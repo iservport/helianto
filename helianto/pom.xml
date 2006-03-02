@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<parent>
+		<artifactId>helianto-parent</artifactId>
+		<groupId>org.helianto</groupId>
+		<version>0.0.1</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.helianto</groupId>
+	<artifactId>helianto</artifactId>
+	<version>0.0.1</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>core</module>
+	</modules>
+	<scm>
+		<connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/helianto:helianto</connection>
+		<developerConnection>scm:cvs:ext:${maven.username}@cvs.sourceforge.net:/cvsroot/acegisecurity:acegisecurity</developerConnection>
+		<url>http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/acegisecurity/acegisecurity</url>
+	</scm>
+	<!--build>
+	</build-->	
+</project>

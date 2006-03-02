@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <extend>${basedir}/../project.xml</extend>
+    <pomVersion>1</pomVersion>
+    <description>Admin domain model and service layer.</description>
+    <id>helianto-core:helianto-core</id>
+    <artifactId>helianto-admin</artifactId>
+    <name>helianto-admin</name>
+    <groupId>helianto</groupId>
+    <organization>
+        <name>Grupo Helianto</name>
+        <url>http://www.iservport.com/helianto</url>
+    </organization>
+    <inceptionYear>2005</inceptionYear>
+    <package>org.helianto.core</package>
+    <shortDescription>Helianto admin tools</shortDescription>
+    <repository />
+    <dependencies>
+        <dependency>
+            <groupId>helianto</groupId>
+            <artifactId>helianto-core</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <unitTest>
+            <includes>
+                <include>**/*Tests.java</include>
+            </includes>
+        </unitTest>
+    </build>
+</project>
+

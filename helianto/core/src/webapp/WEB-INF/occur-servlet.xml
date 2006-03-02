@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 
+	   - ======== -
+	   - Mappings -
+	   - ======== -
+	   -->
+	<bean id="urlMapping" 
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/login.htm">loginController</prop>
+				<prop key="/home.htm">homeController</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 
+	   - ======== -
+	   - Messages -
+	   - ======== -
+	   -->
+	<bean id="messageSource" 
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages"/>
+	</bean>
+	<!-- 
+	   - ============== -
+	   - Viewers config -
+	   - ============== -
+	   -->
+	<bean id="freemarkerConfig" 
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" 
+		    value="/WEB-INF/freemarker/"/>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="default_encoding">ISO-8859-1</prop>
+			</props>
+		</property>
+	</bean>
+	<!--
+	   - ============== -
+	   - View Resolvers -
+	   - ============== -
+	   -->
+	<bean id="resourceBundleViewResolver" 
+		class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<property name="basename" value="views"/>
+	</bean>
+	
+</beans>
