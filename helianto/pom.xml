@@ -15,8 +15,8 @@
 	</modules>
 	<scm>
 		<connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/helianto:helianto</connection>
-		<developerConnection>scm:cvs:ext:${maven.username}@cvs.sourceforge.net:/cvsroot/acegisecurity:acegisecurity</developerConnection>
-		<url>http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/acegisecurity/acegisecurity</url>
+		<developerConnection>scm:cvs:ext:${maven.username}@cvs.sourceforge.net:/cvsroot/helianto:helianto</developerConnection>
+		<url>http://cvs.sourceforge.net/viewcvs.py/helianto/helianto/</url>
 	</scm>
 	<!--build>
 	</build-->	

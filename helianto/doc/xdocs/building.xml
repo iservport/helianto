@@ -54,7 +54,7 @@
 	maven scm:checkout-project 
 	-Dmaven.scm.method=cvs
 	-Dmaven.scm.cvs.module=helianto
-	-Dmaven.scm.cvs.root=:pserver:cvspub@db.iservport.com:/home/cvs/helianto
+	-Dmaven.scm.cvs.root=:pserver:anonymous@cvs.sourceforge.net:/cvsroot/helianto
 	-Dmaven.scm.checkout.dir=helianto
 				</pre>
 			</ol>
