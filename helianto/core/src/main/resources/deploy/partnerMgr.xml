@@ -25,7 +25,7 @@
 			<bean id="partnerTarget"
 				class="org.helianto.core.service.PartnerMgrImpl">
 				<property name="genericDao" ref="genericDao"/>
-				<property name="javaMailSender" ref="javaMailSender"/>
+				<property name="javaMailAdapter" ref="javaMailAdapter"/>
 			</bean>
 		</property>
 		<property name="transactionAttributes">

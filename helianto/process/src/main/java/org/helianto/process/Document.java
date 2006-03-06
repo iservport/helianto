@@ -32,6 +32,9 @@ public class Document implements Serializable {
     private String docName;
 
     /** nullable persistent field */
+    private String docUrl;
+
+    /** nullable persistent field */
     private Entity entity;
 
     /** persistent field */
@@ -77,6 +80,14 @@ public class Document implements Serializable {
 
     public void setDocName(String docName) {
         this.docName = docName;
+    }
+
+    public String getDocUrl() {
+        return this.docUrl;
+    }
+
+    public void setDocUrl(String docUrl) {
+        this.docUrl = docUrl;
     }
 
     public Entity getEntity() {

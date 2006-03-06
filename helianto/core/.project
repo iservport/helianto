@@ -1,5 +1,5 @@
 <projectDescription>
-  <name>helianto</name>
+  <name>helianto-core</name>
   <comment>Helianto project is designed to provide easy &quot;construction
 		blocks&quot; to an Hibernate+Spring+Acegi based application.</comment>
   <projects/>
@@ -8,19 +8,8 @@
       <name>org.eclipse.jdt.core.javabuilder</name>
       <arguments/>
     </buildCommand>
-    <buildCommand>
-      <name>org.mevenide.ui.mavenbuilder</name>
-      <arguments/>
-    </buildCommand>
-    <buildCommand>
-      <name>org.maven.ide.eclipse.maven2Builder</name>
-      <arguments/>
-    </buildCommand>
   </buildSpec>
   <natures>
     <nature>org.eclipse.jdt.core.javanature</nature>
-    <nature>org.maven.ide.eclipse.maven2Nature</nature>
-    <nature>org.mevenide.ui.mavennature</nature>
-    <nature>com.sysdeo.eclipse.tomcat.tomcatnature</nature>
   </natures>
 </projectDescription>

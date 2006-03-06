@@ -17,7 +17,7 @@ package org.helianto.core.dao;
 
 /**
  * Extends the <code>LightWeightDao</code> to provide 
- * additional hibernate-like access code.
+ * additional methods to access code.
  * 
  * @author Maurício Fernandes de Castro
  * @version $Id$

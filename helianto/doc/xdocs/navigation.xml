@@ -44,7 +44,7 @@
 
     <menu type="footer">
       <item name="Spring Framework" href="http://www.springframework.org/" img="http://www.springframework.org/buttons/spring_white.png"/>
-      <item name="Sourceforge" href="http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=2"  width="125" height="37" border="0" alt="SourceForge.net Logo"/>
+      <item name="Sourceforge" href="http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=2"  img="http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=2"  width="125" height="37" border="0" alt="SourceForge.net Logo"/>
     </menu>
 
   </body>

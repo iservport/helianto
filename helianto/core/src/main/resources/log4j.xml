@@ -20,7 +20,7 @@
 	<logger name="com.opensymphony.module.sitemesh">
 		<level value="DEBUG"/>
 	</logger>
-	<logger name="net.sf.acegisecurity">
+	<logger name="org.acegisecurity">
 		<level value="DEBUG"/>
 	</logger>
 	<logger name="org.springframework.orm.hibernate3">

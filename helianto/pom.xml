@@ -1,23 +1,274 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
-	<parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<!--parent>
 		<artifactId>helianto-parent</artifactId>
 		<groupId>org.helianto</groupId>
 		<version>0.0.1</version>
-	</parent>
+	</parent-->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto</artifactId>
 	<version>0.0.1</version>
 	<packaging>pom</packaging>
+	<name>The Helianto Project</name>
+	<inceptionYear>2005</inceptionYear>
+	
 	<modules>
 		<module>core</module>
+		<!--module>process</module-->
 	</modules>
+	
 	<scm>
 		<connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/helianto:helianto</connection>
 		<developerConnection>scm:cvs:ext:${maven.username}@cvs.sourceforge.net:/cvsroot/helianto:helianto</developerConnection>
 		<url>http://cvs.sourceforge.net/viewcvs.py/helianto/helianto/</url>
 	</scm>
+
+	<description>Helianto project is designed to provide easy "construction
+		blocks" to an Hibernate+Spring+Acegi based application.
+	</description>
+	
 	<!--build>
-	</build-->	
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<templateDirectory>
+						file:maven-template/
+					</templateDirectory>
+					<template>maven-site.vm</template>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build-->
+
+	<url>http://www.helianto.org</url>
+	
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate</artifactId>
+			<version>3.1rc3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-dao</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-hibernate</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-support</artifactId>
+			<version>1.2.6</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.resource</groupId>
+					<artifactId>connector</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-mock</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-hibernate</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+		<!--dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-tools</artifactId>
+			<version>3.1.0.beta4</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>1.2.6</version>
+			<scope>runtime</scope>
+		</dependency-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>1.2.6</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.oracle.toplink</groupId>
+					<artifactId>toplink</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>ojb</groupId>
+					<artifactId>db-ojb</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jdo</groupId>
+					<artifactId>jdo</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.ibatis</groupId>
+					<artifactId>ibatis-sqlmap</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.ibatis</groupId>
+					<artifactId>ibatis2-sqlmap</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>1.2.6</version>
+			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.resource</groupId>
+					<artifactId>connector</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency-->
+		<!--dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-hibernate3</artifactId>
+			<version>1.2.6</version>
+			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.persistence</groupId>
+					<artifactId>ejb</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency-->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.acegisecurity</groupId>
+			<artifactId>acegi-security</artifactId>
+			<version>1.0.0-RC1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.resource</groupId>
+					<artifactId>connector</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+	
+	<developers>
+		<developer>
+			<name>Maurício Fernandes de Castro</name>
+			<id>mauricio</id>
+			<email>mauricio at iservport.com</email>
+			<timezone>-3</timezone>
+		</developer>
+	</developers>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include implementation="java.lang.String">**/*Tests.class</include>
+					</includes>
+					<excludes>
+						<exclude implementation="java.lang.String">**/Abstract*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<executions>
+						<execution>
+							<phase>generate-sources</phase>
+							<configuration>
+								<tasks>
+									<taskdef name="hibernatetool"
+									classname="org.hibernate.tool.ant.HibernateToolTask"
+									classpathref="maven.runtime.classpath"/>
+									<hibernatetool destdir="src/main/java/" >
+										<configuration propertyfile="src/main/resources/hibernate.properties">
+											<fileset dir="src/main/resources/mappings/">
+												<include name="**/*.hbm.xml"/>
+											</fileset>
+										</configuration>
+										<hbm2java jdk5="true"/>
+									</hibernatetool>
+								</tasks>
+							</configuration>
+							<goals>
+								<goal>run</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>surefire-report-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jxr-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
+	
 </project>

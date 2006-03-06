@@ -19,9 +19,9 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Set;
 
-import net.sf.acegisecurity.GrantedAuthority;
-import net.sf.acegisecurity.GrantedAuthorityImpl;
-import net.sf.acegisecurity.context.SecurityContextHolder;
+import org.acegisecurity.GrantedAuthority;
+import org.acegisecurity.GrantedAuthorityImpl;
+import org.acegisecurity.context.SecurityContextHolder;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
@@ -30,7 +30,7 @@ import org.helianto.core.Role;
 
 /**
  * Models core user information retieved by an 
- * {@link net.sf.acegisecurity.providers.dao.AuthenticationDao} 
+ * {@link org.acegisecurity.userdetails.UserDetailsService} 
  * as an adapter class to keep coupling from the Acegi-security 
  * package as narrow as possible.
  * 
@@ -65,7 +65,7 @@ import org.helianto.core.Role;
  * 
  * @author Mauricio Fernandes de Castro
  * @version $Id$
- * @see net.sf.acegisecurity.providers.dao.User net.sf.acegisecurity.providers.dao.User
+ * @see org.acegisecurity.providers.dao.User org.acegisecurity.providers.dao.User
  */
 public final class UserAdapter extends AbstractUserDetails implements Serializable, PublicUserDetails {
     

@@ -28,7 +28,7 @@
 			WARNING: do no use in production environment!
 	-->
 	<bean id="inMemoryDaoImpl"
-		class="net.sf.acegisecurity.providers.dao.memory.InMemoryDaoImpl">
+		class="org.acegisecurity.providers.dao.memory.InMemoryDaoImpl">
 		<property name="userMap">
 			<value> teste=teste,ROLE_USER teste1=xxxx,ROLE_USER
 			</value>
@@ -38,7 +38,7 @@
 			Security provider manager
 	-->
 	<bean id="authenticationManager"
-		class="net.sf.acegisecurity.providers.ProviderManager">
+		class="org.acegisecurity.providers.ProviderManager">
 		<property name="providers">
 			<list>
 				<ref local="daoAuthenticationProvider"/>
@@ -50,8 +50,8 @@
 			Authentication provider 	
 	-->
 	<bean id="daoAuthenticationProvider"
-		class="net.sf.acegisecurity.providers.dao.DaoAuthenticationProvider">
-		<property name="authenticationDao" ref="customDaoImpl"/>
+		class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="customDaoImpl"/>
 		<property name="userCache" ref="userCache"/>
 		<!--property name="passwordEncoder" ref="passwordEncoder"/-->
 	</bean>
@@ -59,19 +59,19 @@
 			Anonymous authentication provider 	
 	-->
 	<bean id="anonymousAuthenticationProvider"
-		class="net.sf.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider">
+		class="org.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider">
 		<property name="key" value="foobar"/>
 	</bean>
 	<!--
 			Password encoder 	
 	-->
 	<bean id="passwordEncoder"
-		class="net.sf.acegisecurity.providers.encoding.Md5PasswordEncoder"/>
+		class="org.acegisecurity.providers.encoding.Md5PasswordEncoder"/>
 	<!--
 			User cache 	
 	-->
 	<bean id="userCache"
-		class="net.sf.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
+		class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
 		<property name="cache">
 			<bean id="userCacheBackend"
 				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
@@ -87,10 +87,10 @@
 			Logger listener 	
 	-->
 	<bean id="loggerListener"
-		class="net.sf.acegisecurity.providers.dao.event.LoggerListener"/>
+		class="org.acegisecurity.providers.dao.event.LoggerListener"/>
 	<!--
 			Role voter 	
 	-->
-	<bean id="roleVoter" class="net.sf.acegisecurity.vote.RoleVoter"/>
+	<bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter"/>
 	
 </beans>

@@ -8,8 +8,16 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
-	<artifactId>helianto-core</artifactId>
+	<artifactId>helianto-process</artifactId>
 	<version>0.0.1</version>
-	<name>The Helianto Project Core Module</name>
+	<name>The Helianto Project Process Module</name>
 	
+	<dependencies>
+		<dependency>
+			<groupId>org.helianto</groupId>
+			<artifactId>helianto-core</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+	</dependencies>
+
 </project>

@@ -21,10 +21,10 @@ import org.helianto.core.Credential;
 import org.helianto.core.CredentialState;
 import org.helianto.core.User;
 
-import net.sf.acegisecurity.UserDetails;
+import org.acegisecurity.userdetails.UserDetails;
 
 /**
- * A base class to implement {@link net.sf.acegisecurity.UserDetails}
+ * A base class to implement {@link org.acegisecurity.userdetails.UserDetails}
  * from a supplied user domain object.
  * 
  * <p>

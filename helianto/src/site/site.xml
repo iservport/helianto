@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Maven">
+  <bannerLeft>
+    <name>Helianto</name>
+    <src>images/helianto-t.png</src>
+    <href>http://www.helianto.org/</href>
+  </bannerLeft>
+  <!--bannerRight>
+    <src>http://...</src>
+  </bannerRight-->
+	<body>
+		<links>
+			<item name="Spring Framework"
+				href="http://www.springframework.org/"/>
+			<item name="Hibernate" href="http://www.hibernate.org/"/>
+			<item name="Acegi Security"
+				href="http://www.acegisecurity.org/"/>
+			<item name="Maven 2"
+				href="http://maven.apache.org/maven2/"/>
+		</links>
+		
+		<menu name="The Helianto Project">
+			<item name="Introduction" href="index.html"/>
+		</menu>
+		
+		<menu name="Project JavaDocs">
+			<item name="Core Framework"
+				href="multiproject/helianto-core/apidocs/index.html"/>
+			<item name="Process Framework"
+				href="multiproject/helianto-process/apidocs/index.html"/>
+			<item name="Finance and Accountability"
+				href="multiproject/fac/apidocs/index.html"/>
+			<item name="Access"
+				href="multiproject/helianto-access/apidocs/index.html"/>
+		</menu>
+		
+		<search/> ${reports}
+		
+		<!-- There is a hack in the plugin to make this work.
+			Will be fixed by next plugin version. Let's wait. -->
+		<!--powered-by>
+			<item name="Spring - java/j2ee Application Framework"
+				href="http://www.springframework.org/"
+				img="http://www.springframework.org/buttons/spring_white.png"/>
+			<item name="Hosted by SourceForge"
+				href="http://www.sourceforge.net"
+				img="http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=2"/>
+		</powered-by-->
+		
+	</body>
+</project>

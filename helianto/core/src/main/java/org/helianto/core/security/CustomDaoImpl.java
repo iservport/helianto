@@ -24,13 +24,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import net.sf.acegisecurity.UserDetails;
-import net.sf.acegisecurity.providers.dao.AuthenticationDao;
+import org.acegisecurity.userdetails.UserDetails;
+import org.acegisecurity.userdetails.UserDetailsService;
 
-import net.sf.acegisecurity.providers.dao.UsernameNotFoundException;
+import org.acegisecurity.userdetails.UsernameNotFoundException;
 
 /**
- * Custom implementation for the {@link net.sf.acegisecurity.providers.dao.AuthenticationDao}
+ * Custom implementation for the {@link org.acegisecurity.userdetails.UserDetailsService}
  * interface.
  * 
  * <p>
@@ -42,7 +42,7 @@ import net.sf.acegisecurity.providers.dao.UsernameNotFoundException;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public class CustomDaoImpl implements AuthenticationDao {
+public class CustomDaoImpl implements UserDetailsService {
     
     private final Log logger = LogFactory.getLog(CustomDaoImpl.class);
     
