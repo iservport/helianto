@@ -25,6 +25,11 @@
 		<url>http://cvs.sourceforge.net/viewcvs.py/helianto/helianto/</url>
 	</scm>
 
+	<issueManagement>
+		<system>jira</system>
+		<url>http://jira.helianto.org/jira</url>
+	</issueManagement>
+	
 	<description>Helianto project is designed to provide easy "construction
 		blocks" to an Hibernate+Spring+Acegi based application.
 	</description>
@@ -101,18 +106,6 @@
 			<artifactId>spring-hibernate</artifactId>
 			<version>1.2.6</version>
 		</dependency>
-		<!--dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-tools</artifactId>
-			<version>3.1.0.beta4</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>1.2.6</version>
-			<scope>runtime</scope>
-		</dependency-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
@@ -140,18 +133,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!--dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>1.2.6</version>
-			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.resource</groupId>
-					<artifactId>connector</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency-->
 		<!--dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-hibernate3</artifactId>
@@ -204,6 +185,7 @@
 	</developers>
 
 	<build>
+		<finalName>helianto</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -268,7 +250,43 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jxr-maven-plugin</artifactId>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>surefire-report-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                </configuration>
+            </plugin>
 		</plugins>
 	</reporting>
 	
+<!--reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jxr-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>../AA-IFS-checkstyle-rules.xml
+</configLocation>
+                    <headerLocation>../license.txt</headerLocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>changelog-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting-->
 </project>

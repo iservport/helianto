@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="Helianto">
-	<bannerLeft>
-		<name>Helianto</name>
-		<src>images/helianto-t.png</src>
-		<href>http://www.helianto.org/</href>
-	</bannerLeft>
+<project name="Maven">
+  <bannerLeft>
+    <name>Helianto</name>
+    <src>images/helianto-t.png</src>
+    <href>http://www.helianto.org/</href>
+  </bannerLeft>
+  <!--bannerRight>
+    <src>http://...</src>
+  </bannerRight-->
 	<body>
 		<links>
 			<item name="Spring Framework"
@@ -20,8 +23,6 @@
 			<item name="Introduction" href="index.html"/>
 		</menu>
 		
-		${modules}
-		
 		${reports}
 		
 		<!-- There is a hack in the plugin to make this work.
@@ -36,10 +37,4 @@
 		</powered-by-->
 		
 	</body>
-	<skin>
-		<groupId>org.apache.maven.skins</groupId>
-		<artifactId>helianto-maven-skin</artifactId>
-		<version>1.0-SNAPSHOT</version>
-	</skin>
-		
 </project>

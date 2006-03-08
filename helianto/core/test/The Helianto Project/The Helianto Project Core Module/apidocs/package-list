@@ -1,0 +1,7 @@
+org.helianto.core
+org.helianto.core.dao
+org.helianto.core.hibernate
+org.helianto.core.junit
+org.helianto.core.mail
+org.helianto.core.security
+org.helianto.core.service
