@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Helianto">
-	<bannerLeft>
+	<bannerRight>
 		<name>Helianto</name>
 		<src>images/helianto-t.png</src>
 		<href>http://www.helianto.org/</href>
-	</bannerLeft>
+	</bannerRight>
 	<body>
 		<links>
 			<item name="Spring Framework"
@@ -18,6 +18,13 @@
 		
 		<menu name="The Helianto Project">
 			<item name="Introduction" href="index.html"/>
+		</menu>
+		
+		<menu name="Documentation">
+			<item name="Reference guide (html)" href="docbook/helianto.html"/>
+			<item name="Reference guide (pdf)" href="docbook/helianto.pdf"/>
+			<item name="Helianto core Javadocs" href="helianto-core/apidocs/index.html"/>
+			<!--item name="Helianto process Javadocs" href="helianto-process/apidocs/index.html"/-->
 		</menu>
 		
 		${modules}
