@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-20060310</version>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
 	<inceptionYear>2005</inceptionYear>
@@ -51,11 +51,17 @@
 
 	<url>http://www.helianto.org</url>
 	
+	<!-- workaround to wait for wagon-ftp-1.0-alpha-6 -->
 	<distributionManagement>
 		<site>
 			<id>website</id>
-			<url>ftp://ftp.helianto.org/</url>
+			<url>scp://localhost/home/desk/wrk3/localsite/</url>
 		</site>
+		<repository>
+			<id>helianto-sourceforge</id>
+			<name>Helianto at Sourceforge</name>
+			<url>scp://shell.sourceforge.net/home/groups/h/he/helianto/htdocs/repository</url>
+		</repository>
 	</distributionManagement>
 	
 	<licenses>
@@ -180,11 +186,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>	
-			<groupId>org.apache.maven.wagon</groupId>
-			<artifactId>wagon-ftp</artifactId>
-			<version>1.0-alpha-6</version>
-		</dependency>
 	</dependencies>
 	<developers>
 		<developer>
@@ -216,6 +217,14 @@
 					<excludes>
 						<exclude implementation="java.lang.String">**/Abstract*</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptor>src/main/assembly/src.xml</descriptor>
+					<finalName>helianto-${project.version}</finalName>
+					<outputDirectory>dist</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

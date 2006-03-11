@@ -23,7 +23,8 @@
 		-->
 <hibernate-mapping default-lazy="false">
 	<class table="core_supervisor" 
-		name="org.helianto.core.Supervisor">
+		name="org.helianto.core.Supervisor" 
+		discriminator-value="S">
 		<!-- 
 				SUPERVISOR
 				============================================= 
@@ -56,6 +57,7 @@ At least one default (root) supervisor must be defined per installation.
 		<id name="id" type="int" unsaved-value="null">
 			<generator class="native"/>
 		</id>
+		<discriminator column="type" type="char"/>
 		<!-- 
 				parent
 		-->
@@ -117,5 +119,37 @@ At least one default (root) supervisor must be defined per installation.
 				store password
 		-->
 		<property name="storePassword" type="string" length="20"/>
+		<!-- 
+				subclass to provide a default entity
+		-->
+		<subclass discriminator-value="D"
+			name="org.helianto.core.DefaultEntity">
+		<!-- 
+				DEFAULT ENTITY
+				============================================= 
+		-->
+			<meta attribute="class-description" inherit="false">
+					<![CDATA[
+<p>
+Domain object to provide a default <code>Entity</code> where only
+one (or few) entities are required.
+</p>
+
+@author Mauricio Fernandes de Castro
+@version $Id$
+				]]>
+			</meta>
+			<!-- 
+					default entity
+			-->
+			<many-to-one name="defaultEntity" 
+				class="org.helianto.core.Entity">
+				<column name="defaultEntity" not-null="false"/>
+			</many-to-one>
+			<!-- 
+				priority
+			-->
+			<property name="priority" type="int" not-null="true"/>
+		</subclass>
 	</class>
 </hibernate-mapping>

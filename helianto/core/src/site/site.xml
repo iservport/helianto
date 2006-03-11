@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="Maven">
+<project name="Helianto">
   <bannerLeft>
     <name>Helianto</name>
     <src>images/helianto-t.png</src>
@@ -19,8 +19,14 @@
 				href="http://maven.apache.org/maven2/"/>
 		</links>
 		
-		<menu name="The Helianto Project">
+		<menu name="The Helianto Project Core Module">
 			<item name="Introduction" href="index.html"/>
+		</menu>
+		
+		<menu name="Use Cases">
+			<item name="Simple User" href="simpleuser.html"/>
+			<item name="Entity User" href="entityuser.html"/>
+			<item name="Update Personal Data" href="updatepd.html"/>
 		</menu>
 		
 		${reports}

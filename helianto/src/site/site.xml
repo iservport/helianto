@@ -29,8 +29,6 @@
 		
 		${modules}
 		
-		${reports}
-		
 		<!-- There is a hack in the plugin to make this work.
 			Will be fixed by next plugin version. Let's wait. -->
 		<!--powered-by>
