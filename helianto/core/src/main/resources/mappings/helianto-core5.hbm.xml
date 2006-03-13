@@ -48,6 +48,7 @@ Persist services.
 				service name 
 		-->
 		<property name="serviceName" type="string" >
+			<meta attribute="use-in-equals">true</meta>
 			<column name="serviceName" 
 				length="12" unique="true"/>
 		</property>

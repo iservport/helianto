@@ -1,10 +1,9 @@
 package org.helianto.core;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated Mar 13, 2006 12:21:08 PM by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 				
  * <p>
  * Persist a contact.
@@ -13,62 +12,78 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  *         
-*/
-public class Contact implements Serializable {
+ */
 
-    /** identifier field */
-    private Long id;
+public class Contact  implements java.io.Serializable {
 
-    /** persistent field */
-    private int internalNumber;
 
-    /** nullable persistent field */
-    private String jobReference;
+    // Fields    
 
-    /** nullable persistent field */
-    private String department;
+     private long id;
+     private Partner partner;
+     private Credential credential;
+     private int internalNumber;
+     private String jobReference;
+     private String department;
+     private int priority;
 
-    /** persistent field */
-    private int priority;
 
-    /** nullable persistent field */
-    private org.helianto.core.Partner partner;
-
-    /** nullable persistent field */
-    private org.helianto.core.Credential credential;
-
-    /** full constructor */
-    public Contact(int internalNumber, String jobReference, String department, int priority, org.helianto.core.Partner partner, org.helianto.core.Credential credential) {
-        this.internalNumber = internalNumber;
-        this.jobReference = jobReference;
-        this.department = department;
-        this.priority = priority;
-        this.partner = partner;
-        this.credential = credential;
-    }
+    // Constructors
 
     /** default constructor */
     public Contact() {
     }
 
-    /** minimal constructor */
-    public Contact(int internalNumber, int priority) {
+	/** minimal constructor */
+    public Contact(Partner partner, Credential credential, int internalNumber, int priority) {
+        this.partner = partner;
+        this.credential = credential;
         this.internalNumber = internalNumber;
         this.priority = priority;
     }
+    
+    /** full constructor */
+    public Contact(Partner partner, Credential credential, int internalNumber, String jobReference, String department, int priority) {
+        this.partner = partner;
+        this.credential = credential;
+        this.internalNumber = internalNumber;
+        this.jobReference = jobReference;
+        this.department = department;
+        this.priority = priority;
+    }
+    
 
-    public Long getId() {
+   
+    // Property accessors
+
+    public long getId() {
         return this.id;
     }
-
-    public void setId(Long id) {
+    
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public Partner getPartner() {
+        return this.partner;
+    }
+    
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
+    public Credential getCredential() {
+        return this.credential;
+    }
+    
+    public void setCredential(Credential credential) {
+        this.credential = credential;
     }
 
     public int getInternalNumber() {
         return this.internalNumber;
     }
-
+    
     public void setInternalNumber(int internalNumber) {
         this.internalNumber = internalNumber;
     }
@@ -76,7 +91,7 @@ public class Contact implements Serializable {
     public String getJobReference() {
         return this.jobReference;
     }
-
+    
     public void setJobReference(String jobReference) {
         this.jobReference = jobReference;
     }
@@ -84,7 +99,7 @@ public class Contact implements Serializable {
     public String getDepartment() {
         return this.department;
     }
-
+    
     public void setDepartment(String department) {
         this.department = department;
     }
@@ -92,31 +107,40 @@ public class Contact implements Serializable {
     public int getPriority() {
         return this.priority;
     }
-
+    
     public void setPriority(int priority) {
         this.priority = priority;
     }
+   
 
-    public org.helianto.core.Partner getPartner() {
-        return this.partner;
-    }
 
-    public void setPartner(org.helianto.core.Partner partner) {
-        this.partner = partner;
-    }
 
-    public org.helianto.core.Credential getCredential() {
-        return this.credential;
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Contact) ) return false;
+		 Contact castOther = ( Contact ) other; 
+         
+		 return ( (this.getPartner()==castOther.getPartner()) || ( this.getPartner()!=null && castOther.getPartner()!=null && this.getPartner().equals(castOther.getPartner()) ) )
+ && ( (this.getCredential()==castOther.getCredential()) || ( this.getCredential()!=null && castOther.getCredential()!=null && this.getCredential().equals(castOther.getCredential()) ) )
+ && (this.getInternalNumber()==castOther.getInternalNumber());
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getPartner() == null ? 0 : this.getPartner().hashCode() );
+         result = 37 * result + ( getCredential() == null ? 0 : this.getCredential().hashCode() );
+         result = 37 * result + this.getInternalNumber();
+         
+         
+         
+         return result;
+   }   
 
-    public void setCredential(org.helianto.core.Credential credential) {
-        this.credential = credential;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
 
 }

@@ -49,6 +49,7 @@ Persist a credential, unique by principal.
 			    (also unique with entity in the sublcass)
 		-->
 		<property name="principal" type="string">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="principal" length="64" not-null="true" 
 				unique="true"/>
 		</property>

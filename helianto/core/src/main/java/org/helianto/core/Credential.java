@@ -1,12 +1,12 @@
 package org.helianto.core;
+// Generated Mar 13, 2006 12:21:10 PM by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 
-/** 
+/**
  * 				
  * <p>
  * Persist a credential, unique by principal.
@@ -15,82 +15,83 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 		
-*/
-public class Credential implements Serializable {
+ */
 
-    /** identifier field */
-    private Long id;
+public class Credential  implements java.io.Serializable {
 
-    /** persistent field */
-    private String principal;
 
-    /** nullable persistent field */
-    private String password;
+    // Fields    
 
-    /** persistent field */
-    private char credentialType;
+     private long id;
+     private String principal;
+     private String password;
+     /**
+      * 				@see CredentialType
+ * 			
+     */
+     private char credentialType;
+     /**
+      * 				@see NotificationType
+ * 			
+     */
+     private char notification;
+     private PersonalData personalData;
+     private Date created;
+     private Date lastModified;
+     private Date expired;
+     /**
+      * 				@see CredentialState
+ * 			
+     */
+     private char credentialState;
+     private Set<User> users = new HashSet<User>(0);
 
-    /** persistent field */
-    private char notification;
 
-    /** nullable persistent field */
-    private Date created;
-
-    /** nullable persistent field */
-    private Date lastModified;
-
-    /** nullable persistent field */
-    private Date expired;
-
-    /** persistent field */
-    private char credentialState;
-
-    /** persistent field */
-    private Set users;
-
-    /** persistent field */
-    private org.helianto.core.PersonalData personalData;
-
-    /** full constructor */
-    public Credential(String principal, String password, char credentialType, char notification, Date created, Date lastModified, Date expired, char credentialState, Set users, org.helianto.core.PersonalData personalData) {
-        this.principal = principal;
-        this.password = password;
-        this.credentialType = credentialType;
-        this.notification = notification;
-        this.created = created;
-        this.lastModified = lastModified;
-        this.expired = expired;
-        this.credentialState = credentialState;
-        this.users = users;
-        this.personalData = personalData;
-    }
+    // Constructors
 
     /** default constructor */
     public Credential() {
     }
 
-    /** minimal constructor */
-    public Credential(String principal, char credentialType, char notification, char credentialState, Set users, org.helianto.core.PersonalData personalData) {
+	/** minimal constructor */
+    public Credential(String principal, char credentialType, char notification, PersonalData personalData, char credentialState) {
         this.principal = principal;
         this.credentialType = credentialType;
         this.notification = notification;
+        this.personalData = personalData;
+        this.credentialState = credentialState;
+    }
+    
+    /** full constructor */
+    public Credential(String principal, String password, char credentialType, char notification, PersonalData personalData, Date created, Date lastModified, Date expired, char credentialState, Set<User> users) {
+        this.principal = principal;
+        this.password = password;
+        this.credentialType = credentialType;
+        this.notification = notification;
+        this.personalData = personalData;
+        this.created = created;
+        this.lastModified = lastModified;
+        this.expired = expired;
         this.credentialState = credentialState;
         this.users = users;
-        this.personalData = personalData;
     }
+    
 
-    public Long getId() {
+   
+    // Property accessors
+
+    public long getId() {
         return this.id;
     }
-
-    public void setId(Long id) {
+    
+    public void setId(long id) {
         this.id = id;
     }
 
     public String getPrincipal() {
         return this.principal;
     }
-
+    
     public void setPrincipal(String principal) {
         this.principal = principal;
     }
@@ -98,39 +99,47 @@ public class Credential implements Serializable {
     public String getPassword() {
         return this.password;
     }
-
+    
     public void setPassword(String password) {
         this.password = password;
     }
-
-    /** 
-     * 				@see CredentialType
+    /**       
+     *      * 				@see CredentialType
      * 			
      */
+
     public char getCredentialType() {
         return this.credentialType;
     }
-
+    
     public void setCredentialType(char credentialType) {
         this.credentialType = credentialType;
     }
-
-    /** 
-     * 				@see NotificationType
+    /**       
+     *      * 				@see NotificationType
      * 			
      */
+
     public char getNotification() {
         return this.notification;
     }
-
+    
     public void setNotification(char notification) {
         this.notification = notification;
+    }
+
+    public PersonalData getPersonalData() {
+        return this.personalData;
+    }
+    
+    public void setPersonalData(PersonalData personalData) {
+        this.personalData = personalData;
     }
 
     public Date getCreated() {
         return this.created;
     }
-
+    
     public void setCreated(Date created) {
         this.created = created;
     }
@@ -138,7 +147,7 @@ public class Credential implements Serializable {
     public Date getLastModified() {
         return this.lastModified;
     }
-
+    
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
@@ -146,43 +155,62 @@ public class Credential implements Serializable {
     public Date getExpired() {
         return this.expired;
     }
-
+    
     public void setExpired(Date expired) {
         this.expired = expired;
     }
-
-    /** 
-     * 				@see CredentialState
+    /**       
+     *      * 				@see CredentialState
      * 			
      */
+
     public char getCredentialState() {
         return this.credentialState;
     }
-
+    
     public void setCredentialState(char credentialState) {
         this.credentialState = credentialState;
     }
 
-    public Set getUsers() {
+    public Set<User> getUsers() {
         return this.users;
     }
-
-    public void setUsers(Set users) {
+    
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
+   
 
-    public org.helianto.core.PersonalData getPersonalData() {
-        return this.personalData;
-    }
 
-    public void setPersonalData(org.helianto.core.PersonalData personalData) {
-        this.personalData = personalData;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Credential) ) return false;
+		 Credential castOther = ( Credential ) other; 
+         
+		 return ( (this.getPrincipal()==castOther.getPrincipal()) || ( this.getPrincipal()!=null && castOther.getPrincipal()!=null && this.getPrincipal().equals(castOther.getPrincipal()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getPrincipal() == null ? 0 : this.getPrincipal().hashCode() );
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         return result;
+   }   
+
+
+
+
 
 }

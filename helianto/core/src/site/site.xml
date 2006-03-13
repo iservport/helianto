@@ -27,6 +27,9 @@
 			<item name="Simple User" href="simpleuser.html"/>
 			<item name="Entity User" href="entityuser.html"/>
 			<item name="Update Personal Data" href="updatepd.html"/>
+			<item name="Simple Authentication and Authorization" href="simpleauthn.html"/>
+			<item name="Clear Password" href="clearpwd.html"/>
+			<item name="Entity Authentication" href="entityauthn.html"/>
 		</menu>
 		
 		${reports}

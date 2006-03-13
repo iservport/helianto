@@ -1,10 +1,9 @@
 package org.helianto.core;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated Mar 13, 2006 12:21:07 PM by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 			
  * <p>
  * Persist roles.
@@ -13,73 +12,94 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 		
-*/
-public class Role implements Serializable {
+ */
 
-    /** identifier field */
-    private Integer id;
+public class Role  implements java.io.Serializable {
 
-    /** persistent field */
-    private String roleName;
 
-    /** nullable persistent field */
-    private org.helianto.core.Service service;
+    // Fields    
 
-    /** nullable persistent field */
-    private org.helianto.core.User user;
+     private int id;
+     private Service service;
+     private User user;
+     private String roleName;
 
-    /** full constructor */
-    public Role(String roleName, org.helianto.core.Service service, org.helianto.core.User user) {
-        this.roleName = roleName;
-        this.service = service;
-        this.user = user;
-    }
+
+    // Constructors
 
     /** default constructor */
     public Role() {
     }
 
-    /** minimal constructor */
-    public Role(String roleName) {
+    
+    /** full constructor */
+    public Role(Service service, User user, String roleName) {
+        this.service = service;
+        this.user = user;
         this.roleName = roleName;
     }
+    
 
-    public Integer getId() {
+   
+    // Property accessors
+
+    public int getId() {
         return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public Service getService() {
+        return this.service;
+    }
+    
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getRoleName() {
         return this.roleName;
     }
-
+    
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+   
 
-    public org.helianto.core.Service getService() {
-        return this.service;
-    }
 
-    public void setService(org.helianto.core.Service service) {
-        this.service = service;
-    }
 
-    public org.helianto.core.User getUser() {
-        return this.user;
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Role) ) return false;
+		 Role castOther = ( Role ) other; 
+         
+		 return ( (this.getService()==castOther.getService()) || ( this.getService()!=null && castOther.getService()!=null && this.getService().equals(castOther.getService()) ) )
+ && ( (this.getUser()==castOther.getUser()) || ( this.getUser()!=null && castOther.getUser()!=null && this.getUser().equals(castOther.getUser()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getService() == null ? 0 : this.getService().hashCode() );
+         result = 37 * result + ( getUser() == null ? 0 : this.getUser().hashCode() );
+         
+         return result;
+   }   
 
-    public void setUser(org.helianto.core.User user) {
-        this.user = user;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
 
 }

@@ -1,56 +1,57 @@
 package org.helianto.core;
+// Generated Mar 13, 2006 12:21:12 PM by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
 import java.util.Date;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 
-/** 
+/**
  *  A 
  * 				class to persist Resources. 
-*/
-public class HumanResource extends Contact implements Serializable {
+ */
 
-    /** persistent field */
-    private int resourceState;
+public class HumanResource extends org.helianto.core.Contact implements java.io.Serializable {
 
-    /** persistent field */
-    private int resourceCategory;
 
-    /** nullable persistent field */
-    private Date born;
+    // Fields    
 
-    /** nullable persistent field */
-    private Date hired;
+     private int resourceState;
+     private int resourceCategory;
+     private Date born;
+     private Date hired;
+     private Date terminated;
 
-    /** nullable persistent field */
-    private Date terminated;
 
+    // Constructors
+
+    /** default constructor */
+    public HumanResource() {
+    }
+
+	/** minimal constructor */
+    public HumanResource(Partner partner, Credential credential, int internalNumber, int priority, int resourceState, int resourceCategory) {
+        super(partner, credential, internalNumber, priority);        
+        this.resourceState = resourceState;
+        this.resourceCategory = resourceCategory;
+    }
+    
     /** full constructor */
-    public HumanResource(int internalNumber, String jobReference, String department, int priority, org.helianto.core.Partner partner, org.helianto.core.Credential credential, int resourceState, int resourceCategory, Date born, Date hired, Date terminated) {
-        super(internalNumber, jobReference, department, priority, partner, credential);
+    public HumanResource(Partner partner, Credential credential, int internalNumber, String jobReference, String department, int priority, int resourceState, int resourceCategory, Date born, Date hired, Date terminated) {
+        super(partner, credential, internalNumber, jobReference, department, priority);        
         this.resourceState = resourceState;
         this.resourceCategory = resourceCategory;
         this.born = born;
         this.hired = hired;
         this.terminated = terminated;
     }
+    
 
-    /** default constructor */
-    public HumanResource() {
-    }
-
-    /** minimal constructor */
-    public HumanResource(int internalNumber, int priority, int resourceState, int resourceCategory) {
-      super(internalNumber, priority);
-        this.resourceState = resourceState;
-        this.resourceCategory = resourceCategory;
-    }
+   
+    // Property accessors
 
     public int getResourceState() {
         return this.resourceState;
     }
-
+    
     public void setResourceState(int resourceState) {
         this.resourceState = resourceState;
     }
@@ -58,7 +59,7 @@ public class HumanResource extends Contact implements Serializable {
     public int getResourceCategory() {
         return this.resourceCategory;
     }
-
+    
     public void setResourceCategory(int resourceCategory) {
         this.resourceCategory = resourceCategory;
     }
@@ -66,7 +67,7 @@ public class HumanResource extends Contact implements Serializable {
     public Date getBorn() {
         return this.born;
     }
-
+    
     public void setBorn(Date born) {
         this.born = born;
     }
@@ -74,7 +75,7 @@ public class HumanResource extends Contact implements Serializable {
     public Date getHired() {
         return this.hired;
     }
-
+    
     public void setHired(Date hired) {
         this.hired = hired;
     }
@@ -82,15 +83,17 @@ public class HumanResource extends Contact implements Serializable {
     public Date getTerminated() {
         return this.terminated;
     }
-
+    
     public void setTerminated(Date terminated) {
         this.terminated = terminated;
     }
+   
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+
+
+
+
 
 }

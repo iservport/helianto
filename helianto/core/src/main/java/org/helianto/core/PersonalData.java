@@ -1,10 +1,9 @@
 package org.helianto.core;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated Mar 13, 2006 12:21:15 PM by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 				
  * <p>
  * Persist personal data.
@@ -14,21 +13,39 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 			
-*/
-public class PersonalData implements Serializable {
+ */
 
-    /** nullable persistent field */
-    private String firstName;
+public class PersonalData  implements java.io.Serializable {
 
-    /** nullable persistent field */
-    private String lastName;
 
-    /** persistent field */
-    private char gender;
+    // Fields    
 
-    /** persistent field */
-    private int appellation;
+     private String firstName;
+     private String lastName;
+     /**
+      * 					@see Gender
+ * 				
+     */
+     private char gender;
+     /**
+      * 					@see Appellation
+ * 				
+     */
+     private int appellation;
 
+
+    // Constructors
+
+    /** default constructor */
+    public PersonalData() {
+    }
+
+	/** minimal constructor */
+    public PersonalData(char gender, int appellation) {
+        this.gender = gender;
+        this.appellation = appellation;
+    }
+    
     /** full constructor */
     public PersonalData(String firstName, String lastName, char gender, int appellation) {
         this.firstName = firstName;
@@ -36,21 +53,15 @@ public class PersonalData implements Serializable {
         this.gender = gender;
         this.appellation = appellation;
     }
+    
 
-    /** default constructor */
-    public PersonalData() {
-    }
-
-    /** minimal constructor */
-    public PersonalData(char gender, int appellation) {
-        this.gender = gender;
-        this.appellation = appellation;
-    }
+   
+    // Property accessors
 
     public String getFirstName() {
         return this.firstName;
     }
-
+    
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -58,38 +69,41 @@ public class PersonalData implements Serializable {
     public String getLastName() {
         return this.lastName;
     }
-
+    
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    /** 
-     * 					@see Gender
+    /**       
+     *      * 					@see Gender
      * 				
      */
+
     public char getGender() {
         return this.gender;
     }
-
+    
     public void setGender(char gender) {
         this.gender = gender;
     }
-
-    /** 
-     * 					@see Appellation
+    /**       
+     *      * 					@see Appellation
      * 				
      */
+
     public int getAppellation() {
         return this.appellation;
     }
-
+    
     public void setAppellation(int appellation) {
         this.appellation = appellation;
     }
+   
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .toString();
-    }
+
+
+
+
+
+
 
 }

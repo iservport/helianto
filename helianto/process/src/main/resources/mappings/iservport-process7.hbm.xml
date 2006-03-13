@@ -50,14 +50,16 @@ A class to represent a setup.
   				operation
 		-->
 		<many-to-one name="operation" cascade="merge"
-			class="org.helianto.process.Operation" 
-			column="operationId" 
-			unique-key="priority"
-			not-null="true"/>
+			class="org.helianto.process.Operation">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="operationId" unique-key="priority"
+				not-null="true"/>
+		</many-to-one>
 		<!-- 
   				priority
 		-->
 		<property name="priority" type="int" not-null="true">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="priority" unique-key="priority"
 				not-null="true"/>
 		</property>

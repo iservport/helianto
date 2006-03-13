@@ -1,10 +1,9 @@
 package org.helianto.core;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated Mar 13, 2006 12:21:08 PM by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 				
  * <p>
  * Domain object to represent different business units.
@@ -36,61 +35,83 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 		
-*/
-public class Entity implements Serializable {
+ */
 
-    /** identifier field */
-    private Long id;
+public class Entity  implements java.io.Serializable {
 
-    /** persistent field */
-    private String alias;
 
-    /** nullable persistent field */
-    private org.helianto.core.Supervisor supervisor;
+    // Fields    
 
-    /** full constructor */
-    public Entity(String alias, org.helianto.core.Supervisor supervisor) {
-        this.alias = alias;
-        this.supervisor = supervisor;
-    }
+     private long id;
+     private Supervisor supervisor;
+     private String alias;
+
+
+    // Constructors
 
     /** default constructor */
     public Entity() {
     }
 
-    /** minimal constructor */
-    public Entity(String alias) {
+    
+    /** full constructor */
+    public Entity(Supervisor supervisor, String alias) {
+        this.supervisor = supervisor;
         this.alias = alias;
     }
+    
 
-    public Long getId() {
+   
+    // Property accessors
+
+    public long getId() {
         return this.id;
     }
-
-    public void setId(Long id) {
+    
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public Supervisor getSupervisor() {
+        return this.supervisor;
+    }
+    
+    public void setSupervisor(Supervisor supervisor) {
+        this.supervisor = supervisor;
     }
 
     public String getAlias() {
         return this.alias;
     }
-
+    
     public void setAlias(String alias) {
         this.alias = alias;
     }
+   
 
-    public org.helianto.core.Supervisor getSupervisor() {
-        return this.supervisor;
-    }
 
-    public void setSupervisor(org.helianto.core.Supervisor supervisor) {
-        this.supervisor = supervisor;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Entity) ) return false;
+		 Entity castOther = ( Entity ) other; 
+         
+		 return ( (this.getSupervisor()==castOther.getSupervisor()) || ( this.getSupervisor()!=null && castOther.getSupervisor()!=null && this.getSupervisor().equals(castOther.getSupervisor()) ) )
+ && ( (this.getAlias()==castOther.getAlias()) || ( this.getAlias()!=null && castOther.getAlias()!=null && this.getAlias().equals(castOther.getAlias()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getSupervisor() == null ? 0 : this.getSupervisor().hashCode() );
+         result = 37 * result + ( getAlias() == null ? 0 : this.getAlias().hashCode() );
+         return result;
+   }   
+
+
+
+
 
 }

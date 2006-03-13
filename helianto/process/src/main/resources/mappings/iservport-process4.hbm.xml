@@ -45,12 +45,16 @@ A base class to add details to documents.
 		-->
 		<many-to-one name="document" 
 			class="org.helianto.process.Document">
-			<column name="documentId" not-null="false"/>
+			<meta attribute="use-in-equals">true</meta>
+			<column name="documentId" unique-key="document" not-null="false"/>
 		</many-to-one>
 		<!-- 
   				sequence
 		-->
-		<property name="sequence" type="int"/>
+		<property name="sequence" type="int">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="sequence" unique-key="document" not-null="true"/>
+		</property>
 		<!-- 
   				description
 		-->

@@ -45,6 +45,7 @@ Persist roles.
 		-->
 		<many-to-one name="service" 
 			class="org.helianto.core.Service" cascade="merge">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="serviceId" not-null="true" 
 				unique-key="unique1"/>
 		</many-to-one>
@@ -53,6 +54,7 @@ Persist roles.
 		-->
 		<many-to-one name="user" 
 			class="org.helianto.core.User" cascade="merge">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="userId" not-null="true" 
 				unique-key="unique1"/>
 		</many-to-one>

@@ -58,9 +58,9 @@
 			<url>scp://localhost/home/desk/wrk3/localsite/</url>
 		</site>
 		<repository>
-			<id>helianto-sourceforge</id>
-			<name>Helianto at Sourceforge</name>
-			<url>scp://shell.sourceforge.net/home/groups/h/he/helianto/htdocs/repository</url>
+			<id>localrepo</id>
+			<url>scp://localhost/home/desk/wrk3/localrepo/</url>
+			<!--url>scp://shell.sourceforge.net/home/groups/h/he/helianto/htdocs/repository</url-->
 		</repository>
 	</distributionManagement>
 	
@@ -80,8 +80,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>3.1rc3</version>
+			<artifactId>hibernate-tools</artifactId>
+			<version>3.1.0.beta4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -1,10 +1,9 @@
 package org.helianto.core;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated Mar 13, 2006 12:21:01 PM by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 				
  * <p>
  * A domain object to hold support information for languages and
@@ -28,55 +27,65 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @see java.util.Locale
  * 				
  * 		
-*/
-public class Locale implements Serializable {
+ */
 
-    /** identifier field */
-    private Integer id;
+public class Locale  implements java.io.Serializable {
 
-    /** persistent field */
-    private String language;
 
-    /** persistent field */
-    private String country;
+    // Fields    
 
-    /** persistent field */
-    private char localeType;
+     private int id;
+     private Locale parent;
+     private String language;
+     private String country;
+     private char localeType;
 
-    /** nullable persistent field */
-    private org.helianto.core.Locale parent;
 
-    /** full constructor */
-    public Locale(String language, String country, char localeType, org.helianto.core.Locale parent) {
-        this.language = language;
-        this.country = country;
-        this.localeType = localeType;
-        this.parent = parent;
-    }
+    // Constructors
 
     /** default constructor */
     public Locale() {
     }
 
-    /** minimal constructor */
+	/** minimal constructor */
     public Locale(String language, String country, char localeType) {
         this.language = language;
         this.country = country;
         this.localeType = localeType;
     }
+    
+    /** full constructor */
+    public Locale(Locale parent, String language, String country, char localeType) {
+        this.parent = parent;
+        this.language = language;
+        this.country = country;
+        this.localeType = localeType;
+    }
+    
 
-    public Integer getId() {
+   
+    // Property accessors
+
+    public int getId() {
         return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public Locale getParent() {
+        return this.parent;
+    }
+    
+    public void setParent(Locale parent) {
+        this.parent = parent;
     }
 
     public String getLanguage() {
         return this.language;
     }
-
+    
     public void setLanguage(String language) {
         this.language = language;
     }
@@ -84,7 +93,7 @@ public class Locale implements Serializable {
     public String getCountry() {
         return this.country;
     }
-
+    
     public void setCountry(String country) {
         this.country = country;
     }
@@ -92,23 +101,37 @@ public class Locale implements Serializable {
     public char getLocaleType() {
         return this.localeType;
     }
-
+    
     public void setLocaleType(char localeType) {
         this.localeType = localeType;
     }
+   
 
-    public org.helianto.core.Locale getParent() {
-        return this.parent;
-    }
 
-    public void setParent(org.helianto.core.Locale parent) {
-        this.parent = parent;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Locale) ) return false;
+		 Locale castOther = ( Locale ) other; 
+         
+		 return ( (this.getLanguage()==castOther.getLanguage()) || ( this.getLanguage()!=null && castOther.getLanguage()!=null && this.getLanguage().equals(castOther.getLanguage()) ) )
+ && ( (this.getCountry()==castOther.getCountry()) || ( this.getCountry()!=null && castOther.getCountry()!=null && this.getCountry().equals(castOther.getCountry()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         
+         result = 37 * result + ( getLanguage() == null ? 0 : this.getLanguage().hashCode() );
+         result = 37 * result + ( getCountry() == null ? 0 : this.getCountry().hashCode() );
+         
+         return result;
+   }   
+
+
+
+
 
 }

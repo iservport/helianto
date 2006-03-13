@@ -68,6 +68,7 @@ defaults.
 				language (unique)
 		-->
 		<property name="language" type="string">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="language" length="2" not-null="true" 
 				unique="true"/>
 		</property>
@@ -75,6 +76,7 @@ defaults.
 				country (unique)
 		-->
 		<property name="country" type="string">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="country" length="2" not-null="true" 
 				unique="true"/>
 		</property>

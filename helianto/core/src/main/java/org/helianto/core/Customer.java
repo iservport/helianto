@@ -1,11 +1,10 @@
 package org.helianto.core;
+// Generated Mar 13, 2006 12:20:58 PM by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
 import java.util.Date;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 
-/** 
+/**
  * 				
  * <p>
  * Persist a relationship to a customer 
@@ -14,39 +13,51 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 			
-*/
-public class Customer extends Partner implements Serializable {
+ */
 
-    /** nullable persistent field */
-    private org.helianto.core.Partner deliverTo;
+public class Customer extends org.helianto.core.Partner implements java.io.Serializable {
 
-    /** full constructor */
-    public Customer(String alias, char state, boolean strong, Date relatedSince, String numberAssignedRemotely, Long importedKey, String profile, org.helianto.core.Entity entity, org.helianto.core.Entity related, org.helianto.core.Partner deliverTo) {
-        super(alias, state, strong, relatedSince, numberAssignedRemotely, importedKey, profile, entity, related);
-        this.deliverTo = deliverTo;
-    }
+
+    // Fields    
+
+     private Partner deliverTo;
+
+
+    // Constructors
 
     /** default constructor */
     public Customer() {
     }
 
-    /** minimal constructor */
-    public Customer(String alias, char state, boolean strong) {
-      super(alias, state, strong);
+	/** minimal constructor */
+    public Customer(Entity entity, String alias, char state, boolean strong) {
+        super(entity, alias, state, strong);        
     }
-
-    public org.helianto.core.Partner getDeliverTo() {
-        return this.deliverTo;
-    }
-
-    public void setDeliverTo(org.helianto.core.Partner deliverTo) {
+    
+    /** full constructor */
+    public Customer(Entity entity, String alias, Entity related, char state, boolean strong, Date relatedSince, String numberAssignedRemotely, long importedKey, String profile, Partner deliverTo) {
+        super(entity, alias, related, state, strong, relatedSince, numberAssignedRemotely, importedKey, profile);        
         this.deliverTo = deliverTo;
     }
+    
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
+   
+    // Property accessors
+
+    public Partner getDeliverTo() {
+        return this.deliverTo;
     }
+    
+    public void setDeliverTo(Partner deliverTo) {
+        this.deliverTo = deliverTo;
+    }
+   
+
+
+
+
+
+
+
 
 }

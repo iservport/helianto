@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head><title>Helianto project
 		</title><link xmlns="" href="styles/html/acegi.css" rel="stylesheet" type="text/css" /><meta content="DocBook XSL Stylesheets V1.67.2" name="generator" /></head><body><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a id="N10002" />Helianto project
 		</h1></div><div><h2 class="subtitle">Reference Documentation
-		</h2></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">MaurÃ­cio
+		</h2></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Maurício
 			</span> <span class="surname">Fernandes de Castro
-			</span></h3></div></div></div><div><p class="releaseinfo">0.0.1-20060310
+			</span></h3></div></div></div><div><p class="releaseinfo">0.0.1-20060312
 		</p></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#preface">Preface
 		</a></span></dt><dt><span class="chapter"><a href="#helianto">1. The Helianto Project
 		</a></span></dt><dd><dl><dt><span class="sect1"><a href="#helianto-introduction">1.1. Introduction
@@ -13,7 +13,6 @@
 				</a></span></dt><dt><span class="sect2"><a href="#helianto-introduction-acknowledgements">1.1.2. Acknowledgements
 				</a></span></dt><dt><span class="sect2"><a href="#helianto-introduction-alternatives">1.1.3. Alternatives
 				</a></span></dt><dt><span class="sect2"><a href="#helianto-introduction-requirements">1.1.4. Software Requirements
-				</a></span></dt><dt><span class="sect2"><a href="#helianto-introduction-howtouse">1.1.5. How to Use this Guide
 				</a></span></dt></dl></dd><dt><span class="sect1"><a href="#helianto-arch">1.2. Architecture
 			</a></span></dt><dt><span class="sect1"><a href="#helianto-core">1.3. Core functionality
 			</a></span></dt><dd><dl><dt><span =""><a href="#helianto-core-overview">1.3.1. Overview
@@ -59,8 +58,8 @@
 			outnumbered the original group expectations. Since then, Helianto
 			is distributed under the "Apache License v. 2.0".</p><p>Currently, Helianto has a work in progress status. This document
 			is currently in the process of being written, so not all topics are
-			covered. Contributions are welcome. </p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="helianto" />ChapterÂ 1.Â The Helianto Project
-		</h2></div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-introduction" />1.1.Â Introduction
+			covered. Contributions are welcome. </p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="helianto" />Chapter 1. The Helianto Project
+		</h2></div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-introduction" />1.1. Introduction
 			</h2></div></div></div><p>Helianto tries to capture common project issues and combine
 				it with sound project pratices. Many designers need to model
 				entities like customers or suppliers, payables and
@@ -89,9 +88,9 @@
 				to the persistence layer, create or extend service facades and
 				wire them to the dependency injection container
 				registry.</p><p>Throughout this document, many of the aspects of such
-				customization will be described in deeper detail, along with
-				some fundamentals of the collaborating open source
-				packages.</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-mission" />1.1.1.Â Mission
+				customization will be described in deeper detail. See the
+				appendices for a brief conceptual introduction along for some
+				of the collaborating open source packages.</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-mission" />1.1.1. Mission
 				</h3></div></div></div><p>Continuously develop an application base framework
 					that:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>is as decoupled as possible from the
 							presentation layer, allowing the desired
@@ -105,7 +104,7 @@
 							persistence layer as decoupled as possible from
 							the datastore, and</p></li><li><p>enforces good programming practices like design 
 							patterns usage, rich documentation and extensive 
-							testing.</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-acknowledgements" />1.1.2.Â Acknowledgements
+							testing.</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-acknowledgements" />1.1.2. Acknowledgements
 				</h3></div></div></div><p>The Helianto project includes software developed by the
 					Apache Software Foundation (http://www.apache.org),
 					the Spring Framework Project
@@ -116,47 +115,70 @@
 					(http://www.hibernate.org).</p><p>It is virtually impossible to say thank you to all the
 					people who contributed in some way to the current state of
 					this project. Many of them are project leaders of the
-					packages mentioned above.  </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-alternatives" />1.1.3.Â Alternatives
+					packages mentioned above.  </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-alternatives" />1.1.3. Alternatives
 				</h3></div></div></div><p>As stated before, the Helianto project is not meant to be
 					used out of the box. This is primarily because the
 					presentation layer is not part of the project mission.
 					Other projects, like AppFuse
 					(http://appfuse.dev.java.net) or Java Application
 					Generator (http://jag.sourceforge.net) provide a more
-					comprehensive support for a full architecture.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-requirements" />1.1.4.Â Software Requirements
+					comprehensive support for a full architecture.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-requirements" />1.1.4. Software Requirements
 				</h3></div></div></div><p>The source code includes generics and enumerators,
 					therefore a jdk 1.5 or higher is required.</p><p>Eclipse platform and the appropriate plugins as well as
 					Apache Maven are recomended, although not required. Of
 					course, there are many dependencies listed in the pom
 					files, and Maven will help to have them ready to use.</p><p>Any sql database can be used as long as the appropriate
 					properties are set in hibernate.properties at
-					src/main/resources/.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-howtouse" />1.1.5.Â How to Use this Guide
-				</h3></div></div></div><p>This guide has a mixed content. The sections
-					"Architecture", "Dependency Injection", "Object
-					relational mapping" and "Security" have a conceptual
-					approach. All following sections describe the
-					functionality of each module.</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-arch" />1.2.Â Architecture
+					src/main/resources/.</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-arch" />1.2. Architecture
 			</h2></div></div></div><p>
-				<div class="mediaobject" align="center"><img src="images/arch.png" align="middle" /><div class="caption"><p>Figure 2: Architecture.</p></div></div> </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-core" />1.3.Â Core functionality
-			</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-overview" />1.3.1.Â Overview
-				</h3></div></div></div><p>[Pending]</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-config" />1.3.2.Â Basic configuration
-				</h3></div></div></div><p>[Pending]</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-pkg-ov" />1.3.3.Â The <code class="literal">helianto-core</code> package
+				<div class="mediaobject" align="center"><img src="images/arch.png" align="middle" /><div class="caption"><p>Figure 2: Architecture.</p></div></div> </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-core" />1.3. Core functionality
+			</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-overview" />1.3.1. Overview
+				</h3></div></div></div><p>The core module has two major responsibilities:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>hold the configuration, and</p></li><li><p>implement a basic domain model and services.</p></li></ul></div><p>All the configuration is declarative, mostly in the form
+					of xml files, and will be explained in the next section.</p><p>The basic domain model comprehends user and entity
+					relationship. It is designed to be as flexible as possible to
+					accomodate both, a single user in a small organization and
+					multiple identities beeing shared across an internet
+					distributed application.</p><p>The entity is a key domain object. Its responsibility is
+					to isolate information from one business unit from
+					another, like accounting or maintenance data. In this
+					sense, an entity may be a whole organization, part of one
+					organization or even a group of organizations. The
+					application extending Helianto may choose any of such
+					approaches. </p><p>As an immediate consequence, the domain model has finer
+					granularity and delegates to the service layer the job of
+					exposing simple and complex service methods. For example,
+					there is a method to create a user and associate it by default
+					to an entity. But there also is a method to create a
+					credential to be supplied in a further operation that
+					creates a user for a selected entity.</p><p>There is also a topic to be examined. It is sometimes
+					desirable to share specifc information accross multiple
+					entities. Customers would eventually like to share
+					product data (at their discretion) with
+					suppliers. Helianto is designed to create partners either
+					as domain objects local to an entity, designated as "weak"
+					relationships, or as entities themselves in a so called
+					"strong" relationship. Also, weak partners can be
+					converted to strong partners.</p><p>In order to accomplish this, helianto core module relies
+					on several packages:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>org.helianto.core: basic domain
+							objects,</p></li><li><p>org.helianto.core.dao: a set of common dao
+							interfaces,</p></li><li><p>org.helianto.core.hibernate: an Hibernate
+							implementation for the common dao
+							interfaces,</p></li><li><p>org.helianto.core.junit: extra test
+							support,</p></li><li><p>org.helianto.core.mail: mail notification
+							support,</p></li><li><p>org.helianto.core.security: Acegi Security 
+							support, and</p></li><li><p>org.helianto.core.service: transactional
+							core service layer,</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-config" />1.3.2. Basic configuration
+				</h3></div></div></div><p>[Pending]</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-pkg-ov" />1.3.3. The <code class="literal">helianto-core</code> package
 				</h3></div></div></div><p>The <code class="literal">helianto-core</code> package plays
-					the major role for Helianto funcionality. It comprehends
-					many responsibilities:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>support basic Spring, Hibernate and Acegi
+					the major role for Helianto funcionality:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>support basic Spring, Hibernate and Acegi
 							configuration, wired togheter to provide common
 							functionality to all other modules,</p></li><li><p>fully implement the persistence layer,
 							exposing a standardized dao interface,</p></li><li><p>provide for multiple entity resolution, as
 							entities may be organizations, personal owners,
-							customers, suppliers, and so forth - content of
-							one entity should be visible to others under
-							controlled circumstances, if an internet
-							distributed application is desirable,</p></li><li><p>implement user identity, taking into account
-							that a user may share privileges among different
-							entities,</p></li><li><p>allow for hierarchical authorization
+							customers, suppliers, and so forth,</p></li><li><p>implement user identity,</p></li><li><p>allow for hierarchical authorization
 							control, follwing the chain: supervisor -&gt;
-							administrator -&gt; moderator -&gt; user, and provide
-							for standard event notification.</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-credential" />1.3.4.Â The Credential domain object
+							administrator -&gt; moderator -&gt; user, and </p></li><li><p>provide
+							for standard event notification.</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-credential" />1.3.4. The Credential domain object
 				</h3></div></div></div><p>A <code class="literal">Credential</code> provides the
 					security system with authentication
 					information.</p><p>A <code class="literal">Credential</code> is usually a person,
@@ -172,7 +194,7 @@
 					principal may be used if the
 					<code class="literal">Credential</code> is related to a parent
 					having an addressable principal, or in a chain, up to at
-					least one addressable principal.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-entity" />1.3.5.Â The Entity domain object
+					least one addressable principal.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-entity" />1.3.5. The Entity domain object
 				</h3></div></div></div><p>Helianto core functionality relies on the
 					<code class="literal">Entity</code> abstraction. It represents
 					the root for several hierarchies, for example, all users or
@@ -187,16 +209,16 @@
 					<div class="mediaobject" align="center"><img src="images/entity.png" align="middle" /><div class="caption"><p>Entity model.</p></div></div> </p><p>Each <code class="literal">Entity</code> must recognize an
 					<code class="literal">Supervisor</code> property, specially if
 					an abstraction to keep an <code class="literal">Entity</code>
-					collection as a territory is required.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-user" />1.3.6.Â The User domain object
+					collection as a territory is required.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-user" />1.3.6. The User domain object
 				</h3></div></div></div><p>A <code class="literal">User</code> represents the
 					relationship between a <code class="literal">Credential</code>
 					and an <code class="literal">Entity</code>. It is the mechanism
 					used by a person, or any other identity, to have granted
 					authorization to play a <code class="literal">Role</code> within
 					an <code class="literal">Entity</code>. </p><p>
-					<div class="mediaobject" align="center"><img src="images/user.png" align="middle" /><div class="caption"><p>User model.</p></div></div> </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-dao" />1.3.7.Â Generic DAO
-				</h3></div></div></div><p>[Pending]</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-process" />1.4.Â Process functionality
-			</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-process-abstract" />1.4.1.Â The <code class="literal">helianto-process</code> package
+					<div class="mediaobject" align="center"><img src="images/user.png" align="middle" /><div class="caption"><p>User model.</p></div></div> </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-dao" />1.3.7. Generic DAO
+				</h3></div></div></div><p>[Pending]</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-process" />1.4. Process functionality
+			</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-process-abstract" />1.4.1. The <code class="literal">helianto-process</code> package
 				</h3></div></div></div><p>The <code class="literal">helianto-process</code> package, as
 					the name suggests, introduces a comprehensive process approach to
 					Helianto. Processes may be taken as organizational or
@@ -208,18 +230,18 @@
 							operations,</p></li><li><p>provide product and process trees, and
 							services to maintain them,</p></li><li><p>provide manufacturing specific domain and
 							services,</p></li><li><p>provide base classes for resource
-							management.</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-process-domain" />1.4.2.Â The Process domain model
+							management.</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-process-domain" />1.4.2. The Process domain model
 				</h3></div></div></div><p>
-					<div class="mediaobject" align="center"><img src="images/process.png" align="middle" /><div class="caption"><p>Last updated 20051010.</p></div></div> </p><p>[Pending]</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-sales" />1.5.Â Sales functionality
-			</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-sales-abstract" />1.5.1.Â The <code class="literal">helianto-sales</code> package
+					<div class="mediaobject" align="center"><img src="images/process.png" align="middle" /><div class="caption"><p>Last updated 20051010.</p></div></div> </p><p>[Pending]</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-sales" />1.5. Sales functionality
+			</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-sales-abstract" />1.5.1. The <code class="literal">helianto-sales</code> package
 				</h3></div></div></div><p>The <code class="literal">helianto-sales</code> package is
 					designed to provide price information to products. The
 					module responsibilities are:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>handle, <code class="literal">Proposal</code>s and
-							<code class="literal">Price</code> list,</p></li><li><p>provide services to calculate prices.</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-sales-domain" />1.5.2.Â The Sales domain model
-				</h3></div></div></div><p>[Pending]</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-fac" />1.6.Â Finance and accountability functionality
-			</h2></div></div></div><p>[pending]</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-access" />1.7.Â A template application including access control
-			</h2></div></div></div><p>[pending]</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="appendices" />ChapterÂ 2.Â Apendices
-		</h2></div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-di" />2.1.Â Appendix A - Spring Framework and Dependency injection
+							<code class="literal">Price</code> list,</p></li><li><p>provide services to calculate prices.</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-sales-domain" />1.5.2. The Sales domain model
+				</h3></div></div></div><p>[Pending]</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-fac" />1.6. Finance and accountability functionality
+			</h2></div></div></div><p>[pending]</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-access" />1.7. A template application including access control
+			</h2></div></div></div><p>[pending]</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="appendices" />Chapter 2. Apendices
+		</h2></div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-di" />2.1. Appendix A - Spring Framework and Dependency injection
 			</h2></div></div></div><p>First thing to say about dependency injection is that it is not
 				invasive. It does not require your code to inherit state or
 				behaviour from some class, or to implement any particular
@@ -354,14 +376,14 @@ public abstract class AbstractGenericService
 				it offers many other advantages: </p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>easy integration with orm libraries,</p></li><li><p>declarative transaction management,</p></li><li><p>allows for aspect orientation, and as an
 							immediate consequence, for strong but not
 							invasive security management (see bellow),</p></li><li><p>easy mvc integration, and also the new
-							<code class="literal">Webflow</code> package.</p></li></ul></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-orm" />2.2.Â Appendix B - Hibernate and Object relational mapping
-			</h2></div></div></div><p>[pending]</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-security" />2.3.Â Appendix C - Acegi Security
+							<code class="literal">Webflow</code> package.</p></li></ul></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-orm" />2.2. Appendix B - Hibernate and Object relational mapping
+			</h2></div></div></div><p>[pending]</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-security" />2.3. Appendix C - Acegi Security
 			</h2></div></div></div><p>The helianto project relies on the <code class="literal">Acegi-security
 				for Spring</code> package to provide user authentication
 				and authorization. The following sections have a restricted
 				view of some main objects and concepts, while the Acegi web site
 				documentation is comprehensive and recommended for those who
-				look for deeper understanding. </p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-security-objects" />2.3.1.Â Security object
+				look for deeper understanding. </p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-security-objects" />2.3.1. Security object
 				</h3></div></div></div><p>The security object plays a major role inside
 					<code class="literal">Acegi-security for Spring</code> package
 					as it coordinates the transitions required to secure an

@@ -56,16 +56,20 @@ A class to represent a specification.
   				characteristic
 		-->
 		<many-to-one name="characteristic" 
-			class="org.helianto.process.Characteristic" 
-			column="characteristicId" not-null="false"/>
-		
+			class="org.helianto.process.Characteristic">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="characteristicId" unique-key="characteristic" not-null="true"/>
+		</many-to-one>
+		<!-- 
+  				phase: prototype, pre-launch, production
+		-->
+		<property name="phase" type="int">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="phase" unique-key="characteristic" not-null="false"/>
+		</property>
 		<!-- 
   				specification desc
 		-->
 		<property name="speficicationDesc" type="string" length="64"/>
-		<!-- 
-  				phase: prototype, pre-launch, production
-		-->
-		<property name="phase" type="int" not-null="true"/>
 	</class>
 </hibernate-mapping>

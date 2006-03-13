@@ -46,11 +46,13 @@ partners, like customers, suppliers, banks, etc.
 		<discriminator column="role" type="char"/>
 		<many-to-one name="entity" cascade="merge"
 			class="org.helianto.core.Entity">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="entityId" 
 				unique-key="uniqueAlias" 
 				not-null="true"/>
 		</many-to-one>
 		<property name="alias" type="string">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="alias" length="20" 
 				unique-key="uniqueAlias" 
 				not-null="true"/>

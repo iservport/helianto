@@ -20,6 +20,8 @@ import javax.mail.NoSuchProviderException;
 import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
 
+import org.helianto.core.MailAccessData;
+import org.helianto.core.MailTransportData;
 import org.helianto.core.Supervisor;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -37,14 +39,14 @@ public class JavaMailAdapterImpl extends JavaMailSenderImpl implements JavaMailA
         this.mailComposer = mailComposer;
     }
 
-    public Store popStoreConnect(Supervisor supervisor) {
-        if (supervisor==null) {
-            throw new IllegalStateException("Can't create a Store from a null Owner");
+    public Store connect(MailAccessData mailAccessData) {
+        if (mailAccessData==null) {
+            throw new IllegalStateException("Can't create a Store from a null mailAccessData");
         }
         Store store = null;
         try {
-            store = this.getSession().getStore(supervisor.getStoreType());
-            store.connect(supervisor.getStoreHost(), supervisor.getStoreUser(), supervisor.getStorePassword());
+            store = this.getSession().getStore(mailAccessData.getStoreType());
+            store.connect(mailAccessData.getHost(), mailAccessData.getUser(), mailAccessData.getPassword());
         } catch (NoSuchProviderException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -55,18 +57,22 @@ public class JavaMailAdapterImpl extends JavaMailSenderImpl implements JavaMailA
         return store;
     }
 
-    public void send(Supervisor supervisor, MimeMessage message) throws MailException {
-        Store store = popStoreConnect(supervisor);
-        setHost(supervisor.getMailHost());
-        setUsername(supervisor.getMailUser());
-        setPassword(supervisor.getMailPassword());
-        super.send(new MimeMessage[] { message });
+    public void send(MailTransportData mailTransportData, MailAccessData mailAccessData, MimeMessage message) throws MailException {
+        Store store = connect(mailAccessData);
         try {
+            send(mailTransportData, message);
             store.close();
         } catch (MessagingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public void send(MailTransportData mailTransportData, MimeMessage message) throws MailException {
+        setHost(mailTransportData.getSmtpHost());
+        setUsername(mailTransportData.getSmtpUser());
+        setPassword(mailTransportData.getSmtpPassword());
+        super.send(new MimeMessage[] { message });
     }
 
     @Override

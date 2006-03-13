@@ -76,6 +76,7 @@ like Hibernate's (www.hibernate.org) non-lazy loading.
 		-->
 		<many-to-one name="supervisor" 
 			class="org.helianto.core.Supervisor" cascade="merge">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="supervisorId" not-null="true" 
 				unique-key="unique1"/>
 		</many-to-one>
@@ -83,6 +84,7 @@ like Hibernate's (www.hibernate.org) non-lazy loading.
 				alias
 		-->
 		<property name="alias" type="string">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="alias" length="20" not-null="true" 
 				unique-key="unique1"/>
 		</property>

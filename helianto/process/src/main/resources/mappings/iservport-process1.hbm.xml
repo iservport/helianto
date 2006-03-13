@@ -51,12 +51,14 @@ documents.
 		-->
 		<many-to-one name="entity" 
 			class="org.helianto.core.Entity">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="entityId" unique-key="entity" not-null="true"/>
 		</many-to-one>
 		<!-- 
   				document code
 		-->
 		<property name="docCode" type="string">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="docCode" length="24" unique-key="entity" not-null="true"/>
 		</property>
 		<!-- 

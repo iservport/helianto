@@ -17,30 +17,32 @@ package org.helianto.core.mail;
 
 import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
+
+import org.helianto.core.MailAccessData;
+import org.helianto.core.MailTransportData;
 import org.helianto.core.Supervisor;
 import org.springframework.mail.MailException;
 
 public class MockJavaMailAdapter extends JavaMailAdapterImpl implements JavaMailAdapter {
     
     @Override
-    public Store popStoreConnect(Supervisor supervisor) {
-        if (supervisor==null) {
-            throw new IllegalStateException("Can't create a Store from a null Owner");
+    public Store connect(MailAccessData mailAccessData) {
+        if (mailAccessData==null) {
+            throw new IllegalStateException("Can't create a Store from a null mailAccessData");
         }
         logger.info("\n         Simulate a store connection with" +
-                " storeHost="+supervisor.getStoreHost()+
-                ", storeUser="+supervisor.getStoreUser()+
-                " and prtected password");
+                " Host="+mailAccessData.getHost()+
+                ", User="+mailAccessData.getUser()+
+                " and protected password");
         return null;
     }
 
     @Override
-    public void send(Supervisor supervisor, MimeMessage message) throws MailException {
-        popStoreConnect(supervisor);
+    public void send(MailTransportData mailTransportData, MimeMessage message) throws MailException {
         logger.info("\n         Simulate sending a message with" +
-                " mailHost="+supervisor.getMailHost()+
-                ", mailUser="+supervisor.getMailUser()+
-                " and prtected password");
+                " host="+mailTransportData.getSmtpHost()+
+                ", user="+mailTransportData.getSmtpUser()+
+                " and protected password");
         try {
             logger.info("\n         Message subject is " +
                     message.getSubject());

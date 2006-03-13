@@ -1,0 +1,27 @@
+Use Case: 5 - Clear Password
+
+  Level <USER GOAL>
+
+* Goal in Context: 
+
+  Clear an {{{apidocs/org/helianto/core/User.html}user}} password to allow
+  him/her to enter a new one.
+  
+* Preconditions: 
+
+  A {{{apidocs/org/helianto/core/User.html}user} must have been created as in 
+  the {{{simpleuser.html}simple user}} use case.
+  
+* Success Guarantee: 
+
+  * pending.
+  
+* Primary Actor: 
+
+  pending.
+
+* <<MAIN SUCCESS SCENARIO:>>
+
+  * (1) the USER is informed of other users with enough administrative privileges to 
+    clear the current password.
+    

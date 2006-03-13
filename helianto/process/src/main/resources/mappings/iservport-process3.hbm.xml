@@ -44,12 +44,17 @@ An operation characteristic.
   				operation
 		-->
 		<many-to-one name="operation" 
-			class="org.helianto.process.Operation" 
-			column="operationId"/>
+			class="org.helianto.process.Operation">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="operationId" unique-key="operation" not-null="true"/>
+		</many-to-one>
 		<!-- 
   				sequence
 		-->
-		<property name="sequence" type="int"/>
+		<property name="sequence" type="int">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="sequence" unique-key="operation" not-null="true"/>
+		</property>
 		<!-- 
   				short description
 		-->

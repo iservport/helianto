@@ -45,6 +45,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
  */
 public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
     
+    public PersonalData personalDataFactory() {
+        PersonalData pd = new PersonalData();
+        return pd;
+    }
+
     public Credential credentialFactory() {
         Credential credential = new Credential();
         credential.setCreated(new Date());
@@ -52,7 +57,7 @@ public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
         credential.setExpired(credential.getCreated());
         credential.setCredentialType(CredentialType.PERSONAL_EMAIL.getValue());
         credential.setCredentialState(CredentialState.IDLE.getValue());
-        PersonalData pd = new PersonalData();
+        PersonalData pd = personalDataFactory();
         credential.setPersonalData(pd);
         return credential;
     }
@@ -211,15 +216,16 @@ public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
         MailComposer mailComposer = getJavaMailAdapter().getMailComposer();
         MimeMessage message = getJavaMailAdapter().createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "ISO-8859-1");
+        String mailUser = supervisor.getMailAccessData().getUser();
         helper.setTo(cred.getPrincipal());
-        helper.setReplyTo(supervisor.getStoreUser());
-        helper.setFrom(supervisor.getStoreUser());
+        helper.setReplyTo(mailUser);
+        helper.setFrom(mailUser);
         helper.setSubject(mailComposer
             .composeRegistrationNotificationSubject(supervisor.getSupervisorName()));
         helper.setSentDate(new Date());
         helper.setText(mailComposer
             .composeRegistrationNotification(cred, supervisor.getHttpAddress()), true);
-        getJavaMailAdapter().send(supervisor, message);
+        getJavaMailAdapter().send(supervisor.getMailTransportData(), supervisor.getMailAccessData(), message);
     }
     
     public String generatePassword(int size) {

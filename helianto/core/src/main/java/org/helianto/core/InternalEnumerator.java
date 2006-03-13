@@ -1,10 +1,9 @@
 package org.helianto.core;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated Mar 13, 2006 12:21:05 PM by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 				
  * <p>
  * A class to hold last value for internal number lists.
@@ -13,50 +12,57 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 		
-*/
-public class InternalEnumerator implements Serializable {
+ */
 
-    /** identifier field */
-    private Integer id;
+public class InternalEnumerator  implements java.io.Serializable {
 
-    /** persistent field */
-    private String typeName;
 
-    /** persistent field */
-    private int lastNumber;
+    // Fields    
 
-    /** nullable persistent field */
-    private org.helianto.core.Entity entity;
+     private int id;
+     private Entity entity;
+     private String typeName;
+     private int lastNumber;
 
-    /** full constructor */
-    public InternalEnumerator(String typeName, int lastNumber, org.helianto.core.Entity entity) {
-        this.typeName = typeName;
-        this.lastNumber = lastNumber;
-        this.entity = entity;
-    }
+
+    // Constructors
 
     /** default constructor */
     public InternalEnumerator() {
     }
 
-    /** minimal constructor */
-    public InternalEnumerator(String typeName, int lastNumber) {
+    
+    /** full constructor */
+    public InternalEnumerator(Entity entity, String typeName, int lastNumber) {
+        this.entity = entity;
         this.typeName = typeName;
         this.lastNumber = lastNumber;
     }
+    
 
-    public Integer getId() {
+   
+    // Property accessors
+
+    public int getId() {
         return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public Entity getEntity() {
+        return this.entity;
+    }
+    
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 
     public String getTypeName() {
         return this.typeName;
     }
-
+    
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
@@ -64,23 +70,36 @@ public class InternalEnumerator implements Serializable {
     public int getLastNumber() {
         return this.lastNumber;
     }
-
+    
     public void setLastNumber(int lastNumber) {
         this.lastNumber = lastNumber;
     }
+   
 
-    public org.helianto.core.Entity getEntity() {
-        return this.entity;
-    }
 
-    public void setEntity(org.helianto.core.Entity entity) {
-        this.entity = entity;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof InternalEnumerator) ) return false;
+		 InternalEnumerator castOther = ( InternalEnumerator ) other; 
+         
+		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
+ && ( (this.getTypeName()==castOther.getTypeName()) || ( this.getTypeName()!=null && castOther.getTypeName()!=null && this.getTypeName().equals(castOther.getTypeName()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
+         result = 37 * result + ( getTypeName() == null ? 0 : this.getTypeName().hashCode() );
+         
+         return result;
+   }   
+
+
+
+
 
 }

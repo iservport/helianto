@@ -1,10 +1,9 @@
 package org.helianto.core;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated Mar 13, 2006 12:20:57 PM by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 					
  * <p>
  * Domain object to extend <code>AddressableEntity</code> as an
@@ -14,39 +13,51 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 				
-*/
-public class Individual extends AddressableEntity implements Serializable {
+ */
 
-    /** nullable persistent field */
-    private String credentialName;
+public class Individual extends org.helianto.core.AddressableEntity implements java.io.Serializable {
 
-    /** full constructor */
-    public Individual(String alias, org.helianto.core.Supervisor supervisor, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode, String credentialName) {
-        super(alias, supervisor, entityAddress1, entityAddress2, entityCityName, entityProvinceName, entityPostalCode);
-        this.credentialName = credentialName;
-    }
+
+    // Fields    
+
+     private String credentialName;
+
+
+    // Constructors
 
     /** default constructor */
     public Individual() {
     }
 
-    /** minimal constructor */
-    public Individual(String alias) {
-      super(alias);
+	/** minimal constructor */
+    public Individual(Supervisor supervisor, String alias) {
+        super(supervisor, alias);        
     }
+    
+    /** full constructor */
+    public Individual(Supervisor supervisor, String alias, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode, String credentialName) {
+        super(supervisor, alias, entityAddress1, entityAddress2, entityCityName, entityProvinceName, entityPostalCode);        
+        this.credentialName = credentialName;
+    }
+    
+
+   
+    // Property accessors
 
     public String getCredentialName() {
         return this.credentialName;
     }
-
+    
     public void setCredentialName(String credentialName) {
         this.credentialName = credentialName;
     }
+   
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+
+
+
+
 
 }

@@ -45,15 +45,18 @@ Persist a contact.
 		<discriminator column="resource" type="boolean"/>
 		<many-to-one name="partner" 
 			class="org.helianto.core.Partner">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="partnerId" unique-key="unNumber" 
 				not-null="true"/>
 		</many-to-one>
 		<many-to-one name="credential" cascade="save-update"
 			class="org.helianto.core.Credential">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="credentialId" unique-key="unNumber" 
 				not-null="true"/>
 		</many-to-one>
 		<property name="internalNumber" type="int">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="internalNumber" unique-key="unNumber"
 				not-null="true"/>
 		</property>

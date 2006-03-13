@@ -21,18 +21,26 @@ import javax.mail.MessagingException;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
+import org.helianto.core.MailAccessData;
+import org.helianto.core.MailTransportData;
+import org.helianto.core.PersonalData;
 import org.helianto.core.Supervisor;
 import org.helianto.core.User;
 
 /**
- * A service layer interface for the core package.
+ * A base service layer interface for the core package.
  * 
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
 public interface CoreMgr extends GenericService {
 
-	/**
+    /**
+     * The <code>PersonalData</code> factory method.
+     */
+    public PersonalData personalDataFactory();
+    
+    /**
      * The <code>Credential</code> factory method.
      */
     public Credential credentialFactory();
@@ -111,7 +119,7 @@ public interface CoreMgr extends GenericService {
     
     /**
      * Send a <code>Credential</code> registration using 
-     * <code>Supervisor</code> settings.
+     * mail settings from <code>Supervisor</code>.
      */
     public void sendRegistrationNotification(Supervisor supervisor, Credential cred) throws MessagingException;
     

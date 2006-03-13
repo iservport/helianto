@@ -45,6 +45,7 @@ A class to hold last value for internal number lists.
 		-->
 		<many-to-one name="entity" 
 			class="org.helianto.core.Entity" cascade="merge">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="entityId" not-null="true" 
 				unique-key="unique1"/>
 		</many-to-one>
@@ -52,6 +53,7 @@ A class to hold last value for internal number lists.
 				type name
 		-->
 		<property name="typeName" type="string">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="typeName" length="12" not-null="true" 
 				unique-key="unique1"/>
 		</property>

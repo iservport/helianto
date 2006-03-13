@@ -1,5 +1,7 @@
 Use Case: 1 - Simple User Registration
 
+  Level <USER GOAL>
+
 * Goal in Context: 
 
   Create an {{{apidocs/org/helianto/core/User.html}user}} account 
@@ -10,14 +12,6 @@ Use Case: 1 - Simple User Registration
     
   * a root {{{apidocs/org/helianto/core/Entity.html}entity}}, where 
     authorization rules will apply.
-
-* Scope: 
-
-  See {{{index.html}the Helianto Core Module}}.
-
-* Level: 
-
-  User goal.
 
 * Preconditions: 
 
@@ -41,7 +35,7 @@ Use Case: 1 - Simple User Registration
   
   * knows his/her {{{apidocs/org/helianto/core/Credential.html}credential}}, and 
   
-  * is associated with a {{{apidocs/org/helianto/core/DefaultEntity.html} default entity}}.
+  * is associated with a {{{apidocs/org/helianto/core/DefaultEntity.html}default entity}}.
   
 * Primary Actor: 
 

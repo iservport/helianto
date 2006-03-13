@@ -1,10 +1,9 @@
 package org.helianto.core;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated Mar 13, 2006 12:21:00 PM by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 					
  * <p>
  * Domain object to extend <code>AddressableEntity</code> as an
@@ -14,39 +13,51 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 				
-*/
-public class Organization extends AddressableEntity implements Serializable {
+ */
 
-    /** nullable persistent field */
-    private String businessName;
+public class Organization extends org.helianto.core.AddressableEntity implements java.io.Serializable {
 
-    /** full constructor */
-    public Organization(String alias, org.helianto.core.Supervisor supervisor, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode, String businessName) {
-        super(alias, supervisor, entityAddress1, entityAddress2, entityCityName, entityProvinceName, entityPostalCode);
-        this.businessName = businessName;
-    }
+
+    // Fields    
+
+     private String businessName;
+
+
+    // Constructors
 
     /** default constructor */
     public Organization() {
     }
 
-    /** minimal constructor */
-    public Organization(String alias) {
-      super(alias);
+	/** minimal constructor */
+    public Organization(Supervisor supervisor, String alias) {
+        super(supervisor, alias);        
     }
+    
+    /** full constructor */
+    public Organization(Supervisor supervisor, String alias, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode, String businessName) {
+        super(supervisor, alias, entityAddress1, entityAddress2, entityCityName, entityProvinceName, entityPostalCode);        
+        this.businessName = businessName;
+    }
+    
+
+   
+    // Property accessors
 
     public String getBusinessName() {
         return this.businessName;
     }
-
+    
     public void setBusinessName(String businessName) {
         this.businessName = businessName;
     }
+   
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+
+
+
+
 
 }

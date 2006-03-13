@@ -1,10 +1,9 @@
 package org.helianto.core;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated Mar 13, 2006 12:21:02 PM by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 					
  * <p>
  * Domain object to extend <code>Entity</code> with address
@@ -14,47 +13,49 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 			
-*/
-public class AddressableEntity extends Entity implements Serializable {
+ */
 
-    /** nullable persistent field */
-    private String entityAddress1;
+public class AddressableEntity extends org.helianto.core.Entity implements java.io.Serializable {
 
-    /** nullable persistent field */
-    private String entityAddress2;
 
-    /** nullable persistent field */
-    private String entityCityName;
+    // Fields    
 
-    /** nullable persistent field */
-    private String entityProvinceName;
+     private String entityAddress1;
+     private String entityAddress2;
+     private String entityCityName;
+     private String entityProvinceName;
+     private String entityPostalCode;
 
-    /** nullable persistent field */
-    private String entityPostalCode;
 
+    // Constructors
+
+    /** default constructor */
+    public AddressableEntity() {
+    }
+
+	/** minimal constructor */
+    public AddressableEntity(Supervisor supervisor, String alias) {
+        super(supervisor, alias);        
+    }
+    
     /** full constructor */
-    public AddressableEntity(String alias, org.helianto.core.Supervisor supervisor, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode) {
-        super(alias, supervisor);
+    public AddressableEntity(Supervisor supervisor, String alias, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode) {
+        super(supervisor, alias);        
         this.entityAddress1 = entityAddress1;
         this.entityAddress2 = entityAddress2;
         this.entityCityName = entityCityName;
         this.entityProvinceName = entityProvinceName;
         this.entityPostalCode = entityPostalCode;
     }
+    
 
-    /** default constructor */
-    public AddressableEntity() {
-    }
-
-    /** minimal constructor */
-    public AddressableEntity(String alias) {
-      super(alias);
-    }
+   
+    // Property accessors
 
     public String getEntityAddress1() {
         return this.entityAddress1;
     }
-
+    
     public void setEntityAddress1(String entityAddress1) {
         this.entityAddress1 = entityAddress1;
     }
@@ -62,7 +63,7 @@ public class AddressableEntity extends Entity implements Serializable {
     public String getEntityAddress2() {
         return this.entityAddress2;
     }
-
+    
     public void setEntityAddress2(String entityAddress2) {
         this.entityAddress2 = entityAddress2;
     }
@@ -70,7 +71,7 @@ public class AddressableEntity extends Entity implements Serializable {
     public String getEntityCityName() {
         return this.entityCityName;
     }
-
+    
     public void setEntityCityName(String entityCityName) {
         this.entityCityName = entityCityName;
     }
@@ -78,7 +79,7 @@ public class AddressableEntity extends Entity implements Serializable {
     public String getEntityProvinceName() {
         return this.entityProvinceName;
     }
-
+    
     public void setEntityProvinceName(String entityProvinceName) {
         this.entityProvinceName = entityProvinceName;
     }
@@ -86,15 +87,17 @@ public class AddressableEntity extends Entity implements Serializable {
     public String getEntityPostalCode() {
         return this.entityPostalCode;
     }
-
+    
     public void setEntityPostalCode(String entityPostalCode) {
         this.entityPostalCode = entityPostalCode;
     }
+   
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+
+
+
+
 
 }

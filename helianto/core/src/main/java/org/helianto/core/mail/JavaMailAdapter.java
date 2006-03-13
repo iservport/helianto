@@ -18,7 +18,8 @@ package org.helianto.core.mail;
 import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
 
-import org.helianto.core.Supervisor;
+import org.helianto.core.MailAccessData;
+import org.helianto.core.MailTransportData;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -46,12 +47,21 @@ public interface JavaMailAdapter extends JavaMailSender {
      * To avoid error 553, the service must first connect to
      * a store and then send the desired message.
      */
-    public Store popStoreConnect(Supervisor supervisor);
+    public Store connect(MailAccessData mailAccessData);
     
     /**
-     * Method to send a message using the provided <code>Supervisor</code>  
+     * Method to send a message using the provided <code>MailTransportData</code>  
      * configuration.
      */
-    public void send(Supervisor supervisor, MimeMessage message) throws MailException;
+    public void send(MailTransportData mailTransportData, MimeMessage message) throws MailException;
+
+    /**
+     * Method to send a message using the provided <code>MailTransportData</code>  
+     * configuration.
+     * 
+     * <p>Uses the <code>MailAccessData</code> to connect first as required by 
+     * most mail services.<p>
+     */
+    public void send(MailTransportData mailTransportData, MailAccessData mailAccessData, MimeMessage message) throws MailException;
 
 }

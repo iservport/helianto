@@ -69,6 +69,7 @@ At least one default (root) supervisor must be defined per installation.
 				supervisor name (unique)
 		-->
 		<property name="supervisorName" type="string">
+			<meta attribute="use-in-equals">true</meta>
 			<column name="supervisorName" length="20" not-null="true" 
 				unique="true"/>
 		</property>
@@ -92,33 +93,45 @@ At least one default (root) supervisor must be defined per installation.
 			<column name="localeId" not-null="false"/>
 		</many-to-one>
 		<!-- 
+				mail transport data
+		-->
+		<component name="mailTransportData" 
+			class="org.helianto.core.MailTransportData">
+			<!-- 
 				mail host
-		-->
-		<property name="mailHost" type="string" length="64"/>
-		<!-- 
+			-->
+			<property name="smtpHost" type="string" length="64"/>
+			<!-- 
 				mail user
-		-->
-		<property name="mailUser" type="string" length="32"/>
-		<!-- 
+			-->
+			<property name="smtpUser" type="string" length="32"/>
+			<!-- 
 				mail password
-		-->
-		<property name="mailPassword" type="string" length="20"/>
+			-->
+			<property name="smtpPassword" type="string" length="20"/>
+		</component>
 		<!-- 
+				mail access data
+		-->
+		<component name="mailAccessData" 
+			class="org.helianto.core.MailAccessData">
+			<!-- 
 				store type
-		-->
-		<property name="storeType" type="string" length="12"/>
-		<!-- 
+			-->
+			<property name="storeType" type="string" length="12"/>
+			<!-- 
 				store host
-		-->
-		<property name="storeHost" type="string" length="64"/>
-		<!-- 
+			-->
+			<property name="host" type="string" length="64"/>
+			<!-- 
 				store user
-		-->
-		<property name="storeUser" type="string" length="32"/>
-		<!-- 
+			-->
+			<property name="user" type="string" length="32"/>
+			<!-- 
 				store password
-		-->
-		<property name="storePassword" type="string" length="20"/>
+			-->
+			<property name="password" type="string" length="20"/>
+		</component>
 		<!-- 
 				subclass to provide a default entity
 		-->

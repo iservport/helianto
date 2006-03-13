@@ -1,0 +1,57 @@
+Use Case: 4 - Simple Authentication and Authorization
+
+  Level <USER GOAL>
+
+* Goal in Context: 
+
+  Grant an {{{apidocs/org/helianto/core/User.html}user}} the authorized access to 
+  the {{{apidocs/org/helianto/core/DefaultEntity.html}default entity}}.
+  
+* Preconditions: 
+
+  A {{{apidocs/org/helianto/core/User.html}user}} must have been created as in 
+  the {{{simpleuser.html}simple user}} use case.
+  
+* Success Guarantee: 
+
+  * the {{{apidocs/org/helianto/core/User.html}user}} can access any url or method
+    defined by his/her {{{apidocs/org/helianto/core/Role.html}roles}}.
+  
+* Primary Actor: 
+
+  A registered USER.
+
+* <<MAIN SUCCESS SCENARIO:>>
+
+  * (1) the USER authenticates with valid {{{apidocs/org/helianto/core/Credential.html}credential}} data.
+  
+  * (2) the USER can choose among registered {{{apidocs/org/helianto/core/Service.html}services}}.
+
+
+** <<EXTENSIONS>>
+
+  * (1.1) the USER is not registered: will be informed how to proceed with the 
+    {{{simpleuser.html}simple user}} use case.
+  
+  * (1.2) the principal and password do not match: USER will try again or quit.
+  
+  * (1.3) the USER forgot his/her password: see the {{{clearpwd.html}clear password}} use case.
+  
+  * pending
+
+
+* <<SUB-VARIATIONS>>
+
+  * none
+
+* <RELATED INFORMATION>
+
+  * Priority: see JIRA
+
+  * Frequency: high.
+
+  * Channel to primary actor: interactive.
+
+* <OPEN ISSUES>
+
+  * None.

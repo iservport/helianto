@@ -1,5 +1,7 @@
 Use Case: 2 - Entity User Registration
 
+  Level <USER GOAL>
+
 * Goal in Context: 
 
   * Create authentication ({{{apidocs/org/helianto/core/Credential.html}credential}}) 
@@ -11,14 +13,6 @@ Use Case: 2 - Entity User Registration
   * create an {{{apidocs/org/helianto/core/User.html}user}} account 
     and attach to the previous instances:
   
-* Scope: 
-
-  See {{{index.html}the Helianto Core Module}}.
-
-* Level: 
-
-  User goal.
-
 * Preconditions: 
 
   This use case presumes an enterprise applications defining multiple entities as division boudaries or 
@@ -29,8 +23,8 @@ Use Case: 2 - Entity User Registration
   in two or more unless any root domain object requires isolation. Root domain object examples are equipment,
   employees, parts, processes, etc.>
   
-*------------------------------------------------------------------+
-|At least one {{{apidocs/org/helianto/core/Supervisor.html}supervisor}} must have been
+*----------------------------------------------------------------------------------------------------------------+
+|At least one {{{apidocs/org/helianto/core/Supervisor.html}supervisor}} must have been \
 |previously created, tipically during installation.
 *------------------------------------------------------------------+
 
@@ -40,7 +34,7 @@ Use Case: 2 - Entity User Registration
   
   * knows his/her {{{apidocs/org/helianto/core/Credential.html}credential}}, and 
   
-  * is associated with a {{{apidocs/org/helianto/core/DefaultEntity.html} chosen entity}}.
+  * is associated with a {{{apidocs/org/helianto/core/DefaultEntity.html}chosen entity}}.
   
 * Primary Actor: 
 
