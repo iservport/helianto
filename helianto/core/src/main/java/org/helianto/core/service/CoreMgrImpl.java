@@ -43,48 +43,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
+public class CoreMgrImpl extends CoreFactoryImpl implements CoreMgr {
     
-    public PersonalData personalDataFactory() {
-        PersonalData pd = new PersonalData();
-        return pd;
-    }
-
-    public Credential credentialFactory() {
-        Credential credential = new Credential();
-        credential.setCreated(new Date());
-        credential.setLastModified(credential.getCreated());
-        credential.setExpired(credential.getCreated());
-        credential.setCredentialType(CredentialType.PERSONAL_EMAIL.getValue());
-        credential.setCredentialState(CredentialState.IDLE.getValue());
-        PersonalData pd = personalDataFactory();
-        credential.setPersonalData(pd);
-        return credential;
-    }
-    
-    public Entity entityFactory(Supervisor supervisor, String uniqueAlias) {
-        Entity entity = new Entity();
-        entity.setSupervisor(supervisor);
-        entity.setAlias(uniqueAlias);
-        return entity;
-    }
-    
-    public User userFactory(Entity entity, Credential credential) {
-        User user = new User();
-        user.setEntity(entity);
-        user.setCredential(credential);
-        user.setUserType(UserType.INTERNAL.getValue());
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        return user;
-    }
-
-    public User userFactory(User parent, Credential credential) {
-        User user = userFactory(parent.getEntity(), credential);
-        user.setParent(parent);
-        return user;
-    }
-
     public void persistCredential(Credential credential) {
         if (credential.getPassword()==null) {
             credential.setPassword(generatePassword(8));
@@ -228,17 +188,6 @@ public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
         getJavaMailAdapter().send(supervisor.getMailTransportData(), supervisor.getMailAccessData(), message);
     }
     
-    public String generatePassword(int size) {
-        Random generator = new Random();
-        String source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        String password = ""; 
-        for (int i=0; i<size; i++)  {
-            int index = generator.nextInt(source.length());
-            password += source.substring(index, index+1);
-        }
-        return password;
-    }
-        
     static final String CREDENTIAL_QRY_BY_PRINCIPAL = 
         "from Credential cred " +
         "where cred.principal = ?";

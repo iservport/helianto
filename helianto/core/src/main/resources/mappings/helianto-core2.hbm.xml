@@ -166,7 +166,7 @@ organization.
 					<![CDATA[
 <p>
 Domain object to extend <code>AddressableEntity</code> as an
-individual
+individual.
 </p>
 
 @author Mauricio Fernandes de Castro
@@ -174,9 +174,12 @@ individual
 				]]>
 				</meta>
 				<!-- 
-				credential name
+				credential
 				-->
-				<property name="credentialName" type="string" length="64"/>
+				<many-to-one name="credential" 
+					class="org.helianto.core.Credential" cascade="merge">
+					<column name="credentialId" not-null="true"/>
+				</many-to-one>
 			</subclass>
 		</subclass>
 	</class>

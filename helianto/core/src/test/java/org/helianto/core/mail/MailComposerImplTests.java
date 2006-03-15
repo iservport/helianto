@@ -17,7 +17,7 @@ package org.helianto.core.mail;
 
 import org.helianto.core.Credential;
 import org.helianto.core.junit.AbstractIntegrationTest;
-import org.helianto.core.service.CoreMgr;
+import org.helianto.core.service.CoreMgrImpl;
 
 public class MailComposerImplTests extends AbstractIntegrationTest {
 
@@ -27,9 +27,9 @@ public class MailComposerImplTests extends AbstractIntegrationTest {
         this.mailComposer = mailComposer;
     }
 
-    protected CoreMgr coreMgr;
+    protected CoreMgrImpl coreMgr;
 
-    public void setCoreMgr(CoreMgr coreMgr) {
+    public void setCoreMgr(CoreMgrImpl coreMgr) {
         this.coreMgr = coreMgr;
     }
 

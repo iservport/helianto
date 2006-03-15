@@ -21,9 +21,6 @@ import javax.mail.MessagingException;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
-import org.helianto.core.MailAccessData;
-import org.helianto.core.MailTransportData;
-import org.helianto.core.PersonalData;
 import org.helianto.core.Supervisor;
 import org.helianto.core.User;
 
@@ -35,31 +32,6 @@ import org.helianto.core.User;
  */
 public interface CoreMgr extends GenericService {
 
-    /**
-     * The <code>PersonalData</code> factory method.
-     */
-    public PersonalData personalDataFactory();
-    
-    /**
-     * The <code>Credential</code> factory method.
-     */
-    public Credential credentialFactory();
-    
-    /**
-     * The <code>Entity</code> factory method.
-     */
-    public Entity entityFactory(Supervisor supervisor, String uniqueAlias);
-    
-    /**
-     * The <code>User</code> factory method.
-     */
-    public User userFactory(Entity entity, Credential credential);
-    
-    /**
-     * The <code>User</code> factory method.
-     */
-    public User userFactory(User parent, Credential credential);
-    
     /**
      * Persist a <code>Credential</code>.
      */
