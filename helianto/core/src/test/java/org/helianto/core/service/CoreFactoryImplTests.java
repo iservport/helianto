@@ -22,14 +22,20 @@ import org.helianto.core.Appellation;
 import org.helianto.core.Credential;
 import org.helianto.core.CredentialState;
 import org.helianto.core.CredentialType;
+import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Gender;
+import org.helianto.core.Individual;
 import org.helianto.core.LocaleType;
 import org.helianto.core.MailAccessData;
 import org.helianto.core.MailTransportData;
 import org.helianto.core.Notification;
+import org.helianto.core.Organization;
 import org.helianto.core.PersonalData;
+import org.helianto.core.Role;
 import org.helianto.core.Supervisor;
+import org.helianto.core.User;
+import org.helianto.core.UserType;
 
 import junit.framework.TestCase;
 
@@ -211,60 +217,78 @@ public class CoreFactoryImplTests extends TestCase {
         assertEquals("", entity.getEntityProvinceName());
     }
 
-    /*
-     * Test method for 'org.helianto.core.service.CoreFactoryImpl.organizationFactory(Supervisor, String)'
-     */
     public void testOrganizationFactorySupervisorString() {
-        // TODO Auto-generated method stub
-
+        Supervisor supervisor = 
+            factory.supervisorFactory();
+        Organization organization = 
+            factory.organizationFactory(supervisor, "UNIQUE");
+        assertEquals("UNIQUE", organization.getAlias());
+        assertEquals("UNIQUE", organization.getBusinessName());
     }
 
-    /*
-     * Test method for 'org.helianto.core.service.CoreFactoryImpl.organizationFactory(Supervisor, String, String)'
-     */
     public void testOrganizationFactorySupervisorStringString() {
-        // TODO Auto-generated method stub
-
+        Supervisor supervisor = 
+            factory.supervisorFactory();
+        Organization organization = 
+            factory.organizationFactory(supervisor, "UNIQUE", "BSN_NAME");
+        assertEquals("UNIQUE", organization.getAlias());
+        assertEquals("BSN_NAME", organization.getBusinessName());
     }
 
-    /*
-     * Test method for 'org.helianto.core.service.CoreFactoryImpl.individualFactory(Supervisor, Credential)'
-     */
     public void testIndividualFactory() {
-        // TODO Auto-generated method stub
-
+        Credential credential = 
+            factory.credentialFactory("UNIQUE");
+        Supervisor supervisor = 
+            factory.supervisorFactory();
+        Individual individual = 
+            factory.individualFactory(supervisor, credential);
+        assertEquals("UNIQUE", individual.getAlias());
+        assertSame(credential, individual.getCredential());
     }
 
-    /*
-     * Test method for 'org.helianto.core.service.CoreFactoryImpl.defaultEntityFactory()'
-     */
     public void testDefaultEntityFactory() {
-        // TODO Auto-generated method stub
-
+        DefaultEntity defaultEntity = 
+            factory.defaultEntityFactory();
+        assertEquals("", defaultEntity.getSupervisorName());
     }
 
-    /*
-     * Test method for 'org.helianto.core.service.CoreFactoryImpl.defaultEntityFactory(String)'
-     */
     public void testDefaultEntityFactoryString() {
-        // TODO Auto-generated method stub
-
+        DefaultEntity defaultEntity = 
+            factory.defaultEntityFactory("UNIQUE");
+        assertEquals("UNIQUE", defaultEntity.getSupervisorName());
     }
 
-    /*
-     * Test method for 'org.helianto.core.service.CoreFactoryImpl.defaultEntityFactory(String, int)'
-     */
     public void testDefaultEntityFactoryStringInt() {
-        // TODO Auto-generated method stub
-
+        DefaultEntity defaultEntity = 
+            factory.defaultEntityFactory("UNIQUE", 0);
+        assertEquals("UNIQUE", defaultEntity.getSupervisorName());
+        assertEquals(0, defaultEntity.getPriority());
+        java.util.Locale defaultLocale = java.util.Locale.getDefault();
+        assertEquals(defaultLocale.getLanguage(),
+                defaultEntity.getLocale().getLanguage());
+        assertEquals(defaultLocale.getCountry(),
+                defaultEntity.getLocale().getCountry());
+        assertEquals(LocaleType.COUNTRY.getValue(),
+                defaultEntity.getLocale().getLocaleType());
+        assertEquals("UNIQUE", defaultEntity.getDefaultEntity().getAlias());
     }
 
-    /*
-     * Test method for 'org.helianto.core.service.CoreFactoryImpl.userFactory(Entity, Credential)'
-     */
     public void testUserFactoryEntityCredential() {
-        // TODO Auto-generated method stub
-
+        Supervisor supervisor = 
+            factory.supervisorFactory();
+        Credential credential = 
+            factory.credentialFactory("UNIQUE");
+        Entity entity = 
+            factory.entityFactory(supervisor, "UNIQUE_ENTITY");
+        User user = factory.userFactory(entity, credential);
+        assertSame(entity, user.getEntity());
+        assertSame(credential, user.getCredential());
+        assertNull(user.getParent());
+        assertTrue(user.isAccountNonExpired());
+        assertTrue(user.isAccountNonLocked());
+        assertEquals(UserType.INTERNAL.getValue(), 
+                user.getUserType());
+        assertEquals(0, user.getRoles().size());
     }
 
     /*

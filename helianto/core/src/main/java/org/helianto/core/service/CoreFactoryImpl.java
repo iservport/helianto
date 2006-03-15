@@ -162,6 +162,7 @@ public class CoreFactoryImpl extends AbstractGenericService {
         Organization organization = new Organization();
         organization.setSupervisor(supervisor);
         organization.setAlias(uniqueAlias);
+        organization.setBusinessName(businessName);
         return organization;
     }
     
