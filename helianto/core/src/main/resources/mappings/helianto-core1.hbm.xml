@@ -89,7 +89,7 @@ At least one default (root) supervisor must be defined per installation.
 				locale
 		-->
 		<many-to-one name="locale" 
-			class="org.helianto.core.Locale">
+			class="org.helianto.core.Locale" cascade="all">
 			<column name="localeId" not-null="false"/>
 		</many-to-one>
 		<!-- 
@@ -156,7 +156,7 @@ one (or few) entities are required.
 					default entity
 			-->
 			<many-to-one name="defaultEntity" 
-				class="org.helianto.core.Entity">
+				class="org.helianto.core.Entity" cascade="merge">
 				<column name="defaultEntity" not-null="false"/>
 			</many-to-one>
 			<!-- 

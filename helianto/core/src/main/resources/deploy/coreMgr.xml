@@ -16,21 +16,22 @@
  limitations under the License.
 		-->
 <beans>
+
 	<!--
-			Core service bean	
+			Simple core service bean	
 	-->
-	<bean id="coreMgr" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<bean id="simpleCoreMgr" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="target">
-			<bean id="coreTarget"
-				class="org.helianto.core.service.CoreMgrImpl">
+			<bean id="simpleCoreTarget"
+				class="org.helianto.core.service.SimpleCoreMgrImpl">
 				<property name="genericDao" ref="genericDao"/>
 				<property name="javaMailAdapter" ref="javaMailAdapter"/>
 			</bean>
 		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRED</prop>
+				<prop key="persist*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
 	</bean>

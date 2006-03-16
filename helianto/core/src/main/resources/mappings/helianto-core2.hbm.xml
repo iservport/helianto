@@ -177,8 +177,8 @@ individual.
 				credential
 				-->
 				<many-to-one name="credential" 
-					class="org.helianto.core.Credential" cascade="merge">
-					<column name="credentialId" not-null="true"/>
+					class="org.helianto.core.Credential" cascade="all">
+					<column name="credentialId" not-null="false"/>
 				</many-to-one>
 			</subclass>
 		</subclass>

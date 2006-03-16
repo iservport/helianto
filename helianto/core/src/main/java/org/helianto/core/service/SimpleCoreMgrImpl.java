@@ -24,9 +24,8 @@ import org.helianto.core.User;
 public class SimpleCoreMgrImpl extends CoreMgrImpl implements SimpleCoreMgr {
 
     public DefaultEntity createDefaultEntity(String alias) {
-        DefaultEntity defEnt = new DefaultEntity();
-        Entity entity = new Entity();
-        return defEnt;
+        DefaultEntity defaultEntity = defaultEntityFactory(alias);
+        return defaultEntity;
     }
 
     public DefaultEntity createDefaultEntity(String alias, int priority) {
@@ -62,6 +61,10 @@ public class SimpleCoreMgrImpl extends CoreMgrImpl implements SimpleCoreMgr {
     public void validatePassowrd(Credential cred, String verification) {
         // TODO Auto-generated method stub
         
+    }
+    
+    public void persistDefaultEntity(DefaultEntity defaultEntity) {
+    	getGenericDao().merge(defaultEntity);
     }
 
 }

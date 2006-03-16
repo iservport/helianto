@@ -18,20 +18,15 @@ package org.helianto.core.service;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.helianto.core.Credential;
-import org.helianto.core.CredentialState;
 import org.helianto.core.CredentialType;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
-import org.helianto.core.PersonalData;
 import org.helianto.core.Supervisor;
 import org.helianto.core.User;
-import org.helianto.core.UserType;
 import org.helianto.core.mail.MailComposer;
 
 import org.springframework.mail.javamail.MimeMessageHelper;

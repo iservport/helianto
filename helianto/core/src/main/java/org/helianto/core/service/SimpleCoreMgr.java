@@ -81,4 +81,9 @@ public interface SimpleCoreMgr {
      */
     public void validatePassowrd(Credential cred, String verification);
     
+    /**
+     * <p>Persist the DefaultEntity.</p>
+     */
+    public void persistDefaultEntity(DefaultEntity defaultEntity);
+    
 }
