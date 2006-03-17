@@ -246,7 +246,7 @@
 									<taskdef name="hibernatetool"
 									classname="org.hibernate.tool.ant.HibernateToolTask"
 									classpathref="maven.runtime.classpath"/>
-									<hibernatetool destdir="src/main/java/" >
+									<hibernatetool destdir="src/main/generated/" >
 										<configuration propertyfile="src/main/resources/hibernate.properties">
 											<fileset dir="src/main/resources/mappings/">
 												<include name="**/*.hbm.xml"/>

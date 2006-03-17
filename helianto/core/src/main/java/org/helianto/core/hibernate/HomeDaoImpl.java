@@ -13,27 +13,27 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.hibernate;
 
-/**
- * An enumeration to supply char types for 
- * {@link org.helianto.core.Locale#localeType}.
- * 
- * @author Mauricio Fernandes de Castro
- * @version $Id$
- */
-public enum LocaleType {
-    
-    COUNTRY('C'),
-    LANGUAGE('L');
-    
-    private char value;
-    
-    private LocaleType(char value) {
-        this.value = value;
+import java.util.List;
+
+import org.helianto.core.Home;
+
+public class HomeDaoImpl extends GenericDaoImpl implements HomeDao {
+
+    public void persistHome(Home home) {
+        merge(home);
     }
-    public char getValue() {
-        return this.value;
+
+    public void removeHome(Home home) {
+        remove(home);
     }
+
+    public Home findHomeByHomeName(String homeName) {
+        return (Home) findUnique(HOME_QRY, homeName);
+    }
+    
+    static String HOME_QRY = 
+        "from Home home where home.homeName= ?";
 
 }

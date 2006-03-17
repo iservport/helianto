@@ -13,24 +13,16 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.core.hibernate;
 
-import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.core.Entity;
 
-public class AbstractCoreTest extends AbstractIntegrationTest {
-
-    protected CoreMgr coreMgr;
-
-    public void setCoreMgr(CoreMgr coreMgr) {
-        this.coreMgr = coreMgr;
-    }
-
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { "deploy/dataSource.xml", 
-                "deploy/sessionFactory.xml",
-                "deploy/support.xml",
-                "deploy/coreMgr.xml"};
-    }
+public interface EntityDao {
     
+    public void persistEntity(Entity entity);
+    
+    public void removeEntity(Entity entity);
+    
+    public Entity findEntityByHomeAndAlias(String homeName, String alias);
+
 }

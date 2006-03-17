@@ -15,6 +15,7 @@
 
 package org.helianto.core.service;
 
+
 import java.util.Date;
 
 import org.helianto.core.AddressableEntity;
@@ -26,14 +27,12 @@ import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Gender;
 import org.helianto.core.Individual;
-import org.helianto.core.LocaleType;
 import org.helianto.core.MailAccessData;
 import org.helianto.core.MailTransportData;
 import org.helianto.core.Notification;
 import org.helianto.core.Organization;
 import org.helianto.core.PersonalData;
-import org.helianto.core.Role;
-import org.helianto.core.Supervisor;
+import org.helianto.core.Home;
 import org.helianto.core.User;
 import org.helianto.core.UserType;
 
@@ -81,57 +80,6 @@ public class CoreFactoryImplTests extends TestCase {
         assertEquals(0, credential.getUsers().size());
     }
 
-    public void testLocaleFactory() {
-        java.util.Locale defaultLocale = java.util.Locale.getDefault();
-        org.helianto.core.Locale locale = 
-            factory.localeFactory();
-        assertEquals(defaultLocale.getLanguage(),
-                locale.getLanguage());
-        assertEquals(defaultLocale.getCountry(),
-                locale.getCountry());
-        assertEquals(LocaleType.COUNTRY.getValue(),
-                locale.getLocaleType());
-    }
-
-    public void testLocaleFactoryLocale() {
-        java.util.Locale usLocale = java.util.Locale.US;
-        org.helianto.core.Locale locale = 
-            factory.localeFactory(usLocale);
-        assertEquals(usLocale.getLanguage(),
-                locale.getLanguage());
-        assertEquals(usLocale.getCountry(),
-                locale.getCountry());
-        assertEquals(LocaleType.COUNTRY.getValue(),
-                locale.getLocaleType());
-        java.util.Locale frLocale = java.util.Locale.FRANCE;
-        locale = factory.localeFactory(frLocale);
-        assertEquals(frLocale.getLanguage(),
-                locale.getLanguage());
-        assertEquals(frLocale.getCountry(),
-                locale.getCountry());
-        assertEquals(LocaleType.COUNTRY.getValue(),
-                locale.getLocaleType());
-    }
-
-    public void testLocaleFactoryString() {
-        org.helianto.core.Locale locale = 
-            factory.localeFactory("pt");
-        assertEquals("pt", locale.getLanguage());
-        assertEquals("", locale.getCountry());
-        assertEquals(LocaleType.LANGUAGE.getValue(),
-                locale.getLocaleType());
-    }
-
-    public void testLocaleFactoryStringString() {
-        org.helianto.core.Locale locale = 
-            factory.localeFactory("pt", "BR");
-        assertEquals("pt", locale.getLanguage());
-        assertEquals("BR", locale.getCountry());
-        assertEquals(LocaleType.COUNTRY.getValue(),
-                locale.getLocaleType());
-        assertNull(locale.getParent());
-    }
-
     public void testMailTransportDataFactory() {
         MailTransportData mailTransportData = 
             factory.mailTransportDataFactory("host", "user", "password");
@@ -148,67 +96,47 @@ public class CoreFactoryImplTests extends TestCase {
         assertEquals("password", mailAccessData.getPassword());
     }
 
-    public void testSupervisorFactory() {
-        Supervisor supervisor = 
-            factory.supervisorFactory();
-        assertEquals("", supervisor.getSupervisorName());
-        java.util.Locale defaultLocale = java.util.Locale.getDefault();
-        assertEquals(defaultLocale.getLanguage(),
-                supervisor.getLocale().getLanguage());
-        assertEquals(defaultLocale.getCountry(),
-                supervisor.getLocale().getCountry());
-        assertEquals(LocaleType.COUNTRY.getValue(),
-                supervisor.getLocale().getLocaleType());
+    public void testHomeFactory() {
+        Home home = 
+            factory.homeFactory();
+        assertEquals("", home.getHomeName());
     }
 
-    public void testSupervisorFactoryLocale() {
-        org.helianto.core.Locale locale = 
-            factory.localeFactory("pt", "BR");
-        Supervisor supervisor = 
-            factory.supervisorFactory(locale);
-        assertEquals("pt",
-                supervisor.getLocale().getLanguage());
-        assertEquals("BR",
-                supervisor.getLocale().getCountry());
-        assertEquals(LocaleType.COUNTRY.getValue(),
-                supervisor.getLocale().getLocaleType());
+    public void testHomeFactoryString() {
+        Home home = 
+            factory.homeFactory("UNIQUE");
+        assertEquals("UNIQUE", home.getHomeName());
     }
 
-    public void testSupervisorFactoryLocaleString() {
-        org.helianto.core.Locale locale = 
-            factory.localeFactory("pt", "BR");
-        Supervisor supervisor = 
-            factory.supervisorFactory(locale, "UNIQUE");
-        assertEquals("pt",
-                supervisor.getLocale().getLanguage());
-        assertEquals("BR",
-                supervisor.getLocale().getCountry());
-        assertEquals(LocaleType.COUNTRY.getValue(),
-                supervisor.getLocale().getLocaleType());
-        assertEquals("UNIQUE", supervisor.getSupervisorName());
-        assertTrue(supervisor.getAdded().compareTo(new Date()) < 1000);
-        assertEquals("", supervisor.getHttpAddress());
-        assertEquals("", supervisor.getSupervisorDesc());
-        assertNull(supervisor.getParent());
-        assertNull(supervisor.getMailAccessData());
-        assertNull(supervisor.getMailTransportData());
+    public void testHomeFactoryStringStringString() {
+        Home home = 
+            factory.homeFactory("UNIQUE", "LANGUAGE", "COUNTRY");
+        assertEquals("LANGUAGE", home.getLanguage());
+        assertEquals("COUNTRY", home.getCountry());
+        assertEquals("UNIQUE", home.getHomeName());
+        assertTrue(home.getAdded().compareTo(new Date()) < 1000);
+        assertEquals("", home.getHttpAddress());
+        assertEquals("", home.getHomeDesc());
+        assertNull(home.getParent());
+        assertNull(home.getMailAccessData());
+        assertNull(home.getMailTransportData());
     }
 
     public void testEntityFactory() {
-        Supervisor supervisor = 
-            factory.supervisorFactory();
+        Home home = 
+            factory.homeFactory();
         Entity entity = 
-            factory.entityFactory(supervisor, "UNIQUE");
-        assertSame(supervisor, entity.getSupervisor());
+            factory.entityFactory(home, "UNIQUE");
+        assertSame(home, entity.getHome());
         assertEquals("UNIQUE", entity.getAlias());
     }
 
     public void testAddressableEntityFactory() {
-        Supervisor supervisor = 
-            factory.supervisorFactory();
+        Home home = 
+            factory.homeFactory();
         AddressableEntity entity = 
-            factory.addressableEntityFactory(supervisor, "UNIQUE");
-        assertSame(supervisor, entity.getSupervisor());
+            factory.addressableEntityFactory(home, "UNIQUE");
+        assertSame(home, entity.getHome());
         assertEquals("UNIQUE", entity.getAlias());
         assertEquals("", entity.getEntityAddress1());
         assertEquals("", entity.getEntityAddress2());
@@ -218,19 +146,19 @@ public class CoreFactoryImplTests extends TestCase {
     }
 
     public void testOrganizationFactorySupervisorString() {
-        Supervisor supervisor = 
-            factory.supervisorFactory();
+        Home home = 
+            factory.homeFactory();
         Organization organization = 
-            factory.organizationFactory(supervisor, "UNIQUE");
+            factory.organizationFactory(home, "UNIQUE");
         assertEquals("UNIQUE", organization.getAlias());
         assertEquals("UNIQUE", organization.getBusinessName());
     }
 
     public void testOrganizationFactorySupervisorStringString() {
-        Supervisor supervisor = 
-            factory.supervisorFactory();
+        Home home = 
+            factory.homeFactory();
         Organization organization = 
-            factory.organizationFactory(supervisor, "UNIQUE", "BSN_NAME");
+            factory.organizationFactory(home, "UNIQUE", "BSN_NAME");
         assertEquals("UNIQUE", organization.getAlias());
         assertEquals("BSN_NAME", organization.getBusinessName());
     }
@@ -238,48 +166,36 @@ public class CoreFactoryImplTests extends TestCase {
     public void testIndividualFactory() {
         Credential credential = 
             factory.credentialFactory("UNIQUE");
-        Supervisor supervisor = 
-            factory.supervisorFactory();
+        Home home = 
+            factory.homeFactory();
         Individual individual = 
-            factory.individualFactory(supervisor, credential);
+            factory.individualFactory(home, credential);
         assertEquals("UNIQUE", individual.getAlias());
         assertSame(credential, individual.getCredential());
     }
-
+    
     public void testDefaultEntityFactory() {
+        Home home = 
+            factory.homeFactory();
+        Entity entity = 
+            factory.entityFactory(home, "UNIQUE");
         DefaultEntity defaultEntity = 
-            factory.defaultEntityFactory();
-        assertEquals("", defaultEntity.getSupervisorName());
-    }
-
-    public void testDefaultEntityFactoryString() {
-        DefaultEntity defaultEntity = 
-            factory.defaultEntityFactory("UNIQUE");
-        assertEquals("UNIQUE", defaultEntity.getSupervisorName());
-    }
-
-    public void testDefaultEntityFactoryStringInt() {
-        DefaultEntity defaultEntity = 
-            factory.defaultEntityFactory("UNIQUE", 0);
-        assertEquals("UNIQUE", defaultEntity.getSupervisorName());
-        assertEquals(0, defaultEntity.getPriority());
-        java.util.Locale defaultLocale = java.util.Locale.getDefault();
-        assertEquals(defaultLocale.getLanguage(),
-                defaultEntity.getLocale().getLanguage());
-        assertEquals(defaultLocale.getCountry(),
-                defaultEntity.getLocale().getCountry());
-        assertEquals(LocaleType.COUNTRY.getValue(),
-                defaultEntity.getLocale().getLocaleType());
-        assertEquals("UNIQUE", defaultEntity.getDefaultEntity().getAlias());
+            factory.defaultEntityFactory(entity);
+        assertSame(entity, defaultEntity.getEntity());
+        Organization organization = 
+            factory.organizationFactory(home, "UNIQUE", "BSN_NAME");
+        DefaultEntity defaultOrganization = 
+            factory.defaultEntityFactory((Entity) organization);
+        assertSame(organization, defaultOrganization.getEntity());
     }
 
     public void testUserFactoryEntityCredential() {
-        Supervisor supervisor = 
-            factory.supervisorFactory();
+        Home home = 
+            factory.homeFactory();
         Credential credential = 
             factory.credentialFactory("UNIQUE");
         Entity entity = 
-            factory.entityFactory(supervisor, "UNIQUE_ENTITY");
+            factory.entityFactory(home, "UNIQUE_ENTITY");
         User user = factory.userFactory(entity, credential);
         assertSame(entity, user.getEntity());
         assertSame(credential, user.getCredential());

@@ -15,6 +15,7 @@
 
 package org.helianto.core.service;
 
+
 import java.util.Date;
 import java.util.Random;
 
@@ -26,14 +27,13 @@ import org.helianto.core.CredentialType;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Gender;
+import org.helianto.core.Home;
 import org.helianto.core.Individual;
-import org.helianto.core.LocaleType;
 import org.helianto.core.MailAccessData;
 import org.helianto.core.MailTransportData;
 import org.helianto.core.Notification;
 import org.helianto.core.Organization;
 import org.helianto.core.PersonalData;
-import org.helianto.core.Supervisor;
 import org.helianto.core.User;
 import org.helianto.core.UserType;
 
@@ -73,34 +73,6 @@ public class CoreFactoryImpl extends AbstractGenericService {
         return credential;
     }
     
-    public org.helianto.core.Locale localeFactory() {
-        return localeFactory(java.util.Locale.getDefault());
-    }
-    
-    public org.helianto.core.Locale localeFactory(java.util.Locale javaLocale) {
-        org.helianto.core.Locale locale = new org.helianto.core.Locale();
-        locale.setLanguage(javaLocale.getLanguage());
-        locale.setCountry(javaLocale.getCountry());
-        locale.setLocaleType(LocaleType.COUNTRY.getValue());
-        return locale;
-    }
-    
-    public org.helianto.core.Locale localeFactory(String language) {
-        return localeFactory(language, "");
-    }
-    
-    public org.helianto.core.Locale localeFactory(String language, String country) {
-        org.helianto.core.Locale locale = new org.helianto.core.Locale();
-        locale.setLanguage(language);
-        locale.setCountry(country);
-        if (country.compareTo("")==0) {
-            locale.setLocaleType(LocaleType.LANGUAGE.getValue());
-        } else {
-            locale.setLocaleType(LocaleType.COUNTRY.getValue());
-        }
-        return locale;
-    }
-    
     public MailTransportData mailTransportDataFactory(String host, String user, String password) {
         MailTransportData mailTransportData = new MailTransportData();
         mailTransportData.setSmtpHost(host);
@@ -117,34 +89,36 @@ public class CoreFactoryImpl extends AbstractGenericService {
         return mailAccessData;
     }
     
-    public Supervisor supervisorFactory() {
-        return supervisorFactory(localeFactory(), "");
+    public Home homeFactory() {
+        return homeFactory("");
     }
     
-    public Supervisor supervisorFactory(org.helianto.core.Locale locale) {
-        return supervisorFactory(locale, "");
+    public Home homeFactory(String homeName) {
+        java.util.Locale javaLocale = java.util.Locale.getDefault();
+        return homeFactory(homeName, javaLocale.getLanguage(), javaLocale.getCountry());
     }
     
-    public Supervisor supervisorFactory(org.helianto.core.Locale locale, String supervisorName) {
-        Supervisor supervisor = new Supervisor();
-        supervisor.setHttpAddress("");
-        supervisor.setSupervisorName(supervisorName);
-        supervisor.setSupervisorDesc("");
-        supervisor.setLocale(locale);
-        supervisor.setAdded(new Date());
-        return supervisor;
+    public Home homeFactory(String homeName, String language, String country) {
+        Home home = new Home();
+        home.setHttpAddress("");
+        home.setHomeName(homeName);
+        home.setHomeDesc("");
+        home.setLanguage(language);
+        home.setCountry(country);
+        home.setAdded(new Date());
+        return home;
     }
     
-    public Entity entityFactory(Supervisor supervisor, String uniqueAlias) {
+    public Entity entityFactory(Home home, String uniqueAlias) {
         Entity entity = new Entity();
-        entity.setSupervisor(supervisor);
+        entity.setHome(home);
         entity.setAlias(uniqueAlias);
         return entity;
     }
     
-    public AddressableEntity addressableEntityFactory(Supervisor supervisor, String uniqueAlias) {
+    public AddressableEntity addressableEntityFactory(Home home, String uniqueAlias) {
         AddressableEntity entity = new AddressableEntity();
-        entity.setSupervisor(supervisor);
+        entity.setHome(home);
         entity.setAlias(uniqueAlias);
         entity.setEntityAddress1("");
         entity.setEntityAddress2("");
@@ -154,41 +128,34 @@ public class CoreFactoryImpl extends AbstractGenericService {
         return entity;
     }
     
-    public Organization organizationFactory(Supervisor supervisor, String uniqueAlias) {
-        return organizationFactory(supervisor, uniqueAlias, uniqueAlias);
+    public Organization organizationFactory(Home home, String uniqueAlias) {
+        return organizationFactory(home, uniqueAlias, uniqueAlias);
     }
     
-    public Organization organizationFactory(Supervisor supervisor, String uniqueAlias, String businessName) {
+    public Organization organizationFactory(Home home, String uniqueAlias, String businessName) {
         Organization organization = new Organization();
-        organization.setSupervisor(supervisor);
+        organization.setHome(home);
         organization.setAlias(uniqueAlias);
         organization.setBusinessName(businessName);
         return organization;
     }
     
-    public Individual individualFactory(Supervisor supervisor, Credential credential) {
+    public Individual individualFactory(Home home, Credential credential) {
         Individual individual = new Individual();
-        individual.setSupervisor(supervisor);
+        individual.setHome(home);
         individual.setAlias(credential.getPrincipal());
         individual.setCredential(credential);
         return individual;
     }
     
-    public DefaultEntity defaultEntityFactory() {
-        return defaultEntityFactory("", 0);
+    public DefaultEntity defaultEntityFactory(Entity entity) {
+        return defaultEntityFactory(entity, 0);
     }
     
-    public DefaultEntity defaultEntityFactory(String entityAlias) {
-        return defaultEntityFactory(entityAlias, 0);
-    }
-    
-    public DefaultEntity defaultEntityFactory(String entityAlias, int priority) {
+    public DefaultEntity defaultEntityFactory(Entity entity, int priority) {
         DefaultEntity defaultEntity = new DefaultEntity();
-        defaultEntity.setSupervisorName(entityAlias);
-        defaultEntity.setLocale(localeFactory());
-        Entity entity = entityFactory((Supervisor) defaultEntity, entityAlias);
-        defaultEntity.setDefaultEntity(entity);
-        defaultEntity.setAdded(new Date());
+        defaultEntity.setEntity(entity);
+        defaultEntity.setPriority(priority);
         return defaultEntity;
     }
     

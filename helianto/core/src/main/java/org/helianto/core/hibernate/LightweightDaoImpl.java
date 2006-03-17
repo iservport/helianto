@@ -73,6 +73,10 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         this.getHibernateTemplate().refresh(object);
     }
 
+    public void persist(Object object) throws DataAccessException {
+        this.getHibernateTemplate().persist(object);
+    }
+
     public Collection find(String query, Object values) {
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Finding object with query "+query);

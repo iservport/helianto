@@ -22,42 +22,22 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_entity" discriminator-value="0"
-		name="org.helianto.core.Entity">
+	<class table="core_defaultentity"
+		name="org.helianto.core.DefaultEntity">
 		<!-- 
-				ENTITY
+				DEFAULT ENTITY
 				============================================= 
 		-->
 		<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-Domain object to represent different business units.
+Domain object to indicate which <code>Entity</code>
+may be taken by default when required by an association.
 </p>
 
 <p>
-For example, if two equipment sets must be kept in different 
-logical spaces to avoid identity collision, they
-must be tied to different entities. This is also applicable for many
-ohter domain classes, like accounts, statements, parts, processes, etc.
-The <code>Entity</code> is the root for many of such objects and allow
-for the desirable isolation between two or more organizations, or even
-smaller units within one organization. In other words, an <code>Entity</code>
-'controls' a whole group of domain object instances, or if there is only one,
-it controls the whole application.
-</p>
-
-<p>
-A real world entity usually has many related properties, like 
-address or trade mark. An <code>Entity</code> here, though, is 
-designed not to hold much information, namely only an unique 
-alias and a reference to its <code>Supervisor</code>. That makes 
-it flexible enough to be associated to virtually any real world 
-entity, even individuals. 
-</p>
-
-<p>
-A small footprint is also desirable for some serialization strategies
-like Hibernate's (www.hibernate.org) non-lazy loading.
+This is usefull for environments where all domain objects may be associated
+to a single <code>Entity</code>.
 </p>
 
 @author Mauricio Fernandes de Castro
@@ -67,120 +47,23 @@ like Hibernate's (www.hibernate.org) non-lazy loading.
 		<!-- 
   				id
 		-->
-		<id name="id" type="long" unsaved-value="null">
-			<generator class="native"/>
+		<id name="id" type="int" unsaved-value="null">
+			<generator class="foreign">
+				<param name="property">entity</param>
+			</generator>
 		</id>
-		<discriminator column="type" type="int"/>
 		<!-- 
-				supervisor
+				entity
+				(note this is actually one-to-one because of unique=true)
 		-->
-		<many-to-one name="supervisor" 
-			class="org.helianto.core.Supervisor" cascade="merge">
+		<many-to-one name="entity" 
+			class="org.helianto.core.Entity">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="supervisorId" not-null="true" 
-				unique-key="unique1"/>
+			<column name="entityId" unique="true"/>
 		</many-to-one>
 		<!-- 
-				alias
+				priority
 		-->
-		<property name="alias" type="string">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="alias" length="20" not-null="true" 
-				unique-key="unique1"/>
-		</property>
-		<!-- 
-				subclass to provide address information
-		-->
-		<subclass discriminator-value="1"
-			name="org.helianto.core.AddressableEntity">
-		<!-- 
-				ADDRESSABLE ENTITY
-				============================================= 
-		-->
-			<meta attribute="class-description" inherit="false">
-					<![CDATA[
-<p>
-Domain object to extend <code>Entity</code> with address
-information.
-</p>
-
-@author Mauricio Fernandes de Castro
-@version $Id$
-				]]>
-			</meta>
-			<!-- 
-				address 1
-			-->
-			<property name="entityAddress1" type="string" length="64"/>
-			<!-- 
-				address 2
-			-->
-			<property name="entityAddress2" type="string" length="64"/>
-			<!-- 
-				city name
-			-->
-			<property name="entityCityName" type="string" length="64"/>
-			<!-- 
-				province name
-			-->
-			<property name="entityProvinceName" type="string" length="64"/>
-			<!-- 
-				postal code
-			-->
-			<property name="entityPostalCode" type="string" length="10"/>
-			<!-- 
-				sub class to provide business information
-			-->
-			<subclass discriminator-value="2"
-				name="org.helianto.core.Organization">
-			<!-- 
-				ORGANIZATION
-				============================================= 
-			-->
-				<meta attribute="class-description" inherit="false">
-					<![CDATA[
-<p>
-Domain object to extend <code>AddressableEntity</code> as an
-organization.
-</p>
-
-@author Mauricio Fernandes de Castro
-@version $Id$
-				]]>
-				</meta>
-				<!-- 
-				business name
-				-->
-				<property name="businessName" type="string" length="64"/>
-			</subclass>
-			<!-- 
-				sub class to provide individual information
-			-->
-			<subclass discriminator-value="3"
-				name="org.helianto.core.Individual">
-			<!-- 
-				INDIVIDUAL
-				============================================= 
-			-->
-				<meta attribute="class-description" inherit="false">
-					<![CDATA[
-<p>
-Domain object to extend <code>AddressableEntity</code> as an
-individual.
-</p>
-
-@author Mauricio Fernandes de Castro
-@version $Id$
-				]]>
-				</meta>
-				<!-- 
-				credential
-				-->
-				<many-to-one name="credential" 
-					class="org.helianto.core.Credential" cascade="all">
-					<column name="credentialId" not-null="false"/>
-				</many-to-one>
-			</subclass>
-		</subclass>
+		<property name="priority" type="int" not-null="true" unique="true"/>
 	</class>
 </hibernate-mapping>

@@ -48,7 +48,7 @@ Persist the user account.
 				entity
 		-->
 		<many-to-one name="entity" 
-			class="org.helianto.core.Entity" cascade="merge">
+			class="org.helianto.core.Entity" cascade="all">
 			<meta attribute="use-in-equals">true</meta>
 			<column name="entityId" not-null="true" 
 				unique-key="unique1"/>
@@ -57,7 +57,7 @@ Persist the user account.
 				credential
 		-->
 		<many-to-one name="credential" 
-			class="org.helianto.core.Credential" cascade="merge">
+			class="org.helianto.core.Credential" cascade="all">
 			<meta attribute="use-in-equals">true</meta>
 			<column name="credentialId" not-null="true" 
 				unique-key="unique1"/>
@@ -65,7 +65,7 @@ Persist the user account.
 		<!-- 
 				parent
 		-->
-		<many-to-one name="parent" cascade="merge"
+		<many-to-one name="parent" cascade="all"
 			class="org.helianto.core.User"/>
 		<!-- 
 				account non expired 

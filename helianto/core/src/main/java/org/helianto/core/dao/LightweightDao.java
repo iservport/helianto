@@ -54,6 +54,8 @@ public interface LightweightDao {
      */
     public void refresh(Object object) throws DataAccessException ;
     
+    public void persist(Object object) throws DataAccessException ;
+    
     /**
      * A method to return query results.
      * 

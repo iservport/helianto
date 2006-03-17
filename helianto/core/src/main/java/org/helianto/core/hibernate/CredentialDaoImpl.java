@@ -13,24 +13,26 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.core.hibernate;
 
-import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.core.Credential;
 
-public class AbstractCoreTest extends AbstractIntegrationTest {
+public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
 
-    protected CoreMgr coreMgr;
-
-    public void setCoreMgr(CoreMgr coreMgr) {
-        this.coreMgr = coreMgr;
+    public void persistCredential(Credential credential) {
+        merge(credential);
     }
 
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { "deploy/dataSource.xml", 
-                "deploy/sessionFactory.xml",
-                "deploy/support.xml",
-                "deploy/coreMgr.xml"};
+    public void removeCredential(Credential credential) {
+        remove(credential);
     }
-    
+
+    public Credential findCredentialByPrincipal(String principal) {
+        return (Credential) findUnique(CREDENTIAL_QRY, principal);
+    }
+
+    static final String CREDENTIAL_QRY = 
+        "from Credential credential " +
+        "where credential.principal = ?";
+
 }

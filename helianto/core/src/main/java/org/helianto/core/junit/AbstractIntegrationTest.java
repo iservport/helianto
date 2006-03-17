@@ -18,7 +18,7 @@ package org.helianto.core.junit;
 import java.util.Date;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Supervisor;
+import org.helianto.core.Home;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 
@@ -31,10 +31,17 @@ import org.springframework.test.AbstractTransactionalSpringContextTests;
 public abstract class AbstractIntegrationTest extends
     AbstractTransactionalSpringContextTests {
 
+    @Override
+    protected String[] getConfigLocations() {
+        return new String[] { 
+                "deploy/dataSource.xml", 
+                "deploy/sessionFactory.xml",
+                "deploy/support.xml",
+                "deploy/coreMgr.xml"};
+    }
+    
     protected HibernateTemplate hibernateTemplate;
     
-    protected String entityTest = generateKey(20);
-
     public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
         this.hibernateTemplate = hibernateTemplate;
     }
@@ -62,18 +69,4 @@ public abstract class AbstractIntegrationTest extends
         return localKey;
     }
 
-    /**
-     * Generate a new entity by default. Subclasses should
-     * override to provide a perssited entity.
-     * @return
-     */
-    protected Entity getTestEntity() {
-        Supervisor supervisor = new Supervisor();
-        supervisor.setSupervisorName(generateKey(20));
-        Entity entity = new Entity();
-        entity.setSupervisor(supervisor);
-        entity.setAlias(entityTest);
-        return entity;
-    }
-    
 }

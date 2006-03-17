@@ -25,7 +25,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.CredentialType;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
-import org.helianto.core.Supervisor;
+import org.helianto.core.Home;
 import org.helianto.core.User;
 import org.helianto.core.mail.MailComposer;
 
@@ -85,38 +85,38 @@ public class CoreMgrImpl extends CoreFactoryImpl implements CoreMgr {
         return null;
     }
     
-    public Supervisor findRequiredSupervisor(Object supervisorName) {
+    public Home findRequiredHome(Object homeName) {
         List list = null;
-        if (supervisorName!=null && supervisorName instanceof String) {
-            list =  (List) getGenericDao().find(SUPERVISOR_QRY_BY_NAME, supervisorName.toString());
+        if (homeName!=null && homeName instanceof String) {
+            list =  (List) getGenericDao().find(HOME_QRY_BY_NAME, homeName.toString());
         }
         if (list!=null && list.size()==1) {
-            return (Supervisor) list.get(0);
+            return (Home) list.get(0);
         }
         String language = Locale.getDefault().getLanguage();
         String country = Locale.getDefault().getCountry();
         String[] params = new String[] { language, country };
-        list =  (List) getGenericDao().find(SUPERVISOR_QRY_BY_LANGUAGE_AND_COUTRY, params);
+        list =  (List) getGenericDao().find(HOME_QRY_BY_LANGUAGE_AND_COUTRY, params);
         if (list.size()>0) {
             if (logger.isDebugEnabled()) {
-                logger.debug("\n         Supervisor found with default language "+language+
+                logger.debug("\n         Home found with default language "+language+
                         "and country "+country);
             }
-            return (Supervisor) list.get(0);
+            return (Home) list.get(0);
         }
-        list =  (List) getGenericDao().find(SUPERVISOR_QRY_BY_LANGUAGE, language);
+        list =  (List) getGenericDao().find(HOME_QRY_BY_LANGUAGE, language);
         if (list.size()>0) {
             if (logger.isDebugEnabled()) {
-                logger.debug("\n         Supervisor found with default language "+language);
+                logger.debug("\n         Home found with default language "+language);
             }
-            return (Supervisor) list.get(0);
+            return (Home) list.get(0);
         }
-        list =  (List) getGenericDao().find(SUPERVISOR_QRY_ALL, null);
+        list =  (List) getGenericDao().find(HOME_QRY_ALL, null);
         if (list.size()>0) {
             if (logger.isDebugEnabled()) {
                 logger.debug("\n         Taking root Supervisor");
             }
-            return (Supervisor) list.get(0);
+            return (Home) list.get(0);
         }
         throw new IllegalStateException("Unable to find at least the root Supervisor");
     }
@@ -164,44 +164,44 @@ public class CoreMgrImpl extends CoreFactoryImpl implements CoreMgr {
         }
     }
     
-    public void sendRegistrationNotification(Supervisor supervisor, Credential cred) throws MessagingException {
+    public void sendRegistrationNotification(Home home, Credential cred) throws MessagingException {
         if (cred.getCredentialType()==CredentialType.NOT_ADDRESSABLE.getValue()) {
             throw new IllegalStateException("Credential is not addressable.");
         }
         MailComposer mailComposer = getJavaMailAdapter().getMailComposer();
         MimeMessage message = getJavaMailAdapter().createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "ISO-8859-1");
-        String mailUser = supervisor.getMailAccessData().getUser();
+        String mailUser = home.getMailAccessData().getUser();
         helper.setTo(cred.getPrincipal());
         helper.setReplyTo(mailUser);
         helper.setFrom(mailUser);
         helper.setSubject(mailComposer
-            .composeRegistrationNotificationSubject(supervisor.getSupervisorName()));
+            .composeRegistrationNotificationSubject(home.getHomeName()));
         helper.setSentDate(new Date());
         helper.setText(mailComposer
-            .composeRegistrationNotification(cred, supervisor.getHttpAddress()), true);
-        getJavaMailAdapter().send(supervisor.getMailTransportData(), supervisor.getMailAccessData(), message);
+            .composeRegistrationNotification(cred, home.getHttpAddress()), true);
+        getJavaMailAdapter().send(home.getMailTransportData(), home.getMailAccessData(), message);
     }
     
     static final String CREDENTIAL_QRY_BY_PRINCIPAL = 
         "from Credential cred " +
         "where cred.principal = ?";
     
-    static final String SUPERVISOR_QRY_BY_NAME = 
-        "from Supervisor supervisor " +
-        "where supervisor.supervisorName = ?";
+    static final String HOME_QRY_BY_NAME = 
+        "from Home home " +
+        "where home.homeName = ?";
 
-    static final String SUPERVISOR_QRY_BY_LANGUAGE = 
-        "from Supervisor supervisor " +
-        "where supervisor.locale.language = ?";
+    static final String HOME_QRY_BY_LANGUAGE = 
+        "from Home home " +
+        "where home.language = ?";
 
-    static final String SUPERVISOR_QRY_BY_LANGUAGE_AND_COUTRY = 
-        "from Supervisor supervisor " +
-        "where supervisor.locale.language = ? " +
-        "and supervisor.locale.country = ?";
+    static final String HOME_QRY_BY_LANGUAGE_AND_COUTRY = 
+        "from Home home " +
+        "where home.language = ? " +
+        "and home.country = ?";
 
-    static final String SUPERVISOR_QRY_ALL = 
-        "from Supervisor supervisor ";
+    static final String HOME_QRY_ALL = 
+        "from Home home ";
 
     static final String ENTITY_QRY_BY_ENTITY_ALIAS = 
         "from Entity ent where ent.alias = ?";

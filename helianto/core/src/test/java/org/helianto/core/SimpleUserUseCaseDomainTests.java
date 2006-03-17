@@ -15,6 +15,7 @@
 
 package org.helianto.core;
 
+
 import java.util.Date;
 import junit.framework.TestCase;
 
@@ -22,15 +23,14 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
     
     PersonalData personalData;
     Credential credential;
-    Locale locale;
     MailTransportData mtd;
     MailAccessData mad;
-    Supervisor supervisor;
+    Home home;
     Entity entity;
     AddressableEntity addrent;
     Individual individual;
     Organization organization;
-    DefaultEntity defent;
+    DefaultEntity defaultEntity;
     User user;
     
     public void testGraph() {
@@ -82,31 +82,6 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
         c.setPrincipal("UNIQUE");
         assertTrue(credential.equals(c));
         
-        // locale
-        locale = new Locale();
-        locale.setParent(null);
-        locale.setParent(new Locale());
-        locale.setLanguage("");
-        locale.setCountry("");
-        locale.setLocaleType(LocaleType.COUNTRY.getValue());
-        locale.setLocaleType(LocaleType.LANGUAGE.getValue());
-        
-        assertTrue(locale.equals(locale));
-        assertFalse(locale.equals(null));
-        assertFalse(locale.equals(new Object()));
-        Locale l = new Locale();
-        assertFalse(locale.equals(l));
-        locale.setCountry(null);
-        locale.setLanguage(null);
-        assertTrue(locale.equals(l));
-        locale.setCountry("UNIQUE_COUNTRY");
-        locale.setLanguage("UNIQUE_LANGUAGE");
-        l.setCountry("");
-        l.setLanguage("UNIQUE_LANGUAGE");
-        assertFalse(locale.equals(l));
-        l.setCountry("UNIQUE_COUNTRY");
-        assertTrue(locale.equals(l));
-        
         // mail transport data
         mtd = new MailTransportData();
         mtd.setSmtpHost("");
@@ -120,40 +95,41 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
         mad.setPassword("");
         mad.setUser("");
         
-        // supervisor
-        supervisor = new Supervisor();
-        supervisor.setId(Integer.MAX_VALUE);
-        supervisor.setId(Integer.MIN_VALUE);
-        supervisor.setParent(null);
-        supervisor.setParent(new Supervisor());
-        supervisor.setSupervisorName("");
-        supervisor.setHttpAddress("");
-        supervisor.setSupervisorDesc("");
-        supervisor.setAdded(new Date());
-        supervisor.setLocale(locale);
-        supervisor.setMailTransportData(mtd);
-        supervisor.setMailAccessData(mad);
+        // home
+        home = new Home();
+        home.setId(Integer.MAX_VALUE);
+        home.setId(Integer.MIN_VALUE);
+        home.setParent(null);
+        home.setParent(new Home());
+        home.setHomeName("");
+        home.setHttpAddress("");
+        home.setHomeDesc("");
+        home.setAdded(new Date());
+        home.setLanguage("");
+        home.setCountry("");
+        home.setMailTransportData(mtd);
+        home.setMailAccessData(mad);
         
-        assertTrue(supervisor.equals(supervisor));
-        assertFalse(supervisor.equals(null));
-        assertFalse(supervisor.equals(new Object()));
-        Supervisor s = new Supervisor();
-        assertFalse(supervisor.equals(s));
-        supervisor.setSupervisorName(null);
-        assertTrue(supervisor.equals(s));
-        supervisor.setSupervisorName("UNIQUE");
-        s.setSupervisorName("");
-        assertFalse(supervisor.equals(s));
-        s.setSupervisorName("UNIQUE");
-        assertTrue(supervisor.equals(s));
+        assertTrue(home.equals(home));
+        assertFalse(home.equals(null));
+        assertFalse(home.equals(new Object()));
+        Home h = new Home();
+        assertFalse(home.equals(h));
+        home.setHomeName(null);
+        assertTrue(home.equals(h));
+        home.setHomeName("UNIQUE");
+        h.setHomeName("");
+        assertFalse(home.equals(h));
+        h.setHomeName("UNIQUE");
+        assertTrue(home.equals(h));
         
         // entity
         entity = new Entity();
         entity.setId(Long.MAX_VALUE);
         entity.setId(Long.MIN_VALUE);
         entity.setAlias("");
-        entity.setSupervisor(null);
-        entity.setSupervisor(supervisor);
+        entity.setHome(null);
+        entity.setHome(home);
         
         assertTrue(entity.equals(entity));
         assertFalse(entity.equals(null));
@@ -161,12 +137,12 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
         Entity e = new Entity();
         assertFalse(entity.equals(e));
         entity.setAlias(null);
-        entity.setSupervisor(null);
+        entity.setHome(null);
         assertTrue(entity.equals(e));
         entity.setAlias("UNIQUE_ALIAS");
-        entity.setSupervisor(supervisor);
+        entity.setHome(home);
         e.setAlias("");
-        e.setSupervisor(supervisor);
+        e.setHome(home);
         assertFalse(entity.equals(e));
         e.setAlias("UNIQUE_ALIAS");
         assertTrue(entity.equals(e));
@@ -188,10 +164,24 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
         individual.setCredential(credential);
         
         // default entity
-        defent = new DefaultEntity();
-        defent.setDefaultEntity(entity);
-        defent.setPriority(Integer.MAX_VALUE);
-        defent.setPriority(Integer.MIN_VALUE);
+        defaultEntity = new DefaultEntity();
+        defaultEntity.setId(Integer.MAX_VALUE);
+        defaultEntity.setId(Integer.MIN_VALUE);
+        defaultEntity.setEntity(entity);
+        defaultEntity.setPriority(Integer.MAX_VALUE);
+        defaultEntity.setPriority(Integer.MIN_VALUE);
+        
+        assertTrue(defaultEntity.equals(defaultEntity));
+        assertFalse(defaultEntity.equals(null));
+        assertFalse(defaultEntity.equals(new Object()));
+        DefaultEntity d = new DefaultEntity();
+        assertFalse(defaultEntity.equals(d));
+        defaultEntity.setEntity(null);
+        assertTrue(defaultEntity.equals(d));
+        defaultEntity.setEntity(entity);
+        assertFalse(defaultEntity.equals(d));
+        d.setEntity(entity);
+        assertTrue(defaultEntity.equals(d));
         
         // user
         user = new User();
@@ -226,8 +216,6 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
         assertTrue(user.equals(u));
         
         // downcasts
-        Supervisor s1 = (Supervisor) defent;
-        assertTrue(defent.equals(s1));
         AddressableEntity a1 = (AddressableEntity) individual;
         assertTrue(individual.equals(a1));
         AddressableEntity a2 = (AddressableEntity) organization;

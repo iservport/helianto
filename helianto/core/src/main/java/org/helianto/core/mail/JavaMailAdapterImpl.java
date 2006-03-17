@@ -22,7 +22,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.helianto.core.MailAccessData;
 import org.helianto.core.MailTransportData;
-import org.helianto.core.Supervisor;
+import org.helianto.core.Home;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;

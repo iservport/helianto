@@ -22,29 +22,42 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_supervisor" 
-		name="org.helianto.core.Supervisor" 
-		discriminator-value="S">
+	<class table="core_entity" discriminator-value="0"
+		name="org.helianto.core.Entity">
 		<!-- 
-				SUPERVISOR
+				ENTITY
 				============================================= 
 		-->
 		<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-A domain object to represent a supervisor, unique by a short name.
+Domain object to represent different business units.
 </p>
 
 <p>
-Supervisors are the source for comunication between server and
-e-mail recipients, so they hold the information necessary to connect to 
-external servers. They can be configured to represent a geographical
-limit, bound to a language or country, or according to any territory
-arrangement.
+For example, if two equipment sets must be kept in different 
+logical spaces to avoid identity collision, they
+must be tied to different entities. This is also applicable for many
+ohter domain classes, like accounts, statements, parts, processes, etc.
+The <code>Entity</code> is the root for many of such objects and allow
+for the desirable isolation between two or more organizations, or even
+smaller units within one organization. In other words, an <code>Entity</code>
+'controls' a whole group of domain object instances, or if there is only one,
+it controls the whole application.
 </p>
 
 <p>
-At least one default (root) supervisor must be defined per installation.
+A real world entity usually has many related properties, like 
+address or trade mark. An <code>Entity</code> here, though, is 
+designed not to hold much information, namely only an unique 
+alias and a reference to its <code>Home</code>. That makes 
+it flexible enough to be associated to virtually any real world 
+entity, even individuals. 
+</p>
+
+<p>
+A small footprint is also desirable for some serialization strategies
+like Hibernate's (www.hibernate.org) non-lazy loading.
 </p>
 
 @author Mauricio Fernandes de Castro
@@ -54,98 +67,47 @@ At least one default (root) supervisor must be defined per installation.
 		<!-- 
   				id
 		-->
-		<id name="id" type="int" unsaved-value="null">
+		<id name="id" type="long" unsaved-value="null">
 			<generator class="native"/>
 		</id>
-		<discriminator column="type" type="char"/>
+		<discriminator column="type" type="int"/>
 		<!-- 
-				parent
+				home
 		-->
-		<many-to-one name="parent" 
-			class="org.helianto.core.Supervisor">
-			<column name="parentId" not-null="false"/>
-		</many-to-one>
-		<!-- 
-				supervisor name (unique)
-		-->
-		<property name="supervisorName" type="string">
+		<many-to-one name="home" 
+			class="org.helianto.core.Home" cascade="all">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="supervisorName" length="20" not-null="true" 
-				unique="true"/>
-		</property>
-		<!-- 
-				http address
-		-->
-		<property name="httpAddress" type="string" length="64"/>
-		<!-- 
-				supervisor desc
-		-->
-		<property name="supervisorDesc" type="string" length="64"/>
-		<!-- 
-				date added
-		-->
-		<property name="added" type="date"/>
-		<!-- 
-				locale
-		-->
-		<many-to-one name="locale" 
-			class="org.helianto.core.Locale" cascade="all">
-			<column name="localeId" not-null="false"/>
+			<column name="homeId" not-null="true" 
+				unique-key="unique1"/>
 		</many-to-one>
 		<!-- 
-				mail transport data
+				alias
 		-->
-		<component name="mailTransportData" 
-			class="org.helianto.core.MailTransportData">
-			<!-- 
-				mail host
-			-->
-			<property name="smtpHost" type="string" length="64"/>
-			<!-- 
-				mail user
-			-->
-			<property name="smtpUser" type="string" length="32"/>
-			<!-- 
-				mail password
-			-->
-			<property name="smtpPassword" type="string" length="20"/>
-		</component>
-		<!-- 
-				mail access data
+		<property name="alias" type="string">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="alias" length="20" not-null="true" 
+				unique-key="unique1"/>
+		</property>
+		<!--
+				default entity
 		-->
-		<component name="mailAccessData" 
-			class="org.helianto.core.MailAccessData">
-			<!-- 
-				store type
-			-->
-			<property name="storeType" type="string" length="12"/>
-			<!-- 
-				store host
-			-->
-			<property name="host" type="string" length="64"/>
-			<!-- 
-				store user
-			-->
-			<property name="user" type="string" length="32"/>
-			<!-- 
-				store password
-			-->
-			<property name="password" type="string" length="20"/>
-		</component>
+		<one-to-one name="defaultEntity" 
+			class="org.helianto.core.DefaultEntity"
+			property-ref="entity"/>
 		<!-- 
-				subclass to provide a default entity
+				subclass to provide address information
 		-->
-		<subclass discriminator-value="D"
-			name="org.helianto.core.DefaultEntity">
+		<subclass discriminator-value="1"
+			name="org.helianto.core.AddressableEntity">
 		<!-- 
-				DEFAULT ENTITY
+				ADDRESSABLE ENTITY
 				============================================= 
 		-->
 			<meta attribute="class-description" inherit="false">
 					<![CDATA[
 <p>
-Domain object to provide a default <code>Entity</code> where only
-one (or few) entities are required.
+Domain object to extend <code>Entity</code> with address
+information.
 </p>
 
 @author Mauricio Fernandes de Castro
@@ -153,16 +115,78 @@ one (or few) entities are required.
 				]]>
 			</meta>
 			<!-- 
-					default entity
+				address 1
 			-->
-			<many-to-one name="defaultEntity" 
-				class="org.helianto.core.Entity" cascade="merge">
-				<column name="defaultEntity" not-null="false"/>
-			</many-to-one>
+			<property name="entityAddress1" type="string" length="64"/>
 			<!-- 
-				priority
+				address 2
 			-->
-			<property name="priority" type="int" not-null="true"/>
+			<property name="entityAddress2" type="string" length="64"/>
+			<!-- 
+				city name
+			-->
+			<property name="entityCityName" type="string" length="64"/>
+			<!-- 
+				province name
+			-->
+			<property name="entityProvinceName" type="string" length="64"/>
+			<!-- 
+				postal code
+			-->
+			<property name="entityPostalCode" type="string" length="10"/>
+			<!-- 
+				sub class to provide business information
+			-->
+			<subclass discriminator-value="2"
+				name="org.helianto.core.Organization">
+			<!-- 
+				ORGANIZATION
+				============================================= 
+			-->
+				<meta attribute="class-description" inherit="false">
+					<![CDATA[
+<p>
+Domain object to extend <code>AddressableEntity</code> as an
+organization.
+</p>
+
+@author Mauricio Fernandes de Castro
+@version $Id$
+				]]>
+				</meta>
+				<!-- 
+				business name
+				-->
+				<property name="businessName" type="string" length="64"/>
+			</subclass>
+			<!-- 
+				sub class to provide individual information
+			-->
+			<subclass discriminator-value="3"
+				name="org.helianto.core.Individual">
+			<!-- 
+				INDIVIDUAL
+				============================================= 
+			-->
+				<meta attribute="class-description" inherit="false">
+					<![CDATA[
+<p>
+Domain object to extend <code>AddressableEntity</code> as an
+individual.
+</p>
+
+@author Mauricio Fernandes de Castro
+@version $Id$
+				]]>
+				</meta>
+				<!-- 
+				credential
+				-->
+				<many-to-one name="credential" 
+					class="org.helianto.core.Credential" cascade="all">
+					<column name="credentialId" not-null="false"/>
+				</many-to-one>
+			</subclass>
 		</subclass>
 	</class>
 </hibernate-mapping>

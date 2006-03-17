@@ -18,6 +18,34 @@
 <beans>
 
 	<!--
+			Home dao implementation	
+	-->
+	<bean id="homeDao" 
+		class="org.helianto.core.hibernate.HomeDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			Entity dao implementation	
+	-->
+	<bean id="entityDao" 
+		class="org.helianto.core.hibernate.EntityDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			Credential dao implementation	
+	-->
+	<bean id="credentialDao" 
+		class="org.helianto.core.hibernate.CredentialDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			User dao implementation	
+	-->
+	<bean id="userDao" 
+		class="org.helianto.core.hibernate.UserDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
 			Simple core service bean	
 	-->
 	<bean id="simpleCoreMgr" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">

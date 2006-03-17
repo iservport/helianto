@@ -21,7 +21,7 @@ import javax.mail.MessagingException;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
-import org.helianto.core.Supervisor;
+import org.helianto.core.Home;
 import org.helianto.core.User;
 
 /**
@@ -63,14 +63,14 @@ public interface CoreMgr extends GenericService {
     public Credential findCredentialByPrincipal(String principal);
     
     /**
-     * Find an <code>Supervisor</code> or throw an Exception, if
+     * Find a <code>Home</code> or throw an Exception, if
      * none can't be found.
      * <p>This method performs successive calls
      * to the datastore, using different criteria, to cover all
      * possibilities to retrieve an supervisor.
      * </p>
      */
-    public Supervisor findRequiredSupervisor(Object supervisorName);
+    public Home findRequiredHome(Object homeName);
     
     /**
      * Find an <code>Entity</code> by alias.
@@ -93,6 +93,6 @@ public interface CoreMgr extends GenericService {
      * Send a <code>Credential</code> registration using 
      * mail settings from <code>Supervisor</code>.
      */
-    public void sendRegistrationNotification(Supervisor supervisor, Credential cred) throws MessagingException;
+    public void sendRegistrationNotification(Home home, Credential cred) throws MessagingException;
     
 }

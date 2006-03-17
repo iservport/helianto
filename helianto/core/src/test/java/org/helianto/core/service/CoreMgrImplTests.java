@@ -19,7 +19,7 @@ import javax.mail.MessagingException;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
-import org.helianto.core.Supervisor;
+import org.helianto.core.Home;
 import org.helianto.core.mail.MockJavaMailAdapter;
 
 public class CoreMgrImplTests extends AbstractCoreTest {

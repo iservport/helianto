@@ -15,36 +15,33 @@
 
 package org.helianto.core.service;
 
+import java.util.List;
+
 import org.helianto.core.Credential;
-import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
+import org.helianto.core.Home;
 import org.helianto.core.PersonalData;
 import org.helianto.core.User;
 
 public class SimpleCoreMgrImpl extends CoreMgrImpl implements SimpleCoreMgr {
 
-    public DefaultEntity createDefaultEntity(String alias) {
-        DefaultEntity defaultEntity = defaultEntityFactory(alias);
-        return defaultEntity;
+    public Entity createDefaultEntity(String alias) {
+        Home home = homeFactory(alias);
+        Entity entity = entityFactory(home, alias);
+        return entity;
     }
 
-    public DefaultEntity createDefaultEntity(String alias, int priority) {
-        // TODO Auto-generated method stub
-        return null;
+    public void persistDefaultEntity(Entity entity) {
+        persistEntity(entity);
     }
 
-    public DefaultEntity changeEntityToDefault(Entity entity, int priority) {
+    public void changeEntityToDefault(Entity entity) {
         // TODO Auto-generated method stub
-        return null;
+        
     }
 
-    public DefaultEntity findDefaultEntity() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public DefaultEntity findDefaultEntity(int priority) {
-        // TODO Auto-generated method stub
+    public Entity findDefaultEntity() {
+        
         return null;
     }
 
@@ -63,8 +60,4 @@ public class SimpleCoreMgrImpl extends CoreMgrImpl implements SimpleCoreMgr {
         
     }
     
-    public void persistDefaultEntity(DefaultEntity defaultEntity) {
-    	getGenericDao().merge(defaultEntity);
-    }
-
 }

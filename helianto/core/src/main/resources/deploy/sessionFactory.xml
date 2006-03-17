@@ -39,11 +39,18 @@
 		</property>
 	</bean>	
 	<!--
+			Hibernate template	
+	-->
+    <bean id="hibernateTemplate" 
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+	<!--
 			Hibernate generic dao implementation	
 	-->
 	<bean id="genericDao" 
 		class="org.helianto.core.hibernate.GenericDaoImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	
 </beans>

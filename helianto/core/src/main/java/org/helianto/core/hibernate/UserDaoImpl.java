@@ -13,24 +13,27 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.core.hibernate;
 
-import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.core.User;
 
-public class AbstractCoreTest extends AbstractIntegrationTest {
+public class UserDaoImpl extends GenericDaoImpl implements UserDao {
 
-    protected CoreMgr coreMgr;
-
-    public void setCoreMgr(CoreMgr coreMgr) {
-        this.coreMgr = coreMgr;
+    public void persistUser(User user) {
+        persist(user);
     }
 
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { "deploy/dataSource.xml", 
-                "deploy/sessionFactory.xml",
-                "deploy/support.xml",
-                "deploy/coreMgr.xml"};
+    public void removeUser(User user) {
+        remove(user);
+    }
+
+    public User findUserByEntityAliasAndPrincipal(String alias, String principal) {
+        return (User) findUnique(USER_QRY, new Object[] {alias, principal});
     }
     
+    static final String USER_QRY = 
+        "from User user " +
+        "where user.entity.alias = ? " +
+        "and user.credential.principal = ?";
+
 }

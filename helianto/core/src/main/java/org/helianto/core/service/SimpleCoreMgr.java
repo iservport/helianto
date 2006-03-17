@@ -16,7 +16,6 @@
 package org.helianto.core.service;
 
 import org.helianto.core.Credential;
-import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.PersonalData;
 import org.helianto.core.User;
@@ -41,32 +40,22 @@ public interface SimpleCoreMgr {
     /**
      * <p>A default entity will be required to create a simple user.</p>
      */
-    public DefaultEntity createDefaultEntity(String alias);
-
-    /**
-     * <p>A default entity will be required to create a simple user.</p>
-     */
-    public DefaultEntity createDefaultEntity(String alias, int priority);
+    public Entity createDefaultEntity(String alias);
 
     /**
      * <p>Change an entity to default.</p>
      */
-    public DefaultEntity changeEntityToDefault(Entity entity, int priority);
+    public void changeEntityToDefault(Entity entity);
     
     /**
      * <p>Find the default entity with priority zero.</p>
      */
-    public DefaultEntity findDefaultEntity();
+    public Entity findDefaultEntity();
     
-    /**
-     * <p>Find a default entity with any priority.</p>
-     */
-    public DefaultEntity findDefaultEntity(int priority);
-
     /**
      * <p>A simple user creation that hides a <code>Credential</code>
      * creation behind its implementation and automatically
-     * aggregates the highest priority <code>DefaultEntity</code>.</p>
+     * aggregates the default <code>Entity</code>.</p>
      */
     public User createSimpleUser(String principal, PersonalData pd);
     
@@ -84,6 +73,6 @@ public interface SimpleCoreMgr {
     /**
      * <p>Persist the DefaultEntity.</p>
      */
-    public void persistDefaultEntity(DefaultEntity defaultEntity);
+    public void persistDefaultEntity(Entity entity);
     
 }
