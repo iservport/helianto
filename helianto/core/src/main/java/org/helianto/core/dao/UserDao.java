@@ -13,16 +13,32 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate;
+package org.helianto.core.dao;
 
 import org.helianto.core.User;
 
+/**
+ * User data access interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id$
+ */
 public interface UserDao {
     
+    /**
+     * Persist <code>User</code>.
+     */
     public void persistUser(User user);
     
+    /**
+     * Remove <code>User</code>.
+     */
     public void removeUser(User user);
     
+    /**
+     * Find <code>User</code> by <code>Entity</code>
+     * alias and <code>Credential</code> principal.
+     */
     public User findUserByEntityAliasAndPrincipal(String alias, String principal);
 
 }

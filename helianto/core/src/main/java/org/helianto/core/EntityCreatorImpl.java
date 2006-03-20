@@ -1,0 +1,101 @@
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.helianto.core;
+
+
+import org.helianto.core.service.AbstractGenericService;
+
+/**
+ * Default implementation for the <code>EntityCreator</code> interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id$
+ */
+public class EntityCreatorImpl extends AbstractGenericService implements EntityCreator {
+    
+    /* (non-Javadoc)
+     * @see org.helianto.core.EntityCreator#entityFactory(org.helianto.core.Home, java.lang.String)
+     */
+    public Entity entityFactory(Home home, String uniqueAlias) {
+        Entity entity = new Entity();
+        entity.setHome(home);
+        entity.setAlias(uniqueAlias);
+        return entity;
+    }
+    
+    /* (non-Javadoc)
+     * @see org.helianto.core.EntityCreator#addressableEntityFactory(org.helianto.core.Home, java.lang.String)
+     */
+    public AddressableEntity addressableEntityFactory(Home home, String uniqueAlias) {
+        AddressableEntity entity = new AddressableEntity();
+        entity.setHome(home);
+        entity.setAlias(uniqueAlias);
+        entity.setEntityAddress1("");
+        entity.setEntityAddress2("");
+        entity.setEntityCityName("");
+        entity.setEntityProvinceName("");
+        entity.setEntityPostalCode("");
+        return entity;
+    }
+    
+    /* (non-Javadoc)
+     * @see org.helianto.core.EntityCreator#organizationFactory(org.helianto.core.Home, java.lang.String)
+     */
+    public Organization organizationFactory(Home home, String uniqueAlias) {
+        return organizationFactory(home, uniqueAlias, uniqueAlias);
+    }
+    
+    /* (non-Javadoc)
+     * @see org.helianto.core.EntityCreator#organizationFactory(org.helianto.core.Home, java.lang.String, java.lang.String)
+     */
+    public Organization organizationFactory(Home home, String uniqueAlias, String businessName) {
+        Organization organization = new Organization();
+        organization.setHome(home);
+        organization.setAlias(uniqueAlias);
+        organization.setBusinessName(businessName);
+        return organization;
+    }
+    
+    /* (non-Javadoc)
+     * @see org.helianto.core.EntityCreator#individualFactory(org.helianto.core.Home, org.helianto.core.Credential)
+     */
+    public Individual individualFactory(Home home, Credential credential) {
+        Individual individual = new Individual();
+        individual.setHome(home);
+        individual.setAlias(credential.getPrincipal());
+        individual.setCredential(credential);
+        return individual;
+    }
+    
+    /* (non-Javadoc)
+     * @see org.helianto.core.EntityCreator#defaultEntityFactory(org.helianto.core.Entity)
+     */
+    public DefaultEntity defaultEntityFactory(Entity entity) {
+        return defaultEntityFactory(entity, 0);
+    }
+    
+    /* (non-Javadoc)
+     * @see org.helianto.core.EntityCreator#defaultEntityFactory(org.helianto.core.Entity, int)
+     */
+    public DefaultEntity defaultEntityFactory(Entity entity, int priority) {
+        DefaultEntity defaultEntity = new DefaultEntity();
+        defaultEntity.setEntity(entity);
+        entity.setDefaultEntity(defaultEntity);
+        defaultEntity.setPriority(priority);
+        return defaultEntity;
+    }
+    
+}

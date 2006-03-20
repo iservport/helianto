@@ -67,7 +67,7 @@ like Hibernate's (www.hibernate.org) non-lazy loading.
 		<!-- 
   				id
 		-->
-		<id name="id" type="long" unsaved-value="null">
+		<id name="id" type="long">
 			<generator class="native"/>
 		</id>
 		<discriminator column="type" type="int"/>

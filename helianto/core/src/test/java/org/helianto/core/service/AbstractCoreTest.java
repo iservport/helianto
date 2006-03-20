@@ -19,18 +19,13 @@ import org.helianto.core.junit.AbstractIntegrationTest;
 
 public class AbstractCoreTest extends AbstractIntegrationTest {
 
-    protected CoreMgr coreMgr;
-
-    public void setCoreMgr(CoreMgr coreMgr) {
-        this.coreMgr = coreMgr;
-    }
-
     @Override
     protected String[] getConfigLocations() {
         return new String[] { "deploy/dataSource.xml", 
                 "deploy/sessionFactory.xml",
                 "deploy/support.xml",
-                "deploy/coreMgr.xml"};
+                "deploy/transaction.xml",
+                "deploy/core.xml"};
     }
     
 }

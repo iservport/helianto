@@ -13,16 +13,31 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate;
+package org.helianto.core.dao;
 
 import org.helianto.core.Credential;
 
+/**
+ * Credential data access interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id$
+ */
 public interface CredentialDao {
     
+    /**
+     * Persist <code>Credential</code>.
+     */
     public void persistCredential(Credential credential);
     
+    /**
+     * Remove <code>Credential</code>.
+     */
     public void removeCredential(Credential credential);
     
+    /**
+     * Find <code>Credential</code> by principal.
+     */
     public Credential findCredentialByPrincipal(String principal);
 
 }

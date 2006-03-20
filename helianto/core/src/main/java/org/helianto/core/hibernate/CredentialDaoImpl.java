@@ -16,7 +16,14 @@
 package org.helianto.core.hibernate;
 
 import org.helianto.core.Credential;
+import org.helianto.core.dao.CredentialDao;
 
+/**
+ * Hibernate implementation for <code>CredentialDao</code> interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id$
+ */
 public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
 
     public void persistCredential(Credential credential) {

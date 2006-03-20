@@ -13,42 +13,40 @@
  * limitations under the License.
  */
 
-package org.helianto.core.dao;
+package org.helianto.core.hibernate;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Home;
-import org.helianto.core.hibernate.EntityDao;
+import org.helianto.core.UserCreatorImpl;
+import org.helianto.core.Credential;
+import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
-import org.helianto.core.service.CoreFactoryImpl;
 
-public class EntityDaoImplTests extends AbstractIntegrationTest {
+public class CredentialDaoImplTests extends AbstractIntegrationTest {
     
-    private EntityDao entityDao;
-    private CoreFactoryImpl factory;
+    private CredentialDao credentialDao;
+    private UserCreatorImpl factory;
     
-    public void setEntityDao(EntityDao entityDao) {
-        this.entityDao = entityDao;
+    public void setCredentialDao(CredentialDao credentialDao) {
+        this.credentialDao = credentialDao;
     }
 
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
-        factory = new CoreFactoryImpl();
+        factory = new UserCreatorImpl();
     }
 
-    public void testEntityLifeCycle() {
+    public void testCredentialLifeCycle() {
         
-        Home home = factory.homeFactory("HOME");
-        Entity entity = factory.entityFactory(home, "TEST");
-        entityDao.persistEntity(entity);
+        Credential credential = factory.credentialFactory("TEST");
+        credentialDao.persistCredential(credential);
         
         hibernateTemplate.flush();
         
-        Entity en = entityDao.findEntityByHomeAndAlias("HOME", "TEST");
-        assertEquals(entity, en);
+        Credential cr = credentialDao.findCredentialByPrincipal("TEST");
+        assertEquals(credential, cr);
         
-        Entity duplicatedEntity = factory.entityFactory(home, "TEST");
+        Credential duplicatedCredential = factory.credentialFactory("TEST");
         try {
-            entityDao.persistEntity(duplicatedEntity);
+            credentialDao.persistCredential(duplicatedCredential);
             fail();
         } catch (Exception e) {
             //ok

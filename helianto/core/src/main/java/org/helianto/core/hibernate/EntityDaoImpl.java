@@ -15,8 +15,16 @@
 
 package org.helianto.core.hibernate;
 
+import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
+import org.helianto.core.dao.EntityDao;
 
+/**
+ * Hibernate implementation for <code>EntityDao</code> interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id$
+ */
 public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
 
     public void persistEntity(Entity entity) {
@@ -35,5 +43,26 @@ public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
         "from Entity entity " +
         "where entity.home.homeName = ? " +
         "and entity.alias = ?";
+    
+    public void persistDefaultEntity(DefaultEntity defaultEntity) {
+        merge(defaultEntity);
+    }
 
+    public void removeDefaultEntity(DefaultEntity defaultEntity) {
+        remove(defaultEntity);
+    }
+
+    public Entity findDefaultEntity() {
+        return findDefaultEntity(0);
+    }
+
+    public Entity findDefaultEntity(int priority) {
+        return ((DefaultEntity) 
+                findUnique(DEFAULT_ENTITY_QRY_BY_PRIOR, 0)).getEntity();
+    }
+
+    static final String DEFAULT_ENTITY_QRY_BY_PRIOR = 
+        "from DefaultEntity defaultEntity " +
+        "where defaultEntity.priority = ?";
+    
 }

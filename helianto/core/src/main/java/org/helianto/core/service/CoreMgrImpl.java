@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.helianto.core.UserCreatorImpl;
 import org.helianto.core.Credential;
 import org.helianto.core.CredentialType;
 import org.helianto.core.Entity;
@@ -38,7 +39,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public class CoreMgrImpl extends CoreFactoryImpl implements CoreMgr {
+public class CoreMgrImpl extends UserCreatorImpl implements CoreMgr {
     
     public void persistCredential(Credential credential) {
         if (credential.getPassword()==null) {

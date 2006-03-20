@@ -17,22 +17,23 @@
 		-->
 <beans>
 	<!--
-			Partner service bean	
+			Hibernate transaction manager	
 	-->
-	<bean id="partnerMgr" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<bean id="transactionManager" 
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<!--
+			Service template	
+	-->
+	<bean id="mgrTemplate" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
 		<property name="transactionManager" ref="transactionManager"/>
-		<property name="target">
-			<bean id="partnerTarget"
-				class="org.helianto.core.service.PartnerMgrImpl">
-				<property name="genericDao" ref="genericDao"/>
-				<property name="javaMailAdapter" ref="javaMailAdapter"/>
-			</bean>
-		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRED</prop>
+				<prop key="persist*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
 	</bean>
-	
 </beans>

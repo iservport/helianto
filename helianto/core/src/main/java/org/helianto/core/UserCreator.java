@@ -13,16 +13,27 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate;
+package org.helianto.core;
 
-import org.helianto.core.Entity;
+/**
+ * A factory method pattern interface to <code>User</code>
+ * related domain objects.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id$
+ */
+public interface UserCreator {
 
-public interface EntityDao {
-    
-    public void persistEntity(Entity entity);
-    
-    public void removeEntity(Entity entity);
-    
-    public Entity findEntityByHomeAndAlias(String homeName, String alias);
+    public PersonalData personalDataFactory();
+
+    public Credential credentialFactory();
+
+    public Credential credentialFactory(String principal);
+
+    public User userFactory(Entity entity, Credential credential);
+
+    public User userFactory(User parent, Credential credential);
+
+    public String generatePassword(int size);
 
 }

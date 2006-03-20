@@ -17,8 +17,6 @@ package org.helianto.core.junit;
 
 import java.util.Date;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Home;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 
@@ -37,7 +35,9 @@ public abstract class AbstractIntegrationTest extends
                 "deploy/dataSource.xml", 
                 "deploy/sessionFactory.xml",
                 "deploy/support.xml",
-                "deploy/coreMgr.xml"};
+                "deploy/transaction.xml",
+                "deploy/core.xml"
+                };
     }
     
     protected HibernateTemplate hibernateTemplate;

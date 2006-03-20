@@ -13,16 +13,27 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate;
+package org.helianto.core;
 
-import org.helianto.core.Home;
+/**
+ * A factory method pattern interface to <code>Home</code>
+ * related domain objects.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id$
+ */
+public interface HomeCreator {
 
-public interface HomeDao {
-    
-    public void persistHome(Home home);
-    
-    public void removeHome(Home home);
-    
-    public Home findHomeByHomeName(String homeName);
+    public MailTransportData mailTransportDataFactory(String host, String user,
+            String password);
+
+    public MailAccessData mailAccessDataFactory(String host, String user,
+            String password);
+
+    public Home homeFactory();
+
+    public Home homeFactory(String homeName);
+
+    public Home homeFactory(String homeName, String language, String country);
 
 }

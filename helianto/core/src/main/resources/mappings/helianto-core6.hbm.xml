@@ -37,7 +37,7 @@ Persist roles.
 		<!-- 
   				id
 		-->
-		<id name="id" type="int" unsaved-value="null">
+		<id name="id" type="int">
 			<generator class="native"/>
 		</id>
 		<!-- 

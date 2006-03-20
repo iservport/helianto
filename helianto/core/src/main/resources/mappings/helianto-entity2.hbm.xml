@@ -39,7 +39,7 @@ Persist a contact.
 @version $Id$
 				]]>
         </meta>
-		<id name="id" type="long" unsaved-value="null">
+		<id name="id" type="long">
 			<generator class="native"/>
 		</id>
 		<discriminator column="resource" type="boolean"/>

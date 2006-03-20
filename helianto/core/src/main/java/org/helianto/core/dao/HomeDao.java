@@ -13,28 +13,32 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate;
+package org.helianto.core.dao;
 
-import java.util.List;
-
+import org.helianto.core.Credential;
 import org.helianto.core.Home;
-import org.helianto.core.dao.HomeDao;
 
-public class HomeDaoImpl extends GenericDaoImpl implements HomeDao {
-
-    public void persistHome(Home home) {
-        merge(home);
-    }
-
-    public void removeHome(Home home) {
-        remove(home);
-    }
-
-    public Home findHomeByHomeName(String homeName) {
-        return (Home) findUnique(HOME_QRY, homeName);
-    }
+/**
+ * Home data access interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id$
+ */
+public interface HomeDao {
     
-    static String HOME_QRY = 
-        "from Home home where home.homeName= ?";
+    /**
+     * Persist <code>Home</code>.
+     */
+    public void persistHome(Home home);
+    
+    /**
+     * Remove <code>Home</code>.
+     */
+    public void removeHome(Home home);
+    
+    /**
+     * Find <code>Home</code> by name.
+     */
+    public Home findHomeByHomeName(String homeName);
 
 }

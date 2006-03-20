@@ -41,7 +41,7 @@ Persist a credential, unique by principal.
 		<!-- 
   				id
 		-->
-		<id name="id" type="long" unsaved-value="null">
+		<id name="id" type="long">
 			<generator class="native"/>
 		</id>
 		<!-- 

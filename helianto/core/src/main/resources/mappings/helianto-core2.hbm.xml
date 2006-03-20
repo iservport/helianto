@@ -47,17 +47,15 @@ to a single <code>Entity</code>.
 		<!-- 
   				id
 		-->
-		<id name="id" type="int" unsaved-value="null">
-			<generator class="foreign">
-				<param name="property">entity</param>
-			</generator>
+		<id name="id" type="int">
+			<generator class="native"/>
 		</id>
 		<!-- 
 				entity
 				(note this is actually one-to-one because of unique=true)
 		-->
 		<many-to-one name="entity" 
-			class="org.helianto.core.Entity">
+			class="org.helianto.core.Entity" cascade="all">
 			<meta attribute="use-in-equals">true</meta>
 			<column name="entityId" unique="true"/>
 		</many-to-one>

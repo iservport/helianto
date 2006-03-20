@@ -1,10 +1,12 @@
 package org.helianto.core.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
+import org.helianto.core.PersonalData;
+import org.helianto.core.User;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class SimpleCoreMgrImplTests extends AbstractCoreTest {
@@ -22,40 +24,66 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
 
     public void testCreateDefaultEntitySuccess() {
         
-        Entity entity = simpleCoreMgr.createDefaultEntity("TEST");
-        assertEquals("TEST",entity.getAlias());
-        Home home = entity.getHome();
-        assertEquals("TEST", home.getHomeName());
+        DefaultEntity defaultEntity = simpleCoreMgr.createDefaultEntity("TEST");
+        assertEquals("TEST",defaultEntity.getEntity().getAlias());
+        assertEquals("TEST",defaultEntity.getEntity().getHome().getHomeName());
         
     }
 
     @SuppressWarnings("unchecked")
     public void testPersistDefaultEntitySuccess() {
         
-        Entity entity = simpleCoreMgr.createDefaultEntity("TEST");
-        simpleCoreMgr.persistDefaultEntity(entity);
+        DefaultEntity defaultEntity = simpleCoreMgr.createDefaultEntity("TEST");
+        simpleCoreMgr.persistDefaultEntity(defaultEntity);
         
         hibernateTemplate.flush();
         
         List<Home> homeList = hibernateTemplate.find("from Home");
         assertEquals(1, homeList.size());
         Home h = homeList.get(0);
-        assertEquals (entity.getHome(), h);
+        assertEquals (defaultEntity.getEntity().getHome(), h);
         List<Entity> entityList = hibernateTemplate.find("from Entity");
         assertEquals(1, entityList.size());
         Entity e = entityList.get(0);
-        assertEquals(entity, e);
+        assertEquals(defaultEntity.getEntity(), e);
         
     }
     
     public void testFindDefaultEntitySuccess() {
         
-//        List homeList = (List) hibernateTemplate.find(SimpleCoreMgrImpl.HOME_QRY);
+        DefaultEntity defaultEntity = simpleCoreMgr.createDefaultEntity("TEST");
+        simpleCoreMgr.persistDefaultEntity(defaultEntity);
         
-//        Entity entity = simpleCoreMgr.createDefaultEntity("TEST");
-//        simpleCoreMgr.persistDefaultEntity(entity);
-//        Entity e = simpleCoreMgr.findDefaultEntity();
-//        assertNotNull(e);
+        hibernateTemplate.flush();
+        
+        Entity e = simpleCoreMgr.findDefaultEntity();
+        assertEquals(defaultEntity.getEntity(), e);
+        
+    }
+    
+    public void testCreatePersonalData() {
+        simpleCoreMgr.createPersonalData();
+    }
+    
+    public void testCreateSimpleUser() {
+        DefaultEntity defaultEntity = simpleCoreMgr.createDefaultEntity("TEST");
+        simpleCoreMgr.persistDefaultEntity(defaultEntity);
+
+        PersonalData personalData = simpleCoreMgr.createPersonalData();
+        User user = simpleCoreMgr.createSimpleUser("TEST", personalData);
+        assertEquals(defaultEntity.getEntity(), user.getEntity());
+        
+    }
+
+    public void testCreateSimpleUserEntity() {
+        DefaultEntity defaultEntity = simpleCoreMgr.createDefaultEntity("TEST");
+        simpleCoreMgr.persistDefaultEntity(defaultEntity);
+
+        PersonalData personalData = simpleCoreMgr.createPersonalData();
+        User user = simpleCoreMgr.createSimpleUser(defaultEntity.getEntity(), "TEST", personalData);
+        assertEquals(defaultEntity.getEntity(), user.getEntity());
+        assertEquals("TEST", user.getCredential().getPrincipal());
+        assertSame(personalData, user.getCredential().getPersonalData());
         
     }
 

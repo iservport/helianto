@@ -15,24 +15,33 @@
 
 package org.helianto.core.service;
 
-import java.util.List;
-
 import org.helianto.core.Credential;
+import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
+import org.helianto.core.EntityCreator;
 import org.helianto.core.Home;
+import org.helianto.core.HomeCreator;
 import org.helianto.core.PersonalData;
 import org.helianto.core.User;
+import org.helianto.core.UserCreator;
+import org.helianto.core.dao.EntityDao;
 
-public class SimpleCoreMgrImpl extends CoreMgrImpl implements SimpleCoreMgr {
+public class SimpleCoreMgrImpl implements SimpleCoreMgr {
+    
+    private EntityCreator entityCreator;
+    private HomeCreator homeCreator;
+    private UserCreator userCreator;
+    private EntityDao entityDao;
 
-    public Entity createDefaultEntity(String alias) {
-        Home home = homeFactory(alias);
-        Entity entity = entityFactory(home, alias);
-        return entity;
+    public DefaultEntity createDefaultEntity(String alias) {
+        Home home = homeCreator.homeFactory(alias);
+        Entity entity = entityCreator.entityFactory(home, alias);
+        DefaultEntity defaultEntity = entityCreator.defaultEntityFactory(entity);
+        return defaultEntity;
     }
 
-    public void persistDefaultEntity(Entity entity) {
-        persistEntity(entity);
+    public void persistDefaultEntity(DefaultEntity defaultEntity) {
+        entityDao.persistDefaultEntity(defaultEntity);
     }
 
     public void changeEntityToDefault(Entity entity) {
@@ -41,18 +50,22 @@ public class SimpleCoreMgrImpl extends CoreMgrImpl implements SimpleCoreMgr {
     }
 
     public Entity findDefaultEntity() {
-        
-        return null;
+        return entityDao.findDefaultEntity().getDefaultEntity().getEntity();
+    }
+    
+    public PersonalData createPersonalData() {
+        return userCreator.personalDataFactory();
     }
 
     public User createSimpleUser(String principal, PersonalData pd) {
-        // TODO Auto-generated method stub
-        return null;
+        Entity entity = findDefaultEntity();
+        return createSimpleUser(entity, principal, pd);
     }
 
     public User createSimpleUser(Entity entity, String principal, PersonalData pd) {
-        // TODO Auto-generated method stub
-        return null;
+        Credential credential = userCreator.credentialFactory(principal);
+        credential.setPersonalData(pd);
+        return userCreator.userFactory(entity, credential);
     }
 
     public void validatePassowrd(Credential cred, String verification) {
@@ -60,4 +73,22 @@ public class SimpleCoreMgrImpl extends CoreMgrImpl implements SimpleCoreMgr {
         
     }
     
+    // colaborators
+    
+    public void setEntityCreator(EntityCreator entityCreator) {
+        this.entityCreator = entityCreator;
+    }
+
+    public void setHomeCreator(HomeCreator homeCreator) {
+        this.homeCreator = homeCreator;
+    }
+
+    public void setEntityDao(EntityDao entityDao) {
+        this.entityDao = entityDao;
+    }
+
+    public void setUserCreator(UserCreator userCreator) {
+        this.userCreator = userCreator;
+    }
+
 }

@@ -41,7 +41,7 @@ Persist the user account.
 		<!-- 
   				id
 		-->
-		<id name="id" type="long" unsaved-value="null">
+		<id name="id" type="long">
 			<generator class="native"/>
 		</id>
 		<!-- 

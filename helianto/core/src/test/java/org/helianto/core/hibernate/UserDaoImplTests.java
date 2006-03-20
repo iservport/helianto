@@ -13,21 +13,23 @@
  * limitations under the License.
  */
 
-package org.helianto.core.dao;
+package org.helianto.core.hibernate;
 
+import org.helianto.core.EntityCreatorImpl;
+import org.helianto.core.HomeCreatorImpl;
+import org.helianto.core.UserCreatorImpl;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.User;
-import org.helianto.core.hibernate.CredentialDao;
-import org.helianto.core.hibernate.UserDao;
+import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
-import org.helianto.core.service.CoreFactoryImpl;
 
 public class UserDaoImplTests extends AbstractIntegrationTest {
     
     private UserDao userDao;
-    private CoreFactoryImpl factory;
+    private UserCreatorImpl factory;
+    private Entity entity;
     
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -35,14 +37,14 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
 
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
-        factory = new CoreFactoryImpl();
+        factory = new UserCreatorImpl();
+        Home home = new HomeCreatorImpl().homeFactory("HOME");
+        entity = new EntityCreatorImpl().entityFactory(home, "ENTITY");
     }
 
     public void testUserLifeCycle() {
         
         Credential credential = factory.credentialFactory("CRED");
-        Home home = factory.homeFactory("HOME");
-        Entity entity = factory.entityFactory(home, "ENTITY");
         User user = factory.userFactory(entity, credential);
         userDao.persistUser(user);
         

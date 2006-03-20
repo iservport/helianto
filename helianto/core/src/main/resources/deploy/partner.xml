@@ -16,52 +16,23 @@
  limitations under the License.
 		-->
 <beans>
-
 	<!--
-			Home dao implementation	
+			Partner service bean	
 	-->
-	<bean id="homeDao" 
-		class="org.helianto.core.hibernate.HomeDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
-			Entity dao implementation	
-	-->
-	<bean id="entityDao" 
-		class="org.helianto.core.hibernate.EntityDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
-			Credential dao implementation	
-	-->
-	<bean id="credentialDao" 
-		class="org.helianto.core.hibernate.CredentialDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
-			User dao implementation	
-	-->
-	<bean id="userDao" 
-		class="org.helianto.core.hibernate.UserDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
-			Simple core service bean	
-	-->
-	<bean id="simpleCoreMgr" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<!-- bean id="partnerMgr" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="target">
-			<bean id="simpleCoreTarget"
-				class="org.helianto.core.service.SimpleCoreMgrImpl">
+			<bean id="partnerTarget"
+				class="org.helianto.core.service.PartnerMgrImpl">
 				<property name="genericDao" ref="genericDao"/>
 				<property name="javaMailAdapter" ref="javaMailAdapter"/>
 			</bean>
 		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="persist*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
-	</bean>
+	</bean-->
 	
 </beans>

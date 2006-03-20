@@ -53,7 +53,7 @@ At least one default (root) home must be defined per installation.
 		<!-- 
   				id
 		-->
-		<id name="id" type="int" unsaved-value="null">
+		<id name="id" type="int">
 			<generator class="native"/>
 		</id>
 		<!-- 

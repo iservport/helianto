@@ -13,17 +13,17 @@
  * limitations under the License.
  */
 
-package org.helianto.core.dao;
+package org.helianto.core.hibernate;
 
 import org.helianto.core.Home;
-import org.helianto.core.hibernate.HomeDao;
+import org.helianto.core.HomeCreatorImpl;
+import org.helianto.core.dao.HomeDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
-import org.helianto.core.service.CoreFactoryImpl;
 
 public class HomeDaoImplTests extends AbstractIntegrationTest {
     
     private HomeDao homeDao;
-    private CoreFactoryImpl factory;
+    private HomeCreatorImpl factory;
     
     public void setHomeDao(HomeDao homeDao) {
         this.homeDao = homeDao;
@@ -31,7 +31,7 @@ public class HomeDaoImplTests extends AbstractIntegrationTest {
     
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
-        factory = new CoreFactoryImpl();
+        factory = new HomeCreatorImpl();
     }
 
     public void testHomeLifeCycle() {

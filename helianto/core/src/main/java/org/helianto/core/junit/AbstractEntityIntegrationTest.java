@@ -15,12 +15,8 @@
 
 package org.helianto.core.junit;
 
-import java.util.Date;
-
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.test.AbstractTransactionalSpringContextTests;
 
 /**
  * A base class for service layer integration tests.
