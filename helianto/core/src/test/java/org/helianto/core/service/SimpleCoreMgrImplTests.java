@@ -61,16 +61,11 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
     }
     
-    public void testCreatePersonalData() {
-        simpleCoreMgr.createPersonalData();
-    }
-    
     public void testCreateSimpleUser() {
         DefaultEntity defaultEntity = simpleCoreMgr.createDefaultEntity("TEST");
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
 
-        PersonalData personalData = simpleCoreMgr.createPersonalData();
-        User user = simpleCoreMgr.createSimpleUser("TEST", personalData);
+        User user = simpleCoreMgr.createSimpleUser();
         assertEquals(defaultEntity.getEntity(), user.getEntity());
         
     }
@@ -79,11 +74,9 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         DefaultEntity defaultEntity = simpleCoreMgr.createDefaultEntity("TEST");
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
 
-        PersonalData personalData = simpleCoreMgr.createPersonalData();
-        User user = simpleCoreMgr.createSimpleUser(defaultEntity.getEntity(), "TEST", personalData);
+        User user = simpleCoreMgr.createSimpleUser(defaultEntity.getEntity());
         assertEquals(defaultEntity.getEntity(), user.getEntity());
-        assertEquals("TEST", user.getCredential().getPrincipal());
-        assertSame(personalData, user.getCredential().getPersonalData());
+        assertEquals("", user.getCredential().getPrincipal());
         
     }
 

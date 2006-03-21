@@ -73,6 +73,7 @@
 				<property name="entityCreator" ref="entityCreator"/>
 				<property name="userCreator" ref="userCreator"/>
 				<property name="entityDao" ref="entityDao"/>
+				<property name="userDao" ref="userDao"/>
 				<!-- property name="javaMailAdapter" ref="javaMailAdapter"/-->
 			</bean>
 		</property>

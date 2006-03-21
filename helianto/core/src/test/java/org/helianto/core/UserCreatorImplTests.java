@@ -51,7 +51,7 @@ public class UserCreatorImplTests extends TestCase {
         assertEquals(8, credential.getPassword().length());
         assertTrue(credential.getCreated().compareTo(new Date()) < 1000);
         assertSame(credential.getCreated(), credential.getLastModified());
-        assertSame(credential.getCreated(), credential.getExpired());
+        assertNull(credential.getExpired());
         assertEquals(CredentialType.NOT_ADDRESSABLE.getValue(), credential.getCredentialType());
         assertEquals(Notification.BY_REQUEST.getValue(), credential.getNotification());
         assertEquals(CredentialState.IDLE.getValue(), credential.getCredentialState());

@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto</artifactId>
-	<version>0.0.1-20060310</version>
+	<version>0.0.1-20060320</version>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
 	<inceptionYear>2005</inceptionYear>
@@ -30,8 +30,7 @@
 		<url>http://jira.helianto.org/jira/browse/HEL</url>
 	</issueManagement>
 	
-	<description>Helianto project is designed to provide easy "construction
-		blocks" to an Hibernate+Spring+Acegi based application.
+	<description>Helianto project is designed to provide easy "construction blocks" to an Hibernate+Spring+Acegi based application.
 	</description>
 	
 	<!--build>

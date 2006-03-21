@@ -15,10 +15,8 @@
 
 package org.helianto.core.service;
 
-import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
-import org.helianto.core.PersonalData;
 import org.helianto.core.User;
 
 /**
@@ -59,26 +57,26 @@ public interface SimpleCoreMgr {
     public Entity findDefaultEntity();
     
     /**
-     * <p>Create an empty <code>PersonalData</code> object</p>
-     */
-    public PersonalData createPersonalData();
-    
-    /**
      * <p>A simple user creation that hides a <code>Credential</code>
      * creation behind its implementation and automatically
      * aggregates the default <code>Entity</code>.</p>
      */
-    public User createSimpleUser(String principal, PersonalData pd);
+    public User createSimpleUser();
     
     /**
      * <p>A simple user creation that hides a <code>Credential</code>
      * creation behind its implementation.</p>
      */
-    public User createSimpleUser(Entity entity, String principal, PersonalData pd);
+    public User createSimpleUser(Entity entity);
+    
+    /**
+     * <p>Persist the <code>User</code>.</p>
+     */
+    public void persistUser(User user);
     
     /**
      * <p>Check password against minimum requirements.</p>
      */
-    public void validatePassowrd(Credential cred, String verification);
+    public void validateSimpleUser(User user, String verification);
     
 }
