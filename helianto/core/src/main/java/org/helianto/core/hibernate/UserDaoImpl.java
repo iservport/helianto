@@ -21,7 +21,7 @@ import org.helianto.core.dao.UserDao;
 public class UserDaoImpl extends GenericDaoImpl implements UserDao {
 
     public void persistUser(User user) {
-        persist(user);
+        merge(user);
     }
 
     public void removeUser(User user) {

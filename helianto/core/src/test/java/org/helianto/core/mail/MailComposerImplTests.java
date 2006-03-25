@@ -15,9 +15,7 @@
 
 package org.helianto.core.mail;
 
-import org.helianto.core.Credential;
 import org.helianto.core.junit.AbstractIntegrationTest;
-import org.helianto.core.service.CoreMgrImpl;
 
 public class MailComposerImplTests extends AbstractIntegrationTest {
 
@@ -36,7 +34,7 @@ public class MailComposerImplTests extends AbstractIntegrationTest {
     @Override
     protected String[] getConfigLocations() {
         return new String[] { "deploy/dataSource.xml", 
-                "deploy/sessionFactory-test.xml",
+                "deploy/sessionFactory.xml",
                 "deploy/support.xml",
                 "deploy/transaction.xml",
                 "deploy/core.xml"};

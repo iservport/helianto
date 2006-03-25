@@ -82,7 +82,7 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
             logger.debug("\n        Finding object with query "+query);
         }
         
-        Session session = getSession(false);
+        Session session = getSession(true);
         try {
             Query result = session.createQuery(query);
             if (values != null) {

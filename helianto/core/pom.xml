@@ -12,6 +12,8 @@
 	<version>0.0.1-20060320</version>
 	<name>The Helianto Project Core Module</name>
 	
+	<description>Helianto project core module.</description>
+	
 	<build>
 		<finalName>helianto-core</finalName>
 		<plugins>

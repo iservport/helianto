@@ -15,12 +15,6 @@
 
 package org.helianto.core.service;
 
-import java.util.Date;
-import java.util.List;
-
-import org.helianto.core.Customer;
-import org.helianto.core.Entity;
-import org.helianto.core.PartnerState;
 import org.helianto.core.junit.AbstractIntegrationTest;
 
 public class PartnerMgrImplTests extends AbstractIntegrationTest {
@@ -30,16 +24,17 @@ public class PartnerMgrImplTests extends AbstractIntegrationTest {
     /**
      * @param partnerMger The partnerMger to set.
      */
-    public void setPartnerMgr(PartnerMgr partnerMgr) {
-        this.partnerMgr = partnerMgr;
-    }
-
+//    public void setPartnerMgr(PartnerMgr partnerMgr) {
+//        this.partnerMgr = partnerMgr;
+//    }
+//
     @Override
     protected String[] getConfigLocations() {
         return new String[] { "deploy/dataSource.xml", 
-                "deploy/sessionFactory-test.xml",
+                "deploy/sessionFactory.xml",
                 "deploy/support.xml",
-                "deploy/partnerMgr.xml"};
+                "deploy/transaction.xml",
+                "deploy/partner.xml"};
     }
     
     public void test() {
