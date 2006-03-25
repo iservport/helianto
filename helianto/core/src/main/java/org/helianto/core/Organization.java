@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/03/2006 20:52:10 by Hibernate Tools 3.1.0.beta4
+// Generated 25/03/2006 08:09:14 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -35,8 +35,8 @@ public class Organization extends org.helianto.core.AddressableEntity implements
     }
     
     /** full constructor */
-    public Organization(Home home, String alias, DefaultEntity defaultEntity, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode, String businessName) {
-        super(home, alias, defaultEntity, entityAddress1, entityAddress2, entityCityName, entityProvinceName, entityPostalCode);        
+    public Organization(Home home, String alias, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode, String businessName) {
+        super(home, alias, entityAddress1, entityAddress2, entityCityName, entityProvinceName, entityPostalCode);        
         this.businessName = businessName;
     }
     

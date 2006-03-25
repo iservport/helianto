@@ -51,7 +51,7 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     }
 
     public Entity findDefaultEntity() {
-        return entityDao.findDefaultEntity().getDefaultEntity().getEntity();
+        return entityDao.findDefaultEntity();
     }
     
     public User createSimpleUser() {

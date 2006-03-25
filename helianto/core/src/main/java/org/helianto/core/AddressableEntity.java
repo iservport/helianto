@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/03/2006 20:52:11 by Hibernate Tools 3.1.0.beta4
+// Generated 25/03/2006 08:09:15 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -39,8 +39,8 @@ public class AddressableEntity extends org.helianto.core.Entity implements java.
     }
     
     /** full constructor */
-    public AddressableEntity(Home home, String alias, DefaultEntity defaultEntity, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode) {
-        super(home, alias, defaultEntity);        
+    public AddressableEntity(Home home, String alias, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode) {
+        super(home, alias);        
         this.entityAddress1 = entityAddress1;
         this.entityAddress2 = entityAddress2;
         this.entityCityName = entityCityName;

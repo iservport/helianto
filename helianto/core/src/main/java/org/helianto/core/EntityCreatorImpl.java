@@ -93,7 +93,6 @@ public class EntityCreatorImpl extends AbstractGenericService implements EntityC
     public DefaultEntity defaultEntityFactory(Entity entity, int priority) {
         DefaultEntity defaultEntity = new DefaultEntity();
         defaultEntity.setEntity(entity);
-        entity.setDefaultEntity(defaultEntity);
         defaultEntity.setPriority(priority);
         return defaultEntity;
     }

@@ -5,7 +5,6 @@ import java.util.List;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
-import org.helianto.core.PersonalData;
 import org.helianto.core.User;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 

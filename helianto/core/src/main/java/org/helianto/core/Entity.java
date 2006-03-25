@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/03/2006 20:52:18 by Hibernate Tools 3.1.0.beta4
+// Generated 25/03/2006 08:09:22 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -45,7 +45,6 @@ public class Entity  implements java.io.Serializable {
      private long id;
      private Home home;
      private String alias;
-     private DefaultEntity defaultEntity;
 
 
     // Constructors
@@ -54,17 +53,11 @@ public class Entity  implements java.io.Serializable {
     public Entity() {
     }
 
-	/** minimal constructor */
+    
+    /** full constructor */
     public Entity(Home home, String alias) {
         this.home = home;
         this.alias = alias;
-    }
-    
-    /** full constructor */
-    public Entity(Home home, String alias, DefaultEntity defaultEntity) {
-        this.home = home;
-        this.alias = alias;
-        this.defaultEntity = defaultEntity;
     }
     
 
@@ -94,14 +87,6 @@ public class Entity  implements java.io.Serializable {
     public void setAlias(String alias) {
         this.alias = alias;
     }
-
-    public DefaultEntity getDefaultEntity() {
-        return this.defaultEntity;
-    }
-    
-    public void setDefaultEntity(DefaultEntity defaultEntity) {
-        this.defaultEntity = defaultEntity;
-    }
    
 
 
@@ -122,7 +107,6 @@ public class Entity  implements java.io.Serializable {
          
          result = 37 * result + ( getHome() == null ? 0 : this.getHome().hashCode() );
          result = 37 * result + ( getAlias() == null ? 0 : this.getAlias().hashCode() );
-         
          return result;
    }   
 

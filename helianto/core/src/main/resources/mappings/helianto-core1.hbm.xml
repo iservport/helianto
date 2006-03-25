@@ -88,12 +88,6 @@ like Hibernate's (www.hibernate.org) non-lazy loading.
 			<column name="alias" length="20" not-null="true" 
 				unique-key="unique1"/>
 		</property>
-		<!--
-				default entity
-		-->
-		<one-to-one name="defaultEntity" 
-			class="org.helianto.core.DefaultEntity"
-			property-ref="entity"/>
 		<!-- 
 				subclass to provide address information
 		-->
