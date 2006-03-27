@@ -82,8 +82,12 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
             logger.debug("\n        Finding object with query "+query);
         }
         
-        Session session = getSession(true);
+        return queryAssembler( query,  values).list();
+    }
+    
+    protected Query queryAssembler(String query, Object values) {
         try {
+            Session session = getSession(true);
             Query result = session.createQuery(query);
             if (values != null) {
                 if (values instanceof Object[]) {
@@ -105,10 +109,9 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
                     logger.debug("\n        No parameters");
                 }
             }
-            return result.list();
-        }
-        catch (HibernateException ex) {
-            throw convertHibernateAccessException(ex);
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to assemble query");
         }
     }
 

@@ -15,6 +15,8 @@
 
 package org.helianto.core.service;
 
+import java.util.Locale;
+
 import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
@@ -46,12 +48,16 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     }
 
     public void changeEntityToDefault(Entity entity) {
-        // TODO Auto-generated method stub
-        
+        // TODO changeEntityToDefault
+        throw new RuntimeException("Feature not yet implemented.");
     }
 
     public Entity findDefaultEntity() {
         return entityDao.findDefaultEntity();
+    }
+    
+    public Credential createEmptyCredential() {
+        return userCreator.credentialFactory();
     }
     
     public User createSimpleUser() {
@@ -63,16 +69,39 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         Credential credential = userCreator.credentialFactory();
         return userCreator.userFactory(entity, credential);
     }
+    
+    public Locale getLocale(Home home) {
+        try {
+            return new Locale(home.getLanguage(), home.getCountry());
+        } catch (Exception e) {
+            return Locale.getDefault();
+        }
+    }
+    
+    /**
+     * Helper method to convert principal to lower case.
+     */
+    static String convertToLowerCase(Locale locale, String principal) {
+        if ((principal != null && principal.length() > 0)) {
+            return principal.toLowerCase(locale);
+        }
+        throw new RuntimeException("Principal should not be null or empty.");
+    }
 
     public void persistUser(User user) {
+        String principal = user.getCredential().getPrincipal();
+        Locale locale = getLocale(user.getEntity().getHome());
+        user.getCredential().setPrincipal(
+                convertToLowerCase(locale, principal));
         userDao.persistUser(user);
     }
 
-    public void validateSimpleUser(User user, String verification) {
-        // TODO Auto-generated method stub
-        
+    public boolean isPrincipalUnique(User user) {
+        Locale locale = getLocale(user.getEntity().getHome());
+        String principal = convertToLowerCase(locale, user.getCredential().getPrincipal());
+        return (userDao.countCredentialByPrincipal(principal)==0) ? true : false;
     }
-    
+
     // colaborators
     
     public void setEntityCreator(EntityCreator entityCreator) {

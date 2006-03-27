@@ -15,18 +15,18 @@
 
 package org.helianto.core.hibernate;
 
-import org.helianto.core.UserCreatorImpl;
 import org.helianto.core.Credential;
-import org.helianto.core.dao.CredentialDao;
+import org.helianto.core.UserCreatorImpl;
+import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
 
 public class CredentialDaoImplTests extends AbstractIntegrationTest {
     
-    private CredentialDao credentialDao;
+    private UserDao userDao;
     private UserCreatorImpl factory;
     
-    public void setCredentialDao(CredentialDao credentialDao) {
-        this.credentialDao = credentialDao;
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
@@ -37,16 +37,16 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
     public void testCredentialLifeCycle() {
         
         Credential credential = factory.credentialFactory("TEST");
-        credentialDao.persistCredential(credential);
+        userDao.persistCredential(credential);
         
         hibernateTemplate.flush();
         
-        Credential cr = credentialDao.findCredentialByPrincipal("TEST");
+        Credential cr = userDao.findCredentialByPrincipal("TEST");
         assertEquals(credential, cr);
         
         Credential duplicatedCredential = factory.credentialFactory("TEST");
         try {
-            credentialDao.persistCredential(duplicatedCredential);
+            userDao.persistCredential(duplicatedCredential);
             fail();
         } catch (Exception e) {
             //ok

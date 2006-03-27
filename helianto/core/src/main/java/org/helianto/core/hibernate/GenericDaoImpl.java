@@ -15,6 +15,8 @@
 
 package org.helianto.core.hibernate;
 
+import java.util.Iterator;
+
 import org.helianto.core.dao.GenericDao;
 
 /**
@@ -52,6 +54,30 @@ public class GenericDaoImpl extends LightweightDaoImpl implements GenericDao {
             logger.debug("\n        Evicting (removing from session cache) "+object.toString());
         }
         this.getHibernateTemplate().evict(object);
+    }
+    
+    public Iterator iterate(String query, Object values) {
+        if (values != null) {
+            if (values instanceof Object[]) {
+                Object[] valueList = (Object[]) values;
+                for (int i = 0; i<valueList.length; i++) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("\n        Parameter "+i+"="+valueList[i]);
+                    }
+                }
+                return this.getHibernateTemplate().iterate(query, valueList);
+            } else {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("\n        Single parameter is "+values);
+                }
+                return this.getHibernateTemplate().iterate(query, values);
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("\n        No parameters");
+            }
+            return this.getHibernateTemplate().iterate(query);
+        }
     }
 
 }

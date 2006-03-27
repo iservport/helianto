@@ -39,5 +39,10 @@ public interface CredentialDao {
      * Find <code>Credential</code> by principal.
      */
     public Credential findCredentialByPrincipal(String principal);
+    
+    /**
+     * Count <code>Credential</code> by principal.
+     */
+    public int countCredentialByPrincipal(String principal);
 
 }

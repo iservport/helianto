@@ -23,7 +23,7 @@ import org.helianto.core.User;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public interface UserDao {
+public interface UserDao extends CredentialDao {
     
     /**
      * Persist <code>User</code>.

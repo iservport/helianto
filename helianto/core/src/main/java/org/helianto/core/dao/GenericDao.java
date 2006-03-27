@@ -15,6 +15,8 @@
 
 package org.helianto.core.dao;
 
+import java.util.Iterator;
+
 /**
  * Extends the <code>LightWeightDao</code> to provide 
  * additional methods to access code.
@@ -48,5 +50,10 @@ public interface GenericDao extends LightweightDao {
      * current Session.
      */
     public void evict(Object object);
+    
+    /**
+     * A method to iterate over a query.
+     */
+    public Iterator iterate(String query, Object values);
 
 }

@@ -15,8 +15,12 @@
 
 package org.helianto.core.service;
 
+import java.util.Locale;
+
+import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
+import org.helianto.core.Home;
 import org.helianto.core.User;
 
 /**
@@ -57,6 +61,12 @@ public interface SimpleCoreMgr {
     public Entity findDefaultEntity();
     
     /**
+     * <p>An empty <code>Credential</code> to be 
+     * submitted to the presentation layer.</p>
+     */
+    public Credential createEmptyCredential();
+    
+    /**
      * <p>A simple user creation that hides a <code>Credential</code>
      * creation behind its implementation and automatically
      * aggregates the default <code>Entity</code>.</p>
@@ -70,13 +80,28 @@ public interface SimpleCoreMgr {
     public User createSimpleUser(Entity entity);
     
     /**
+     * <p>The <code>java.util.Locale</code> 
+     * for the given <code>Home</code>.</p>
+     * 
+     * <p>If a <code>Locale</code> can not be set
+     * from the <code>language</code> and <code>country</code>
+     * instance members of <code>Home</code>, return the 
+     * default <code>Locale</code>.
+     */
+    public Locale getLocale(Home home);
+    
+    
+    /**
+     * <p>A method to prevent unique key violation for
+     * the <code>Credential</code> object.</p>
+     * <p>The principal is converted to lower case before
+     * uniqueness check.<p>
+     */
+    public boolean isPrincipalUnique(User user);
+    
+    /**
      * <p>Persist the <code>User</code>.</p>
      */
     public void persistUser(User user);
-    
-    /**
-     * <p>Check password against minimum requirements.</p>
-     */
-    public void validateSimpleUser(User user, String verification);
     
 }

@@ -18,7 +18,7 @@ package org.helianto.core.hibernate;
 import org.helianto.core.User;
 import org.helianto.core.dao.UserDao;
 
-public class UserDaoImpl extends GenericDaoImpl implements UserDao {
+public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
 
     public void persistUser(User user) {
         merge(user);
