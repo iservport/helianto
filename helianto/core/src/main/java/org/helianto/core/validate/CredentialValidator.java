@@ -25,7 +25,7 @@ import org.springframework.validation.Validator;
  * Basic <code>Credential</code> validator.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $ Id: $
+ * @version $Id$
  */
 public class CredentialValidator implements Validator {
     
@@ -49,18 +49,24 @@ public class CredentialValidator implements Validator {
             logger.debug("Validating Credential principal");
         }
         String principal = credential.getPrincipal();
-        if (principal != null && principal.length() > 0) {
+        if (principal == null || principal.length() == 0) {
             errors.rejectValue("principal", 
-                    "credential.error.whitespace", 
+                    "credential.error.empty", 
                     "Credential principal should not be empty or have whitespace");
-        }
-        for (char c : principal.toCharArray()) {
-            if (!Character.isLetterOrDigit(c)) {
-                errors.rejectValue("principal", 
-                        "credential.error.invalidchar", 
-                        "Credential principal should include invalid char " + c);
+        } else {
+            for (char c : principal.toCharArray()) {
+                if (Character.isWhitespace(c)) {
+                    errors.rejectValue("principal", 
+                            "credential.error.whitespace", 
+                            "Credential principal should include invalid char " + c);
+                }
+                if (!Character.isLetterOrDigit(c)) {
+                    errors.rejectValue("principal", 
+                            "credential.error.invalidchar", 
+                            "Credential principal should include invalid char " + c);
+                }
+                
             }
-            
         }
     }
 

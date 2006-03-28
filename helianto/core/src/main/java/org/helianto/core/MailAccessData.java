@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 27/03/2006 12:08:34 by Hibernate Tools 3.1.0.beta4
+// Generated 27/03/2006 21:54:03 by Hibernate Tools 3.1.0.beta4
 
 
 

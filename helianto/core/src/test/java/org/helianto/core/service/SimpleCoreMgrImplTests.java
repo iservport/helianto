@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
@@ -68,6 +69,10 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
     }
     
+    public void testCreateEmptyCredential() {
+        assertNotNull(simpleCoreMgr.createEmptyCredential());
+    }
+    
     public void testCreateSimpleUser() {
 
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
@@ -86,6 +91,30 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         User user = simpleCoreMgr.createSimpleUser(defaultEntity.getEntity());
         assertEquals(defaultEntity.getEntity(), user.getEntity());
         assertEquals("", user.getCredential().getPrincipal());
+        
+    }
+    
+    public void testCreateSimpleUserCredential() {
+
+        simpleCoreMgr.persistDefaultEntity(defaultEntity);
+        hibernateTemplate.flush();
+        
+        Credential credential = simpleCoreMgr.createEmptyCredential();
+        
+        User user = simpleCoreMgr.createSimpleUser(credential);
+        assertEquals(defaultEntity.getEntity(), user.getEntity());
+        assertSame(credential, user.getCredential());
+        
+    }
+    
+    public void testCreateUser() {
+
+        simpleCoreMgr.persistDefaultEntity(defaultEntity);
+        hibernateTemplate.flush();
+        
+        Credential credential = simpleCoreMgr.createEmptyCredential();
+        
+        assertNotNull(simpleCoreMgr.createUser(credential, defaultEntity.getEntity()));
         
     }
     

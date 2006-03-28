@@ -50,21 +50,4 @@ public class UserValidatorTests extends TestCase {
         }
     }
 
-    public void testValidateEmptyPrincipal() {
-        userValidator.validate(user, errors);
-        for (Object object : errors.getAllErrors()) {
-            assertEquals("credential.error.whitespace", 
-                    ((ObjectError) object).getCode());
-        }
-    }
-
-//    public void testValidatePrincipalInvalidChar() {
-//        user.getCredential().setPrincipal("~");
-//        userValidator.validate(user, errors);
-//        for (Object object : errors.getAllErrors()) {
-//            assertEquals("credential.error.whitespace", 
-//                    ((ObjectError) object).getCode());
-//        }
-//    }
-
 }

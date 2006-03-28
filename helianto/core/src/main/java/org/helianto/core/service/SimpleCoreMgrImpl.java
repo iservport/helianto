@@ -67,9 +67,18 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
 
     public User createSimpleUser(Entity entity) {
         Credential credential = userCreator.credentialFactory();
-        return userCreator.userFactory(entity, credential);
+        return createUser(credential, entity);
     }
     
+    public User createSimpleUser(Credential credential) {
+        Entity entity = findDefaultEntity();
+        return createUser(credential, entity);
+    }
+    
+    public User createUser(Credential credential, Entity entity) {
+        return userCreator.userFactory(entity, credential);
+    }
+
     public Locale getLocale(Home home) {
         try {
             return new Locale(home.getLanguage(), home.getCountry());

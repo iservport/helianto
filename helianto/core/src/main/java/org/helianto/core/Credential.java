@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 27/03/2006 12:08:30 by Hibernate Tools 3.1.0.beta4
+// Generated 27/03/2006 21:53:59 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,7 +17,7 @@ import java.util.Set;
  * 		
  */
 
-public class Credential  implements java.io.Serializable {
+public class Credential extends AbstractCredential implements java.io.Serializable {
 
 
     // Fields    

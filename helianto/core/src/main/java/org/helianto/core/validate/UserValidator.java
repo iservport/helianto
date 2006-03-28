@@ -40,7 +40,6 @@ public class UserValidator extends CredentialValidator implements Validator {
             errors.reject("user.error.nullpointer", "Null user received");
         } else {
             User user = (User) obj;
-            validatePrincipal(user.getCredential(), errors);
         }
     }
     

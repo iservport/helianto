@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 27/03/2006 12:08:36 by Hibernate Tools 3.1.0.beta4
+// Generated 27/03/2006 21:54:04 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -15,7 +15,7 @@ package org.helianto.core;
  * 			
  */
 
-public class PersonalData  implements java.io.Serializable {
+public class PersonalData extends AbstractCredential implements java.io.Serializable {
 
 
     // Fields    

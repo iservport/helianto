@@ -67,17 +67,27 @@ public interface SimpleCoreMgr {
     public Credential createEmptyCredential();
     
     /**
-     * <p>A simple user creation that hides a <code>Credential</code>
+     * <p>A simple <code>User</code> creation that hides an empty <code>Credential</code>
      * creation behind its implementation and automatically
      * aggregates the default <code>Entity</code>.</p>
      */
     public User createSimpleUser();
     
     /**
-     * <p>A simple user creation that hides a <code>Credential</code>
+     * <p>A simple <code>User</code> creation that hides an empty <code>Credential</code>
      * creation behind its implementation.</p>
      */
     public User createSimpleUser(Entity entity);
+    
+    /**
+     * <p>A simple <code>User</code> creation given a <code>Credential</code>.</p>
+     */
+    public User createSimpleUser(Credential credential);
+    
+    /**
+     * <p>Full <code>User</code> creation.</p>
+     */
+    public User createUser(Credential credential, Entity entity);
     
     /**
      * <p>The <code>java.util.Locale</code> 

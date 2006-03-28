@@ -49,6 +49,7 @@ public class UserCreatorImplTests extends TestCase {
             factory.credentialFactory("UNIQUE");
         assertEquals("UNIQUE", credential.getPrincipal());
         assertEquals(8, credential.getPassword().length());
+        assertEquals("", credential.getVerifyPassword());
         assertTrue(credential.getCreated().compareTo(new Date()) < 1000);
         assertSame(credential.getCreated(), credential.getLastModified());
         assertNull(credential.getExpired());

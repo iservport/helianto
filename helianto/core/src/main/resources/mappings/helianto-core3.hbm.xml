@@ -39,6 +39,10 @@ Persist a credential, unique by principal.
 				]]>
 		</meta>
 		<!-- 
+  				base class with non-persistent fields
+		-->
+		<meta attribute="extends">AbstractCredential</meta>
+		<!-- 
   				id
 		-->
 		<id name="id" type="long">
