@@ -24,6 +24,14 @@ import org.springframework.validation.Validator;
 /**
  * Basic <code>Credential</code> validator.
  * 
+ * <p><code>Credential principal</code> should not be empty (or null),
+ * should be maximum 64 chars long, no white space, and have only digits, letters
+ * or <code>'@' '.'</code> or <code>'_'</code>. </p>
+ * 
+ * <p><code>Credential password</code> is only checked if <code>isPasswordDirty</code> is set.
+ * It should not be empty (or null), be 6 to 20 chars long, no white space. 
+ * <code>Credential password</code> and <code>Credential verifyPassword</code> must match. </p>
+ * 
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
@@ -41,6 +49,7 @@ public class CredentialValidator implements Validator {
         } else {
             Credential credential = (Credential) obj;
             validatePrincipal(credential, errors);
+            validatePassword(credential, errors);
         }
     }
     
@@ -50,22 +59,98 @@ public class CredentialValidator implements Validator {
         }
         String principal = credential.getPrincipal();
         if (principal == null || principal.length() == 0) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Credential principal or password should not be empty");
+            }
             errors.rejectValue("principal", 
                     "credential.error.empty", 
-                    "Credential principal should not be empty or have whitespace");
+                    "Credential principal or password should not be empty");
         } else {
             for (char c : principal.toCharArray()) {
                 if (Character.isWhitespace(c)) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Credential principal or password should not have whitespace");
+                    }
                     errors.rejectValue("principal", 
                             "credential.error.whitespace", 
-                            "Credential principal should include invalid char " + c);
-                }
-                if (!Character.isLetterOrDigit(c)) {
+                            "Credential principal or password should not have whitespace");
+                } else if (!Character.isLetterOrDigit(c) && (c!='@' & c!='.' & c!='_')) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Credential principal should not include invalid char " + c);
+                    }
                     errors.rejectValue("principal", 
-                            "credential.error.invalidchar", 
-                            "Credential principal should include invalid char " + c);
+                            "credential.error.invalidchar", new Object[] { c },
+                            "Credential principal should not include invalid char $1 " + c);
                 }
-                
+            }
+            if (principal.length()>64) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Credential principal lenght should not exceed 64 chars");
+                }
+                errors.rejectValue("principal", 
+                        "credential.error.principaltoolong", 
+                        "Credential principal lenght should not exceed 64 chars");
+            }
+        }
+    }
+    
+    public void validatePassword(Credential credential, Errors errors) {
+        if (credential.isPasswordDirty()) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Validating Credential password");
+            }
+            String password = credential.getPassword();
+            String verifyPassword = credential.getVerifyPassword();
+            if (password == null || password.length() == 0) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Credential principal or password should not be empty");
+                }
+                errors.rejectValue("password", 
+                        "credential.error.empty", 
+                        "Credential principal or password should not be empty");
+            } else {
+                if (password.length()>20) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Credential password lenght should not exceed 20 chars");
+                    }
+                    errors.rejectValue("password", 
+                            "credential.error.passwordtoolong", 
+                            "Credential password lenght should not exceed 20 chars");
+                } else if (password.length()<6) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Credential password lenght should be at least 6 chars");
+                    }
+                    errors.rejectValue("password", 
+                            "credential.error.passwordtooshort", 
+                            "Credential password lenght should be at least 6 chars");
+                } else if (verifyPassword == null || verifyPassword.length() == 0) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Credential password verification should not be empty");
+                    }
+                    errors.rejectValue("verifyPassword", 
+                            "credential.error.emptyverify", 
+                            "Credential password verification should not be empty");
+                } else {
+                    if (password.compareToIgnoreCase(verifyPassword)!=0) {
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("Credential password and verification do not match");
+                        }
+                        errors.rejectValue("password", 
+                                "credential.error.passworderror", 
+                                "Credential password and verification do not match");
+                    } else {
+                        for (char c : password.toCharArray()) {
+                            if (Character.isWhitespace(c)) {
+                                if (logger.isDebugEnabled()) {
+                                    logger.debug("Credential principal or password should not have whitespace");
+                                }
+                                errors.rejectValue("password", 
+                                        "credential.error.whitespace", 
+                                        "Credential principal or password should not have whitespace");
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -8,26 +8,11 @@
 				value="%p --- %C{1}.%M(%L) | %m%n"/>
 		</layout>
 	</appender>
-	<logger name="org.apache">
-		<level value="INFO"/>
-	</logger>
-	<logger name="net.sf.hibernate">
-		<level value="warn"/>
-	</logger>
-	<logger name="com.opensymphony.module.sitemesh">
-		<level value="DEBUG"/>
-	</logger>
-	<logger name="org.springframework">
-		<level value="INFO"/>
-	</logger>
-	<logger name="org.springframework.orm.hibernate3">
-		<level value="DEBUG"/>
-	</logger>
 	<logger name="org.helianto.core">
 		<level value="DEBUG"/>
 	</logger>
 	<root>
-		<level value="INFO"/>
+		<level value="WARN"/>
 		<appender-ref ref="CONSOLE"/>
 	</root>
 </log4j:configuration>

@@ -25,6 +25,7 @@ package org.helianto.core;
 public class AbstractCredential {
     
     private String verifyPassword;
+    private boolean passwordDirty;
 
     public String getVerifyPassword() {
         return verifyPassword;
@@ -32,6 +33,19 @@ public class AbstractCredential {
 
     public void setVerifyPassword(String verifyPassword) {
         this.verifyPassword = verifyPassword;
+    }
+
+    public boolean isPasswordDirty() {
+        return passwordDirty;
+    }
+
+    /**
+     * If set, <code>verifyPassword</code> is 
+     * automatically reset.
+     */
+    public void setPasswordDirty(boolean passwordDirty) {
+        this.verifyPassword = "";
+        this.passwordDirty = passwordDirty;
     }
 
 }
