@@ -43,12 +43,8 @@ public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
         "where credential.principal = ?";
     
     public int countCredentialByPrincipal(String principal) {
-        return ( (Integer) iterate(CREDENTIAL_QRY_CNT, principal).next() ).intValue();
+        return find(CREDENTIAL_QRY, principal).size();
     }
 
-    static final String CREDENTIAL_QRY_CNT = 
-        "select count(*) " +
-        "from Credential credential " +
-        "where credential.principal = ?";
     
 }

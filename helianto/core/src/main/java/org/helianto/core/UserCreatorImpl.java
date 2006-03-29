@@ -56,6 +56,7 @@ public class UserCreatorImpl extends AbstractGenericService implements UserCreat
         credential.setPrincipal(principal);
         credential.setPassword(generatePassword(8));
         credential.setVerifyPassword("");
+        credential.setPasswordDirty(false);
         credential.setCreated(new Date());
         credential.setLastModified(credential.getCreated());
         credential.setExpired(null);

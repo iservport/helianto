@@ -33,6 +33,7 @@ public class AbstractCredential {
 
     public void setVerifyPassword(String verifyPassword) {
         this.verifyPassword = verifyPassword;
+        this.passwordDirty = true;
     }
 
     public boolean isPasswordDirty() {
@@ -44,7 +45,6 @@ public class AbstractCredential {
      * automatically reset.
      */
     public void setPasswordDirty(boolean passwordDirty) {
-        this.verifyPassword = "";
         this.passwordDirty = passwordDirty;
     }
 
