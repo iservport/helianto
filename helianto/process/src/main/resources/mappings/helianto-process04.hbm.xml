@@ -19,19 +19,20 @@
 		-->
 <hibernate-mapping default-lazy="false">
 		<!-- 
-				DOCUMENT ATTACHMENT
+				METHOD
 				============================================= 
 		-->
-<class table="process_attachment" 
-		name="org.helianto.process.Attachment">
+	<class table="process_method" 
+		name="org.helianto.process.Method">
 		<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-A base class to add attachments to documents.
+A method is required to complete an association between
+a characteristic and a specification.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id$
+@version $Id: iservport-process0.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
 				]]>
 		</meta>
 		<!-- 
@@ -41,27 +42,32 @@ A base class to add attachments to documents.
 			<generator class="native"/>
 		</id>
 		<!-- 
-  				document
+  				entity
 		-->
-		<many-to-one name="document" 
-			class="org.helianto.process.Document">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="documentId" unique-key="document" not-null="true"/>
-		</many-to-one>
+		<many-to-one name="entity" 
+			class="org.helianto.core.Entity" 
+			column="entityId"/>
 		<!-- 
-  				sequence
+  				resource
 		-->
-		<property name="sequence" type="int">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="sequence" unique-key="document" not-null="true"/>
-		</property>
+		<many-to-one name="resource" 
+			class="org.helianto.process.Resource" 
+			column="resourceId"/>
 		<!-- 
-  				content
+  				sample size
 		-->
-		<property name="content" type="binary"/>
+		<property name="sampleSize" type="double" not-null="true"/>
 		<!-- 
-  				description
+  				sample frequency
 		-->
-		<property name="detailDesc" type="string" length="512"/>
+		<property name="sampleFrequency" type="string" length="10"/>
+		<!-- 
+  				techinique
+		-->
+		<property name="techinique" type="string" length="32"/>
+		<!-- 
+  				control 
+		-->
+		<property name="control" type="string" length="32"/>
 	</class>
 </hibernate-mapping>

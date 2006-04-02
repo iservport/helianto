@@ -19,57 +19,57 @@
 		-->
 <hibernate-mapping default-lazy="false">
 		<!-- 
-				SETUP
+				MATERIAL TYPE
 				============================================= 
 		-->
-	<class table="process_setup" 
-		name="org.helianto.process.Setup">
+	<class table="process_materialtype" 
+		name="org.helianto.process.MaterialType">
 		<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-A class to represent a setup.
+A class to represent a material type.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id$
+@version $Id: iservport-process0.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
 				]]>
 		</meta>
 		<!-- 
   				id
-		--> 
+		-->
 		<id name="id" type="long" unsaved-value="null">
 			<generator class="native"/>
 		</id>
 		<!-- 
-  				process resource
+  				entity
 		-->
-		<many-to-one name="resource" 
-			class="org.helianto.process.Resource" 
-			column="resourceId"/>
-		<!-- 
-  				operation
-		-->
-		<many-to-one name="operation" cascade="merge"
-			class="org.helianto.process.Operation">
+		<many-to-one name="entity" 
+			class="org.helianto.core.Entity">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="operationId" unique-key="priority"
-				not-null="true"/>
+			<column name="entityId" unique-key="internalnumber"/>
 		</many-to-one>
 		<!-- 
-  				priority
+  				internal number
 		-->
-		<property name="priority" type="int" not-null="true">
+		<property name="internalNumber" type="long">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="priority" unique-key="priority"
-				not-null="true"/>
+			<column name="internalNumber" unique-key="internalnumber"/>
 		</property>
 		<!-- 
-  				setup time
+  				parent
 		-->
-		<property name="setupTime" type="long" not-null="true"/>
+		<many-to-one name="parent" 
+			class="org.helianto.process.Material" 
+			column="parentId" not-null="false"/>
 		<!-- 
-  				transport time
+  				material unit
 		-->
-		<property name="transportTime" type="long" not-null="true"/>
+		<many-to-one name="materialUnit" 
+			class="org.helianto.process.Unit" 
+			column="materialUnitId" not-null="true"/>
+		<!-- 
+  				material name
+		-->
+		<property name="materialName" type="string" length="128"/>
 	</class>
 </hibernate-mapping>

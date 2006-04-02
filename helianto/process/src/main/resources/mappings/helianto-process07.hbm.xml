@@ -19,57 +19,60 @@
 		-->
 <hibernate-mapping default-lazy="false">
 		<!-- 
-				SPECIFICATION
+				SETUP
 				============================================= 
 		-->
-	<class table="process_specification" 
-		name="org.helianto.process.Specification">
+	<class table="process_setup" 
+		name="org.helianto.process.Setup">
 		<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-A class to represent a specification.
+A class to represent a setup.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id$
+@version $Id: iservport-process7.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
 				]]>
 		</meta>
 		<!-- 
   				id
-		-->
+		--> 
 		<id name="id" type="long" unsaved-value="null">
 			<generator class="native"/>
 		</id>
 		<!-- 
-  				parent
+  				process resource
 		-->
-		<many-to-one name="parent" 
-			class="org.helianto.process.Specification" 
-			column="parentId" not-null="false"/>
-		<!-- 
-  				unit
-		-->
-		<many-to-one name="unit" 
-			class="org.helianto.process.Unit" 
-			column="unitId" not-null="false"/>
-		<!-- 
-  				characteristic
-		-->
-		<many-to-one name="characteristic" 
-			class="org.helianto.process.Characteristic">
+		<many-to-one name="resource" 
+			class="org.helianto.process.Resource">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="characteristicId" unique-key="characteristic" not-null="true"/>
+			<column name="resourceId" unique-key="priority"
+				not-null="true"/>
 		</many-to-one>
 		<!-- 
-  				phase: prototype, pre-launch, production
+  				operation
 		-->
-		<property name="phase" type="int">
+		<many-to-one name="operation" cascade="merge"
+			class="org.helianto.process.Operation">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="phase" unique-key="characteristic" not-null="false"/>
+			<column name="operationId" unique-key="priority"
+				not-null="true"/>
+		</many-to-one>
+		<!-- 
+  				priority
+		-->
+		<property name="priority" type="int" not-null="true">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="priority" unique-key="priority"
+				not-null="true"/>
 		</property>
 		<!-- 
-  				specification desc
+  				setup time
 		-->
-		<property name="speficicationDesc" type="string" length="64"/>
+		<property name="setupTime" type="long" not-null="true"/>
+		<!-- 
+  				transport time
+		-->
+		<property name="transportTime" type="long" not-null="true"/>
 	</class>
 </hibernate-mapping>

@@ -19,49 +19,63 @@
 		-->
 <hibernate-mapping default-lazy="false">
 		<!-- 
-				CHARACTERISTIC
+				TREE
 				============================================= 
 		-->
-	<class table="process_characteristic" 
-		name="org.helianto.process.Characteristic">
+	<class table="process_tree" 
+		name="org.helianto.process.Tree">
 		<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-An operation characteristic.
+A class to define relationships between different document types.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id$
+@version $Id: iservport-process1.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
 				]]>
 		</meta>
 		<!-- 
   				id
 		-->
-		<id name="id" type="int" unsaved-value="null">
+		<id name="id" type="long" unsaved-value="null">
 			<generator class="native"/>
 		</id>
 		<!-- 
-  				operation
+  				parent document
 		-->
-		<many-to-one name="operation" 
-			class="org.helianto.process.Operation">
+		<many-to-one name="parent" 
+			class="org.helianto.process.Document">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="operationId" unique-key="operation" not-null="true"/>
+			<column name="parentId" unique-key="tree" 
+			    not-null="true"/>
+		</many-to-one>
+		<!-- 
+  				child document
+		-->
+		<many-to-one name="child" 
+			class="org.helianto.process.Document">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="childId" unique-key="tree" 
+			    not-null="false"/>
 		</many-to-one>
 		<!-- 
   				sequence
 		-->
-		<property name="sequence" type="int">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="sequence" unique-key="operation" not-null="true"/>
-		</property>
+		<property name ="sequence" type="int" not-null="true"/>
 		<!-- 
-  				short description
+  				coefficient
 		-->
-		<property name="shortDesc" type="string" length="64"/>
+		<property name="coefficient" type="double" not-null="true"/>
 		<!-- 
-  				classification
+  				association type
 		-->
-		<property name="classification" type="int"/>
+		<property name="associationType" type="int" not-null="true"/>
+		<!-- 
+  				method
+		-->
+		<many-to-one name="method" 
+			class="org.helianto.process.Method">
+			<column name="methodId" not-null="false"/>
+		</many-to-one>
 	</class>
 </hibernate-mapping>
