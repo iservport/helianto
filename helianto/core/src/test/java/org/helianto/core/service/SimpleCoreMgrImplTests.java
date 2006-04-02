@@ -232,6 +232,10 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
     }
     
+    public void testListUserByEntity() {
+        //TODO
+    }
+    
     // colaborator setters
     
     public void setSimpleCoreMgr(SimpleCoreMgr simpleCoreMgr) {

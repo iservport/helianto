@@ -62,5 +62,9 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         }
 
     }
+    
+    public void testfindUserByEntity() {
+        // TODO
+    }
 
 }
