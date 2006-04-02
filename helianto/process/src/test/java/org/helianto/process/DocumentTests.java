@@ -27,28 +27,28 @@ public class DocumentTests extends TestCase {
         document = new Document();
     }
     
-    public void testId() {
-        Long id = Long.MAX_VALUE;
-        document.setId(id);
-        assertEquals(Long.MAX_VALUE, document.getId().longValue());
-    }
-    
-    public void testEntity() {
-        Entity entity = new Entity();
-        document.setEntity(entity);
-        assertSame(entity, document.getEntity());
-    }
-    
-    public void testDocName() {
-        String docName = "Document name";
-        document.setDocName(docName);
-        assertEquals(docName, document.getDocName());
-    }
-    
-    public void testDocCode() {
-        String docCode = "12345678-ABC";
-        document.setDocCode(docCode);
-        assertEquals(docCode, document.getDocCode());
-    }
-
+//    public void testId() {
+//        Long id = Long.MAX_VALUE;
+//        document.setId(id);
+//        assertEquals(Long.MAX_VALUE, document.getId().longValue());
+//    }
+//    
+//    public void testEntity() {
+//        Entity entity = new Entity();
+//        document.setEntity(entity);
+//        assertSame(entity, document.getEntity());
+//    }
+//    
+//    public void testDocName() {
+//        String docName = "Document name";
+//        document.setDocName(docName);
+//        assertEquals(docName, document.getDocName());
+//    }
+//    
+//    public void testDocCode() {
+//        String docCode = "12345678-ABC";
+//        document.setDocCode(docCode);
+//        assertEquals(docCode, document.getDocCode());
+//    }
+//
 }
