@@ -92,6 +92,10 @@ At least one default (root) home must be defined per installation.
 		-->
 		<property name="added" type="date"/>
 		<!-- 
+				server mode: local or enterprise
+		-->
+		<property name="serverMode" type="char" not-null="true"/>
+		<!-- 
 				mail transport data
 		-->
 		<component name="mailTransportData" 
