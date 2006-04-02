@@ -15,6 +15,9 @@
 
 package org.helianto.core.dao;
 
+import java.util.List;
+
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 
 /**
@@ -41,4 +44,8 @@ public interface UserDao extends CredentialDao {
      */
     public User findUserByEntityAliasAndPrincipal(String alias, String principal);
 
+    /**
+     * Find <code>User</code> by <code>Entity</code>.
+     */
+    public List<User> findUserByEntity(Entity entity);
 }

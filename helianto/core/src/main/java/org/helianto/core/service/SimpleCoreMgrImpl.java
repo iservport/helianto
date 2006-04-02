@@ -15,8 +15,11 @@
 
 package org.helianto.core.service;
 
+import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
@@ -28,14 +31,14 @@ import org.helianto.core.UserCreator;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.UserDao;
 
+/**
+ * Default implementation of <code>SimpleCoreMgr</code> interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id: $
+ */
 public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     
-    private EntityCreator entityCreator;
-    private HomeCreator homeCreator;
-    private UserCreator userCreator;
-    private EntityDao entityDao;
-    private UserDao userDao;
-
     public DefaultEntity createDefaultEntity(String alias) {
         Home home = homeCreator.homeFactory(alias);
         Entity entity = entityCreator.entityFactory(home, alias);
@@ -45,6 +48,9 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
 
     public void persistDefaultEntity(DefaultEntity defaultEntity) {
         entityDao.persistDefaultEntity(defaultEntity);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Persisted "+defaultEntity);
+        }
     }
 
     public void changeEntityToDefault(Entity entity) {
@@ -53,7 +59,11 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     }
 
     public Entity findDefaultEntity() {
-        return entityDao.findDefaultEntity();
+        Entity entity = entityDao.findDefaultEntity();
+        if (logger.isDebugEnabled()) {
+            logger.debug("Default entity is "+entity);
+        }
+        return entity;
     }
     
     public Credential createEmptyCredential() {
@@ -80,11 +90,16 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     }
 
     public Locale getLocale(Home home) {
+        Locale locale = null;
         try {
-            return new Locale(home.getLanguage(), home.getCountry());
+            locale = new Locale(home.getLanguage(), home.getCountry());
         } catch (Exception e) {
-            return Locale.getDefault();
+            locale = Locale.getDefault();
         }
+        if (logger.isDebugEnabled()) {
+            logger.debug("Locale is "+locale);
+        }
+        return locale;
     }
     
     /**
@@ -103,15 +118,41 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         user.getCredential().setPrincipal(
                 convertToLowerCase(locale, principal));
         userDao.persistUser(user);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Persisted "+user);
+        }
+    }
+    
+    public List<User> findUserByEntity(Entity entity) {
+        return userDao.findUserByEntity(entity);
     }
 
     public boolean isPrincipalUnique(User user) {
-        Locale locale = getLocale(user.getEntity().getHome());
-        String principal = convertToLowerCase(locale, user.getCredential().getPrincipal());
-        return (userDao.countCredentialByPrincipal(principal)==0) ? true : false;
+        return isPrincipalUnique(user.getEntity().getHome(), user.getCredential());
     }
 
-    // colaborators
+    public boolean isPrincipalUnique(Home home, Credential credential) {
+        String principal = convertToLowerCase(getLocale(home), credential.getPrincipal());
+        int principalCount = userDao.countCredentialByPrincipal(principal);
+        if (logger.isDebugEnabled()) {
+            logger.debug("There is  "+principalCount+" principal named "+principal);
+        }
+        return (principalCount==0) ? true : false;
+    }
+
+    // logger
+    
+    private final Log logger = LogFactory.getLog(getClass());
+    
+    // collaborators
+    
+    private EntityCreator entityCreator;
+    private HomeCreator homeCreator;
+    private UserCreator userCreator;
+    private EntityDao entityDao;
+    private UserDao userDao;
+
+    // colaborator accessors
     
     public void setEntityCreator(EntityCreator entityCreator) {
         this.entityCreator = entityCreator;

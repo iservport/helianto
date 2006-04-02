@@ -15,6 +15,9 @@
 
 package org.helianto.core.hibernate;
 
+import java.util.List;
+
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.dao.UserDao;
 
@@ -36,5 +39,14 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
         "from User user " +
         "where user.entity.alias = ? " +
         "and user.credential.principal = ?";
+
+    @SuppressWarnings("unchecked")
+    public List<User> findUserByEntity(Entity entity) {
+        return (List<User>) findUnique(USER_QRY_ENTITY, entity);
+    }
+    
+    static final String USER_QRY_ENTITY = 
+        "from User user " +
+        "where user.entity = ?";
 
 }

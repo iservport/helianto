@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 29/03/2006 18:55:59 by Hibernate Tools 3.1.0.beta4
+// Generated 30/03/2006 15:35:10 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import java.util.Date;
  * partners, like customers, suppliers, banks, etc. 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
  * 				
  *         
  * 				
@@ -19,7 +19,7 @@ import java.util.Date;
  * Persist a relationship to a division. 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
  * 				
  * 			
  * 				
@@ -27,7 +27,7 @@ import java.util.Date;
  * Persist a relationship to a customer 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
  * 				
  * 			
  * 				
@@ -35,7 +35,7 @@ import java.util.Date;
  * Persist a relationship to a supplier 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
  * 				
  * 			
  * 				
@@ -43,7 +43,7 @@ import java.util.Date;
  * Persist a relationship to a bank 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
  * 				
  * 			
  * 				
@@ -51,7 +51,7 @@ import java.util.Date;
  * Persist a relationship to an Agent, like a sales representative. 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
  * 				
  * 			
  */

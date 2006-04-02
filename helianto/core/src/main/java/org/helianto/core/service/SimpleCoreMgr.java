@@ -15,6 +15,7 @@
 
 package org.helianto.core.service;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.helianto.core.Credential;
@@ -90,6 +91,11 @@ public interface SimpleCoreMgr {
     public User createUser(Credential credential, Entity entity);
     
     /**
+     * <p>List <code>User</code> by <code>Entity</code>.</p>
+     */
+    public List<User> findUserByEntity(Entity entity);
+    
+    /**
      * <p>The <code>java.util.Locale</code> 
      * for the given <code>Home</code>.</p>
      * 
@@ -103,11 +109,19 @@ public interface SimpleCoreMgr {
     
     /**
      * <p>A method to prevent unique key violation for
-     * the <code>Credential</code> object.</p>
+     * the <code>Credential</code> object contained in <code>User</code>.</p>
      * <p>The principal is converted to lower case before
      * uniqueness check.<p>
      */
     public boolean isPrincipalUnique(User user);
+    
+    /**
+     * <p>A method to prevent unique key violation for
+     * the <code>Credential</code> object.</p>
+     * <p>The principal is converted to lower case before
+     * uniqueness check.<p>
+     */
+    public boolean isPrincipalUnique(Home home, Credential credential);
     
     /**
      * <p>Persist the <code>User</code>.</p>

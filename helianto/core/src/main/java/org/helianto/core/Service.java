@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 29/03/2006 18:56:04 by Hibernate Tools 3.1.0.beta4
+// Generated 30/03/2006 15:35:13 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -9,7 +9,7 @@ package org.helianto.core;
  * Persist services.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: helianto-core5.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
  * 				
  * 		
  */
