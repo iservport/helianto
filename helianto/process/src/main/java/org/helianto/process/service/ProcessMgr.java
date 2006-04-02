@@ -78,7 +78,7 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Product factory method.
      */
-    public Product productFactory(Unit unit, Material material, String productCode, Process process);
+//    public Product productFactory(Unit unit, Material material, String productCode, Process process);
     
     /**
      * Part factory method.

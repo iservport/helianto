@@ -40,7 +40,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     public Resource resourceGroupFactory(Entity entity) {
         Resource resource = new Resource();
         resource.setEntity(entity);
-        resource.setResourceType(ResourceType.GROUP.getValue());
+//        resource.setResourceType(ResourceType.GROUP.getValue());
         if (logger.isDebugEnabled()) {
             logger.debug("\n         New instance of Resource (group)"+resource);
         }
@@ -50,7 +50,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     public Resource resourceFactory(Resource parent) {
         Resource resource = new Resource();
         resource.setEntity(parent.getEntity());
-        resource.setResourceType(ResourceType.NORMAL.getValue());
+        resource.setResourceType(ResourceType.EQUIPMENT.getValue());
         resource.setParent(parent);
         if (logger.isDebugEnabled()) {
             logger.debug("\n         New instance of Resource "+resource);
@@ -98,23 +98,23 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         doc.setChildren(new ArrayList());
     }
     
-    public Product productFactory(Unit unit, Material material, String productCode, Process process) {
-        if (process==null) {
-            throw new IllegalArgumentException("At least one primary process is required to build a product");
-        }
-        Product product =  new Product();
-        initDocument((Document) product, unit.getEntity(), productCode);
-        product.setUnit(unit);
-        product.setMaterial(material);
-        product.setHasDrawing(false);
-        product.setProductType(ProductType.DOMESTIC.getValue());
-        associate((Document) product, (Document) process, 0d, AssociationType.PRIMARY_PRODUCT_TO_PROCESS.getValue(), 0);
-        if (logger.isDebugEnabled()) {
-            logger.debug("\n         New instance of Product "+product);
-        }
-        return product;
-    }
-    
+//    public Product productFactory(Unit unit, Material material, String productCode, Process process) {
+//        if (process==null) {
+//            throw new IllegalArgumentException("At least one primary process is required to build a product");
+//        }
+//        Product product =  new Product();
+//        initDocument((Document) product, unit.getEntity(), productCode);
+//        product.setUnit(unit);
+//        product.setMaterial(material);
+//        product.setHasDrawing(false);
+//        product.setProductType(ProductType.DOMESTIC.getValue());
+//        associate((Document) product, (Document) process, 0d, AssociationType.PRIMARY_PRODUCT_TO_PROCESS.getValue(), 0);
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("\n         New instance of Product "+product);
+//        }
+//        return product;
+//    }
+//    
     public Part partFactory(Entity entity, String partCode, boolean hasDrawing) {
         Part part = new Part();
         initDocument((Document) part, entity, partCode);
@@ -146,7 +146,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
     
     public void associateParts(Part parent, Part child, double coefficient, int sequence) {
-        associate((Document) parent, (Document) child, coefficient, AssociationType.PART_TO_PART.getValue(), sequence);
+        associate((Document) parent, (Document) child, coefficient, AssociationType.PART_PART.getValue(), sequence);
     }
     
     public Process processFactory(Entity entity, String processCode) {
@@ -162,8 +162,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         Operation operation = new Operation();
         initDocument((Document) operation, process.getEntity(), operationCode);
         operation.setOperationTime(execTime);
-        operation.setOperationType(OperationType.EXECUTION.getValue());
-        associate((Document) process, (Document) operation, 0d, AssociationType.PROCESS_TO_OPERATION.getValue(), sequence);
+        operation.setOperationType(OperationType.OPERATION.getValue());
+        associate((Document) process, (Document) operation, 0d, AssociationType.PROCESS_OPERATION.getValue(), sequence);
         operation.setSetups(new ArrayList());
         if (logger.isDebugEnabled()) {
             logger.debug("\n         New instance of Operation "+operation);

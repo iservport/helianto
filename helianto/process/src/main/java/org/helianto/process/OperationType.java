@@ -14,7 +14,7 @@ public enum OperationType {
     /**
      * The operation is execution.
      */
-    EXECUTION(1),
+    OPERATION(1),
     /**
      * The operation is inspection.
      */
@@ -22,7 +22,15 @@ public enum OperationType {
     /**
      * The operation is both execution and inspection.
      */
-    MIXED(3);
+    OPERATON_AND_INSPECTION(3),
+    /**
+     * The operation is transport.
+     */
+    TRANSPORT(4),
+    /**
+     * The operation is validation.
+     */
+    VALIDATION(8);
     
     private int value;
     

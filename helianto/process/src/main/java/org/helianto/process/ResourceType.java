@@ -12,22 +12,26 @@ package org.helianto.process;
 public enum ResourceType {
     
     /**
-     * The resource is a group.
+     * The resource is a regular equipment.
      */
-    GROUP(0),
+    EQUIPMENT(0),
     /**
-     * The resource is not a key equipment.
+     * The resource is a fixture.
      */
-    NORMAL(1),
+    FIXTURE(1),
+    /**
+     * The resource is an instrument.
+     */
+    INSTRUMENT(2),
     /**
      * The resource is key, i.e. can potentially cause
      * interruption in the supply chain.
      */
-    KEY(2),
+    KEY_EQUIPMENT(3),
     /**
-     * The resource is inactive.
+     * The resource is a tool.
      */
-    INACTIVE(-1);
+    TOOL(4);
     
     private int value;
     
