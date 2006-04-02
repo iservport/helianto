@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Helianto">
-  <bannerLeft>
-    <name>Helianto</name>
-    <src>images/helianto-t.png</src>
-    <href>http://www.helianto.org/</href>
-  </bannerLeft>
-  <!--bannerRight>
-    <src>http://...</src>
-  </bannerRight-->
+	<bannerRight>
+		<name>Helianto</name>
+		<src>images/helianto-t.gif</src>
+		<href>http://www.helianto.org/</href>
+	</bannerRight>
 	<body>
 		<links>
 			<item name="Spring Framework"
