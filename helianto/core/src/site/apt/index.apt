@@ -1,0 +1,67 @@
+Welcome to The Helianto Project Core Module
+
+  Helianto project is designed to provide easy "construction blocks" to an Hibernate+Spring+Acegi based application.
+
+* Overview
+
+  The core module has two major responsibilities:</para>
+
+  * hold the configuration, and
+
+  * implement a basic domain model and services.
+
+  All the configuration is declarative, mostly in the form
+  of xml files.
+
+  The basic domain model comprehends user and entity
+  relationship. It is designed to be as flexible as possible to
+  accomodate both, a single user in a small organization and
+  multiple identities beeing shared across an internet
+  distributed application.
+
+  The entity is a key domain object. Its responsibility is
+  to isolate information from one business unit from
+  another, like accounting or maintenance data. In this
+  sense, an entity may be a whole organization, part of one
+  organization or even a group of organizations. The
+  application extending Helianto may choose any of such
+  approaches.
+
+  As an immediate consequence, the domain model has finer
+  granularity and delegates to the service layer the job of
+  exposing simple and complex service methods. For example,
+  there is a method to create a user and associate it by default
+  to an entity. But there also is a method to create a
+  credential to be supplied in a further operation that
+  creates a user for a selected entity.
+
+  There is also a topic to be examined. It is sometimes
+  desirable to share specifc information accross multiple
+  entities. Customers would eventually like to share
+  product data (at their discretion) with
+  suppliers. Helianto is designed to create partners either
+  as domain objects local to an entity, designated as "weak"
+  relationships, or as entities themselves in a so called
+  "strong" relationship. Also, weak partners can be
+  converted to strong partners.
+
+  In order to accomplish this, helianto core module relies
+  on several packages:
+
+  * org.helianto.core: basic domain objects,
+
+  * org.helianto.core.dao: a set of common dao interfaces,
+
+  * org.helianto.core.hibernate: an Hibernate implementation for the common dao interfaces,
+
+  * org.helianto.core.junit: extra test support,
+
+  * org.helianto.core.mail: mail notification support,
+
+  * org.helianto.core.security: Acegi Security support, and
+  
+  * org.helianto.core.service: transactional core service layer.
+
+  * org.helianto.core.validate: Spring based domain validation.
+
+  For further information, please, see the reference guide.
