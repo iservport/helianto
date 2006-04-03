@@ -19,27 +19,35 @@ import org.helianto.core.Entity;
 
 public class PartCreatorImpl  implements PartCreator {
 
-    public Part partWithDrawingFactory(String drawingNumber, String drawingName) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public Part partFactory(String partNumber, String partName) {
-        // TODO Auto-generated method stub
-        return null;
+    	return partFactory(entity, drawingNumber, drawingName, true);
     }
 
     public Part partFactory(Entity entity, String partNumber, String partName) {
+        return partFactory(entity, partNumber, partName, false);
+    }
+
+    private Part partFactory(Entity entity, String partNumber, String partName, boolean hasDrawing) {
         Part part = new Part();
         part.setEntity(entity);
         part.setDocCode(partNumber);
         part.setDocName(partName);
+        part.setHasDrawing(hasDrawing);
         return part;
     }
+
+	public MaterialType materialTypeFactory(Unit materialUnit, String materialName) {
+		MaterialType materialType = new MaterialType();
+		materialType.setEntity(materialUnit.getEntity());
+		materialType.setMaterialUnit(materialUnit);
+		materialType.setMaterialName(materialName);
+		materialType.setInternalNumber(0);
+		return materialType;
+	}
+
+	public Part materialFactory(MaterialType materialType, String materialNumber, String materialName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
