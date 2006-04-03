@@ -21,7 +21,6 @@ public enum AssociationType {
      * <p>The specification should be also descendant of a 
      * control plan to provide for phase resolution.</p>
      * 
-     * @see {ProcessPhase}
      */
     CHARACTERISTIC_SPECIFICATION(0),
     /**
