@@ -16,7 +16,7 @@
 	
 	<modules>
 		<module>core</module>
-		<!--module>process</module-->
+		<module>process</module>
 	</modules>
 	
 	<scm>
@@ -242,8 +242,11 @@
 									classpathref="maven.runtime.classpath"/>
 									<hibernatetool destdir="src/main/java/" >
 										<configuration propertyfile="src/main/resources/hibernate.properties">
-											<fileset dir="src/main/resources/mappings/">
+											<!--fileset dir="src/main/resources/mappings/">
 												<include name="**/*.hbm.xml"/>
+											</fileset-->
+											<fileset dir="../">
+												<include name="**/src/main/resources/mappings/*.hbm.xml"/>
 											</fileset>
 										</configuration>
 										<hbm2java jdk5="true"/>
