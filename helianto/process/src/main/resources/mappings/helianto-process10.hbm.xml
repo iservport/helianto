@@ -49,7 +49,7 @@ A class to represent document versions.
 				release
 			-->
 			<many-to-one name="Release"
-				class="org.helianto.process.Entity">
+				class="org.helianto.core.Entity">
 				<meta attribute="use-in-equals">true</meta>
 				<column name="releaseId" />
 			</many-to-one>

@@ -59,7 +59,7 @@ A class to represent a material type.
   				parent
 		-->
 		<many-to-one name="parent" 
-			class="org.helianto.process.Material" 
+			class="org.helianto.process.MaterialType" 
 			column="parentId" not-null="false"/>
 		<!-- 
   				material unit
