@@ -15,6 +15,31 @@
 
 package org.helianto.process;
 
-public class PartCreatorImpl {
+import org.helianto.core.Entity;
+
+public class PartCreatorImpl  implements PartCreator {
+
+    public Part partWithDrawingFactory(String drawingNumber, String drawingName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Part partFactory(String partNumber, String partName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Part partFactory(Entity entity, String partNumber, String partName) {
+        Part part = new Part();
+        part.setEntity(entity);
+        part.setDocCode(partNumber);
+        part.setDocName(partName);
+        return part;
+    }
 
 }

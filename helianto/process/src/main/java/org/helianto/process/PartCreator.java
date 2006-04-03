@@ -4,12 +4,12 @@ import org.helianto.core.Entity;
 
 public interface PartCreator {
 	
-    public Part createPartWithDrawing(String drawingNumber, String drawingName);
+    public Part partWithDrawingFactory(String drawingNumber, String drawingName);
     
-    public Part createPartWithDrawing(Entity entity, String drawingNumber, String drawingName);
+    public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName);
     
-	public Part createPart(String partNumber, String partName);
+	public Part partFactory(String partNumber, String partName);
 	
-	public Part createPart(Entity entity, String partNumber, String partName);
+	public Part partFactory(Entity entity, String partNumber, String partName);
 
 }
