@@ -4,19 +4,59 @@
 	<parent>
 		<artifactId>helianto</artifactId>
 		<groupId>org.helianto</groupId>
-		<version>0.0.1</version>
+		<version>0.0.1-20060320</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-process</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-20060320</version>
 	<name>The Helianto Project Process Module</name>
+	
+	<description>Helianto project core module.</description>
+	
+	<build>
+		<finalName>helianto-core</finalName>
+		<plugins>
+			<!-- plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<configuration>
+							<tasks>
+								<taskdef name="hibernatetool"
+									classname="org.hibernate.tool.ant.HibernateToolTask"
+									classpathref="maven.compile.classpath" 
+									classpath="/home/desk/.m2/repository/org/helianto/helianto-core/0.0.1-20060320/helianto-core-0.0.1-20060320.jar"/>
+								<hibernatetool
+									destdir="src/main/java/">
+									<configuration
+										propertyfile="src/main/resources/hibernate.properties">
+										<fileset dir="src/main/resources/mappings/">
+											<include name="**/*.hbm.xml"/>
+										</fileset>
+										<fileset dir="../core/src/main/resources/mappings/">
+											<include name="**/*.hbm.xml"/>
+										</fileset>
+									</configuration>
+									<hbm2java jdk5="true" />
+								</hibernatetool>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin-->
+		</plugins>
+	</build>
 	
 	<dependencies>
 		<dependency>
 			<groupId>org.helianto</groupId>
 			<artifactId>helianto-core</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.1-20060320</version>
 		</dependency>
 	</dependencies>
 

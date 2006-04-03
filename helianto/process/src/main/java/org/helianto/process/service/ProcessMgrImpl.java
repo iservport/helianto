@@ -22,11 +22,10 @@ import org.helianto.core.Entity;
 import org.helianto.core.service.PartnerMgrImpl;
 import org.helianto.process.AssociationType;
 import org.helianto.process.Document;
-import org.helianto.process.Material;
+import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.OperationType;
 import org.helianto.process.Part;
-import org.helianto.process.Product;
 import org.helianto.process.Process;
 import org.helianto.process.ProductType;
 import org.helianto.process.Resource;
@@ -75,21 +74,21 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return unit;
     }
 
-    public Material materialFactory(Unit unit, String materialName) {
-        Material material = new Material();
-        material.setEntity(unit.getEntity());
-        material.setMaterialUnit(unit);
-        material.setMaterialName(materialName);
+    public MaterialType materialFactory(Unit unit, String materialName) {
+        MaterialType MaterialType = new MaterialType();
+        MaterialType.setEntity(unit.getEntity());
+        MaterialType.setMaterialUnit(unit);
+        MaterialType.setMaterialName(materialName);
         if (logger.isDebugEnabled()) {
-            logger.debug("\n         New instance of Material "+material);
+            logger.debug("\n         New instance of MaterialType "+MaterialType);
         }
-        return material;
+        return MaterialType;
     }
 
-    public Material materialFactory(Material parent, Unit unit, String materialName) {
-        Material material = materialFactory(unit, materialName);
-        material.setParent(parent);
-        return material;
+    public MaterialType materialFactory(MaterialType parent, Unit unit, String materialName) {
+        MaterialType MaterialType = materialFactory(unit, materialName);
+        MaterialType.setParent(parent);
+        return MaterialType;
     }
 
     private void initDocument(Document doc, Entity entity, String code) {
@@ -98,14 +97,14 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         doc.setChildren(new ArrayList());
     }
     
-//    public Product productFactory(Unit unit, Material material, String productCode, Process process) {
+//    public Product productFactory(Unit unit, MaterialType MaterialType, String productCode, Process process) {
 //        if (process==null) {
 //            throw new IllegalArgumentException("At least one primary process is required to build a product");
 //        }
 //        Product product =  new Product();
 //        initDocument((Document) product, unit.getEntity(), productCode);
 //        product.setUnit(unit);
-//        product.setMaterial(material);
+//        product.setMaterial(MaterialType);
 //        product.setHasDrawing(false);
 //        product.setProductType(ProductType.DOMESTIC.getValue());
 //        associate((Document) product, (Document) process, 0d, AssociationType.PRIMARY_PRODUCT_TO_PROCESS.getValue(), 0);
@@ -194,12 +193,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         getGenericDao().merge(unit);
     }
 
-    public void persistMaterial(Material material) {
-        getGenericDao().merge(material);
-    }
-
-    public void persistProduct(Product product) {
-        getGenericDao().merge(product);
+    public void persistMaterial(MaterialType MaterialType) {
+        getGenericDao().merge(MaterialType);
     }
 
     public void persistPart(Part part) {
@@ -207,7 +202,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
 
     public void persistProcess(Process process) {
-        if (process.getInternalNumber()==null) {
+        if (process.getInternalNumber()==0) {
             //FIXME internal number should return long ...
             process.setInternalNumber(new Long(currentNumber(process.getEntity(), "PROC")));
         }
@@ -230,12 +225,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return (Unit) getGenericDao().load(Unit.class, key);
     }
 
-    public Material loadMaterial(Long key) {
-        return (Material) getGenericDao().load(Material.class, key);
-    }
-
-    public Product loadProduct(Long key) {
-        return (Product) getGenericDao().load(Product.class, key);
+    public MaterialType loadMaterial(Long key) {
+        return (MaterialType) getGenericDao().load(MaterialType.class, key);
     }
 
     public Part loadPart(Long key) {

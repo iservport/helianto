@@ -1,12 +1,11 @@
 package org.helianto.process;
+// Generated 03/04/2006 06:51:32 by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
 import java.util.List;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.helianto.core.Entity;
 
 
-/** 
+/**
  * 				
  * <p>
  * A process.
@@ -15,39 +14,51 @@ import org.helianto.core.Entity;
  * @version $Id$
  * 				
  * 			
-*/
-public class Process extends Document implements Serializable {
+ */
 
-    /** nullable persistent field */
-    private Long internalNumber;
+public class Process extends org.helianto.process.Document implements java.io.Serializable {
 
-    /** full constructor */
-    public Process(String docCode, String docName, Entity entity, List children, Long internalNumber) {
-        super(docCode, docName, entity, children);
-        this.internalNumber = internalNumber;
-    }
+
+    // Fields    
+
+     private long internalNumber;
+
+
+    // Constructors
 
     /** default constructor */
     public Process() {
     }
 
-    /** minimal constructor */
-    public Process(String docCode, List children) {
-      super(docCode, children);
+	/** minimal constructor */
+    public Process(Entity entity, String docCode) {
+        super(entity, docCode);        
     }
-
-    public Long getInternalNumber() {
-        return this.internalNumber;
-    }
-
-    public void setInternalNumber(Long internalNumber) {
+    
+    /** full constructor */
+    public Process(Entity entity, String docCode, String docName, String docUrl, List<Tree> children, long internalNumber) {
+        super(entity, docCode, docName, docUrl, children);        
         this.internalNumber = internalNumber;
     }
+    
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
+   
+    // Property accessors
+
+    public long getInternalNumber() {
+        return this.internalNumber;
     }
+    
+    public void setInternalNumber(long internalNumber) {
+        this.internalNumber = internalNumber;
+    }
+   
+
+
+
+
+
+
+
 
 }

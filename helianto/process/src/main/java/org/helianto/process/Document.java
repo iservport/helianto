@@ -1,13 +1,13 @@
 package org.helianto.process;
+// Generated 03/04/2006 06:50:57 by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.helianto.core.Entity;
 
 
-/** 
- * 				
+/**
+ * 			
  * <p>
  * A base class to any class that requires version control.
  * </p>
@@ -19,57 +19,66 @@ import org.helianto.core.Entity;
  * @version $Id$
  * 				
  * 		
-*/
-public class Document implements Serializable {
+ */
 
-    /** identifier field */
-    private Long id;
+public class Document  implements java.io.Serializable {
 
-    /** persistent field */
-    private String docCode;
 
-    /** nullable persistent field */
-    private String docName;
+    // Fields    
 
-    /** nullable persistent field */
-    private String docUrl;
+     private long id;
+     private Entity entity;
+     private String docCode;
+     private String docName;
+     private String docUrl;
+     private List<Tree> children = new ArrayList<Tree>(0);
 
-    /** nullable persistent field */
-    private Entity entity;
 
-    /** persistent field */
-    private List children;
-
-    /** full constructor */
-    public Document(String docCode, String docName, Entity entity, List children) {
-        this.docCode = docCode;
-        this.docName = docName;
-        this.entity = entity;
-        this.children = children;
-    }
+    // Constructors
 
     /** default constructor */
     public Document() {
     }
 
-    /** minimal constructor */
-    public Document(String docCode, List children) {
+	/** minimal constructor */
+    public Document(Entity entity, String docCode) {
+        this.entity = entity;
         this.docCode = docCode;
+    }
+    
+    /** full constructor */
+    public Document(Entity entity, String docCode, String docName, String docUrl, List<Tree> children) {
+        this.entity = entity;
+        this.docCode = docCode;
+        this.docName = docName;
+        this.docUrl = docUrl;
         this.children = children;
     }
+    
 
-    public Long getId() {
+   
+    // Property accessors
+
+    public long getId() {
         return this.id;
     }
-
-    public void setId(Long id) {
+    
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public Entity getEntity() {
+        return this.entity;
+    }
+    
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 
     public String getDocCode() {
         return this.docCode;
     }
-
+    
     public void setDocCode(String docCode) {
         this.docCode = docCode;
     }
@@ -77,7 +86,7 @@ public class Document implements Serializable {
     public String getDocName() {
         return this.docName;
     }
-
+    
     public void setDocName(String docName) {
         this.docName = docName;
     }
@@ -85,31 +94,46 @@ public class Document implements Serializable {
     public String getDocUrl() {
         return this.docUrl;
     }
-
+    
     public void setDocUrl(String docUrl) {
         this.docUrl = docUrl;
     }
 
-    public Entity getEntity() {
-        return this.entity;
-    }
-
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
-    public List getChildren() {
+    public List<Tree> getChildren() {
         return this.children;
     }
-
-    public void setChildren(List children) {
+    
+    public void setChildren(List<Tree> children) {
         this.children = children;
     }
+   
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Document) ) return false;
+		 Document castOther = ( Document ) other; 
+         
+		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
+ && ( (this.getDocCode()==castOther.getDocCode()) || ( this.getDocCode()!=null && castOther.getDocCode()!=null && this.getDocCode().equals(castOther.getDocCode()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
+         result = 37 * result + ( getDocCode() == null ? 0 : this.getDocCode().hashCode() );
+         
+         
+         
+         return result;
+   }   
+
+
+
+
 
 }

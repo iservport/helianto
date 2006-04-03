@@ -1,10 +1,9 @@
 package org.helianto.process;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated 03/04/2006 06:51:36 by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 				
  * <p>
  * A class to define relationships between different document types.
@@ -13,110 +12,134 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 		
-*/
-public class Tree implements Serializable {
+ */
 
-    /** identifier field */
-    private Long id;
+public class Tree  implements java.io.Serializable {
 
-    /** persistent field */
-    private int sequence;
 
-    /** nullable persistent field */
-    private Double coefficient;
+    // Fields    
 
-    /** persistent field */
-    private int associationType;
+     private long id;
+     private Document parent;
+     private Document child;
+     private int sequence;
+     private double coefficient;
+     private int associationType;
+     private Method method;
 
-    /** nullable persistent field */
-    private org.helianto.process.Document parent;
 
-    /** nullable persistent field */
-    private org.helianto.process.Document child;
-
-    /** nullable persistent field */
-    private org.helianto.process.Function function;
-
-    /** full constructor */
-    public Tree(int sequence, Double coefficient, int associationType, org.helianto.process.Document parent, org.helianto.process.Document child, org.helianto.process.Function function) {
-        this.sequence = sequence;
-        this.coefficient = coefficient;
-        this.associationType = associationType;
-        this.parent = parent;
-        this.child = child;
-        this.function = function;
-    }
+    // Constructors
 
     /** default constructor */
     public Tree() {
     }
 
-    /** minimal constructor */
-    public Tree(int sequence, int associationType) {
+	/** minimal constructor */
+    public Tree(Document parent, int sequence, double coefficient, int associationType) {
+        this.parent = parent;
         this.sequence = sequence;
+        this.coefficient = coefficient;
         this.associationType = associationType;
     }
+    
+    /** full constructor */
+    public Tree(Document parent, Document child, int sequence, double coefficient, int associationType, Method method) {
+        this.parent = parent;
+        this.child = child;
+        this.sequence = sequence;
+        this.coefficient = coefficient;
+        this.associationType = associationType;
+        this.method = method;
+    }
+    
 
-    public Long getId() {
+   
+    // Property accessors
+
+    public long getId() {
         return this.id;
     }
-
-    public void setId(Long id) {
+    
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public Document getParent() {
+        return this.parent;
+    }
+    
+    public void setParent(Document parent) {
+        this.parent = parent;
+    }
+
+    public Document getChild() {
+        return this.child;
+    }
+    
+    public void setChild(Document child) {
+        this.child = child;
     }
 
     public int getSequence() {
         return this.sequence;
     }
-
+    
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
 
-    public Double getCoefficient() {
+    public double getCoefficient() {
         return this.coefficient;
     }
-
-    public void setCoefficient(Double coefficient) {
+    
+    public void setCoefficient(double coefficient) {
         this.coefficient = coefficient;
     }
 
     public int getAssociationType() {
         return this.associationType;
     }
-
+    
     public void setAssociationType(int associationType) {
         this.associationType = associationType;
     }
 
-    public org.helianto.process.Document getParent() {
-        return this.parent;
+    public Method getMethod() {
+        return this.method;
     }
+    
+    public void setMethod(Method method) {
+        this.method = method;
+    }
+   
 
-    public void setParent(org.helianto.process.Document parent) {
-        this.parent = parent;
-    }
 
-    public org.helianto.process.Document getChild() {
-        return this.child;
-    }
 
-    public void setChild(org.helianto.process.Document child) {
-        this.child = child;
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Tree) ) return false;
+		 Tree castOther = ( Tree ) other; 
+         
+		 return ( (this.getParent()==castOther.getParent()) || ( this.getParent()!=null && castOther.getParent()!=null && this.getParent().equals(castOther.getParent()) ) )
+ && ( (this.getChild()==castOther.getChild()) || ( this.getChild()!=null && castOther.getChild()!=null && this.getChild().equals(castOther.getChild()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getParent() == null ? 0 : this.getParent().hashCode() );
+         result = 37 * result + ( getChild() == null ? 0 : this.getChild().hashCode() );
+         
+         
+         
+         
+         return result;
+   }   
 
-    public org.helianto.process.Function getFunction() {
-        return this.function;
-    }
 
-    public void setFunction(org.helianto.process.Function function) {
-        this.function = function;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
 
 }

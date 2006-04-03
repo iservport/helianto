@@ -1,12 +1,11 @@
 package org.helianto.process;
+// Generated 03/04/2006 06:51:06 by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
 import java.util.List;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.helianto.core.Entity;
 
 
-/** 
+/**
  * 				
  * <p>
  * A part.
@@ -15,52 +14,62 @@ import org.helianto.core.Entity;
  * @version $Id$
  * 				
  * 			
-*/
-public class Part extends Document implements Serializable {
+ */
 
-    /** persistent field */
-    private boolean hasDrawing;
+public class Part extends org.helianto.process.Document implements java.io.Serializable {
 
-    /** nullable persistent field */
-    private org.helianto.process.Material material;
 
-    /** full constructor */
-    public Part(String docCode, String docName, Entity entity, List children, boolean hasDrawing, org.helianto.process.Material material) {
-        super(docCode, docName, entity, children);
-        this.hasDrawing = hasDrawing;
-        this.material = material;
-    }
+    // Fields    
+
+     private boolean hasDrawing;
+     private MaterialType materialType;
+
+
+    // Constructors
 
     /** default constructor */
     public Part() {
     }
 
-    /** minimal constructor */
-    public Part(String docCode, List children, boolean hasDrawing) {
-      super(docCode, children);
+	/** minimal constructor */
+    public Part(Entity entity, String docCode, boolean hasDrawing) {
+        super(entity, docCode);        
         this.hasDrawing = hasDrawing;
     }
+    
+    /** full constructor */
+    public Part(Entity entity, String docCode, String docName, String docUrl, List<Tree> children, boolean hasDrawing, MaterialType materialType) {
+        super(entity, docCode, docName, docUrl, children);        
+        this.hasDrawing = hasDrawing;
+        this.materialType = materialType;
+    }
+    
+
+   
+    // Property accessors
 
     public boolean isHasDrawing() {
         return this.hasDrawing;
     }
-
+    
     public void setHasDrawing(boolean hasDrawing) {
         this.hasDrawing = hasDrawing;
     }
 
-    public org.helianto.process.Material getMaterial() {
-        return this.material;
+    public MaterialType getMaterialType() {
+        return this.materialType;
     }
+    
+    public void setMaterialType(MaterialType materialType) {
+        this.materialType = materialType;
+    }
+   
 
-    public void setMaterial(org.helianto.process.Material material) {
-        this.material = material;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+
+
+
 
 }

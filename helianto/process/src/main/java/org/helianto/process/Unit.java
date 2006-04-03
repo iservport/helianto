@@ -1,11 +1,10 @@
 package org.helianto.process;
+// Generated 03/04/2006 06:51:02 by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.helianto.core.Entity;
 
 
-/** 
+/**
  * 				
  * <p>
  * A class to represent a unit.
@@ -14,48 +13,72 @@ import org.helianto.core.Entity;
  * @version $Id$
  * 				
  * 		
-*/
-public class Unit implements Serializable {
+ */
 
-    /** identifier field */
-    private Integer id;
+public class Unit  implements java.io.Serializable {
 
-    /** nullable persistent field */
-    private String unitCode;
 
-    /** nullable persistent field */
-    private String unitName;
+    // Fields    
 
-    /** nullable persistent field */
-    private Entity entity;
+     private int id;
+     private Entity entity;
+     private Unit parent;
+     private String unitCode;
+     private String unitName;
 
-    /** nullable persistent field */
-    private org.helianto.process.Unit parent;
 
-    /** full constructor */
-    public Unit(String unitCode, String unitName, Entity entity, org.helianto.process.Unit parent) {
-        this.unitCode = unitCode;
-        this.unitName = unitName;
-        this.entity = entity;
-        this.parent = parent;
-    }
+    // Constructors
 
     /** default constructor */
     public Unit() {
     }
 
-    public Integer getId() {
+	/** minimal constructor */
+    public Unit(Entity entity, String unitCode) {
+        this.entity = entity;
+        this.unitCode = unitCode;
+    }
+    
+    /** full constructor */
+    public Unit(Entity entity, Unit parent, String unitCode, String unitName) {
+        this.entity = entity;
+        this.parent = parent;
+        this.unitCode = unitCode;
+        this.unitName = unitName;
+    }
+    
+
+   
+    // Property accessors
+
+    public int getId() {
         return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public Entity getEntity() {
+        return this.entity;
+    }
+    
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
+    public Unit getParent() {
+        return this.parent;
+    }
+    
+    public void setParent(Unit parent) {
+        this.parent = parent;
     }
 
     public String getUnitCode() {
         return this.unitCode;
     }
-
+    
     public void setUnitCode(String unitCode) {
         this.unitCode = unitCode;
     }
@@ -63,31 +86,37 @@ public class Unit implements Serializable {
     public String getUnitName() {
         return this.unitName;
     }
-
+    
     public void setUnitName(String unitName) {
         this.unitName = unitName;
     }
+   
 
-    public Entity getEntity() {
-        return this.entity;
-    }
 
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
 
-    public org.helianto.process.Unit getParent() {
-        return this.parent;
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Unit) ) return false;
+		 Unit castOther = ( Unit ) other; 
+         
+		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
+ && ( (this.getUnitCode()==castOther.getUnitCode()) || ( this.getUnitCode()!=null && castOther.getUnitCode()!=null && this.getUnitCode().equals(castOther.getUnitCode()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
+         
+         result = 37 * result + ( getUnitCode() == null ? 0 : this.getUnitCode().hashCode() );
+         
+         return result;
+   }   
 
-    public void setParent(org.helianto.process.Unit parent) {
-        this.parent = parent;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
 
 }

@@ -1,10 +1,9 @@
 package org.helianto.process;
-
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+// Generated 03/04/2006 06:51:20 by Hibernate Tools 3.1.0.beta4
 
 
-/** 
+
+/**
  * 				
  * <p>
  * A base class to add attachments to documents.
@@ -13,80 +12,110 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Id$
  * 				
  * 		
-*/
-public class Attachment implements Serializable {
+ */
 
-    /** identifier field */
-    private Long id;
+public class Attachment  implements java.io.Serializable {
 
-    /** nullable persistent field */
-    private Integer sequence;
 
-    /** nullable persistent field */
-    private byte[] content;
+    // Fields    
 
-    /** nullable persistent field */
-    private String detailDesc;
+     private long id;
+     private Document document;
+     private int sequence;
+     private byte[] content;
+     private String attachDesc;
 
-    /** nullable persistent field */
-    private org.helianto.process.Document document;
 
-    /** full constructor */
-    public Attachment(Integer sequence, byte[] content, String detailDesc, org.helianto.process.Document document) {
-        this.sequence = sequence;
-        this.content = content;
-        this.detailDesc = detailDesc;
-        this.document = document;
-    }
+    // Constructors
 
     /** default constructor */
     public Attachment() {
     }
 
-    public Long getId() {
+	/** minimal constructor */
+    public Attachment(Document document, int sequence) {
+        this.document = document;
+        this.sequence = sequence;
+    }
+    
+    /** full constructor */
+    public Attachment(Document document, int sequence, byte[] content, String attachDesc) {
+        this.document = document;
+        this.sequence = sequence;
+        this.content = content;
+        this.attachDesc = attachDesc;
+    }
+    
+
+   
+    // Property accessors
+
+    public long getId() {
         return this.id;
     }
-
-    public void setId(Long id) {
+    
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Integer getSequence() {
-        return this.sequence;
+    public Document getDocument() {
+        return this.document;
+    }
+    
+    public void setDocument(Document document) {
+        this.document = document;
     }
 
-    public void setSequence(Integer sequence) {
+    public int getSequence() {
+        return this.sequence;
+    }
+    
+    public void setSequence(int sequence) {
         this.sequence = sequence;
     }
 
     public byte[] getContent() {
         return this.content;
     }
-
+    
     public void setContent(byte[] content) {
         this.content = content;
     }
 
-    public String getDetailDesc() {
-        return this.detailDesc;
+    public String getAttachDesc() {
+        return this.attachDesc;
     }
+    
+    public void setAttachDesc(String attachDesc) {
+        this.attachDesc = attachDesc;
+    }
+   
 
-    public void setDetailDesc(String detailDesc) {
-        this.detailDesc = detailDesc;
-    }
 
-    public org.helianto.process.Document getDocument() {
-        return this.document;
-    }
 
-    public void setDocument(org.helianto.process.Document document) {
-        this.document = document;
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Attachment) ) return false;
+		 Attachment castOther = ( Attachment ) other; 
+         
+		 return ( (this.getDocument()==castOther.getDocument()) || ( this.getDocument()!=null && castOther.getDocument()!=null && this.getDocument().equals(castOther.getDocument()) ) )
+ && (this.getSequence()==castOther.getSequence());
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getDocument() == null ? 0 : this.getDocument().hashCode() );
+         result = 37 * result + this.getSequence();
+         
+         
+         return result;
+   }   
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+
 
 }

@@ -19,10 +19,9 @@ import java.util.Collection;
 
 import org.helianto.core.Entity;
 import org.helianto.core.service.PartnerMgr;
-import org.helianto.process.Material;
+import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
-import org.helianto.process.Product;
 import org.helianto.process.Process;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
@@ -68,12 +67,12 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Material factory method.
      */
-    public Material materialFactory(Unit unit, String materialName);
+    public MaterialType materialFactory(Unit unit, String materialName);
     
     /**
      * Material factory method.
      */
-    public Material materialFactory(Material parent, Unit unit, String materialName);
+    public MaterialType materialFactory(MaterialType parent, Unit unit, String materialName);
     
     /**
      * Product factory method.
@@ -123,12 +122,7 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Persist a <code>Material</code>.
      */
-    public void persistMaterial(Material material);
-    
-    /**
-     * Persist a <code>Product</code>.
-     */
-    public void persistProduct(Product product);
+    public void persistMaterial(MaterialType material);
     
     /**
      * Persist a <code>Part</code>.
@@ -163,12 +157,7 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Load a <code>Material</code>.
      */
-    public Material loadMaterial(Long key);
-    
-    /**
-     * Load a <code>Product</code>.
-     */
-    public Product loadProduct(Long key);
+    public MaterialType loadMaterial(Long key);
     
     /**
      * Load a <code>Part</code>.

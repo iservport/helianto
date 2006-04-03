@@ -1,109 +1,75 @@
 package org.helianto.process;
+// Generated 03/04/2006 06:51:13 by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import java.util.List;
+import org.helianto.core.Entity;
 
 
-/** 
+/**
  * 				
  * <p>
- * A class to represent a specification.
+ * A process characteristic specification.
  * </p>
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  * 				
- * 		
-*/
-public class Specification implements Serializable {
+ * 			
+ */
 
-    /** identifier field */
-    private Long id;
+public class Specification extends org.helianto.process.Document implements java.io.Serializable {
 
-    /** nullable persistent field */
-    private String speficicationDesc;
 
-    /** persistent field */
-    private int phase;
+    // Fields    
 
-    /** nullable persistent field */
-    private org.helianto.process.Specification parent;
+     private Unit unit;
+     private SpecificationLimit specificationLimit;
 
-    /** nullable persistent field */
-    private org.helianto.process.Unit unit;
 
-    /** nullable persistent field */
-    private org.helianto.process.Characteristic characteristic;
-
-    /** full constructor */
-    public Specification(String speficicationDesc, int phase, org.helianto.process.Specification parent, org.helianto.process.Unit unit, org.helianto.process.Characteristic characteristic) {
-        this.speficicationDesc = speficicationDesc;
-        this.phase = phase;
-        this.parent = parent;
-        this.unit = unit;
-        this.characteristic = characteristic;
-    }
+    // Constructors
 
     /** default constructor */
     public Specification() {
     }
 
-    /** minimal constructor */
-    public Specification(int phase) {
-        this.phase = phase;
+	/** minimal constructor */
+    public Specification(Entity entity, String docCode, SpecificationLimit specificationLimit) {
+        super(entity, docCode);        
+        this.specificationLimit = specificationLimit;
     }
-
-    public Long getId() {
-        return this.id;
+    
+    /** full constructor */
+    public Specification(Entity entity, String docCode, String docName, String docUrl, List<Tree> children, Unit unit, SpecificationLimit specificationLimit) {
+        super(entity, docCode, docName, docUrl, children);        
+        this.unit = unit;
+        this.specificationLimit = specificationLimit;
     }
+    
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+   
+    // Property accessors
 
-    public String getSpeficicationDesc() {
-        return this.speficicationDesc;
-    }
-
-    public void setSpeficicationDesc(String speficicationDesc) {
-        this.speficicationDesc = speficicationDesc;
-    }
-
-    public int getPhase() {
-        return this.phase;
-    }
-
-    public void setPhase(int phase) {
-        this.phase = phase;
-    }
-
-    public org.helianto.process.Specification getParent() {
-        return this.parent;
-    }
-
-    public void setParent(org.helianto.process.Specification parent) {
-        this.parent = parent;
-    }
-
-    public org.helianto.process.Unit getUnit() {
+    public Unit getUnit() {
         return this.unit;
     }
-
-    public void setUnit(org.helianto.process.Unit unit) {
+    
+    public void setUnit(Unit unit) {
         this.unit = unit;
     }
 
-    public org.helianto.process.Characteristic getCharacteristic() {
-        return this.characteristic;
+    public SpecificationLimit getSpecificationLimit() {
+        return this.specificationLimit;
     }
+    
+    public void setSpecificationLimit(SpecificationLimit specificationLimit) {
+        this.specificationLimit = specificationLimit;
+    }
+   
 
-    public void setCharacteristic(org.helianto.process.Characteristic characteristic) {
-        this.characteristic = characteristic;
-    }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+
+
+
 
 }

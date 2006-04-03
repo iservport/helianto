@@ -1,92 +1,65 @@
 package org.helianto.process;
+// Generated 03/04/2006 06:51:26 by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import java.util.List;
+import org.helianto.core.Entity;
 
 
-/** 
+/**
  * 				
  * <p>
- * An operation characteristic.
+ * A process characteristic.
  * </p>
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  * 				
- * 		
-*/
-public class Characteristic implements Serializable {
+ * 			
+ */
 
-    /** identifier field */
-    private Integer id;
+public class Characteristic extends org.helianto.process.Document implements java.io.Serializable {
 
-    /** nullable persistent field */
-    private Integer sequence;
 
-    /** nullable persistent field */
-    private String shortDesc;
+    // Fields    
 
-    /** nullable persistent field */
-    private Integer classification;
+     private int classification;
 
-    /** nullable persistent field */
-    private org.helianto.process.Operation operation;
 
-    /** full constructor */
-    public Characteristic(Integer sequence, String shortDesc, Integer classification, org.helianto.process.Operation operation) {
-        this.sequence = sequence;
-        this.shortDesc = shortDesc;
-        this.classification = classification;
-        this.operation = operation;
-    }
+    // Constructors
 
     /** default constructor */
     public Characteristic() {
     }
 
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getSequence() {
-        return this.sequence;
-    }
-
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
-    }
-
-    public String getShortDesc() {
-        return this.shortDesc;
-    }
-
-    public void setShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
-    }
-
-    public Integer getClassification() {
-        return this.classification;
-    }
-
-    public void setClassification(Integer classification) {
+	/** minimal constructor */
+    public Characteristic(Entity entity, String docCode, int classification) {
+        super(entity, docCode);        
         this.classification = classification;
     }
-
-    public org.helianto.process.Operation getOperation() {
-        return this.operation;
+    
+    /** full constructor */
+    public Characteristic(Entity entity, String docCode, String docName, String docUrl, List<Tree> children, int classification) {
+        super(entity, docCode, docName, docUrl, children);        
+        this.classification = classification;
     }
+    
 
-    public void setOperation(org.helianto.process.Operation operation) {
-        this.operation = operation;
-    }
+   
+    // Property accessors
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
+    public int getClassification() {
+        return this.classification;
     }
+    
+    public void setClassification(int classification) {
+        this.classification = classification;
+    }
+   
+
+
+
+
+
+
+
 
 }

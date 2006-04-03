@@ -1,12 +1,12 @@
 package org.helianto.process;
+// Generated 03/04/2006 06:50:59 by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.helianto.core.Entity;
 
 
-/** 
+/**
  * 				
  * <p>
  * An operation.
@@ -15,42 +15,47 @@ import org.helianto.core.Entity;
  * @version $Id$
  * 				
  * 			
-*/
-public class Operation extends Document implements Serializable {
+ */
 
-    /** persistent field */
-    private int operationType;
+public class Operation extends org.helianto.process.Document implements java.io.Serializable {
 
-    /** persistent field */
-    private long operationTime;
 
-    /** persistent field */
-    private List setups;
+    // Fields    
 
-    /** full constructor */
-    public Operation(String docCode, String docName, Entity entity, List children, int operationType, long operationTime, List setups) {
-        super(docCode, docName, entity, children);
-        this.operationType = operationType;
-        this.operationTime = operationTime;
-        this.setups = setups;
-    }
+     private int operationType;
+     private long operationTime;
+     private List<Setup> setups = new ArrayList<Setup>(0);
+
+
+    // Constructors
 
     /** default constructor */
     public Operation() {
     }
 
-    /** minimal constructor */
-    public Operation(String docCode, List children, int operationType, long operationTime, List setups) {
-      super(docCode, children);
+	/** minimal constructor */
+    public Operation(Entity entity, String docCode, int operationType, long operationTime) {
+        super(entity, docCode);        
+        this.operationType = operationType;
+        this.operationTime = operationTime;
+    }
+    
+    /** full constructor */
+    public Operation(Entity entity, String docCode, String docName, String docUrl, List<Tree> children, int operationType, long operationTime, List<Setup> setups) {
+        super(entity, docCode, docName, docUrl, children);        
         this.operationType = operationType;
         this.operationTime = operationTime;
         this.setups = setups;
     }
+    
+
+   
+    // Property accessors
 
     public int getOperationType() {
         return this.operationType;
     }
-
+    
     public void setOperationType(int operationType) {
         this.operationType = operationType;
     }
@@ -58,23 +63,25 @@ public class Operation extends Document implements Serializable {
     public long getOperationTime() {
         return this.operationTime;
     }
-
+    
     public void setOperationTime(long operationTime) {
         this.operationTime = operationTime;
     }
 
-    public List getSetups() {
+    public List<Setup> getSetups() {
         return this.setups;
     }
-
-    public void setSetups(List setups) {
+    
+    public void setSetups(List<Setup> setups) {
         this.setups = setups;
     }
+   
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+
+
+
+
 
 }

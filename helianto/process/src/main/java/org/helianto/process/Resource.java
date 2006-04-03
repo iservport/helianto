@@ -1,70 +1,88 @@
 package org.helianto.process;
+// Generated 03/04/2006 06:51:00 by Hibernate Tools 3.1.0.beta4
 
-import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.helianto.core.Entity;
 
 
-/** 
+/**
  * 			
  * <p>
- * A class to represent a process resource
+ * A class to represent a process resource.
  * </p>
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  * 				
  * 		
-*/
-public class Resource implements Serializable {
+ */
 
-    /** identifier field */
-    private Integer id;
+public class Resource  implements java.io.Serializable {
 
-    /** nullable persistent field */
-    private String resourceCode;
 
-    /** nullable persistent field */
-    private String resourceName;
+    // Fields    
 
-    /** persistent field */
-    private int resourceType;
+     private int id;
+     private Entity entity;
+     private Resource parent;
+     private String resourceCode;
+     private String resourceName;
+     private int resourceType;
+     private int resourceState;
 
-    /** nullable persistent field */
-    private Entity entity;
 
-    /** nullable persistent field */
-    private org.helianto.process.Resource parent;
-
-    /** full constructor */
-    public Resource(String resourceCode, String resourceName, int resourceType, Entity entity, org.helianto.process.Resource parent) {
-        this.resourceCode = resourceCode;
-        this.resourceName = resourceName;
-        this.resourceType = resourceType;
-        this.entity = entity;
-        this.parent = parent;
-    }
+    // Constructors
 
     /** default constructor */
     public Resource() {
     }
 
-    /** minimal constructor */
-    public Resource(int resourceType) {
+	/** minimal constructor */
+    public Resource(int resourceType, int resourceState) {
         this.resourceType = resourceType;
+        this.resourceState = resourceState;
     }
+    
+    /** full constructor */
+    public Resource(Entity entity, Resource parent, String resourceCode, String resourceName, int resourceType, int resourceState) {
+        this.entity = entity;
+        this.parent = parent;
+        this.resourceCode = resourceCode;
+        this.resourceName = resourceName;
+        this.resourceType = resourceType;
+        this.resourceState = resourceState;
+    }
+    
 
-    public Integer getId() {
+   
+    // Property accessors
+
+    public int getId() {
         return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public Entity getEntity() {
+        return this.entity;
+    }
+    
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
+    public Resource getParent() {
+        return this.parent;
+    }
+    
+    public void setParent(Resource parent) {
+        this.parent = parent;
     }
 
     public String getResourceCode() {
         return this.resourceCode;
     }
-
+    
     public void setResourceCode(String resourceCode) {
         this.resourceCode = resourceCode;
     }
@@ -72,7 +90,7 @@ public class Resource implements Serializable {
     public String getResourceName() {
         return this.resourceName;
     }
-
+    
     public void setResourceName(String resourceName) {
         this.resourceName = resourceName;
     }
@@ -80,31 +98,47 @@ public class Resource implements Serializable {
     public int getResourceType() {
         return this.resourceType;
     }
-
+    
     public void setResourceType(int resourceType) {
         this.resourceType = resourceType;
     }
 
-    public Entity getEntity() {
-        return this.entity;
+    public int getResourceState() {
+        return this.resourceState;
     }
+    
+    public void setResourceState(int resourceState) {
+        this.resourceState = resourceState;
+    }
+   
 
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
 
-    public org.helianto.process.Resource getParent() {
-        return this.parent;
-    }
 
-    public void setParent(org.helianto.process.Resource parent) {
-        this.parent = parent;
-    }
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof Resource) ) return false;
+		 Resource castOther = ( Resource ) other; 
+         
+		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
+ && ( (this.getResourceCode()==castOther.getResourceCode()) || ( this.getResourceCode()!=null && castOther.getResourceCode()!=null && this.getResourceCode().equals(castOther.getResourceCode()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
+         
+         result = 37 * result + ( getResourceCode() == null ? 0 : this.getResourceCode().hashCode() );
+         
+         
+         
+         return result;
+   }   
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
+
+
+
 
 }
