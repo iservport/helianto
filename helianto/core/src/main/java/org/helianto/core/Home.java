@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 30/03/2006 15:35:11 by Hibernate Tools 3.1.0.beta4
+// Generated 03/04/2006 06:42:35 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -38,6 +38,7 @@ public class Home  implements java.io.Serializable {
      private String httpAddress;
      private String homeDesc;
      private Date added;
+     private char serverMode;
      private MailTransportData mailTransportData;
      private MailAccessData mailAccessData;
 
@@ -49,14 +50,15 @@ public class Home  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public Home(String homeName, String language, String country) {
+    public Home(String homeName, String language, String country, char serverMode) {
         this.homeName = homeName;
         this.language = language;
         this.country = country;
+        this.serverMode = serverMode;
     }
     
     /** full constructor */
-    public Home(Home parent, String homeName, String language, String country, String httpAddress, String homeDesc, Date added, MailTransportData mailTransportData, MailAccessData mailAccessData) {
+    public Home(Home parent, String homeName, String language, String country, String httpAddress, String homeDesc, Date added, char serverMode, MailTransportData mailTransportData, MailAccessData mailAccessData) {
         this.parent = parent;
         this.homeName = homeName;
         this.language = language;
@@ -64,6 +66,7 @@ public class Home  implements java.io.Serializable {
         this.httpAddress = httpAddress;
         this.homeDesc = homeDesc;
         this.added = added;
+        this.serverMode = serverMode;
         this.mailTransportData = mailTransportData;
         this.mailAccessData = mailAccessData;
     }
@@ -136,6 +139,14 @@ public class Home  implements java.io.Serializable {
         this.added = added;
     }
 
+    public char getServerMode() {
+        return this.serverMode;
+    }
+    
+    public void setServerMode(char serverMode) {
+        this.serverMode = serverMode;
+    }
+
     public MailTransportData getMailTransportData() {
         return this.mailTransportData;
     }
@@ -170,6 +181,7 @@ public class Home  implements java.io.Serializable {
          
          
          result = 37 * result + ( getHomeName() == null ? 0 : this.getHomeName().hashCode() );
+         
          
          
          
