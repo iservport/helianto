@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Helianto">
+	<bannerRight>
+		<name>Helianto</name>
+		<src>images/helianto-t.gif</src>
+		<href>http://www.helianto.org/</href>
+	</bannerRight>
+	<body>
+		<links>
+			<item name="Spring Framework"
+				href="http://www.springframework.org/"/>
+			<item name="Hibernate" href="http://www.hibernate.org/"/>
+			<item name="Acegi Security"
+				href="http://www.acegisecurity.org/"/>
+			<item name="Maven 2"
+				href="http://maven.apache.org/maven2/"/>
+		</links>
+		
+		<menu name="The Helianto Project Process Module">
+			<item name="Introduction" href="index.html"/>
+		</menu>
+		
+		<menu name="Use Cases">
+			<item name="Design responsible parts " href="drparts.html"/>
+			<item name="Third party parts " href="tpparts.html"/>
+			<item name="Process driven manufacturing" href="procmnf.html"/>
+			<item name="Part driven manufacturing" href="partmnf.html"/>
+		</menu>
+		
+		${reports}
+		
+	</body>
+</project>
