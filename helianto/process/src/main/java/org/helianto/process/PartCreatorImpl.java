@@ -17,6 +17,12 @@ package org.helianto.process;
 
 import org.helianto.core.Entity;
 
+/**
+ * Default implementation of <code>PartCreator</code> interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id: $
+ */
 public class PartCreatorImpl  implements PartCreator {
 
     public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName) {
@@ -27,6 +33,9 @@ public class PartCreatorImpl  implements PartCreator {
         return partFactory(entity, partNumber, partName, false);
     }
 
+    /*
+     * internal part factory.
+     */
     private Part partFactory(Entity entity, String partNumber, String partName, boolean hasDrawing) {
         Part part = new Part();
         part.setEntity(entity);
@@ -48,6 +57,24 @@ public class PartCreatorImpl  implements PartCreator {
 	public Part materialFactory(MaterialType materialType, String materialNumber, String materialName) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Part componentFactory(Part parent, String drawingNumber, String drawingName, double coefficient) {
+		Part child = partFactory(parent.getEntity(), drawingNumber, drawingName);
+		Tree tree = associationFactory(parent, child, coefficient);
+		tree.setAssociationType(AssociationType.PART_PART.getValue());
+		return child;
+	}
+	
+	/*
+	 * Internal tree factory
+	 */
+	private Tree associationFactory(Document parent, Document child, double coefficient) {
+		Tree tree = new Tree();
+		tree.setParent(parent);
+		tree.setChild(child);
+		parent.getChildren().add(tree);
+		return tree;
 	}
 
 }

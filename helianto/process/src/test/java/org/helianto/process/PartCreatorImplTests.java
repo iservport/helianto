@@ -26,17 +26,18 @@ public class PartCreatorImplTests extends TestCase {
     
     private PartCreator partCreator;
     private EntityCreator entityCreator;
+    private Entity entity;
     
     public void setUp() {
         entityCreator = new EntityCreatorImpl();
         partCreator = new PartCreatorImpl();
+        entity = entityCreator.entityFactory(new Home(), "ENTITY");
     }
     
-    public void testCreatePart() {
-        Home home = new Home();
-        Entity entity = entityCreator.entityFactory(home, "ENTITY");
+    public void testPartWithDrawingFactory() {
         Part  part = partCreator.partFactory(entity, "CODE", "NAME");
         assertSame(entity, part.getEntity());
+    	// TODO
     }
 
 }

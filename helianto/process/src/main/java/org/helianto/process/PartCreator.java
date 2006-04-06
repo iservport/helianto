@@ -23,5 +23,10 @@ public interface PartCreator {
      * Create a <code>Material</code>.
      */
 	public Part materialFactory(MaterialType materialType, String materialNumber, String materialName);
+	
+	/**
+	 * Create a component.
+	 */
+	public Part componentFactory(Part parent, String drawingNumber, String drawingName, double coefficient);
 
 }
