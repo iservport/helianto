@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 03/04/2006 14:02:45 by Hibernate Tools 3.1.0.beta4
+// Generated Apr 7, 2006 6:49:57 AM by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -20,12 +20,12 @@ import java.util.Date;
  * At least one default (root) home must be defined per installation.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core0.hbm.xml 24 2006-04-02 18:50:22 -0300 (Dom, 02 Abr 2006) iserv $
+ * @version $Id: helianto-core0.hbm.xml,v 1.4 2006/03/20 16:11:40 iserv Exp $
  * 				
  * 		
  */
 
-public class Home  implements java.io.Serializable {
+public class Home extends AbstractHome implements java.io.Serializable {
 
 
     // Fields    

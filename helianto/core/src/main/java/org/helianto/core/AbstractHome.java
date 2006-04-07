@@ -15,37 +15,27 @@
 
 package org.helianto.core;
 
+import java.util.Locale;
+
 /**
- * Base class to provide <code>Credential</code> with 
- * non persistnt fields.
+ * Abstract class to provide <code>Home</code> subclass with 
+ * a read only <code>Locale</code> non persistent field.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
-public abstract class AbstractCredential {
+public abstract class AbstractHome {
     
-    private String verifyPassword;
-    private boolean passwordDirty;
-
-    public String getVerifyPassword() {
-        return verifyPassword;
+    public Locale getLocale() {
+        Locale locale = null;
+        try {
+            locale = new Locale(getLanguage(), getCountry());
+        } catch (Exception e) {
+            locale = Locale.getDefault();
+        }
+        return locale;
     }
-
-    public void setVerifyPassword(String verifyPassword) {
-        this.verifyPassword = verifyPassword;
-        this.passwordDirty = true;
-    }
-
-    public boolean isPasswordDirty() {
-        return passwordDirty;
-    }
-
-    /**
-     * If set, <code>verifyPassword</code> is 
-     * automatically reset.
-     */
-    public void setPasswordDirty(boolean passwordDirty) {
-        this.passwordDirty = passwordDirty;
-    }
+    
+    public abstract String getLanguage();
+    public abstract String getCountry();
 
 }

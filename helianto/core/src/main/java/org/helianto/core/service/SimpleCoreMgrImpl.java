@@ -92,7 +92,7 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     public Locale getLocale(Home home) {
         Locale locale = null;
         try {
-            locale = new Locale(home.getLanguage(), home.getCountry());
+            locale = home.getLocale();
         } catch (Exception e) {
             locale = Locale.getDefault();
         }

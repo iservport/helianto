@@ -51,6 +51,10 @@ At least one default (root) home must be defined per installation.
 				]]>
 		</meta>
 		<!-- 
+  				base class with non-persistent fields
+		-->
+		<meta attribute="extends" inherit="false">AbstractHome</meta>
+		<!-- 
   				id
 		-->
 		<id name="id" type="int">
