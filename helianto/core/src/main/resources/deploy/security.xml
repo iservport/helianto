@@ -28,9 +28,9 @@
 			WARNING: do no use in production environment!
 	-->
 	<bean id="inMemoryDaoImpl"
-		class="org.acegisecurity.providers.dao.memory.InMemoryDaoImpl">
+		class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
 		<property name="userMap">
-			<value> teste=teste,ROLE_USER teste1=xxxx,ROLE_USER
+			<value> test=test,ROLE_USER test1=xxxx,ROLE_USER
 			</value>
 		</property>
 	</bean>
@@ -83,11 +83,6 @@
 			</bean>
 		</property>
 	</bean>
-	<!--
-			Logger listener 	
-	-->
-	<bean id="loggerListener"
-		class="org.acegisecurity.providers.dao.event.LoggerListener"/>
 	<!--
 			Role voter 	
 	-->
