@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 11/04/2006 16:08:12 by Hibernate Tools 3.1.0.beta4
+// Generated 12/04/2006 16:04:33 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 import java.util.HashSet;
@@ -12,7 +12,7 @@ import java.util.Set;
  * Persist a credential, unique by principal.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core3.hbm.xml,v 1.4 2006/03/28 10:03:12 iserv Exp $
+ * @version $Id: helianto-core3.hbm.xml 19 2006-03-28 07:03:41 -0300 (Ter, 28 Mar 2006) iserv $
  * 				
  * 		
  */

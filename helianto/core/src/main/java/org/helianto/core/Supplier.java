@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 11/04/2006 16:08:02 by Hibernate Tools 3.1.0.beta4
+// Generated 12/04/2006 16:04:29 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import java.util.Date;
  * partners, like customers, suppliers, banks, etc. 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
+ * @version $Id: helianto-entity1.hbm.xml 14 2006-03-20 13:11:47 -0300 (Seg, 20 Mar 2006) iserv $
  * 				
  *         
  * 				
@@ -19,7 +19,7 @@ import java.util.Date;
  * Persist a relationship to a division. 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
+ * @version $Id: helianto-entity1.hbm.xml 14 2006-03-20 13:11:47 -0300 (Seg, 20 Mar 2006) iserv $
  * 				
  * 			
  * 				
@@ -27,7 +27,7 @@ import java.util.Date;
  * Persist a relationship to a customer 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
+ * @version $Id: helianto-entity1.hbm.xml 14 2006-03-20 13:11:47 -0300 (Seg, 20 Mar 2006) iserv $
  * 				
  * 			
  * 				
@@ -35,7 +35,7 @@ import java.util.Date;
  * Persist a relationship to a supplier 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
+ * @version $Id: helianto-entity1.hbm.xml 14 2006-03-20 13:11:47 -0300 (Seg, 20 Mar 2006) iserv $
  * 				
  * 			
  * 				
@@ -43,7 +43,7 @@ import java.util.Date;
  * Persist a relationship to a bank 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
+ * @version $Id: helianto-entity1.hbm.xml 14 2006-03-20 13:11:47 -0300 (Seg, 20 Mar 2006) iserv $
  * 				
  * 			
  * 				
@@ -51,7 +51,7 @@ import java.util.Date;
  * Persist a relationship to an Agent, like a sales representative. 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
+ * @version $Id: helianto-entity1.hbm.xml 14 2006-03-20 13:11:47 -0300 (Seg, 20 Mar 2006) iserv $
  * 				
  * 			
  */

@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 11/04/2006 16:07:59 by Hibernate Tools 3.1.0.beta4
+// Generated 12/04/2006 16:04:27 by Hibernate Tools 3.1.0.beta4
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +11,7 @@ import java.util.Set;
  * Persist the user account.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core4.hbm.xml,v 1.4 2006/03/20 16:11:40 iserv Exp $
+ * @version $Id: helianto-core4.hbm.xml 14 2006-03-20 13:11:47 -0300 (Seg, 20 Mar 2006) iserv $
  * 				
  * 		
  */

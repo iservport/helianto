@@ -30,6 +30,8 @@ import org.helianto.core.User;
 import org.helianto.core.UserCreator;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.UserDao;
+import org.helianto.core.security.PublicUserDetails;
+import org.helianto.core.security.UserAdapter;
 
 /**
  * Default implementation of <code>SimpleCoreMgr</code> interface.
@@ -139,6 +141,10 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         }
         return (principalCount==0) ? true : false;
     }
+
+	public PublicUserDetails findSecureUser() {
+		return UserAdapter.retrievePublicUserDetailsFromSecurityContext();
+	}
 
     // logger
     

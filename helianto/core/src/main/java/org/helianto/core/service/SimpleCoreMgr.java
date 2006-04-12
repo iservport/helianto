@@ -23,6 +23,7 @@ import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.User;
+import org.helianto.core.security.PublicUserDetails;
 
 /**
  * A service layer interface extension for the simple user use case.
@@ -127,5 +128,11 @@ public interface SimpleCoreMgr {
      * <p>Persist the <code>User</code>.</p>
      */
     public void persistUser(User user);
+    
+    /**
+     * <p>Retrieve the <code>PublicUserDetails</code> available in a
+     * secure context.</p>
+     */
+    public PublicUserDetails findSecureUser();
     
 }
