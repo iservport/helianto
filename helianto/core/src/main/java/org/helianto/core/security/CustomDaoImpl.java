@@ -57,8 +57,9 @@ public class CustomDaoImpl implements UserDetailsService {
             logger.debug("\n         Username "+username);
         }
         List list = null;
+        HibernateTemplate hibernateTemplate = null;
         try {
-            HibernateTemplate hibernateTemplate = new HibernateTemplate(sessionFactory, true);
+            hibernateTemplate = new HibernateTemplate(sessionFactory, true);
             list = (List) hibernateTemplate.find(CREDENTIAL_QUERY, username);
         } catch (Exception e) {
             if (logger.isDebugEnabled()) {
@@ -70,12 +71,23 @@ public class CustomDaoImpl implements UserDetailsService {
             if (logger.isDebugEnabled()) {
                 logger.debug("\n         One credential loaded by username");
             }
+            List userLogList = (List) hibernateTemplate.find(USERLOG_QUERY, username);
+            if (userLogList.size()==0) {
+            	// TODO guess user
+            } else if (userLogList.size()==1) {
+            	// TODO take this
+            } else {
+            	// TODO take last
+            }
             return new UserAdapter((Credential) list.get(0));
         } 
         throw new UsernameNotFoundException("Username: "+username);
     }
 
     static final String CREDENTIAL_QUERY = "from Credential cred " +
-            "where cred.principal = ?";
+    	"where cred.principal = ?";
+
+    static final String USERLOG_QUERY = "from UserLog userLog " +
+    	"where userLog.user.credential.principal = ?";
 
 }
