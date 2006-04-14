@@ -15,13 +15,12 @@
 
 package org.helianto.core.security;
 
+import org.acegisecurity.context.SecurityContextHolder;
+import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Credential;
 import org.helianto.core.CredentialState;
 import org.helianto.core.User;
-
-import org.acegisecurity.userdetails.UserDetails;
 
 /**
  * A base class to implement {@link org.acegisecurity.userdetails.UserDetails}
@@ -40,24 +39,35 @@ public abstract class AbstractUserDetails implements UserDetails {
     
     protected User user;
 
-    public void setUser(User user) {
+    public AbstractUserDetails() {
+        throw new IllegalArgumentException("AbstractUserDetails subclasses must take an " +
+                "User instance as constructor parameter");
+    }
+
+    /**
+     * Minimal constructor.
+     * @param credential A valid credential.
+     */
+    public AbstractUserDetails(User user) {
         if (user==null) {
             throw new IllegalArgumentException("Cannot set a null user");
         }
         this.user = user;
     }
     
-    private AbstractUserDetails() {}
-
     /**
-     * Minimal constructor.
-     * @param credential A valid credential.
+     * Static method to retrieve the <code>UserAdapter</code>
+     * instance held in the <code>SecurityContext</code>.
      */
-    public AbstractUserDetails(Credential credential) {
-        user = new User();
-        user.setCredential(credential);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
+    public static PublicUserDetails retrievePublicUserDetailsFromSecurityContext() {
+        if (logger.isDebugEnabled()) {
+            logger.debug("\n         Retriving public user details ...");
+        }
+        PublicUserDetails pud = (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+        if (logger.isDebugEnabled()) {
+            logger.debug("\n         Done.");
+        }
+        return pud;
     }
     
     public boolean isAccountNonExpired() {

@@ -16,40 +16,33 @@
 package org.helianto.core.security;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
-import org.acegisecurity.context.SecurityContextHolder;
-
-import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.PersonalData;
 import org.helianto.core.Role;
+import org.helianto.core.User;
 
 /**
- * Models core user information retieved by an 
+ * Models core user information retieved by  
  * {@link org.acegisecurity.userdetails.UserDetailsService} 
  * as an adapter class to keep coupling from the Acegi-security 
  * package as narrow as possible.
  * 
  * <p>
- * A new <code>UserAdapter</code> must be built from a single
- * {@link org.helianto.core.Credential}. As such <code>Credential</code>
- * may be connected to zero or more {@link org.helianto.core.User}s, 
- * the authorities granted are exposed only after at least one corresponding 
- * <code>User</code> is selected as current. This is
+ * A new <code>UserAdapter</code> must be created from a single
+ * {@link org.helianto.core.User}. As a group of <code>User</code>s may be
+ * connected by a common <code>Credential</code> it may be desirable to switch 
+ * <code>User</code>s inside the group at runtime as no new authentication will
+ * be required (same credential). This is
  * is a design choice made to allow multiple entities to share
  * the same set of credentials and still keep individual sets of
  * authorities. 
- * </p>
- * 
- * <p>
- * To avoid further processing after authentication 
- * for environments where all credentials can be restricted to 
- * a single entity, i.e. one <code>User</code> per <code>Credential</code>,
- * the constructor silently tries to do the selection.
  * </p>
  * 
  * <p>
@@ -57,7 +50,7 @@ import org.helianto.core.Role;
  * {@link org.helianto.core.security.PublicUserDetails} interface 
  * to prevent unintended access to the embedded <code>User</code> and 
  * <code>Credential</code> instances. A convenient static method 
- * {@link #retrievePublicUserDetailsFromSecurityContext} 
+ * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsFromSecurityContext} 
  * is supplied to perform this task. <code>PublicUserDetails</code>  
  * provides a method to set the current <code>User</code> after any 
  * <code>Entity</code> selection.
@@ -70,24 +63,9 @@ import org.helianto.core.Role;
 public final class UserAdapter extends AbstractUserDetails implements Serializable, PublicUserDetails {
     
     private static final long serialVersionUID = 4017521054529203449L;
-
-    /**
-     * Static method suitable to retrieve the <code>UserAdapter</code>
-     * instance mantained in the <code>SecurityContext</code>.
-     */
-    public static PublicUserDetails retrievePublicUserDetailsFromSecurityContext() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("\n         Retriving public user details ...");
-        }
-        PublicUserDetails pud = (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-        if (logger.isDebugEnabled()) {
-            logger.debug("\n         Done.");
-        }
-        return pud;
-    }
     
-    public UserAdapter(Credential cred) {
-        super(cred);
+    public UserAdapter(User user) {
+        super(user);
     }
 
     public GrantedAuthority[] getAuthorities() {
@@ -106,16 +84,42 @@ public final class UserAdapter extends AbstractUserDetails implements Serializab
         return new GrantedAuthority[] {new GrantedAuthorityImpl("ROLE_USER")};
     }
 
-    public Entity getEntity() {
+    public PersonalData getPersonalData() {
+        return user.getCredential().getPersonalData();
+    }
+
+    public String getPrincipal() {
+        return user.getCredential().getPrincipal();
+    }
+
+    public Entity getCurrentEntity() {
         return user.getEntity();
     }
     
-    public Long getCredentialId() {
-        return user.getCredential().getId();
+    public List<Entity> getEntities() {
+        Set<User> userSet = user.getCredential().getUsers();
+        List<Entity> entityList = new ArrayList<Entity>();
+        for (User u: userSet) {
+            entityList.add(u.getEntity());
+        }
+        return entityList;
     }
-    
-    public PersonalData getPersonalData() {
-        return user.getCredential().getPersonalData();
+
+    public void setEntity(Entity entity) {
+        Set<User> userSet = user.getCredential().getUsers();
+        User newUser = null;
+        for (User u: userSet) {
+             if (u.getEntity().equals(entity)) {
+                 newUser = u;
+             }
+        }
+        if (newUser==null) {
+            throw new IllegalArgumentException("Unable to change to entity " +
+                    entity.getAlias()+": there is no corresponding user for " +
+                    "credential "+user.getCredential());
+        } else {
+            user = newUser;
+        }
     }
 
 }

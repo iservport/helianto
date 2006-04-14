@@ -17,17 +17,17 @@ package org.helianto.core.security;
 
 import java.util.List;
 
+import org.acegisecurity.userdetails.UserDetails;
+import org.acegisecurity.userdetails.UserDetailsService;
+import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Credential;
+import org.helianto.core.User;
+import org.helianto.core.UserLog;
 import org.hibernate.SessionFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.acegisecurity.userdetails.UserDetails;
-import org.acegisecurity.userdetails.UserDetailsService;
-
-import org.acegisecurity.userdetails.UsernameNotFoundException;
 
 /**
  * Custom implementation for the {@link org.acegisecurity.userdetails.UserDetailsService}
@@ -72,14 +72,16 @@ public class CustomDaoImpl implements UserDetailsService {
                 logger.debug("\n         One credential loaded by username");
             }
             List userLogList = (List) hibernateTemplate.find(USERLOG_QUERY, username);
+            User user = null;
             if (userLogList.size()==0) {
             	// TODO guess user
             } else if (userLogList.size()==1) {
             	// TODO take this
+                user = ((UserLog) userLogList.get(0)).getUser();
             } else {
             	// TODO take last
             }
-            return new UserAdapter((Credential) list.get(0));
+            return new UserAdapter(user);
         } 
         throw new UsernameNotFoundException("Username: "+username);
     }

@@ -15,9 +15,10 @@
 
 package org.helianto.core.security;
 
+import java.util.List;
+
 import org.helianto.core.Entity;
 import org.helianto.core.PersonalData;
-import org.helianto.core.User;
 
 /**
  * An interface to reveal public user details.
@@ -28,19 +29,24 @@ import org.helianto.core.User;
 public interface PublicUserDetails {
     
     /**
-     * Set the current <code>User</code>.
+     * @return the current <code>Entity</code>.
      */
-    public void setUser(User user);
+    public Entity getCurrentEntity();
     
     /**
      * @return the current <code>Entity</code>.
      */
-    public Entity getEntity();
+    public List<Entity> getEntities();
     
     /**
-     * @return the current <code>Credential</code> id.
+     * Set an <code>Entity</code>.
      */
-    public Long getCredentialId();
+    public void setEntity(Entity entity);
+    
+    /**
+     * @return principal.
+     */
+    public String getPrincipal();
     
     /**
      * @return Personal data.
