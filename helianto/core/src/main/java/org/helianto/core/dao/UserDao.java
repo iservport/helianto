@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
+import org.helianto.core.UserLog;
 
 /**
  * User data access interface.
@@ -48,4 +49,23 @@ public interface UserDao extends CredentialDao {
      * Find <code>User</code> by <code>Entity</code>.
      */
     public List<User> findUserByEntity(Entity entity);
+    
+    /**
+     * Convenience method to create and persist a new 
+     * <code>User</code> automatically.
+     */
+    public User autoCreateAndPersistUser(String principal);
+    
+    /**
+     * Create and persist a new <code>UserLog</code>.
+     * 
+     * <p>The <code>UserLog</code> is automatically assigned 
+     * the current date.</p>
+     */
+    public UserLog createAndPersistUserLog(User user);
+    
+    /**
+     * Find the last <code>UserLog</code>.
+     */
+    public UserLog findLastUserLog(String principal);
 }
