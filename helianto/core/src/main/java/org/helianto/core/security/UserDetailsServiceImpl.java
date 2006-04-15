@@ -15,6 +15,85 @@
 
 package org.helianto.core.security;
 
-public class UserDetailsServiceImpl {
+import org.acegisecurity.userdetails.UserDetails;
+import org.acegisecurity.userdetails.UserDetailsService;
+import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.helianto.core.Credential;
+import org.helianto.core.User;
+import org.helianto.core.UserLog;
+import org.helianto.core.dao.UserDao;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 
+/**
+ * Custom implementation for the {@link org.acegisecurity.userdetails.UserDetailsService}
+ * interface.
+ * 
+ * <p>
+ * The method {@link #loadUserByUsername(String)} returns a 
+ * <code>UserLog</code> wrapped in an <code>UserAdpater</code>
+ * instance.
+ * </p>
+ * 
+ * @author Mauricio Fernandes de Castro
+ * @version $Id$
+ */
+public class UserDetailsServiceImpl implements UserDetailsService {
+    
+    private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
+    
+    private UserDao userDao;
+    
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    /**
+     * Take the first available matching <code>User</code>.
+     */
+    public User guessUser(String principal) {
+        Credential credential = userDao.findCredentialByPrincipal(principal);
+        if (credential==null) {
+            throw new UsernameNotFoundException("No Credential with principal: "+principal);
+        } else {
+            for (User u: credential.getUsers()) {
+                return u;
+            }
+            User auto = userDao.autoCreateAndPersistUser(principal);
+            if (auto != null) {
+                return auto;
+            }
+        }
+        throw new UsernameNotFoundException("No User defined for Credential with principal: "+principal);
+    }
+    
+    /**
+     * Implements {@link org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)}
+     * to provide {@link org.acegisecurity.userdetails.UserDetails} as an adapter.
+     * 
+     * <p>If there is a matching <code>Credential</code> to the supplied <code>username</code>,
+     * the method finds the last <code>UserLog</code>
+     */
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("\n         Username "+username);
+        }
+        UserLog userLog = null;
+        try {
+            userLog = userDao.findLastUserLog(username);
+            if (userLog==null) {
+                userLog = userDao.createAndPersistUserLog(guessUser(username));
+            } 
+            return new UserDetailsAdapter(userLog);
+        } catch (Exception e) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("\n         thrown from "+e.toString());
+            }
+            throw new DataRetrievalFailureException("Username: "+username);
+        }
+    }
+    
 }
+
