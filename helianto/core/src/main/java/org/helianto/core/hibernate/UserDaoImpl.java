@@ -15,11 +15,14 @@
 
 package org.helianto.core.hibernate;
 
+import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
+import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
+import org.springframework.dao.DataRetrievalFailureException;
 
 public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
 
@@ -48,5 +51,47 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
     static final String USER_QRY_ENTITY = 
         "from User user " +
         "where user.entity = ?";
+
+    /**
+     * Subclasses should override this method to provide 
+     * <code>User</code> auto-create functionality.
+     * 
+     * @return null
+     */
+    public User autoCreateAndPersistUser(String principal) {
+        return null;
+    }
+    
+    public UserLog createAndPersistUserLog(User user) {
+        return createAndPersistUserLog(user, new Date());
+    }
+    
+    /**
+     * Not in interface <code>UserDao</code>, but usefull for tests.
+     */
+    public UserLog createAndPersistUserLog(User user, Date date) {
+        UserLog userLog = new UserLog();
+        userLog.setUser(user);
+        userLog.setLastLogin(date);
+        save(userLog);
+        return userLog;
+    }
+    
+    public UserLog findLastUserLog(String principal) {
+        try {
+            return (UserLog) findUnique(LASTUSERLOG_QUERY, principal);
+        } catch (Exception e) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Exception "+e.toString());
+            }
+            throw new DataRetrievalFailureException("Unable to find UserLogs for principal: "+principal);
+        }
+    }
+
+    static final String LASTUSERLOG_QUERY = "from UserLog userLog " +
+        "where userLog.user.credential.principal = ? " +
+        "and userLog.lastLogin = (" +
+        "  select max(lastLogin) from UserLog lastUserLog where lastUserLog.id = userLog.id" +
+        ")";
 
 }

@@ -17,8 +17,8 @@ package org.helianto.core.hibernate;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import org.helianto.core.dao.LightweightDao;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.dao.DataAccessException;
