@@ -20,7 +20,7 @@ import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.CredentialState;
-import org.helianto.core.User;
+import org.helianto.core.UserLog;
 
 /**
  * A base class to implement {@link org.acegisecurity.userdetails.UserDetails}
@@ -37,7 +37,7 @@ public abstract class AbstractUserDetails implements UserDetails {
     
     static final Log logger = LogFactory.getLog(AbstractUserDetails.class);
     
-    protected User user;
+    protected UserLog userLog;
 
     public AbstractUserDetails() {
         throw new IllegalArgumentException("AbstractUserDetails subclasses must take an " +
@@ -46,13 +46,12 @@ public abstract class AbstractUserDetails implements UserDetails {
 
     /**
      * Minimal constructor.
-     * @param credential A valid credential.
      */
-    public AbstractUserDetails(User user) {
-        if (user==null) {
-            throw new IllegalArgumentException("Cannot set a null user");
+    public AbstractUserDetails(UserLog userLog) {
+        if (userLog==null) {
+            throw new IllegalArgumentException("Cannot set a null userLog");
         }
-        this.user = user;
+        this.userLog = userLog;
     }
     
     /**
@@ -71,23 +70,23 @@ public abstract class AbstractUserDetails implements UserDetails {
     }
     
     public boolean isAccountNonExpired() {
-        return user.isAccountNonExpired();
+        return userLog.getUser().isAccountNonExpired();
     }
 
     public boolean isAccountNonLocked() {
-        return user.isAccountNonLocked();
+        return userLog.getUser().isAccountNonLocked();
     }
 
     public boolean isCredentialsNonExpired() {
         //TODO implement control over expiration date
-        if (user.getCredential().getExpired()==null) {
+        if (userLog.getUser().getCredential().getExpired()==null) {
             return true;
         } 
         return true;
     }
 
     public boolean isEnabled() {
-        char state = user.getCredential().getCredentialState();
+        char state = userLog.getUser().getCredential().getCredentialState();
         if (state==CredentialState.ACTIVE.getValue() | 
                 state==CredentialState.IDLE.getValue()) {
             return true;
@@ -96,11 +95,11 @@ public abstract class AbstractUserDetails implements UserDetails {
     }
 
     public String getPassword() {
-        return user.getCredential().getPassword();
+        return userLog.getUser().getCredential().getPassword();
      }
 
     public String getUsername() {
-        return user.getCredential().getPrincipal();
+        return userLog.getUser().getCredential().getPrincipal();
     }
     
 }
