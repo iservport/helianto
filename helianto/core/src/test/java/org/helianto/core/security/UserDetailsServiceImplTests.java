@@ -17,30 +17,13 @@ package org.helianto.core.security;
 
 import junit.framework.TestCase;
 
-import org.acegisecurity.GrantedAuthority;
-import org.helianto.core.UserLog;
-
-public class AbstractUserDetailsTests extends TestCase {
+public class UserDetailsServiceImplTests extends TestCase {
     
-
-    public void test() {
+    public void testGuessUser() {
         
     }
     
-    // inner stub class
-    
-    @SuppressWarnings("serial")
-    public class UserDetailsStub extends AbstractUserDetails {
-
-        public UserDetailsStub(UserLog userLog) {
-            super(userLog);
-            // TODO Auto-generated constructor stub
-        }
-
-        public GrantedAuthority[] getAuthorities() {
-            // TODO Auto-generated method stub
-            return null;
-        }
+    public void testLoadUserByUsername() {
         
     }
 

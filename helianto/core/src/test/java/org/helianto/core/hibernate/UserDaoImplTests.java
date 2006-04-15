@@ -15,6 +15,12 @@
 
 package org.helianto.core.hibernate;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
+import org.helianto.core.EntityCreator;
 import org.helianto.core.EntityCreatorImpl;
 import org.helianto.core.HomeCreatorImpl;
 import org.helianto.core.UserCreatorImpl;
@@ -22,14 +28,17 @@ import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.User;
+import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
 
 public class UserDaoImplTests extends AbstractIntegrationTest {
     
     private UserDao userDao;
-    private UserCreatorImpl factory;
+    private UserCreatorImpl userCreator;
+    private Home home = new HomeCreatorImpl().homeFactory("HOME");
     private Entity entity;
+    private EntityCreator entityCreator;
     
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -37,15 +46,15 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
 
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
-        factory = new UserCreatorImpl();
-        Home home = new HomeCreatorImpl().homeFactory("HOME");
-        entity = new EntityCreatorImpl().entityFactory(home, "ENTITY");
+        userCreator = new UserCreatorImpl();
+        entityCreator = new EntityCreatorImpl();
+        entity = entityCreator.entityFactory(home, "ENTITY");
     }
 
     public void testUserLifeCycle() {
         
-        Credential credential = factory.credentialFactory("CRED");
-        User user = factory.userFactory(entity, credential);
+        Credential credential = userCreator.credentialFactory("CRED");
+        User user = userCreator.userFactory(entity, credential);
         userDao.persistUser(user);
         
         hibernateTemplate.flush();
@@ -53,7 +62,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         User us = userDao.findUserByEntityAliasAndPrincipal("ENTITY", "CRED");
         assertEquals(user, us);
         
-        User duplicatedUser = factory.userFactory(entity, credential);
+        User duplicatedUser = userCreator.userFactory(entity, credential);
         try {
             userDao.persistUser(duplicatedUser);
             fail();
@@ -67,4 +76,50 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         // TODO
     }
 
+    public void testFindLastUserLog() {
+        
+        populateUsersAndLogs();
+        // FIXME result is not unique as expected
+//        UserLog userLog = userDao.findLastUserLog("CRED1");
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("Last UserLog for "+userLog+" at date "+userLog.getLastLogin());
+//        }
+        
+    }
+    
+    public void testCreateAndPersistUserLog() {
+        
+    }
+    
+    private void populateUsersAndLogs() {
+        List<Entity> entities = new ArrayList<Entity>();
+        for (int i = 1; i<=10; i++) {
+            Entity e = entityCreator.entityFactory(home, "ENTITY"+i);
+            entities.add(e);
+        }
+        List<Credential> credentials = new ArrayList<Credential>();
+        for (int i = 1; i<=3; i++) {
+            Credential c = userCreator.credentialFactory("CRED"+i);
+            credentials.add(c);
+        }
+        long time = (new Date()).getTime();
+        for (Entity e: entities) {
+            Random r = new Random();
+            int repeat1 = r.nextInt(2);
+            for (int i=0; i<=repeat1;i++) {
+                User u = userCreator.userFactory(e, credentials.get(i));
+                userDao.persistUser(u);
+                int repeat2 = r.nextInt(2);
+                for (int j=0; j<=repeat2;j++) {
+                    int oneSecond = 1000;
+                    Date notRepeatedDate = new Date(time+i*60*oneSecond+j*oneSecond);
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Repeat ("+i+", "+j+") UserLog to: "+u+" - "+notRepeatedDate);
+                    }
+                    ((UserDaoImpl) userDao).createAndPersistUserLog(u, notRepeatedDate);
+                }
+            }
+        }
+    }
+    
 }
