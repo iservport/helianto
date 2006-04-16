@@ -118,7 +118,7 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
     public Object findUnique(String query, Object values) throws DataAccessException {
     	Collection list = find(query, values);
         if (logger.isDebugEnabled()) {
-            logger.debug("\n         Query result size is ");
+            logger.debug("\n         Query result size is "+list.size());
         }
         if (list.size()==1) {
             Object object = list.toArray()[0];

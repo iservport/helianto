@@ -15,6 +15,7 @@
 
 package org.helianto.core.hibernate;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,13 +74,23 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
         UserLog userLog = new UserLog();
         userLog.setUser(user);
         userLog.setLastLogin(date);
+        user.getUserLogs().add(userLog);
         save(userLog);
         return userLog;
     }
     
     public UserLog findLastUserLog(String principal) {
         try {
-            return (UserLog) findUnique(LASTUSERLOG_QUERY, principal);
+            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOG_QUERY, principal);
+            if (logger.isDebugEnabled()) {
+                for (UserLog ul: userLogList) {
+                    logger.debug("Found UserLog(s) with principal "+principal+"[" +ul.getUser().getCredential().getPrincipal()+"]: "+ul.getUser()+" - "+ul.getLastLogin());
+                }
+            }
+            if (userLogList.size()>0) {
+                return userLogList.get(0);
+            }
+            return null; 
         } catch (Exception e) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Exception "+e.toString());
@@ -88,10 +99,13 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
         }
     }
 
-    static final String LASTUSERLOG_QUERY = "from UserLog userLog " +
-        "where userLog.user.credential.principal = ? " +
-        "and userLog.lastLogin = (" +
-        "  select max(lastLogin) from UserLog lastUserLog where lastUserLog.id = userLog.id" +
-        ")";
+    static final String LASTUSERLOG_QUERY = "from UserLog lastUserLog " +
+    "  where lastUserLog.user.credential.principal = ? and" +
+    "  lastUserLog.lastLogin =" +
+    "    ( select max(userLog.lastLogin) " +
+    "      from UserLog userLog " +
+    "      group by userLog.user.id " +
+    "      having userLog.user.id = lastUserLog.user.id " +
+    "    )";
 
 }

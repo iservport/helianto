@@ -65,7 +65,8 @@ public interface UserDao extends CredentialDao {
     public UserLog createAndPersistUserLog(User user);
     
     /**
-     * Find the last <code>UserLog</code>.
+     * Find the last <code>UserLog</code> for any <code>User</code>
+     * having a given principal.
      */
     public UserLog findLastUserLog(String principal);
 }

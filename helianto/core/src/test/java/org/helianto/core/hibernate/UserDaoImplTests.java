@@ -78,12 +78,13 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
 
     public void testFindLastUserLog() {
         
-        populateUsersAndLogs();
-        // FIXME result is not unique as expected
-//        UserLog userLog = userDao.findLastUserLog("CRED1");
-//        if (logger.isDebugEnabled()) {
-//            logger.debug("Last UserLog for "+userLog+" at date "+userLog.getLastLogin());
-//        }
+        List<User> users = populateUsersAndLogs();
+        User u = users.get(0);  
+        
+        UserLog userLog = userDao.findLastUserLog(u.getCredential().getPrincipal());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Found "+userLog.getUser()+" - "+userLog.getLastLogin());
+        }
         
     }
     
@@ -91,7 +92,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         
     }
     
-    private void populateUsersAndLogs() {
+    private List<User> populateUsersAndLogs() {
         List<Entity> entities = new ArrayList<Entity>();
         for (int i = 1; i<=10; i++) {
             Entity e = entityCreator.entityFactory(home, "ENTITY"+i);
@@ -102,6 +103,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
             Credential c = userCreator.credentialFactory("CRED"+i);
             credentials.add(c);
         }
+        List<User> users = new ArrayList<User>();
         long time = (new Date()).getTime();
         for (Entity e: entities) {
             Random r = new Random();
@@ -109,7 +111,8 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
             for (int i=0; i<=repeat1;i++) {
                 User u = userCreator.userFactory(e, credentials.get(i));
                 userDao.persistUser(u);
-                int repeat2 = r.nextInt(2);
+                users.add(u);
+                int repeat2 = r.nextInt(8);
                 for (int j=0; j<=repeat2;j++) {
                     int oneSecond = 1000;
                     Date notRepeatedDate = new Date(time+i*60*oneSecond+j*oneSecond);
@@ -120,6 +123,8 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
                 }
             }
         }
+        hibernateTemplate.flush();
+        return users;
     }
     
 }

@@ -1,7 +1,9 @@
 package org.helianto.core;
-// Generated 15/04/2006 10:12:05 by Hibernate Tools 3.1.0.beta4
+// Generated 15/04/2006 14:55:59 by Hibernate Tools 3.1.0.beta4
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -29,6 +31,7 @@ public class User  implements java.io.Serializable {
      private boolean accountNonLocked;
      private char userType;
      private Set<Role> roles = new HashSet<Role>(0);
+     private List<UserLog> userLogs = new ArrayList<UserLog>(0);
 
 
     // Constructors
@@ -47,7 +50,7 @@ public class User  implements java.io.Serializable {
     }
     
     /** full constructor */
-    public User(Entity entity, Credential credential, User parent, boolean accountNonExpired, boolean accountNonLocked, char userType, Set<Role> roles) {
+    public User(Entity entity, Credential credential, User parent, boolean accountNonExpired, boolean accountNonLocked, char userType, Set<Role> roles, List<UserLog> userLogs) {
         this.entity = entity;
         this.credential = credential;
         this.parent = parent;
@@ -55,6 +58,7 @@ public class User  implements java.io.Serializable {
         this.accountNonLocked = accountNonLocked;
         this.userType = userType;
         this.roles = roles;
+        this.userLogs = userLogs;
     }
     
 
@@ -124,6 +128,14 @@ public class User  implements java.io.Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public List<UserLog> getUserLogs() {
+        return this.userLogs;
+    }
+    
+    public void setUserLogs(List<UserLog> userLogs) {
+        this.userLogs = userLogs;
+    }
    
 
 
@@ -144,6 +156,7 @@ public class User  implements java.io.Serializable {
          
          result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getCredential() == null ? 0 : this.getCredential().hashCode() );
+         
          
          
          
