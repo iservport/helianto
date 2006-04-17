@@ -19,9 +19,9 @@
 	<!--
 			Security dao 	
 	-->
-	<bean id="customDaoImpl"
-		class="org.helianto.core.security.CustomDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"/>
+	<bean id="userDetailsService"
+		class="org.helianto.core.security.UserDetailsServiceImpl">
+		<property name="userDao" ref="userDao"/>
 	</bean>
 	<!--
 			Security test dao
@@ -51,7 +51,7 @@
 	-->
 	<bean id="daoAuthenticationProvider"
 		class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
-		<property name="userDetailsService" ref="customDaoImpl"/>
+		<property name="userDetailsService" ref="userDetailsService"/>
 		<property name="userCache" ref="userCache"/>
 		<!--property name="passwordEncoder" ref="passwordEncoder"/-->
 	</bean>

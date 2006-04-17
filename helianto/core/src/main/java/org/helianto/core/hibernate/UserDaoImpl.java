@@ -87,7 +87,9 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
 
     public UserLog findLastUserLog(String principal) {
         try {
-            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOG_QUERY, new Object[] { principal, principal });
+        	// two different queries to grant compatibility with all databases
+        	Date lastLogin = (Date) findUnique(LASTUSERLOGDATE_QUERY, principal);
+            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOG_QUERY, new Object[] { principal, lastLogin });
             if (logger.isDebugEnabled()) {
                 for (UserLog ul: userLogList) {
                     logger.debug("Found UserLog(s) with principal "+principal+"[" +ul.getUser().getCredential().getPrincipal()+"]: "+ul.getUser()+" - "+ul.getLastLogin());
@@ -104,14 +106,14 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
             throw new DataRetrievalFailureException("Unable to find UserLogs for principal: "+principal);
         }
     }
+    
+    static final String LASTUSERLOGDATE_QUERY = "select max(userLog.lastLogin) " +
+    "  from UserLog userLog " +
+    "  where userLog.user.credential.principal = ? "+
+    "  group by userLog.user.credential.principal ";
 
     static final String LASTUSERLOG_QUERY = "from UserLog lastUserLog " +
     "  where lastUserLog.user.credential.principal = ? and" +
-    "  lastUserLog.lastLogin =" +
-    "    ( select max(userLog.lastLogin) " +
-    "      from UserLog userLog " +
-    "      group by userLog.user.credential.principal " +
-    "      having userLog.user.credential.principal = ? " +
-    "    )";
+    "  lastUserLog.lastLogin = ?";
 
 }
