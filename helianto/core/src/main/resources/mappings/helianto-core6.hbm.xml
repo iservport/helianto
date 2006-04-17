@@ -40,30 +40,29 @@ Persist roles.
 		<id name="id" type="int">
 			<generator class="native"/>
 		</id>
+		<natural-id>
+			<!-- 
+					user
+			-->
+			<many-to-one name="user" 
+				class="org.helianto.core.User" cascade="merge">
+				<meta attribute="use-in-equals">true</meta>
+				<column name="userId"/>
+			</many-to-one>
+			<!-- 
+					role name 
+			-->
+			<property name="roleName" type="string">
+				<meta attribute="use-in-equals">true</meta>
+				<column name="roleName"	length="20"/>
+			</property>
+		</natural-id>
 		<!-- 
 				service
 		-->
 		<many-to-one name="service" 
 			class="org.helianto.core.Service" cascade="merge">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="serviceId" not-null="true" 
-				unique-key="unique1"/>
+			<column name="serviceId"/>
 		</many-to-one>
-		<!-- 
-				user
-		-->
-		<many-to-one name="user" 
-			class="org.helianto.core.User" cascade="merge">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="userId" not-null="true" 
-				unique-key="unique1"/>
-		</many-to-one>
-		<!-- 
-				role name 
-		-->
-		<property name="roleName" type="string">
-			<column name="roleName" not-null="true" 
-				length="20"/>
-		</property>
 	</class>
 </hibernate-mapping>

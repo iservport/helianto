@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 15/04/2006 14:56:04 by Hibernate Tools 3.1.0.beta4
+// Generated 16/04/2006 21:12:15 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -20,9 +20,9 @@ public class Role  implements java.io.Serializable {
     // Fields    
 
      private int id;
-     private Service service;
      private User user;
      private String roleName;
+     private Service service;
 
 
     // Constructors
@@ -31,12 +31,17 @@ public class Role  implements java.io.Serializable {
     public Role() {
     }
 
-    
-    /** full constructor */
-    public Role(Service service, User user, String roleName) {
-        this.service = service;
+	/** minimal constructor */
+    public Role(User user, String roleName) {
         this.user = user;
         this.roleName = roleName;
+    }
+    
+    /** full constructor */
+    public Role(User user, String roleName, Service service) {
+        this.user = user;
+        this.roleName = roleName;
+        this.service = service;
     }
     
 
@@ -49,14 +54,6 @@ public class Role  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Service getService() {
-        return this.service;
-    }
-    
-    public void setService(Service service) {
-        this.service = service;
     }
 
     public User getUser() {
@@ -74,6 +71,14 @@ public class Role  implements java.io.Serializable {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+
+    public Service getService() {
+        return this.service;
+    }
+    
+    public void setService(Service service) {
+        this.service = service;
+    }
    
 
 
@@ -84,16 +89,16 @@ public class Role  implements java.io.Serializable {
 		 if ( !(other instanceof Role) ) return false;
 		 Role castOther = ( Role ) other; 
          
-		 return ( (this.getService()==castOther.getService()) || ( this.getService()!=null && castOther.getService()!=null && this.getService().equals(castOther.getService()) ) )
- && ( (this.getUser()==castOther.getUser()) || ( this.getUser()!=null && castOther.getUser()!=null && this.getUser().equals(castOther.getUser()) ) );
+		 return ( (this.getUser()==castOther.getUser()) || ( this.getUser()!=null && castOther.getUser()!=null && this.getUser().equals(castOther.getUser()) ) )
+ && ( (this.getRoleName()==castOther.getRoleName()) || ( this.getRoleName()!=null && castOther.getRoleName()!=null && this.getRoleName().equals(castOther.getRoleName()) ) );
    }
    
    public int hashCode() {
          int result = 17;
          
          
-         result = 37 * result + ( getService() == null ? 0 : this.getService().hashCode() );
          result = 37 * result + ( getUser() == null ? 0 : this.getUser().hashCode() );
+         result = 37 * result + ( getRoleName() == null ? 0 : this.getRoleName().hashCode() );
          
          return result;
    }   

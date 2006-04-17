@@ -36,9 +36,9 @@ public interface PublicUserDetails {
     
     /**
      * Return the <code>Credential</code> principal from 
-     * the secured <code>User</code>.
+     * the secured <code>User</code> as username.
      */
-    public String getPrincipal();
+    public String getUsername();
     
     /**
      * Return the current <code>Entity</code>.

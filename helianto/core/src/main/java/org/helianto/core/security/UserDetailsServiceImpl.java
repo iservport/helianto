@@ -53,7 +53,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     /**
      * Take the first available matching <code>User</code>.
      */
-    public User guessUser(String principal) {
+    final User guessUser(String principal) {
         Credential credential = userDao.findCredentialByPrincipal(principal);
         if (credential==null) {
             throw new UsernameNotFoundException("No Credential with principal: "+principal);
@@ -74,11 +74,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * to provide {@link org.acegisecurity.userdetails.UserDetails} as an adapter.
      * 
      * <p>If there is a matching <code>Credential</code> to the supplied <code>username</code>,
-     * the method finds the last <code>UserLog</code>
+     * the method finds the last created <code>UserLog</code>, if exists. If not, it guesses an
+     * <code>User</code> (from users having the same credential) to create a new <code>UserLog</code>.
+     * In both cases, the resulting <code>UserLog</code> is passed as a constructor parameter to a new  
+     * <code>UserDetailsAdapter</code>.
      */
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+    public final UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         if (logger.isDebugEnabled()) {
-            logger.debug("\n         Username "+username);
+            logger.debug("Username is "+username);
         }
         UserLog userLog = null;
         try {

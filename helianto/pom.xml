@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto</artifactId>
-	<version>0.0.1-20060320</version>
+	<version>0.0.1-20060416</version>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
 	<inceptionYear>2005</inceptionYear>

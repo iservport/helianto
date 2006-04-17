@@ -46,7 +46,7 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
 
     @SuppressWarnings("unchecked")
     public List<User> findUserByEntity(Entity entity) {
-        return (List<User>) findUnique(USER_QRY_ENTITY, entity);
+        return (List<User>) find(USER_QRY_ENTITY, entity);
     }
     
     static final String USER_QRY_ENTITY = 
@@ -74,14 +74,20 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
         UserLog userLog = new UserLog();
         userLog.setUser(user);
         userLog.setLastLogin(date);
-        user.getUserLogs().add(userLog);
-        save(userLog);
+        merge(userLog);
         return userLog;
     }
     
+    public List<UserLog> findUserLogByUser(User user) {
+        return (ArrayList<UserLog>) find(USERLOG_QUERY, user);
+    }
+    
+    static final String USERLOG_QUERY = "from UserLog userLog " +
+    "  where userLog.user = ? ";
+
     public UserLog findLastUserLog(String principal) {
         try {
-            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOG_QUERY, principal);
+            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOG_QUERY, new Object[] { principal, principal });
             if (logger.isDebugEnabled()) {
                 for (UserLog ul: userLogList) {
                     logger.debug("Found UserLog(s) with principal "+principal+"[" +ul.getUser().getCredential().getPrincipal()+"]: "+ul.getUser()+" - "+ul.getLastLogin());
@@ -104,8 +110,8 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
     "  lastUserLog.lastLogin =" +
     "    ( select max(userLog.lastLogin) " +
     "      from UserLog userLog " +
-    "      group by userLog.user.id " +
-    "      having userLog.user.id = lastUserLog.user.id " +
+    "      group by userLog.user.credential.principal " +
+    "      having userLog.user.credential.principal = ? " +
     "    )";
 
 }

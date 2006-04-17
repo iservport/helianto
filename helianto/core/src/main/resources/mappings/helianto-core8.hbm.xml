@@ -45,7 +45,8 @@ A class to hold user successful logins.
 					user
 			-->
 			<many-to-one name="user" 
-				class="org.helianto.core.User" insert="true">
+				class="org.helianto.core.User" cascade="merge"
+				insert="true">
 				<meta attribute="use-in-equals">true</meta>
 				<column name="userId"/>
 			</many-to-one>

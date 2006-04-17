@@ -73,38 +73,86 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     }
     
     public void testfindUserByEntity() {
-        // TODO
+        List<Entity> entities = createEntities();
+        populateUsersAndLogs(entities);
+        for (Entity e: entities) {
+            List<User> users = userDao.findUserByEntity(e);
+            for (User u: users) {
+                assertEquals(e, u.getEntity());
+            }
+        }
+        
+    }
+
+    public void testfindUserLogByUser() {
+        List<Entity> entities = createEntities();
+        List<User> users = populateUsersAndLogs(entities);
+        for (User u: users) {
+            List<UserLog> userLogs = userDao.findUserLogByUser(u);
+            for (UserLog ul: userLogs) {
+                assertEquals(u, ul.getUser());
+            }
+        }
+        
     }
 
     public void testFindLastUserLog() {
         
-        List<User> users = populateUsersAndLogs();
-        User u = users.get(0);  
+        List<Entity> entities = createEntities();
+        List<User> users = populateUsersAndLogs(entities);
+        User user = users.get(0);  
+        String principal = user.getCredential().getPrincipal();
         
-        UserLog userLog = userDao.findLastUserLog(u.getCredential().getPrincipal());
+        UserLog userLog = userDao.findLastUserLog(principal);
         if (logger.isDebugEnabled()) {
             logger.debug("Found "+userLog.getUser()+" - "+userLog.getLastLogin());
+        }
+        
+        Date maxLastLogin = userLog.getLastLogin();
+        for (User u: users) {
+            // check only users with selected principal
+            if (u.getCredential().getPrincipal().compareTo(principal)==0) {
+                List<UserLog> userLogs = userDao.findUserLogByUser(u);
+                for (UserLog ul: userLogs) {
+                    if (ul.getLastLogin().getTime() > maxLastLogin.getTime()) {
+                        fail("Max last login is actually "+ul.getLastLogin());
+                    }
+                }
+            }
         }
         
     }
     
     public void testCreateAndPersistUserLog() {
+
+        Credential credential = userCreator.credentialFactory("CRED");
+        User user = userCreator.userFactory(entity, credential);
+        Date date = new Date();
+        UserLog userLog = ((UserDaoImpl) userDao).createAndPersistUserLog(user, date);
+        hibernateTemplate.flush();
         
+        List<UserLog> userLogs = userDao.findUserLogByUser(user);
+        assertTrue(userLogs.size()==1);
+        UserLog ul = userLogs.get(0);
+        assertEquals(userLog, ul);
     }
     
-    private List<User> populateUsersAndLogs() {
+    private List<Entity> createEntities() {
         List<Entity> entities = new ArrayList<Entity>();
         for (int i = 1; i<=10; i++) {
             Entity e = entityCreator.entityFactory(home, "ENTITY"+i);
             entities.add(e);
         }
+        return entities;
+    }
+    
+    private List<User> populateUsersAndLogs(List<Entity> entities) {
         List<Credential> credentials = new ArrayList<Credential>();
         for (int i = 1; i<=3; i++) {
             Credential c = userCreator.credentialFactory("CRED"+i);
             credentials.add(c);
         }
         List<User> users = new ArrayList<User>();
-        long time = (new Date()).getTime();
         for (Entity e: entities) {
             Random r = new Random();
             int repeat1 = r.nextInt(2);
@@ -114,17 +162,29 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
                 users.add(u);
                 int repeat2 = r.nextInt(8);
                 for (int j=0; j<=repeat2;j++) {
-                    int oneSecond = 1000;
-                    Date notRepeatedDate = new Date(time+i*60*oneSecond+j*oneSecond);
+                    Date date = randomDateGenerator(r);
                     if (logger.isDebugEnabled()) {
-                        logger.debug("Repeat ("+i+", "+j+") UserLog to: "+u+" - "+notRepeatedDate);
+                        logger.debug("Repeat ("+i+", "+j+") UserLog to: "+u+" - "+date);
                     }
-                    ((UserDaoImpl) userDao).createAndPersistUserLog(u, notRepeatedDate);
+                    // there is a very small chance to have a duplicated date here
+                    ((UserDaoImpl) userDao).createAndPersistUserLog(u, date);
                 }
             }
         }
         hibernateTemplate.flush();
         return users;
+    }
+    
+    private Date randomDateGenerator(Random r) {
+        long sixMonthPeriodInMinutes = 60*24*180;
+        long timeSixMonthAgo = (new Date()).getTime() - sixMonthPeriodInMinutes*60*1000;
+        int randomShift = r.nextInt((int)sixMonthPeriodInMinutes);
+        long randomTimeInLastSixMonth = timeSixMonthAgo + (long)randomShift*60*1000;
+        Date likelyNotRepeatedDate = new Date(randomTimeInLastSixMonth);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Random generated (likely not repeated) date: "+likelyNotRepeatedDate);
+        }
+        return likelyNotRepeatedDate;
     }
     
 }

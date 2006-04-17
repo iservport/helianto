@@ -39,8 +39,8 @@ import org.helianto.core.UserLog;
  * <p>
  * A new <code>UserAdapter</code> must be created from a single
  * {@link org.helianto.core.User}. As a group of <code>User</code>s may be
- * connected by a common <code>Credential</code> it may be desirable to switch 
- * <code>User</code>s inside the group at runtime as no new authentication will
+ * connected by a common <code>Credential</code> it is desirable to switch 
+ * <code>User</code>s inside the group at runtime as no new authentication is
  * be required (same credential). This is
  * is a design choice made to allow multiple entities to share
  * the same set of credentials and still keep individual sets of
@@ -49,12 +49,14 @@ import org.helianto.core.UserLog;
  * 
  * <p>
  * Service layer code should retrieve <code>UserAdapter</code> through the 
- * {@link org.helianto.core.security.PublicUserDetails} interface 
+ * {@link org.helianto.core.security.PublicUserDetails}  or
+ * {@link org.helianto.core.security.PublicUserDetailsSwitcher} interfaces 
  * to prevent unintended access to the embedded <code>User</code> and 
- * <code>Credential</code> instances. A convenient static method 
- * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsFromSecurityContext} 
- * is supplied to perform this task. <code>PublicUserDetails</code>  
- * provides a method to set the current <code>User</code> after any 
+ * <code>Credential</code> instances. A convenient static methods 
+ * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsFromSecurityContext} and
+ * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsSwitcherFromSecurityContext} 
+ * are supplied to perform this task. <code>PublicUserDetailsSwitcher</code>  
+ * provides a method to switch the current <code>User</code> based on an
  * <code>Entity</code> selection.
  * </p>
  * 
@@ -62,7 +64,7 @@ import org.helianto.core.UserLog;
  * @version $Id$
  * @see org.acegisecurity.providers.dao.User org.acegisecurity.providers.dao.User
  */
-public final class UserDetailsAdapter extends AbstractUserDetails implements Serializable, PublicUserDetails, EntitySwitcher {
+public final class UserDetailsAdapter extends AbstractUserDetails implements Serializable, PublicUserDetailsSwitcher {
     
     private static final long serialVersionUID = 4017521054529203449L;
     
@@ -88,10 +90,6 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
 
     public PersonalData getPersonalData() {
         return userLog.getUser().getCredential().getPersonalData();
-    }
-
-    public String getPrincipal() {
-        return userLog.getUser().getCredential().getPrincipal();
     }
 
     public Entity getCurrentEntity() {
@@ -132,8 +130,7 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     }
 
     public Date getLastLogin() {
-        // TODO Auto-generated method stub
-        return null;
+        return userLog.getLastLogin();
     }
 
 }

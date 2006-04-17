@@ -69,11 +69,28 @@ public abstract class AbstractUserDetails implements UserDetails {
         return pud;
     }
     
+    /**
+     * Static method to retrieve the <code>UserAdapter</code>
+     * instance held in the <code>SecurityContext</code>.
+     */
+    public static PublicUserDetailsSwitcher retrievePublicUserDetailsSwitcherFromSecurityContext() {
+        if (logger.isDebugEnabled()) {
+            logger.debug("\n         Retriving public user details switcher...");
+        }
+        PublicUserDetailsSwitcher puds = (PublicUserDetailsSwitcher) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+        if (logger.isDebugEnabled()) {
+            logger.debug("\n         Done.");
+        }
+        return puds;
+    }
+    
     public boolean isAccountNonExpired() {
+        // TODO calculate account (User) expiration
         return userLog.getUser().isAccountNonExpired();
     }
 
     public boolean isAccountNonLocked() {
+        // TODO calculate account (User) expiration
         return userLog.getUser().isAccountNonLocked();
     }
 
