@@ -26,9 +26,6 @@ import org.helianto.core.service.AbstractGenericService;
  */
 public class EntityCreatorImpl extends AbstractGenericService implements EntityCreator {
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.EntityCreator#entityFactory(org.helianto.core.Home, java.lang.String)
-     */
     public Entity entityFactory(Home home, String uniqueAlias) {
         Entity entity = new Entity();
         entity.setHome(home);
@@ -36,17 +33,23 @@ public class EntityCreatorImpl extends AbstractGenericService implements EntityC
         return entity;
     }
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.EntityCreator#addressableEntityFactory(org.helianto.core.Home, java.lang.String)
-     */
     public AddressableEntity addressableEntityFactory(Home home, String uniqueAlias) {
+        return addressableEntityFactory(home, null, uniqueAlias);
+    }
+    
+    public AddressableEntity addressableEntityFactory(Province province, String uniqueAlias) {
+        return addressableEntityFactory(province.getHome(), province, uniqueAlias);
+    }
+    
+    private AddressableEntity addressableEntityFactory(Home home, Province province, String uniqueAlias) {
         AddressableEntity entity = new AddressableEntity();
         entity.setHome(home);
         entity.setAlias(uniqueAlias);
         entity.setEntityAddress1("");
         entity.setEntityAddress2("");
+        entity.setEntityAddress3("");
         entity.setEntityCityName("");
-        entity.setEntityProvinceName("");
+        entity.setProvince(province);
         entity.setEntityPostalCode("");
         return entity;
     }
@@ -95,6 +98,19 @@ public class EntityCreatorImpl extends AbstractGenericService implements EntityC
         defaultEntity.setEntity(entity);
         defaultEntity.setPriority(priority);
         return defaultEntity;
+    }
+
+    public Province provinceFactory(Home home, String code, String name) {
+        return provinceFactory(home, code, name, home.getCountry());
+    }
+
+    public Province provinceFactory(Home home, String code, String name, String country) {
+        Province province = new Province();
+        province.setHome(home);
+        province.setCode(code);
+        province.setProvinceName(name);
+        province.setCountry(country);
+        return province;
     }
     
 }

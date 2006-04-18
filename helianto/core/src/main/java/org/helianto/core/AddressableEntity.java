@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 17/04/2006 13:43:23 by Hibernate Tools 3.1.0.beta4
+// Generated 17/04/2006 21:44:12 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -10,7 +10,7 @@ package org.helianto.core;
  * information.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core1.hbm.xml 17 2006-03-25 08:13:08 -0300 (Sáb, 25 Mar 2006) iserv $
+ * @version $Id: helianto-core1.hbm.xml,v 1.7 2006/03/25 11:12:58 iserv Exp $
  * 				
  * 			
  */
@@ -22,8 +22,9 @@ public class AddressableEntity extends org.helianto.core.Entity implements java.
 
      private String entityAddress1;
      private String entityAddress2;
+     private String entityAddress3;
      private String entityCityName;
-     private String entityProvinceName;
+     private Province province;
      private String entityPostalCode;
 
 
@@ -39,12 +40,13 @@ public class AddressableEntity extends org.helianto.core.Entity implements java.
     }
     
     /** full constructor */
-    public AddressableEntity(Home home, String alias, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode) {
+    public AddressableEntity(Home home, String alias, String entityAddress1, String entityAddress2, String entityAddress3, String entityCityName, Province province, String entityPostalCode) {
         super(home, alias);        
         this.entityAddress1 = entityAddress1;
         this.entityAddress2 = entityAddress2;
+        this.entityAddress3 = entityAddress3;
         this.entityCityName = entityCityName;
-        this.entityProvinceName = entityProvinceName;
+        this.province = province;
         this.entityPostalCode = entityPostalCode;
     }
     
@@ -68,6 +70,14 @@ public class AddressableEntity extends org.helianto.core.Entity implements java.
         this.entityAddress2 = entityAddress2;
     }
 
+    public String getEntityAddress3() {
+        return this.entityAddress3;
+    }
+    
+    public void setEntityAddress3(String entityAddress3) {
+        this.entityAddress3 = entityAddress3;
+    }
+
     public String getEntityCityName() {
         return this.entityCityName;
     }
@@ -76,12 +86,12 @@ public class AddressableEntity extends org.helianto.core.Entity implements java.
         this.entityCityName = entityCityName;
     }
 
-    public String getEntityProvinceName() {
-        return this.entityProvinceName;
+    public Province getProvince() {
+        return this.province;
     }
     
-    public void setEntityProvinceName(String entityProvinceName) {
-        this.entityProvinceName = entityProvinceName;
+    public void setProvince(Province province) {
+        this.province = province;
     }
 
     public String getEntityPostalCode() {

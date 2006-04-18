@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 17/04/2006 13:43:22 by Hibernate Tools 3.1.0.beta4
+// Generated 17/04/2006 21:44:10 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -10,7 +10,7 @@ package org.helianto.core;
  * organization.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core1.hbm.xml 17 2006-03-25 08:13:08 -0300 (Sáb, 25 Mar 2006) iserv $
+ * @version $Id: helianto-core1.hbm.xml,v 1.7 2006/03/25 11:12:58 iserv Exp $
  * 				
  * 				
  */
@@ -35,8 +35,8 @@ public class Organization extends org.helianto.core.AddressableEntity implements
     }
     
     /** full constructor */
-    public Organization(Home home, String alias, String entityAddress1, String entityAddress2, String entityCityName, String entityProvinceName, String entityPostalCode, String businessName) {
-        super(home, alias, entityAddress1, entityAddress2, entityCityName, entityProvinceName, entityPostalCode);        
+    public Organization(Home home, String alias, String entityAddress1, String entityAddress2, String entityAddress3, String entityCityName, Province province, String entityPostalCode, String businessName) {
+        super(home, alias, entityAddress1, entityAddress2, entityAddress3, entityCityName, province, entityPostalCode);        
         this.businessName = businessName;
     }
     

@@ -32,6 +32,7 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
     Organization organization;
     DefaultEntity defaultEntity;
     User user;
+    Province province;
     
     public void testGraph() {
         
@@ -153,7 +154,7 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
         addrent.setEntityAddress2("");
         addrent.setEntityCityName("");
         addrent.setEntityPostalCode("");
-        addrent.setEntityProvinceName("");
+        addrent.setProvince(province);
         
         // organization
         organization = new Organization();
@@ -214,6 +215,28 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
         assertFalse(user.equals(u));
         u.setEntity(entity);
         assertTrue(user.equals(u));
+        
+        //province
+        province = new Province();
+        province.setId(Integer.MAX_VALUE);
+        province.setId(Integer.MIN_VALUE);
+        province.setHome(home);
+        province.setCode("");
+        province.setProvinceName("");
+        province.setCountry("");
+        
+        assertTrue(province.equals(province));
+        assertFalse(province.equals(null));
+        assertFalse(province.equals(new Object()));
+        Province p = new Province();
+        assertFalse(province.equals(p));
+        province.setHome(home);
+        province.setCode("ABC");
+        p.setHome(new Home());
+        p.setCode("ABC");
+        assertFalse(province.equals(p));
+        p.setHome(home);
+        assertTrue(province.equals(p));
         
         // downcasts
         AddressableEntity a1 = (AddressableEntity) individual;

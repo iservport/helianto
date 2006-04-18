@@ -115,15 +115,22 @@ information.
 			<!-- 
 				address 2
 			-->
-			<property name="entityAddress2" type="string" length="64"/>
+			<property name="entityAddress2" type="string" length="32"/>
+			<!-- 
+				address 2
+			-->
+			<property name="entityAddress3" type="string" length="20"/>
 			<!-- 
 				city name
 			-->
-			<property name="entityCityName" type="string" length="64"/>
+			<property name="entityCityName" type="string" length="32"/>
 			<!-- 
-				province name
+				province
 			-->
-			<property name="entityProvinceName" type="string" length="64"/>
+			<many-to-one name="province" 
+				class="org.helianto.core.Province">
+				<column name="provinceId"/>
+			</many-to-one>
 			<!-- 
 				postal code
 			-->

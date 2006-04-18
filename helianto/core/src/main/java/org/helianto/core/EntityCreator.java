@@ -39,5 +39,9 @@ public interface EntityCreator {
     public DefaultEntity defaultEntityFactory(Entity entity);
 
     public DefaultEntity defaultEntityFactory(Entity entity, int priority);
+    
+    public Province provinceFactory(Home home, String code, String name);
+
+    public Province provinceFactory(Home home, String code, String name, String country);
 
 }

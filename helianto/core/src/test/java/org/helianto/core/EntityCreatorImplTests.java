@@ -29,6 +29,21 @@ public class EntityCreatorImplTests extends TestCase {
             new HomeCreatorImpl().homeFactory();
     }
 
+    public void testProvinceFactoryDefaultCountry() {
+        home.setCountry("AB");
+        Province province = factory.provinceFactory(home, "ABC", "Name");
+        assertEquals("AB", province.getCountry());
+    }
+
+    public void testProvinceFactory() {
+        home.setCountry("AB");
+        Province province = factory.provinceFactory(home, "ABC", "NAME", "CD");
+        assertEquals("CD", province.getCountry());
+        assertSame(home, province.getHome());
+        assertEquals("ABC", province.getCode());
+        assertEquals("NAME", province.getProvinceName());
+    }
+
     public void testEntityFactory() {
         Entity entity = 
             factory.entityFactory(home, "UNIQUE");
@@ -45,7 +60,15 @@ public class EntityCreatorImplTests extends TestCase {
         assertEquals("", entity.getEntityAddress2());
         assertEquals("", entity.getEntityCityName());
         assertEquals("", entity.getEntityPostalCode());
-        assertEquals("", entity.getEntityProvinceName());
+        assertNull(entity.getProvince());
+    }
+
+    public void testAddressableEntityFactoryProvince() {
+        Province province = factory.provinceFactory(home, "", "");
+        AddressableEntity entity = 
+            factory.addressableEntityFactory(province, "UNIQUE");
+        assertSame(home, entity.getHome());
+        assertSame(province, entity.getProvince());
     }
 
     public void testOrganizationFactorySupervisorString() {
@@ -83,5 +106,5 @@ public class EntityCreatorImplTests extends TestCase {
             factory.defaultEntityFactory((Entity) organization);
         assertSame(organization, defaultOrganization.getEntity());
     }
-
+    
 }
