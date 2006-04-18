@@ -87,10 +87,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         try {
             userLog = userDao.findLastUserLog(username);
             if (userLog==null) {
+                // case 1: first login
                 userLog = userDao.createAndPersistUserLog(guessUser(username));
-            } 
+            } else {
+                // case 2: user with a previous visit
+                userLog = userDao.createAndPersistUserLog(userLog.getUser());
+            }
             return new UserDetailsAdapter(userLog);
         } catch (Exception e) {
+            // case 3: fail to login (bad passwd, not registered as user, other)
             if (logger.isDebugEnabled()) {
                 logger.debug("\n         thrown from "+e.toString());
             }

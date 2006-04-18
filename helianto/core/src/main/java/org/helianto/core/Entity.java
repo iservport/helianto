@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 17/04/2006 21:44:17 by Hibernate Tools 3.1.0.beta4
+// Generated 18/04/2006 13:34:35 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -32,7 +32,7 @@ package org.helianto.core;
  * like Hibernate's (www.hibernate.org) non-lazy loading.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core1.hbm.xml,v 1.7 2006/03/25 11:12:58 iserv Exp $
+ * @version $Id: helianto-core1.hbm.xml 75 2006-04-17 21:45:55 -0300 (Seg, 17 Abr 2006) iserv $
  * 				
  * 		
  */

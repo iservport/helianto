@@ -77,12 +77,14 @@ public class UserDetailsServiceImplTests extends TestCase {
     
     public void testLoadUserByUsernameSuccess() {
         
-        // prepare
+        // prepare first login
         
         userList = createUsers(testCredential, 1);
         User user = userList.get(0);
+        Date loginDate1 = new Date();
+        lastLogin = loginDate1;
         
-        // guess user and create log
+        // test case 1: guess user and create log
         
         UserDetails userDetails = userDetailsService.loadUserByUsername("CRED1");
         assertEquals(userDetails.getUsername(), "CRED1");
@@ -136,15 +138,20 @@ public class UserDetailsServiceImplTests extends TestCase {
         // cast UserDetails to PublicUserDetails
         
         PublicUserDetails publicUserDetails = (PublicUserDetails) userDetails;
-        assertSame(publicUserDetails.getLastLogin(), lastLogin);
+        assertSame(publicUserDetails.getLastLogin(), loginDate1);
         assertSame(publicUserDetails.getCurrentEntity(), user.getEntity());
         assertSame(publicUserDetails.getPersonalData(), user.getCredential().getPersonalData());
         
-        // second invocation
+        // prepare UserDaoStub for second invocation
         
-        UserDetails userDetailsCopy = userDetailsService.loadUserByUsername("CRED1");
-        // TODO check if userDetailsCopy has a reference to the last userLog
+        Date loginDate2 = new Date();
+        lastLogin = loginDate2;
         
+        // test case 2: second invocation
+        
+        PublicUserDetails publicUserDetails2 = (PublicUserDetails) userDetailsService.loadUserByUsername("CRED1");
+        assertEquals(2, userLogList.size());
+        assertSame(publicUserDetails2.getLastLogin(), loginDate2);
         
     }
     
