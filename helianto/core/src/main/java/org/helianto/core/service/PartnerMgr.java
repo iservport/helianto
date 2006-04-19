@@ -33,21 +33,6 @@ import org.helianto.core.Supplier;
 public interface PartnerMgr extends CoreMgr {
     
     /**
-     * The <code>Customer</code> factory method.
-     */
-    public Customer customerFactory(Entity entity, String alias);
-    
-    /**
-     * The <code>Supplier</code> factory method.
-     */
-    public Supplier supplierFactory(Entity entity, String alias);
-    
-    /**
-     * The <code>Contact</code> factory method.
-     */
-    public Contact contactFactory(Partner partner, Credential cred);
-    
-    /**
      * Persist a <code>Customer</code>
      */
     public void persistCustomer(Customer customer);
