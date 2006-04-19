@@ -22,15 +22,15 @@
 	
 -->
 <hibernate-mapping default-lazy="false">
-	<class table="core_province" name="org.helianto.core.Province">
+	<class table="core_entitykey" name="org.helianto.core.EntityKey">
 		<!-- 
-			PROVINCE
+			ENTITY KEY
 			============================================= 
 		-->
 		<meta attribute="class-description">
 			<![CDATA[
 <p>
-Provinces.
+A domain class to accept different key numbers for each <code>Entity</code>.
 </p>
 
 @author Mauricio Fernandes de Castro
@@ -45,29 +45,27 @@ Provinces.
 		</id>
 		<natural-id>
 			<!-- 
-				home
+				entity
 			-->
-			<many-to-one name="home"
-				class="org.helianto.core.Home">
+			<many-to-one name="entity"
+				class="org.helianto.core.Entity">
 				<meta attribute="use-in-equals">true</meta>
-				<column name="homeId"/>
+				<column name="entityId"/>
 			</many-to-one>
 			<!-- 
-				code
+				key type
 			-->
-			<property name="code" type="string">
+			<property name="keyType" type="int">
 				<meta attribute="use-in-equals">true</meta>
-				<column name="code" length="3"/>
+				<column name="keyType"/>
+			</property>
+			<!-- 
+				key number
+			-->
+			<property name="keyNumber" type="string">
+				<meta attribute="use-in-equals">true</meta>
+				<column name="keyNumber" length="20"/>
 			</property>
 		</natural-id>
-		<!-- 
-				provinceName
-		-->
-		<property name="provinceName" type="string" length="32"/>
-		<!-- 
-				country ISO code
-		-->
-		<property name="country" type="string" length="2"/>
 	</class>
 </hibernate-mapping>
-
