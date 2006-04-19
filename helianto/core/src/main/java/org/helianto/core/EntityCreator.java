@@ -20,7 +20,7 @@ package org.helianto.core;
  * related domain objects.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: $
  */
 public interface EntityCreator {
 

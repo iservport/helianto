@@ -167,6 +167,8 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
     @SuppressWarnings("unchecked")
     public void testPersistUserSuccess() {
         
+        // TODO refactor with userDao stub or mock
+        
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
         hibernateTemplate.flush();
         
@@ -184,6 +186,8 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
     
     public void testPersistUserFailureNullPrincipal() {
         
+        // TODO refactor with userDao stub or mock
+
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
         hibernateTemplate.flush();
         
@@ -201,6 +205,8 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
 
     public void testPersistUserFailureEmptyPrincipal() {
         
+        // TODO refactor with userDao stub or mock
+
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
         hibernateTemplate.flush();
         
@@ -218,6 +224,8 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
 
     public void testIsPrincipalUnique() {
 
+        // TODO refactor with userDao stub or mock
+
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
         hibernateTemplate.flush();
         
@@ -230,10 +238,6 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
         assertFalse(simpleCoreMgr.isPrincipalUnique(user));
         
-    }
-    
-    public void testListUserByEntity() {
-        //TODO
     }
     
     // colaborator setters

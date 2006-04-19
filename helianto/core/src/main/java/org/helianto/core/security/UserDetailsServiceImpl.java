@@ -52,6 +52,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
      * Take the first available matching <code>User</code>.
+     * 
+     * <p>If there is no <code>User</code> associated with a 
+     * <code>Credential</code> uniquely identified by the supplied
+     * <code>principal</code>, the method delegates the automatic
+     * <code>User</code> creation to the underlying 
+     * <code>UserDao</code>.</p>
      */
     final User guessUser(String principal) {
         Credential credential = userDao.findCredentialByPrincipal(principal);

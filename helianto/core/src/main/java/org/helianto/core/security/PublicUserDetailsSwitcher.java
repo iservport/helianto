@@ -15,9 +15,10 @@
 
 package org.helianto.core.security;
 
-import java.util.List;
+import java.util.Set;
 
-import org.helianto.core.Entity;
+import org.helianto.core.User;
+import org.helianto.core.UserLog;
 
 /**
  * Implementations
@@ -30,18 +31,20 @@ import org.helianto.core.Entity;
 public interface PublicUserDetailsSwitcher extends PublicUserDetails {
 
     /**
-     * Return an <code>Entity</code> from all
-     * <code>User</code>s connected by the same
-     * <code>Credential</code>.
+     * Get the connected <code>User</code> set.
      */
-    public List<Entity> getEntities();
+    public Set<User> getUsers();
     
     /**
-     * Set an <code>Entity</code> if there is an 
-     * <code>User</code> that to replace the current
-     * secure <code>User</code> associated with the
-     * <code>Entity</code> with the same <code>Credential</code> .
+     * Set the <code>UserLog</code>.
+     * 
+     * <p>As one of the <code>User</code> primary responsibilities
+     * is to carry a set of <code>Role</code>s specific to
+     * an <code>Entity</code>, a new <code>UserLog</code>
+     * that points to an <code>User</code> different than
+     * the current one will change the <code>GrantedAuthority</code>
+     * array.</p>
      */
-    public void setEntity(Entity entity);
+    public void setUserLog(UserLog userLog);
     
 }

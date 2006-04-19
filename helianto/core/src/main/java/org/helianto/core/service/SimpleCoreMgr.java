@@ -24,6 +24,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
+import org.helianto.core.security.PublicUserDetailsSwitcher;
 
 /**
  * A service layer interface extension for the simple user use case.
@@ -134,5 +135,11 @@ public interface SimpleCoreMgr {
      * secure context.</p>
      */
     public PublicUserDetails findSecureUser();
+    
+    /**
+     * <p>Switch to an <code>User</code> with the same authentication.</p>
+     * 
+     */
+    public boolean switchAuthorizedUser(PublicUserDetailsSwitcher secureUser, String entityAlias);
     
 }

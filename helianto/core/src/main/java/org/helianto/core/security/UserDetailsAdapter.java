@@ -97,12 +97,23 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     }
     
     public List<Entity> getEntities() {
-        Set<User> userSet = userLog.getUser().getCredential().getUsers();
         List<Entity> entityList = new ArrayList<Entity>();
-        for (User u: userSet) {
+        for (User u: getUsers()) {
             entityList.add(u.getEntity());
         }
         return entityList;
+    }
+
+    public Date getLastLogin() {
+        return userLog.getLastLogin();
+    }
+    
+    public Set<User> getUsers() {
+        return userLog.getUser().getCredential().getUsers();
+    }
+    
+    public void setUserLog(UserLog userLog) {
+        this.userLog = userLog;
     }
 
     public void setEntity(Entity entity) {
@@ -117,21 +128,8 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
             throw new IllegalArgumentException("Unable to change to entity " +
                     entity.getAlias()+": there is no corresponding user for " +
                     "credential "+userLog.getUser().getCredential());
-        } else {
-            userLog = userLogFactory(newUser);
-        }
+        } 
     }
     
-    public UserLog userLogFactory(User user) {
-        UserLog localUserLog = new UserLog();
-        localUserLog.setUser(user);
-        localUserLog.setLastLogin(new Date());
-        return localUserLog;
-    }
-
-    public Date getLastLogin() {
-        return userLog.getLastLogin();
-    }
-
 }
 

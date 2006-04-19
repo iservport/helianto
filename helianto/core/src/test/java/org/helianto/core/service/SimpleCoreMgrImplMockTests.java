@@ -1,0 +1,81 @@
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.helianto.core.service;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.helianto.core.Credential;
+import org.helianto.core.Entity;
+import org.helianto.core.User;
+import org.helianto.core.UserLog;
+import org.helianto.core.dao.UserDao;
+import org.helianto.core.security.UserDetailsAdapter;
+
+import junit.framework.TestCase;
+import static org.easymock.EasyMock.*;
+
+public class SimpleCoreMgrImplMockTests extends TestCase {
+
+    public void testSwitchAuthorizedUserSuccess() {
+        
+        Credential credential = new Credential();
+        User[] users = createUsersWithSameCredential(credential, 2);
+        
+        UserLog userLog = new UserLog();
+        userLog.setUser(users[0]);
+        UserDetailsAdapter secureUser = new UserDetailsAdapter(userLog);
+        
+        expect(mock.createAndPersistUserLog(users[1]))
+            .andReturn(isA(UserLog.class));
+        replay(mock);
+        assertTrue(simpleCoreMgr.switchAuthorizedUser(secureUser, "ENT1"));
+        
+    }
+
+    private SimpleCoreMgrImpl simpleCoreMgr;
+    private UserDao mock;
+    
+    // utility fields
+    private final Log logger = LogFactory.getLog(getClass());
+    
+    // setup
+    
+    public void setUp() {
+        mock = createMock(UserDao.class);
+        simpleCoreMgr = new SimpleCoreMgrImpl();
+        simpleCoreMgr.setUserDao(mock);
+    }
+    
+    // helpers
+    
+    public User[] createUsersWithSameCredential(Credential credential, int size) {
+        User[] users = new User[size];
+        Entity[] entities = new Entity[size];
+        for (int i = 0; i < size; i++) {
+            users[i] = new User();
+            entities[i] = new Entity();
+            entities[i].setAlias("ENT"+i);
+            users[i].setCredential(credential);
+            users[i].setEntity(entities[i]);
+            credential.getUsers().add(users[i]);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Test user "+users[i]+" "+users[i].getCredential()+" "+users[i].getEntity());
+            }
+        }
+        return users;
+    }
+
+}

@@ -33,6 +33,7 @@ import org.helianto.core.Role;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
+import org.springframework.dao.DataRetrievalFailureException;
 
 public class UserDetailsServiceImplTests extends TestCase {
     
@@ -152,6 +153,17 @@ public class UserDetailsServiceImplTests extends TestCase {
         PublicUserDetails publicUserDetails2 = (PublicUserDetails) userDetailsService.loadUserByUsername("CRED1");
         assertEquals(2, userLogList.size());
         assertSame(publicUserDetails2.getLastLogin(), loginDate2);
+        
+    }
+    
+    public void testLoadUserByUsernameFailure() {
+        
+        try {
+            userDetailsService.loadUserByUsername("");
+            fail();
+        } catch (DataRetrievalFailureException e) {
+            // ok
+        }
         
     }
     

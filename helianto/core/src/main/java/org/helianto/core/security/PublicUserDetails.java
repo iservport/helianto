@@ -16,6 +16,7 @@
 package org.helianto.core.security;
 
 import java.util.Date;
+import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.PersonalData;
@@ -50,5 +51,12 @@ public interface PublicUserDetails {
      * <code>User</code>.
      */
     public Date getLastLogin();
+
+    /**
+     * Return an <code>Entity</code> from all
+     * <code>User</code>s connected by the same
+     * <code>Credential</code>.
+     */
+    public List<Entity> getEntities();
     
 }
