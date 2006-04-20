@@ -21,17 +21,17 @@
 			Home creator implementation	
 	-->
 	<bean id="homeCreator" 
-		class="org.helianto.core.HomeCreatorImpl"/>
+		class="org.helianto.core.creation.HomeCreatorImpl"/>
 	<!--
 			Entity creator implementation	
 	-->
 	<bean id="entityCreator" 
-		class="org.helianto.core.EntityCreatorImpl"/>
+		class="org.helianto.core.creation.EntityCreatorImpl"/>
 	<!--
 			User creator implementation	
 	-->
 	<bean id="userCreator" 
-		class="org.helianto.core.UserCreatorImpl"/>
+		class="org.helianto.core.creation.UserCreatorImpl"/>
 	<!--
 			Home dao implementation	
 	-->

@@ -1,15 +1,15 @@
 package org.helianto.core;
-// Generated 19/04/2006 18:10:30 by Hibernate Tools 3.1.0.beta4
+// Generated 20/04/2006 07:09:21 by Hibernate Tools 3.1.0.beta4
 
 
 
 /**
  * 				
  * <p>
- * Persist a contact.
+ * The contact domain class.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-entity2.hbm.xml 14 2006-03-20 13:11:47 -0300 (Seg, 20 Mar 2006) iserv $
+ * @version $Id: helianto-entity2.hbm.xml 80 2006-04-19 21:56:03 -0300 (Qua, 19 Abr 2006) iserv $
  * 				
  *         
  */
