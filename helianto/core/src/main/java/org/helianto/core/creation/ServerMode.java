@@ -13,7 +13,9 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
+
+import org.helianto.core.Home;
 
 /**
  * An enumeration to supply operation modes for 

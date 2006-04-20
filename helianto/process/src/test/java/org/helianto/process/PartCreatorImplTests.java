@@ -16,9 +16,9 @@
 package org.helianto.process;
 
 import org.helianto.core.Entity;
-import org.helianto.core.EntityCreator;
-import org.helianto.core.EntityCreatorImpl;
 import org.helianto.core.Home;
+import org.helianto.core.creation.EntityCreator;
+import org.helianto.core.creation.EntityCreatorImpl;
 
 import junit.framework.TestCase;
 

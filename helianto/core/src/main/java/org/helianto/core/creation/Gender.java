@@ -13,28 +13,31 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
+
+import org.helianto.core.PersonalData;
 
 /**
  * An enumeration to supply char types for 
- * {@link Credential#credentialType}.
+ * {@link PersonalData#gender}.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: Gender.java,v 1.1 2006/03/02 22:44:27 iserv Exp $
  */
-public enum CredentialType {
+public enum Gender {
     
-    NOT_ADDRESSABLE('N'),
-    ORGANIZATIONAL_EMAIL('O'),
-    PERSONAL_EMAIL('P');
+    NOT_SUPPLIED('N'),
+    MALE('M'),
+    FEMALE('F');
     
     private char value;
     
-    private CredentialType(char value) {
+    private Gender(char value) {
         this.value = value;
     }
+    
     public char getValue() {
-        return this.value;
+        return value;
     }
 
 }

@@ -17,6 +17,15 @@ package org.helianto.core;
 
 
 import java.util.Date;
+
+import org.helianto.core.creation.Appellation;
+import org.helianto.core.creation.CredentialState;
+import org.helianto.core.creation.CredentialType;
+import org.helianto.core.creation.Gender;
+import org.helianto.core.creation.KeyType;
+import org.helianto.core.creation.Notification;
+import org.helianto.core.creation.UserType;
+
 import junit.framework.TestCase;
 
 public class SimpleUserUseCaseDomainTests extends TestCase {

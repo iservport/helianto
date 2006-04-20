@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.helianto.core.creation.CredentialState;
+import org.helianto.core.creation.CredentialType;
+
 
 /**
  * 				

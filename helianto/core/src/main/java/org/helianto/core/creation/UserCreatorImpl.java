@@ -13,12 +13,16 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
 
 
 import java.util.Date;
 import java.util.Random;
 
+import org.helianto.core.Credential;
+import org.helianto.core.Entity;
+import org.helianto.core.PersonalData;
+import org.helianto.core.User;
 import org.helianto.core.service.AbstractGenericService;
 
 /**

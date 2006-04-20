@@ -19,8 +19,8 @@ import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.CredentialState;
 import org.helianto.core.UserLog;
+import org.helianto.core.creation.CredentialState;
 
 /**
  * A base class to implement {@link org.acegisecurity.userdetails.UserDetails}

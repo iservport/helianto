@@ -26,7 +26,7 @@ import org.helianto.core.Customer;
 import org.helianto.core.Credential;
 import org.helianto.core.Contact;
 import org.helianto.core.Partner;
-import org.helianto.core.PartnerState;
+import org.helianto.core.creation.PartnerState;
 
 /**
  * Default implementation of the 

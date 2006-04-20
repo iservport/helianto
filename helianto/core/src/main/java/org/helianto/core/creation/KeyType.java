@@ -13,27 +13,33 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
 
 /**
- * A factory method pattern interface to <code>User</code>
- * related domain objects.
+ * An enumeration to <code>Entity</code> key types.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: CredentialType.java,v 1.1 2006/03/02 22:44:27 iserv Exp $
  */
-public interface UserCreator {
+public enum KeyType {
 
-    public PersonalData personalDataFactory();
-
-    public Credential credentialFactory();
-
-    public Credential credentialFactory(String principal);
-
-    public User userFactory(Entity entity, Credential credential);
-
-    public User userFactory(User parent, Credential credential);
-
-    public String generatePassword(int size);
+    /**
+     * A key unique within a country.
+     */
+    COUNTRY_WIDE(0),
+    /**
+     * A key unique within a province.
+     */
+    PROVINCE_WIDE(1);
+    
+    private int value;
+    
+    private KeyType(int value) {
+        this.value = value;
+    }
+    
+    public int getValue() {
+        return value;
+    }
 
 }

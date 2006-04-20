@@ -1,4 +1,4 @@
-package org.helianto.core;
+package org.helianto.core.creation;
 
 
 /**
@@ -6,7 +6,7 @@ package org.helianto.core;
  * a <code>Partner</code>. 
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: PartnerState.java,v 1.1 2006/03/02 22:44:27 iserv Exp $
  */
 public enum PartnerState {
     

@@ -1,4 +1,4 @@
-package org.helianto.core;
+package org.helianto.core.creation;
 
 
 import org.helianto.core.PersonalData;
@@ -8,7 +8,7 @@ import org.helianto.core.PersonalData;
  * {@link PersonalData#appellation}.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: Appellation.java,v 1.2 2006/03/17 23:36:38 iserv Exp $
  */
 public enum Appellation {
     

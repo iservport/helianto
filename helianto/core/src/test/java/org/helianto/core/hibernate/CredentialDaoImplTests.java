@@ -16,7 +16,7 @@
 package org.helianto.core.hibernate;
 
 import org.helianto.core.Credential;
-import org.helianto.core.UserCreatorImpl;
+import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
 

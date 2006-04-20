@@ -1,4 +1,8 @@
 package org.helianto.core;
+
+import org.helianto.core.creation.Appellation;
+import org.helianto.core.creation.Gender;
+
 // Generated 19/04/2006 18:10:33 by Hibernate Tools 3.1.0.beta4
 
 

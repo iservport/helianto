@@ -13,32 +13,25 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
 
 /**
- * An enumeration to <code>Entity</code> key types.
+ * Enumeration to represent a type for 
+ * an <code>User</code>. 
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id: CredentialType.java,v 1.1 2006/03/02 22:44:27 iserv Exp $
+ * @version $Id: UserType.java,v 1.1 2006/03/02 22:44:27 iserv Exp $
  */
-public enum KeyType {
-
-    /**
-     * A key unique within a country.
-     */
-    COUNTRY_WIDE(0),
-    /**
-     * A key unique within a province.
-     */
-    PROVINCE_WIDE(1);
+public enum UserType {
     
-    private int value;
+    EXTERNAL('E'),
+    INTERNAL('I');
     
-    private KeyType(int value) {
-        this.value = value;
+    private char value;
+    private UserType(char type) {
+        this.value = type;
     }
-    
-    public int getValue() {
+    public char getValue() {
         return value;
     }
 

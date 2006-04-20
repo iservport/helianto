@@ -13,29 +13,36 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
+
+import org.helianto.core.Credential;
 
 /**
  * An enumeration to supply char types for 
- * {@link PersonalData#gender}.
+ * {@link Credential#credentialState}.
+ * 
+ * <p>
+ * Only active credentials should be granted authorization 
+ * into the system.
+ * </p>
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: CredentialState.java,v 1.1 2006/03/02 22:44:27 iserv Exp $
  */
-public enum Gender {
+public enum CredentialState {
     
-    NOT_SUPPLIED('N'),
-    MALE('M'),
-    FEMALE('F');
+    ACTIVE('A'),
+    CANCELLED('C'),
+    IDLE('I'),
+    SUSPENDED('S');
     
     private char value;
     
-    private Gender(char value) {
+    private CredentialState(char value) {
         this.value = value;
     }
-    
     public char getValue() {
-        return value;
+        return this.value;
     }
 
 }

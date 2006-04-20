@@ -13,10 +13,15 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
 
 
 import java.util.Date;
+
+import org.helianto.core.Home;
+import org.helianto.core.MailAccessData;
+import org.helianto.core.MailTransportData;
+import org.helianto.core.creation.HomeCreatorImpl;
 
 import junit.framework.TestCase;
 

@@ -13,28 +13,30 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
+
+import org.helianto.core.Credential;
 
 /**
  * An enumeration to supply char types for 
- * {@link Credential#notification}.
+ * {@link Credential#credentialType}.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: CredentialType.java,v 1.1 2006/03/02 22:44:27 iserv Exp $
  */
-public enum Notification {
-
-    AUTOMATIC('A'),
-    BY_REQUEST('R');
+public enum CredentialType {
+    
+    NOT_ADDRESSABLE('N'),
+    ORGANIZATIONAL_EMAIL('O'),
+    PERSONAL_EMAIL('P');
     
     private char value;
     
-    private Notification(char value) {
+    private CredentialType(char value) {
         this.value = value;
     }
-    
     public char getValue() {
-        return value;
+        return this.value;
     }
 
 }

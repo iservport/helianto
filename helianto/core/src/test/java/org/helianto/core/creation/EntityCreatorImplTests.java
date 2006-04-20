@@ -13,8 +13,22 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
 
+
+import org.helianto.core.AddressableEntity;
+import org.helianto.core.Credential;
+import org.helianto.core.DefaultEntity;
+import org.helianto.core.Entity;
+import org.helianto.core.EntityKey;
+import org.helianto.core.Home;
+import org.helianto.core.Individual;
+import org.helianto.core.Organization;
+import org.helianto.core.Province;
+import org.helianto.core.creation.EntityCreatorImpl;
+import org.helianto.core.creation.HomeCreatorImpl;
+import org.helianto.core.creation.KeyType;
+import org.helianto.core.creation.UserCreatorImpl;
 
 import junit.framework.TestCase;
 

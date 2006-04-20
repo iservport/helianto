@@ -20,15 +20,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.helianto.core.EntityCreator;
-import org.helianto.core.EntityCreatorImpl;
-import org.helianto.core.HomeCreatorImpl;
-import org.helianto.core.UserCreatorImpl;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
+import org.helianto.core.creation.EntityCreator;
+import org.helianto.core.creation.EntityCreatorImpl;
+import org.helianto.core.creation.HomeCreatorImpl;
+import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
 

@@ -16,7 +16,7 @@
 package org.helianto.core.hibernate;
 
 import org.helianto.core.Home;
-import org.helianto.core.HomeCreatorImpl;
+import org.helianto.core.creation.HomeCreatorImpl;
 import org.helianto.core.dao.HomeDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
 

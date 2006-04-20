@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
-import org.helianto.core.UserCreatorImpl;
+import org.helianto.core.creation.UserCreatorImpl;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;

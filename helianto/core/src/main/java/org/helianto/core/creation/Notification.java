@@ -13,27 +13,30 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
+
+import org.helianto.core.Credential;
 
 /**
- * A factory method pattern interface to <code>Home</code>
- * related domain objects.
+ * An enumeration to supply char types for 
+ * {@link Credential#notification}.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: Notification.java,v 1.1 2006/03/02 22:44:27 iserv Exp $
  */
-public interface HomeCreator {
+public enum Notification {
 
-    public MailTransportData mailTransportDataFactory(String host, String user,
-            String password);
-
-    public MailAccessData mailAccessDataFactory(String host, String user,
-            String password);
-
-    public Home homeFactory();
-
-    public Home homeFactory(String homeName);
-
-    public Home homeFactory(String homeName, String language, String country);
+    AUTOMATIC('A'),
+    BY_REQUEST('R');
+    
+    private char value;
+    
+    private Notification(char value) {
+        this.value = value;
+    }
+    
+    public char getValue() {
+        return value;
+    }
 
 }

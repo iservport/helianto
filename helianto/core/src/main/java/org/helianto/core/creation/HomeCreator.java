@@ -13,26 +13,31 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
+
+import org.helianto.core.Home;
+import org.helianto.core.MailAccessData;
+import org.helianto.core.MailTransportData;
 
 /**
- * Enumeration to represent a type for 
- * an <code>User</code>. 
+ * A factory method pattern interface to <code>Home</code>
+ * related domain objects.
  * 
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public enum UserType {
-    
-    EXTERNAL('E'),
-    INTERNAL('I');
-    
-    private char value;
-    private UserType(char type) {
-        this.value = type;
-    }
-    public char getValue() {
-        return value;
-    }
+public interface HomeCreator {
+
+    public MailTransportData mailTransportDataFactory(String host, String user,
+            String password);
+
+    public MailAccessData mailAccessDataFactory(String host, String user,
+            String password);
+
+    public Home homeFactory();
+
+    public Home homeFactory(String homeName);
+
+    public Home homeFactory(String homeName, String language, String country);
 
 }

@@ -13,10 +13,19 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
 
 
 import java.util.Date;
+
+import org.helianto.core.Credential;
+import org.helianto.core.PersonalData;
+import org.helianto.core.creation.Appellation;
+import org.helianto.core.creation.CredentialState;
+import org.helianto.core.creation.CredentialType;
+import org.helianto.core.creation.Gender;
+import org.helianto.core.creation.Notification;
+import org.helianto.core.creation.UserCreatorImpl;
 
 import junit.framework.TestCase;
 

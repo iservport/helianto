@@ -13,7 +13,14 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
+
+import org.helianto.core.Contact;
+import org.helianto.core.Credential;
+import org.helianto.core.Customer;
+import org.helianto.core.Entity;
+import org.helianto.core.Partner;
+import org.helianto.core.Supplier;
 
 /**
  * A factory method pattern interface to <code>Partner</code>

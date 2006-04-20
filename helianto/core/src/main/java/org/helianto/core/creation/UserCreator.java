@@ -13,34 +13,32 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.creation;
+
+import org.helianto.core.Credential;
+import org.helianto.core.Entity;
+import org.helianto.core.PersonalData;
+import org.helianto.core.User;
 
 /**
- * An enumeration to supply char types for 
- * {@link Credential#credentialState}.
- * 
- * <p>
- * Only active credentials should be granted authorization 
- * into the system.
- * </p>
+ * A factory method pattern interface to <code>User</code>
+ * related domain objects.
  * 
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public enum CredentialState {
-    
-    ACTIVE('A'),
-    CANCELLED('C'),
-    IDLE('I'),
-    SUSPENDED('S');
-    
-    private char value;
-    
-    private CredentialState(char value) {
-        this.value = value;
-    }
-    public char getValue() {
-        return this.value;
-    }
+public interface UserCreator {
+
+    public PersonalData personalDataFactory();
+
+    public Credential credentialFactory();
+
+    public Credential credentialFactory(String principal);
+
+    public User userFactory(Entity entity, Credential credential);
+
+    public User userFactory(User parent, Credential credential);
+
+    public String generatePassword(int size);
 
 }

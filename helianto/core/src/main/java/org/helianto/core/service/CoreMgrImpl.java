@@ -21,13 +21,13 @@ import java.util.Locale;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.helianto.core.UserCreatorImpl;
 import org.helianto.core.Credential;
-import org.helianto.core.CredentialType;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Home;
 import org.helianto.core.User;
+import org.helianto.core.creation.CredentialType;
+import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.mail.MailComposer;
 
 import org.springframework.mail.javamail.MimeMessageHelper;
