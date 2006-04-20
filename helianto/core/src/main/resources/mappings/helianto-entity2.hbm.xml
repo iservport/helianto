@@ -32,7 +32,7 @@
 		<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-Persist a contact.
+The contact domain class.
 </p>
 
 @author Mauricio Fernandes de Castro

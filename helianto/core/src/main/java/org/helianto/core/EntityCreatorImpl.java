@@ -112,5 +112,13 @@ public class EntityCreatorImpl extends AbstractGenericService implements EntityC
         province.setCountry(country);
         return province;
     }
+
+    public EntityKey entityKeyFactory(Entity entity, KeyType keyType, String keyNumber) {
+        EntityKey entityKey = new EntityKey();
+        entityKey.setEntity(entity);
+        entityKey.setKeyType(keyType.getValue());
+        entityKey.setKeyNumber(keyNumber);
+        return entityKey;
+    }
     
 }

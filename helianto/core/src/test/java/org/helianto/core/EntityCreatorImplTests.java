@@ -28,6 +28,15 @@ public class EntityCreatorImplTests extends TestCase {
         home = 
             new HomeCreatorImpl().homeFactory();
     }
+    
+    public void testEntityKey() {
+        Entity entity = 
+            factory.entityFactory(home, "UNIQUE");
+        EntityKey entityKey = factory.entityKeyFactory(entity, KeyType.COUNTRY_WIDE, "123");
+        assertSame(entity, entityKey.getEntity());
+        assertEquals(KeyType.COUNTRY_WIDE.getValue(), entityKey.getKeyType());
+        assertEquals("123", entityKey.getKeyNumber());
+    }
 
     public void testProvinceFactoryDefaultCountry() {
         home.setCountry("AB");

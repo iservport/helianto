@@ -27,6 +27,7 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
     MailAccessData mad;
     Home home;
     Entity entity;
+    EntityKey entityKey;
     AddressableEntity addrent;
     Individual individual;
     Organization organization;
@@ -147,6 +148,39 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
         assertFalse(entity.equals(e));
         e.setAlias("UNIQUE_ALIAS");
         assertTrue(entity.equals(e));
+        
+        // entity key
+        
+        entityKey = new EntityKey();
+        entityKey.setId(Integer.MAX_VALUE);
+        entityKey.setId(Integer.MIN_VALUE);
+        entityKey.setEntity(entity);
+        entityKey.setKeyType(KeyType.COUNTRY_WIDE.getValue());
+        entityKey.setKeyType(KeyType.PROVINCE_WIDE.getValue());
+        entityKey.setKeyNumber("");
+        
+        assertTrue(entityKey.equals(entityKey));
+        assertFalse(entityKey.equals(null));
+        assertFalse(entityKey.equals(new Object()));
+        EntityKey ek = new EntityKey();
+        assertFalse(entityKey.equals(ek));
+        entityKey.setEntity(entity);
+        entityKey.setKeyType(0);
+        entityKey.setKeyNumber("123");
+        ek.setEntity(null);
+        ek.setKeyType(0);
+        ek.setKeyNumber("123");
+        assertFalse(entityKey.equals(ek));
+        ek.setEntity(entity);
+        ek.setKeyType(1);
+        ek.setKeyNumber("123");
+        assertFalse(entityKey.equals(ek));
+        ek.setEntity(entity);
+        ek.setKeyType(0);
+        ek.setKeyNumber("456");
+        assertFalse(entityKey.equals(ek));
+        ek.setKeyNumber("123");
+        assertTrue(entityKey.equals(ek));
         
         // addressable entity
         addrent = new AddressableEntity();

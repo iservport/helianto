@@ -43,5 +43,7 @@ public interface EntityCreator {
     public Province provinceFactory(Home home, String code, String name);
 
     public Province provinceFactory(Home home, String code, String name, String country);
+    
+    public EntityKey entityKeyFactory(Entity entity, KeyType keyType, String keyNumber);
 
 }
