@@ -95,9 +95,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             if (userLog==null) {
                 // case 1: first login
                 userLog = userDao.createAndPersistUserLog(guessUser(username));
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Case 1, UserLog is "+userLog);
+                }
             } else {
                 // case 2: user with a previous visit
                 userLog = userDao.createAndPersistUserLog(userLog.getUser());
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Case 2, UserLog is "+userLog);
+                }
             }
             return new UserDetailsAdapter(userLog);
         } catch (Exception e) {

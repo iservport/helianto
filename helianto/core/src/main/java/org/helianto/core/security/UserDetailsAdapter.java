@@ -98,9 +98,15 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     
     public List<Entity> getEntities() {
         List<Entity> entityList = new ArrayList<Entity>();
+        if (logger.isDebugEnabled()) {
+            logger.debug("Current entity is: "+getCurrentEntity());
+        }
         for (User u: getUsers()) {
         	if (!u.equals(getCurrentEntity())) {
                 entityList.add(u.getEntity());
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Added to entity list: "+u.getEntity());
+                }
         	}
         }
         return entityList;

@@ -142,6 +142,7 @@ public class UserDetailsServiceImplTests extends TestCase {
         assertSame(publicUserDetails.getLastLogin(), loginDate1);
         assertSame(publicUserDetails.getCurrentEntity(), user.getEntity());
         assertSame(publicUserDetails.getPersonalData(), user.getCredential().getPersonalData());
+//        assertEquals(2, publicUserDetails.getEntities().size());
         
         // prepare UserDaoStub for second invocation
         
@@ -178,21 +179,26 @@ public class UserDetailsServiceImplTests extends TestCase {
     }
     
     final List<User> createUsers(Credential credential, int size) {
-        List<User> userList = new ArrayList<User>();
-        Entity entity = new Entity();
-        User u;
+        userList = new ArrayList<User>();
+        Entity[] entities = new Entity[size];
         for (int i=0;i<size;i++) {
-            u = new User();
-            u.setEntity(entity);
-            u.setCredential(credential);
-            credential.getUsers().add(u);
-            createRoles(u, 3);
-            userList.add(u);
-            if (logger.isDebugEnabled()) {
-                logger.debug("User created "+u);
-            }
+            entities[i] = new Entity();
+            entities[i].setAlias("ENT"+i);
+            addUserToList(credential, entities[i]);
         }
         return userList;
+    }
+    
+    final void addUserToList(Credential credential, Entity entity) {
+        User user = new User();
+        user.setEntity(entity);
+        user.setCredential(credential);
+        credential.getUsers().add(user);
+        createRoles(user, 3);
+        userList.add(user);
+        if (logger.isDebugEnabled()) {
+            logger.debug("User created "+user);
+        }
     }
     
     final void createRoles(User user, int size) {
