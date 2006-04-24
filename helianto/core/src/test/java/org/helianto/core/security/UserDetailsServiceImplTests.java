@@ -76,9 +76,7 @@ public class UserDetailsServiceImplTests extends TestCase {
         assertSame(auto, user);
     }
     
-    public void testLoadUserByUsernameSuccess() {
-        
-        // prepare first login
+    public void testLoadUserByUsernameNoUserLogYet() {
         
         userList = createUsers(testCredential, 1);
         User user = userList.get(0);
@@ -89,6 +87,8 @@ public class UserDetailsServiceImplTests extends TestCase {
         
         UserDetails userDetails = userDetailsService.loadUserByUsername("CRED1");
         assertEquals(userDetails.getUsername(), "CRED1");
+        assertEquals("PASSWORD1", userDetails.getPassword());
+        
         Set<Role> roles = user.getRoles();
         GrantedAuthority[] authorities = userDetails.getAuthorities();
         // all authorities are roles
@@ -130,30 +130,37 @@ public class UserDetailsServiceImplTests extends TestCase {
                 fail();
             }
         }
-        assertEquals("PASSWORD1", userDetails.getPassword());
         
         assertEquals(1, userLogList.size());
         UserLog userLog = userLogList.get(0);
-        assertEquals(user, userLog.getUser());
+        assertSame(user, userLog.getUser());
         
-        // cast UserDetails to PublicUserDetails
+    }
+    
+    public void testLoadUserByUsernameFromUserLog() {
+
+        userList = createUsers(testCredential, 1);
+        User user = userList.get(0);
+        Date loginDate1 = new Date();
+        lastLogin = loginDate1;
+        userDao.createAndPersistUserLog(user);
+        assertEquals(1, userLogList.size());
         
-        PublicUserDetails publicUserDetails = (PublicUserDetails) userDetails;
+        PublicUserDetails publicUserDetails = (PublicUserDetails) userDetailsService.loadUserByUsername("CRED1");
+        assertEquals(2, userLogList.size());
         assertSame(publicUserDetails.getLastLogin(), loginDate1);
         assertSame(publicUserDetails.getCurrentEntity(), user.getEntity());
         assertSame(publicUserDetails.getPersonalData(), user.getCredential().getPersonalData());
-//        assertEquals(2, publicUserDetails.getEntities().size());
+        assertEquals(0, publicUserDetails.getEntities().size());
+                
+    }
+    
+    public void testLoadUserByUsernameManyUsers() {
+
+        userList = createUsers(testCredential, 3);
         
-        // prepare UserDaoStub for second invocation
-        
-        Date loginDate2 = new Date();
-        lastLogin = loginDate2;
-        
-        // test case 2: second invocation
-        
-        PublicUserDetails publicUserDetails2 = (PublicUserDetails) userDetailsService.loadUserByUsername("CRED1");
-        assertEquals(2, userLogList.size());
-        assertSame(publicUserDetails2.getLastLogin(), loginDate2);
+        PublicUserDetails publicUserDetails = (PublicUserDetails) userDetailsService.loadUserByUsername("CRED1");
+        assertEquals(2, publicUserDetails.getEntities().size());
         
     }
     
@@ -174,6 +181,7 @@ public class UserDetailsServiceImplTests extends TestCase {
         testCredential = new Credential();
         testCredential.setPrincipal("CRED1");
         testCredential.setPassword("PASSWORD1");
+        userDao = new UserDaoStub();
         userDetailsService = new UserDetailsServiceImpl();
         userDetailsService.setUserDao(new UserDaoStub());
     }
@@ -220,8 +228,10 @@ public class UserDetailsServiceImplTests extends TestCase {
     private Credential testCredential;
     private List<User> userList;
     private List<UserLog> userLogList;
+    private UserLog lastUserLog = null;
     private Date lastLogin = new Date();
     private User auto = null;
+    private UserDao userDao;
     private UserDetailsServiceImpl userDetailsService;
     
     // inner stub class
@@ -243,11 +253,15 @@ public class UserDetailsServiceImplTests extends TestCase {
             if (userLogList==null) {
                 userLogList = new ArrayList<UserLog>();
             }
-            UserLog userLog = new UserLog();
-            userLog.setUser(user);
-            userLog.setLastLogin(lastLogin);
-            userLogList.add(userLog);
-            return userLog;
+            lastUserLog = new UserLog();
+            lastUserLog.setUser(user);
+            lastUserLog.setLastLogin(lastLogin);
+            userLogList.add(lastUserLog);
+            return lastUserLog;
+        }
+
+        public UserLog findLastUserLog(String principal) {
+            return lastUserLog;
         }
 
         // not used
@@ -261,8 +275,6 @@ public class UserDetailsServiceImplTests extends TestCase {
         public List<User> findUserByEntity(Entity entity) { return null; }
 
         public List<UserLog> findUserLogByUser(User user) { return null; }
-
-        public UserLog findLastUserLog(String principal) { return null; }
 
         public void persistCredential(Credential credential) { }
 

@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 21/04/2006 16:47:38 by Hibernate Tools 3.1.0.beta4
+// Generated 23/04/2006 15:36:36 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import java.util.Date;
  * partners, like customers, suppliers, banks, etc. 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-entity1.hbm.xml 14 2006-03-20 13:11:47 -0300 (Seg, 20 Mar 2006) iserv $
+ * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
  * 				
  *         
  */
