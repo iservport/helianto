@@ -15,6 +15,7 @@
 	<inceptionYear>2005</inceptionYear>
 	
 	<modules>
+		<module>domain</module>
 		<module>core</module>
 		<module>process</module>
 	</modules>
@@ -234,39 +235,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<executions>
-						<execution>
-							<phase>generate-sources</phase>
-							<configuration>
-								<tasks>
-									<taskdef name="hibernatetool"
-									classname="org.hibernate.tool.ant.HibernateToolTask"
-									classpathref="maven.runtime.classpath"/>
-									<hibernatetool destdir="src/main/java/" >
-										<configuration propertyfile="src/main/resources/hibernate.properties">
-											<!--fileset dir="src/main/resources/mappings/">
-												<include name="**/*.hbm.xml"/>
-											</fileset-->
-											<fileset dir="../">
-												<include name="**/src/main/resources/mappings/*.hbm.xml"/>
-											</fileset>
-										</configuration>
-										<hbm2java jdk5="true"/>
-									</hibernatetool>
-								</tasks>
-							</configuration>
-							<goals>
-								<goal>run</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 	
 	<reporting>

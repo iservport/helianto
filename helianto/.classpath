@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="domain/src/main/java"/>
+	<classpathentry kind="src" path="domain/src/main/resources"/>
+	<classpathentry kind="src" path="domain/src/test/java"/>
+	<classpathentry kind="src" path="domain/src/test/resources"/>
 	<classpathentry kind="src" path="core/src/main/java"/>
 	<classpathentry kind="src" path="core/src/main/resources"/>
 	<classpathentry kind="src" path="core/src/test/java"/>

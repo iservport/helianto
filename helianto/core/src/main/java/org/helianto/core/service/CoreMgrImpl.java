@@ -18,18 +18,18 @@ package org.helianto.core.service;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
-import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Home;
+import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.creation.CredentialType;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.mail.MailComposer;
-
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 /**
@@ -39,11 +39,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public class CoreMgrImpl extends UserCreatorImpl implements CoreMgr {
+public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
     
     public void persistCredential(Credential credential) {
         if (credential.getPassword()==null) {
-            credential.setPassword(generatePassword(8));
+            credential.setPassword(getUserCreatorImpl().generatePassword(8));
         }
         this.getGenericDao().merge(credential);
     }  
@@ -214,5 +214,17 @@ public class CoreMgrImpl extends UserCreatorImpl implements CoreMgr {
         "from InternalEnumerator enumerator " +
         "where enumerator.entity.id = ? "+
         "and enumerator.typeName = ? ";
+    
+    // accessors
+    
+    private UserCreatorImpl userCreatorImpl;
+    
+    public UserCreatorImpl getUserCreatorImpl() {
+        return userCreatorImpl;
+    }
+
+    public void setUserCreatorImpl(UserCreatorImpl userCreatorImpl) {
+        this.userCreatorImpl = userCreatorImpl;
+    }
 
 }
