@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>helianto</artifactId>
+		<groupId>org.helianto</groupId>
+		<version>0.0.1-20060423</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.helianto</groupId>
+	<artifactId>helianto-domain</artifactId>
+	<version>0.0.1-20060423</version>
+	<name>The Helianto Project Domain Module</name>
+
+	<description>Helianto project domain module.</description>
+
+	<build>
+		<finalName>helianto-domain</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<configuration>
+							<tasks>
+								<taskdef name="hibernatetool"
+									classname="org.hibernate.tool.ant.HibernateToolTask"
+									classpathref="maven.runtime.classpath" />
+								<hibernatetool
+									destdir="src/main/java/">
+									<configuration
+										propertyfile="src/main/resources/hibernate.properties">
+										<fileset dir="src/main/resources/mappings/">
+											<include name="**/*.hbm.xml"/>
+										</fileset>
+									</configuration>
+									<hbm2java jdk5="true" />
+								</hibernatetool>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

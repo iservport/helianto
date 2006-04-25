@@ -1,0 +1,32 @@
+package org.helianto.process;
+
+import org.helianto.core.Entity;
+
+public interface PartCreator {
+	
+    /**
+     * Create a <code>Part</code> with a drawing.
+     */
+	public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName);
+    
+    /**
+     * Create a <code>Part</code>.
+     */
+	public Part partFactory(Entity entity, String partNumber, String partName);
+
+    /**
+     * Create a <code>MaterialType</code>.
+     */
+	public MaterialType materialTypeFactory(Unit materialUnit, String materialName);
+
+    /**
+     * Create a <code>Material</code>.
+     */
+	public Part materialFactory(MaterialType materialType, String materialNumber, String materialName);
+	
+	/**
+	 * Create a component.
+	 */
+	public Part componentFactory(Part parent, String drawingNumber, String drawingName, double coefficient);
+
+}
