@@ -16,6 +16,7 @@
 package org.helianto.core.dao;
 
 import org.helianto.core.Credential;
+import org.helianto.core.PersonalData;
 
 /**
  * Credential data access interface.
@@ -44,5 +45,10 @@ public interface CredentialDao {
      * Count <code>Credential</code> by principal.
      */
     public int countCredentialByPrincipal(String principal);
+    
+    /**
+     * Persist <code>PersonalData</code>.
+     */
+    public void persistPersonalData(PersonalData personalData);
 
 }

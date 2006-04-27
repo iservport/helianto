@@ -22,6 +22,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
+import org.helianto.core.PersonalData;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
@@ -141,5 +142,10 @@ public interface SimpleCoreMgr {
      * 
      */
     public boolean switchAuthorizedUser(PublicUserDetailsSwitcher secureUser, String entityAlias);
+    
+    /**
+     * <p>Delegate to persistence layer to save <code>PersonalData</code>.</p>
+     */
+    public void persistPersonalData(PersonalData personalData);
     
 }

@@ -16,6 +16,7 @@
 package org.helianto.core.hibernate;
 
 import org.helianto.core.Credential;
+import org.helianto.core.PersonalData;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
@@ -51,6 +52,28 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
         } catch (Exception e) {
             //ok
         }
+
+    }
+    
+    public void testPersistPersonalData() {
+        
+        Credential credential = factory.credentialFactory("TEST");
+        credential.getPersonalData().setFirstName("FIRSTNAME1");
+        userDao.persistCredential(credential);
+        
+        hibernateTemplate.flush();
+        
+        Credential c1 = userDao.findCredentialByPrincipal("TEST");
+        PersonalData personalData = c1.getPersonalData();
+        assertEquals("FIRSTNAME1", personalData.getFirstName());
+        personalData.setFirstName("FIRSTNAME2");
+        
+        hibernateTemplate.flush();
+        
+        Credential c2 = userDao.findCredentialByPrincipal("TEST");
+        PersonalData pd = c2.getPersonalData();
+        assertEquals("FIRSTNAME2", pd.getFirstName());
+        
 
     }
 

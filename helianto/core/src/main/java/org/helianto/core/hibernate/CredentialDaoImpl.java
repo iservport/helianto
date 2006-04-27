@@ -16,6 +16,7 @@
 package org.helianto.core.hibernate;
 
 import org.helianto.core.Credential;
+import org.helianto.core.PersonalData;
 import org.helianto.core.dao.CredentialDao;
 
 /**
@@ -44,6 +45,10 @@ public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
     
     public int countCredentialByPrincipal(String principal) {
         return find(CREDENTIAL_QRY, principal).size();
+    }
+    
+    public void persistPersonalData(PersonalData personalData) {
+        merge(personalData);
     }
 
     

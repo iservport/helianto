@@ -29,6 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
+import org.helianto.core.PersonalData;
 import org.helianto.core.Role;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
@@ -281,6 +282,8 @@ public class UserDetailsServiceImplTests extends TestCase {
         public void removeCredential(Credential credential) { }
 
         public int countCredentialByPrincipal(String principal) { return 0; }
+
+        public void persistPersonalData(PersonalData personalData) { }
         
     }
 

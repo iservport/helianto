@@ -24,6 +24,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
+import org.helianto.core.PersonalData;
 import org.helianto.core.User;
 import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.HomeCreator;
@@ -164,6 +165,10 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         } 
         secureUser.setUserLog(userDao.createAndPersistUserLog(newUser));
         return true;
+    }
+    
+    public void persistPersonalData(PersonalData personalData) {
+        userDao.persistPersonalData(personalData);
     }
 
     // logger
