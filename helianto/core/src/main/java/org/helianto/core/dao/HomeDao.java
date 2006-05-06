@@ -15,7 +15,6 @@
 
 package org.helianto.core.dao;
 
-import org.helianto.core.Credential;
 import org.helianto.core.Home;
 
 /**

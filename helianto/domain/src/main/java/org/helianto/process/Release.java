@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 05/05/2006 07:19:24 by Hibernate Tools 3.1.0.beta4
+// Generated 05/05/2006 22:23:08 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 import org.helianto.core.Entity;

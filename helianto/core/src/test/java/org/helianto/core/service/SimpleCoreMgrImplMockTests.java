@@ -22,12 +22,29 @@ import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
+import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 
 import junit.framework.TestCase;
 import static org.easymock.EasyMock.*;
 
 public class SimpleCoreMgrImplMockTests extends TestCase {
+
+    public void testPersistPersonalDataSuccess() {
+        
+        Credential credential = new Credential();
+        User[] users = createUsersWithSameCredential(credential, 1);
+
+        UserLog userLog = new UserLog();
+        userLog.setUser(users[0]);
+        SecureUserDetails secureUser = new UserDetailsAdapter(userLog);
+        
+        mock.persistCredential(secureUser.getCredential());
+        replay(mock);
+        simpleCoreMgr.persistPersonalData(secureUser);
+        verify(mock);
+        
+    }
 
     public void testSwitchAuthorizedUserSuccess() {
         
@@ -42,9 +59,10 @@ public class SimpleCoreMgrImplMockTests extends TestCase {
             .andReturn(isA(UserLog.class));
         replay(mock);
         assertTrue(simpleCoreMgr.switchAuthorizedUser(secureUser, "ENT1"));
+        reset(mock);
         
     }
-
+    
     private SimpleCoreMgrImpl simpleCoreMgr;
     private UserDao mock;
     

@@ -22,10 +22,10 @@ import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
-import org.helianto.core.PersonalData;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
+import org.helianto.core.security.SecureUserDetails;
 
 /**
  * A service layer interface extension for the simple user use case.
@@ -146,6 +146,6 @@ public interface SimpleCoreMgr {
     /**
      * <p>Delegate to persistence layer to save <code>PersonalData</code>.</p>
      */
-    public void persistPersonalData(PersonalData personalData);
+    public void persistPersonalData(SecureUserDetails secureUserDetails);
     
 }

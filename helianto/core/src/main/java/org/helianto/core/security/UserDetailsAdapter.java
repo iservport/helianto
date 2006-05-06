@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
+import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.PersonalData;
 import org.helianto.core.Role;
@@ -64,7 +65,7 @@ import org.helianto.core.UserLog;
  * @version $Id$
  * @see org.acegisecurity.providers.dao.User org.acegisecurity.providers.dao.User
  */
-public final class UserDetailsAdapter extends AbstractUserDetails implements Serializable, PublicUserDetailsSwitcher {
+public final class UserDetailsAdapter extends AbstractUserDetails implements Serializable, PublicUserDetailsSwitcher, SecureUserDetails {
     
     private static final long serialVersionUID = 4017521054529203449L;
     
@@ -137,6 +138,10 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
                     entity.getAlias()+": there is no corresponding user for " +
                     "credential "+userLog.getUser().getCredential());
         } 
+    }
+
+    public Credential getCredential() {
+        return userLog.getUser().getCredential();
     }
     
 }

@@ -24,7 +24,6 @@ import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
-import org.helianto.core.PersonalData;
 import org.helianto.core.User;
 import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.HomeCreator;
@@ -33,6 +32,7 @@ import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
+import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 
 /**
@@ -167,8 +167,8 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         return true;
     }
     
-    public void persistPersonalData(PersonalData personalData) {
-        userDao.persistPersonalData(personalData);
+    public void persistPersonalData(SecureUserDetails secureUserDetails) {
+        userDao.persistCredential(secureUserDetails.getCredential());
     }
 
     // logger
