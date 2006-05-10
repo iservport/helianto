@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<!--parent>
 		<artifactId>helianto-parent</artifactId>
 		<groupId>org.helianto</groupId>
 		<version>0.0.1</version>
-	</parent-->
+		</parent-->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto</artifactId>
@@ -13,16 +14,20 @@
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
 	<inceptionYear>2005</inceptionYear>
-	
+
 	<modules>
 		<module>domain</module>
 		<module>core</module>
 		<module>process</module>
 	</modules>
-	
+
 	<scm>
-		<connection>scm:https://svn.sourceforge.net/svnroot/helianto</connection>
-		<developerConnection>scm:https://svn.sourceforge.net/svnroot/helianto</developerConnection>
+		<connection>
+			scm:https://svn.sourceforge.net/svnroot/helianto
+		</connection>
+		<developerConnection>
+			scm:https://svn.sourceforge.net/svnroot/helianto
+		</developerConnection>
 		<url>http://svn.sourceforge.net/viewcvs.cgi/helianto/</url>
 	</scm>
 
@@ -30,32 +35,33 @@
 		<system>jira</system>
 		<url>http://jira.helianto.org/jira/browse/HEL</url>
 	</issueManagement>
-	
-	<description>Helianto project is designed to provide easy "construction blocks" to an Hibernate+Spring+Acegi based application.
+
+	<description>
+		Helianto project is designed to provide easy "construction
+		blocks" to an Hibernate+Spring+Acegi based application.
 	</description>
-	
+
 	<!--build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
-					<templateDirectory>
-						file:maven-template/
-					</templateDirectory>
-					<template>maven-site.vm</template>
-				</configuration>
-			</plugin>
+		<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-site-plugin</artifactId>
+		<configuration>
+		<templateDirectory>
+		file:maven-template/
+		</templateDirectory>
+		<template>maven-site.vm</template>
+		</configuration>
+		</plugin>
 		</plugins>
-	</build-->
+		</build-->
 
 	<url>http://www.helianto.org</url>
-	
-	<!-- workaround to wait for wagon-ftp-1.0-alpha-6 -->
+
 	<distributionManagement>
 		<site>
 			<id>website</id>
-			<url>scp://localhost/home/desk/wrk3/localsite/</url>
+			<url>ftp://ftp.helianto.org</url>
 		</site>
 		<repository>
 			<id>localrepo</id>
@@ -63,7 +69,7 @@
 			<!--url>scp://shell.sourceforge.net/home/groups/h/he/helianto/htdocs/repository</url-->
 		</repository>
 	</distributionManagement>
-	
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -71,7 +77,7 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -97,7 +103,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-hibernate3</artifactId>
-			<version>2.0-m3</version>
+			<version>2.0-m4</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.persistence</groupId>
@@ -108,7 +114,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
-			<version>2.0-m3</version>
+			<version>2.0-m4</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.resource</groupId>
@@ -143,7 +149,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-mock</artifactId>
-			<version>2.0-m1</version>
+			<version>2.0-m4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.acegisecurity</groupId>
@@ -154,6 +160,39 @@
 					<groupId>javax.resource</groupId>
 					<artifactId>connector</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-remoting</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-webmvc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-dao</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-support</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-jdbc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -219,10 +258,14 @@
 					<testFailureIgnore>false</testFailureIgnore>
 					<childDelegation>false</childDelegation>
 					<includes>
-						<include implementation="java.lang.String">**/*Tests.class</include>
+						<include implementation="java.lang.String">
+							**/*Tests.class
+						</include>
 					</includes>
 					<excludes>
-						<exclude implementation="java.lang.String">**/Abstract*</exclude>
+						<exclude implementation="java.lang.String">
+							**/Abstract*
+						</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -235,8 +278,15 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-alpha-6</version>
+			</extension>
+		</extensions>
 	</build>
-	
+
 	<reporting>
 		<plugins>
 			<plugin>
@@ -247,43 +297,45 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jxr-maven-plugin</artifactId>
 			</plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>surefire-report-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>surefire-report-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+				</configuration>
+			</plugin>
 		</plugins>
 	</reporting>
-	
-<!--reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jxr-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <configLocation>../AA-IFS-checkstyle-rules.xml
-</configLocation>
-                    <headerLocation>../license.txt</headerLocation>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>changelog-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting-->
+
+	<!--reporting>
+		<plugins>
+		<plugin>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>jxr-maven-plugin</artifactId>
+		</plugin>
+		<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-checkstyle-plugin</artifactId>
+		<configuration>
+		<configLocation>../AA-IFS-checkstyle-rules.xml
+		</configLocation>
+		<headerLocation>../license.txt</headerLocation>
+		</configuration>
+		</plugin>
+		<plugin>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>changelog-maven-plugin</artifactId>
+		</plugin>
+		</plugins>
+		</reporting-->
 </project>

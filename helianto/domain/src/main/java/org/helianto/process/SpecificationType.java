@@ -11,7 +11,7 @@ package org.helianto.process;
  */
 public enum SpecificationType {
     
-    ATTRIBUTE(0),
+    ATTRIBUTE(0), 
     VARIABLE_BILATERAL(1),
     VARIABLE_UNILATERAL_MAX(2),
     VARIABLE_UNILATERAL_MIN(3);

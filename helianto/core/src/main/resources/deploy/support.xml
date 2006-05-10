@@ -24,6 +24,7 @@
 	    <property name="basenames">
 	      <list>
 	        <value>bundles/notification</value>
+	        <value>bundles/credential</value>
 	        <value>messages</value>
 	      </list>
 	    </property>
