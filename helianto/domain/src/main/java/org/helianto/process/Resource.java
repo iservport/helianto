@@ -1,7 +1,8 @@
 package org.helianto.process;
-// Generated 23/05/2006 17:52:22 by Hibernate Tools 3.1.0.beta4
+// Generated 23/05/2006 19:12:53 by Hibernate Tools 3.1.0.beta4
 
 import org.helianto.core.Entity;
+import org.helianto.core.Partner;
 
 
 /**
@@ -22,6 +23,7 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
 
      private String serialNumber;
      private int resourceState;
+     private Partner manufacturer;
 
 
     // Constructors
@@ -37,10 +39,11 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     }
     
     /** full constructor */
-    public Resource(Entity entity, ResourceGroup parent, String resourceCode, String resourceName, int resourceType, String serialNumber, int resourceState) {
+    public Resource(Entity entity, ResourceGroup parent, String resourceCode, String resourceName, int resourceType, String serialNumber, int resourceState, Partner manufacturer) {
         super(entity, parent, resourceCode, resourceName, resourceType);        
         this.serialNumber = serialNumber;
         this.resourceState = resourceState;
+        this.manufacturer = manufacturer;
     }
     
 
@@ -61,6 +64,14 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     
     public void setResourceState(int resourceState) {
         this.resourceState = resourceState;
+    }
+
+    public Partner getManufacturer() {
+        return this.manufacturer;
+    }
+    
+    public void setManufacturer(Partner manufacturer) {
+        this.manufacturer = manufacturer;
     }
    
 

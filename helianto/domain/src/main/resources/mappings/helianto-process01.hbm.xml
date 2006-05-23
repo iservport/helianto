@@ -91,6 +91,12 @@ A class to represent a process resource.
 				resource state
 			-->
 			<property name="resourceState" type="int" not-null="true" />
+			<!-- 
+				manufacturer
+			-->
+			<many-to-one name="manufacturer" class="org.helianto.core.Partner">
+				<column name="manufacturerId"/>
+			</many-to-one>
 		</subclass>
 	</class>
 </hibernate-mapping>
