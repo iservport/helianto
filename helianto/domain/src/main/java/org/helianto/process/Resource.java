@@ -1,31 +1,26 @@
 package org.helianto.process;
-// Generated 09/05/2006 16:42:31 by Hibernate Tools 3.1.0.beta4
+// Generated 23/05/2006 17:52:22 by Hibernate Tools 3.1.0.beta4
 
 import org.helianto.core.Entity;
 
 
 /**
- * 			
+ * 				
  * <p>
  * A class to represent a process resource.
  * </p>
  * @author Mauricio Fernandes de Castro
  * @version $Id: iservport-process0.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
  * 				
- * 		
+ * 			
  */
 
-public class Resource  implements java.io.Serializable {
+public class Resource extends org.helianto.process.ResourceGroup implements java.io.Serializable {
 
 
     // Fields    
 
-     private int id;
-     private Entity entity;
-     private Resource parent;
-     private String resourceCode;
-     private String resourceName;
-     private int resourceType;
+     private String serialNumber;
      private int resourceState;
 
 
@@ -37,17 +32,14 @@ public class Resource  implements java.io.Serializable {
 
 	/** minimal constructor */
     public Resource(int resourceType, int resourceState) {
-        this.resourceType = resourceType;
+        super(resourceType);        
         this.resourceState = resourceState;
     }
     
     /** full constructor */
-    public Resource(Entity entity, Resource parent, String resourceCode, String resourceName, int resourceType, int resourceState) {
-        this.entity = entity;
-        this.parent = parent;
-        this.resourceCode = resourceCode;
-        this.resourceName = resourceName;
-        this.resourceType = resourceType;
+    public Resource(Entity entity, ResourceGroup parent, String resourceCode, String resourceName, int resourceType, String serialNumber, int resourceState) {
+        super(entity, parent, resourceCode, resourceName, resourceType);        
+        this.serialNumber = serialNumber;
         this.resourceState = resourceState;
     }
     
@@ -55,52 +47,12 @@ public class Resource  implements java.io.Serializable {
    
     // Property accessors
 
-    public int getId() {
-        return this.id;
+    public String getSerialNumber() {
+        return this.serialNumber;
     }
     
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Entity getEntity() {
-        return this.entity;
-    }
-    
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
-    public Resource getParent() {
-        return this.parent;
-    }
-    
-    public void setParent(Resource parent) {
-        this.parent = parent;
-    }
-
-    public String getResourceCode() {
-        return this.resourceCode;
-    }
-    
-    public void setResourceCode(String resourceCode) {
-        this.resourceCode = resourceCode;
-    }
-
-    public String getResourceName() {
-        return this.resourceName;
-    }
-    
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
-    }
-
-    public int getResourceType() {
-        return this.resourceType;
-    }
-    
-    public void setResourceType(int resourceType) {
-        this.resourceType = resourceType;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public int getResourceState() {
@@ -114,28 +66,6 @@ public class Resource  implements java.io.Serializable {
 
 
 
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof Resource) ) return false;
-		 Resource castOther = ( Resource ) other; 
-         
-		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
- && ( (this.getResourceCode()==castOther.getResourceCode()) || ( this.getResourceCode()!=null && castOther.getResourceCode()!=null && this.getResourceCode().equals(castOther.getResourceCode()) ) );
-   }
-   
-   public int hashCode() {
-         int result = 17;
-         
-         
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
-         
-         result = 37 * result + ( getResourceCode() == null ? 0 : this.getResourceCode().hashCode() );
-         
-         
-         
-         return result;
-   }   
 
 
 

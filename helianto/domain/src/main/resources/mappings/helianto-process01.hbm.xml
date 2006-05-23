@@ -23,11 +23,11 @@
 		============================================= 
 	-->
 	<class table="process_resources"
-		name="org.helianto.process.Resource">
+		name="org.helianto.process.ResourceGroup" discriminator-value="G">
 		<meta attribute="class-description" inherit="false">
 			<![CDATA[
 <p>
-A class to represent a process resource.
+A class to represent a process resource group.
 </p>
 
 @author Mauricio Fernandes de Castro
@@ -37,28 +37,28 @@ A class to represent a process resource.
 		<!-- 
 			id
 		-->
-		<id name="id" type="int" unsaved-value="null">
+		<id name="id" type="int">
 			<generator class="native" />
 		</id>
+		<discriminator column="type" type="char" />
 		<!-- 
 			entity
 		-->
-		<many-to-one name="entity" 
-			class="org.helianto.core.Entity">
+		<many-to-one name="entity" class="org.helianto.core.Entity">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="entityId" unique-key="code"/>
+			<column name="entityId" unique-key="code" />
 		</many-to-one>
 		<!-- 
 			parent
 		-->
-		<many-to-one name="parent" class="org.helianto.process.Resource"
+		<many-to-one name="parent" class="org.helianto.process.ResourceGroup"
 			column="parentId" not-null="false" cascade="merge" />
 		<!-- 
 			resource code
 		-->
 		<property name="resourceCode" type="string">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="resourceCode" unique-key="code" length="6"/>
+			<column name="resourceCode" unique-key="code" length="6" />
 		</property>
 		<!-- 
 			resource name
@@ -69,8 +69,28 @@ A class to represent a process resource.
 		-->
 		<property name="resourceType" type="int" not-null="true" />
 		<!-- 
-			resource state
+			resource subclass
 		-->
-		<property name="resourceState" type="int" not-null="true" />
+		<subclass name="org.helianto.process.Resource"
+			discriminator-value="R">
+			<meta attribute="class-description" inherit="false">
+				<![CDATA[
+<p>
+A class to represent a process resource.
+</p>
+
+@author Mauricio Fernandes de Castro
+@version $Id: iservport-process0.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
+				]]>
+			</meta>
+			<!-- 
+				serial number
+			-->
+			<property name="serialNumber" type="string"  length="20"/>
+			<!-- 
+				resource state
+			-->
+			<property name="resourceState" type="int" not-null="true" />
+		</subclass>
 	</class>
 </hibernate-mapping>
