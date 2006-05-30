@@ -42,24 +42,29 @@ A class to represent a process resource group.
 		</id>
 		<discriminator column="type" type="char" />
 		<!-- 
-			entity
+			natural key
 		-->
-		<many-to-one name="entity" class="org.helianto.core.Entity">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="entityId" unique-key="code" />
-		</many-to-one>
+		<natural-id>
+			<!-- 
+				entity
+			-->
+			<many-to-one name="entity" class="org.helianto.core.Entity">
+				<meta attribute="use-in-equals">true</meta>
+				<column name="entityId" />
+			</many-to-one>
+			<!-- 
+				resource code
+			-->
+			<property name="resourceCode" type="string">
+				<meta attribute="use-in-equals">true</meta>
+				<column name="resourceCode" length="20" />
+			</property>
+		</natural-id>
 		<!-- 
 			parent
 		-->
 		<many-to-one name="parent" class="org.helianto.process.ResourceGroup"
 			column="parentId" not-null="false" cascade="merge" />
-		<!-- 
-			resource code
-		-->
-		<property name="resourceCode" type="string">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="resourceCode" unique-key="code" length="6" />
-		</property>
 		<!-- 
 			resource name
 		-->
@@ -67,7 +72,7 @@ A class to represent a process resource group.
 		<!-- 
 			resource type
 		-->
-		<property name="resourceType" type="int" not-null="true" />
+		<property name="resourceType" type="char" not-null="true" />
 		<!-- 
 			resource subclass
 		-->
@@ -90,12 +95,18 @@ A class to represent a process resource.
 			<!-- 
 				resource state
 			-->
-			<property name="resourceState" type="int" not-null="true" />
+			<property name="resourceState" type="char" not-null="true" />
 			<!-- 
 				manufacturer
 			-->
 			<many-to-one name="manufacturer" class="org.helianto.core.Partner">
 				<column name="manufacturerId"/>
+			</many-to-one>
+			<!-- 
+				owner
+			-->
+			<many-to-one name="owner" class="org.helianto.core.Partner">
+				<column name="ownerId"/>
 			</many-to-one>
 		</subclass>
 	</class>

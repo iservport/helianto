@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 23/05/2006 20:22:11 by Hibernate Tools 3.1.0.beta4
+// Generated 30/05/2006 12:01:05 by Hibernate Tools 3.1.0.beta4
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
@@ -22,8 +22,9 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     // Fields    
 
      private String serialNumber;
-     private int resourceState;
+     private char resourceState;
      private Partner manufacturer;
+     private Partner owner;
 
 
     // Constructors
@@ -33,17 +34,18 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     }
 
 	/** minimal constructor */
-    public Resource(int resourceType, int resourceState) {
-        super(resourceType);        
+    public Resource(Entity entity, String resourceCode, char resourceType, char resourceState) {
+        super(entity, resourceCode, resourceType);        
         this.resourceState = resourceState;
     }
     
     /** full constructor */
-    public Resource(Entity entity, ResourceGroup parent, String resourceCode, String resourceName, int resourceType, String serialNumber, int resourceState, Partner manufacturer) {
-        super(entity, parent, resourceCode, resourceName, resourceType);        
+    public Resource(Entity entity, String resourceCode, ResourceGroup parent, String resourceName, char resourceType, String serialNumber, char resourceState, Partner manufacturer, Partner owner) {
+        super(entity, resourceCode, parent, resourceName, resourceType);        
         this.serialNumber = serialNumber;
         this.resourceState = resourceState;
         this.manufacturer = manufacturer;
+        this.owner = owner;
     }
     
 
@@ -58,11 +60,11 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
         this.serialNumber = serialNumber;
     }
 
-    public int getResourceState() {
+    public char getResourceState() {
         return this.resourceState;
     }
     
-    public void setResourceState(int resourceState) {
+    public void setResourceState(char resourceState) {
         this.resourceState = resourceState;
     }
 
@@ -72,6 +74,14 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     
     public void setManufacturer(Partner manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public Partner getOwner() {
+        return this.owner;
+    }
+    
+    public void setOwner(Partner owner) {
+        this.owner = owner;
     }
    
 

@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 23/05/2006 20:22:20 by Hibernate Tools 3.1.0.beta4
+// Generated 30/05/2006 12:01:17 by Hibernate Tools 3.1.0.beta4
 
 import org.helianto.core.Entity;
 
@@ -22,10 +22,10 @@ public class ResourceGroup  implements java.io.Serializable {
 
      private int id;
      private Entity entity;
-     private ResourceGroup parent;
      private String resourceCode;
+     private ResourceGroup parent;
      private String resourceName;
-     private int resourceType;
+     private char resourceType;
 
 
     // Constructors
@@ -35,15 +35,17 @@ public class ResourceGroup  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public ResourceGroup(int resourceType) {
+    public ResourceGroup(Entity entity, String resourceCode, char resourceType) {
+        this.entity = entity;
+        this.resourceCode = resourceCode;
         this.resourceType = resourceType;
     }
     
     /** full constructor */
-    public ResourceGroup(Entity entity, ResourceGroup parent, String resourceCode, String resourceName, int resourceType) {
+    public ResourceGroup(Entity entity, String resourceCode, ResourceGroup parent, String resourceName, char resourceType) {
         this.entity = entity;
-        this.parent = parent;
         this.resourceCode = resourceCode;
+        this.parent = parent;
         this.resourceName = resourceName;
         this.resourceType = resourceType;
     }
@@ -68,20 +70,20 @@ public class ResourceGroup  implements java.io.Serializable {
         this.entity = entity;
     }
 
-    public ResourceGroup getParent() {
-        return this.parent;
-    }
-    
-    public void setParent(ResourceGroup parent) {
-        this.parent = parent;
-    }
-
     public String getResourceCode() {
         return this.resourceCode;
     }
     
     public void setResourceCode(String resourceCode) {
         this.resourceCode = resourceCode;
+    }
+
+    public ResourceGroup getParent() {
+        return this.parent;
+    }
+    
+    public void setParent(ResourceGroup parent) {
+        this.parent = parent;
     }
 
     public String getResourceName() {
@@ -92,11 +94,11 @@ public class ResourceGroup  implements java.io.Serializable {
         this.resourceName = resourceName;
     }
 
-    public int getResourceType() {
+    public char getResourceType() {
         return this.resourceType;
     }
     
-    public void setResourceType(int resourceType) {
+    public void setResourceType(char resourceType) {
         this.resourceType = resourceType;
     }
    
@@ -118,8 +120,8 @@ public class ResourceGroup  implements java.io.Serializable {
          
          
          result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
-         
          result = 37 * result + ( getResourceCode() == null ? 0 : this.getResourceCode().hashCode() );
+         
          
          
          return result;

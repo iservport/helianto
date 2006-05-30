@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 23/05/2006 20:22:21 by Hibernate Tools 3.1.0.beta4
+// Generated 30/05/2006 12:01:19 by Hibernate Tools 3.1.0.beta4
 
 import java.util.HashSet;
 import java.util.Set;
