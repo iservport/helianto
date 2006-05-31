@@ -15,12 +15,12 @@
 
 package org.helianto.process;
 
+import junit.framework.TestCase;
+
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.EntityCreatorImpl;
-
-import junit.framework.TestCase;
 
 public class PartCreatorImplTests extends TestCase {
     
