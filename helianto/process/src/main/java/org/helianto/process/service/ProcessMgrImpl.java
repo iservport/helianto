@@ -20,19 +20,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.helianto.core.Entity;
 import org.helianto.core.service.PartnerMgrImpl;
-import org.helianto.process.AssociationType;
 import org.helianto.process.Document;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.OperationType;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
-import org.helianto.process.ProductType;
 import org.helianto.process.Resource;
-import org.helianto.process.ResourceType;
 import org.helianto.process.Setup;
 import org.helianto.process.Tree;
 import org.helianto.process.Unit;
+import org.helianto.process.creation.AssociationType;
+import org.helianto.process.creation.ResourceType;
 
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
