@@ -1,6 +1,8 @@
 package org.helianto.process;
 
 import org.helianto.core.Entity;
+import org.helianto.process.Part;
+import org.helianto.process.Unit;
 
 public interface PartCreator {
 	

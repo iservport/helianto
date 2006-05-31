@@ -1,5 +1,11 @@
 package org.helianto.process;
 
+import org.helianto.process.Characteristic;
+import org.helianto.process.DocumentDetail;
+import org.helianto.process.Operation;
+import org.helianto.process.Part;
+import org.helianto.process.Process;
+
 public interface ProcessCreator {
 	
 	public Process createProcess(Part part, String processCode);

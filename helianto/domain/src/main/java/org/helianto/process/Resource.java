@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 30/05/2006 12:01:05 by Hibernate Tools 3.1.0.beta4
+// Generated 31/05/2006 17:45:47 by Hibernate Tools 3.1.0.beta4
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
@@ -11,7 +11,7 @@ import org.helianto.core.Partner;
  * A class to represent a process resource.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: iservport-process0.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
+ * @version $Id$
  * 				
  * 			
  */
@@ -25,6 +25,7 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
      private char resourceState;
      private Partner manufacturer;
      private Partner owner;
+     private boolean keyResource;
 
 
     // Constructors
@@ -34,18 +35,18 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     }
 
 	/** minimal constructor */
-    public Resource(Entity entity, String resourceCode, char resourceType, char resourceState) {
+    public Resource(Entity entity, String resourceCode, char resourceType) {
         super(entity, resourceCode, resourceType);        
-        this.resourceState = resourceState;
     }
     
     /** full constructor */
-    public Resource(Entity entity, String resourceCode, ResourceGroup parent, String resourceName, char resourceType, String serialNumber, char resourceState, Partner manufacturer, Partner owner) {
+    public Resource(Entity entity, String resourceCode, ResourceGroup parent, String resourceName, char resourceType, String serialNumber, char resourceState, Partner manufacturer, Partner owner, boolean keyResource) {
         super(entity, resourceCode, parent, resourceName, resourceType);        
         this.serialNumber = serialNumber;
         this.resourceState = resourceState;
         this.manufacturer = manufacturer;
         this.owner = owner;
+        this.keyResource = keyResource;
     }
     
 
@@ -82,6 +83,14 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     
     public void setOwner(Partner owner) {
         this.owner = owner;
+    }
+
+    public boolean isKeyResource() {
+        return this.keyResource;
+    }
+    
+    public void setKeyResource(boolean keyResource) {
+        this.keyResource = keyResource;
     }
    
 
