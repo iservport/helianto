@@ -95,7 +95,7 @@ A class to represent a process resource.
 			<!-- 
 				resource state
 			-->
-			<property name="resourceState" type="char" not-null="true" />
+			<property name="resourceState" type="char" not-null="true" formula="'I'"/>
 			<!-- 
 				manufacturer
 			-->
@@ -108,6 +108,10 @@ A class to represent a process resource.
 			<many-to-one name="owner" class="org.helianto.core.Partner">
 				<column name="ownerId"/>
 			</many-to-one>
+			<!-- 
+				key resource
+			-->
+			<property name="keyResource" type="boolean" not-null="true"  formula="0"/>
 		</subclass>
 	</class>
 </hibernate-mapping>
