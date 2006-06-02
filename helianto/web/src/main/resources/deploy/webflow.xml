@@ -31,7 +31,7 @@
 		<property name="flowLocations">
 			<list>
 			 	<value>classpath*:/flows/*.xml</value>
-			 	<value>/WEB-INF/flows/*.xml</value>
+			 	<!--value>/WEB-INF/flows/*.xml</value-->
 			</list>
 		</property>
 	</bean>
