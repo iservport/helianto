@@ -32,7 +32,7 @@ import org.helianto.core.Province;
  * @author Mauricio Fernandes de Castro
  * @version $Id: $
  */
-public interface EntityCreator {
+public interface EntityCreator extends HomeCreator {
 
     public Entity entityFactory(Home home, String uniqueAlias);
 

@@ -32,7 +32,7 @@ import org.helianto.core.Province;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public class EntityCreatorImpl implements EntityCreator {
+public class EntityCreatorImpl extends HomeCreatorImpl implements EntityCreator {
     
     public Entity entityFactory(Home home, String uniqueAlias) {
         Entity entity = new Entity();
