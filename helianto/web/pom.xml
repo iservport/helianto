@@ -21,11 +21,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.helianto</groupId>
-			<artifactId>helianto-domain</artifactId>
-			<version>0.0.1-20060531</version>
-		</dependency>
-		<dependency>
-			<groupId>org.helianto</groupId>
 			<artifactId>helianto-core</artifactId>
 			<version>0.0.1-20060531</version>
 		</dependency>
