@@ -57,8 +57,11 @@ public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
     }
 
     public Entity findDefaultEntity(int priority) {
-        return ((DefaultEntity) 
-                findUnique(DEFAULT_ENTITY_QRY_BY_PRIOR, 0)).getEntity();
+        DefaultEntity defaultEntity = (DefaultEntity) findUnique(DEFAULT_ENTITY_QRY_BY_PRIOR, 0);
+        if (defaultEntity!=null) {
+            return defaultEntity.getEntity(); 
+        }
+        return null;
     }
 
     static final String DEFAULT_ENTITY_QRY_BY_PRIOR = 
