@@ -32,9 +32,9 @@ import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 public class ResourceDaoImplTests extends AbstractIntegrationTest {
     
     private ResourceDao resourceDao;
-    private EntityDao entityDao;
+    private EntityDao entityDao; 
     private ResourceCreator resourceCreator;
-    private EntityCreator entityCreator;
+    private EntityCreator entityCreator; // extends HomeCreator
     private Entity entity;
     
     {
