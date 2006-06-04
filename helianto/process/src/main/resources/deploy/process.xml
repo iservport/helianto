@@ -28,9 +28,9 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
-			Process service bean	
+			Resource service bean	
 	-->
-	<bean id="processMgr" 
+	<bean id="resourceMgr" 
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
 		parent="mgrTemplate">
 		<property name="target">
