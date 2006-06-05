@@ -155,6 +155,24 @@ Persist a relationship to a bank
 			</meta>
 			<property name="checkFormFile" type="string" length="10"/>
 		</subclass>
+		<subclass name="org.helianto.core.Manufacturer" 
+			discriminator-value="M">
+			<!-- 
+				MANUFACTURER
+				============================================= 
+			-->
+			<meta attribute="class-description" inherit="false">
+				<![CDATA[
+<p>
+Persist a relationship to a resource manufaturer. 
+</p>
+
+@author Mauricio Fernandes de Castro
+@version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
+				]]>
+			</meta>
+			
+		</subclass>
 		<subclass name="org.helianto.core.Agent" 
 			discriminator-value="B">
 			<!-- 

@@ -16,6 +16,7 @@
 package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
+import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 
 /**
@@ -43,5 +44,15 @@ public class ResourceCreatorImpl implements ResourceCreator {
         resourceGroup.setParent(parent);
         return resourceGroup;
     }
+
+	public Resource resourceFactory(Entity entity, String resourceCode, ResourceType resourceType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Resource resourceFactory(ResourceGroup parent, String resourceCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

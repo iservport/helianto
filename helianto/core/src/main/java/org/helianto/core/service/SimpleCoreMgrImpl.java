@@ -22,11 +22,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
+import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.User;
 import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.HomeCreator;
+import org.helianto.core.creation.PartnerCreator;
 import org.helianto.core.creation.UserCreator;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.UserDao;
@@ -48,6 +50,10 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         Entity entity = entityCreator.entityFactory(home, alias);
         DefaultEntity defaultEntity = entityCreator.defaultEntityFactory(entity);
         return defaultEntity;
+    }
+    
+    public Division createDefaultDivision(DefaultEntity defaultEntity) {
+    	return partnerCreator.divisionFactory(defaultEntity.getEntity(), defaultEntity.getEntity().getAlias());
     }
 
     public void persistDefaultEntity(DefaultEntity defaultEntity) {
@@ -177,6 +183,7 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     
     // collaborators
     
+    private PartnerCreator partnerCreator;
     private EntityCreator entityCreator;
     private HomeCreator homeCreator;
     private UserCreator userCreator;
@@ -185,6 +192,10 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
 
     // colaborator accessors
     
+	public void setPartnerCreator(PartnerCreator partnerCreator) {
+		this.partnerCreator = partnerCreator;
+	}
+
     public void setEntityCreator(EntityCreator entityCreator) {
         this.entityCreator = entityCreator;
     }

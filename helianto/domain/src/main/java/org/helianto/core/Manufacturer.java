@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 05/06/2006 11:47:58 by Hibernate Tools 3.1.0.beta4
+// Generated 05/06/2006 11:48:01 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -64,42 +64,32 @@ import java.util.Date;
  * 			
  */
 
-public class Customer extends org.helianto.core.Partner implements java.io.Serializable {
+public class Manufacturer extends org.helianto.core.Partner implements java.io.Serializable {
 
 
     // Fields    
 
-     private Partner deliverTo;
 
 
     // Constructors
 
     /** default constructor */
-    public Customer() {
+    public Manufacturer() {
     }
 
 	/** minimal constructor */
-    public Customer(Entity entity, String alias, char state, boolean strong) {
+    public Manufacturer(Entity entity, String alias, char state, boolean strong) {
         super(entity, alias, state, strong);        
     }
     
     /** full constructor */
-    public Customer(Entity entity, String alias, Entity related, char state, boolean strong, Date relatedSince, String numberAssignedRemotely, long importedKey, String profile, Partner deliverTo) {
+    public Manufacturer(Entity entity, String alias, Entity related, char state, boolean strong, Date relatedSince, String numberAssignedRemotely, long importedKey, String profile) {
         super(entity, alias, related, state, strong, relatedSince, numberAssignedRemotely, importedKey, profile);        
-        this.deliverTo = deliverTo;
     }
     
 
    
     // Property accessors
-
-    public Partner getDeliverTo() {
-        return this.deliverTo;
-    }
-    
-    public void setDeliverTo(Partner deliverTo) {
-        this.deliverTo = deliverTo;
-    }
    
 
 

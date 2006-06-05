@@ -46,6 +46,10 @@ public class ResourceMgrImpl implements ResourceMgr {
         return getResourceDao().findResourceByEntity(entity);
     }
 
+	public List<ResourceGroup> findRootResourceByEntity(Entity entity) {
+        return getResourceDao().findRootResourceByEntity(entity);
+	}
+
     public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup) {
         return getResourceDao().findResourceByParent(resourceGroup);
     }

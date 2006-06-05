@@ -5,30 +5,33 @@ import java.util.Date;
 import org.helianto.core.Contact;
 import org.helianto.core.Credential;
 import org.helianto.core.Customer;
+import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
 
-public class PartnerCreatorImpl implements PartnerCreator {
+public class PartnerCreatorImpl extends EntityCreatorImpl implements PartnerCreator {
+	
+	private Partner partnerFactory(Entity entity, String alias) {
+		Partner partner = new Partner();
+		partner.setEntity(entity);
+		partner.setAlias(alias);
+		partner.setRelatedSince(new Date());
+		partner.setState(PartnerState.ACTIVE.getValue());
+		partner.setStrong(false);
+		return partner;
+	}
 
     public Customer customerFactory(Entity entity, String alias) {
-        Customer customer = new Customer();
-        customer.setEntity(entity);
-        customer.setAlias(alias);
-        customer.setRelatedSince(new Date());
-        customer.setState(PartnerState.ACTIVE.getValue());
-        customer.setStrong(false);
-        return customer;
+    	return (Customer) partnerFactory(entity, alias);
     }
     
     public Supplier supplierFactory(Entity entity, String alias) {
-        Supplier supplier = new Supplier();
-        supplier.setEntity(entity);
-        supplier.setAlias(alias);
-        supplier.setRelatedSince(new Date());
-        supplier.setState(PartnerState.ACTIVE.getValue());
-        supplier.setStrong(false);
-        return supplier;
+    	return (Supplier) partnerFactory(entity, alias);
+    }
+    
+    public Division divisionFactory(Entity entity, String alias) {
+    	return (Division) partnerFactory(entity, alias);
     }
     
     public Contact contactFactory(Partner partner, Credential cred) {

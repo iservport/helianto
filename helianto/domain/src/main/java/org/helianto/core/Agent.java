@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 02/06/2006 13:28:20 by Hibernate Tools 3.1.0.beta4
+// Generated 05/06/2006 11:48:00 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -41,6 +41,14 @@ import java.util.Date;
  * 				
  * <p>
  * Persist a relationship to a bank 
+ * </p>
+ * @author Mauricio Fernandes de Castro
+ * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
+ * 				
+ * 			
+ * 				
+ * <p>
+ * Persist a relationship to a resource manufaturer. 
  * </p>
  * @author Mauricio Fernandes de Castro
  * @version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $

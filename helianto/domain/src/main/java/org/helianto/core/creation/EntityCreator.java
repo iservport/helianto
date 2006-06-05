@@ -46,8 +46,20 @@ public interface EntityCreator extends HomeCreator {
 
     public Individual individualFactory(Home home, Credential credential);
 
+    /**
+     * <p>
+     * Create an <code>Entity</code> and the corresponding
+     * <code>DefaultEntity</code> with priority zero.
+     * </p>
+     */
     public DefaultEntity defaultEntityFactory(Entity entity);
 
+    /**
+     * <p>
+     * Create an <code>Entity</code> and the corresponding
+     * <code>DefaultEntity</code> with a given priority.
+     * </p>
+     */
     public DefaultEntity defaultEntityFactory(Entity entity, int priority);
     
     public Province provinceFactory(Home home, String code, String name);

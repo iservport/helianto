@@ -33,6 +33,12 @@ public interface ResourceDao {
     public List<ResourceGroup> findResourceByEntity(Entity entity);
     
     /**
+     * Find <code>ResourceGroup</code>s by <code>Entity</code> where
+     * parent is null.
+     */
+    public List<ResourceGroup> findRootResourceByEntity(Entity entity);
+    
+    /**
      * Find <code>ResourceGroup</code>s by <code>ResourceGroup</code> parent.
      */
     public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup);

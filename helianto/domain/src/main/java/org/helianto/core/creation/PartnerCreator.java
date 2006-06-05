@@ -18,6 +18,7 @@ package org.helianto.core.creation;
 import org.helianto.core.Contact;
 import org.helianto.core.Credential;
 import org.helianto.core.Customer;
+import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
@@ -29,7 +30,7 @@ import org.helianto.core.Supplier;
  * @author Mauricio Fernandes de Castro
  * @version $Id: $
  */
-public interface PartnerCreator {
+public interface PartnerCreator  extends EntityCreator {
 
     /**
      * The <code>Customer</code> factory method.
@@ -40,6 +41,11 @@ public interface PartnerCreator {
      * The <code>Supplier</code> factory method.
      */
     public Supplier supplierFactory(Entity entity, String alias);
+    
+    /**
+     * The <code>Division</code> factory method.
+     */
+    public Division divisionFactory(Entity entity, String alias);
     
     /**
      * The <code>Contact</code> factory method.

@@ -34,6 +34,11 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
         return resourceList;
     }
     
+	public List<ResourceGroup> findRootResourceByEntity(Entity entity) {
+        List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) find(RESOURCEROOT_QRY, entity);
+        return resourceList;
+	}
+
     public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup) {
         List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) find(RESOURCEGROUP_QRY_BYPARENT, resourceGroup);
         return resourceList;
@@ -44,5 +49,8 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
 
     static String RESOURCEGROUP_QRY_BYPARENT = "from ResourceGroup resourceGroup " +
     "where resourceGroup.parent = ?";
+
+    static String RESOURCEROOT_QRY = "from ResourceGroup resourceGroup " +
+    "where resourceGroup.entity = ? and resourceGroup.parent = null";
 
 }

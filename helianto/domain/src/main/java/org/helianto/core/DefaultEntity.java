@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 02/06/2006 13:28:23 by Hibernate Tools 3.1.0.beta4
+// Generated 05/06/2006 11:48:02 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -12,6 +12,9 @@ package org.helianto.core;
  * <p>
  * This is usefull for environments where all domain objects may be associated
  * to a single <code>Entity</code>.
+ * </p>
+ * <p>
+ * Each <code>DefaultEntity</code> should have a corresponding {@link Partner}.
  * </p>
  * @author Mauricio Fernandes de Castro
  * @version $Id: helianto-core2.hbm.xml,v 1.6 2006/03/20 16:11:40 iserv Exp $
