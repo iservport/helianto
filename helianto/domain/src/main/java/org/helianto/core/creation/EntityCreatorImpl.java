@@ -69,9 +69,6 @@ public class EntityCreatorImpl extends HomeCreatorImpl implements EntityCreator 
         return organizationFactory(home, uniqueAlias, uniqueAlias);
     }
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.EntityCreator#organizationFactory(org.helianto.core.Home, java.lang.String, java.lang.String)
-     */
     public Organization organizationFactory(Home home, String uniqueAlias, String businessName) {
         Organization organization = new Organization();
         organization.setHome(home);
@@ -80,9 +77,6 @@ public class EntityCreatorImpl extends HomeCreatorImpl implements EntityCreator 
         return organization;
     }
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.EntityCreator#individualFactory(org.helianto.core.Home, org.helianto.core.Credential)
-     */
     public Individual individualFactory(Home home, Credential credential) {
         Individual individual = new Individual();
         individual.setHome(home);
@@ -91,16 +85,16 @@ public class EntityCreatorImpl extends HomeCreatorImpl implements EntityCreator 
         return individual;
     }
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.EntityCreator#defaultEntityFactory(org.helianto.core.Entity)
-     */
+    public DefaultEntity defaultEntityFactory(String alias) {
+        Home home = homeFactory(alias);
+        Entity entity = entityFactory(home, alias);
+        return defaultEntityFactory(entity);
+    }
+    
     public DefaultEntity defaultEntityFactory(Entity entity) {
         return defaultEntityFactory(entity, 0);
     }
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.EntityCreator#defaultEntityFactory(org.helianto.core.Entity, int)
-     */
     public DefaultEntity defaultEntityFactory(Entity entity, int priority) {
         DefaultEntity defaultEntity = new DefaultEntity();
         defaultEntity.setEntity(entity);
@@ -128,5 +122,5 @@ public class EntityCreatorImpl extends HomeCreatorImpl implements EntityCreator 
         entityKey.setKeyNumber(keyNumber);
         return entityKey;
     }
-    
+
 }

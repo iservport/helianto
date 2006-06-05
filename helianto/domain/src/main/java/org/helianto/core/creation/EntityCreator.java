@@ -48,6 +48,14 @@ public interface EntityCreator extends HomeCreator {
 
     /**
      * <p>
+     * Create <code>Home</code>, <code>Entity</code> and the corresponding
+     * <code>DefaultEntity</code> with priority zero and the given alias.
+     * </p>
+     */
+    public DefaultEntity defaultEntityFactory(String alias);
+
+    /**
+     * <p>
      * Create an <code>Entity</code> and the corresponding
      * <code>DefaultEntity</code> with priority zero.
      * </p>

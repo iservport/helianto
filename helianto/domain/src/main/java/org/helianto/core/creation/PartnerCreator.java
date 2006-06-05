@@ -15,11 +15,14 @@
 
 package org.helianto.core.creation;
 
+import org.helianto.core.Agent;
+import org.helianto.core.Bank;
 import org.helianto.core.Contact;
 import org.helianto.core.Credential;
 import org.helianto.core.Customer;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
+import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
 
@@ -46,6 +49,21 @@ public interface PartnerCreator  extends EntityCreator {
      * The <code>Division</code> factory method.
      */
     public Division divisionFactory(Entity entity, String alias);
+    
+    /**
+     * The <code>Bank</code> factory method.
+     */
+    public Bank bankFactory(Entity entity, String alias);
+    
+    /**
+     * The <code>Agent</code> factory method.
+     */
+    public Agent agentFactory(Entity entity, String alias);
+    
+    /**
+     * The <code>Manufacturer</code> factory method.
+     */
+    public Manufacturer manufacturerFactory(Entity entity, String alias);
     
     /**
      * The <code>Contact</code> factory method.
