@@ -28,6 +28,11 @@
 	<bean id="entityCreator" 
 		class="org.helianto.core.creation.EntityCreatorImpl"/>
 	<!--
+			Partner creator implementation	
+	-->
+	<bean id="partnerCreator" 
+		class="org.helianto.core.creation.PartnerCreatorImpl"/>
+	<!--
 			User creator implementation	
 	-->
 	<bean id="userCreator" 
@@ -44,6 +49,13 @@
 	-->
 	<bean id="entityDao" 
 		class="org.helianto.core.hibernate.EntityDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			Partner dao implementation	
+	-->
+	<bean id="partnerDao" 
+		class="org.helianto.core.hibernate.PartnerDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
