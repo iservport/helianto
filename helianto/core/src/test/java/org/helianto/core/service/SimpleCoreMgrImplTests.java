@@ -1,5 +1,6 @@
 package org.helianto.core.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,17 +39,16 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
     }
 
-    @SuppressWarnings("unchecked")
     public void testPersistDefaultEntitySuccess() {
         
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
         hibernateTemplate.flush();
         
-        List<Home> homeList = hibernateTemplate.find("from Home");
+        List<Home> homeList = (ArrayList<Home>) hibernateTemplate.find("from Home");
         assertEquals(1, homeList.size());
         Home h = homeList.get(0);
         assertEquals (defaultEntity.getEntity().getHome(), h);
-        List<Entity> entityList = hibernateTemplate.find("from Entity");
+        List<Entity> entityList = (ArrayList<Entity>) hibernateTemplate.find("from Entity");
         assertEquals(1, entityList.size());
         Entity e = entityList.get(0);
         assertEquals(defaultEntity.getEntity(), e);

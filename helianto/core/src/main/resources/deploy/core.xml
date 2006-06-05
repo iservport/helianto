@@ -81,10 +81,10 @@
 		<property name="target">
 			<bean id="simpleCoreTarget"
 				class="org.helianto.core.service.SimpleCoreMgrImpl">
-				<property name="homeCreator" ref="homeCreator"/>
-				<property name="entityCreator" ref="entityCreator"/>
+				<property name="partnerCreator" ref="partnerCreator"/>
 				<property name="userCreator" ref="userCreator"/>
 				<property name="entityDao" ref="entityDao"/>
+				<property name="partnerDao" ref="partnerDao"/>
 				<property name="userDao" ref="userDao"/>
 				<!-- property name="javaMailAdapter" ref="javaMailAdapter"/-->
 			</bean>

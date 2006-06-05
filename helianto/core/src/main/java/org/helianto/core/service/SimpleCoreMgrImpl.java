@@ -26,8 +26,6 @@ import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.User;
-import org.helianto.core.creation.EntityCreator;
-import org.helianto.core.creation.HomeCreator;
 import org.helianto.core.creation.PartnerCreator;
 import org.helianto.core.creation.UserCreator;
 import org.helianto.core.dao.EntityDao;
@@ -47,9 +45,9 @@ import org.helianto.core.security.UserDetailsAdapter;
 public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     
     public DefaultEntity createDefaultEntity(String alias) {
-        Home home = homeCreator.homeFactory(alias);
-        Entity entity = entityCreator.entityFactory(home, alias);
-        DefaultEntity defaultEntity = entityCreator.defaultEntityFactory(entity);
+        Home home = partnerCreator.homeFactory(alias);
+        Entity entity = partnerCreator.entityFactory(home, alias);
+        DefaultEntity defaultEntity = partnerCreator.defaultEntityFactory(entity);
         return defaultEntity;
     }
     
@@ -196,8 +194,6 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     // collaborators
     
     private PartnerCreator partnerCreator;
-    private EntityCreator entityCreator;
-    private HomeCreator homeCreator;
     private UserCreator userCreator;
     private EntityDao entityDao;
     private PartnerDao partnerDao;
@@ -209,20 +205,16 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
 		this.partnerCreator = partnerCreator;
 	}
 
-    public void setEntityCreator(EntityCreator entityCreator) {
-        this.entityCreator = entityCreator;
-    }
-
-    public void setHomeCreator(HomeCreator homeCreator) {
-        this.homeCreator = homeCreator;
-    }
-
     public void setEntityDao(EntityDao entityDao) {
         this.entityDao = entityDao;
     }
 
     public void setUserCreator(UserCreator userCreator) {
         this.userCreator = userCreator;
+    }
+
+    public void setPartnerDao(PartnerDao partnerDao) {
+        this.partnerDao = partnerDao;
     }
 
     public void setUserDao(UserDao userDao) {
