@@ -31,6 +31,7 @@ import org.helianto.core.creation.HomeCreator;
 import org.helianto.core.creation.PartnerCreator;
 import org.helianto.core.creation.UserCreator;
 import org.helianto.core.dao.EntityDao;
+import org.helianto.core.dao.PartnerDao;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
@@ -53,13 +54,24 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     }
     
     public Division createDefaultDivision(DefaultEntity defaultEntity) {
-    	return partnerCreator.divisionFactory(defaultEntity.getEntity(), defaultEntity.getEntity().getAlias());
+        Division defaultDivision =  createDivision(defaultEntity.getEntity(), defaultEntity.getEntity().getAlias());
+        defaultDivision.setRelated(defaultEntity.getEntity());
+        return defaultDivision;
+    }
+
+    public Division createDivision(Entity entity, String alias) {
+        return  partnerCreator.divisionFactory(entity, alias);
     }
 
     public void persistDefaultEntity(DefaultEntity defaultEntity) {
         entityDao.persistDefaultEntity(defaultEntity);
         if (logger.isDebugEnabled()) {
             logger.debug("Persisted "+defaultEntity);
+        }
+        Division defaultDivision = createDefaultDivision(defaultEntity);
+        partnerDao.persistDivision(defaultDivision);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Persisted "+defaultDivision);
         }
     }
 
@@ -188,6 +200,7 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     private HomeCreator homeCreator;
     private UserCreator userCreator;
     private EntityDao entityDao;
+    private PartnerDao partnerDao;
     private UserDao userDao;
 
     // colaborator accessors
