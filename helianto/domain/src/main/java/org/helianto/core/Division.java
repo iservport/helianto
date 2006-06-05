@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated Jun 5, 2006 4:10:27 PM by Hibernate Tools 3.1.0.beta4
+// Generated 05/06/2006 20:39:29 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -79,9 +79,8 @@ public class Division extends org.helianto.core.Partner implements java.io.Seria
     }
 
 	/** minimal constructor */
-    public Division(Entity entity, String alias, char state, boolean strong, char divisionType) {
+    public Division(Entity entity, String alias, char state, boolean strong) {
         super(entity, alias, state, strong);        
-        this.divisionType = divisionType;
     }
     
     /** full constructor */
