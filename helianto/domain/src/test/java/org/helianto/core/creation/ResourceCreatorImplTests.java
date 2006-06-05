@@ -15,7 +15,9 @@
 
 package org.helianto.core.creation;
 
+import org.helianto.core.Division;
 import org.helianto.core.Entity;
+import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.creation.ResourceCreator;
 import org.helianto.process.creation.ResourceCreatorImpl;
@@ -32,7 +34,7 @@ public class ResourceCreatorImplTests extends TestCase {
         resourceCreator = new ResourceCreatorImpl();
     }
     
-    public void testResourceCreation() {
+    public void testResourceGroupCreation() {
         Entity entity = new Entity();
         ResourceGroup resourceGroup = resourceCreator.resourceGroupFactory(entity, "123", ResourceType.EQUIPMENT);
         assertSame(entity, resourceGroup.getEntity());
@@ -40,7 +42,7 @@ public class ResourceCreatorImplTests extends TestCase {
         assertEquals(ResourceType.EQUIPMENT.getValue(), resourceGroup.getResourceType());
     }
     
-    public void testResourceParentCreation() {
+    public void testResourceGroupChildCreation() {
         Entity entity = new Entity();
         ResourceGroup parent = resourceCreator.resourceGroupFactory(entity, "123", ResourceType.EQUIPMENT);
         ResourceGroup resourceGroup = resourceCreator.resourceGroupFactory(parent, "456");
@@ -49,4 +51,29 @@ public class ResourceCreatorImplTests extends TestCase {
         assertEquals(ResourceType.EQUIPMENT.getValue(), resourceGroup.getResourceType());
         assertSame(parent, resourceGroup.getParent());
     }
+    
+    public void testResourceCreation() {
+        Entity entity = new Entity();
+        Division division = new Division();
+        division.setEntity(entity);
+        Resource resource = resourceCreator.resourceFactory(division, "123", ResourceType.EQUIPMENT);
+        assertSame(entity, resource.getEntity());
+        assertEquals("123", resource.getResourceCode());
+        assertEquals(ResourceType.EQUIPMENT.getValue(), resource.getResourceType());
+        assertSame(division, resource.getOwner());
+    }
+
+    public void testResourceChildCreation() {
+        Entity entity = new Entity();
+        Division division = new Division();
+        division.setEntity(entity);
+        ResourceGroup parent = resourceCreator.resourceGroupFactory(entity, "123", ResourceType.EQUIPMENT);
+        Resource resource = resourceCreator.resourceFactory(parent, "456", division);
+        assertSame(entity, resource.getEntity());
+        assertEquals("456", resource.getResourceCode());
+        assertEquals(ResourceType.EQUIPMENT.getValue(), resource.getResourceType());
+        assertSame(parent, resource.getParent());
+        assertSame(division, resource.getOwner());
+    }
+    
 }

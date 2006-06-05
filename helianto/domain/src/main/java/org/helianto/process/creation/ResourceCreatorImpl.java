@@ -16,43 +16,52 @@
 package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Partner;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 
 /**
- * Default implementation for the <code>ResourceGroupCreator</code> interface.
+ * Default implementation for the <code>ResourceCreator</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: $
  */
 public class ResourceCreatorImpl implements ResourceCreator {
 
     public ResourceGroup resourceGroupFactory(Entity entity, String resourceCode, ResourceType resourceType) {
-        return resourceGroupFactory(entity, resourceCode, resourceType.getValue());
+        return resourceGroupFactory(ResourceGroup.class, entity, resourceCode, resourceType.getValue());
     }
 
-    private ResourceGroup resourceGroupFactory(Entity entity, String resourceCode, char resourceTypeValue) {
-        ResourceGroup resourceGroup = new ResourceGroup();
-        resourceGroup.setEntity(entity);
-        resourceGroup.setResourceCode(resourceCode);
-        resourceGroup.setResourceType(resourceTypeValue);
-        return resourceGroup;
+    private ResourceGroup resourceGroupFactory(Class clazz, Entity entity, String resourceCode, char resourceTypeValue) {
+        ResourceGroup resourceGroup;
+        try {
+            resourceGroup = (ResourceGroup) clazz.newInstance();
+            resourceGroup.setEntity(entity);
+            resourceGroup.setResourceCode(resourceCode);
+            resourceGroup.setResourceType(resourceTypeValue);
+            return resourceGroup;
+        } catch (Exception e) {
+            throw new RuntimeException("Can't create calss "+clazz);
+        }
     }
 
     public ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode) {
-        ResourceGroup resourceGroup = resourceGroupFactory(parent.getEntity(), resourceCode, parent.getResourceType());
+        ResourceGroup resourceGroup = resourceGroupFactory(ResourceGroup.class, parent.getEntity(), resourceCode, parent.getResourceType());
         resourceGroup.setParent(parent);
         return resourceGroup;
     }
 
-	public Resource resourceFactory(Entity entity, String resourceCode, ResourceType resourceType) {
-		// TODO Auto-generated method stub
-		return null;
+	public Resource resourceFactory(Partner owner, String resourceCode, ResourceType resourceType) {
+        Resource resource = (Resource) resourceGroupFactory(Resource.class, owner.getEntity(), resourceCode, resourceType.getValue());
+        resource.setOwner(owner);
+        return resource;
 	}
 
-	public Resource resourceFactory(ResourceGroup parent, String resourceCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Resource resourceFactory(ResourceGroup parent, String resourceCode, Partner owner) {
+        Resource resource = (Resource) resourceGroupFactory(Resource.class, parent.getEntity(), resourceCode, parent.getResourceType());
+        resource.setParent(parent);
+        resource.setOwner(owner);
+        return resource;
+    }
 
 }
