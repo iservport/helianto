@@ -17,6 +17,8 @@ package org.helianto.process.service;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
@@ -29,6 +31,8 @@ import org.helianto.process.creation.ResourceType;
 import org.helianto.process.dao.ResourceDao;
 
 public class ResourceMgrImpl implements ResourceMgr {
+	
+	private final Log logger = LogFactory.getLog(getClass());
     
 	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
         return getResourceCreator().resourceGroupFactory(entity, rootEquipentCode, ResourceType.EQUIPMENT);
@@ -47,27 +51,19 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
 
 	public Resource createResource(ResourceGroup parentGroup, String resourceCode) {
-		return resourceCreator.resourceFactory(parentGroup, resourceCode, null);
+		return createResource(parentGroup, resourceCode, null);
 	}
 
 	public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner) {
 		if (owner==null) {
-			owner = findCurrentDivision(parentGroup.getEntity());
+			if (logger.isDebugEnabled()) {
+				logger.debug("owner is null");
+			}
+			owner = partnerDao.findCurrentDivision(parentGroup.getEntity());
 		}
 		return resourceCreator.resourceFactory(parentGroup, resourceCode, owner);
 	}
 	
-	// TODO move to partnerDao
-	public Division findCurrentDivision(Entity entity) {
-		List<Division> divisionList = getPartnerDao().findDivisionByEntity(entity);
-		for (Division d: divisionList) {
-			if (d.getRelated()!=null && d.getRelated().equals(entity)) {
-				return d;
-			}
-		}
-		return null;
-	}
-
     public List<ResourceGroup> findResourceByEntity(Entity entity) {
         return getResourceDao().findResourceByEntity(entity);
     }
