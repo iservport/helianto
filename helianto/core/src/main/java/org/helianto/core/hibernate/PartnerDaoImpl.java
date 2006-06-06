@@ -70,6 +70,16 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
         return (ArrayList<Division>) find(DIVISION_QRY, entity);
     }
 
+	public Division findCurrentDivision(Entity entity) {
+		// TODO see CURRENTDIVISION_QRY
+		List<Division> divisionList = findDivisionByEntity(entity);
+		for (Division d: divisionList) {
+			if (d.getRelated()!=null && d.getRelated().equals(entity)) {
+				return d;
+			}
+		}
+		return null;
+	}
     public List<Agent> findAgentByEntity(Entity entity) {
         return (ArrayList<Agent>) find(AGENT_QRY, entity);
     }
@@ -90,6 +100,9 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
 
     static String DIVISION_QRY = "from Division division " +
         "where division.entity = ?";
+
+    static String CURRENTDIVISION_QRY = "from Division division " +
+    	"where division.entity = ? and division.related = division.entity";
 
     static String AGENT_QRY = "from Agent agent " +
         "where agent.entity = ?";

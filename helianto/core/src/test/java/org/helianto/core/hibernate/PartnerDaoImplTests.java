@@ -151,6 +151,23 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         }
     }
     
+    public void testFindCurrentDivision() {
+    	
+        // create many
+    	Division division = null;
+        for (int i = 0;i<5;i++) {
+            division = partnerCreator.divisionFactory(entity, generateKey(PARTNER_ALIAS_LENGTH));
+            if (i==4) {
+                division.setRelated(entity);
+            }
+            partnerDao.persistDivision(division);
+        }
+        hibernateTemplate.flush();
+        
+        assertEquals(division, partnerDao.findCurrentDivision(entity));
+        
+    }
+
     public void testDuplicateDivision() {
         
         //create one
@@ -297,7 +314,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         } catch (DataIntegrityViolationException e) {
             logger.info("Expected exception");
         }
-        
+                
     }
     
     //

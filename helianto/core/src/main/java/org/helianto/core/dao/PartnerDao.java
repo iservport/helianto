@@ -80,6 +80,12 @@ public interface PartnerDao {
     public List<Division> findDivisionByEntity(Entity entity);
     
     /**
+     * Find <code>Division</code> by <code>Entity</code>, where the
+     * related entity and entity are the same.
+     */
+    public Division findCurrentDivision(Entity entity);
+    
+    /**
      * Find <code>Agent</code> by <code>Entity</code>.
      */
     public List<Agent> findAgentByEntity(Entity entity);
