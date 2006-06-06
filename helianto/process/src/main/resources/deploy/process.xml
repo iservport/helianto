@@ -39,6 +39,7 @@
 				<property name="entityCreator" ref="entityCreator"/>
 				<property name="resourceCreator" ref="resourceCreator"/>
 				<property name="resourceDao" ref="resourceDao"/>
+				<property name="partnerDao" ref="partnerDao"/>
 			</bean>
 		</property>
 	</bean>
