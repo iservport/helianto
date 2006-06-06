@@ -16,6 +16,8 @@
 package org.helianto.process.service;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Partner;
+import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.dao.ResourceDao;
 
@@ -34,5 +36,21 @@ public interface ResourceMgr extends ResourceDao {
     public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode);
     
     public ResourceGroup createSubGroup(ResourceGroup parentGroup, String resourceCode);
+    
+    /**
+     * <p>
+     * Create a <code>Resource</code> for the parent <code>ResourceGroup</code> and
+     * the current <code>Division</code> as owner.
+     * </p> 
+     */
+    public Resource createResource(ResourceGroup parentGroup, String resourceCode);
+    
+    /**
+     * <p>
+     * Create a <code>Resource</code> for the parent <code>ResourceGroup</code> with
+     * a given owner.
+     * </p> 
+     */
+    public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner);
     
 }

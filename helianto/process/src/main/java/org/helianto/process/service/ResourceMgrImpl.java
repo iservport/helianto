@@ -17,8 +17,12 @@ package org.helianto.process.service;
 
 import java.util.List;
 
+import org.helianto.core.Division;
 import org.helianto.core.Entity;
+import org.helianto.core.Partner;
 import org.helianto.core.creation.EntityCreator;
+import org.helianto.core.dao.PartnerDao;
+import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.creation.ResourceCreator;
 import org.helianto.process.creation.ResourceType;
@@ -26,7 +30,7 @@ import org.helianto.process.dao.ResourceDao;
 
 public class ResourceMgrImpl implements ResourceMgr {
     
-    public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
+	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
         return getResourceCreator().resourceGroupFactory(entity, rootEquipentCode, ResourceType.EQUIPMENT);
     }
     
@@ -41,6 +45,28 @@ public class ResourceMgrImpl implements ResourceMgr {
     public void persistResourceGroup(ResourceGroup resourceGroup) {
         getResourceDao().persistResourceGroup(resourceGroup);
     }
+
+	public Resource createResource(ResourceGroup parentGroup, String resourceCode) {
+		return resourceCreator.resourceFactory(parentGroup, resourceCode, null);
+	}
+
+	public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner) {
+		if (owner==null) {
+			owner = findCurrentDivision(parentGroup.getEntity());
+		}
+		return resourceCreator.resourceFactory(parentGroup, resourceCode, owner);
+	}
+	
+	// TODO move to partnerDao
+	public Division findCurrentDivision(Entity entity) {
+		List<Division> divisionList = getPartnerDao().findDivisionByEntity(entity);
+		for (Division d: divisionList) {
+			if (d.getRelated()!=null && d.getRelated().equals(entity)) {
+				return d;
+			}
+		}
+		return null;
+	}
 
     public List<ResourceGroup> findResourceByEntity(Entity entity) {
         return getResourceDao().findResourceByEntity(entity);
@@ -58,6 +84,7 @@ public class ResourceMgrImpl implements ResourceMgr {
 
     private EntityCreator entityCreator; 
     private ResourceCreator resourceCreator; 
+    private PartnerDao partnerDao;
     private ResourceDao resourceDao;
 
     public EntityCreator getEntityCreator() {
@@ -67,6 +94,10 @@ public class ResourceMgrImpl implements ResourceMgr {
     public ResourceCreator getResourceCreator() {
         return resourceCreator;
     }
+
+	public PartnerDao getPartnerDao() {
+		return partnerDao;
+	}
 
     public ResourceDao getResourceDao() {
         return resourceDao;
@@ -79,6 +110,10 @@ public class ResourceMgrImpl implements ResourceMgr {
     public void setResourceCreator(ResourceCreator resourceCreator) {
         this.resourceCreator = resourceCreator;
     }
+
+	public void setPartnerDao(PartnerDao partnerDao) {
+		this.partnerDao = partnerDao;
+	}
 
     public void setResourceDao(ResourceDao resourceDao) {
         this.resourceDao = resourceDao;
