@@ -20,13 +20,18 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
+import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.dao.ResourceDao;
 
 public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
 
+    public void persistResource(Resource resource) {
+        merge(resource);
+    }
+
     public void persistResourceGroup(ResourceGroup resourceGroup) {
-        persist(resourceGroup);
+        merge(resourceGroup);
     }
     
     public List<ResourceGroup> findResourceByEntity(Entity entity) {

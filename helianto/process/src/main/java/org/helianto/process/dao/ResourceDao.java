@@ -18,6 +18,7 @@ package org.helianto.process.dao;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 
 public interface ResourceDao {
@@ -26,6 +27,11 @@ public interface ResourceDao {
      * Persist a <code>ResourceGroup</code>.
      */
     public void persistResourceGroup(ResourceGroup resourceGroup);
+    
+    /**
+     * Persist a <code>Resource</code>.
+     */
+    public void persistResource(Resource resource);
     
     /**
      * Find <code>ResourceGroup</code>s by <code>Entity</code>.

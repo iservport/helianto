@@ -17,11 +17,13 @@ package org.helianto.process.hibernate;
 
 import java.util.List;
 
+import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.creation.ResourceCreator;
 import org.helianto.process.creation.ResourceType;
@@ -29,52 +31,11 @@ import org.helianto.process.dao.ResourceDao;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
+
 public class ResourceDaoImplTests extends AbstractIntegrationTest {
     
+    // class (interface) under test
     private ResourceDao resourceDao;
-    private EntityDao entityDao; 
-    private ResourceCreator resourceCreator;
-    private EntityCreator entityCreator; // extends HomeCreator
-    private Entity entity;
-    
-    {
-        setAutowireMode(AbstractDependencyInjectionSpringContextTests.AUTOWIRE_BY_NAME);
-    }
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml", 
-                "deploy/sessionFactory.xml",
-                "deploy/support.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/process.xml"
-                };
-    }
-    
-    public void setResourceDao(ResourceDao resourceDao) {
-        this.resourceDao = resourceDao;
-    }
-
-    public void setEntityDao(EntityDao entityDao) {
-        this.entityDao = entityDao;
-    }
-    
-    public void setResourceCreator(ResourceCreator resourceCreator) {
-        this.resourceCreator = resourceCreator;
-    }
-
-    public void setEntityCreator(EntityCreator entityCreator) {
-        this.entityCreator = entityCreator;
-    }
-
-    @Override
-    public void onSetUpInTransaction() {
-        Home home = entityCreator.homeFactory(generateKey(5));
-        entity = entityCreator.entityFactory(home, generateKey(5));
-        entityDao.persistEntity(entity);
-    }
 
     public void testPersistResourceGroup() {
         String generatedCode = generateKey(20);
@@ -178,5 +139,56 @@ public class ResourceDaoImplTests extends AbstractIntegrationTest {
         setComplete();
     }
     
+    // TODO complete
+    public void testPersistResource() {
+//        List<Division> divisionList
+        Resource resource = resourceCreator.resourceFactory(null, generateKey(20), ResourceType.EQUIPMENT );
+    }
+
+    // collaborators
     
+    private EntityDao entityDao; 
+    private ResourceCreator resourceCreator;
+    private EntityCreator entityCreator; // extends HomeCreator
+    private Entity entity;
+    
+    {
+        setAutowireMode(AbstractDependencyInjectionSpringContextTests.AUTOWIRE_BY_NAME);
+    }
+    
+    @Override
+    protected String[] getConfigLocations() {
+        return new String[] { 
+                "deploy/dataSource.xml", 
+                "deploy/sessionFactory.xml",
+                "deploy/support.xml",
+                "deploy/transaction.xml",
+                "deploy/core.xml",
+                "deploy/process.xml"
+                };
+    }
+    
+    public void setResourceDao(ResourceDao resourceDao) {
+        this.resourceDao = resourceDao;
+    }
+
+    public void setEntityDao(EntityDao entityDao) {
+        this.entityDao = entityDao;
+    }
+    
+    public void setResourceCreator(ResourceCreator resourceCreator) {
+        this.resourceCreator = resourceCreator;
+    }
+
+    public void setEntityCreator(EntityCreator entityCreator) {
+        this.entityCreator = entityCreator;
+    }
+
+    @Override
+    public void onSetUpInTransaction() {
+        DefaultEntity defaultEntity = entityCreator.defaultEntityFactory(generateKey(20));
+        entity = defaultEntity.getEntity();
+        entityDao.persistEntity(entity);
+    }
+
 }
