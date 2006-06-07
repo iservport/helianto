@@ -81,8 +81,10 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Finding object with query "+query);
         }
-        
-        return queryAssembler( query,  values).list();
+        if (values instanceof Object[]) {
+            return queryAssembler(query,  values).list();
+        }
+        return this.getHibernateTemplate().find(query, values);
     }
     
     protected Query queryAssembler(String query, Object values) {
