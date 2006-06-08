@@ -64,6 +64,10 @@ public class ResourceMgrImpl implements ResourceMgr {
 		return resourceCreator.resourceFactory(parentGroup, resourceCode, owner);
 	}
 	
+    public void persistResource(Resource resource) {
+        getResourceDao().persistResource(resource);
+    }
+
     public List<ResourceGroup> findResourceByEntity(Entity entity) {
         return getResourceDao().findResourceByEntity(entity);
     }
