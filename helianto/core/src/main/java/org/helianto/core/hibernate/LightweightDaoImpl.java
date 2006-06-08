@@ -17,6 +17,7 @@ package org.helianto.core.hibernate;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import org.helianto.core.dao.LightweightDao;
 import org.hibernate.Query;
@@ -36,7 +37,7 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
 
     public Object load(Class clazz, Serializable key) throws DataAccessException {
         if (logger.isDebugEnabled()) {
-            logger.debug("\n        Loading "+clazz.toString()
+            logger.debug("** DAO Loading "+clazz.toString()
                     +" with id "+key.toString());
         }
         return this.getHibernateTemplate().load(clazz, key);
@@ -44,23 +45,23 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
 
     public void merge(Object object) {
         if (logger.isDebugEnabled()) {
-            logger.debug("\n         Merging "+object.toString());
+            logger.debug("** DAO Merging "+object.toString());
         }
         this.getHibernateTemplate().merge(object);
     }
 
     public void remove(Object object) {
         if (object instanceof String) {
-            remove(find(object.toString(), null));
+            remove(find(object.toString()));
         } else if (object instanceof Collection) {
             Collection collection = (Collection) object;
             if (logger.isDebugEnabled()) {
-                logger.debug("\n        Deleting collection of size "+collection.size());
+                logger.debug("** DAO Deleting collection of size "+collection.size());
             }
             this.getHibernateTemplate().deleteAll(collection);
         } else {
             if (logger.isDebugEnabled()) {
-                logger.debug("\n        Deleting "+object.toString());
+                logger.debug("** DAO Deleting "+object.toString());
             }
             this.getHibernateTemplate().delete(object);
         }
@@ -68,28 +69,69 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
 
     public void refresh(Object object) throws DataAccessException {
         if (logger.isDebugEnabled()) {
-            logger.debug("\n        Refreshing "+object);
+            logger.debug("** DAO Refreshing "+object);
         }
         this.getHibernateTemplate().refresh(object);
     }
 
     public void persist(Object object) throws DataAccessException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("** DAO Persisting "+object);
+        }
         this.getHibernateTemplate().persist(object);
     }
 
-    public Collection find(String query, Object values) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("\n        Finding object with query "+query);
+    protected Query queryAssembler(String query, Object... values) {
+        try {
+            Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+            Query result = session.createQuery(query);
+            int i = 0;
+            for (Object value: values) {
+                result.setParameter(i++, value);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Parameter "+i+"="+value);
+                }
+            }
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to assemble query");
         }
-        if (values instanceof Object[]) {
-            return queryAssembler(query,  values).list();
-        }
-        return this.getHibernateTemplate().find(query, values);
     }
     
+    public Collection find(String query, Object... values) throws DataAccessException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("** DAO finding ["+query+"] with "+values);
+        }
+        return queryAssembler(query,  values).list();
+    }
+
+    public Object findUnique(String query, Object... values) throws DataAccessException {
+        Collection list = find(query, values);
+        if (isUnique(list)) {
+            return ((List) list).get(0);
+        }
+        throw new DataIntegrityViolationException("Unique object expected");
+    }
+
+    public boolean isUnique(Collection collection) {
+        if (collection.size()==1) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Unique result found");
+            }
+            return true;
+        } else if(collection.size()==0) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Empty result found");
+            }
+        }
+        return false;
+        
+    }
+
+    @Deprecated
     protected Query queryAssembler(String query, Object values) {
         try {
-            Session session = getSession(true);
+            Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
             Query result = session.createQuery(query);
             if (values != null) {
                 if (values instanceof Object[]) {
@@ -116,23 +158,23 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
             throw new RuntimeException("Unable to assemble query");
         }
     }
-
-    public Object findUnique(String query, Object values) throws DataAccessException {
-    	Collection list = find(query, values);
+    
+    @Deprecated
+    public Collection find(String query, Object values) {
         if (logger.isDebugEnabled()) {
-            logger.debug("\n         Query result size is "+list.size());
+            logger.debug("\n        Finding object with query "+query);
         }
-        if (list.size()==1) {
-            Object object = list.toArray()[0];
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n         Unique object "+object+" found");
-            }
-            return object;
-        } else if(list.size()==0) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n         Unique object not found");
-            }
-            return null;
+        if (values instanceof Object[]) {
+            return queryAssembler(query,  values).list();
+        }
+        return this.getHibernateTemplate().find(query, values);
+    }
+    
+    @Deprecated
+    public Object findUnique(String query, Object values) throws DataAccessException {
+        Collection list = find(query, values);
+        if (isUnique(list)) {
+            return ((List) list).get(0);
         }
         throw new DataIntegrityViolationException("Unique object expected");
     }

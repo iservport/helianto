@@ -23,7 +23,7 @@ import org.springframework.dao.DataAccessException;
  * A lightweight dao interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: $
  */
 public interface LightweightDao {
 
@@ -66,11 +66,20 @@ public interface LightweightDao {
      * the appropriate action.
      * </p>
      * 
-     * @param query A query string.
-     * @param values Parameters.
-     * @return the result list.
+     * @deprecated Use find(String query, Object... values).
+     * 
      */
     public Collection find(String query, Object values) throws DataAccessException ;
+
+    /**
+     * A method to return query results.
+     * 
+     * <p>
+     * Uses JSE 5.0 variable argument.
+     * </p>
+     * 
+     */
+    public Collection find(String query, Object... values) throws DataAccessException ;
 
     /**
      * A method to return a single object from query results.
@@ -81,11 +90,19 @@ public interface LightweightDao {
      * passed or if it is an array of objects before taking 
      * the appropriate action.
      * </p>
+     * @deprecated Use findUnique(String query, Object... values).
      * 
-     * @param query A query string.
-     * @param values Parameters.
-     * @return the object.
      */
     public Object findUnique(String query, Object values) throws DataAccessException ;
+
+    /**
+     * A method to return a single object from query results.
+     * 
+     * <p>
+     * Uses JSE 5.0 variable argument.
+     * </p>
+     * 
+     */
+    public Object findUnique(String query, Object... values) throws DataAccessException ;
 
 }
