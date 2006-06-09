@@ -15,7 +15,10 @@ import org.helianto.core.Supplier;
 
 public class PartnerCreatorImpl extends EntityCreatorImpl implements PartnerCreator {
 	
-    private Partner partnerFactory(Class clazz, Entity entity, String alias) {
+    private Partner partnerFactory(Class clazz, Entity entity, String alias) throws NullEntityException {
+        if (entity==null) {
+            throw new NullEntityException("A Partner must have a parent Entity");
+        }
         Partner partner;
         try {
             partner = (Partner) clazz.newInstance();
@@ -30,27 +33,27 @@ public class PartnerCreatorImpl extends EntityCreatorImpl implements PartnerCrea
         }
     }
 
-    public Customer customerFactory(Entity entity, String alias) {
+    public Customer customerFactory(Entity entity, String alias) throws NullEntityException {
     	return (Customer) partnerFactory(Customer.class, entity, alias);
     }
     
-    public Supplier supplierFactory(Entity entity, String alias) {
+    public Supplier supplierFactory(Entity entity, String alias) throws NullEntityException {
     	return (Supplier) partnerFactory(Supplier.class, entity, alias);
     }
     
-    public Division divisionFactory(Entity entity, String alias) {
+    public Division divisionFactory(Entity entity, String alias) throws NullEntityException {
     	return (Division) partnerFactory(Division.class, entity, alias);
     }
     
-    public Bank bankFactory(Entity entity, String alias) {
+    public Bank bankFactory(Entity entity, String alias) throws NullEntityException {
         return (Bank) partnerFactory(Bank.class, entity, alias);
     }
 
-    public Agent agentFactory(Entity entity, String alias) {
+    public Agent agentFactory(Entity entity, String alias) throws NullEntityException {
         return (Agent) partnerFactory(Agent.class, entity, alias);
     }
 
-    public Manufacturer manufacturerFactory(Entity entity, String alias) {
+    public Manufacturer manufacturerFactory(Entity entity, String alias) throws NullEntityException {
         return (Manufacturer) partnerFactory(Manufacturer.class, entity, alias);
     }
 

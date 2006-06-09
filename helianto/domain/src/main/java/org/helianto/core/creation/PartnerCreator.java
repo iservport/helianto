@@ -38,36 +38,36 @@ public interface PartnerCreator  extends EntityCreator {
     /**
      * The <code>Customer</code> factory method.
      */
-    public Customer customerFactory(Entity entity, String alias);
+    public Customer customerFactory(Entity entity, String alias) throws NullEntityException;
     
     /**
      * The <code>Supplier</code> factory method.
      */
-    public Supplier supplierFactory(Entity entity, String alias);
+    public Supplier supplierFactory(Entity entity, String alias) throws NullEntityException;
     
     /**
      * The <code>Division</code> factory method.
      */
-    public Division divisionFactory(Entity entity, String alias);
+    public Division divisionFactory(Entity entity, String alias) throws NullEntityException;
     
     /**
      * The <code>Bank</code> factory method.
      */
-    public Bank bankFactory(Entity entity, String alias);
+    public Bank bankFactory(Entity entity, String alias) throws NullEntityException;
     
     /**
      * The <code>Agent</code> factory method.
      */
-    public Agent agentFactory(Entity entity, String alias);
+    public Agent agentFactory(Entity entity, String alias) throws NullEntityException;
     
     /**
      * The <code>Manufacturer</code> factory method.
      */
-    public Manufacturer manufacturerFactory(Entity entity, String alias);
+    public Manufacturer manufacturerFactory(Entity entity, String alias) throws NullEntityException;
     
     /**
      * The <code>Contact</code> factory method.
      */
-    public Contact contactFactory(Partner partner, Credential cred);
+    public Contact contactFactory(Partner partner, Credential cred) throws NullEntityException;
     
 }
