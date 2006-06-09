@@ -23,7 +23,7 @@ import org.helianto.core.service.PartnerMgrImpl;
 import org.helianto.process.Document;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
-import org.helianto.process.OperationType;
+import org.helianto.process.creation.OperationType;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.Resource;

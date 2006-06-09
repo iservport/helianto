@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
 import org.helianto.core.creation.EntityCreator;
