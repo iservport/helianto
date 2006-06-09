@@ -21,6 +21,8 @@ import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.EntityCreatorImpl;
+import org.helianto.process.creation.PartCreator;
+import org.helianto.process.creation.PartCreatorImpl;
 
 public class PartCreatorImplTests extends TestCase {
     
