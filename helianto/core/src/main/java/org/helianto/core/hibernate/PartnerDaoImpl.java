@@ -20,10 +20,12 @@ import java.util.List;
 
 import org.helianto.core.Agent;
 import org.helianto.core.Bank;
+import org.helianto.core.Contact;
 import org.helianto.core.Customer;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Manufacturer;
+import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
 import org.helianto.core.dao.PartnerDao;
 
@@ -58,6 +60,10 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
         merge(manufacturer);
     }
 
+    public void persistContact(Contact contact) {
+        merge(contact);
+    }
+
     public List<Customer> findCustomerByEntity(Entity entity) {
         return (ArrayList<Customer>) find(CUSTOMER_QRY, entity);
     }
@@ -88,10 +94,23 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
         return (ArrayList<Bank>) find(BANK_QRY, entity);
     }
 
+    // TODO add priority to partner
     public List<Manufacturer> findManufacturerByEntity(Entity entity) {
-        return (ArrayList<Manufacturer>) find(MANUFATURER_QRY, entity);
+        return findManufacturerByEntity(entity, -1);
+    }
+
+    public List<Manufacturer> findManufacturerByEntity(Entity entity, int priority) {
+        if (priority<0) {
+            return (ArrayList<Manufacturer>) find(MANUFATURER_QRY, entity);
+        }
+//        return (ArrayList<Manufacturer>) partnerDao.find(MANUFACTURER_QRY_BY_ENTITY+
+//                MANUFACTURER_FILTER_BY_PRIORITY, entity, priority);
+        return null;
     }
     
+    public List<Contact> findContactByPartner(Partner partner) {
+        return (ArrayList<Contact>) find(CONTACT_QRY_BY_PARTNER, partner.getId());
+    }
     static String CUSTOMER_QRY = "from Customer customer " +
         "where customer.entity = ?";
 
@@ -112,5 +131,9 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
 
     static String MANUFATURER_QRY = "from Manufacturer manufaturer " +
         "where manufaturer.entity = ?";
+
+    static final String CONTACT_QRY_BY_PARTNER = 
+        "from Contact contact " +
+        "where contact.partner.id = ?";
 
 }

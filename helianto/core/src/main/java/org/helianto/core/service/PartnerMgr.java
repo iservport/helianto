@@ -70,13 +70,13 @@ public interface PartnerMgr extends CoreMgr {
     /**
      * Find a <code>Manufacturer</code> list by <code>Entity</code>.
      */
-    public List<Manufacturer> findManufaturerByEntity(Entity entity);
+    public List<Manufacturer> findManufacturerByEntity(Entity entity);
     
     /**
      * Find a <code>Manufacturer</code> list by <code>Entity</code>
      * and priority.
      */
-    public List<Manufacturer> findManufaturerByEntity(Entity entity, int priority);
+    public List<Manufacturer> findManufacturerByEntity(Entity entity, int priority);
     
     /**
      * Find a <code>Contact</code> list by <code>Partner</code>.

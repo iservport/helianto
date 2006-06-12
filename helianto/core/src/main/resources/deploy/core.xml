@@ -90,5 +90,18 @@
 			</bean>
 		</property>
 	</bean>
+	<!--
+			Simple core service bean	
+	-->
+	<bean id="partnerMgr" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="partnerTarget"
+				class="org.helianto.core.service.PartnerMgrImpl">
+				<property name="partnerDao" ref="partnerDao"/>
+			</bean>
+		</property>
+	</bean>
 	
 </beans>

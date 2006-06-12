@@ -19,10 +19,12 @@ import java.util.List;
 
 import org.helianto.core.Agent;
 import org.helianto.core.Bank;
+import org.helianto.core.Contact;
 import org.helianto.core.Customer;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Manufacturer;
+import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
 
 /**
@@ -60,9 +62,14 @@ public interface PartnerDao {
     public void persistBank(Bank bank);
     
     /**
-     * Persist <code>User</code>.
+     * Persist <code>Manufacturer</code>.
      */
     public void persistManufacturer(Manufacturer manufacturer);
+
+    /**
+     * Persist <code>Contact</code>.
+     */
+    public void persistContact(Contact contact);
 
     /**
      * Find <code>Customer</code> by <code>Entity</code>.
@@ -100,4 +107,15 @@ public interface PartnerDao {
      */
     public List<Manufacturer> findManufacturerByEntity(Entity entity);
 
+    //TODO detail this
+    /**
+     * Find <code>Manufacturer</code> by <code>Entity</code> and priority.
+     */
+    public List<Manufacturer> findManufacturerByEntity(Entity entity, int priority);
+    
+    /**
+     * Find <code>Contact</code> by <code>Partner</code>.
+     */
+    public List<Contact> findContactByPartner(Partner partner);
+    
 }

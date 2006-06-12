@@ -15,7 +15,6 @@
 
 package org.helianto.core.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Contact;
@@ -24,6 +23,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
+import org.helianto.core.dao.PartnerDao;
 
 /**
  * Default implementation of the 
@@ -35,70 +35,64 @@ import org.helianto.core.Supplier;
 public class PartnerMgrImpl extends CoreMgrImpl implements PartnerMgr {
 
     public void persistCustomer(Customer customer) {
-        this.getGenericDao().merge(customer);
+        partnerDao.persistCustomer(customer);
     }
     
     public void persistSupplier(Supplier supplier) {
-        this.getGenericDao().merge(supplier);
+        partnerDao.persistSupplier(supplier);
     }
     
     public void persistContact(Contact contact) {
-        this.getGenericDao().merge(contact);
+        partnerDao.persistContact(contact);
     }
     
     public Customer loadCustomer(Long key) {
-        try {
-            return (Customer) getGenericDao().load(Customer.class, key);
-        } catch (Exception e) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n         Unable to load customer with id "+key+", raised the exception:"+e.toString());
-            }
-        }
+//        try {
+//            return (Customer) partnerDao.load(Customer.class, key);
+//        } catch (Exception e) {
+//            if (logger.isDebugEnabled()) {
+//                logger.debug("\n         Unable to load customer with id "+key+", raised the exception:"+e.toString());
+//            }
+//        }
         return null;
     }
     
     public Supplier loadSupplier(Long key) {
-        try {
-            return (Supplier) getGenericDao().load(Supplier.class, key);
-        } catch (Exception e) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n         Unable to load supplier with id "+key+", raised the exception:"+e.toString());
-            }
-        }
+//        try {
+//            return (Supplier) partnerDao.load(Supplier.class, key);
+//        } catch (Exception e) {
+//            if (logger.isDebugEnabled()) {
+//                logger.debug("\n         Unable to load supplier with id "+key+", raised the exception:"+e.toString());
+//            }
+//        }
         return null;
     }
     
     public Contact loadContact(String key) {
-        try {
-            return (Contact) getGenericDao().load(Contact.class, key);
-        } catch (Exception e) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n         Unable to load contact with id "+key+", raised the exception:"+e.toString());
-            }
-        }
+//        try {
+//            return (Contact) partnerDao.load(Contact.class, key);
+//        } catch (Exception e) {
+//            if (logger.isDebugEnabled()) {
+//                logger.debug("\n         Unable to load contact with id "+key+", raised the exception:"+e.toString());
+//            }
+//        }
         return null;
     }
     
     public List<Customer> findCustomerByEntity(Entity entity) {
-        return (ArrayList<Customer>) getGenericDao().find(CUSTOMER_QRY_BY_ENTITY, entity.getId());
+        return findCustomerByEntity(entity);
     }
 
-    // TODO add priority to partner
-    public List<Manufacturer> findManufaturerByEntity(Entity entity) {
-        return findManufaturerByEntity(entity, -1);
+    public List<Manufacturer> findManufacturerByEntity(Entity entity) {
+        return findManufacturerByEntity(entity, -1);
     }
 
-    public List<Manufacturer> findManufaturerByEntity(Entity entity, int priority) {
-        if (priority<0) {
-            return (ArrayList<Manufacturer>) getGenericDao().find(MANUFACTURER_QRY_BY_ENTITY, entity);
-        }
-//        return (ArrayList<Manufacturer>) getGenericDao().find(MANUFACTURER_QRY_BY_ENTITY+
-//                MANUFACTURER_FILTER_BY_PRIORITY, entity, priority);
-        return null;
+    public List<Manufacturer> findManufacturerByEntity(Entity entity, int priority) {
+        return partnerDao.findManufacturerByEntity(entity, priority);
     }
     
-    public List findContactByPartner(Partner partner) {
-        return (List) getGenericDao().find(CONTACT_QRY_BY_PARTNER, partner.getId());
+    public List<Contact> findContactByPartner(Partner partner) {
+        return partnerDao.findContactByPartner(partner);
     }
     public void bindCustomerToEntity(Customer customer, Entity entity) {
         customer.setRelated(entity);
@@ -110,17 +104,10 @@ public class PartnerMgrImpl extends CoreMgrImpl implements PartnerMgr {
         supplier.setStrong(true);
     }
 
-    static final String CUSTOMER_QRY_BY_ENTITY = 
-        "from Customer cust where cust.entity.id = ?";
-    
-    static final String CONTACT_QRY_BY_PARTNER = 
-        "from Contact contact " +
-        "where contact.partner.id = ?";
-    
-    static final String MANUFACTURER_QRY_BY_ENTITY = "from Manufacturer manufacturer " +
-        "where manufacturer.entity = ?";
+    private PartnerDao partnerDao;
 
-    static final String MANUFACTURER_FILTER_BY_PRIORITY = 
-        "and manufacturer.priority = ?";
+    public void setPartnerDao(PartnerDao partnerDao) {
+        this.partnerDao = partnerDao;
+    }
 
 }
