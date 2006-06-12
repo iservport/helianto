@@ -15,11 +15,13 @@
 
 package org.helianto.process.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.creation.ResourceType;
 
 public interface ResourceDao {
     
@@ -34,9 +36,36 @@ public interface ResourceDao {
     public void persistResource(Resource resource);
     
     /**
-     * Find <code>ResourceGroup</code>s by <code>Entity</code>.
+     * Load a <code>Resource</code>.
      */
-    public List<ResourceGroup> findResourceByEntity(Entity entity);
+    public ResourceGroup load(Serializable key);
+    
+    /**
+     * Find <code>ResourceGroup</code>s and <code>Resources</code> by <code>Entity</code>.
+     */
+    public List<ResourceGroup> findResourceAndGroupByEntity(Entity entity);
+    
+    /**
+     * Find <code>Resource</code>s by <code>Entity</code>.
+     */
+    public List<Resource> findResourceByEntity(Entity entity);
+    
+    /**
+     * Find <code>ResourceGroup</code>s and <code>Resources</code> by <code>Entity</code> 
+     * and <code>ResourceType</code>.
+     */
+    public List<ResourceGroup> findResourceAndGroupByEntityAndType(Entity entity, ResourceType resourceType);
+    
+    /**
+     * Find <code>Resource</code>s by <code>Entity</code>
+     * and <code>ResourceType</code>.
+     */
+    public List<Resource> findResourceByEntityAndType(Entity entity, ResourceType resourceType);
+    
+    /**
+     * Find <code>ResourceGroup</code>s and <code>Resources</code> by parent.
+     */
+    public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup);
     
     /**
      * Find <code>ResourceGroup</code>s by <code>Entity</code> where
@@ -45,8 +74,14 @@ public interface ResourceDao {
     public List<ResourceGroup> findRootResourceByEntity(Entity entity);
     
     /**
-     * Find <code>ResourceGroup</code>s by <code>ResourceGroup</code> parent.
+     * Find <code>ResourceGroup</code>s by <code>Entity</code> and <code>ResourceType</code> where
+     * parent is null.
      */
-    public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup);
+    public List<ResourceGroup> findRootResourceByEntityAndType(Entity entity, ResourceType resourceType);
+
+    /**
+     * Find <code>ResourceGroup</code> or <code>Resource</code> by <code>Entity</code> and code.
+     */
+    public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode);
 
 }

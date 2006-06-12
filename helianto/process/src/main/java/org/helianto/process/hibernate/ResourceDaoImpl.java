@@ -15,6 +15,7 @@
 
 package org.helianto.process.hibernate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,16 @@ import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.creation.ResourceType;
 import org.helianto.process.dao.ResourceDao;
 
+/**
+ * <p>
+ * Hibernate implementation for <code>ResourceDao</code> interface.
+ * </p>
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
 
     public void persistResource(Resource resource) {
@@ -34,28 +43,71 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
         merge(resourceGroup);
     }
     
-    public List<ResourceGroup> findResourceByEntity(Entity entity) {
-        List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) find(RESOURCEGROUP_QRY, entity);
+    public ResourceGroup load(Serializable key) {
+        return (ResourceGroup) load(ResourceGroup.class, key);
+    }
+    
+    public List<ResourceGroup> findResourceAndGroupByEntity(Entity entity) {
+        List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) 
+            find(RESOURCEGROUP_QRY, entity);
         return resourceList;
     }
     
-	public List<ResourceGroup> findRootResourceByEntity(Entity entity) {
-        List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) find(RESOURCEROOT_QRY, entity);
+    public List<Resource> findResourceByEntity(Entity entity) {
+        List<Resource> resourceList = (ArrayList<Resource>) 
+            find(RESOURCE_QRY, entity);
         return resourceList;
-	}
-
+    }
+    
     public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup) {
-        List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) find(RESOURCEGROUP_QRY_BYPARENT, resourceGroup);
+        List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) 
+            find(RESOURCEGROUP_QRY_BYPARENT, resourceGroup);
         return resourceList;
     }
     
-    static String RESOURCEGROUP_QRY = "from ResourceGroup resourceGroup " +
-    "where resourceGroup.entity = ?";
+    public List<ResourceGroup> findRootResourceByEntity(Entity entity) {
+        List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) 
+            find(RESOURCEGROUP_QRY+RESOURCEROOT_FILTER, entity);
+        return resourceList;
+    }
 
-    static String RESOURCEGROUP_QRY_BYPARENT = "from ResourceGroup resourceGroup " +
-    "where resourceGroup.parent = ?";
+    public List<ResourceGroup> findResourceAndGroupByEntityAndType(Entity entity, ResourceType resourceType) {
+        List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) 
+            find(RESOURCEGROUP_QRY+RESOURCETYPE_FILTER, entity, resourceType.getValue());
+        return resourceList;
+    }
 
-    static String RESOURCEROOT_QRY = "from ResourceGroup resourceGroup " +
-    "where resourceGroup.entity = ? and resourceGroup.parent = null";
+    public List<Resource> findResourceByEntityAndType(Entity entity, ResourceType resourceType) {
+        List<Resource> resourceList = (ArrayList<Resource>) 
+            find(RESOURCE_QRY+RESOURCETYPE_FILTER, entity, resourceType.getValue());
+        return resourceList;
+    }
+
+    public List<ResourceGroup> findRootResourceByEntityAndType(Entity entity, ResourceType resourceType) {
+        List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) 
+            find(RESOURCEGROUP_QRY+RESOURCEROOT_FILTER+RESOURCETYPE_FILTER, entity, resourceType.getValue());
+        return resourceList;
+    }
+
+    public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode) {
+        ResourceGroup resourceGroup = (ResourceGroup)
+            findUnique(RESOURCEGROUP_QRY+RESOURCECODE_FILTER, entity, resourceCode);
+        return resourceGroup;
+    }
+
+    static String RESOURCEGROUP_QRY = "from ResourceGroup resource " +
+        "where resource.entity = ?";
+
+    static String RESOURCE_QRY = "from Resource resource " +
+        "where resource.entity = ?";
+
+    static String RESOURCEGROUP_QRY_BYPARENT = "from ResourceGroup resource " +
+        "where resource.parent = ?";
+
+    static String RESOURCEROOT_FILTER = " and resource.parent = null";
+    
+    static String RESOURCETYPE_FILTER = " and resource.resourceType = ?";
+
+    static String RESOURCECODE_FILTER = " and resource.resourceCode = ?";
 
 }
