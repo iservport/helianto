@@ -34,7 +34,7 @@ public class PartnerMgrImplTests extends AbstractIntegrationTest {
                 "deploy/sessionFactory.xml",
                 "deploy/support.xml",
                 "deploy/transaction.xml",
-                "deploy/partner.xml"};
+                "deploy/core.xml"};
     }
     
     public void test() {
