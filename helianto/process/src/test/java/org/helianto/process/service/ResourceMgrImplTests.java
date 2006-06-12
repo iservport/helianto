@@ -16,7 +16,7 @@ public class ResourceMgrImplTests extends TestCase {
 	// class (interface) under test
 	private ResourceMgrImpl resourceMgr;
 	
-	public void testCreateResource() {
+	public void testPrepareResource() {
 		
 		Entity entity = new Entity();
 		ResourceGroup parentGroup = new ResourceGroup();
@@ -32,7 +32,7 @@ public class ResourceMgrImplTests extends TestCase {
         	.andReturn(resource);
         replay(resourceCreatorMock);
 
-        assertSame(resource, resourceMgr.createResource(parentGroup, "TEST"));
+        assertSame(resource, resourceMgr.prepareResource(parentGroup, "TEST"));
 		
         verify(partnerDaoMock);
 		verify(resourceCreatorMock);

@@ -15,35 +15,69 @@
 
 package org.helianto.process.service;
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
-import org.helianto.process.dao.ResourceDao;
 
 /**
  * Base interface to deal with <code>Resource</code>s.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface ResourceMgr extends ResourceDao {
+public interface ResourceMgr {
     
     /**
+     * <p>
      * Method required to create the equipment tree.
-     * 
-     *  This method should be invoked at least once during installation.
+     * </p>
+     * <p>
+     * This method should be invoked at least once during installation.
+     * </p>
      */
     public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode);
     
+    /**
+     * <p>
+     * Delegates to {@link ResourceCreator#resourceGroupFactory(ResourceGroup, String)} with
+     * an empty resource code (to be filled at the presentation layer).
+     * </p>  
+     */
+    public ResourceGroup createSubGroup(ResourceGroup parentGroup);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceCreator#resourceGroupFactory(ResourceGroup, String)}.
+     * </p>  
+     */
     public ResourceGroup createSubGroup(ResourceGroup parentGroup, String resourceCode);
     
     /**
      * <p>
-     * Create a <code>Resource</code> for the parent <code>ResourceGroup</code> and
-     * the current <code>Division</code> as owner.
+     * Delegates to {@link ResourceDao#persistResourceGroup(ResourceGroup)}.
+     * </p>  
+     */
+    public void persistResourceGroup(ResourceGroup resourceGroup);
+    
+    /**
+     * <p>
+     * Create a <code>Resource</code> for the parent <code>ResourceGroup</code> with
+     * an empty resource code (to be filled at the presentation layer) and 
+     * prepare the current <code>Division</code> to be the default owner.
      * </p> 
      */
-    public Resource createResource(ResourceGroup parentGroup, String resourceCode);
+    public Resource prepareResource(ResourceGroup parentGroup);
+    
+    /**
+     * <p>
+     * Create a <code>Resource</code> for the parent <code>ResourceGroup</code> and
+     * prepare the current <code>Division</code> to be the default owner.
+     * </p> 
+     */
+    public Resource prepareResource(ResourceGroup parentGroup, String resourceCode);
     
     /**
      * <p>
@@ -52,5 +86,45 @@ public interface ResourceMgr extends ResourceDao {
      * </p> 
      */
     public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#persistResource(Resource)}.
+     * </p>  
+     */
+    public void persistResource(Resource resource);
+    
+    /**
+     * Load a <code>Resource</code>.
+     */
+    public ResourceGroup load(Serializable key);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#findRootResourceByEntity(Entity)}.
+     * </p>  
+     */
+    public List<ResourceGroup> findRootResourceByEntity(Entity entity);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#findResourceByEntity(Entity)}.
+     * </p>  
+     */
+    public List<ResourceGroup> findResourceByEntity(Entity entity);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#findResourceByParent(ResourceGroup)}.
+     * </p>  
+     */
+    public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#findResourceByEntityAndCode(Entity, String)}.
+     * </p>  
+     */
+    public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode);
     
 }

@@ -15,6 +15,7 @@
 
 package org.helianto.process.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -28,6 +29,7 @@ import org.helianto.process.ResourceGroup;
 import org.helianto.process.creation.ResourceCreator;
 import org.helianto.process.creation.ResourceType;
 import org.helianto.process.dao.ResourceDao;
+import org.springframework.beans.factory.annotation.Required;
 
 public class ResourceMgrImpl implements ResourceMgr {
 	
@@ -41,6 +43,10 @@ public class ResourceMgrImpl implements ResourceMgr {
 //        return getResourceCreator().resourceGroupFactory(parentGroup, equipentCode);
 //    }
     
+    public ResourceGroup createSubGroup(ResourceGroup parentGroup) {
+        return getResourceCreator().resourceGroupFactory(parentGroup, "");
+    }
+    
     public ResourceGroup createSubGroup(ResourceGroup parentGroup, String resourceCode) {
         return getResourceCreator().resourceGroupFactory(parentGroup, resourceCode);
     }
@@ -49,16 +55,18 @@ public class ResourceMgrImpl implements ResourceMgr {
         getResourceDao().persistResourceGroup(resourceGroup);
     }
 
-	public Resource createResource(ResourceGroup parentGroup, String resourceCode) {
-		return createResource(parentGroup, resourceCode, null);
-	}
+    public Resource prepareResource(ResourceGroup parentGroup) {
+        return prepareResource(parentGroup, "");
+    }
+
+    public Resource prepareResource(ResourceGroup parentGroup, String resourceCode) {
+        Partner owner = partnerDao.findCurrentDivision(parentGroup.getEntity());
+        return createResource(parentGroup, resourceCode, owner);
+    }
 
 	public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner) {
 		if (owner==null) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("owner is null");
-			}
-			owner = partnerDao.findCurrentDivision(parentGroup.getEntity());
+			throw new NullPointerException("Resource owner must be a non-null Partner");
 		}
 		return resourceCreator.resourceFactory(parentGroup, resourceCode, owner);
 	}
@@ -67,8 +75,15 @@ public class ResourceMgrImpl implements ResourceMgr {
         getResourceDao().persistResource(resource);
     }
 
+    public ResourceGroup load(Serializable key) {
+        if (key instanceof String) {
+            return getResourceDao().load(Integer.parseInt((String) key)); 
+        }
+        return getResourceDao().load(key);
+    }
+
     public List<ResourceGroup> findResourceByEntity(Entity entity) {
-        return getResourceDao().findResourceByEntity(entity);
+        return getResourceDao().findResourceAndGroupByEntity(entity);
     }
 
 	public List<ResourceGroup> findRootResourceByEntity(Entity entity) {
@@ -77,6 +92,10 @@ public class ResourceMgrImpl implements ResourceMgr {
 
     public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup) {
         return getResourceDao().findResourceByParent(resourceGroup);
+    }
+    
+    public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode) {
+        return getResourceDao().findResourceByEntityAndCode(entity, resourceCode);
     }
     
     // accesssors and mutators
@@ -102,18 +121,22 @@ public class ResourceMgrImpl implements ResourceMgr {
         return resourceDao;
     }
 
+    @Required
     public void setEntityCreator(EntityCreator entityCreator) {
         this.entityCreator = entityCreator;
     }
 
+    @Required
     public void setResourceCreator(ResourceCreator resourceCreator) {
         this.resourceCreator = resourceCreator;
     }
 
-	public void setPartnerDao(PartnerDao partnerDao) {
+	@Required
+    public void setPartnerDao(PartnerDao partnerDao) {
 		this.partnerDao = partnerDao;
 	}
 
+    @Required
     public void setResourceDao(ResourceDao resourceDao) {
         this.resourceDao = resourceDao;
     }
