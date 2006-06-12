@@ -95,7 +95,9 @@ A class to represent a process resource.
 			<!-- 
 				resource state
 			-->
-			<property name="resourceState" type="char" not-null="true" formula="'I'"/>
+			<property name="resourceState" type="char">
+				<column name="resourceState" not-null="true" default="'I'"/>
+			</property>
 			<!-- 
 				manufacturer
 			-->
@@ -111,7 +113,9 @@ A class to represent a process resource.
 			<!-- 
 				key resource
 			-->
-			<property name="keyResource" type="boolean" not-null="true"  formula="0"/>
+			<property name="keyResource" type="boolean">
+				<column name="keyResource" not-null="true" default="0"/>
+			</property>
 		</subclass>
 	</class>
 </hibernate-mapping>

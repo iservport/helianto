@@ -17,6 +17,7 @@ package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
+import org.helianto.core.creation.NullEntityException;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 
@@ -32,22 +33,22 @@ public interface ResourceCreator {
     /**
      * The <code>ResourceGroup</code> factory method.
      */
-    public ResourceGroup resourceGroupFactory(Entity entity, String resourceCode, ResourceType resourceType);
+    public ResourceGroup resourceGroupFactory(Entity entity, String resourceCode, ResourceType resourceType) throws NullEntityException;
 
     /**
      * The <code>ResourceGroup</code> factory method.
      */
-    public ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode);
+    public ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode) throws NullEntityException;
 
     /**
      * A <code>Resource</code> factory method to create resources with no groups. 
      * Requires a sub-class of <code>Partner</code> as owner.
      */
-    public Resource resourceFactory(Partner owner, String resourceCode, ResourceType resourceType);
+    public Resource resourceFactory(Partner owner, String resourceCode, ResourceType resourceType) throws NullEntityException;
 
     /**
      * The <code>Resource</code> factory method. Requires a sub-class of <code>Partner</code> as owner.
      */
-    public Resource resourceFactory(ResourceGroup parent, String resourceCode, Partner owner);
+    public Resource resourceFactory(ResourceGroup parent, String resourceCode, Partner owner) throws NullEntityException;
 
 }

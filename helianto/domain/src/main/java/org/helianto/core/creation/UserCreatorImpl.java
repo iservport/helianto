@@ -32,9 +32,6 @@ import org.helianto.core.User;
  */
 public class UserCreatorImpl implements UserCreator {
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.UserCreator#personalDataFactory()
-     */
     public PersonalData personalDataFactory() {
         PersonalData personalData = new PersonalData();
         personalData.setFirstName("");
@@ -44,16 +41,10 @@ public class UserCreatorImpl implements UserCreator {
         return personalData;
     }
 
-    /* (non-Javadoc)
-     * @see org.helianto.core.UserCreator#credentialFactory()
-     */
     public Credential credentialFactory() {
         return credentialFactory("");
     }
 
-    /* (non-Javadoc)
-     * @see org.helianto.core.UserCreator#credentialFactory(java.lang.String)
-     */
     public Credential credentialFactory(String principal) {
         Credential credential = new Credential();
         credential.setPrincipal(principal);
@@ -71,10 +62,10 @@ public class UserCreatorImpl implements UserCreator {
         return credential;
     }
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.UserCreator#userFactory(org.helianto.core.Entity, org.helianto.core.Credential)
-     */
-    public User userFactory(Entity entity, Credential credential) {
+    public User userFactory(Entity entity, Credential credential) throws NullEntityException {
+        if (entity==null) {
+            throw new NullEntityException("An User must belong to an Entity");
+        }
         User user = new User();
         user.setEntity(entity);
         user.setCredential(credential);
@@ -84,18 +75,12 @@ public class UserCreatorImpl implements UserCreator {
         return user;
     }
 
-    /* (non-Javadoc)
-     * @see org.helianto.core.UserCreator#userFactory(org.helianto.core.User, org.helianto.core.Credential)
-     */
     public User userFactory(User parent, Credential credential) {
         User user = userFactory(parent.getEntity(), credential);
         user.setParent(parent);
         return user;
     }
 
-    /* (non-Javadoc)
-     * @see org.helianto.core.UserCreator#generatePassword(int)
-     */
     public String generatePassword(int size) {
         Random generator = new Random();
         String source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

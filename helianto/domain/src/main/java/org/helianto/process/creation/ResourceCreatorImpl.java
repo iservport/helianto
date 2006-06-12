@@ -17,6 +17,7 @@ package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
+import org.helianto.core.creation.NullEntityException;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 
@@ -28,11 +29,14 @@ import org.helianto.process.ResourceGroup;
  */
 public class ResourceCreatorImpl implements ResourceCreator {
 
-    public ResourceGroup resourceGroupFactory(Entity entity, String resourceCode, ResourceType resourceType) {
+    public ResourceGroup resourceGroupFactory(Entity entity, String resourceCode, ResourceType resourceType) throws NullEntityException {
         return resourceGroupFactory(ResourceGroup.class, entity, resourceCode, resourceType.getValue());
     }
 
-    private ResourceGroup resourceGroupFactory(Class clazz, Entity entity, String resourceCode, char resourceTypeValue) {
+    private ResourceGroup resourceGroupFactory(Class clazz, Entity entity, String resourceCode, char resourceTypeValue) throws NullEntityException {
+        if (entity==null) {
+            throw new NullEntityException(clazz+" must belong to an entity");
+        }
         ResourceGroup resourceGroup;
         try {
             resourceGroup = (ResourceGroup) clazz.newInstance();
@@ -41,23 +45,23 @@ public class ResourceCreatorImpl implements ResourceCreator {
             resourceGroup.setResourceType(resourceTypeValue);
             return resourceGroup;
         } catch (Exception e) {
-            throw new RuntimeException("Can't create calss "+clazz);
+            throw new RuntimeException("Can't create class "+clazz);
         }
     }
 
-    public ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode) {
+    public ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode) throws NullEntityException {
         ResourceGroup resourceGroup = resourceGroupFactory(ResourceGroup.class, parent.getEntity(), resourceCode, parent.getResourceType());
         resourceGroup.setParent(parent);
         return resourceGroup;
     }
 
-	public Resource resourceFactory(Partner owner, String resourceCode, ResourceType resourceType) {
+	public Resource resourceFactory(Partner owner, String resourceCode, ResourceType resourceType) throws NullEntityException {
         Resource resource = (Resource) resourceGroupFactory(Resource.class, owner.getEntity(), resourceCode, resourceType.getValue());
         resource.setOwner(owner);
         return resource;
 	}
 
-    public Resource resourceFactory(ResourceGroup parent, String resourceCode, Partner owner) {
+    public Resource resourceFactory(ResourceGroup parent, String resourceCode, Partner owner) throws NullEntityException {
         Resource resource = (Resource) resourceGroupFactory(Resource.class, parent.getEntity(), resourceCode, parent.getResourceType());
         resource.setParent(parent);
         resource.setOwner(owner);

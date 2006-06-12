@@ -1,6 +1,7 @@
 package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
+import org.helianto.core.creation.NullEntityException;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Part;
 import org.helianto.process.Unit;
@@ -10,12 +11,12 @@ public interface PartCreator {
     /**
      * Create a <code>Part</code> with a drawing.
      */
-	public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName);
+	public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName) throws NullEntityException;
     
     /**
      * Create a <code>Part</code>.
      */
-	public Part partFactory(Entity entity, String partNumber, String partName);
+	public Part partFactory(Entity entity, String partNumber, String partName) throws NullEntityException;
 
     /**
      * Create a <code>MaterialType</code>.

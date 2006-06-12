@@ -16,6 +16,7 @@
 package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
+import org.helianto.core.creation.NullEntityException;
 import org.helianto.process.Document;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Part;
@@ -29,24 +30,21 @@ import org.helianto.process.creation.AssociationType;
  * @author Mauricio Fernandes de Castro
  * @version $Id: $
  */
-public class PartCreatorImpl  implements PartCreator {
+public class PartCreatorImpl extends AbstractDocumentCreator implements PartCreator {
 
-    public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName) {
+    public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName) throws NullEntityException {
     	return partFactory(entity, drawingNumber, drawingName, true);
     }
 
-    public Part partFactory(Entity entity, String partNumber, String partName) {
+    public Part partFactory(Entity entity, String partNumber, String partName) throws NullEntityException {
         return partFactory(entity, partNumber, partName, false);
     }
 
     /*
      * internal part factory.
      */
-    private Part partFactory(Entity entity, String partNumber, String partName, boolean hasDrawing) {
-        Part part = new Part();
-        part.setEntity(entity);
-        part.setDocCode(partNumber);
-        part.setDocName(partName);
+    private Part partFactory(Entity entity, String partNumber, String partName, boolean hasDrawing) throws NullEntityException {
+        Part part = (Part) documentFactory(Part.class, entity, partNumber);
         part.setHasDrawing(hasDrawing);
         return part;
     }

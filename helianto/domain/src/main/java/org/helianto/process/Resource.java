@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 05/06/2006 20:39:11 by Hibernate Tools 3.1.0.beta4
+// Generated 11/06/2006 09:58:48 by Hibernate Tools 3.1.0.beta4
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
@@ -35,8 +35,10 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     }
 
 	/** minimal constructor */
-    public Resource(Entity entity, String resourceCode, char resourceType) {
+    public Resource(Entity entity, String resourceCode, char resourceType, char resourceState, boolean keyResource) {
         super(entity, resourceCode, resourceType);        
+        this.resourceState = resourceState;
+        this.keyResource = keyResource;
     }
     
     /** full constructor */

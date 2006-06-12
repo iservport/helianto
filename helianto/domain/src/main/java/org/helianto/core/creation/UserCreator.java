@@ -35,7 +35,7 @@ public interface UserCreator {
 
     public Credential credentialFactory(String principal);
 
-    public User userFactory(Entity entity, Credential credential);
+    public User userFactory(Entity entity, Credential credential) throws NullEntityException;
 
     public User userFactory(User parent, Credential credential);
 

@@ -69,7 +69,7 @@ partners, like customers, suppliers, banks, etc.
 		<!-- 
   				related
 		-->
-		<many-to-one name="related" cascade="merge"
+		<many-to-one name="related"
 			class="org.helianto.core.Entity">
 			<column name="relId"></column>
 		</many-to-one>
