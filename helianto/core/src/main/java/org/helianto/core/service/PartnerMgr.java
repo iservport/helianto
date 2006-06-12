@@ -18,9 +18,9 @@ package org.helianto.core.service;
 import java.util.List;
 
 import org.helianto.core.Contact;
-import org.helianto.core.Credential;
 import org.helianto.core.Customer;
 import org.helianto.core.Entity;
+import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
 
@@ -66,6 +66,17 @@ public interface PartnerMgr extends CoreMgr {
      * Find a <code>Customer</code> list by <code>Entity</code>.
      */
     public List<Customer> findCustomerByEntity(Entity entity);
+    
+    /**
+     * Find a <code>Manufacturer</code> list by <code>Entity</code>.
+     */
+    public List<Manufacturer> findManufaturerByEntity(Entity entity);
+    
+    /**
+     * Find a <code>Manufacturer</code> list by <code>Entity</code>
+     * and priority.
+     */
+    public List<Manufacturer> findManufaturerByEntity(Entity entity, int priority);
     
     /**
      * Find a <code>Contact</code> list by <code>Partner</code>.

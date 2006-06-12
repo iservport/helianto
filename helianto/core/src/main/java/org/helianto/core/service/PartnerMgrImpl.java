@@ -15,18 +15,15 @@
 
 package org.helianto.core.service;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Supplier;
-
-import org.helianto.core.Customer;
-
-import org.helianto.core.Credential;
 import org.helianto.core.Contact;
+import org.helianto.core.Customer;
+import org.helianto.core.Entity;
+import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
-import org.helianto.core.creation.PartnerState;
+import org.helianto.core.Supplier;
 
 /**
  * Default implementation of the 
@@ -83,9 +80,23 @@ public class PartnerMgrImpl extends CoreMgrImpl implements PartnerMgr {
     }
     
     public List<Customer> findCustomerByEntity(Entity entity) {
-        return (List<Customer>) getGenericDao().find(CUSTOMER_QRY_BY_ENTITY, entity.getId());
+        return (ArrayList<Customer>) getGenericDao().find(CUSTOMER_QRY_BY_ENTITY, entity.getId());
     }
 
+    // TODO add priority to partner
+    public List<Manufacturer> findManufaturerByEntity(Entity entity) {
+        return findManufaturerByEntity(entity, -1);
+    }
+
+    public List<Manufacturer> findManufaturerByEntity(Entity entity, int priority) {
+        if (priority<0) {
+            return (ArrayList<Manufacturer>) getGenericDao().find(MANUFACTURER_QRY_BY_ENTITY, entity);
+        }
+//        return (ArrayList<Manufacturer>) getGenericDao().find(MANUFACTURER_QRY_BY_ENTITY+
+//                MANUFACTURER_FILTER_BY_PRIORITY, entity, priority);
+        return null;
+    }
+    
     public List findContactByPartner(Partner partner) {
         return (List) getGenericDao().find(CONTACT_QRY_BY_PARTNER, partner.getId());
     }
@@ -106,4 +117,10 @@ public class PartnerMgrImpl extends CoreMgrImpl implements PartnerMgr {
         "from Contact contact " +
         "where contact.partner.id = ?";
     
+    static final String MANUFACTURER_QRY_BY_ENTITY = "from Manufacturer manufacturer " +
+        "where manufacturer.entity = ?";
+
+    static final String MANUFACTURER_FILTER_BY_PRIORITY = 
+        "and manufacturer.priority = ?";
+
 }
