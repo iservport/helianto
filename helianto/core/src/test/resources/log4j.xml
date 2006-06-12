@@ -11,6 +11,9 @@
 	<logger name="org.helianto.core">
 		<level value="DEBUG"/>
 	</logger>
+	<logger name="org.helianto.process">
+		<level value="DEBUG"/>
+	</logger>
 	<root>
 		<level value="WARN"/>
 		<appender-ref ref="CONSOLE"/>

@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
+import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.User;
@@ -53,6 +54,33 @@ public interface SimpleCoreMgr {
      * <p>Persist the DefaultEntity.</p>
      */
     public void persistDefaultEntity(DefaultEntity defaultEntity);
+    
+    /**
+     * <p>A cooresponding default <code>Division</code> will be required 
+     * to work with the <code>DefaultEntity</code>.</p>
+     */
+    public Division createDefaultDivision(DefaultEntity defaultEntity);
+
+    /**
+     * <p>Create a <code>Division</code>.</p>
+     */
+    public Division createDivision(Entity entity, String alias);
+    
+    /**
+     * <p>Persist a <code>Division</code>.</p>
+     */
+    public void persistDivision(Division division);
+    
+    /**
+     * <p>
+     * The preferred way to create and persist the DefaultEntity.
+     * </p>
+     * <p>
+     * Additionally, a <code>Division</code> with the same
+     * alias will be automatically created and persisted.
+     * </p>
+     */
+    public DefaultEntity installDefaultEntity(String alias);
     
     /**
      * <p>Change an entity to default.</p>

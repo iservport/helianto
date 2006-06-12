@@ -60,40 +60,11 @@ public interface LightweightDao {
      * A method to return query results.
      * 
      * <p>
-     * Implementation should inspect the <code>values</code>
-     * parameter to distinguish if a single object is beeing 
-     * passed or if it is an array of objects before taking 
-     * the appropriate action.
-     * </p>
-     * 
-     * @deprecated Use find(String query, Object... values).
-     * 
-     */
-    public Collection find(String query, Object values) throws DataAccessException ;
-
-    /**
-     * A method to return query results.
-     * 
-     * <p>
      * Uses JSE 5.0 variable argument.
      * </p>
      * 
      */
     public Collection find(String query, Object... values) throws DataAccessException ;
-
-    /**
-     * A method to return a single object from query results.
-     * 
-     * <p>
-     * Implementation should inspect the <code>values</code>
-     * parameter to distinguish if a single object is beeing 
-     * passed or if it is an array of objects before taking 
-     * the appropriate action.
-     * </p>
-     * @deprecated Use findUnique(String query, Object... values).
-     * 
-     */
-    public Object findUnique(String query, Object values) throws DataAccessException ;
 
     /**
      * A method to return a single object from query results.

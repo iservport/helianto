@@ -61,16 +61,30 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         return  partnerCreator.divisionFactory(entity, alias);
     }
 
+    public DefaultEntity installDefaultEntity(String alias) {
+        try {
+            DefaultEntity defaultEntity = createDefaultEntity(alias);
+            persistDefaultEntity(defaultEntity);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+defaultEntity);
+            }
+            Division defaultDivision = createDefaultDivision(defaultEntity);
+            persistDivision(defaultDivision);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+defaultDivision);
+            }
+            return defaultEntity;
+        } catch (Exception e) {
+            throw new RuntimeException("DefaultEntity installation failed ", e);
+        }
+    }
+
     public void persistDefaultEntity(DefaultEntity defaultEntity) {
         entityDao.persistDefaultEntity(defaultEntity);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Persisted "+defaultEntity);
-        }
-        Division defaultDivision = createDefaultDivision(defaultEntity);
-        partnerDao.persistDivision(defaultDivision);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Persisted "+defaultDivision);
-        }
+    }
+    
+    public void persistDivision(Division division) {
+        partnerDao.persistDivision(division);
     }
 
     public void changeEntityToDefault(Entity entity) {

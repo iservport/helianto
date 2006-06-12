@@ -94,7 +94,7 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
             }
             return result;
         } catch (Exception e) {
-            throw new RuntimeException("Unable to assemble query");
+            throw new RuntimeException("Unable to assemble query", e);
         }
     }
     
@@ -109,6 +109,8 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         Collection list = find(query, values);
         if (isUnique(list)) {
             return ((List) list).get(0);
+        } else if (isEmpty(list)) {
+            return null;
         }
         throw new DataIntegrityViolationException("Unique object expected");
     }
@@ -119,64 +121,18 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
                 logger.debug("Unique result found");
             }
             return true;
-        } else if(collection.size()==0) {
+        }
+        return false;
+    }
+
+    public boolean isEmpty(Collection collection) {
+        if (collection.isEmpty()) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Empty result found");
             }
+            return true;
         }
         return false;
-        
-    }
-
-    @Deprecated
-    protected Query queryAssembler(String query, Object values) {
-        try {
-            Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-            Query result = session.createQuery(query);
-            if (values != null) {
-                if (values instanceof Object[]) {
-                    Object[] valueList = (Object[]) values;
-                    for (int i = 0; i<valueList.length; i++) {
-                        result.setParameter(i, valueList[i]);
-                        if (logger.isDebugEnabled()) {
-                            logger.debug("\n        Parameter "+i+"="+valueList[i]);
-                        }
-                    }
-                } else {
-                    result.setParameter(0, values);
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("\n        Single parameter is "+values);
-                    }
-                }
-            } else {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("\n        No parameters");
-                }
-            }
-            return result;
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to assemble query");
-        }
-    }
-    
-    @Deprecated
-    public Collection find(String query, Object values) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("\n        Finding object with query "+query);
-        }
-        if (values instanceof Object[]) {
-            return queryAssembler(query,  values).list();
-        }
-        return this.getHibernateTemplate().find(query, values);
-    }
-    
-    @Deprecated
-    public Object findUnique(String query, Object values) throws DataAccessException {
-        Collection list = find(query, values);
-        if (isUnique(list)) {
-            return ((List) list).get(0);
-        }
-        throw new DataIntegrityViolationException("Unique object expected");
     }
 
 }

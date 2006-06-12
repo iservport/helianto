@@ -32,7 +32,11 @@
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="transactionAttributes">
 			<props>
+				<prop key="prepare*">PROPAGATION_REQUIRED</prop>
 				<prop key="persist*">PROPAGATION_REQUIRED</prop>
+				<prop key="find*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
 	</bean>
