@@ -19,24 +19,9 @@ import org.helianto.core.junit.AbstractIntegrationTest;
 
 public class PartnerMgrImplTests extends AbstractIntegrationTest {
     
-    private PartnerMgr partnerMgr;
+    // class under test
+	private PartnerMgr partnerMgr;
 
-    /**
-     * @param partnerMger The partnerMger to set.
-     */
-//    public void setPartnerMgr(PartnerMgr partnerMgr) {
-//        this.partnerMgr = partnerMgr;
-//    }
-//
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { "deploy/dataSource.xml", 
-                "deploy/sessionFactory.xml",
-                "deploy/support.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml"};
-    }
-    
     public void test() {
 //        Entity entity = getTestEntity();
 //        partnerMgr.persistEntity(entity);
@@ -69,9 +54,81 @@ public class PartnerMgrImplTests extends AbstractIntegrationTest {
 //        
 //        List list = partnerMgr.findCustomerByEntity(entity);
 //        assertEquals("6.1", 2, list.size());
-//        
+    	
+    	
 //        
 //        
     }
+    
+//  public void persistCustomer(Customer customer);
+    public void testPersistCustomer() {
+    	
+    }
 
+//	public void persistSupplier(Supplier supplier);
+    public void testPersistSupplier() {
+    	
+    }
+
+//	public void persistContact(Contact contact);
+    public void testPersistContact() {
+    	
+    }
+
+//	public Customer loadCustomer(Long key);
+    public void testLoadCustomer() {
+    	
+    }
+
+//	public Supplier loadSupplier(Long key);
+    public void testLoadSupplier() {
+    	
+    }
+
+//	public Contact loadContact(String key);
+    public void testLoadContact() {
+    	
+    }
+
+//	public List<Customer> findCustomerByEntity(Entity entity);
+    public void testFindCustomerByEntity() {
+    	
+    }
+
+//	public List<Manufacturer> findManufacturerByEntity(Entity entity);
+//	public List<Manufacturer> findManufacturerByEntity(Entity entity, int priority);
+    public void testFindManufacturerByEntity() {
+    	
+    }
+
+//	public List findContactByPartner(Partner partner);
+    public void testFindContactByPartner() {
+    	
+    }
+
+//	public void bindCustomerToEntity(Customer customer, Entity entity);
+    public void testBindCustomerToEntity() {
+    	
+    }
+
+//	public void bindSupplierToEntity(Supplier supplier, Entity entity);
+    public void testBindSupplierToEntity() {
+    	
+    }
+
+    // collabs
+    
+    public void setPartnerMgr(PartnerMgr partnerMgr) {
+        this.partnerMgr = partnerMgr;
+    }
+
+    @Override
+    protected String[] getConfigLocations() {
+        return new String[] { "deploy/dataSource.xml", 
+                "deploy/sessionFactory.xml",
+                "deploy/support.xml",
+                "deploy/transaction.xml",
+                "deploy/core.xml"};
+    }
+    
 }
