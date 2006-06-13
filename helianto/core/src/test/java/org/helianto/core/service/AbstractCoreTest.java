@@ -19,7 +19,7 @@ import org.helianto.core.junit.AbstractIntegrationTest;
 
 public class AbstractCoreTest extends AbstractIntegrationTest {
 
-    @Override
+    @Override 
     protected String[] getConfigLocations() {
         return new String[] { "deploy/dataSource.xml", 
                 "deploy/sessionFactory.xml",
