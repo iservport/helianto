@@ -94,6 +94,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     public List<Contact> findContactByPartner(Partner partner) {
         return partnerDao.findContactByPartner(partner);
     }
+    
     public void bindCustomerToEntity(Customer customer, Entity entity) {
         customer.setRelated(entity);
         customer.setStrong(true);

@@ -26,6 +26,7 @@ import org.helianto.core.Contact;
 import org.helianto.core.Customer;
 import org.helianto.core.Entity;
 import org.helianto.core.Manufacturer;
+import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
 import org.helianto.core.dao.PartnerDao;
 
@@ -108,12 +109,21 @@ public class PartnerMgrImplTests extends TestCase {
 
 //	public List findContactByPartner(Partner partner);
     public void testFindContactByPartner() {
-    	
+    	Partner partner = new Partner();
+    	List<Partner> contactList = new ArrayList<Partner>();
+        expect(partnerDao.findContactByPartner(partner)).andStubReturn(contactList);
+        replay(partnerDao);
+    	assertSame(contactList, partnerMgr.findContactByPartner(partner));
+    	verify(partnerDao);
     }
 
 //	public void bindCustomerToEntity(Customer customer, Entity entity);
     public void testBindCustomerToEntity() {
-    	
+    	Customer customer = new Customer();
+    	Entity entity = new Entity();
+    	partnerMgr.bindCustomerToEntity(customer, entity);
+    	assertSame(entity, customer.getRelated());
+    	assertTrue(customer.isStrong());
     }
 
 //	public void bindSupplierToEntity(Supplier supplier, Entity entity);
