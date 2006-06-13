@@ -30,7 +30,7 @@ import org.helianto.core.Supplier;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public interface PartnerMgr extends CoreMgr {
+public interface PartnerMgr {
     
     /**
      * Persist a <code>Customer</code>

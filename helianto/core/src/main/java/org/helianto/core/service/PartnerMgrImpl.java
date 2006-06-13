@@ -32,7 +32,7 @@ import org.helianto.core.dao.PartnerDao;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public class PartnerMgrImpl extends CoreMgrImpl implements PartnerMgr {
+public class PartnerMgrImpl implements PartnerMgr {
 
     public void persistCustomer(Customer customer) {
         partnerDao.persistCustomer(customer);
@@ -80,11 +80,11 @@ public class PartnerMgrImpl extends CoreMgrImpl implements PartnerMgr {
     }
     
     public List<Customer> findCustomerByEntity(Entity entity) {
-        return findCustomerByEntity(entity);
+        return partnerDao.findCustomerByEntity(entity);
     }
 
     public List<Manufacturer> findManufacturerByEntity(Entity entity) {
-        return findManufacturerByEntity(entity, -1);
+        return partnerDao.findManufacturerByEntity(entity, -1);
     }
 
     public List<Manufacturer> findManufacturerByEntity(Entity entity, int priority) {
