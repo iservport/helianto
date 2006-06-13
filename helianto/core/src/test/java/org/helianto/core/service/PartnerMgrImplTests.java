@@ -15,64 +15,50 @@
 
 package org.helianto.core.service;
 
-import org.helianto.core.junit.AbstractIntegrationTest;
+import static org.easymock.EasyMock.*;
 
-public class PartnerMgrImplTests extends AbstractIntegrationTest {
+import java.util.ArrayList;
+import java.util.List;
+
+import junit.framework.TestCase;
+
+import org.helianto.core.Contact;
+import org.helianto.core.Customer;
+import org.helianto.core.Entity;
+import org.helianto.core.Manufacturer;
+import org.helianto.core.Supplier;
+import org.helianto.core.dao.PartnerDao;
+
+public class PartnerMgrImplTests extends TestCase {
     
     // class under test
-	private PartnerMgr partnerMgr;
+	private PartnerMgrImpl partnerMgr;
 
-    public void test() {
-//        Entity entity = getTestEntity();
-//        partnerMgr.persistEntity(entity);
-//        assertNotNull("0", entity.getId());
-//        
-//        //Customer
-//        String customerAlias = generateKey(20); 
-//        Customer customer = partnerMgr.customerFactory(entity, customerAlias);
-//        assertNull("1.1", customer.getId());
-//        assertSame("1.2", entity, customer.getEntity());
-//        assertEquals("1.3", customerAlias, customer.getAlias());
-//        assertTrue("1.4", (new Date()).getTime()-customer.getRelatedSince().getTime()<1000);
-//        assertEquals("1.5", PartnerState.ACTIVE.getValue(), customer.getState());
-//        assertFalse("1.5", customer.isStrong());
-//        
-//        partnerMgr.persistCustomer(customer);
-//        assertNotNull("2.1", customer.getId());
-//        
-//        customerAlias = generateKey(20); 
-//        customer = partnerMgr.customerFactory(entity, customerAlias);
-//        assertNull("3.1", customer.getId());
-//
-//        partnerMgr.persistCustomer(customer);
-//        assertNotNull("4.1", customer.getId());
-//        
-//        hibernateTemplate.clear();
-//        
-//        Customer loadedCustomer = partnerMgr.loadCustomer(customer.getId());
-//        assertEquals("5.1", loadedCustomer.getId(), customer.getId());
-//        
-//        List list = partnerMgr.findCustomerByEntity(entity);
-//        assertEquals("6.1", 2, list.size());
-    	
-    	
-//        
-//        
-    }
-    
 //  public void persistCustomer(Customer customer);
     public void testPersistCustomer() {
-    	
+        Customer customer = new Customer();
+        partnerDao.persistCustomer(customer);
+        replay(partnerDao);
+        partnerMgr.persistCustomer(customer);
+        verify(partnerDao);
     }
 
 //	public void persistSupplier(Supplier supplier);
     public void testPersistSupplier() {
-    	
+    	Supplier supplier = new Supplier();
+        partnerDao.persistSupplier(supplier);
+        replay(partnerDao);
+        partnerMgr.persistSupplier(supplier);
+        verify(partnerDao);
     }
 
 //	public void persistContact(Contact contact);
     public void testPersistContact() {
-    	
+    	Contact contact = new Contact();
+        partnerDao.persistContact(contact);
+        replay(partnerDao);
+        partnerMgr.persistContact(contact);
+        verify(partnerDao);
     }
 
 //	public Customer loadCustomer(Long key);
@@ -92,13 +78,32 @@ public class PartnerMgrImplTests extends AbstractIntegrationTest {
 
 //	public List<Customer> findCustomerByEntity(Entity entity);
     public void testFindCustomerByEntity() {
-    	
+        Entity entity = new Entity();
+        List<Customer> customerList = new ArrayList<Customer>();
+    	expect(partnerDao.findCustomerByEntity(entity)).andReturn(customerList);
+        replay(partnerDao);
+        assertSame(customerList, partnerMgr.findCustomerByEntity(entity));
+        verify(partnerDao);
     }
 
-//	public List<Manufacturer> findManufacturerByEntity(Entity entity);
-//	public List<Manufacturer> findManufacturerByEntity(Entity entity, int priority);
+//  public List<Manufacturer> findManufacturerByEntity(Entity entity);
     public void testFindManufacturerByEntity() {
-    	
+        Entity entity = new Entity();
+        List<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
+        expect(partnerDao.findManufacturerByEntity(entity, -1)).andReturn(manufacturerList);
+        replay(partnerDao);
+        assertSame(manufacturerList, partnerMgr.findManufacturerByEntity(entity));
+        verify(partnerDao);
+    }
+
+//  public List<Manufacturer> findManufacturerByEntity(Entity entity, int priority);
+    public void testFindManufacturerByEntityAndPriority() {
+        Entity entity = new Entity();
+        List<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
+        expect(partnerDao.findManufacturerByEntity(entity, 0)).andReturn(manufacturerList);
+        replay(partnerDao);
+        assertSame(manufacturerList, partnerMgr.findManufacturerByEntity(entity, 0));
+        verify(partnerDao);
     }
 
 //	public List findContactByPartner(Partner partner);
@@ -118,17 +123,13 @@ public class PartnerMgrImplTests extends AbstractIntegrationTest {
 
     // collabs
     
-    public void setPartnerMgr(PartnerMgr partnerMgr) {
-        this.partnerMgr = partnerMgr;
-    }
-
+    private PartnerDao partnerDao;
+    
     @Override
-    protected String[] getConfigLocations() {
-        return new String[] { "deploy/dataSource.xml", 
-                "deploy/sessionFactory.xml",
-                "deploy/support.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml"};
+    public void setUp() {
+        partnerDao = createMock(PartnerDao.class);
+        partnerMgr = new PartnerMgrImpl();
+        partnerMgr.setPartnerDao(partnerDao);
     }
     
 }
