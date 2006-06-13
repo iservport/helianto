@@ -18,7 +18,11 @@ package org.helianto.process.service;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
+import org.helianto.core.service.AbstractGenericService;
 import org.helianto.core.service.PartnerMgrImpl;
 import org.helianto.process.Document;
 import org.helianto.process.MaterialType;
@@ -32,8 +36,11 @@ import org.helianto.process.Tree;
 import org.helianto.process.Unit;
 import org.helianto.process.creation.AssociationType;
 import org.helianto.process.creation.ResourceType;
+import org.helianto.process.dao.ProcessDao;
 
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
+
+    public static final Log logger = LogFactory.getLog(ProcessMgrImpl.class);
 
     public Resource resourceGroupFactory(Entity entity) {
         Resource resource = new Resource();
@@ -185,93 +192,95 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
     
     public void persistResource(Resource resource) {
-        getGenericDao().merge(resource);
+//        getGenericDao().merge(resource);
     }
     
     public void persistUnit(Unit unit) {
-        getGenericDao().merge(unit);
+//        getGenericDao().merge(unit);
     }
 
     public void persistMaterial(MaterialType MaterialType) {
-        getGenericDao().merge(MaterialType);
+//        getGenericDao().merge(MaterialType);
     }
 
     public void persistPart(Part part) {
-        getGenericDao().merge(part);
+//        getGenericDao().merge(part);
     }
 
     public void persistProcess(Process process) {
         if (process.getInternalNumber()==0) {
             //FIXME internal number should return long ...
-            process.setInternalNumber(new Long(currentNumber(process.getEntity(), "PROC")));
+//            process.setInternalNumber(new Long(currentNumber(process.getEntity(), "PROC")));
         }
-        getGenericDao().merge(process);
+//        getGenericDao().merge(process);
     }
 
     public void persistOperation(Operation operation) {
-        getGenericDao().merge(operation);
+//        getGenericDao().merge(operation);
     }
 
     public void persistSetup(Setup setup) {
-        getGenericDao().merge(setup);
+//        getGenericDao().merge(setup);
     }
 
     public Resource loadResource(Integer key) {
-        return (Resource) getGenericDao().load(Resource.class, key);
+        return (Resource) processDao.load(Resource.class, key);
     }
     
     public Unit loadUnit(Integer key) {
-        return (Unit) getGenericDao().load(Unit.class, key);
+        return (Unit) processDao.load(Unit.class, key);
     }
 
     public MaterialType loadMaterial(Long key) {
-        return (MaterialType) getGenericDao().load(MaterialType.class, key);
+        return (MaterialType) processDao.load(MaterialType.class, key);
     }
 
     public Part loadPart(Long key) {
-        return (Part) getGenericDao().load(Part.class, key);
+        return (Part) processDao.load(Part.class, key);
     }
 
     public Process loadProcess(Long key) {
-        return (Process) getGenericDao().load(Process.class, key);
+        return (Process) processDao.load(Process.class, key);
     }
 
     public Operation loadOperation(Long key) {
-        return (Operation) getGenericDao().load(Operation.class, key);
+        return (Operation) processDao.load(Operation.class, key);
     }
 
     public Setup loadSetup(Long key) {
-        return (Setup) getGenericDao().load(Setup.class, key);
+        return (Setup) processDao.load(Setup.class, key);
     }
 
     public Collection findResources(String entityAlias) {
-        try {
-            Entity entity = findEntityByAlias(entityAlias);
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n         Entity with alias "+entityAlias+" found");
-            }
-            return findResources(entity);
-        } catch (Exception e) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n         Entity with alias "+entityAlias+" not found:"+e.toString());
-            }
-        }
+//        try {
+//            Entity entity = findEntityByAlias(entityAlias);
+//            if (logger.isDebugEnabled()) {
+//                logger.debug("\n         Entity with alias "+entityAlias+" found");
+//            }
+//            return findResources(entity);
+//        } catch (Exception e) {
+//            if (logger.isDebugEnabled()) {
+//                logger.debug("\n         Entity with alias "+entityAlias+" not found:"+e.toString());
+//            }
+//        }
         throw new InvalidParameterException("Entity alias "+entityAlias+" not found");
     }
 
     public Collection findResources(Entity entity) {
-        return getGenericDao().find(RESOURCE_QRY, entity.getId());
+        return processDao.find(RESOURCE_QRY, entity.getId());
     }
 
     public Collection findResourceGroups(Entity entity) {
-        return getGenericDao().find(RESOURCE_GROUP_QRY, entity.getId());
+        return processDao.find(RESOURCE_GROUP_QRY, entity.getId());
     }
 
     public Collection findResourcesByGroup(Resource resource) {
-        return getGenericDao().find(RESOURCE_QRY_BY_GROUP, resource.getId());
+        return processDao.find(RESOURCE_QRY_BY_GROUP, resource.getId());
     }
     
 //    public 
+    
+    private ProcessDao processDao;
 
     static final String RESOURCE_QRY = 
         "from Resource res where res.entity.id = ?";
