@@ -17,9 +17,13 @@ package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
+import org.helianto.core.creation.NullAssociationException;
 import org.helianto.core.creation.NullEntityException;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.ResourceParameter;
+import org.helianto.process.ResourceParameterValue;
+import org.helianto.process.Unit;
 
 /**
  * A factory method pattern interface to <code>ResourceGroup</code>
@@ -50,5 +54,35 @@ public interface ResourceCreator {
      * The <code>Resource</code> factory method. Requires a sub-class of <code>Partner</code> as owner.
      */
     public Resource resourceFactory(ResourceGroup parent, String resourceCode, Partner owner) throws NullEntityException;
+
+    /**
+     * The <code>ResourceParameter</code> factory method.
+     */
+    public ResourceParameter resourceParameterFactory(Entity entity, String parameterCode, Unit unit) 
+    	throws NullEntityException;
+
+    /**
+     * The <code>ResourceParameter</code> factory method. Requires a <code>Unit</code>.
+     */
+    public ResourceParameter resourceParameterFactory(Entity entity, String parameterCode) 
+    	throws NullEntityException;
+
+    /**
+     * The <code>ResourceParameter</code> factory method. Requires a parent <code>ResourceParameter</code>.
+     */
+    public ResourceParameter resourceParameterFactory(ResourceParameter parent, String parameterCode) 
+    	throws NullEntityException;
+
+    /**
+     * The <code>ResourceParameterValue</code> factory method.
+     */
+    public ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter, boolean suppressed) 
+		throws NullAssociationException;
+
+    /**
+     * The <code>ResourceParameterValue</code> factory method.
+     */
+    public ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter) 
+		throws NullAssociationException;
 
 }

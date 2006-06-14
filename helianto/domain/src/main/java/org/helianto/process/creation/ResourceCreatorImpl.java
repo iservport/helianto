@@ -17,9 +17,13 @@ package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
+import org.helianto.core.creation.NullAssociationException;
 import org.helianto.core.creation.NullEntityException;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.ResourceParameter;
+import org.helianto.process.ResourceParameterValue;
+import org.helianto.process.Unit;
 
 /**
  * Default implementation for the <code>ResourceCreator</code> interface.
@@ -66,6 +70,55 @@ public class ResourceCreatorImpl implements ResourceCreator {
         resource.setParent(parent);
         resource.setOwner(owner);
         return resource;
+    }
+    
+    public ResourceParameter resourceParameterFactory(Entity entity, String parameterCode, Unit unit) 
+        throws NullEntityException {
+        if (entity==null) {
+            throw new NullEntityException("A ResourceParameter must have a parent Entity");
+        }
+    	ResourceParameter resourceParameter;
+    	try {
+        	resourceParameter = new ResourceParameter();
+    		resourceParameter.setEntity(entity);
+    		resourceParameter.setParameterCode(parameterCode);
+    		resourceParameter.setUnit(unit);
+        	return resourceParameter;
+    	} catch (Exception e){
+    		throw new RuntimeException("Can't instantiate "+ResourceParameter.class, e);
+    	}
+    }
+
+    public ResourceParameter resourceParameterFactory(Entity entity, String parameterCode) 
+        throws NullEntityException {
+	    return resourceParameterFactory(entity, parameterCode, null);
+    }
+
+    public ResourceParameter resourceParameterFactory(ResourceParameter parent, String parameterCode) 
+    	throws NullEntityException {
+    return resourceParameterFactory(parent.getEntity(), parameterCode, parent.getUnit());
+}
+
+    public ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter, boolean suppressed) 
+    	throws NullAssociationException {
+        if (resourceGroup==null || resourceParameter==null) {
+            throw new NullAssociationException("A ResourceGroup and a ResourceParameter must be supplied to create a ResourceParameterValue");
+        }
+        ResourceParameterValue resourceParameterValue;
+    	try {
+    		resourceParameterValue = new ResourceParameterValue();
+    		resourceParameterValue.setResource(resourceGroup);
+    		resourceParameterValue.setParameter(resourceParameter);
+    		resourceParameterValue.setSuppressed(suppressed);
+        	return resourceParameterValue;
+    	} catch (Exception e){
+    		throw new RuntimeException("Can't instantiate "+ResourceParameter.class, e);
+    	}
+    }
+
+    public ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter) 
+		throws NullAssociationException {
+    	return resourceParameterValueFactory(resourceGroup, resourceParameter, false);
     }
 
 }

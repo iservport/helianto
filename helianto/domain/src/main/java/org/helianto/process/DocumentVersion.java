@@ -1,7 +1,6 @@
 package org.helianto.process;
-// Generated 11/06/2006 09:59:08 by Hibernate Tools 3.1.0.beta4
+// Generated 14/06/2006 10:46:09 by Hibernate Tools 3.1.0.beta4
 
-import org.helianto.core.Entity;
 
 
 /**
@@ -20,8 +19,8 @@ public class DocumentVersion  implements java.io.Serializable {
 
     // Fields    
 
-     private long id;
-     private Entity Release;
+     private int id;
+     private Release release;
      private Document document;
      private int majorNumber;
      private int minorNumber;
@@ -37,8 +36,8 @@ public class DocumentVersion  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public DocumentVersion(Entity Release, Document document, int majorNumber, int minorNumber, int releaseAction, char activityCode) {
-        this.Release = Release;
+    public DocumentVersion(Release release, Document document, int majorNumber, int minorNumber, int releaseAction, char activityCode) {
+        this.release = release;
         this.document = document;
         this.majorNumber = majorNumber;
         this.minorNumber = minorNumber;
@@ -47,8 +46,8 @@ public class DocumentVersion  implements java.io.Serializable {
     }
     
     /** full constructor */
-    public DocumentVersion(Entity Release, Document document, int majorNumber, int minorNumber, int releaseAction, char activityCode, String changeSummary) {
-        this.Release = Release;
+    public DocumentVersion(Release release, Document document, int majorNumber, int minorNumber, int releaseAction, char activityCode, String changeSummary) {
+        this.release = release;
         this.document = document;
         this.majorNumber = majorNumber;
         this.minorNumber = minorNumber;
@@ -61,20 +60,20 @@ public class DocumentVersion  implements java.io.Serializable {
    
     // Property accessors
 
-    public long getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Entity getRelease() {
-        return this.Release;
+    public Release getRelease() {
+        return this.release;
     }
     
-    public void setRelease(Entity Release) {
-        this.Release = Release;
+    public void setRelease(Release release) {
+        this.release = release;
     }
 
     public Document getDocument() {
