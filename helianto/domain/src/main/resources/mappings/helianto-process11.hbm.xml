@@ -19,26 +19,26 @@
 -->
 <hibernate-mapping default-lazy="false">
 	<!-- 
-		DOCUMENT VERSION
+		RESOURCE PARAMETER
 		============================================= 
 	-->
-	<class table="process_version"
-		name="org.helianto.process.DocumentVersion">
+	<class table="process_resourceparam"
+		name="org.helianto.process.ResourceParameter">
 		<meta attribute="class-description" inherit="false">
 			<![CDATA[
 <p>
-A class to represent document versions.
+A class to represent resource parameters.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: iservport-process0.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
+@version $Id: $
 				]]>
 		</meta>
 		<!-- 
 			id
 		-->
 		<id name="id" type="int">
-			<column name="id" unique-key="versionNumber"/>
+			<column name="id"/>
 			<generator class="native" />
 		</id>
 		<!-- 
@@ -46,47 +46,48 @@ A class to represent document versions.
 		-->
 		<natural-id mutable="false">
 			<!-- 
-				release
+				entity
 			-->
-			<many-to-one name="release"
-				class="org.helianto.process.Release">
+			<many-to-one name="entity"
+				class="org.helianto.core.Entity">
 				<meta attribute="use-in-equals">true</meta>
-				<column name="releaseId" />
+				<column name="entityId" />
 			</many-to-one>
 			<!-- 
-				document
+				code
 			-->
-			<many-to-one name="document"
-				class="org.helianto.process.Document">
+			<property name="parameterCode" type="string">
 				<meta attribute="use-in-equals">true</meta>
-				<column name="documentId" />
-			</many-to-one>
+				<column name="parameterCode" length="20" />
+			</property>
 		</natural-id>
 		<!-- 
-			major revision number
+			parent
 		-->
-		<property name="majorNumber" type="int">
-			<column name="majorNumber" unique-key="versionNumber"
-				not-null="true" />
+		<many-to-one name="parent"
+			class="org.helianto.process.ResourceParameter">
+			<column name="parentId" not-null="false" />
+		</many-to-one>
+		<!-- 
+			unit
+		-->
+		<many-to-one name="unit"
+			class="org.helianto.process.Unit">
+			<column name="untId" />
+		</many-to-one>
+		<!-- 
+			name
+		-->
+		<property name="paramName" type="string" length="64" />
+		<!-- 
+			description
+		-->
+		<property name="paramDesc" type="string" length="256" />
+		<!-- 
+			text only
+		-->
+		<property name="textOnly" type="boolean" >
+			<column name="textOnly" not-null="true" default="0"/>
 		</property>
-		<!-- 
-			minor revision number
-		-->
-		<property name="minorNumber" type="int">
-			<column name="minorNumber" unique-key="versionNumber"
-				not-null="true" />
-		</property>
-		<!-- 
-			release action
-		-->
-		<property name="releaseAction" type="int" not-null="true" />
-		<!-- 
-			activity code
-		-->
-		<property name="activityCode" type="char" not-null="true" />
-		<!-- 
-			change summary
-		-->
-		<property name="changeSummary" type="string" length="256" />
 	</class>
 </hibernate-mapping>

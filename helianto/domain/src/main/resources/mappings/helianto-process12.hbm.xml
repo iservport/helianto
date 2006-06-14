@@ -19,26 +19,26 @@
 -->
 <hibernate-mapping default-lazy="false">
 	<!-- 
-		DOCUMENT VERSION
+		RESOURCE PARAMETER VALUE
 		============================================= 
 	-->
-	<class table="process_version"
-		name="org.helianto.process.DocumentVersion">
+	<class table="process_resourceparamvalue"
+		name="org.helianto.process.ResourceParameterValue">
 		<meta attribute="class-description" inherit="false">
 			<![CDATA[
 <p>
-A class to represent document versions.
+A class to represent parameters values.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: iservport-process0.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
+@version $Id: $
 				]]>
 		</meta>
 		<!-- 
 			id
 		-->
 		<id name="id" type="int">
-			<column name="id" unique-key="versionNumber"/>
+			<column name="id"/>
 			<generator class="native" />
 		</id>
 		<!-- 
@@ -46,47 +46,35 @@ A class to represent document versions.
 		-->
 		<natural-id mutable="false">
 			<!-- 
-				release
+				resource or resource group
 			-->
-			<many-to-one name="release"
-				class="org.helianto.process.Release">
+			<many-to-one name="resource"
+				class="org.helianto.process.ResourceGroup">
 				<meta attribute="use-in-equals">true</meta>
-				<column name="releaseId" />
+				<column name="resourceId" />
 			</many-to-one>
 			<!-- 
-				document
+				code
 			-->
-			<many-to-one name="document"
-				class="org.helianto.process.Document">
+			<many-to-one name="parameter"
+				class="org.helianto.process.ResourceParameter">
 				<meta attribute="use-in-equals">true</meta>
-				<column name="documentId" />
+				<column name="parameterId" />
 			</many-to-one>
 		</natural-id>
 		<!-- 
-			major revision number
+			parameter value
 		-->
-		<property name="majorNumber" type="int">
-			<column name="majorNumber" unique-key="versionNumber"
-				not-null="true" />
+		<property name="parameterNumericValue" type="big_decimal"/>
+		<!-- 
+			parameter value
+		-->
+		<property name="parameterTextValue" type="string" length="32" />
+		<!-- 
+			suppress
+		-->
+		<property name="suppressed" type="boolean" >
+			<column name="suppressed" not-null="true" default="0"/>
 		</property>
-		<!-- 
-			minor revision number
-		-->
-		<property name="minorNumber" type="int">
-			<column name="minorNumber" unique-key="versionNumber"
-				not-null="true" />
-		</property>
-		<!-- 
-			release action
-		-->
-		<property name="releaseAction" type="int" not-null="true" />
-		<!-- 
-			activity code
-		-->
-		<property name="activityCode" type="char" not-null="true" />
-		<!-- 
-			change summary
-		-->
-		<property name="changeSummary" type="string" length="256" />
 	</class>
 </hibernate-mapping>
