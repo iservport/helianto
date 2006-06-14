@@ -91,6 +91,7 @@ public class ResourceCreatorImplTests extends TestCase {
     	assertSame(entity, resourceParameter.getEntity());
     	assertEquals("123", resourceParameter.getParameterCode());
     	assertSame(unit, resourceParameter.getUnit());
+    	assertSame(parent, resourceParameter.getParent());
     }
     
     public void testResourceParamCreationException() {

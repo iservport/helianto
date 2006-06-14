@@ -16,11 +16,14 @@
 package org.helianto.process.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.ResourceParameter;
+import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.creation.ResourceType;
 
 public interface ResourceDao {
@@ -36,9 +39,24 @@ public interface ResourceDao {
     public void persistResource(Resource resource);
     
     /**
+     * Persist a <code>ResourceParameter</code>.
+     */
+	public void persistResourceParameter(ResourceParameter resourceParameter);
+
+    /**
+     * Persist a <code>ResourceParameterValue</code>.
+     */
+	public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue);
+	
+    /**
      * Load a <code>Resource</code>.
      */
     public ResourceGroup load(Serializable key);
+    
+    /**
+     * Load a <code>ResourceParameterValue</code>.
+     */
+    public ResourceParameterValue loadResourceParameterValue(int key);
     
     /**
      * Find <code>ResourceGroup</code>s and <code>Resources</code> by <code>Entity</code>.
@@ -83,5 +101,20 @@ public interface ResourceDao {
      * Find <code>ResourceGroup</code> or <code>Resource</code> by <code>Entity</code> and code.
      */
     public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode);
-
+    
+    /**
+     * Find <code>ResourceParameter</code> by <code>Entity</code>.
+     */
+    public List<ResourceParameter> findResourceParameterByEntity(Entity entity);
+    
+    /**
+     * Find <code>ResourceParameter</code> by  parent <code>ResourceParameter</code>.
+     */
+    public List<ResourceParameter> findResourceParameterByParent(ResourceParameter parent);
+    
+    /**
+     * Find <code>ResourceParameterValue</code> by <code>ResourceGroup</code> or <code>Resource</code>.
+     */
+    public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup);
+    	
 }

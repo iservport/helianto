@@ -23,6 +23,8 @@ import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.ResourceParameter;
+import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.creation.ResourceType;
 import org.helianto.process.dao.ResourceDao;
 
@@ -43,9 +45,23 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
         merge(resourceGroup);
     }
     
+    public void persistResourceParameter(ResourceParameter resourceParameter) {
+    	merge(resourceParameter);
+    }
+    
+    public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue) {
+    	merge(resourceParameterValue);
+    }
+    
     public ResourceGroup load(Serializable key) {
         return (ResourceGroup) load(ResourceGroup.class, key);
     }
+    
+    public ResourceParameterValue loadResourceParameterValue(int key) {
+    	return (ResourceParameterValue) load(ResourceParameterValue.class, key);
+    }
+    
+    //
     
     public List<ResourceGroup> findResourceAndGroupByEntity(Entity entity) {
         List<ResourceGroup> resourceList = (ArrayList<ResourceGroup>) 
@@ -94,7 +110,7 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
             findUnique(RESOURCEGROUP_QRY+RESOURCECODE_FILTER, entity, resourceCode);
         return resourceGroup;
     }
-
+    
     static String RESOURCEGROUP_QRY = "from ResourceGroup resource " +
         "where resource.entity = ?";
 
@@ -109,5 +125,32 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
     static String RESOURCETYPE_FILTER = " and resource.resourceType = ?";
 
     static String RESOURCECODE_FILTER = " and resource.resourceCode = ?";
+
+    public List<ResourceParameter> findResourceParameterByEntity(Entity entity) {
+    	List<ResourceParameter> resourceParameterList = 
+    		(ArrayList<ResourceParameter>) find(RESOURCEPARAM_QRY, entity);
+    	return resourceParameterList;
+    }
+    
+    public List<ResourceParameter> findResourceParameterByParent(ResourceParameter parent) {
+    	List<ResourceParameter> resourceParameterList = 
+    		(ArrayList<ResourceParameter>) find(RESOURCEPARAM_QRY_BYPARENT, parent);
+    	return resourceParameterList;
+    }
+    
+    public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup) {
+    	List<ResourceParameterValue> resourceParameterValueList = 
+    		(ArrayList<ResourceParameterValue>) find(RESOURCEPARAMVALUE_QRY, resourceGroup);
+    	return resourceParameterValueList;
+    }
+    
+    static String RESOURCEPARAM_QRY = "from ResourceParameter param " +
+    	"where param.entity = ?";
+
+    static String RESOURCEPARAM_QRY_BYPARENT = "from ResourceParameter param " +
+        "where param.parent = ?";
+
+    static String RESOURCEPARAMVALUE_QRY = "from ResourceParameterValue paramValue " +
+		"where paramValue.resource = ?";
 
 }

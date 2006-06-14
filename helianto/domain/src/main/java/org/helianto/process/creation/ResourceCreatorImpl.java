@@ -96,8 +96,10 @@ public class ResourceCreatorImpl implements ResourceCreator {
 
     public ResourceParameter resourceParameterFactory(ResourceParameter parent, String parameterCode) 
     	throws NullEntityException {
-    return resourceParameterFactory(parent.getEntity(), parameterCode, parent.getUnit());
-}
+    	ResourceParameter resourceParameter = resourceParameterFactory(parent.getEntity(), parameterCode, parent.getUnit());
+    	resourceParameter.setParent(parent);
+    	return resourceParameter;
+    }
 
     public ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter, boolean suppressed) 
     	throws NullAssociationException {
