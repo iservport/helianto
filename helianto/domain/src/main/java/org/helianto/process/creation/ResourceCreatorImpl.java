@@ -19,6 +19,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Partner;
 import org.helianto.core.creation.NullAssociationException;
 import org.helianto.core.creation.NullEntityException;
+import org.helianto.core.creation.NullParentException;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
@@ -95,7 +96,10 @@ public class ResourceCreatorImpl implements ResourceCreator {
     }
 
     public ResourceParameter resourceParameterFactory(ResourceParameter parent, String parameterCode) 
-    	throws NullEntityException {
+    	throws NullEntityException, NullParentException {
+        if (parent==null) {
+            throw new NullParentException("Can't proceed ResourceParameter creation with a null parent");
+        }
     	ResourceParameter resourceParameter = resourceParameterFactory(parent.getEntity(), parameterCode, parent.getUnit());
     	resourceParameter.setParent(parent);
     	return resourceParameter;
