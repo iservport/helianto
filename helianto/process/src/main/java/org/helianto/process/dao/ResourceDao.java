@@ -116,5 +116,10 @@ public interface ResourceDao {
      * Find <code>ResourceParameterValue</code> by <code>ResourceGroup</code> or <code>Resource</code>.
      */
     public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup);
+
+    /**
+     * Find <code>ResourceParameter</code> by <code>Entity</code> and code.
+     */
+    public ResourceParameter findResourceParameterByEntityAndCode(Entity entity, String resourceParameterCode);
     	
 }

@@ -4,6 +4,7 @@ import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.creation.NullAssociationException;
 import org.helianto.core.creation.NullEntityException;
+import org.helianto.core.creation.NullParentException;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
@@ -95,12 +96,20 @@ public class ResourceCreatorImplTests extends TestCase {
     }
     
     public void testResourceParamCreationException() {
-    	try {
-    		resourceCreator.resourceParameterFactory(null, "", null);
-    		fail();
-    	} catch (NullEntityException e) {
-    		// expected
-    	}
+        Entity entity = null;
+        try {
+            resourceCreator.resourceParameterFactory(entity, "");
+            fail();
+        } catch (NullEntityException e) {
+            // expected
+        }
+        ResourceParameter parent = null;
+        try {
+            resourceCreator.resourceParameterFactory(parent, "");
+            fail();
+        } catch (NullParentException e) {
+            // expected
+        }
     }
     
     public void testResourceParamValueCreation() {

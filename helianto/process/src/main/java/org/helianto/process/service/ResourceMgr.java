@@ -22,6 +22,9 @@ import org.helianto.core.Entity;
 import org.helianto.core.Partner;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.ResourceParameter;
+import org.helianto.process.ResourceParameterValue;
+import org.helianto.process.Unit;
 
 /**
  * Base interface to deal with <code>Resource</code>s.
@@ -97,7 +100,7 @@ public interface ResourceMgr {
     /**
      * Load a <code>Resource</code>.
      */
-    public ResourceGroup load(Serializable key);
+    public ResourceGroup loadResourceGroup(Serializable key);
     
     /**
      * <p>
@@ -126,5 +129,97 @@ public interface ResourceMgr {
      * </p>  
      */
     public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode);
+    
+    /**
+     * <p>
+     * Create a <code>ResourceParameter</code> with a given <code>Unit</code>.
+     * </p>  
+     */
+    public ResourceParameter createResourceParameter(Entity entity, String parameterCode, Unit unit);
+
+    /**
+     * <p>
+     * Create a <code>ResourceParameter</code>.
+     * </p>  
+     */
+    public ResourceParameter createResourceParameter(Entity entity);
+
+    /**
+     * <p>
+     * Create a <code>ResourceParameter</code>.
+     * </p>  
+     */
+    public ResourceParameter createResourceParameter(Entity entity, String parameterCode);
+
+    /**
+     * <p>
+     * Create a <code>ResourceParameter</code> with a parent <code>ResourceParameter</code>.
+     * </p>  
+     */
+    public ResourceParameter createResourceParameter(ResourceParameter parent, String parameterCode);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#persistResourceParameter(ResourceParameter)}.
+     * </p>  
+     */
+    public void persistResourceParameter(ResourceParameter resourceParameter);
+    
+    /**
+     * <p>
+     * Create a <code>ParameterValue</code>.
+     * </p>  
+     */
+    public ResourceParameterValue createParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter);
+
+    /**
+     * <p>
+     * Create a suppressed <code>ParameterValue</code> to hide the occurrence of the 
+     * same parameter in any parent <code>ResourceGroup</code>.
+     * </p>  
+     */
+    public ResourceParameterValue createSuppressedParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter);
+
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#persistResourceParameterValue(ResourceParameterValue)}.
+     * </p>  
+     */
+    public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#loadResourceParameterValue(int)}.
+     * </p>  
+     */
+    public ResourceParameterValue loadResourceParameterValue(Serializable key);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#findResourceParameterByEntity(Entity)}.
+     * </p>  
+     */
+    public List<ResourceParameter> findResourceParameterByEntity(Entity entity);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#findResourceParameterByParent(ResourceParameter)}.
+     * </p>  
+     */
+    public List<ResourceParameter> findResourceParameterByParent(ResourceParameter parent);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#findResourceParameterValueByResource(ResourceGroup)}.
+     * </p>  
+     */
+    public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup);
+    
+    /**
+     * <p>
+     * Delegates to {@link ResourceDao#findResourceByEntityAndCode(Entity, String)}.
+     * </p>  
+     */
+    public ResourceParameter findResourceParameterByEntityAndCode(Entity entity, String resourceParameterCode);
     
 }

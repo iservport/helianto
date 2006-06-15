@@ -138,6 +138,10 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
     	return resourceParameterList;
     }
     
+    public ResourceParameter findResourceParameterByEntityAndCode(Entity entity, String resourceParameterCode) {
+        return (ResourceParameter) findUnique(RESOURCEPARAM_QRY+RESOURCEPARAMCODE_FILTER, entity, resourceParameterCode);
+    }
+
     public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup) {
     	List<ResourceParameterValue> resourceParameterValueList = 
     		(ArrayList<ResourceParameterValue>) find(RESOURCEPARAMVALUE_QRY, resourceGroup);
@@ -152,5 +156,7 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
 
     static String RESOURCEPARAMVALUE_QRY = "from ResourceParameterValue paramValue " +
 		"where paramValue.resource = ?";
+
+    static String RESOURCEPARAMCODE_FILTER = " and param.parameterCode = ?";
 
 }

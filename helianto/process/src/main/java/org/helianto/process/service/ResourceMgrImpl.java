@@ -26,6 +26,9 @@ import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.dao.PartnerDao;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.ResourceParameter;
+import org.helianto.process.ResourceParameterValue;
+import org.helianto.process.Unit;
 import org.helianto.process.creation.ResourceCreator;
 import org.helianto.process.creation.ResourceType;
 import org.helianto.process.dao.ResourceDao;
@@ -54,6 +57,15 @@ public class ResourceMgrImpl implements ResourceMgr {
     public void persistResourceGroup(ResourceGroup resourceGroup) {
         getResourceDao().persistResourceGroup(resourceGroup);
     }
+    
+    public ResourceGroup loadResourceGroup(Serializable key) {
+        if (key instanceof String) {
+            return getResourceDao().load(Integer.parseInt((String) key)); 
+        }
+        return getResourceDao().load(key);
+    }
+
+    //
 
     public Resource prepareResource(ResourceGroup parentGroup) {
         return prepareResource(parentGroup, "");
@@ -72,30 +84,84 @@ public class ResourceMgrImpl implements ResourceMgr {
 	}
 	
     public void persistResource(Resource resource) {
-        getResourceDao().persistResource(resource);
+        resourceDao.persistResource(resource);
+    }
+    
+    //
+    
+    public ResourceParameter createResourceParameter(Entity entity) {
+        return resourceCreator.resourceParameterFactory(entity, "");
     }
 
-    public ResourceGroup load(Serializable key) {
-        if (key instanceof String) {
-            return getResourceDao().load(Integer.parseInt((String) key)); 
-        }
-        return getResourceDao().load(key);
+    public ResourceParameter createResourceParameter(Entity entity, String parameterCode, Unit unit) {
+        return resourceCreator.resourceParameterFactory(entity, parameterCode, unit);
     }
+
+    public ResourceParameter createResourceParameter(Entity entity, String parameterCode) {
+        return resourceCreator.resourceParameterFactory(entity, parameterCode);
+    }
+
+    public ResourceParameter createResourceParameter(ResourceParameter parent, String parameterCode) {
+        return resourceCreator.resourceParameterFactory(parent, parameterCode);
+    }
+    
+    public void persistResourceParameter(ResourceParameter resourceParameter) {
+        resourceDao.persistResourceParameter(resourceParameter);
+    }
+    
+    //
+    
+    public ResourceParameterValue createParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
+        return resourceCreator.resourceParameterValueFactory(resourceGroup, resourceParameter);
+    }
+
+    public ResourceParameterValue createSuppressedParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
+        return resourceCreator.resourceParameterValueFactory(resourceGroup, resourceParameter, true);
+    }
+
+    public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue) {
+        resourceDao.persistResourceParameterValue(resourceParameterValue);
+    }
+    
+    public ResourceParameterValue loadResourceParameterValue(Serializable key) {
+        if (key instanceof String) {
+            return resourceDao.loadResourceParameterValue(Integer.parseInt((String) key)); 
+        }
+        return resourceDao.loadResourceParameterValue((Integer) key);
+    }
+    
+    //
 
     public List<ResourceGroup> findResourceByEntity(Entity entity) {
-        return getResourceDao().findResourceAndGroupByEntity(entity);
+        return resourceDao.findResourceAndGroupByEntity(entity);
     }
 
 	public List<ResourceGroup> findRootResourceByEntity(Entity entity) {
-        return getResourceDao().findRootResourceByEntity(entity);
+        return resourceDao.findRootResourceByEntity(entity);
 	}
 
     public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup) {
-        return getResourceDao().findResourceByParent(resourceGroup);
+        return resourceDao.findResourceByParent(resourceGroup);
     }
     
     public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode) {
-        return getResourceDao().findResourceByEntityAndCode(entity, resourceCode);
+        return resourceDao.findResourceByEntityAndCode(entity, resourceCode);
+    }
+    
+    public List<ResourceParameter> findResourceParameterByEntity(Entity entity) {
+        return resourceDao.findResourceParameterByEntity(entity);
+    }
+    
+    public List<ResourceParameter> findResourceParameterByParent(ResourceParameter parent) {
+        return resourceDao.findResourceParameterByParent(parent);
+    }
+    
+    public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup) {
+        return resourceDao.findResourceParameterValueByResource(resourceGroup);
+    }
+    
+    public ResourceParameter findResourceParameterByEntityAndCode(Entity entity, String resourceParameterCode) {
+        return resourceDao.findResourceParameterByEntityAndCode(entity, resourceParameterCode);
     }
     
     // accesssors and mutators

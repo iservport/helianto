@@ -21,8 +21,11 @@ import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.junit.AbstractIntegrationTest;
 import org.helianto.core.service.SimpleCoreMgr;
+import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
+import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.creation.ResourceCreator;
+import org.helianto.process.creation.ResourceType;
 import org.helianto.process.dao.ResourceDao;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
@@ -35,11 +38,7 @@ public class ResourceDaoImplParamTests extends AbstractIntegrationTest {
 //	public void persistResourceParameter(ResourceParameter resourceParameter)
 //	public List<ResourceParameter> findResourceParameterByEntity(Entity entity)
     public void testPersistResourceParameter() {
-    	String generatedCode = generateKey(20);
-    	ResourceParameter resourceParameter = 
-    		resourceCreator.resourceParameterFactory(entity, generatedCode);
-    	resourceDao.persistResourceParameter(resourceParameter);
-    	hibernateTemplate.flush();
+    	ResourceParameter resourceParameter = helpCreateAndPersist(entity);
     	
     	List<ResourceParameter> resourceParameterList = 
     		resourceDao.findResourceParameterByEntity(entity);
@@ -62,20 +61,31 @@ public class ResourceDaoImplParamTests extends AbstractIntegrationTest {
 
     public void testDupPersistResourceParameter() {
         String generatedCode = generateKey(20);
-    	ResourceParameter resourceParameter = 
-    		resourceCreator.resourceParameterFactory(entity, generatedCode);
-    	resourceDao.persistResourceParameter(resourceParameter);
+        ResourceParameter resourceParameter = 
+            resourceCreator.resourceParameterFactory(entity, generatedCode);
+        resourceDao.persistResourceParameter(resourceParameter);
         hibernateTemplate.flush();
 
         try {
-        	ResourceParameter copy = 
-        		resourceCreator.resourceParameterFactory(entity, generatedCode);
+            ResourceParameter copy = 
+                resourceCreator.resourceParameterFactory(entity, generatedCode);
             resourceDao.persistResourceParameter(copy);
             hibernateTemplate.flush();
             fail();
         } catch (DataIntegrityViolationException e) {
             // expected
         }
+    }
+
+    public void testFindUniqueResourceParameter() {
+        String generatedCode = generateKey(20);
+        ResourceParameter resourceParameter = 
+            resourceCreator.resourceParameterFactory(entity, generatedCode);
+        resourceDao.persistResourceParameter(resourceParameter);
+        hibernateTemplate.clear();
+
+        ResourceParameter retr = resourceDao.findResourceParameterByEntityAndCode(entity, generatedCode);
+        assertEquals(retr, resourceParameter);
     }
 
 //	public List<ResourceParameter> findResourceParameterByParent(ResourceParameter parent)
@@ -103,7 +113,76 @@ public class ResourceDaoImplParamTests extends AbstractIntegrationTest {
     	ResourceParameter retr = resourceParameterList.get(0);
     	assertEquals(retr, resourceParameter);
     }
+    
+//    public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue)
+//    public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup)
+    public void testPersistResourceParameterValue() {
+        ResourceParameter resourceParameter = 
+            helpCreateAndPersist(entity);
+        ResourceGroup resourceGroup = 
+            resourceCreator.resourceGroupFactory(entity, "RESOURCE", ResourceType.EQUIPMENT);
+        resourceDao.persistResourceGroup(resourceGroup);
+        ResourceParameterValue resourceParameterValue = 
+            resourceCreator.resourceParameterValueFactory(resourceGroup, resourceParameter);
+        resourceDao.persistResourceParameterValue(resourceParameterValue);
+        hibernateTemplate.flush();
+        
+        List<ResourceParameterValue> resourceParameterValueList = 
+            resourceDao.findResourceParameterValueByResource(resourceGroup);
+        assertEquals(1, resourceParameterValueList.size());
+        ResourceParameterValue retr = resourceParameterValueList.get(0);
+        assertEquals(retr, resourceParameterValue);
+    }
 
+    public void testDuplicateResourceParameterValue() {
+        ResourceParameter resourceParameter = 
+            helpCreateAndPersist(entity);
+        ResourceGroup resourceGroup = 
+            resourceCreator.resourceGroupFactory(entity, "RESOURCE", ResourceType.EQUIPMENT);
+        resourceDao.persistResourceGroup(resourceGroup);
+        ResourceParameterValue resourceParameterValue = 
+            resourceCreator.resourceParameterValueFactory(resourceGroup, resourceParameter);
+        resourceDao.persistResourceParameterValue(resourceParameterValue);
+        hibernateTemplate.flush();
+        
+        try {
+            ResourceParameterValue copy = 
+                resourceCreator.resourceParameterValueFactory(resourceGroup, resourceParameter);
+            resourceDao.persistResourceParameterValue(copy);
+            hibernateTemplate.flush();
+            fail();
+        } catch (DataIntegrityViolationException e) {
+            // expected
+        }
+    }
+
+    public void testLoadResourceParameterValue() {
+        ResourceParameter resourceParameter = 
+            helpCreateAndPersist(entity);
+        ResourceGroup resourceGroup = 
+            resourceCreator.resourceGroupFactory(entity, "RESOURCE", ResourceType.EQUIPMENT);
+        resourceDao.persistResourceGroup(resourceGroup);
+        ResourceParameterValue resourceParameterValue = 
+            resourceCreator.resourceParameterValueFactory(resourceGroup, resourceParameter);
+        resourceDao.persistResourceParameterValue(resourceParameterValue);
+        hibernateTemplate.clear();
+        
+        ResourceParameterValue retr = 
+            resourceDao.loadResourceParameterValue(resourceParameterValue.getId());
+        assertEquals(retr, resourceParameterValue);
+    }
+
+    //
+
+    private ResourceParameter helpCreateAndPersist(Entity entity) {
+        String generatedCode2 = generateKey(20);
+        ResourceParameter resourceParameter = 
+            resourceCreator.resourceParameterFactory(entity, generatedCode2);
+        resourceDao.persistResourceParameter(resourceParameter);
+        hibernateTemplate.flush();
+        return resourceParameter;
+    }
+    
     private ResourceCreator resourceCreator;
 
     private SimpleCoreMgr simpleCoreMgr;
