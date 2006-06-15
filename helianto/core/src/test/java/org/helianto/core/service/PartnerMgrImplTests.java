@@ -37,29 +37,29 @@ public class PartnerMgrImplTests extends TestCase {
 
 //  public void persistCustomer(Customer customer);
     public void testPersistCustomer() {
-//        Customer customer = new Customer();
-//        partnerDao.persistCustomer(customer);
-//        replay(partnerDao);
-//        partnerMgr.persistCustomer(customer);
-//        verify(partnerDao);
+        Customer customer = new Customer();
+        partnerDao.persistCustomer(customer);
+        replay(partnerDao);
+        partnerMgr.persistCustomer(customer);
+        verify(partnerDao);
     }
 
 //	public void persistSupplier(Supplier supplier);
     public void testPersistSupplier() {
-//    	Supplier supplier = new Supplier();
-//        partnerDao.persistSupplier(supplier);
-//        replay(partnerDao);
-//        partnerMgr.persistSupplier(supplier);
-//        verify(partnerDao);
+    	Supplier supplier = new Supplier();
+        partnerDao.persistSupplier(supplier);
+        replay(partnerDao);
+        partnerMgr.persistSupplier(supplier);
+        verify(partnerDao);
     }
 
 //	public void persistContact(Contact contact);
     public void testPersistContact() {
-//    	Contact contact = new Contact();
-//        partnerDao.persistContact(contact);
-//        replay(partnerDao);
-//        partnerMgr.persistContact(contact);
-//        verify(partnerDao);
+    	Contact contact = new Contact();
+        partnerDao.persistContact(contact);
+        replay(partnerDao);
+        partnerMgr.persistContact(contact);
+        verify(partnerDao);
     }
 
 //	public Customer loadCustomer(Long key);
@@ -79,42 +79,42 @@ public class PartnerMgrImplTests extends TestCase {
 
 //	public List<Customer> findCustomerByEntity(Entity entity);
     public void testFindCustomerByEntity() {
-//        Entity entity = new Entity();
-//        List<Customer> customerList = new ArrayList<Customer>();
-//    	expect(partnerDao.findCustomerByEntity(entity)).andReturn(customerList);
-//        replay(partnerDao);
-//        assertSame(customerList, partnerMgr.findCustomerByEntity(entity));
-//        verify(partnerDao);
+        Entity entity = new Entity();
+        List<Customer> customerList = new ArrayList<Customer>();
+    	expect(partnerDao.findCustomerByEntity(entity)).andReturn(customerList);
+        replay(partnerDao);
+        assertSame(customerList, partnerMgr.findCustomerByEntity(entity));
+        verify(partnerDao);
     }
 
 //  public List<Manufacturer> findManufacturerByEntity(Entity entity);
     public void testFindManufacturerByEntity() {
-//        Entity entity = new Entity();
-//        List<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
-//        expect(partnerDao.findManufacturerByEntity(entity, -1)).andReturn(manufacturerList);
-//        replay(partnerDao);
-//        assertSame(manufacturerList, partnerMgr.findManufacturerByEntity(entity));
-//        verify(partnerDao);
+        Entity entity = new Entity();
+        List<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
+        expect(partnerDao.findManufacturerByEntity(entity, -1)).andReturn(manufacturerList);
+        replay(partnerDao);
+        assertSame(manufacturerList, partnerMgr.findManufacturerByEntity(entity));
+        verify(partnerDao);
     }
 
 //  public List<Manufacturer> findManufacturerByEntity(Entity entity, int priority);
     public void testFindManufacturerByEntityAndPriority() {
-//        Entity entity = new Entity();
-//        List<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
-//        expect(partnerDao.findManufacturerByEntity(entity, 0)).andReturn(manufacturerList);
-//        replay(partnerDao);
-//        assertSame(manufacturerList, partnerMgr.findManufacturerByEntity(entity, 0));
-//        verify(partnerDao);
+        Entity entity = new Entity();
+        List<Manufacturer> manufacturerList = new ArrayList<Manufacturer>();
+        expect(partnerDao.findManufacturerByEntity(entity, 0)).andReturn(manufacturerList);
+        replay(partnerDao);
+        assertSame(manufacturerList, partnerMgr.findManufacturerByEntity(entity, 0));
+        verify(partnerDao);
     }
 
 //	public List findContactByPartner(Partner partner);
     public void testFindContactByPartner() {
-//    	Partner partner = new Partner();
-//    	List<Partner> contactList = new ArrayList<Partner>();
-//        expect(partnerDao.findContactByPartner(partner)).andStubReturn(contactList);
-//        replay(partnerDao);
-//    	assertSame(contactList, partnerMgr.findContactByPartner(partner));
-//    	verify(partnerDao);
+    	Partner partner = new Partner();
+    	List<Partner> contactList = new ArrayList<Partner>();
+        expect(partnerDao.findContactByPartner(partner)).andStubReturn(contactList);
+        replay(partnerDao);
+    	assertSame(contactList, partnerMgr.findContactByPartner(partner));
+    	verify(partnerDao);
     }
 
 //	public void bindCustomerToEntity(Customer customer, Entity entity);
@@ -140,6 +140,7 @@ public class PartnerMgrImplTests extends TestCase {
         partnerDao = createMock(PartnerDao.class);
         partnerMgr = new PartnerMgrImpl();
         partnerMgr.setPartnerDao(partnerDao);
+        reset(partnerDao);
     }
     
 }
