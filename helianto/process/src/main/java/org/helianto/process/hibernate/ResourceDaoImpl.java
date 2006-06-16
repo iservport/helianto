@@ -57,6 +57,10 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
         return (ResourceGroup) load(ResourceGroup.class, key);
     }
     
+	public ResourceParameter loadResourceParameter(Integer key) {
+		return (ResourceParameter) load(ResourceParameter.class, key);
+	}
+
     public ResourceParameterValue loadResourceParameterValue(int key) {
     	return (ResourceParameterValue) load(ResourceParameterValue.class, key);
     }

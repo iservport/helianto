@@ -109,6 +109,13 @@ public class ResourceMgrImpl implements ResourceMgr {
         resourceDao.persistResourceParameter(resourceParameter);
     }
     
+    public ResourceParameter loadResourceParameter(Serializable key) {
+        if (key instanceof String) {
+            return resourceDao.loadResourceParameter(Integer.parseInt((String) key)); 
+        }
+        return resourceDao.loadResourceParameter((Integer) key);
+    }
+    
     //
     
     public ResourceParameterValue createParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {

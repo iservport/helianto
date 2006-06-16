@@ -14,19 +14,19 @@ public enum ResourceState {
     /**
      * The resource is active.
      */
-    ACTIVE(0),
+    ACTIVE('A'),
     /**
      * The resource is inactive.
      */
-    INACTIVE(1);
+    INACTIVE('I');
     
-    private int value;
+    private char value;
     
-    private ResourceState(int value) {
+    private ResourceState(char value) {
         this.value = value;
     }
     
-    public int getValue() {
+    public char getValue() {
         return value;
     }
 

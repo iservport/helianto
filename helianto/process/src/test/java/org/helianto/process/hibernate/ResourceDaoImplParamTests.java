@@ -88,6 +88,18 @@ public class ResourceDaoImplParamTests extends AbstractIntegrationTest {
         assertEquals(retr, resourceParameter);
     }
 
+    public void testLoadResourceParameter() {
+        String generatedCode = generateKey(20);
+        ResourceParameter resourceParameter = 
+            resourceCreator.resourceParameterFactory(entity, generatedCode);
+        resourceDao.persistResourceParameter(resourceParameter);
+        hibernateTemplate.clear();
+        
+        ResourceParameter retr = 
+            resourceDao.loadResourceParameter(resourceParameter.getId());
+        assertEquals(retr, resourceParameter);
+    }
+
 //	public List<ResourceParameter> findResourceParameterByParent(ResourceParameter parent)
     public void testPersistResourceParameterParent() {
         // create parent

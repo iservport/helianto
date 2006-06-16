@@ -167,6 +167,13 @@ public interface ResourceMgr {
     
     /**
      * <p>
+     * Delegates to {@link ResourceDao#loadResourceParameter(int)}.
+     * </p>  
+     */
+    public ResourceParameter loadResourceParameter(Serializable key);
+    
+    /**
+     * <p>
      * Create a <code>ParameterValue</code>.
      * </p>  
      */

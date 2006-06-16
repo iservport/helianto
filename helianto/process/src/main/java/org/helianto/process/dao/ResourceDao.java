@@ -44,11 +44,17 @@ public interface ResourceDao {
 	public void persistResourceParameter(ResourceParameter resourceParameter);
 
     /**
+     * Load a <code>ResourceParameter</code>.
+     */
+	public ResourceParameter loadResourceParameter(Integer integer);
+	
+    /**
      * Persist a <code>ResourceParameterValue</code>.
      */
 	public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue);
 	
-    /**
+    // FIXME
+	/**
      * Load a <code>Resource</code>.
      */
     public ResourceGroup load(Serializable key);
@@ -121,5 +127,5 @@ public interface ResourceDao {
      * Find <code>ResourceParameter</code> by <code>Entity</code> and code.
      */
     public ResourceParameter findResourceParameterByEntityAndCode(Entity entity, String resourceParameterCode);
-    	
+
 }
