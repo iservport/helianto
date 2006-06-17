@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 16/06/2006 13:59:00 by Hibernate Tools 3.1.0.beta4
+// Generated 16/06/2006 19:27:59 by Hibernate Tools 3.1.0.beta4
 
 import java.math.BigDecimal;
 
