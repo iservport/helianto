@@ -15,7 +15,8 @@
 
 package org.helianto.process.service;
 
-import java.util.Collection;
+import java.io.Serializable;
+import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.service.PartnerMgr;
@@ -37,57 +38,19 @@ import org.helianto.process.Unit;
 public interface ProcessMgr extends PartnerMgr {
 
     /**
-     * Factory method to create a <code>Resource</code> group.
-     * 
-     * <p>
-     * <code>Resource</code> groups must have a null parent.
-     * </p>
-     */
-    public Resource resourceGroupFactory(Entity entity);
-    
-    /**
-     * Factory method to create a <code>Resource</code>.
-     * 
-     * <p>
-     * <code>Resource</code> groups must have a valid parent.
-     * </p>
-     */
-    public Resource resourceFactory(Resource parent);
-    
-    /**
      * Unit factory method.
      */
-    public Unit unitFactory(Entity entity, String unitCode, String unitName);
-    
-    /**
-     * Unit factory method.
-     */
-    public Unit unitFactory(Unit parent, String unitCode, String unitName);
+    public Unit createUnit(Entity entity);
     
     /**
      * Material factory method.
      */
-    public MaterialType materialFactory(Unit unit, String materialName);
-    
-    /**
-     * Material factory method.
-     */
-    public MaterialType materialFactory(MaterialType parent, Unit unit, String materialName);
-    
-    /**
-     * Product factory method.
-     */
-//    public Product productFactory(Unit unit, Material material, String productCode, Process process);
+    public MaterialType createMaterialType(Unit unit);
     
     /**
      * Part factory method.
      */
-    public Part partFactory(Entity entity, String partCode, boolean hasDrawing);
-    
-    /**
-     * Part factory method.
-     */
-    public Part partFactory(Part parent, String partCode, boolean hasDrawing, double coefficient);
+    public Part createPart(Entity entity, boolean hasDrawing);
     
     /**
      * Part association method.
@@ -97,22 +60,17 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Process factory method.
      */
-    public Process processFactory(Entity entity, String processCode);
+    public Process createProcess(Entity entity);
     
     /**
      * Operation factory method.
      */
-    public Operation operationFactory(Process process, int sequence, String operationCode, long execTime);
+    public Operation createOperation(Process process);
     
     /**
      * Setup factory method.
      */
-    public Setup setupFactory(Operation operation, Resource resource, int priority, long setupTime, long transportTime); 
-    
-    /**
-     * Persist a <code>Resource</code>.
-     */
-    public void persistResource(Resource resource);
+    public Setup createSetupFactory(Operation operation, Resource resource); 
     
     /**
      * Persist an <code>Unit</code>.
@@ -145,58 +103,38 @@ public interface ProcessMgr extends PartnerMgr {
     public void persistSetup(Setup setup);
     
     /**
-     * Load a <code>Resource</code>.
-     */
-    public Resource loadResource(Integer key);
-    
-    /**
      * Load an <code>Unit</code>.
      */
-    public Unit loadUnit(Integer key);
+    public Unit loadUnit(Serializable key);
     
     /**
      * Load a <code>Material</code>.
      */
-    public MaterialType loadMaterial(Long key);
+    public MaterialType loadMaterial(Serializable key);
     
     /**
      * Load a <code>Part</code>.
      */
-    public Part loadPart(Long key);
+    public Part loadPart(Serializable key);
     
     /**
      * Load a <code>Process</code>.
      */
-    public Process loadProcess(Long key);
+    public Process loadProcess(Serializable key);
     
     /**
      * Load an <code>Operation</code>.
      */
-    public Operation loadOperation(Long key);
+    public Operation loadOperation(Serializable key);
     
     /**
      * Load a <code>Setup</code>.
      */
-    public Setup loadSetup(Long key);
+    public Setup loadSetup(Serializable key);
     
     /**
-     * Find <code>Resource</code>s by <code>Entity</code>.
+     * Find <code>Unit</code> list for this <code>Entity</code>
      */
-    public Collection findResources(Entity entity);
-
-    /**
-     * Find <code>Resource</code>s by <code>Entity</code> alias.
-     */
-    public Collection findResources(String entityAlias);
+    public List<Unit> findUnitByEntity(Entity entity);
     
-    /**
-     * Find <code>Resource</code> groups by <code>Entity</code>.
-     */
-    public Collection findResourceGroups(Entity entity);
-
-    /**
-     * Find <code>Resource</code>s by group.
-     */
-    public Collection findResourcesByGroup(Resource resource);
-
 }

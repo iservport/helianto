@@ -44,4 +44,30 @@
 		</property>
 	</bean>
 	
+	<!--
+			Process creator implementation	
+	-->
+	<bean id="processCreator" 
+		class="org.helianto.process.creation.ProcessCreatorImpl"/>
+	<!--
+			process dao	
+	-->
+	<bean id="processDao" class="org.helianto.process.hibernate.ProcessDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			process service bean	
+	-->
+	<bean id="processMgr" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="processTarget"
+				class="org.helianto.process.service.ProcessMgrImpl">
+				<property name="processCreator" ref="processCreator"/>
+				<property name="processDao" ref="processDao"/>
+			</bean>
+		</property>
+	</bean>
+	
 </beans>
