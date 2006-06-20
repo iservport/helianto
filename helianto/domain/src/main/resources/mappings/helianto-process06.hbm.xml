@@ -58,6 +58,7 @@ A class to represent a unit.
 		-->
 		<property name="unitCode" type="string">
 			<meta attribute="use-in-equals">true</meta>
+			<meta attribute="use-in-tostring">true</meta>
 			<column name="unitCode" length="12" unique-key="entity"
 				not-null="true" />
 		</property>
