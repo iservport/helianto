@@ -60,7 +60,27 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     public Division createDivision(Entity entity, String alias) {
         return  partnerCreator.divisionFactory(entity, alias);
     }
+    
+    public Division installWithDefaults(String alias) {
+        try {
+            DefaultEntity defaultEntity = createDefaultEntity(alias);
+            persistDefaultEntity(defaultEntity);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+defaultEntity);
+            }
+            Division defaultDivision = createDefaultDivision(defaultEntity);
+            persistDivision(defaultDivision);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+defaultDivision);
+            }
+            return defaultDivision;
+        } catch (Exception e) {
+            throw new RuntimeException("Installation with defaults failed ", e);
+        }
+    }
 
+    
+    @Deprecated
     public DefaultEntity installDefaultEntity(String alias) {
         try {
             DefaultEntity defaultEntity = createDefaultEntity(alias);

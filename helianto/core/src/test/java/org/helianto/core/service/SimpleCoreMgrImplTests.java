@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
+import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.User;
@@ -31,7 +32,12 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         super.onSetUpInTransaction();
         defaultEntity = simpleCoreMgr.createDefaultEntity("TEST");
     }
-	
+    
+//    public void testInstallWithDefaults() {
+//    	Division division = simpleCoreMgr.installWithDefaults("TEST");
+//    	assertEquals("TEST", division.getAlias());
+//    }
+//	
     public void testCreateDefaultEntitySuccess() {
         
         assertEquals("TEST",defaultEntity.getEntity().getAlias());

@@ -44,6 +44,21 @@ import org.helianto.core.security.SecureUserDetails;
  * @version $Id$
  */
 public interface SimpleCoreMgr {
+	
+	/**
+	 * <p>Create a default installation.</p>
+	 * <p>A default installation creates and persists all
+	 * domain objects required to support a <code>Division</code>, i.e.,
+	 * a parent <code>Entity</code> for the <code>Division</code>
+	 * (already registered as a <code>DefaultEntity</code>) and the
+	 * corresponding <code>Home</code>. The <code>Division</code> is created as
+	 * a strong <code>Partner</code> subclass, where the <code>related</code>
+	 * property exposes the same reference to the parent <code>Entity</code>.
+	 * </p>
+	 * @param alias
+	 * @return
+	 */
+	public Division installWithDefaults(String alias);
     
     /**
      * <p>A default entity will be required to create a simple user.</p>
