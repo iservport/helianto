@@ -17,6 +17,8 @@ package org.helianto.core.dao;
 
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
+import org.helianto.core.InternalEnumerator;
+import org.helianto.core.creation.NullEntityException;
 
 /**
  * Entity data access interface.
@@ -64,5 +66,20 @@ public interface EntityDao {
      * distinguished by priority.</p>
      */
     public Entity findDefaultEntity(int priority);
+    
+    /**
+     * Find last <code>InternalEnumerator</code> for the
+     * <code>Entity</code> and type.
+     * @param entity
+     * @param typeName
+     * @return
+     * @throws NullEntityException
+     */public InternalEnumerator findInternalEnumerator(Entity entity, String typeName) 
+		throws NullEntityException;
+     
+     /**
+      * Persist <code>InternalEnumerator</code>.
+      */
+     public void persistInternalEnumerator(InternalEnumerator internalEnumerator);
     
 }

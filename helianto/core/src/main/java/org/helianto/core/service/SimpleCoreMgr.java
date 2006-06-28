@@ -191,4 +191,12 @@ public interface SimpleCoreMgr {
      */
     public void persistPersonalData(SecureUserDetails secureUserDetails);
     
+    /**
+     * Find the next available integer for the <code>Entity</code> to supply 
+     * to a key identified by a <code>typeName</code>.
+     * @param entity
+     * @param typeName
+     */
+    public int findNextInternalNumber(Entity entity, String typeName);
+    
 }

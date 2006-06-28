@@ -25,6 +25,7 @@ import org.helianto.core.DefaultEntity;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
+import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.creation.PartnerCreator;
 import org.helianto.core.creation.UserCreator;
@@ -226,6 +227,25 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     public void persistPersonalData(SecureUserDetails secureUserDetails) {
         userDao.persistCredential(secureUserDetails.getCredential());
     }
+    
+    public int findNextInternalNumber(Entity entity, String typeName) {
+        InternalEnumerator enumerator = entityDao.findInternalEnumerator(entity, typeName);
+        if (enumerator!=null) {
+            int lastNumber = enumerator.getLastNumber();
+            enumerator.setLastNumber(lastNumber+1);
+            entityDao.persistInternalEnumerator(enumerator);
+            return lastNumber;
+        } else  {
+            enumerator = new InternalEnumerator();
+            enumerator.setEntity(entity);
+            enumerator.setTypeName(typeName);
+            enumerator.setLastNumber(2);
+            entityDao.persistInternalEnumerator(enumerator);
+            return 1;
+        }
+    }
+    
+
 
     // logger
     
