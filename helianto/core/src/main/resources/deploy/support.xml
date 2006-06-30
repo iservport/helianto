@@ -19,8 +19,8 @@
 	<!-- 
 			JSE5 style annotation post processor
     -->
-	<bean 
-	    class="org.springframework.beans.factory.annotation.RequiredBeanFactoryPostProcessor"/>
+	<!-- bean 
+	    class="org.springframework.beans.factory.annotation.RequiredBeanFactoryPostProcessor"/-->
 	<!-- 
 			Messages
     -->
