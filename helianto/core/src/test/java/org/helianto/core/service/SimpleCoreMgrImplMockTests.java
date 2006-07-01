@@ -56,7 +56,7 @@ public class SimpleCoreMgrImplMockTests extends TestCase {
         UserDetailsAdapter secureUser = new UserDetailsAdapter(userLog);
         
         expect(mock.createAndPersistUserLog(users[1]))
-            .andReturn(isA(UserLog.class));
+            .andReturn(userLog);
         replay(mock);
         assertTrue(simpleCoreMgr.switchAuthorizedUser(secureUser, "ENT1"));
         reset(mock);
