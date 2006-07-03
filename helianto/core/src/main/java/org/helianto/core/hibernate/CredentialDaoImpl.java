@@ -56,11 +56,12 @@ public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
     }
 
     public Credential findCredentialByIdentity(Identity identity) {
-        return (Credential) findUnique(CREDENTIAL_QRY, identity);
+        logger.info("*** Finding "+identity);
+        return (Credential) findUnique(CREDENTIAL_QRY, identity.getId());
     }
         
     static final String CREDENTIAL_QRY = 
         "from Credential credential " +
-        "where credential.identity = ?";
+        "where credential.identity.id = ?";
     
 }

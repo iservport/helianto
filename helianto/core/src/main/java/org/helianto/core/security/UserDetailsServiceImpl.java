@@ -66,7 +66,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("No Credential with principal: "+principal);
         } else {
             for (User u: identity.getUsers()) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Guess user from current identity "+identity);
+                }
                 return u;
+            }
+            if (logger.isDebugEnabled()) {
+                logger.debug("Unable to guess user from current identity "+identity);
             }
             User auto = userDao.autoCreateAndPersistUser(principal);
             if (auto != null) {
@@ -106,7 +112,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     logger.debug("Case 2, UserLog is "+userLog);
                 }
             }
-            Credential credential = userDao.findCredentialByIdentity(userLog.getUser().getIdentity());
+            Identity identity = userLog.getUser().getIdentity();
+            if (logger.isDebugEnabled()) {
+                logger.debug("Identity is "+identity);
+            }
+            Credential credential = userDao.findCredentialByIdentity(identity);
             return new UserDetailsAdapter(userLog, credential);
         } catch (Exception e) {
             // case 3: fail to login (bad passwd, not registered as user, other)

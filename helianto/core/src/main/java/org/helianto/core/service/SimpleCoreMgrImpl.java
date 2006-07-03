@@ -46,6 +46,24 @@ import org.helianto.core.security.UserDetailsAdapter;
  */
 public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     
+    public Identity createIdentity() {
+        return userCreator.identityFactory("", "");
+    }
+    
+    public void persistIdentity(Identity identity) {
+        userDao.persistIdentity(identity);
+    }
+
+    public Credential createCredential(Identity identity) {
+        return userCreator.credentialFactory(identity);
+    }
+    
+    public void persistCredential(Credential credential) {
+        userDao.persistCredential(credential);
+    }
+
+    private final static String CREDENTIAL = "CREDENTIAL";
+
     public DefaultEntity createDefaultEntity(String alias) {
         Home home = partnerCreator.homeFactory(alias);
         Entity entity = partnerCreator.entityFactory(home, alias);
@@ -128,16 +146,6 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         return entity;
     }
     
-    public Identity createIdentity() {
-        return userCreator.identityFactory("", "");
-    }
-    
-    public Credential createCredential(Identity identity) {
-        return userCreator.credentialFactory(identity);
-    }
-    
-    private final static String CREDENTIAL = "CREDENTIAL";
-
     public User createSimpleUser() {
         Entity entity = findDefaultEntity();
         return createSimpleUser(entity);

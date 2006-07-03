@@ -38,7 +38,7 @@ public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
     }
 
     public Entity findEntityByHomeAndAlias(String homeName, String alias) {
-        return (Entity) findUnique(ENTITY_QRY, new Object[] {homeName, alias});
+        return (Entity) findUnique(ENTITY_QRY, homeName, alias);
     }
 
     static final String ENTITY_QRY = 

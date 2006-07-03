@@ -45,7 +45,23 @@ import org.helianto.core.security.SecureUserDetails;
  * @version $Id$
  */
 public interface SimpleCoreMgr {
-	
+    
+    /**
+     * <p>An empty <code>Identity</code> to be 
+     * submitted to the presentation layer.</p>
+     */
+    public Identity createIdentity();
+    
+    /**
+     * <p>Persist <code>Identity</code>.</p>
+     */
+    public void persistIdentity(Identity identity);
+    
+    /**
+     * <p>A <code>Credential</code>.</p>
+     */
+    public Credential createCredential(Identity identity);
+    
 	/**
 	 * <p>Create a default installation.</p>
 	 * <p>A default installation creates and persists all
@@ -60,6 +76,11 @@ public interface SimpleCoreMgr {
 	 * @return
 	 */
 	public Division installWithDefaults(String alias);
+    
+    /**
+     * <p>Persist <code>Credential</code>.</p>
+     */
+    public void persistCredential(Credential credential);
     
     /**
      * <p>A default entity will be required to create a simple user.</p>
@@ -107,17 +128,6 @@ public interface SimpleCoreMgr {
      * <p>Find the default entity with priority zero.</p>
      */
     public Entity findDefaultEntity();
-    
-    /**
-     * <p>An empty <code>Identity</code> to be 
-     * submitted to the presentation layer.</p>
-     */
-    public Identity createIdentity();
-    
-    /**
-     * <p>A <code>Credential</code>.</p>
-     */
-    public Credential createCredential(Identity identity);
     
     /**
      * <p>A simple <code>User</code> creation that hides an empty <code>Credential</code>
