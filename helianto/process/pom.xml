@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-process</artifactId>
-	<version>0.0.1-20060610</version>
+	<version>0.0.1-m1</version>
 	<name>The Helianto Project Process Module</name>
 	
 	<description>Helianto project core module.</description>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>org.helianto</groupId>
 			<artifactId>helianto-core</artifactId>
-			<version>0.0.1-20060610</version>
+			<version>0.0.1-m1</version>
 		</dependency>
 	</dependencies>
 
