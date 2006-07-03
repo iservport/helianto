@@ -24,7 +24,7 @@
 <hibernate-mapping default-lazy="false">
 	<class table="core_contact" 
 		name="org.helianto.core.Contact" 
-		discriminator-value="false">
+		discriminator-value="C">
 		<!-- 
 				CONTACT
 				============================================= 
@@ -42,17 +42,17 @@ The contact domain class.
 		<id name="id" type="long">
 			<generator class="native"/>
 		</id>
-		<discriminator column="resource" type="boolean"/>
+		<discriminator column="type" type="char"/>
 		<many-to-one name="partner" 
 			class="org.helianto.core.Partner">
 			<meta attribute="use-in-equals">true</meta>
 			<column name="partnerId" unique-key="unNumber" 
 				not-null="true"/>
 		</many-to-one>
-		<many-to-one name="credential" cascade="save-update"
-			class="org.helianto.core.Credential">
+		<many-to-one name="identity" cascade="save-update"
+			class="org.helianto.core.Identity">
 			<meta attribute="use-in-equals">true</meta>
-			<column name="credentialId" unique-key="unNumber" 
+			<column name="idntId" unique-key="unNumber" 
 				not-null="true"/>
 		</many-to-one>
 		<property name="internalNumber" type="int">
@@ -68,7 +68,7 @@ The contact domain class.
 			<one-to-many class="org.helianto.core.Phone"/>
 		</set-->
 		<subclass name="org.helianto.core.HumanResource" 
-			discriminator-value="true">
+			discriminator-value="H">
 			<!-- 
 				HUMAN RESOURCE
 				============================================= 
@@ -79,7 +79,7 @@ The contact domain class.
 			<property name="resourceCategory" type="int" not-null="true"/>
 			<property name="born" type="date"/>
 			<property name="hired" type="date"/>
-			<property name="terminated" type="date"/>
+			<property name="dismissed" type="date"/>
 		</subclass>
 	</class>
 </hibernate-mapping>
