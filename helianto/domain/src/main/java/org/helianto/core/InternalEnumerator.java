@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 16/06/2006 13:58:59 by Hibernate Tools 3.1.0.beta4
+// Generated 03/07/2006 15:46:47 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -22,7 +22,7 @@ public class InternalEnumerator  implements java.io.Serializable {
      private int id;
      private Entity entity;
      private String typeName;
-     private int lastNumber;
+     private long lastNumber;
 
 
     // Constructors
@@ -33,7 +33,7 @@ public class InternalEnumerator  implements java.io.Serializable {
 
     
     /** full constructor */
-    public InternalEnumerator(Entity entity, String typeName, int lastNumber) {
+    public InternalEnumerator(Entity entity, String typeName, long lastNumber) {
         this.entity = entity;
         this.typeName = typeName;
         this.lastNumber = lastNumber;
@@ -67,15 +67,29 @@ public class InternalEnumerator  implements java.io.Serializable {
         this.typeName = typeName;
     }
 
-    public int getLastNumber() {
+    public long getLastNumber() {
         return this.lastNumber;
     }
     
-    public void setLastNumber(int lastNumber) {
+    public void setLastNumber(long lastNumber) {
         this.lastNumber = lastNumber;
     }
    
 
+    /**
+     * toString
+     * @return String
+     */
+     public String toString() {
+	  StringBuffer buffer = new StringBuffer();
+
+      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+      buffer.append("entity").append("='").append(getEntity()).append("' ");			
+      buffer.append("typeName").append("='").append(getTypeName()).append("' ");			
+      buffer.append("]");
+      
+      return buffer.toString();
+     }
 
 
    public boolean equals(Object other) {

@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 16/06/2006 13:59:01 by Hibernate Tools 3.1.0.beta4
+// Generated 03/07/2006 15:46:54 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -20,7 +20,7 @@ public class Individual extends org.helianto.core.AddressableEntity implements j
 
     // Fields    
 
-     private Credential credential;
+     private Identity identity;
 
 
     // Constructors
@@ -35,21 +35,21 @@ public class Individual extends org.helianto.core.AddressableEntity implements j
     }
     
     /** full constructor */
-    public Individual(Home home, String alias, String entityAddress1, String entityAddress2, String entityAddress3, String entityCityName, Province province, String entityPostalCode, Credential credential) {
+    public Individual(Home home, String alias, String entityAddress1, String entityAddress2, String entityAddress3, String entityCityName, Province province, String entityPostalCode, Identity identity) {
         super(home, alias, entityAddress1, entityAddress2, entityAddress3, entityCityName, province, entityPostalCode);        
-        this.credential = credential;
+        this.identity = identity;
     }
     
 
    
     // Property accessors
 
-    public Credential getCredential() {
-        return this.credential;
+    public Identity getIdentity() {
+        return this.identity;
     }
     
-    public void setCredential(Credential credential) {
-        this.credential = credential;
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
     }
    
 

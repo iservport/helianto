@@ -17,7 +17,7 @@ package org.helianto.core.creation;
 
 
 import org.helianto.core.AddressableEntity;
-import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.EntityKey;
@@ -77,11 +77,11 @@ public class EntityCreatorImpl extends HomeCreatorImpl implements EntityCreator 
         return organization;
     }
     
-    public Individual individualFactory(Home home, Credential credential) {
+    public Individual individualFactory(Home home, Identity identity) {
         Individual individual = new Individual();
         individual.setHome(home);
-        individual.setAlias(credential.getPrincipal());
-        individual.setCredential(credential);
+        individual.setAlias(identity.getPrincipal());
+        individual.setIdentity(identity);
         return individual;
     }
     

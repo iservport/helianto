@@ -21,6 +21,7 @@ import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.EntityKey;
 import org.helianto.core.Home;
+import org.helianto.core.Identity;
 import org.helianto.core.Individual;
 import org.helianto.core.Organization;
 import org.helianto.core.Province;
@@ -44,7 +45,7 @@ public interface EntityCreator extends HomeCreator {
     public Organization organizationFactory(Home home, String uniqueAlias,
             String businessName);
 
-    public Individual individualFactory(Home home, Credential credential);
+    public Individual individualFactory(Home home, Identity identity);
 
     /**
      * <p>

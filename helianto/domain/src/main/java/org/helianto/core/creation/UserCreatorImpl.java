@@ -17,12 +17,16 @@ package org.helianto.core.creation;
 
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.PersonalData;
+import org.helianto.core.Role;
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 
 /**
  * Default implementation for the <code>UserCreator</code> interface.
@@ -41,46 +45,6 @@ public class UserCreatorImpl implements UserCreator {
         return personalData;
     }
 
-    public Credential credentialFactory() {
-        return credentialFactory("");
-    }
-
-    public Credential credentialFactory(String principal) {
-        Credential credential = new Credential();
-        credential.setPrincipal(principal);
-        credential.setPassword(generatePassword(8));
-        credential.setVerifyPassword("");
-        credential.setPasswordDirty(false);
-        credential.setCreated(new Date());
-        credential.setLastModified(credential.getCreated());
-        credential.setExpired(null);
-        credential.setCredentialType(CredentialType.NOT_ADDRESSABLE.getValue());
-        credential.setNotification(Notification.BY_REQUEST.getValue());
-        credential.setCredentialState(CredentialState.IDLE.getValue());
-        PersonalData pd = personalDataFactory();
-        credential.setPersonalData(pd);
-        return credential;
-    }
-    
-    public User userFactory(Entity entity, Credential credential) throws NullEntityException {
-        if (entity==null) {
-            throw new NullEntityException("An User must belong to an Entity");
-        }
-        User user = new User();
-        user.setEntity(entity);
-        user.setCredential(credential);
-        user.setUserType(UserType.INTERNAL.getValue());
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        return user;
-    }
-
-    public User userFactory(User parent, Credential credential) {
-        User user = userFactory(parent.getEntity(), credential);
-        user.setParent(parent);
-        return user;
-    }
-
     public String generatePassword(int size) {
         Random generator = new Random();
         String source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -90,6 +54,63 @@ public class UserCreatorImpl implements UserCreator {
             password += source.substring(index, index+1);
         }
         return password;
+    }
+
+    public Identity identityFactory(String principal, String optionalAlias) {
+        Identity identity = new Identity();
+        identity.setPrincipal(principal);
+        identity.setOptionalAlias(optionalAlias);
+        identity.setCreated(new Date());
+        identity.setIdentityType(IdentityType.NOT_ADDRESSABLE.getValue());
+        identity.setNotification(Notification.BY_REQUEST.getValue());
+        PersonalData pd = personalDataFactory();
+        identity.setPersonalData(pd);
+        return identity;
+    }
+
+    public Credential credentialFactory(Identity identity) {
+        Credential credential = new Credential();
+        credential.setIdentity(identity);
+        credential.setPassword(generatePassword(8));
+        credential.setVerifyPassword("");
+        credential.setPasswordDirty(false);
+        credential.setLastModified(new Date());
+        credential.setExpired(null);
+        credential.setCredentialState(CredentialState.IDLE.getValue());
+        return credential;
+    }
+
+    public User userFactory(Entity entity, Identity identity) throws NullEntityException {
+        if (entity==null) {
+            throw new NullEntityException("An User must belong to an Entity");
+        }
+        User user = new User();
+        user.setEntity(entity);
+        user.setIdentity(identity);
+        user.setParent(null);
+        user.setUserType(UserType.INTERNAL.getValue());
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setRoles(new HashSet<Role>());
+        return user;
+    }
+
+    public User userFactory(UserGroup parent, Identity identity) {
+        User user = userFactory(parent.getEntity(), identity);
+        user.setParent(parent);
+        return user;
+    }
+
+    public UserGroup userGroupFactory(Entity entity, Identity identity) throws NullEntityException {
+        if (entity==null) {
+            throw new NullEntityException("An UserGroup must belong to an Entity");
+        }
+        UserGroup userGroup = new UserGroup();
+        userGroup.setEntity(entity);
+        userGroup.setIdentity(identity);
+        userGroup.setParent(null);
+        userGroup.setRoles(new HashSet<Role>());
+        return userGroup;
     }
         
 }

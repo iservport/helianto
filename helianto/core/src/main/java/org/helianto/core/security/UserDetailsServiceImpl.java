@@ -21,6 +21,7 @@ import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
@@ -60,11 +61,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * <code>UserDao</code>.</p>
      */
     final User guessUser(String principal) {
-        Credential credential = userDao.findCredentialByPrincipal(principal);
-        if (credential==null) {
+        Identity identity = userDao.findIdentityByPrincipal(principal);
+        if (identity==null) {
             throw new UsernameNotFoundException("No Credential with principal: "+principal);
         } else {
-            for (User u: credential.getUsers()) {
+            for (User u: identity.getUsers()) {
                 return u;
             }
             User auto = userDao.autoCreateAndPersistUser(principal);
@@ -105,7 +106,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     logger.debug("Case 2, UserLog is "+userLog);
                 }
             }
-            return new UserDetailsAdapter(userLog);
+            Credential credential = userDao.findCredentialByIdentity(userLog.getUser().getIdentity());
+            return new UserDetailsAdapter(userLog, credential);
         } catch (Exception e) {
             // case 3: fail to login (bad passwd, not registered as user, other)
             if (logger.isDebugEnabled()) {

@@ -1,36 +1,28 @@
 package org.helianto.core;
-// Generated 16/06/2006 13:59:04 by Hibernate Tools 3.1.0.beta4
+// Generated 03/07/2006 15:47:03 by Hibernate Tools 3.1.0.beta4
 
 
 
 /**
  * 				
  * <p>
- * Persist personal data.
+ * Personal data, if any.
  * </p>
  * 	
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core3.hbm.xml,v 1.4 2006/03/28 10:03:12 iserv Exp $
+ * @version $Id: $
  * 				
  * 			
  */
 
-public class PersonalData extends AbstractCredential implements java.io.Serializable {
+public class PersonalData  implements java.io.Serializable {
 
 
     // Fields    
 
      private String firstName;
      private String lastName;
-     /**
-      * 					@see Gender
- * 				
-     */
      private char gender;
-     /**
-      * 					@see Appellation
- * 				
-     */
      private int appellation;
 
 
@@ -73,10 +65,6 @@ public class PersonalData extends AbstractCredential implements java.io.Serializ
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    /**       
-     *      * 					@see Gender
-     * 				
-     */
 
     public char getGender() {
         return this.gender;
@@ -85,10 +73,6 @@ public class PersonalData extends AbstractCredential implements java.io.Serializ
     public void setGender(char gender) {
         this.gender = gender;
     }
-    /**       
-     *      * 					@see Appellation
-     * 				
-     */
 
     public int getAppellation() {
         return this.appellation;

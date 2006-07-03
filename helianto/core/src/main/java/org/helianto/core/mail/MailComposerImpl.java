@@ -54,7 +54,7 @@ public class MailComposerImpl implements MailComposer {
         String[] params = new String[] {
             confirmationAddress,
             confirmationAddress,
-            cred.getPrincipal(),
+            cred.getIdentity().getPrincipal(),
             cred.getPassword(),
             cred.getExpired().toString()
         };

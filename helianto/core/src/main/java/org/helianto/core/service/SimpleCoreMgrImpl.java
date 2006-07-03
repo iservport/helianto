@@ -25,6 +25,7 @@ import org.helianto.core.DefaultEntity;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
+import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.creation.PartnerCreator;
@@ -127,27 +128,33 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         return entity;
     }
     
-    public Credential createEmptyCredential() {
-        return userCreator.credentialFactory();
+    public Identity createIdentity() {
+        return userCreator.identityFactory("", "");
     }
     
+    public Credential createCredential(Identity identity) {
+        return userCreator.credentialFactory(identity);
+    }
+    
+    private final static String CREDENTIAL = "CREDENTIAL";
+
     public User createSimpleUser() {
         Entity entity = findDefaultEntity();
         return createSimpleUser(entity);
     }
 
     public User createSimpleUser(Entity entity) {
-        Credential credential = userCreator.credentialFactory();
-        return createUser(credential, entity);
+        Identity identity = createIdentity();
+        return createUser(identity, entity);
     }
     
-    public User createSimpleUser(Credential credential) {
+    public User createSimpleUser(Identity identity) {
         Entity entity = findDefaultEntity();
-        return createUser(credential, entity);
+        return createUser(identity, entity);
     }
     
-    public User createUser(Credential credential, Entity entity) {
-        return userCreator.userFactory(entity, credential);
+    public User createUser(Identity identity, Entity entity) {
+        return userCreator.userFactory(entity, identity);
     }
 
     public Locale getLocale(Home home) {
@@ -174,9 +181,9 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     }
 
     public void persistUser(User user) {
-        String principal = user.getCredential().getPrincipal();
+        String principal = user.getIdentity().getPrincipal();
         Locale locale = getLocale(user.getEntity().getHome());
-        user.getCredential().setPrincipal(
+        user.getIdentity().setPrincipal(
                 convertToLowerCase(locale, principal));
         userDao.persistUser(user);
         if (logger.isDebugEnabled()) {
@@ -189,12 +196,12 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     }
 
     public boolean isPrincipalUnique(User user) {
-        return isPrincipalUnique(user.getEntity().getHome(), user.getCredential());
+        return isPrincipalUnique(user.getEntity().getHome(), user.getIdentity());
     }
 
-    public boolean isPrincipalUnique(Home home, Credential credential) {
-        String principal = convertToLowerCase(getLocale(home), credential.getPrincipal());
-        int principalCount = userDao.countCredentialByPrincipal(principal);
+    public boolean isPrincipalUnique(Home home, Identity identity) {
+        String principal = convertToLowerCase(getLocale(home), identity.getPrincipal());
+        int principalCount = userDao.countIdentityByPrincipal(principal);
         if (logger.isDebugEnabled()) {
             logger.debug("There is  "+principalCount+" principal named "+principal);
         }
@@ -228,10 +235,10 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
         userDao.persistCredential(secureUserDetails.getCredential());
     }
     
-    public int findNextInternalNumber(Entity entity, String typeName) {
+    public long findNextInternalNumber(Entity entity, String typeName) {
         InternalEnumerator enumerator = entityDao.findInternalEnumerator(entity, typeName);
         if (enumerator!=null) {
-            int lastNumber = enumerator.getLastNumber();
+            long lastNumber = enumerator.getLastNumber();
             enumerator.setLastNumber(lastNumber+1);
             entityDao.persistInternalEnumerator(enumerator);
             return lastNumber;

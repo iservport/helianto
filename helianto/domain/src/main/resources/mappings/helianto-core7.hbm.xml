@@ -40,26 +40,28 @@ A class to hold last value for internal number lists.
 		<id name="id" type="int">
 			<generator class="native"/>
 		</id>
-		<!-- 
-				entity
-		-->
-		<many-to-one name="entity" 
-			class="org.helianto.core.Entity" cascade="merge">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="entityId" not-null="true" 
-				unique-key="unique1"/>
-		</many-to-one>
-		<!-- 
-				type name
-		-->
-		<property name="typeName" type="string">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="typeName" length="12" not-null="true" 
-				unique-key="unique1"/>
-		</property>
+		<natural-id>
+			<!-- 
+					entity
+			-->
+			<many-to-one name="entity" 
+				class="org.helianto.core.Entity" cascade="merge">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="entityId"/>
+			</many-to-one>
+			<!-- 
+					type name
+			-->
+			<property name="typeName" type="string">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="typeName" length="12"/>
+			</property>
+		</natural-id>
 		<!-- 
 				last number
 		-->
-		<property name="lastNumber" type="int" not-null="true"/>
+		<property name="lastNumber" type="long" not-null="true"/>
 	</class>
 </hibernate-mapping>

@@ -1,19 +1,17 @@
 package org.helianto.core;
-// Generated 16/06/2006 13:59:00 by Hibernate Tools 3.1.0.beta4
+// Generated 03/07/2006 15:46:51 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
- * 				
+ * 			
  * <p>
- * Persist a credential, unique by principal.
+ * Provides <code>Identity</code> with authentication information. 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core3.hbm.xml,v 1.4 2006/03/28 10:03:12 iserv Exp $
- * 				
+ * @version $Id: $
+ * 			
  * 		
  */
 
@@ -23,28 +21,11 @@ public class Credential extends AbstractCredential implements java.io.Serializab
     // Fields    
 
      private long id;
-     private String principal;
+     private Identity identity;
      private String password;
-     /**
-      * 				@see CredentialType
- * 			
-     */
-     private char credentialType;
-     /**
-      * 				@see NotificationType
- * 			
-     */
-     private char notification;
-     private PersonalData personalData;
-     private Date created;
+     private char credentialState;
      private Date lastModified;
      private Date expired;
-     /**
-      * 				@see CredentialState
- * 			
-     */
-     private char credentialState;
-     private Set<User> users = new HashSet<User>(0);
 
 
     // Constructors
@@ -54,26 +35,18 @@ public class Credential extends AbstractCredential implements java.io.Serializab
     }
 
 	/** minimal constructor */
-    public Credential(String principal, char credentialType, char notification, PersonalData personalData, char credentialState) {
-        this.principal = principal;
-        this.credentialType = credentialType;
-        this.notification = notification;
-        this.personalData = personalData;
+    public Credential(Identity identity, char credentialState) {
+        this.identity = identity;
         this.credentialState = credentialState;
     }
     
     /** full constructor */
-    public Credential(String principal, String password, char credentialType, char notification, PersonalData personalData, Date created, Date lastModified, Date expired, char credentialState, Set<User> users) {
-        this.principal = principal;
+    public Credential(Identity identity, String password, char credentialState, Date lastModified, Date expired) {
+        this.identity = identity;
         this.password = password;
-        this.credentialType = credentialType;
-        this.notification = notification;
-        this.personalData = personalData;
-        this.created = created;
+        this.credentialState = credentialState;
         this.lastModified = lastModified;
         this.expired = expired;
-        this.credentialState = credentialState;
-        this.users = users;
     }
     
 
@@ -88,12 +61,12 @@ public class Credential extends AbstractCredential implements java.io.Serializab
         this.id = id;
     }
 
-    public String getPrincipal() {
-        return this.principal;
+    public Identity getIdentity() {
+        return this.identity;
     }
     
-    public void setPrincipal(String principal) {
-        this.principal = principal;
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
     }
 
     public String getPassword() {
@@ -103,45 +76,13 @@ public class Credential extends AbstractCredential implements java.io.Serializab
     public void setPassword(String password) {
         this.password = password;
     }
-    /**       
-     *      * 				@see CredentialType
-     * 			
-     */
 
-    public char getCredentialType() {
-        return this.credentialType;
+    public char getCredentialState() {
+        return this.credentialState;
     }
     
-    public void setCredentialType(char credentialType) {
-        this.credentialType = credentialType;
-    }
-    /**       
-     *      * 				@see NotificationType
-     * 			
-     */
-
-    public char getNotification() {
-        return this.notification;
-    }
-    
-    public void setNotification(char notification) {
-        this.notification = notification;
-    }
-
-    public PersonalData getPersonalData() {
-        return this.personalData;
-    }
-    
-    public void setPersonalData(PersonalData personalData) {
-        this.personalData = personalData;
-    }
-
-    public Date getCreated() {
-        return this.created;
-    }
-    
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCredentialState(char credentialState) {
+        this.credentialState = credentialState;
     }
 
     public Date getLastModified() {
@@ -159,28 +100,21 @@ public class Credential extends AbstractCredential implements java.io.Serializab
     public void setExpired(Date expired) {
         this.expired = expired;
     }
-    /**       
-     *      * 				@see CredentialState
-     * 			
-     */
-
-    public char getCredentialState() {
-        return this.credentialState;
-    }
-    
-    public void setCredentialState(char credentialState) {
-        this.credentialState = credentialState;
-    }
-
-    public Set<User> getUsers() {
-        return this.users;
-    }
-    
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
    
 
+    /**
+     * toString
+     * @return String
+     */
+     public String toString() {
+	  StringBuffer buffer = new StringBuffer();
+
+      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+      buffer.append("identity").append("='").append(getIdentity()).append("' ");			
+      buffer.append("]");
+      
+      return buffer.toString();
+     }
 
 
    public boolean equals(Object other) {
@@ -189,19 +123,14 @@ public class Credential extends AbstractCredential implements java.io.Serializab
 		 if ( !(other instanceof Credential) ) return false;
 		 Credential castOther = ( Credential ) other; 
          
-		 return ( (this.getPrincipal()==castOther.getPrincipal()) || ( this.getPrincipal()!=null && castOther.getPrincipal()!=null && this.getPrincipal().equals(castOther.getPrincipal()) ) );
+		 return ( (this.getIdentity()==castOther.getIdentity()) || ( this.getIdentity()!=null && castOther.getIdentity()!=null && this.getIdentity().equals(castOther.getIdentity()) ) );
    }
    
    public int hashCode() {
          int result = 17;
          
          
-         result = 37 * result + ( getPrincipal() == null ? 0 : this.getPrincipal().hashCode() );
-         
-         
-         
-         
-         
+         result = 37 * result + ( getIdentity() == null ? 0 : this.getIdentity().hashCode() );
          
          
          

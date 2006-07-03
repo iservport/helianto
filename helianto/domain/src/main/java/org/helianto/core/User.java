@@ -1,34 +1,35 @@
 package org.helianto.core;
-// Generated 16/06/2006 13:59:01 by Hibernate Tools 3.1.0.beta4
+// Generated 03/07/2006 15:46:53 by Hibernate Tools 3.1.0.beta4
 
-import java.util.HashSet;
 import java.util.Set;
 
 
 /**
- * 			
+ * 				
  * <p>
- * Persist the user account.
+ * The user account.
+ * </p>
+ * <p>
+ * An user account represents the association between an <code>Identity</code>
+ * and an <code>Entity</code>. Such association allows for a singly identified 
+ * actor, i.e. a person or any other organizational <code>Identity</code>, to keep
+ * a single authentication scheme and have multiple authorization schemes, one per
+ * <code>Entity</code>.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core4.hbm.xml,v 1.4 2006/03/20 16:11:40 iserv Exp $
+ * @version $Id: $
  * 				
- * 		
+ * 			
  */
 
-public class User  implements java.io.Serializable {
+public class User extends org.helianto.core.UserGroup implements java.io.Serializable {
 
 
     // Fields    
 
-     private long id;
-     private Entity entity;
-     private Credential credential;
-     private User parent;
+     private char userType;
      private boolean accountNonExpired;
      private boolean accountNonLocked;
-     private char userType;
-     private Set<Role> roles = new HashSet<Role>(0);
 
 
     // Constructors
@@ -38,59 +39,31 @@ public class User  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public User(Entity entity, Credential credential, boolean accountNonExpired, boolean accountNonLocked, char userType) {
-        this.entity = entity;
-        this.credential = credential;
+    public User(Entity entity, Identity identity, char userType, boolean accountNonExpired, boolean accountNonLocked) {
+        super(entity, identity);        
+        this.userType = userType;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
-        this.userType = userType;
     }
     
     /** full constructor */
-    public User(Entity entity, Credential credential, User parent, boolean accountNonExpired, boolean accountNonLocked, char userType, Set<Role> roles) {
-        this.entity = entity;
-        this.credential = credential;
-        this.parent = parent;
+    public User(Entity entity, Identity identity, UserGroup parent, Set<Role> roles, char userType, boolean accountNonExpired, boolean accountNonLocked) {
+        super(entity, identity, parent, roles);        
+        this.userType = userType;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
-        this.userType = userType;
-        this.roles = roles;
     }
     
 
    
     // Property accessors
 
-    public long getId() {
-        return this.id;
+    public char getUserType() {
+        return this.userType;
     }
     
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Entity getEntity() {
-        return this.entity;
-    }
-    
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
-    public Credential getCredential() {
-        return this.credential;
-    }
-    
-    public void setCredential(Credential credential) {
-        this.credential = credential;
-    }
-
-    public User getParent() {
-        return this.parent;
-    }
-    
-    public void setParent(User parent) {
-        this.parent = parent;
+    public void setUserType(char userType) {
+        this.userType = userType;
     }
 
     public boolean isAccountNonExpired() {
@@ -108,49 +81,10 @@ public class User  implements java.io.Serializable {
     public void setAccountNonLocked(boolean accountNonLocked) {
         this.accountNonLocked = accountNonLocked;
     }
-
-    public char getUserType() {
-        return this.userType;
-    }
-    
-    public void setUserType(char userType) {
-        this.userType = userType;
-    }
-
-    public Set<Role> getRoles() {
-        return this.roles;
-    }
-    
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
    
 
 
 
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof User) ) return false;
-		 User castOther = ( User ) other; 
-         
-		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
- && ( (this.getCredential()==castOther.getCredential()) || ( this.getCredential()!=null && castOther.getCredential()!=null && this.getCredential().equals(castOther.getCredential()) ) );
-   }
-   
-   public int hashCode() {
-         int result = 17;
-         
-         
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
-         result = 37 * result + ( getCredential() == null ? 0 : this.getCredential().hashCode() );
-         
-         
-         
-         
-         
-         return result;
-   }   
 
 
 

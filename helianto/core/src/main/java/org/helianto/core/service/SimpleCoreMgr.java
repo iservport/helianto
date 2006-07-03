@@ -23,6 +23,7 @@ import org.helianto.core.DefaultEntity;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
+import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
@@ -108,10 +109,15 @@ public interface SimpleCoreMgr {
     public Entity findDefaultEntity();
     
     /**
-     * <p>An empty <code>Credential</code> to be 
+     * <p>An empty <code>Identity</code> to be 
      * submitted to the presentation layer.</p>
      */
-    public Credential createEmptyCredential();
+    public Identity createIdentity();
+    
+    /**
+     * <p>A <code>Credential</code>.</p>
+     */
+    public Credential createCredential(Identity identity);
     
     /**
      * <p>A simple <code>User</code> creation that hides an empty <code>Credential</code>
@@ -127,14 +133,14 @@ public interface SimpleCoreMgr {
     public User createSimpleUser(Entity entity);
     
     /**
-     * <p>A simple <code>User</code> creation given a <code>Credential</code>.</p>
+     * <p>A simple <code>User</code> creation given an <code>Identity</code>.</p>
      */
-    public User createSimpleUser(Credential credential);
+    public User createSimpleUser(Identity Identity);
     
     /**
      * <p>Full <code>User</code> creation.</p>
      */
-    public User createUser(Credential credential, Entity entity);
+    public User createUser(Identity Identity, Entity entity);
     
     /**
      * <p>List <code>User</code> by <code>Entity</code>.</p>
@@ -167,7 +173,7 @@ public interface SimpleCoreMgr {
      * <p>The principal is converted to lower case before
      * uniqueness check.<p>
      */
-    public boolean isPrincipalUnique(Home home, Credential credential);
+    public boolean isPrincipalUnique(Home home, Identity identity);
     
     /**
      * <p>Persist the <code>User</code>.</p>
@@ -197,6 +203,6 @@ public interface SimpleCoreMgr {
      * @param entity
      * @param typeName
      */
-    public int findNextInternalNumber(Entity entity, String typeName);
+    public long findNextInternalNumber(Entity entity, String typeName);
     
 }

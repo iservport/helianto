@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
@@ -32,12 +33,13 @@ public class SimpleCoreMgrImplMockTests extends TestCase {
 
     public void testPersistPersonalDataSuccess() {
         
+        Identity identity = new Identity();
         Credential credential = new Credential();
-        User[] users = createUsersWithSameCredential(credential, 1);
+        User[] users = createUsersWithSameIdentity(identity, 1);
 
         UserLog userLog = new UserLog();
         userLog.setUser(users[0]);
-        SecureUserDetails secureUser = new UserDetailsAdapter(userLog);
+        SecureUserDetails secureUser = new UserDetailsAdapter(userLog, credential);
         
         mock.persistCredential(secureUser.getCredential());
         replay(mock);
@@ -48,12 +50,13 @@ public class SimpleCoreMgrImplMockTests extends TestCase {
 
     public void testSwitchAuthorizedUserSuccess() {
         
+        Identity identity = new Identity();
         Credential credential = new Credential();
-        User[] users = createUsersWithSameCredential(credential, 2);
+        User[] users = createUsersWithSameIdentity(identity, 2);
         
         UserLog userLog = new UserLog();
         userLog.setUser(users[0]);
-        UserDetailsAdapter secureUser = new UserDetailsAdapter(userLog);
+        UserDetailsAdapter secureUser = new UserDetailsAdapter(userLog, credential);
         
         expect(mock.createAndPersistUserLog(users[1]))
             .andReturn(userLog);
@@ -79,18 +82,18 @@ public class SimpleCoreMgrImplMockTests extends TestCase {
     
     // helpers
     
-    public User[] createUsersWithSameCredential(Credential credential, int size) {
+    public User[] createUsersWithSameIdentity(Identity identity, int size) {
         User[] users = new User[size];
         Entity[] entities = new Entity[size];
         for (int i = 0; i < size; i++) {
             users[i] = new User();
             entities[i] = new Entity();
             entities[i].setAlias("ENT"+i);
-            users[i].setCredential(credential);
+            users[i].setIdentity(identity);
             users[i].setEntity(entities[i]);
-            credential.getUsers().add(users[i]);
+            identity.getUsers().add(users[i]);
             if (logger.isDebugEnabled()) {
-                logger.debug("Test user "+users[i]+" "+users[i].getCredential()+" "+users[i].getEntity());
+                logger.debug("Test user "+users[i]+" "+users[i].getIdentity()+" "+users[i].getEntity());
             }
         }
         return users;

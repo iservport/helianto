@@ -16,6 +16,7 @@
 package org.helianto.core.hibernate;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
@@ -33,25 +34,37 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
     protected void onSetUpBeforeTransaction() throws Exception {
         factory = new UserCreatorImpl();
     }
+    
+    private Identity createAndPersistIdentity(String principal, String optionalAlias ) {
+        Identity identity = factory.identityFactory(principal, optionalAlias);
+        userDao.persistIdentity(identity);
+        return identity;
+    }
 
-    public void testCredentialLifeCycle() {
+    public void testPersistIdentity() {
+        //write
+        String principal = generateKey(20);
+        String optionalAlias = generateKey(20);
+        Identity identity = createAndPersistIdentity(principal, optionalAlias);
+        hibernateTemplate.flush();
+        //read
+        Identity found = userDao.findIdentityByPrincipal(principal);
+        assertEquals(identity, found);
+    }
+
+    public void testPersistCredential() {
         
-        Credential credential = factory.credentialFactory("TEST");
+        String principal = generateKey(20);
+        String optionalAlias = generateKey(20);
+        Identity identity = createAndPersistIdentity(principal, optionalAlias);
+        Credential credential = factory.credentialFactory(identity);
         userDao.persistCredential(credential);
         
         hibernateTemplate.flush();
         
-        Credential cr = userDao.findCredentialByPrincipal("TEST");
-        assertEquals(credential, cr);
+        Credential found = userDao.findCredentialByIdentity(identity);
+        assertEquals(credential, found);
         
-        Credential duplicatedCredential = factory.credentialFactory("TEST");
-        try {
-            userDao.persistCredential(duplicatedCredential);
-            fail();
-        } catch (Exception e) {
-            //ok
-        }
-
     }
     
 }

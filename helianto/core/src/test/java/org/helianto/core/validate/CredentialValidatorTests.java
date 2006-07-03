@@ -20,6 +20,7 @@ import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
@@ -38,7 +39,9 @@ public class CredentialValidatorTests extends TestCase {
     // setup
     
     public void setUp() {
-        credential = new UserCreatorImpl().credentialFactory();
+        Identity identity = new Identity();
+        identity.setPrincipal("ABC");
+        credential = new UserCreatorImpl().credentialFactory(identity);
         credentialValidator = new CredentialValidator();
         errors = new BindException(credential, "credential");
     }
@@ -54,57 +57,7 @@ public class CredentialValidatorTests extends TestCase {
         checkRequiredErrors(errors,"credential.error.nullpointer");
     }
 
-    public void testValidateEmptyPrincipal() {
-        credentialValidator.validate(credential, errors);
-        checkRequiredErrors(errors,"credential.error.empty");
-    }
-
-    public void testValidateNullPrincipal() {
-        credential.setPrincipal(null);
-        credentialValidator.validate(credential, errors);
-        checkRequiredErrors(errors,"credential.error.empty");
-    }
-
-    public void testValidatePrincipalWhiteSpace() {
-        credential.setPrincipal(" \n\t");
-        credentialValidator.validate(credential, errors);
-        checkRequiredErrors(errors,"credential.error.whitespace");
-    }
-
-    public void testValidatePrincipalInvalidChar() {
-        String invalidChar = "!#$%&*()-=+§£¢¬?{}[]°`'|,;/<>:~^°*?\"\'\\";
-        for (char c : invalidChar.toCharArray()) {
-            errors = new BindException(credential, "credential");
-            credential.setPrincipal(String.valueOf(c));
-            credentialValidator.validate(credential, errors);
-            checkRequiredErrors(errors,"credential.error.invalidchar");
-        }
-    }
-    
-    public void testValidatePrincipalValidChar() {
-        String validChar = "@._1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        for (char c : validChar.toCharArray()) {
-            errors = new BindException(credential, "credential");
-            credential.setPrincipal(String.valueOf(c));
-            credentialValidator.validate(credential, errors);
-            assertEquals(0, errors.getAllErrors().size());
-        }
-    }
-    
-    public void testPrincipalNotTooLong() {
-        credential.setPrincipal(sixteen+sixteen+sixteen+sixteen);
-        credentialValidator.validate(credential, errors);
-        assertEquals(0, errors.getAllErrors().size());
-    }
-    
-    public void testPrincipalTooLong() {
-        credential.setPrincipal(sixteen+sixteen+sixteen+sixteen+"1");
-        credentialValidator.validate(credential, errors);
-        checkRequiredErrors(errors,"credential.error.principaltoolong");
-    }
-    
     public void testPasswordNull() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword(null);
         credentialValidator.validate(credential, errors);
@@ -112,7 +65,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testPasswordEmpty() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword("");
         credentialValidator.validate(credential, errors);
@@ -120,7 +72,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testPasswordNotTooLong() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword(sixteen+"1234");
         credential.setVerifyPassword(sixteen+"1234");
@@ -129,7 +80,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testPasswordTooLong() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword(sixteen+"12345");
         credentialValidator.validate(credential, errors);
@@ -137,7 +87,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testPasswordNotTooShort() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword("123456");
         credential.setVerifyPassword("123456");
@@ -146,7 +95,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testPasswordTooShort() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword("12345");
         credentialValidator.validate(credential, errors);
@@ -154,7 +102,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testVerifyPasswordNull() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword("123456");
         credential.setVerifyPassword(null);
@@ -163,7 +110,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testVerifyPasswordEmpty() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword("123456");
         credential.setVerifyPassword("");
@@ -172,7 +118,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testValidPassword() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword("abcdef");
         credential.setVerifyPassword("AbCdEf");
@@ -181,7 +126,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testInvalidPassword() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword("123456");
         credential.setVerifyPassword("12345");
@@ -190,7 +134,6 @@ public class CredentialValidatorTests extends TestCase {
     }
     
     public void testPasswordWhiteSpace() {
-        credential.setPrincipal(sixteen);
         credential.setPasswordDirty(true);
         credential.setPassword("123 \n\t");
         credential.setVerifyPassword("123 \n\t");

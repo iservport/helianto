@@ -19,6 +19,7 @@ import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.Credential;
 import org.helianto.core.UserLog;
 import org.helianto.core.creation.CredentialState;
 
@@ -38,6 +39,8 @@ public abstract class AbstractUserDetails implements UserDetails {
     static final Log logger = LogFactory.getLog(AbstractUserDetails.class);
     
     protected UserLog userLog;
+    
+    protected Credential credential;
 
     public AbstractUserDetails() {
         throw new IllegalArgumentException("AbstractUserDetails subclasses must take an " +
@@ -47,11 +50,12 @@ public abstract class AbstractUserDetails implements UserDetails {
     /**
      * Minimal constructor.
      */
-    public AbstractUserDetails(UserLog userLog) {
+    public AbstractUserDetails(UserLog userLog, Credential credential) {
         if (userLog==null) {
             throw new IllegalArgumentException("Cannot set a null userLog");
         }
         this.userLog = userLog;
+        this.credential = credential;
     }
     
     /**
@@ -81,14 +85,14 @@ public abstract class AbstractUserDetails implements UserDetails {
 
     public boolean isCredentialsNonExpired() {
         //TODO implement control over expiration date
-        if (userLog.getUser().getCredential().getExpired()==null) {
+        if (credential.getExpired()==null) {
             return true;
         } 
         return true;
     }
 
     public boolean isEnabled() {
-        char state = userLog.getUser().getCredential().getCredentialState();
+        char state = credential.getCredentialState();
         if (state==CredentialState.ACTIVE.getValue() | 
                 state==CredentialState.IDLE.getValue()) {
             return true;
@@ -97,11 +101,11 @@ public abstract class AbstractUserDetails implements UserDetails {
     }
 
     public String getPassword() {
-        return userLog.getUser().getCredential().getPassword();
+        return credential.getPassword();
      }
 
     public String getUsername() {
-        return userLog.getUser().getCredential().getPrincipal();
+        return userLog.getUser().getIdentity().getPrincipal();
     }
     
 }

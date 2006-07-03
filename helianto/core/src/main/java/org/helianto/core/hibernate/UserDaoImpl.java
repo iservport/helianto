@@ -36,17 +36,16 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
     }
 
     public User findUserByEntityAliasAndPrincipal(String alias, String principal) {
-        return (User) findUnique(USER_QRY, new Object[] {alias, principal});
+        return (User) findUnique(USER_QRY, alias, principal);
     }
     
     static final String USER_QRY = 
         "from User user " +
         "where user.entity.alias = ? " +
-        "and user.credential.principal = ?";
+        "and user.identity.principal = ?";
 
-    @SuppressWarnings("unchecked")
     public List<User> findUserByEntity(Entity entity) {
-        return (List<User>) find(USER_QRY_ENTITY, entity);
+        return (ArrayList<User>) find(USER_QRY_ENTITY, entity);
     }
     
     static final String USER_QRY_ENTITY = 
@@ -89,10 +88,10 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
         try {
         	// two different queries to grant compatibility with all databases
         	Date lastLogin = (Date) findUnique(LASTUSERLOGDATE_QUERY, principal);
-            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOG_QUERY, new Object[] { principal, lastLogin });
+            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOG_QUERY, principal, lastLogin );
             if (logger.isDebugEnabled()) {
                 for (UserLog ul: userLogList) {
-                    logger.debug("Found UserLog(s) with principal "+principal+"[" +ul.getUser().getCredential().getPrincipal()+"]: "+ul.getUser()+" - "+ul.getLastLogin());
+                    logger.debug("Found UserLog(s) with principal "+principal+"[" +ul.getUser().getIdentity().getPrincipal()+"]: "+ul.getUser()+" - "+ul.getLastLogin());
                 }
             }
             if (userLogList.size()>0) {
@@ -109,11 +108,11 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
     
     static final String LASTUSERLOGDATE_QUERY = "select max(userLog.lastLogin) " +
     "  from UserLog userLog " +
-    "  where userLog.user.credential.principal = ? "+
-    "  group by userLog.user.credential.principal ";
+    "  where userLog.user.identity.principal = ? "+
+    "  group by userLog.user.identity.principal ";
 
     static final String LASTUSERLOG_QUERY = "from UserLog lastUserLog " +
-    "  where lastUserLog.user.credential.principal = ? and" +
+    "  where lastUserLog.user.identity.principal = ? and" +
     "  lastUserLog.lastLogin = ?";
 
 }

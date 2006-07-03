@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 16/06/2006 19:27:55 by Hibernate Tools 3.1.0.beta4
+// Generated 03/07/2006 15:46:45 by Hibernate Tools 3.1.0.beta4
 
 import org.helianto.core.Entity;
 
@@ -92,6 +92,19 @@ public class Unit  implements java.io.Serializable {
     }
    
 
+    /**
+     * toString
+     * @return String
+     */
+     public String toString() {
+	  StringBuffer buffer = new StringBuffer();
+
+      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+      buffer.append("unitCode").append("='").append(getUnitCode()).append("' ");			
+      buffer.append("]");
+      
+      return buffer.toString();
+     }
 
 
    public boolean equals(Object other) {

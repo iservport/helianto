@@ -23,6 +23,7 @@ import java.util.Random;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
+import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.creation.EntityCreator;
@@ -51,25 +52,21 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         entity = entityCreator.entityFactory(home, "ENTITY");
     }
 
+    private User createAndPersistUser() {
+        Identity identity = userCreator.identityFactory("IDENTITY", "ALIAS");
+        User user = userCreator.userFactory(entity, identity);
+        userDao.persistUser(user);
+        return user;
+    }
+    
     public void testUserLifeCycle() {
         
-        Credential credential = userCreator.credentialFactory("CRED");
-        User user = userCreator.userFactory(entity, credential);
-        userDao.persistUser(user);
-        
+        User user = createAndPersistUser();
         hibernateTemplate.flush();
         
-        User us = userDao.findUserByEntityAliasAndPrincipal("ENTITY", "CRED");
+        User us = userDao.findUserByEntityAliasAndPrincipal("ENTITY", "IDENTITY");
         assertEquals(user, us);
         
-        User duplicatedUser = userCreator.userFactory(entity, credential);
-        try {
-            userDao.persistUser(duplicatedUser);
-            fail();
-        } catch (Exception e) {
-            //ok
-        }
-
     }
     
     public void testfindUserByEntity() {
@@ -101,7 +98,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         List<Entity> entities = createEntities();
         List<User> users = populateUsersAndLogs(entities);
         User user = users.get(0);  
-        String principal = user.getCredential().getPrincipal();
+        String principal = user.getIdentity().getPrincipal();
         
         UserLog userLog = userDao.findLastUserLog(principal);
         if (logger.isDebugEnabled()) {
@@ -111,7 +108,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         Date maxLastLogin = userLog.getLastLogin();
         for (User u: users) {
             // check only users with selected principal
-            if (u.getCredential().getPrincipal().compareTo(principal)==0) {
+            if (u.getIdentity().getPrincipal().compareTo(principal)==0) {
                 List<UserLog> userLogs = userDao.findUserLogByUser(u);
                 for (UserLog ul: userLogs) {
                     if (ul.getLastLogin().getTime() > maxLastLogin.getTime()) {
@@ -125,8 +122,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     
     public void testCreateAndPersistUserLog() {
 
-        Credential credential = userCreator.credentialFactory("CRED");
-        User user = userCreator.userFactory(entity, credential);
+        User user = createAndPersistUser();
         Date date = new Date();
         UserLog userLog = ((UserDaoImpl) userDao).createAndPersistUserLog(user, date);
         hibernateTemplate.flush();
@@ -147,17 +143,17 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     }
     
     private List<User> populateUsersAndLogs(List<Entity> entities) {
-        List<Credential> credentials = new ArrayList<Credential>();
+        List<Identity> identities = new ArrayList<Identity>();
         for (int i = 1; i<=3; i++) {
-            Credential c = userCreator.credentialFactory("CRED"+i);
-            credentials.add(c);
+            Identity c = userCreator.identityFactory("CRED"+i, "ALIAS"+i);
+            identities.add(c);
         }
         List<User> users = new ArrayList<User>();
         for (Entity e: entities) {
             Random r = new Random();
             int repeat1 = r.nextInt(2);
             for (int i=0; i<=repeat1;i++) {
-                User u = userCreator.userFactory(e, credentials.get(i));
+                User u = userCreator.userFactory(e, identities.get(i));
                 userDao.persistUser(u);
                 users.add(u);
                 int repeat2 = r.nextInt(8);

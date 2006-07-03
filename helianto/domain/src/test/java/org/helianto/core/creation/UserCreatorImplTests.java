@@ -19,7 +19,11 @@ package org.helianto.core.creation;
 import java.util.Date;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.PersonalData;
+import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 import org.helianto.core.creation.Appellation;
 import org.helianto.core.creation.CredentialState;
 import org.helianto.core.creation.CredentialType;
@@ -48,28 +52,60 @@ public class UserCreatorImplTests extends TestCase {
                 personalData.getGender());
     }
 
-    public void testCredentialFactory() {
-        Credential credential = factory.credentialFactory();
-        assertEquals("", credential.getPrincipal());
+    public void testIdentityFactory() {
+        Identity identity = factory.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        assertEquals("PRINCIPAL", identity.getPrincipal());
+        assertEquals("OPTIONAL_ALIAS", identity.getOptionalAlias());
+        assertTrue(identity.getCreated().compareTo(new Date()) < 1000);
+        assertEquals(CredentialType.NOT_ADDRESSABLE.getValue(), identity.getIdentityType());
+        assertEquals(Notification.BY_REQUEST.getValue(), identity.getNotification());
+        assertEquals(Appellation.NOT_SUPPLIED.getValue(),
+                identity.getPersonalData().getAppellation());
+        assertEquals(Gender.NOT_SUPPLIED.getValue(),
+                identity.getPersonalData().getGender());
+        assertEquals(0, identity.getUsers().size());
     }
 
-    public void testCredentialFactoryString() {
-        Credential credential = 
-            factory.credentialFactory("UNIQUE");
-        assertEquals("UNIQUE", credential.getPrincipal());
+    public void testCredentialFactory() {
+        Identity identity = factory.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Credential credential = factory.credentialFactory(identity);
+        assertSame(identity, credential.getIdentity());
         assertEquals(8, credential.getPassword().length());
         assertEquals("", credential.getVerifyPassword());
-        assertTrue(credential.getCreated().compareTo(new Date()) < 1000);
-        assertSame(credential.getCreated(), credential.getLastModified());
+        assertTrue(credential.getLastModified().compareTo(new Date()) < 1000);
         assertNull(credential.getExpired());
-        assertEquals(CredentialType.NOT_ADDRESSABLE.getValue(), credential.getCredentialType());
-        assertEquals(Notification.BY_REQUEST.getValue(), credential.getNotification());
         assertEquals(CredentialState.IDLE.getValue(), credential.getCredentialState());
-        assertEquals(Appellation.NOT_SUPPLIED.getValue(),
-                credential.getPersonalData().getAppellation());
-        assertEquals(Gender.NOT_SUPPLIED.getValue(),
-                credential.getPersonalData().getGender());
-        assertEquals(0, credential.getUsers().size());
+    }
+    
+    public void testUserGroupFactory() {
+        Identity identity = factory.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Entity entity = new Entity();
+        UserGroup userGroup = factory.userGroupFactory(entity, identity);
+        assertSame(entity, userGroup.getEntity());
+        assertSame(identity, userGroup.getIdentity());
+        assertNull(userGroup.getParent());
+        assertEquals(0, userGroup.getRoles().size());
+    }
+    
+    public void testUserFactory() {
+        Identity identity = factory.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Entity entity = new Entity();
+        User user = factory.userFactory(entity, identity);
+        assertSame(entity, user.getEntity());
+        assertSame(identity, user.getIdentity());
+        assertNull(user.getParent());
+        assertEquals(0, user.getRoles().size());
+        assertEquals(UserType.INTERNAL.getValue(), user.getUserType());
+    }
+    
+    public void testDerivedUserFactory() {
+        Identity identity1 = factory.identityFactory("PRINCIPAL1", "OPTIONAL_ALIAS");
+        Identity identity2 = factory.identityFactory("PRINCIPAL2", "OPTIONAL_ALIAS");
+        Entity entity = new Entity();
+        UserGroup userGroup = factory.userGroupFactory(entity, identity1);
+        User user = factory.userFactory(userGroup, identity2);
+        assertSame(entity, user.getEntity());
+        assertEquals(userGroup, user.getParent());
     }
     
     public void testGeneratePassword() {

@@ -23,7 +23,7 @@
 		-->
 <hibernate-mapping default-lazy="false">
 	<class table="core_credential" 
-		name="org.helianto.core.Credential">
+		name="org.helianto.core.legacy.Credential">
 		<!-- 
 				CREDENTIAL
 				============================================= 
@@ -31,17 +31,18 @@
 		<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-Persist a credential, unique by principal.
+A credential, unique by principal.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-core3.hbm.xml,v 1.4 2006/03/28 10:03:12 iserv Exp $
+@version $Id: $
+@deprecated use {@link org.helianto.core.Credential}
 				]]>
 		</meta>
 		<!-- 
   				base class with non-persistent fields
 		-->
-		<meta attribute="extends">AbstractCredential</meta>
+		<meta attribute="extends">org.helianto.core.legacy.AbstractCredential</meta>
 		<!-- 
   				id
 		-->

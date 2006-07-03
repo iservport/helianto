@@ -48,49 +48,7 @@ public class CredentialValidator implements Validator {
             errors.reject("credential.error.nullpointer", "Null Credential received");
         } else {
             Credential credential = (Credential) obj;
-            validatePrincipal(credential, errors);
             validatePassword(credential, errors);
-        }
-    }
-    
-    public void validatePrincipal(Credential credential, Errors errors) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Validating Credential principal");
-        }
-        String principal = credential.getPrincipal();
-        if (principal == null || principal.length() == 0) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Credential principal or password should not be empty");
-            }
-            errors.rejectValue("principal", 
-                    "credential.error.empty", 
-                    "Credential principal or password should not be empty");
-        } else {
-            for (char c : principal.toCharArray()) {
-                if (Character.isWhitespace(c)) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Credential principal or password should not have whitespace");
-                    }
-                    errors.rejectValue("principal", 
-                            "credential.error.whitespace", 
-                            "Credential principal or password should not have whitespace");
-                } else if (!Character.isLetterOrDigit(c) && (c!='@' & c!='.' & c!='_')) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Credential principal should not include invalid char " + c);
-                    }
-                    errors.rejectValue("principal", 
-                            "credential.error.invalidchar", new Object[] { c },
-                            "Credential principal should not include invalid char $1 " + c);
-                }
-            }
-            if (principal.length()>64) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Credential principal lenght should not exceed 64 chars");
-                }
-                errors.rejectValue("principal", 
-                        "credential.error.principaltoolong", 
-                        "Credential principal lenght should not exceed 64 chars");
-            }
         }
     }
     
@@ -103,11 +61,11 @@ public class CredentialValidator implements Validator {
             String verifyPassword = credential.getVerifyPassword();
             if (password == null || password.length() == 0) {
                 if (logger.isDebugEnabled()) {
-                    logger.debug("Credential principal or password should not be empty");
+                    logger.debug("Credential password should not be empty");
                 }
                 errors.rejectValue("password", 
                         "credential.error.empty", 
-                        "Credential principal or password should not be empty");
+                        "Credential password should not be empty");
             } else {
                 if (password.length()>20) {
                     if (logger.isDebugEnabled()) {
@@ -146,7 +104,7 @@ public class CredentialValidator implements Validator {
                                 }
                                 errors.rejectValue("password", 
                                         "credential.error.whitespace", 
-                                        "Credential principal or password should not have whitespace");
+                                        "Credential password should not have whitespace");
                             }
                         }
                     }

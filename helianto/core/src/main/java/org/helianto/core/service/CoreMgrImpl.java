@@ -28,6 +28,7 @@ import org.helianto.core.Home;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.creation.CredentialType;
+import org.helianto.core.creation.IdentityType;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.mail.MailComposer;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -131,7 +132,7 @@ public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
         return (List<User>) getGenericDao().find(USER_QRY_BY_CRED, credId);
     }
 
-    public int currentNumber(Entity entity, String typeName) {
+    public long currentNumber(Entity entity, String typeName) {
         InternalEnumerator enumerator = null;
         Object[] args = new Object[] { entity.getId(), typeName };
         try {
@@ -143,7 +144,7 @@ public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
             }
         }
         if (enumerator!=null) {
-            int lastNumber = enumerator.getLastNumber();
+            long lastNumber = enumerator.getLastNumber();
             enumerator.setLastNumber(lastNumber+1);
             getGenericDao().update(enumerator);
             if (logger.isDebugEnabled()) {
@@ -166,14 +167,14 @@ public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
     }
     
     public void sendRegistrationNotification(Home home, Credential cred) throws MessagingException {
-        if (cred.getCredentialType()==CredentialType.NOT_ADDRESSABLE.getValue()) {
+        if (cred.getIdentity().getIdentityType()==IdentityType.NOT_ADDRESSABLE.getValue()) {
             throw new IllegalStateException("Credential is not addressable.");
         }
         MailComposer mailComposer = getJavaMailAdapter().getMailComposer();
         MimeMessage message = getJavaMailAdapter().createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "ISO-8859-1");
         String mailUser = home.getMailAccessData().getUser();
-        helper.setTo(cred.getPrincipal());
+        helper.setTo(cred.getIdentity().getPrincipal());
         helper.setReplyTo(mailUser);
         helper.setFrom(mailUser);
         helper.setSubject(mailComposer

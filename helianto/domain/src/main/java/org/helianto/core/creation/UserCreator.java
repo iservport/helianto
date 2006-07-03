@@ -17,27 +17,31 @@ package org.helianto.core.creation;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.PersonalData;
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 
 /**
  * A factory method pattern interface to <code>User</code>
  * related domain objects.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: $
  */
 public interface UserCreator {
 
     public PersonalData personalDataFactory();
 
-    public Credential credentialFactory();
+    public Identity identityFactory(String principal, String optionalAlias);
 
-    public Credential credentialFactory(String principal);
+    public Credential credentialFactory(Identity identity);
 
-    public User userFactory(Entity entity, Credential credential) throws NullEntityException;
+    public User userFactory(Entity entity, Identity identity) throws NullEntityException;
 
-    public User userFactory(User parent, Credential credential);
+    public UserGroup userGroupFactory(Entity entity, Identity identity) throws NullEntityException;
+
+    public User userFactory(UserGroup parent, Identity identity);
 
     public String generatePassword(int size);
 

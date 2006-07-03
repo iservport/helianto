@@ -87,7 +87,7 @@ public interface CoreMgr extends GenericService {
      * Return the last available number to a number type
      * and assign a new one with increment 1.
      */
-    public int currentNumber(Entity entity, String type);
+    public long currentNumber(Entity entity, String type);
     
     /**
      * Send a <code>Credential</code> registration using 

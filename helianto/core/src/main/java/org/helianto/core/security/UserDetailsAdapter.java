@@ -69,8 +69,8 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     
     private static final long serialVersionUID = 4017521054529203449L;
     
-    public UserDetailsAdapter(UserLog userLog) {
-        super(userLog);
+    public UserDetailsAdapter(UserLog userLog, Credential credential) {
+        super(userLog, credential);
     }
 
     public GrantedAuthority[] getAuthorities() {
@@ -90,7 +90,7 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     }
 
     public PersonalData getPersonalData() {
-        return userLog.getUser().getCredential().getPersonalData();
+        return userLog.getUser().getIdentity().getPersonalData();
     }
 
     public Entity getCurrentEntity() {
@@ -118,7 +118,7 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     }
     
     public Set<User> getUsers() {
-        return userLog.getUser().getCredential().getUsers();
+        return userLog.getUser().getIdentity().getUsers();
     }
     
     public void setUserLog(UserLog userLog) {
@@ -126,7 +126,7 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     }
 
     public void setEntity(Entity entity) {
-        Set<User> userSet = userLog.getUser().getCredential().getUsers();
+        Set<User> userSet = userLog.getUser().getIdentity().getUsers();
         User newUser = null;
         for (User u: userSet) {
              if (u.getEntity().equals(entity)) {
@@ -136,12 +136,12 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
         if (newUser==null) {
             throw new IllegalArgumentException("Unable to change to entity " +
                     entity.getAlias()+": there is no corresponding user for " +
-                    "credential "+userLog.getUser().getCredential());
+                    "credential "+userLog.getUser().getIdentity());
         } 
     }
 
     public Credential getCredential() {
-        return userLog.getUser().getCredential();
+        return credential;
     }
     
 }

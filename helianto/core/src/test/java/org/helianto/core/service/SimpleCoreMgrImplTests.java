@@ -6,11 +6,10 @@ import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
-import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
+import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
@@ -75,10 +74,6 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
     }
     
-    public void testCreateEmptyCredential() {
-        assertNotNull(simpleCoreMgr.createEmptyCredential());
-    }
-    
     public void testCreateSimpleUser() {
 
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
@@ -96,7 +91,7 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
         User user = simpleCoreMgr.createSimpleUser(defaultEntity.getEntity());
         assertEquals(defaultEntity.getEntity(), user.getEntity());
-        assertEquals("", user.getCredential().getPrincipal());
+        assertEquals("", user.getIdentity().getPrincipal());
         
     }
     
@@ -105,11 +100,11 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
         hibernateTemplate.flush();
         
-        Credential credential = simpleCoreMgr.createEmptyCredential();
+        Identity identity = simpleCoreMgr.createIdentity();
         
-        User user = simpleCoreMgr.createSimpleUser(credential);
+        User user = simpleCoreMgr.createSimpleUser(identity);
         assertEquals(defaultEntity.getEntity(), user.getEntity());
-        assertSame(credential, user.getCredential());
+        assertSame(identity, user.getIdentity());
         
     }
     
@@ -118,9 +113,8 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
         hibernateTemplate.flush();
         
-        Credential credential = simpleCoreMgr.createEmptyCredential();
-        
-        assertNotNull(simpleCoreMgr.createUser(credential, defaultEntity.getEntity()));
+        Identity identity = simpleCoreMgr.createIdentity();
+        assertNotNull(simpleCoreMgr.createUser(identity, defaultEntity.getEntity()));
         
     }
     
@@ -179,7 +173,7 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         hibernateTemplate.flush();
         
         User user = simpleCoreMgr.createSimpleUser();
-        user.getCredential().setPrincipal("ABC");
+        user.getIdentity().setPrincipal("ABC");
         simpleCoreMgr.persistUser(user);
         hibernateTemplate.flush();
         
@@ -199,7 +193,7 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
         try {
             User user = simpleCoreMgr.createSimpleUser();
-            user.getCredential().setPrincipal(null);
+            user.getIdentity().setPrincipal(null);
             simpleCoreMgr.persistUser(user);
             fail();
         } catch (Exception e) {
@@ -218,7 +212,7 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
         try {
             User user = simpleCoreMgr.createSimpleUser();
-            user.getCredential().setPrincipal("");
+            user.getIdentity().setPrincipal("");
             simpleCoreMgr.persistUser(user);
             fail();
         } catch (Exception e) {
@@ -236,7 +230,7 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         hibernateTemplate.flush();
         
         User user = simpleCoreMgr.createSimpleUser();
-        user.getCredential().setPrincipal("ABC");
+        user.getIdentity().setPrincipal("ABC");
         assertTrue(simpleCoreMgr.isPrincipalUnique(user));
         
         simpleCoreMgr.persistUser(user);

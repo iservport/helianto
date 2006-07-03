@@ -16,6 +16,7 @@
 package org.helianto.core.hibernate;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.dao.CredentialDao;
 
 /**
@@ -26,6 +27,14 @@ import org.helianto.core.dao.CredentialDao;
  */
 public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
 
+    public void persistIdentity(Identity identity) {
+        merge(identity);
+    }
+
+    public void removeIdentity(Identity identity) {
+        remove(identity);
+    }
+
     public void persistCredential(Credential credential) {
         merge(credential);
     }
@@ -34,16 +43,24 @@ public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
         remove(credential);
     }
 
-    public Credential findCredentialByPrincipal(String principal) {
-        return (Credential) findUnique(CREDENTIAL_QRY, principal);
+    public Identity findIdentityByPrincipal(String principal) {
+        return (Identity) findUnique(IDENTITY_QRY, principal);
     }
 
-    static final String CREDENTIAL_QRY = 
-        "from Credential credential " +
-        "where credential.principal = ?";
+    static final String IDENTITY_QRY = 
+        "from Identity identity " +
+        "where identity.principal = ?";
     
-    public int countCredentialByPrincipal(String principal) {
-        return find(CREDENTIAL_QRY, principal).size();
+    public int countIdentityByPrincipal(String principal) {
+        return find(IDENTITY_QRY, principal).size();
+    }
+
+    public Credential findCredentialByIdentity(Identity identity) {
+        return (Credential) findUnique(CREDENTIAL_QRY, identity);
     }
         
+    static final String CREDENTIAL_QRY = 
+        "from Credential credential " +
+        "where credential.identity = ?";
+    
 }

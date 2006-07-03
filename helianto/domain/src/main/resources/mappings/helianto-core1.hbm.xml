@@ -183,9 +183,9 @@ individual.
 				<!-- 
 				credential
 				-->
-				<many-to-one name="credential" 
-					class="org.helianto.core.Credential" cascade="all">
-					<column name="credentialId" not-null="false"/>
+				<many-to-one name="identity" 
+					class="org.helianto.core.Identity" cascade="all">
+					<column name="identityId" not-null="false"/>
 				</many-to-one>
 			</subclass>
 		</subclass>

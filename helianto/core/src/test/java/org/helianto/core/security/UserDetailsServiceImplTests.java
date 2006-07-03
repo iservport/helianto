@@ -27,13 +27,13 @@ import org.acegisecurity.userdetails.UserDetails;
 import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Credential;
 import org.helianto.core.Entity;
-import org.helianto.core.PersonalData;
+import org.helianto.core.Identity;
 import org.helianto.core.Role;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
+import org.helianto.core.hibernate.UserDaoImpl;
 import org.springframework.dao.DataRetrievalFailureException;
 
 public class UserDetailsServiceImplTests extends TestCase {
@@ -41,7 +41,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     public void testGuessUserSuccess() {
         
         String principal = "CRED1";
-        userList = createUsers(testCredential, 10);
+        userList = createUsers(testIdentity, 10);
         User user = userDetailsService.guessUser(principal);
         assertTrue(userList.contains(user));
         
@@ -79,7 +79,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     
     public void testLoadUserByUsernameNoUserLogYet() {
         
-        userList = createUsers(testCredential, 1);
+        userList = createUsers(testIdentity, 1);
         User user = userList.get(0);
         Date loginDate1 = new Date();
         lastLogin = loginDate1;
@@ -140,7 +140,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     
     public void testLoadUserByUsernameFromUserLog() {
 
-        userList = createUsers(testCredential, 1);
+        userList = createUsers(testIdentity, 1);
         User user = userList.get(0);
         Date loginDate1 = new Date();
         lastLogin = loginDate1;
@@ -151,14 +151,14 @@ public class UserDetailsServiceImplTests extends TestCase {
         assertEquals(2, userLogList.size());
         assertSame(publicUserDetails.getLastLogin(), loginDate1);
         assertSame(publicUserDetails.getCurrentEntity(), user.getEntity());
-        assertSame(publicUserDetails.getPersonalData(), user.getCredential().getPersonalData());
+        assertSame(publicUserDetails.getPersonalData(), user.getIdentity().getPersonalData());
         assertEquals(0, publicUserDetails.getEntities().size());
                 
     }
     
     public void testLoadUserByUsernameManyUsers() {
 
-        userList = createUsers(testCredential, 3);
+        userList = createUsers(testIdentity, 3);
         
         PublicUserDetails publicUserDetails = (PublicUserDetails) userDetailsService.loadUserByUsername("CRED1");
         assertEquals(2, publicUserDetails.getEntities().size());
@@ -179,30 +179,29 @@ public class UserDetailsServiceImplTests extends TestCase {
     // setup
     
     public void setUp() {
-        testCredential = new Credential();
-        testCredential.setPrincipal("CRED1");
-        testCredential.setPassword("PASSWORD1");
+        testIdentity = new Identity();
+        testIdentity.setPrincipal("CRED1");
         userDao = new UserDaoStub();
         userDetailsService = new UserDetailsServiceImpl();
         userDetailsService.setUserDao(new UserDaoStub());
     }
     
-    final List<User> createUsers(Credential credential, int size) {
+    final List<User> createUsers(Identity identity, int size) {
         userList = new ArrayList<User>();
         Entity[] entities = new Entity[size];
         for (int i=0;i<size;i++) {
             entities[i] = new Entity();
             entities[i].setAlias("ENT"+i);
-            addUserToList(credential, entities[i]);
+            addUserToList(identity, entities[i]);
         }
         return userList;
     }
     
-    final void addUserToList(Credential credential, Entity entity) {
+    final void addUserToList(Identity identity, Entity entity) {
         User user = new User();
         user.setEntity(entity);
-        user.setCredential(credential);
-        credential.getUsers().add(user);
+        user.setIdentity(identity);
+        identity.getUsers().add(user);
         createRoles(user, 3);
         userList.add(user);
         if (logger.isDebugEnabled()) {
@@ -216,7 +215,7 @@ public class UserDetailsServiceImplTests extends TestCase {
             r[i] = new Role();
             r[i].setUser(user);
             user.getRoles().add(r[i]);
-            r[i].setRoleName("ROLE_"+user.getCredential().getPrincipal()+"_"+i);
+            r[i].setRoleName("ROLE_"+user.getIdentity().getPrincipal()+"_"+i);
             if (logger.isDebugEnabled()) {
                 logger.debug("Role created "+r[i]+"(" +r[i].getRoleName()+") for user "+user);
             }
@@ -226,7 +225,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     // private members
     
     private final Log logger = LogFactory.getLog(getClass());
-    private Credential testCredential;
+    private Identity testIdentity;
     private List<User> userList;
     private List<UserLog> userLogList;
     private UserLog lastUserLog = null;
@@ -237,13 +236,15 @@ public class UserDetailsServiceImplTests extends TestCase {
     
     // inner stub class
     
-    public class UserDaoStub implements UserDao {
+    public class UserDaoStub extends UserDaoImpl {
         
         // stub members
         
-        public Credential findCredentialByPrincipal(String principal) {
-            if (principal.compareTo(testCredential.getPrincipal())==0) {
-                return testCredential;
+        
+        @Override
+        public Identity findIdentityByPrincipal(String principal) {
+            if (principal.compareTo(testIdentity.getPrincipal())==0) {
+                return testIdentity;
             }
             return null;
         }
@@ -265,26 +266,6 @@ public class UserDetailsServiceImplTests extends TestCase {
             return lastUserLog;
         }
 
-        // not used
-        
-        public void persistUser(User user) { }
-
-        public void removeUser(User user) { }
-
-        public User findUserByEntityAliasAndPrincipal(String alias, String principal) { return null; }
-
-        public List<User> findUserByEntity(Entity entity) { return null; }
-
-        public List<UserLog> findUserLogByUser(User user) { return null; }
-
-        public void persistCredential(Credential credential) { }
-
-        public void removeCredential(Credential credential) { }
-
-        public int countCredentialByPrincipal(String principal) { return 0; }
-
-        public void persistPersonalData(PersonalData personalData) { }
-        
     }
 
 }

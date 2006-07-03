@@ -16,9 +16,10 @@
 package org.helianto.core.dao;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 
 /**
- * Credential data access interface.
+ * Identity and Credential data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  * @version $Id$
@@ -26,23 +27,38 @@ import org.helianto.core.Credential;
 public interface CredentialDao {
     
     /**
+     * Persist <code>Identity</code>.
+     */
+    public void persistIdentity(Identity identity);
+
+    /**
+     * Remove <code>Identity</code>.
+     */
+    public void removeIdentity(Identity identity);
+
+    /**
      * Persist <code>Credential</code>.
      */
     public void persistCredential(Credential credential);
-    
+
     /**
      * Remove <code>Credential</code>.
      */
     public void removeCredential(Credential credential);
-    
+
     /**
-     * Find <code>Credential</code> by principal.
+     * Find <code>Identity</code> by principal.
      */
-    public Credential findCredentialByPrincipal(String principal);
-    
+    public Identity findIdentityByPrincipal(String principal);
+
     /**
-     * Count <code>Credential</code> by principal.
+     * Find <code>Credential</code> by <code>Identity</code>.
      */
-    public int countCredentialByPrincipal(String principal);
+    public Credential findCredentialByIdentity(Identity identity);
+
+    /**
+     * Count <code>Identity</code> by principal.
+     */
+    public int countIdentityByPrincipal(String principal);
     
 }
