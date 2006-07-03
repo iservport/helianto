@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 03/07/2006 15:46:52 by Hibernate Tools 3.1.0.beta4
+// Generated 03/07/2006 17:04:47 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -18,7 +18,7 @@ public class HumanResource extends org.helianto.core.Contact implements java.io.
      private int resourceCategory;
      private Date born;
      private Date hired;
-     private Date terminated;
+     private Date dismissed;
 
 
     // Constructors
@@ -28,20 +28,20 @@ public class HumanResource extends org.helianto.core.Contact implements java.io.
     }
 
 	/** minimal constructor */
-    public HumanResource(Partner partner, Credential credential, int internalNumber, int priority, int resourceState, int resourceCategory) {
-        super(partner, credential, internalNumber, priority);        
+    public HumanResource(Partner partner, Identity identity, int internalNumber, int priority, int resourceState, int resourceCategory) {
+        super(partner, identity, internalNumber, priority);        
         this.resourceState = resourceState;
         this.resourceCategory = resourceCategory;
     }
     
     /** full constructor */
-    public HumanResource(Partner partner, Credential credential, int internalNumber, String jobReference, String department, int priority, int resourceState, int resourceCategory, Date born, Date hired, Date terminated) {
-        super(partner, credential, internalNumber, jobReference, department, priority);        
+    public HumanResource(Partner partner, Identity identity, int internalNumber, String jobReference, String department, int priority, int resourceState, int resourceCategory, Date born, Date hired, Date dismissed) {
+        super(partner, identity, internalNumber, jobReference, department, priority);        
         this.resourceState = resourceState;
         this.resourceCategory = resourceCategory;
         this.born = born;
         this.hired = hired;
-        this.terminated = terminated;
+        this.dismissed = dismissed;
     }
     
 
@@ -80,12 +80,12 @@ public class HumanResource extends org.helianto.core.Contact implements java.io.
         this.hired = hired;
     }
 
-    public Date getTerminated() {
-        return this.terminated;
+    public Date getDismissed() {
+        return this.dismissed;
     }
     
-    public void setTerminated(Date terminated) {
-        this.terminated = terminated;
+    public void setDismissed(Date dismissed) {
+        this.dismissed = dismissed;
     }
    
 

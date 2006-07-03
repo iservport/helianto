@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 03/07/2006 15:46:49 by Hibernate Tools 3.1.0.beta4
+// Generated 03/07/2006 17:04:43 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -21,7 +21,7 @@ public class Contact  implements java.io.Serializable {
 
      private long id;
      private Partner partner;
-     private Credential credential;
+     private Identity identity;
      private int internalNumber;
      private String jobReference;
      private String department;
@@ -35,17 +35,17 @@ public class Contact  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public Contact(Partner partner, Credential credential, int internalNumber, int priority) {
+    public Contact(Partner partner, Identity identity, int internalNumber, int priority) {
         this.partner = partner;
-        this.credential = credential;
+        this.identity = identity;
         this.internalNumber = internalNumber;
         this.priority = priority;
     }
     
     /** full constructor */
-    public Contact(Partner partner, Credential credential, int internalNumber, String jobReference, String department, int priority) {
+    public Contact(Partner partner, Identity identity, int internalNumber, String jobReference, String department, int priority) {
         this.partner = partner;
-        this.credential = credential;
+        this.identity = identity;
         this.internalNumber = internalNumber;
         this.jobReference = jobReference;
         this.department = department;
@@ -72,12 +72,12 @@ public class Contact  implements java.io.Serializable {
         this.partner = partner;
     }
 
-    public Credential getCredential() {
-        return this.credential;
+    public Identity getIdentity() {
+        return this.identity;
     }
     
-    public void setCredential(Credential credential) {
-        this.credential = credential;
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
     }
 
     public int getInternalNumber() {
@@ -122,7 +122,7 @@ public class Contact  implements java.io.Serializable {
 		 Contact castOther = ( Contact ) other; 
          
 		 return ( (this.getPartner()==castOther.getPartner()) || ( this.getPartner()!=null && castOther.getPartner()!=null && this.getPartner().equals(castOther.getPartner()) ) )
- && ( (this.getCredential()==castOther.getCredential()) || ( this.getCredential()!=null && castOther.getCredential()!=null && this.getCredential().equals(castOther.getCredential()) ) )
+ && ( (this.getIdentity()==castOther.getIdentity()) || ( this.getIdentity()!=null && castOther.getIdentity()!=null && this.getIdentity().equals(castOther.getIdentity()) ) )
  && (this.getInternalNumber()==castOther.getInternalNumber());
    }
    
@@ -131,7 +131,7 @@ public class Contact  implements java.io.Serializable {
          
          
          result = 37 * result + ( getPartner() == null ? 0 : this.getPartner().hashCode() );
-         result = 37 * result + ( getCredential() == null ? 0 : this.getCredential().hashCode() );
+         result = 37 * result + ( getIdentity() == null ? 0 : this.getIdentity().hashCode() );
          result = 37 * result + this.getInternalNumber();
          
          

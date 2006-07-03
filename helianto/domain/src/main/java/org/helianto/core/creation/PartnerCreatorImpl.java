@@ -9,6 +9,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Customer;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
@@ -57,10 +58,10 @@ public class PartnerCreatorImpl extends EntityCreatorImpl implements PartnerCrea
         return (Manufacturer) partnerFactory(Manufacturer.class, entity, alias);
     }
 
-    public Contact contactFactory(Partner partner, Credential cred) {
+    public Contact contactFactory(Partner partner, Identity identity) {
         Contact cntct = new Contact();
         cntct.setPartner(partner);
-        cntct.setCredential(cred);
+        cntct.setIdentity(identity);
         return cntct;
     }
 

@@ -22,6 +22,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Customer;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
 import org.helianto.core.Supplier;
@@ -68,6 +69,6 @@ public interface PartnerCreator  extends EntityCreator {
     /**
      * The <code>Contact</code> factory method.
      */
-    public Contact contactFactory(Partner partner, Credential cred) throws NullEntityException;
+    public Contact contactFactory(Partner partner, Identity identity) throws NullEntityException;
     
 }
