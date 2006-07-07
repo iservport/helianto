@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
-import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.Identity;
@@ -120,6 +120,31 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         
     }
     
+    public void testfindLastIdentityLogDate() {
+        List<Entity> entities = createEntities();
+        List<User> userList = populateUsersAndLogs(entities);
+        assertTrue(userList.size()>0);
+        Identity identity = userList.get(0).getIdentity();
+        logger.info("**> Identity to test "+identity);
+        assertNotNull(identity);
+        Set<User> users = identity.getUsers();
+        logger.info("**> Users that share the same identity are "+users.size());
+        List<UserLog> userLogList = new ArrayList<UserLog>();
+        for (User u: users) {
+            userLogList.addAll(userDao.findUserLogByUser(u));
+            logger.info("**> User "+u.getIdentity().getPrincipal()+" "+u.getEntity().getAlias());
+        }
+        Date lastLogin = userDao.findLastIdentityLogDate(identity.getPrincipal());
+        assertNotNull(lastLogin);
+        logger.info("**> Last date found "+lastLogin);
+        for (UserLog ul: userLogList) {
+            logger.info("**> UserLog "+ul.getUser().getIdentity().getPrincipal()+":"+ul.getUser().getEntity().getAlias()+" "+ul.getLastLogin());
+            if (ul.getLastLogin().getTime() > lastLogin.getTime()) {
+                fail();
+            }
+        }
+    }
+    
     public void testCreateAndPersistUserLog() {
 
         User user = createAndPersistUser();
@@ -135,7 +160,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     
     private List<Entity> createEntities() {
         List<Entity> entities = new ArrayList<Entity>();
-        for (int i = 1; i<=10; i++) {
+        for (int i = 1; i<=3; i++) {
             Entity e = entityCreator.entityFactory(home, "ENTITY"+i);
             entities.add(e);
         }
@@ -143,25 +168,26 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     }
     
     private List<User> populateUsersAndLogs(List<Entity> entities) {
+        // write identities
+        int numberOfIdentities = 3;
         List<Identity> identities = new ArrayList<Identity>();
-        for (int i = 1; i<=3; i++) {
-            Identity c = userCreator.identityFactory("CRED"+i, "ALIAS"+i);
+        for (int i = 1; i<numberOfIdentities; i++) {
+            Identity c = userCreator.identityFactory("IDENTITY"+i, "ALIAS"+i);
+            userDao.persistIdentity(c);
             identities.add(c);
         }
+        // write one user for each entity and identity
+        Random r = new Random();
         List<User> users = new ArrayList<User>();
         for (Entity e: entities) {
-            Random r = new Random();
-            int repeat1 = r.nextInt(2);
-            for (int i=0; i<=repeat1;i++) {
-                User u = userCreator.userFactory(e, identities.get(i));
+            for (Identity i: identities) {
+                User u = userCreator.userFactory(e, i);
+                i.getUsers().add(u);
                 userDao.persistUser(u);
                 users.add(u);
-                int repeat2 = r.nextInt(8);
-                for (int j=0; j<=repeat2;j++) {
+                for (int j=0; j<=3;j++) {
                     Date date = randomDateGenerator(r);
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Repeat ("+i+", "+j+") UserLog to: "+u+" - "+date);
-                    }
+                    logger.info("Repeat ("+i+", "+j+") UserLog to: "+u+" - "+date);
                     // there is a very small chance to have a duplicated date here
                     ((UserDaoImpl) userDao).createAndPersistUserLog(u, date);
                 }

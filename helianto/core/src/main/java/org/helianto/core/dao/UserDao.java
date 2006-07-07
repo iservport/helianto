@@ -15,6 +15,7 @@
 
 package org.helianto.core.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.Entity;
@@ -74,4 +75,13 @@ public interface UserDao extends CredentialDao {
      * having a given principal.
      */
     public UserLog findLastUserLog(String principal);
+    
+    /**
+     * Find the last time an <code>User</code> which the <code>Identity</code>
+     * corresponds to <code>principal</code> has logged.
+     * 
+     * @param principal
+     */
+    public Date findLastIdentityLogDate(String principal);
+    
 }

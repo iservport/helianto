@@ -84,10 +84,18 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
     static final String USERLOG_QUERY = "from UserLog userLog " +
     "  where userLog.user = ? ";
 
+    public Date findLastIdentityLogDate(String principal) {
+        Date lastLogin = (Date) findUnique(LASTUSERLOGDATE_QUERY, principal);
+        return lastLogin;
+    }
+    
+    static final String LASTUSERLOGDATE_QUERY = "select max(userLog.lastLogin) " +
+        "  from UserLog userLog " +
+        "  where userLog.user.identity.principal = ? ";
+
     public UserLog findLastUserLog(String principal) {
         try {
-        	// two different queries to grant compatibility with all databases
-        	Date lastLogin = (Date) findUnique(LASTUSERLOGDATE_QUERY, principal);
+        	Date lastLogin = findLastIdentityLogDate(principal);
             List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOG_QUERY, principal, lastLogin );
             if (logger.isDebugEnabled()) {
                 for (UserLog ul: userLogList) {
@@ -106,10 +114,6 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
         }
     }
     
-    static final String LASTUSERLOGDATE_QUERY = "select max(userLog.lastLogin) " +
-    "  from UserLog userLog " +
-    "  where userLog.user.identity.principal = ? "+
-    "  group by userLog.user.identity.principal ";
 
     static final String LASTUSERLOG_QUERY = "from UserLog lastUserLog " +
     "  where lastUserLog.user.identity.principal = ? and" +
