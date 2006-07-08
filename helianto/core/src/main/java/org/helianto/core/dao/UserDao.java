@@ -49,7 +49,7 @@ public interface UserDao extends CredentialDao {
     /**
      * Find <code>User</code> by <code>Entity</code>.
      */
-    public List<User> findUserByEntity(Entity entity);
+    public List<User> findUserByEntity(Entity requiredEntity);
     
     /**
      * Persist <code>UserLog</code>.
@@ -61,11 +61,16 @@ public interface UserDao extends CredentialDao {
     /**
      * List <code>UserLog</code> by <code>User</code>.
      */
-    public List<UserLog> findUserLogByUser(User user);
+    public List<UserLog> findUserLogByUser(User requiredUser);
     
     /**
      * Find the last <code>UserLog</code> for an <code>Identity</code>.
      */
-    public UserLog findLastUserLog(Identity identity);
+    public UserLog findLastUserLog(Identity requiredIdentity);
+    
+    /**
+     * Remove <code>UserLog</code>.
+     */
+    public void removeUserLog(UserLog userLog);
     
 }

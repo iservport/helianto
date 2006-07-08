@@ -24,7 +24,6 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
-import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.util.Assert;
 
 public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
@@ -38,11 +37,6 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
         merge(user);
     }
 
-    public void removeUser(User user) {
-    	Assert.notNull(user);
-        remove(user);
-    }
-
     public User findUserByEntityAndIdentity(Entity requiredEntity, Identity requiredIdentity) {
     	Assert.notNull(requiredEntity, "An entity is required");
     	Assert.notNull(requiredIdentity, "An identity is required");
@@ -54,10 +48,16 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
 
     static final String USER_IDENTITY_FILTER = "and user.identity = ?";
 
-    public List<User> findUserByEntity(Entity entity) {
-        return (ArrayList<User>) find(USER_ENTITY_QRY, entity);
+    public List<User> findUserByEntity(Entity requiredEntity) {
+        Assert.notNull(requiredEntity, "An entity is required");
+        return (ArrayList<User>) find(USER_ENTITY_QRY, requiredEntity);
     }
     
+    public void removeUser(User user) {
+        Assert.notNull(user);
+        remove(user);
+    }
+
     /*
      * Persist and find UserLog
      */
@@ -67,10 +67,11 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
         merge(userLog);
     }
 
-    public UserLog findLastUserLog(Identity identity) {
-		if (identity.getLastLogin() != null) {
-			return (UserLog) findUnique(LASTUSERLOG_QRY, identity, identity
-					.getLastLogin());
+    public UserLog findLastUserLog(Identity requiredIdentity) {
+        Assert.notNull(requiredIdentity);
+		if (requiredIdentity.getLastLogin() != null) {
+			return (UserLog) findUnique(LASTUSERLOG_QRY, requiredIdentity, 
+                    requiredIdentity.getLastLogin());
 		}
 		return null;
 	}
@@ -78,12 +79,20 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
 	static final String LASTUSERLOG_QRY = "from UserLog userLog "
 			+ "where userLog.user.identity = ? " + "and userLog.lastLogin = ? ";
 
-    public List<UserLog> findUserLogByUser(User user) {
-        return (ArrayList<UserLog>) find(USERLOG_QUERY, user);
+    public List<UserLog> findUserLogByUser(User requiredUser) {
+        Assert.notNull(requiredUser);
+        return (ArrayList<UserLog>) find(USERLOG_QUERY, requiredUser);
     }
     
     static final String USERLOG_QUERY = "from UserLog userLog " +
     	"where userLog.user = ? ";
+
+    public void removeUserLog(UserLog userLog) {
+        Assert.notNull(userLog);
+        remove(userLog);
+    }
+    
+    // code to be removed
 
 //    public Date findLastIdentityLogDate(String principal) {
 //        Date lastLogin = (Date) findUnique(LASTUSERLOGDATE_QUERY, principal);
@@ -96,8 +105,7 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
 //    
 
 	public Date findLastIdentityLogDate(String principal) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Code to be removed");
 	}
 
 }
