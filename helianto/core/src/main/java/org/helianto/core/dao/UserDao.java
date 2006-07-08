@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 
@@ -26,7 +27,7 @@ import org.helianto.core.UserLog;
  * User data access interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: $
  */
 public interface UserDao extends CredentialDao {
     
@@ -54,6 +55,7 @@ public interface UserDao extends CredentialDao {
     /**
      * Convenience method to create and persist a new 
      * <code>User</code> automatically.
+     * @deprecated
      */
     public User autoCreateAndPersistUser(String principal);
     
@@ -62,8 +64,21 @@ public interface UserDao extends CredentialDao {
      * 
      * <p>The <code>UserLog</code> is automatically assigned 
      * the current date.</p>
+     * @deprecated
      */
     public UserLog createAndPersistUserLog(User user);
+    
+    /**
+     * Persist <code>UserLog</code>.
+     * 
+     * @param userLog
+     */
+    public void persistUserLog(UserLog userLog);
+    
+    /**
+     * Find the last <code>UserLog</code> by <code>Identity</code>.
+     */
+    public UserLog findLastUserLog(Identity identity);
     
     /**
      * List <code>UserLog</code> by <code>User</code>.
@@ -73,6 +88,7 @@ public interface UserDao extends CredentialDao {
     /**
      * Find the last <code>UserLog</code> for any <code>User</code>
      * having a given principal.
+     * @deprecated
      */
     public UserLog findLastUserLog(String principal);
     

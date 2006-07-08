@@ -221,21 +221,22 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
 	}
     
     public boolean switchAuthorizedUser(PublicUserDetailsSwitcher secureUser, String entityAlias) {
-        if (!(secureUser.getUsers().size() > 1)) {
-            return false;
-        }
-        User newUser = null;
-        for (User u: secureUser.getUsers()) {
-             if (u.getEntity().getAlias().compareTo(entityAlias)==0) {
-                 newUser = u;
-             }
-        }
-        if (newUser==null) {
-            throw new IllegalArgumentException("Unable to change to entity " +
-                    entityAlias+": there is no corresponding user for " +
-                    "credential "+secureUser.getUsername());
-        } 
-        secureUser.setUserLog(userDao.createAndPersistUserLog(newUser));
+        //FIXME
+//        if (!(secureUser.getUsers().size() > 1)) {
+//            return false;
+//        }
+//        User newUser = null;
+//        for (User u: secureUser.getUsers()) {
+//             if (u.getEntity().getAlias().compareTo(entityAlias)==0) {
+//                 newUser = u;
+//             }
+//        }
+//        if (newUser==null) {
+//            throw new IllegalArgumentException("Unable to change to entity " +
+//                    entityAlias+": there is no corresponding user for " +
+//                    "credential "+secureUser.getUser().getIdentity().getPrincipal());
+//        } 
+//        secureUser.setUser(userDao.createAndPersistUserLog(newUser));
         return true;
     }
     

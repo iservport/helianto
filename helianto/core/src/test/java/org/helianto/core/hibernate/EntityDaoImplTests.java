@@ -15,10 +15,15 @@
 
 package org.helianto.core.hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
+import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.EntityCreatorImpl;
+import org.helianto.core.creation.HomeCreator;
 import org.helianto.core.creation.HomeCreatorImpl;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
@@ -99,5 +104,23 @@ public class EntityDaoImplTests extends AbstractIntegrationTest {
         assertEquals(entity, de1);
         
     }
-
+    
+    // utility methods
+    
+    /**
+     * Utility method to create entities.
+     * @param size
+     */
+    public static List<Entity> createEntities(int size) {
+        EntityCreator entityCreator = new EntityCreatorImpl();
+        HomeCreator homeCreator = new HomeCreatorImpl();
+        Home home = homeCreator.homeFactory("HOME");
+        List<Entity> entities = new ArrayList<Entity>();
+        for (int i = 0; i<size; i++) {
+            Entity e = entityCreator.entityFactory(home, "ENTITY"+i);
+            entities.add(e);
+        }
+        return entities;
+    }
+    
 }

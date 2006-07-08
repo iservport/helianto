@@ -19,7 +19,7 @@ import junit.framework.TestCase;
 
 import org.acegisecurity.GrantedAuthority;
 import org.helianto.core.Credential;
-import org.helianto.core.UserLog;
+import org.helianto.core.User;
 
 public class AbstractUserDetailsTests extends TestCase {
     
@@ -33,8 +33,8 @@ public class AbstractUserDetailsTests extends TestCase {
     @SuppressWarnings("serial")
     public class UserDetailsStub extends AbstractUserDetails {
 
-        public UserDetailsStub(UserLog userLog, Credential cred) {
-            super(userLog, cred);
+        public UserDetailsStub(User user, Credential cred) {
+            super(user, cred);
             // TODO Auto-generated constructor stub
         }
 

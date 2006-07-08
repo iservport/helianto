@@ -15,8 +15,12 @@
 
 package org.helianto.core.hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.creation.UserCreator;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
@@ -64,7 +68,17 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
         
         Credential found = userDao.findCredentialByIdentity(identity);
         assertEquals(credential, found);
-        
+    }
+    
+    //~ utility methods 
+    
+    public static List<Identity> createIdentities(int size) {
+        List<Identity> identities = new ArrayList<Identity>();
+        UserCreator userCreator = new UserCreatorImpl();
+        for (int i=0;i<size;i++) {
+            identities.add(userCreator.identityFactory("PRINCIPAL"+i, "ALIAS"+i));
+        }
+        return identities ;
     }
     
 }

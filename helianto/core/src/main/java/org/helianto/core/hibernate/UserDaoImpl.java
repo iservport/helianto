@@ -20,10 +20,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.util.Assert;
 
 public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
 
@@ -51,6 +53,11 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
     static final String USER_QRY_ENTITY = 
         "from User user " +
         "where user.entity = ?";
+
+    public void persistUserLog(UserLog userLog) {
+        Assert.notNull(userLog);
+        merge(userLog);
+    }
 
     /**
      * Subclasses should override this method to provide 
@@ -92,11 +99,23 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
     static final String LASTUSERLOGDATE_QUERY = "select max(userLog.lastLogin) " +
         "  from UserLog userLog " +
         "  where userLog.user.identity.principal = ? ";
+    
+    public UserLog findLastUserLog(Identity identity) {
+        if (identity.getLastLogin()!=null) {
+            return (UserLog) findUnique(LASTUSERLOG_QRY, identity, identity.getLastLogin());
+        }
+        return null;
+    }
 
+    static final String LASTUSERLOG_QRY = "from UserLog userLog " +
+        "where userLog.user.identity = ? " +
+        "and userLog.lastLogin = ? ";
+
+    @Deprecated
     public UserLog findLastUserLog(String principal) {
         try {
         	Date lastLogin = findLastIdentityLogDate(principal);
-            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOG_QUERY, principal, lastLogin );
+            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOGPRINCIPAL_QUERY, principal, lastLogin );
             if (logger.isDebugEnabled()) {
                 for (UserLog ul: userLogList) {
                     logger.debug("Found UserLog(s) with principal "+principal+"[" +ul.getUser().getIdentity().getPrincipal()+"]: "+ul.getUser()+" - "+ul.getLastLogin());
@@ -115,7 +134,7 @@ public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
     }
     
 
-    static final String LASTUSERLOG_QUERY = "from UserLog lastUserLog " +
+    private static final String LASTUSERLOGPRINCIPAL_QUERY = "from UserLog lastUserLog " +
     "  where lastUserLog.user.identity.principal = ? and" +
     "  lastUserLog.lastLogin = ?";
 

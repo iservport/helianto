@@ -15,11 +15,7 @@
 
 package org.helianto.core.security;
 
-import java.util.Date;
-import java.util.List;
-
-import org.helianto.core.Entity;
-import org.helianto.core.PersonalData;
+import org.helianto.core.User;
 
 /**
  * An interface to reveal public user details.
@@ -30,33 +26,10 @@ import org.helianto.core.PersonalData;
 public interface PublicUserDetails {
     
     /**
-     * Return <code>PersonalData</code> from 
-     * the secured <code>User</code>.
+     * Return the <code>User</code>.
      */
-    public PersonalData getPersonalData();
+    public User getUser();
     
-    /**
-     * Return the <code>Credential</code> principal from 
-     * the secured <code>User</code> as username.
-     */
-    public String getUsername();
-    
-    /**
-     * Return the current <code>Entity</code>.
-     */
-    public Entity getCurrentEntity();
-    
-    /**
-     * Retrieve the last login date for the current secure
-     * <code>User</code>.
-     */
-    public Date getLastLogin();
 
-    /**
-     * Return an <code>Entity</code> from all
-     * <code>User</code>s connected by the same
-     * <code>Credential</code>.
-     */
-    public List<Entity> getEntities();
     
 }

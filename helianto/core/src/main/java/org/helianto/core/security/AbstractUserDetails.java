@@ -20,8 +20,9 @@ import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
-import org.helianto.core.UserLog;
+import org.helianto.core.User;
 import org.helianto.core.creation.CredentialState;
+import org.springframework.util.Assert;
 
 /**
  * A base class to implement {@link org.acegisecurity.userdetails.UserDetails}
@@ -36,25 +37,17 @@ import org.helianto.core.creation.CredentialState;
  */
 public abstract class AbstractUserDetails implements UserDetails {
     
-    static final Log logger = LogFactory.getLog(AbstractUserDetails.class);
+    private User user;
     
-    protected UserLog userLog;
-    
-    protected Credential credential;
-
-    public AbstractUserDetails() {
-        throw new IllegalArgumentException("AbstractUserDetails subclasses must take an " +
-                "User instance as constructor parameter");
-    }
+    private Credential credential;
 
     /**
      * Minimal constructor.
      */
-    public AbstractUserDetails(UserLog userLog, Credential credential) {
-        if (userLog==null) {
-            throw new IllegalArgumentException("Cannot set a null userLog");
-        }
-        this.userLog = userLog;
+    public AbstractUserDetails(User user, Credential credential) {
+        Assert.notNull(user, "Required to create UserDetails");
+        Assert.notNull(credential, "Required to create UserDetails");
+        this.user = user;
         this.credential = credential;
     }
     
@@ -63,24 +56,21 @@ public abstract class AbstractUserDetails implements UserDetails {
      * instance held in the <code>SecurityContext</code>.
      */
     public static PublicUserDetails retrievePublicUserDetailsFromSecurityContext() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("\n         Retriving public user details ...");
-        }
         PublicUserDetails pud = (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
         if (logger.isDebugEnabled()) {
-            logger.debug("\n         Done.");
+            logger.debug("PublicUserDetails retrieved from security context");
         }
         return pud;
     }
     
     public boolean isAccountNonExpired() {
         // TODO calculate account (User) expiration
-        return userLog.getUser().isAccountNonExpired();
+        return user.isAccountNonExpired();
     }
 
     public boolean isAccountNonLocked() {
         // TODO calculate account (User) expiration
-        return userLog.getUser().isAccountNonLocked();
+        return user.isAccountNonLocked();
     }
 
     public boolean isCredentialsNonExpired() {
@@ -105,7 +95,22 @@ public abstract class AbstractUserDetails implements UserDetails {
      }
 
     public String getUsername() {
-        return userLog.getUser().getIdentity().getPrincipal();
+        return user.getIdentity().getPrincipal();
     }
+    
+    public User getUser() {
+        return user;
+    }
+    
+    protected void setUser(User user) {
+        this.user = user;
+    }
+    
+    public AbstractUserDetails() {
+        throw new IllegalArgumentException("AbstractUserDetails subclasses must take an " +
+                "User instance as constructor parameter");
+    }
+
+    static final Log logger = LogFactory.getLog(AbstractUserDetails.class);
     
 }

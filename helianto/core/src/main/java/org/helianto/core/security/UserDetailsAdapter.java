@@ -16,20 +16,15 @@
 package org.helianto.core.security;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
 import org.helianto.core.Credential;
-import org.helianto.core.Entity;
-import org.helianto.core.PersonalData;
 import org.helianto.core.Role;
 import org.helianto.core.User;
-import org.helianto.core.UserLog;
+import org.springframework.util.Assert;
 
 /**
  * Models core user information retieved by  
@@ -69,16 +64,13 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     
     private static final long serialVersionUID = 4017521054529203449L;
     
-    public UserDetailsAdapter(UserLog userLog, Credential credential) {
-        super(userLog, credential);
+    public UserDetailsAdapter(User user, Credential credential) {
+        super(user, credential);
     }
 
     public GrantedAuthority[] getAuthorities() {
-        Set roles = userLog.getUser().getRoles();
+        Set roles = getUser().getRoles();
         if (roles!=null && roles.size()>0) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n         Roles found: "+roles.size());
-            }
             GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
             int i = 0;
             for (Iterator it = roles.iterator(); it.hasNext();) {
@@ -89,60 +81,25 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
         return new GrantedAuthority[] {new GrantedAuthorityImpl("ROLE_USER")};
     }
 
-    public PersonalData getPersonalData() {
-        return userLog.getUser().getIdentity().getPersonalData();
-    }
-
-    public Entity getCurrentEntity() {
-        return userLog.getUser().getEntity();
-    }
-    
-    public List<Entity> getEntities() {
-        List<Entity> entityList = new ArrayList<Entity>();
-        if (logger.isDebugEnabled()) {
-            logger.debug("Current entity is: "+getCurrentEntity());
-        }
-        for (User u: getUsers()) {
-        	if (!u.getEntity().equals(getCurrentEntity())) {
-                entityList.add(u.getEntity());
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Added to entity list: "+u.getEntity());
-                }
-        	}
-        }
-        return entityList;
-    }
-
-    public Date getLastLogin() {
-        return userLog.getLastLogin();
-    }
-    
-    public Set<User> getUsers() {
-        return userLog.getUser().getIdentity().getUsers();
-    }
-    
-    public void setUserLog(UserLog userLog) {
-        this.userLog = userLog;
-    }
-
-    public void setEntity(Entity entity) {
-        Set<User> userSet = userLog.getUser().getIdentity().getUsers();
+    public void setCurrentUser(User user) {
+        Set<User> userSet = getUser().getIdentity().getUsers();
         User newUser = null;
         for (User u: userSet) {
-             if (u.getEntity().equals(entity)) {
+             if (u.equals(user)) {
                  newUser = u;
+                 setUser(u);
              }
         }
-        if (newUser==null) {
-            throw new IllegalArgumentException("Unable to change to entity " +
-                    entity.getAlias()+": there is no corresponding user for " +
-                    "credential "+userLog.getUser().getIdentity());
-        } 
+        Assert.notNull(newUser, "Unable to change to user "+user);
     }
 
     public Credential getCredential() {
-        return credential;
+        return getCredential();
     }
-    
+
+    public Set<User> getUsers() {
+        return getUser().getIdentity().getUsers();
+    }
+
 }
 

@@ -18,7 +18,6 @@ package org.helianto.core.security;
 import java.util.Set;
 
 import org.helianto.core.User;
-import org.helianto.core.UserLog;
 
 /**
  * Implementations
@@ -40,11 +39,10 @@ public interface PublicUserDetailsSwitcher extends PublicUserDetails {
      * 
      * <p>As one of the <code>User</code> primary responsibilities
      * is to carry a set of <code>Role</code>s specific to
-     * an <code>Entity</code>, a new <code>UserLog</code>
-     * that points to an <code>User</code> different than
+     * an <code>Entity</code>, a new <code>User</code> different than
      * the current one will change the <code>GrantedAuthority</code>
      * array.</p>
      */
-    public void setUserLog(UserLog userLog);
+    public void setCurrentUser(User user);
     
 }

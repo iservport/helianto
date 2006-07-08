@@ -29,6 +29,7 @@ import org.helianto.core.UserLog;
 import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.EntityCreatorImpl;
 import org.helianto.core.creation.HomeCreatorImpl;
+import org.helianto.core.creation.UserCreator;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
@@ -37,7 +38,6 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     
     private UserDao userDao;
     private UserCreatorImpl userCreator;
-    private Home home = new HomeCreatorImpl().homeFactory("HOME");
     private Entity entity;
     private EntityCreator entityCreator;
     
@@ -49,6 +49,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     protected void onSetUpBeforeTransaction() throws Exception {
         userCreator = new UserCreatorImpl();
         entityCreator = new EntityCreatorImpl();
+        Home home = new HomeCreatorImpl().homeFactory("HOME");
         entity = entityCreator.entityFactory(home, "ENTITY");
     }
 
@@ -70,7 +71,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     }
     
     public void testfindUserByEntity() {
-        List<Entity> entities = createEntities();
+        List<Entity> entities = EntityDaoImplTests.createEntities(3);
         populateUsersAndLogs(entities);
         for (Entity e: entities) {
             List<User> users = userDao.findUserByEntity(e);
@@ -82,7 +83,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     }
 
     public void testfindUserLogByUser() {
-        List<Entity> entities = createEntities();
+        List<Entity> entities = EntityDaoImplTests.createEntities(3);
         List<User> users = populateUsersAndLogs(entities);
         for (User u: users) {
             List<UserLog> userLogs = userDao.findUserLogByUser(u);
@@ -95,7 +96,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
 
     public void testFindLastUserLog() {
         
-        List<Entity> entities = createEntities();
+        List<Entity> entities = EntityDaoImplTests.createEntities(3);
         List<User> users = populateUsersAndLogs(entities);
         User user = users.get(0);  
         String principal = user.getIdentity().getPrincipal();
@@ -121,7 +122,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     }
     
     public void testfindLastIdentityLogDate() {
-        List<Entity> entities = createEntities();
+        List<Entity> entities = EntityDaoImplTests.createEntities(3);
         List<User> userList = populateUsersAndLogs(entities);
         assertTrue(userList.size()>0);
         Identity identity = userList.get(0).getIdentity();
@@ -158,13 +159,37 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         assertEquals(userLog, ul);
     }
     
-    private List<Entity> createEntities() {
-        List<Entity> entities = new ArrayList<Entity>();
-        for (int i = 1; i<=3; i++) {
-            Entity e = entityCreator.entityFactory(home, "ENTITY"+i);
-            entities.add(e);
+    /**
+     * Utility method to create users.
+     * 
+     * @param identities
+     * @param entities
+     * @return
+     */
+    public static List<User> createUsers(List<Identity> identities, List<Entity> entities) {
+        List<User> users = new ArrayList<User>();
+        UserCreator userCreator = new UserCreatorImpl();
+        for (Identity i: identities) {
+            for (Entity e: entities) {
+                User u = userCreator.userFactory(e, i);
+                i.getUsers().add(u);
+                users.add(u);
+            }
         }
-        return entities;
+        return users;
+    }
+    
+    /**
+     * Utility method to create users.
+     * 
+     * @param identityListSize
+     * @param entityListSize
+     * @return
+     */
+    public static List<User> createUsers(int identityListSize, int entityListSize) {
+        List<Entity> entities = EntityDaoImplTests.createEntities(entityListSize);
+        List<Identity> identities = CredentialDaoImplTests.createIdentities(identityListSize);
+        return createUsers(identities, entities);
     }
     
     private List<User> populateUsersAndLogs(List<Entity> entities) {

@@ -17,11 +17,21 @@
 		-->
 <beans>
 	<!--
-			Security dao 	
-	-->
-	<bean id="userDetailsService"
+			Security service 	
+	<bean id="userDetailsService1"
 		class="org.helianto.core.security.UserDetailsServiceImpl">
 		<property name="userDao" ref="userDao"/>
+	</bean>
+	-->
+	<bean id="userDetailsService" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="org.helianto.core.security.UserDetailsServiceImpl"
+				class="org.helianto.core.service.SimpleCoreMgrImpl">
+				<property name="userDao" ref="userDao"/>
+			</bean>
+		</property>
 	</bean>
 	<!--
 			Security test dao
