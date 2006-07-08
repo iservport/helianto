@@ -36,7 +36,6 @@ import org.helianto.core.Identity;
 import org.helianto.core.Role;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
-import org.helianto.core.creation.UserCreator;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.hibernate.UserDaoImpl;
@@ -209,11 +208,10 @@ public class UserDetailsServiceImplTests extends TestCase {
     // setup
     
     public void setUp() {
-        UserCreator userCreator = new UserCreatorImpl();
-        testIdentity = userCreator.identityFactory("CRED1", "");
+        testIdentity = UserCreatorImpl.identityFactory("CRED1", "");
         userDao = createMock(UserDao.class);
         userDetailsService = new UserDetailsServiceImpl();
-        userDetailsService.setUserDao(new UserDaoStub());
+//        userDetailsService.setUserDao(new UserDaoStub());
     }
     
     public void tearDown() {

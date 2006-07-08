@@ -18,8 +18,6 @@ package org.helianto.core.hibernate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
@@ -29,87 +27,173 @@ import org.helianto.core.UserLog;
 import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.EntityCreatorImpl;
 import org.helianto.core.creation.HomeCreatorImpl;
-import org.helianto.core.creation.UserCreator;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 public class UserDaoImplTests extends AbstractIntegrationTest {
     
     private UserDao userDao;
-    private UserCreatorImpl userCreator;
+
     private Entity entity;
     private EntityCreator entityCreator;
     
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
-        userCreator = new UserCreatorImpl();
         entityCreator = new EntityCreatorImpl();
         Home home = new HomeCreatorImpl().homeFactory("HOME");
         entity = entityCreator.entityFactory(home, "ENTITY");
     }
 
-    private User createAndPersistUser() {
-        Identity identity = userCreator.identityFactory("IDENTITY", "ALIAS");
-        User user = userCreator.userFactory(entity, identity);
+    /*
+     * UserLog tests
+     */
+
+    private User createAndPersistUser(UserDao userDao) {
+        Identity identity = UserCreatorImpl.identityFactory("IDENTITY", "ALIAS");
+        User user = UserCreatorImpl.userFactory(entity, identity);
         userDao.persistUser(user);
         return user;
     }
     
-    public void testUserLifeCycle() {
-        
-        User user = createAndPersistUser();
+    public void testPersistUser() {
+        // write
+        User user = createAndPersistUser(userDao);
         hibernateTemplate.flush();
-        
-        User us = userDao.findUserByEntityAliasAndPrincipal("ENTITY", "IDENTITY");
-        assertEquals(user, us);
-        
+        // read
+        User u = userDao.findUserByEntityAndIdentity(user.getEntity(), user.getIdentity());
+        assertEquals(user, u);
     }
     
-    public void testfindUserByEntity() {
-        List<Entity> entities = EntityDaoImplTests.createEntities(3);
-        populateUsersAndLogs(entities);
-        for (Entity e: entities) {
-            List<User> users = userDao.findUserByEntity(e);
-            for (User u: users) {
-                assertEquals(e, u.getEntity());
-            }
+    public void testFindUser() {
+        // bulk write
+        int e = 3, i = 4;
+        List<User> userList = createUsers(e, i);
+        assertEquals(e*i, userList.size());
+        hibernateTemplate.saveOrUpdateAll(userList);
+        hibernateTemplate.flush();
+        hibernateTemplate.clear();
+        // bulk read
+        User user = userList.get(0);
+        List<User> listSameEntity = userDao.findUserByEntity(user.getEntity());
+        assertEquals(i, listSameEntity.size());
+        for (User u: listSameEntity) {
+            assertEquals(user.getEntity(), u.getEntity());
         }
-        
     }
-
-    public void testfindUserLogByUser() {
-        List<Entity> entities = EntityDaoImplTests.createEntities(3);
-        List<User> users = populateUsersAndLogs(entities);
-        for (User u: users) {
-            List<UserLog> userLogs = userDao.findUserLogByUser(u);
-            for (UserLog ul: userLogs) {
-                assertEquals(u, ul.getUser());
-            }
+    
+    public void testUserError() {
+        try {
+            userDao.persistUser(null); fail();
+        } catch (IllegalArgumentException e) { }
+        try {
+            userDao.findUserByEntityAndIdentity(null, new Identity()); fail();
+        } catch (IllegalArgumentException e) { }
+        try {
+            userDao.findUserByEntityAndIdentity(new Entity(), null); fail();
+        } catch (IllegalArgumentException e) { }
+        try {
+            userDao.findUserByEntity(null); fail();
+        } catch (IllegalArgumentException e) { }
+    }
+    
+    public void testUserDuplicate() {
+        // write
+        User user = createAndPersistUser(userDao);
+        hibernateTemplate.clear();
+        // duplicate
+        try {
+            hibernateTemplate.save(user); fail();
+        } catch (DataIntegrityViolationException e) { }
+    }
+    
+    public void testUserRemove() {
+        // bulk write
+        int e = 1, i = 10;
+        List<User> userList = createUsers(e, i);
+        assertEquals(e*i, userList.size());
+        hibernateTemplate.saveOrUpdateAll(userList);
+        hibernateTemplate.flush();
+        hibernateTemplate.clear();
+        // pick one
+        List<User> all = (ArrayList<User>) hibernateTemplate.find("from User");
+        assertEquals(e*i, all.size());
+        User user = all.get(0);
+        // remove
+        userDao.removeUser(user);
+        hibernateTemplate.flush();
+        hibernateTemplate.clear();
+        // read
+        List<User> list = (ArrayList<User>) hibernateTemplate.find("from User");
+        assertEquals(e*i-1, list.size());
+        assertFalse(list.contains(user));
+    }
+    
+    /*
+     * UserLog tests
+     */
+    
+    private UserLog createAndPersistUserLog(UserDao userDao, Date date) {
+        User user = createAndPersistUser(userDao);
+        UserLog userLog = UserCreatorImpl.userLogFactory(user, date);
+        userDao.persistUserLog(userLog);
+        return userLog;
+    }
+    
+    public void testPersistUserLog() {
+        // write
+        Date date = new Date();
+        UserLog userLog = createAndPersistUserLog(userDao, date);
+        hibernateTemplate.flush();
+        // read
+        List<UserLog> list = userDao.findUserLogByUser(userLog.getUser());
+        assertEquals(1, list.size());
+        UserLog l = list.get(0);
+        assertEquals(userLog, l);
+    }
+    
+    public void testFindUserLog() {
+        // bulk write
+        int e = 3, i = 4, d = 3;
+        List<User> userList = createUsers(e, i);
+        List<UserLog> userLogList = createUserLogs(userList, d);
+        assertEquals(e*i*d, userLogList.size());
+        hibernateTemplate.saveOrUpdateAll(userList);
+        hibernateTemplate.saveOrUpdateAll(userLogList);
+        hibernateTemplate.flush();
+        hibernateTemplate.clear();
+        // bulk read
+        UserLog userLog = userLogList.get(0);
+        List<UserLog> list = userDao.findUserLogByUser(userLog.getUser());
+        assertEquals(d, list.size());
+        for (UserLog l: list) {
+            assertEquals(userLog.getUser(), l.getUser());
         }
-        
     }
-
+    
     public void testFindLastUserLog() {
-        
-        List<Entity> entities = EntityDaoImplTests.createEntities(3);
-        List<User> users = populateUsersAndLogs(entities);
-        User user = users.get(0);  
-        String principal = user.getIdentity().getPrincipal();
-        
-        UserLog userLog = userDao.findLastUserLog(principal);
+        // bulk write
+        int e = 3, i = 4, d = 3;
+        List<User> userList = createUsers(e, i);
+        List<UserLog> userLogList = createUserLogs(userList, d);
+        assertEquals(e*i*d, userLogList.size());
+        hibernateTemplate.saveOrUpdateAll(userList);
+        hibernateTemplate.saveOrUpdateAll(userLogList);
+        hibernateTemplate.flush();
+        hibernateTemplate.clear();
+        User user = userList.get(0);  
+        // read
+        UserLog userLog = userDao.findLastUserLog(user.getIdentity());
+        assertNotNull(userLog);
         if (logger.isDebugEnabled()) {
             logger.debug("Found "+userLog.getUser()+" - "+userLog.getLastLogin());
         }
         
         Date maxLastLogin = userLog.getLastLogin();
-        for (User u: users) {
-            // check only users with selected principal
-            if (u.getIdentity().getPrincipal().compareTo(principal)==0) {
+        for (User u: userList) {
+            // check only users within selected identity
+            if (u.getIdentity().equals(user.getIdentity())) {
                 List<UserLog> userLogs = userDao.findUserLogByUser(u);
                 for (UserLog ul: userLogs) {
                     if (ul.getLastLogin().getTime() > maxLastLogin.getTime()) {
@@ -121,43 +205,68 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         
     }
     
-    public void testfindLastIdentityLogDate() {
-        List<Entity> entities = EntityDaoImplTests.createEntities(3);
-        List<User> userList = populateUsersAndLogs(entities);
-        assertTrue(userList.size()>0);
-        Identity identity = userList.get(0).getIdentity();
-        logger.info("**> Identity to test "+identity);
-        assertNotNull(identity);
-        Set<User> users = identity.getUsers();
-        logger.info("**> Users that share the same identity are "+users.size());
-        List<UserLog> userLogList = new ArrayList<UserLog>();
-        for (User u: users) {
-            userLogList.addAll(userDao.findUserLogByUser(u));
-            logger.info("**> User "+u.getIdentity().getPrincipal()+" "+u.getEntity().getAlias());
-        }
-        Date lastLogin = userDao.findLastIdentityLogDate(identity.getPrincipal());
-        assertNotNull(lastLogin);
-        logger.info("**> Last date found "+lastLogin);
-        for (UserLog ul: userLogList) {
-            logger.info("**> UserLog "+ul.getUser().getIdentity().getPrincipal()+":"+ul.getUser().getEntity().getAlias()+" "+ul.getLastLogin());
-            if (ul.getLastLogin().getTime() > lastLogin.getTime()) {
-                fail();
-            }
-        }
+    public void testUserLogError() {
+        try {
+            userDao.persistUserLog(null); fail();
+        } catch (IllegalArgumentException e) { }
+        try {
+            userDao.findUserLogByUser(null); fail();
+        } catch (IllegalArgumentException e) { }
+        try {
+            userDao.findLastUserLog(null); fail();
+        } catch (IllegalArgumentException e) { }
     }
     
-    public void testCreateAndPersistUserLog() {
-
-        User user = createAndPersistUser();
-        Date date = new Date();
-        UserLog userLog = ((UserDaoImpl) userDao).createAndPersistUserLog(user, date);
+    public void testUserLogRemove() {
+        // bulk write
+        int e = 1, i = 10, d = 3;
+        List<User> userList = createUsers(e, i);
+        List<UserLog> userLogList = createUserLogs(userList, d);
+        assertEquals(e*i*d, userLogList.size());
+        hibernateTemplate.saveOrUpdateAll(userList);
+        hibernateTemplate.saveOrUpdateAll(userLogList);
+        hibernateTemplate.clear();
+        // pick one
+        List<UserLog> all = (ArrayList<UserLog>) hibernateTemplate.find("from UserLog");
+        assertEquals(e*i*d, all.size());
+        UserLog userLog = all.get(0);
+        // remove
+        userDao.removeUserLog(userLog);
         hibernateTemplate.flush();
-        
-        List<UserLog> userLogs = userDao.findUserLogByUser(user);
-        assertTrue(userLogs.size()==1);
-        UserLog ul = userLogs.get(0);
-        assertEquals(userLog, ul);
+        hibernateTemplate.clear();
+        // read
+        List<UserLog> list = (ArrayList<UserLog>) hibernateTemplate.find("from UserLog");
+        assertEquals(e*i*d-1, list.size());
+        assertFalse(list.contains(userLog));
     }
+    
+    public void testfindLastIdentityLogDate() {
+        // TODO Code to be removed
+//        List<Entity> entities = EntityDaoImplTests.createEntities(3);
+//        List<User> userList = populateUsersAndLogs(entities);
+//        assertTrue(userList.size()>0);
+//        Identity identity = userList.get(0).getIdentity();
+//        logger.info("**> Identity to test "+identity);
+//        assertNotNull(identity);
+//        Set<User> users = identity.getUsers();
+//        logger.info("**> Users that share the same identity are "+users.size());
+//        List<UserLog> userLogList = new ArrayList<UserLog>();
+//        for (User u: users) {
+//            userLogList.addAll(userDao.findUserLogByUser(u));
+//            logger.info("**> User "+u.getIdentity().getPrincipal()+" "+u.getEntity().getAlias());
+//        }
+//        Date lastLogin = userDao.findLastIdentityLogDate(identity.getPrincipal());
+//        assertNotNull(lastLogin);
+//        logger.info("**> Last date found "+lastLogin);
+//        for (UserLog ul: userLogList) {
+//            logger.info("**> UserLog "+ul.getUser().getIdentity().getPrincipal()+":"+ul.getUser().getEntity().getAlias()+" "+ul.getLastLogin());
+//            if (ul.getLastLogin().getTime() > lastLogin.getTime()) {
+//                fail();
+//            }
+//        }
+    }
+    
+    //~ utility methods
     
     /**
      * Utility method to create users.
@@ -166,12 +275,11 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
      * @param entities
      * @return
      */
-    public static List<User> createUsers(List<Identity> identities, List<Entity> entities) {
+    public static List<User> createUsers(List<Entity> entities, List<Identity> identities) {
         List<User> users = new ArrayList<User>();
-        UserCreator userCreator = new UserCreatorImpl();
         for (Identity i: identities) {
             for (Entity e: entities) {
-                User u = userCreator.userFactory(e, i);
+                User u = UserCreatorImpl.userFactory(e, i);
                 i.getUsers().add(u);
                 users.add(u);
             }
@@ -186,52 +294,32 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
      * @param entityListSize
      * @return
      */
-    public static List<User> createUsers(int identityListSize, int entityListSize) {
+    public static List<User> createUsers(int entityListSize, int identityListSize) {
         List<Entity> entities = EntityDaoImplTests.createEntities(entityListSize);
         List<Identity> identities = CredentialDaoImplTests.createIdentities(identityListSize);
-        return createUsers(identities, entities);
+        return createUsers(entities, identities);
     }
     
-    private List<User> populateUsersAndLogs(List<Entity> entities) {
-        // write identities
-        int numberOfIdentities = 3;
-        List<Identity> identities = new ArrayList<Identity>();
-        for (int i = 1; i<numberOfIdentities; i++) {
-            Identity c = userCreator.identityFactory("IDENTITY"+i, "ALIAS"+i);
-            userDao.persistIdentity(c);
-            identities.add(c);
-        }
-        // write one user for each entity and identity
-        Random r = new Random();
-        List<User> users = new ArrayList<User>();
-        for (Entity e: entities) {
-            for (Identity i: identities) {
-                User u = userCreator.userFactory(e, i);
-                i.getUsers().add(u);
-                userDao.persistUser(u);
-                users.add(u);
-                for (int j=0; j<=3;j++) {
-                    Date date = randomDateGenerator(r);
-                    logger.info("Repeat ("+i+", "+j+") UserLog to: "+u+" - "+date);
-                    // there is a very small chance to have a duplicated date here
-                    ((UserDaoImpl) userDao).createAndPersistUserLog(u, date);
-                }
+    /**
+     * Utility method to create user logs.
+     * @param users
+     * @param size
+     */
+    private List<UserLog> createUserLogs(List<User> users, int size) {
+        List<UserLog> userLogs = new ArrayList<UserLog>();
+        long time = new Date().getTime();
+        for (User u: users) {
+            for (int i = 0; i<size; i++) {
+                userLogs.add(UserCreatorImpl.userLogFactory(u, new Date(time++)));
             }
         }
-        hibernateTemplate.flush();
-        return users;
+        return userLogs;
     }
     
-    private Date randomDateGenerator(Random r) {
-        long sixMonthPeriodInMinutes = 60*24*180;
-        long timeSixMonthAgo = (new Date()).getTime() - sixMonthPeriodInMinutes*60*1000;
-        int randomShift = r.nextInt((int)sixMonthPeriodInMinutes);
-        long randomTimeInLastSixMonth = timeSixMonthAgo + (long)randomShift*60*1000;
-        Date likelyNotRepeatedDate = new Date(randomTimeInLastSixMonth);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Random generated (likely not repeated) date: "+likelyNotRepeatedDate);
-        }
-        return likelyNotRepeatedDate;
-    }
+    //~ collaborator mutators
     
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
 }

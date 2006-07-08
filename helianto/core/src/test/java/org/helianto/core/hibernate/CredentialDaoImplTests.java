@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
-import org.helianto.core.creation.UserCreator;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
@@ -28,19 +27,9 @@ import org.helianto.core.junit.AbstractIntegrationTest;
 public class CredentialDaoImplTests extends AbstractIntegrationTest {
     
     private UserDao userDao;
-    private UserCreatorImpl factory;
-    
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    @Override
-    protected void onSetUpBeforeTransaction() throws Exception {
-        factory = new UserCreatorImpl();
-    }
     
     private Identity createAndPersistIdentity(String principal, String optionalAlias ) {
-        Identity identity = factory.identityFactory(principal, optionalAlias);
+        Identity identity = UserCreatorImpl.identityFactory(principal, optionalAlias);
         userDao.persistIdentity(identity);
         return identity;
     }
@@ -61,7 +50,7 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
         String principal = generateKey(20);
         String optionalAlias = generateKey(20);
         Identity identity = createAndPersistIdentity(principal, optionalAlias);
-        Credential credential = factory.credentialFactory(identity);
+        Credential credential = UserCreatorImpl.credentialFactory(identity);
         userDao.persistCredential(credential);
         
         hibernateTemplate.flush();
@@ -70,13 +59,16 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
         assertEquals(credential, found);
     }
     
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     //~ utility methods 
     
     public static List<Identity> createIdentities(int size) {
         List<Identity> identities = new ArrayList<Identity>();
-        UserCreator userCreator = new UserCreatorImpl();
         for (int i=0;i<size;i++) {
-            identities.add(userCreator.identityFactory("PRINCIPAL"+i, "ALIAS"+i));
+            identities.add(UserCreatorImpl.identityFactory("PRINCIPAL"+i, "ALIAS"+i));
         }
         return identities ;
     }
