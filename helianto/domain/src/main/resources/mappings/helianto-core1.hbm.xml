@@ -71,23 +71,24 @@ like Hibernate's (www.hibernate.org) non-lazy loading.
 			<generator class="native"/>
 		</id>
 		<discriminator column="type" type="int"/>
-		<!-- 
-				home
-		-->
-		<many-to-one name="home" 
-			class="org.helianto.core.Home" cascade="all">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="homeId" not-null="true" 
-				unique-key="unique1"/>
-		</many-to-one>
-		<!-- 
-				alias
-		-->
-		<property name="alias" type="string">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="alias" length="20" not-null="true" 
-				unique-key="unique1"/>
-		</property>
+		<natural-id>
+			<!-- 
+					home
+			-->
+			<many-to-one name="home" 
+				class="org.helianto.core.Home" cascade="save-update,merge">
+				<meta attribute="use-in-equals">true</meta>
+				<column name="homeId"/>
+			</many-to-one>
+			<!-- 
+					alias
+			-->
+			<property name="alias" type="string">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="alias" length="20"/>
+			</property>
+		</natural-id>
 		<!-- 
 				subclass to provide address information
 		-->

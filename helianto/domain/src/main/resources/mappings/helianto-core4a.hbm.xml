@@ -57,7 +57,7 @@ service will look-up the user hierarchy roles as well.
 					entity
 			-->
 			<many-to-one name="entity" 
-				class="org.helianto.core.Entity" cascade="all">
+				class="org.helianto.core.Entity" cascade="save-update,merge">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
 				<column name="entityId"/>

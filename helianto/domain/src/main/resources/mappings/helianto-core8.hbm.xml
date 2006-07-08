@@ -37,26 +37,24 @@ A class to hold user successful logins.
 		<!-- 
   				id
 		-->
-		<id name="id" type="int">
+		<id name="id" type="long">
 			<generator class="native"/>
 		</id>
-		<natural-id>
-			<!-- 
-					user
-			-->
-			<many-to-one name="user" 
-				class="org.helianto.core.User" cascade="merge"
-				insert="true">
-				<meta attribute="use-in-equals">true</meta>
-				<column name="userId"/>
-			</many-to-one>
-			<!-- 
-					las login
-			-->
-			<property name="lastLogin" type="timestamp">
-				<meta attribute="use-in-equals">true</meta>
-				<column name="lastLogin"/>
-			</property>
-		</natural-id>
+		<!-- 
+				user
+		-->
+		<many-to-one name="user" 
+			class="org.helianto.core.User" cascade="save-update,merge"
+			insert="true">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="userId"/>
+		</many-to-one>
+		<!-- 
+				las login
+		-->
+		<property name="lastLogin" type="timestamp">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="lastLogin"/>
+		</property>
 	</class>
 </hibernate-mapping>

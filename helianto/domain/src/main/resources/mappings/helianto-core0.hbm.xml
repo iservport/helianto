@@ -60,6 +60,16 @@ At least one default (root) home must be defined per installation.
 		<id name="id" type="int">
 			<generator class="native"/>
 		</id>
+		<natural-id>
+			<!-- 
+					home name (unique)
+			-->
+			<property name="homeName" type="string">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="homeName" length="20"/>
+			</property>
+		</natural-id>
 		<!-- 
 				parent
 		-->
@@ -67,14 +77,6 @@ At least one default (root) home must be defined per installation.
 			class="org.helianto.core.Home">
 			<column name="parentId" not-null="false"/>
 		</many-to-one>
-		<!-- 
-				home name (unique)
-		-->
-		<property name="homeName" type="string">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="homeName" length="20" not-null="true" 
-				unique="true"/>
-		</property>
 		<!-- 
 				language
 		-->
