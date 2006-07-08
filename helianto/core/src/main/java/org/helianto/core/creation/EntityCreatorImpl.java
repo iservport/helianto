@@ -25,6 +25,7 @@ import org.helianto.core.Home;
 import org.helianto.core.Individual;
 import org.helianto.core.Organization;
 import org.helianto.core.Province;
+import org.springframework.util.Assert;
 
 /**
  * Default implementation for the <code>EntityCreator</code> interface.
@@ -35,6 +36,7 @@ import org.helianto.core.Province;
 public class EntityCreatorImpl extends HomeCreatorImpl implements EntityCreator {
     
     public Entity entityFactory(Home home, String uniqueAlias) {
+        Assert.notNull(home);
         Entity entity = new Entity();
         entity.setHome(home);
         entity.setAlias(uniqueAlias);

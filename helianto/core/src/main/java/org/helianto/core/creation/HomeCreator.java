@@ -28,16 +28,14 @@ import org.helianto.core.MailTransportData;
  */
 public interface HomeCreator {
 
+    public Home homeFactory(String homeName);
+
+    public Home homeFactory(String homeName, String language, String country);
+
     public MailTransportData mailTransportDataFactory(String host, String user,
             String password);
 
     public MailAccessData mailAccessDataFactory(String host, String user,
             String password);
-
-    public Home homeFactory();
-
-    public Home homeFactory(String homeName);
-
-    public Home homeFactory(String homeName, String language, String country);
 
 }

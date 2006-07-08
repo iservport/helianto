@@ -30,46 +30,11 @@ import org.helianto.core.MailTransportData;
  */
 public class HomeCreatorImpl implements HomeCreator {
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.HomeCreator#mailTransportDataFactory(java.lang.String, java.lang.String, java.lang.String)
-     */
-    public MailTransportData mailTransportDataFactory(String host, String user, String password) {
-        MailTransportData mailTransportData = new MailTransportData();
-        mailTransportData.setSmtpHost(host);
-        mailTransportData.setSmtpUser(user);
-        mailTransportData.setSmtpPassword(password);
-        return mailTransportData;
-    }
-    
-    /* (non-Javadoc)
-     * @see org.helianto.core.HomeCreator#mailAccessDataFactory(java.lang.String, java.lang.String, java.lang.String)
-     */
-    public MailAccessData mailAccessDataFactory(String host, String user, String password) {
-        MailAccessData mailAccessData = new MailAccessData();
-        mailAccessData.setHost(host);
-        mailAccessData.setUser(user);
-        mailAccessData.setPassword(password);
-        return mailAccessData;
-    }
-    
-    /* (non-Javadoc)
-     * @see org.helianto.core.HomeCreator#homeFactory()
-     */
-    public Home homeFactory() {
-        return homeFactory("");
-    }
-    
-    /* (non-Javadoc)
-     * @see org.helianto.core.HomeCreator#homeFactory(java.lang.String)
-     */
     public Home homeFactory(String homeName) {
         java.util.Locale javaLocale = java.util.Locale.getDefault();
         return homeFactory(homeName, javaLocale.getLanguage(), javaLocale.getCountry());
     }
     
-    /* (non-Javadoc)
-     * @see org.helianto.core.HomeCreator#homeFactory(java.lang.String, java.lang.String, java.lang.String)
-     */
     public Home homeFactory(String homeName, String language, String country) {
         Home home = new Home();
         home.setHttpAddress("");
@@ -79,6 +44,22 @@ public class HomeCreatorImpl implements HomeCreator {
         home.setCountry(country);
         home.setAdded(new Date());
         return home;
+    }
+    
+    public MailTransportData mailTransportDataFactory(String host, String user, String password) {
+        MailTransportData mailTransportData = new MailTransportData();
+        mailTransportData.setSmtpHost(host);
+        mailTransportData.setSmtpUser(user);
+        mailTransportData.setSmtpPassword(password);
+        return mailTransportData;
+    }
+    
+    public MailAccessData mailAccessDataFactory(String host, String user, String password) {
+        MailAccessData mailAccessData = new MailAccessData();
+        mailAccessData.setHost(host);
+        mailAccessData.setUser(user);
+        mailAccessData.setPassword(password);
+        return mailAccessData;
     }
     
 }
