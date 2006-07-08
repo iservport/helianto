@@ -102,6 +102,10 @@ Personal data, if any.
 		-->
 		<property name="created" type="date"/>
 		<!-- 
+				last login
+		-->
+		<property name="lastLogin" type="date"/>
+		<!-- 
 				credential type: organizational email, personal email,
 			    or not addressable.
 		-->
