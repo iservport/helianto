@@ -18,6 +18,7 @@ package org.helianto.core.hibernate;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.dao.CredentialDao;
+import org.springframework.util.Assert;
 
 /**
  * Hibernate implementation for <code>CredentialDao</code> interface.
@@ -27,7 +28,11 @@ import org.helianto.core.dao.CredentialDao;
  */
 public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
 
-    public void persistIdentity(Identity identity) {
+	/*
+	 * Persist, remove and find identity
+	 */
+	public void persistIdentity(Identity identity) {
+		Assert.notNull(identity);
         merge(identity);
     }
 
@@ -35,19 +40,8 @@ public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
         remove(identity);
     }
 
-    public void persistCredential(Credential credential) {
-        merge(credential);
-    }
-
-    public void removeCredential(Credential credential) {
-        remove(credential);
-    }
-
     public Identity findIdentityByPrincipal(String principal) {
         Identity identity = (Identity) findUnique(IDENTITY_QRY, principal);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Found identity "+identity);
-        }
         return identity;
     }
 
@@ -55,13 +49,22 @@ public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
         "from Identity identity " +
         "where identity.principal = ?";
     
-    public int countIdentityByPrincipal(String principal) {
-        return find(IDENTITY_QRY, principal).size();
+	/*
+	 * Persist, remove and find credential
+	 */
+    public void persistCredential(Credential credential) {
+    	Assert.notNull(credential);
+        merge(credential);
     }
 
-    public Credential findCredentialByIdentity(Identity identity) {
-        logger.info("*** Finding "+identity);
-        return (Credential) findUnique(CREDENTIAL_QRY, identity.getId());
+    public void removeCredential(Credential credential) {
+    	Assert.notNull(credential);
+        remove(credential);
+    }
+
+    public Credential findCredentialByIdentity(Identity requiredIdentity) {
+    	Assert.notNull(requiredIdentity, "An identity is required");
+        return (Credential) findUnique(CREDENTIAL_QRY, requiredIdentity.getId());
     }
         
     static final String CREDENTIAL_QRY = 

@@ -26,7 +26,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
-import org.helianto.core.dao.UserDao;
+import org.helianto.core.service.SecurityMgr;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.util.Assert;
@@ -46,7 +46,7 @@ import org.springframework.util.Assert;
  */
 public class UserDetailsServiceImpl implements UserDetailsService {
     
-    private UserDao userDao;
+    private SecurityMgr securityMgr;
     
     /**
      * Implements {@link org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)}
@@ -75,7 +75,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public Identity loadAndValidateIdentity(String principal) {
         Identity identity = null;
         try {
-            identity = userDao.findIdentityByPrincipal(principal);
+            identity = securityMgr.findIdentityByPrincipal(principal);
             Assert.notNull(identity, "Null Identity");
         } catch (Exception e) {
             throw new UsernameNotFoundException("Username "+principal, e);
@@ -92,7 +92,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public Credential loadAndValidateCredential(Identity identity) {
         try {
             //TODO find only active credential
-            Credential credential = userDao.findCredentialByIdentity(identity);
+            Credential credential = securityMgr.findCredentialByIdentity(identity);
             if (credential!=null) {
                 if (logger.isDebugEnabled()) {
                     logger.debug("User credential loaded");
@@ -114,7 +114,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     public User loadOrCreateUser(Identity identity) {
         User user = null;
-        UserLog userLog = userDao.findLastUserLog(identity);
+        UserLog userLog = securityMgr.findLastUserLog(identity);
         if (userLog==null) {
             if (logger.isDebugEnabled()) {
                 logger.debug("First login");
@@ -126,7 +126,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             }
             user = userLog.getUser();
         }
-        createAndPersistUserLog(user);
+        securityMgr.persistUserLog(user, new Date());
         return user;
     }
     
@@ -141,57 +141,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             }
             return u;
         }
-        if (isAutoCreateEnabled()) {
-            return autoCreateUser(identity);
+        if (securityMgr.isAutoCreateEnabled()) {
+            return securityMgr.autoCreateUser(identity);
         }
         throw new UsernameNotFoundException("No User defined for Credential with principal: ");
     }
     
-    /**
-     * A hook to allow for automatic <code>User</code> creation.
-     * 
-     * @param identity
-     * @return
-     */
-    protected User autoCreateUser(Identity identity) {
-        return null;
-    }
-
-    public void createAndPersistUserLog(User user) {
-        createAndPersistUserLog(user, new Date());
-    }
-    
-    /**
-     * Persist a new <code>UserLog<code> and update the <code>Identity</code>
-     * last log date.
-     * 
-     * @param user
-     * @param date
-     */
-    public void createAndPersistUserLog(User user, Date date) {
-        UserLog userLog = new UserLog();
-        userLog.setUser(user);
-        userLog.setLastLogin(date);
-        user.getIdentity().setLastLogin(date);
-        userDao.persistUserLog(userLog);
-        userDao.persistIdentity(user.getIdentity());
-    }
-    
-    /**
-     * Auto-create mode enables a new <code>User</code> creation for the 
-     * default <code>Entity</code> if necessary.
-     * 
-     * @return
-     */
-    public boolean isAutoCreateEnabled() {
-        return false;
-    }
-    
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
     private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
+
+	public void setSecurityMgr(SecurityMgr securityMgr) {
+		this.securityMgr = securityMgr;
+	}
     
 }
 

@@ -44,24 +44,8 @@ import org.helianto.core.security.UserDetailsAdapter;
  * @author Mauricio Fernandes de Castro
  * @version $Id: $
  */
-public class SimpleCoreMgrImpl implements SimpleCoreMgr {
+public class SimpleCoreMgrImpl extends UserMgrImpl implements SimpleCoreMgr {
     
-    public Identity createIdentity() {
-        return userCreator.identityFactory("", "");
-    }
-    
-    public void persistIdentity(Identity identity) {
-        userDao.persistIdentity(identity);
-    }
-
-    public Credential createCredential(Identity identity) {
-        return userCreator.credentialFactory(identity);
-    }
-    
-    public void persistCredential(Credential credential) {
-        userDao.persistCredential(credential);
-    }
-
     private final static String CREDENTIAL = "CREDENTIAL";
 
     public DefaultEntity createDefaultEntity(String alias) {
@@ -148,73 +132,13 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     
     public User createSimpleUser() {
         Entity entity = findDefaultEntity();
-        return createSimpleUser(entity);
+        return createUser(entity);
     }
 
-    public User createSimpleUser(Entity entity) {
-        Identity identity = createIdentity();
-        return createUser(identity, entity);
-    }
-    
-    public User createSimpleUser(Identity identity) {
-        Entity entity = findDefaultEntity();
-        return createUser(identity, entity);
-    }
-    
-    public User createUser(Identity identity, Entity entity) {
-        return userCreator.userFactory(entity, identity);
-    }
-
-    public Locale getLocale(Home home) {
-        Locale locale = null;
-        try {
-            locale = home.getLocale();
-        } catch (Exception e) {
-            locale = Locale.getDefault();
-        }
-        if (logger.isDebugEnabled()) {
-            logger.debug("Locale is "+locale);
-        }
-        return locale;
-    }
-    
-    /**
-     * Helper method to convert principal to lower case.
-     */
-    static String convertToLowerCase(Locale locale, String principal) {
-        if ((principal != null && principal.length() > 0)) {
-            return principal.toLowerCase(locale);
-        }
-        throw new RuntimeException("Principal should not be null or empty.");
-    }
-
-    public void persistUser(User user) {
-        String principal = user.getIdentity().getPrincipal();
-        Locale locale = getLocale(user.getEntity().getHome());
-        user.getIdentity().setPrincipal(
-                convertToLowerCase(locale, principal));
-        userDao.persistUser(user);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Persisted "+user);
-        }
-    }
-    
-    public List<User> findUserByEntity(Entity entity) {
-        return userDao.findUserByEntity(entity);
-    }
-
-    public boolean isPrincipalUnique(User user) {
-        return isPrincipalUnique(user.getEntity().getHome(), user.getIdentity());
-    }
-
-    public boolean isPrincipalUnique(Home home, Identity identity) {
-        String principal = convertToLowerCase(getLocale(home), identity.getPrincipal());
-        int principalCount = userDao.countIdentityByPrincipal(principal);
-        if (logger.isDebugEnabled()) {
-            logger.debug("There is  "+principalCount+" principal named "+principal);
-        }
-        return (principalCount==0) ? true : false;
-    }
+	public User createSimpleUser(Identity identity) {
+		Entity entity = findDefaultEntity();
+		return createUser(identity, entity);
+	}
 
 	public PublicUserDetails findSecureUser() {
 		return UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
@@ -270,12 +194,11 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
     // collaborators
     
     private PartnerCreator partnerCreator;
-    private UserCreator userCreator;
     private EntityDao entityDao;
     private PartnerDao partnerDao;
     private UserDao userDao;
 
-    // colaborator accessors
+    // collaborator accessors
     
 	public void setPartnerCreator(PartnerCreator partnerCreator) {
 		this.partnerCreator = partnerCreator;
@@ -283,10 +206,6 @@ public class SimpleCoreMgrImpl implements SimpleCoreMgr {
 
     public void setEntityDao(EntityDao entityDao) {
         this.entityDao = entityDao;
-    }
-
-    public void setUserCreator(UserCreator userCreator) {
-        this.userCreator = userCreator;
     }
 
     public void setPartnerDao(PartnerDao partnerDao) {

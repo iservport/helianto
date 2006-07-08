@@ -37,6 +37,11 @@ public interface CredentialDao {
     public void removeIdentity(Identity identity);
 
     /**
+     * Find <code>Identity</code> by principal.
+     */
+    public Identity findIdentityByPrincipal(String principal);
+
+    /**
      * Persist <code>Credential</code>.
      */
     public void persistCredential(Credential credential);
@@ -47,18 +52,8 @@ public interface CredentialDao {
     public void removeCredential(Credential credential);
 
     /**
-     * Find <code>Identity</code> by principal.
-     */
-    public Identity findIdentityByPrincipal(String principal);
-
-    /**
      * Find <code>Credential</code> by <code>Identity</code>.
      */
     public Credential findCredentialByIdentity(Identity identity);
 
-    /**
-     * Count <code>Identity</code> by principal.
-     */
-    public int countIdentityByPrincipal(String principal);
-    
 }

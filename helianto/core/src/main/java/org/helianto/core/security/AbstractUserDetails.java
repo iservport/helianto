@@ -106,7 +106,7 @@ public abstract class AbstractUserDetails implements UserDetails {
         this.user = user;
     }
     
-    public AbstractUserDetails() {
+    private AbstractUserDetails() {
         throw new IllegalArgumentException("AbstractUserDetails subclasses must take an " +
                 "User instance as constructor parameter");
     }

@@ -34,9 +34,9 @@ import org.helianto.core.UserGroup;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public class UserCreatorImpl implements UserCreator {
+public class UserCreatorImpl {
     
-    public PersonalData personalDataFactory() {
+    public static PersonalData personalDataFactory() {
         PersonalData personalData = new PersonalData();
         personalData.setFirstName("");
         personalData.setLastName("");
@@ -45,7 +45,7 @@ public class UserCreatorImpl implements UserCreator {
         return personalData;
     }
 
-    public String generatePassword(int size) {
+    public static String generatePassword(int size) {
         Random generator = new Random();
         String source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         String password = ""; 
@@ -56,7 +56,7 @@ public class UserCreatorImpl implements UserCreator {
         return password;
     }
 
-    public Identity identityFactory(String principal, String optionalAlias) {
+    public static Identity identityFactory(String principal, String optionalAlias) {
         Identity identity = new Identity();
         identity.setPrincipal(principal);
         identity.setOptionalAlias(optionalAlias);
@@ -68,7 +68,7 @@ public class UserCreatorImpl implements UserCreator {
         return identity;
     }
 
-    public Credential credentialFactory(Identity identity) {
+    public static Credential credentialFactory(Identity identity) {
         Credential credential = new Credential();
         credential.setIdentity(identity);
         credential.setPassword(generatePassword(8));
@@ -80,7 +80,7 @@ public class UserCreatorImpl implements UserCreator {
         return credential;
     }
 
-    public User userFactory(Entity entity, Identity identity) throws NullEntityException {
+    public static User userFactory(Entity entity, Identity identity) throws NullEntityException {
         if (entity==null) {
             throw new NullEntityException("An User must belong to an Entity");
         }
@@ -95,13 +95,13 @@ public class UserCreatorImpl implements UserCreator {
         return user;
     }
 
-    public User userFactory(UserGroup parent, Identity identity) {
+    public static User userFactory(UserGroup parent, Identity identity) {
         User user = userFactory(parent.getEntity(), identity);
         user.setParent(parent);
         return user;
     }
 
-    public UserGroup userGroupFactory(Entity entity, Identity identity) throws NullEntityException {
+    public static UserGroup userGroupFactory(Entity entity, Identity identity) throws NullEntityException {
         if (entity==null) {
             throw new NullEntityException("An UserGroup must belong to an Entity");
         }

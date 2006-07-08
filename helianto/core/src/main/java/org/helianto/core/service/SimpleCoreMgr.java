@@ -44,23 +44,7 @@ import org.helianto.core.security.SecureUserDetails;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public interface SimpleCoreMgr {
-    
-    /**
-     * <p>An empty <code>Identity</code> to be 
-     * submitted to the presentation layer.</p>
-     */
-    public Identity createIdentity();
-    
-    /**
-     * <p>Persist <code>Identity</code>.</p>
-     */
-    public void persistIdentity(Identity identity);
-    
-    /**
-     * <p>A <code>Credential</code>.</p>
-     */
-    public Credential createCredential(Identity identity);
+public interface SimpleCoreMgr extends UserMgr {
     
 	/**
 	 * <p>Create a default installation.</p>
@@ -76,11 +60,6 @@ public interface SimpleCoreMgr {
 	 * @return
 	 */
 	public Division installWithDefaults(String alias);
-    
-    /**
-     * <p>Persist <code>Credential</code>.</p>
-     */
-    public void persistCredential(Credential credential);
     
     /**
      * <p>A default entity will be required to create a simple user.</p>
@@ -138,57 +117,10 @@ public interface SimpleCoreMgr {
     
     /**
      * <p>A simple <code>User</code> creation that hides an empty <code>Credential</code>
-     * creation behind its implementation.</p>
+     * creation behind its implementation and automatically
+     * aggregates the default <code>Entity</code>.</p>
      */
-    public User createSimpleUser(Entity entity);
-    
-    /**
-     * <p>A simple <code>User</code> creation given an <code>Identity</code>.</p>
-     */
-    public User createSimpleUser(Identity Identity);
-    
-    /**
-     * <p>Full <code>User</code> creation.</p>
-     */
-    public User createUser(Identity Identity, Entity entity);
-    
-    /**
-     * <p>List <code>User</code> by <code>Entity</code>.</p>
-     */
-    public List<User> findUserByEntity(Entity entity);
-    
-    /**
-     * <p>The <code>java.util.Locale</code> 
-     * for the given <code>Home</code>.</p>
-     * 
-     * <p>If a <code>Locale</code> can not be set
-     * from the <code>language</code> and <code>country</code>
-     * instance members of <code>Home</code>, return the 
-     * default <code>Locale</code>.
-     */
-    public Locale getLocale(Home home);
-    
-    
-    /**
-     * <p>A method to prevent unique key violation for
-     * the <code>Credential</code> object contained in <code>User</code>.</p>
-     * <p>The principal is converted to lower case before
-     * uniqueness check.<p>
-     */
-    public boolean isPrincipalUnique(User user);
-    
-    /**
-     * <p>A method to prevent unique key violation for
-     * the <code>Credential</code> object.</p>
-     * <p>The principal is converted to lower case before
-     * uniqueness check.<p>
-     */
-    public boolean isPrincipalUnique(Home home, Identity identity);
-    
-    /**
-     * <p>Persist the <code>User</code>.</p>
-     */
-    public void persistUser(User user);
+    public User createSimpleUser(Identity identity);
     
     /**
      * <p>Retrieve the <code>PublicUserDetails</code> available in a
@@ -215,4 +147,6 @@ public interface SimpleCoreMgr {
      */
     public long findNextInternalNumber(Entity entity, String typeName);
     
+    
+
 }

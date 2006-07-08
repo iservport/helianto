@@ -28,114 +28,76 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.util.Assert;
 
 public class UserDaoImpl extends CredentialDaoImpl implements UserDao {
+	
+	/*
+	 * Persist, remove and find user.
+	 */
 
     public void persistUser(User user) {
+    	Assert.notNull(user);
         merge(user);
     }
 
     public void removeUser(User user) {
+    	Assert.notNull(user);
         remove(user);
     }
 
-    public User findUserByEntityAliasAndPrincipal(String alias, String principal) {
-        return (User) findUnique(USER_QRY, alias, principal);
+    public User findUserByEntityAndIdentity(Entity requiredEntity, Identity requiredIdentity) {
+    	Assert.notNull(requiredEntity, "An entity is required");
+    	Assert.notNull(requiredIdentity, "An identity is required");
+        return (User) findUnique(USER_ENTITY_QRY+USER_IDENTITY_FILTER, requiredEntity, requiredIdentity);
     }
     
-    static final String USER_QRY = 
-        "from User user " +
-        "where user.entity.alias = ? " +
-        "and user.identity.principal = ?";
+    static final String USER_ENTITY_QRY = "from User user " +
+        "where user.entity = ? ";
+
+    static final String USER_IDENTITY_FILTER = "and user.identity = ?";
 
     public List<User> findUserByEntity(Entity entity) {
-        return (ArrayList<User>) find(USER_QRY_ENTITY, entity);
+        return (ArrayList<User>) find(USER_ENTITY_QRY, entity);
     }
     
-    static final String USER_QRY_ENTITY = 
-        "from User user " +
-        "where user.entity = ?";
-
+    /*
+     * Persist and find UserLog
+     */
+    
     public void persistUserLog(UserLog userLog) {
         Assert.notNull(userLog);
         merge(userLog);
     }
 
-    /**
-     * Subclasses should override this method to provide 
-     * <code>User</code> auto-create functionality.
-     * 
-     * @return null
-     */
-    public User autoCreateAndPersistUser(String principal) {
-        return null;
-    }
-    
-    public UserLog createAndPersistUserLog(User user) {
-        return createAndPersistUserLog(user, new Date());
-    }
-    
-    /**
-     * Not in interface <code>UserDao</code>, but usefull for tests.
-     */
-    public UserLog createAndPersistUserLog(User user, Date date) {
-        UserLog userLog = new UserLog();
-        userLog.setUser(user);
-        userLog.setLastLogin(date);
-        merge(userLog);
-        return userLog;
-    }
-    
+    public UserLog findLastUserLog(Identity identity) {
+		if (identity.getLastLogin() != null) {
+			return (UserLog) findUnique(LASTUSERLOG_QRY, identity, identity
+					.getLastLogin());
+		}
+		return null;
+	}
+
+	static final String LASTUSERLOG_QRY = "from UserLog userLog "
+			+ "where userLog.user.identity = ? " + "and userLog.lastLogin = ? ";
+
     public List<UserLog> findUserLogByUser(User user) {
         return (ArrayList<UserLog>) find(USERLOG_QUERY, user);
     }
     
     static final String USERLOG_QUERY = "from UserLog userLog " +
-    "  where userLog.user = ? ";
+    	"where userLog.user = ? ";
 
-    public Date findLastIdentityLogDate(String principal) {
-        Date lastLogin = (Date) findUnique(LASTUSERLOGDATE_QUERY, principal);
-        return lastLogin;
-    }
-    
-    static final String LASTUSERLOGDATE_QUERY = "select max(userLog.lastLogin) " +
-        "  from UserLog userLog " +
-        "  where userLog.user.identity.principal = ? ";
-    
-    public UserLog findLastUserLog(Identity identity) {
-        if (identity.getLastLogin()!=null) {
-            return (UserLog) findUnique(LASTUSERLOG_QRY, identity, identity.getLastLogin());
-        }
-        return null;
-    }
+//    public Date findLastIdentityLogDate(String principal) {
+//        Date lastLogin = (Date) findUnique(LASTUSERLOGDATE_QUERY, principal);
+//        return lastLogin;
+//    }
+//    
+//    static final String LASTUSERLOGDATE_QUERY = "select max(userLog.lastLogin) " +
+//        "  from UserLog userLog " +
+//        "  where userLog.user.identity.principal = ? ";
+//    
 
-    static final String LASTUSERLOG_QRY = "from UserLog userLog " +
-        "where userLog.user.identity = ? " +
-        "and userLog.lastLogin = ? ";
-
-    @Deprecated
-    public UserLog findLastUserLog(String principal) {
-        try {
-        	Date lastLogin = findLastIdentityLogDate(principal);
-            List<UserLog> userLogList = (ArrayList<UserLog>) find(LASTUSERLOGPRINCIPAL_QUERY, principal, lastLogin );
-            if (logger.isDebugEnabled()) {
-                for (UserLog ul: userLogList) {
-                    logger.debug("Found UserLog(s) with principal "+principal+"[" +ul.getUser().getIdentity().getPrincipal()+"]: "+ul.getUser()+" - "+ul.getLastLogin());
-                }
-            }
-            if (userLogList.size()>0) {
-                return userLogList.get(0);
-            }
-            return null; 
-        } catch (Exception e) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Exception "+e.toString());
-            }
-            throw new DataRetrievalFailureException("Unable to find UserLogs for principal: "+principal);
-        }
-    }
-    
-
-    private static final String LASTUSERLOGPRINCIPAL_QUERY = "from UserLog lastUserLog " +
-    "  where lastUserLog.user.identity.principal = ? and" +
-    "  lastUserLog.lastLogin = ?";
+	public Date findLastIdentityLogDate(String principal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
