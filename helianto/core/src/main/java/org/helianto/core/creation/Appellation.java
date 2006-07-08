@@ -3,7 +3,7 @@ package org.helianto.core.creation;
 
 import org.helianto.core.PersonalData;
 
-/**
+/** 
  * An enumeration to supply int types for 
  * {@link PersonalData#appellation}.
  * 
