@@ -33,11 +33,6 @@
 	<bean id="partnerCreator" 
 		class="org.helianto.core.creation.PartnerCreatorImpl"/>
 	<!--
-			User creator implementation	
-	-->
-	<bean id="userCreator" 
-		class="org.helianto.core.creation.UserCreatorImpl"/>
-	<!--
 			Home dao implementation	
 	-->
 	<bean id="homeDao" 
@@ -82,7 +77,6 @@
 			<bean id="simpleCoreTarget"
 				class="org.helianto.core.service.SimpleCoreMgrImpl">
 				<property name="partnerCreator" ref="partnerCreator"/>
-				<property name="userCreator" ref="userCreator"/>
 				<property name="entityDao" ref="entityDao"/>
 				<property name="partnerDao" ref="partnerDao"/>
 				<property name="userDao" ref="userDao"/>

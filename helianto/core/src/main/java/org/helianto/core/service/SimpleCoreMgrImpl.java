@@ -15,12 +15,8 @@
 
 package org.helianto.core.service;
 
-import java.util.List;
-import java.util.Locale;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Credential;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Division;
 import org.helianto.core.Entity;
@@ -29,7 +25,6 @@ import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.creation.PartnerCreator;
-import org.helianto.core.creation.UserCreator;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.PartnerDao;
 import org.helianto.core.dao.UserDao;

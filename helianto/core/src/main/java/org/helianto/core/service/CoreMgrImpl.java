@@ -27,7 +27,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
-import org.helianto.core.creation.CredentialType;
 import org.helianto.core.creation.IdentityType;
 import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.mail.MailComposer;
@@ -38,13 +37,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
  * <code>CoreMgr</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: $
+ * @deprecated use UserMgr or SimplCoreMgr
  */
 public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
     
     public void persistCredential(Credential credential) {
         if (credential.getPassword()==null) {
-            credential.setPassword(getUserCreatorImpl().generatePassword(8));
+            credential.setPassword(UserCreatorImpl.generatePassword(8));
         }
         this.getGenericDao().merge(credential);
     }  
@@ -218,14 +218,4 @@ public class CoreMgrImpl extends AbstractGenericService implements CoreMgr {
     
     // accessors
     
-    private UserCreatorImpl userCreatorImpl;
-    
-    public UserCreatorImpl getUserCreatorImpl() {
-        return userCreatorImpl;
-    }
-
-    public void setUserCreatorImpl(UserCreatorImpl userCreatorImpl) {
-        this.userCreatorImpl = userCreatorImpl;
-    }
-
 }
