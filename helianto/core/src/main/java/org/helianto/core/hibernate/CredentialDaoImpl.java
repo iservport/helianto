@@ -44,7 +44,11 @@ public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
     }
 
     public Identity findIdentityByPrincipal(String principal) {
-        return (Identity) findUnique(IDENTITY_QRY, principal);
+        Identity identity = (Identity) findUnique(IDENTITY_QRY, principal);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Found identity "+identity);
+        }
+        return identity;
     }
 
     static final String IDENTITY_QRY = 
