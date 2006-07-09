@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 03/07/2006 17:04:53 by Hibernate Tools 3.1.0.beta4
+// Generated 09/07/2006 19:17:10 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -31,8 +31,8 @@ public class Home extends AbstractHome implements java.io.Serializable {
     // Fields    
 
      private int id;
-     private Home parent;
      private String homeName;
+     private Home parent;
      private String language;
      private String country;
      private String httpAddress;
@@ -58,9 +58,9 @@ public class Home extends AbstractHome implements java.io.Serializable {
     }
     
     /** full constructor */
-    public Home(Home parent, String homeName, String language, String country, String httpAddress, String homeDesc, Date added, char serverMode, MailTransportData mailTransportData, MailAccessData mailAccessData) {
-        this.parent = parent;
+    public Home(String homeName, Home parent, String language, String country, String httpAddress, String homeDesc, Date added, char serverMode, MailTransportData mailTransportData, MailAccessData mailAccessData) {
         this.homeName = homeName;
+        this.parent = parent;
         this.language = language;
         this.country = country;
         this.httpAddress = httpAddress;
@@ -83,20 +83,20 @@ public class Home extends AbstractHome implements java.io.Serializable {
         this.id = id;
     }
 
-    public Home getParent() {
-        return this.parent;
-    }
-    
-    public void setParent(Home parent) {
-        this.parent = parent;
-    }
-
     public String getHomeName() {
         return this.homeName;
     }
     
     public void setHomeName(String homeName) {
         this.homeName = homeName;
+    }
+
+    public Home getParent() {
+        return this.parent;
+    }
+    
+    public void setParent(Home parent) {
+        this.parent = parent;
     }
 
     public String getLanguage() {
@@ -164,6 +164,19 @@ public class Home extends AbstractHome implements java.io.Serializable {
     }
    
 
+    /**
+     * toString
+     * @return String
+     */
+     public String toString() {
+	  StringBuffer buffer = new StringBuffer();
+
+      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+      buffer.append("homeName").append("='").append(getHomeName()).append("' ");			
+      buffer.append("]");
+      
+      return buffer.toString();
+     }
 
 
    public boolean equals(Object other) {
@@ -179,8 +192,8 @@ public class Home extends AbstractHome implements java.io.Serializable {
          int result = 17;
          
          
-         
          result = 37 * result + ( getHomeName() == null ? 0 : this.getHomeName().hashCode() );
+         
          
          
          

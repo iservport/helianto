@@ -1,15 +1,15 @@
 package org.helianto.core;
-// Generated 03/07/2006 17:04:54 by Hibernate Tools 3.1.0.beta4
+// Generated 09/07/2006 19:17:11 by Hibernate Tools 3.1.0.beta4
 
 
 
 /**
  * 			
  * <p>
- * Persist services.
+ * Provides distinction among different services available to each <code>Entity</code>.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core5.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
+ * @version $Id: $
  * 				
  * 		
  */
@@ -56,6 +56,19 @@ public class Service  implements java.io.Serializable {
     }
    
 
+    /**
+     * toString
+     * @return String
+     */
+     public String toString() {
+	  StringBuffer buffer = new StringBuffer();
+
+      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+      buffer.append("serviceName").append("='").append(getServiceName()).append("' ");			
+      buffer.append("]");
+      
+      return buffer.toString();
+     }
 
 
    public boolean equals(Object other) {

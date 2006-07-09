@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 03/07/2006 17:04:56 by Hibernate Tools 3.1.0.beta4
+// Generated 09/07/2006 19:17:12 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,6 +27,7 @@ public class Identity  implements org.helianto.core.creation.ImmutableIdentity,j
      private String optionalAlias;
      private PersonalData personalData;
      private Date created;
+     private Date lastLogin;
      private char identityType;
      private char notification;
      private Set<User> users = new HashSet<User>(0);
@@ -47,11 +48,12 @@ public class Identity  implements org.helianto.core.creation.ImmutableIdentity,j
     }
     
     /** full constructor */
-    public Identity(String principal, String optionalAlias, PersonalData personalData, Date created, char identityType, char notification, Set<User> users) {
+    public Identity(String principal, String optionalAlias, PersonalData personalData, Date created, Date lastLogin, char identityType, char notification, Set<User> users) {
         this.principal = principal;
         this.optionalAlias = optionalAlias;
         this.personalData = personalData;
         this.created = created;
+        this.lastLogin = lastLogin;
         this.identityType = identityType;
         this.notification = notification;
         this.users = users;
@@ -99,6 +101,14 @@ public class Identity  implements org.helianto.core.creation.ImmutableIdentity,j
     
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public Date getLastLogin() {
+        return this.lastLogin;
+    }
+    
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     public char getIdentityType() {
@@ -155,6 +165,7 @@ public class Identity  implements org.helianto.core.creation.ImmutableIdentity,j
          
          
          result = 37 * result + ( getPrincipal() == null ? 0 : this.getPrincipal().hashCode() );
+         
          
          
          

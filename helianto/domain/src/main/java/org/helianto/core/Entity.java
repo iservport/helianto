@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 03/07/2006 17:04:53 by Hibernate Tools 3.1.0.beta4
+// Generated 09/07/2006 19:17:09 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -89,6 +89,19 @@ public class Entity  implements java.io.Serializable {
     }
    
 
+    /**
+     * toString
+     * @return String
+     */
+     public String toString() {
+	  StringBuffer buffer = new StringBuffer();
+
+      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+      buffer.append("alias").append("='").append(getAlias()).append("' ");			
+      buffer.append("]");
+      
+      return buffer.toString();
+     }
 
 
    public boolean equals(Object other) {

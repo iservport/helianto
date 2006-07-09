@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 03/07/2006 17:04:57 by Hibernate Tools 3.1.0.beta4
+// Generated 09/07/2006 19:17:14 by Hibernate Tools 3.1.0.beta4
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +30,7 @@ public class UserGroup  implements java.io.Serializable {
      private Entity entity;
      private Identity identity;
      private UserGroup parent;
-     private Set<Role> roles = new HashSet<Role>(0);
+     private Set<UserRole> roles = new HashSet<UserRole>(0);
 
 
     // Constructors
@@ -46,7 +46,7 @@ public class UserGroup  implements java.io.Serializable {
     }
     
     /** full constructor */
-    public UserGroup(Entity entity, Identity identity, UserGroup parent, Set<Role> roles) {
+    public UserGroup(Entity entity, Identity identity, UserGroup parent, Set<UserRole> roles) {
         this.entity = entity;
         this.identity = identity;
         this.parent = parent;
@@ -89,11 +89,11 @@ public class UserGroup  implements java.io.Serializable {
         this.parent = parent;
     }
 
-    public Set<Role> getRoles() {
+    public Set<UserRole> getRoles() {
         return this.roles;
     }
     
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
    

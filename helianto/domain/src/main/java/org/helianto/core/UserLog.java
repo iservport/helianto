@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 03/07/2006 17:04:51 by Hibernate Tools 3.1.0.beta4
+// Generated 09/07/2006 19:17:07 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -20,7 +20,7 @@ public class UserLog  implements java.io.Serializable {
 
     // Fields    
 
-     private int id;
+     private long id;
      private User user;
      private Date lastLogin;
 
@@ -42,11 +42,11 @@ public class UserLog  implements java.io.Serializable {
    
     // Property accessors
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
