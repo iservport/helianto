@@ -84,17 +84,6 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
     }
 
-    public void testCreateSimpleUserEntity() {
-
-        simpleCoreMgr.persistDefaultEntity(defaultEntity);
-        hibernateTemplate.flush();
-        
-        User user = simpleCoreMgr.createSimpleUser(defaultEntity.getEntity());
-        assertEquals(defaultEntity.getEntity(), user.getEntity());
-        assertEquals("", user.getIdentity().getPrincipal());
-        
-    }
-    
     public void testCreateSimpleUserCredential() {
 
         simpleCoreMgr.persistDefaultEntity(defaultEntity);
@@ -105,16 +94,6 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         User user = simpleCoreMgr.createSimpleUser(identity);
         assertEquals(defaultEntity.getEntity(), user.getEntity());
         assertSame(identity, user.getIdentity());
-        
-    }
-    
-    public void testCreateUser() {
-
-        simpleCoreMgr.persistDefaultEntity(defaultEntity);
-        hibernateTemplate.flush();
-        
-        Identity identity = simpleCoreMgr.createIdentity();
-        assertNotNull(simpleCoreMgr.createUser(identity, defaultEntity.getEntity()));
         
     }
     
@@ -164,45 +143,6 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
     }
     
-    @SuppressWarnings("unchecked")
-    public void testPersistUserSuccess() {
-        
-        // TODO refactor with userDao stub or mock
-        
-        simpleCoreMgr.persistDefaultEntity(defaultEntity);
-        hibernateTemplate.flush();
-        
-        User user = simpleCoreMgr.createSimpleUser();
-        user.getIdentity().setPrincipal("ABC");
-        simpleCoreMgr.persistUser(user);
-        hibernateTemplate.flush();
-        
-        List<User> userList = hibernateTemplate.find("from User");
-        assertEquals(1, userList.size());
-        User u = userList.get(0);
-        assertEquals (user, u);
-
-    }
-    
-    public void testPersistUserFailureNullPrincipal() {
-        
-        // TODO refactor with userDao stub or mock
-
-        simpleCoreMgr.persistDefaultEntity(defaultEntity);
-        hibernateTemplate.flush();
-        
-        try {
-            User user = simpleCoreMgr.createSimpleUser();
-            user.getIdentity().setPrincipal(null);
-            simpleCoreMgr.persistUser(user);
-            fail();
-        } catch (Exception e) {
-            logger.error("Expected exception is "+e.getMessage());
-            // ok
-        }
-        
-    }
-
     public void testPersistUserFailureEmptyPrincipal() {
         
         // TODO refactor with userDao stub or mock
@@ -222,25 +162,7 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
     }
 
-    public void testIsPrincipalUnique() {
-
-        // TODO refactor with userDao stub or mock
-
-        simpleCoreMgr.persistDefaultEntity(defaultEntity);
-        hibernateTemplate.flush();
-        
-        User user = simpleCoreMgr.createSimpleUser();
-        user.getIdentity().setPrincipal("ABC");
-        assertTrue(simpleCoreMgr.isPrincipalUnique(user));
-        
-        simpleCoreMgr.persistUser(user);
-        hibernateTemplate.flush();
-        
-        assertFalse(simpleCoreMgr.isPrincipalUnique(user));
-        
-    }
-    
-    // colaborator setters
+    // colaborator mutators
     
     public void setSimpleCoreMgr(SimpleCoreMgr simpleCoreMgr) {
         this.simpleCoreMgr = simpleCoreMgr;

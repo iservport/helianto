@@ -24,13 +24,14 @@ import org.springframework.util.Assert;
  * Hibernate implementation for <code>CredentialDao</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @version $Id: $
  */
 public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
 
 	/*
 	 * Persist, remove and find identity
 	 */
+    
 	public void persistIdentity(Identity identity) {
 		Assert.notNull(identity);
         merge(identity);
@@ -52,6 +53,7 @@ public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
 	/*
 	 * Persist, remove and find credential
 	 */
+    
     public void persistCredential(Credential credential) {
     	Assert.notNull(credential);
         merge(credential);

@@ -31,6 +31,7 @@ import org.helianto.core.creation.UserCreatorImpl;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class UserDaoImplTests extends AbstractIntegrationTest {
     
@@ -47,7 +48,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     }
 
     /*
-     * UserLog tests
+     * User tests
      */
 
     private User createAndPersistUser(UserDao userDao) {
@@ -55,6 +56,14 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         User user = UserCreatorImpl.userFactory(entity, identity);
         userDao.persistUser(user);
         return user;
+    }
+    
+    public static List<User> createAndPersistUserList(HibernateTemplate hibernateTemplate, int e, int i) {
+        List<User> userList = createUsers(e, i);
+        hibernateTemplate.saveOrUpdateAll(userList);
+        hibernateTemplate.flush();
+        hibernateTemplate.clear();
+        return userList;
     }
     
     public void testPersistUser() {
@@ -69,11 +78,8 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     public void testFindUser() {
         // bulk write
         int e = 3, i = 4;
-        List<User> userList = createUsers(e, i);
+        List<User> userList = createAndPersistUserList(hibernateTemplate, e, i);
         assertEquals(e*i, userList.size());
-        hibernateTemplate.saveOrUpdateAll(userList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
         // bulk read
         User user = userList.get(0);
         List<User> listSameEntity = userDao.findUserByEntity(user.getEntity());
@@ -105,17 +111,15 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         // duplicate
         try {
             hibernateTemplate.save(user); fail();
-        } catch (DataIntegrityViolationException e) { }
+        } catch (DataIntegrityViolationException e) { 
+        } catch (Exception e) { fail(); }
     }
     
     public void testUserRemove() {
         // bulk write
         int e = 1, i = 10;
-        List<User> userList = createUsers(e, i);
+        List<User> userList = createAndPersistUserList(hibernateTemplate, e, i);
         assertEquals(e*i, userList.size());
-        hibernateTemplate.saveOrUpdateAll(userList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
         // pick one
         List<User> all = (ArrayList<User>) hibernateTemplate.find("from User");
         assertEquals(e*i, all.size());

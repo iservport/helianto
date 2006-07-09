@@ -21,14 +21,14 @@ public interface UserMgr {
     public void persistIdentity(Identity identity);
     
     /**
-     * <p>Persist <code>Credential</code>.</p>
-     */
-    public void persistCredential(Credential credential);
-    
-    /**
      * <p>A <code>Credential</code>.</p>
      */
     public Credential createCredential(Identity identity);
+    
+    /**
+     * <p>Persist <code>Credential</code>.</p>
+     */
+    public void persistCredential(Credential credential);
     
     /**
      * <p>A simple <code>User</code> creation given an <code>Endity</code>.</p>

@@ -49,16 +49,15 @@ public abstract class AbstractIntegrationTest extends
     /**
      * Generate a not repeatable key.
      */
-    public String generateKey() {
+    public static String generateKey() {
         return String.valueOf(new Date().getTime());
     }
 
     /**
      * Generate a not repeatable key of a given size.
      */
-    public String generateKey(int size) {
+    public static String generateKey(int size) {
         String localKey = generateKey();
-        logger.info("original key "+localKey);
         while (localKey.length()!=size) {
             if (localKey.length() > size) {
                 localKey = localKey.substring(localKey.length()-size, localKey.length());
