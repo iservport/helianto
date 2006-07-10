@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 09/07/2006 19:17:02 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:46 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -10,7 +10,6 @@ import java.util.Date;
  * Provides <code>Identity</code> with authentication information. 
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: $
  * 			
  * 		
  */

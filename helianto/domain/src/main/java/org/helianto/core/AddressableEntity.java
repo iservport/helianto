@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 09/07/2006 19:17:07 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:49 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -10,7 +10,6 @@ package org.helianto.core;
  * information.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core1.hbm.xml 75 2006-04-17 21:45:55 -0300 (Seg, 17 Abr 2006) iserv $
  * 				
  * 			
  */

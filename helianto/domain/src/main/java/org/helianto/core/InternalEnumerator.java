@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 09/07/2006 19:16:59 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:43 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -9,7 +9,6 @@ package org.helianto.core;
  * A class to hold last value for internal number lists.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core7.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
  * 				
  * 		
  */

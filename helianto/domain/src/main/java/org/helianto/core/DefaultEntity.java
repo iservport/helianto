@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 09/07/2006 19:17:11 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:54 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -17,7 +17,6 @@ package org.helianto.core;
  * Each <code>DefaultEntity</code> should have a corresponding {@link Partner}.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core2.hbm.xml,v 1.6 2006/03/20 16:11:40 iserv Exp $
  * 				
  * 		
  */

@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 09/07/2006 19:17:14 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:55 by Hibernate Tools 3.1.0.beta4
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +16,6 @@ import java.util.Set;
  * service will look-up the user hierarchy roles as well.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: $
  * 				
  * 		
  */

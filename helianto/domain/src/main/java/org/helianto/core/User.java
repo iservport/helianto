@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 09/07/2006 19:17:04 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:47 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Set;
 
@@ -17,7 +17,6 @@ import java.util.Set;
  * <code>Entity</code>.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: $
  * 				
  * 			
  */

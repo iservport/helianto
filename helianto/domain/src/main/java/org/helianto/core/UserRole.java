@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 09/07/2006 19:17:04 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:47 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -9,7 +9,6 @@ package org.helianto.core;
  * Persist roles.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core6.hbm.xml 70 2006-04-16 21:21:57 -0300 (Dom, 16 Abr 2006) iserv $
  * 				
  * 		
  */

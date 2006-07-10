@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 09/07/2006 19:17:10 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:51 by Hibernate Tools 3.1.0.beta4
 
 import java.util.Date;
 
@@ -20,7 +20,6 @@ import java.util.Date;
  * At least one default (root) home must be defined per installation.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-core0.hbm.xml 55 2006-04-07 07:04:17 -0300 (Sex, 07 Abr 2006) iserv $
  * 				
  * 		
  */
