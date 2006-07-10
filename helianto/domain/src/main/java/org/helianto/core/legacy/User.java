@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Role;
 
 
 /**
