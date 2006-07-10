@@ -1,5 +1,5 @@
 package org.helianto.purchase;
-// Generated 03/07/2006 17:04:43 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:44 by Hibernate Tools 3.1.0.beta4
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,7 +13,6 @@ import org.helianto.core.Partner;
  * A domain object to represent a purchase order.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: helianto-purchase00.hbm.xml 55 2006-04-07 07:04:17 -0300 (Sex, 07 Abr 2006) iserv $
  * 				
  * 		
  */

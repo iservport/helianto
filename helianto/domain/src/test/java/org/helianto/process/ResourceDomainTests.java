@@ -3,7 +3,7 @@ package org.helianto.process;
 import java.math.BigDecimal;
 
 import org.helianto.core.Entity;
-import org.helianto.process.creation.ResourceType;
+import org.helianto.process.type.ResourceType;
 
 import junit.framework.TestCase;
 

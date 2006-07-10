@@ -18,13 +18,13 @@ package org.helianto.core;
 import java.util.Date;
 import java.util.HashSet;
 
-import org.helianto.core.creation.Appellation;
-import org.helianto.core.creation.CredentialState;
-import org.helianto.core.creation.Gender;
-import org.helianto.core.creation.IdentityType;
-import org.helianto.core.creation.KeyType;
-import org.helianto.core.creation.Notification;
-import org.helianto.core.creation.UserType;
+import org.helianto.core.type.Appellation;
+import org.helianto.core.type.CredentialState;
+import org.helianto.core.type.Gender;
+import org.helianto.core.type.IdentityType;
+import org.helianto.core.type.KeyType;
+import org.helianto.core.type.Notification;
+import org.helianto.core.type.UserType;
 
 import junit.framework.TestCase;
 
@@ -296,7 +296,7 @@ public class SimpleUserUseCaseDomainTests extends TestCase {
         user.setAccountNonLocked(false);
         user.setUserType(UserType.EXTERNAL.getValue());
         user.setUserType(UserType.INTERNAL.getValue());
-        user.getRoles().add(new Role());
+        user.getRoles().add(new UserRole());
 
         assertTrue(user.equals(user));
         assertFalse(user.equals(null));
