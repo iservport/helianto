@@ -17,27 +17,28 @@
 		-->
 <beans>
 	<!--
-			Security service 	
+			Security Mgr	
 	-->
-	<bean id="userDetailsService"
-		class="org.helianto.core.security.UserDetailsServiceImpl">
-		<property name="userDao" ref="userDao"/>
-	</bean>
-	<!-- 
-	<bean id="userDetailsService" 
+	<bean id="securityMgr" 
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
 		parent="mgrTemplate">
 		<property name="target">
-			<bean id="org.helianto.core.security.UserDetailsServiceImpl"
-				class="org.helianto.core.service.SimpleCoreMgrImpl">
+			<bean id="securityTarget"
+				class="org.helianto.core.service.SecurityMgrImpl">
 				<property name="userDao" ref="userDao"/>
 			</bean>
 		</property>
 	</bean>
-	 -->
+	<!--
+			Security service 	
+	-->
+	<bean id="userDetailsService"
+		class="org.helianto.core.security.UserDetailsServiceImpl">
+		<property name="securityMgr" ref="securityMgr"/>
+	</bean>
 	<!--
 			Security test dao
-			WARNING: do no use in production environment!
+			WARNING: do not use in production environment!
 	-->
 	<bean id="inMemoryDaoImpl"
 		class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
