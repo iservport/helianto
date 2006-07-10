@@ -18,8 +18,8 @@
  limitations under the License.		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_role" 
-		name="org.helianto.core.Role">
+	<class table="core_userrole" 
+		name="org.helianto.core.UserRole">
 		<!-- 
 				ROLE
 				============================================= 
@@ -31,7 +31,6 @@ Persist roles.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-core6.hbm.xml 70 2006-04-16 21:21:57 -0300 (Dom, 16 Abr 2006) iserv $
 				]]>
 		</meta>
 		<!-- 
@@ -45,24 +44,28 @@ Persist roles.
 					user
 			-->
 			<many-to-one name="user" 
-				class="org.helianto.core.User" cascade="merge">
+				class="org.helianto.core.User" cascade="save-update,merge">
 				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
 				<column name="userId"/>
 			</many-to-one>
 			<!-- 
-					role name 
+					service
 			-->
-			<property name="roleName" type="string">
+			<many-to-one name="service" 
+				class="org.helianto.core.Service" cascade="save-update,merge">
 				<meta attribute="use-in-equals">true</meta>
-				<column name="roleName"	length="20"/>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="serviceId"/>
+			</many-to-one>
+			<!-- 
+					service extension 
+			-->
+			<property name="serviceExtension" type="string">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="serviceExtension"	length="8"/>
 			</property>
 		</natural-id>
-		<!-- 
-				service
-		-->
-		<many-to-one name="service" 
-			class="org.helianto.core.Service" cascade="merge">
-			<column name="serviceId"/>
-		</many-to-one>
 	</class>
 </hibernate-mapping>

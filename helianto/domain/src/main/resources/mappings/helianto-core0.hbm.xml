@@ -47,7 +47,6 @@ At least one default (root) home must be defined per installation.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-core0.hbm.xml 55 2006-04-07 07:04:17 -0300 (Sex, 07 Abr 2006) iserv $
 				]]>
 		</meta>
 		<!-- 

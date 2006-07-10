@@ -36,7 +36,6 @@ The contact domain class.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-entity2.hbm.xml 80 2006-04-19 21:56:03 -0300 (Qua, 19 Abr 2006) iserv $
 				]]>
         </meta>
 		<id name="id" type="long">

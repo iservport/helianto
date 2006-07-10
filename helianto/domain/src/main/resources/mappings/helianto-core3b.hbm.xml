@@ -35,7 +35,6 @@ Provides <code>Identity</code> with authentication information.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: $
 			]]>
 		</meta>
 		<!-- 
@@ -52,7 +51,8 @@ Provides <code>Identity</code> with authentication information.
 			<!-- 
 					identity
 			-->
-			<many-to-one name="identity" class="org.helianto.core.Identity">
+			<many-to-one name="identity" cascade="save-update,merge"
+			    class="org.helianto.core.Identity">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
 				<column name="idntId"/>

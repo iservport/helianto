@@ -42,7 +42,6 @@ service will look-up the user hierarchy roles as well.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: $
 				]]>
 		</meta>
 		<!-- 
@@ -66,7 +65,7 @@ service will look-up the user hierarchy roles as well.
 					identity
 			-->
 			<many-to-one name="identity" 
-				class="org.helianto.core.Identity" cascade="all">
+				class="org.helianto.core.Identity" cascade="save-update,merge">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
 				<column name="identityId"/>
@@ -75,14 +74,14 @@ service will look-up the user hierarchy roles as well.
 		<!-- 
 				parent
 		-->
-		<many-to-one name="parent" cascade="all"
+		<many-to-one name="parent" cascade="save-update,merge"
 			class="org.helianto.core.UserGroup"/>
 		<!--
 				roles
 		-->
 		<set name="roles" inverse="true">
 			<key column="userId"/>
-			<one-to-many class="org.helianto.core.Role"/>
+			<one-to-many class="org.helianto.core.UserRole"/>
 		</set>
 		<!-- 
 			user subclass
@@ -105,7 +104,6 @@ a single authentication scheme and have multiple authorization schemes, one per
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: $
 				]]>
 			</meta>
 			<!-- 

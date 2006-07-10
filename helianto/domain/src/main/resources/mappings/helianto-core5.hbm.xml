@@ -31,11 +31,10 @@
 		<meta attribute="class-description" inherit="false">
 			<![CDATA[
 <p>
-Persist services.
+Provides distinction among different services available to each <code>Entity</code>.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-core5.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
 				]]>
 		</meta>
 		<!-- 
@@ -44,13 +43,15 @@ Persist services.
 		<id name="id" type="int">
 			<generator class="native"/>
 		</id>
-		<!-- 
-				service name 
-		-->
-		<property name="serviceName" type="string" >
-			<meta attribute="use-in-equals">true</meta>
-			<column name="serviceName" 
-				length="12" unique="true"/>
-		</property>
+		<natural-id>
+			<!-- 
+					service name 
+			-->
+			<property name="serviceName" type="string" >
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="serviceName" length="12"/>
+			</property>
+		</natural-id>
 	</class>
 </hibernate-mapping>

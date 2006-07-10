@@ -35,7 +35,6 @@ A domain object to represent a purchase order.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-purchase00.hbm.xml 55 2006-04-07 07:04:17 -0300 (Sex, 07 Abr 2006) iserv $
 				]]>
 		</meta>
 		<!-- 

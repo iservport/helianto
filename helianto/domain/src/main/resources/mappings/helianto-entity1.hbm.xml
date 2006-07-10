@@ -37,7 +37,6 @@ partners, like customers, suppliers, banks, etc.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
 				]]>
         </meta>
 		<!-- 
@@ -101,7 +100,6 @@ Persist a relationship to a division.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
 				]]>
 			</meta>
 			<property name="divisionType" type="char" not-null="true" formula="' '"/>
@@ -119,7 +117,6 @@ Persist a relationship to a customer
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
 				]]>
 			</meta>
 			<many-to-one name="deliverTo" 
@@ -140,7 +137,6 @@ Persist a relationship to a supplier
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
 				]]>
 			</meta>
 			<property name="supplierAsessment" type="float"/>
@@ -162,7 +158,6 @@ Persist a relationship to a bank
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
 				]]>
 			</meta>
 			<property name="checkFormFile" type="string" length="10"/>
@@ -180,7 +175,6 @@ Persist a relationship to a resource manufaturer.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
 				]]>
 			</meta>
 			
@@ -198,7 +192,6 @@ Persist a relationship to an Agent, like a sales representative.
 </p>
 
 @author Mauricio Fernandes de Castro
-@version $Id: helianto-entity1.hbm.xml,v 1.3 2006/03/20 16:11:40 iserv Exp $
 				]]>
 			</meta>
 			
