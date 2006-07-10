@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.creation.EntityCreator;
-import org.helianto.core.creation.EntityCreatorImpl;
+import org.helianto.core.creation.EntityCreator;
 import org.helianto.process.creation.PartCreator;
 import org.helianto.process.creation.PartCreatorImpl;
 
@@ -31,7 +31,7 @@ public class PartCreatorImplTests extends TestCase {
     private Entity entity;
     
     public void setUp() {
-        entityCreator = new EntityCreatorImpl();
+        entityCreator = new EntityCreator();
         partCreator = new PartCreatorImpl();
         entity = entityCreator.entityFactory(new Home(), "ENTITY");
     }

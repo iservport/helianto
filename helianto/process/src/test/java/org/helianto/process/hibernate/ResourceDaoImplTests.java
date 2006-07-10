@@ -26,8 +26,8 @@ import org.helianto.core.service.SimpleCoreMgr;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.creation.ResourceCreator;
-import org.helianto.process.creation.ResourceType;
 import org.helianto.process.dao.ResourceDao;
+import org.helianto.process.type.ResourceType;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 

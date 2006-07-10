@@ -22,7 +22,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
-import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.dao.PartnerDao;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
@@ -30,8 +29,8 @@ import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.Unit;
 import org.helianto.process.creation.ResourceCreator;
-import org.helianto.process.creation.ResourceType;
 import org.helianto.process.dao.ResourceDao;
+import org.helianto.process.type.ResourceType;
 import org.springframework.beans.factory.annotation.Required;
 
 public class ResourceMgrImpl implements ResourceMgr {
@@ -173,14 +172,9 @@ public class ResourceMgrImpl implements ResourceMgr {
     
     // accesssors and mutators
 
-    private EntityCreator entityCreator; 
     private ResourceCreator resourceCreator; 
     private PartnerDao partnerDao;
     private ResourceDao resourceDao;
-
-    public EntityCreator getEntityCreator() {
-        return entityCreator;
-    }
 
     public ResourceCreator getResourceCreator() {
         return resourceCreator;
@@ -192,11 +186,6 @@ public class ResourceMgrImpl implements ResourceMgr {
 
     public ResourceDao getResourceDao() {
         return resourceDao;
-    }
-
-    @Required
-    public void setEntityCreator(EntityCreator entityCreator) {
-        this.entityCreator = entityCreator;
     }
 
     @Required

@@ -23,7 +23,7 @@ import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
-import org.helianto.process.creation.ResourceType;
+import org.helianto.process.type.ResourceType;
 
 public interface ResourceDao {
     

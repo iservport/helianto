@@ -36,7 +36,6 @@
 		<property name="target">
 			<bean id="resourceTarget"
 				class="org.helianto.process.service.ResourceMgrImpl">
-				<property name="entityCreator" ref="entityCreator"/>
 				<property name="resourceCreator" ref="resourceCreator"/>
 				<property name="resourceDao" ref="resourceDao"/>
 				<property name="partnerDao" ref="partnerDao"/>
