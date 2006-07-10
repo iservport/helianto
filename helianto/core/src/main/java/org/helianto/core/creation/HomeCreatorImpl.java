@@ -28,14 +28,14 @@ import org.helianto.core.MailTransportData;
  * @author Mauricio Fernandes de Castro
  * @version $Id$
  */
-public class HomeCreatorImpl implements HomeCreator {
+public class HomeCreatorImpl {
     
-    public Home homeFactory(String homeName) {
+    public static Home homeFactory(String homeName) {
         java.util.Locale javaLocale = java.util.Locale.getDefault();
         return homeFactory(homeName, javaLocale.getLanguage(), javaLocale.getCountry());
     }
     
-    public Home homeFactory(String homeName, String language, String country) {
+    public static Home homeFactory(String homeName, String language, String country) {
         Home home = new Home();
         home.setHttpAddress("");
         home.setHomeName(homeName);
@@ -46,7 +46,7 @@ public class HomeCreatorImpl implements HomeCreator {
         return home;
     }
     
-    public MailTransportData mailTransportDataFactory(String host, String user, String password) {
+    public static MailTransportData mailTransportDataFactory(String host, String user, String password) {
         MailTransportData mailTransportData = new MailTransportData();
         mailTransportData.setSmtpHost(host);
         mailTransportData.setSmtpUser(user);
@@ -54,7 +54,7 @@ public class HomeCreatorImpl implements HomeCreator {
         return mailTransportData;
     }
     
-    public MailAccessData mailAccessDataFactory(String host, String user, String password) {
+    public static MailAccessData mailAccessDataFactory(String host, String user, String password) {
         MailAccessData mailAccessData = new MailAccessData();
         mailAccessData.setHost(host);
         mailAccessData.setUser(user);

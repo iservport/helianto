@@ -24,10 +24,16 @@ import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalData;
-import org.helianto.core.Role;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.UserRole;
+import org.helianto.core.type.Appellation;
+import org.helianto.core.type.CredentialState;
+import org.helianto.core.type.Gender;
+import org.helianto.core.type.IdentityType;
+import org.helianto.core.type.Notification;
+import org.helianto.core.type.UserType;
 import org.springframework.util.Assert;
 
 /**
@@ -36,7 +42,7 @@ import org.springframework.util.Assert;
  * @author Mauricio Fernandes de Castro
  * @version $Id: $
  */
-public class UserCreatorImpl {
+public class UserCreator {
     
     /**
      * <code>PersonalData</code> is created by default with
@@ -130,7 +136,8 @@ public class UserCreatorImpl {
         user.setUserType(UserType.INTERNAL.getValue());
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
-        user.setRoles(new HashSet<Role>());
+        user.setRoles(new HashSet<UserRole>());
+        user.getIdentity().getUsers().add(user);
         return user;
     }
 
@@ -156,14 +163,18 @@ public class UserCreatorImpl {
      * @param entity
      * @param identity
      */
-    public static UserGroup userGroupFactory(Entity entity, Identity identity) {
+    public static UserGroup userGroupFactory(Entity entity, String principal) {
         Assert.notNull(entity);
-        Assert.notNull(identity);
+        Identity identity = new Identity();
+        identity.setPrincipal(principal);
+        identity.setCreated(new Date());
+        identity.setIdentityType(IdentityType.GROUP.getValue());
+        identity.setNotification(Notification.BY_REQUEST.getValue());
         UserGroup userGroup = new UserGroup();
         userGroup.setEntity(entity);
         userGroup.setIdentity(identity);
         userGroup.setParent(null);
-        userGroup.setRoles(new HashSet<Role>());
+        userGroup.setRoles(new HashSet<UserRole>());
         return userGroup;
     }
     
@@ -182,8 +193,8 @@ public class UserCreatorImpl {
             date = new Date();
         }
         userLog.setLastLogin(date);
-        user.getIdentity().setLastLogin(date);
+        ((Identity) user.getIdentity()).setLastLogin(date);
         return userLog;
     }
-        
+    
 }

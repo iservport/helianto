@@ -15,66 +15,115 @@
 
 package org.helianto.core.creation;
 
+
 import org.helianto.core.AddressableEntity;
-import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.EntityKey;
 import org.helianto.core.Home;
-import org.helianto.core.Identity;
 import org.helianto.core.Individual;
 import org.helianto.core.Organization;
 import org.helianto.core.Province;
+import org.helianto.core.type.KeyType;
+import org.springframework.util.Assert;
 
 /**
- * A factory method pattern interface to <code>Entity</code>
- * related domain objects.
+ * Default implementation for the <code>EntityCreator</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id: $
+ * @version $Id$
  */
-public interface EntityCreator extends HomeCreator {
-
-    public Entity entityFactory(Home home, String uniqueAlias);
-
-    public AddressableEntity addressableEntityFactory(Home home,
-            String uniqueAlias);
-
-    public Organization organizationFactory(Home home, String uniqueAlias);
-
-    public Organization organizationFactory(Home home, String uniqueAlias,
-            String businessName);
-
-    public Individual individualFactory(Home home, Identity identity);
-
-    /**
-     * <p>
-     * Create <code>Home</code>, <code>Entity</code> and the corresponding
-     * <code>DefaultEntity</code> with priority zero and the given alias.
-     * </p>
-     */
-    public DefaultEntity defaultEntityFactory(String alias);
-
-    /**
-     * <p>
-     * Create an <code>Entity</code> and the corresponding
-     * <code>DefaultEntity</code> with priority zero.
-     * </p>
-     */
-    public DefaultEntity defaultEntityFactory(Entity entity);
-
-    /**
-     * <p>
-     * Create an <code>Entity</code> and the corresponding
-     * <code>DefaultEntity</code> with a given priority.
-     * </p>
-     */
-    public DefaultEntity defaultEntityFactory(Entity entity, int priority);
+public class EntityCreator extends HomeCreatorImpl {
     
-    public Province provinceFactory(Home home, String code, String name);
-
-    public Province provinceFactory(Home home, String code, String name, String country);
+    public static Entity entityFactory(Home home, String uniqueAlias) {
+        Assert.notNull(home);
+        Entity entity = new Entity();
+        entity.setHome(home);
+        entity.setAlias(uniqueAlias);
+        return entity;
+    }
     
-    public EntityKey entityKeyFactory(Entity entity, KeyType keyType, String keyNumber);
+    public static AddressableEntity addressableEntityFactory(Home home, String uniqueAlias) {
+        return addressableEntityFactory(home, null, uniqueAlias);
+    }
+    
+    public static AddressableEntity addressableEntityFactory(Province province, String uniqueAlias) {
+        return addressableEntityFactory(province.getHome(), province, uniqueAlias);
+    }
+    
+    private static AddressableEntity addressableEntityFactory(Home home, Province province, String uniqueAlias) {
+        AddressableEntity entity = new AddressableEntity();
+        entity.setHome(home);
+        entity.setAlias(uniqueAlias);
+        entity.setEntityAddress1("");
+        entity.setEntityAddress2("");
+        entity.setEntityAddress3("");
+        entity.setEntityCityName("");
+        entity.setProvince(province);
+        entity.setEntityPostalCode("");
+        return entity;
+    }
+    
+    /* (non-Javadoc)
+     * @see org.helianto.core.EntityCreator#organizationFactory(org.helianto.core.Home, java.lang.String)
+     */
+    public static Organization organizationFactory(Home home, String uniqueAlias) {
+        return organizationFactory(home, uniqueAlias, uniqueAlias);
+    }
+    
+    public static Organization organizationFactory(Home home, String uniqueAlias, String businessName) {
+        Organization organization = new Organization();
+        organization.setHome(home);
+        organization.setAlias(uniqueAlias);
+        organization.setBusinessName(businessName);
+        return organization;
+    }
+    
+    public static Individual individualFactory(Home home, Identity identity) {
+        Individual individual = new Individual();
+        individual.setHome(home);
+        individual.setAlias(identity.getPrincipal());
+        individual.setIdentity(identity);
+        return individual;
+    }
+    
+    public static DefaultEntity defaultEntityFactory(String alias) {
+        Home home = homeFactory(alias);
+        Entity entity = entityFactory(home, alias);
+        return defaultEntityFactory(entity);
+    }
+    
+    public static DefaultEntity defaultEntityFactory(Entity entity) {
+        return defaultEntityFactory(entity, 0);
+    }
+    
+    public static DefaultEntity defaultEntityFactory(Entity entity, int priority) {
+        DefaultEntity defaultEntity = new DefaultEntity();
+        defaultEntity.setEntity(entity);
+        defaultEntity.setPriority(priority);
+        return defaultEntity;
+    }
+
+    public static Province provinceFactory(Home home, String code, String name) {
+        return provinceFactory(home, code, name, home.getCountry());
+    }
+
+    public static Province provinceFactory(Home home, String code, String name, String country) {
+        Province province = new Province();
+        province.setHome(home);
+        province.setCode(code);
+        province.setProvinceName(name);
+        province.setCountry(country);
+        return province;
+    }
+
+    public static EntityKey entityKeyFactory(Entity entity, KeyType keyType, String keyNumber) {
+        EntityKey entityKey = new EntityKey();
+        entityKey.setEntity(entity);
+        entityKey.setKeyType(keyType.getValue());
+        entityKey.setKeyNumber(keyNumber);
+        return entityKey;
+    }
 
 }
