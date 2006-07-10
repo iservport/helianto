@@ -21,7 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
-import org.helianto.core.creation.UserCreatorImpl;
+import org.helianto.core.creation.UserCreator;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
@@ -41,7 +41,7 @@ public class CredentialValidatorTests extends TestCase {
     public void setUp() {
         Identity identity = new Identity();
         identity.setPrincipal("ABC");
-        credential = UserCreatorImpl.credentialFactory(identity);
+        credential = UserCreator.credentialFactory(identity);
         credentialValidator = new CredentialValidator();
         errors = new BindException(credential, "credential");
     }

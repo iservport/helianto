@@ -25,9 +25,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.creation.EntityCreator;
-import org.helianto.core.creation.EntityCreatorImpl;
-import org.helianto.core.creation.HomeCreatorImpl;
-import org.helianto.core.creation.UserCreatorImpl;
+import org.helianto.core.creation.UserCreator;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -37,24 +35,18 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     
     private UserDao userDao;
 
-    private Entity entity;
-    private EntityCreator entityCreator;
-    
-    @Override
-    protected void onSetUpBeforeTransaction() throws Exception {
-        entityCreator = new EntityCreatorImpl();
-        Home home = new HomeCreatorImpl().homeFactory("HOME");
-        entity = entityCreator.entityFactory(home, "ENTITY");
-    }
-
     /*
      * User tests
      */
 
-    private User createAndPersistUser(UserDao userDao) {
-        Identity identity = UserCreatorImpl.identityFactory("IDENTITY", "ALIAS");
-        User user = UserCreatorImpl.userFactory(entity, identity);
-        userDao.persistUser(user);
+    public static User createAndPersistUser(UserDao userDao) {
+        Home home = EntityCreator.homeFactory("HOME");
+        Entity entity = EntityCreator.entityFactory(home, "ENTITY");
+        Identity identity = UserCreator.identityFactory("IDENTITY", "ALIAS");
+        User user = UserCreator.userFactory(entity, identity);
+        if (userDao!=null) {
+            userDao.persistUser(user);
+        }
         return user;
     }
     
@@ -92,16 +84,20 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     public void testUserError() {
         try {
             userDao.persistUser(null); fail();
-        } catch (IllegalArgumentException e) { }
+        } catch (IllegalArgumentException e) { 
+        } catch (Exception e) { fail(); }
         try {
             userDao.findUserByEntityAndIdentity(null, new Identity()); fail();
-        } catch (IllegalArgumentException e) { }
+        } catch (IllegalArgumentException e) { 
+        } catch (Exception e) { fail(); }
         try {
             userDao.findUserByEntityAndIdentity(new Entity(), null); fail();
-        } catch (IllegalArgumentException e) { }
+        } catch (IllegalArgumentException e) { 
+        } catch (Exception e) { fail(); }
         try {
             userDao.findUserByEntity(null); fail();
-        } catch (IllegalArgumentException e) { }
+        } catch (IllegalArgumentException e) { 
+        } catch (Exception e) { fail(); }
     }
     
     public void testUserDuplicate() {
@@ -138,10 +134,12 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
      * UserLog tests
      */
     
-    private UserLog createAndPersistUserLog(UserDao userDao, Date date) {
+    public static UserLog createAndPersistUserLog(UserDao userDao, Date date) {
         User user = createAndPersistUser(userDao);
-        UserLog userLog = UserCreatorImpl.userLogFactory(user, date);
-        userDao.persistUserLog(userLog);
+        UserLog userLog = UserCreator.userLogFactory(user, date);
+        if (userDao!=null) {
+            userDao.persistUserLog(userLog);
+        }
         return userLog;
     }
     
@@ -283,8 +281,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         List<User> users = new ArrayList<User>();
         for (Identity i: identities) {
             for (Entity e: entities) {
-                User u = UserCreatorImpl.userFactory(e, i);
-                i.getUsers().add(u);
+                User u = UserCreator.userFactory(e, i);
                 users.add(u);
             }
         }
@@ -299,7 +296,7 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
      * @return
      */
     public static List<User> createUsers(int entityListSize, int identityListSize) {
-        List<Entity> entities = EntityDaoImplTests.createEntities(entityListSize);
+        List<Entity> entities = EntityDaoImplTests.createEntityList(entityListSize);
         List<Identity> identities = CredentialDaoImplTests.createIdentities(identityListSize);
         return createUsers(entities, identities);
     }
@@ -314,10 +311,17 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
         long time = new Date().getTime();
         for (User u: users) {
             for (int i = 0; i<size; i++) {
-                userLogs.add(UserCreatorImpl.userLogFactory(u, new Date(time++)));
+                userLogs.add(UserCreator.userLogFactory(u, new Date(time++)));
             }
         }
         return userLogs;
+    }
+    
+    //~ config
+    
+    @Override
+    public int getAutowireMode() {
+        return AUTOWIRE_BY_NAME;
     }
     
     //~ collaborator mutators

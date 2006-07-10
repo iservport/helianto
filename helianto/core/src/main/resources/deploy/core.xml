@@ -18,21 +18,6 @@
 <beans>
 
 	<!--
-			Home creator implementation	
-	-->
-	<bean id="homeCreator" 
-		class="org.helianto.core.creation.HomeCreatorImpl"/>
-	<!--
-			Entity creator implementation	
-	-->
-	<bean id="entityCreator" 
-		class="org.helianto.core.creation.EntityCreatorImpl"/>
-	<!--
-			Partner creator implementation	
-	-->
-	<bean id="partnerCreator" 
-		class="org.helianto.core.creation.PartnerCreatorImpl"/>
-	<!--
 			Home dao implementation	
 	-->
 	<bean id="homeDao" 
@@ -68,6 +53,13 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
+			Service dao implementation	
+	-->
+	<bean id="serviceDao" 
+		class="org.helianto.core.hibernate.ServiceDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
 			Simple core service bean	
 	-->
 	<bean id="simpleCoreMgr" 
@@ -76,7 +68,6 @@
 		<property name="target">
 			<bean id="simpleCoreTarget"
 				class="org.helianto.core.service.SimpleCoreMgrImpl">
-				<property name="partnerCreator" ref="partnerCreator"/>
 				<property name="entityDao" ref="entityDao"/>
 				<property name="partnerDao" ref="partnerDao"/>
 				<property name="userDao" ref="userDao"/>

@@ -15,8 +15,8 @@
 
 package org.helianto.core.hibernate;
 
-import static org.helianto.core.creation.UniqueKeyInfo.ENTITY_ALIAS_LENGTH;
-import static org.helianto.core.creation.UniqueKeyInfo.PARTNER_ALIAS_LENGTH;
+import static org.helianto.core.type.UniqueKeyInfo.ENTITY_ALIAS_LENGTH;
+import static org.helianto.core.type.UniqueKeyInfo.PARTNER_ALIAS_LENGTH;
 
 import java.util.List;
 
@@ -28,6 +28,7 @@ import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Manufacturer;
 import org.helianto.core.Supplier;
+import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.PartnerCreator;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.PartnerDao;
@@ -46,7 +47,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Customer customer = partnerCreator.customerFactory(entity, alias);
+        Customer customer = PartnerCreator.customerFactory(entity, alias);
         partnerDao.persistCustomer(customer);
         hibernateTemplate.flush();
         List<Customer> customerList = partnerDao.findCustomerByEntity(entity);
@@ -55,7 +56,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         // create many
         for (int i = 1;i<testSize;i++) {
-            partnerDao.persistCustomer(partnerCreator.customerFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
+            partnerDao.persistCustomer(PartnerCreator.customerFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
         }
         hibernateTemplate.flush();
         customerList = partnerDao.findCustomerByEntity(entity);
@@ -69,12 +70,12 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Customer customer = partnerCreator.customerFactory(entity, alias);
+        Customer customer = PartnerCreator.customerFactory(entity, alias);
         partnerDao.persistCustomer(customer);
         hibernateTemplate.flush();
         
         // create second
-        Customer duplicate = partnerCreator.customerFactory(entity, alias);
+        Customer duplicate = PartnerCreator.customerFactory(entity, alias);
         
         try {
             partnerDao.persistCustomer(duplicate);
@@ -89,7 +90,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Supplier supplier = partnerCreator.supplierFactory(entity, alias);
+        Supplier supplier = PartnerCreator.supplierFactory(entity, alias);
         partnerDao.persistSupplier(supplier);
         hibernateTemplate.flush();
         List<Supplier> supplierList = partnerDao.findSupplierByEntity(entity);
@@ -98,7 +99,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         // create many
         for (int i = 1;i<testSize;i++) {
-            partnerDao.persistSupplier(partnerCreator.supplierFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
+            partnerDao.persistSupplier(PartnerCreator.supplierFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
         }
         hibernateTemplate.flush();
         supplierList = partnerDao.findSupplierByEntity(entity);
@@ -112,12 +113,12 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Supplier supplier = partnerCreator.supplierFactory(entity, alias);
+        Supplier supplier = PartnerCreator.supplierFactory(entity, alias);
         partnerDao.persistSupplier(supplier);
         hibernateTemplate.flush();
         
         // create second
-        Supplier duplicate = partnerCreator.supplierFactory(entity, alias);
+        Supplier duplicate = PartnerCreator.supplierFactory(entity, alias);
         
         try {
             partnerDao.persistSupplier(duplicate);
@@ -132,7 +133,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Division division = partnerCreator.divisionFactory(entity, alias);
+        Division division = PartnerCreator.divisionFactory(entity, alias);
         partnerDao.persistDivision(division);
         hibernateTemplate.flush();
         List<Division> divisionList = partnerDao.findDivisionByEntity(entity);
@@ -141,7 +142,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         // create many
         for (int i = 1;i<testSize;i++) {
-            partnerDao.persistDivision(partnerCreator.divisionFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
+            partnerDao.persistDivision(PartnerCreator.divisionFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
         }
         hibernateTemplate.flush();
         divisionList = partnerDao.findDivisionByEntity(entity);
@@ -156,7 +157,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         // create many
     	Division division = null;
         for (int i = 0;i<5;i++) {
-            division = partnerCreator.divisionFactory(entity, generateKey(PARTNER_ALIAS_LENGTH));
+            division = PartnerCreator.divisionFactory(entity, generateKey(PARTNER_ALIAS_LENGTH));
             if (i==4) {
                 division.setRelated(entity);
             }
@@ -172,12 +173,12 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Division division = partnerCreator.divisionFactory(entity, alias);
+        Division division = PartnerCreator.divisionFactory(entity, alias);
         partnerDao.persistDivision(division);
         hibernateTemplate.flush();
         
         // create second
-        Division duplicate = partnerCreator.divisionFactory(entity, alias);
+        Division duplicate = PartnerCreator.divisionFactory(entity, alias);
         
         try {
             partnerDao.persistDivision(duplicate);
@@ -192,7 +193,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Bank bank = partnerCreator.bankFactory(entity, alias);
+        Bank bank = PartnerCreator.bankFactory(entity, alias);
         partnerDao.persistBank(bank);
         hibernateTemplate.flush();
         List<Bank> bankList = partnerDao.findBankByEntity(entity);
@@ -201,7 +202,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         // create many
         for (int i = 1;i<testSize;i++) {
-            partnerDao.persistBank(partnerCreator.bankFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
+            partnerDao.persistBank(PartnerCreator.bankFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
         }
         hibernateTemplate.flush();
         bankList = partnerDao.findBankByEntity(entity);
@@ -215,12 +216,12 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Bank bank = partnerCreator.bankFactory(entity, alias);
+        Bank bank = PartnerCreator.bankFactory(entity, alias);
         partnerDao.persistBank(bank);
         hibernateTemplate.flush();
         
         // create second
-        Bank duplicate = partnerCreator.bankFactory(entity, alias);
+        Bank duplicate = PartnerCreator.bankFactory(entity, alias);
         
         try {
             partnerDao.persistBank(duplicate);
@@ -235,7 +236,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Agent agent = partnerCreator.agentFactory(entity, alias);
+        Agent agent = PartnerCreator.agentFactory(entity, alias);
         partnerDao.persistAgent(agent);
         hibernateTemplate.flush();
         List<Agent> agentList = partnerDao.findAgentByEntity(entity);
@@ -244,7 +245,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         // create many
         for (int i = 1;i<testSize;i++) {
-            partnerDao.persistAgent(partnerCreator.agentFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
+            partnerDao.persistAgent(PartnerCreator.agentFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
         }
         hibernateTemplate.flush();
         agentList = partnerDao.findAgentByEntity(entity);
@@ -258,12 +259,12 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Agent agent = partnerCreator.agentFactory(entity, alias);
+        Agent agent = PartnerCreator.agentFactory(entity, alias);
         partnerDao.persistAgent(agent);
         hibernateTemplate.flush();
         
         // create second
-        Agent duplicate = partnerCreator.agentFactory(entity, alias);
+        Agent duplicate = PartnerCreator.agentFactory(entity, alias);
         
         try {
             partnerDao.persistAgent(duplicate);
@@ -278,7 +279,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Manufacturer manufacturer = partnerCreator.manufacturerFactory(entity, alias);
+        Manufacturer manufacturer = PartnerCreator.manufacturerFactory(entity, alias);
         partnerDao.persistManufacturer(manufacturer);
         hibernateTemplate.flush();
         List<Manufacturer> manufacturerList = partnerDao.findManufacturerByEntity(entity);
@@ -287,7 +288,7 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         // create many
         for (int i = 1;i<testSize;i++) {
-            partnerDao.persistManufacturer(partnerCreator.manufacturerFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
+            partnerDao.persistManufacturer(PartnerCreator.manufacturerFactory(entity, generateKey(PARTNER_ALIAS_LENGTH)));
         }
         hibernateTemplate.flush();
         manufacturerList = partnerDao.findManufacturerByEntity(entity);
@@ -301,12 +302,12 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         
         //create one
         String alias = generateKey(PARTNER_ALIAS_LENGTH);
-        Manufacturer manufacturer = partnerCreator.manufacturerFactory(entity, alias);
+        Manufacturer manufacturer = PartnerCreator.manufacturerFactory(entity, alias);
         partnerDao.persistManufacturer(manufacturer);
         hibernateTemplate.flush();
         
         // create second
-        Manufacturer duplicate = partnerCreator.manufacturerFactory(entity, alias);
+        Manufacturer duplicate = PartnerCreator.manufacturerFactory(entity, alias);
         
         try {
             partnerDao.persistManufacturer(duplicate);
@@ -320,12 +321,11 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
     //
     
     private Entity entity;
-    private PartnerCreator partnerCreator;
     private EntityDao entityDao;
 
     @Override
     public void onSetUpInTransaction() {
-        DefaultEntity defaultEntity = partnerCreator.defaultEntityFactory(generateKey(ENTITY_ALIAS_LENGTH));
+        DefaultEntity defaultEntity = EntityCreator.defaultEntityFactory(generateKey(ENTITY_ALIAS_LENGTH));
         entityDao.persistDefaultEntity(defaultEntity);
         entity = defaultEntity.getEntity();
     }
@@ -336,10 +336,6 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
 
     public void setEntityDao(EntityDao entityDao) {
         this.entityDao = entityDao;
-    }
-
-    public void setPartnerCreator(PartnerCreator partnerCreator) {
-        this.partnerCreator = partnerCreator;
     }
 
 }

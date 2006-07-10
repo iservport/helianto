@@ -17,29 +17,33 @@ package org.helianto.core.security;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.verify;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import junit.framework.TestCase;
 
-import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.userdetails.UserDetails;
 import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.Credential;
+import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.Role;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
-import org.helianto.core.creation.UserCreatorImpl;
-import org.helianto.core.dao.UserDao;
-import org.helianto.core.hibernate.UserDaoImpl;
+import org.helianto.core.creation.UserCreator;
+import org.helianto.core.hibernate.CredentialDaoImplTests;
+import org.helianto.core.hibernate.EntityDaoImplTests;
+import org.helianto.core.hibernate.ServiceDaoImplTests;
 import org.helianto.core.hibernate.UserDaoImplTests;
+import org.helianto.core.service.SecurityMgr;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 
 
@@ -48,242 +52,181 @@ public class UserDetailsServiceImplTests extends TestCase {
     // class under test
     private UserDetailsServiceImpl userDetailsService;
     // collaborators
-    private UserDao userDao;
+    private SecurityMgr securityMgr;
     
-    //
-    //
-    //  TODO * * * W R I T E   T H I S   A G A I N * * *
-    //
-    //
+    private Identity prepapreSuccessfullLoadAndValidate(String principal) {
+        Identity identity = CredentialDaoImplTests.createAndPersistIdentity(null);
 
-    public void testGuessUserSuccess() {
-//        //prepare
-//        List<User> userList = UserDaoImplTests.createUsers(3, 3);
-//        assertEquals(9, userList.size());
-//        User choice = userList.get(0);
-//        Identity identity = choice.getIdentity();
-//        String principal = identity.getPrincipal();
-//        // init mock
-//        // Identity identity = userDao.findIdentityByPrincipal(principal);
-//        expect(userDao.findIdentityByPrincipal(principal)).andReturn(choice.getIdentity());
-//        replay(userDao);
-//        // test
-//        User user = userDetailsService.guessUser(principal);
-//        assertTrue(userList.contains(user));
-//        assertSame(choice.getIdentity(), user.getIdentity());
-//        
+        expect(securityMgr.findIdentityByPrincipal(principal))
+            .andReturn(identity);
+        replay(securityMgr);
+        return identity;
     }
     
-    public void testGuessUserNoCredential() {
-//        
-//        String principal = "CRED2";
-//        try {
-//            userDetailsService.guessUser(principal);
-//            fail();
-//        } catch (UsernameNotFoundException e) {
-//            //ok
-//        }
-    }
-    
-    public void testGuessUserNoUser() {
-//        
-//        String principal = "CRED1";
-//        try {
-//            userDetailsService.guessUser(principal);
-//            fail();
-//        } catch (UsernameNotFoundException e) {
-//            //ok
-//        }
-    }
-    
-    public void testGuessUserAuto() {
-//        
-//        String principal = "CRED1";
-//        auto = new User();
-//        User user = userDetailsService.guessUser(principal);
-//        assertSame(auto, user);
-    }
-    
+    public void testLoadAndValidateIdentity() {
+        Identity identity = prepapreSuccessfullLoadAndValidate("PRINCIPAL");
 
-    public void testLoadUserByUsernameNoUserLogYet() {
-//        
-//        List<User> userList = UserDaoImplTests.createUsers(3, 3);
-//        User user = userList.get(0);
-//        Date loginDate1 = new Date();
-//        lastLogin = loginDate1;
-//        
-//        // test case 1: guess user and create log
-//        
-//        UserDetails userDetails = userDetailsService.loadUserByUsername("CRED1");
-//        assertEquals(userDetails.getUsername(), "CRED1");
-//        assertEquals("PASSWORD1", userDetails.getPassword());
-//        
-//        Set<Role> roles = user.getRoles();
-//        GrantedAuthority[] authorities = userDetails.getAuthorities();
-//        // all authorities are roles
-//        for (GrantedAuthority ga: authorities) {
-//            if (logger.isDebugEnabled()) {
-//                logger.debug("GrantedAuthority is "+ga);
-//            }
-//            boolean matchAuthorityToRole = false;
-//            for (Role r: roles) {
-//                if (logger.isDebugEnabled()) {
-//                    logger.debug("Comparing to Role "+r+", "+r.getRoleName());
-//                }
-//                if (ga.getAuthority().compareTo(r.getRoleName())==0) {
-//                    if (logger.isDebugEnabled()) {
-//                        logger.debug("Equals");
-//                    }
-//                    matchAuthorityToRole = true;
-//                } 
-//            }
-//            if (!matchAuthorityToRole) {
-//                fail();
-//            }
-//        }
-//        // all roles are authorities
-//        for (Role r: roles) {
-//            if (logger.isDebugEnabled()) {
-//                logger.debug("Role is "+r+", "+r.getRoleName());
-//            }
-//            boolean matchRoleToAuthority = false;
-//            for (GrantedAuthority ga: authorities) {
-//                if (logger.isDebugEnabled()) {
-//                    logger.debug("Comparing to GrantedAuthority "+ga);
-//                }
-//                if (r.getRoleName().compareTo(ga.getAuthority())==0) {
-//                    matchRoleToAuthority = true;
-//                }
-//            }
-//            if (!matchRoleToAuthority) {
-//                fail();
-//            }
-//        }
-//        
-//        assertEquals(1, userLogList.size());
-//        UserLog userLog = userLogList.get(0);
-//        assertSame(user, userLog.getUser());
-//        
+        assertSame(identity, userDetailsService.loadAndValidateIdentity("PRINCIPAL"));
+        verify(securityMgr);
     }
     
-    //FIXME
-//    public void testLoadUserByUsernameFromUserLog() {
-//
-//        userList = createUsers(testIdentity, 1);
-//        User user = userList.get(0);
-//        Date loginDate1 = new Date();
-//        lastLogin = loginDate1;
-//        userDao.createAndPersistUserLog(user);
-//        assertEquals(1, userLogList.size());
+    public void testLoadAndValidateIdentityNull() {
+        expect(securityMgr.findIdentityByPrincipal("PRINCIPAL"))
+            .andReturn(null);
+        replay(securityMgr);
+        
+        try {
+            userDetailsService.loadAndValidateIdentity("PRINCIPAL"); fail();
+        } catch (UsernameNotFoundException e) {
+        } catch (Exception e) { fail(); }
+        verify(securityMgr);
+    }
+
+    public void testLoadAndValidateIdentityError() {
+        expect(securityMgr.findIdentityByPrincipal("PRINCIPAL"))
+            .andThrow(new UsernameNotFoundException("Error"));
+        replay(securityMgr);
+        
+        try {
+            userDetailsService.loadAndValidateIdentity("PRINCIPAL"); fail();
+        } catch (UsernameNotFoundException e) {
+        } catch (Exception e) { fail(); }
+        verify(securityMgr);
+    }
+    
+    private Credential prepareSuccessfullLoadAndValidateCredential(Identity identity) {
+        Credential credential = CredentialDaoImplTests.createAndPersistCredential(null);
+        credential.setIdentity(identity);
+        
+        expect(securityMgr.findCredentialByIdentity(credential.getIdentity()))
+            .andReturn(credential);
+        replay(securityMgr);
+        return credential;
+    }
+
+    public void testLoadAndValidateCredential() {
+        Credential credential = prepareSuccessfullLoadAndValidateCredential(new Identity());
+        
+        assertSame(credential,userDetailsService.loadAndValidateCredential(credential.getIdentity()));
+        verify(securityMgr);
+    }
+
+    public void testLoadAndValidateCredentialNull() {
+        expect(securityMgr.findCredentialByIdentity(new Identity()))
+            .andReturn(null);
+        replay(securityMgr);
+        
+        try {
+            userDetailsService.loadAndValidateCredential(new Identity()); fail();
+        } catch (DataRetrievalFailureException e) {
+        } catch (Exception e) { fail(); }
+        verify(securityMgr);
+    }
+
+    
+    public void testLoadAndValidateCredentialError() {
+        expect(securityMgr.findCredentialByIdentity(new Identity()))
+            .andThrow(new DataRetrievalFailureException(""));
+        replay(securityMgr);
+        
+        try {
+            userDetailsService.loadAndValidateCredential(new Identity()); fail();
+        } catch (DataRetrievalFailureException e) {
+        } catch (Exception e) { fail(); }
+        verify(securityMgr);
+    }
+    
+    private User prepareSuccessfullLoadOrCreateUser(Identity identity) {
+        UserLog userLog = UserDaoImplTests.createAndPersistUserLog(null, new Date());
+        userLog.getUser().setIdentity(identity);
+        
+        expect(securityMgr.findLastUserLog(identity))
+            .andReturn(userLog);
+        securityMgr.persistUserLog(isA(User.class), isA(Date.class));
+        replay(securityMgr);
+        return userLog.getUser();
+    }
+
+    public void testLoadOrCreateUser() {
+        Credential credential = CredentialDaoImplTests.createAndPersistCredential(null);
+        Identity identity = credential.getIdentity();
+        User user = prepareSuccessfullLoadOrCreateUser(identity);;
+        
+        assertSame(user, userDetailsService.loadOrCreateUser(identity));
+        verify(securityMgr);
+    }
+    
+    private User prepareSuccessfullLoadOrCreateUserFirstLogin(Identity identity, int e) {
+        List<Entity> entityList = EntityDaoImplTests.createEntityList(e);
+        List<User> userList = new ArrayList<User>();
+        for (Entity entity: entityList) {
+            User u = UserCreator.userFactory(entity, identity);
+            userList.add(u);
+            identity.getUsers().add(u);
+        }
+        User user = userList.get((int) Math.random()*e);
+        
+        expect(securityMgr.findLastUserLog(identity))
+            .andReturn(null);
+        securityMgr.persistUserLog(isA(User.class), isA(Date.class));
+        replay(securityMgr);
+        return user;
+    }
+
+    public void testLoadOrCreateUserFirstLogin() {
+        Identity identity = CredentialDaoImplTests.createAndPersistIdentity(null);
+        User user = prepareSuccessfullLoadOrCreateUserFirstLogin(identity, 3);
+        
+        assertSame(user.getIdentity(), userDetailsService.loadOrCreateUser(identity).getIdentity());
+        verify(securityMgr);
+    }
+
+    public void testLoadOrCreateUserNoUser() {
+        Identity identity = CredentialDaoImplTests.createAndPersistIdentity(null);
+        
+        expect(securityMgr.findLastUserLog(identity))
+            .andReturn(null);
+        expect(securityMgr.isAutoCreateEnabled())
+            .andReturn(false);
+        replay(securityMgr);
+        
+        try {
+            userDetailsService.loadOrCreateUser(identity); fail();
+        } catch (UsernameNotFoundException e) {
+        } catch (Exception e) { fail(); }
+        verify(securityMgr);
+    }
+
+    public void testLoadUserByUsername() {
+        //FIXME
+//        Identity identity = CredentialDaoImplTests.createAndPersistIdentity(null);
+//        Credential credential = prepareSuccessfullLoadAndValidateCredential(identity);
+//        User user = prepareSuccessfullLoadOrCreateUserFirstLogin(identity, 1);
 //        
-//        PublicUserDetails publicUserDetails = (PublicUserDetails) userDetailsService.loadUserByUsername("CRED1");
-//        assertEquals(2, userLogList.size());
-//        assertSame(publicUserDetails.getLastLogin(), loginDate1);
-//        assertSame(publicUserDetails.getCurrentEntity(), user.getEntity());
-//        assertSame(publicUserDetails.getPersonalData(), user.getIdentity().getPersonalData());
-//        assertEquals(0, publicUserDetails.getEntities().size());
-//                
-//    }
-//    
-//    public void testLoadUserByUsernameManyUsers() {
-//
-//        userList = createUsers(testIdentity, 3);
-//        
-//        PublicUserDetails publicUserDetails = (PublicUserDetails) userDetailsService.loadUserByUsername("CRED1");
-//        assertEquals(2, publicUserDetails.getEntities().size());
-//        
-//    }
-//    
-    public void testLoadUserByUsernameFailure() {
-//        
-//        try {
-//            userDetailsService.loadUserByUsername("");
-//            fail();
-//        } catch (DataRetrievalFailureException e) {
-//            // ok
-//        }
-//        
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(identity.getPrincipal());
+//        verify(securityMgr);
+//        assertSame(user, ((PublicUserDetails) userDetails).getUser());
+//        assertSame(credential, ((SecureUserDetails) userDetails).getCredential());
     }
     
     // setup
     
+    @Override
     public void setUp() {
-        testIdentity = UserCreatorImpl.identityFactory("CRED1", "");
-        userDao = createMock(UserDao.class);
+        securityMgr = createMock(SecurityMgr.class);
         userDetailsService = new UserDetailsServiceImpl();
-//        userDetailsService.setUserDao(new UserDaoStub());
+        userDetailsService.setSecurityMgr(securityMgr);
     }
     
+    @Override
     public void tearDown() {
-        reset(userDao);
-    }
-    
-//    final void addUserToList(Identity identity, Entity entity) {
-//        User user = new User();
-//        user.setEntity(entity);
-//        user.setIdentity(identity);
-//        identity.getUsers().add(user);
-//        createRoles(user, 3);
-//        userList.add(user);
-//        if (logger.isDebugEnabled()) {
-//            logger.debug("User created "+user);
-//        }
-//    }
-//    
-    final void createRoles(User user, int size) {
-        Role[] r = new Role[size];
-        for (int i=0;i<size;i++) {
-            r[i] = new Role();
-            r[i].setUser(user);
-            user.getRoles().add(r[i]);
-            r[i].setRoleName("ROLE_"+user.getIdentity().getPrincipal()+"_"+i);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Role created "+r[i]+"(" +r[i].getRoleName()+") for user "+user);
-            }
-        }
+        reset(securityMgr);
     }
     
     // private members
     
     private final Log logger = LogFactory.getLog(getClass());
-    private Identity testIdentity;
-    private List<UserLog> userLogList;
-    private UserLog lastUserLog = null;
-    private Date lastLogin = new Date();
-    private User auto = null;
     
     // inner stub class
     
-    public class UserDaoStub extends UserDaoImpl {
-        
-        // stub members
-        
-        
-        @Override
-        public Identity findIdentityByPrincipal(String principal) {
-            if (principal.compareTo(testIdentity.getPrincipal())==0) {
-                return testIdentity;
-            }
-            return null;
-        }
-
-        public User autoCreateAndPersistUser(String principal) { return auto; }
-
-        public UserLog createAndPersistUserLog(User user) {
-            if (userLogList==null) {
-                userLogList = new ArrayList<UserLog>();
-            }
-            lastUserLog = new UserLog();
-            lastUserLog.setUser(user);
-            lastUserLog.setLastLogin(lastLogin);
-            userLogList.add(lastUserLog);
-            return lastUserLog;
-        }
-
-        public UserLog findLastUserLog(String principal) {
-            return lastUserLog;
-        }
-
-    }
-
 }

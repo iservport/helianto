@@ -97,52 +97,52 @@ public class SimpleCoreMgrImplTests extends AbstractCoreTest {
         
     }
     
-    public void testLocaleFromValidHome() {
-        
-        simpleCoreMgr.persistDefaultEntity(defaultEntity);
-        hibernateTemplate.flush();
-        
-        Home home = defaultEntity.getEntity().getHome();
-        Locale locale = simpleCoreMgr.getLocale(home);
-        assertEquals(home.getLanguage(), locale.getLanguage());
-        assertEquals(home.getCountry(), locale.getCountry());
-
-    }
-    
-    public void testLocaleFromInvalidHome() {
-        
-        Locale locale = simpleCoreMgr.getLocale(null);
-        Locale defaultLocale = Locale.getDefault();
-        assertEquals(locale, defaultLocale);
-
-    }
-    
-    public void testConvertToLowerCaseSuccess() {
-        
-        Locale locale = simpleCoreMgr.getLocale(null);
-        assertEquals("abcde123", 
-                SimpleCoreMgrImpl.convertToLowerCase(locale, "ABCDE123"));
-        
-    }
-    
-    public void testConvertToLowerCaseFailure() {
-        
-        Locale locale = simpleCoreMgr.getLocale(null);
-        try {
-            SimpleCoreMgrImpl.convertToLowerCase(locale, null);
-            fail();
-        } catch (Exception e) {
-            // ok
-        }
-        try {
-            SimpleCoreMgrImpl.convertToLowerCase(locale, "");
-            fail();
-        } catch (Exception e) {
-            // ok
-        }
-        
-    }
-    
+//    public void testLocaleFromValidHome() {
+//        
+//        simpleCoreMgr.persistDefaultEntity(defaultEntity);
+//        hibernateTemplate.flush();
+//        
+//        Home home = defaultEntity.getEntity().getHome();
+//        Locale locale = simpleCoreMgr.getLocale(home);
+//        assertEquals(home.getLanguage(), locale.getLanguage());
+//        assertEquals(home.getCountry(), locale.getCountry());
+//
+//    }
+//    
+//    public void testLocaleFromInvalidHome() {
+//        
+//        Locale locale = simpleCoreMgr.getLocale(null);
+//        Locale defaultLocale = Locale.getDefault();
+//        assertEquals(locale, defaultLocale);
+//
+//    }
+//    
+//    public void testConvertToLowerCaseSuccess() {
+//        
+//        Locale locale = simpleCoreMgr.getLocale(null);
+//        assertEquals("abcde123", 
+//                SimpleCoreMgrImpl.convertToLowerCase(locale, "ABCDE123"));
+//        
+//    }
+//    
+//    public void testConvertToLowerCaseFailure() {
+//        
+//        Locale locale = simpleCoreMgr.getLocale(null);
+//        try {
+//            SimpleCoreMgrImpl.convertToLowerCase(locale, null);
+//            fail();
+//        } catch (Exception e) {
+//            // ok
+//        }
+//        try {
+//            SimpleCoreMgrImpl.convertToLowerCase(locale, "");
+//            fail();
+//        } catch (Exception e) {
+//            // ok
+//        }
+//        
+//    }
+//    
     public void testPersistUserFailureEmptyPrincipal() {
         
         // TODO refactor with userDao stub or mock

@@ -27,14 +27,15 @@ import org.helianto.core.Identity;
 import org.helianto.core.Individual;
 import org.helianto.core.Organization;
 import org.helianto.core.Province;
+import org.helianto.core.type.KeyType;
 
 public class EntityCreatorImplTests extends TestCase {
     
-    EntityCreatorImpl factory;
+    EntityCreator factory;
     Home home;
     
     public void setUp() {
-        factory = new EntityCreatorImpl();
+        factory = new EntityCreator();
         home = 
             new HomeCreatorImpl().homeFactory("");
     }
@@ -106,7 +107,7 @@ public class EntityCreatorImplTests extends TestCase {
 
     public void testIndividualFactory() {
         Identity identity = 
-            UserCreatorImpl.identityFactory("UNIQUE", "");
+            UserCreator.identityFactory("UNIQUE", "");
         Individual individual = 
             factory.individualFactory(home, identity);
         assertEquals("UNIQUE", individual.getAlias());

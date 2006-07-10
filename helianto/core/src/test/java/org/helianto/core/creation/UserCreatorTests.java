@@ -18,6 +18,8 @@ package org.helianto.core.creation;
 
 import java.util.Date;
 
+import junit.framework.TestCase;
+
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
@@ -25,20 +27,19 @@ import org.helianto.core.PersonalData;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
-import org.helianto.core.creation.Appellation;
-import org.helianto.core.creation.CredentialState;
-import org.helianto.core.creation.CredentialType;
-import org.helianto.core.creation.Gender;
-import org.helianto.core.creation.Notification;
-import org.helianto.core.creation.UserCreatorImpl;
-
-import junit.framework.TestCase;
+import org.helianto.core.type.Appellation;
+import org.helianto.core.type.CredentialState;
+import org.helianto.core.type.CredentialType;
+import org.helianto.core.type.Gender;
+import org.helianto.core.type.IdentityType;
+import org.helianto.core.type.Notification;
+import org.helianto.core.type.UserType;
 
 public class UserCreatorTests extends TestCase {
     
     public void testPersonalDataFactory() {
         PersonalData personalData = 
-            UserCreatorImpl.personalDataFactory();
+            UserCreator.personalDataFactory();
         assertEquals("", personalData.getFirstName());
         assertEquals("", personalData.getLastName());
         assertEquals(Appellation.NOT_SUPPLIED.getValue(),
@@ -48,7 +49,7 @@ public class UserCreatorTests extends TestCase {
     }
 
     public void testIdentityFactory() {
-        Identity identity = UserCreatorImpl.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Identity identity = UserCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
         assertEquals("PRINCIPAL", identity.getPrincipal());
         assertEquals("OPTIONAL_ALIAS", identity.getOptionalAlias());
         assertTrue(identity.getCreated().compareTo(new Date()) < 1000);
@@ -63,13 +64,13 @@ public class UserCreatorTests extends TestCase {
 
     public void testCredentialFactoryError() {
         try {
-            UserCreatorImpl.credentialFactory(null); fail();
+            UserCreator.credentialFactory(null); fail();
         } catch (IllegalArgumentException e) {}
     }
 
     public void testCredentialFactory() {
-        Identity identity = UserCreatorImpl.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
-        Credential credential = UserCreatorImpl.credentialFactory(identity);
+        Identity identity = UserCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Credential credential = UserCreator.credentialFactory(identity);
         assertSame(identity, credential.getIdentity());
         assertEquals(8, credential.getPassword().length());
         assertEquals("", credential.getVerifyPassword());
@@ -80,85 +81,82 @@ public class UserCreatorTests extends TestCase {
     
     public void testUserGroupFactoryError() {
         try {
-            UserCreatorImpl.userGroupFactory(null, new Identity()); fail();
-        } catch (IllegalArgumentException e) {}
-        try {
-            UserCreatorImpl.userGroupFactory(new Entity(), null); fail();
+            UserCreator.userGroupFactory(null, ""); fail();
         } catch (IllegalArgumentException e) {}
     }
 
     public void testUserGroupFactory() {
-        Identity identity = UserCreatorImpl.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
         Entity entity = new Entity();
-        UserGroup userGroup = UserCreatorImpl.userGroupFactory(entity, identity);
+        UserGroup userGroup = UserCreator.userGroupFactory(entity, "PRINCIPAL");
         assertSame(entity, userGroup.getEntity());
-        assertSame(identity, userGroup.getIdentity());
+        assertSame("PRINCIPAL", userGroup.getIdentity().getPrincipal());
+        assertSame(IdentityType.GROUP.getValue(), userGroup.getIdentity().getIdentityType());
         assertNull(userGroup.getParent());
         assertEquals(0, userGroup.getRoles().size());
     }
     
     public void testUserFactoryError() {
         try {
-            UserCreatorImpl.userFactory(new Entity(), null); fail();
+            UserCreator.userFactory(new Entity(), null); fail();
         } catch (IllegalArgumentException e) {}
         try {
-            UserCreatorImpl.userFactory(new UserGroup(), null); fail();
+            UserCreator.userFactory(new UserGroup(), null); fail();
         } catch (IllegalArgumentException e) {}
     }
 
     public void testUserFactory() {
-        Identity identity = UserCreatorImpl.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Identity identity = UserCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
         Entity entity = new Entity();
-        User user = UserCreatorImpl.userFactory(entity, identity);
+        User user = UserCreator.userFactory(entity, identity);
         assertSame(entity, user.getEntity());
         assertSame(identity, user.getIdentity());
         assertNull(user.getParent());
         assertEquals(0, user.getRoles().size());
         assertEquals(UserType.INTERNAL.getValue(), user.getUserType());
+        assertTrue(user.getIdentity().getUsers().contains(user));
     }
     
     public void testDerivedUserFactory() {
-        Identity identity1 = UserCreatorImpl.identityFactory("PRINCIPAL1", "OPTIONAL_ALIAS");
-        Identity identity2 = UserCreatorImpl.identityFactory("PRINCIPAL2", "OPTIONAL_ALIAS");
+        Identity identity = UserCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
         Entity entity = new Entity();
-        UserGroup userGroup = UserCreatorImpl.userGroupFactory(entity, identity1);
-        User user = UserCreatorImpl.userFactory(userGroup, identity2);
+        UserGroup userGroup = UserCreator.userGroupFactory(entity, "GROUP");
+        User user = UserCreator.userFactory(userGroup, identity);
         assertSame(entity, user.getEntity());
         assertEquals(userGroup, user.getParent());
     }
     
     public void testGeneratePassword() {
-        String password = UserCreatorImpl.generatePassword(8);
+        String password = UserCreator.generatePassword(8);
         assertEquals(8, password.length());
     }
     
     public void testUserLogFactoryError() {
         try {
-            UserCreatorImpl.userLogFactory(null, null); fail();
+            UserCreator.userLogFactory(null, null); fail();
         } catch (IllegalArgumentException e) {}
         try {
-            UserCreatorImpl.userLogFactory(null, new Date()); fail();
+            UserCreator.userLogFactory(null, new Date()); fail();
         } catch (IllegalArgumentException e) {}
     }
 
     public void testUserLogFactory() {
-        Identity identity = UserCreatorImpl.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Identity identity = UserCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
         Entity entity = new Entity();
-        User user = UserCreatorImpl.userFactory(entity, identity);
+        User user = UserCreator.userFactory(entity, identity);
         Date date = new Date();
-        UserLog userLog = UserCreatorImpl.userLogFactory(user, date);
+        UserLog userLog = UserCreator.userLogFactory(user, date);
         assertSame(user, userLog.getUser());
         assertSame(date, userLog.getLastLogin());
     }
 
     public void testUserLogFactoryNullDate() {
-        Identity identity = UserCreatorImpl.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Identity identity = UserCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
         Entity entity = new Entity();
-        User user = UserCreatorImpl.userFactory(entity, identity);
+        User user = UserCreator.userFactory(entity, identity);
         Date date = new Date();
-        UserLog userLog = UserCreatorImpl.userLogFactory(user, null);
+        UserLog userLog = UserCreator.userLogFactory(user, null);
         assertSame(user, userLog.getUser());
         assertTrue(Math.abs(date.getTime() - userLog.getLastLogin().getTime()) < 1000);
     }
-
+    
 }

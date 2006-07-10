@@ -22,16 +22,15 @@ import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.creation.EntityCreator;
-import org.helianto.core.creation.EntityCreatorImpl;
-import org.helianto.core.creation.HomeCreator;
 import org.helianto.core.creation.HomeCreatorImpl;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class EntityDaoImplTests extends AbstractIntegrationTest {
     
     private EntityDao entityDao;
-    private EntityCreatorImpl factory;
+    private EntityCreator factory;
     private Home home;
     
     public void setEntityDao(EntityDao entityDao) {
@@ -40,13 +39,40 @@ public class EntityDaoImplTests extends AbstractIntegrationTest {
 
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
-        factory = new EntityCreatorImpl();
-        home = new HomeCreatorImpl().homeFactory("HOME");
+        factory = new EntityCreator();
+        home = HomeCreatorImpl.homeFactory("HOME");
+    }
+
+    public static Entity createAndPersistEntity(EntityDao entityDao) {
+        Home home = HomeCreatorImpl.homeFactory(generateKey(20));
+        Entity entity = EntityCreator.entityFactory(home, generateKey(20));
+        if (entityDao!=null) {
+            entityDao.persistEntity(entity);
+        }
+        return entity;
+    }
+
+    public static List<Entity> createAndPersistEntityList(HibernateTemplate hibernateTemplate, int i) {
+        List<Entity> entityList = createEntityList(i);
+        hibernateTemplate.saveOrUpdateAll(entityList);
+        hibernateTemplate.flush();
+        hibernateTemplate.clear();
+        return entityList;
+    }
+    
+    public static List<Entity> createEntityList(int size) {
+        Home home = HomeCreatorImpl.homeFactory(generateKey(20));
+        List<Entity> entities = new ArrayList<Entity>();
+        for (int i = 0; i<size; i++) {
+            Entity e = EntityCreator.entityFactory(home, "ENTITY"+i);
+            entities.add(e);
+        }
+        return entities;
     }
 
     public void testEntityLifeCycle() {
         
-        Entity entity = new EntityCreatorImpl().entityFactory(home, "TEST");
+        Entity entity = new EntityCreator().entityFactory(home, "TEST");
         entityDao.persistEntity(entity);
         
         hibernateTemplate.flush();
@@ -110,17 +136,10 @@ public class EntityDaoImplTests extends AbstractIntegrationTest {
     /**
      * Utility method to create entities.
      * @param size
+     * @deprecated
      */
     public static List<Entity> createEntities(int size) {
-        EntityCreator entityCreator = new EntityCreatorImpl();
-        HomeCreator homeCreator = new HomeCreatorImpl();
-        Home home = homeCreator.homeFactory("HOME");
-        List<Entity> entities = new ArrayList<Entity>();
-        for (int i = 0; i<size; i++) {
-            Entity e = entityCreator.entityFactory(home, "ENTITY"+i);
-            entities.add(e);
-        }
-        return entities;
+        return createEntityList(size);
     }
     
 }

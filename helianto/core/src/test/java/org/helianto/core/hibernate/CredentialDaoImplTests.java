@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
-import org.helianto.core.creation.UserCreatorImpl;
+import org.helianto.core.creation.UserCreator;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.junit.AbstractIntegrationTest;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -37,7 +37,7 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
     public static Identity createAndPersistIdentity(CredentialDao credentialDao) {
         String principal = generateKey(20);
         String optionalAlias = generateKey(20);
-        Identity identity = UserCreatorImpl.identityFactory(principal, optionalAlias);
+        Identity identity = UserCreator.identityFactory(principal, optionalAlias);
         if (credentialDao!=null) {
             credentialDao.persistIdentity(identity);
         }
@@ -109,7 +109,7 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
     
     public static Credential createAndPersistCredential(CredentialDao credentialDao) {
         Identity identity = createAndPersistIdentity(credentialDao);
-        Credential credential = UserCreatorImpl.credentialFactory(identity);
+        Credential credential = UserCreator.credentialFactory(identity);
         if (credentialDao!=null) {
             credentialDao.persistCredential(credential);
         }
@@ -117,10 +117,7 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
     }
 
     public static List<Credential> createAndPersistCredentialList(HibernateTemplate hibernateTemplate, int i) {
-        String principal = generateKey(20);
-        String optionalAlias = generateKey(20);
-        Identity identity = UserCreatorImpl.identityFactory(principal, optionalAlias);
-        List<Credential> credentialList = createCredentialList(identity, i);
+        List<Credential> credentialList = createCredentialList(i);
         hibernateTemplate.saveOrUpdateAll(credentialList);
         hibernateTemplate.flush();
         hibernateTemplate.clear();
@@ -147,8 +144,13 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
 
     public void testCredentialErrors() {
         try {
-             credentialDao.persistCredential(null); fail();
-        } catch (IllegalArgumentException e) { }
+            credentialDao.persistCredential(null); fail();
+       } catch (IllegalArgumentException e) { 
+       } catch (Exception e) { fail(); }
+       try {
+           credentialDao.findCredentialByIdentity(null); fail();
+      } catch (IllegalArgumentException e) { 
+      } catch (Exception e) { fail(); }
     }
 
     public void testCredentialDuplicate() {
@@ -188,15 +190,16 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
     public static List<Identity> createIdentities(int size) {
         List<Identity> identities = new ArrayList<Identity>();
         for (int i=0;i<size;i++) {
-            identities.add(UserCreatorImpl.identityFactory("PRINCIPAL"+i, "ALIAS"+i));
+            identities.add(UserCreator.identityFactory("PRINCIPAL"+i, "ALIAS"+i));
         }
         return identities ;
     }
 
-    public static List<Credential> createCredentialList(Identity identity, int size) {
+    public static List<Credential> createCredentialList(int size) {
+        List<Identity> identities = createIdentities(size);
         List<Credential> credentialList = new ArrayList<Credential>();
-        for (int i=0;i<size;i++) {
-            credentialList.add(UserCreatorImpl.credentialFactory(identity));
+        for (Identity i: identities) {
+            credentialList.add(UserCreator.credentialFactory(i));
         }
         return credentialList ;
     }
