@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 03/07/2006 17:04:52 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:50 by Hibernate Tools 3.1.0.beta4
 
 import org.helianto.core.Entity;
 
@@ -10,7 +10,6 @@ import org.helianto.core.Entity;
  * A class to represent resource parameters.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: $
  * 				
  * 		
  */

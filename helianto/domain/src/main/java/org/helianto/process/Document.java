@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 03/07/2006 17:04:37 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:40 by Hibernate Tools 3.1.0.beta4
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ import org.helianto.core.Entity;
  * documents.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: iservport-process1.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
  * 				
  * 		
  */

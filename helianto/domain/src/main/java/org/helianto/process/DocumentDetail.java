@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 03/07/2006 17:04:55 by Hibernate Tools 3.1.0.beta4
+// Generated 10/07/2006 15:12:54 by Hibernate Tools 3.1.0.beta4
 
 
 
@@ -9,7 +9,6 @@ package org.helianto.process;
  * A base class to add details to documents.
  * </p>
  * @author Mauricio Fernandes de Castro
- * @version $Id: iservport-process4.hbm.xml,v 1.2 2006/03/13 15:29:13 iserv Exp $
  * 				
  * 		
  */
