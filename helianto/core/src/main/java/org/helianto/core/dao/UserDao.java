@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 
@@ -72,5 +73,5 @@ public interface UserDao extends CredentialDao {
      * Remove <code>UserLog</code>.
      */
     public void removeUserLog(UserLog userLog);
-    
+
 }

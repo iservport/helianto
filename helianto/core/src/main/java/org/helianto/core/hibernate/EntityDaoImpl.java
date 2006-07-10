@@ -18,8 +18,8 @@ package org.helianto.core.hibernate;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
-import org.helianto.core.creation.NullEntityException;
 import org.helianto.core.dao.EntityDao;
+import org.springframework.util.Assert;
 
 /**
  * Hibernate implementation for <code>EntityDao</code> interface.
@@ -70,11 +70,8 @@ public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
         "from DefaultEntity defaultEntity " +
         "where defaultEntity.priority = ?";
     
-    public InternalEnumerator findInternalEnumerator(Entity entity, String typeName) 
-    	throws NullEntityException {
-    	if (entity==null) { 
-    		throw new NullEntityException("An entity is required.");
-    	}
+    public InternalEnumerator findInternalEnumerator(Entity entity, String typeName)  {
+        Assert.notNull(entity);
     	return (InternalEnumerator) findUnique(ENUM_QRY, entity, typeName);
     }
     

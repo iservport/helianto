@@ -21,7 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.User;
-import org.helianto.core.creation.CredentialState;
+import org.helianto.core.type.CredentialState;
 import org.springframework.util.Assert;
 
 /**
@@ -35,7 +35,7 @@ import org.springframework.util.Assert;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractUserDetails implements UserDetails {
+public abstract class AbstractUserDetails implements UserDetails, PublicUserDetails, SecureUserDetails {
     
     private User user;
     
@@ -45,10 +45,9 @@ public abstract class AbstractUserDetails implements UserDetails {
      * Minimal constructor.
      */
     public AbstractUserDetails(User user, Credential credential) {
-        Assert.notNull(user, "Required to create UserDetails");
-        Assert.notNull(credential, "Required to create UserDetails");
         this.user = user;
         this.credential = credential;
+        validateUserAndCredentialCompatibility();
     }
     
     /**
@@ -83,7 +82,7 @@ public abstract class AbstractUserDetails implements UserDetails {
 
     public boolean isEnabled() {
         char state = credential.getCredentialState();
-        if (state==CredentialState.ACTIVE.getValue() | 
+        if (state==CredentialState.ACTIVE.getValue() || 
                 state==CredentialState.IDLE.getValue()) {
             return true;
         }
@@ -98,17 +97,29 @@ public abstract class AbstractUserDetails implements UserDetails {
         return user.getIdentity().getPrincipal();
     }
     
+    public Credential getCredential() {
+        return credential;
+    }
+
     public User getUser() {
         return user;
     }
     
-    protected void setUser(User user) {
+    protected final void setUser(User user) {
+        validateUserAndCredentialCompatibility();
         this.user = user;
     }
     
+    protected final void validateUserAndCredentialCompatibility() {
+        Assert.notNull(user, "Required to UserDetailsAdapter");
+        Assert.notNull(credential, "Required to UserDetailsAdapter");
+        if(!user.getIdentity().equals(credential.getIdentity())) {
+            throw new IllegalArgumentException("User and Credential must share the same Identity");
+        }
+    }
+    
     private AbstractUserDetails() {
-        throw new IllegalArgumentException("AbstractUserDetails subclasses must take an " +
-                "User instance as constructor parameter");
+        validateUserAndCredentialCompatibility();
     }
 
     static final Log logger = LogFactory.getLog(AbstractUserDetails.class);

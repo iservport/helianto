@@ -9,6 +9,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserDao;
+import org.springframework.util.Assert;
 
 public class SecurityMgrImpl implements SecurityMgr {
 
@@ -19,7 +20,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 	}
 
 	public Credential findCredentialByIdentity(Identity identity) {
-		return findCredentialByIdentity(identity);
+		return userDao.findCredentialByIdentity(identity);
 	}
 
 	public UserLog findLastUserLog(Identity identity) {
@@ -27,8 +28,12 @@ public class SecurityMgrImpl implements SecurityMgr {
 	}
     
     public void persistUserLog(User user, Date date) {
+        Assert.notNull(user.getIdentity());
         UserLog userLog = new UserLog();
         userLog.setUser(user);
+        if (date==null) {
+            date = new Date();
+        }
         userLog.setLastLogin(date);
         user.getIdentity().setLastLogin(date);
         userDao.persistUserLog(userLog);

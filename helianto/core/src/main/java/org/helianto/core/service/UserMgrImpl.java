@@ -8,7 +8,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.creation.UserCreatorImpl;
+import org.helianto.core.creation.UserCreator;
 import org.helianto.core.dao.UserDao;
 
 public class UserMgrImpl implements UserMgr {
@@ -20,7 +20,7 @@ public class UserMgrImpl implements UserMgr {
 	 */
 
 	public Identity createIdentity() {
-		return UserCreatorImpl.identityFactory("", "");
+		return UserCreator.identityFactory("", "");
 	}
 
 	public void persistIdentity(Identity identity) {
@@ -33,7 +33,7 @@ public class UserMgrImpl implements UserMgr {
 	 */
 
 	public Credential createCredential(Identity identity) {
-		return UserCreatorImpl.credentialFactory(identity);
+		return UserCreator.credentialFactory(identity);
 	}
 
 	public void persistCredential(Credential credential) {
@@ -51,7 +51,7 @@ public class UserMgrImpl implements UserMgr {
     }
     
     public User createUser(Identity identity, Entity entity) {
-        return UserCreatorImpl.userFactory(entity, identity);
+        return UserCreator.userFactory(entity, identity);
     }
 
     public void persistUser(User user) {

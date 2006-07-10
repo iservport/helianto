@@ -16,14 +16,13 @@
 package org.helianto.core.security;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
 import org.helianto.core.Credential;
-import org.helianto.core.Role;
 import org.helianto.core.User;
+import org.helianto.core.UserRole;
 import org.springframework.util.Assert;
 
 /**
@@ -60,7 +59,7 @@ import org.springframework.util.Assert;
  * @version $Id$
  * @see org.acegisecurity.providers.dao.User org.acegisecurity.providers.dao.User
  */
-public final class UserDetailsAdapter extends AbstractUserDetails implements Serializable, PublicUserDetailsSwitcher, SecureUserDetails {
+public final class UserDetailsAdapter extends AbstractUserDetails implements Serializable, PublicUserDetailsSwitcher {
     
     private static final long serialVersionUID = 4017521054529203449L;
     
@@ -69,20 +68,31 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     }
 
     public GrantedAuthority[] getAuthorities() {
-        Set roles = getUser().getRoles();
-        if (roles!=null && roles.size()>0) {
-            GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
-            int i = 0;
-            for (Iterator it = roles.iterator(); it.hasNext();) {
-                authorities[i++] =  new GrantedAuthorityImpl(((Role) it.next()).getRoleName());
-            }
-            return authorities;
+        Set<UserRole> roles = getUser().getRoles();
+        Assert.notNull(roles);
+        GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
+        int i = 0;
+        for (UserRole r: roles) {
+            String roleName = convertUserRoleToString(r);
+            authorities[i++] =  new GrantedAuthorityImpl(roleName);
         }
-        return new GrantedAuthority[] {new GrantedAuthorityImpl("ROLE_USER")};
+        return authorities;
+    }
+    
+    public String convertUserRoleToString(UserRole userRole) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ROLE_")
+            .append(userRole.getService().getServiceName())
+            .append("_").append(userRole.getServiceExtension());
+        return sb.toString();
+    }
+
+    public Set<User> getUsers() {
+        return getUser().getIdentity().getUsers();
     }
 
     public void setCurrentUser(User user) {
-        Set<User> userSet = getUser().getIdentity().getUsers();
+        Set<User> userSet = getUsers();
         User newUser = null;
         for (User u: userSet) {
              if (u.equals(user)) {
@@ -91,14 +101,6 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
              }
         }
         Assert.notNull(newUser, "Unable to change to user "+user);
-    }
-
-    public Credential getCredential() {
-        return getCredential();
-    }
-
-    public Set<User> getUsers() {
-        return getUser().getIdentity().getUsers();
     }
 
 }
