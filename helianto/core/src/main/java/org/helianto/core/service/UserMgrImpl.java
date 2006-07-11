@@ -16,7 +16,7 @@ public class UserMgrImpl implements UserMgr {
 	private UserDao userDao;
 	
 	/* 
-	 * Criar e persistir identidade
+	 * Create and persist Identity
 	 */
 
 	public Identity createIdentity() {
@@ -29,7 +29,7 @@ public class UserMgrImpl implements UserMgr {
 	}
 
 	/* 
-	 * Criar e persistir credencial
+	 * Create and persist Credential
 	 */
 
 	public Credential createCredential(Identity identity) {
@@ -42,7 +42,7 @@ public class UserMgrImpl implements UserMgr {
 	}
 
 	/* 
-	 * Criar e persistir usuário
+	 * Create and persist User
 	 */
 
 	public User createUser(Entity entity) {

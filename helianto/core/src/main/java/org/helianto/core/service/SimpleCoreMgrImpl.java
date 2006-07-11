@@ -44,9 +44,9 @@ public class SimpleCoreMgrImpl extends UserMgrImpl implements SimpleCoreMgr {
     private final static String CREDENTIAL = "CREDENTIAL";
 
     public DefaultEntity createDefaultEntity(String alias) {
-        Home home = partnerCreator.homeFactory(alias);
-        Entity entity = partnerCreator.entityFactory(home, alias);
-        DefaultEntity defaultEntity = partnerCreator.defaultEntityFactory(entity);
+        Home home = PartnerCreator.homeFactory(alias);
+        Entity entity = PartnerCreator.entityFactory(home, alias);
+        DefaultEntity defaultEntity = PartnerCreator.defaultEntityFactory(entity);
         return defaultEntity;
     }
     
@@ -57,7 +57,7 @@ public class SimpleCoreMgrImpl extends UserMgrImpl implements SimpleCoreMgr {
     }
 
     public Division createDivision(Entity entity, String alias) {
-        return  partnerCreator.divisionFactory(entity, alias);
+        return  PartnerCreator.divisionFactory(entity, alias);
     }
     
     public Division installWithDefaults(String alias) {
@@ -188,17 +188,12 @@ public class SimpleCoreMgrImpl extends UserMgrImpl implements SimpleCoreMgr {
     
     // collaborators
     
-    private PartnerCreator partnerCreator;
     private EntityDao entityDao;
     private PartnerDao partnerDao;
     private UserDao userDao;
 
     // collaborator accessors
     
-	public void setPartnerCreator(PartnerCreator partnerCreator) {
-		this.partnerCreator = partnerCreator;
-	}
-
     public void setEntityDao(EntityDao entityDao) {
         this.entityDao = entityDao;
     }
