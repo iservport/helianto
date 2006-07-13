@@ -29,7 +29,6 @@ import org.helianto.core.UserLog;
 import org.helianto.core.service.SecurityMgr;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.util.Assert;
 
 /**
  * Custom implementation for the {@link org.acegisecurity.userdetails.UserDetailsService}
@@ -48,6 +47,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     
     private SecurityMgr securityMgr;
     
+    private IdentityResolutionStrategy identityResolutionStrategy;
+    
     /**
      * Implements {@link org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)}
      * to provide {@link org.acegisecurity.userdetails.UserDetails} as an adapter.
@@ -60,27 +61,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (logger.isDebugEnabled()) {
             logger.debug("Attempt login with username "+username);
         }
-        Identity identity = loadAndValidateIdentity(username);
+        Identity identity = identityResolutionStrategy.loadAndValidateIdentity(username);
         Credential credential = loadAndValidateCredential(identity);
         User user = loadOrCreateUser(identity);
         return new UserDetailsAdapter(user, credential);
-    }
-    
-    /**
-     * Load and validate an <code>Identity</code>
-     * 
-     * @param principal
-     * @return
-     */
-    public Identity loadAndValidateIdentity(String principal) {
-        Identity identity = null;
-        try {
-            identity = securityMgr.findIdentityByPrincipal(principal);
-            Assert.notNull(identity, "Null Identity");
-        } catch (Exception e) {
-            throw new UsernameNotFoundException("Username "+principal, e);
-        }
-        return identity;
     }
     
     /**
@@ -152,6 +136,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public void setSecurityMgr(SecurityMgr securityMgr) {
 		this.securityMgr = securityMgr;
 	}
+
+    public void setIdentityResolutionStrategy(
+            IdentityResolutionStrategy identityResolutionStrategy) {
+        this.identityResolutionStrategy = identityResolutionStrategy;
+    }
     
 }
 

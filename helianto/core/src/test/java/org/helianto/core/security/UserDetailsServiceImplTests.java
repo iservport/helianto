@@ -17,9 +17,9 @@ package org.helianto.core.security;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.verify;
 
 import java.util.ArrayList;
@@ -28,7 +28,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.acegisecurity.userdetails.UserDetails;
 import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,10 +39,8 @@ import org.helianto.core.UserLog;
 import org.helianto.core.creation.UserCreator;
 import org.helianto.core.hibernate.CredentialDaoImplTests;
 import org.helianto.core.hibernate.EntityDaoImplTests;
-import org.helianto.core.hibernate.ServiceDaoImplTests;
 import org.helianto.core.hibernate.UserDaoImplTests;
 import org.helianto.core.service.SecurityMgr;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 
 
@@ -53,6 +50,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     private UserDetailsServiceImpl userDetailsService;
     // collaborators
     private SecurityMgr securityMgr;
+    private IdentityResolutionStrategy identityResolutionStrategy;
     
     private Identity prepapreSuccessfullLoadAndValidate(String principal) {
         Identity identity = CredentialDaoImplTests.createAndPersistIdentity(null);
@@ -61,37 +59,6 @@ public class UserDetailsServiceImplTests extends TestCase {
             .andReturn(identity);
         replay(securityMgr);
         return identity;
-    }
-    
-    public void testLoadAndValidateIdentity() {
-        Identity identity = prepapreSuccessfullLoadAndValidate("PRINCIPAL");
-
-        assertSame(identity, userDetailsService.loadAndValidateIdentity("PRINCIPAL"));
-        verify(securityMgr);
-    }
-    
-    public void testLoadAndValidateIdentityNull() {
-        expect(securityMgr.findIdentityByPrincipal("PRINCIPAL"))
-            .andReturn(null);
-        replay(securityMgr);
-        
-        try {
-            userDetailsService.loadAndValidateIdentity("PRINCIPAL"); fail();
-        } catch (UsernameNotFoundException e) {
-        } catch (Exception e) { fail(); }
-        verify(securityMgr);
-    }
-
-    public void testLoadAndValidateIdentityError() {
-        expect(securityMgr.findIdentityByPrincipal("PRINCIPAL"))
-            .andThrow(new UsernameNotFoundException("Error"));
-        replay(securityMgr);
-        
-        try {
-            userDetailsService.loadAndValidateIdentity("PRINCIPAL"); fail();
-        } catch (UsernameNotFoundException e) {
-        } catch (Exception e) { fail(); }
-        verify(securityMgr);
     }
     
     private Credential prepareSuccessfullLoadAndValidateCredential(Identity identity) {
@@ -214,13 +181,16 @@ public class UserDetailsServiceImplTests extends TestCase {
     @Override
     public void setUp() {
         securityMgr = createMock(SecurityMgr.class);
+        identityResolutionStrategy = createMock(IdentityResolutionStrategy.class);
         userDetailsService = new UserDetailsServiceImpl();
         userDetailsService.setSecurityMgr(securityMgr);
+        userDetailsService.setIdentityResolutionStrategy(identityResolutionStrategy);
     }
     
     @Override
     public void tearDown() {
         reset(securityMgr);
+        reset(identityResolutionStrategy);
     }
     
     // private members
