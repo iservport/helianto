@@ -17,8 +17,6 @@ package org.helianto.core.security;
 
 import java.util.Date;
 
-import org.acegisecurity.userdetails.UserDetails;
-import org.acegisecurity.userdetails.UserDetailsService;
 import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,53 +24,25 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
-import org.helianto.core.service.SecurityMgr;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 
 /**
  * Custom implementation for the {@link org.acegisecurity.userdetails.UserDetailsService}
  * interface.
  * 
- * <p>
- * The method {@link #loadUserByUsername(String)} returns a 
- * <code>UserLog</code> wrapped in an <code>UserAdpater</code>
- * instance.
- * </p>
- * 
  * @author Mauricio Fernandes de Castro
  * @version $Id: $
  */
-public class UserDetailsServiceImpl implements UserDetailsService {
-    
-    private SecurityMgr securityMgr;
+public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     
     private IdentityResolutionStrategy identityResolutionStrategy;
     
-    /**
-     * Implements {@link org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)}
-     * to provide {@link org.acegisecurity.userdetails.UserDetails} as an adapter.
-     * 
-     * <p>It is a four step process: (1) load an <code>Identity<code>, (2) load a <code>Credential<code>,
-     * (3) find a compatible <code>User</code> and (4) create an adapter instance which both takes the 
-     * <code>User</code> and satisfies <code>UserDetails</code>.</p>
-     */
-    public final UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Attempt login with username "+username);
-        }
-        Identity identity = identityResolutionStrategy.loadAndValidateIdentity(username);
-        Credential credential = loadAndValidateCredential(identity);
-        User user = loadOrCreateUser(identity);
-        return new UserDetailsAdapter(user, credential);
+    @Override
+    public Identity loadAndValidateIdentity(String principal) {
+        return identityResolutionStrategy.loadAndValidateIdentity(principal);
     }
     
-    /**
-     * Load and validate a <code>Credential</code>
-     * 
-     * @param identity
-     * @return
-     */
+    @Override
     public Credential loadAndValidateCredential(Identity identity) {
         try {
             //TODO find only active credential
@@ -90,12 +60,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
     }
     
-    /**
-     * Load or create an <code>User</code>
-     * 
-     * @param identity
-     * @return
-     */
+    @Override
     public User loadOrCreateUser(Identity identity) {
         User user = null;
         UserLog userLog = securityMgr.findLastUserLog(identity);
@@ -133,14 +98,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     
     private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
 
-	public void setSecurityMgr(SecurityMgr securityMgr) {
-		this.securityMgr = securityMgr;
-	}
-
     public void setIdentityResolutionStrategy(
             IdentityResolutionStrategy identityResolutionStrategy) {
         this.identityResolutionStrategy = identityResolutionStrategy;
     }
-    
+
 }
 

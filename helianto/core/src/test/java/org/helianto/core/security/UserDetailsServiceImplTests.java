@@ -52,27 +52,13 @@ public class UserDetailsServiceImplTests extends TestCase {
     private SecurityMgr securityMgr;
     private IdentityResolutionStrategy identityResolutionStrategy;
     
-    private Identity prepapreSuccessfullLoadAndValidate(String principal) {
-        Identity identity = CredentialDaoImplTests.createAndPersistIdentity(null);
-
-        expect(securityMgr.findIdentityByPrincipal(principal))
-            .andReturn(identity);
-        replay(securityMgr);
-        return identity;
-    }
-    
-    private Credential prepareSuccessfullLoadAndValidateCredential(Identity identity) {
+    public void testLoadAndValidateCredential() {
         Credential credential = CredentialDaoImplTests.createAndPersistCredential(null);
-        credential.setIdentity(identity);
+        credential.setIdentity(new Identity());
         
         expect(securityMgr.findCredentialByIdentity(credential.getIdentity()))
             .andReturn(credential);
         replay(securityMgr);
-        return credential;
-    }
-
-    public void testLoadAndValidateCredential() {
-        Credential credential = prepareSuccessfullLoadAndValidateCredential(new Identity());
         
         assertSame(credential,userDetailsService.loadAndValidateCredential(credential.getIdentity()));
         verify(securityMgr);
@@ -164,18 +150,6 @@ public class UserDetailsServiceImplTests extends TestCase {
         verify(securityMgr);
     }
 
-    public void testLoadUserByUsername() {
-        //FIXME
-//        Identity identity = CredentialDaoImplTests.createAndPersistIdentity(null);
-//        Credential credential = prepareSuccessfullLoadAndValidateCredential(identity);
-//        User user = prepareSuccessfullLoadOrCreateUserFirstLogin(identity, 1);
-//        
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(identity.getPrincipal());
-//        verify(securityMgr);
-//        assertSame(user, ((PublicUserDetails) userDetails).getUser());
-//        assertSame(credential, ((SecureUserDetails) userDetails).getCredential());
-    }
-    
     // setup
     
     @Override
