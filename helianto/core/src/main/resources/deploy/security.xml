@@ -35,6 +35,12 @@
 	<bean id="userDetailsService"
 		class="org.helianto.core.security.UserDetailsServiceImpl">
 		<property name="securityMgr" ref="securityMgr"/>
+		<property name="identityResolutionStrategy">
+			<bean id="identityResolutionStrategy"
+				class="org.helianto.core.security.SimpleIdentityResolver">
+				<property name="securityMgr" ref="securityMgr"/>
+			</bean>
+		</property>
 	</bean>
 	<!--
 			Security test dao
