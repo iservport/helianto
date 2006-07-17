@@ -20,18 +20,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Home;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
-import org.helianto.core.creation.EntityCreator;
 import org.helianto.core.creation.UserCreator;
 import org.helianto.core.dao.UserDao;
-import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.core.junit.AbstractUserTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class UserDaoImplTests extends AbstractIntegrationTest {
+public class UserDaoImplTests extends AbstractUserTest {
     
     private UserDao userDao;
 
@@ -39,25 +36,6 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
      * User tests
      */
 
-    public static User createAndPersistUser(UserDao userDao) {
-        Home home = EntityCreator.homeFactory("HOME");
-        Entity entity = EntityCreator.entityFactory(home, "ENTITY");
-        Identity identity = UserCreator.identityFactory("IDENTITY", "ALIAS");
-        User user = UserCreator.userFactory(entity, identity);
-        if (userDao!=null) {
-            userDao.persistUser(user);
-        }
-        return user;
-    }
-    
-    public static List<User> createAndPersistUserList(HibernateTemplate hibernateTemplate, int e, int i) {
-        List<User> userList = createUsers(e, i);
-        hibernateTemplate.saveOrUpdateAll(userList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return userList;
-    }
-    
     public void testPersistUser() {
         // write
         User user = createAndPersistUser(userDao);
@@ -269,37 +247,6 @@ public class UserDaoImplTests extends AbstractIntegrationTest {
     }
     
     //~ utility methods
-    
-    /**
-     * Utility method to create users.
-     * 
-     * @param identities
-     * @param entities
-     * @return
-     */
-    public static List<User> createUsers(List<Entity> entities, List<Identity> identities) {
-        List<User> users = new ArrayList<User>();
-        for (Identity i: identities) {
-            for (Entity e: entities) {
-                User u = UserCreator.userFactory(e, i);
-                users.add(u);
-            }
-        }
-        return users;
-    }
-    
-    /**
-     * Utility method to create users.
-     * 
-     * @param identityListSize
-     * @param entityListSize
-     * @return
-     */
-    public static List<User> createUsers(int entityListSize, int identityListSize) {
-        List<Entity> entities = EntityDaoImplTests.createEntityList(entityListSize);
-        List<Identity> identities = CredentialDaoImplTests.createIdentities(identityListSize);
-        return createUsers(entities, identities);
-    }
     
     /**
      * Utility method to create user logs.

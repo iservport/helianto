@@ -23,20 +23,14 @@ import org.helianto.core.junit.AbstractIntegrationTest;
 public class HomeDaoImplTests extends AbstractIntegrationTest {
     
     private HomeDao homeDao;
-    private HomeCreatorImpl factory;
     
     public void setHomeDao(HomeDao homeDao) {
         this.homeDao = homeDao;
     }
     
-    @Override
-    protected void onSetUpBeforeTransaction() throws Exception {
-        factory = new HomeCreatorImpl();
-    }
-
     public void testHomeLifeCycle() {
         
-        Home home = factory.homeFactory("TEST");
+        Home home = HomeCreatorImpl.homeFactory("TEST");
         homeDao.persistHome(home);
         
         hibernateTemplate.flush();
@@ -44,7 +38,7 @@ public class HomeDaoImplTests extends AbstractIntegrationTest {
         Home h = homeDao.findHomeByHomeName("TEST");
         assertEquals(home, h);
         
-        Home duplicatedHome = factory.homeFactory("TEST");
+        Home duplicatedHome = HomeCreatorImpl.homeFactory("TEST");
         try {
             homeDao.persistHome(duplicatedHome);
             fail();
