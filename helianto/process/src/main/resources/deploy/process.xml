@@ -42,7 +42,13 @@
 			</bean>
 		</property>
 	</bean>
-	
+	<!--
+		Resource property editor registrar
+	-->
+	<bean id="resourcePropertyEditorRegistrar" 
+	    class="org.helianto.process.validation.ResourcePropertyEditorRegistrar">
+	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 	<!--
 			Process creator implementation	
 	-->
