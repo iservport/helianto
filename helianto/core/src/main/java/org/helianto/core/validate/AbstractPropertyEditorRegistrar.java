@@ -17,7 +17,8 @@ package org.helianto.core.validate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.beans.PropertyEditorRegistrar;
+import org.springframework.orm.hibernate3.HibernateOperations;
 
 /**
  * A base class to <code>PropertyEditorRegistrar</code> that
@@ -26,16 +27,15 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractPropertyEditorRegistrar implements
-    org.springframework.beans.PropertyEditorRegistrar {
+public abstract class AbstractPropertyEditorRegistrar implements PropertyEditorRegistrar {
 
-    private HibernateTemplate hibernateTemplate;
+    private HibernateOperations hibernateTemplate;
     
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+    public void setHibernateTemplate(HibernateOperations hibernateTemplate) {
         this.hibernateTemplate = hibernateTemplate;
     }
 
-    public HibernateTemplate getHibernateTemplate() {
+    public HibernateOperations getHibernateTemplate() {
         return hibernateTemplate;
     }
 
