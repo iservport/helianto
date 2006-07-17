@@ -68,4 +68,9 @@ public abstract class AbstractIntegrationTest extends
         return localKey;
     }
 
+    @Override
+    public int getAutowireMode() {
+        return AUTOWIRE_BY_NAME;
+    }
+    
 }
