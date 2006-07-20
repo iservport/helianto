@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
+import org.helianto.core.Self;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
@@ -88,7 +89,7 @@ public interface ResourceMgr {
      * a given owner.
      * </p> 
      */
-    public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner);
+    public Resource createResource(ResourceGroup parentGroup, String resourceCode, Self self);
     
     /**
      * <p>

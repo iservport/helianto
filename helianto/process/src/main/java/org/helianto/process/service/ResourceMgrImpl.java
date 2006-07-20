@@ -22,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
+import org.helianto.core.Self;
 import org.helianto.core.dao.PartnerDao;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
@@ -71,15 +72,15 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
 
     public Resource prepareResource(ResourceGroup parentGroup, String resourceCode) {
-        Partner owner = partnerDao.findCurrentDivision(parentGroup.getEntity());
-        return createResource(parentGroup, resourceCode, owner);
+        Self self = partnerDao.whoAmI(parentGroup.getEntity());
+        return createResource(parentGroup, resourceCode, self);
     }
 
-	public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner) {
-		if (owner==null) {
-			throw new NullPointerException("Resource owner must be a non-null Partner");
+	public Resource createResource(ResourceGroup parentGroup, String resourceCode, Self self) {
+		if (self==null) {
+			throw new NullPointerException("Resource owner must be a non-null Partner (or Self)");
 		}
-		return resourceCreator.resourceFactory(parentGroup, resourceCode, owner);
+		return resourceCreator.resourceFactory(parentGroup, resourceCode, self);
 	}
 	
     public void persistResource(Resource resource) {
