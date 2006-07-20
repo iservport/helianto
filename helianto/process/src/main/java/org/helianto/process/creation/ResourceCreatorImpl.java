@@ -17,6 +17,7 @@ package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
+import org.helianto.core.Self;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
@@ -64,10 +65,10 @@ public class ResourceCreatorImpl implements ResourceCreator {
         return resource;
 	}
 
-    public Resource resourceFactory(ResourceGroup parent, String resourceCode, Partner owner) {
+    public Resource resourceFactory(ResourceGroup parent, String resourceCode, Self self) {
         Resource resource = (Resource) resourceGroupFactory(Resource.class, parent.getEntity(), resourceCode, parent.getResourceType());
         resource.setParent(parent);
-        resource.setOwner(owner);
+        resource.setOwner(self);
         return resource;
     }
     
