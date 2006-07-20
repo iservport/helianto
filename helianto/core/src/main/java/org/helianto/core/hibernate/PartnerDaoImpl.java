@@ -26,6 +26,8 @@ import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
+import org.helianto.core.PartnerRole;
+import org.helianto.core.Self;
 import org.helianto.core.Supplier;
 import org.helianto.core.dao.PartnerDao;
 
@@ -36,28 +38,8 @@ import org.helianto.core.dao.PartnerDao;
  */
 public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
 
-    public void persistCustomer(Customer customer) {
-        merge(customer);
-    }
-
-    public void persistSupplier(Supplier supplier) {
-        merge(supplier);
-    }
-
-    public void persistDivision(Division division) {
-        merge(division);
-    }
-
-    public void persistAgent(Agent agent) {
-        merge(agent);
-    }
-
-    public void persistBank(Bank bank) {
-        merge(bank);
-    }
-
-    public void persistManufacturer(Manufacturer manufacturer) {
-        merge(manufacturer);
+    public void persistPartnerRole(PartnerRole partnerRole) {
+        merge(partnerRole);
     }
 
     public void persistContact(Contact contact) {
@@ -76,17 +58,16 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
         return (ArrayList<Division>) find(DIVISION_QRY, entity);
     }
 
+	public Self whoAmI(Entity entity) {
+        return (Self) findUnique(WHOAMI_QRY, entity);
+	}
+
 	public Division findCurrentDivision(Entity entity) {
-		// TODO see CURRENTDIVISION_QRY
-		List<Division> divisionList = findDivisionByEntity(entity);
-		for (Division d: divisionList) {
-			if (d.getRelated()!=null && d.getRelated().equals(entity)) {
-				return d;
-			}
-		}
+		// TODO TO BE REMOVED
 		return null;
 	}
-    public List<Agent> findAgentByEntity(Entity entity) {
+    
+	public List<Agent> findAgentByEntity(Entity entity) {
         return (ArrayList<Agent>) find(AGENT_QRY, entity);
     }
 
@@ -111,26 +92,30 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
     public List<Contact> findContactByPartner(Partner partner) {
         return (ArrayList<Contact>) find(CONTACT_QRY_BY_PARTNER, partner.getId());
     }
+
+    static String WHOAMI_QRY = "from Self myself " +
+    	"where myself.entity = ?";
+
     static String CUSTOMER_QRY = "from Customer customer " +
-        "where customer.entity = ?";
+    	"where customer.partner.entity = ?";
 
     static String SUPPLIER_QRY = "from Supplier supplier " +
-        "where supplier.entity = ?";
+        "where supplier.partner.entity = ?";
 
     static String DIVISION_QRY = "from Division division " +
-        "where division.entity = ?";
+        "where division.partner.entity = ?";
 
     static String CURRENTDIVISION_QRY = "from Division division " +
-    	"where division.entity = ? and division.related = division.entity";
+    	"where division.partner.entity = ? and division.related = division.entity";
 
     static String AGENT_QRY = "from Agent agent " +
-        "where agent.entity = ?";
+        "where agent.partner.entity = ?";
 
     static String BANK_QRY = "from Bank bank " +
-        "where bank.entity = ?";
+        "where bank.partner.entity = ?";
 
     static String MANUFATURER_QRY = "from Manufacturer manufaturer " +
-        "where manufaturer.entity = ?";
+        "where manufaturer.partner.entity = ?";
 
     static final String CONTACT_QRY_BY_PARTNER = 
         "from Contact contact " +

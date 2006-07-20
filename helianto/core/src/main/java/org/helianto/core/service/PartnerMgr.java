@@ -48,21 +48,6 @@ public interface PartnerMgr {
     public void persistContact(Contact contact);
     
     /**
-     * Load a <code>Customer</code>
-     */
-    public Customer loadCustomer(Long key);
-    
-    /**
-     * Load a <code>Supplier</code>
-     */
-    public Supplier loadSupplier(Long key);
-    
-    /**
-     * Load a <code>Contact</code>
-     */
-    public Contact loadContact(String key);
-    
-    /**
      * Find a <code>Customer</code> list by <code>Entity</code>.
      */
     public List<Customer> findCustomerByEntity(Entity entity);
@@ -83,16 +68,4 @@ public interface PartnerMgr {
      */
     public List findContactByPartner(Partner partner);
     
-    /**
-     * Bind a <code>Customer</code> to an <code>Entity</code>
-     * and assure the relationship is assigned as strong.
-     */
-    public void bindCustomerToEntity(Customer customer, Entity entity);
-
-    /**
-     * Bind a <code>Supplier</code> to an <code>Entity</code>
-     * and assure the relationship is assigned as strong.
-     */
-    public void bindSupplierToEntity(Supplier supplier, Entity entity);
-
 }

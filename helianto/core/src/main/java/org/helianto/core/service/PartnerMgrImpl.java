@@ -35,48 +35,15 @@ import org.helianto.core.dao.PartnerDao;
 public class PartnerMgrImpl implements PartnerMgr {
 
     public void persistCustomer(Customer customer) {
-        partnerDao.persistCustomer(customer);
+        partnerDao.persistPartnerRole(customer);
     }
     
     public void persistSupplier(Supplier supplier) {
-        partnerDao.persistSupplier(supplier);
+        partnerDao.persistPartnerRole(supplier);
     }
     
     public void persistContact(Contact contact) {
         partnerDao.persistContact(contact);
-    }
-    
-    public Customer loadCustomer(Long key) {
-//        try {
-//            return (Customer) partnerDao.load(Customer.class, key);
-//        } catch (Exception e) {
-//            if (logger.isDebugEnabled()) {
-//                logger.debug("\n         Unable to load customer with id "+key+", raised the exception:"+e.toString());
-//            }
-//        }
-        return null;
-    }
-    
-    public Supplier loadSupplier(Long key) {
-//        try {
-//            return (Supplier) partnerDao.load(Supplier.class, key);
-//        } catch (Exception e) {
-//            if (logger.isDebugEnabled()) {
-//                logger.debug("\n         Unable to load supplier with id "+key+", raised the exception:"+e.toString());
-//            }
-//        }
-        return null;
-    }
-    
-    public Contact loadContact(String key) {
-//        try {
-//            return (Contact) partnerDao.load(Contact.class, key);
-//        } catch (Exception e) {
-//            if (logger.isDebugEnabled()) {
-//                logger.debug("\n         Unable to load contact with id "+key+", raised the exception:"+e.toString());
-//            }
-//        }
-        return null;
     }
     
     public List<Customer> findCustomerByEntity(Entity entity) {
@@ -95,16 +62,6 @@ public class PartnerMgrImpl implements PartnerMgr {
         return partnerDao.findContactByPartner(partner);
     }
     
-    public void bindCustomerToEntity(Customer customer, Entity entity) {
-        customer.setRelated(entity);
-        customer.setStrong(true);
-    }
-
-    public void bindSupplierToEntity(Supplier supplier, Entity entity) {
-        supplier.setRelated(entity);
-        supplier.setStrong(true);
-    }
-
     private PartnerDao partnerDao;
 
     public void setPartnerDao(PartnerDao partnerDao) {

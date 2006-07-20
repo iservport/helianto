@@ -24,6 +24,7 @@ import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.Identity;
+import org.helianto.core.Partner;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
@@ -59,7 +60,7 @@ public interface SimpleCoreMgr extends UserMgr {
 	 * @param alias
 	 * @return
 	 */
-	public Division installWithDefaults(String alias);
+//	public Division installWithDefaults(String alias);
     
     /**
      * <p>A default entity will be required to create a simple user.</p>
@@ -75,12 +76,12 @@ public interface SimpleCoreMgr extends UserMgr {
      * <p>A cooresponding default <code>Division</code> will be required 
      * to work with the <code>DefaultEntity</code>.</p>
      */
-    public Division createDefaultDivision(DefaultEntity defaultEntity);
+//    public Division createDefaultDivision(DefaultEntity defaultEntity);
 
     /**
      * <p>Create a <code>Division</code>.</p>
      */
-    public Division createDivision(Entity entity, String alias);
+    public Division createDivision(Partner partner);
     
     /**
      * <p>Persist a <code>Division</code>.</p>
@@ -96,7 +97,7 @@ public interface SimpleCoreMgr extends UserMgr {
      * alias will be automatically created and persisted.
      * </p>
      */
-    public DefaultEntity installDefaultEntity(String alias);
+//    public DefaultEntity installDefaultEntity(String alias);
     
     /**
      * <p>Change an entity to default.</p>

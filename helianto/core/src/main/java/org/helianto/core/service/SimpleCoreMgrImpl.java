@@ -23,8 +23,10 @@ import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
+import org.helianto.core.Partner;
 import org.helianto.core.User;
 import org.helianto.core.creation.PartnerCreator;
+import org.helianto.core.creation.PartnerRoleCreator;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.PartnerDao;
 import org.helianto.core.dao.UserDao;
@@ -50,66 +52,47 @@ public class SimpleCoreMgrImpl extends UserMgrImpl implements SimpleCoreMgr {
         return defaultEntity;
     }
     
-    public Division createDefaultDivision(DefaultEntity defaultEntity) {
-        Division defaultDivision =  createDivision(defaultEntity.getEntity(), defaultEntity.getEntity().getAlias());
-        defaultDivision.setRelated(defaultEntity.getEntity());
-        return defaultDivision;
-    }
-
-    public Division createDivision(Entity entity, String alias) {
-        return  PartnerCreator.divisionFactory(entity, alias);
+//    public Division createDefaultDivision(DefaultEntity defaultEntity) {
+//        Division defaultDivision =  createDivision(defaultEntity.getEntity(), defaultEntity.getEntity().getAlias());
+//        defaultDivision.setRelated(defaultEntity.getEntity());
+//        return defaultDivision;
+//    }
+//
+    public Division createDivision(Partner partner) {
+        return  PartnerRoleCreator.divisionFactory(partner);
     }
     
-    public Division installWithDefaults(String alias) {
-        try {
-            Entity entity = 
-                findDefaultEntity();
-            if (entity==null) {
-                DefaultEntity defaultEntity = createDefaultEntity(alias);
-                persistDefaultEntity(defaultEntity);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Persisted "+defaultEntity);
-                }
-                Division defaultDivision = createDefaultDivision(defaultEntity);
-                persistDivision(defaultDivision);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Persisted "+defaultDivision);
-                }
-                return defaultDivision;
-            } else {
-                return partnerDao.findCurrentDivision(entity);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Installation with defaults failed ", e);
-        }
-    }
-
+//    public Division installWithDefaults(String alias) {
+//        try {
+//            Entity entity = 
+//                findDefaultEntity();
+//            if (entity==null) {
+//                DefaultEntity defaultEntity = createDefaultEntity(alias);
+//                persistDefaultEntity(defaultEntity);
+//                if (logger.isDebugEnabled()) {
+//                    logger.debug("Persisted "+defaultEntity);
+//                }
+//                Division defaultDivision = createDefaultDivision(defaultEntity);
+//                persistDivision(defaultDivision);
+//                if (logger.isDebugEnabled()) {
+//                    logger.debug("Persisted "+defaultDivision);
+//                }
+//                return defaultDivision;
+//            } else {
+//                return partnerDao.findCurrentDivision(entity);
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException("Installation with defaults failed ", e);
+//        }
+//    }
+//
     
-    @Deprecated
-    public DefaultEntity installDefaultEntity(String alias) {
-        try {
-            DefaultEntity defaultEntity = createDefaultEntity(alias);
-            persistDefaultEntity(defaultEntity);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+defaultEntity);
-            }
-            Division defaultDivision = createDefaultDivision(defaultEntity);
-            persistDivision(defaultDivision);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+defaultDivision);
-            }
-            return defaultEntity;
-        } catch (Exception e) {
-            throw new RuntimeException("DefaultEntity installation failed ", e);
-        }
-    }
-
     public void persistDefaultEntity(DefaultEntity defaultEntity) {
         entityDao.persistDefaultEntity(defaultEntity);
     }
     
     public void persistDivision(Division division) {
-        partnerDao.persistDivision(division);
+        partnerDao.persistPartnerRole(division);
     }
 
     public void changeEntityToDefault(Entity entity) {
