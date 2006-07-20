@@ -25,6 +25,8 @@ import org.helianto.core.Division;
 import org.helianto.core.Entity;
 import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
+import org.helianto.core.PartnerRole;
+import org.helianto.core.Self;
 import org.helianto.core.Supplier;
 
 /**
@@ -37,35 +39,12 @@ import org.helianto.core.Supplier;
 public interface PartnerDao {
     
     /**
-     * Persist <code>Customer</code>.
+     * Persist <code>PartnerRole</code> or its descendants: 
+     * <code>Customer</code>, <code>Supplier</code>, <code>Division</code>, 
+     * <code>Agent</code>, <code>Bank</code>, <code>Manufacturer</code>.
      */
-    public void persistCustomer(Customer customer);
+	public void persistPartnerRole(PartnerRole partnerRole);
     
-    /**
-     * Persist <code>Supplier</code>.
-     */
-    public void persistSupplier(Supplier supplier);
-    
-    /**
-     * Persist <code>Division</code>.
-     */
-    public void persistDivision(Division division);
-    
-    /**
-     * Persist <code>Agent</code>.
-     */
-    public void persistAgent(Agent agent);
-    
-    /**
-     * Persist <code>Bank</code>.
-     */
-    public void persistBank(Bank bank);
-    
-    /**
-     * Persist <code>Manufacturer</code>.
-     */
-    public void persistManufacturer(Manufacturer manufacturer);
-
     /**
      * Persist <code>Contact</code>.
      */
@@ -87,10 +66,9 @@ public interface PartnerDao {
     public List<Division> findDivisionByEntity(Entity entity);
     
     /**
-     * Find <code>Division</code> by <code>Entity</code>, where the
-     * related entity and entity are the same.
+     * Find a <code>PartnerRole</code> representing the organization itself.
      */
-    public Division findCurrentDivision(Entity entity);
+    public Self whoAmI(Entity entity);
     
     /**
      * Find <code>Agent</code> by <code>Entity</code>.
