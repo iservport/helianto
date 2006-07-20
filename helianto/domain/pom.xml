@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-domain</artifactId>
-	<version>0.0.1-m1</version>
+	<version>0.0.1-m2</version>
 	<name>The Helianto Project Domain Module</name>
 
 	<description>Helianto project domain module.</description>

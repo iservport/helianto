@@ -22,63 +22,185 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_contact" 
-		name="org.helianto.core.Contact" 
-		discriminator-value="C">
+	<class table="core_partnerrole" 
+		name="org.helianto.core.PartnerRole" 
+		discriminator-value="N">
 		<!-- 
-				CONTACT
+				PARTNER ROLE
 				============================================= 
 		-->
-		<meta attribute="class-description" inherit="false">
+		<meta attribute="class-description">
 				<![CDATA[
 <p>
-The contact domain class.
+Describe the different <code>Partner</code> roles,
+like customers, suppliers, banks, etc. 
 </p>
 
 @author Mauricio Fernandes de Castro
 				]]>
         </meta>
-		<id name="id" type="long">
+		<!-- 
+  				id
+		-->
+		<id name="id" type="long" unsaved-value="null">
 			<generator class="native"/>
 		</id>
-		<discriminator column="type" type="char"/>
-		<many-to-one name="partner" 
-			class="org.helianto.core.Partner">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="partnerId" unique-key="unNumber" 
-				not-null="true"/>
-		</many-to-one>
-		<many-to-one name="identity" cascade="save-update"
-			class="org.helianto.core.Identity">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="idntId" unique-key="unNumber" 
-				not-null="true"/>
-		</many-to-one>
-		<property name="internalNumber" type="int">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="internalNumber" unique-key="unNumber"
-				not-null="true"/>
-		</property>
-		<property name="jobReference" type="string" length="20"/>
-		<property name="department" type="string" length="20"/>
-		<property name="priority" type="int" not-null="true"/>
-		<!--set name="phones" inverse="true" cascade="all">
-			<key column="contactId"/>
-			<one-to-many class="org.helianto.core.Phone"/>
-		</set-->
-		<subclass name="org.helianto.core.HumanResource" 
-			discriminator-value="H">
+		<discriminator column="role" type="char"/>
+		<natural-id>
 			<!-- 
-				HUMAN RESOURCE
+	  				partner
+			-->
+			<many-to-one name="partner" cascade="save-update,merge"
+				class="org.helianto.core.Partner">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="partnerId"/>
+			</many-to-one>
+			<property name="partnerRole" type="char" formula="role"/>
+		</natural-id>
+		<!-- 
+  				account
+		-->
+		<!--many-to-one name="account" 
+			class="org.helainto.account.Account">
+			<column name="accountId"/>
+		</many-to-one-->
+		<!-- 
+  				priority
+		-->
+		<property name="priority" type="char">
+			<column name="priority" not-null="true" default="z"/>
+		</property>
+		<!-- 
+  				partner state
+		-->
+		<property name="partnerState" type="char">
+			<column name="partnerState" not-null="true" default="A"/>
+		</property>
+		<!-- 
+  				number assigned remotely (by the customer, supplier, etc.)
+		-->
+		<property name="numberAssignedRemotely" type="string" 
+			length="20"/>
+		<!-- 
+  				imported key (legacy systems)
+		-->
+		<property name="importedKey" type="long"/>
+		<!-- 
+  				profile
+		-->
+		<property name="profile" type="string" length="255"/>
+		<!-- 
+  				Division
+		-->
+		<subclass name="org.helianto.core.Division" 
+			discriminator-value="D">
+			<!-- 
+				DIVISION
 				============================================= 
 			-->
-			<meta attribute="class-description" inherit="false"> A 
-				class to persist Resources. </meta>
-			<property name="resourceState" type="int" not-null="true"/>
-			<property name="resourceCategory" type="int" not-null="true"/>
-			<property name="born" type="date"/>
-			<property name="hired" type="date"/>
-			<property name="dismissed" type="date"/>
+			<meta attribute="class-description" inherit="false">
+				<![CDATA[
+<p>
+Persist a relationship to a division. 
+</p>
+
+@author Mauricio Fernandes de Castro
+				]]>
+			</meta>
+			<property name="divisionType" type="char" not-null="true" formula="' '"/>
+		</subclass>
+		<subclass name="org.helianto.core.Customer" 
+			discriminator-value="C">
+			<!-- 
+				CUSTOMER
+				============================================= 
+			-->
+			<meta attribute="class-description" inherit="false">
+				<![CDATA[
+<p>
+Persist a relationship to a customer 
+</p>
+
+@author Mauricio Fernandes de Castro
+				]]>
+			</meta>
+			<many-to-one name="deliverTo" 
+				class="org.helianto.core.Partner" 
+				column="deliverId">
+			</many-to-one>
+		</subclass>
+		<subclass name="org.helianto.core.Supplier" 
+			discriminator-value="S">
+			<!-- 
+				SUPPLIER
+				============================================= 
+			-->
+			<meta attribute="class-description" inherit="false">
+				<![CDATA[
+<p>
+Persist a relationship to a supplier 
+</p>
+
+@author Mauricio Fernandes de Castro
+				]]>
+			</meta>
+			<property name="supplierAsessment" type="float"/>
+			<many-to-one name="buyer" 
+				class="org.helianto.core.User">
+				<column name="buyerId"/>
+			</many-to-one>
+		</subclass>
+		<subclass name="org.helianto.core.Bank" 
+			discriminator-value="B">
+			<!-- 
+				BANK
+				============================================= 
+			-->
+			<meta attribute="class-description" inherit="false">
+				<![CDATA[
+<p>
+Persist a relationship to a bank 
+</p>
+
+@author Mauricio Fernandes de Castro
+				]]>
+			</meta>
+			<property name="checkFormFile" type="string" length="10"/>
+		</subclass>
+		<subclass name="org.helianto.core.Manufacturer" 
+			discriminator-value="M">
+			<!-- 
+				MANUFACTURER
+				============================================= 
+			-->
+			<meta attribute="class-description" inherit="false">
+				<![CDATA[
+<p>
+Persist a relationship to a resource manufaturer. 
+</p>
+
+@author Mauricio Fernandes de Castro
+				]]>
+			</meta>
+			
+		</subclass>
+		<subclass name="org.helianto.core.Agent" 
+			discriminator-value="B">
+			<!-- 
+				AGENT
+				============================================= 
+			-->
+			<meta attribute="class-description" inherit="false">
+				<![CDATA[
+<p>
+Persist a relationship to an Agent, like a sales representative. 
+</p>
+
+@author Mauricio Fernandes de Castro
+				]]>
+			</meta>
+			
 		</subclass>
 	</class>
 </hibernate-mapping>

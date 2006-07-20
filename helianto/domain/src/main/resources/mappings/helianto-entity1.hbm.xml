@@ -23,17 +23,16 @@
 		-->
 <hibernate-mapping default-lazy="false">
 	<class table="core_partner" 
-		name="org.helianto.core.Partner" 
-		discriminator-value="N">
+		name="org.helianto.core.Self" 
+		discriminator-value="S">
 		<!-- 
-				PARTNER
+				SELF
 				============================================= 
 		-->
 		<meta attribute="class-description">
 				<![CDATA[
 <p>
-Persist relationships between the organization and its 
-partners, like customers, suppliers, banks, etc. 
+Represents the organization itself. 
 </p>
 
 @author Mauricio Fernandes de Castro
@@ -46,155 +45,65 @@ partners, like customers, suppliers, banks, etc.
 			<generator class="native"/>
 		</id>
 		<discriminator column="role" type="char"/>
-		<!-- 
-  				entity
-		-->
-		<many-to-one name="entity" cascade="merge"
-			class="org.helianto.core.Entity">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="entityId" 
-				unique-key="uniqueAlias" 
-				not-null="true"/>
-		</many-to-one>
-		<!-- 
-  				alias
-		-->
-		<property name="alias" type="string">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="alias" length="20" 
-				unique-key="uniqueAlias" 
-				not-null="true"/>
-		</property>
-		<!-- 
-  				related
-		-->
-		<many-to-one name="related"
-			class="org.helianto.core.Entity">
-			<column name="relId"></column>
-		</many-to-one>
-		<!--many-to-one name="assetAccount" 
-			class="org.helainto.account.Account">
-			<column name="assetId"/>
-		</many-to-one>
-		<many-to-one name="liabilityAccount" 
-			class="org.helainto.account.Account">
-			<column name="liabilityId"/>
-		</many-to-one-->
-		<property name="state" type="char" not-null="true"/>
-		<property name="strong" type="boolean" not-null="true"/>
-		<property name="relatedSince" type="date"/>
-		<property name="numberAssignedRemotely" type="string" 
-			length="20"/>
-		<property name="importedKey" type="long"/>
-		<property name="profile" type="string" length="255"/>
-		<subclass name="org.helianto.core.Division" 
-			discriminator-value="D">
+		<natural-id>
 			<!-- 
-				DIVISION
-				============================================= 
+	  				entity
 			-->
-			<meta attribute="class-description" inherit="false">
-				<![CDATA[
-<p>
-Persist a relationship to a division. 
-</p>
-
-@author Mauricio Fernandes de Castro
-				]]>
-			</meta>
-			<property name="divisionType" type="char" not-null="true" formula="' '"/>
-		</subclass>
-		<subclass name="org.helianto.core.Customer" 
-			discriminator-value="C">
-			<!-- 
-				CUSTOMER
-				============================================= 
-			-->
-			<meta attribute="class-description" inherit="false">
-				<![CDATA[
-<p>
-Persist a relationship to a customer 
-</p>
-
-@author Mauricio Fernandes de Castro
-				]]>
-			</meta>
-			<many-to-one name="deliverTo" 
-				class="org.helianto.core.Partner" 
-				column="deliverId">
+			<many-to-one name="entity" cascade="save-update,merge"
+				class="org.helianto.core.Entity">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="entityId"/>
 			</many-to-one>
-		</subclass>
-		<subclass name="org.helianto.core.Supplier" 
-			discriminator-value="S">
 			<!-- 
-				SUPPLIER
+	  				alias
+			-->
+			<property name="alias" type="string">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="alias" length="20"/>
+			</property>
+		</natural-id>
+		<!-- 
+  				Partner
+		-->
+		<subclass name="org.helianto.core.Partner" 
+			discriminator-value="P">
+			<!-- 
+				PARTNER
 				============================================= 
 			-->
 			<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-Persist a relationship to a supplier 
+Represents a relationship to other entities. 
 </p>
 
 @author Mauricio Fernandes de Castro
 				]]>
 			</meta>
-			<property name="supplierAsessment" type="float"/>
-			<many-to-one name="buyer" 
-				class="org.helianto.core.User">
-				<column name="buyerId"/>
+			<!-- 
+	  				related to (another entity)
+			-->
+			<many-to-one name="related"  cascade="save-update,merge"
+				class="org.helianto.core.Entity">
+				<column name="relId"></column>
 			</many-to-one>
-		</subclass>
-		<subclass name="org.helianto.core.Bank" 
-			discriminator-value="B">
 			<!-- 
-				BANK
-				============================================= 
+	  				share mode (restricted, full)
 			-->
-			<meta attribute="class-description" inherit="false">
-				<![CDATA[
-<p>
-Persist a relationship to a bank 
-</p>
-
-@author Mauricio Fernandes de Castro
-				]]>
-			</meta>
-			<property name="checkFormFile" type="string" length="10"/>
-		</subclass>
-		<subclass name="org.helianto.core.Manufacturer" 
-			discriminator-value="M">
+			<property name="shareMode" type="char" not-null="true"/>
 			<!-- 
-				MANUFACTURER
-				============================================= 
+	  				relatedSince
 			-->
-			<meta attribute="class-description" inherit="false">
-				<![CDATA[
-<p>
-Persist a relationship to a resource manufaturer. 
-</p>
-
-@author Mauricio Fernandes de Castro
-				]]>
-			</meta>
-			
-		</subclass>
-		<subclass name="org.helianto.core.Agent" 
-			discriminator-value="B">
-			<!-- 
-				AGENT
-				============================================= 
+			<property name="relatedSince" type="date"/>
+			<!--
+					roles
 			-->
-			<meta attribute="class-description" inherit="false">
-				<![CDATA[
-<p>
-Persist a relationship to an Agent, like a sales representative. 
-</p>
-
-@author Mauricio Fernandes de Castro
-				]]>
-			</meta>
-			
+			<set name="roles" inverse="true">
+				<key column="partnerId"/>
+				<one-to-many class="org.helianto.core.PartnerRole"/>
+			</set>
 		</subclass>
 	</class>
 </hibernate-mapping>
