@@ -18,7 +18,7 @@ public enum ShareMode {
         this.value = value;
     }
     
-    public int getValue() {
+    public char getValue() {
         return value;
     }
 
