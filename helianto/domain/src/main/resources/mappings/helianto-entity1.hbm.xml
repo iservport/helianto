@@ -23,16 +23,16 @@
 		-->
 <hibernate-mapping default-lazy="false">
 	<class table="core_partner" 
-		name="org.helianto.core.Self" 
-		discriminator-value="S">
+		name="org.helianto.core.Partner" 
+		discriminator-value="P">
 		<!-- 
-				SELF
-				============================================= 
+			PARTNER
+			============================================= 
 		-->
 		<meta attribute="class-description">
 				<![CDATA[
 <p>
-Represents the organization itself. 
+Represents the relationship between the organization and other entities.  
 </p>
 
 @author Mauricio Fernandes de Castro
@@ -65,45 +65,26 @@ Represents the organization itself.
 			</property>
 		</natural-id>
 		<!-- 
-  				Partner
+  				related to (another entity)
 		-->
-		<subclass name="org.helianto.core.Partner" 
-			discriminator-value="P">
-			<!-- 
-				PARTNER
-				============================================= 
-			-->
-			<meta attribute="class-description" inherit="false">
-				<![CDATA[
-<p>
-Represents a relationship to other entities. 
-</p>
-
-@author Mauricio Fernandes de Castro
-				]]>
-			</meta>
-			<!-- 
-	  				related to (another entity)
-			-->
-			<many-to-one name="related"  cascade="save-update,merge"
-				class="org.helianto.core.Entity">
-				<column name="relId"></column>
-			</many-to-one>
-			<!-- 
-	  				share mode (restricted, full)
-			-->
-			<property name="shareMode" type="char" not-null="true"/>
-			<!-- 
-	  				relatedSince
-			-->
-			<property name="relatedSince" type="date"/>
-			<!--
-					roles
-			-->
-			<set name="roles" inverse="true">
-				<key column="partnerId"/>
-				<one-to-many class="org.helianto.core.PartnerRole"/>
-			</set>
-		</subclass>
+		<many-to-one name="related"  cascade="save-update,merge"
+			class="org.helianto.core.Entity">
+			<column name="relId"></column>
+		</many-to-one>
+		<!-- 
+  				share mode (restricted, full)
+		-->
+		<property name="shareMode" type="char" not-null="true"/>
+		<!-- 
+  				relatedSince
+		-->
+		<property name="relatedSince" type="date"/>
+		<!--
+				roles
+		-->
+		<set name="roles" inverse="true">
+			<key column="partnerId"/>
+			<one-to-many class="org.helianto.core.PartnerRole"/>
+		</set>
 	</class>
 </hibernate-mapping>
