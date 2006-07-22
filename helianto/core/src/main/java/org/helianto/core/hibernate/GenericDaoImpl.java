@@ -18,17 +18,18 @@ package org.helianto.core.hibernate;
 import java.util.Iterator;
 
 import org.helianto.core.dao.GenericDao;
+import org.springframework.util.Assert;
 
 /**
  * Hibernate implementation for the <code>GenericDao</code>
  * interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public class GenericDaoImpl extends LightweightDaoImpl implements GenericDao {
 
     public void save(Object object) {
+        Assert.notNull(object);
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Saving "+object.toString());
         }
@@ -36,6 +37,7 @@ public class GenericDaoImpl extends LightweightDaoImpl implements GenericDao {
     }
 
     public void saveOrUpdate(Object object) {
+        Assert.notNull(object);
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Saving or updating "+object.toString());
         }
@@ -43,6 +45,7 @@ public class GenericDaoImpl extends LightweightDaoImpl implements GenericDao {
     }
 
     public void update(Object object) {
+        Assert.notNull(object);
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Updating "+object.toString());
         }
@@ -50,6 +53,7 @@ public class GenericDaoImpl extends LightweightDaoImpl implements GenericDao {
     }
 
     public void evict(Object object) {
+        Assert.notNull(object);
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Evicting (removing from session cache) "+object.toString());
         }

@@ -26,7 +26,6 @@ import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Partner;
 import org.helianto.core.User;
 import org.helianto.core.creation.PartnerCreator;
-import org.helianto.core.creation.PartnerRoleCreator;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.PartnerDao;
 import org.helianto.core.dao.UserDao;
@@ -59,7 +58,7 @@ public class SimpleCoreMgrImpl extends UserMgrImpl implements SimpleCoreMgr {
 //    }
 //
     public Division createDivision(Partner partner) {
-        return  PartnerRoleCreator.divisionFactory(partner);
+        return  PartnerCreator.divisionFactory(partner);
     }
     
 //    public Division installWithDefaults(String alias) {

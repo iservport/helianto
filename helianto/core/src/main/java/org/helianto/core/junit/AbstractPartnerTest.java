@@ -25,13 +25,12 @@ import org.helianto.core.Partner;
 import org.helianto.core.PartnerRole;
 import org.helianto.core.creation.PartnerCreator;
 import org.helianto.core.dao.PartnerDao;
-import org.helianto.core.hibernate.EntityDaoImplTests;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class AbstractPartnerTest extends AbstractIntegrationTest {
 
     public static Partner createAndPersistPartner(PartnerDao partnerDao) {
-        Entity entity = EntityDaoImplTests.createAndPersistEntity(null);
+        Entity entity = AbstractEntityTest.createAndPersistEntity(null);
         Partner partner = PartnerCreator.partnerFactory(entity, generateKey(PARTNER_ALIAS_LENGTH));
         if (partnerDao!=null) {
             partnerDao.persistPartner(partner);
@@ -41,14 +40,16 @@ public class AbstractPartnerTest extends AbstractIntegrationTest {
 
     public static List<Partner> createAndPersistPartnerList(HibernateTemplate hibernateTemplate, int i, int e) {
         List<Partner> partnerList = createPartnerList(i, e);
-        hibernateTemplate.saveOrUpdateAll(partnerList);
+        for (Partner p: partnerList) {
+            hibernateTemplate.merge(p);
+        }
         hibernateTemplate.flush();
         hibernateTemplate.clear();
         return partnerList;
     }
     
     public static List<Partner> createPartnerList(int size, int entityListSize) {
-        List<Entity> entityList = EntityDaoImplTests.createEntityList(entityListSize);
+        List<Entity> entityList = AbstractEntityTest.createEntityList(entityListSize);
         return createPartnerList(size, entityList);
     }
     
@@ -73,7 +74,9 @@ public class AbstractPartnerTest extends AbstractIntegrationTest {
 
     public static List<PartnerRole> createAndPersistPartnerRoleList(HibernateTemplate hibernateTemplate, int i, int p) {
         List<PartnerRole> partnerRoleList = createPartnerRoleList(i, p);
-        hibernateTemplate.saveOrUpdateAll(partnerRoleList);
+        for (PartnerRole x: partnerRoleList) {
+            hibernateTemplate.merge(x);
+        }
         hibernateTemplate.flush();
         hibernateTemplate.clear();
         return partnerRoleList;

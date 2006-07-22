@@ -11,33 +11,19 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
-import org.helianto.core.Self;
+import org.helianto.core.PartnerRole;
 import org.helianto.core.Supplier;
 import org.helianto.core.type.PartnerState;
 import org.helianto.core.type.ShareMode;
 
 public class PartnerCreator extends EntityCreator {
 	
-    private static Object selfFactory(Class clazz, Entity entity, String alias) {
-    	Self self;
-        try {
-        	self = (Partner) clazz.newInstance();
-        	self.setEntity(entity);
-        	self.setAlias(alias);
-            return self;
-        } catch (Exception e) {
-            throw new RuntimeException("Can't instantiate "+clazz);
-        }
-    }
-
-    public static Self selfFactory(Entity entity, String alias) {
-    	return (Self) selfFactory(Self.class, entity, alias);
-    }
-    
     public static Partner partnerFactory(Entity entity, String alias) {
-        Partner partner = (Partner) selfFactory(Partner.class, entity, alias);
+        Partner partner = new Partner();
+        partner.setEntity(entity);
+        partner.setAlias(alias);
         partner.setRelatedSince(new Date());
-//        partner.setShareMode(ShareMode.RESTRICTED.getValue());
+        partner.setShareMode(ShareMode.RESTRICTED.getValue());
     	return partner;
     }
     
@@ -46,6 +32,47 @@ public class PartnerCreator extends EntityCreator {
         cntct.setPartner(partner);
         cntct.setIdentity(identity);
         return cntct;
+    }
+
+    private static Object partnerRoleFactory(Class clazz, Partner partner) {
+        PartnerRole partnerRole;
+        try {
+            partnerRole = (PartnerRole) clazz.newInstance();
+            partnerRole.setPartner(partner);
+            partnerRole.setPartnerState(PartnerState.ACTIVE.getValue());
+            return partnerRole;
+        } catch (Exception e) {
+            throw new RuntimeException("Can't instantiate "+clazz);
+        }
+    }
+
+    // for test purposes only
+    public static PartnerRole partnerRoleFactory(Partner partner) {
+        return (PartnerRole) partnerRoleFactory(PartnerRole.class, partner);
+      }
+      
+    public static Customer customerFactory(Partner partner) {
+        return (Customer) partnerRoleFactory(Customer.class, partner);
+      }
+      
+    public static Supplier supplierFactory(Partner partner) {
+      return (Supplier) partnerRoleFactory(Supplier.class, partner);
+    }
+    
+    public static Division divisionFactory(Partner partner) {
+        return (Division) partnerRoleFactory(Division.class, partner);
+    }
+    
+    public static Bank bankFactory(Partner partner) {
+        return (Bank) partnerRoleFactory(Bank.class, partner);
+    }
+
+    public static Agent agentFactory(Partner partner) {
+        return (Agent) partnerRoleFactory(Agent.class, partner);
+    }
+
+    public static Manufacturer manufacturerFactory(Partner partner) {
+        return (Manufacturer) partnerRoleFactory(Manufacturer.class, partner);
     }
 
 }

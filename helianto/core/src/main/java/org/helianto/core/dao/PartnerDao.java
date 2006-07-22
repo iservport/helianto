@@ -26,7 +26,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
 import org.helianto.core.PartnerRole;
-import org.helianto.core.Self;
 import org.helianto.core.Supplier;
 
 /**
@@ -39,6 +38,11 @@ import org.helianto.core.Supplier;
 public interface PartnerDao {
     
     /**
+     * Persist <code>Partner</code>.
+     */
+    public void persistPartner(Partner partner);
+    
+    /**
      * Persist <code>PartnerRole</code> or its descendants: 
      * <code>Customer</code>, <code>Supplier</code>, <code>Division</code>, 
      * <code>Agent</code>, <code>Bank</code>, <code>Manufacturer</code>.
@@ -49,6 +53,26 @@ public interface PartnerDao {
      * Persist <code>Contact</code>.
      */
     public void persistContact(Contact contact);
+
+    /**
+     * Find <code>Partner</code> by <code>Entity</code> and alias.
+     */
+    public Partner findPartnerByEntityAndAlias(Entity entity, String alias);
+    
+    /**
+     * Find <code>Partner</code> by <code>Entity</code>.
+     */
+    public List<Partner> findPartnerByEntity(Entity entity);
+    
+    /**
+     * Find <code>PartnerRole</code> by <code>Entity</code>.
+     */
+    public List<PartnerRole> findPartnerRoleByEntity(Entity entity);
+
+    /**
+     * Find <code>PartnerRole</code> by <code>Partner</code>.
+     */
+    public List<PartnerRole> findPartnerRoleByPartner(Partner partner);
 
     /**
      * Find <code>Customer</code> by <code>Entity</code>.
@@ -64,11 +88,6 @@ public interface PartnerDao {
      * Find <code>Division</code> by <code>Entity</code>.
      */
     public List<Division> findDivisionByEntity(Entity entity);
-    
-    /**
-     * Find a <code>PartnerRole</code> representing the organization itself.
-     */
-    public Self whoAmI(Entity entity);
     
     /**
      * Find <code>Agent</code> by <code>Entity</code>.
@@ -95,5 +114,20 @@ public interface PartnerDao {
      * Find <code>Contact</code> by <code>Partner</code>.
      */
     public List<Contact> findContactByPartner(Partner partner);
-    
+
+    /**
+     * Remove <code>Partner</code>.
+     */
+    public void removePartner(Partner partner);
+
+    /**
+     * Remove <code>PartnerRole</code>.
+     */
+    public void removePartnerRole(PartnerRole partnerRole);
+
+    /**
+     * Remove <code>Contact</code>.
+     */
+    public void removeContact(Contact contact);
+
 }

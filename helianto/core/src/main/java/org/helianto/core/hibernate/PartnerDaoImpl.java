@@ -27,9 +27,9 @@ import org.helianto.core.Entity;
 import org.helianto.core.Manufacturer;
 import org.helianto.core.Partner;
 import org.helianto.core.PartnerRole;
-import org.helianto.core.Self;
 import org.helianto.core.Supplier;
 import org.helianto.core.dao.PartnerDao;
+import org.springframework.util.Assert;
 
 /**
  * Default implementation for <code>PartnerDao</code>.
@@ -38,12 +38,35 @@ import org.helianto.core.dao.PartnerDao;
  */
 public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
 
+    public void persistPartner(Partner partner) {
+        Assert.notNull(partner);
+        merge(partner);
+    }
+
     public void persistPartnerRole(PartnerRole partnerRole) {
+        Assert.notNull(partnerRole);
         merge(partnerRole);
     }
 
     public void persistContact(Contact contact) {
+        Assert.notNull(contact);
         merge(contact);
+    }
+
+    public Partner findPartnerByEntityAndAlias(Entity entity, String alias) {
+        return (Partner) findUnique(PARTNER1_QRY, entity, alias);
+    }
+
+    public List<Partner> findPartnerByEntity(Entity entity) {
+        return (ArrayList<Partner>) find(PARTNER2_QRY, entity);
+    }
+
+    public List<PartnerRole> findPartnerRoleByEntity(Entity entity) {
+        return (ArrayList<PartnerRole>) find(PARTNERROLE1_QRY, entity);
+    }
+
+    public List<PartnerRole> findPartnerRoleByPartner(Partner partner) {
+        return (ArrayList<PartnerRole>) find(PARTNERROLE2_QRY, partner);
     }
 
     public List<Customer> findCustomerByEntity(Entity entity) {
@@ -57,10 +80,6 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
     public List<Division> findDivisionByEntity(Entity entity) {
         return (ArrayList<Division>) find(DIVISION_QRY, entity);
     }
-
-	public Self whoAmI(Entity entity) {
-        return (Self) findUnique(WHOAMI_QRY, entity);
-	}
 
 	public Division findCurrentDivision(Entity entity) {
 		// TODO TO BE REMOVED
@@ -93,11 +112,32 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
         return (ArrayList<Contact>) find(CONTACT_QRY_BY_PARTNER, partner.getId());
     }
 
-    static String WHOAMI_QRY = "from Self myself " +
-    	"where myself.entity = ?";
+    public void removePartner(Partner partner) {
+        remove(partner);
+    }
+
+    public void removePartnerRole(PartnerRole partnerRole) {
+        remove(partnerRole);
+    }
+
+    public void removeContact(Contact contact) {
+        remove(contact);
+    }
+
+    static final String PARTNER1_QRY = "from Partner partner " +
+        "where partner.entity = ? and partner.alias = ? ";
+
+    static final String PARTNER2_QRY = "from Partner partner " +
+        "where partner.entity = ? ";
+
+    static final String PARTNERROLE1_QRY = "from PartnerRole partnerRole " +
+        "where partnerRole.partner.entity = ? ";
+
+    static final String PARTNERROLE2_QRY = "from PartnerRole partnerRole " +
+        "where partnerRole.partner = ? ";
 
     static String CUSTOMER_QRY = "from Customer customer " +
-    	"where customer.partner.entity = ?";
+    	"where customer.partner.entity = ? ";
 
     static String SUPPLIER_QRY = "from Supplier supplier " +
         "where supplier.partner.entity = ?";
