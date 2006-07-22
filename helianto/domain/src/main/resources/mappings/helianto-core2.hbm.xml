@@ -58,7 +58,7 @@ Each <code>DefaultEntity</code> should have a corresponding {@link Partner}.
 				(note this is actually one-to-one because of unique=true)
 		-->
 		<many-to-one name="entity" 
-			class="org.helianto.core.Entity" cascade="all">
+			class="org.helianto.core.Entity" cascade="save-update,merge">
 			<meta attribute="use-in-equals">true</meta>
 			<column name="entityId" unique="true"/>
 		</many-to-one>

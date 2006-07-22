@@ -69,13 +69,13 @@ like customers, suppliers, banks, etc.
   				priority
 		-->
 		<property name="priority" type="char">
-			<column name="priority" not-null="true" default="z"/>
+			<column name="priority" not-null="true" default="'z'"/>
 		</property>
 		<!-- 
   				partner state
 		-->
 		<property name="partnerState" type="char">
-			<column name="partnerState" not-null="true" default="A"/>
+			<column name="partnerState" not-null="true" default="'A'"/>
 		</property>
 		<!-- 
   				number assigned remotely (by the customer, supplier, etc.)

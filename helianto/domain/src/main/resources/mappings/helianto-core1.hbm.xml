@@ -77,6 +77,7 @@ like Hibernate's (www.hibernate.org) non-lazy loading.
 			<many-to-one name="home" 
 				class="org.helianto.core.Home" cascade="save-update,merge">
 				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
 				<column name="homeId"/>
 			</many-to-one>
 			<!-- 

@@ -47,9 +47,10 @@ A class to represent resource parameters.
 			<!-- 
 				entity
 			-->
-			<many-to-one name="entity"
+			<many-to-one name="entity" cascade="save-update,merge"
 				class="org.helianto.core.Entity">
 				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
 				<column name="entityId" />
 			</many-to-one>
 			<!-- 
@@ -57,6 +58,7 @@ A class to represent resource parameters.
 			-->
 			<property name="parameterCode" type="string">
 				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
 				<column name="parameterCode" length="20" />
 			</property>
 		</natural-id>
@@ -70,7 +72,7 @@ A class to represent resource parameters.
 		<!-- 
 			unit
 		-->
-		<many-to-one name="unit"
+		<many-to-one name="unit" cascade="save-update,merge"
 			class="org.helianto.process.Unit">
 			<column name="untId" />
 		</many-to-one>

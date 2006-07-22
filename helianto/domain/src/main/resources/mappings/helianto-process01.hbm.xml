@@ -47,8 +47,10 @@ A class to represent a process resource group.
 			<!-- 
 				entity
 			-->
-			<many-to-one name="entity" class="org.helianto.core.Entity">
+			<many-to-one name="entity" cascade="save-update,merge"
+			    class="org.helianto.core.Entity">
 				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
 				<column name="entityId" />
 			</many-to-one>
 			<!-- 
