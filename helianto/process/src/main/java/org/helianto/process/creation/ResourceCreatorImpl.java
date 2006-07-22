@@ -17,7 +17,6 @@ package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
-import org.helianto.core.Self;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
@@ -32,14 +31,14 @@ import org.springframework.util.Assert;
  * @author Mauricio Fernandes de Castro
  * @version $Id: $
  */
-public class ResourceCreatorImpl implements ResourceCreator {
+public class ResourceCreatorImpl {
 
-    public ResourceGroup resourceGroupFactory(Entity entity, String resourceCode, ResourceType resourceType) {
+    public static ResourceGroup resourceGroupFactory(Entity entity, String resourceCode, ResourceType resourceType) {
         Assert.notNull(entity);
         return resourceGroupFactory(ResourceGroup.class, entity, resourceCode, resourceType.getValue());
     }
 
-    private ResourceGroup resourceGroupFactory(Class clazz, Entity entity, String resourceCode, char resourceTypeValue) {
+    private static ResourceGroup resourceGroupFactory(Class clazz, Entity entity, String resourceCode, char resourceTypeValue) {
         Assert.notNull(entity);
         ResourceGroup resourceGroup;
         try {
@@ -53,26 +52,20 @@ public class ResourceCreatorImpl implements ResourceCreator {
         }
     }
 
-    public ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode) {
+    public static ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode) {
         ResourceGroup resourceGroup = resourceGroupFactory(ResourceGroup.class, parent.getEntity(), resourceCode, parent.getResourceType());
         resourceGroup.setParent(parent);
         return resourceGroup;
     }
 
-	public Resource resourceFactory(Partner owner, String resourceCode, ResourceType resourceType) {
-        Resource resource = (Resource) resourceGroupFactory(Resource.class, owner.getEntity(), resourceCode, resourceType.getValue());
-        resource.setOwner(owner);
-        return resource;
-	}
-
-    public Resource resourceFactory(ResourceGroup parent, String resourceCode, Self self) {
+    public static Resource resourceFactory(ResourceGroup parent, String resourceCode, Partner partner) {
         Resource resource = (Resource) resourceGroupFactory(Resource.class, parent.getEntity(), resourceCode, parent.getResourceType());
         resource.setParent(parent);
-        resource.setOwner(self);
+        resource.setOwner(partner);
         return resource;
     }
     
-    public ResourceParameter resourceParameterFactory(Entity entity, String parameterCode, Unit unit) {
+    public static ResourceParameter resourceParameterFactory(Entity entity, String parameterCode, Unit unit) {
         Assert.notNull(entity);
     	ResourceParameter resourceParameter;
     	try {
@@ -86,18 +79,14 @@ public class ResourceCreatorImpl implements ResourceCreator {
     	}
     }
 
-    public ResourceParameter resourceParameterFactory(Entity entity, String parameterCode) {
-	    return resourceParameterFactory(entity, parameterCode, null);
-    }
-
-    public ResourceParameter resourceParameterFactory(ResourceParameter parent, String parameterCode) {
+    public static ResourceParameter resourceParameterFactory(ResourceParameter parent, String parameterCode) {
         Assert.notNull(parent);
     	ResourceParameter resourceParameter = resourceParameterFactory(parent.getEntity(), parameterCode, parent.getUnit());
     	resourceParameter.setParent(parent);
     	return resourceParameter;
     }
 
-    public ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter, boolean suppressed) {
+    public static ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
         Assert.notNull(resourceGroup);
         Assert.notNull(resourceParameter);
         ResourceParameterValue resourceParameterValue;
@@ -105,17 +94,10 @@ public class ResourceCreatorImpl implements ResourceCreator {
     		resourceParameterValue = new ResourceParameterValue();
     		resourceParameterValue.setResource(resourceGroup);
     		resourceParameterValue.setParameter(resourceParameter);
-    		resourceParameterValue.setSuppressed(suppressed);
         	return resourceParameterValue;
     	} catch (Exception e){
     		throw new RuntimeException("Can't instantiate "+ResourceParameter.class, e);
     	}
-    }
-
-    public ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
-        Assert.notNull(resourceGroup);
-        Assert.notNull(resourceParameter);
-    	return resourceParameterValueFactory(resourceGroup, resourceParameter, false);
     }
 
 }

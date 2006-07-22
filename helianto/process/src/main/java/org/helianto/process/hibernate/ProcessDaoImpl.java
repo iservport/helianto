@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
@@ -28,7 +27,7 @@ import org.helianto.process.Setup;
 import org.helianto.process.Unit;
 import org.helianto.process.dao.ProcessDao;
 
-public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
+public class ProcessDaoImpl extends MaterialDaoImpl implements ProcessDao {
 
     public void persist(Unit unit) {
         merge(unit);

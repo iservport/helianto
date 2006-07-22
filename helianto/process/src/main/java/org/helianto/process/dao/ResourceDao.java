@@ -15,7 +15,6 @@
 
 package org.helianto.process.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.helianto.core.Entity;
@@ -28,41 +27,35 @@ import org.helianto.process.type.ResourceType;
 public interface ResourceDao {
     
     /**
-     * Persist a <code>ResourceGroup</code>.
+     * Persist a <code>ResourceGroup</code> or <code>Resource</code>.
      */
     public void persistResourceGroup(ResourceGroup resourceGroup);
     
     /**
-     * Persist a <code>Resource</code>.
+     * Remove a <code>ResourceGroup</code> or <code>Resource</code>.
      */
-    public void persistResource(Resource resource);
-    
+    public void removeResourceGroup(ResourceGroup resourceGroup);
+
     /**
      * Persist a <code>ResourceParameter</code>.
      */
 	public void persistResourceParameter(ResourceParameter resourceParameter);
 
     /**
-     * Load a <code>ResourceParameter</code>.
+     * Remove a <code>ResourceParameter</code>.
      */
-	public ResourceParameter loadResourceParameter(Integer integer);
-	
+    public void removeResourceParameter(ResourceParameter resourceParameter);
+
     /**
      * Persist a <code>ResourceParameterValue</code>.
      */
 	public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue);
 	
-    // FIXME
-	/**
-     * Load a <code>Resource</code>.
-     */
-    public ResourceGroup load(Serializable key);
-    
     /**
-     * Load a <code>ResourceParameterValue</code>.
+     * Remove a <code>ResourceParameterValue</code>.
      */
-    public ResourceParameterValue loadResourceParameterValue(int key);
-    
+    public void removeResourceParameterValue(ResourceParameterValue resourceParameterValue);
+
     /**
      * Find <code>ResourceGroup</code>s and <code>Resources</code> by <code>Entity</code>.
      */

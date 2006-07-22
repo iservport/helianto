@@ -15,165 +15,93 @@
 
 package org.helianto.process.hibernate;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.DefaultEntity;
-import org.helianto.core.Division;
-import org.helianto.core.Entity;
-import org.helianto.core.dao.PartnerDao;
-import org.helianto.core.junit.AbstractIntegrationTest;
-import org.helianto.core.service.SimpleCoreMgr;
-import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
-import org.helianto.process.creation.ResourceCreator;
 import org.helianto.process.dao.ResourceDao;
-import org.helianto.process.type.ResourceType;
+import org.helianto.process.junit.AbstractResourceDaoTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
-public class ResourceDaoImplTests extends AbstractIntegrationTest {
+public class ResourceDaoImplTests extends AbstractResourceDaoTest {
 
     // class (interface) under test
     private ResourceDao resourceDao;
 
-//  void persistResourceGroup(ResourceGroup resourceGroup);
-//  List<ResourceGroup> findResourceAndGroupByEntity(Entity entity);
-//  List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup);
+    /*
+     * ResourceGroup tests 
+     */
+    
     public void testPersistResourceGroup() {
-        String generatedCode = generateKey(20);
-        ResourceGroup resourceGroup = resourceCreator.resourceGroupFactory(
-                entity, generatedCode, ResourceType.EQUIPMENT);
-        String generatedName = generateKey(128);
-        resourceGroup.setResourceName(generatedName);
-        resourceDao.persistResourceGroup(resourceGroup);
+        //write
+        ResourceGroup resourceGroup = createAndPersistResourceGroup(resourceDao);
         hibernateTemplate.flush();
-        List<ResourceGroup> resourceList = resourceDao
-                .findResourceAndGroupByEntity(entity);
-        assertEquals(1, resourceList.size());
-        ResourceGroup rg = resourceList.get(0);
-        assertEquals(entity, rg.getEntity());
-        assertEquals(generatedCode, rg.getResourceCode());
-        assertEquals(generatedName, rg.getResourceName());
-        assertEquals(ResourceType.EQUIPMENT.getValue(), rg.getResourceType());
-        logger.info("Id " + rg.getId() + ", Entity " + rg.getEntity()
-                + ", Code " + rg.getResourceCode() + ", Name "
-                + rg.getResourceName() + ", Type " + rg.getResourceType());
+        //read
+        assertEquals(resourceGroup,  resourceDao.findResourceByEntityAndCode(resourceGroup.getEntity(), resourceGroup.getResourceCode()));
+    }
+    
+    public void testFindResourceGroup() {
+        // write list
+        int i = 10;
+        int e = 2;
+        List<ResourceGroup> resourceGroupList = createAndPersistResourceGroupList(hibernateTemplate, i, e);
+        assertEquals(i*e, resourceGroupList.size());
+        // read
+        ResourceGroup resourceGroup = resourceGroupList.get((int) Math.random()*i*e);
+        assertEquals(resourceGroup,  resourceDao.findResourceByEntityAndCode(resourceGroup.getEntity(), resourceGroup.getResourceCode()));
+        // List<ResourceGroup> findResourceAndGroupByEntity(Entity entity);
+        List<ResourceGroup> resourceGroupEntityList = resourceDao.findResourceAndGroupByEntity(resourceGroup.getEntity());
+        assertEquals(i, resourceGroupEntityList.size());
+        assertEquals(resourceGroup.getEntity(), resourceGroupEntityList.get((int) Math.random()*i).getEntity());
+        // TODO
+//        List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup);
+//        List<ResourceGroup> resourceChildList = resourceDao
+//        .findResourceByParent(resourceList.get(10));
+//        assertEquals(0, resourceChildList.size());
+//        assertEquals(resourceList.get(9), resourceList.get(10).getParent());
     }
 
-    public void testPersistAndReadResourceGroupMany() {
-        for (int i = 0; i < 50; i++) {
-            ResourceGroup resourceGroup = resourceCreator.resourceGroupFactory(
-                    entity, generateKey(5), ResourceType.EQUIPMENT);
-            resourceDao.persistResourceGroup(resourceGroup);
-        }
-        hibernateTemplate.flush();
-        List<ResourceGroup> resourceList = resourceDao
-                .findResourceAndGroupByEntity(entity);
-        assertEquals(50, resourceList.size());
-    }
-
-    public void testDupPersistResourceGroup() {
-        String generatedCode = generateKey(20);
-        ResourceGroup resourceGroup = resourceCreator.resourceGroupFactory(
-                entity, generatedCode, ResourceType.EQUIPMENT);
-        resourceDao.persistResourceGroup(resourceGroup);
-        hibernateTemplate.flush();
-
+    public void testResourceGroupErrors() {
         try {
-            ResourceGroup resourceGroup2 = resourceCreator
-                    .resourceGroupFactory(entity, generatedCode,
-                            ResourceType.EQUIPMENT);
-            resourceDao.persistResourceGroup(resourceGroup2);
-            hibernateTemplate.flush();
-            fail();
-        } catch (DataIntegrityViolationException e) {
-            // expected
-            logger.info("Exception " + e.toString());
-        }
-
+            resourceDao.persistResourceGroup(null); fail();
+       } catch (IllegalArgumentException e) { 
+       } catch (Exception e) { fail(); }
+       try {
+           resourceDao.removeResourceGroup(null); fail();
+      } catch (IllegalArgumentException e) { 
+      } catch (Exception e) { fail(); }
     }
 
-    public void testPersistResourceGroupParent() {
-        // create parent
-        String generatedCode1 = generateKey(20);
-        ResourceGroup resourceGroupParent = resourceCreator
-                .resourceGroupFactory(entity, generatedCode1,
-                        ResourceType.EQUIPMENT);
-        resourceDao.persistResourceGroup(resourceGroupParent);
-        hibernateTemplate.flush();
-
-        // create child
-        String generatedCode2 = generateKey(20);
-        ResourceGroup resourceGroupChild = resourceCreator
-                .resourceGroupFactory(resourceGroupParent, generatedCode2);
-        resourceDao.persistResourceGroup(resourceGroupChild);
-        hibernateTemplate.flush();
-
-        List<ResourceGroup> resourceList = resourceDao
-                .findResourceAndGroupByEntity(entity);
-        assertEquals(2, resourceList.size());
-        ResourceGroup rg = resourceList.get(1);
-        assertEquals(entity, rg.getEntity());
-        assertEquals(generatedCode2, rg.getResourceCode());
-        assertEquals(ResourceType.EQUIPMENT.getValue(), rg.getResourceType());
+    public void testResourceGroupDuplicate() {
+        // write
+        ResourceGroup resourceGroup = createAndPersistResourceGroup( resourceDao);
+        hibernateTemplate.clear();
+        // duplicate
+        try {
+            hibernateTemplate.save(resourceGroup); fail();
+        } catch (DataIntegrityViolationException e) { 
+        } catch (Exception e) { fail(); }
     }
-
-    public void testPersistResourceGroupParentList() {
-
-        ResourceGroup resourceGroupParent = resourceCreator
-                .resourceGroupFactory(entity, generateKey(20),
-                        ResourceType.EQUIPMENT);
-        resourceDao.persistResourceGroup(resourceGroupParent);
-
-        for (int i = 0; i < 10; i++) {
-            ResourceGroup resourceGroup = resourceCreator.resourceGroupFactory(
-                    resourceGroupParent, generateKey(20));
-            resourceDao.persistResourceGroup(resourceGroup);
-            resourceGroupParent = resourceGroup;
-        }
-
-        resourceGroupParent = resourceCreator.resourceGroupFactory(entity,
-                generateKey(20), ResourceType.EQUIPMENT);
-        resourceDao.persistResourceGroup(resourceGroupParent);
-
-        for (int i = 0; i < 5; i++) {
-            ResourceGroup resourceGroup = resourceCreator.resourceGroupFactory(
-                    resourceGroupParent, generateKey(20));
-            resourceDao.persistResourceGroup(resourceGroup);
-            resourceGroupParent = resourceGroup;
-        }
+    
+    public void testRemoveResourceGroup() {
+        // bulk write
+        int i = 10;
+        int e = 2; //entities
+        List<ResourceGroup> resourceGroupList = createAndPersistResourceGroupList(hibernateTemplate, i, e);
+        assertEquals(i*e, resourceGroupList.size());
+        // remove
+        ResourceGroup resourceGroup = resourceGroupList.get((int) Math.random()*i*e);
+        resourceDao.removeResourceGroup(resourceGroup);
         hibernateTemplate.flush();
-
-        List<ResourceGroup> resourceList = resourceDao
-                .findResourceAndGroupByEntity(entity);
-        assertEquals(17, resourceList.size());
-
-        List<ResourceGroup> resourceChildList = resourceDao
-                .findResourceByParent(resourceList.get(10));
-        assertEquals(0, resourceChildList.size());
-        assertEquals(resourceList.get(9), resourceList.get(10).getParent());
+        hibernateTemplate.clear();
+        // read
+        List<ResourceGroup> all = (ArrayList<ResourceGroup>) hibernateTemplate.find("from ResourceGroup");
+        assertEquals(i*e-1, all.size());
+        assertFalse(all.contains(resourceGroup));
     }
 
 //  void persistResource(Resource resource);
 //  List<Resource> findResourceByEntity(Entity entity);
-    public void testPersistResource() {
-        List<Division> divisionList = partnerDao.findDivisionByEntity(entity);
-        if (divisionList.size() == 0) {
-            fail("DefaultEntity installation method should have created at least one Division");
-        }
-        String generatedCode = generateKey(20);
-        Division currentDivision = (Division) divisionList.get(0);
-        Resource resource = resourceCreator.resourceFactory(currentDivision,
-                generatedCode, ResourceType.EQUIPMENT);
-        resourceDao.persistResource(resource);
-        hibernateTemplate.flush();
-        List<Resource> resourceList = resourceDao.findResourceByEntity(entity);
-        assertEquals(1, resourceList.size());
-        ResourceGroup rg = resourceList.get(0);
-        assertEquals(entity, rg.getEntity());
-        assertEquals(generatedCode, rg.getResourceCode());
-        assertEquals(ResourceType.EQUIPMENT.getValue(), rg.getResourceType());
-    }
 
 // TODO following tests
 //  List<ResourceGroup> findResourceAndGroupByEntityAndType(Entity entity, ResourceType resourceType);
@@ -183,48 +111,15 @@ public class ResourceDaoImplTests extends AbstractIntegrationTest {
     
     // collaborators
 
-    private PartnerDao partnerDao;
-
-    private ResourceCreator resourceCreator;
-
-    private SimpleCoreMgr simpleCoreMgr;
-
-    private Entity entity;
-
-    {
-        setAutowireMode(AbstractDependencyInjectionSpringContextTests.AUTOWIRE_BY_NAME);
-    }
-
     @Override
     protected String[] getConfigLocations() {
-        return new String[] { "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml", "deploy/support.xml",
-                "deploy/transaction.xml", "deploy/core.xml",
+        return new String[] { 
+                "deploy/core.xml",
                 "deploy/process.xml" };
     }
 
     public void setResourceDao(ResourceDao resourceDao) {
         this.resourceDao = resourceDao;
     }
-
-    public void setPartnerDao(PartnerDao partnerDao) {
-        this.partnerDao = partnerDao;
-    }
-
-    public void setResourceCreator(ResourceCreator resourceCreator) {
-        this.resourceCreator = resourceCreator;
-    }
-
-    public void setSimpleCoreMgr(SimpleCoreMgr simpleCoreMgr) {
-        this.simpleCoreMgr = simpleCoreMgr;
-    }
-
-    @Override
-    public void onSetUpInTransaction() {
-        DefaultEntity defaultEntity = simpleCoreMgr
-                .installDefaultEntity(generateKey(20));
-        entity = defaultEntity.getEntity();
-    }
-
 
 }

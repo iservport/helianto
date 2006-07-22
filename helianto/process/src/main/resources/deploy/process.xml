@@ -17,10 +17,11 @@
 		-->
 <beans>
 	<!--
-			Resource creator implementation	
+			material dao	
 	-->
-	<bean id="resourceCreator" 
-		class="org.helianto.process.creation.ResourceCreatorImpl"/>
+	<bean id="materialDao" class="org.helianto.process.hibernate.MaterialDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 	<!--
 			resource dao	
 	-->
@@ -36,7 +37,6 @@
 		<property name="target">
 			<bean id="resourceTarget"
 				class="org.helianto.process.service.ResourceMgrImpl">
-				<property name="resourceCreator" ref="resourceCreator"/>
 				<property name="resourceDao" ref="resourceDao"/>
 				<property name="partnerDao" ref="partnerDao"/>
 			</bean>

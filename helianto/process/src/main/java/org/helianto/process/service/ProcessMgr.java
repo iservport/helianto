@@ -15,7 +15,6 @@
 
 package org.helianto.process.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.helianto.core.Entity;
@@ -101,36 +100,6 @@ public interface ProcessMgr extends PartnerMgr {
      * Persist an <code>Setup</code>.
      */
     public void persistSetup(Setup setup);
-    
-    /**
-     * Load an <code>Unit</code>.
-     */
-    public Unit loadUnit(Serializable key);
-    
-    /**
-     * Load a <code>Material</code>.
-     */
-    public MaterialType loadMaterial(Serializable key);
-    
-    /**
-     * Load a <code>Part</code>.
-     */
-    public Part loadPart(Serializable key);
-    
-    /**
-     * Load a <code>Process</code>.
-     */
-    public Process loadProcess(Serializable key);
-    
-    /**
-     * Load an <code>Operation</code>.
-     */
-    public Operation loadOperation(Serializable key);
-    
-    /**
-     * Load a <code>Setup</code>.
-     */
-    public Setup loadSetup(Serializable key);
     
     /**
      * Find <code>Unit</code> list for this <code>Entity</code>

@@ -15,17 +15,16 @@
 
 package org.helianto.process.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
-import org.helianto.core.Self;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.Unit;
+import org.helianto.process.dao.ResourceDao;
 
 /**
  * Base interface to deal with <code>Resource</code>s.
@@ -89,7 +88,7 @@ public interface ResourceMgr {
      * a given owner.
      * </p> 
      */
-    public Resource createResource(ResourceGroup parentGroup, String resourceCode, Self self);
+    public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner partner);
     
     /**
      * <p>
@@ -97,11 +96,6 @@ public interface ResourceMgr {
      * </p>  
      */
     public void persistResource(Resource resource);
-    
-    /**
-     * Load a <code>Resource</code>.
-     */
-    public ResourceGroup loadResourceGroup(Serializable key);
     
     /**
      * <p>
@@ -168,13 +162,6 @@ public interface ResourceMgr {
     
     /**
      * <p>
-     * Delegates to {@link ResourceDao#loadResourceParameter(int)}.
-     * </p>  
-     */
-    public ResourceParameter loadResourceParameter(Serializable key);
-    
-    /**
-     * <p>
      * Create a <code>ParameterValue</code>.
      * </p>  
      */
@@ -194,13 +181,6 @@ public interface ResourceMgr {
      * </p>  
      */
     public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceDao#loadResourceParameterValue(int)}.
-     * </p>  
-     */
-    public ResourceParameterValue loadResourceParameterValue(Serializable key);
     
     /**
      * <p>

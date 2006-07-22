@@ -1,13 +1,10 @@
 package org.helianto.process.creation;
 
-import org.helianto.core.Entity;
 import org.helianto.process.Characteristic;
 import org.helianto.process.DocumentDetail;
-import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
-import org.helianto.process.Unit;
 
 public interface ProcessCreator {
 	
@@ -24,14 +21,5 @@ public interface ProcessCreator {
     public DocumentDetail operationDetailFactory(Operation operation);
 
     public Characteristic characteristicFactory(Operation operation);
-
-    public Unit unitFactory(Entity entity, String unitCode, String unitName);
-
-    public Unit unitFactory(Unit parent, String unitCode, String unitName);
-
-    public MaterialType materialFactory(Unit unit, String materialName);
-
-    public MaterialType materialFactory(MaterialType parent, Unit unit,
-            String materialName);
 
 }

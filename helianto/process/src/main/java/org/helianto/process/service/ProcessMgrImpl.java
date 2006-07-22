@@ -15,7 +15,6 @@
 
 package org.helianto.process.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -70,11 +69,11 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
 
     public void persistUnit(Unit unit) {
-        processDao.persist(unit);
+        processDao.persistUnit(unit);
     }
 
     public void persistMaterial(MaterialType MaterialType) {
-        processDao.persist(MaterialType);
+        processDao.persistMaterialType(MaterialType);
     }
 
     public void persistPart(Part part) {
@@ -95,38 +94,6 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     public void persistSetup(Setup setup) {
         processDao.persist(setup);
-    }
-
-    public Unit loadUnit(Serializable key) {
-        if (key instanceof String) {
-            return processDao.loadUnit(Integer.parseInt((String) key)); 
-        }
-        return processDao.loadUnit(new Integer(key.toString()).intValue());
-    }
-
-    //FIXME
-    public MaterialType loadMaterial(Serializable key) {
-        return processDao.loadMaterialType(0);
-    }
-
-    //FIXME
-    public Part loadPart(Serializable key) {
-        return  processDao.loadPart(0);
-    }
-
-    //FIXME
-    public Process loadProcess(Serializable key) {
-        return processDao.loadProcess(0);
-    }
-
-    //FIXME
-    public Operation loadOperation(Serializable key) {
-        return processDao.loadOperation(0);
-    }
-
-    //FIXME
-    public Setup loadSetup(Serializable key) {
-        return processDao.loadSetup(0);
     }
 
     public List<Unit> findUnitByEntity(Entity entity) {

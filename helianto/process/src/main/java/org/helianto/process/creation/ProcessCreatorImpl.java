@@ -144,32 +144,4 @@ public class ProcessCreatorImpl implements ProcessCreator {
         return null;
     }
 
-    public Unit unitFactory(Entity entity, String unitCode, String unitName) {
-        Unit unit = new Unit();
-        unit.setEntity(entity);
-        unit.setUnitCode(unitCode);
-        unit.setUnitName(unitName);
-        return unit;
-    }
-
-    public Unit unitFactory(Unit parent, String unitCode, String unitName) {
-        Unit unit = unitFactory(parent.getEntity(), unitCode, unitName);
-        unit.setParent(parent);
-        return unit;
-    }
-
-    public MaterialType materialFactory(Unit unit, String materialName) {
-        MaterialType MaterialType = new MaterialType();
-        MaterialType.setEntity(unit.getEntity());
-        MaterialType.setMaterialUnit(unit);
-        MaterialType.setMaterialName(materialName);
-        return MaterialType;
-    }
-
-    public MaterialType materialFactory(MaterialType parent, Unit unit, String materialName) {
-        MaterialType MaterialType = materialFactory(unit, materialName);
-        MaterialType.setParent(parent);
-        return MaterialType;
-    }
-
 }

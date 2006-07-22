@@ -15,7 +15,6 @@
 
 package org.helianto.process.hibernate;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +36,6 @@ import org.helianto.process.type.ResourceType;
  */
 public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
 
-    public void persistResource(Resource resource) {
-        merge(resource);
-    }
-
     public void persistResourceGroup(ResourceGroup resourceGroup) {
         merge(resourceGroup);
     }
@@ -53,18 +48,14 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
     	merge(resourceParameterValue);
     }
     
-    public ResourceGroup load(Serializable key) {
-        return (ResourceGroup) load(ResourceGroup.class, key);
+    public void removeResourceParameter(ResourceParameter resourceParameter) {
+        remove(resourceParameter);
     }
-    
-	public ResourceParameter loadResourceParameter(Integer key) {
-		return (ResourceParameter) load(ResourceParameter.class, key);
-	}
 
-    public ResourceParameterValue loadResourceParameterValue(int key) {
-    	return (ResourceParameterValue) load(ResourceParameterValue.class, key);
+    public void removeResourceParameterValue(ResourceParameterValue resourceParameterValue) {
+        remove(resourceParameterValue);
     }
-    
+
     //
     
     public List<ResourceGroup> findResourceAndGroupByEntity(Entity entity) {
@@ -162,5 +153,9 @@ public class ResourceDaoImpl extends GenericDaoImpl implements ResourceDao {
 		"where paramValue.resource = ?";
 
     static String RESOURCEPARAMCODE_FILTER = " and param.parameterCode = ?";
+
+    public void removeResourceGroup(ResourceGroup resourceGroup) {
+        remove(resourceGroup);
+    }
 
 }

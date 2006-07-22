@@ -15,56 +15,43 @@
 
 package org.helianto.process.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
-import org.helianto.core.Self;
 import org.helianto.core.dao.PartnerDao;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.Unit;
-import org.helianto.process.creation.ResourceCreator;
+import org.helianto.process.creation.ResourceCreatorImpl;
 import org.helianto.process.dao.ResourceDao;
 import org.helianto.process.type.ResourceType;
 import org.springframework.beans.factory.annotation.Required;
 
 public class ResourceMgrImpl implements ResourceMgr {
 	
-	private final Log logger = LogFactory.getLog(getClass());
+	static final Log logger = LogFactory.getLog(ResourceMgrImpl.class);
     
 	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
-        return getResourceCreator().resourceGroupFactory(entity, rootEquipentCode, ResourceType.EQUIPMENT);
+        return ResourceCreatorImpl.resourceGroupFactory(entity, rootEquipentCode, ResourceType.EQUIPMENT);
     }
     
-//    public Resource createEquipment(ResourceGroup parentGroup, String equipentCode) {
-//        return getResourceCreator().resourceGroupFactory(parentGroup, equipentCode);
-//    }
-    
     public ResourceGroup createSubGroup(ResourceGroup parentGroup) {
-        return getResourceCreator().resourceGroupFactory(parentGroup, "");
+        return ResourceCreatorImpl.resourceGroupFactory(parentGroup, "");
     }
     
     public ResourceGroup createSubGroup(ResourceGroup parentGroup, String resourceCode) {
-        return getResourceCreator().resourceGroupFactory(parentGroup, resourceCode);
+        return ResourceCreatorImpl.resourceGroupFactory(parentGroup, resourceCode);
     }
     
     public void persistResourceGroup(ResourceGroup resourceGroup) {
         getResourceDao().persistResourceGroup(resourceGroup);
     }
     
-    public ResourceGroup loadResourceGroup(Serializable key) {
-        if (key instanceof String) {
-            return getResourceDao().load(Integer.parseInt((String) key)); 
-        }
-        return getResourceDao().load(key);
-    }
-
     //
 
     public Resource prepareResource(ResourceGroup parentGroup) {
@@ -72,69 +59,51 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
 
     public Resource prepareResource(ResourceGroup parentGroup, String resourceCode) {
-        Self self = partnerDao.whoAmI(parentGroup.getEntity());
-        return createResource(parentGroup, resourceCode, self);
+        return createResource(parentGroup, resourceCode, null);
     }
 
-	public Resource createResource(ResourceGroup parentGroup, String resourceCode, Self self) {
-		if (self==null) {
-			throw new NullPointerException("Resource owner must be a non-null Partner (or Self)");
-		}
-		return resourceCreator.resourceFactory(parentGroup, resourceCode, self);
+	public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner partner) {
+		return ResourceCreatorImpl.resourceFactory(parentGroup, resourceCode, partner);
 	}
 	
     public void persistResource(Resource resource) {
-        resourceDao.persistResource(resource);
+        resourceDao.persistResourceGroup(resource);
     }
     
     //
     
     public ResourceParameter createResourceParameter(Entity entity) {
-        return resourceCreator.resourceParameterFactory(entity, "");
+        return ResourceCreatorImpl.resourceParameterFactory(entity, "", null);
     }
 
     public ResourceParameter createResourceParameter(Entity entity, String parameterCode, Unit unit) {
-        return resourceCreator.resourceParameterFactory(entity, parameterCode, unit);
+        return ResourceCreatorImpl.resourceParameterFactory(entity, parameterCode, unit);
     }
 
     public ResourceParameter createResourceParameter(Entity entity, String parameterCode) {
-        return resourceCreator.resourceParameterFactory(entity, parameterCode);
+        return ResourceCreatorImpl.resourceParameterFactory(entity, parameterCode, null);
     }
 
     public ResourceParameter createResourceParameter(ResourceParameter parent, String parameterCode) {
-        return resourceCreator.resourceParameterFactory(parent, parameterCode);
+        return ResourceCreatorImpl.resourceParameterFactory(parent, parameterCode);
     }
     
     public void persistResourceParameter(ResourceParameter resourceParameter) {
         resourceDao.persistResourceParameter(resourceParameter);
     }
     
-    public ResourceParameter loadResourceParameter(Serializable key) {
-        if (key instanceof String) {
-            return resourceDao.loadResourceParameter(Integer.parseInt((String) key)); 
-        }
-        return resourceDao.loadResourceParameter((Integer) key);
-    }
-    
     //
     
     public ResourceParameterValue createParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
-        return resourceCreator.resourceParameterValueFactory(resourceGroup, resourceParameter);
+        return ResourceCreatorImpl.resourceParameterValueFactory(resourceGroup, resourceParameter);
     }
 
     public ResourceParameterValue createSuppressedParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
-        return resourceCreator.resourceParameterValueFactory(resourceGroup, resourceParameter, true);
+        return ResourceCreatorImpl.resourceParameterValueFactory(resourceGroup, resourceParameter);
     }
 
     public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue) {
         resourceDao.persistResourceParameterValue(resourceParameterValue);
-    }
-    
-    public ResourceParameterValue loadResourceParameterValue(Serializable key) {
-        if (key instanceof String) {
-            return resourceDao.loadResourceParameterValue(Integer.parseInt((String) key)); 
-        }
-        return resourceDao.loadResourceParameterValue((Integer) key);
     }
     
     //
@@ -173,13 +142,8 @@ public class ResourceMgrImpl implements ResourceMgr {
     
     // accesssors and mutators
 
-    private ResourceCreator resourceCreator; 
     private PartnerDao partnerDao;
     private ResourceDao resourceDao;
-
-    public ResourceCreator getResourceCreator() {
-        return resourceCreator;
-    }
 
 	public PartnerDao getPartnerDao() {
 		return partnerDao;
@@ -187,11 +151,6 @@ public class ResourceMgrImpl implements ResourceMgr {
 
     public ResourceDao getResourceDao() {
         return resourceDao;
-    }
-
-    @Required
-    public void setResourceCreator(ResourceCreator resourceCreator) {
-        this.resourceCreator = resourceCreator;
     }
 
 	@Required

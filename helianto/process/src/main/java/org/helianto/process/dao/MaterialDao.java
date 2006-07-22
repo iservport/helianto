@@ -18,29 +18,25 @@ package org.helianto.process.dao;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.process.Operation;
-import org.helianto.process.Part;
-import org.helianto.process.Process;
-import org.helianto.process.Setup;
+import org.helianto.process.MaterialType;
+import org.helianto.process.Unit;
 
-public interface ProcessDao extends MaterialDao {
+public interface MaterialDao {
+
+    public void persistUnit(Unit unit);
+
+    public void persistMaterialType(MaterialType materialType);
+
+    public List<Unit> findUnitByEntity(Entity entity);
     
-    public void persist(Part part);
+    public Unit findUnitByEntityAndCode(Entity entity, String unitCode);
 
-    public void persist(Process process);
-
-    public void persist(Operation operation);
-
-    public void persist(Setup setup);
+    public List<MaterialType> findMaterialTypeByEntity(Entity entity);
     
-    //
-
-    public List<Part> findPartByEntity(Entity entity);
-
-    public List<Process> findProcessByEntity(Entity entity);
+    public MaterialType findMaterialTypeByEntityAnd(Entity entity, long internalNumber);
     
-    public List<Operation> findOperationByProcess(Entity entity);
+    public void removeUnit(Unit unit);
 
-    public List<Setup> findSetupByEntity(Entity entity);
+    public void removeMaterialType(MaterialType materialType);
 
 }
