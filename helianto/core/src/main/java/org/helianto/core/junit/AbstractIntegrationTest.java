@@ -32,10 +32,6 @@ public abstract class AbstractIntegrationTest extends
     @Override
     protected String[] getConfigLocations() {
         return new String[] { 
-                "deploy/dataSource.xml", 
-                "deploy/sessionFactory.xml",
-                "deploy/support.xml",
-                "deploy/transaction.xml",
                 "deploy/core.xml"
                 };
     }
@@ -58,6 +54,21 @@ public abstract class AbstractIntegrationTest extends
      */
     public static String generateKey(int size) {
         String localKey = generateKey();
+        while (localKey.length()!=size) {
+            if (localKey.length() > size) {
+                localKey = localKey.substring(localKey.length()-size, localKey.length());
+            } else if (localKey.length() < size) {
+                localKey = localKey.concat(localKey);
+            }
+        }
+        return localKey;
+    }
+
+    /**
+     * Generate a not repeatable key of a given size.
+     */
+    public static String generateKey(int size, int index) {
+        String localKey = index+"-"+generateKey();
         while (localKey.length()!=size) {
             if (localKey.length() > size) {
                 localKey = localKey.substring(localKey.length()-size, localKey.length());

@@ -48,7 +48,7 @@ public class AbstractEntityTest extends AbstractIntegrationTest {
         Home home = HomeCreatorImpl.homeFactory(generateKey(20));
         List<Entity> entities = new ArrayList<Entity>();
         for (int i = 0; i<size; i++) {
-            Entity e = EntityCreator.entityFactory(home, "ENTITY"+i);
+            Entity e = EntityCreator.entityFactory(home, generateKey(20, i));
             entities.add(e);
         }
         return entities;
