@@ -79,7 +79,7 @@ service will look-up the user hierarchy roles as well.
 		<!--
 				roles
 		-->
-		<set name="roles" inverse="true">
+		<set name="roles" inverse="true" cascade="save-update,merge">
 			<key column="userId"/>
 			<one-to-many class="org.helianto.core.UserRole"/>
 		</set>

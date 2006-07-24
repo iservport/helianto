@@ -47,9 +47,10 @@ Provinces.
 			<!-- 
 				home
 			-->
-			<many-to-one name="home"
+			<many-to-one name="home" cascade="save-update,merge"
 				class="org.helianto.core.Home">
 				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
 				<column name="homeId"/>
 			</many-to-one>
 			<!-- 
@@ -57,6 +58,7 @@ Provinces.
 			-->
 			<property name="code" type="string">
 				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
 				<column name="code" length="3"/>
 			</property>
 		</natural-id>

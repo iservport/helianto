@@ -111,7 +111,7 @@ Personal data, if any.
 		<!--
 				users
 		-->
-		<set name="users" inverse="true">
+		<set name="users" inverse="true" cascade="save-update,merge">
 			<key column="credentialId"/>
 			<one-to-many class="org.helianto.core.User"/>
 		</set>
