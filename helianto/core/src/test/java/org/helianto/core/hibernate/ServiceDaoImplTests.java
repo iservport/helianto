@@ -19,45 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Service;
-import org.helianto.core.User;
 import org.helianto.core.UserRole;
-import org.helianto.core.creation.ServiceCreator;
 import org.helianto.core.dao.ServiceDao;
-import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.core.junit.AbstractServiceTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class ServiceDaoImplTests extends AbstractIntegrationTest {
+public class ServiceDaoImplTests extends AbstractServiceTest {
     
     private ServiceDao serviceDao;
 
     /*
      * Service tests 
      */
-    
-    public static Service createAndPersistService(ServiceDao serviceDao) {
-        Service service = ServiceCreator.serviceFactory(generateKey(12));
-        if (serviceDao!=null) {
-            serviceDao.persistService(service);
-        }
-        return service;
-    }
-
-    public static List<Service> createAndPersistServiceList(HibernateTemplate hibernateTemplate, int i) {
-        List<Service> serviceList = createServiceList(i);
-        hibernateTemplate.saveOrUpdateAll(serviceList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return serviceList;
-    }
-    
-    public static List<Service> createServiceList(int size) {
-        List<Service> serviceList = new ArrayList<Service>();
-        for (int i=0;i<size;i++) {
-            serviceList.add(ServiceCreator.serviceFactory("SERVICE"+i));
-        }
-        return serviceList ;
-    }
     
     public void testPersistService() {
         //write
@@ -118,44 +91,6 @@ public class ServiceDaoImplTests extends AbstractIntegrationTest {
     /*
      * UserRole tests 
      */
-    
-    public static UserRole createAndPersistUserRole(ServiceDao serviceDao) {
-        User user = UserDaoImplTests.createAndPersistUser(serviceDao);
-        Service service = createAndPersistService(serviceDao);
-        UserRole userRole = ServiceCreator.userRoleFactory(user, service, "");
-        if (serviceDao!=null) {
-            serviceDao.persistUserRole(userRole);
-        }
-        return userRole;
-    }
-
-    public static List<UserRole> createAndPersistUserRoleList(HibernateTemplate hibernateTemplate, int eSize, int iSize, int sSize, int rSize) {
-        List<UserRole> userRoleList = createUserRoleList(eSize, iSize, sSize, rSize);
-        hibernateTemplate.saveOrUpdateAll(userRoleList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return userRoleList;
-    }
-    
-    public static List<UserRole> createUserRoleList(int eSize, int iSize, int sSize, int rSize) {
-        List<User> userList = UserDaoImplTests.createUsers(eSize, iSize);
-        List<Service> serviceList = createServiceList(sSize);
-        List<UserRole> userRoleList = new ArrayList<UserRole>();
-        for (User u: userList) {
-            for (Service s: serviceList) {
-                for (int i = 0;i<rSize;i++) {
-                    if (i==0) {
-                        userRoleList.add(ServiceCreator.userRoleFactory(u, s, ""));
-                    } else {
-                        userRoleList.add(ServiceCreator.userRoleFactory(u, s, "EXT"+i));
-                    }
-                }
-            }
-        }
-        return userRoleList ;
-    }
-
-    
     
     public void testPersistUserRole() {
         //write

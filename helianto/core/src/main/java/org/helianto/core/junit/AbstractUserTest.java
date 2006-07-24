@@ -18,6 +18,7 @@ package org.helianto.core.junit;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Home;
 import org.helianto.core.Identity;
@@ -64,6 +65,19 @@ public class AbstractUserTest extends AbstractCredentialTest {
     /**
      * Utility method to create users.
      * 
+     * @param credentialListSize
+     * @param entityListSize
+     * @return
+     */
+    public static List<User> createValidUserList(int entityListSize, int credentialListSize) {
+        List<Entity> entities = createEntityList(entityListSize);
+        List<Credential> credentials = createCredentialList(credentialListSize);
+        return createValidUserList(entities, credentials);
+    }
+    
+    /**
+     * Utility method to create users.
+     * 
      * @param identities
      * @param entities
      * @return
@@ -73,6 +87,24 @@ public class AbstractUserTest extends AbstractCredentialTest {
         for (Identity i: identities) {
             for (Entity e: entities) {
                 User u = UserCreator.userFactory(e, i);
+                users.add(u);
+            }
+        }
+        return users;
+    }
+    
+    /**
+     * Utility method to create users having a valid credential.
+     * 
+     * @param credentials
+     * @param entities
+     * @return
+     */
+    public static List<User> createValidUserList(List<Entity> entities, List<Credential> credentials) {
+        List<User> users = new ArrayList<User>();
+        for (Credential c: credentials) {
+            for (Entity e: entities) {
+                User u = UserCreator.userFactory(e, c.getIdentity());
                 users.add(u);
             }
         }
