@@ -111,9 +111,10 @@ public class AbstractResourceDaoTest extends AbstractIntegrationTest {
     }
     
     public static List<ResourceGroup> createResourceList(int size, int entityListSize, int parentListSize) {
-        List<ResourceGroup> resourceGroupList =  createResourceGroupList(size, entityListSize, parentListSize);
+        List<ResourceGroup> resourceGroupList =  createResourceGroupList(parentListSize, entityListSize);
         List<ResourceGroup> resourceList = new ArrayList<ResourceGroup>();
         for (ResourceGroup g: resourceGroupList) {
+            resourceList.add(g);
             for (int i=0;i<size;i++) {
                 resourceList.add(ResourceCreatorImpl.resourceFactory(g, generateKey(20, intValue++), null));
             }
