@@ -29,6 +29,8 @@ import org.helianto.process.type.ResourceType;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class AbstractResourceDaoTest extends AbstractIntegrationTest {
+	
+	static int intValue = 1;
 
     public static ResourceGroup createResourceGroup() {
         Entity entity = AbstractEntityTest.createAndPersistEntity(null);
@@ -100,21 +102,20 @@ public class AbstractResourceDaoTest extends AbstractIntegrationTest {
         return resource;
     }
 
-    public static List<Resource> createAndPersistResourceList(HibernateTemplate hibernateTemplate, int i, int e, int p) {
-        List<Resource> resourceList = createResourceList(i, e, p);
+    public static List<ResourceGroup> createAndPersistResourceList(HibernateTemplate hibernateTemplate, int i, int e, int p) {
+        List<ResourceGroup> resourceList = createResourceList(i, e, p);
         hibernateTemplate.saveOrUpdateAll(resourceList);
         hibernateTemplate.flush();
         hibernateTemplate.clear();
         return resourceList;
     }
     
-    // TODO avoid integrity violation
-    public static List<Resource> createResourceList(int size, int entityListSize, int parentListSize) {
+    public static List<ResourceGroup> createResourceList(int size, int entityListSize, int parentListSize) {
         List<ResourceGroup> resourceGroupList =  createResourceGroupList(size, entityListSize, parentListSize);
-        List<Resource> resourceList = new ArrayList<Resource>();
+        List<ResourceGroup> resourceList = new ArrayList<ResourceGroup>();
         for (ResourceGroup g: resourceGroupList) {
             for (int i=0;i<size;i++) {
-                resourceList.add(ResourceCreatorImpl.resourceFactory(g, generateKey(20, i), null));
+                resourceList.add(ResourceCreatorImpl.resourceFactory(g, generateKey(20, intValue++), null));
             }
         }
         return resourceList;
