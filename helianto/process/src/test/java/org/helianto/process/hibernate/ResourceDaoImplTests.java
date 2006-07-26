@@ -18,6 +18,7 @@ package org.helianto.process.hibernate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.dao.ResourceDao;
 import org.helianto.process.junit.AbstractResourceDaoTest;
@@ -109,6 +110,61 @@ public class ResourceDaoImplTests extends AbstractResourceDaoTest {
 //  List<ResourceGroup> findRootResourceByEntity(Entity entity);
 //  List<ResourceGroup> findRootResourceByEntityAndType(Entity entity, ResourceType resourceType);
     
+    /*
+     * Resource tests 
+     */
+    
+    public void testPersistResource() {
+        //write
+        Resource resource = createAndPersistResource(resourceDao);
+        hibernateTemplate.flush();
+        // TODO read
+//        assertEquals(resource,  resourceDao.findResource(resource));
+    }
+    
+    public void testFindResource() {
+        // write list
+//        int i = 10;
+//        int e = 2;
+//        int p = 2;
+        // TODO integrity violation
+//        List<Resource> resourceList = createAndPersistResourceList(hibernateTemplate, i, e, p);
+//        assertEquals(i*e*p, resourceList.size());
+//        // TODO read
+//        Resource resource = resourceList.get((int) Math.random()*i);
+//        assertEquals(resource,  resourceDao.findResource(resource);
+        // TODO add some more finders
+    }
+
+    public void testResourceDuplicate() {
+        // write
+        Resource resource = createAndPersistResource( resourceDao);
+        hibernateTemplate.clear();
+        // duplicate
+        try {
+            hibernateTemplate.save(resource); fail();
+        } catch (DataIntegrityViolationException e) { 
+        } catch (Exception e) { fail(); }
+    }
+    
+    public void testRemoveResource() {
+//        // bulk write
+//        int i = 10;
+//        int e = 2;
+//        int p = 2;
+//        List<Resource> resourceList = createAndPersistResourceList(hibernateTemplate, i, e, p);
+//        assertEquals(i*e*p, resourceList.size());
+//        // remove
+//        Resource resource = resourceList.get((int) Math.random()*i*e*p);
+//        resourceDao.removeResourceGroup(resource);
+//        hibernateTemplate.flush();
+//        hibernateTemplate.clear();
+//        // read
+//        List<Resource> all = (ArrayList<Resource>) hibernateTemplate.find("from Resource");
+//        assertEquals(i*e*p-1, all.size());
+//        assertFalse(all.contains(resource));
+    }
+
     // collaborators
 
     @Override

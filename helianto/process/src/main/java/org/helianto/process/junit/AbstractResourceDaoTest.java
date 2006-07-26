@@ -21,6 +21,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.junit.AbstractEntityTest;
 import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.creation.ResourceCreatorImpl;
 import org.helianto.process.dao.ResourceDao;
@@ -29,10 +30,15 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class AbstractResourceDaoTest extends AbstractIntegrationTest {
 
-    public static ResourceGroup createAndPersistResourceGroup(ResourceDao resourceDao) {
+    public static ResourceGroup createResourceGroup() {
         Entity entity = AbstractEntityTest.createAndPersistEntity(null);
         ResourceGroup resourceGroup = ResourceCreatorImpl.resourceGroupFactory(
                 entity, generateKey(20), ResourceType.EQUIPMENT);
+        return resourceGroup;
+    }
+
+    public static ResourceGroup createAndPersistResourceGroup(ResourceDao resourceDao) {
+        ResourceGroup resourceGroup = createResourceGroup();
         if (resourceDao!=null) {
             resourceDao.persistResourceGroup(resourceGroup);
         }
@@ -80,4 +86,40 @@ public class AbstractResourceDaoTest extends AbstractIntegrationTest {
         return resourceGroupList ;
     }
 
+    public static Resource createResource() {
+        ResourceGroup resourceGroup = createResourceGroup();
+        Resource resource = ResourceCreatorImpl.resourceFactory(resourceGroup, "R"+generateKey(19), null);
+        return resource;
+    }
+
+    public static Resource createAndPersistResource(ResourceDao resourceDao) {
+        Resource resource = createResource();
+        if (resourceDao!=null) {
+            resourceDao.persistResourceGroup(resource);
+        }
+        return resource;
+    }
+
+    public static List<Resource> createAndPersistResourceList(HibernateTemplate hibernateTemplate, int i, int e, int p) {
+        List<Resource> resourceList = createResourceList(i, e, p);
+        hibernateTemplate.saveOrUpdateAll(resourceList);
+        hibernateTemplate.flush();
+        hibernateTemplate.clear();
+        return resourceList;
+    }
+    
+    // TODO avoid integrity violation
+    public static List<Resource> createResourceList(int size, int entityListSize, int parentListSize) {
+        List<ResourceGroup> resourceGroupList =  createResourceGroupList(size, entityListSize, parentListSize);
+        List<Resource> resourceList = new ArrayList<Resource>();
+        for (ResourceGroup g: resourceGroupList) {
+            for (int i=0;i<size;i++) {
+                resourceList.add(ResourceCreatorImpl.resourceFactory(g, generateKey(20, i), null));
+            }
+        }
+        return resourceList;
+    }
+
+    
+    
 }
