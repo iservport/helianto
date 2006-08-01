@@ -75,6 +75,13 @@ A class to represent a process resource group.
 			resource type
 		-->
 		<property name="resourceType" type="char" not-null="true" />
+		<!--
+				resources
+		-->
+		<set name="resources" inverse="true" cascade="save-update,merge">
+			<key column="parentId"/>
+			<one-to-many class="org.helianto.process.ResourceGroup"/>
+		</set>
 		<!-- 
 			resource subclass
 		-->
