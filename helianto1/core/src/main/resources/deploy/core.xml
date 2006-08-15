@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+	<!--
+ Copyright 2005 I Serv Consultoria Empresarial Ltda.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+		-->
+<beans>
+
+	<!--
+			imports 	
+	-->
+	<import resource="classpath:/deploy/dataSource.xml"/>
+	<import resource="classpath:/deploy/sessionFactory.xml"/>
+	<import resource="classpath:/deploy/transaction.xml"/>
+	<import resource="classpath:/deploy/support.xml"/>
+	<!--
+			Operator dao implementation	
+	-->
+	<bean id="operatorDao" 
+		class="org.helianto.core.hibernate.OperatorDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			Authentication dao implementation	
+	-->
+	<bean id="authenticationDao" 
+		class="org.helianto.core.hibernate.AuthenticationDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			Authorization dao implementation	
+	-->
+	<bean id="authorizationDao" 
+		class="org.helianto.core.hibernate.AuthorizationDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			Entity dao implementation	
+	-->
+	<bean id="entityDao" 
+		class="org.helianto.core.hibernate.EntityDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			Partner dao implementation	
+	-->
+	<bean id="partnerDao" 
+		class="org.helianto.core.hibernate.PartnerDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			Simple core service bean	
+	-->
+	<bean id="partnerMgr" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="partnerTarget"
+				class="org.helianto.core.service.PartnerMgrImpl">
+				<property name="partnerDao" ref="partnerDao"/>
+			</bean>
+		</property>
+	</bean>
+	
+</beans>

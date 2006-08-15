@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!--
+	
+	Copyright 2005 I Serv Consultoria Empresarial Ltda.
+	
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+	
+	Hibernate mapping
+	
+-->
+<hibernate-mapping default-lazy="false">
+	<class table="core_partnerkey_m3" 
+	    name="org.helianto.core.PartnerKey">
+		<!-- 
+			PARTNER KEY
+			============================================= 
+		-->
+		<meta attribute="class-description">
+			<![CDATA[
+<p>
+Represents different key values for each <code>PartnerRole</code>.
+</p>
+
+@author Mauricio Fernandes de Castro
+				]]>
+		</meta>
+		<!-- 
+				id
+		-->
+		<id name="id" type="long">
+			<generator class="native" />
+		</id>
+		<natural-id>
+			<!-- 
+				partner
+			-->
+			<many-to-one name="partner"
+				class="org.helianto.core.Partner">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="partnerId"/>
+			</many-to-one>
+			<!-- 
+				key type
+			-->
+			<many-to-one name="keyType"
+				class="org.helianto.core.KeyType">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="keyTypeId"/>
+			</many-to-one>
+		</natural-id>
+		<!-- 
+			key value
+		-->
+		<property name="keyValue" type="string" length="20"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,52 @@
+Use Case: 3 - Update Personal Data
+
+  Level <USER GOAL>
+
+* Goal in Context: 
+
+  Update {{{apidocs/org/helianto/core/PersonalData.html}personal data}}.
+  
+* Preconditions: 
+
+  A {{{apidocs/org/helianto/core/Credential.html}credential}} must exist.
+  It may have been automatically created as in the {{{simpleuser.html}simple user}}
+  use case, or explicitly, in the workflow of {{{entityuser.html}entity user}} use case.
+  
+* Success Guarantee: 
+
+  * the {{{apidocs/org/helianto/core/PersonalData.html}personal data}} is up to date.
+  
+* Primary Actor: 
+
+  An PERSON in control of a {{{apidocs/org/helianto/core/Credential.html}credential}}.
+
+* <<MAIN SUCCESS SCENARIO:>>
+
+  * (1) the PERSON authenticates with valid {{{apidocs/org/helianto/core/Credential.html}credential}} data.
+  
+  * (2) the PERSON updates his/her {{{apidocs/org/helianto/core/PersonalData.html}personal data}}.
+
+
+** <<EXTENSIONS>>
+
+  * (1.1) can't authenticate: see the {{{simpleauthn.html}simple authentication and authorization}} use case.
+  
+  * pending
+
+
+* <<SUB-VARIATIONS>>
+
+  * none
+
+* <RELATED INFORMATION>
+
+  * Priority: see JIRA
+
+  * Frequency: high.
+
+  * Channel to primary actor: interactive.
+
+* <OPEN ISSUES>
+
+  * None.
+  

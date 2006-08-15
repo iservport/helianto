@@ -1,0 +1,24 @@
+Use Case: 1 - Design responsible parts management
+
+  Level <USER GOAL>
+
+* Goal in Context: 
+
+  Manage {{{apidocs/org/helianto/process/Part.html}parts}} with 
+  design responsibility assigned to the DESIGNER.
+  
+* Preconditions: 
+
+  pending
+  
+* Success Guarantee: 
+
+  * pending.
+  
+* Primary Actor: 
+
+  DESIGNER: the user who creates, reads, updates or deletes the part.
+
+* <<MAIN SUCCESS SCENARIO:>>
+
+  * (1) pending

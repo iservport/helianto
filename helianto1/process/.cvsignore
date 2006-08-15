@@ -1,0 +1,6 @@
+target
+deprecated
+.settings
+testdb
+.classpath
+.project

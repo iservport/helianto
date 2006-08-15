@@ -1,0 +1,24 @@
+Use Case: 2 - Third party parts management
+
+  Level <USER GOAL>
+
+* Goal in Context: 
+
+  Manage {{{apidocs/org/helianto/process/Part.html}parts}} with 
+  design responsibility assigned to a partner organization.
+  
+* Preconditions: 
+
+  pending
+  
+* Success Guarantee: 
+
+  * pending.
+  
+* Primary Actor: 
+
+  ANALYST: the user who registers, reads, updates or deletes the part.
+
+* <<MAIN SUCCESS SCENARIO:>>
+
+  * (1) pending

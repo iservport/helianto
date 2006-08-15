@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Helianto">
+	<bannerRight>
+		<name>Helianto</name>
+		<src>images/helianto-t.gif</src>
+		<href>http://www.helianto.org/</href>
+	</bannerRight>
+	<body>
+		<links>
+			<item name="Spring Framework"
+				href="http://www.springframework.org/"/>
+			<item name="Hibernate" href="http://www.hibernate.org/"/>
+			<item name="Acegi Security"
+				href="http://www.acegisecurity.org/"/>
+			<item name="Maven 2"
+				href="http://maven.apache.org/maven2/"/>
+		</links>
+		
+		<menu name="The Helianto Project">
+			<item name="Introduction" href="index.html"/>
+		</menu>
+		
+		<menu name="Documentation">
+			<item name="Reference guide (html)" href="docbook/helianto.html"/>
+			<item name="Reference guide (pdf)" href="docbook/helianto.pdf"/>
+			<item name="Helianto core Javadocs" href="helianto-core/apidocs/index.html"/>
+			<!--item name="Helianto process Javadocs" href="helianto-process/apidocs/index.html"/-->
+		</menu>
+		
+		<menu name="Development">
+			<item name="Road map" href="http://jira.helianto.org/jira/browse/HEL?report=com.atlassian.jira.plugin.system.project:roadmap-panel" target="_blank"/>
+		</menu>
+		
+		${modules}
+		
+		<!-- There is a hack in the plugin to make this work.
+			Will be fixed by next plugin version. Let's wait. -->
+		<!--powered-by>
+			<item name="Spring - java/j2ee Application Framework"
+				href="http://www.springframework.org/"
+				img="http://www.springframework.org/buttons/spring_white.png"/>
+			<item name="Hosted by SourceForge"
+				href="http://www.sourceforge.net"
+				img="http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=2"/>
+		</powered-by-->
+		
+	</body>
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>helianto-maven-skin</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</skin>
+		
+</project>

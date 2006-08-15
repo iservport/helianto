@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+	<!--
+ Copyright 2005 I Serv Consultoria Empresarial Ltda.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+		-->
+<beans>
+	<!--
+			Security Mgr	
+	-->
+	<bean id="securityMgr" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="securityTarget"
+				class="org.helianto.core.service.SecurityMgrImpl">
+				<property name="authenticationDao" ref="authenticationDao"/>
+				<property name="authorizationDao" ref="authorizationDao"/>
+			</bean>
+		</property>
+	</bean>
+	<!--
+			Security service 	
+	-->
+	<bean id="userDetailsService"
+		class="org.helianto.core.security.UserDetailsServiceImpl">
+		<property name="securityMgr" ref="securityMgr"/>
+		<property name="identityResolutionStrategy">
+			<bean id="identityResolutionStrategy"
+				class="org.helianto.core.security.SimpleIdentityResolver">
+				<property name="securityMgr" ref="securityMgr"/>
+			</bean>
+		</property>
+	</bean>
+	<!--
+			Security test dao
+			WARNING: do not use in production environment!
+	-->
+	<bean id="inMemoryDaoImpl"
+		class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
+		<property name="userMap">
+			<value> test=test,ROLE_USER test1=xxxx,ROLE_USER
+			</value>
+		</property>
+	</bean>
+	<!--
+			Security provider manager
+	-->
+	<bean id="authenticationManager"
+		class="org.acegisecurity.providers.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref local="daoAuthenticationProvider"/>
+				<ref local="anonymousAuthenticationProvider"/>
+			</list>
+		</property>
+	</bean>
+	<!--
+			Authentication provider 	
+	-->
+	<bean id="daoAuthenticationProvider"
+		class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsService"/>
+		<property name="userCache" ref="userCache"/>
+		<!--property name="passwordEncoder" ref="passwordEncoder"/-->
+	</bean>
+	<!--
+			Anonymous authentication provider 	
+	-->
+	<bean id="anonymousAuthenticationProvider"
+		class="org.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider">
+		<property name="key" value="foobar"/>
+	</bean>
+	<!--
+			Password encoder 	
+	-->
+	<bean id="passwordEncoder"
+		class="org.acegisecurity.providers.encoding.Md5PasswordEncoder"/>
+	<!--
+			User cache 	
+	-->
+	<bean id="userCache"
+		class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
+		<property name="cache">
+			<bean id="userCacheBackend"
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager">
+					<bean id="cacheManager"
+						class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
+				</property>
+				<property name="cacheName" value="userCache"/>
+			</bean>
+		</property>
+	</bean>
+	<!--
+			Role voter 	
+	-->
+	<bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter"/>
+	
+</beans>

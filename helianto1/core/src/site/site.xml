@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Helianto">
+	<bannerRight>
+		<name>Helianto</name>
+		<src>images/helianto-t.gif</src>
+		<href>http://www.helianto.org/</href>
+	</bannerRight>
+	<body>
+		<links>
+			<item name="Spring Framework"
+				href="http://www.springframework.org/"/>
+			<item name="Hibernate" href="http://www.hibernate.org/"/>
+			<item name="Acegi Security"
+				href="http://www.acegisecurity.org/"/>
+			<item name="Maven 2"
+				href="http://maven.apache.org/maven2/"/>
+		</links>
+		
+		<menu name="The Helianto Project Core Module">
+			<item name="Introduction" href="index.html"/>
+		</menu>
+		
+		<menu name="Use Cases">
+			<item name="Simple User" href="simpleuser.html"/>
+			<item name="Entity User" href="entityuser.html"/>
+			<item name="Update Personal Data" href="updatepd.html"/>
+			<item name="Simple Authentication and Authorization" href="simpleauthn.html"/>
+			<item name="Clear Password" href="clearpwd.html"/>
+			<item name="Entity Authentication" href="entityauthn.html"/>
+		</menu>
+		
+		${reports}
+		
+		<!-- There is a hack in the plugin to make this work.
+			Will be fixed by next plugin version. Let's wait. -->
+		<!--powered-by>
+			<item name="Spring - java/j2ee Application Framework"
+				href="http://www.springframework.org/"
+				img="http://www.springframework.org/buttons/spring_white.png"/>
+			<item name="Hosted by SourceForge"
+				href="http://www.sourceforge.net"
+				img="http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=2"/>
+		</powered-by-->
+		
+	</body>
+</project>
