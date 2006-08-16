@@ -24,7 +24,6 @@ import org.springframework.util.Assert;
  * Hibernate implementation for <code>CredentialDao</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public class AuthenticationDaoImpl extends GenericDaoImpl implements AuthenticationDao {
 

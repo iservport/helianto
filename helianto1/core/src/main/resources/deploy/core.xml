@@ -72,5 +72,12 @@
 			</bean>
 		</property>
 	</bean>
+	<!--
+			Authentication property editor registrar bean	
+	-->
+	<bean id="authenticationPropertyEditorRegistrar" 
+		class="org.helianto.core.validate.AuthenticationPropertyEditorRegistrar">
+	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 	
 </beans>
