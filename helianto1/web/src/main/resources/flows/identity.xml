@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flow PUBLIC "-//SPRING//DTD WEBFLOW 1.0//EN"  
+    "http://www.springframework.org/dtd/spring-webflow-1.0.dtd">
+
+<flow start-state="identity.view">
+
+	<var name="identityForm" class="org.helianto.web.view.IdentityForm"/>
+
+    <view-state id="identity.view" view="identity">
+		<transition on="persist" to="persist"/>
+		<transition on="cancel" to="bind"/>
+    </view-state>
+
+    <action-state id="persist">
+    	<entry-actions>
+	    	<action bean="identityAction" method="bind"/>
+    	</entry-actions>
+    	<action bean="identityAction"/>
+        <transition on-exception="org.springframework.dao.DataIntegrityViolationException" 
+        	to="nonUnique"/>
+    </action-state>
+    
+    <action-state id="nonUnique">
+    	<action bean="identityAction"/>
+		<transition on="success" to="identity.view"/>
+    </action-state>
+
+    <end-state id="end"/>
+    
+    <end-state id="error" view="abort"/>
+    
+	<global-transitions>
+        <transition on="error" to="error"/>
+        <transition on="success" to="bind"/>
+        <transition on="login_error" to="login.view"/>
+    </global-transitions>
+
+</flow>

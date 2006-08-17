@@ -16,13 +16,25 @@
 package org.helianto.web.controller;
 
 import org.helianto.core.service.UserMgr;
+import org.helianto.web.view.IdentityForm;
+import org.springframework.webflow.Event;
+import org.springframework.webflow.RequestContext;
 import org.springframework.webflow.action.FormAction;
 
 public class IdentityFormAction extends FormAction {
     
     private UserMgr userMgr;
     
+    public Event persist(RequestContext context) {
+        IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
+        userMgr.persistIdentity(form.getIdentity());
+        return success();
+    }
     
+    public Event nonUnique(RequestContext context) {
+        IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
+        return success();
+    }
     
     //~ collaborators
 
