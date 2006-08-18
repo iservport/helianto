@@ -15,7 +15,7 @@
 
 package org.helianto.web.controller;
 
-import org.helianto.core.service.UserMgr;
+import org.helianto.core.service.SecurityMgr;
 import org.helianto.web.view.IdentityForm;
 import org.springframework.webflow.Event;
 import org.springframework.webflow.RequestContext;
@@ -23,11 +23,11 @@ import org.springframework.webflow.action.FormAction;
 
 public class IdentityFormAction extends FormAction {
     
-    private UserMgr userMgr;
+    private SecurityMgr securityMgr;
     
     public Event persist(RequestContext context) {
         IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
-        userMgr.persistIdentity(form.getIdentity());
+        securityMgr.persistIdentity(form.getIdentity());
         return success();
     }
     
@@ -38,8 +38,8 @@ public class IdentityFormAction extends FormAction {
     
     //~ collaborators
 
-    public UserMgr getUserMgr() {
-        return userMgr;
+    public void setSecurityMgr(SecurityMgr securityMgr) {
+        this.securityMgr =  securityMgr;
     }
 
 }

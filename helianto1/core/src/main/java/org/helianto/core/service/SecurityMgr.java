@@ -7,7 +7,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 
-public interface SecurityMgr {
+public interface SecurityMgr extends UserMgr {
 	
 	public Identity findIdentityByPrincipal(String principal);
 	

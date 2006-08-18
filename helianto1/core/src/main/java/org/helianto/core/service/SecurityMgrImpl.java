@@ -2,22 +2,14 @@ package org.helianto.core.service;
 
 import java.util.Date;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
-import org.helianto.core.dao.AuthenticationDao;
-import org.helianto.core.dao.AuthorizationDao;
 import org.springframework.util.Assert;
 
-public class SecurityMgrImpl implements SecurityMgr {
+public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
 
-    private AuthenticationDao authenticationDao;
-    
-    private AuthorizationDao authorizationDao;
-    
 	public Identity findIdentityByPrincipal(String principal) {
 		return authenticationDao.findIdentityByPrincipal(principal);
 	}
@@ -52,16 +44,4 @@ public class SecurityMgrImpl implements SecurityMgr {
         return null;
     }
     
-    //~ collaborators
-
-    private final Log logger = LogFactory.getLog(SecurityMgrImpl.class);
-
-    public void setAuthenticationDao(AuthenticationDao authenticationDao) {
-        this.authenticationDao = authenticationDao;
-    }
-
-    public void setAuthorizationDao(AuthorizationDao authorizationDao) {
-        this.authorizationDao = authorizationDao;
-    }
-
 }

@@ -3,6 +3,8 @@ package org.helianto.core.service;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
@@ -10,6 +12,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
+import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
@@ -17,8 +20,10 @@ import org.helianto.core.security.UserDetailsAdapter;
 
 public class UserMgrImpl implements UserMgr {
 	
-    private AuthorizationDao authorizationDao;
-	
+    protected AuthenticationDao authenticationDao;
+    
+    protected AuthorizationDao authorizationDao;
+    
 	/* 
 	 * Create and persist Identity
 	 */
@@ -106,8 +111,14 @@ public class UserMgrImpl implements UserMgr {
     
     //~ collaborators
 
-	public void setAuthorizationDaoDao(AuthorizationDao authorizationDao) {
-		this.authorizationDao = authorizationDao;
-	}
+    private final Log logger = LogFactory.getLog(SecurityMgrImpl.class);
+
+    public void setAuthenticationDao(AuthenticationDao authenticationDao) {
+        this.authenticationDao = authenticationDao;
+    }
+
+    public void setAuthorizationDao(AuthorizationDao authorizationDao) {
+        this.authorizationDao = authorizationDao;
+    }
 
 }
