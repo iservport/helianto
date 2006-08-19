@@ -19,7 +19,7 @@
 	<tbody>
 		<tr style="background-image: url(img/vert-grad.png);">
 			<td align="left" height="80">
-	    		<img border="0" src="img/helianto.gif"/>
+	    		<img border="0" src="img/helianto-t.gif"/>
 			</td>
 			<td style="text-align: right;">About <a href="about.html">Helianto.org</a></td>
 		</tr>

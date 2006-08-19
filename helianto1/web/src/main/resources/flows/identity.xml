@@ -2,12 +2,17 @@
 <!DOCTYPE flow PUBLIC "-//SPRING//DTD WEBFLOW 1.0//EN"  
     "http://www.springframework.org/dtd/spring-webflow-1.0.dtd">
 
-<flow start-state="identity.view">
+<flow start-state="create">
 
 	<var name="identityForm" class="org.helianto.web.view.IdentityForm"/>
 
+    <action-state id="create">
+    	<action bean="identityAction"/>
+		<transition on="success" to="identity.view"/>
+    </action-state>
+
     <view-state id="identity.view" view="identity">
-		<transition on="persist" to="persist"/>
+		<transition on="page2" to="persist"/>
 		<transition on="cancel" to="bind"/>
     </view-state>
 
