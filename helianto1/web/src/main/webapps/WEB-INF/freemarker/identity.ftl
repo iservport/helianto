@@ -4,10 +4,13 @@
 <table>
 	<tr>
 	<td style="width: 35%; vertical-align: top; border: 1px dotted #cccccc;">
-	<p><@spring.messageText "identity.step1.header", "Registration process"/></p>
+	<p><@spring.messageText "identity.step1.header", "Registration process - Start"/></p>
 	<p><@spring.messageText "identity.step1.welcome", "Welcome to the registration  
 	    process. Please, follow the required steps bellow to input your identity
 	    and credentials."/></p>
+	<p><@spring.messageText "identity.step1.warning", "Notice that your email is
+		required to prevent duplicate identity registration. If you do not want
+		to provide such information, please, read <a href=''>this</a>."/></p>
 	</td>
 	<td style="width: 65%; vertical-align: top;">
 		<!-- 
@@ -17,17 +20,12 @@
 		<table>
 		
 			<tr class="t_title">
-			<td colspan="3"><@spring.messageText "identity.header", "Identification"/></td>
+			<td colspan="3"><@spring.messageText "identity.header1", "Identification"/></td>
 			</tr>
 			
 			<tr>
 			<td><@spring.messageText "identity.email", "E-mail"/>:</td>
 			<td><@spring.formInput "identityForm.identity.principal", 'size="32"'/></td>
-			</tr>
-
-			<tr>
-			<td><@spring.messageText "identity.optionalAlias", "Optional alias"/>:</td>
-			<td><@spring.formInput "identityForm.identity.optionalAlias", 'size="32"'/></td>
 			</tr>
 
 			<tr class="t_title">

@@ -12,18 +12,54 @@
     </action-state>
 
     <view-state id="identity.view" view="identity">
-		<transition on="page2" to="persist"/>
+		<transition on="page2" to="persistIdentity"/>
 		<transition on="cancel" to="bind"/>
     </view-state>
 
-    <action-state id="persist">
+    <action-state id="persistIdentity">
     	<entry-actions>
 	    	<action bean="identityAction" method="bind"/>
     	</entry-actions>
     	<action bean="identityAction"/>
+		<transition on="success" to="identity.details.view"/>
         <transition on-exception="org.springframework.dao.DataIntegrityViolationException" 
         	to="nonUnique"/>
     </action-state>
+    
+    <view-state id="identity.details.view" view="identity/details">
+		<transition on="page1" to="identity.view"/>
+		<transition on="page3" to="ifPersonal"/>
+		<transition on="cancel" to="bind"/>
+    </view-state>
+    
+    <decision-state id="ifPersonal">
+    	<entry-actions>
+	    	<action bean="identityAction" method="bind"/>
+    	</entry-actions>
+    	<if test="${flowScope.identityForm.identity.identityType == 'P'}" 
+    	    then="identity.personal.view" 
+    	    else="identity.confirm.view" />
+    </decision-state>
+
+    <view-state id="identity.personal.view" view="identity/personal">
+		<transition on="page2" to="identity.details.view"/>
+		<transition on="page4" to="identity.confirm.view"/>
+		<transition on="cancel" to="bind"/>
+    </view-state>
+    
+    <view-state id="identity.confirm.view" view="identity/confirm">
+		<transition on="change" to="ifPersonal"/>
+		<transition on="credential" to="identity.credential.view"/>
+		<transition on="confirm" to="persistFinal"/>
+		<transition on="cancel" to="bind"/>
+    </view-state>
+    
+    <view-state id="identity.credential.view" view="identity/credential">
+		<transition on="change" to="ifPersonal"/>
+		<transition on="credential" to="ifPersonal"/>
+		<transition on="confirm" to="persistFinal"/>
+		<transition on="cancel" to="bind"/>
+    </view-state>
     
     <action-state id="nonUnique">
     	<action bean="identityAction"/>

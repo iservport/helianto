@@ -15,6 +15,7 @@
 
 package org.helianto.web.view;
 
+import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 
 /**
@@ -24,14 +25,22 @@ import org.helianto.core.Identity;
  */
 public class IdentityForm {
 
-    private Identity identity;
+    private Credential credential;
     
     public Identity getIdentity() {
-        return identity;
+        return credential.getIdentity();
     }
 
     public void setIdentity(Identity identity) {
-        this.identity = identity;
+        this.credential.setIdentity(identity);
+    }
+
+    public Credential getCredential() {
+        return credential;
+    }
+
+    public void setCredential(Credential credential) {
+        this.credential = credential;
     }
 
 }

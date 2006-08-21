@@ -37,7 +37,7 @@
 				/logoff.htm=ROLE_ANONYMOUS,ROLE_USER
 				/login.htm*=ROLE_ANONYMOUS,ROLE_USER
 				/home.htm*flowid*=ROLE_ANONYMOUS
-				/home.htm*=ROLE_USER
+				/home.htm*=ROLE_ANONYMOUS
 				/user.htm*=ROLE_ANONYMOUS
 			</value>
 		</property>
