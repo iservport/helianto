@@ -7,7 +7,6 @@ package org.helianto.process.type;
  * The operation type enumeration.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public enum OperationType {
     
