@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	<!--
+
+ Copyright 2005 I Serv Consultoria Empresarial Ltda.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+		
+	Hibernate mapping
+		
+		-->
+<hibernate-mapping default-lazy="false">
+	<joined-subclass 
+	    name="org.helianto.process.Operation" 
+	    table="process_documentop_m3" 
+	    extends="org.helianto.process.Document">
+		<!-- 
+			OPERATION
+			============================================= 
+		-->
+		<meta attribute="class-description" inherit="false">
+			<![CDATA[
+<p>
+An operation.
+</p>
+
+@author Mauricio Fernandes de Castro
+				]]>
+		</meta>
+		<key column="id" />
+		<!-- 
+			operation type
+		-->
+		<property name="operationType" type="int" not-null="true" />
+		<!-- 
+			operation time
+		-->
+		<property name="operationTime" type="long" not-null="true" />
+		<!-- 
+			setups 
+		-->
+		<list name="setups" inverse="true" cascade="merge">
+			<key column="id" />
+			<list-index column="priority" />
+			<one-to-many class="org.helianto.process.Setup" />
+		</list>
+	</joined-subclass>
+</hibernate-mapping>
