@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.service.PartnerMgr;
+import org.helianto.process.ExternalDocument;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
@@ -46,6 +47,21 @@ public interface ProcessMgr extends PartnerMgr {
      */
     public MaterialType createMaterialType(Unit unit);
     
+    /**
+     * <code>ExternalDocument</code> of type category factory method.
+     */
+    public ExternalDocument createExternalDocumentCategory(Entity entity, String documentCode);
+
+    /**
+     * <code>ExternalDocument</code> of type folder factory method.
+     */
+    public ExternalDocument createExternalFolder(ExternalDocument parent, String documentCode);
+
+    /**
+     * <code>ExternalDocument</code> of type file factory method.
+     */
+    public ExternalDocument createExternalFile(ExternalDocument parent, String documentCode);
+
     /**
      * Part factory method.
      */

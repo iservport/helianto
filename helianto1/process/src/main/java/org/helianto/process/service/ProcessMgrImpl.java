@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.service.PartnerMgrImpl;
+import org.helianto.process.ExternalDocument;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
@@ -28,8 +29,10 @@ import org.helianto.process.Process;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
 import org.helianto.process.Unit;
+import org.helianto.process.creation.ExternalDocumentCreator;
 import org.helianto.process.creation.ProcessCreator;
 import org.helianto.process.dao.ProcessDao;
+import org.helianto.process.type.DocumentType;
 
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
@@ -41,6 +44,32 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     public MaterialType createMaterialType(Unit unit) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public ExternalDocument createExternalDocumentCategory(Entity entity, String documentCode) {
+        ExternalDocument externalDocument  = 
+            ExternalDocumentCreator.externalDocumentFactory(entity, documentCode, DocumentType.CATEGORY);
+        externalDocument.setDocName(documentCode);
+        externalDocument.setDocUrl(documentCode+"/");
+        return externalDocument;
+    }
+
+    public ExternalDocument createExternalFolder(ExternalDocument parent, String documentCode) {
+        ExternalDocument externalDocument  = 
+            ExternalDocumentCreator.externalDocumentFactory(parent.getEntity(), documentCode, DocumentType.FOLDER);
+        externalDocument.setParent(parent);
+        externalDocument.setDocName(documentCode);
+        externalDocument.setDocUrl(documentCode+"/");
+        return externalDocument;
+    }
+
+    public ExternalDocument createExternalFile(ExternalDocument parent, String documentCode) {
+        ExternalDocument externalDocument  = 
+            ExternalDocumentCreator.externalDocumentFactory(parent.getEntity(), documentCode, DocumentType.FILE);
+        externalDocument.setParent(parent);
+        externalDocument.setDocName(documentCode);
+        externalDocument.setDocUrl(documentCode+"/");
+        return externalDocument;
     }
 
     public Part createPart(Entity entity, boolean hasDrawing) {

@@ -27,18 +27,17 @@ import org.springframework.util.Assert;
  */
 public class AbstractDocumentCreator {
     
-    protected Document documentFactory(Class clazz, Entity entity, String documentCode) {
+    protected static Document documentFactory(Class clazz, Entity entity, String documentCode) {
         return documentFactory(clazz, entity, documentCode, "");
     }
     
-    protected Document documentFactory(Class clazz, Entity entity, String documentCode, String documentName) {
+    protected static Document documentFactory(Class clazz, Entity entity, String documentCode, String documentName) {
         Assert.notNull(entity);
         Document document;
         try {
             document = (Document) clazz.newInstance();
             document.setEntity(entity);
             document.setDocCode(documentCode);
-            document.setDocName(documentName);
             return document;
         } catch (Exception e) {
             throw new RuntimeException("Can't instantiate "+clazz);
