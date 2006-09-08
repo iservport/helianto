@@ -61,9 +61,19 @@ public class AuthenticationTestSupport extends AbstractIntegrationTest {
         return identities ;
     }
 
-    public static Credential createAndPersistCredential(AuthenticationDao credentialDao) {
-        Identity identity = createAndPersistIdentity(credentialDao);
+    public static Credential createCredential(Object... args) {
+        Identity identity;
+        try {
+            identity = (Identity) args[0];
+        } catch(ArrayIndexOutOfBoundsException e) {
+            identity = AuthenticationTestSupport.createIdentity();
+        }
         Credential credential = AuthenticationCreator.credentialFactory(identity, "");
+        return credential;
+    }
+
+    public static Credential createAndPersistCredential(AuthenticationDao credentialDao) {
+        Credential credential = createCredential();
         if (credentialDao!=null) {
             credentialDao.persistCredential(credential);
         }
