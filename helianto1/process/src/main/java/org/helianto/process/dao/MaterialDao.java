@@ -29,7 +29,7 @@ public interface MaterialDao {
 
     public List<Unit> findUnitByEntity(Entity entity);
     
-    public Unit findUnitByEntityAndCode(Entity entity, String unitCode);
+    public Unit findUnitByNaturalId(Entity entity, String unitCode);
 
     public List<MaterialType> findMaterialTypeByEntity(Entity entity);
     

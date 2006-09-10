@@ -38,7 +38,7 @@ public class MaterialDaoImpl extends GenericDaoImpl implements MaterialDao {
         return (ArrayList<Unit>) find(UNIT_QRY, entity);
     }
     
-    public Unit findUnitByEntityAndCode(Entity entity, String unitCode) {
+    public Unit findUnitByNaturalId(Entity entity, String unitCode) {
         return (Unit) findUnique(UNIT_QRY+UNIT_UNIQUE_FILTER, entity, unitCode);
     }
     

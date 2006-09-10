@@ -2,12 +2,11 @@ package org.helianto.process;
 
 import java.util.ArrayList;
 
+import junit.framework.TestCase;
+
 import org.helianto.core.Entity;
-import org.helianto.core.Identity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.process.type.DocumentType;
-
-import junit.framework.TestCase;
 
 public class DocumentDomainTests extends TestCase {
 	
@@ -46,7 +45,7 @@ public class DocumentDomainTests extends TestCase {
 		externalDocument.setDocType(DocumentType.CATEGORY.getValue());
 		externalDocument.setDocType(DocumentType.FILE.getValue());
 		externalDocument.setDocType(DocumentType.FOLDER.getValue());
-		externalDocument.setParent(new Document());
+		externalDocument.setParent(new ExternalDocument());
 	}
 
 }

@@ -30,7 +30,6 @@ import org.helianto.process.Resource;
 import org.helianto.process.Setup;
 import org.helianto.process.Unit;
 import org.helianto.process.creation.ExternalDocumentCreator;
-import org.helianto.process.creation.ProcessCreator;
 import org.helianto.process.dao.ProcessDao;
 import org.helianto.process.type.DocumentType;
 
@@ -105,8 +104,12 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         processDao.persistMaterialType(MaterialType);
     }
 
+    public void persistExternalDocument(ExternalDocument externalDocument) {
+        processDao.persistDocument(externalDocument);
+    }
+
     public void persistPart(Part part) {
-        processDao.persist(part);
+        processDao.persistDocument(part);
     }
 
     public void persistProcess(Process process) {
@@ -114,19 +117,39 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
             //FIXME internal number should return long ...
 //            process.setInternalNumber(new Long(currentNumber(process.getEntity(), "PROC")));
         }
-        processDao.persist(process);
+        processDao.persistDocument(process);
     }
 
     public void persistOperation(Operation operation) {
-        processDao.persist(operation);
+        processDao.persistDocument(operation);
     }
 
     public void persistSetup(Setup setup) {
-        processDao.persist(setup);
+        processDao.persistSetup(setup);
+    }
+
+    public Unit findUnitByNaturalId(Entity entity, String unitCode) {
+        return processDao.findUnitByNaturalId(entity, unitCode);
     }
 
     public List<Unit> findUnitByEntity(Entity entity) {
         return processDao.findUnitByEntity(entity);
+    }
+
+    public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode) {
+        return processDao.findExternalDocumentByNaturalId(entity, docCode);
+    }
+    
+    public List<ExternalDocument> findExternalDocumentByEntity(Entity entity) {
+        return processDao.findExternalDocumentByEntity(entity);
+    }
+
+    public List<ExternalDocument> findExternalDocumentRootByEntity(Entity entity) {
+        return processDao.findExternalDocumentRootByEntity(entity);
+    }
+
+    public List<ExternalDocument> findExternalDocumentByParent(ExternalDocument parent) {
+        return processDao.findExternalDocumentByParent(parent);
     }
 
 //    public 
@@ -135,14 +158,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     private ProcessDao processDao;
 
-    private ProcessCreator processCreator;
-
     public void setProcessDao(ProcessDao processDao) {
         this.processDao = processDao;
-    }
-
-    public void setProcessCreator(ProcessCreator processCreator) {
-        this.processCreator = processCreator;
     }
 
 }

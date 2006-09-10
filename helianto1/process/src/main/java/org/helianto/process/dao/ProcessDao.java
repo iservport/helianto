@@ -18,6 +18,8 @@ package org.helianto.process.dao;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.process.Document;
+import org.helianto.process.ExternalDocument;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
@@ -25,16 +27,36 @@ import org.helianto.process.Setup;
 
 public interface ProcessDao extends MaterialDao {
     
-    public void persist(Part part);
+    /**
+     * Persist <code>Document</code> and subclasses.
+     */
+    public void persistDocument(Document document);
 
-    public void persist(Process process);
+    public void persistSetup(Setup setup);
 
-    public void persist(Operation operation);
-
-    public void persist(Setup setup);
     
     //
 
+    /**
+     * <code>ExternalDocument</code> finder.
+     */
+    public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode);
+    
+    /**
+     * <code>ExternalDocument</code> entity finder.
+     */
+    public List<ExternalDocument> findExternalDocumentByEntity(Entity entity);
+
+    /**
+     * <code>ExternalDocument</code> root (null parent) finder.
+     */
+    public List<ExternalDocument> findExternalDocumentRootByEntity(Entity entity);
+
+    /**
+     * <code>ExternalDocument</code> finder by parent.
+     */
+    public List<ExternalDocument> findExternalDocumentByParent(ExternalDocument parent);
+    
     public List<Part> findPartByEntity(Entity entity);
 
     public List<Process> findProcessByEntity(Entity entity);
@@ -42,5 +64,10 @@ public interface ProcessDao extends MaterialDao {
     public List<Operation> findOperationByProcess(Entity entity);
 
     public List<Setup> findSetupByEntity(Entity entity);
+    
+    /**
+     * Remove <code>Document</code> and subclasses.
+     */
+    public void removeDocument(Document document);
 
 }

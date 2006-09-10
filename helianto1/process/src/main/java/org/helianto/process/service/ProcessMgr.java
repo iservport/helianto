@@ -118,8 +118,33 @@ public interface ProcessMgr extends PartnerMgr {
     public void persistSetup(Setup setup);
     
     /**
+     * Find <code>Unit</code> by <code>Entity</code> and code.
+     */
+    public Unit findUnitByNaturalId(Entity entity, String unitCode);
+    
+    /**
      * Find <code>Unit</code> list for this <code>Entity</code>
      */
     public List<Unit> findUnitByEntity(Entity entity);
+    
+    /**
+     * Find <code>ExternalDocument</code> by <code>Entity</code> and code.
+     */
+    public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode);
+    
+    /**
+     * Find <code>ExternalDocument</code> list for this <code>Entity</code>
+     */
+    public List<ExternalDocument> findExternalDocumentByEntity(Entity entity);
+
+    /**
+     * Find <code>ExternalDocument</code> list for this <code>Entity</code> where parent is null.
+     */
+    public List<ExternalDocument> findExternalDocumentRootByEntity(Entity entity);
+
+    /**
+     * Find <code>ExternalDocument</code> list for the parent.
+     */
+    public List<ExternalDocument> findExternalDocumentByParent(ExternalDocument parent);
     
 }

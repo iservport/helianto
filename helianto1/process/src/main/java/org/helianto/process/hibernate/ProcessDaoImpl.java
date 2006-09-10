@@ -19,70 +19,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.process.MaterialType;
+import org.helianto.process.Document;
+import org.helianto.process.ExternalDocument;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.Setup;
-import org.helianto.process.Unit;
 import org.helianto.process.dao.ProcessDao;
 
 public class ProcessDaoImpl extends MaterialDaoImpl implements ProcessDao {
 
-    public void persist(Unit unit) {
-        merge(unit);
+    public void persistDocument(Document document) {
+        merge(document);
     }
 
-    public void persist(MaterialType materialType) {
-        merge(materialType);
-    }
-
-    public void persist(Part part) {
-        merge(part);
-    }
-
-    public void persist(Process process) {
-        merge(process);
-    }
-
-    public void persist(Operation operation) {
-        merge(operation);
-    }
-
-    public void persist(Setup setup) {
+    public void persistSetup(Setup setup) {
         merge(setup);
     }
 
-    public Unit loadUnit(int key) {
-        return (Unit) load(Unit.class, key);
+    public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode) {
+        return (ExternalDocument) findUnique(EXTERNALDOCUMENT_QRY, entity, docCode);
+    }
+    
+    public List<ExternalDocument> findExternalDocumentByEntity(Entity entity) {
+        return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_ENTITY_QRY, entity);
     }
 
-    public MaterialType loadMaterialType(long key) {
-        return (MaterialType) load(MaterialType.class, key);
+    public List<ExternalDocument> findExternalDocumentRootByEntity(Entity entity) {
+        return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_ROOT_QRY, entity);
     }
 
-    public Part loadPart(long key) {
-        return (Part) load(Part.class, key);
-    }
-
-    public Process loadProcess(long key) {
-        return (Process) load(Process.class, key);
-    }
-
-    public Operation loadOperation(long key) {
-        return (Operation) load(Operation.class, key);
-    }
-
-    public Setup loadSetup(long key) {
-        return (Setup) load(Setup.class, key);
-    }
-
-    public List<Unit> findUnitByEntity(Entity entity) {
-        return (ArrayList<Unit>) find(UNIT_QRY, entity);
-    }
-
-    public List<MaterialType> findMaterialTypeByEntity(Entity entity) {
-        return (ArrayList<MaterialType>) find(MATERIALTYPE_QRY, entity);
+    public List<ExternalDocument> findExternalDocumentByParent(ExternalDocument parent) {
+        return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_PARENT_QRY, parent);
     }
 
     public List<Part> findPartByEntity(Entity entity) {
@@ -101,10 +69,14 @@ public class ProcessDaoImpl extends MaterialDaoImpl implements ProcessDao {
         return (ArrayList<Setup>) find(SETUP_QRY, entity);
     }
 
-    static final String UNIT_QRY = "from Unit unit " +
-            "where unit.entity = ? ";
-    static final String MATERIALTYPE_QRY = "from MaterialType materialType " +
-            "where materialType.entity = ? ";
+    static String EXTERNALDOCUMENT_QRY = "from ExternalDocument externalDocument "+
+        "where externalDocument.entity = ? and externalDocument.docCode = ? ";
+    static final String EXTERNALDOCUMENT_ENTITY_QRY = "from ExternalDocument externalDocument " +
+        "where externalDocument.entity = ? ";
+    static final String EXTERNALDOCUMENT_ROOT_QRY = "from ExternalDocument externalDocument " +
+        "where externalDocument.entity = ? and externalDocument.parent = null ";
+    static final String EXTERNALDOCUMENT_PARENT_QRY = "from ExternalDocument externalDocument " +
+        "where externalDocument.parent = ? ";
     static final String PART_QRY = null;
     static final String PROCESS_QRY = null;
     static final String OPERATION_QRY = null;
@@ -114,6 +86,9 @@ public class ProcessDaoImpl extends MaterialDaoImpl implements ProcessDao {
         "from Tree tree where tree.parent.id = ? " +
         "and tree.child = ?";
 
-
+    public void removeDocument(Document document) {
+        remove(document);
+        
+    }
 
 }
