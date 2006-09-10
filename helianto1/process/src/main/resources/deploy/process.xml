@@ -50,10 +50,12 @@
 	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
-			Process creator implementation	
+		Document property editor registrar
 	-->
-	<bean id="processCreator" 
-		class="org.helianto.process.creation.ProcessCreatorImpl"/>
+	<bean id="documentPropertyEditorRegistrar" 
+	    class="org.helianto.process.validation.DocumentPropertyEditorRegistrar">
+	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 	<!--
 			process dao	
 	-->
@@ -69,7 +71,6 @@
 		<property name="target">
 			<bean id="processTarget"
 				class="org.helianto.process.service.ProcessMgrImpl">
-				<property name="processCreator" ref="processCreator"/>
 				<property name="processDao" ref="processDao"/>
 			</bean>
 		</property>

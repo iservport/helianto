@@ -33,7 +33,7 @@ public class MaterialDaoImplTests extends AbstractMaterialTest {
         Unit unit = createAndPersistUnit(materialDao);
         hibernateTemplate.flush();
         //read
-        assertEquals(unit,  materialDao.findUnitByEntityAndCode(unit.getEntity(), unit.getUnitCode()));
+        assertEquals(unit,  materialDao.findUnitByNaturalId(unit.getEntity(), unit.getUnitCode()));
     }
     
     public void testFindUnit() {
@@ -44,7 +44,7 @@ public class MaterialDaoImplTests extends AbstractMaterialTest {
         assertEquals(i*e, unitList.size());
         // read
         Unit unit = unitList.get((int) Math.random()*i);
-        assertEquals(unit,  materialDao.findUnitByEntityAndCode(unit.getEntity(), unit.getUnitCode()));
+        assertEquals(unit,  materialDao.findUnitByNaturalId(unit.getEntity(), unit.getUnitCode()));
         // TODO add some more finders
     }
 
