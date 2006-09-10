@@ -44,11 +44,11 @@ documents.
 		<id name="id" type="long" unsaved-value="null">
 			<generator class="native" />
 		</id>
-		<discriminator column="type" type="int" />
 		<!-- 
 			parent entity
 		-->
-		<many-to-one name="entity" class="org.helianto.core.Entity">
+		<many-to-one name="entity" class="org.helianto.core.Entity"
+		    cascade="save-update,merge">
 			<meta attribute="use-in-equals">true</meta>
 			<column name="entityId" unique-key="entity" not-null="true" />
 		</many-to-one>
@@ -67,7 +67,7 @@ documents.
 		<!-- 
 			children
 		-->
-		<list name="children" inverse="true" cascade="merge">
+		<list name="children" inverse="true" cascade="save-update,merge">
 			<key column="id" />
 			<list-index column="sequence" />
 			<one-to-many class="org.helianto.process.Tree" />
