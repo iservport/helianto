@@ -17,6 +17,10 @@
 		-->
 <beans>
 	<!--
+			imports 	
+	-->
+	<import resource="classpath:/deploy/core.xml"/>
+	<!--
 			material dao	
 	-->
 	<bean id="materialDao" class="org.helianto.process.hibernate.MaterialDaoImpl">
