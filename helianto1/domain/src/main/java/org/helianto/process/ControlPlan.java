@@ -1,18 +1,18 @@
 package org.helianto.process;
-// Generated 15/08/2006 12:04:35 by Hibernate Tools 3.1.0.beta4
+// Generated 09/09/2006 21:08:18 by Hibernate Tools 3.1.0.beta4
 
 import java.util.List;
 import org.helianto.core.Entity;
 
 
 /**
- * 					
+ * 			
  * <p>
  * A control plan.
  * </p>
  * @author Mauricio Fernandes de Castro
  * 				
- * 				
+ * 		
  */
 
 public class ControlPlan extends org.helianto.process.Process implements java.io.Serializable {
@@ -36,8 +36,8 @@ public class ControlPlan extends org.helianto.process.Process implements java.io
     }
     
     /** full constructor */
-    public ControlPlan(Entity entity, String docCode, String docName, String docUrl, List<Tree> children, long internalNumber, int phase) {
-        super(entity, docCode, docName, docUrl, children, internalNumber);        
+    public ControlPlan(Entity entity, String docCode, String docName, List<Tree> children, long internalNumber, int phase) {
+        super(entity, docCode, docName, children, internalNumber);        
         this.phase = phase;
     }
     

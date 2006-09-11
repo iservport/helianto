@@ -1,17 +1,17 @@
 package org.helianto.process;
-// Generated 15/08/2006 12:04:36 by Hibernate Tools 3.1.0.beta4
+// Generated 09/09/2006 21:08:18 by Hibernate Tools 3.1.0.beta4
 
 
 
 /**
- * 					
+ * 				
  * <p>
  * Specification limits.
  * </p>
  * 	
  * @author Mauricio Fernandes de Castro
  * 				
- * 				
+ * 			
  */
 
 public class SpecificationLimit  implements java.io.Serializable {

@@ -1,18 +1,18 @@
 package org.helianto.process;
-// Generated 15/08/2006 12:04:36 by Hibernate Tools 3.1.0.beta4
+// Generated 09/09/2006 21:08:18 by Hibernate Tools 3.1.0.beta4
 
 import java.util.List;
 import org.helianto.core.Entity;
 
 
 /**
- * 				
+ * 			
  * <p>
  * A part.
  * </p>
  * @author Mauricio Fernandes de Castro
  * 				
- * 			
+ * 		
  */
 
 public class Part extends org.helianto.process.Document implements java.io.Serializable {
@@ -37,8 +37,8 @@ public class Part extends org.helianto.process.Document implements java.io.Seria
     }
     
     /** full constructor */
-    public Part(Entity entity, String docCode, String docName, String docUrl, List<Tree> children, boolean hasDrawing, MaterialType materialType) {
-        super(entity, docCode, docName, docUrl, children);        
+    public Part(Entity entity, String docCode, String docName, List<Tree> children, boolean hasDrawing, MaterialType materialType) {
+        super(entity, docCode, docName, children);        
         this.hasDrawing = hasDrawing;
         this.materialType = materialType;
     }

@@ -1,5 +1,5 @@
 package org.helianto.purchase;
-// Generated 15/08/2006 12:04:34 by Hibernate Tools 3.1.0.beta4
+// Generated 09/09/2006 21:08:16 by Hibernate Tools 3.1.0.beta4
 
 import java.math.BigDecimal;
 import java.util.Date;

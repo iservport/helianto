@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 15/08/2006 12:04:34 by Hibernate Tools 3.1.0.beta4
+// Generated 09/09/2006 21:08:17 by Hibernate Tools 3.1.0.beta4
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,6 @@ public class Document  implements java.io.Serializable {
      private Entity entity;
      private String docCode;
      private String docName;
-     private String docUrl;
      private List<Tree> children = new ArrayList<Tree>(0);
 
 
@@ -46,11 +45,10 @@ public class Document  implements java.io.Serializable {
     }
     
     /** full constructor */
-    public Document(Entity entity, String docCode, String docName, String docUrl, List<Tree> children) {
+    public Document(Entity entity, String docCode, String docName, List<Tree> children) {
         this.entity = entity;
         this.docCode = docCode;
         this.docName = docName;
-        this.docUrl = docUrl;
         this.children = children;
     }
     
@@ -90,14 +88,6 @@ public class Document  implements java.io.Serializable {
         this.docName = docName;
     }
 
-    public String getDocUrl() {
-        return this.docUrl;
-    }
-    
-    public void setDocUrl(String docUrl) {
-        this.docUrl = docUrl;
-    }
-
     public List<Tree> getChildren() {
         return this.children;
     }
@@ -125,7 +115,6 @@ public class Document  implements java.io.Serializable {
          
          result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getDocCode() == null ? 0 : this.getDocCode().hashCode() );
-         
          
          
          return result;

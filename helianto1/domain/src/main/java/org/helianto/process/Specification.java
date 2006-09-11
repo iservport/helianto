@@ -1,18 +1,18 @@
 package org.helianto.process;
-// Generated 15/08/2006 12:04:35 by Hibernate Tools 3.1.0.beta4
+// Generated 09/09/2006 21:08:18 by Hibernate Tools 3.1.0.beta4
 
 import java.util.List;
 import org.helianto.core.Entity;
 
 
 /**
- * 				
+ * 			
  * <p>
  * A process characteristic specification.
  * </p>
  * @author Mauricio Fernandes de Castro
  * 				
- * 			
+ * 		
  */
 
 public class Specification extends org.helianto.process.Document implements java.io.Serializable {
@@ -37,8 +37,8 @@ public class Specification extends org.helianto.process.Document implements java
     }
     
     /** full constructor */
-    public Specification(Entity entity, String docCode, String docName, String docUrl, List<Tree> children, Unit unit, SpecificationLimit specificationLimit) {
-        super(entity, docCode, docName, docUrl, children);        
+    public Specification(Entity entity, String docCode, String docName, List<Tree> children, Unit unit, SpecificationLimit specificationLimit) {
+        super(entity, docCode, docName, children);        
         this.unit = unit;
         this.specificationLimit = specificationLimit;
     }
