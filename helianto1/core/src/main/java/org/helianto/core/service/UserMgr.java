@@ -7,6 +7,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
+import org.helianto.core.security.PublicUserDetails;
 
 public interface UserMgr {
 	
@@ -51,6 +52,9 @@ public interface UserMgr {
      */
     public List<UserGroup> findUserByEntity(Entity entity);
     
-
+    /**
+     * <p>Utility method to find <code>PublicUserDetails</code> stored in a security context.</p>
+     */
+    public PublicUserDetails findSecureUser();
 
 }
