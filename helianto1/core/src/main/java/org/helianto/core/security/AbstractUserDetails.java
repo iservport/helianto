@@ -55,11 +55,15 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
      * instance held in the <code>SecurityContext</code>.
      */
     public static PublicUserDetails retrievePublicUserDetailsFromSecurityContext() {
-        PublicUserDetails pud = (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-        if (logger.isDebugEnabled()) {
-            logger.debug("PublicUserDetails retrieved from security context");
-        }
-        return pud;
+    	Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	if (userDetails instanceof PublicUserDetails) {
+            PublicUserDetails pud = (PublicUserDetails) userDetails;  
+            if (logger.isDebugEnabled()) {
+                logger.debug("PublicUserDetails retrieved from security context");
+            }
+            return pud;
+    	}
+    	return null;
     }
     
     public boolean isAccountNonExpired() {
@@ -121,10 +125,8 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
         }
     }
     
-    private AbstractUserDetails() {
-        validateUserAndCredentialCompatibility();
-    }
-
+    AbstractUserDetails() {}
+    
     static final Log logger = LogFactory.getLog(AbstractUserDetails.class);
     
 }
