@@ -131,7 +131,7 @@ a single authentication scheme and have multiple authorization schemes, one per
 					account non expired 
 			-->
 			<property name="accountNonExpired" type="boolean">
-				<column name="accountNonExpired" not-null="true" default="true"/>
+				<column name="accountNonExpired" not-null="true" default="1"/>
 			</property>
 		</subclass>
 	</class>
