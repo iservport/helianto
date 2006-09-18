@@ -33,12 +33,9 @@
 			<value> 
 			    CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 				PATTERN_TYPE_APACHE_ANT
-				/hello.htm=ROLE_ANONYMOUS,ROLE_USER
-				/logoff.htm=ROLE_ANONYMOUS,ROLE_USER
-				/login.htm*=ROLE_ANONYMOUS,ROLE_USER
-				/home.htm*flowid*=ROLE_ANONYMOUS
-				/home.htm*=ROLE_ANONYMOUS
-				/user.htm*=ROLE_ANONYMOUS
+				/logoff.htm=ROLE_ANONYMOUS
+				/login.htm*=ROLE_ANONYMOUS
+				/home.htm*=ROLE_USER
 			</value>
 		</property>
 	</bean>

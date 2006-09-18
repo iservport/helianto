@@ -17,13 +17,6 @@
 -->
 <beans>
 	<!--
-		Flow controller
-	-->
-	<bean name="/home.htm"
-		class="org.springframework.webflow.executor.mvc.FlowController">
-		<property name="flowLocator" ref="flowRegistry" />
-	</bean>
-	<!--
 		Flow registry
 	-->
 	<bean name="flowRegistry"
