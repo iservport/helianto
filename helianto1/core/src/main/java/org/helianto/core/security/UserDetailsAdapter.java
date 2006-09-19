@@ -57,7 +57,6 @@ import org.springframework.util.Assert;
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  * @see org.acegisecurity.providers.dao.User org.acegisecurity.providers.dao.User
  */
 public final class UserDetailsAdapter extends AbstractUserDetails implements Serializable, PublicUserDetailsSwitcher {

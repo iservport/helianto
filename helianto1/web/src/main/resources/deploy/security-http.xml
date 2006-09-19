@@ -33,8 +33,6 @@
 			<value> 
 			    CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 				PATTERN_TYPE_APACHE_ANT
-				/logoff.htm=ROLE_ANONYMOUS
-				/login.htm*=ROLE_ANONYMOUS
 				/home.htm*=ROLE_USER
 			</value>
 		</property>
@@ -97,7 +95,7 @@
 	-->
 	<bean id="authenticationProcessingFilterEntryPoint"
 		class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
-		<property name="loginFormUrl" value="/login.ftl"/>
+		<property name="loginFormUrl" value="/login.html"/>
 		<property name="forceHttps" value="false"/>
 	</bean>
 	<!--

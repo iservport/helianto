@@ -112,7 +112,7 @@ public class AuthorizationDaoImpl extends GenericDaoImpl implements Authorizatio
     }
 
     static final String LASTUSERLOG_QRY = "from UserLog userLog "
-            + "where userLog.user.identity = ? " + "and userLog.lastLogin = ? ";
+            + "where userLog.user.identity = ? " + "and userLog.lastEvent = ? ";
 
     public List<UserLog> findUserLogByUser(User requiredUser) {
         Assert.notNull(requiredUser);
