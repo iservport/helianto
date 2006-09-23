@@ -19,6 +19,7 @@ public class DocumentDomainTests extends TestCase {
 		document.setDocCode("");
 		document.setDocName("");
 		document.setChildren(new ArrayList<Tree>(0));
+        document.setParent(new Document());
 	}
 	
 	public void testDocumentEquals() {
@@ -45,7 +46,6 @@ public class DocumentDomainTests extends TestCase {
 		externalDocument.setDocType(DocumentType.CATEGORY.getValue());
 		externalDocument.setDocType(DocumentType.FILE.getValue());
 		externalDocument.setDocType(DocumentType.FOLDER.getValue());
-		externalDocument.setParent(new ExternalDocument());
 	}
 
 }

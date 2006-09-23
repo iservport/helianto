@@ -47,23 +47,33 @@ documents.
 		<!-- 
 			parent entity
 		-->
-		<many-to-one name="entity" class="org.helianto.core.Entity"
-		    cascade="save-update,merge">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="entityId" unique-key="entity" not-null="true" />
-		</many-to-one>
-		<!-- 
-			document code
-		-->
-		<property name="docCode" type="string">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="docCode" length="24" unique-key="entity"
-				not-null="true" />
-		</property>
+		<natural-id>
+			<many-to-one name="entity" class="org.helianto.core.Entity"
+			    cascade="save-update,merge">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="entityId"/>
+			</many-to-one>
+			<!-- 
+				document code
+			-->
+			<property name="docCode" type="string">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="docCode" length="24"/>
+			</property>
+		</natural-id>
 		<!-- 
 			document name
 		-->
 		<property name="docName" type="string" length="128" />
+		<!-- 
+			parent
+		-->
+		<many-to-one name="parent"  cascade="save-update,merge"
+			class="org.helianto.process.Document">
+			<column name="parentId" not-null="false" />
+		</many-to-one>
 		<!-- 
 			children
 		-->

@@ -48,12 +48,5 @@ Documents to be stored appart from the datastore.
 			document type
 		-->
 		<property name="docType" type="char"/>
-		<!-- 
-			parent
-		-->
-		<many-to-one name="parent"
-			class="org.helianto.process.ExternalDocument">
-			<column name="parentId" />
-		</many-to-one>
 	</joined-subclass>
 </hibernate-mapping>
