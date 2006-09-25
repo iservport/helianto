@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 09/09/2006 21:08:18 by Hibernate Tools 3.1.0.beta4
+// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
 
 import java.util.List;
 import org.helianto.core.Entity;
@@ -37,8 +37,8 @@ public class Specification extends org.helianto.process.Document implements java
     }
     
     /** full constructor */
-    public Specification(Entity entity, String docCode, String docName, List<Tree> children, Unit unit, SpecificationLimit specificationLimit) {
-        super(entity, docCode, docName, children);        
+    public Specification(Entity entity, String docCode, String docName, Document parent, List<Tree> children, Unit unit, SpecificationLimit specificationLimit) {
+        super(entity, docCode, docName, parent, children);        
         this.unit = unit;
         this.specificationLimit = specificationLimit;
     }

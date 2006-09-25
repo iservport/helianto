@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 09/09/2006 21:08:17 by Hibernate Tools 3.1.0.beta4
+// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
 
 import java.util.List;
 import org.helianto.core.Entity;
@@ -35,8 +35,8 @@ public class Process extends org.helianto.process.Document implements java.io.Se
     }
     
     /** full constructor */
-    public Process(Entity entity, String docCode, String docName, List<Tree> children, long internalNumber) {
-        super(entity, docCode, docName, children);        
+    public Process(Entity entity, String docCode, String docName, Document parent, List<Tree> children, long internalNumber) {
+        super(entity, docCode, docName, parent, children);        
         this.internalNumber = internalNumber;
     }
     

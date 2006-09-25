@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 09/09/2006 21:08:17 by Hibernate Tools 3.1.0.beta4
+// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
 
 import java.util.List;
 import org.helianto.core.Entity;
@@ -22,7 +22,6 @@ public class ExternalDocument extends org.helianto.process.Document implements j
 
      private String docUrl;
      private char docType;
-     private ExternalDocument parent;
 
 
     // Constructors
@@ -37,11 +36,10 @@ public class ExternalDocument extends org.helianto.process.Document implements j
     }
     
     /** full constructor */
-    public ExternalDocument(Entity entity, String docCode, String docName, List<Tree> children, String docUrl, char docType, ExternalDocument parent) {
-        super(entity, docCode, docName, children);        
+    public ExternalDocument(Entity entity, String docCode, String docName, Document parent, List<Tree> children, String docUrl, char docType) {
+        super(entity, docCode, docName, parent, children);        
         this.docUrl = docUrl;
         this.docType = docType;
-        this.parent = parent;
     }
     
 
@@ -62,14 +60,6 @@ public class ExternalDocument extends org.helianto.process.Document implements j
     
     public void setDocType(char docType) {
         this.docType = docType;
-    }
-
-    public ExternalDocument getParent() {
-        return this.parent;
-    }
-    
-    public void setParent(ExternalDocument parent) {
-        this.parent = parent;
     }
    
 
