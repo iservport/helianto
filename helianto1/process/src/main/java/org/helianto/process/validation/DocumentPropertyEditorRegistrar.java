@@ -16,9 +16,11 @@
 package org.helianto.process.validation;
 
 import java.beans.PropertyEditor;
+import java.io.Serializable;
 
 import org.helianto.core.validate.AbstractHibernatePropertyEditor;
 import org.helianto.core.validate.AbstractPropertyEditorRegistrar;
+import org.helianto.process.Document;
 import org.helianto.process.ExternalDocument;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.orm.hibernate3.HibernateOperations;
@@ -27,11 +29,43 @@ public class DocumentPropertyEditorRegistrar extends
         AbstractPropertyEditorRegistrar {
 
     public void registerCustomEditors(PropertyEditorRegistry registry) {
+        PropertyEditor documentPropertyEditor = new DocumentPropertyEditor(getHibernateTemplate());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Registering custom editor "+documentPropertyEditor);
+        }
+        registry.registerCustomEditor(Document.class, documentPropertyEditor);
+
         PropertyEditor externalDocumentPropertyEditor = new ExternalDocumentPropertyEditor(getHibernateTemplate());
         if (logger.isDebugEnabled()) {
             logger.debug("Registering custom editor "+externalDocumentPropertyEditor);
         }
         registry.registerCustomEditor(ExternalDocument.class, externalDocumentPropertyEditor);
+    }
+    
+    /**
+     * Default hibernate backed <code>Document</code> property editor.
+     * 
+     * @author Mauricio Fernandes de Castro
+     */
+    public class DocumentPropertyEditor extends AbstractHibernatePropertyEditor {
+        
+        public DocumentPropertyEditor(HibernateOperations hibernateTemplate) {
+            super(hibernateTemplate);
+        }
+        @Override
+        public String getAsText() {
+            return String.valueOf(((Document) getValue()).getDocCode());
+        }
+        @Override
+        public void setAsText(String id) throws IllegalArgumentException {
+            setAsText(id, ExternalDocument.class);
+        }
+
+        @Override
+        protected Serializable resolveId(String id) {
+            return Long.parseLong(id);
+        }
+        
     }
     
     /**
@@ -50,9 +84,20 @@ public class DocumentPropertyEditorRegistrar extends
         }
         @Override
         public void setAsText(String id) throws IllegalArgumentException {
-            setAsText(id, ExternalDocument.class);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Loaded ExternalDocument property editor");
+            }
+            try {
+                Object value = getHibernateTemplate().load(ExternalDocument.class, Long.parseLong(id));
+                super.setValue(value);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Loaded property: "+value);
+                }
+            } catch (Exception e) {
+                super.setValue(null);
+            }
         }
-
+        
     }
     
 }
