@@ -37,7 +37,7 @@ public class DocumentPropertyEditorRegistrarTests extends TestCase {
         ExternalDocument loaded = new ExternalDocument();
         loaded.setDocCode("TEST");
         
-        expect(hibernateTemplate.load(ExternalDocument.class, 5)).andReturn(loaded);
+        expect(hibernateTemplate.load(ExternalDocument.class, new Long(5))).andReturn(loaded);
         replay(hibernateTemplate);
         
         ExternalDocumentForm externalDocumentForm = new ExternalDocumentForm();
