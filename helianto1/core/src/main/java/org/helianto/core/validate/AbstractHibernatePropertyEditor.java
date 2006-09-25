@@ -51,7 +51,8 @@ public abstract class AbstractHibernatePropertyEditor extends
             logger.debug("Loaded "+clazz.getName()+" property editor");
         }
         try {
-            Object value = getHibernateTemplate().load(clazz, resolveId(id));
+            Serializable key = resolveId(id);
+            Object value = getHibernateTemplate().load(clazz, key);
             super.setValue(value);
             if (logger.isDebugEnabled()) {
                 logger.debug("Loaded property: "+value);
@@ -62,7 +63,8 @@ public abstract class AbstractHibernatePropertyEditor extends
     }
     
     protected Serializable resolveId(String id) {
-        return Integer.parseInt(id);
+        int value = Integer.parseInt(id);
+        return value;
     }
     
     static protected final Log logger = LogFactory.getLog(AbstractHibernatePropertyEditor.class);
