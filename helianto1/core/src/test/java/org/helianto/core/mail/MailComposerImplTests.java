@@ -15,7 +15,7 @@
 
 package org.helianto.core.mail;
 
-import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.core.test.AbstractIntegrationTest;
 
 public class MailComposerImplTests extends AbstractIntegrationTest {
 
