@@ -15,7 +15,7 @@
 
 package org.helianto.core.hibernate;
 
-import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.core.test.AbstractIntegrationTest;
 import org.springframework.dao.DataAccessException;
 
 public class LightweightDaoImplTests extends AbstractIntegrationTest {
