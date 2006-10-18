@@ -1,0 +1,17 @@
+<projectDescription>
+  <name>helianto-process</name>
+  <comment>Helianto project core module.</comment>
+  <projects>
+    <project>helianto-core</project>
+    <project>helianto-domain</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+      <arguments/>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>
