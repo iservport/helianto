@@ -25,7 +25,7 @@ import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.Setup;
 
-public interface ProcessDao extends MaterialDao {
+public interface ProcessDao {
     
     /**
      * Persist <code>Document</code> and subclasses.

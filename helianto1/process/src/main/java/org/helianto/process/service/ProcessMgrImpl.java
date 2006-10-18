@@ -28,22 +28,11 @@ import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
-import org.helianto.process.Unit;
 import org.helianto.process.creation.ExternalDocumentCreator;
 import org.helianto.process.dao.ProcessDao;
 import org.helianto.process.type.DocumentType;
 
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
-
-    public Unit createUnit(Entity entity) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public MaterialType createMaterialType(Unit unit) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     public ExternalDocument createExternalDocumentCategory(Entity entity, String documentCode) {
         ExternalDocument externalDocument  = 
@@ -96,14 +85,6 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return null;
     }
 
-    public void persistUnit(Unit unit) {
-        processDao.persistUnit(unit);
-    }
-
-    public void persistMaterial(MaterialType MaterialType) {
-        processDao.persistMaterialType(MaterialType);
-    }
-
     public void persistExternalDocument(ExternalDocument externalDocument) {
         processDao.persistDocument(externalDocument);
     }
@@ -126,14 +107,6 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     public void persistSetup(Setup setup) {
         processDao.persistSetup(setup);
-    }
-
-    public Unit findUnitByNaturalId(Entity entity, String unitCode) {
-        return processDao.findUnitByNaturalId(entity, unitCode);
-    }
-
-    public List<Unit> findUnitByEntity(Entity entity) {
-        return processDao.findUnitByEntity(entity);
     }
 
     public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode) {
@@ -160,6 +133,11 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     public void setProcessDao(ProcessDao processDao) {
         this.processDao = processDao;
+    }
+
+    public void persistMaterial(MaterialType material) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

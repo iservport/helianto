@@ -26,7 +26,6 @@ import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
-import org.helianto.process.Unit;
 
 /**
  * Default implementation of the 
@@ -37,16 +36,6 @@ import org.helianto.process.Unit;
  */
 public interface ProcessMgr extends PartnerMgr {
 
-    /**
-     * Unit factory method.
-     */
-    public Unit createUnit(Entity entity);
-    
-    /**
-     * Material factory method.
-     */
-    public MaterialType createMaterialType(Unit unit);
-    
     /**
      * <code>ExternalDocument</code> of type category factory method.
      */
@@ -85,12 +74,12 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Setup factory method.
      */
-    public Setup createSetupFactory(Operation operation, Resource resource); 
+    public Setup createSetupFactory(Operation operation, Resource resource);
     
     /**
-     * Persist an <code>Unit</code>.
+     * Persist an <code>ExternalDocument</code>.
      */
-    public void persistUnit(Unit unit);
+    public void persistExternalDocument(ExternalDocument externalDocument);
     
     /**
      * Persist a <code>Material</code>.
@@ -116,16 +105,6 @@ public interface ProcessMgr extends PartnerMgr {
      * Persist an <code>Setup</code>.
      */
     public void persistSetup(Setup setup);
-    
-    /**
-     * Find <code>Unit</code> by <code>Entity</code> and code.
-     */
-    public Unit findUnitByNaturalId(Entity entity, String unitCode);
-    
-    /**
-     * Find <code>Unit</code> list for this <code>Entity</code>
-     */
-    public List<Unit> findUnitByEntity(Entity entity);
     
     /**
      * Find <code>ExternalDocument</code> by <code>Entity</code> and code.
