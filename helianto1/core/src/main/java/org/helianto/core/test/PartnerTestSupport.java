@@ -30,7 +30,6 @@ import org.helianto.core.Province;
 import org.helianto.core.Supplier;
 import org.helianto.core.creation.PartnerCreator;
 import org.helianto.core.dao.PartnerDao;
-import org.helianto.core.junit.AbstractIntegrationTest;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class PartnerTestSupport extends AbstractIntegrationTest {

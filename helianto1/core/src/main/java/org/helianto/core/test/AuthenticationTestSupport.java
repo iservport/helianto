@@ -22,7 +22,6 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.dao.AuthenticationDao;
-import org.helianto.core.junit.AbstractIntegrationTest;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class AuthenticationTestSupport extends AbstractIntegrationTest {

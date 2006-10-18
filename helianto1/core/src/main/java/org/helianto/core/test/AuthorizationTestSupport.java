@@ -28,7 +28,6 @@ import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.AuthorizationDao;
-import org.helianto.core.junit.AbstractIntegrationTest;
 import org.helianto.core.type.UserEventType;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 

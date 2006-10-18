@@ -22,7 +22,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.EntityDao;
-import org.helianto.core.junit.AbstractIntegrationTest;
 import org.helianto.core.type.OperationMode;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 

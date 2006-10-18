@@ -27,7 +27,6 @@ import org.helianto.core.Server;
 import org.helianto.core.Service;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
-import org.helianto.core.junit.AbstractIntegrationTest;
 import org.helianto.core.type.OperationMode;
 import org.helianto.core.type.ActivityState;
 import org.helianto.core.type.ServerType;
