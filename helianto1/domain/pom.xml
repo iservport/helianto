@@ -15,14 +15,6 @@
 
 	<description>Helianto project domain module.</description>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<finalName>helianto-domain</finalName>
 		<plugins>

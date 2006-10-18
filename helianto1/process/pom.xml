@@ -12,17 +12,17 @@
 	<version>0.0.1-m3-SNAPSHOT</version>
 	<name>The Helianto Project Process Module</name>
 	
-	<description>Helianto project core module.</description>
+	<description>Helianto project process module.</description>
 	
 	<build>
-		<finalName>helianto-core</finalName>
+		<finalName>helianto-process</finalName>
 	</build>
 	
 	<dependencies>
 		<dependency>
-			<groupId>org.helianto</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>helianto-core</artifactId>
-			<version>0.0.1-m3-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
