@@ -61,111 +61,76 @@
 	</licenses>
 
 	<dependencies>
+		<!-- 
+		  logging related deps 
+		-->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.13</version>
 		</dependency>
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>easymock</artifactId>
-			<version>2.2</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- 
+		  orm related deps 
+		-->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
-			<version>3.1.3</version>
+			<version>3.2.0.cr5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-tools</artifactId>
-			<version>3.1.0.beta4</version>
+			<version>3.2.0.beta6</version>
 		</dependency>
+		<!-- 
+		  spring related deps 
+		-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-hibernate3</artifactId>
-			<version>2.0-rc2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.persistence</groupId>
-					<artifactId>ejb</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-			<version>2.0-rc2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.resource</groupId>
-					<artifactId>connector</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.oracle.toplink</groupId>
-					<artifactId>toplink</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ojb</groupId>
-					<artifactId>db-ojb</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jdo</groupId>
-					<artifactId>jdo</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.ibatis</groupId>
-					<artifactId>ibatis-sqlmap</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.ibatis</groupId>
-					<artifactId>ibatis2-sqlmap</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.persistence</groupId>
-					<artifactId>ejb</artifactId>
-				</exclusion>
-			</exclusions>
+			<artifactId>spring-web</artifactId>
+			<version>2.0</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>aopalliance</groupId>
-			<artifactId>aopalliance</artifactId>
-			<version>1.0</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>2.0</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-mock</artifactId>
-			<version>2.0-rc2</version>
+			<version>2.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-support</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<!-- 
+		  mail related deps 
+		-->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<!-- 
+		  security related deps 
+		-->
 		<dependency>
 			<groupId>org.acegisecurity</groupId>
 			<artifactId>acegi-security</artifactId>
-			<version>1.0.0-RC1</version>
+			<version>1.0.2</version>
 			<exclusions>
 				<exclusion>
-					<groupId>javax.resource</groupId>
-					<artifactId>connector</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>org.springframework</groupId>
-					<artifactId>spring-remoting</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-webmvc</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-dao</artifactId>
+					<artifactId>spring-jdbc</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>org.springframework</groupId>
@@ -173,40 +138,17 @@
 				</exclusion>
 				<exclusion>
 					<groupId>org.springframework</groupId>
-					<artifactId>spring-jdbc</artifactId>
+					<artifactId>spring-remoting</artifactId>
 				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.1</version>
-		</dependency>
+		<!-- 
+		  datastore related deps 
+		-->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.2.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.13</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.3.2</version>
 		</dependency>
 		<dependency>
 			<groupId>hsqldb</groupId>
@@ -220,7 +162,22 @@
 			<version>3.1.11</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- 
+		  test related deps 
+		-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>2.2</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
+	
 	<developers>
 		<developer>
 			<name>Maurício Fernandes de Castro</name>
