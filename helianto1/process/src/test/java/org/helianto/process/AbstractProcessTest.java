@@ -15,7 +15,7 @@
 
 package org.helianto.process;
 
-import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.core.test.AbstractIntegrationTest;
 
 public class AbstractProcessTest extends AbstractIntegrationTest {
 

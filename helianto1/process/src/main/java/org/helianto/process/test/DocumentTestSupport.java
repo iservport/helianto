@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.junit.AbstractIntegrationTest;
+import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.creation.ExternalDocumentCreator;

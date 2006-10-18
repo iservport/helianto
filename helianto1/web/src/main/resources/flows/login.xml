@@ -2,51 +2,13 @@
 <!DOCTYPE flow PUBLIC "-//SPRING//DTD WEBFLOW 1.0//EN"
 	"http://www.springframework.org/dtd/spring-webflow-1.0.dtd">
 
-<flow start-state="findSecureUser">
+<flow start-state="login.view">
 
-    <action-state id="findSecureUser">
-    	<action bean="simpleCoreMgr" 
-            method="findSecureUser()"
-            resultName="secureUser"
-            resultScope="flow"/>
-    	<transition on="success" to="home.view" />
-    </action-state>
-    
-    <subflow-state id="register.flow" flow="simpleuser-flow">
-    	<transition on="finish" to="home.view"/>
-    </subflow-state>
-
-    <view-state id="home.view" view="home">
-		<transition on="entity" to="switchAuthorizedUser"/>
-		<transition on="personalData" to="personalData.view"/>
-		<transition on="finish" to="endLogin"/>
+    <view-state id="login.view" view="login">
+		<transition on="enter" to="end"/>
     </view-state>
 
-    <action-state id="switchAuthorizedUser">
-    	<action bean="simpleCoreMgr" 
-            method="switchAuthorizedUser(${flowScope.secureUser}, ${requestParameters.entityName})"/>
-    	<transition on="success" to="home.view" />
-    </action-state>
-    
-    <view-state id="personalData.view" view="personalData">
-		<transition on="bindPersonalData" to="bindPersonalData"/>
-		<transition on="error" to="home.view"/>
-    </view-state>
-
-    <action-state id="bindPersonalData">
-    	<action bean="personalDataBinder" 
-            method="bindAndValidate()"/>
-    	<transition on="success" to="persistPersonalData" />
-    	<transition on="error" to="personalData.view" />
-    </action-state>
-    
-    <action-state id="persistPersonalData">
-    	<action bean="simpleCoreMgr" 
-            method="persistPersonalData(${flowScope.secureUser})"/>
-    	<transition on="success" to="home.view" />
-    </action-state>
-    
-	<end-state id="endLogin" />
+	<end-state id="end" />
 	
 </flow>
 

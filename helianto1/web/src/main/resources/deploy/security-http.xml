@@ -46,7 +46,7 @@
 			<value> 
 				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 				PATTERN_TYPE_APACHE_ANT
-				/**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,anonymousProcessingFilter,securityEnforcementFilter
+				/**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
 			</value>
 		</property>
 	</bean>
@@ -69,14 +69,27 @@
 	</bean>
 	<!--
 			Security enforcement filter 	
-	-->
+	
 	<bean id="securityEnforcementFilter"
 		class="org.acegisecurity.intercept.web.SecurityEnforcementFilter">
 		<property name="filterSecurityInterceptor"
 			ref="filterInvocationInterceptor"/>
 		<property name="authenticationEntryPoint"
 			ref="authenticationProcessingFilterEntryPoint"/>
+	</bean> -->
+	<bean id="exceptionTranslationFilter" 
+	    class="org.acegisecurity.ui.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<bean id="authenticationEntryPoint" 
+			    class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+				<property name="loginFormUrl" value="/admin.htm"/>
+				<property name="forceHttps" value="false"/>
+			</bean>
+		</property>
 	</bean>
+
+
+
 	<!--
 			Authentication processing filter 	
 	-->
@@ -85,19 +98,20 @@
 		<property name="authenticationManager"
 			ref="authenticationManager"/>
 		<property name="authenticationFailureUrl"
-			value="/login.htm?login_error=1"/>
+			value="/admin.htm?login_error=1"/>
 		<property name="defaultTargetUrl" value="/"/>
 		<property name="filterProcessesUrl"
 			value="/j_acegi_security_check"/>
 	</bean>
+	
 	<!--
 			Authentication processing filter entry point	
-	-->
+	
 	<bean id="authenticationProcessingFilterEntryPoint"
 		class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
 		<property name="loginFormUrl" value="/login.html"/>
 		<property name="forceHttps" value="false"/>
-	</bean>
+	</bean> -->
 	<!--
 			Web access decision manager	
 	-->

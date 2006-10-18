@@ -23,8 +23,8 @@
 		class="org.springframework.webflow.registry.XmlFlowRegistryFactoryBean">
 		<property name="flowLocations">
 			<list>
-			 	<value>classpath*:/flows/*.xml</value>
-			 	<!--value>/WEB-INF/flows/*.xml</value-->
+			 	<value>classpath:/flows/*.xml</value>
+			 	<value>/WEB-INF/flows/*.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -33,8 +33,12 @@
 	-->
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath"
-			value="/WEB-INF/freemarker/" />
+		<property name="templateLoaderPaths">
+			<list>
+				<value>/WEB-INF/freemarker/</value>
+			 	<value>classpath:/freemarker/</value>
+			</list>
+		</property>
 		<property name="freemarkerSettings">
 			<props>
 				<prop key="default_encoding">ISO-8859-1</prop>
@@ -52,4 +56,12 @@
 		<property name="suffix" value=".ftl" />
 	</bean>
 
+    <!--
+        admin flow controller
+    -->
+    <bean name="/admin.htm"
+        class="org.springframework.webflow.executor.mvc.FlowController">
+        <property name="flowLocator" ref="flowRegistry" />
+        <property name="defaultFlowId" value="login" />
+    </bean>
 </beans>
