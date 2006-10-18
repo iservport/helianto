@@ -82,7 +82,7 @@ public class PartCreatorImpl extends AbstractDocumentCreator implements PartCrea
 		Tree tree = new Tree();
 		tree.setParent(parent);
 		tree.setChild(child);
-		parent.getChildren().add(tree);
+//		parent.getChildren().add(tree);
 		return tree;
 	}
 

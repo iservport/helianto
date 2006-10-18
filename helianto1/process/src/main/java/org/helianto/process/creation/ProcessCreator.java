@@ -51,7 +51,7 @@ public class ProcessCreator extends AbstractDocumentCreator {
         tree.setAssociationType(associationType);
         tree.setSequence(sequence);
         tree.setCoefficient(coefficient);
-        parent.getChildren().add(tree);
+//        parent.getChildren().add(tree);
     }
     
     public static void associateParts(Part parent, Part child, double coefficient, int sequence) {
@@ -72,16 +72,16 @@ public class ProcessCreator extends AbstractDocumentCreator {
         return operation;
     }
 
-    public static Setup setupFactory(Operation operation, Resource resource, int priority, long setupTime, long transportTime) {
-        Setup setup = new Setup();
-        setup.setOperation(operation);
-        setup.setResource(resource);
-        setup.setPriority(priority);
-        setup.setSetupTime(setupTime);
-        setup.setTransportTime(transportTime);
-        operation.getSetups().add(setup);
-        return setup;
-    }
+//    public static Setup setupFactory(Operation operation, Resource resource, int priority, long setupTime, long transportTime) {
+//        Setup setup = new Setup();
+//        setup.setOperation(operation);
+//        setup.setResource(resource);
+//        setup.setPriority(priority);
+//        setup.setSetupTime(setupTime);
+//        setup.setTransportTime(transportTime);
+//        operation.getSetups().add(setup);
+//        return setup;
+//    }
     
 //  public Product productFactory(Unit unit, MaterialType MaterialType, String productCode, Process process) {
 //  if (process==null) {
