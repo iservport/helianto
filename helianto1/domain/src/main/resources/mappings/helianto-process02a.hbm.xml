@@ -24,8 +24,8 @@
 <hibernate-mapping default-lazy="false">
 	<joined-subclass 
 	    name="org.helianto.process.ExternalDocument" 
-	    table="process_documentext_m3" 
-	    extends="org.helianto.process.Document">
+	    extends="org.helianto.process.Document"
+	    table="process_documentext_m3">
 		<!-- 
 			EXTERNAL DOCUMENT
 			============================================= 
@@ -39,7 +39,7 @@ Documents to be stored appart from the datastore.
 @author Mauricio Fernandes de Castro
 				]]>
 		</meta>
-		<key column="id" />
+		<key column="id"/>
 		<!-- 
 			document url
 		-->
@@ -48,5 +48,17 @@ Documents to be stored appart from the datastore.
 			document type
 		-->
 		<property name="docType" type="char"/>
+		<!-- 
+			parent
+		-->
+		<many-to-one name="parent"  cascade="save-update,merge"
+		    fetch="select"
+			class="org.helianto.process.ExternalDocument">
+			<column name="parentId" not-null="false" />
+		</many-to-one>
 	</joined-subclass>
 </hibernate-mapping>
+
+
+
+

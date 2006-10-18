@@ -51,12 +51,12 @@ A class to represent a setup.
 		<!-- 
   				operation
 		-->
-		<many-to-one name="operation" cascade="merge"
+		<!-- many-to-one name="operation" cascade="merge"
 			class="org.helianto.process.Operation">
 			<meta attribute="use-in-equals">true</meta>
 			<column name="operationId" unique-key="priority"
 				not-null="true"/>
-		</many-to-one>
+		</many-to-one-->
 		<!-- 
   				priority
 		-->
