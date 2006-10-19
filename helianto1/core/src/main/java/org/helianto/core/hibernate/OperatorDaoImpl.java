@@ -37,6 +37,12 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
         remove(operator);
     }
     
+    public List<Operator> findOperatorAll() {
+        return (ArrayList<Operator>) find(OPERATOR_ALL_QRY);
+    }
+    
+    static String OPERATOR_ALL_QRY = "from Operator operator ";
+
     public Operator findOperatorByNaturalId(String operatorName) {
         return (Operator) findUnique(OPERATOR_QRY, operatorName);
     }

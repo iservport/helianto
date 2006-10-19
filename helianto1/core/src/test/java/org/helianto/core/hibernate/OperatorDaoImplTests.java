@@ -53,6 +53,11 @@ public class OperatorDaoImplTests extends OperatorTestSupport {
         // read
         Operator operator = operatorList.get((int) Math.random()*i);
         assertEquals(operator,  operatorDao.findOperatorByNaturalId(operator.getOperatorName()));
+        // all
+        List<Operator> all = operatorDao.findOperatorAll();
+        for (Operator op: all) {
+            assertTrue(operatorList.contains(op));
+        }
     }
 
     public void testOperatorErrors() {

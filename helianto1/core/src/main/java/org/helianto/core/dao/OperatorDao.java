@@ -42,6 +42,11 @@ public interface OperatorDao {
     public void removeOperator(Operator operator);
     
     /**
+     * Find any registered <code>Operator</code>.
+     */
+    public List<Operator> findOperatorAll();
+    
+    /**
      * Find <code>Operator</code> by  operatorName.
      */
     public Operator findOperatorByNaturalId(String operatorName);
