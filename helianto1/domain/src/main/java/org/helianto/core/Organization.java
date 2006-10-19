@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -13,16 +13,13 @@ package org.helianto.core;
  * 				
  * 			
  */
-
 public class Organization extends org.helianto.core.Entity implements java.io.Serializable {
-
 
     // Fields    
 
      private String businessName;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Organization() {
@@ -32,17 +29,14 @@ public class Organization extends org.helianto.core.Entity implements java.io.Se
     public Organization(Operator operator, String alias) {
         super(operator, alias);        
     }
-    
     /** full constructor */
     public Organization(Operator operator, String alias, String businessName) {
         super(operator, alias);        
-        this.businessName = businessName;
+       this.businessName = businessName;
     }
     
-
    
     // Property accessors
-
     public String getBusinessName() {
         return this.businessName;
     }
@@ -50,13 +44,10 @@ public class Organization extends org.helianto.core.Entity implements java.io.Se
     public void setBusinessName(String businessName) {
         this.businessName = businessName;
     }
-   
-
-
-
-
 
 
 
 
 }
+
+

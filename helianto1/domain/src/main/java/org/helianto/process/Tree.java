@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.process;
  * 				
  * 		
  */
-
 public class Tree  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -26,8 +24,7 @@ public class Tree  implements java.io.Serializable {
      private int associationType;
      private Method method;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Tree() {
@@ -40,21 +37,18 @@ public class Tree  implements java.io.Serializable {
         this.coefficient = coefficient;
         this.associationType = associationType;
     }
-    
     /** full constructor */
     public Tree(Document parent, Document child, int sequence, double coefficient, int associationType, Method method) {
-        this.parent = parent;
-        this.child = child;
-        this.sequence = sequence;
-        this.coefficient = coefficient;
-        this.associationType = associationType;
-        this.method = method;
+       this.parent = parent;
+       this.child = child;
+       this.sequence = sequence;
+       this.coefficient = coefficient;
+       this.associationType = associationType;
+       this.method = method;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -62,7 +56,6 @@ public class Tree  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Document getParent() {
         return this.parent;
     }
@@ -70,7 +63,6 @@ public class Tree  implements java.io.Serializable {
     public void setParent(Document parent) {
         this.parent = parent;
     }
-
     public Document getChild() {
         return this.child;
     }
@@ -78,7 +70,6 @@ public class Tree  implements java.io.Serializable {
     public void setChild(Document child) {
         this.child = child;
     }
-
     public int getSequence() {
         return this.sequence;
     }
@@ -86,7 +77,6 @@ public class Tree  implements java.io.Serializable {
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
-
     public double getCoefficient() {
         return this.coefficient;
     }
@@ -94,7 +84,6 @@ public class Tree  implements java.io.Serializable {
     public void setCoefficient(double coefficient) {
         this.coefficient = coefficient;
     }
-
     public int getAssociationType() {
         return this.associationType;
     }
@@ -102,7 +91,6 @@ public class Tree  implements java.io.Serializable {
     public void setAssociationType(int associationType) {
         this.associationType = associationType;
     }
-
     public Method getMethod() {
         return this.method;
     }
@@ -110,8 +98,6 @@ public class Tree  implements java.io.Serializable {
     public void setMethod(Method method) {
         this.method = method;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -138,7 +124,6 @@ public class Tree  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

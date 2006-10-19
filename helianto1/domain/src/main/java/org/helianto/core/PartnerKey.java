@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.core;
  * 				
  * 		
  */
-
 public class PartnerKey  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -23,8 +21,7 @@ public class PartnerKey  implements java.io.Serializable {
      private KeyType keyType;
      private String keyValue;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public PartnerKey() {
@@ -35,18 +32,15 @@ public class PartnerKey  implements java.io.Serializable {
         this.partner = partner;
         this.keyType = keyType;
     }
-    
     /** full constructor */
     public PartnerKey(Partner partner, KeyType keyType, String keyValue) {
-        this.partner = partner;
-        this.keyType = keyType;
-        this.keyValue = keyValue;
+       this.partner = partner;
+       this.keyType = keyType;
+       this.keyValue = keyValue;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -54,7 +48,6 @@ public class PartnerKey  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Partner getPartner() {
         return this.partner;
     }
@@ -62,7 +55,6 @@ public class PartnerKey  implements java.io.Serializable {
     public void setPartner(Partner partner) {
         this.partner = partner;
     }
-
     public KeyType getKeyType() {
         return this.keyType;
     }
@@ -70,7 +62,6 @@ public class PartnerKey  implements java.io.Serializable {
     public void setKeyType(KeyType keyType) {
         this.keyType = keyType;
     }
-
     public String getKeyValue() {
         return this.keyValue;
     }
@@ -78,7 +69,6 @@ public class PartnerKey  implements java.io.Serializable {
     public void setKeyValue(String keyValue) {
         this.keyValue = keyValue;
     }
-   
 
     /**
      * toString
@@ -94,7 +84,6 @@ public class PartnerKey  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -117,7 +106,6 @@ public class PartnerKey  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

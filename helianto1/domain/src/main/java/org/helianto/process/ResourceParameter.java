@@ -1,8 +1,8 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import org.helianto.core.Entity;
-
 
 /**
  * 			
@@ -13,9 +13,7 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-
 public class ResourceParameter  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -28,8 +26,7 @@ public class ResourceParameter  implements java.io.Serializable {
      private String paramDesc;
      private boolean textOnly;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public ResourceParameter() {
@@ -41,22 +38,19 @@ public class ResourceParameter  implements java.io.Serializable {
         this.parameterCode = parameterCode;
         this.textOnly = textOnly;
     }
-    
     /** full constructor */
     public ResourceParameter(Entity entity, String parameterCode, ResourceParameter parent, Unit unit, String paramName, String paramDesc, boolean textOnly) {
-        this.entity = entity;
-        this.parameterCode = parameterCode;
-        this.parent = parent;
-        this.unit = unit;
-        this.paramName = paramName;
-        this.paramDesc = paramDesc;
-        this.textOnly = textOnly;
+       this.entity = entity;
+       this.parameterCode = parameterCode;
+       this.parent = parent;
+       this.unit = unit;
+       this.paramName = paramName;
+       this.paramDesc = paramDesc;
+       this.textOnly = textOnly;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -64,7 +58,6 @@ public class ResourceParameter  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -72,7 +65,6 @@ public class ResourceParameter  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public String getParameterCode() {
         return this.parameterCode;
     }
@@ -80,7 +72,6 @@ public class ResourceParameter  implements java.io.Serializable {
     public void setParameterCode(String parameterCode) {
         this.parameterCode = parameterCode;
     }
-
     public ResourceParameter getParent() {
         return this.parent;
     }
@@ -88,7 +79,6 @@ public class ResourceParameter  implements java.io.Serializable {
     public void setParent(ResourceParameter parent) {
         this.parent = parent;
     }
-
     public Unit getUnit() {
         return this.unit;
     }
@@ -96,7 +86,6 @@ public class ResourceParameter  implements java.io.Serializable {
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
-
     public String getParamName() {
         return this.paramName;
     }
@@ -104,7 +93,6 @@ public class ResourceParameter  implements java.io.Serializable {
     public void setParamName(String paramName) {
         this.paramName = paramName;
     }
-
     public String getParamDesc() {
         return this.paramDesc;
     }
@@ -112,7 +100,6 @@ public class ResourceParameter  implements java.io.Serializable {
     public void setParamDesc(String paramDesc) {
         this.paramDesc = paramDesc;
     }
-
     public boolean isTextOnly() {
         return this.textOnly;
     }
@@ -120,7 +107,6 @@ public class ResourceParameter  implements java.io.Serializable {
     public void setTextOnly(boolean textOnly) {
         this.textOnly = textOnly;
     }
-   
 
     /**
      * toString
@@ -136,7 +122,6 @@ public class ResourceParameter  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -163,7 +148,6 @@ public class ResourceParameter  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

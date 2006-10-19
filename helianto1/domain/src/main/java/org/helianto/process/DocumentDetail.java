@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.process;
  * 				
  * 		
  */
-
 public class DocumentDetail  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -23,8 +21,7 @@ public class DocumentDetail  implements java.io.Serializable {
      private int sequence;
      private String detailDesc;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public DocumentDetail() {
@@ -34,18 +31,15 @@ public class DocumentDetail  implements java.io.Serializable {
     public DocumentDetail(int sequence) {
         this.sequence = sequence;
     }
-    
     /** full constructor */
     public DocumentDetail(Document document, int sequence, String detailDesc) {
-        this.document = document;
-        this.sequence = sequence;
-        this.detailDesc = detailDesc;
+       this.document = document;
+       this.sequence = sequence;
+       this.detailDesc = detailDesc;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -53,7 +47,6 @@ public class DocumentDetail  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Document getDocument() {
         return this.document;
     }
@@ -61,7 +54,6 @@ public class DocumentDetail  implements java.io.Serializable {
     public void setDocument(Document document) {
         this.document = document;
     }
-
     public int getSequence() {
         return this.sequence;
     }
@@ -69,7 +61,6 @@ public class DocumentDetail  implements java.io.Serializable {
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
-
     public String getDetailDesc() {
         return this.detailDesc;
     }
@@ -77,8 +68,6 @@ public class DocumentDetail  implements java.io.Serializable {
     public void setDetailDesc(String detailDesc) {
         this.detailDesc = detailDesc;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -102,7 +91,6 @@ public class DocumentDetail  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

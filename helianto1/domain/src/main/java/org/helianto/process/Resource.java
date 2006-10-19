@@ -1,10 +1,10 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.Set;
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
-
 
 /**
  * 				
@@ -15,9 +15,7 @@ import org.helianto.core.Partner;
  * 				
  * 			
  */
-
 public class Resource extends org.helianto.process.ResourceGroup implements java.io.Serializable {
-
 
     // Fields    
 
@@ -27,8 +25,7 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
      private Partner owner;
      private boolean keyResource;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Resource() {
@@ -40,21 +37,18 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
         this.resourceState = resourceState;
         this.keyResource = keyResource;
     }
-    
     /** full constructor */
     public Resource(Entity entity, String resourceCode, ResourceGroup parent, String resourceName, char resourceType, Set<ResourceGroup> resources, String serialNumber, char resourceState, Partner manufacturer, Partner owner, boolean keyResource) {
         super(entity, resourceCode, parent, resourceName, resourceType, resources);        
-        this.serialNumber = serialNumber;
-        this.resourceState = resourceState;
-        this.manufacturer = manufacturer;
-        this.owner = owner;
-        this.keyResource = keyResource;
+       this.serialNumber = serialNumber;
+       this.resourceState = resourceState;
+       this.manufacturer = manufacturer;
+       this.owner = owner;
+       this.keyResource = keyResource;
     }
     
-
    
     // Property accessors
-
     public String getSerialNumber() {
         return this.serialNumber;
     }
@@ -62,7 +56,6 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
-
     public char getResourceState() {
         return this.resourceState;
     }
@@ -70,7 +63,6 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     public void setResourceState(char resourceState) {
         this.resourceState = resourceState;
     }
-
     public Partner getManufacturer() {
         return this.manufacturer;
     }
@@ -78,7 +70,6 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     public void setManufacturer(Partner manufacturer) {
         this.manufacturer = manufacturer;
     }
-
     public Partner getOwner() {
         return this.owner;
     }
@@ -86,7 +77,6 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     public void setOwner(Partner owner) {
         this.owner = owner;
     }
-
     public boolean isKeyResource() {
         return this.keyResource;
     }
@@ -94,13 +84,10 @@ public class Resource extends org.helianto.process.ResourceGroup implements java
     public void setKeyResource(boolean keyResource) {
         this.keyResource = keyResource;
     }
-   
-
-
-
-
 
 
 
 
 }
+
+

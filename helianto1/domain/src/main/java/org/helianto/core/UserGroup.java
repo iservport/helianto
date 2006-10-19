@@ -1,9 +1,9 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  * 			
@@ -19,9 +19,7 @@ import java.util.Set;
  * 				
  * 		
  */
-
 public class UserGroup  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -33,8 +31,7 @@ public class UserGroup  implements java.io.Serializable {
      private Set<UserGroup> children = new HashSet<UserGroup>(0);
      private Set<UserRole> roles = new HashSet<UserRole>(0);
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public UserGroup() {
@@ -46,21 +43,18 @@ public class UserGroup  implements java.io.Serializable {
         this.identity = identity;
         this.userState = userState;
     }
-    
     /** full constructor */
     public UserGroup(Entity entity, Identity identity, char userState, UserGroup parent, Set<UserGroup> children, Set<UserRole> roles) {
-        this.entity = entity;
-        this.identity = identity;
-        this.userState = userState;
-        this.parent = parent;
-        this.children = children;
-        this.roles = roles;
+       this.entity = entity;
+       this.identity = identity;
+       this.userState = userState;
+       this.parent = parent;
+       this.children = children;
+       this.roles = roles;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -68,7 +62,6 @@ public class UserGroup  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -76,7 +69,6 @@ public class UserGroup  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public Identity getIdentity() {
         return this.identity;
     }
@@ -84,7 +76,6 @@ public class UserGroup  implements java.io.Serializable {
     public void setIdentity(Identity identity) {
         this.identity = identity;
     }
-
     public char getUserState() {
         return this.userState;
     }
@@ -92,7 +83,6 @@ public class UserGroup  implements java.io.Serializable {
     public void setUserState(char userState) {
         this.userState = userState;
     }
-
     public UserGroup getParent() {
         return this.parent;
     }
@@ -100,7 +90,6 @@ public class UserGroup  implements java.io.Serializable {
     public void setParent(UserGroup parent) {
         this.parent = parent;
     }
-
     public Set<UserGroup> getChildren() {
         return this.children;
     }
@@ -108,7 +97,6 @@ public class UserGroup  implements java.io.Serializable {
     public void setChildren(Set<UserGroup> children) {
         this.children = children;
     }
-
     public Set<UserRole> getRoles() {
         return this.roles;
     }
@@ -116,7 +104,6 @@ public class UserGroup  implements java.io.Serializable {
     public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
-   
 
     /**
      * toString
@@ -132,7 +119,6 @@ public class UserGroup  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -158,7 +144,6 @@ public class UserGroup  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

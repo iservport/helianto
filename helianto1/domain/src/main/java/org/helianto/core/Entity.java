@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -34,9 +34,7 @@ package org.helianto.core;
  * 				
  * 		
  */
-
 public class Entity  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -44,24 +42,20 @@ public class Entity  implements java.io.Serializable {
      private Operator operator;
      private String alias;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Entity() {
     }
 
-    
     /** full constructor */
     public Entity(Operator operator, String alias) {
-        this.operator = operator;
-        this.alias = alias;
+       this.operator = operator;
+       this.alias = alias;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -69,7 +63,6 @@ public class Entity  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Operator getOperator() {
         return this.operator;
     }
@@ -77,7 +70,6 @@ public class Entity  implements java.io.Serializable {
     public void setOperator(Operator operator) {
         this.operator = operator;
     }
-
     public String getAlias() {
         return this.alias;
     }
@@ -85,7 +77,6 @@ public class Entity  implements java.io.Serializable {
     public void setAlias(String alias) {
         this.alias = alias;
     }
-   
 
     /**
      * toString
@@ -101,7 +92,6 @@ public class Entity  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -123,7 +113,6 @@ public class Entity  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

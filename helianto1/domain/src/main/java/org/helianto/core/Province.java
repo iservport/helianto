@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.core;
  * 				
  * 		
  */
-
 public class Province  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -23,8 +21,7 @@ public class Province  implements java.io.Serializable {
      private String code;
      private String provinceName;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Province() {
@@ -35,18 +32,15 @@ public class Province  implements java.io.Serializable {
         this.operator = operator;
         this.code = code;
     }
-    
     /** full constructor */
     public Province(Operator operator, String code, String provinceName) {
-        this.operator = operator;
-        this.code = code;
-        this.provinceName = provinceName;
+       this.operator = operator;
+       this.code = code;
+       this.provinceName = provinceName;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -54,7 +48,6 @@ public class Province  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Operator getOperator() {
         return this.operator;
     }
@@ -62,7 +55,6 @@ public class Province  implements java.io.Serializable {
     public void setOperator(Operator operator) {
         this.operator = operator;
     }
-
     public String getCode() {
         return this.code;
     }
@@ -70,7 +62,6 @@ public class Province  implements java.io.Serializable {
     public void setCode(String code) {
         this.code = code;
     }
-
     public String getProvinceName() {
         return this.provinceName;
     }
@@ -78,7 +69,6 @@ public class Province  implements java.io.Serializable {
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName;
     }
-   
 
     /**
      * toString
@@ -94,7 +84,6 @@ public class Province  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -117,7 +106,6 @@ public class Province  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

@@ -1,8 +1,8 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.Date;
-
 
 /**
  * 			
@@ -13,9 +13,7 @@ import java.util.Date;
  * 			
  * 		
  */
-
 public class Credential extends org.helianto.core.type.AbstractCredential implements java.io.Serializable {
-
 
     // Fields    
 
@@ -27,8 +25,7 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
      private Date expired;
      private byte encription;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Credential() {
@@ -40,21 +37,18 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
         this.credentialState = credentialState;
         this.encription = encription;
     }
-    
     /** full constructor */
     public Credential(Identity identity, String password, char credentialState, Date lastModified, Date expired, byte encription) {
-        this.identity = identity;
-        this.password = password;
-        this.credentialState = credentialState;
-        this.lastModified = lastModified;
-        this.expired = expired;
-        this.encription = encription;
+       this.identity = identity;
+       this.password = password;
+       this.credentialState = credentialState;
+       this.lastModified = lastModified;
+       this.expired = expired;
+       this.encription = encription;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -62,7 +56,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
     public void setId(long id) {
         this.id = id;
     }
-
     public Identity getIdentity() {
         return this.identity;
     }
@@ -70,7 +63,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
     public void setIdentity(Identity identity) {
         this.identity = identity;
     }
-
     public String getPassword() {
         return this.password;
     }
@@ -78,7 +70,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
     public void setPassword(String password) {
         this.password = password;
     }
-
     public char getCredentialState() {
         return this.credentialState;
     }
@@ -86,7 +77,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
     public void setCredentialState(char credentialState) {
         this.credentialState = credentialState;
     }
-
     public Date getLastModified() {
         return this.lastModified;
     }
@@ -94,7 +84,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
-
     public Date getExpired() {
         return this.expired;
     }
@@ -102,7 +91,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
     public void setExpired(Date expired) {
         this.expired = expired;
     }
-
     public byte getEncription() {
         return this.encription;
     }
@@ -110,7 +98,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
     public void setEncription(byte encription) {
         this.encription = encription;
     }
-   
 
     /**
      * toString
@@ -125,7 +112,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -150,7 +136,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
    }   
 
 
-
-
-
 }
+
+

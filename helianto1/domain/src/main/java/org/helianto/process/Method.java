@@ -1,8 +1,8 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import org.helianto.core.Entity;
-
 
 /**
  * 				
@@ -14,9 +14,7 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-
 public class Method  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -28,8 +26,7 @@ public class Method  implements java.io.Serializable {
      private String techinique;
      private String control;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Method() {
@@ -39,21 +36,18 @@ public class Method  implements java.io.Serializable {
     public Method(double sampleSize) {
         this.sampleSize = sampleSize;
     }
-    
     /** full constructor */
     public Method(Entity entity, Resource resource, double sampleSize, String sampleFrequency, String techinique, String control) {
-        this.entity = entity;
-        this.resource = resource;
-        this.sampleSize = sampleSize;
-        this.sampleFrequency = sampleFrequency;
-        this.techinique = techinique;
-        this.control = control;
+       this.entity = entity;
+       this.resource = resource;
+       this.sampleSize = sampleSize;
+       this.sampleFrequency = sampleFrequency;
+       this.techinique = techinique;
+       this.control = control;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -61,7 +55,6 @@ public class Method  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -69,7 +62,6 @@ public class Method  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public Resource getResource() {
         return this.resource;
     }
@@ -77,7 +69,6 @@ public class Method  implements java.io.Serializable {
     public void setResource(Resource resource) {
         this.resource = resource;
     }
-
     public double getSampleSize() {
         return this.sampleSize;
     }
@@ -85,7 +76,6 @@ public class Method  implements java.io.Serializable {
     public void setSampleSize(double sampleSize) {
         this.sampleSize = sampleSize;
     }
-
     public String getSampleFrequency() {
         return this.sampleFrequency;
     }
@@ -93,7 +83,6 @@ public class Method  implements java.io.Serializable {
     public void setSampleFrequency(String sampleFrequency) {
         this.sampleFrequency = sampleFrequency;
     }
-
     public String getTechinique() {
         return this.techinique;
     }
@@ -101,7 +90,6 @@ public class Method  implements java.io.Serializable {
     public void setTechinique(String techinique) {
         this.techinique = techinique;
     }
-
     public String getControl() {
         return this.control;
     }
@@ -109,13 +97,10 @@ public class Method  implements java.io.Serializable {
     public void setControl(String control) {
         this.control = control;
     }
-   
-
-
-
-
 
 
 
 
 }
+
+

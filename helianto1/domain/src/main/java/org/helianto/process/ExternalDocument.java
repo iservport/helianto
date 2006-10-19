@@ -1,9 +1,8 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
-import java.util.List;
+
 import org.helianto.core.Entity;
-
 
 /**
  * 			
@@ -14,17 +13,15 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-
 public class ExternalDocument extends org.helianto.process.Document implements java.io.Serializable {
-
 
     // Fields    
 
      private String docUrl;
      private char docType;
+     private ExternalDocument parent;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public ExternalDocument() {
@@ -34,18 +31,16 @@ public class ExternalDocument extends org.helianto.process.Document implements j
     public ExternalDocument(Entity entity, String docCode) {
         super(entity, docCode);        
     }
-    
     /** full constructor */
-    public ExternalDocument(Entity entity, String docCode, String docName, Document parent, List<Tree> children, String docUrl, char docType) {
-        super(entity, docCode, docName, parent, children);        
-        this.docUrl = docUrl;
-        this.docType = docType;
+    public ExternalDocument(Entity entity, String docCode, String docName, String docUrl, char docType, ExternalDocument parent) {
+        super(entity, docCode, docName);        
+       this.docUrl = docUrl;
+       this.docType = docType;
+       this.parent = parent;
     }
     
-
    
     // Property accessors
-
     public String getDocUrl() {
         return this.docUrl;
     }
@@ -53,7 +48,6 @@ public class ExternalDocument extends org.helianto.process.Document implements j
     public void setDocUrl(String docUrl) {
         this.docUrl = docUrl;
     }
-
     public char getDocType() {
         return this.docType;
     }
@@ -61,13 +55,17 @@ public class ExternalDocument extends org.helianto.process.Document implements j
     public void setDocType(char docType) {
         this.docType = docType;
     }
-   
-
-
-
-
+    public ExternalDocument getParent() {
+        return this.parent;
+    }
+    
+    public void setParent(ExternalDocument parent) {
+        this.parent = parent;
+    }
 
 
 
 
 }
+
+

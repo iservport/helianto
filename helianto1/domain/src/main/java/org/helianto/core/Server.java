@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -17,9 +17,7 @@ package org.helianto.core;
  * 				
  * 		
  */
-
 public class Server  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -34,8 +32,7 @@ public class Server  implements java.io.Serializable {
      private byte requiredEncription;
      private Credential credential;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Server() {
@@ -50,24 +47,21 @@ public class Server  implements java.io.Serializable {
         this.serverState = serverState;
         this.requiredEncription = requiredEncription;
     }
-    
     /** full constructor */
     public Server(Operator operator, String serverName, String serverHostAddress, String serverDesc, char serverType, byte priority, char serverState, byte requiredEncription, Credential credential) {
-        this.operator = operator;
-        this.serverName = serverName;
-        this.serverHostAddress = serverHostAddress;
-        this.serverDesc = serverDesc;
-        this.serverType = serverType;
-        this.priority = priority;
-        this.serverState = serverState;
-        this.requiredEncription = requiredEncription;
-        this.credential = credential;
+       this.operator = operator;
+       this.serverName = serverName;
+       this.serverHostAddress = serverHostAddress;
+       this.serverDesc = serverDesc;
+       this.serverType = serverType;
+       this.priority = priority;
+       this.serverState = serverState;
+       this.requiredEncription = requiredEncription;
+       this.credential = credential;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -75,7 +69,6 @@ public class Server  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Operator getOperator() {
         return this.operator;
     }
@@ -83,7 +76,6 @@ public class Server  implements java.io.Serializable {
     public void setOperator(Operator operator) {
         this.operator = operator;
     }
-
     public String getServerName() {
         return this.serverName;
     }
@@ -91,7 +83,6 @@ public class Server  implements java.io.Serializable {
     public void setServerName(String serverName) {
         this.serverName = serverName;
     }
-
     public String getServerHostAddress() {
         return this.serverHostAddress;
     }
@@ -99,7 +90,6 @@ public class Server  implements java.io.Serializable {
     public void setServerHostAddress(String serverHostAddress) {
         this.serverHostAddress = serverHostAddress;
     }
-
     public String getServerDesc() {
         return this.serverDesc;
     }
@@ -107,7 +97,6 @@ public class Server  implements java.io.Serializable {
     public void setServerDesc(String serverDesc) {
         this.serverDesc = serverDesc;
     }
-
     public char getServerType() {
         return this.serverType;
     }
@@ -115,7 +104,6 @@ public class Server  implements java.io.Serializable {
     public void setServerType(char serverType) {
         this.serverType = serverType;
     }
-
     public byte getPriority() {
         return this.priority;
     }
@@ -123,7 +111,6 @@ public class Server  implements java.io.Serializable {
     public void setPriority(byte priority) {
         this.priority = priority;
     }
-
     public char getServerState() {
         return this.serverState;
     }
@@ -131,7 +118,6 @@ public class Server  implements java.io.Serializable {
     public void setServerState(char serverState) {
         this.serverState = serverState;
     }
-
     public byte getRequiredEncription() {
         return this.requiredEncription;
     }
@@ -139,7 +125,6 @@ public class Server  implements java.io.Serializable {
     public void setRequiredEncription(byte requiredEncription) {
         this.requiredEncription = requiredEncription;
     }
-
     public Credential getCredential() {
         return this.credential;
     }
@@ -147,7 +132,6 @@ public class Server  implements java.io.Serializable {
     public void setCredential(Credential credential) {
         this.credential = credential;
     }
-   
 
     /**
      * toString
@@ -164,7 +148,6 @@ public class Server  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -194,7 +177,6 @@ public class Server  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

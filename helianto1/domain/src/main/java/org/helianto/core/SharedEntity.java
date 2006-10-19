@@ -1,8 +1,8 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.Date;
-
 
 /**
  * 				
@@ -13,9 +13,7 @@ import java.util.Date;
  * 				
  *         
  */
-
 public class SharedEntity  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -25,8 +23,7 @@ public class SharedEntity  implements java.io.Serializable {
      private char shareMode;
      private Date sharedSince;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public SharedEntity() {
@@ -38,19 +35,16 @@ public class SharedEntity  implements java.io.Serializable {
         this.partnerData = partnerData;
         this.shareMode = shareMode;
     }
-    
     /** full constructor */
     public SharedEntity(Entity sharedEntity, PartnerData partnerData, char shareMode, Date sharedSince) {
-        this.sharedEntity = sharedEntity;
-        this.partnerData = partnerData;
-        this.shareMode = shareMode;
-        this.sharedSince = sharedSince;
+       this.sharedEntity = sharedEntity;
+       this.partnerData = partnerData;
+       this.shareMode = shareMode;
+       this.sharedSince = sharedSince;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -58,7 +52,6 @@ public class SharedEntity  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Entity getSharedEntity() {
         return this.sharedEntity;
     }
@@ -66,7 +59,6 @@ public class SharedEntity  implements java.io.Serializable {
     public void setSharedEntity(Entity sharedEntity) {
         this.sharedEntity = sharedEntity;
     }
-
     public PartnerData getPartnerData() {
         return this.partnerData;
     }
@@ -74,7 +66,6 @@ public class SharedEntity  implements java.io.Serializable {
     public void setPartnerData(PartnerData partnerData) {
         this.partnerData = partnerData;
     }
-
     public char getShareMode() {
         return this.shareMode;
     }
@@ -82,7 +73,6 @@ public class SharedEntity  implements java.io.Serializable {
     public void setShareMode(char shareMode) {
         this.shareMode = shareMode;
     }
-
     public Date getSharedSince() {
         return this.sharedSince;
     }
@@ -90,7 +80,6 @@ public class SharedEntity  implements java.io.Serializable {
     public void setSharedSince(Date sharedSince) {
         this.sharedSince = sharedSince;
     }
-   
 
     /**
      * toString
@@ -106,7 +95,6 @@ public class SharedEntity  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -130,7 +118,6 @@ public class SharedEntity  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

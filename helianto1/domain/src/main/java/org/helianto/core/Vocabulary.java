@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.core;
  * 				
  * 		
  */
-
 public class Vocabulary  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -24,8 +22,7 @@ public class Vocabulary  implements java.io.Serializable {
      private Vocabulary parent;
      private String name;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Vocabulary() {
@@ -36,19 +33,16 @@ public class Vocabulary  implements java.io.Serializable {
         this.entity = entity;
         this.code = code;
     }
-    
     /** full constructor */
     public Vocabulary(Entity entity, String code, Vocabulary parent, String name) {
-        this.entity = entity;
-        this.code = code;
-        this.parent = parent;
-        this.name = name;
+       this.entity = entity;
+       this.code = code;
+       this.parent = parent;
+       this.name = name;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -56,7 +50,6 @@ public class Vocabulary  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -64,7 +57,6 @@ public class Vocabulary  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public String getCode() {
         return this.code;
     }
@@ -72,7 +64,6 @@ public class Vocabulary  implements java.io.Serializable {
     public void setCode(String code) {
         this.code = code;
     }
-
     public Vocabulary getParent() {
         return this.parent;
     }
@@ -80,7 +71,6 @@ public class Vocabulary  implements java.io.Serializable {
     public void setParent(Vocabulary parent) {
         this.parent = parent;
     }
-
     public String getName() {
         return this.name;
     }
@@ -88,8 +78,6 @@ public class Vocabulary  implements java.io.Serializable {
     public void setName(String name) {
         this.name = name;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -114,7 +102,6 @@ public class Vocabulary  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

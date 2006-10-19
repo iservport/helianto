@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -20,9 +20,7 @@ package org.helianto.core;
  * 				
  * 		
  */
-
 public class DefaultEntity  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -30,8 +28,7 @@ public class DefaultEntity  implements java.io.Serializable {
      private Entity entity;
      private int priority;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public DefaultEntity() {
@@ -41,17 +38,14 @@ public class DefaultEntity  implements java.io.Serializable {
     public DefaultEntity(int priority) {
         this.priority = priority;
     }
-    
     /** full constructor */
     public DefaultEntity(Entity entity, int priority) {
-        this.entity = entity;
-        this.priority = priority;
+       this.entity = entity;
+       this.priority = priority;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -59,7 +53,6 @@ public class DefaultEntity  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -67,7 +60,6 @@ public class DefaultEntity  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public int getPriority() {
         return this.priority;
     }
@@ -75,8 +67,6 @@ public class DefaultEntity  implements java.io.Serializable {
     public void setPriority(int priority) {
         this.priority = priority;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -98,7 +88,6 @@ public class DefaultEntity  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

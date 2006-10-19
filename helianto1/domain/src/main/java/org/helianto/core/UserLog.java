@@ -1,8 +1,8 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.Date;
-
 
 /**
  * 				
@@ -13,9 +13,7 @@ import java.util.Date;
  * 				
  * 		
  */
-
 public class UserLog  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -24,25 +22,21 @@ public class UserLog  implements java.io.Serializable {
      private Date lastEvent;
      private byte eventType;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public UserLog() {
     }
 
-    
     /** full constructor */
     public UserLog(User user, Date lastEvent, byte eventType) {
-        this.user = user;
-        this.lastEvent = lastEvent;
-        this.eventType = eventType;
+       this.user = user;
+       this.lastEvent = lastEvent;
+       this.eventType = eventType;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -50,7 +44,6 @@ public class UserLog  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public User getUser() {
         return this.user;
     }
@@ -58,7 +51,6 @@ public class UserLog  implements java.io.Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-
     public Date getLastEvent() {
         return this.lastEvent;
     }
@@ -66,7 +58,6 @@ public class UserLog  implements java.io.Serializable {
     public void setLastEvent(Date lastEvent) {
         this.lastEvent = lastEvent;
     }
-
     public byte getEventType() {
         return this.eventType;
     }
@@ -74,8 +65,6 @@ public class UserLog  implements java.io.Serializable {
     public void setEventType(byte eventType) {
         this.eventType = eventType;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -99,7 +88,6 @@ public class UserLog  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

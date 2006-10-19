@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.process;
  * 				
  * 		
  */
-
 public class DocumentVersion  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -27,8 +25,7 @@ public class DocumentVersion  implements java.io.Serializable {
      private char activityCode;
      private String changeSummary;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public DocumentVersion() {
@@ -43,22 +40,19 @@ public class DocumentVersion  implements java.io.Serializable {
         this.releaseAction = releaseAction;
         this.activityCode = activityCode;
     }
-    
     /** full constructor */
     public DocumentVersion(Release release, Document document, int majorNumber, int minorNumber, int releaseAction, char activityCode, String changeSummary) {
-        this.release = release;
-        this.document = document;
-        this.majorNumber = majorNumber;
-        this.minorNumber = minorNumber;
-        this.releaseAction = releaseAction;
-        this.activityCode = activityCode;
-        this.changeSummary = changeSummary;
+       this.release = release;
+       this.document = document;
+       this.majorNumber = majorNumber;
+       this.minorNumber = minorNumber;
+       this.releaseAction = releaseAction;
+       this.activityCode = activityCode;
+       this.changeSummary = changeSummary;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -66,7 +60,6 @@ public class DocumentVersion  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Release getRelease() {
         return this.release;
     }
@@ -74,7 +67,6 @@ public class DocumentVersion  implements java.io.Serializable {
     public void setRelease(Release release) {
         this.release = release;
     }
-
     public Document getDocument() {
         return this.document;
     }
@@ -82,7 +74,6 @@ public class DocumentVersion  implements java.io.Serializable {
     public void setDocument(Document document) {
         this.document = document;
     }
-
     public int getMajorNumber() {
         return this.majorNumber;
     }
@@ -90,7 +81,6 @@ public class DocumentVersion  implements java.io.Serializable {
     public void setMajorNumber(int majorNumber) {
         this.majorNumber = majorNumber;
     }
-
     public int getMinorNumber() {
         return this.minorNumber;
     }
@@ -98,7 +88,6 @@ public class DocumentVersion  implements java.io.Serializable {
     public void setMinorNumber(int minorNumber) {
         this.minorNumber = minorNumber;
     }
-
     public int getReleaseAction() {
         return this.releaseAction;
     }
@@ -106,7 +95,6 @@ public class DocumentVersion  implements java.io.Serializable {
     public void setReleaseAction(int releaseAction) {
         this.releaseAction = releaseAction;
     }
-
     public char getActivityCode() {
         return this.activityCode;
     }
@@ -114,7 +102,6 @@ public class DocumentVersion  implements java.io.Serializable {
     public void setActivityCode(char activityCode) {
         this.activityCode = activityCode;
     }
-
     public String getChangeSummary() {
         return this.changeSummary;
     }
@@ -122,8 +109,6 @@ public class DocumentVersion  implements java.io.Serializable {
     public void setChangeSummary(String changeSummary) {
         this.changeSummary = changeSummary;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -151,7 +136,6 @@ public class DocumentVersion  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

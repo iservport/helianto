@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -13,9 +13,7 @@ package org.helianto.core;
  * 				
  * 		
  */
-
 public class Service  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -23,24 +21,20 @@ public class Service  implements java.io.Serializable {
      private Operator operator;
      private String serviceName;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Service() {
     }
 
-    
     /** full constructor */
     public Service(Operator operator, String serviceName) {
-        this.operator = operator;
-        this.serviceName = serviceName;
+       this.operator = operator;
+       this.serviceName = serviceName;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -48,7 +42,6 @@ public class Service  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Operator getOperator() {
         return this.operator;
     }
@@ -56,7 +49,6 @@ public class Service  implements java.io.Serializable {
     public void setOperator(Operator operator) {
         this.operator = operator;
     }
-
     public String getServiceName() {
         return this.serviceName;
     }
@@ -64,7 +56,6 @@ public class Service  implements java.io.Serializable {
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }
-   
 
     /**
      * toString
@@ -80,7 +71,6 @@ public class Service  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -102,7 +92,6 @@ public class Service  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

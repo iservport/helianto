@@ -36,13 +36,6 @@ public class Part extends org.helianto.process.Document implements java.io.Seria
         this.hasDrawing = hasDrawing;
     }
     
-    /** full constructor */
-    public Part(Entity entity, String docCode, String docName, Document parent, List<Tree> children, boolean hasDrawing, MaterialType materialType) {
-        super(entity, docCode, docName, parent, children);        
-        this.hasDrawing = hasDrawing;
-        this.materialType = materialType;
-    }
-    
 
    
     // Property accessors

@@ -1,8 +1,8 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import org.helianto.core.Entity;
-
 
 /**
  * 				
@@ -13,9 +13,7 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-
 public class MaterialType  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -26,8 +24,7 @@ public class MaterialType  implements java.io.Serializable {
      private Unit materialUnit;
      private String materialName;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public MaterialType() {
@@ -37,20 +34,17 @@ public class MaterialType  implements java.io.Serializable {
     public MaterialType(Unit materialUnit) {
         this.materialUnit = materialUnit;
     }
-    
     /** full constructor */
     public MaterialType(Entity entity, long internalNumber, MaterialType parent, Unit materialUnit, String materialName) {
-        this.entity = entity;
-        this.internalNumber = internalNumber;
-        this.parent = parent;
-        this.materialUnit = materialUnit;
-        this.materialName = materialName;
+       this.entity = entity;
+       this.internalNumber = internalNumber;
+       this.parent = parent;
+       this.materialUnit = materialUnit;
+       this.materialName = materialName;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -58,7 +52,6 @@ public class MaterialType  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -66,7 +59,6 @@ public class MaterialType  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public long getInternalNumber() {
         return this.internalNumber;
     }
@@ -74,7 +66,6 @@ public class MaterialType  implements java.io.Serializable {
     public void setInternalNumber(long internalNumber) {
         this.internalNumber = internalNumber;
     }
-
     public MaterialType getParent() {
         return this.parent;
     }
@@ -82,7 +73,6 @@ public class MaterialType  implements java.io.Serializable {
     public void setParent(MaterialType parent) {
         this.parent = parent;
     }
-
     public Unit getMaterialUnit() {
         return this.materialUnit;
     }
@@ -90,7 +80,6 @@ public class MaterialType  implements java.io.Serializable {
     public void setMaterialUnit(Unit materialUnit) {
         this.materialUnit = materialUnit;
     }
-
     public String getMaterialName() {
         return this.materialName;
     }
@@ -98,8 +87,6 @@ public class MaterialType  implements java.io.Serializable {
     public void setMaterialName(String materialName) {
         this.materialName = materialName;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -125,7 +112,6 @@ public class MaterialType  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

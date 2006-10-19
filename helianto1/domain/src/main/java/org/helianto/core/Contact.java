@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.core;
  * 				
  *         
  */
-
 public class Contact  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -25,8 +23,7 @@ public class Contact  implements java.io.Serializable {
      private String department;
      private char priority;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Contact() {
@@ -38,20 +35,17 @@ public class Contact  implements java.io.Serializable {
         this.identity = identity;
         this.priority = priority;
     }
-    
     /** full constructor */
     public Contact(PartnerData partnerData, Identity identity, String jobReference, String department, char priority) {
-        this.partnerData = partnerData;
-        this.identity = identity;
-        this.jobReference = jobReference;
-        this.department = department;
-        this.priority = priority;
+       this.partnerData = partnerData;
+       this.identity = identity;
+       this.jobReference = jobReference;
+       this.department = department;
+       this.priority = priority;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -59,7 +53,6 @@ public class Contact  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public PartnerData getPartnerData() {
         return this.partnerData;
     }
@@ -67,7 +60,6 @@ public class Contact  implements java.io.Serializable {
     public void setPartnerData(PartnerData partnerData) {
         this.partnerData = partnerData;
     }
-
     public Identity getIdentity() {
         return this.identity;
     }
@@ -75,7 +67,6 @@ public class Contact  implements java.io.Serializable {
     public void setIdentity(Identity identity) {
         this.identity = identity;
     }
-
     public String getJobReference() {
         return this.jobReference;
     }
@@ -83,7 +74,6 @@ public class Contact  implements java.io.Serializable {
     public void setJobReference(String jobReference) {
         this.jobReference = jobReference;
     }
-
     public String getDepartment() {
         return this.department;
     }
@@ -91,7 +81,6 @@ public class Contact  implements java.io.Serializable {
     public void setDepartment(String department) {
         this.department = department;
     }
-
     public char getPriority() {
         return this.priority;
     }
@@ -99,7 +88,6 @@ public class Contact  implements java.io.Serializable {
     public void setPriority(char priority) {
         this.priority = priority;
     }
-   
 
     /**
      * toString
@@ -115,7 +103,6 @@ public class Contact  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -140,7 +127,6 @@ public class Contact  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

@@ -1,8 +1,8 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.math.BigDecimal;
-
 
 /**
  * 			
@@ -13,9 +13,7 @@ import java.math.BigDecimal;
  * 				
  * 		
  */
-
 public class ResourceParameterValue  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -26,8 +24,7 @@ public class ResourceParameterValue  implements java.io.Serializable {
      private String parameterTextValue;
      private boolean suppressed;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public ResourceParameterValue() {
@@ -39,20 +36,17 @@ public class ResourceParameterValue  implements java.io.Serializable {
         this.parameter = parameter;
         this.suppressed = suppressed;
     }
-    
     /** full constructor */
     public ResourceParameterValue(ResourceGroup resource, ResourceParameter parameter, BigDecimal parameterNumericValue, String parameterTextValue, boolean suppressed) {
-        this.resource = resource;
-        this.parameter = parameter;
-        this.parameterNumericValue = parameterNumericValue;
-        this.parameterTextValue = parameterTextValue;
-        this.suppressed = suppressed;
+       this.resource = resource;
+       this.parameter = parameter;
+       this.parameterNumericValue = parameterNumericValue;
+       this.parameterTextValue = parameterTextValue;
+       this.suppressed = suppressed;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -60,7 +54,6 @@ public class ResourceParameterValue  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public ResourceGroup getResource() {
         return this.resource;
     }
@@ -68,7 +61,6 @@ public class ResourceParameterValue  implements java.io.Serializable {
     public void setResource(ResourceGroup resource) {
         this.resource = resource;
     }
-
     public ResourceParameter getParameter() {
         return this.parameter;
     }
@@ -76,7 +68,6 @@ public class ResourceParameterValue  implements java.io.Serializable {
     public void setParameter(ResourceParameter parameter) {
         this.parameter = parameter;
     }
-
     public BigDecimal getParameterNumericValue() {
         return this.parameterNumericValue;
     }
@@ -84,7 +75,6 @@ public class ResourceParameterValue  implements java.io.Serializable {
     public void setParameterNumericValue(BigDecimal parameterNumericValue) {
         this.parameterNumericValue = parameterNumericValue;
     }
-
     public String getParameterTextValue() {
         return this.parameterTextValue;
     }
@@ -92,7 +82,6 @@ public class ResourceParameterValue  implements java.io.Serializable {
     public void setParameterTextValue(String parameterTextValue) {
         this.parameterTextValue = parameterTextValue;
     }
-
     public boolean isSuppressed() {
         return this.suppressed;
     }
@@ -100,7 +89,6 @@ public class ResourceParameterValue  implements java.io.Serializable {
     public void setSuppressed(boolean suppressed) {
         this.suppressed = suppressed;
     }
-   
 
     /**
      * toString
@@ -116,7 +104,6 @@ public class ResourceParameterValue  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -141,7 +128,6 @@ public class ResourceParameterValue  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

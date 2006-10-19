@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.core;
  * 			
  * 		
  */
-
 public class PrivateKey  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -22,8 +20,7 @@ public class PrivateKey  implements java.io.Serializable {
      private Credential credential;
      private String privateKey;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public PrivateKey() {
@@ -33,17 +30,14 @@ public class PrivateKey  implements java.io.Serializable {
     public PrivateKey(Credential credential) {
         this.credential = credential;
     }
-    
     /** full constructor */
     public PrivateKey(Credential credential, String privateKey) {
-        this.credential = credential;
-        this.privateKey = privateKey;
+       this.credential = credential;
+       this.privateKey = privateKey;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -51,7 +45,6 @@ public class PrivateKey  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Credential getCredential() {
         return this.credential;
     }
@@ -59,7 +52,6 @@ public class PrivateKey  implements java.io.Serializable {
     public void setCredential(Credential credential) {
         this.credential = credential;
     }
-
     public String getPrivateKey() {
         return this.privateKey;
     }
@@ -67,7 +59,6 @@ public class PrivateKey  implements java.io.Serializable {
     public void setPrivateKey(String privateKey) {
         this.privateKey = privateKey;
     }
-   
 
     /**
      * toString
@@ -82,7 +73,6 @@ public class PrivateKey  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -103,7 +93,6 @@ public class PrivateKey  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

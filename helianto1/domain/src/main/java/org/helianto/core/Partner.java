@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -13,9 +13,7 @@ package org.helianto.core;
  * 				
  *         
  */
-
 public class Partner  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -26,8 +24,7 @@ public class Partner  implements java.io.Serializable {
      private char partnerState;
      private String profile;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Partner() {
@@ -40,20 +37,17 @@ public class Partner  implements java.io.Serializable {
         this.priority = priority;
         this.partnerState = partnerState;
     }
-    
     /** full constructor */
     public Partner(PartnerData partnerData, byte sequence, char priority, char partnerState, String profile) {
-        this.partnerData = partnerData;
-        this.sequence = sequence;
-        this.priority = priority;
-        this.partnerState = partnerState;
-        this.profile = profile;
+       this.partnerData = partnerData;
+       this.sequence = sequence;
+       this.priority = priority;
+       this.partnerState = partnerState;
+       this.profile = profile;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -61,7 +55,6 @@ public class Partner  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public PartnerData getPartnerData() {
         return this.partnerData;
     }
@@ -69,7 +62,6 @@ public class Partner  implements java.io.Serializable {
     public void setPartnerData(PartnerData partnerData) {
         this.partnerData = partnerData;
     }
-
     public byte getSequence() {
         return this.sequence;
     }
@@ -77,7 +69,6 @@ public class Partner  implements java.io.Serializable {
     public void setSequence(byte sequence) {
         this.sequence = sequence;
     }
-
     public char getPriority() {
         return this.priority;
     }
@@ -85,7 +76,6 @@ public class Partner  implements java.io.Serializable {
     public void setPriority(char priority) {
         this.priority = priority;
     }
-
     public char getPartnerState() {
         return this.partnerState;
     }
@@ -93,7 +83,6 @@ public class Partner  implements java.io.Serializable {
     public void setPartnerState(char partnerState) {
         this.partnerState = partnerState;
     }
-
     public String getProfile() {
         return this.profile;
     }
@@ -101,7 +90,6 @@ public class Partner  implements java.io.Serializable {
     public void setProfile(String profile) {
         this.profile = profile;
     }
-   
 
     /**
      * toString
@@ -116,7 +104,6 @@ public class Partner  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -141,7 +128,6 @@ public class Partner  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

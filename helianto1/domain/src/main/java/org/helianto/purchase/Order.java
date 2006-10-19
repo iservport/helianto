@@ -1,11 +1,11 @@
 package org.helianto.purchase;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.math.BigDecimal;
 import java.util.Date;
 import org.helianto.core.Entity;
 import org.helianto.core.Partner;
-
 
 /**
  * 				
@@ -16,9 +16,7 @@ import org.helianto.core.Partner;
  * 				
  * 		
  */
-
 public class Order  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -29,27 +27,23 @@ public class Order  implements java.io.Serializable {
      private Date dateIssued;
      private BigDecimal orderValue;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Order() {
     }
 
-    
     /** full constructor */
     public Order(Entity entity, int internalNumber, Partner partner, Date dateIssued, BigDecimal orderValue) {
-        this.entity = entity;
-        this.internalNumber = internalNumber;
-        this.partner = partner;
-        this.dateIssued = dateIssued;
-        this.orderValue = orderValue;
+       this.entity = entity;
+       this.internalNumber = internalNumber;
+       this.partner = partner;
+       this.dateIssued = dateIssued;
+       this.orderValue = orderValue;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -57,7 +51,6 @@ public class Order  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -65,7 +58,6 @@ public class Order  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public int getInternalNumber() {
         return this.internalNumber;
     }
@@ -73,7 +65,6 @@ public class Order  implements java.io.Serializable {
     public void setInternalNumber(int internalNumber) {
         this.internalNumber = internalNumber;
     }
-
     public Partner getPartner() {
         return this.partner;
     }
@@ -81,7 +72,6 @@ public class Order  implements java.io.Serializable {
     public void setPartner(Partner partner) {
         this.partner = partner;
     }
-
     public Date getDateIssued() {
         return this.dateIssued;
     }
@@ -89,7 +79,6 @@ public class Order  implements java.io.Serializable {
     public void setDateIssued(Date dateIssued) {
         this.dateIssued = dateIssued;
     }
-
     public BigDecimal getOrderValue() {
         return this.orderValue;
     }
@@ -97,8 +86,6 @@ public class Order  implements java.io.Serializable {
     public void setOrderValue(BigDecimal orderValue) {
         this.orderValue = orderValue;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -124,7 +111,6 @@ public class Order  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

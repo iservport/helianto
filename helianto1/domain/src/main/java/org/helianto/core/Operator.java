@@ -1,8 +1,8 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.Locale;
-
 
 /**
  * 				
@@ -21,9 +21,7 @@ import java.util.Locale;
  * 				
  * 		
  */
-
 public class Operator  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -33,8 +31,7 @@ public class Operator  implements java.io.Serializable {
      private Locale locale;
      private char operationMode;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Operator() {
@@ -45,19 +42,16 @@ public class Operator  implements java.io.Serializable {
         this.operatorName = operatorName;
         this.operationMode = operationMode;
     }
-    
     /** full constructor */
     public Operator(String operatorName, Operator parent, Locale locale, char operationMode) {
-        this.operatorName = operatorName;
-        this.parent = parent;
-        this.locale = locale;
-        this.operationMode = operationMode;
+       this.operatorName = operatorName;
+       this.parent = parent;
+       this.locale = locale;
+       this.operationMode = operationMode;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -65,7 +59,6 @@ public class Operator  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public String getOperatorName() {
         return this.operatorName;
     }
@@ -73,7 +66,6 @@ public class Operator  implements java.io.Serializable {
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
     }
-
     public Operator getParent() {
         return this.parent;
     }
@@ -81,7 +73,6 @@ public class Operator  implements java.io.Serializable {
     public void setParent(Operator parent) {
         this.parent = parent;
     }
-
     public Locale getLocale() {
         return this.locale;
     }
@@ -89,7 +80,6 @@ public class Operator  implements java.io.Serializable {
     public void setLocale(Locale locale) {
         this.locale = locale;
     }
-
     public char getOperationMode() {
         return this.operationMode;
     }
@@ -97,7 +87,6 @@ public class Operator  implements java.io.Serializable {
     public void setOperationMode(char operationMode) {
         this.operationMode = operationMode;
     }
-   
 
     /**
      * toString
@@ -112,7 +101,6 @@ public class Operator  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -135,7 +123,6 @@ public class Operator  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

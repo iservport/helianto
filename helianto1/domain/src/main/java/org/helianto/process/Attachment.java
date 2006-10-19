@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.process;
  * 				
  * 		
  */
-
 public class Attachment  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -24,8 +22,7 @@ public class Attachment  implements java.io.Serializable {
      private byte[] content;
      private String attachDesc;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Attachment() {
@@ -36,19 +33,16 @@ public class Attachment  implements java.io.Serializable {
         this.document = document;
         this.sequence = sequence;
     }
-    
     /** full constructor */
     public Attachment(Document document, int sequence, byte[] content, String attachDesc) {
-        this.document = document;
-        this.sequence = sequence;
-        this.content = content;
-        this.attachDesc = attachDesc;
+       this.document = document;
+       this.sequence = sequence;
+       this.content = content;
+       this.attachDesc = attachDesc;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -56,7 +50,6 @@ public class Attachment  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Document getDocument() {
         return this.document;
     }
@@ -64,7 +57,6 @@ public class Attachment  implements java.io.Serializable {
     public void setDocument(Document document) {
         this.document = document;
     }
-
     public int getSequence() {
         return this.sequence;
     }
@@ -72,7 +64,6 @@ public class Attachment  implements java.io.Serializable {
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
-
     public byte[] getContent() {
         return this.content;
     }
@@ -80,7 +71,6 @@ public class Attachment  implements java.io.Serializable {
     public void setContent(byte[] content) {
         this.content = content;
     }
-
     public String getAttachDesc() {
         return this.attachDesc;
     }
@@ -88,8 +78,6 @@ public class Attachment  implements java.io.Serializable {
     public void setAttachDesc(String attachDesc) {
         this.attachDesc = attachDesc;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -114,7 +102,6 @@ public class Attachment  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

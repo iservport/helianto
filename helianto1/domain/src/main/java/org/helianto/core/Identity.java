@@ -1,10 +1,10 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  * 				
@@ -15,9 +15,7 @@ import java.util.Set;
  * 				
  * 		
  */
-
 public class Identity  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -31,8 +29,7 @@ public class Identity  implements java.io.Serializable {
      private char notification;
      private Set<UserGroup> users = new HashSet<UserGroup>(0);
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Identity() {
@@ -45,23 +42,20 @@ public class Identity  implements java.io.Serializable {
         this.identityType = identityType;
         this.notification = notification;
     }
-    
     /** full constructor */
     public Identity(String principal, String optionalAlias, PersonalData personalData, Date created, Date lastLogin, char identityType, char notification, Set<UserGroup> users) {
-        this.principal = principal;
-        this.optionalAlias = optionalAlias;
-        this.personalData = personalData;
-        this.created = created;
-        this.lastLogin = lastLogin;
-        this.identityType = identityType;
-        this.notification = notification;
-        this.users = users;
+       this.principal = principal;
+       this.optionalAlias = optionalAlias;
+       this.personalData = personalData;
+       this.created = created;
+       this.lastLogin = lastLogin;
+       this.identityType = identityType;
+       this.notification = notification;
+       this.users = users;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -69,7 +63,6 @@ public class Identity  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public String getPrincipal() {
         return this.principal;
     }
@@ -77,7 +70,6 @@ public class Identity  implements java.io.Serializable {
     public void setPrincipal(String principal) {
         this.principal = principal;
     }
-
     public String getOptionalAlias() {
         return this.optionalAlias;
     }
@@ -85,7 +77,6 @@ public class Identity  implements java.io.Serializable {
     public void setOptionalAlias(String optionalAlias) {
         this.optionalAlias = optionalAlias;
     }
-
     public PersonalData getPersonalData() {
         return this.personalData;
     }
@@ -93,7 +84,6 @@ public class Identity  implements java.io.Serializable {
     public void setPersonalData(PersonalData personalData) {
         this.personalData = personalData;
     }
-
     public Date getCreated() {
         return this.created;
     }
@@ -101,7 +91,6 @@ public class Identity  implements java.io.Serializable {
     public void setCreated(Date created) {
         this.created = created;
     }
-
     public Date getLastLogin() {
         return this.lastLogin;
     }
@@ -109,7 +98,6 @@ public class Identity  implements java.io.Serializable {
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
     }
-
     public char getIdentityType() {
         return this.identityType;
     }
@@ -117,7 +105,6 @@ public class Identity  implements java.io.Serializable {
     public void setIdentityType(char identityType) {
         this.identityType = identityType;
     }
-
     public char getNotification() {
         return this.notification;
     }
@@ -125,7 +112,6 @@ public class Identity  implements java.io.Serializable {
     public void setNotification(char notification) {
         this.notification = notification;
     }
-
     public Set<UserGroup> getUsers() {
         return this.users;
     }
@@ -133,7 +119,6 @@ public class Identity  implements java.io.Serializable {
     public void setUsers(Set<UserGroup> users) {
         this.users = users;
     }
-   
 
     /**
      * toString
@@ -149,7 +134,6 @@ public class Identity  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -176,7 +160,6 @@ public class Identity  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.core;
  * 				
  *         
  */
-
 public class Phone  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -25,8 +23,7 @@ public class Phone  implements java.io.Serializable {
      private char phoneType;
      private String comment;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Phone() {
@@ -39,20 +36,17 @@ public class Phone  implements java.io.Serializable {
         this.areaCode = areaCode;
         this.phoneType = phoneType;
     }
-    
     /** full constructor */
     public Phone(Contact contact, String phoneNumber, String areaCode, char phoneType, String comment) {
-        this.contact = contact;
-        this.phoneNumber = phoneNumber;
-        this.areaCode = areaCode;
-        this.phoneType = phoneType;
-        this.comment = comment;
+       this.contact = contact;
+       this.phoneNumber = phoneNumber;
+       this.areaCode = areaCode;
+       this.phoneType = phoneType;
+       this.comment = comment;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -60,7 +54,6 @@ public class Phone  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Contact getContact() {
         return this.contact;
     }
@@ -68,7 +61,6 @@ public class Phone  implements java.io.Serializable {
     public void setContact(Contact contact) {
         this.contact = contact;
     }
-
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
@@ -76,7 +68,6 @@ public class Phone  implements java.io.Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
     public String getAreaCode() {
         return this.areaCode;
     }
@@ -84,7 +75,6 @@ public class Phone  implements java.io.Serializable {
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
     }
-
     public char getPhoneType() {
         return this.phoneType;
     }
@@ -92,7 +82,6 @@ public class Phone  implements java.io.Serializable {
     public void setPhoneType(char phoneType) {
         this.phoneType = phoneType;
     }
-
     public String getComment() {
         return this.comment;
     }
@@ -100,7 +89,6 @@ public class Phone  implements java.io.Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
-   
 
     /**
      * toString
@@ -117,7 +105,6 @@ public class Phone  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -143,7 +130,6 @@ public class Phone  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

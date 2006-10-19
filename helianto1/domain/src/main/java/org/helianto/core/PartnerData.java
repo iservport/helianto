@@ -1,9 +1,9 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  * 				
@@ -14,9 +14,7 @@ import java.util.Set;
  * 				
  *         
  */
-
 public class PartnerData  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -32,8 +30,7 @@ public class PartnerData  implements java.io.Serializable {
      private String postOfficeBox;
      private Set<Partner> partners = new HashSet<Partner>(0);
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public PartnerData() {
@@ -44,25 +41,22 @@ public class PartnerData  implements java.io.Serializable {
         this.entity = entity;
         this.alias = alias;
     }
-    
     /** full constructor */
     public PartnerData(Entity entity, String alias, Province province, String address1, String address2, String address3, String cityName, String postalCode, String postOfficeBox, Set<Partner> partners) {
-        this.entity = entity;
-        this.alias = alias;
-        this.province = province;
-        this.address1 = address1;
-        this.address2 = address2;
-        this.address3 = address3;
-        this.cityName = cityName;
-        this.postalCode = postalCode;
-        this.postOfficeBox = postOfficeBox;
-        this.partners = partners;
+       this.entity = entity;
+       this.alias = alias;
+       this.province = province;
+       this.address1 = address1;
+       this.address2 = address2;
+       this.address3 = address3;
+       this.cityName = cityName;
+       this.postalCode = postalCode;
+       this.postOfficeBox = postOfficeBox;
+       this.partners = partners;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -70,7 +64,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -78,7 +71,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public String getAlias() {
         return this.alias;
     }
@@ -86,7 +78,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setAlias(String alias) {
         this.alias = alias;
     }
-
     public Province getProvince() {
         return this.province;
     }
@@ -94,7 +85,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setProvince(Province province) {
         this.province = province;
     }
-
     public String getAddress1() {
         return this.address1;
     }
@@ -102,7 +92,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setAddress1(String address1) {
         this.address1 = address1;
     }
-
     public String getAddress2() {
         return this.address2;
     }
@@ -110,7 +99,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setAddress2(String address2) {
         this.address2 = address2;
     }
-
     public String getAddress3() {
         return this.address3;
     }
@@ -118,7 +106,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setAddress3(String address3) {
         this.address3 = address3;
     }
-
     public String getCityName() {
         return this.cityName;
     }
@@ -126,7 +113,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
-
     public String getPostalCode() {
         return this.postalCode;
     }
@@ -134,7 +120,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
-
     public String getPostOfficeBox() {
         return this.postOfficeBox;
     }
@@ -142,7 +127,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setPostOfficeBox(String postOfficeBox) {
         this.postOfficeBox = postOfficeBox;
     }
-
     public Set<Partner> getPartners() {
         return this.partners;
     }
@@ -150,7 +134,6 @@ public class PartnerData  implements java.io.Serializable {
     public void setPartners(Set<Partner> partners) {
         this.partners = partners;
     }
-   
 
     /**
      * toString
@@ -166,7 +149,6 @@ public class PartnerData  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -196,7 +178,6 @@ public class PartnerData  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

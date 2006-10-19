@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.core;
  * 				
  * 		
  */
-
 public class UserRole  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -23,25 +21,21 @@ public class UserRole  implements java.io.Serializable {
      private Service service;
      private String serviceExtension;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public UserRole() {
     }
 
-    
     /** full constructor */
     public UserRole(User user, Service service, String serviceExtension) {
-        this.user = user;
-        this.service = service;
-        this.serviceExtension = serviceExtension;
+       this.user = user;
+       this.service = service;
+       this.serviceExtension = serviceExtension;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -49,7 +43,6 @@ public class UserRole  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public User getUser() {
         return this.user;
     }
@@ -57,7 +50,6 @@ public class UserRole  implements java.io.Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-
     public Service getService() {
         return this.service;
     }
@@ -65,7 +57,6 @@ public class UserRole  implements java.io.Serializable {
     public void setService(Service service) {
         this.service = service;
     }
-
     public String getServiceExtension() {
         return this.serviceExtension;
     }
@@ -73,7 +64,6 @@ public class UserRole  implements java.io.Serializable {
     public void setServiceExtension(String serviceExtension) {
         this.serviceExtension = serviceExtension;
     }
-   
 
     /**
      * toString
@@ -90,7 +80,6 @@ public class UserRole  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -114,7 +103,6 @@ public class UserRole  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

@@ -36,12 +36,6 @@ public class Specification extends org.helianto.process.Document implements java
         this.specificationLimit = specificationLimit;
     }
     
-    /** full constructor */
-    public Specification(Entity entity, String docCode, String docName, Document parent, List<Tree> children, Unit unit, SpecificationLimit specificationLimit) {
-        super(entity, docCode, docName, parent, children);        
-        this.unit = unit;
-        this.specificationLimit = specificationLimit;
-    }
     
 
    

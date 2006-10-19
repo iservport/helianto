@@ -1,8 +1,8 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.Set;
-
 
 /**
  * 				
@@ -20,17 +20,14 @@ import java.util.Set;
  * 				
  * 			
  */
-
 public class User extends org.helianto.core.UserGroup implements java.io.Serializable {
-
 
     // Fields    
 
      private char userType;
      private boolean accountNonExpired;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public User() {
@@ -41,18 +38,15 @@ public class User extends org.helianto.core.UserGroup implements java.io.Seriali
         super(entity, identity, userState);        
         this.userType = userType;
     }
-    
     /** full constructor */
     public User(Entity entity, Identity identity, char userState, UserGroup parent, Set<UserGroup> children, Set<UserRole> roles, char userType, boolean accountNonExpired) {
         super(entity, identity, userState, parent, children, roles);        
-        this.userType = userType;
-        this.accountNonExpired = accountNonExpired;
+       this.userType = userType;
+       this.accountNonExpired = accountNonExpired;
     }
     
-
    
     // Property accessors
-
     public char getUserType() {
         return this.userType;
     }
@@ -60,7 +54,6 @@ public class User extends org.helianto.core.UserGroup implements java.io.Seriali
     public void setUserType(char userType) {
         this.userType = userType;
     }
-
     public boolean isAccountNonExpired() {
         return this.accountNonExpired;
     }
@@ -68,13 +61,10 @@ public class User extends org.helianto.core.UserGroup implements java.io.Seriali
     public void setAccountNonExpired(boolean accountNonExpired) {
         this.accountNonExpired = accountNonExpired;
     }
-   
-
-
-
-
 
 
 
 
 }
+
+

@@ -1,9 +1,9 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.Date;
 import org.helianto.core.Entity;
-
 
 /**
  * 				
@@ -14,9 +14,7 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-
 public class Release  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -26,26 +24,22 @@ public class Release  implements java.io.Serializable {
      private Date releaseDate;
      private char releaseState;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Release() {
     }
 
-    
     /** full constructor */
     public Release(Entity entity, long internalNumber, Date releaseDate, char releaseState) {
-        this.entity = entity;
-        this.internalNumber = internalNumber;
-        this.releaseDate = releaseDate;
-        this.releaseState = releaseState;
+       this.entity = entity;
+       this.internalNumber = internalNumber;
+       this.releaseDate = releaseDate;
+       this.releaseState = releaseState;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -53,7 +47,6 @@ public class Release  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -61,7 +54,6 @@ public class Release  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public long getInternalNumber() {
         return this.internalNumber;
     }
@@ -69,7 +61,6 @@ public class Release  implements java.io.Serializable {
     public void setInternalNumber(long internalNumber) {
         this.internalNumber = internalNumber;
     }
-
     public Date getReleaseDate() {
         return this.releaseDate;
     }
@@ -77,7 +68,6 @@ public class Release  implements java.io.Serializable {
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
-
     public char getReleaseState() {
         return this.releaseState;
     }
@@ -85,8 +75,6 @@ public class Release  implements java.io.Serializable {
     public void setReleaseState(char releaseState) {
         this.releaseState = releaseState;
     }
-   
-
 
 
    public boolean equals(Object other) {
@@ -111,7 +99,6 @@ public class Release  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

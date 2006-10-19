@@ -35,11 +35,6 @@ public class Characteristic extends org.helianto.process.Document implements jav
         this.classification = classification;
     }
     
-    /** full constructor */
-    public Characteristic(Entity entity, String docCode, String docName, Document parent, List<Tree> children, int classification) {
-        super(entity, docCode, docName, parent, children);        
-        this.classification = classification;
-    }
     
 
    

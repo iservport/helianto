@@ -1,10 +1,8 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:24 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
-import java.util.ArrayList;
-import java.util.List;
+
 import org.helianto.core.Entity;
-
 
 /**
  * 			
@@ -19,9 +17,7 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-
 public class Document  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -29,11 +25,8 @@ public class Document  implements java.io.Serializable {
      private Entity entity;
      private String docCode;
      private String docName;
-     private Document parent;
-     private List<Tree> children = new ArrayList<Tree>(0);
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Document() {
@@ -44,20 +37,15 @@ public class Document  implements java.io.Serializable {
         this.entity = entity;
         this.docCode = docCode;
     }
-    
     /** full constructor */
-    public Document(Entity entity, String docCode, String docName, Document parent, List<Tree> children) {
-        this.entity = entity;
-        this.docCode = docCode;
-        this.docName = docName;
-        this.parent = parent;
-        this.children = children;
+    public Document(Entity entity, String docCode, String docName) {
+       this.entity = entity;
+       this.docCode = docCode;
+       this.docName = docName;
     }
     
-
    
     // Property accessors
-
     public long getId() {
         return this.id;
     }
@@ -65,7 +53,6 @@ public class Document  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -73,7 +60,6 @@ public class Document  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public String getDocCode() {
         return this.docCode;
     }
@@ -81,7 +67,6 @@ public class Document  implements java.io.Serializable {
     public void setDocCode(String docCode) {
         this.docCode = docCode;
     }
-
     public String getDocName() {
         return this.docName;
     }
@@ -89,23 +74,6 @@ public class Document  implements java.io.Serializable {
     public void setDocName(String docName) {
         this.docName = docName;
     }
-
-    public Document getParent() {
-        return this.parent;
-    }
-    
-    public void setParent(Document parent) {
-        this.parent = parent;
-    }
-
-    public List<Tree> getChildren() {
-        return this.children;
-    }
-    
-    public void setChildren(List<Tree> children) {
-        this.children = children;
-    }
-   
 
     /**
      * toString
@@ -121,7 +89,6 @@ public class Document  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -140,13 +107,10 @@ public class Document  implements java.io.Serializable {
          result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getDocCode() == null ? 0 : this.getDocCode().hashCode() );
          
-         
-         
          return result;
    }   
 
 
-
-
-
 }
+
+

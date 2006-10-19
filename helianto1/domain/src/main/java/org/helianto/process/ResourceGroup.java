@@ -1,10 +1,10 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:23 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import java.util.HashSet;
 import java.util.Set;
 import org.helianto.core.Entity;
-
 
 /**
  * 			
@@ -15,9 +15,7 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-
 public class ResourceGroup  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -29,8 +27,7 @@ public class ResourceGroup  implements java.io.Serializable {
      private char resourceType;
      private Set<ResourceGroup> resources = new HashSet<ResourceGroup>(0);
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public ResourceGroup() {
@@ -42,21 +39,18 @@ public class ResourceGroup  implements java.io.Serializable {
         this.resourceCode = resourceCode;
         this.resourceType = resourceType;
     }
-    
     /** full constructor */
     public ResourceGroup(Entity entity, String resourceCode, ResourceGroup parent, String resourceName, char resourceType, Set<ResourceGroup> resources) {
-        this.entity = entity;
-        this.resourceCode = resourceCode;
-        this.parent = parent;
-        this.resourceName = resourceName;
-        this.resourceType = resourceType;
-        this.resources = resources;
+       this.entity = entity;
+       this.resourceCode = resourceCode;
+       this.parent = parent;
+       this.resourceName = resourceName;
+       this.resourceType = resourceType;
+       this.resources = resources;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -64,7 +58,6 @@ public class ResourceGroup  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -72,7 +65,6 @@ public class ResourceGroup  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public String getResourceCode() {
         return this.resourceCode;
     }
@@ -80,7 +72,6 @@ public class ResourceGroup  implements java.io.Serializable {
     public void setResourceCode(String resourceCode) {
         this.resourceCode = resourceCode;
     }
-
     public ResourceGroup getParent() {
         return this.parent;
     }
@@ -88,7 +79,6 @@ public class ResourceGroup  implements java.io.Serializable {
     public void setParent(ResourceGroup parent) {
         this.parent = parent;
     }
-
     public String getResourceName() {
         return this.resourceName;
     }
@@ -96,7 +86,6 @@ public class ResourceGroup  implements java.io.Serializable {
     public void setResourceName(String resourceName) {
         this.resourceName = resourceName;
     }
-
     public char getResourceType() {
         return this.resourceType;
     }
@@ -104,7 +93,6 @@ public class ResourceGroup  implements java.io.Serializable {
     public void setResourceType(char resourceType) {
         this.resourceType = resourceType;
     }
-
     public Set<ResourceGroup> getResources() {
         return this.resources;
     }
@@ -112,7 +100,6 @@ public class ResourceGroup  implements java.io.Serializable {
     public void setResources(Set<ResourceGroup> resources) {
         this.resources = resources;
     }
-   
 
     /**
      * toString
@@ -128,7 +115,6 @@ public class ResourceGroup  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -154,7 +140,6 @@ public class ResourceGroup  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

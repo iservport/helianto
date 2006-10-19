@@ -1,8 +1,8 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
+
 
 import org.helianto.core.Entity;
-
 
 /**
  * 				
@@ -13,9 +13,7 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-
 public class Unit  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -25,8 +23,7 @@ public class Unit  implements java.io.Serializable {
      private Unit parent;
      private String unitName;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Unit() {
@@ -37,19 +34,16 @@ public class Unit  implements java.io.Serializable {
         this.entity = entity;
         this.unitCode = unitCode;
     }
-    
     /** full constructor */
     public Unit(Entity entity, String unitCode, Unit parent, String unitName) {
-        this.entity = entity;
-        this.unitCode = unitCode;
-        this.parent = parent;
-        this.unitName = unitName;
+       this.entity = entity;
+       this.unitCode = unitCode;
+       this.parent = parent;
+       this.unitName = unitName;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -57,7 +51,6 @@ public class Unit  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -65,7 +58,6 @@ public class Unit  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public String getUnitCode() {
         return this.unitCode;
     }
@@ -73,7 +65,6 @@ public class Unit  implements java.io.Serializable {
     public void setUnitCode(String unitCode) {
         this.unitCode = unitCode;
     }
-
     public Unit getParent() {
         return this.parent;
     }
@@ -81,7 +72,6 @@ public class Unit  implements java.io.Serializable {
     public void setParent(Unit parent) {
         this.parent = parent;
     }
-
     public String getUnitName() {
         return this.unitName;
     }
@@ -89,7 +79,6 @@ public class Unit  implements java.io.Serializable {
     public void setUnitName(String unitName) {
         this.unitName = unitName;
     }
-   
 
     /**
      * toString
@@ -105,7 +94,6 @@ public class Unit  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -129,7 +117,6 @@ public class Unit  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

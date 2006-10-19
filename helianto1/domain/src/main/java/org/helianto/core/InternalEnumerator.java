@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -12,9 +12,7 @@ package org.helianto.core;
  * 				
  * 		
  */
-
 public class InternalEnumerator  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -23,25 +21,21 @@ public class InternalEnumerator  implements java.io.Serializable {
      private String typeName;
      private long lastNumber;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public InternalEnumerator() {
     }
 
-    
     /** full constructor */
     public InternalEnumerator(Entity entity, String typeName, long lastNumber) {
-        this.entity = entity;
-        this.typeName = typeName;
-        this.lastNumber = lastNumber;
+       this.entity = entity;
+       this.typeName = typeName;
+       this.lastNumber = lastNumber;
     }
     
-
    
     // Property accessors
-
     public int getId() {
         return this.id;
     }
@@ -49,7 +43,6 @@ public class InternalEnumerator  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
     public Entity getEntity() {
         return this.entity;
     }
@@ -57,7 +50,6 @@ public class InternalEnumerator  implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
     public String getTypeName() {
         return this.typeName;
     }
@@ -65,7 +57,6 @@ public class InternalEnumerator  implements java.io.Serializable {
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
-
     public long getLastNumber() {
         return this.lastNumber;
     }
@@ -73,7 +64,6 @@ public class InternalEnumerator  implements java.io.Serializable {
     public void setLastNumber(long lastNumber) {
         this.lastNumber = lastNumber;
     }
-   
 
     /**
      * toString
@@ -89,7 +79,6 @@ public class InternalEnumerator  implements java.io.Serializable {
       
       return buffer.toString();
      }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -112,7 +101,6 @@ public class InternalEnumerator  implements java.io.Serializable {
    }   
 
 
-
-
-
 }
+
+

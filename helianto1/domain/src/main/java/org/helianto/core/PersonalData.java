@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/09/2006 12:54:26 by Hibernate Tools 3.1.0.beta4
+// Generated 18/10/2006 20:52:47 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -13,9 +13,7 @@ package org.helianto.core;
  * 				
  * 			
  */
-
 public class PersonalData  implements java.io.Serializable {
-
 
     // Fields    
 
@@ -24,8 +22,7 @@ public class PersonalData  implements java.io.Serializable {
      private char gender;
      private int appellation;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public PersonalData() {
@@ -36,19 +33,16 @@ public class PersonalData  implements java.io.Serializable {
         this.gender = gender;
         this.appellation = appellation;
     }
-    
     /** full constructor */
     public PersonalData(String firstName, String lastName, char gender, int appellation) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.appellation = appellation;
+       this.firstName = firstName;
+       this.lastName = lastName;
+       this.gender = gender;
+       this.appellation = appellation;
     }
     
-
    
     // Property accessors
-
     public String getFirstName() {
         return this.firstName;
     }
@@ -56,7 +50,6 @@ public class PersonalData  implements java.io.Serializable {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
     public String getLastName() {
         return this.lastName;
     }
@@ -64,7 +57,6 @@ public class PersonalData  implements java.io.Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
     public char getGender() {
         return this.gender;
     }
@@ -72,7 +64,6 @@ public class PersonalData  implements java.io.Serializable {
     public void setGender(char gender) {
         this.gender = gender;
     }
-
     public int getAppellation() {
         return this.appellation;
     }
@@ -80,13 +71,10 @@ public class PersonalData  implements java.io.Serializable {
     public void setAppellation(int appellation) {
         this.appellation = appellation;
     }
-   
-
-
-
-
 
 
 
 
 }
+
+
