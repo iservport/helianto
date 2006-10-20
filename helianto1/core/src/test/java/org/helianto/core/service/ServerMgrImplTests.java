@@ -21,10 +21,12 @@ import static org.easymock.EasyMock.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 import org.helianto.core.Operator;
 import org.helianto.core.dao.OperatorDao;
+import org.helianto.core.type.OperationMode;
 
 import junit.framework.TestCase;
 
@@ -35,6 +37,15 @@ public class ServerMgrImplTests extends TestCase {
     
     //
     
+    public void testPersistOperator() {
+        Operator operator = new Operator();
+        operatorDao.persistOperator(operator);
+        replay(operatorDao);
+        
+        serverMgr.persistOperator(operator);
+        verify(operatorDao);
+    }
+    
     public void testFindOperatorAll() {
         List<Operator> operatorList = new ArrayList<Operator>();
         expect(operatorDao.findOperatorAll()).andReturn(operatorList);
@@ -44,7 +55,12 @@ public class ServerMgrImplTests extends TestCase {
         verify(operatorDao);
     }
 
-
+    public void testCreateLocalDefaultOperator() {
+        Operator operator = serverMgr.createLocalDefaultOperator();
+        assertEquals("DEFAULT", operator.getOperatorName());
+        assertEquals(OperationMode.LOCAL.getValue(), operator.getOperationMode());
+        assertEquals(Locale.getDefault(), operator.getLocale());
+    }
 
     // collabs
     
