@@ -15,7 +15,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 		-->
-<beans>
+<beans default-init-method="init">
 
 	<!--
 			imports 	
@@ -53,6 +53,26 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
+			Partner dao implementation	
+	-->
+	<bean id="partnerDao" 
+		class="org.helianto.core.hibernate.PartnerDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+			Server service bean	
+	-->
+	<bean id="serverMgr" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="serverTarget"
+				class="org.helianto.core.service.ServerMgrImpl">
+				<property name="operatorDao" ref="operatorDao"/>
+			</bean>
+		</property>
+	</bean>
+	<!--
 			User service bean	
 	-->
 	<bean id="userMgr" 
@@ -65,13 +85,6 @@
 				<property name="authorizationDao" ref="authorizationDao"/>
 			</bean>
 		</property>
-	</bean>
-	<!--
-			Partner dao implementation	
-	-->
-	<bean id="partnerDao" 
-		class="org.helianto.core.hibernate.PartnerDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
 			Partner service bean	
