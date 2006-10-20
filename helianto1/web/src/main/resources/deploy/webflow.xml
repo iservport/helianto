@@ -17,6 +17,10 @@
 -->
 <beans>
 	<!--
+			imports 	
+	-->
+	<import resource="classpath:/deploy/install.xml"/>
+	<!--
 		Flow registry
 	-->
 	<bean name="flowRegistry"
