@@ -26,6 +26,7 @@ import junit.framework.TestCase;
 import org.helianto.core.Operator;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.web.controller.InstallFormAction;
+import org.helianto.web.view.OperatorForm;
 import org.springframework.webflow.Event;
 import org.springframework.webflow.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
@@ -62,17 +63,22 @@ public class InstallFormActionTests extends TestCase {
         replay(serverMgr);
         
         RequestContext context = new MockRequestContext();
+        OperatorForm form = new OperatorForm();
+        context.getFlowScope().put("formObject", form);
+        
         Event event = installFormAction.createOperator(context);
         assertEquals(event.getId(), "success");
         verify(serverMgr);
         
-        assertSame(operator, context.getFlowScope().get("operator"));
+        assertSame(operator, form.getOperator());
     }
 
     public void testPersistOperator() {
         Operator operator = new Operator();
+        OperatorForm form = new OperatorForm();
+        form.setOperator(operator);
         RequestContext context = new MockRequestContext();
-        context.getFlowScope().put("operator", operator);
+        context.getFlowScope().put("formObject", form);
         
         serverMgr.persistOperator(operator);
         replay(serverMgr);

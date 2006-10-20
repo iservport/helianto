@@ -17,6 +17,8 @@ package org.helianto.web.controller;
 
 import org.helianto.core.Operator;
 import org.helianto.core.service.ServerMgr;
+import org.helianto.web.view.OperatorForm;
+import org.springframework.webflow.AttributeMap;
 import org.springframework.webflow.Event;
 import org.springframework.webflow.RequestContext;
 import org.springframework.webflow.action.FormAction;
@@ -42,11 +44,12 @@ public class InstallFormAction extends FormAction {
     
     /**
      * Invoke service layer to create a default operator and
-     * make it available to the flow;
+     * make it available to the form flow;
      */
     public Event createOperator(RequestContext context) {
         Operator operator = serverMgr.createLocalDefaultOperator();
-        context.getFlowScope().put("operator", operator);
+        OperatorForm form = doGetForm(context);
+        form.setOperator(operator);
         return success();
     }
     
@@ -54,10 +57,17 @@ public class InstallFormAction extends FormAction {
      * Persist the operator retrieved from the flow;
      */
     public Event persistOperator(RequestContext context) {
-        Operator operator = (Operator) context.getFlowScope().get("operator");
+        Operator operator = doGetForm(context).getOperator();
         serverMgr.persistOperator(operator);
         return success();
     }
+    
+    //~ utilities
+    protected OperatorForm doGetForm(RequestContext context) {
+        AttributeMap flowScope = context.getFlowScope();
+        return (OperatorForm) flowScope.getRequired(getFormObjectName());
+    }
+
 
     //~ collaborators
     public void setServerMgr(ServerMgr serverMgr) {
