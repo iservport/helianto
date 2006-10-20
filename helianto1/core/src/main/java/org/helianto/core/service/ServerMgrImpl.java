@@ -35,11 +35,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-public class ServerMgrImpl {
+public class ServerMgrImpl implements ServerMgr {
 
     protected OperatorDao operatorDao;
 
     private MailComposer mailComposer;
+    
+    public List<Operator> findOperator() {
+        List<Operator> operatorList = operatorDao.findOperatorAll();
+        return operatorList;
+    }
     
     /**
      * Send a <code>Credential</code> registration using 
@@ -132,6 +137,10 @@ public class ServerMgrImpl {
 
     public void setMailComposer(MailComposer mailComposer) {
         this.mailComposer = mailComposer;
+    }
+
+    public void setOperatorDao(OperatorDao operatorDao) {
+        this.operatorDao = operatorDao;
     }
 
 }
