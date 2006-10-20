@@ -297,6 +297,12 @@ public class PartnerMgrImpl implements PartnerMgr {
         return partnerDao.findContactByPartnerData(partnerData);
     }
     
+    //
+    
+    public void init() {
+        if (partnerDao==null) throw new IllegalArgumentException("PartnerDao property required");
+    }
+    
     // mutators
 
     public void setPartnerDao(PartnerDao partnerDao) {

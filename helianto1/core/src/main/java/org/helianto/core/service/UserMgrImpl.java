@@ -109,6 +109,13 @@ public class UserMgrImpl implements UserMgr {
         return true;
     }
     
+    //
+    
+    public void init() {
+        if (authenticationDao==null) throw new IllegalArgumentException("AuthenticationDao property required");
+        if (authorizationDao==null) throw new IllegalArgumentException("AuthorizationDao property required");
+    }
+    
     //~ collaborators
 
     private final Log logger = LogFactory.getLog(SecurityMgrImpl.class);
