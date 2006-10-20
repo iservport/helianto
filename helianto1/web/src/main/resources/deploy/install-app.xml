@@ -28,6 +28,18 @@
 	<!--
 		identity action
 	-->
+	<bean name="installAction"
+		class="org.helianto.web.controller.InstallFormAction">
+		<property name="formObjectClass" 
+			value="org.helianto.web.view.OperatorForm" />
+		<property name="propertyEditorRegistrar" 
+			ref="authenticationPropertyEditorRegistrar"/>
+		<property name="serverMgr" 
+			ref="serverMgr"/>
+	</bean>
+	<!--
+		identity action
+	-->
 	<bean name="identityAction"
 		class="org.helianto.web.controller.IdentityFormAction">
 		<property name="formObjectClass" 

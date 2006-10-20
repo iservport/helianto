@@ -15,6 +15,7 @@
 
 package org.helianto.web.controller;
 
+import org.helianto.core.Operator;
 import org.helianto.core.service.ServerMgr;
 import org.springframework.webflow.Event;
 import org.springframework.webflow.RequestContext;
@@ -29,11 +30,33 @@ public class InstallFormAction extends FormAction {
     
     private ServerMgr serverMgr;
     
+    /**
+     * Test if there is already at least one operator.
+     */
     public Event ifNew(RequestContext context) {
         if (serverMgr.findOperator().size()==0) {
             return yes();
         }
         return no();
+    }
+    
+    /**
+     * Invoke service layer to create a default operator and
+     * make it available to the flow;
+     */
+    public Event createOperator(RequestContext context) {
+        Operator operator = serverMgr.createLocalDefaultOperator();
+        context.getFlowScope().put("operator", operator);
+        return success();
+    }
+    
+    /**
+     * Persist the operator retrieved from the flow;
+     */
+    public Event persistOperator(RequestContext context) {
+        Operator operator = (Operator) context.getFlowScope().get("operator");
+        serverMgr.persistOperator(operator);
+        return success();
     }
 
     //~ collaborators
