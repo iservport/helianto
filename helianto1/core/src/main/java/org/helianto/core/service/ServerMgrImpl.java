@@ -17,6 +17,7 @@ package org.helianto.core.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -26,10 +27,12 @@ import javax.mail.internet.MimeMessage;
 import org.helianto.core.Credential;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
+import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.mail.MailComposer;
 import org.helianto.core.type.ActivityState;
 import org.helianto.core.type.IdentityType;
+import org.helianto.core.type.OperationMode;
 import org.helianto.core.type.ServerType;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -41,15 +44,20 @@ public class ServerMgrImpl implements ServerMgr {
 
     private MailComposer mailComposer;
     
+    public void persistOperator(Operator operator) {
+        operatorDao.persistOperator(operator);
+    }
+
     public List<Operator> findOperator() {
         List<Operator> operatorList = operatorDao.findOperatorAll();
         return operatorList;
     }
     
-    /**
-     * Send a <code>Credential</code> registration using 
-     * mail settings from <code>Operator</code>.
-     */
+    public Operator createLocalDefaultOperator() {
+        return OperatorCreator.operatorFactory("DEFAULT", OperationMode.LOCAL, Locale.getDefault());
+    }
+
+    // TODO validate this
     public void sendRegistrationNotification(Operator operator, Credential cred) throws MessagingException {
         if (cred.getIdentity().getIdentityType()==IdentityType.NOT_ADDRESSABLE.getValue()) {
             throw new IllegalStateException("Credential is not addressable.");
@@ -86,6 +94,7 @@ public class ServerMgrImpl implements ServerMgr {
 
     }
     
+    // TODO validate this
     Server getValidServer(Operator operator, ServerType serverType) {
         List<Server> orderedServerList = operatorDao.findServerActiveByType(operator, serverType);
         for (Server s: orderedServerList) {
@@ -98,6 +107,7 @@ public class ServerMgrImpl implements ServerMgr {
         throw new IllegalStateException("Not able to find a valid server to operator "+operator);
     }
     
+    // TODO validate this
     /**
      * To avoid unauthorized mail relay (error 553), the service must first connect to
      * a store and then send the desired message.
@@ -120,6 +130,7 @@ public class ServerMgrImpl implements ServerMgr {
         return store;
     }
     
+    // TODO validate this
     JavaMailSender createJavaMailSender(Server transportServer) {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost(transportServer.getServerHostAddress());
@@ -128,13 +139,15 @@ public class ServerMgrImpl implements ServerMgr {
         return javaMailSender;
     }
     
+    //
+    
+    public void init() {
+        if (operatorDao==null) throw new IllegalArgumentException("OperatorDao property required");
+    }
+    
     
     // mutators
     
-    public OperatorDao getOperatorDao() {
-        return operatorDao;
-    }
-
     public void setMailComposer(MailComposer mailComposer) {
         this.mailComposer = mailComposer;
     }
