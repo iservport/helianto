@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flow PUBLIC "-//SPRING//DTD WEBFLOW 1.0//EN"
+	"http://www.springframework.org/dtd/spring-webflow-1.0.dtd">
+
+<flow start-state="createOperator">
+
+	<var name="operatorForm" class="org.helianto.web.view.OperatorForm"/>
+
+    <action-state id="createOperator">
+    	<action bean="installAction"/>
+		<transition on="success" to="operator.view"/>
+    </action-state>
+
+    <view-state id="operator.view" view="operator">
+		<transition on="enter" to="persistOperator"/>
+    </view-state>
+
+    <action-state id="persistOperator">
+    	<action bean="installAction"/>
+		<transition on="success" to="end"/>
+    </action-state>
+
+	<end-state id="end" />
+	
+</flow>
