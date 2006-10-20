@@ -30,6 +30,8 @@
 	-->
 	<bean name="installAction"
 		class="org.helianto.web.controller.InstallFormAction">
+		<property name="formObjectName" 
+			value="operatorForm" />
 		<property name="formObjectClass" 
 			value="org.helianto.web.view.OperatorForm" />
 		<property name="propertyEditorRegistrar" 
@@ -42,6 +44,8 @@
 	-->
 	<bean name="identityAction"
 		class="org.helianto.web.controller.IdentityFormAction">
+		<property name="formObjectName" 
+			value="identityForm" />
 		<property name="formObjectClass" 
 			value="org.helianto.web.view.IdentityForm" />
 		<property name="propertyEditorRegistrar" 
