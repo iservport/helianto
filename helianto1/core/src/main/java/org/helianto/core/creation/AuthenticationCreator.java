@@ -83,18 +83,15 @@ public class AuthenticationCreator extends CreatorSupport {
      * <code>Credential</code> created with current system 
      * date, initially set as <code>INITIAL</code>.
      * 
-     * @param identity if null, create an empty one
+     * @param requiredIdentity 
      * @param password
      * 
      * @see CredentialState
      */
-    public static Credential credentialFactory(Identity identity, String password) {
+    public static Credential credentialFactory(Identity requiredIdentity, String password) {
         Credential credential = new Credential();
-        
-        if (identity==null) {
-            identity = identityFactory("", "");
-        }
-        credential.setIdentity(identity);
+        assertNotNull(requiredIdentity);
+        credential.setIdentity(requiredIdentity);
         credential.setPassword(password);
         credential.setVerifyPassword("");
         credential.setPasswordDirty(false);
