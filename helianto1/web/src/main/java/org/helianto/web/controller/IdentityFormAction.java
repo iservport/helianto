@@ -27,7 +27,7 @@ public class IdentityFormAction extends FormAction {
     
     public Event create(RequestContext context) {
         IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
-        form.setCredential(securityMgr.createCredential(null));
+        form.setCredential(securityMgr.createCredentialAndIdentity());
         return success();
     }
     
@@ -39,6 +39,12 @@ public class IdentityFormAction extends FormAction {
     
     public Event nonUnique(RequestContext context) {
         IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
+        return success();
+    }
+    
+    public Event persistFinal(RequestContext context) {
+        IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
+        securityMgr.persistCredential(form.getCredential());
         return success();
     }
     
