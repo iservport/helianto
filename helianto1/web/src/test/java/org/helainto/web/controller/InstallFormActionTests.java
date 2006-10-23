@@ -16,10 +16,17 @@
 package org.helainto.web.controller;
 
 import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.verify;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -58,34 +65,64 @@ public class InstallFormActionTests extends TestCase {
     }
     
     public void testCreateOperator() {
-        Operator operator = new Operator();
-        expect(serverMgr.createLocalDefaultOperator()).andReturn(operator);
-        replay(serverMgr);
-        
-        RequestContext context = new MockRequestContext();
-        OperatorForm form = new OperatorForm();
-        context.getFlowScope().put("formObject", form);
-        
-        Event event = installFormAction.createOperator(context);
-        assertEquals(event.getId(), "success");
-        verify(serverMgr);
-        
-        assertSame(operator, form.getOperator());
+//        Operator operator = new Operator();
+//        expect(serverMgr.createLocalDefaultOperator()).andReturn(operator);
+//        replay(serverMgr);
+//        
+//        RequestContext context = new MockRequestContext();
+//        OperatorForm form = new OperatorForm();
+//        context.getFlowScope().put("formObject", form);
+//        
+//        Event event = installFormAction.createOperator(context);
+//        assertEquals(event.getId(), "success");
+//        verify(serverMgr);
+//        
+//        assertSame(operator, form.getOperator());
     }
 
     public void testPersistOperator() {
-        Operator operator = new Operator();
-        OperatorForm form = new OperatorForm();
-        form.setOperator(operator);
+//        Operator operator = new Operator();
+//        OperatorForm form = new OperatorForm();
+//        form.setOperator(operator);
+//        RequestContext context = new MockRequestContext();
+//        context.getFlowScope().put("formObject", form);
+//        
+//        serverMgr.persistOperator(operator);
+//        replay(serverMgr);
+//        
+//        Event event = installFormAction.persistOperator(context);
+//        assertEquals(event.getId(), "success");
+//        verify(serverMgr);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public void testLoadAvailableLocales() {
         RequestContext context = new MockRequestContext();
-        context.getFlowScope().put("formObject", form);
+        Locale[] locales = Locale.getAvailableLocales();
+        Set<String> keys = new HashSet<String>();
+        for (Locale locale: locales) {
+            keys.add(locale.toString());
+        }
+
+        Event event = installFormAction.loadAvailableLocalesInRequestScope(context);
+        assertEquals(event.getId(), "success");
+
+        HashMap<String, String> contextLocales = (HashMap<String, String>) context.getRequestScope().get("locales");
+        assertTrue(keys.containsAll(contextLocales.keySet()));
+        assertTrue(contextLocales.keySet().containsAll(keys));
+    }
+    
+    public void testListOperator() {
+        RequestContext context = new MockRequestContext();
         
-        serverMgr.persistOperator(operator);
+        List<Operator> operatorList = new ArrayList<Operator>();
+        expect(serverMgr.findOperator()).andReturn(operatorList);
         replay(serverMgr);
         
-        Event event = installFormAction.persistOperator(context);
-        assertEquals(event.getId(), "success");
+        installFormAction.listOperatorInRequestScope(context);
         verify(serverMgr);
+        assertSame(operatorList, context.getRequestScope().get("operatorList"));
+        
     }
 
     // collabs
