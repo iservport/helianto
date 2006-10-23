@@ -28,26 +28,29 @@ public class UserMgrImpl implements UserMgr {
 	 * Create and persist Identity
 	 */
 
-	public Identity createIdentity() {
+	public Identity createEmptyIdentity() {
 		return AuthenticationCreator.identityFactory("", "");
 	}
 
 	public void persistIdentity(Identity identity) {
-		// TODO Auto-generated method stub
-		
+        authenticationDao.persistIdentity(identity);
 	}
 
 	/* 
 	 * Create and persist Credential
 	 */
 
-	public Credential createCredential(Identity identity) {
-		return AuthenticationCreator.credentialFactory(identity, "empty");
-	}
+    public Credential createCredential(Identity identity) {
+        return AuthenticationCreator.credentialFactory(identity, "empty");
+    }
+
+    public Credential createCredentialAndIdentity() {
+        Identity identity = createEmptyIdentity();
+        return createCredential(identity);
+    }
 
 	public void persistCredential(Credential credential) {
-		// TODO Auto-generated method stub
-		
+        authenticationDao.persistCredential(credential);
 	}
 
 	/* 
@@ -55,7 +58,7 @@ public class UserMgrImpl implements UserMgr {
 	 */
 
 	public User createUser(Entity entity) {
-        Identity identity = createIdentity();
+        Identity identity = createEmptyIdentity();
         return createUser(identity, entity);
     }
     

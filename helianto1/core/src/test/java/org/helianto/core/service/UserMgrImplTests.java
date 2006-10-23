@@ -16,44 +16,72 @@
 package org.helianto.core.service;
 
 import junit.framework.TestCase;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.verify;
 
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.helianto.core.Credential;
+import org.helianto.core.Identity;
+import org.helianto.core.dao.AuthenticationDao;
 
 public class UserMgrImplTests extends TestCase {
     
-    private UserMgr userMgr;
-    private HibernateTemplate hibernateTemplate;
-
-    public void testCreateUserEntity() {
-//
-//        userMgr.persistDefaultEntity(defaultEntity);
-//        hibernateTemplate.flush();
-//        
-//        User user = userMgr.createUser(defaultEntity.getEntity());
-//        assertEquals(defaultEntity.getEntity(), user.getEntity());
-//        assertEquals("", user.getIdentity().getPrincipal());
-//        
-    }
-
-    public void testCreateUserEntityIdentity() {
-//
-//        userMgr.persistDefaultEntity(defaultEntity);
-//        hibernateTemplate.flush();
-//        
-//        Identity identity = userMgr.createIdentity();
-//        assertNotNull(userMgr.createUser(identity, defaultEntity.getEntity()));
-//        
+    private UserMgrImpl userMgr;
+    
+    public void testCreateEmptyIdentity() {
+        Identity identity = userMgr.createEmptyIdentity();
+        assertEquals("", identity.getPrincipal());
+        assertEquals("", identity.getOptionalAlias());
     }
     
-
-    //~ collaborator mutators
-
-    public void setUserMgr(UserMgr userMgr) {
-        this.userMgr = userMgr;
+    public void testPersistIdentity() {
+        Identity identity = new Identity();
+        
+        authenticationDao.persistIdentity(identity);
+        replay(authenticationDao);
+        
+        userMgr.persistIdentity(identity);
+        verify(authenticationDao);
+    }
+    
+    public void testCreateCredential() {
+        Identity identity = new Identity();
+        Credential credential = userMgr.createCredential(identity);
+        assertSame(identity, credential.getIdentity());
+        assertEquals("empty", credential.getPassword());
     }
 
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
+    public void testCreateCredentialAndIdentity() {
+        Credential credential = userMgr.createCredentialAndIdentity();
+        assertEquals("", credential.getIdentity().getPrincipal());
+        assertEquals("", credential.getIdentity().getOptionalAlias());
+        assertEquals("empty", credential.getPassword());
+    }
+
+    public void testPersistCredential() {
+        Credential credential = new Credential();
+        
+        authenticationDao.persistCredential(credential);
+        replay(authenticationDao);
+        
+        userMgr.persistCredential(credential);
+        verify(authenticationDao);
+    }
+    
+    private AuthenticationDao authenticationDao;
+    
+    @Override
+    public void setUp() {
+        userMgr = new UserMgrImpl();
+        authenticationDao = createMock(AuthenticationDao.class);
+        userMgr.setAuthenticationDao(authenticationDao);
+    }
+    
+    @Override
+    public void tearDown() {
+        reset(authenticationDao);
     }
     
 }

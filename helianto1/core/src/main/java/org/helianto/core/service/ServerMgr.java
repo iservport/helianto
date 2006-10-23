@@ -20,7 +20,9 @@ import java.util.List;
 import javax.mail.MessagingException;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.Operator;
+import org.helianto.core.User;
 
 /**
  * A base service layer interface for the core package.
@@ -30,15 +32,23 @@ import org.helianto.core.Operator;
 public interface ServerMgr {
 
     /**
+     * Set the system up to accept a manager.
+     * 
+     * @param managerIdentity
+     * @return new manager <code>User</code>
+     */
+    public User createSystemConfiguration(Identity managerIdentity);
+    
+    /**
      * Create an <code>Operator</code> with name "DEFAULT",
      * LOCAL mode and default <code>Locale</code>.
      */
-    public Operator createLocalDefaultOperator();
+//    public Operator createLocalDefaultOperator();
 
     /**
      * Persist the <code>Operator</code>.
      */
-    public void persistOperator(Operator operator);
+//    public void persistOperator(Operator operator);
 
     /**
      * Send a <code>Credential</code> registration using 

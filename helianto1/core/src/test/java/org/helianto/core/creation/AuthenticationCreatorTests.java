@@ -85,13 +85,6 @@ public class AuthenticationCreatorTests extends TestCase {
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
     }
 
-    public void testCredentialFactoryDefaults() {
-        Credential credential = AuthenticationCreator.credentialFactory(null, "PASSWORD");
-        
-        assertEquals("", credential.getIdentity().getPrincipal());
-        assertEquals("", credential.getIdentity().getOptionalAlias());
-    }
-
     /*
      * Test method for 'org.helianto.core.creation.AuthenticationCreator.privateKeyFactory(Credential, String)'
      */

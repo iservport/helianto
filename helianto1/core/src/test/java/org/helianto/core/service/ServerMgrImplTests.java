@@ -16,19 +16,24 @@
 package org.helianto.core.service;
 
 import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.verify;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import junit.framework.TestCase;
 
+import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.Operator;
+import org.helianto.core.User;
+import org.helianto.core.UserRole;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.type.OperationMode;
-
-import junit.framework.TestCase;
 
 public class ServerMgrImplTests extends TestCase {
     
@@ -36,6 +41,27 @@ public class ServerMgrImplTests extends TestCase {
     private ServerMgrImpl serverMgr;
     
     //
+    
+    public void testCreateSystemConfiguration() {
+        Identity managerIdentity = new Identity();
+        Entity defaultEntity = new Entity();
+        UserRole adminManagerRole = new UserRole();
+        User manager = new User();
+        
+        expect(systemConfigurationTemplate
+                .createDefaultEntity()).andReturn(defaultEntity);
+        expect(serviceManagementTemplate
+                .createManagerRole(defaultEntity, "ADMIN")).andReturn(adminManagerRole);
+        expect(systemConfigurationTemplate.createManager(
+                adminManagerRole, managerIdentity)).andReturn(manager);
+        replay(systemConfigurationTemplate);
+        replay(serviceManagementTemplate);
+        
+        assertSame(manager, serverMgr.createSystemConfiguration(managerIdentity));
+        verify(systemConfigurationTemplate);
+        verify(serviceManagementTemplate);
+    }
+
     
     public void testPersistOperator() {
         Operator operator = new Operator();
@@ -65,13 +91,25 @@ public class ServerMgrImplTests extends TestCase {
     // collabs
     
     private OperatorDao operatorDao;
+    private ServiceManagementTemplate serviceManagementTemplate;
+    private SystemConfigurationTemplate systemConfigurationTemplate;
     
     @Override
     public void setUp() {
         operatorDao = createMock(OperatorDao.class);
+        serviceManagementTemplate = createMock(ServiceManagementTemplate.class);
+        systemConfigurationTemplate = createMock(SystemConfigurationTemplate.class);
         serverMgr = new ServerMgrImpl();
         serverMgr.setOperatorDao(operatorDao);
+        serverMgr.setServiceManagementTemplate(serviceManagementTemplate);
+        serverMgr.setSystemConfigurationTemplate(systemConfigurationTemplate);
+    }
+    
+    @Override
+    public void tearDown() {
         reset(operatorDao);
+        reset(serviceManagementTemplate);
+        reset(systemConfigurationTemplate);
     }
     
 }

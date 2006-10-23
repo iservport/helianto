@@ -15,12 +15,18 @@ public interface UserMgr {
      * <p>An empty <code>Identity</code> to be 
      * submitted to the presentation layer.</p>
      */
-    public Identity createIdentity();
+    public Identity createEmptyIdentity();
     
     /**
      * <p>Persist <code>Identity</code>.</p>
      */
     public void persistIdentity(Identity identity);
+    
+    /**
+     * <p>A <code>Credential</code> with an
+     * associated new <code>Identity</code>.</p>
+     */
+    public Credential createCredentialAndIdentity();
     
     /**
      * <p>A <code>Credential</code>.</p>
