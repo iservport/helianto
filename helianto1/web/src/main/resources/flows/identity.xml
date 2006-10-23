@@ -11,8 +11,8 @@
 		<transition on="success" to="identity.view"/>
     </action-state>
 
-    <view-state id="identity.view" view="identity">
-		<transition on="page2" to="persistIdentity"/>
+    <view-state id="identity.view" view="identity/principal">
+		<transition on="next" to="persistIdentity"/>
 		<transition on="cancel" to="bind"/>
     </view-state>
 
@@ -50,16 +50,27 @@
     <view-state id="identity.confirm.view" view="identity/confirm">
 		<transition on="change" to="ifPersonal"/>
 		<transition on="credential" to="identity.credential.view"/>
+		<transition on="sendCurrent" to="identity.credential.view"/>
+		<transition on="sendNew" to="identity.credential.view"/>
+		<transition on="password" to="identity.credential.view"/>
 		<transition on="confirm" to="persistFinal"/>
 		<transition on="cancel" to="bind"/>
     </view-state>
     
     <view-state id="identity.credential.view" view="identity/credential">
-		<transition on="change" to="ifPersonal"/>
-		<transition on="credential" to="ifPersonal"/>
-		<transition on="confirm" to="persistFinal"/>
+		<transition on="next" to="identity.confirm.view"/>
 		<transition on="cancel" to="bind"/>
     </view-state>
+    
+    <action-state id="persistFinal">
+    	<entry-actions>
+	    	<action bean="identityAction" method="bind"/>
+    	</entry-actions>
+    	<action bean="identityAction"/>
+		<transition on="success" to="end"/>
+        <transition on-exception="org.springframework.dao.DataIntegrityViolationException" 
+        	to="nonUnique"/>
+    </action-state>
     
     <action-state id="nonUnique">
     	<action bean="identityAction"/>

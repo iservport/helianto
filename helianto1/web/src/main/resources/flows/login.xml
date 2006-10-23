@@ -7,10 +7,10 @@
     <action-state id="ifNew">
     	<action bean="installAction"/>
 		<transition on="no" to="login.view"/>
-		<transition on="yes" to="operator.subflow"/>
+		<transition on="yes" to="configuration.subflow"/>
     </action-state>
 
-    <subflow-state id="operator.subflow" flow="operator">
+    <subflow-state id="configuration.subflow" flow="configuration">
 		<transition on="end" to="end"/>
     </subflow-state>
     

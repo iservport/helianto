@@ -8,17 +8,39 @@
 
     <action-state id="createOperator">
     	<action bean="installAction"/>
-		<transition on="success" to="operator.view"/>
+		<transition on="success" to="form.view"/>
     </action-state>
 
-    <view-state id="operator.view" view="operator">
-		<transition on="enter" to="persistOperator"/>
+    <view-state id="form.view" view="operator/form">
+    	<entry-actions>
+    		<action bean="installAction" 
+    		    method="loadAvailableLocalesInRequestScope"/>
+    	</entry-actions>
+		<transition on="enter" to="bind"/>
     </view-state>
+
+    <action-state id="bind">
+    	<action bean="installAction"/>
+		<transition on="success" to="persistOperator"/>
+    </action-state>
 
     <action-state id="persistOperator">
     	<action bean="installAction"/>
-		<transition on="success" to="end"/>
+		<transition on="success" to="listOperatorInRequestScope"/>
     </action-state>
+
+    <action-state id="listOperatorInRequestScope">
+    	<action bean="installAction"/>
+		<transition on="success" to="list.view"/>
+    </action-state>
+
+    <view-state id="list.view" view="operator/list">
+    	<entry-actions>
+    		<action bean="installAction" 
+    		    method="loadAvailableLocalesInRequestScope"/>
+    	</entry-actions>
+		<transition on="enter" to="end"/>
+    </view-state>
 
 	<end-state id="end" />
 	

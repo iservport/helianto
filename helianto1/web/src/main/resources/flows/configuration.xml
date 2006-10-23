@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flow PUBLIC "-//SPRING//DTD WEBFLOW 1.0//EN"
+	"http://www.springframework.org/dtd/spring-webflow-1.0.dtd">
+
+<flow start-state="info.view">
+
+	<var name="userForm" class="org.helianto.web.view.UserForm"/>
+
+    <view-state id="info.view" view="configuration/info">
+		<transition on="next" to="identity.subflow"/>
+    </view-state>
+
+    <subflow-state id="identity.subflow" flow="identity">
+    	<attribute-mapper>
+    		<output-mapper>
+    			<mapping source="identity" target="requestScope.identity"/>
+    		</output-mapper>
+    	</attribute-mapper>
+		<transition on="end" to="createManager"/>
+    </subflow-state>
+    
+    <action-state id="createManager">
+    	<action bean="installAction"/>
+		<transition on="success" to="rename.view"/>
+    </action-state>
+
+    <view-state id="rename.view" view="configuration/rename">
+		<transition on="next" to="end"/>
+    </view-state>
+
+	<end-state id="end" />
+	
+</flow>
+

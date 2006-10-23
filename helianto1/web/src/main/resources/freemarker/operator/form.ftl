@@ -9,17 +9,16 @@
 <form name="operatorForm" method="POST" action="admin.htm" >
 <table>
 <tr>
-<td style="width: 200px; height: 320px;">
+<td >
 	<table>
 	<tr>
-	<td>&#160;</td>
 	<td>There is no Operator present. This is likely a
 	    first time installation.</td>
 	</tr>
 	</table>
 </td>
 <td style="background-image: url(img/arrow-bg.png);">
-	<table style="width: 200px;">
+	<table >
 	<tr>
 	<td>Name: </td>
 	<td><@spring.formInput "operatorForm.operator.operatorName", 'size="20"  maxlength="20"'/></td>
@@ -34,7 +33,7 @@
 	</td> 
 	</tr><tr>
 	<td>Locale: </td>
-	<td>${operatorForm.operator.locale}</td>
+	<td><@spring.formSingleSelect "operatorForm.operator.locale", locales /></td>
 	</tr><tr colspan="2">
 	<td><input type="submit" alignment="center" value="Next" class="btn"></td>
 	</tr>
