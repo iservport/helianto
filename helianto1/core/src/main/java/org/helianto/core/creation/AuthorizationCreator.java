@@ -153,12 +153,12 @@ public class AuthorizationCreator extends CreatorSupport {
      * @param requiredService
      * @param serviceExtension
      */
-    public static UserRole userRoleFactory(User requiredUser, Service requiredService, String serviceExtension) {
+    public static UserRole userRoleFactory(UserGroup requiredUser, Service requiredService, String serviceExtension) {
         assertNotNull(requiredUser);
         assertNotNull(requiredService);
         UserRole userRole = new UserRole();
         
-        userRole.setUser(requiredUser);
+        userRole.setUserGroup(requiredUser);
         userRole.setService(requiredService);
         userRole.setServiceExtension(serviceExtension);
         requiredUser.getRoles().add(userRole);

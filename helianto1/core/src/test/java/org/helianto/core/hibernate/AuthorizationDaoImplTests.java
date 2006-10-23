@@ -232,7 +232,7 @@ public class AuthorizationDaoImplTests extends AuthorizationTestSupport {
         UserRole userRole = createAndPersistUserRole(authorizationDao);
         hibernateTemplate.flush();
         //read
-        assertEquals(userRole,  authorizationDao.findUserRoleByNaturalId(userRole.getUser(), userRole.getService(), userRole.getServiceExtension()));
+        assertEquals(userRole,  authorizationDao.findUserRoleByNaturalId(userRole.getUserGroup(), userRole.getService(), userRole.getServiceExtension()));
     }
     
     private List<UserRole> writeUserRole() {
@@ -250,7 +250,7 @@ public class AuthorizationDaoImplTests extends AuthorizationTestSupport {
         List<UserRole> userRoleList = writeUserRole();
         // read
         UserRole userRole = userRoleList.get((int) Math.random()*userRoleList.size());
-        assertEquals(userRole,  authorizationDao.findUserRoleByNaturalId(userRole.getUser(), userRole.getService(), userRole.getServiceExtension()));
+        assertEquals(userRole,  authorizationDao.findUserRoleByNaturalId(userRole.getUserGroup(), userRole.getService(), userRole.getServiceExtension()));
     }
 
     public void testUserRoleErrors() {

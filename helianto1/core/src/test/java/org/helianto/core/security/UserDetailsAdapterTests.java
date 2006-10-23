@@ -104,10 +104,12 @@ public class UserDetailsAdapterTests extends TestCase {
         assertEquals(conv, new UserDetailsAdapter(user, credential).convertUserRoleToString(userRole));
     }
     
+    //
+    
     public void testGrantedAuthorities() {
         int i = 4, e = 3, d = 4, s = 3;
         List<UserRole> userRoleList = AuthorizationTestSupport.createUserRoleList(i, e, d, s);
-        User user = userRoleList.get((int) Math.random()*userRoleList.size()).getUser();
+        User user = (User) userRoleList.get((int) Math.random()*userRoleList.size()).getUserGroup();
         Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
         user.setIdentity(credential.getIdentity());
         UserDetailsAdapter userDetails = new UserDetailsAdapter(user, credential);

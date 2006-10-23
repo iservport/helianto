@@ -86,6 +86,6 @@ public interface AuthorizationDao {
     /**
      * Find <code>UserRole</code> by  user, service and identity.
      */
-    public UserRole findUserRoleByNaturalId(User user, Service service, String serviceExtension);
+    public UserRole findUserRoleByNaturalId(UserGroup userGroup, Service service, String serviceExtension);
 
 }

@@ -127,12 +127,12 @@ public class AuthorizationDaoImpl extends GenericDaoImpl implements Authorizatio
         merge(userRole);
     }
 
-    public UserRole findUserRoleByNaturalId(User user, Service service, String serviceExtension) {
-        return (UserRole) findUnique(USER_ROLE_QUERY, user, service, serviceExtension);
+    public UserRole findUserRoleByNaturalId(UserGroup userGroup, Service service, String serviceExtension) {
+        return (UserRole) findUnique(USER_ROLE_QUERY, userGroup, service, serviceExtension);
     }
 
     static final String USER_ROLE_QUERY = "from UserRole userRole " +
-            "where userRole.user = ? " +
+            "where userRole.userGroup = ? " +
             "and userRole.service = ? " +
             "and userRole.serviceExtension = ? ";
 

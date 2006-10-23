@@ -115,7 +115,8 @@ public class AuthorizationDomainTests extends TestCase {
         userRole.setId(Long.MAX_VALUE);
         userRole.setId(Long.MIN_VALUE);
         
-        userRole.setUser(new User());
+        userRole.setUserGroup(new UserGroup());
+        userRole.setUserGroup(new User());
         
         userRole.setService(new Service());
         
@@ -124,18 +125,18 @@ public class AuthorizationDomainTests extends TestCase {
 
     public void testUserRoleEquals() {
         UserRole copy, userRole = new UserRole();
-        userRole.setUser(new User());
+        userRole.setUserGroup(new UserGroup());
         userRole.setService(new Service());
         copy = (UserRole) DomainTestSupport.minimalEqualsTest(userRole);
 
-        copy.setUser(userRole.getUser());
+        copy.setUserGroup(userRole.getUserGroup());
         assertFalse(userRole.equals(copy));
 
-        copy.setUser(null);
+        copy.setUserGroup(null);
         copy.setService(userRole.getService());
         assertFalse(userRole.equals(copy));
 
-        copy.setUser(userRole.getUser());
+        copy.setUserGroup(userRole.getUserGroup());
         copy.setService(userRole.getService());
         assertTrue(userRole.equals(copy));
     }
