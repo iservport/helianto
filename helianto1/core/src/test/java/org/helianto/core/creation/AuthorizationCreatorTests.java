@@ -157,7 +157,7 @@ public class AuthorizationCreatorTests extends TestCase {
         UserRole userRole = AuthorizationCreator.userRoleFactory(user, service, "EXT");
         
         assertSame(service, userRole.getService());
-        assertSame(user, userRole.getUser());
+        assertSame(user, userRole.getUserGroup());
         assertEquals("EXT", userRole.getServiceExtension());
         assertTrue(user.getRoles().contains(userRole));
     }
