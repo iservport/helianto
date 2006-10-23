@@ -16,6 +16,10 @@
 package org.helianto.core.security;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.acegisecurity.GrantedAuthority;
@@ -24,66 +28,69 @@ import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.helianto.process.ResourceGroup;
 import org.springframework.util.Assert;
 
 /**
- * Models core user information retieved by  
- * {@link org.acegisecurity.userdetails.UserDetailsService} 
- * as an adapter class to keep coupling from the Acegi-security 
- * package as narrow as possible.
+ * Models core user information retieved by
+ * {@link org.acegisecurity.userdetails.UserDetailsService} as an adapter class
+ * to keep coupling from the Acegi-security package as narrow as possible.
  * 
  * <p>
  * A new <code>UserAdapter</code> must be created from a single
  * {@link org.helianto.core.User}. As a group of <code>User</code>s may be
- * connected by a common <code>Credential</code> it is desirable to switch 
+ * connected by a common <code>Credential</code> it is desirable to switch
  * <code>User</code>s inside the group at runtime as no new authentication is
- * be required (same credential). This is
- * is a design choice made to allow multiple entities to share
- * the same set of credentials and still keep individual sets of
- * authorities. 
+ * be required (same credential). This is is a design choice made to allow
+ * multiple entities to share the same set of credentials and still keep
+ * individual sets of authorities.
  * </p>
  * 
  * <p>
- * Service layer code should retrieve <code>UserAdapter</code> through the 
- * {@link org.helianto.core.security.PublicUserDetails}  or
- * {@link org.helianto.core.security.PublicUserDetailsSwitcher} interfaces 
- * to prevent unintended access to the embedded <code>User</code> and 
- * <code>Credential</code> instances. A convenient static methods 
- * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsFromSecurityContext} and
- * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsSwitcherFromSecurityContext} 
- * are supplied to perform this task. <code>PublicUserDetailsSwitcher</code>  
+ * Service layer code should retrieve <code>UserAdapter</code> through the
+ * {@link org.helianto.core.security.PublicUserDetails} or
+ * {@link org.helianto.core.security.PublicUserDetailsSwitcher} interfaces to
+ * prevent unintended access to the embedded <code>User</code> and
+ * <code>Credential</code> instances. A convenient static methods
+ * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsFromSecurityContext}
+ * and
+ * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsSwitcherFromSecurityContext}
+ * are supplied to perform this task. <code>PublicUserDetailsSwitcher</code>
  * provides a method to switch the current <code>User</code> based on an
  * <code>Entity</code> selection.
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
- * @see org.acegisecurity.providers.dao.User org.acegisecurity.providers.dao.User
+ * @see org.acegisecurity.providers.dao.User
+ *      org.acegisecurity.providers.dao.User
  */
-public final class UserDetailsAdapter extends AbstractUserDetails implements Serializable, PublicUserDetailsSwitcher {
-    
+public final class UserDetailsAdapter extends AbstractUserDetails implements
+        Serializable, PublicUserDetailsSwitcher {
+
     private static final long serialVersionUID = 4017521054529203449L;
-    
+
+    private AuthorityResolutionStrategy authorityResolutionStrategy = 
+        new DefaultAuthorityResolutionStrategy();
+
     public UserDetailsAdapter(User user, Credential credential) {
         super(user, credential);
     }
 
     public GrantedAuthority[] getAuthorities() {
-        Set<UserRole> roles = getUser().getRoles();
-        Assert.notNull(roles);
+        Set<UserRole> roles = authorityResolutionStrategy.resolveUserRoles();
         GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
         int i = 0;
-        for (UserRole r: roles) {
+        for (UserRole r : roles) {
             String roleName = convertUserRoleToString(r);
-            authorities[i++] =  new GrantedAuthorityImpl(roleName);
+            authorities[i++] = new GrantedAuthorityImpl(roleName);
         }
         return authorities;
     }
-    
+
     public String convertUserRoleToString(UserRole userRole) {
         StringBuilder sb = new StringBuilder();
-        sb.append("ROLE_")
-            .append(userRole.getService().getServiceName())
-            .append("_").append(userRole.getServiceExtension());
+        sb.append("ROLE_").append(userRole.getService().getServiceName())
+                .append("_").append(userRole.getServiceExtension());
         return sb.toString();
     }
 
@@ -94,14 +101,55 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements Ser
     public void setCurrentUser(User user) {
         Set<UserGroup> userSet = getUsers();
         boolean acceptable = false;
-        for (UserGroup u: userSet) {
-             if (u.equals(user)) {
-                 acceptable = true;
-                 setUser(user);
-             }
+        for (UserGroup u : userSet) {
+            if (u.equals(user)) {
+                acceptable = true;
+                setUser(user);
+            }
         }
-        Assert.isTrue(acceptable, "Unable to change to user "+user);
+        Assert.isTrue(acceptable, "Unable to change to user " + user);
+    }
+
+    /**
+     * Default implementation to the <code>AuthorityResolutionStrategy</code>.
+     * 
+     * @author Mauricio Fernandes de Castro
+     */
+    public class DefaultAuthorityResolutionStrategy implements
+            AuthorityResolutionStrategy {
+
+        public Set<UserRole> resolveUserRoles() {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Trying to resolve roles...");
+            }
+            Set<UserRole> roles = new HashSet<UserRole>();
+            List<UserGroup> userHierarchy = assembleUsersInTreeOrder(getUser());
+            for (UserGroup user: userHierarchy) {
+                roles.addAll(user.getRoles());
+            }
+            Assert.notNull(roles);
+            return roles;
+        }
+        
+        public List<UserGroup> assembleUsersInReverseTreeOrder(UserGroup userGroup) {
+            List<UserGroup> userGroupList = new ArrayList<UserGroup>();
+            UserGroup parent = userGroup;
+            while (parent!=null) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Found in user hierarchy: "+parent);
+                }
+                userGroupList.add(parent);
+                parent = parent.getParent();
+            }
+            return userGroupList;
+        }
+        
+        public List<UserGroup> assembleUsersInTreeOrder(UserGroup userGroup) {
+            List<UserGroup> userGroupList = assembleUsersInReverseTreeOrder(userGroup);
+            Collections.reverse(userGroupList);
+            return userGroupList;
+        }
+
     }
 
 }
-
