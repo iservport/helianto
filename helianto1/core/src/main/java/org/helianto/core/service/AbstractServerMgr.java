@@ -33,7 +33,7 @@ import org.helianto.core.type.OperationMode;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractServerMgr implements ServerMgr {
+public abstract class AbstractServerMgr extends UserMgrImpl implements ServerMgr {
 
     protected ServiceManagementTemplate serviceManagementTemplate = new DefaultServiceManagementImpl();
 
