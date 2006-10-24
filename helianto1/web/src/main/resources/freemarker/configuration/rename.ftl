@@ -29,7 +29,13 @@
 
 			<tr>
 			<td>!</td>
-			<td><@spring.messageText "configuration..caption2", "Operator and Entity name."/></td>
+			<td><@spring.messageText "configuration.rename", "Rename to:"/></td>
+			<td><@spring.formInput "userForm.user.entity.alias", 'size="20"'/></td>
+			</tr>
+
+			<tr>
+			<td>&#160;</td>
+			<td><@spring.messageText "configuration.caption2", "Operator and Entity name."/></td>
 			<td><input type="submit" name="_eventId_next" value="<@spring.messageText "button.go", "Go"/>" class="btn" /></td>
 			</tr>
 

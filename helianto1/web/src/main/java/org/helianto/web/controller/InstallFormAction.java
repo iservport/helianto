@@ -50,11 +50,20 @@ public class InstallFormAction extends FormAction {
     /**
      * Create the manager <code>User</code>.
      */
-    public Event createUser(RequestContext context) {
-        Identity managerIdentity = null;
+    public Event createManager(RequestContext context) {
+        Identity managerIdentity = (Identity) getFromRequestScope(context, "identity");
         User user = serverMgr.createSystemConfiguration(managerIdentity);
         UserForm form = doGetForm(context);
         form.setUser(user);
+        return success();
+    }
+    
+    /**
+     * Create the manager <code>User</code>.
+     */
+    public Event persistManager(RequestContext context) {
+        UserForm form = doGetForm(context);
+//        form.setUser(user);
         return success();
     }
     
@@ -105,6 +114,11 @@ public class InstallFormAction extends FormAction {
     protected UserForm doGetForm(RequestContext context) {
         AttributeMap flowScope = context.getFlowScope();
         return (UserForm) flowScope.getRequired(getFormObjectName());
+    }
+    
+    protected Object getFromRequestScope(RequestContext context, String name) {
+        AttributeMap requestScope = context.getRequestScope();
+        return requestScope.get(name);
     }
 
 

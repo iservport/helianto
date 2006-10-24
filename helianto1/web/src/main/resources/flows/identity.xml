@@ -77,7 +77,11 @@
 		<transition on="success" to="identity.view"/>
     </action-state>
 
-    <end-state id="end"/>
+    <end-state id="end">
+    	<output-mapper>
+   			<mapping source="flowScope.identityForm.credential.identity" target="identity"/>
+    	</output-mapper>
+    </end-state>
     
     <end-state id="error" view="abort"/>
     

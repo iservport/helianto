@@ -31,9 +31,9 @@
 	<bean name="installAction"
 		class="org.helianto.web.controller.InstallFormAction">
 		<property name="formObjectName" 
-			value="operatorForm" />
+			value="userForm" />
 		<property name="formObjectClass" 
-			value="org.helianto.web.view.OperatorForm" />
+			value="org.helianto.web.view.UserForm" />
 		<property name="propertyEditorRegistrar" 
 			ref="authenticationPropertyEditorRegistrar"/>
 		<property name="serverMgr" 
