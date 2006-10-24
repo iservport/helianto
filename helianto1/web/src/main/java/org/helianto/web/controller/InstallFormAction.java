@@ -63,7 +63,7 @@ public class InstallFormAction extends FormAction {
      */
     public Event persistManager(RequestContext context) {
         UserForm form = doGetForm(context);
-//        form.setUser(user);
+//        serverMgr.persistUser(form.getUser());
         return success();
     }
     
