@@ -48,8 +48,8 @@ public class AuthorityResolutionStrategyTests extends TestCase {
         user.getParent().getRoles().add(parentUserRole);
         Set<UserRole> roles = authorityResolutionStrategy.resolveUserRoles();
         assertEquals(2, roles.size());
-        assertSame(childUserRole, roles.toArray()[0]);
-        assertSame(parentUserRole, roles.toArray()[1]);
+        assertTrue(roles.contains(childUserRole));
+        assertTrue(roles.contains(parentUserRole));
     }
     
     public void testDuplicateDefaultAuthorityResolution() {
@@ -63,8 +63,8 @@ public class AuthorityResolutionStrategyTests extends TestCase {
         user.getParent().getRoles().add(childUserRole); //too
         Set<UserRole> roles = authorityResolutionStrategy.resolveUserRoles();
         assertEquals(2, roles.size());
-        assertSame(childUserRole, roles.toArray()[0]);
-        assertSame(parentUserRole, roles.toArray()[1]);
+        assertTrue(roles.contains(childUserRole));
+        assertTrue(roles.contains(parentUserRole));
     }
     
     //

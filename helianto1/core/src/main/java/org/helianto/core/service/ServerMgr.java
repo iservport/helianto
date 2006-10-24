@@ -29,7 +29,7 @@ import org.helianto.core.User;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface ServerMgr extends UserMgr {
+public interface ServerMgr {
 
     /**
      * Set the system up to accept a manager.
