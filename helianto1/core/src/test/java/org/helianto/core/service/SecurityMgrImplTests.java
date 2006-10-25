@@ -111,6 +111,45 @@ public class SecurityMgrImplTests extends TestCase {
         assertTrue(Math.abs(date.getTime() - identity.getLastLogin().getTime()) < 1000);
     }
     
+    /*
+    public boolean verifyPassword(Credential credential) {
+        if (credential.getPassword().compareTo(credential.getVerifyPassword())!=0) {
+            credential.setPassword("");
+            credential.setVerifyPassword("");
+            credential.setPasswordDirty(true);
+            return false;
+        }
+        credential.setVerifyPassword("");
+        credential.setPasswordDirty(false);
+        return true;
+    }
+    
+     */
+    
+    public void testVerifyPasswordSuccess() {
+        Credential credential = new Credential();
+        String password = String.valueOf(new Date().getTime());
+        credential.setPassword(password);
+        credential.setVerifyPassword(password);
+        
+        assertTrue(securityMgr.verifyPassword(credential));
+        assertEquals(password, credential.getPassword());
+        assertEquals("", credential.getVerifyPassword());
+        assertFalse(credential.isPasswordDirty());
+    }
+    
+    public void testVerifyPasswordError() {
+        Credential credential = new Credential();
+        String password = String.valueOf(new Date().getTime());
+        credential.setPassword(password);
+        credential.setVerifyPassword(password+"1");
+        
+        assertFalse(securityMgr.verifyPassword(credential));
+        assertEquals("", credential.getPassword());
+        assertEquals("", credential.getVerifyPassword());
+        assertTrue(credential.isPasswordDirty());
+    }
+    
     //~ pending
 
     public void testIsAutoCreateEnabled() {

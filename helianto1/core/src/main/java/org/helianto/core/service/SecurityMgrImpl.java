@@ -43,5 +43,17 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
     	// TODO implement auto creation
         return null;
     }
+
+    public boolean verifyPassword(Credential credential) {
+        if (credential.getPassword().compareTo(credential.getVerifyPassword())!=0) {
+            credential.setPassword("");
+            credential.setVerifyPassword("");
+            credential.setPasswordDirty(true);
+            return false;
+        }
+        credential.setVerifyPassword("");
+        credential.setPasswordDirty(false);
+        return true;
+    }
     
 }
