@@ -15,10 +15,6 @@
 
 package org.helianto.web.controller;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.service.ServerMgr;
@@ -30,7 +26,7 @@ import org.springframework.webflow.RequestContext;
 import org.springframework.webflow.action.FormAction;
 
 /**
- * 
+ * Follows the configuration.xml flow.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -40,6 +36,9 @@ public class InstallFormAction extends FormAction {
     
     private UserMgr userMgr;
     
+    /**
+     * Assure required collaborators at runtime.
+     */
     public void init() {
         if (serverMgr==null) throw new IllegalArgumentException("Required serverMgr property is null");
         if (userMgr==null) throw new IllegalArgumentException("Required userMgr property is null");
@@ -74,50 +73,7 @@ public class InstallFormAction extends FormAction {
         userMgr.persistUser(form.getUser());
         return success();
     }
-    
-    //TODO review operator creation flow states bellow
-    
-    /**
-     * Invoke service layer to create a default operator and
-     * make it available to the form flow;
-     */
-    public Event createOperator(RequestContext context) {
-//        Operator operator = serverMgr.createLocalDefaultOperator();
-//        OperatorForm form = doGetForm(context);
-//        form.setOperator(operator);
-        return success();
-    }
-    
-    /**
-     * Load available locales in request scope.
-     */
-    public Event loadAvailableLocalesInRequestScope(RequestContext context) {
-        Locale[] locales = Locale.getAvailableLocales();
-        Map<String, String> localesMap = new HashMap<String, String>();
-        for (Locale locale: locales) {
-            localesMap.put(locale.toString(), locale.getDisplayName());
-        }
-        context.getRequestScope().put("locales", localesMap);
-        return success();
-    }
-    
-    /**
-     * Persist the operator retrieved from the flow.
-     */
-    public Event persistOperator(RequestContext context) {
-//        Operator operator = doGetForm(context).getOperator();
-//        serverMgr.persistOperator(operator);
-        return success();
-    }
-    
-    /**
-     * List all operators in request scope.
-     */
-    public Event listOperatorInRequestScope(RequestContext context) {
-        context.getRequestScope().put("operatorList", serverMgr.findOperator());
-        return success();
-    }
-    
+        
     //~ utilities
     protected UserForm doGetForm(RequestContext context) {
         AttributeMap flowScope = context.getFlowScope();

@@ -16,7 +16,6 @@
 package org.helianto.web.view;
 
 import org.helianto.core.Credential;
-import org.helianto.core.Identity;
 
 /**
  * <code>Identity</code> form.
@@ -27,20 +26,29 @@ public class IdentityForm {
 
     private Credential credential;
     
-    public Identity getIdentity() {
-        return credential.getIdentity();
-    }
-
-    public void setIdentity(Identity identity) {
-        this.credential.setIdentity(identity);
-    }
-
     public Credential getCredential() {
         return credential;
     }
 
     public void setCredential(Credential credential) {
         this.credential = credential;
+    }
+
+    /**
+     * toString
+     * 
+     * @return String
+     */
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getName()).append("@").append(
+                Integer.toHexString(hashCode())).append(" [");
+        buffer.append("credential").append("='").append(getCredential()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
     }
 
 }

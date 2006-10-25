@@ -36,7 +36,7 @@
     	<entry-actions>
 	    	<action bean="identityAction" method="bind"/>
     	</entry-actions>
-    	<if test="${flowScope.identityForm.identity.identityType == 'P'}" 
+    	<if test="${flowScope.identityForm.credential.identity.identityType == 'P'}" 
     	    then="identity.personal.view" 
     	    else="identity.confirm.view" />
     </decision-state>
@@ -58,9 +58,18 @@
     </view-state>
     
     <view-state id="identity.credential.view" view="identity/credential">
-		<transition on="next" to="identity.confirm.view"/>
+		<transition on="next" to="verify"/>
 		<transition on="cancel" to="bind"/>
     </view-state>
+    
+    <action-state id="verify">
+    	<entry-actions>
+	    	<action bean="identityAction" method="bind"/>
+    	</entry-actions>
+    	<action bean="identityAction"/>
+		<transition on="success" to="identity.confirm.view"/>
+		<transition on="error" to="identity.credential.view"/>
+    </action-state>
     
     <action-state id="persistFinal">
     	<entry-actions>
