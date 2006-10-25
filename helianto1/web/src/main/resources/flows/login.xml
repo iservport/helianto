@@ -11,7 +11,7 @@
     </action-state>
 
     <subflow-state id="configuration.subflow" flow="configuration">
-		<transition on="end" to="end"/>
+		<transition on="end" to="login.view"/>
     </subflow-state>
     
     <view-state id="login.view" view="login">

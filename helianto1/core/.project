@@ -1,9 +1,7 @@
 <projectDescription>
   <name>helianto-core</name>
   <comment>Helianto project core module.</comment>
-  <projects>
-    <project>helianto-domain</project>
-  </projects>
+  <projects/>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
