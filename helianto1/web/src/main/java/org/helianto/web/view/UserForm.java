@@ -19,7 +19,7 @@ import org.helianto.core.User;
 
 /**
  * <code>User</code> form.
- *  
+ * 
  * @author Mauricio Fernandes de Castro
  */
 public class UserForm {
@@ -33,5 +33,22 @@ public class UserForm {
     public void setUser(User user) {
         this.user = user;
     }
-    
+
+    /**
+     * toString
+     * 
+     * @return String
+     */
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getClass().getName()).append("@").append(
+                Integer.toHexString(hashCode())).append(" [");
+        buffer.append("user").append("='").append(getUser()).append("' ");
+        buffer.append("]");
+
+        return buffer.toString();
+    }
+
 }

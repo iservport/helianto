@@ -30,10 +30,13 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.Identity;
 import org.helianto.core.Operator;
+import org.helianto.core.User;
 import org.helianto.core.service.ServerMgr;
+import org.helianto.core.service.UserMgr;
 import org.helianto.web.controller.InstallFormAction;
-import org.helianto.web.view.OperatorForm;
+import org.helianto.web.view.UserForm;
 import org.springframework.webflow.Event;
 import org.springframework.webflow.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
@@ -62,6 +65,43 @@ public class InstallFormActionTests extends TestCase {
         Event event = installFormAction.ifNew(new MockRequestContext());
         assertEquals(event.getId(), "no");
         verify(serverMgr);
+    }
+    
+    
+    public void testCreateManager() {
+        RequestContext context = simulateFormInContext(new UserForm());
+        Identity managerIdentity = new Identity();
+        context.getRequestScope().put("identity", managerIdentity);
+        User user = new User();
+        
+        expect(serverMgr.createSystemConfiguration(managerIdentity))
+            .andReturn(user);
+        replay(serverMgr);
+        
+        Event event = installFormAction.createManager(context);
+        assertEquals(event.getId(), "success");
+        verify(serverMgr);
+        
+        assertSame(user, ((UserForm) context.getFlowScope().get("formObject")).getUser());
+    }
+    
+    public void testPersistManager() {
+        UserForm form = new UserForm();
+        form.setUser(new User());
+        RequestContext context = simulateFormInContext(form);
+        
+        userMgr.persistUser(form.getUser());
+        replay(serverMgr);
+
+        Event event = installFormAction.persistManager(context);
+        assertEquals(event.getId(), "success");
+        verify(serverMgr);
+    }
+    
+    private RequestContext simulateFormInContext(Object form) {
+        RequestContext context = new MockRequestContext();
+        context.getFlowScope().put("formObject", form);
+        return context;
     }
     
     public void testCreateOperator() {
@@ -127,17 +167,21 @@ public class InstallFormActionTests extends TestCase {
 
     // collabs
     private ServerMgr serverMgr;
+    private UserMgr userMgr;
     
     @Override
     public void setUp() {
         serverMgr = createMock(ServerMgr.class);
+        userMgr = createMock(UserMgr.class);
         installFormAction = new InstallFormAction();
         installFormAction.setServerMgr(serverMgr);
+        installFormAction.setUserMgr(userMgr);
     }
     
     @Override
     public void tearDown() {
         reset(serverMgr);
+        reset(userMgr);
     }
     
 }

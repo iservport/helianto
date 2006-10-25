@@ -22,6 +22,7 @@ import java.util.Map;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.service.ServerMgr;
+import org.helianto.core.service.UserMgr;
 import org.helianto.web.view.UserForm;
 import org.springframework.webflow.AttributeMap;
 import org.springframework.webflow.Event;
@@ -36,6 +37,13 @@ import org.springframework.webflow.action.FormAction;
 public class InstallFormAction extends FormAction {
     
     private ServerMgr serverMgr;
+    
+    private UserMgr userMgr;
+    
+    public void init() {
+        if (serverMgr==null) throw new IllegalArgumentException("Required serverMgr property is null");
+        if (userMgr==null) throw new IllegalArgumentException("Required userMgr property is null");
+    }
     
     /**
      * Test if there is already at least one operator.
@@ -63,7 +71,7 @@ public class InstallFormAction extends FormAction {
      */
     public Event persistManager(RequestContext context) {
         UserForm form = doGetForm(context);
-//        serverMgr.persistUser(form.getUser());
+        userMgr.persistUser(form.getUser());
         return success();
     }
     
@@ -125,6 +133,10 @@ public class InstallFormAction extends FormAction {
     //~ collaborators
     public void setServerMgr(ServerMgr serverMgr) {
         this.serverMgr = serverMgr;
+    }
+
+    public void setUserMgr(UserMgr userMgr) {
+        this.userMgr = userMgr;
     }
     
 }
