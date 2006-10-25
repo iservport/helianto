@@ -43,12 +43,12 @@ public interface ServerMgr {
      * Create an <code>Operator</code> with name "DEFAULT",
      * LOCAL mode and default <code>Locale</code>.
      */
-//    public Operator createLocalDefaultOperator();
+    public Operator createLocalDefaultOperator();
 
     /**
      * Persist the <code>Operator</code>.
      */
-//    public void persistOperator(Operator operator);
+    public void persistOperator(Operator operator);
 
     /**
      * Send a <code>Credential</code> registration using 

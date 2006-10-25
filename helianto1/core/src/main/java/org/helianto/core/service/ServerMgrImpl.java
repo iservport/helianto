@@ -64,10 +64,6 @@ public class ServerMgrImpl extends AbstractServerMgr {
     public Operator createLocalDefaultOperator() {
         Operator operator = OperatorCreator.operatorFactory("DEFAULT",
                 OperationMode.LOCAL, Locale.getDefault());
-        Entity entity = OperatorCreator.entityFactory(operator, "DEFAULT");
-        Identity identity = AuthenticationCreator.identityFactory("manager",
-                "Manager account");
-        User user = AuthorizationCreator.userFactory(entity, identity);
         return operator;
     }
 
