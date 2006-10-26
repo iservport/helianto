@@ -77,7 +77,7 @@ external hosts.
 		-->
 		<property name="serverDesc" type="string" length="64"/>
 		<!-- 
-				server type: http, mail post office, mail transport, etc
+				server type: mail post office, mail transport, etc
 		-->
 		<property name="serverType" type="char" >
 			<column name="serverType" not-null="true" default="'P'"/>

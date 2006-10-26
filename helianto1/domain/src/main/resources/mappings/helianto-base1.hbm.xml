@@ -80,5 +80,9 @@ At least one default (root) operatot must be defined per installation.
 		<property name="operationMode" type="char" >
 			<column name="operationMode" not-null="true" default="'L'"/>
 		</property>
+		<!-- 
+				operator host address
+		-->
+		<property name="operatorHostAddress" type="string" length="64"/>
 	</class>
 </hibernate-mapping>
