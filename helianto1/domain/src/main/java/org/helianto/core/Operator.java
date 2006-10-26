@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 24/10/2006 13:50:48 by Hibernate Tools 3.1.0.beta5
+// Generated 26/10/2006 06:37:59 by Hibernate Tools 3.1.0.beta5
 
 
 import java.util.Locale;
@@ -30,6 +30,7 @@ public class Operator  implements java.io.Serializable {
      private Operator parent;
      private Locale locale;
      private char operationMode;
+     private String operatorHostAddress;
 
      // Constructors
 
@@ -43,11 +44,12 @@ public class Operator  implements java.io.Serializable {
         this.operationMode = operationMode;
     }
     /** full constructor */
-    public Operator(String operatorName, Operator parent, Locale locale, char operationMode) {
+    public Operator(String operatorName, Operator parent, Locale locale, char operationMode, String operatorHostAddress) {
        this.operatorName = operatorName;
        this.parent = parent;
        this.locale = locale;
        this.operationMode = operationMode;
+       this.operatorHostAddress = operatorHostAddress;
     }
     
    
@@ -87,6 +89,13 @@ public class Operator  implements java.io.Serializable {
     public void setOperationMode(char operationMode) {
         this.operationMode = operationMode;
     }
+    public String getOperatorHostAddress() {
+        return this.operatorHostAddress;
+    }
+    
+    public void setOperatorHostAddress(String operatorHostAddress) {
+        this.operatorHostAddress = operatorHostAddress;
+    }
 
     /**
      * toString
@@ -116,6 +125,7 @@ public class Operator  implements java.io.Serializable {
          
          
          result = 37 * result + ( getOperatorName() == null ? 0 : this.getOperatorName().hashCode() );
+         
          
          
          
