@@ -84,5 +84,9 @@ At least one default (root) operatot must be defined per installation.
 				operator host address
 		-->
 		<property name="operatorHostAddress" type="string" length="64"/>
+		<!-- 
+				default encoding
+		-->
+		<property name="defaultEncoding" type="string" length="20"/>
 	</class>
 </hibernate-mapping>

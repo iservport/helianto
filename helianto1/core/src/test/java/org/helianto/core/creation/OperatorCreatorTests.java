@@ -43,6 +43,7 @@ public class OperatorCreatorTests extends TestCase {
         Operator operator = OperatorCreator.operatorFactory("NAME", OperationMode.ENTERPRISE, Locale.CANADA);
         
         assertEquals("NAME", operator.getOperatorName());
+        assertEquals("ISO-8859-1", operator.getDefaultEncoding());
         assertEquals(OperationMode.ENTERPRISE.getValue(), operator.getOperationMode());
         assertEquals(Locale.CANADA, operator.getLocale());
         assertNull(operator.getParent());

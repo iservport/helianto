@@ -31,6 +31,7 @@ public class Operator  implements java.io.Serializable {
      private Locale locale;
      private char operationMode;
      private String operatorHostAddress;
+     private String defaultEncoding;
 
      // Constructors
 
@@ -130,7 +131,15 @@ public class Operator  implements java.io.Serializable {
          
          
          return result;
-   }   
+   }
+
+public String getDefaultEncoding() {
+    return defaultEncoding;
+}
+
+public void setDefaultEncoding(String defaultEncoding) {
+    this.defaultEncoding = defaultEncoding;
+}   
 
 
 }

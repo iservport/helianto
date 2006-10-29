@@ -62,6 +62,7 @@ public class OperatorCreator extends CreatorSupport {
         } else {
             operator.setLocale(locale);
         }
+        operator.setDefaultEncoding("ISO-8859-1");
 
         return operator;
     }
