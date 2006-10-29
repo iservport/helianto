@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 26/10/2006 06:37:59 by Hibernate Tools 3.1.0.beta5
+// Generated 29/10/2006 20:02:34 by Hibernate Tools 3.1.0.beta5
 
 
 import java.util.Locale;
@@ -45,12 +45,13 @@ public class Operator  implements java.io.Serializable {
         this.operationMode = operationMode;
     }
     /** full constructor */
-    public Operator(String operatorName, Operator parent, Locale locale, char operationMode, String operatorHostAddress) {
+    public Operator(String operatorName, Operator parent, Locale locale, char operationMode, String operatorHostAddress, String defaultEncoding) {
        this.operatorName = operatorName;
        this.parent = parent;
        this.locale = locale;
        this.operationMode = operationMode;
        this.operatorHostAddress = operatorHostAddress;
+       this.defaultEncoding = defaultEncoding;
     }
     
    
@@ -97,6 +98,13 @@ public class Operator  implements java.io.Serializable {
     public void setOperatorHostAddress(String operatorHostAddress) {
         this.operatorHostAddress = operatorHostAddress;
     }
+    public String getDefaultEncoding() {
+        return this.defaultEncoding;
+    }
+    
+    public void setDefaultEncoding(String defaultEncoding) {
+        this.defaultEncoding = defaultEncoding;
+    }
 
     /**
      * toString
@@ -130,16 +138,9 @@ public class Operator  implements java.io.Serializable {
          
          
          
+         
          return result;
-   }
-
-public String getDefaultEncoding() {
-    return defaultEncoding;
-}
-
-public void setDefaultEncoding(String defaultEncoding) {
-    this.defaultEncoding = defaultEncoding;
-}   
+   }   
 
 
 }
