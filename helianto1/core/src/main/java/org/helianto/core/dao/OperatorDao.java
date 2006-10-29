@@ -22,6 +22,7 @@ import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
+import org.helianto.core.type.ActivityState;
 import org.helianto.core.type.ServerType;
 
 /**
@@ -90,7 +91,7 @@ public interface OperatorDao {
      * @see ServerType
      * @see ActivityState
      */
-    public List<Server> findServerActiveByType(Operator operator, ServerType serverType);
+    public List<Server> findServerActive(Operator operator);
     
     /**
      * Persist <code>Province</code>.

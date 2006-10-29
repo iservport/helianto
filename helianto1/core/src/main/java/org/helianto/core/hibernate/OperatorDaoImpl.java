@@ -25,7 +25,6 @@ import org.helianto.core.Server;
 import org.helianto.core.Service;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.ServerType;
 
 public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
     
@@ -78,14 +77,16 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
     }
     
     static String SERVER_QRY = "from Server server "+
-        "where server.operator = ? and server.serverName = ? ";
+        "where server.operator = ? " +
+        "and server.serverName = ? ";
 
-    public List<Server> findServerActiveByType(Operator operator, ServerType serverType) {
-        return (ArrayList<Server>) find(SERVER_QRY_BY_TYPE, operator, serverType.getValue(), ActivityState.ACTIVE.getValue());
+    public List<Server> findServerActive(Operator operator) {
+        return (ArrayList<Server>) find(SERVER_QRY_ACTIVE, operator, ActivityState.ACTIVE.getValue());
     }
     
-    static String SERVER_QRY_BY_TYPE = "from Server server "+
-        "where server.operator = ? and server.serverType = ? and server.serverState = ? " +
+    static String SERVER_QRY_ACTIVE = "from Server server "+
+        "where server.operator = ? " +
+        "and server.serverState = ? " +
         "order by server.priority ";
 
     public void persistProvince(Province province) {

@@ -180,12 +180,10 @@ public class OperatorDaoImplTests extends OperatorTestSupport {
         assertEquals(i*o, serverList.size());
         // read
         Server server = serverList.get((int) Math.random()*serverList.size());
-        ServerType serverType = ServerType.values()[(int) Math.random()*ServerType.values().length];
-        List<Server> list = operatorDao.findServerActiveByType(server.getOperator(), serverType);
+        List<Server> list = operatorDao.findServerActive(server.getOperator());
         byte priority = 0;
         for (Server s: list) {
             assertEquals(server.getOperator(), s.getOperator());
-            assertEquals(serverType.getValue(), s.getServerType());
             assertEquals(ActivityState.ACTIVE.getValue(), s.getServerState());
             assertTrue(s.getPriority()>=priority);
             priority = s.getPriority();
