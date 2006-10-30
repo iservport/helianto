@@ -25,14 +25,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.mail.MessagingException;
+
 import junit.framework.TestCase;
 
+import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
+import org.helianto.core.Server;
 import org.helianto.core.User;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.OperatorDao;
+import org.helianto.core.mail.MailComposer;
+import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.type.OperationMode;
 
 public class ServerMgrImplTests extends TestCase {
@@ -87,22 +93,71 @@ public class ServerMgrImplTests extends TestCase {
         assertEquals(OperationMode.LOCAL.getValue(), operator.getOperationMode());
         assertEquals(Locale.getDefault(), operator.getLocale());
     }
+    
+    /*
+    public void sendRegistrationNotification(Operator operator, Credential cred)
+            throws MessagingException {
+        if (cred.getIdentity().getIdentityType() == IdentityType.NOT_ADDRESSABLE
+                .getValue()) {
+            throw new IllegalStateException("Credential is not addressable.");
+        }
+
+        Server transportServer = 
+            serverUtilsTemplate.selectFirstAvailableMailTransportServer(operator);
+        JavaMailSenderImpl javaMailSender = (JavaMailSenderImpl) createSender(transportServer);
+        MimeMessageHelper helper = createMimeHelper(javaMailSender, transportServer.getCredential()
+                .getIdentity().getPrincipal(), cred.getIdentity().getPrincipal());
+
+        helper.setSubject(mailComposer
+                .composeRegistrationNotificationSubject(""));
+        helper.setText(mailComposer.composeRegistrationNotification(cred,
+                operator.getOperatorHostAddress()), true);
+        Server accessServer = 
+            serverUtilsTemplate.selectFirstAvailableMailAccessServer(operator);
+        senderStrategy.send(accessServer, javaMailSender, helper);
+        
+    }
+     */
+    
+    public void testSendRegistrationNotification() throws MessagingException {
+        Server transportServer = OperatorTestSupport.createServer();
+        Operator operator = transportServer.getOperator();
+        Server accessServer = OperatorTestSupport.createServer(operator);
+        Credential cred = transportServer.getCredential();
+        
+//        expect(serverUtilsTemplate.selectFirstAvailableMailTransportServer(operator))
+//            .andReturn(transportServer);
+//        expect(mailComposer.composeRegistrationNotificationSubject(""))
+//            .andReturn("SUBJECT");
+//        expect(mailComposer.composeRegistrationNotification(cred,
+//                operator.getOperatorHostAddress()))
+//            .andReturn("SUBJECT");
+//        expect(serverUtilsTemplate.selectFirstAvailableMailAccessServer(operator))
+//            .andReturn(accessServer);
+//        senderStrategy.send(accessServer, javaMailSender, helper);
+        
+        serverMgr.sendRegistrationNotification(operator, cred);
+    }
 
     // collabs
     
     private OperatorDao operatorDao;
     private ServiceManagementTemplate serviceManagementTemplate;
     private SystemConfigurationTemplate systemConfigurationTemplate;
+    private MailComposer mailComposer;
     
     @Override
     public void setUp() {
         operatorDao = createMock(OperatorDao.class);
         serviceManagementTemplate = createMock(ServiceManagementTemplate.class);
         systemConfigurationTemplate = createMock(SystemConfigurationTemplate.class);
+        mailComposer = createMock(MailComposer.class);
+        
         serverMgr = new ServerMgrImpl();
         serverMgr.setOperatorDao(operatorDao);
         serverMgr.setServiceManagementTemplate(serviceManagementTemplate);
         serverMgr.setSystemConfigurationTemplate(systemConfigurationTemplate);
+        serverMgr.setMailComposer(mailComposer);
     }
     
     @Override
@@ -110,6 +165,7 @@ public class ServerMgrImplTests extends TestCase {
         reset(operatorDao);
         reset(serviceManagementTemplate);
         reset(systemConfigurationTemplate);
+        reset(mailComposer);
     }
     
 }

@@ -15,35 +15,23 @@
 
 package org.helianto.core.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Store;
-import javax.mail.internet.MimeMessage;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.creation.OperatorCreator;
-import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.OperatorDao;
+import org.helianto.core.mail.JavaMailSenderAdapter;
 import org.helianto.core.mail.MailComposer;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.IdentityType;
 import org.helianto.core.type.OperationMode;
-import org.helianto.core.type.ServerType;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 
 public class ServerMgrImpl extends AbstractServerMgr {
 
     protected OperatorDao operatorDao;
-
-    protected AuthenticationDao authenticationDao;
 
     private MailComposer mailComposer;
     
@@ -62,105 +50,22 @@ public class ServerMgrImpl extends AbstractServerMgr {
         return operator;
     }
 
-    public void sendRegistrationNotification(Operator operator, Credential cred)
+    public void sendRegistrationNotification(Operator operator, Credential credential)
             throws MessagingException {
-        if (cred.getIdentity().getIdentityType() == IdentityType.NOT_ADDRESSABLE
-                .getValue()) {
-            throw new IllegalStateException("Credential is not addressable.");
-        }
 
-        Server transportServer = 
-            getValidServer(operator,
-                ServerType.SMTP_SERVER);
+        List<Server> serverList = operatorDao.findServerActive(operator);
 
-        JavaMailSenderImpl javaMailSender = (JavaMailSenderImpl) createSender(transportServer);
-        MimeMessageHelper helper = createMimeHelper(javaMailSender, transportServer.getCredential()
-                .getIdentity().getPrincipal(), cred.getIdentity().getPrincipal());
-
-        helper.setSubject(mailComposer
-                .composeRegistrationNotificationSubject(""));
-        helper.setText(mailComposer.composeRegistrationNotification(cred,
-                operator.getOperatorHostAddress()), true);
-        
-        senderStrategy.send(operator, javaMailSender, helper);
+        JavaMailSenderAdapter sender = new JavaMailSenderAdapter();
+        StringBuilder body = new StringBuilder();
+        body.append("test");
+//        helper.setSubject(mailComposer
+//                .composeRegistrationNotificationSubject(""));
+//        helper.setText(mailComposer.composeRegistrationNotification(cred,
+//                operator.getOperatorHostAddress()), true);
+//        sender.send(null, credential.getIdentity(), null, body);
         
     }
     
-    private SenderStrategy senderStrategy = new DefaultSender(); 
-    
-    public class DefaultSender implements SenderStrategy {
-        
-        public void send(Operator operator, JavaMailSenderImpl javaMailSender, MimeMessageHelper helper) throws MessagingException {
-            Store store = null;
-            try {
-                store = connectBeforeSend(javaMailSender.getSession(), getValidServer(operator, 
-                        ServerType.POP3_SERVER));
-                javaMailSender.send(helper.getMimeMessage());
-            } finally {
-                if (store != null) {
-                    store.close();
-                }
-            }
-        }
-        
-        public Store connectBeforeSend(Session mailSession, Server accessServer) {
-            String storeType = "";
-            if (accessServer.getServerType() == ServerType.POP3_SERVER.getValue()) {
-                storeType = "POP3";
-            }
-            Store store = null;
-            String host = accessServer.getServerHostAddress();
-            String username = accessServer.getCredential().getIdentity()
-                    .getPrincipal();
-            String password = accessServer.getCredential().getPassword();
-            try {
-                store = mailSession.getStore(storeType);
-                store.connect(host, username, password);
-            } catch (Exception e) {
-                throw new IllegalStateException("Unable to connect to "
-                        + accessServer + " before sending message", e);
-            }
-            return store;
-        }
-
-    }
-    
-    public MimeMessageHelper createMimeHelper(JavaMailSenderImpl javaMailSender, String from, String to) 
-        throws MessagingException {
-        MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "ISO-8859-1");
-        helper.setTo(to);
-        helper.setReplyTo(from);
-        helper.setFrom(from);
-        helper.setSentDate(new Date());
-        return helper;
-    }
-
-    public JavaMailSender createSender(Server transportServer) {
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost(transportServer.getServerHostAddress());
-        javaMailSender.setUsername(transportServer.getCredential()
-                .getIdentity().getPrincipal());
-        javaMailSender.setPassword(transportServer.getCredential()
-                .getPassword());
-        return javaMailSender;
-    }
-
-    public Server getValidServer(Operator operator, ServerType serverType) {
-        List<Server> orderedServerList = operatorDao.findServerActiveByType(
-                operator, serverType);
-        for (Server s : orderedServerList) {
-            Credential credential = s.getCredential();
-            if (credential.getCredentialState() == ActivityState.ACTIVE
-                    .getValue()
-                    && credential.getEncription() == s.getRequiredEncription()) {
-                return s;
-            }
-        }
-        throw new IllegalStateException(
-                "Not able to find a valid server to operator " + operator);
-    }
-
     //
 
     public void init() {
@@ -177,5 +82,5 @@ public class ServerMgrImpl extends AbstractServerMgr {
     public void setOperatorDao(OperatorDao operatorDao) {
         this.operatorDao = operatorDao;
     }
-    
+
 }

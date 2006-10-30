@@ -60,7 +60,7 @@ public interface ServerMgr {
      * Send a <code>Credential</code> registration using 
      * mail settings from <code>Operator</code>.
      */
-    public void sendRegistrationNotification(Operator operator, Credential cred)
+    public void sendRegistrationNotification(Operator operator, Credential credential)
             throws MessagingException;
 
 }
