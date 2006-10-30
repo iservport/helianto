@@ -37,16 +37,11 @@
 	-->
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="configuration" ref="freemarkerConfiguration"/>
 		<property name="templateLoaderPaths">
 			<list>
 				<value>/WEB-INF/freemarker/</value>
-			 	<value>classpath:/freemarker/</value>
 			</list>
-		</property>
-		<property name="freemarkerSettings">
-			<props>
-				<prop key="default_encoding">ISO-8859-1</prop>
-			</props>
 		</property>
 	</bean>
 	<!-- 
