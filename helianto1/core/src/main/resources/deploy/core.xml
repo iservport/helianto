@@ -20,10 +20,10 @@
 	<!--
 			imports 	
 	-->
-	<import resource="classpath:/deploy/dataSource.xml"/>
-	<import resource="classpath:/deploy/sessionFactory.xml"/>
-	<import resource="classpath:/deploy/transaction.xml"/>
-	<import resource="classpath:/deploy/support.xml"/>
+	<import resource="classpath*:/deploy/dataSource.xml"/>
+	<import resource="classpath*:/deploy/sessionFactory.xml"/>
+	<import resource="classpath*:/deploy/transaction.xml"/>
+	<import resource="classpath*:/deploy/support.xml"/>
 	<!--
 			Operator dao implementation	
 	-->

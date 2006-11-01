@@ -17,10 +17,6 @@
 -->
 <beans>
 	<!--
-			imports 	
-	-->
-	<import resource="classpath:/deploy/install.xml"/>
-	<!--
 		Flow registry
 	-->
 	<bean name="flowRegistry"
@@ -35,13 +31,40 @@
 	<!-- 
 		Freemarker configuration
 	-->
-	<bean id="freemarkerConfig"
-		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="configuration" ref="freemarkerConfiguration"/>
+	<!-- 
+		freemarker configuration
+		
+		TODO: autowire by type is injecting this, while we need 
+		freemarkerWebConfiguration injected to automatically add
+		a template lader to spring.ftl
+	-->
+	<!--bean id="freemarkerConfiguration"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
 		<property name="templateLoaderPaths">
 			<list>
+			 	<value>classpath:/freemarker/</value>
 				<value>/WEB-INF/freemarker/</value>
 			</list>
+		</property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="default_encoding">ISO-8859-1</prop>
+			</props>
+		</property>
+	</bean-->
+	<bean id="freemarkerWebConfiguration"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<!--property name="configuration" ref="freemarkerConfiguration"/-->
+		<property name="templateLoaderPaths">
+			<list>
+			 	<value>classpath:/freemarker/</value>
+				<value>/WEB-INF/freemarker/</value>
+			</list>
+		</property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="default_encoding">ISO-8859-1</prop>
+			</props>
 		</property>
 	</bean>
 	<!-- 
@@ -55,12 +78,4 @@
 		<property name="suffix" value=".ftl" />
 	</bean>
 
-    <!--
-        admin flow controller
-    -->
-    <bean name="/admin.htm"
-        class="org.springframework.webflow.executor.mvc.FlowController">
-        <property name="flowLocator" ref="flowRegistry" />
-        <property name="defaultFlowId" value="login" />
-    </bean>
 </beans>

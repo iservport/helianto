@@ -25,6 +25,9 @@
     <bean id="repositoryFactory" class="org.springframework.webflow.execution.repository.continuation.ContinuationFlowExecutionRepositoryFactory">
         <constructor-arg ref="flowRegistry"/>
     </bean>
+    <!--
+        admin flow controller
+    -->
 	<!--
 		identity action
 	-->

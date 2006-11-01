@@ -19,7 +19,7 @@
 	<!--
 			imports 	
 	-->
-	<import resource="classpath:/deploy/security.xml"/>
+	<import resource="classpath*:/deploy/security.xml"/>
 	<!--
 			Web security interceptor 	
 	-->

@@ -19,7 +19,7 @@
 	<!--
 			imports 	
 	-->
-	<import resource="classpath:/deploy/core.xml"/>
+	<import resource="classpath*:/deploy/core.xml"/>
 	<!--
 			Security Mgr	
 	-->

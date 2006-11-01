@@ -41,20 +41,4 @@
 		class="org.helianto.core.mail.MailComposerImpl">
 		<property name="messageSource" ref="messageSource" />
 	</bean>
-	<!-- 
-		freemarker configuration
-	-->
-	<bean id="freemarkerConfiguration"
-		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
-		<property name="templateLoaderPaths">
-			<list>
-			 	<value>classpath:/freemarker/</value>
-			</list>
-		</property>
-		<property name="freemarkerSettings">
-			<props>
-				<prop key="default_encoding">ISO-8859-1</prop>
-			</props>
-		</property>
-	</bean>
 </beans>
