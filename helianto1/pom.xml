@@ -113,6 +113,19 @@
 			<version>2.0</version>
 		</dependency>
 		<!-- 
+		  AspectJ related deps 
+		-->
+		<dependency>
+			<groupId>aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.5.2a</version>
+		</dependency>
+		<dependency>
+			<groupId>aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.5.2a</version>
+		</dependency>
+		<!-- 
 		  mail related deps 
 		-->
 		<dependency>
