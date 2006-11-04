@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 29/10/2006 20:02:34 by Hibernate Tools 3.1.0.beta5
+// Generated 04/11/2006 12:58:43 by Hibernate Tools 3.1.0.beta5
 
 
 
@@ -25,6 +25,7 @@ public class Server  implements java.io.Serializable {
      private Operator operator;
      private String serverName;
      private String serverHostAddress;
+     private int serverPort;
      private String serverDesc;
      private char serverType;
      private byte priority;
@@ -48,10 +49,11 @@ public class Server  implements java.io.Serializable {
         this.requiredEncription = requiredEncription;
     }
     /** full constructor */
-    public Server(Operator operator, String serverName, String serverHostAddress, String serverDesc, char serverType, byte priority, char serverState, byte requiredEncription, Credential credential) {
+    public Server(Operator operator, String serverName, String serverHostAddress, int serverPort, String serverDesc, char serverType, byte priority, char serverState, byte requiredEncription, Credential credential) {
        this.operator = operator;
        this.serverName = serverName;
        this.serverHostAddress = serverHostAddress;
+       this.serverPort = serverPort;
        this.serverDesc = serverDesc;
        this.serverType = serverType;
        this.priority = priority;
@@ -89,6 +91,13 @@ public class Server  implements java.io.Serializable {
     
     public void setServerHostAddress(String serverHostAddress) {
         this.serverHostAddress = serverHostAddress;
+    }
+    public int getServerPort() {
+        return this.serverPort;
+    }
+    
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
     }
     public String getServerDesc() {
         return this.serverDesc;
@@ -166,6 +175,7 @@ public class Server  implements java.io.Serializable {
          
          result = 37 * result + ( getOperator() == null ? 0 : this.getOperator().hashCode() );
          result = 37 * result + ( getServerName() == null ? 0 : this.getServerName().hashCode() );
+         
          
          
          
