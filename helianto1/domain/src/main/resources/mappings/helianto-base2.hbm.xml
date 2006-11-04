@@ -73,6 +73,10 @@ external hosts.
 		-->
 		<property name="serverHostAddress" type="string" length="64"/>
 		<!-- 
+				server port
+		-->
+		<property name="serverPort" type="int"/>
+		<!-- 
 				server desc
 		-->
 		<property name="serverDesc" type="string" length="64"/>
