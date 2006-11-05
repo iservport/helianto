@@ -67,6 +67,7 @@ public class OperatorCreatorTests extends TestCase {
         
         assertSame(operator, server.getOperator());
         assertEquals("NAME", server.getServerName());
+        assertEquals(-1, server.getServerPort());
         assertEquals(ServerType.HTTP_SERVER.getValue(), server.getServerType());
         assertSame(credential, server.getCredential());
         

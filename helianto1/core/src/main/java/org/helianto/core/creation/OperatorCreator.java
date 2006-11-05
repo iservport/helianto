@@ -63,6 +63,7 @@ public class OperatorCreator extends CreatorSupport {
             operator.setLocale(locale);
         }
         operator.setDefaultEncoding("ISO-8859-1");
+        operator.setOperatorHostAddress("http://www.helianto.org");
 
         return operator;
     }
@@ -89,6 +90,7 @@ public class OperatorCreator extends CreatorSupport {
         server.setOperator(requiredOperator);
         server.setServerName(serverName);
         server.setServerHostAddress("");
+        server.setServerPort(-1);
         server.setServerDesc("");
         if (serverType==null) {
             server.setServerType(ServerType.SMTP_SERVER.getValue());

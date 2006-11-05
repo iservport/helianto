@@ -61,6 +61,8 @@ public class BaseDomainTests extends TestCase {
 
         server.setServerName("");
         server.setServerHostAddress("");
+        server.setServerPort(Integer.MAX_VALUE);
+        server.setServerPort(Integer.MIN_VALUE);
         server.setServerDesc("");
 
         server.setServerType(ServerType.HTTP_SERVER.getValue());
