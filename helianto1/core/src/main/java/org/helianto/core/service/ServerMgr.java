@@ -19,11 +19,10 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 
-import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
-import org.helianto.core.mail.compose.MailForm;
+import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 
 /**
  * A base service layer interface for the core package.
@@ -58,10 +57,10 @@ public interface ServerMgr {
     public List<Operator> findOperator();
 
     /**
-     * Send a <code>Credential</code> registration using 
-     * mail settings from <code>Operator</code>.
+     * Send a <code>Credential</code> confirmation mail using 
+     * a <code>PasswordConfirmationMailForm</code>.
      */
-    public void sendRegistrationNotification(MailForm mailForm)
+    public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
             throws MessagingException;
 
 }

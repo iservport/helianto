@@ -26,10 +26,15 @@ import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.MailMessageComposer;
-import org.helianto.core.mail.compose.MailForm;
+import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.type.OperationMode;
 import org.springframework.mail.javamail.JavaMailSender;
 
+/**
+ * Default implementation for <code>ServerMgr</code> interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class ServerMgrImpl extends AbstractServerMgr {
 
     protected OperatorDao operatorDao;
@@ -53,27 +58,24 @@ public class ServerMgrImpl extends AbstractServerMgr {
         return operator;
     }
 
-    public void sendRegistrationNotification(MailForm mailForm)
+    public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
             throws MessagingException {
-
         List<Server> serverList = operatorDao.findServerActive(mailForm.getOperator());
-        
         JavaMailSender sender = configurableMailSenderFactory.create(serverList);
-        
-        mailMessageComposer.composeMessage("PASSWORD", mailForm);
-        
-        
-//        sender.send(templateMailMessageDecorator);
-        
+        sender.send(mailMessageComposer.composeMessage("PASSWORD", mailForm));
     }
     
     //
 
     public void init() {
-        if (operatorDao == null)
+        if (operatorDao == null) {
             throw new IllegalArgumentException("OperatorDao property required");
+        }
         if (configurableMailSenderFactory == null) {
             throw new IllegalArgumentException("configurableMailSenderFactory property required");
+        }
+        if (mailMessageComposer == null) {
+            throw new IllegalArgumentException("mailMessageComposer property required");
         }
     }
 
