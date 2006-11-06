@@ -85,6 +85,10 @@ At least one default (root) operatot must be defined per installation.
 		-->
 		<property name="operatorHostAddress" type="string" length="64"/>
 		<!-- 
+				operator source mail address
+		-->
+		<property name="operatorSourceMailAddress" type="string" length="64"/>
+		<!-- 
 				default encoding
 		-->
 		<property name="defaultEncoding" type="string" length="20"/>

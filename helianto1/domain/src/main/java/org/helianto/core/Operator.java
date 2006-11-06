@@ -31,6 +31,7 @@ public class Operator  implements java.io.Serializable {
      private Locale locale;
      private char operationMode;
      private String operatorHostAddress;
+     private String operatorSourceMailAddress;
      private String defaultEncoding;
 
      // Constructors
@@ -140,7 +141,15 @@ public class Operator  implements java.io.Serializable {
          
          
          return result;
-   }   
+   }
+
+public String getOperatorSourceMailAddress() {
+    return operatorSourceMailAddress;
+}
+
+public void setOperatorSourceMailAddress(String operatorSourceMailAddress) {
+    this.operatorSourceMailAddress = operatorSourceMailAddress;
+}   
 
 
 }
