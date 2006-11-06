@@ -25,7 +25,7 @@ import org.helianto.core.Server;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
-import org.helianto.core.mail.MailMessageComposer;
+import org.helianto.core.mail.compose.MailMessageComposer;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.type.OperationMode;
 import org.springframework.mail.javamail.JavaMailSender;
