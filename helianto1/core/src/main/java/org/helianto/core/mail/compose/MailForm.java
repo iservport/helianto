@@ -30,9 +30,19 @@ public class MailForm {
 
     private Identity recipientIdentity;
 
-    private String subject;
+    private String subject = "";
+    
+    private String content = "";
 
-    private Identity validatePrincipal(Identity identity) {
+    public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	private Identity validatePrincipal(Identity identity) {
         if (identity == null
                 || identity.getIdentityType() == IdentityType.NOT_ADDRESSABLE
                         .getValue()

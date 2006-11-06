@@ -43,7 +43,7 @@ public class DecoratedPreparator implements MimeMessagePreparator {
     }
     
     protected void compose() {
-        body.append("EMPTY MESSAGE");
+        body.append(mailForm.getContent());
     }
 
     public void prepare(MimeMessage mimeMessage) {
