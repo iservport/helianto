@@ -39,7 +39,13 @@
 	<bean id="configurableMailSenderFactory"
 		class="org.helianto.core.mail.ConfigurableMailSenderFactoryImpl"/>
 	<!--
-		Message composer	
+		Basic Mail Message composer
+	-->
+	<bean id="basicMailMessageComposer"
+		class="org.helianto.core.mail.compose.BasicMailMessageComposer"/>
+	<!--
+		Message composer
+		@deprecated ...
 	-->
 	<bean id="mailComposer"
 		class="org.helianto.core.mail.MailComposerImpl">
