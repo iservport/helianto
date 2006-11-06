@@ -26,7 +26,6 @@ import org.helianto.core.Credential;
 public class PasswordConfirmationMailMessageDecorator extends DecoratedPreparator {
 
     public PasswordConfirmationMailMessageDecorator(DecoratedPreparator parent) {
-        //FIXME
         super(parent.mailForm);
     }
 

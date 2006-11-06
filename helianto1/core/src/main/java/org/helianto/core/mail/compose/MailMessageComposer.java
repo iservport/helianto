@@ -15,29 +15,27 @@
 
 package org.helianto.core.mail.compose;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
 /**
- * Base class for <code>MailMessageComposer</code> implementations.
+ * Base interface to all mail message composers.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractMailMessageComposer implements MailMessageComposer {
+public interface MailMessageComposer {
     
-    private Set<String> supportedKeys;
+    /**
+     * True if the key is supported.
+     * @param key
+     */
+    public boolean supports(String key);
     
-    public AbstractMailMessageComposer() {
-        supportedKeys = new HashSet<String>();
-    }
-
-    public boolean supports(String key) {
-        return supportedKeys.contains(key);
-    }
-
-    protected Set<String> getSupportedKeys() {
-        return supportedKeys;
-    }
+    /**
+     * Compose a message and hand it to a <code>MimeMessagePreparator</code>
+     * for a key.
+     * @param key
+     * @param args
+     */
+    public MimeMessagePreparator composeMessage(String key, MailForm mailForm);
 
 }
