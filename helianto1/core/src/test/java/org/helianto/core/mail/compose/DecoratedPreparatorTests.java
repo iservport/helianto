@@ -40,7 +40,8 @@ public class DecoratedPreparatorTests extends TestCase {
     public void testPrepare() throws MessagingException, IOException {
         MockJavaMailSender mockSender = new MockJavaMailSender();
         MimeMessage mimeMessage = mockSender.createMimeMessage();
-        decoratedPreparator.getBody().append("BODY");
+        mailForm.setSubject("SUBJECT");
+        mailForm.setContent("BODY");
         
         decoratedPreparator.prepare(mimeMessage);
         
@@ -55,6 +56,8 @@ public class DecoratedPreparatorTests extends TestCase {
         assertEquals(1, mimeMessage.getFrom().length);
         Address fromAddress = mimeMessage.getFrom()[0];
         assertEquals(mailForm.getOperator().getOperatorSourceMailAddress(), fromAddress.toString());
+        
+        assertEquals("SUBJECT", mimeMessage.getSubject());
         
         MimeMultipart part = (MimeMultipart) mimeMessage.getContent();
         assertEquals(1, part.getCount());
