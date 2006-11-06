@@ -38,9 +38,10 @@ import org.helianto.core.UserRole;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.mail.ConfigurableMailSender;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
-import org.helianto.core.mail.ConfigurableMailSenderImpl;
-import org.helianto.core.mail.MailMessageComposer;
+import org.helianto.core.mail.compose.DecoratedPreparator;
+import org.helianto.core.mail.compose.MailMessageComposer;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
+import org.helianto.core.mail.compose.PasswordConfirmationMailMessageDecorator;
 import org.helianto.core.type.OperationMode;
 
 public class ServerMgrImplTests extends TestCase {
@@ -111,17 +112,21 @@ public class ServerMgrImplTests extends TestCase {
     	Operator operator = new Operator();
     	mailForm.setOperator(operator);
     	List<Server> serverList = new ArrayList<Server>();
+        PasswordConfirmationMailMessageDecorator decoratedPreparator =
+            new PasswordConfirmationMailMessageDecorator(
+                    new DecoratedPreparator(mailForm));
     	
-//        Server transportServer = OperatorTestSupport.createServer();
-//        Server accessServer = OperatorTestSupport.createServer(operator);
-        
-        ConfigurableMailSender sender = new ConfigurableMailSenderImpl();
-        
         expect(operatorDao.findServerActive(mailForm.getOperator())).andReturn(serverList);
         replay(operatorDao);
 
         expect(configurableMailSenderFactory.create(serverList)).andReturn(sender);
-        replay(operatorDao);
+        replay(configurableMailSenderFactory);
+
+        expect(mailMessageComposer.composeMessage("PASSWORD", mailForm)).andReturn(decoratedPreparator);
+        replay(mailMessageComposer);
+
+        sender.send(decoratedPreparator);
+        replay(sender);
 
         serverMgr.sendPasswordConfirmation(mailForm);
     }
@@ -133,6 +138,7 @@ public class ServerMgrImplTests extends TestCase {
     private SystemConfigurationTemplate systemConfigurationTemplate;
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
+    private ConfigurableMailSender sender;
     
     @Override
     public void setUp() {
@@ -141,6 +147,8 @@ public class ServerMgrImplTests extends TestCase {
         systemConfigurationTemplate = createMock(SystemConfigurationTemplate.class);
         configurableMailSenderFactory = createMock(ConfigurableMailSenderFactory.class);
         mailMessageComposer = createMock(MailMessageComposer.class);
+        
+        sender = createMock(ConfigurableMailSender.class);
         
         serverMgr = new ServerMgrImpl();
         serverMgr.setOperatorDao(operatorDao);
@@ -157,6 +165,7 @@ public class ServerMgrImplTests extends TestCase {
         reset(systemConfigurationTemplate);
         reset(configurableMailSenderFactory);
         reset(mailMessageComposer);
+        reset(sender);
     }
     
 }
