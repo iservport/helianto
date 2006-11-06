@@ -13,23 +13,25 @@
  * limitations under the License.
  */
 
-package org.helianto.core.mail;
+package org.helianto.core.mail.compose;
 
 import org.helianto.core.Credential;
 
 /**
- * Base interface to provide basic e-mail comunication.
+ * Password confirmation mail form.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface MailComposer {
+public class PasswordConfirmationMailForm extends MailForm {
     
-    public String composeNotificationHeader();
-    
-    public String composeNotificationFooter();
-    
-    public String composeRegistrationNotificationSubject(String prefix);
-    
-    public String composeRegistrationNotification(Credential cred, String confirmationAddress);
+    private Credential credential;
+
+    public Credential getCredential() {
+        return credential;
+    }
+
+    public void setCredential(Credential credential) {
+        this.credential = credential;
+    }
 
 }

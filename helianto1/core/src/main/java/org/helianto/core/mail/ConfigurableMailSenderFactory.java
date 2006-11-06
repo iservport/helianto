@@ -15,21 +15,18 @@
 
 package org.helianto.core.mail;
 
-import org.helianto.core.Credential;
+import java.util.List;
+
+import org.helianto.core.Server;
 
 /**
- * Base interface to provide basic e-mail comunication.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface MailComposer {
+public interface ConfigurableMailSenderFactory {
     
-    public String composeNotificationHeader();
+    public ConfigurableMailSender create(List<Server> serverList);
     
-    public String composeNotificationFooter();
-    
-    public String composeRegistrationNotificationSubject(String prefix);
-    
-    public String composeRegistrationNotification(Credential cred, String confirmationAddress);
+    public void setServerUtilsTemplate(ServerUtilsTemplate serverUtilsTemplate);
 
 }

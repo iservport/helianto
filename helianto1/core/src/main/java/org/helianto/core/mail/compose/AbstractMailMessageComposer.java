@@ -13,23 +13,32 @@
  * limitations under the License.
  */
 
-package org.helianto.core.mail;
+package org.helianto.core.mail.compose;
 
-import org.helianto.core.Credential;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.helianto.core.mail.MailMessageComposer;
 
 /**
- * Base interface to provide basic e-mail comunication.
+ * Base class for <code>MailMessageComposer</code> implementations.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface MailComposer {
+public abstract class AbstractMailMessageComposer implements MailMessageComposer {
     
-    public String composeNotificationHeader();
+    private Set<String> supportedKeys;
     
-    public String composeNotificationFooter();
-    
-    public String composeRegistrationNotificationSubject(String prefix);
-    
-    public String composeRegistrationNotification(Credential cred, String confirmationAddress);
+    public AbstractMailMessageComposer() {
+        supportedKeys = new HashSet<String>();
+    }
+
+    public boolean supports(String key) {
+        return supportedKeys.contains(key);
+    }
+
+    protected Set<String> getSupportedKeys() {
+        return supportedKeys;
+    }
 
 }

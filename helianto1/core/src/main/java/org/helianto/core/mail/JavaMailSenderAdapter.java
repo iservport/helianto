@@ -15,7 +15,6 @@
 
 package org.helianto.core.mail;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -25,13 +24,11 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Identity;
 import org.helianto.core.Server;
 import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.IdentityType;
 import org.helianto.core.type.ServerType;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
 
 /**
@@ -54,15 +51,15 @@ public class JavaMailSenderAdapter {
     
     public void setServerList(List<Server> serverList) {
         this.serverList = serverList;
-        loadTransportServerParameters();
+        init();
     }
 
     public void setJavaMailSender(JavaMailSenderImpl javaMailSender) {
         this.javaMailSender = javaMailSender;
-        loadTransportServerParameters();
+        init();
     }
 
-    private void loadTransportServerParameters() throws IllegalStateException {
+    private void init() throws IllegalStateException {
         Server transportServer = serverUtilsTemplate.selectFirstAvailableMailTransportServer(serverList);
         javaMailSender.setHost(transportServer.getServerHostAddress());
         javaMailSender.setUsername(transportServer.getCredential().getIdentity()
@@ -71,14 +68,20 @@ public class JavaMailSenderAdapter {
         javaMailSender.setDefaultEncoding(transportServer.getOperator().getDefaultEncoding());
     }
     
-    private Identity validatePrincipal(Identity identity) {
-        if (identity.getIdentityType() == IdentityType.NOT_ADDRESSABLE
-                .getValue()) {
-            throw new IllegalArgumentException("Credential is not addressable.");
+    /**
+     * Wraps javaMailSender.send with pre and post process hooks.
+     * 
+     * @param preparator
+     */
+    public void send(MimeMessagePreparator preparator) {
+        sendPreProcess();
+        try {
+            javaMailSender.send(preparator);
+        } finally {
+            sendPostProcess();
         }
-        return identity;
     }
-
+    
     /**
      * Wraps javaMailSender.send with pre and post process hooks.
      * 
@@ -134,24 +137,6 @@ public class JavaMailSenderAdapter {
         } catch (MessagingException e) {
             logger.warn("Unable to close store.");
         }
-    }
-    
-    /**
-     * Alternative sender method.
-     * 
-     * @param recipientIdentity
-     * @param body
-     * @throws MessagingException
-     */
-    public void send(Identity senderIdentity, Identity recipientIdentity, StringBuilder body) throws MessagingException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-        helper.setTo(validatePrincipal(recipientIdentity).getPrincipal());
-        helper.setReplyTo(senderIdentity.getPrincipal());
-        helper.setFrom(senderIdentity.getPrincipal());
-        helper.setSentDate(new Date());
-        helper.setText(body.toString(), true);
-        send(helper.getMimeMessage());
     }
     
     private ServerUtilsTemplate serverUtilsTemplate = new DefaultServerUtils();

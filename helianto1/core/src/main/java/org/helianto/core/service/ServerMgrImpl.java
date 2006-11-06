@@ -20,21 +20,24 @@ import java.util.Locale;
 
 import javax.mail.MessagingException;
 
-import org.helianto.core.Credential;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
-import org.helianto.core.mail.JavaMailSenderAdapter;
-import org.helianto.core.mail.MailComposer;
+import org.helianto.core.mail.ConfigurableMailSenderFactory;
+import org.helianto.core.mail.MailMessageComposer;
+import org.helianto.core.mail.compose.MailForm;
 import org.helianto.core.type.OperationMode;
+import org.springframework.mail.javamail.JavaMailSender;
 
 public class ServerMgrImpl extends AbstractServerMgr {
 
     protected OperatorDao operatorDao;
-
-    private MailComposer mailComposer;
     
+    private ConfigurableMailSenderFactory configurableMailSenderFactory;
+    
+    private MailMessageComposer mailMessageComposer;
+
     public void persistOperator(Operator operator) {
         operatorDao.persistOperator(operator);
     }
@@ -50,19 +53,17 @@ public class ServerMgrImpl extends AbstractServerMgr {
         return operator;
     }
 
-    public void sendRegistrationNotification(Operator operator, Credential credential)
+    public void sendRegistrationNotification(MailForm mailForm)
             throws MessagingException {
 
-        List<Server> serverList = operatorDao.findServerActive(operator);
-
-        JavaMailSenderAdapter sender = new JavaMailSenderAdapter();
-        StringBuilder body = new StringBuilder();
-        body.append("test");
-//        helper.setSubject(mailComposer
-//                .composeRegistrationNotificationSubject(""));
-//        helper.setText(mailComposer.composeRegistrationNotification(cred,
-//                operator.getOperatorHostAddress()), true);
-//        sender.send(null, credential.getIdentity(), null, body);
+        List<Server> serverList = operatorDao.findServerActive(mailForm.getOperator());
+        
+        JavaMailSender sender = configurableMailSenderFactory.create(serverList);
+        
+        mailMessageComposer.composeMessage("PASSWORD", mailForm);
+        
+        
+//        sender.send(templateMailMessageDecorator);
         
     }
     
@@ -71,16 +72,24 @@ public class ServerMgrImpl extends AbstractServerMgr {
     public void init() {
         if (operatorDao == null)
             throw new IllegalArgumentException("OperatorDao property required");
+        if (configurableMailSenderFactory == null) {
+            throw new IllegalArgumentException("configurableMailSenderFactory property required");
+        }
     }
 
     // mutators
 
-    public void setMailComposer(MailComposer mailComposer) {
-        this.mailComposer = mailComposer;
-    }
-
     public void setOperatorDao(OperatorDao operatorDao) {
         this.operatorDao = operatorDao;
+    }
+
+    public void setConfigurableMailSenderFactory(
+            ConfigurableMailSenderFactory configurableMailSenderFactory) {
+        this.configurableMailSenderFactory = configurableMailSenderFactory;
+    }
+
+    public void setMailMessageComposer(MailMessageComposer mailMessageComposer) {
+        this.mailMessageComposer = mailMessageComposer;
     }
 
 }

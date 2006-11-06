@@ -47,6 +47,7 @@ import junit.framework.TestCase;
 import org.helianto.core.Identity;
 import org.helianto.core.Server;
 import org.helianto.core.mail.JavaMailSenderAdapter;
+import org.helianto.core.mail.MockJavaMailSender;
 import org.helianto.core.mail.ServerUtilsTemplate;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
@@ -79,7 +80,7 @@ public class JavaMailSenderAdapterTests extends TestCase {
         
     }
     
-    public void testSendPlain() throws AddressException, MessagingException {
+    public void testSendMimeMessage() throws AddressException, MessagingException {
         MockJavaMailSender mockSender = new MockJavaMailSender();
         
         serverList = OperatorTestSupport.createServerList(2, 1);
@@ -115,89 +116,6 @@ public class JavaMailSenderAdapterTests extends TestCase {
         Store store = new MockStore();
         javaMailSenderAdapter.setStore(store);
         javaMailSenderAdapter.send(mimeMessage);
-        
-        assertFalse(store.isConnected());
-        
-    }
-    
-    public void testSendCustom() throws AddressException, MessagingException, IOException {
-        MockJavaMailSender mockSender = new MockJavaMailSender();
-        
-        serverList = OperatorTestSupport.createServerList(2, 1);
-        Server transportServer = serverList.get(0);
-        transportServer.setServerHostAddress("HOST_ADDRESS");
-        
-        expect(serverUtilsTemplate.selectFirstAvailableMailTransportServer(serverList))
-            .andReturn(transportServer).times(2);
-        replay(serverUtilsTemplate);
-        
-        javaMailSenderAdapter.setServerList(serverList);
-        javaMailSenderAdapter.setJavaMailSender(mockSender);
-        verify(serverUtilsTemplate);
-        
-        assertEquals("HOST_ADDRESS", javaMailSenderAdapter.getJavaMailSender().getHost());
-        assertEquals(transportServer.getCredential().getIdentity()
-                .getPrincipal(), javaMailSenderAdapter.getJavaMailSender().getUsername());
-        assertEquals(transportServer.getCredential().getPassword(), 
-                javaMailSenderAdapter.getJavaMailSender().getPassword());
-        
-        Server accessServer = serverList.get(1);
-        accessServer.setServerHostAddress("STORE_ADDRESS");
-        accessServer.getCredential().getIdentity().setPrincipal("STORE_USER");
-        accessServer.getCredential().setPassword("STORE_PASSWORD");
-        
-        reset(serverUtilsTemplate);
-        expect(serverUtilsTemplate.selectFirstAvailableMailAccessServer(serverList))
-            .andReturn(accessServer);
-        replay(serverUtilsTemplate);
-        
-        Store store = new MockStore();
-        javaMailSenderAdapter.setStore(store);
-        Identity senderIdentity = AuthenticationTestSupport.createIdentity();
-        Identity recipientIdentity = AuthenticationTestSupport.createIdentity();
-        StringBuilder body = new StringBuilder();
-        body.append("BODY");
-        
-        try {
-            javaMailSenderAdapter.send(senderIdentity, recipientIdentity, body);
-            fail();
-        } catch (IllegalArgumentException e) {
-            //expected, now fix it to continue bellow
-            senderIdentity.setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
-        } catch (Exception e) {
-            fail();
-        }
-        try {
-            javaMailSenderAdapter.send(senderIdentity, recipientIdentity, body);
-            fail();
-        } catch (IllegalArgumentException e) {
-            //expected, now fix it to continue bellow
-            recipientIdentity.setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
-        } catch (Exception e) {
-            fail();
-        }
-        javaMailSenderAdapter.send(senderIdentity, recipientIdentity, body);
-        
-        MimeMessage mimeMessage = mockSender.transport.getSentMessage(0);//mockSender.getMimeMessage();
-        
-        
-        assertEquals(1, mimeMessage.getRecipients(Message.RecipientType.TO).length);
-        Address to = mimeMessage.getRecipients(Message.RecipientType.TO)[0];
-        assertEquals(recipientIdentity.getPrincipal(), to.toString());
-        
-        assertEquals(1, mimeMessage.getReplyTo().length);
-        Address reply = mimeMessage.getReplyTo()[0];
-        assertEquals(senderIdentity.getPrincipal(), reply.toString());
-        
-        assertEquals(1, mimeMessage.getFrom().length);
-        Address from = mimeMessage.getFrom()[0];
-        assertEquals(senderIdentity.getPrincipal(), from.toString());
-        
-        MimeMultipart part = (MimeMultipart) mimeMessage.getContent();
-        assertEquals(1, part.getCount());
-        MimeMultipart content = (MimeMultipart) part.getBodyPart(0).getContent();
-        assertEquals(1, content.getCount());
-        assertEquals("BODY", (String) content.getBodyPart(0).getContent());
         
         assertFalse(store.isConnected());
         
@@ -249,96 +167,6 @@ public class JavaMailSenderAdapterTests extends TestCase {
     
     public void tearDown() {
         reset(serverUtilsTemplate);
-    }
-    
-    /*
-     * Thanks to Juergen Hoeller to provide this mocks 
-     * inside Spring code (org.springframework.mail.javamail.JavaMailSenderTests)
-     */
-    private static class MockJavaMailSender extends JavaMailSenderImpl {
-
-        private MockTransport transport;
-        
-        protected Transport getTransport(Session session) throws NoSuchProviderException {
-            this.transport = new MockTransport(session, null);
-            return transport;
-        }
-
-    }
-
-    private static class MockTransport extends Transport {
-
-        private String connectedHost = null;
-        private int connectedPort = -2;
-        private String connectedUsername = null;
-        private String connectedPassword = null;
-        private boolean closeCalled = false;
-        private List sentMessages = new ArrayList();
-
-        public MockTransport(Session session, URLName urlName) {
-            super(session, urlName);
-        }
-
-        public String getConnectedHost() {
-            return connectedHost;
-        }
-
-        public int getConnectedPort() {
-            return connectedPort;
-        }
-
-        public String getConnectedUsername() {
-            return connectedUsername;
-        }
-
-        public String getConnectedPassword() {
-            return connectedPassword;
-        }
-
-        public boolean isCloseCalled() {
-            return closeCalled;
-        }
-
-        public List getSentMessages() {
-            return sentMessages;
-        }
-
-        public MimeMessage getSentMessage(int index) {
-            return (MimeMessage) this.sentMessages.get(index);
-        }
-
-        public void connect(String host, int port, String username, String password) throws MessagingException {
-            if (host == null) {
-                throw new MessagingException("no host");
-            }
-            this.connectedHost = host;
-            this.connectedPort = port;
-            this.connectedUsername = username;
-            this.connectedPassword = password;
-        }
-
-        public synchronized void close() throws MessagingException {
-            this.closeCalled = true;
-        }
-        
-        @SuppressWarnings({ "deprecation", "unchecked" })
-        public void sendMessage(Message message, Address[] addresses) throws MessagingException {
-            if ("fail".equals(message.getSubject())) {
-                throw new MessagingException("failed");
-            }
-            List addr1 = Arrays.asList(message.getAllRecipients());
-            List addr2 = Arrays.asList(addresses);
-            if (!addr1.equals(addr2)) {
-                throw new MessagingException("addresses not correct");
-            }
-            if (message.getSentDate() == null) {
-                throw new MessagingException("No sentDate specified");
-            }
-            if (message.getSubject() != null && message.getSubject().indexOf("custom") != -1) {
-                assertEquals(new Date(2005, 3, 1), message.getSentDate());
-            }
-            this.sentMessages.add(message);
-        }
     }
     
     private static class MockStore extends Store {

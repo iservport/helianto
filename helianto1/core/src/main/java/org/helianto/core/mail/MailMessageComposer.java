@@ -15,21 +15,28 @@
 
 package org.helianto.core.mail;
 
-import org.helianto.core.Credential;
+import org.helianto.core.mail.compose.MailForm;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
 /**
- * Base interface to provide basic e-mail comunication.
+ * Base interface to all mail message composers.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface MailComposer {
+public interface MailMessageComposer {
     
-    public String composeNotificationHeader();
+    /**
+     * True if the key is supported.
+     * @param key
+     */
+    public boolean supports(String key);
     
-    public String composeNotificationFooter();
-    
-    public String composeRegistrationNotificationSubject(String prefix);
-    
-    public String composeRegistrationNotification(Credential cred, String confirmationAddress);
+    /**
+     * Compose a message and hand it to a <code>MimeMessagePreparator</code>
+     * for a key.
+     * @param key
+     * @param args
+     */
+    public MimeMessagePreparator composeMessage(String key, MailForm mailForm);
 
 }

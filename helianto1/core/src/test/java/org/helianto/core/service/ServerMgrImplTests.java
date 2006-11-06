@@ -94,31 +94,7 @@ public class ServerMgrImplTests extends TestCase {
         assertEquals(Locale.getDefault(), operator.getLocale());
     }
     
-    /*
-    public void sendRegistrationNotification(Operator operator, Credential cred)
-            throws MessagingException {
-        if (cred.getIdentity().getIdentityType() == IdentityType.NOT_ADDRESSABLE
-                .getValue()) {
-            throw new IllegalStateException("Credential is not addressable.");
-        }
-
-        Server transportServer = 
-            serverUtilsTemplate.selectFirstAvailableMailTransportServer(operator);
-        JavaMailSenderImpl javaMailSender = (JavaMailSenderImpl) createSender(transportServer);
-        MimeMessageHelper helper = createMimeHelper(javaMailSender, transportServer.getCredential()
-                .getIdentity().getPrincipal(), cred.getIdentity().getPrincipal());
-
-        helper.setSubject(mailComposer
-                .composeRegistrationNotificationSubject(""));
-        helper.setText(mailComposer.composeRegistrationNotification(cred,
-                operator.getOperatorHostAddress()), true);
-        Server accessServer = 
-            serverUtilsTemplate.selectFirstAvailableMailAccessServer(operator);
-        senderStrategy.send(accessServer, javaMailSender, helper);
-        
-    }
-     */
-    
+    //TODO pending
     public void testSendRegistrationNotification() throws MessagingException {
         Server transportServer = OperatorTestSupport.createServer();
         Operator operator = transportServer.getOperator();
@@ -136,7 +112,7 @@ public class ServerMgrImplTests extends TestCase {
 //            .andReturn(accessServer);
 //        senderStrategy.send(accessServer, javaMailSender, helper);
         
-        serverMgr.sendRegistrationNotification(operator, cred);
+//        serverMgr.sendRegistrationNotification(operator, cred);
     }
 
     // collabs
@@ -144,20 +120,17 @@ public class ServerMgrImplTests extends TestCase {
     private OperatorDao operatorDao;
     private ServiceManagementTemplate serviceManagementTemplate;
     private SystemConfigurationTemplate systemConfigurationTemplate;
-    private MailComposer mailComposer;
     
     @Override
     public void setUp() {
         operatorDao = createMock(OperatorDao.class);
         serviceManagementTemplate = createMock(ServiceManagementTemplate.class);
         systemConfigurationTemplate = createMock(SystemConfigurationTemplate.class);
-        mailComposer = createMock(MailComposer.class);
         
         serverMgr = new ServerMgrImpl();
         serverMgr.setOperatorDao(operatorDao);
         serverMgr.setServiceManagementTemplate(serviceManagementTemplate);
         serverMgr.setSystemConfigurationTemplate(systemConfigurationTemplate);
-        serverMgr.setMailComposer(mailComposer);
     }
     
     @Override
@@ -165,7 +138,6 @@ public class ServerMgrImplTests extends TestCase {
         reset(operatorDao);
         reset(serviceManagementTemplate);
         reset(systemConfigurationTemplate);
-        reset(mailComposer);
     }
     
 }

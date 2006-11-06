@@ -23,6 +23,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
+import org.helianto.core.mail.compose.MailForm;
 
 /**
  * A base service layer interface for the core package.
@@ -60,7 +61,7 @@ public interface ServerMgr {
      * Send a <code>Credential</code> registration using 
      * mail settings from <code>Operator</code>.
      */
-    public void sendRegistrationNotification(Operator operator, Credential credential)
+    public void sendRegistrationNotification(MailForm mailForm)
             throws MessagingException;
 
 }

@@ -17,10 +17,9 @@
 -->
 <beans>
 	<!-- 
-		JSE5 style annotation post processor
+		Enable @AspectJ Support
 	-->
-	<!-- bean 
-		class="org.springframework.beans.factory.annotation.RequiredBeanFactoryPostProcessor"/-->
+	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
 	<!-- 
 		Messages
 	-->
@@ -34,6 +33,11 @@
 			</list>
 		</property>
 	</bean>
+	<!--
+		configurable mail sender factory	
+	-->
+	<bean id="configurableMailSenderFactory"
+		class="org.helianto.core.mail.ConfigurableMailSenderFactoryImpl"/>
 	<!--
 		Message composer	
 	-->
