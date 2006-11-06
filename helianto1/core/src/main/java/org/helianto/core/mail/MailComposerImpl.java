@@ -22,7 +22,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
  * Default implementatio of the MailComposer interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @deprecated
  */
 public class MailComposerImpl implements MailComposer {
 

@@ -21,6 +21,7 @@ import org.helianto.core.Credential;
  * Base interface to provide basic e-mail comunication.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public interface MailComposer {
     
