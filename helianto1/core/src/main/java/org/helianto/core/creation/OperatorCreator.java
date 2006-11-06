@@ -62,6 +62,7 @@ public class OperatorCreator extends CreatorSupport {
         } else {
             operator.setLocale(locale);
         }
+        operator.setOperatorSourceMailAddress("operator@helianto.org");
         operator.setDefaultEncoding("ISO-8859-1");
         operator.setOperatorHostAddress("http://www.helianto.org");
 
