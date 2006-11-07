@@ -47,7 +47,7 @@ public class AuthorizationCreator extends CreatorSupport {
             }
             userGroup.setIdentity(identity);
             identity.getUsers().add(userGroup);
-            userGroup.setUserState(ActivityState.INITIAL.getValue());
+            userGroup.setUserState(ActivityState.ACTIVE.getValue());
             userGroup.setParent(null);
             userGroup.setChildren(new HashSet<UserGroup>());
             userGroup.setRoles(new HashSet<UserRole>());
