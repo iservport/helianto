@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.helianto</groupId>
+	<artifactId>helianto-archetype</artifactId>
+	<version>0.0.3</version>
+	<description>Helianto base archetype</description>
+	<packaging>maven-plugin</packaging>
+</project>
