@@ -28,7 +28,6 @@ import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.process.ResourceGroup;
 import org.springframework.util.Assert;
 
 /**
