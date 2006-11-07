@@ -23,6 +23,8 @@ import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.type.ActivityState;
 
 import static org.easymock.EasyMock.*;
 
@@ -111,21 +113,6 @@ public class SecurityMgrImplTests extends TestCase {
         assertTrue(Math.abs(date.getTime() - identity.getLastLogin().getTime()) < 1000);
     }
     
-    /*
-    public boolean verifyPassword(Credential credential) {
-        if (credential.getPassword().compareTo(credential.getVerifyPassword())!=0) {
-            credential.setPassword("");
-            credential.setVerifyPassword("");
-            credential.setPasswordDirty(true);
-            return false;
-        }
-        credential.setVerifyPassword("");
-        credential.setPasswordDirty(false);
-        return true;
-    }
-    
-     */
-    
     public void testVerifyPasswordSuccess() {
         Credential credential = new Credential();
         String password = String.valueOf(new Date().getTime());
@@ -148,6 +135,20 @@ public class SecurityMgrImplTests extends TestCase {
         assertEquals("", credential.getPassword());
         assertEquals("", credential.getVerifyPassword());
         assertTrue(credential.isPasswordDirty());
+    }
+    
+    public void testUserState() {
+        User user = AuthorizationTestSupport.createUser();
+        assertEquals(ActivityState.INITIAL.getValue(), user.getUserState());
+        
+        securityMgr.activateUser(user);
+        assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
+        
+        securityMgr.suspendUser(user);
+        assertEquals(ActivityState.SUSPENDED.getValue(), user.getUserState());
+        
+        securityMgr.cancelUser(user);
+        assertEquals(ActivityState.CANCELLED.getValue(), user.getUserState());
     }
     
     //~ pending

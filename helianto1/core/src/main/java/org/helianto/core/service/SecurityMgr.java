@@ -5,7 +5,9 @@ import java.util.Date;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.type.ActivityState;
 
 public interface SecurityMgr extends UserMgr {
 	
@@ -43,5 +45,22 @@ public interface SecurityMgr extends UserMgr {
      * to true and returns false.
      */
     public boolean verifyPassword(Credential credential);
+    
+    /**
+     * <code>UserGroup</code> will be unlocked by this action.
+     */
+    public void activateUser(UserGroup user);
+    
+    /**
+     * <code>UserGroup</code> will be locked by this action.
+     */
+    public void cancelUser(UserGroup user);
+    
+    /**
+     * <code>UserGroup</code> will be locked by this action. 
+     * Unlike <code>cancelUser()</code>, this is supposed to be 
+     * a temporary action.
+     */
+    public void suspendUser(UserGroup user);
 
 }
