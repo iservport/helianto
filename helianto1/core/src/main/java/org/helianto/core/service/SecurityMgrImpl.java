@@ -5,8 +5,9 @@ import java.util.Date;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.security.PublicUserDetails;
+import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.core.type.ActivityState;
 import org.springframework.util.Assert;
 
@@ -51,23 +52,17 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
             credential.setPassword("");
             credential.setVerifyPassword("");
             credential.setPasswordDirty(true);
+            credential.setCredentialState(ActivityState.SUSPENDED.getValue());
             return false;
         }
         credential.setVerifyPassword("");
         credential.setPasswordDirty(false);
+        credential.setCredentialState(ActivityState.ACTIVE.getValue());
         return true;
     }
     
-    public void activateUser(UserGroup user) {
-        user.setUserState(ActivityState.ACTIVE.getValue());
-    }
-    
-    public void cancelUser(UserGroup user) {
-        user.setUserState(ActivityState.CANCELLED.getValue());
-    }
-    
-    public void suspendUser(UserGroup user) {
-        user.setUserState(ActivityState.SUSPENDED.getValue());
+    public PublicUserDetails findSecureUser() {
+        return UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
     }
     
 }

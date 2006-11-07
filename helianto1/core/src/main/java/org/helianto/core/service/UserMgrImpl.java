@@ -14,9 +14,8 @@ import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
-import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
-import org.helianto.core.security.UserDetailsAdapter;
+import org.helianto.core.type.ActivityState;
 
 public class UserMgrImpl implements UserMgr {
 	
@@ -88,8 +87,18 @@ public class UserMgrImpl implements UserMgr {
         throw new RuntimeException("Principal should not be null or empty.");
     }
 
-    public PublicUserDetails findSecureUser() {
-        return UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
+    public void activateUser(UserGroup user, Credential credential) {
+        if (credential.getCredentialState()==ActivityState.ACTIVE.getValue()) {
+            user.setUserState(ActivityState.ACTIVE.getValue());
+        }
+    }
+    
+    public void cancelUser(UserGroup user) {
+        user.setUserState(ActivityState.CANCELLED.getValue());
+    }
+    
+    public void suspendUser(UserGroup user) {
+        user.setUserState(ActivityState.SUSPENDED.getValue());
     }
     
     public boolean switchAuthorizedUser(PublicUserDetailsSwitcher secureUser, String entityAlias) {

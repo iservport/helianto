@@ -7,7 +7,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.security.PublicUserDetails;
 
 public interface UserMgr {
 	
@@ -59,8 +58,21 @@ public interface UserMgr {
     public List<UserGroup> findUserByEntity(Entity entity);
     
     /**
-     * <p>Utility method to find <code>PublicUserDetails</code> stored in a security context.</p>
+     * <code>UserGroup</code> will be unlocked by this action
+     * if the <code>Credential</code> is active.
      */
-    public PublicUserDetails findSecureUser();
+    public void activateUser(UserGroup user, Credential credential);
+    
+    /**
+     * <code>UserGroup</code> will be locked by this action.
+     */
+    public void cancelUser(UserGroup user);
+    
+    /**
+     * <code>UserGroup</code> will be locked by this action. 
+     * Unlike <code>cancelUser()</code>, this is supposed to be 
+     * a temporary action.
+     */
+    public void suspendUser(UserGroup user);
 
 }

@@ -7,7 +7,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
-import org.helianto.core.type.ActivityState;
+import org.helianto.core.security.PublicUserDetails;
 
 public interface SecurityMgr extends UserMgr {
 	
@@ -47,20 +47,8 @@ public interface SecurityMgr extends UserMgr {
     public boolean verifyPassword(Credential credential);
     
     /**
-     * <code>UserGroup</code> will be unlocked by this action.
+     * <p>Utility method to find <code>PublicUserDetails</code> stored in a security context.</p>
      */
-    public void activateUser(UserGroup user);
-    
-    /**
-     * <code>UserGroup</code> will be locked by this action.
-     */
-    public void cancelUser(UserGroup user);
-    
-    /**
-     * <code>UserGroup</code> will be locked by this action. 
-     * Unlike <code>cancelUser()</code>, this is supposed to be 
-     * a temporary action.
-     */
-    public void suspendUser(UserGroup user);
+    public PublicUserDetails findSecureUser();
 
 }
