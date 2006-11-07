@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flow PUBLIC "-//SPRING//DTD WEBFLOW 1.0//EN"
+	"http://www.springframework.org/dtd/spring-webflow-1.0.dtd">
+
+<flow start-state="authorize">
+
+	<action-state id="authorize">
+        <action bean="securityMgr" 
+            method="findSecureUser()"
+            result-name="secure"
+            result-scope="flow"/>
+        <transition on="success" to="success"/>
+    </action-state>
+
+    <!-- 
+     ! End subflow
+     !-->
+
+    <end-state id="success">
+    	<output-mapper>
+			<mapping source="${flowScope.secure}" target="secure"/>
+		</output-mapper>
+    </end-state>
+    
+    <end-state id="error" view="abort"/>
+    
+	<global-transitions>
+        <transition on="error" to="error"/>
+    </global-transitions>
+
+</flow>
