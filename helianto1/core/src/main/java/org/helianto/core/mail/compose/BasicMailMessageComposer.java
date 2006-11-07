@@ -24,6 +24,9 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
  */
 public class BasicMailMessageComposer extends AbstractMailMessageComposer {
     
+    /**
+     * Constructor.
+     */
     public BasicMailMessageComposer() {
         super();
         getSupportedKeys().add("PASSWORD");

@@ -19,10 +19,26 @@ import java.util.List;
 
 import org.helianto.core.Server;
 
+/**
+ * An interface to retrieve <code>Server</code>s from a
+ * list.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public interface ServerUtilsTemplate {
 
+    /**
+     * Selects the first available transport <code>Server</code>.
+     * 
+     * @param serverList
+     */
     public Server selectFirstAvailableMailTransportServer(List<Server> serverList);
     
+    /**
+     * Selects the first available access <code>Server</code>.
+     * 
+     * @param serverList
+     */
     public Server selectFirstAvailableMailAccessServer(List<Server> serverList);
     
 }

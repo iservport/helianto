@@ -24,6 +24,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
 /**
+ * Extends Spring's <code>MimeMessagePreparator</code> abstraction
+ * to accept a <code>MailForm</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -32,6 +34,11 @@ public class DecoratedPreparator implements MimeMessagePreparator {
     protected MailForm mailForm;
     private StringBuilder body;
 
+    /**
+     * Constructor.
+     * 
+     * @param mailForm
+     */
     public DecoratedPreparator(MailForm mailForm) {
         body = new StringBuilder();
         this.mailForm = mailForm;
@@ -42,10 +49,18 @@ public class DecoratedPreparator implements MimeMessagePreparator {
                 "Missing required identities, use full constructor instead!");
     }
     
+    /**
+     * Subclasses can override this method to support 
+     * custom mail content creation.
+     */
     protected void compose() {
         body.append(mailForm.getContent());
     }
 
+    /**
+     * Reads the <code>MailForm</code> to set up the 
+     * <code>MimeMessage</code>.
+     */
     public void prepare(MimeMessage mimeMessage) {
         compose();
         MimeMessageHelper helper;

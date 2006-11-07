@@ -21,6 +21,8 @@ import org.helianto.core.type.IdentityType;
 
 /**
  * A base class to all forms to be submitted as mail forms.
+ * By default, validates the recipient <code>Identity</code>
+ * either when setting or getting.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -42,7 +44,7 @@ public class MailForm {
 		this.content = content;
 	}
 
-	private Identity validatePrincipal(Identity identity) {
+	protected Identity validatePrincipal(Identity identity) {
         if (identity == null
                 || identity.getIdentityType() == IdentityType.NOT_ADDRESSABLE
                         .getValue()

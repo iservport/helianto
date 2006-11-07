@@ -15,6 +15,8 @@
 
 package org.helianto.core.mail;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Server;
 import org.helianto.core.type.ActivityState;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,13 +35,22 @@ public class ConfigurableMailSenderImpl extends JavaMailSenderImpl implements
     private Server transportServer;
     private Server accessServer;
 
+    /**
+     * Cares for proper <code>JavaMailSenderImpl</code> initialization.
+     */
     public void init() throws IllegalStateException {
         setHost(transportServer.getServerHostAddress());
+        logger.info("Host set to "+transportServer.getServerHostAddress());
         setUsername(transportServer.getCredential().getIdentity()
                 .getPrincipal());
+        logger.info("Username set to "+transportServer.getCredential().getIdentity()
+                .getPrincipal());
         setPassword(transportServer.getCredential().getPassword());
+        logger.info("Password set to [protected]");
         setPort(transportServer.getServerPort());
+        logger.info("Port set to "+transportServer.getServerPort());
         setDefaultEncoding(transportServer.getOperator().getDefaultEncoding());
+        logger.info("DefaultEncoding set to "+transportServer.getOperator().getDefaultEncoding());
     }
 
     /**
@@ -48,9 +59,14 @@ public class ConfigurableMailSenderImpl extends JavaMailSenderImpl implements
      * <code>Encription</code> as required by the server.
      */
     protected boolean validate(Server server) {
-        return (server!=null 
+        boolean valid = (server!=null 
                 && server.getCredential().getCredentialState() == ActivityState.ACTIVE.getValue()
                 && server.getCredential().getEncription() == server.getRequiredEncription());
+        if (logger.isDebugEnabled()) {
+            String notValid = valid ? "" :" not";
+            logger.debug("Server "+server+" is "+notValid+"valid.");
+        }
+        return valid;
     }
     
     public void setAccessServer(Server accessServer) {
@@ -67,5 +83,7 @@ public class ConfigurableMailSenderImpl extends JavaMailSenderImpl implements
     public Server getAccessServer() {
         return accessServer;
     }
+
+    public static final Log logger = LogFactory.getLog(ConfigurableMailSenderImpl.class);
 
 }

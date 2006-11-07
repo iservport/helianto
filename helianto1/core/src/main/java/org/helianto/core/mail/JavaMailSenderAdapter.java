@@ -32,10 +32,11 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 
 
 /**
- * A non thread-safe <code>JavaMailSenderImpl</code> adpater that
+ * A <code>JavaMailSenderImpl</code> adpater that
  * reads configuration from a <code>List&lt;Server&gt; serverList</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated use <code>ConfigurableMailSender</code>
  */
 public class JavaMailSenderAdapter {
     

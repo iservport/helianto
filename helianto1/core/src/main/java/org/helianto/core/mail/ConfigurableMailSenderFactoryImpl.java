@@ -17,15 +17,16 @@ package org.helianto.core.mail;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Server;
 import org.helianto.core.type.ServerType;
 
 /**
- * A factory bean to <code>ConfigurableMailSender</code>
- * instances. 
+ * Default inplementation for <code>ConfigurableMailSenderFactory</code>.
  * 
- * Holds a reference to <code>ServerUtilsTemplate</code> as
- * a strategy to select the appropriate <code>Server</code>.
+ * Holds a reference to a default <code>ServerUtilsTemplate</code> 
+ * implementation as an inner class.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -60,11 +61,19 @@ public class ConfigurableMailSenderFactoryImpl implements ConfigurableMailSender
     public class DefaultServerUtils implements ServerUtilsTemplate {
         
         public Server selectFirstAvailableMailTransportServer(List<Server> serverList) {
-            return selectServer(serverList, ServerType.SMTP_SERVER);
+            Server server = selectServer(serverList, ServerType.SMTP_SERVER);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Transport server selected: "+server);
+            }
+            return server;
         }
         
         public Server selectFirstAvailableMailAccessServer(List<Server> serverList) {
-            return selectServer(serverList, ServerType.POP3_SERVER);
+            Server server = selectServer(serverList, ServerType.POP3_SERVER);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Access server selected: "+server);
+            }
+            return server;
         }
         
         protected Server selectServer(List<Server> serverList, ServerType serverType) {
@@ -75,7 +84,8 @@ public class ConfigurableMailSenderFactoryImpl implements ConfigurableMailSender
             }
             return null;
         }
-
     }
     
+    public static final Log logger = LogFactory.getLog(ConfigurableMailSenderFactoryImpl.class);
+
 }

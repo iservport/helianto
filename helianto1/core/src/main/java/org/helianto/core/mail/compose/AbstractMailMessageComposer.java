@@ -28,6 +28,9 @@ public abstract class AbstractMailMessageComposer implements MailMessageComposer
     
     private Set<String> supportedKeys;
     
+    /**
+     * Constructor
+     */
     public AbstractMailMessageComposer() {
         supportedKeys = new HashSet<String>();
     }
