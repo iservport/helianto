@@ -15,20 +15,28 @@
 
 package org.helianto.core.service;
 
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.verify;
+
 import java.util.Date;
 
+import junit.framework.TestCase;
+
+import org.acegisecurity.context.SecurityContextHolder;
+import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
-import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.security.PublicUserDetails;
+import org.helianto.core.test.SecurityTestSupport;
 import org.helianto.core.type.ActivityState;
-
-import static org.easymock.EasyMock.*;
-
-import junit.framework.TestCase;
 
 public class SecurityMgrImplTests extends TestCase {
 
@@ -122,6 +130,7 @@ public class SecurityMgrImplTests extends TestCase {
         assertTrue(securityMgr.verifyPassword(credential));
         assertEquals(password, credential.getPassword());
         assertEquals("", credential.getVerifyPassword());
+        assertEquals(ActivityState.ACTIVE.getValue(), credential.getCredentialState());
         assertFalse(credential.isPasswordDirty());
     }
     
@@ -134,21 +143,14 @@ public class SecurityMgrImplTests extends TestCase {
         assertFalse(securityMgr.verifyPassword(credential));
         assertEquals("", credential.getPassword());
         assertEquals("", credential.getVerifyPassword());
+        assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
         assertTrue(credential.isPasswordDirty());
     }
     
-    public void testUserState() {
-        User user = AuthorizationTestSupport.createUser();
-        assertEquals(ActivityState.INITIAL.getValue(), user.getUserState());
-        
-        securityMgr.activateUser(user);
-        assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
-        
-        securityMgr.suspendUser(user);
-        assertEquals(ActivityState.SUSPENDED.getValue(), user.getUserState());
-        
-        securityMgr.cancelUser(user);
-        assertEquals(ActivityState.CANCELLED.getValue(), user.getUserState());
+    public void testFindSecureUser() {
+        PublicUserDetails pud = SecurityTestSupport.createUserDetailsAdapter();
+        SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(pud, null, null));
+        assertSame(pud, securityMgr.findSecureUser());
     }
     
     //~ pending
@@ -164,7 +166,6 @@ public class SecurityMgrImplTests extends TestCase {
     //~ collaborators
     
     private AuthenticationDao authenticationDao;
-    
     private AuthorizationDao authorizationDao;
     
     //~ setup

@@ -24,7 +24,11 @@ import static org.easymock.EasyMock.verify;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.User;
 import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.test.AuthenticationTestSupport;
+import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.type.ActivityState;
 
 public class UserMgrImplTests extends TestCase {
     
@@ -68,6 +72,27 @@ public class UserMgrImplTests extends TestCase {
         
         userMgr.persistCredential(credential);
         verify(authenticationDao);
+    }
+    
+    public void testUserState() {
+        User user = AuthorizationTestSupport.createUser();
+        Credential credential = AuthenticationTestSupport.createCredential(user.getIdentity());
+        assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
+        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
+        
+        user.setUserState(ActivityState.INITIAL.getValue());
+        userMgr.activateUser(user, credential);
+        assertEquals(ActivityState.INITIAL.getValue(), user.getUserState());
+        
+        credential.setCredentialState(ActivityState.ACTIVE.getValue());
+        userMgr.activateUser(user, credential);
+        assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
+        
+        userMgr.suspendUser(user);
+        assertEquals(ActivityState.SUSPENDED.getValue(), user.getUserState());
+        
+        userMgr.cancelUser(user);
+        assertEquals(ActivityState.CANCELLED.getValue(), user.getUserState());
     }
     
     private AuthenticationDao authenticationDao;
