@@ -15,22 +15,21 @@
 
 package org.helainto.web.view;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
+import junit.framework.TestCase;
+
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import junit.framework.TestCase;
 
 public class PrincipalPageTests extends TestCase {
 
-    private String testPathPrefix = "web/src/main/resources/freemarker/";
-    private Configuration configuration;
+    private FreeMarkerConfigurer configurer;
     private Map<String, Object> model;
     
     public void testSummary() {
@@ -46,7 +45,8 @@ public class PrincipalPageTests extends TestCase {
     public StringWriter process(String templateName, boolean visualTest) {
         try {
             Template template = 
-                configuration.getTemplate(templateName);
+//                configurer.getTemplate(templateName);
+            configurer.getConfiguration().getTemplate(templateName);
             StringWriter result = new StringWriter();
             template.process(model, result);
             if (visualTest) {
@@ -61,10 +61,11 @@ public class PrincipalPageTests extends TestCase {
         }
     }
 
-    public void setUp() throws IOException {
-        configuration = new Configuration();
-        configuration.setDirectoryForTemplateLoading(new File(testPathPrefix));
-        configuration.setObjectWrapper(new DefaultObjectWrapper()); 
+    public void setUp() throws IOException, TemplateException {
+        configurer = new FreeMarkerConfigurer();
+        configurer.setTemplateLoaderPath("classpath:/freemarker/");
+        configurer.setDefaultEncoding("ISO-8859-1");
+        configurer.afterPropertiesSet();
         model = new HashMap<String, Object>();
   }
     
