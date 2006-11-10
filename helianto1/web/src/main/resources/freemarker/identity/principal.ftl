@@ -9,13 +9,17 @@
 <table>
 	<tr>
 	<td style="width: 35%; vertical-align: top; border: 1px dotted #cccccc;">
-	<p><@spring.messageText "identity.step1.header", "Registration process - Start"/></p>
-	<p><@spring.messageText "identity.step1.welcome", "Welcome to the registration  
+	<p>Registration process - Start"</p>
+	<p>Welcome to the registration  
 	    process. Please, follow the required steps bellow to input your identity
-	    and credentials."/></p>
-	<p><@spring.messageText "identity.step1.warning", "Notice that your email is
+	    and credentials."</p>
+	    
+	<#assign page=0/>
+	<#include "summary.ftl"/>
+	
+	<p>Notice that your email is
 		required to prevent duplicate identity registration. If you do not want
-		to provide such information, please, read <a href=''>this</a>."/></p>
+		to provide such information, please, read <a href=''>this</a>.</p>
 	</td>
 	<td style="width: 65%; vertical-align: top;">
 		<!-- 
@@ -25,11 +29,11 @@
 		<table>
 		
 			<tr class="t_title">
-			<td colspan="3"><@spring.messageText "identity.header1", "Identification"/></td>
+			<td colspan="3">Identification</td>
 			</tr>
 			
 			<tr>
-			<td><@spring.messageText "identity.email", "E-mail"/>:</td>
+			<td>E-mail:</td>
 			<td><@spring.formInput "identityForm.credential.identity.principal", 'size="32"'/></td>
 			</tr>
 
