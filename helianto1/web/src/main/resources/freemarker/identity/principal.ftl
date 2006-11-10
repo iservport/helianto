@@ -1,4 +1,5 @@
 <#import "/spring.ftl" as spring />
+<#import "/macros/cancelForm.ftl" as cf />
 <@spring.bind "identityForm.credential.*" /> 
 
 <html>
@@ -47,12 +48,7 @@
 
 		</table>
 		</form>
-		<form action="admin.htm" method="POST">
-		<p style="font-weight: bold; text-align: right;">
-			<input type="submit" name="_eventId_cancel" value="<@spring.messageText "button.cancel", "Cancel"/>"  class="btn" />
-			<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
-		</p>
-		</form>
+		<@cf.cancelForm "admin.htm"/>
 	</td>
 	</tr>
 </table>
