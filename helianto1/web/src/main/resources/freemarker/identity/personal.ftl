@@ -1,18 +1,18 @@
 <#import "/spring.ftl" as spring />
+<#import "/macros/head.ftl" as hd />
+<#import "/macros/cancelForm.ftl" as cf />
 <@spring.bind "identityForm.credential.*" /> 
 
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-</head>
+<@hd.head />
 <body>
 <table>
 	<tr>
 	<td style="width: 35%; vertical-align: top; border: 1px dotted #cccccc;">
-	<p><@spring.messageText "identity.step2.header", "Registration details"/></p>
-	<p><@spring.messageText "identity.step2.info", "Your identity has been successfully 
+	<p>Registration details</p>
+	<p>Your identity has been successfully 
 	    registered. Now, select your preferred profile or accept the defaults and advance 
-	    directly to the last step."/></p>
+	    directly to the last step.</p>
 	</td>
 	<td style="width: 65%; vertical-align: top;">
 		<!-- 
@@ -26,7 +26,7 @@
 			</tr>
 			
 			<tr>
-			<td><@spring.messageText "identity.email", "E-mail"/>:</td>
+			<td>E-mail:</td>
 			<td>${identityForm.credential.identity.principal}</td>
 			</tr>
 
@@ -35,12 +35,12 @@
 			</tr>
 			
 			<tr>
-			<td><@spring.messageText "identity.personalData.firstName", "First name"/>:</td>
+			<td>First name:</td>
 			<td><@spring.formInput "identityForm.credential.identity.personalData.firstName", 'size="32"' /></td>
 			</tr>
 
 			<tr>
-			<td><@spring.messageText "identity.personalData.lastName", "Last name"/>:</td>
+			<td>Last name:</td>
 			<td><@spring.formInput "identityForm.credential.identity.personalData.lastName", 'size="32"' /></td>
 			</tr>
 			
@@ -55,7 +55,7 @@
 			  } />
 
 			<tr>
-			<td><@spring.messageText "identity.personalData.gender", "Gender"/>:</td>
+			<td>Gender:</td>
 			<td><@spring.formSingleSelect "identityForm.credential.identity.personalData.gender", gender /></td>
 			</tr>
 
@@ -72,7 +72,7 @@
 			  } />
 
 			<tr>
-			<td><@spring.messageText "identity.personalData.appellation", "Appellation"/>:</td>
+			<td>Appellation:</td>
 			<td><@spring.formSingleSelect "identityForm.credential.identity.personalData.appellation", appellation /></td>
 			</tr>
 
@@ -87,12 +87,7 @@
 
 		</table>
 		</form>
-		<form action="admin.htm" method="POST">
-		<p style="font-weight: bold; text-align: right;">
-			<input type="submit" name="_eventId_cancel" value="<@spring.messageText "button.cancel", "Cancel"/>"  class="btn" />
-			<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
-		</p>
-		</form>
+		<@cf.cancelForm "admin.htm"/>
 	</td>
 	</tr>
 </table>

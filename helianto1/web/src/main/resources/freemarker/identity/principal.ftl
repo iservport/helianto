@@ -1,11 +1,10 @@
 <#import "/spring.ftl" as spring />
+<#import "/macros/head.ftl" as hd />
 <#import "/macros/cancelForm.ftl" as cf />
 <@spring.bind "identityForm.credential.*" /> 
 
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-</head>
+<@hd.head />
 <body>
 <table>
 	<tr>
