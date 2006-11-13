@@ -46,15 +46,8 @@
 			</@bx.row>
 		</@bx.group>
 		
-		<#assign genderM><@spring.messageText "identity.gender.M", "male"/></#assign>
-		<#assign genderF><@spring.messageText "identity.gender.F", "female"/></#assign>
-		<#assign genderN><@spring.messageText "identity.gender.N", "not supplied"/></#assign>
-		<#assign gender={
-		    'M': "${genderM}"
-		  , 'F': "${genderF}" 
-		  , 'N': "${genderN}" 
-		  } />
-
+		<#include "/core/options/gender.ftl"/>
+		
 		<@bx.group >
 			<@bx.row>Gender:</@bx.row>
 			<@bx.row>
@@ -62,18 +55,8 @@
 			</@bx.row>
 		</@bx.group>
 		
-		<#assign appellation0><@spring.messageText "identity.appellation.0", "not supplied"/></#assign>
-		<#assign appellation1><@spring.messageText "identity.appellation.1", "Miss"/></#assign>
-		<#assign appellation2><@spring.messageText "identity.appellation.2", "Mr. ou Mrs."/></#assign>
-		<#assign appellation3><@spring.messageText "identity.appellation.3", "Ms."/></#assign>
+		<#include "/core/options/appellation.ftl"/>
 		
-		<#assign appellation={
-		    '0': "${appellation0}"
-		  , '1': "${appellation1}" 
-		  , '2': "${appellation2}" 
-		  , '3': "${appellation3}" 
-		  } />
-
 		<@bx.group >
 			<@bx.row>Appellation:</@bx.row>
 			<@bx.row>

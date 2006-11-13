@@ -25,6 +25,7 @@ import org.helianto.core.Credential;
 public class IdentityForm {
 
     private Credential credential;
+    private char sendOption = '1';
     
     public Credential getCredential() {
         return credential;
@@ -32,6 +33,14 @@ public class IdentityForm {
 
     public void setCredential(Credential credential) {
         this.credential = credential;
+    }
+
+    public char getSendOption() {
+        return sendOption;
+    }
+
+    public void setSendOption(char sendOption) {
+        this.sendOption = sendOption;
     }
 
     /**

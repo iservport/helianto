@@ -33,15 +33,12 @@
 		<form action="admin.htm" method="POST">
 		<@bx.table "${identityForm.credential.identity.principal}">
 	
-		<@bx.row>
-		Optional alias:
-		</@bx.row>
-		
-		<@bx.err>xxx</@bx.err>
-
-		<@bx.row>
-		<@spring.formInput "identityForm.credential.identity.optionalAlias", 'size="32"'/>
-		</@bx.row>
+		<@bx.group>
+			<@bx.row>Optional alias:</@bx.row>
+			<@bx.row>
+			<@spring.formInput "identityForm.credential.identity.optionalAlias", 'size="32"'/>
+			</@bx.row>
+		</@bx.group>
 
 		<@bx.row>
 		<p>The system operator may redirect some notification messages 
@@ -50,20 +47,14 @@
 		wish to request the messages manually.</p>
 		</@bx.row>
 		
-		<#assign notificationA><@spring.messageText "identity.notification.A", "auto"/></#assign>
-		<#assign notificationR><@spring.messageText "identity.notification.R", "by request"/></#assign>
-		<#assign notificationTypes={
-		    'A': "${notificationA}"
-		  , 'R': "${notificationR}" 
-		  } />
+		<#include "/core/options/notification.ftl" />
 		
-		<@bx.row>
-		Notification type:
-		</@bx.row>
-		
-		<@bx.row>
-		<@spring.formSingleSelect "identityForm.credential.identity.notification", notificationTypes />
-		</@bx.row>
+		<@bx.group>
+			<@bx.row>Notification type:</@bx.row>
+			<@bx.row>
+			<@spring.formSingleSelect "identityForm.credential.identity.notification", notificationTypes />
+			</@bx.row>
+		</@bx.group>
 
 		<@bx.row>
 		<p>If you share the email previously supplied as your unique 
@@ -72,20 +63,14 @@
 		"personal" to make the personal data form available.</p>
 		</@bx.row>
 		
-		<#assign typeO><@spring.messageText "identity.type.O", "organizational"/></#assign>
-		<#assign typeP><@spring.messageText "identity.type.P", "personal"/></#assign>
-		<#assign identityTypes={
-		    'O': "${typeO}"
-		  , 'P': "${typeP}" 
-		  } />
-
-		<@bx.row>
-		Identity type:
-		</@bx.row>
+		<#include "/core/options/identityType.ftl" />
 		
-		<@bx.row>
-		<@spring.formSingleSelect "identityForm.credential.identity.identityType", identityTypes />
-		</@bx.row>
+		<@bx.group>
+			<@bx.row>Identity type:</@bx.row>
+			<@bx.row>
+			<@spring.formSingleSelect "identityForm.credential.identity.identityType", identityTypes />
+			</@bx.row>
+		</@bx.group>
 		
 		<tr class="t_title">
 		<td colspan="3">

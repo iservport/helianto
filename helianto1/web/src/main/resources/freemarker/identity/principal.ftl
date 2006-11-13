@@ -38,15 +38,12 @@
 		  information, please, read <a href=''>this</a>.</p>
 		</@bx.row>
 
-		<@bx.row>
-		E-mail:
-		</@bx.row>
-		
-		<@bx.err>xxx</@bx.err>
-
-		<@bx.row>
-		<@spring.formInput "identityForm.credential.identity.principal", 'size="32"'/>
-		</@bx.row>
+		<@bx.group >
+			<@bx.row>E-mail:</@bx.row>
+			<@bx.row>
+			<@spring.formInput "identityForm.credential.identity.principal", 'size="32"'/>
+			</@bx.row>
+		</@bx.group>
 
 		<tr>
 		<td>

@@ -1,13 +1,15 @@
 <div id="summary">
 <table>
 
+	<tr class="smTitle">
+	<td colspan="2">Summary</td>
+	</tr>
+
 	<@mark 0 >Unique identification</@mark>
 	<@mark 1 >Registration details</@mark>
 	<@mark 2 >Personal data</@mark>
-	<@mark 3 >Personal data</@mark>
+	<@mark 3 >Password selection</@mark>
 	<@mark 4 >Confirmation</@mark>
-	<@mark 5 >Password</@mark>
-	<@mark 6 >Conclusion</@mark>
 	
 </table>
 </div>

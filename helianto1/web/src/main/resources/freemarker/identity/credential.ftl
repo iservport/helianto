@@ -1,17 +1,57 @@
 <#import "/spring.ftl" as spring />
+<#import "/macros/layout.ftl" as lo />
+<#import "/macros/box.ftl" as bx />
+<#import "/macros/head.ftl" as hd />
+<#import "/macros/cancelForm.ftl" as cf />
+
 <@spring.bind "identityForm.credential.*" /> 
 
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-</head>
-<body>
-<table>
-	<tr>
-	<td style="width: 35%; vertical-align: top; border: 1px dotted #cccccc;">
-	<p><@spring.messageText "identity.password.header", "Enter your password"/></p>
-	</td>
-	<td style="width: 65%; vertical-align: top;">
+<@hd.head />
+<@lo.layout>
+	<@lo.east>
+	
+		<@bx.table "Password selection">
+		
+		<@bx.row>
+		<p>The password required to protect your identity may 
+	    be updated either on-line or emailed to you.</p>
+		</@bx.row>
+		
+		<@bx.row>
+		<#assign page=3/>
+		<#include "summary.ftl"/>
+		</@bx.row>
+	
+		</@bx.table>
+
+		<@cf.cancelForm "admin.htm"/>
+		
+	</@lo.east>
+	<@lo.west>
+
+		<form action="admin.htm" method="POST">
+		<@bx.table "Password email">
+		
+			<#assign sendOptions={
+				  "0" : "Send current password"
+				, "1" : "Send new password"
+			}
+			/>
+		
+			<@bx.row>
+			<@spring.formRadioButtons "identityForm.sendOption", sendOptions, "<br />"/>
+			</@bx.row>
+
+			<@bx.row>
+			<input type="submit" name="_eventId_sendPassword" value="<@spring.messageText "identity.button.sendPassword", "Send"/>"  class="btn" />
+			</@bx.row>
+
+			<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+
+		</@bx.table>
+		</form>
+
 		<!-- 
 		 ! Forms
 		 !-->
@@ -24,12 +64,12 @@
 			
 			<tr>
 			<td><@spring.messageText "identity.password1", "Password"/>:</td>
-			<td><@spring.formInput "identityForm.credential.password", 'size="32"'/></td>
+			<td><@spring.formPasswordInput "identityForm.credential.password", 'size="32"'/></td>
 			</tr>
 
 			<tr>
 			<td><@spring.messageText "identity.password2", "Password confirmation"/>:</td>
-			<td><@spring.formInput "identityForm.credential.verifyPassword", 'size="32"'/></td>
+			<td><@spring.formPasswordInput "identityForm.credential.verifyPassword", 'size="32"'/></td>
 			</tr>
 
 			<tr class="t_title">
@@ -38,18 +78,7 @@
 			</tr>
 
 			<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
-			
 
-		</table>
-		</form>
-		<form action="admin.htm" method="POST">
-		<p style="font-weight: bold; text-align: right;">
-			<input type="submit" name="_eventId_cancel" value="<@spring.messageText "button.cancel", "Cancel"/>"  class="btn" />
-			<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
-		</p>
-		</form>
-	</td>
-	</tr>
-</table>
-</body>
+	</@lo.west>
+</@lo.layout>
 </html>

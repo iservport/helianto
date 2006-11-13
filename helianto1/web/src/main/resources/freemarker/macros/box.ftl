@@ -1,4 +1,4 @@
-<#--
+<#-- 
  # Convenience to create box tables.
  #
  # @author Mauricio Fernandes de Castro

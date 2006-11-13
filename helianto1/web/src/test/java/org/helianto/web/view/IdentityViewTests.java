@@ -16,25 +16,13 @@
 package org.helianto.web.view;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.helianto.core.test.AuthenticationTestSupport;
+import org.helianto.core.type.IdentityType;
 import org.helianto.web.test.FreeMarkerViewTestSupport;
-import org.helianto.web.view.IdentityForm;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.web.servlet.mvc.BaseCommandController;
-import org.springframework.web.servlet.support.BindStatus;
-import org.springframework.web.servlet.support.RequestContext;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 public class IdentityViewTests extends FreeMarkerViewTestSupport {
@@ -45,27 +33,44 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
     }
 
     public void testPrincipalView() throws Exception {
-        processView("identity/principal.ftl", model, true);
+        processView("identity/principal.ftl", model, false);
     }
 
-    public void testPrincipalViewError() throws Exception {
-        model.put("errors", "xxx");
-        processView("identity/principal.ftl", model, true);
+    public void testPrincipalViewErrors() throws Exception {
+        bindingResult.rejectValue("credential.identity.principal", null, "ERROR IN principal");
+        model.put(BindingResult.MODEL_KEY_PREFIX+"identityForm", bindingResult);
+        processView("identity/principal.ftl", model, false);
     }
 
     public void testDetailsView() throws Exception {
-        processView("identity/details.ftl", model, true);
+        processView("identity/details.ftl", model, false);
+    }
+    
+    public void testDetailsViewErrors() throws Exception {
+        bindingResult.rejectValue("credential.identity.optionalAlias", null, "ERROR IN optionalAlias");
+        bindingResult.rejectValue("credential.identity.notification", null, "ERROR IN notification");
+        bindingResult.rejectValue("credential.identity.identityType", null, "ERROR IN identityType");
+        model.put(BindingResult.MODEL_KEY_PREFIX+"identityForm", bindingResult);
+        processView("identity/details.ftl", model, false);
     }
     
     public void testPersonalView() throws Exception {
-        processView("identity/personal.ftl", model, true);
+        processView("identity/personal.ftl", model, false);
     }
     
     public void testPersonalViewErrors() throws Exception {
         bindingResult.rejectValue("credential.identity.personalData.lastName", null, "ERROR IN lastName");
         bindingResult.rejectValue("credential.identity.personalData.appellation", null, "ERROR IN appellation");
         model.put(BindingResult.MODEL_KEY_PREFIX+"identityForm", bindingResult);
-        processView("identity/personal.ftl", model, true);
+        processView("identity/personal.ftl", model, false);
+    }
+    
+    public void testCredentialView() throws Exception {
+        processView("identity/credential.ftl", model, true);
+    }
+    
+    public void testConfirmView() throws Exception {
+        processView("identity/confirm.ftl", model, false);
     }
     
     @Override
@@ -73,6 +78,9 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
         super.setUp();
         IdentityForm identityForm = new IdentityForm();
         identityForm.setCredential(AuthenticationTestSupport.createCredential());
+        identityForm.getCredential().getIdentity().setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
+        identityForm.getCredential().getIdentity().getPersonalData().setFirstName("First Name");
+        identityForm.getCredential().getIdentity().getPersonalData().setLastName("Last Name");
         model.put("identityForm", identityForm);
         bindingResult = new BeanPropertyBindingResult(identityForm, "identityForm");
     }
