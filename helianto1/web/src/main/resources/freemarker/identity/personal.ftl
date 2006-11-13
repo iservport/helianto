@@ -11,14 +11,6 @@
 <@lo.layout>
 	<@lo.east>
 	
-	zzz
-	<#list spring.status.errorCodes as error>
-    <@row classOrStyle >
-    x${error}x
-    </@row>
-    </#list>
-	zzz
-	
 		<@bx.table "Personal data">
 		
 		<@bx.row>
@@ -40,25 +32,19 @@
 		<form action="admin.htm" method="POST">
 		<@bx.table "${identityForm.credential.identity.principal}">
 	
-		<@bx.row>
-		First name:
-		</@bx.row>
+		<@bx.group >
+			<@bx.row>First name:</@bx.row>
+			<@bx.row>
+			<@spring.formInput "identityForm.credential.identity.personalData.firstName", 'size="32"' />
+			</@bx.row>
+		</@bx.group>
 
-		<@bx.row>
-		<@spring.formInput "identityForm.credential.identity.personalData.firstName", 'size="32"' />
-		</@bx.row>
-
-		<@bx.row>
-		<@bx.showErrors spring.status.errorMessages />
-		</@bx.row>
-
-		<@bx.row>
-		Last name:
-		</@bx.row>
-
-		<@bx.row>
-		<@spring.formInput "identityForm.credential.identity.personalData.lastName", 'size="32"' />
-		</@bx.row>
+		<@bx.group >
+			<@bx.row>Last name:</@bx.row>
+			<@bx.row>
+			<@spring.formInput "identityForm.credential.identity.personalData.lastName", 'size="32"' />
+			</@bx.row>
+		</@bx.group>
 		
 		<#assign genderM><@spring.messageText "identity.gender.M", "male"/></#assign>
 		<#assign genderF><@spring.messageText "identity.gender.F", "female"/></#assign>
@@ -69,18 +55,13 @@
 		  , 'N': "${genderN}" 
 		  } />
 
-		<@bx.row>
-		Gender:
-		</@bx.row>
-
-		<@bx.row>
-		<@spring.formSingleSelect "identityForm.credential.identity.personalData.gender", gender />
-		</@bx.row>
+		<@bx.group >
+			<@bx.row>Gender:</@bx.row>
+			<@bx.row>
+			<@spring.formSingleSelect "identityForm.credential.identity.personalData.gender", gender />
+			</@bx.row>
+		</@bx.group>
 		
-		<@bx.row>
-		Appellation:
-		</@bx.row>
-
 		<#assign appellation0><@spring.messageText "identity.appellation.0", "not supplied"/></#assign>
 		<#assign appellation1><@spring.messageText "identity.appellation.1", "Miss"/></#assign>
 		<#assign appellation2><@spring.messageText "identity.appellation.2", "Mr. ou Mrs."/></#assign>
@@ -93,9 +74,13 @@
 		  , '3': "${appellation3}" 
 		  } />
 
-		<@bx.row>
-		<@spring.formSingleSelect "identityForm.credential.identity.personalData.appellation", appellation />
-		</@bx.row>
+		<@bx.group >
+			<@bx.row>Appellation:</@bx.row>
+			<@bx.row>
+			<@spring.formSingleSelect "identityForm.credential.identity.personalData.appellation", appellation />
+			</@bx.row>
+		</@bx.group>
+		
 		
 		<tr class="t_title">
 		<td colspan="3">

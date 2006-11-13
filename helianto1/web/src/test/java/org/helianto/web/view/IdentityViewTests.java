@@ -15,10 +15,27 @@
 
 package org.helianto.web.view;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.web.test.FreeMarkerViewTestSupport;
 import org.helianto.web.view.IdentityForm;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.servlet.mvc.BaseCommandController;
+import org.springframework.web.servlet.support.BindStatus;
+import org.springframework.web.servlet.support.RequestContext;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
+
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 public class IdentityViewTests extends FreeMarkerViewTestSupport {
 
@@ -28,18 +45,36 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
     }
 
     public void testPrincipalView() throws Exception {
-        processView("identity/principal.ftl");
+        processView("identity/principal.ftl", model, true);
+    }
+
+    public void testPrincipalViewError() throws Exception {
+        model.put("errors", "xxx");
+        processView("identity/principal.ftl", model, true);
     }
 
     public void testDetailsView() throws Exception {
-        processView("identity/details.ftl");
+        processView("identity/details.ftl", model, true);
     }
     
-    public MockHttpServletResponse processView(String templateName) throws Exception {
+    public void testPersonalView() throws Exception {
+        processView("identity/personal.ftl", model, true);
+    }
+    
+    public void testPersonalViewErrors() throws Exception {
+        bindingResult.rejectValue("credential.identity.personalData.lastName", null, "ERROR IN lastName");
+        bindingResult.rejectValue("credential.identity.personalData.appellation", null, "ERROR IN appellation");
+        model.put(BindingResult.MODEL_KEY_PREFIX+"identityForm", bindingResult);
+        processView("identity/personal.ftl", model, true);
+    }
+    
+    @Override
+    public void setUp() throws IOException, TemplateException, InstantiationException, IllegalAccessException {
+        super.setUp();
         IdentityForm identityForm = new IdentityForm();
         identityForm.setCredential(AuthenticationTestSupport.createCredential());
         model.put("identityForm", identityForm);
-        return processView(templateName, model, false);
+        bindingResult = new BeanPropertyBindingResult(identityForm, "identityForm");
     }
 
 }

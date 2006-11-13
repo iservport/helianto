@@ -20,17 +20,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.context.support.StaticWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.support.BindStatus;
+import org.springframework.web.servlet.support.RequestContext;
 import org.springframework.web.servlet.theme.FixedThemeResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
+import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 import junit.framework.TestCase;
@@ -51,6 +57,8 @@ public class FreeMarkerViewTestSupport extends TestCase {
     protected Map<String, Object> model;
     
     protected FreeMarkerConfigurer configurer;
+    
+    protected BindingResult bindingResult;
 
     @Override
     public void setUp() throws IOException, TemplateException, InstantiationException, IllegalAccessException {
@@ -79,12 +87,15 @@ public class FreeMarkerViewTestSupport extends TestCase {
      * Basic FreeMarker view setup.
      * 
      * @param templateName a template in classpath
+     * @throws Exception 
      */
-    protected FreeMarkerView prepareView(String templateName) {
+    protected FreeMarkerView prepareView(String templateName) throws Exception {
         FreeMarkerView fv = new FreeMarkerView();
         fv.setUrl(templateName);
         fv.setApplicationContext(wac);
         fv.setExposeSpringMacroHelpers(true);
+        fv.setBeanName(templateName);
+        fv.afterPropertiesSet();
         return fv;
     }
     
@@ -98,6 +109,24 @@ public class FreeMarkerViewTestSupport extends TestCase {
     protected MockHttpServletResponse processView(String templateName, Map<String, Object> model, boolean visualTest) throws Exception {
         MockHttpServletResponse expectedResponse = new MockHttpServletResponse();
         FreeMarkerView fv = prepareView(templateName);
+        fv.render(model, request, expectedResponse);
+        System.out.println(request.getAttribute("errors"));
+        if (visualTest) {
+            String output = expectedResponse.getContentAsString();
+            System.out.println(output);
+            fail();
+        }
+        return expectedResponse;
+    }
+    
+    /**
+     * FreeMarker view rendering.
+     * 
+     * @param fv a FreeMarker view 
+     * @param visualTest if true prints to System.out and fails.
+     */
+    protected MockHttpServletResponse processView(FreeMarkerView fv, boolean visualTest) throws Exception {
+        MockHttpServletResponse expectedResponse = new MockHttpServletResponse();
         fv.render(model, request, expectedResponse);
         if (visualTest) {
             String output = expectedResponse.getContentAsString();

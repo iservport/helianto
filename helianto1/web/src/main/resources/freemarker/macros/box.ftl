@@ -21,20 +21,21 @@
 <#macro row classOrStyle="">
 	<tr>
     <#if classOrStyle?index_of(":") == -1><#assign attr="class"><#else><#assign attr="style"></#if>
-	<td ${attr}="${classOrStyle}" ><#nested /></td>
+	<td <#if classOrStyle!="" >${attr}="${classOrStyle}" </#if> ><#nested /></td>
 	</tr>
 </#macro>	
 
 <#--
- # Convenience to create box error lines.
- # Refactored from spring macro showErrors.
+ # Convenience to group box lines and show errors.
  #
  # @author Mauricio Fernandes de Castro
 -->
-<#macro showErrors errorsPath classOrStyle="error">
-    <#list errorsPath as error>
-    <@row classOrStyle >
-    ${error}
+<#macro group classOrStyle="">
+	<#nested />
+	<#if spring?exists && spring.status.errorMessages?has_content >
+	<@row "bxError" >
+    <@spring.showErrors "<br/>" />
     </@row>
-    </#list>
+    </#if>
 </#macro>	
+
