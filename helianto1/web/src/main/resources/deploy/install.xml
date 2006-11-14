@@ -55,6 +55,8 @@
 			value="org.helianto.web.view.IdentityForm" />
 		<property name="propertyEditorRegistrar" 
 			ref="authenticationPropertyEditorRegistrar"/>
+		<property name="serverMgr" 
+			ref="serverMgr"/>
 		<property name="securityMgr" 
 			ref="securityMgr"/>
 	</bean>
