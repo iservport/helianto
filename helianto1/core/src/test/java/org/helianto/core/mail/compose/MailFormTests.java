@@ -40,6 +40,13 @@ public class MailFormTests extends TestCase {
 
     }
     
+    public void testMailFormOperatorConstructor() {
+        Operator operator = OperatorTestSupport.createOperator();
+        MailForm mailForm = new MailForm(operator);
+        assertSame(operator, mailForm.getOperator());
+
+    }
+    
     public void testValidate() throws MessagingException, IOException {
         //create with organizational email
         MailForm mailForm = createMailForm();

@@ -16,6 +16,7 @@
 package org.helianto.core.mail.compose;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Operator;
 
 /**
  * Password confirmation mail form.
@@ -26,6 +27,14 @@ public class PasswordConfirmationMailForm extends MailForm {
     
     private Credential credential;
 
+    public PasswordConfirmationMailForm(Operator operator) {
+        super(operator);
+    }
+    
+    public PasswordConfirmationMailForm() {
+        super();
+    }
+    
     public Credential getCredential() {
         return credential;
     }
