@@ -15,8 +15,14 @@
 
 package org.helianto.web.controller;
 
+import javax.mail.MessagingException;
+
 import org.helianto.core.Credential;
+import org.helianto.core.Operator;
+import org.helianto.core.mail.compose.MailForm;
+import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.SecurityMgr;
+import org.helianto.core.service.ServerMgr;
 import org.helianto.web.view.IdentityForm;
 import org.springframework.webflow.AttributeMap;
 import org.springframework.webflow.Event;
@@ -31,6 +37,7 @@ import org.springframework.webflow.action.FormAction;
 public class IdentityFormAction extends FormAction {
     
     private SecurityMgr securityMgr;
+    private ServerMgr serverMgr;
     
     public Event create(RequestContext context) {
         IdentityForm form = doGetForm(context);
@@ -51,8 +58,25 @@ public class IdentityFormAction extends FormAction {
         return error();
     }
     
+    public Event send(RequestContext context) {
+        Credential credential = doGetForm(context).getCredential();
+        PasswordConfirmationMailForm mailForm = createMailForm(context);
+        if (mailForm!=null) {
+            mailForm.setCredential(credential);
+            mailForm.setRecipientIdentity(credential.getIdentity());
+            try {
+                serverMgr.sendPasswordConfirmation(mailForm);
+            } catch (MessagingException e) {
+                return error();
+            }
+            return success();
+        }
+        return error();
+    }
+    
     public Event nonUnique(RequestContext context) {
         IdentityForm form = doGetForm(context);
+        //TODO non unique identity
         return success();
     }
     
@@ -68,10 +92,28 @@ public class IdentityFormAction extends FormAction {
         return (IdentityForm) flowScope.getRequired(getFormObjectName());
     }
     
+    protected Operator getOperator(RequestContext context) {
+        AttributeMap flowScope = context.getFlowScope();
+        return (Operator) flowScope.get("operator");
+    }
+    
+    protected PasswordConfirmationMailForm createMailForm(RequestContext context) {
+        Operator operator = getOperator(context);
+        if (operator!=null) {
+            PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm();
+            return mailForm;
+        }
+        return null;
+    }
+    
     //~ collaborators
 
     public void setSecurityMgr(SecurityMgr securityMgr) {
         this.securityMgr =  securityMgr;
+    }
+
+    public void setServerMgr(ServerMgr serverMgr) {
+        this.serverMgr = serverMgr;
     }
 
 }
