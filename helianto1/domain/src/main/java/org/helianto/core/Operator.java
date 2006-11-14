@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 29/10/2006 20:02:34 by Hibernate Tools 3.1.0.beta5
+// Generated 14/11/2006 21:06:50 by Hibernate Tools 3.1.0.beta5
 
 
 import java.util.Locale;
@@ -46,12 +46,13 @@ public class Operator  implements java.io.Serializable {
         this.operationMode = operationMode;
     }
     /** full constructor */
-    public Operator(String operatorName, Operator parent, Locale locale, char operationMode, String operatorHostAddress, String defaultEncoding) {
+    public Operator(String operatorName, Operator parent, Locale locale, char operationMode, String operatorHostAddress, String operatorSourceMailAddress, String defaultEncoding) {
        this.operatorName = operatorName;
        this.parent = parent;
        this.locale = locale;
        this.operationMode = operationMode;
        this.operatorHostAddress = operatorHostAddress;
+       this.operatorSourceMailAddress = operatorSourceMailAddress;
        this.defaultEncoding = defaultEncoding;
     }
     
@@ -99,6 +100,13 @@ public class Operator  implements java.io.Serializable {
     public void setOperatorHostAddress(String operatorHostAddress) {
         this.operatorHostAddress = operatorHostAddress;
     }
+    public String getOperatorSourceMailAddress() {
+        return this.operatorSourceMailAddress;
+    }
+    
+    public void setOperatorSourceMailAddress(String operatorSourceMailAddress) {
+        this.operatorSourceMailAddress = operatorSourceMailAddress;
+    }
     public String getDefaultEncoding() {
         return this.defaultEncoding;
     }
@@ -140,16 +148,9 @@ public class Operator  implements java.io.Serializable {
          
          
          
+         
          return result;
-   }
-
-public String getOperatorSourceMailAddress() {
-    return operatorSourceMailAddress;
-}
-
-public void setOperatorSourceMailAddress(String operatorSourceMailAddress) {
-    this.operatorSourceMailAddress = operatorSourceMailAddress;
-}   
+   }   
 
 
 }
