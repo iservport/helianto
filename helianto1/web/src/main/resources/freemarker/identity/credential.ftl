@@ -7,7 +7,19 @@
 <@spring.bind "identityForm.credential.*" /> 
 
 <html>
-<@hd.head />
+<@hd.head>
+	<script language="javascript">
+function dontsend (choice) {
+sendBtn = document.getElementById("_eventId_send");
+if (choice==-1) {
+sendBtn.disabled = true;
+} else {
+sendBtn.disabled = false;
+}
+return false;
+};
+	</script>
+</@hd.head>
 <@lo.layout>
 	<@lo.east>
 	
@@ -31,20 +43,25 @@
 	<@lo.west>
 
 		<form action="admin.htm" method="POST">
-		<@bx.table "Password email">
+		<@bx.table "${identityForm.credential.identity.principal}">
+		
+			<@bx.row>
+			<p>Please notice the password email option is recommended.</p>
+			</@bx.row>
 		
 			<#assign sendOptions={
 				  "0" : "Send current password"
 				, "1" : "Send new password"
+				, "-1" : "verify on-line (see below)"
 			}
 			/>
 		
 			<@bx.row>
-			<@spring.formRadioButtons "identityForm.sendOption", sendOptions, "<br />"/>
+			<@spring.formRadioButtons "identityForm.sendOption", sendOptions, "<br />", "onChange='dontsend(this.value);'"/>
 			</@bx.row>
 
 			<@bx.row>
-			<input type="submit" name="_eventId_sendPassword" value="<@spring.messageText "identity.button.sendPassword", "Send"/>"  class="btn" />
+			<input id="_eventId_send" type="submit" name="_eventId_send" value="<@spring.messageText "identity.button.sendPassword", "Send"/>"  class="btn" />
 			</@bx.row>
 
 			<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
@@ -52,32 +69,9 @@
 		</@bx.table>
 		</form>
 
-		<!-- 
-		 ! Forms
-		 !-->
 		<form action="admin.htm" method="POST">
-		<table>
-		
-			<tr class="t_title">
-			<td colspan="3"><@spring.messageText "identity.header1", "Password"/></td>
-			</tr>
-			
-			<tr>
-			<td><@spring.messageText "identity.password1", "Password"/>:</td>
-			<td><@spring.formPasswordInput "identityForm.credential.password", 'size="32"'/></td>
-			</tr>
-
-			<tr>
-			<td><@spring.messageText "identity.password2", "Password confirmation"/>:</td>
-			<td><@spring.formPasswordInput "identityForm.credential.verifyPassword", 'size="32"'/></td>
-			</tr>
-
-			<tr class="t_title">
-			<td colspan="3">
-			<input type="submit" name="_eventId_next" value="<@spring.messageText "button.next", "Next"/>" class="btn" /></td>
-			</tr>
-
-			<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+		<#include "passwordForm.ftl">
+		</form>
 
 	</@lo.west>
 </@lo.layout>

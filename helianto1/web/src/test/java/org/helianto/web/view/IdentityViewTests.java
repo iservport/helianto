@@ -69,6 +69,16 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
         processView("identity/credential.ftl", model, true);
     }
     
+    public void testPasswordView() throws Exception {
+        processView("identity/password.ftl", model, false);
+    }
+    
+    public void testPasswordViewError() throws Exception {
+        bindingResult.rejectValue("credential.verifyPassword", null, "ERROR IN password");
+        model.put(BindingResult.MODEL_KEY_PREFIX+"identityForm", bindingResult);
+        processView("identity/password.ftl", model, false);
+    }
+    
     public void testConfirmView() throws Exception {
         processView("identity/confirm.ftl", model, false);
     }
