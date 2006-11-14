@@ -36,10 +36,22 @@ public class MailForm {
     
     private String content = "";
 
+    /**
+     * Default constructor for subclasses.
+     */
+    public MailForm() { }
+
+    /**
+     * <code>Operator</code> driven constructor.
+     */
+    public MailForm(Operator operator) { 
+        this.operator = operator;
+    }
+
     public String getContent() {
 		return content;
 	}
-
+    
 	public void setContent(String content) {
 		this.content = content;
 	}
