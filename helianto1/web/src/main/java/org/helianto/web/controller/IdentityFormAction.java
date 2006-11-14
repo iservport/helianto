@@ -18,8 +18,8 @@ package org.helianto.web.controller;
 import javax.mail.MessagingException;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.Operator;
-import org.helianto.core.mail.compose.MailForm;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
@@ -39,14 +39,29 @@ public class IdentityFormAction extends FormAction {
     private SecurityMgr securityMgr;
     private ServerMgr serverMgr;
     
+    /**
+     * Delegates to <code>SecurityMgr#createCredentialAndIdentity()</code>
+     * and populates the form with the new <code>Credential</code>.
+     */
     public Event create(RequestContext context) {
         IdentityForm form = doGetForm(context);
-        form.setCredential(securityMgr.createCredentialAndIdentity());
+        Credential credential = securityMgr.createCredentialAndIdentity();
+        form.setCredential(credential);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Set property credential to "+credential+" on form " +form);
+        }
         return success();
     }
     
+    /**
+     * Simply delegates to <code>securityMgr.persistIdentity(Identity)</code>.
+     */
     public Event persistIdentity(RequestContext context) {
-        securityMgr.persistIdentity(doGetForm(context).getCredential().getIdentity());
+        Identity identity = doGetForm(context).getCredential().getIdentity();
+        securityMgr.persistIdentity(identity);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Persisted identity "+identity);
+        }
         return success();
     }
     
@@ -59,17 +74,20 @@ public class IdentityFormAction extends FormAction {
     }
     
     public Event send(RequestContext context) {
-        Credential credential = doGetForm(context).getCredential();
         PasswordConfirmationMailForm mailForm = createMailForm(context);
         if (mailForm!=null) {
-            mailForm.setCredential(credential);
-            mailForm.setRecipientIdentity(credential.getIdentity());
             try {
                 serverMgr.sendPasswordConfirmation(mailForm);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Sent mailForm "+mailForm);
+                }
+                return success();
             } catch (MessagingException e) {
                 return error();
             }
-            return success();
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("Null MailForm, can't send");
         }
         return error();
     }
@@ -89,19 +107,39 @@ public class IdentityFormAction extends FormAction {
     //~ utilities
     protected IdentityForm doGetForm(RequestContext context) {
         AttributeMap flowScope = context.getFlowScope();
-        return (IdentityForm) flowScope.getRequired(getFormObjectName());
+        IdentityForm identityForm = 
+            (IdentityForm) flowScope.getRequired(getFormObjectName()); 
+        if (logger.isDebugEnabled()) {
+            logger.debug("Retrive "+identityForm+"from scope "+flowScope);
+        }
+        return identityForm;
     }
     
     protected Operator getOperator(RequestContext context) {
         AttributeMap flowScope = context.getFlowScope();
-        return (Operator) flowScope.get("operator");
+        Operator operator = 
+            (Operator) flowScope.get("operator");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Retrive "+operator+"from scope "+flowScope);
+        }
+        return operator;
     }
     
+    /**
+     * Method to extract <code>MailForm</code> properties from
+     * the context.
+     */
     protected PasswordConfirmationMailForm createMailForm(RequestContext context) {
         Operator operator = getOperator(context);
         if (operator!=null) {
-            PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm();
+            PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm(operator);
+            Credential credential = doGetForm(context).getCredential();
+            mailForm.setCredential(credential);
+            mailForm.setRecipientIdentity(credential.getIdentity());
             return mailForm;
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("Null operator, can't create MailForm");
         }
         return null;
     }

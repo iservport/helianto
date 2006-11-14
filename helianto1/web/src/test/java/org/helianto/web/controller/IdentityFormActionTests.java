@@ -17,18 +17,24 @@ package org.helianto.web.controller;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 
-import java.util.Date;
+import javax.mail.MessagingException;
 
 import junit.framework.TestCase;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.Operator;
+import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.SecurityMgr;
-import org.helianto.web.controller.IdentityFormAction;
+import org.helianto.core.service.ServerMgr;
+import org.helianto.core.test.AuthenticationTestSupport;
+import org.helianto.core.test.OperatorTestSupport;
+import org.helianto.core.type.IdentityType;
 import org.helianto.web.view.IdentityForm;
 import org.springframework.webflow.Event;
 import org.springframework.webflow.RequestContext;
@@ -39,16 +45,7 @@ public class IdentityFormActionTests extends TestCase {
     // class under test
     private IdentityFormAction identityFormAction;
     
-    /*
-    public Event create(RequestContext context) {
-        IdentityForm form = doGetForm(context);
-        form.setCredential(securityMgr.createCredentialAndIdentity());
-        return success();
-    }
-    */
-    
     public void testCreate() {
-        RequestContext context = simulateFormInContext(new IdentityForm());
         Credential credential = new Credential();
         
         expect(securityMgr.createCredentialAndIdentity())
@@ -62,19 +59,10 @@ public class IdentityFormActionTests extends TestCase {
         assertSame(credential, ((IdentityForm) context.getFlowScope().get("formObject")).getCredential());
     }
     
-    /*
-    public Event persistIdentity(RequestContext context) {
-        securityMgr.persistIdentity(doGetForm(context).getCredential().getIdentity());
-        return success();
-    }
-    */
-    
     public void testPersistIdentity() {
-        IdentityForm form = new IdentityForm();
         form.setCredential(new Credential());
         Identity identity = new Identity();
         form.getCredential().setIdentity(identity);
-        RequestContext context = simulateFormInContext(form);
         
         securityMgr.persistIdentity(form.getCredential().getIdentity());
         replay(securityMgr);
@@ -84,22 +72,9 @@ public class IdentityFormActionTests extends TestCase {
         verify(securityMgr);
     }
     
-    /*
-    public Event verify(RequestContext context) {
-        Credential credential = doGetForm(context).getCredential();
-        if (securityMgr.verifyPassword(credential)) {
-            return success();
-        }
-        return error();
-    }
-    
-    */
-    
     public void testVerifySuccess() {
-        IdentityForm form = new IdentityForm();
         Credential credential = new Credential();
         form.setCredential(credential);
-        RequestContext context = simulateFormInContext(form);
         
         expect(securityMgr.verifyPassword(credential))
             .andReturn(true);
@@ -112,10 +87,8 @@ public class IdentityFormActionTests extends TestCase {
     }
     
     public void testVerifyError() {
-        IdentityForm form = new IdentityForm();
         Credential credential = new Credential();
         form.setCredential(credential);
-        RequestContext context = simulateFormInContext(form);
         
         expect(securityMgr.verifyPassword(credential))
             .andReturn(false);
@@ -127,25 +100,90 @@ public class IdentityFormActionTests extends TestCase {
         
     }
     
-    private RequestContext simulateFormInContext(Object form) {
-        RequestContext context = new MockRequestContext();
-        context.getFlowScope().put("formObject", form);
-        return context;
+    public void testCreateMailFormSuccess() {
+        IdentityFormAction localIdentityFormAction = new IdentityFormAction();
+        Operator operator = OperatorTestSupport.createOperator();
+        context.getFlowScope().put("operator", operator);
+        Credential credential = AuthenticationTestSupport.createCredential();
+        credential.getIdentity().setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
+        form.setCredential(credential);
+        
+        mailForm = localIdentityFormAction.createMailForm(context);
+        assertNotNull(mailForm);
+        assertSame(operator, mailForm.getOperator());
+        assertSame(credential, mailForm.getCredential());
+        assertSame(credential.getIdentity(), mailForm.getRecipientIdentity());
+    }
+    
+    public void testCreateMailFormError() {
+        IdentityFormAction localIdentityFormAction = new IdentityFormAction();
+        
+        mailForm = localIdentityFormAction.createMailForm(context);
+        assertNull(mailForm);
+    }
+    
+    public void testSendSuccess() throws MessagingException {
+        mailForm = new PasswordConfirmationMailForm();
+        
+        serverMgr.sendPasswordConfirmation(mailForm);
+        replay(serverMgr);
+        
+        Event event = identityFormAction.send(context);
+        assertEquals(event.getId(), "success");
+        verify(serverMgr);
+    }
+    
+    public void testSendError() throws MessagingException {
+        mailForm = null;
+        
+        replay(serverMgr);
+
+        Event event = identityFormAction.send(context);
+        assertEquals(event.getId(), "error");
+        verify(serverMgr);
+    }
+    
+    public void testSendFailure() throws MessagingException {
+        mailForm = new PasswordConfirmationMailForm();
+        
+        serverMgr.sendPasswordConfirmation(mailForm);
+        expectLastCall().andThrow(new MessagingException());
+        replay(serverMgr);
+
+        Event event = identityFormAction.send(context);
+        assertEquals(event.getId(), "error");
+        verify(serverMgr);
     }
     
     // collabs
+    private RequestContext context;
+    private IdentityForm form;
     private SecurityMgr securityMgr;
+    private ServerMgr serverMgr;
+    private PasswordConfirmationMailForm mailForm;
     
     @Override
     public void setUp() {
+        context = new MockRequestContext();
+        form = new IdentityForm();
+        context.getFlowScope().put("formObject", form);
+        
         securityMgr = createMock(SecurityMgr.class);
-        identityFormAction = new IdentityFormAction();
+        serverMgr = createMock(ServerMgr.class);
+        identityFormAction = new IdentityFormAction() {
+            protected PasswordConfirmationMailForm createMailForm(RequestContext context) {
+                System.out.println("Mail is "+mailForm);
+                return mailForm;
+            }
+        };
         identityFormAction.setSecurityMgr(securityMgr);
+        identityFormAction.setServerMgr(serverMgr);
     }
     
     @Override
     public void tearDown() {
         reset(securityMgr);
+        reset(serverMgr);
     }
     
 }
