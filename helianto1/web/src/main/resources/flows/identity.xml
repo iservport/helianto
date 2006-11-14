@@ -38,33 +38,38 @@
     	</entry-actions>
     	<if test="${flowScope.identityForm.credential.identity.identityType == 'P'}" 
     	    then="identity.personal.view" 
-    	    else="identity.confirm.view" />
+    	    else="ifNotAddressable" />
     </decision-state>
 
     <view-state id="identity.personal.view" view="identity/personal">
 		<transition on="previous" to="identity.details.view"/>
-		<transition on="next" to="identity.personal.credential"/>
+		<transition on="next" to="ifNotAddressable"/>
 		<transition on="cancel" to="bind"/>
     </view-state>
     
-    <view-state id="identity.personal.credential" view="identity/credential">
+    <decision-state id="ifNotAddressable">
+    	<if test="${flowScope.identityForm.credential.identity.identityType == 'N'}" 
+    	    then="identity.password.view" 
+    	    else="identity.credential.view" />
+    </decision-state>
 
-		<transition on="sendCurrent" to="identity.credential.view"/>
-		<transition on="sendNew" to="identity.credential.view"/>
-		<transition on="password" to="identity.credential.view"/>
-		
-		<transition on="previous" to="identity.details.view"/>
-		<transition on="next" to="identity.confirm.view"/>
-		<transition on="cancel" to="bind"/>
-    </view-state>
-    
-    <view-state id="identity.confirm.view" view="identity/confirm">
-		<transition on="change" to="ifPersonal"/>
-		<transition on="confirm" to="persistFinal"/>
-		<transition on="cancel" to="bind"/>
-    </view-state>
-    
     <view-state id="identity.credential.view" view="identity/credential">
+		<transition on="send" to="send"/>
+		<transition on="next" to="identity.confirm.view"/>
+		<transition on="previous" to="identity.details.view"/>
+		<transition on="cancel" to="bind"/>
+    </view-state>
+    
+    <action-state id="send">
+    	<entry-actions>
+	    	<action bean="identityAction" method="bind"/>
+    	</entry-actions>
+    	<action bean="identityAction"/>
+		<transition on="success" to="identity.confirm.view"/>
+		<transition on="error" to="identity.credential.view"/>
+    </action-state>
+    
+    <view-state id="identity.password.view" view="identity/credential">
 		<transition on="next" to="verify"/>
 		<transition on="cancel" to="bind"/>
     </view-state>
@@ -75,8 +80,14 @@
     	</entry-actions>
     	<action bean="identityAction"/>
 		<transition on="success" to="identity.confirm.view"/>
-		<transition on="error" to="identity.credential.view"/>
+		<transition on="error" to="ifNotAddressable"/>
     </action-state>
+    
+    <view-state id="identity.confirm.view" view="identity/confirm">
+		<transition on="change" to="ifPersonal"/>
+		<transition on="confirm" to="persistFinal"/>
+		<transition on="cancel" to="bind"/>
+    </view-state>
     
     <action-state id="persistFinal">
     	<entry-actions>
