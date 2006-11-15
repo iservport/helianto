@@ -8,12 +8,11 @@
 
     <action-state id="create">
     	<action bean="identityAction"/>
-		<transition on="success" to="identity.view"/>
+		<transition on="success" to="identity.principal.view"/>
     </action-state>
 
-    <view-state id="identity.view" view="identity/principal">
+    <view-state id="identity.principal.view" view="identity/principal">
 		<transition on="next" to="persistIdentity"/>
-		<transition on="cancel" to="bind"/>
     </view-state>
 
     <action-state id="persistIdentity">
@@ -26,10 +25,14 @@
         	to="nonUnique"/>
     </action-state>
     
+    <action-state id="nonUnique">
+    	<action bean="identityAction"/>
+		<transition on="error" to="identity.principal.view"/>
+    </action-state>
+
     <view-state id="identity.details.view" view="identity/details">
-		<transition on="previous" to="identity.view"/>
+		<transition on="previous" to="identity.details.view"/>
 		<transition on="next" to="ifPersonal"/>
-		<transition on="cancel" to="bind"/>
     </view-state>
     
     <decision-state id="ifPersonal">
@@ -44,7 +47,6 @@
     <view-state id="identity.personal.view" view="identity/personal">
 		<transition on="previous" to="identity.details.view"/>
 		<transition on="next" to="ifNotAddressable"/>
-		<transition on="cancel" to="bind"/>
     </view-state>
     
     <decision-state id="ifNotAddressable">
@@ -54,11 +56,25 @@
     </decision-state>
 
     <view-state id="identity.credential.view" view="identity/credential">
-		<transition on="send" to="send"/>
+		<transition on="send" to="ifNewPassword"/>
 		<transition on="next" to="identity.confirm.view"/>
 		<transition on="previous" to="identity.details.view"/>
-		<transition on="cancel" to="bind"/>
     </view-state>
+    
+    <decision-state id="ifNewPassword">
+    	<entry-actions>
+	    	<action bean="identityAction" method="bind"/>
+    	</entry-actions>
+    	<if test="${flowScope.identityForm.sendOption == 'N'}" 
+    	    then="generatePassword" 
+    	    else="send" />
+    </decision-state>
+
+    <action-state id="generatePassword">
+    	<action bean="identityAction"/>
+		<transition on="success" to="send"/>
+		<transition on="error" to="identity.credential.view"/>
+    </action-state>
     
     <action-state id="send">
     	<entry-actions>
@@ -69,9 +85,8 @@
 		<transition on="error" to="identity.credential.view"/>
     </action-state>
     
-    <view-state id="identity.password.view" view="identity/credential">
+    <view-state id="identity.password.view" view="identity/password">
 		<transition on="next" to="verify"/>
-		<transition on="cancel" to="bind"/>
     </view-state>
     
     <action-state id="verify">
@@ -86,7 +101,6 @@
     <view-state id="identity.confirm.view" view="identity/confirm">
 		<transition on="change" to="ifPersonal"/>
 		<transition on="confirm" to="persistFinal"/>
-		<transition on="cancel" to="bind"/>
     </view-state>
     
     <action-state id="persistFinal">
@@ -99,23 +113,17 @@
         	to="nonUnique"/>
     </action-state>
     
-    <action-state id="nonUnique">
-    	<action bean="identityAction"/>
-		<transition on="success" to="identity.view"/>
-    </action-state>
-
     <end-state id="end">
     	<output-mapper>
    			<mapping source="flowScope.identityForm.credential.identity" target="identity"/>
     	</output-mapper>
     </end-state>
     
-    <end-state id="error" view="abort"/>
+    <end-state id="abort" view="abort"/>
     
 	<global-transitions>
         <transition on="error" to="error"/>
-        <transition on="success" to="bind"/>
-        <transition on="login_error" to="login.view"/>
+		<transition on="cancel" to="abort"/>
     </global-transitions>
 
 </flow>

@@ -50,9 +50,9 @@ return false;
 			</@bx.row>
 		
 			<#assign sendOptions={
-				  "0" : "Send current password"
-				, "1" : "Send new password"
-				, "-1" : "verify on-line (see below)"
+				  "C" : "Send current password"
+				, "N" : "Send new password"
+				, "V" : "verify on-line (see below)"
 			}
 			/>
 		

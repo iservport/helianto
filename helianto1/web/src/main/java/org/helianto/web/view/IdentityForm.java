@@ -23,9 +23,13 @@ import org.helianto.core.Credential;
  * @author Mauricio Fernandes de Castro
  */
 public class IdentityForm {
+    
+    public static final char SEND_CURRENT_PASSWORD = 'C';
+    public static final char SEND_NEW_PASSWORD = 'N';
+    public static final char VERIFY_PASSWORD_ONLINE = 'V';
 
     private Credential credential;
-    private char sendOption = '1';
+    private char sendOption = SEND_NEW_PASSWORD;
     
     public Credential getCredential() {
         return credential;
