@@ -19,12 +19,12 @@
 	<!--
 		Flow registry
 	-->
-	<bean name="flowRegistry"
-		class="org.springframework.webflow.registry.XmlFlowRegistryFactoryBean">
+	<bean id="flowRegistry"
+		class="org.springframework.webflow.engine.builder.xml.XmlFlowRegistryFactoryBean">
 		<property name="flowLocations">
 			<list>
-			 	<value>classpath:/flows/*.xml</value>
-			 	<value>/WEB-INF/flows/*.xml</value>
+				<value>classpath:/flows/*.xml</value>
+				<value>/WEB-INF/flows/*.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -41,23 +41,23 @@
 	<!--bean id="freemarkerConfiguration"
 		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
 		<property name="templateLoaderPaths">
-			<list>
-			 	<value>classpath:/freemarker/</value>
-				<value>/WEB-INF/freemarker/</value>
-			</list>
+		<list>
+		<value>classpath:/freemarker/</value>
+		<value>/WEB-INF/freemarker/</value>
+		</list>
 		</property>
 		<property name="freemarkerSettings">
-			<props>
-				<prop key="default_encoding">ISO-8859-1</prop>
-			</props>
+		<props>
+		<prop key="default_encoding">ISO-8859-1</prop>
+		</props>
 		</property>
-	</bean-->
+		</bean-->
 	<bean id="freemarkerWebConfiguration"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<!--property name="configuration" ref="freemarkerConfiguration"/-->
 		<property name="templateLoaderPaths">
 			<list>
-			 	<value>classpath:/freemarker/</value>
+				<value>classpath:/freemarker/</value>
 				<value>/WEB-INF/freemarker/</value>
 			</list>
 		</property>
