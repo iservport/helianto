@@ -36,8 +36,8 @@ import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.type.IdentityType;
 import org.helianto.web.view.IdentityForm;
-import org.springframework.webflow.Event;
-import org.springframework.webflow.RequestContext;
+import org.springframework.webflow.execution.Event;
+import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
 
 public class IdentityFormActionTests extends TestCase {

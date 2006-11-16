@@ -33,8 +33,8 @@ import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.controller.InstallFormAction;
 import org.helianto.web.view.UserForm;
-import org.springframework.webflow.Event;
-import org.springframework.webflow.RequestContext;
+import org.springframework.webflow.execution.Event;
+import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
 
 public class InstallFormActionTests extends TestCase {
