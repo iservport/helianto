@@ -3,14 +3,9 @@
  #
  # @author Mauricio Fernandes de Castro
 -->
-<#macro table title="">
-	<table >
-
-	<@row "ctit">${title}</@row>
-	
-	<#nested />
-	
-	</table>
+<#macro table classOrStyle="">
+    <#if classOrStyle?index_of(":") == -1><#assign attr="class"><#else><#assign attr="style"></#if>
+	<table <#if classOrStyle!="" >${attr}="${classOrStyle}" </#if> ><#nested /></table>
 </#macro>	
 
 <#--
