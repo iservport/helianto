@@ -20,26 +20,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import junit.framework.TestCase;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.context.support.StaticWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-import org.springframework.web.servlet.support.BindStatus;
-import org.springframework.web.servlet.support.RequestContext;
 import org.springframework.web.servlet.theme.FixedThemeResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
-
-import junit.framework.TestCase;
 
 /**
  * Base class to test FreeMarker based views.
@@ -80,7 +75,7 @@ public class FreeMarkerViewTestSupport extends TestCase {
         wac.refresh();
 
         model = new HashMap<String, Object>();
-        model.put("flowExecutionKey", "flowExecutionKey");
+        model.put("flowExecutionKey", "flowExecutionKeyValue");
     }
     
     /**
