@@ -7,6 +7,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
+import org.helianto.core.dao.IdentityFilter;
 
 public interface UserMgr {
 	
@@ -20,6 +21,13 @@ public interface UserMgr {
      * <p>Persist <code>Identity</code>.</p>
      */
     public void persistIdentity(Identity identity);
+    
+    /**
+     * <p>Selects an <code>Identity</code> list.
+     * 
+     * @param filter
+     */
+    public List<Identity> selectIdentities(IdentityFilter filter);
     
     /**
      * <p>A <code>Credential</code> with an

@@ -48,6 +48,8 @@ public class AuthenticationDaoImplTests extends AbstractCredentialTest {
         // read
         Identity identity = identityList.get((int) Math.random()*i);
         assertEquals(identity, authenticationDao.findIdentityByPrincipal(identity.getPrincipal()));
+        assertEquals(i, authenticationDao.findIdentityByCriteria("").size());
+        assertEquals(identity, authenticationDao.findIdentityByCriteria("where identity.principal='"+identity.getPrincipal()+"' ").get(0));
     }
 
     public void testIdentityErrors() {

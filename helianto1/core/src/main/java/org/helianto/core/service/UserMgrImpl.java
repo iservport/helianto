@@ -14,6 +14,9 @@ import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.dao.IdentityFilter;
+import org.helianto.core.dao.IdentitySelectionStrategy;
+import org.helianto.core.hibernate.DefaultIdentitySelectionStrategy;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
 import org.helianto.core.type.ActivityState;
 
@@ -23,17 +26,25 @@ public class UserMgrImpl implements UserMgr {
     
     protected AuthorizationDao authorizationDao;
     
+    private IdentitySelectionStrategy identitySelectionStrategy;
+    
 	/* 
 	 * Create and persist Identity
 	 */
 
-	public Identity createEmptyIdentity() {
+    public Identity createEmptyIdentity() {
 		return AuthenticationCreator.identityFactory("", "");
 	}
 
 	public void persistIdentity(Identity identity) {
         authenticationDao.persistIdentity(identity);
 	}
+    
+    public List<Identity> selectIdentities(IdentityFilter filter) {
+        String criteria = identitySelectionStrategy.createCriteriaAsString(filter);
+        List<Identity> identityList = authenticationDao.findIdentityByCriteria(criteria);
+        return identityList ;
+    }
 
 	/* 
 	 * Create and persist Credential
@@ -126,6 +137,9 @@ public class UserMgrImpl implements UserMgr {
     public void init() {
         if (authenticationDao==null) throw new IllegalArgumentException("AuthenticationDao property required");
         if (authorizationDao==null) throw new IllegalArgumentException("AuthorizationDao property required");
+        if (identitySelectionStrategy==null) {
+            identitySelectionStrategy = new DefaultIdentitySelectionStrategy();
+        }
     }
     
     //~ collaborators
@@ -138,6 +152,11 @@ public class UserMgrImpl implements UserMgr {
 
     public void setAuthorizationDao(AuthorizationDao authorizationDao) {
         this.authorizationDao = authorizationDao;
+    }
+
+    public void setIdentitySelectionStrategy(
+            IdentitySelectionStrategy identitySelectionStrategy) {
+        this.identitySelectionStrategy = identitySelectionStrategy;
     }
 
 }

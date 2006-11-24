@@ -15,6 +15,9 @@
 
 package org.helianto.core.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.TestCase;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
@@ -26,6 +29,8 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.IdentityFilter;
+import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.type.ActivityState;
@@ -47,6 +52,23 @@ public class UserMgrImplTests extends TestCase {
         replay(authenticationDao);
         
         userMgr.persistIdentity(identity);
+        verify(authenticationDao);
+    }
+    
+    public void testSelectIdentities() {
+        IdentityFilter filter = new IdentityFilter();
+        String criteria = "criteria";
+        List<Identity> identityList = new ArrayList<Identity>();;
+
+        expect(identitySelectionStrategy.createCriteriaAsString(filter))
+            .andReturn(criteria);
+        replay(identitySelectionStrategy);
+        
+        expect(authenticationDao.findIdentityByCriteria(criteria))
+            .andReturn(identityList);
+        replay(authenticationDao);
+
+        assertSame(identityList, userMgr.selectIdentities(filter));
         verify(authenticationDao);
     }
     
@@ -96,17 +118,21 @@ public class UserMgrImplTests extends TestCase {
     }
     
     private AuthenticationDao authenticationDao;
+    private IdentitySelectionStrategy identitySelectionStrategy;
     
     @Override
     public void setUp() {
         userMgr = new UserMgrImpl();
         authenticationDao = createMock(AuthenticationDao.class);
+        identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setAuthenticationDao(authenticationDao);
+        userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
     }
     
     @Override
     public void tearDown() {
         reset(authenticationDao);
+        reset(identitySelectionStrategy);
     }
     
 }

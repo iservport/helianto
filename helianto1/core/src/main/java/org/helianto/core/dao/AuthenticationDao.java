@@ -15,6 +15,8 @@
 
 package org.helianto.core.dao;
 
+import java.util.List;
+
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 
@@ -39,6 +41,11 @@ public interface AuthenticationDao {
      * Find <code>Identity</code> by principal.
      */
     public Identity findIdentityByPrincipal(String principal);
+
+    /**
+     * Find <code>Identity</code> list by string criteria.
+     */
+    public List<Identity> findIdentityByCriteria(String criteria);
 
     /**
      * Persist <code>Credential</code>.

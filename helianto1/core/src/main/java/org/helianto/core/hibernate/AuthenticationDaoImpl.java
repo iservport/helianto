@@ -15,6 +15,9 @@
 
 package org.helianto.core.hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.dao.AuthenticationDao;
@@ -49,6 +52,11 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
         "from Identity identity " +
         "where identity.principal = ?";
     
+    public List<Identity> findIdentityByCriteria(String criteria) {
+        List<Identity> identityList = (ArrayList<Identity>) find("from Identity identity " + criteria);
+        return identityList;
+    }
+    
 	/*
 	 * Persist, remove and find credential
 	 */
@@ -71,5 +79,5 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
     static final String CREDENTIAL_QRY = 
         "from Credential credential " +
         "where credential.identity.id = ?";
-    
+
 }
