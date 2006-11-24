@@ -30,14 +30,14 @@ public class DefaultIdentitySelectionStrategy implements
     
     public String createCriteriaAsString(IdentityFilter filter) {
         StringBuilder criteria = new StringBuilder();
-        if (!filter.getPrincipalSearch().isEmpty()) {
+        if (!filter.getPrincipalSearch().equals("")) {
             criteria.append("lower(identity.principal) like '%")
             .append(filter.getPrincipalSearch().toLowerCase())
             .append("%' ");
         }
-        if (!filter.getNameOrAliasSearch().isEmpty()) {
+        if (!filter.getNameOrAliasSearch().equals("")) {
             String nameOrAliasSearch = filter.getNameOrAliasSearch().toLowerCase();
-            if (!criteria.toString().isEmpty()) {
+            if (!criteria.toString().equals("")) {
                 criteria.append("or ");
             }
             criteria.append("lower(identity.optionalAlias) like '%")
@@ -52,7 +52,7 @@ public class DefaultIdentitySelectionStrategy implements
             .append(nameOrAliasSearch)
             .append("%' ");
         }
-        if (criteria.toString().isEmpty()) {
+        if (criteria.toString().equals("")) {
             return "";
         }
         return criteria.insert(0, "where ").toString();
