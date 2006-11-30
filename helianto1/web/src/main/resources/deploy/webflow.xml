@@ -17,6 +17,21 @@
 -->
 <beans>
 	<!--
+		Flow executor
+	-->
+	<bean id="flowExecutor"
+		class="org.springframework.webflow.config.FlowExecutorFactoryBean">
+		<property name="definitionLocator" ref="flowRegistry" />
+		<property name="executionAttributes">
+			<map>
+				<entry key="alwaysRedirectOnPause">
+					<value type="java.lang.Boolean">false</value>
+				</entry>
+			</map>
+		</property>
+		<property name="repositoryType" value="CONTINUATION" />
+	</bean>
+	<!--
 		Flow registry
 	-->
 	<bean id="flowRegistry"
