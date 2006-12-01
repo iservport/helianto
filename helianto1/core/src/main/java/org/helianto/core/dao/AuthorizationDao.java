@@ -26,7 +26,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 
-public interface AuthorizationDao {
+public interface AuthorizationDao extends EntityDao {
 
     /**
      * Persist <code>UserGroup</code>.

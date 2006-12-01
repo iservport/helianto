@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.creation.AuthenticationCreator;
@@ -20,7 +21,7 @@ import org.helianto.core.hibernate.DefaultIdentitySelectionStrategy;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
 import org.helianto.core.type.ActivityState;
 
-public class UserMgrImpl implements UserMgr {
+public class UserMgrImpl implements UserMgr, CoreMgr {
 	
     protected AuthenticationDao authenticationDao;
     
@@ -130,6 +131,23 @@ public class UserMgrImpl implements UserMgr {
 //        } 
 //        secureUser.setUser(userDao.createAndPersistUserLog(newUser));
         return true;
+    }
+    
+    public long findNextInternalNumber(Entity entity, String typeName) {
+        InternalEnumerator enumerator = authorizationDao.findInternalEnumerator(entity, typeName);
+        if (enumerator!=null) {
+            long lastNumber = enumerator.getLastNumber();
+            enumerator.setLastNumber(lastNumber+1);
+            authorizationDao.persistInternalEnumerator(enumerator);
+            return lastNumber;
+        } else  {
+            enumerator = new InternalEnumerator();
+            enumerator.setEntity(entity);
+            enumerator.setTypeName(typeName);
+            enumerator.setLastNumber(2);    
+            authorizationDao.persistInternalEnumerator(enumerator);
+            return 1;
+        }
     }
     
     //

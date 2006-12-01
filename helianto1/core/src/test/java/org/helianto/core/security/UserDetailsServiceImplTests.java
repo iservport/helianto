@@ -36,9 +36,9 @@ import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.hibernate.AuthenticationDaoImplTests;
-import org.helianto.core.hibernate.EntityDaoImplTests;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.EntityTestSupport;
 import org.springframework.dao.DataRetrievalFailureException;
 
 
@@ -108,7 +108,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     }
     
     private User prepareSuccessfullLoadOrCreateUserFirstLogin(Identity identity, int e) {
-        List<Entity> entityList = EntityDaoImplTests.createEntityList(e);
+        List<Entity> entityList = EntityTestSupport.createEntityList(e);
         List<User> userList = new ArrayList<User>();
         for (Entity entity: entityList) {
             User u = AuthorizationCreator.userFactory(entity, identity);

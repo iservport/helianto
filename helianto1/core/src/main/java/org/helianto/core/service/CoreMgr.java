@@ -22,7 +22,7 @@ import org.helianto.core.Entity;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface CoreMgr extends GenericService {
+public interface CoreMgr {
 
     /**
      * Return the last available number to a number type

@@ -21,14 +21,18 @@ import java.util.List;
 import junit.framework.TestCase;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.IdentityFilter;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.test.AuthenticationTestSupport;
@@ -117,21 +121,53 @@ public class UserMgrImplTests extends TestCase {
         assertEquals(ActivityState.CANCELLED.getValue(), user.getUserState());
     }
     
+    public void testFindNextInternalNumber() {
+        InternalEnumerator enumerator = new InternalEnumerator();
+        enumerator.setLastNumber(10);
+        Entity entity = new Entity();
+        
+        expect(authorizationDao.findInternalEnumerator(entity, "TYPE_NAME"))
+            .andReturn(enumerator);
+        authorizationDao.persistInternalEnumerator(enumerator);
+        replay(authorizationDao);
+        
+        assertEquals(10, userMgr.findNextInternalNumber(entity, "TYPE_NAME"));
+        verify(authorizationDao);
+        assertEquals(11, enumerator.getLastNumber());
+    }
+    
+    public void testFindNextInternalNumberFirstCall() {
+        InternalEnumerator enumerator = null;
+        Entity entity = new Entity();
+        
+        expect(authorizationDao.findInternalEnumerator(entity, "TYPE_NAME"))
+            .andReturn(enumerator);
+        authorizationDao.persistInternalEnumerator(isA(InternalEnumerator.class));
+        replay(authorizationDao);
+        
+        assertEquals(1, userMgr.findNextInternalNumber(entity, "TYPE_NAME"));
+        verify(authorizationDao);
+    }
+    
     private AuthenticationDao authenticationDao;
+    private AuthorizationDao authorizationDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
     
     @Override
     public void setUp() {
         userMgr = new UserMgrImpl();
         authenticationDao = createMock(AuthenticationDao.class);
+        authorizationDao = createMock(AuthorizationDao.class);
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setAuthenticationDao(authenticationDao);
+        userMgr.setAuthorizationDao(authorizationDao);
         userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
     }
     
     @Override
     public void tearDown() {
         reset(authenticationDao);
+        reset(authorizationDao);
         reset(identitySelectionStrategy);
     }
     
