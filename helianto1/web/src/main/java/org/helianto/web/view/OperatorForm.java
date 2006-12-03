@@ -15,6 +15,8 @@
 
 package org.helianto.web.view;
 
+import java.io.Serializable;
+
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 
@@ -23,7 +25,9 @@ import org.helianto.core.Operator;
  *  
  * @author Mauricio Fernandes de Castro
  */
-public class OperatorForm {
+public class OperatorForm  implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     private Operator operator;
     

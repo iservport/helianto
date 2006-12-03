@@ -39,6 +39,11 @@ public class IdentityFormAction extends FormAction {
     private SecurityMgr securityMgr;
     private ServerMgr serverMgr;
     
+    public IdentityFormAction() {
+        setFormObjectName("identityForm");
+        setFormObjectClass(IdentityForm.class);
+    }
+    
     /**
      * Delegates to <code>SecurityMgr#createCredentialAndIdentity()</code>
      * and populates the form with the new <code>Credential</code>.
@@ -147,6 +152,17 @@ public class IdentityFormAction extends FormAction {
             logger.debug("Null operator, can't create MailForm");
         }
         return null;
+    }
+    
+    //- utilities
+    
+    public void init() {
+        if (securityMgr==null) {
+            throw new IllegalArgumentException("Required securityMgr");
+        }
+        if (serverMgr==null) {
+            throw new IllegalArgumentException("Required serverMgr");
+        }
     }
     
     //~ collaborators

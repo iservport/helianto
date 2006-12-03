@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE flow PUBLIC "-//SPRING//DTD WEBFLOW 1.0//EN"
-	"http://www.springframework.org/dtd/spring-webflow-1.0.dtd">
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
 
-<flow start-state="info.view">
+	<start-actions>
+		<!-- create the backing form object and initialize a empty errors collection -->
+		<action bean="installAction" method="setupForm" />
+	</start-actions>
 
-	<var name="userForm" class="org.helianto.web.view.UserForm"/>
+	<start-state idref="info.view" />
 
     <view-state id="info.view" view="configuration/info">
 		<transition on="next" to="identity.subflow"/>

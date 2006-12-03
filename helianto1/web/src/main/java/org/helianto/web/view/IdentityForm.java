@@ -15,6 +15,8 @@
 
 package org.helianto.web.view;
 
+import java.io.Serializable;
+
 import org.helianto.core.Credential;
 
 /**
@@ -22,8 +24,9 @@ import org.helianto.core.Credential;
  *  
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityForm {
+public class IdentityForm implements Serializable {
     
+    private static final long serialVersionUID = 1L;
     public static final char SEND_CURRENT_PASSWORD = 'C';
     public static final char SEND_NEW_PASSWORD = 'N';
     public static final char VERIFY_PASSWORD_ONLINE = 'V';

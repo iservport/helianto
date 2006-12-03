@@ -50,7 +50,7 @@
 	<!--
 			Security test dao
 			WARNING: do not use in production environment!
-	-->
+	
 	<bean id="inMemoryDaoImpl"
 		class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
 		<property name="userMap">
@@ -58,6 +58,7 @@
 			</value>
 		</property>
 	</bean>
+	-->
 	<!--
 			Security provider manager
 	-->

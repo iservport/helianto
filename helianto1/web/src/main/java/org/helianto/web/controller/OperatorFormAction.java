@@ -36,6 +36,11 @@ public class OperatorFormAction extends FormAction {
 
     private ServerMgr serverMgr;
     
+    public OperatorFormAction() {
+        setFormObjectName("operatorForm");
+        setFormObjectClass(OperatorForm.class);
+    }
+    
     /**
      * Assure required collaborators at runtime.
      */

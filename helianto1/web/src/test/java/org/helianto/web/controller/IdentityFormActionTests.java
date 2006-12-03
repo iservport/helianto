@@ -40,10 +40,19 @@ import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
 
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class IdentityFormActionTests extends TestCase {
     
     // class under test
     private IdentityFormAction identityFormAction;
+    
+    public void testConstruct() {
+        assertEquals("identityForm", identityFormAction.getFormObjectName());
+        assertEquals(IdentityForm.class, identityFormAction.getFormObjectClass());
+    }
     
     public void testCreate() {
         Credential credential = new Credential();
@@ -56,7 +65,7 @@ public class IdentityFormActionTests extends TestCase {
         assertEquals(event.getId(), "success");
         verify(securityMgr);
         
-        assertSame(credential, ((IdentityForm) context.getFlowScope().get("formObject")).getCredential());
+        assertSame(credential, ((IdentityForm) context.getFlowScope().get("identityForm")).getCredential());
     }
     
     public void testPersistIdentity() {
@@ -166,16 +175,16 @@ public class IdentityFormActionTests extends TestCase {
     public void setUp() {
         context = new MockRequestContext();
         form = new IdentityForm();
-        context.getFlowScope().put("formObject", form);
-        
-        securityMgr = createMock(SecurityMgr.class);
-        serverMgr = createMock(ServerMgr.class);
         identityFormAction = new IdentityFormAction() {
             protected PasswordConfirmationMailForm createMailForm(RequestContext context) {
                 System.out.println("Mail is "+mailForm);
                 return mailForm;
             }
         };
+        context.getFlowScope().put(identityFormAction.getFormObjectName(), form);
+        
+        securityMgr = createMock(SecurityMgr.class);
+        serverMgr = createMock(ServerMgr.class);
         identityFormAction.setSecurityMgr(securityMgr);
         identityFormAction.setServerMgr(serverMgr);
     }

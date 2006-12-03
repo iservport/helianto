@@ -37,10 +37,19 @@ import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
 
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class InstallFormActionTests extends TestCase {
     
     // class under test
     private InstallFormAction installFormAction;
+    
+    public void testConstruct() {
+        assertEquals("userForm", installFormAction.getFormObjectName());
+        assertEquals(UserForm.class, installFormAction.getFormObjectClass());
+    }
     
     public void testIfNewYes() {
         List<Operator> operatorList = new ArrayList<Operator>();
@@ -78,7 +87,7 @@ public class InstallFormActionTests extends TestCase {
         assertEquals(event.getId(), "success");
         verify(serverMgr);
         
-        assertSame(user, ((UserForm) context.getFlowScope().get("formObject")).getUser());
+        assertSame(user, ((UserForm) context.getFlowScope().get("userForm")).getUser());
     }
     
     public void testPersistManager() {
@@ -96,7 +105,7 @@ public class InstallFormActionTests extends TestCase {
     
     private RequestContext simulateFormInContext(Object form) {
         RequestContext context = new MockRequestContext();
-        context.getFlowScope().put("formObject", form);
+        context.getFlowScope().put("userForm", form);
         return context;
     }
     

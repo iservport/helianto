@@ -15,6 +15,8 @@
 
 package org.helianto.web.view;
 
+import java.io.Serializable;
+
 import org.helianto.core.User;
 
 /**
@@ -22,7 +24,9 @@ import org.helianto.core.User;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserForm {
+public class UserForm  implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     private User user;
 

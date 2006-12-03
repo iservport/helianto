@@ -38,10 +38,19 @@ import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
 
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class OperatorFormActionTests extends TestCase {
     
     // class under test
     private OperatorFormAction operatorFormAction;
+    
+    public void testConstruct() {
+        assertEquals("operatorForm", operatorFormAction.getFormObjectName());
+        assertEquals(OperatorForm.class, operatorFormAction.getFormObjectClass());
+    }
     
     public void testCreateOperator() {
         Operator operator = new Operator();
@@ -50,7 +59,7 @@ public class OperatorFormActionTests extends TestCase {
         
         RequestContext context = new MockRequestContext();
         OperatorForm form = new OperatorForm();
-        context.getFlowScope().put("formObject", form);
+        context.getFlowScope().put("operatorForm", form);
         
         Event event = operatorFormAction.createOperator(context);
         assertEquals(event.getId(), "success");
@@ -64,7 +73,7 @@ public class OperatorFormActionTests extends TestCase {
         OperatorForm form = new OperatorForm();
         form.setOperator(operator);
         RequestContext context = new MockRequestContext();
-        context.getFlowScope().put("formObject", form);
+        context.getFlowScope().put("operatorForm", form);
         
         serverMgr.persistOperator(operator);
         replay(serverMgr);

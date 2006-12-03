@@ -36,6 +36,13 @@ public class InstallFormAction extends FormAction {
     
     private UserMgr userMgr;
     
+    
+    
+    public InstallFormAction() {
+        setFormObjectName("userForm");
+        setFormObjectClass(UserForm.class);
+    }
+
     /**
      * Assure required collaborators at runtime.
      */
