@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 14/11/2006 21:06:50 by Hibernate Tools 3.1.0.beta5
+// Generated 03/12/2006 12:45:54 by Hibernate Tools 3.2.0.beta8
 
 
 import java.util.Date;
@@ -46,7 +46,6 @@ public class Credential extends org.helianto.core.type.AbstractCredential implem
        this.expired = expired;
        this.encription = encription;
     }
-    
    
     // Property accessors
     public long getId() {

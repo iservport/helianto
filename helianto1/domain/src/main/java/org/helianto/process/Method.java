@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 29/10/2006 20:02:34 by Hibernate Tools 3.1.0.beta5
+// Generated 03/12/2006 12:45:54 by Hibernate Tools 3.2.0.beta8
 
 
 import org.helianto.core.Entity;
@@ -45,7 +45,6 @@ public class Method  implements java.io.Serializable {
        this.techinique = techinique;
        this.control = control;
     }
-    
    
     // Property accessors
     public long getId() {

@@ -1,5 +1,5 @@
 package org.helianto.purchase;
-// Generated 29/10/2006 20:02:34 by Hibernate Tools 3.1.0.beta5
+// Generated 03/12/2006 12:45:54 by Hibernate Tools 3.2.0.beta8
 
 
 import java.math.BigDecimal;
@@ -41,7 +41,6 @@ public class Order  implements java.io.Serializable {
        this.dateIssued = dateIssued;
        this.orderValue = orderValue;
     }
-    
    
     // Property accessors
     public int getId() {

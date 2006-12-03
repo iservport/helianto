@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 29/10/2006 20:02:34 by Hibernate Tools 3.1.0.beta5
+// Generated 03/12/2006 12:45:54 by Hibernate Tools 3.2.0.beta8
 
 
 
@@ -35,7 +35,6 @@ public class Setup  implements java.io.Serializable {
        this.setupTime = setupTime;
        this.transportTime = transportTime;
     }
-    
    
     // Property accessors
     public long getId() {

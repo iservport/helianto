@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 14/11/2006 21:06:50 by Hibernate Tools 3.1.0.beta5
+// Generated 03/12/2006 12:45:54 by Hibernate Tools 3.2.0.beta8
 
 
 
@@ -31,7 +31,6 @@ public class Customer extends org.helianto.core.Partner implements java.io.Seria
     public Customer(PartnerData partnerData, byte sequence, char priority, char partnerState, String profile) {
         super(partnerData, sequence, priority, partnerState, profile);        
     }
-    
    
     // Property accessors
 

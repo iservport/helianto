@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 14/11/2006 21:06:50 by Hibernate Tools 3.1.0.beta5
+// Generated 03/12/2006 12:45:54 by Hibernate Tools 3.2.0.beta8
 
 
 
@@ -35,7 +35,6 @@ public class PrivateKey  implements java.io.Serializable {
        this.credential = credential;
        this.privateKey = privateKey;
     }
-    
    
     // Property accessors
     public int getId() {
