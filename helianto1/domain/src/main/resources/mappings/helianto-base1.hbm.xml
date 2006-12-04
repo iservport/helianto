@@ -92,5 +92,23 @@ At least one default (root) operatot must be defined per installation.
 				default encoding
 		-->
 		<property name="defaultEncoding" type="string" length="20"/>
+		<!-- 
+				preferred date format
+		-->
+		<property name="preferredDateFormat" type="string" length="12">
+			<column name="preferredDateFormat" default="yyyy/MM/dd "/>
+		</property>
+		<!-- 
+				preferred time format
+		-->
+		<property name="preferredTimeFormat" type="string" length="12">
+			<column name="preferredTimeFormat" default="HH:mm "/>
+		</property>
+		<!-- 
+				RFC 822 time zone
+		-->
+		<property name="rfc822TimeZone" type="string" length="5">
+			<column name="rfc822TimeZone" default="-0300"/>
+		</property>
 	</class>
 </hibernate-mapping>
