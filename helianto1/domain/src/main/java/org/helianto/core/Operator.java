@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 03/12/2006 12:45:54 by Hibernate Tools 3.2.0.beta8
+// Generated 04/12/2006 19:22:32 by Hibernate Tools 3.2.0.beta8
 
 
 import java.util.Locale;
@@ -33,6 +33,9 @@ public class Operator  implements java.io.Serializable {
      private String operatorHostAddress;
      private String operatorSourceMailAddress;
      private String defaultEncoding;
+     private String preferredDateFormat;
+     private String preferredTimeFormat;
+     private String rfc822TimeZone;
 
      // Constructors
 
@@ -46,7 +49,7 @@ public class Operator  implements java.io.Serializable {
         this.operationMode = operationMode;
     }
     /** full constructor */
-    public Operator(String operatorName, Operator parent, Locale locale, char operationMode, String operatorHostAddress, String operatorSourceMailAddress, String defaultEncoding) {
+    public Operator(String operatorName, Operator parent, Locale locale, char operationMode, String operatorHostAddress, String operatorSourceMailAddress, String defaultEncoding, String preferredDateFormat, String preferredTimeFormat, String rfc822TimeZone) {
        this.operatorName = operatorName;
        this.parent = parent;
        this.locale = locale;
@@ -54,6 +57,9 @@ public class Operator  implements java.io.Serializable {
        this.operatorHostAddress = operatorHostAddress;
        this.operatorSourceMailAddress = operatorSourceMailAddress;
        this.defaultEncoding = defaultEncoding;
+       this.preferredDateFormat = preferredDateFormat;
+       this.preferredTimeFormat = preferredTimeFormat;
+       this.rfc822TimeZone = rfc822TimeZone;
     }
    
     // Property accessors
@@ -113,6 +119,27 @@ public class Operator  implements java.io.Serializable {
     public void setDefaultEncoding(String defaultEncoding) {
         this.defaultEncoding = defaultEncoding;
     }
+    public String getPreferredDateFormat() {
+        return this.preferredDateFormat;
+    }
+    
+    public void setPreferredDateFormat(String preferredDateFormat) {
+        this.preferredDateFormat = preferredDateFormat;
+    }
+    public String getPreferredTimeFormat() {
+        return this.preferredTimeFormat;
+    }
+    
+    public void setPreferredTimeFormat(String preferredTimeFormat) {
+        this.preferredTimeFormat = preferredTimeFormat;
+    }
+    public String getRfc822TimeZone() {
+        return this.rfc822TimeZone;
+    }
+    
+    public void setRfc822TimeZone(String rfc822TimeZone) {
+        this.rfc822TimeZone = rfc822TimeZone;
+    }
 
     /**
      * toString
@@ -142,6 +169,9 @@ public class Operator  implements java.io.Serializable {
          
          
          result = 37 * result + ( getOperatorName() == null ? 0 : this.getOperatorName().hashCode() );
+         
+         
+         
          
          
          
