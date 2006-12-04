@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>	    	
 <!--
 	Copyright 2005 I Serv Consultoria Empresarial Ltda.
 	
@@ -15,32 +14,24 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 -->
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:flow="http://www.springframework.org/schema/webflow-config"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/webflow-config
+           http://www.springframework.org/schema/webflow-config/spring-webflow-config-1.0.xsd">
+       	    	
 	<!--
 		Flow executor
 	-->
-	<bean id="flowExecutor"
-		class="org.springframework.webflow.config.FlowExecutorFactoryBean">
-		<property name="definitionLocator" ref="flowRegistry" />
-		<property name="executionAttributes">
-			<map>
-				<entry key="alwaysRedirectOnPause">
-					<value type="java.lang.Boolean">false</value>
-				</entry>
-			</map>
-		</property>
-		<property name="repositoryType" value="CONTINUATION" />
-	</bean>
+    <flow:executor id="flowExecutor" registry-ref="flowRegistry"/>
 	<!--
 		Flow registry
 	-->
-	<bean id="flowRegistry"
-		class="org.springframework.webflow.engine.builder.xml.XmlFlowRegistryFactoryBean">
-		<property name="flowLocations">
-			<list>
-				<value>classpath:/flows/*.xml</value>
-				<value>/WEB-INF/flows/*.xml</value>
-			</list>
-		</property>
-	</bean>
+    <flow:registry id="flowRegistry">
+        <flow:location path="classpath*:/flows/**/*.xml"/>
+    </flow:registry>
+    
 </beans>

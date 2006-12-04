@@ -24,6 +24,7 @@ import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.web.view.IdentityForm;
+import org.springframework.validation.Errors;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
 import org.springframework.webflow.execution.Event;
@@ -104,8 +105,12 @@ public class IdentityFormAction extends FormAction {
     
     public Event nonUnique(RequestContext context) {
         IdentityForm form = doGetForm(context);
+//        Errors errors = (Errors) context.getFlashScope().get("errors");
+//        errors.rejectValue("credential.identity.principal", 
+//                "principal.error.duplicate", 
+//                "Duplicate principal, please choose another.");
         //TODO non unique identity
-        return success();
+        return error();
     }
     
     public Event persistFinal(RequestContext context) {
