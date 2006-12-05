@@ -16,13 +16,18 @@
 package org.helianto.core.validate;
 
 import java.beans.PropertyEditor;
+import java.io.Serializable;
 
 import org.helianto.core.Identity;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.orm.hibernate3.HibernateOperations;
 
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class AuthenticationPropertyEditorRegistrar extends
-        AbstractPropertyEditorRegistrar {
+    AbstractPropertyEditorRegistrar {
 
     public void registerCustomEditors(PropertyEditorRegistry registry) {
         PropertyEditor identityPropertyEditor = new IdentityPropertyEditor(
@@ -52,6 +57,12 @@ public class AuthenticationPropertyEditorRegistrar extends
         @Override
         public void setAsText(String id) throws IllegalArgumentException {
             setAsText(id, Identity.class);
+        }
+
+        @Override
+        protected Serializable resolveId(String id) {
+            long value = Long.parseLong(id);
+            return value;
         }
 
     }

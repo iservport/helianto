@@ -55,7 +55,7 @@ public abstract class AbstractHibernatePropertyEditor extends
             Object value = getHibernateTemplate().load(clazz, key);
             super.setValue(value);
             if (logger.isDebugEnabled()) {
-                logger.debug("Loaded property: "+value);
+                logger.debug("Loaded property: " + getValue()+" set from id="+id);
             }
         } catch (Exception e) {
             super.setValue(null);
