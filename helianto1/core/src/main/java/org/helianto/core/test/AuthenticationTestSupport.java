@@ -30,7 +30,7 @@ public class AuthenticationTestSupport extends AbstractIntegrationTest {
 
     public static Identity createIdentity() {
         String principal = generateKey(20, testKey++);
-        String optionalAlias = generateKey(20);
+        String optionalAlias = generateKey(12);
         Identity identity = AuthenticationCreator.identityFactory(principal, optionalAlias);
         logger.info("+++ "+identity);
         return identity;
