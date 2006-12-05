@@ -15,15 +15,18 @@
 
 package org.helianto.core.dao;
 
+import java.io.Serializable;
+
 /**
  * Value object to hold <code>Identity</code> filter data.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityFilter {
+public class IdentityFilter implements Serializable {
 
-    private String principalSearch;
-    private String nameOrAliasSearch;
+    private static final long serialVersionUID = 1L;
+    private String principalSearch = "";
+    private String nameOrAliasSearch = "";
 
     public String getNameOrAliasSearch() {
         return nameOrAliasSearch;
