@@ -72,7 +72,7 @@ public class UserMgrImplTests extends TestCase {
             .andReturn(identityList);
         replay(authenticationDao);
 
-        assertSame(identityList, userMgr.selectIdentities(filter));
+        assertSame(identityList, userMgr.findIdentities(filter));
         verify(authenticationDao);
     }
     

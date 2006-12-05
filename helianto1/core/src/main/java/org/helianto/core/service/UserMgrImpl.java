@@ -21,6 +21,11 @@ import org.helianto.core.hibernate.DefaultIdentitySelectionStrategy;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
 import org.helianto.core.type.ActivityState;
 
+/**
+ * Default <code>UserMgr</code> implementation.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class UserMgrImpl implements UserMgr, CoreMgr {
 	
     protected AuthenticationDao authenticationDao;
@@ -41,7 +46,7 @@ public class UserMgrImpl implements UserMgr, CoreMgr {
         authenticationDao.persistIdentity(identity);
 	}
     
-    public List<Identity> selectIdentities(IdentityFilter filter) {
+    public List<Identity> findIdentities(IdentityFilter filter) {
         String criteria = identitySelectionStrategy.createCriteriaAsString(filter);
         List<Identity> identityList = authenticationDao.findIdentityByCriteria(criteria);
         return identityList ;

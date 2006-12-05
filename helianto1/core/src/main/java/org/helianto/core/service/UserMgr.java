@@ -27,7 +27,7 @@ public interface UserMgr {
      * 
      * @param filter
      */
-    public List<Identity> selectIdentities(IdentityFilter filter);
+    public List<Identity> findIdentities(IdentityFilter filter);
     
     /**
      * <p>A <code>Credential</code> with an
