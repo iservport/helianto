@@ -20,6 +20,7 @@ import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.hibernate.DefaultIdentitySelectionStrategy;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
 import org.helianto.core.type.ActivityState;
+import org.helianto.core.type.IdentityType;
 
 /**
  * Default <code>UserMgr</code> implementation.
@@ -92,6 +93,21 @@ public class UserMgrImpl implements UserMgr, CoreMgr {
     
     public List<UserGroup> findUserByEntity(Entity entity) {
         return authorizationDao.findUserGroupByEntity(entity);
+    }
+    
+    public UserGroup findOrCreateUserGroup(Entity entity, String groupName) {
+        Identity groupIdentity = authenticationDao.findIdentityByPrincipal(groupName);
+        if (groupIdentity==null) {
+            groupIdentity = AuthenticationCreator.identityFactory(groupName, groupName);
+            groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
+            authenticationDao.persistIdentity(groupIdentity);
+        }
+        UserGroup userGroup = authorizationDao.findUserGroupByNaturalId(entity, groupIdentity);
+        if (userGroup==null) {
+            userGroup = AuthorizationCreator.userGroupFactory(entity, groupIdentity);
+            authorizationDao.persistUserGroup(userGroup);
+        }
+        return userGroup;
     }
     
     /**

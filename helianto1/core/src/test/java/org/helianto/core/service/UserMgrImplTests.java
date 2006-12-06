@@ -31,6 +31,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.IdentityFilter;
@@ -38,6 +39,7 @@ import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.type.ActivityState;
+import org.helianto.core.type.IdentityType;
 
 public class UserMgrImplTests extends TestCase {
     
@@ -119,6 +121,66 @@ public class UserMgrImplTests extends TestCase {
         
         userMgr.cancelUser(user);
         assertEquals(ActivityState.CANCELLED.getValue(), user.getUserState());
+    }
+    
+    public void testFindOrCreateUserGroupNoName() {
+        Entity entity = new Entity();
+        
+        expect(authenticationDao.findIdentityByPrincipal("NAME"))
+            .andReturn(null);
+        authenticationDao.persistIdentity(isA(Identity.class));
+        replay(authenticationDao);
+        
+        expect(authorizationDao.findUserGroupByNaturalId(isA(Entity.class), isA(Identity.class)))
+            .andReturn(null);
+        authorizationDao.persistUserGroup(isA(UserGroup.class));
+        replay(authorizationDao);
+        
+        UserGroup userGroup = userMgr.findOrCreateUserGroup(entity, "NAME");
+        verify(authenticationDao);
+        
+        assertSame(entity, userGroup.getEntity());
+        assertEquals("NAME", userGroup.getIdentity().getPrincipal());
+        assertEquals("NAME", userGroup.getIdentity().getOptionalAlias());
+        assertEquals(IdentityType.GROUP.getValue(), userGroup.getIdentity().getIdentityType());
+    }
+    
+    public void testFindOrCreateUserGroupOnlyName() {
+        Identity groupIdentity = new Identity(); 
+        Entity entity = new Entity();
+        
+        expect(authenticationDao.findIdentityByPrincipal("NAME"))
+            .andReturn(groupIdentity);
+        replay(authenticationDao);
+        
+        expect(authorizationDao.findUserGroupByNaturalId(isA(Entity.class), isA(Identity.class)))
+            .andReturn(null);
+        authorizationDao.persistUserGroup(isA(UserGroup.class));
+        replay(authorizationDao);
+        
+        UserGroup userGroup = userMgr.findOrCreateUserGroup(entity, "NAME");
+        verify(authenticationDao);
+        
+        assertSame(entity, userGroup.getEntity());
+        assertSame(groupIdentity, userGroup.getIdentity());
+    }
+    
+    public void testFindOrCreateUserGroup() {
+        Identity groupIdentity = new Identity(); 
+        Entity entity = new Entity();
+        UserGroup userGroup = new UserGroup();
+        
+        expect(authenticationDao.findIdentityByPrincipal("NAME"))
+            .andReturn(groupIdentity);
+        replay(authenticationDao);
+        
+        expect(authorizationDao.findUserGroupByNaturalId(isA(Entity.class), isA(Identity.class)))
+            .andReturn(userGroup);
+        replay(authorizationDao);
+        
+        assertSame(userGroup, userMgr.findOrCreateUserGroup(entity, "NAME"));
+        verify(authenticationDao);
+        
     }
     
     public void testFindNextInternalNumber() {

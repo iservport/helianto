@@ -18,6 +18,7 @@ package org.helianto.core.hibernate;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
+import org.helianto.core.Operator;
 import org.helianto.core.dao.EntityDao;
 import org.springframework.util.Assert;
 
@@ -25,7 +26,6 @@ import org.springframework.util.Assert;
  * Hibernate implementation for <code>EntityDao</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
 
@@ -37,15 +37,13 @@ public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
         remove(entity);
     }
 
-    public Entity findEntityByHomeAndAlias(String homeName, String alias) {
-        return (Entity) findUnique(ENTITY_QRY, homeName, alias);
+    public Entity findEntityByNaturalId(Operator operator, String alias) {
+        return (Entity) findUnique(ENTITY_QRY, operator, alias);
     }
-
-    static final String ENTITY_QRY = 
-        "from Entity entity " +
-        "where entity.home.homeName = ? " +
-        "and entity.alias = ?";
     
+    static String ENTITY_QRY = "from Entity entity "+
+        "where entity.operator = ? and entity.alias = ? ";
+
     public void persistDefaultEntity(DefaultEntity defaultEntity) {
         merge(defaultEntity);
     }

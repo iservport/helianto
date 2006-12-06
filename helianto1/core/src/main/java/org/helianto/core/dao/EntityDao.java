@@ -18,6 +18,7 @@ package org.helianto.core.dao;
 import org.helianto.core.DefaultEntity;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
+import org.helianto.core.Operator;
 
 /**
  * Entity data access interface.
@@ -37,23 +38,25 @@ public interface EntityDao {
     public void removeEntity(Entity entity);
     
     /**
-     * Find <code>Entity</code> by <code>Home</code>
-     * name and unique alias.
+     * Find <code>Entity</code> by <code>Operator</code> and alias.
      */
-    public Entity findEntityByHomeAndAlias(String homeName, String alias);
-
+    public Entity findEntityByNaturalId(Operator operator, String alias);
+    
     /**
      * Persist <code>DefaultEntity</code>.
+     * @deprecated
      */
     public void persistDefaultEntity(DefaultEntity defaultEntity);
     
     /**
      * Remove <code>DefaultEntity</code>.
+     * @deprecated
      */
     public void removeDefaultEntity(DefaultEntity defaultEntity);
     
     /**
      * Find <code>Entity</code> assigned as default.
+     * @deprecated
      */
     public Entity findDefaultEntity();
     
@@ -62,6 +65,7 @@ public interface EntityDao {
      * 
      * <p>More than one default entity is allowed when
      * distinguished by priority.</p>
+     * @deprecated
      */
     public Entity findDefaultEntity(int priority);
     
