@@ -54,9 +54,8 @@ service will look-up the user hierarchy roles as well.
 		<natural-id mutable="false">
 			<!-- 
 					entity
-					REMEMBER: don't use cascade here.
 			-->
-			<many-to-one name="entity" 
+			<many-to-one name="entity" cascade="merge,save-update"
 				class="org.helianto.core.Entity">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
@@ -64,9 +63,8 @@ service will look-up the user hierarchy roles as well.
 			</many-to-one>
 			<!-- 
 					identity
-					REMEMBER: don't use cascade here.
 			-->
-			<many-to-one name="identity" 
+			<many-to-one name="identity" cascade="merge,save-update"
 				class="org.helianto.core.Identity">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
@@ -87,15 +85,15 @@ service will look-up the user hierarchy roles as well.
 		<!--
 				children
 		-->
-		<set name="children" inverse="true">
-			<key column="id"/>
-			<one-to-many class="org.helianto.core.UserGroup"/>
+		<set name="children" inverse="true" cascade="all">
+			<key column="id" not-null="true"/>
+			<one-to-many class="org.helianto.core.UserGroup" />
 		</set> 
 		<!--
 				roles
 		-->
-		<set name="roles" inverse="true" cascade="save-update,merge">
-			<key column="userId"/>
+		<set name="roles" inverse="true" cascade="all">
+			<key column="userId" not-null="true"/>
 			<one-to-many class="org.helianto.core.UserRole"/>
 		</set>
 		<!-- 

@@ -11,8 +11,8 @@
 	<logger name="org.apache">
 		<level value="INFO"/>
 	</logger>
-	<logger name="net.sf.hibernate">
-		<level value="warn"/>
+	<logger name="org.hibernate">
+		<level value="DEBUG"/>
 	</logger>
 	<logger name="org.springframework">
 		<level value="INFO"/>

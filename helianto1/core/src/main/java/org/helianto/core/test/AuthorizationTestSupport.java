@@ -60,6 +60,7 @@ public class AuthorizationTestSupport extends AbstractIntegrationTest {
     public static UserGroup createAndPersistUserGroup(AuthorizationDao authorizationDao) {
         UserGroup userGroup = createUserGroup();
         if (authorizationDao!=null) {
+//            authorizationDao.persistEntity(userGroup.getEntity());
             authorizationDao.persistUserGroup(userGroup);
         }
         return userGroup;

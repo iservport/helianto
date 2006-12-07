@@ -112,9 +112,9 @@ Personal data, if any.
 		<!--
 				users
 		-->
-		<set name="users" inverse="true" cascade="save-update,merge">
-			<key column="identityId"/>
-			<one-to-many class="org.helianto.core.UserGroup"/>
+		<set name="users" inverse="true" cascade="all">
+			<key column="identityId" not-null="true"/>
+			<one-to-many class="org.helianto.core.UserGroup" />
 		</set>
 	</class>
 </hibernate-mapping>
