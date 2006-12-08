@@ -15,10 +15,6 @@
 
 package org.helianto.core.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import junit.framework.TestCase;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.isA;
@@ -26,12 +22,16 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import junit.framework.TestCase;
+
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.IdentityFilter;
@@ -39,7 +39,6 @@ import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.IdentityType;
 
 public class UserMgrImplTests extends TestCase {
     

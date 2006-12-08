@@ -49,29 +49,6 @@ public class ServerMgrImplTests extends TestCase {
     // class under test
     private ServerMgrImpl serverMgr;
     
-    //
-    
-    public void testCreateSystemConfiguration() {
-        Identity managerIdentity = new Identity();
-        Entity defaultEntity = new Entity();
-        UserRole adminManagerRole = new UserRole();
-        User manager = new User();
-        
-        expect(systemConfigurationTemplate
-                .createDefaultEntity()).andReturn(defaultEntity);
-        expect(serviceManagementTemplate
-                .createManagerRole(defaultEntity, "ADMIN")).andReturn(adminManagerRole);
-        expect(systemConfigurationTemplate.createManager(
-                adminManagerRole, managerIdentity)).andReturn(manager);
-        replay(systemConfigurationTemplate);
-        replay(serviceManagementTemplate);
-        
-        assertSame(manager, serverMgr.createSystemConfiguration(managerIdentity));
-        verify(systemConfigurationTemplate);
-        verify(serviceManagementTemplate);
-    }
-
-    
     public void testPersistOperator() {
         Operator operator = new Operator();
         operatorDao.persistOperator(operator);
@@ -134,8 +111,6 @@ public class ServerMgrImplTests extends TestCase {
     // collabs
     
     private OperatorDao operatorDao;
-    private ServiceManagementTemplate serviceManagementTemplate;
-    private SystemConfigurationTemplate systemConfigurationTemplate;
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
     private ConfigurableMailSender sender;
@@ -143,8 +118,6 @@ public class ServerMgrImplTests extends TestCase {
     @Override
     public void setUp() {
         operatorDao = createMock(OperatorDao.class);
-        serviceManagementTemplate = createMock(ServiceManagementTemplate.class);
-        systemConfigurationTemplate = createMock(SystemConfigurationTemplate.class);
         configurableMailSenderFactory = createMock(ConfigurableMailSenderFactory.class);
         mailMessageComposer = createMock(MailMessageComposer.class);
         
@@ -152,8 +125,6 @@ public class ServerMgrImplTests extends TestCase {
         
         serverMgr = new ServerMgrImpl();
         serverMgr.setOperatorDao(operatorDao);
-//        serverMgr.setServiceManagementTemplate(serviceManagementTemplate);
-//        serverMgr.setSystemConfigurationTemplate(systemConfigurationTemplate);
         serverMgr.setConfigurableMailSenderFactory(configurableMailSenderFactory);
         serverMgr.setMailMessageComposer(mailMessageComposer);
     }
@@ -161,8 +132,8 @@ public class ServerMgrImplTests extends TestCase {
     @Override
     public void tearDown() {
         reset(operatorDao);
-        reset(serviceManagementTemplate);
-        reset(systemConfigurationTemplate);
+//        reset(serviceManagementTemplate);
+//        reset(systemConfigurationTemplate);
         reset(configurableMailSenderFactory);
         reset(mailMessageComposer);
         reset(sender);
