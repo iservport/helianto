@@ -152,8 +152,8 @@ public class ServerMgrImplTests extends TestCase {
         
         serverMgr = new ServerMgrImpl();
         serverMgr.setOperatorDao(operatorDao);
-        serverMgr.setServiceManagementTemplate(serviceManagementTemplate);
-        serverMgr.setSystemConfigurationTemplate(systemConfigurationTemplate);
+//        serverMgr.setServiceManagementTemplate(serviceManagementTemplate);
+//        serverMgr.setSystemConfigurationTemplate(systemConfigurationTemplate);
         serverMgr.setConfigurableMailSenderFactory(configurableMailSenderFactory);
         serverMgr.setMailMessageComposer(mailMessageComposer);
     }

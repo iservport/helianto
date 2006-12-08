@@ -23,28 +23,32 @@ import org.helianto.core.User;
 import org.helianto.core.UserRole;
 import org.helianto.core.test.AuthorizationTestSupport;
 
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class DefaultSystemConfigurationImplTests extends TestCase {
     
-    private SystemConfigurationTemplate systemConfigurationTemplate;
-    
-    public void testCreateDefaultEntity() {
-        Entity defaultEntity = systemConfigurationTemplate.createDefaultEntity();
-        assertEquals("DEFAULT", defaultEntity.getAlias());
-        assertEquals("DEFAULT", defaultEntity.getOperator().getOperatorName());
-    }
-    
-    public void testCreateManager() {
-        UserRole managerRole = AuthorizationTestSupport.createUserRole();
-        Identity managerIdentity = new Identity();
-        User manager = systemConfigurationTemplate.createManager(managerRole, managerIdentity);
-        assertSame(managerRole.getUserGroup(), manager.getParent());
-        assertSame(managerIdentity, manager.getIdentity());
-    }
-    
-    @Override
-    public void setUp() {
-        ServerMgrImpl serverMgr = new ServerMgrImpl();
-        systemConfigurationTemplate = serverMgr.new DefaultSystemConfigurationImpl();
-    }
+//    private SystemConfigurationTemplate systemConfigurationTemplate;
+//    
+//    public void testCreateDefaultEntity() {
+//        Entity defaultEntity = systemConfigurationTemplate.createDefaultEntity();
+//        assertEquals("DEFAULT", defaultEntity.getAlias());
+//        assertEquals("DEFAULT", defaultEntity.getOperator().getOperatorName());
+//    }
+//    
+//    public void testCreateManager() {
+//        UserRole managerRole = AuthorizationTestSupport.createUserRole();
+//        Identity managerIdentity = new Identity();
+//        User manager = systemConfigurationTemplate.createManager(managerRole, managerIdentity);
+//        assertSame(managerRole.getUserGroup(), manager.getParent());
+//        assertSame(managerIdentity, manager.getIdentity());
+//    }
+//    
+//    @Override
+//    public void setUp() {
+//        ServerMgrImpl serverMgr = new ServerMgrImpl();
+//        systemConfigurationTemplate = serverMgr.new DefaultSystemConfigurationImpl();
+//    }
 
 }

@@ -26,6 +26,7 @@ import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
 import org.helianto.core.Credential;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.springframework.util.Assert;
@@ -122,33 +123,24 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements
                 logger.debug("Trying to resolve roles...");
             }
             Set<UserRole> roles = new HashSet<UserRole>();
-            List<UserGroup> userHierarchy = assembleUsersInTreeOrder(getUser());
-            for (UserGroup user: userHierarchy) {
-                roles.addAll(user.getRoles());
-            }
+            recusrseUserRoles(getUser(), roles, 0);
             Assert.notNull(roles);
             return roles;
         }
         
-        public List<UserGroup> assembleUsersInReverseTreeOrder(UserGroup userGroup) {
-            List<UserGroup> userGroupList = new ArrayList<UserGroup>();
-            UserGroup parent = userGroup;
-            while (parent!=null) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Found in user hierarchy: "+parent);
-                }
-                userGroupList.add(parent);
-                parent = parent.getParent();
+        public void recusrseUserRoles(UserGroup userGroup, Set<UserRole> roles, int level) {
+            // first, take the roles from this user group (or user)
+            roles.addAll(userGroup.getRoles());
+            if (logger.isDebugEnabled()) {
+                logger.debug("Adding roles level "+level+" from "+userGroup);
             }
-            return userGroupList;
+            level++;
+            for (UserAssociation association: userGroup.getParents()) {
+                // then, for every association we must retrieve a parent
+                recusrseUserRoles(association.getParent(), roles, level);
+            }
         }
         
-        public List<UserGroup> assembleUsersInTreeOrder(UserGroup userGroup) {
-            List<UserGroup> userGroupList = assembleUsersInReverseTreeOrder(userGroup);
-            Collections.reverse(userGroupList);
-            return userGroupList;
-        }
-
     }
 
 }

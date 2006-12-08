@@ -95,35 +95,6 @@ public class UserMgrImpl implements UserMgr, CoreMgr {
         return authorizationDao.findUserGroupByEntity(entity);
     }
     
-    public UserGroup findOrCreateUserGroup(Entity entity, String groupName) {
-        Identity groupIdentity = authenticationDao.findIdentityByPrincipal(groupName);
-        if (groupIdentity==null) {
-            groupIdentity = AuthenticationCreator.identityFactory(groupName, groupName);
-            groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
-            authenticationDao.persistIdentity(groupIdentity);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+groupIdentity);
-            }
-        } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Retrieved "+groupIdentity);
-            }
-        }
-        UserGroup userGroup = authorizationDao.findUserGroupByNaturalId(entity, groupIdentity);
-        if (userGroup==null) {
-            userGroup = AuthorizationCreator.userGroupFactory(entity, groupIdentity);
-            authorizationDao.persistUserGroup(userGroup);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+userGroup);
-            }
-        } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Retrieved "+userGroup);
-            }
-        }
-        return userGroup;
-    }
-    
     /**
      * Helper method to convert principal to lower case.
      */

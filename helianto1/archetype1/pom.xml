@@ -4,7 +4,7 @@
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-archetype</artifactId>
 	<version>0.0.3</version>
-	<name>The Helianto Project Web Module</name>
+	<name>The Helianto Project Archetype</name>
 	<packaging>maven-plugin</packaging>
 
 	<description>Helianto base archetype.</description>

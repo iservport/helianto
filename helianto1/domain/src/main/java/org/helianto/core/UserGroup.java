@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 07/12/2006 11:35:10 by Hibernate Tools 3.2.0.beta8
+// Generated 07/12/2006 16:03:04 by Hibernate Tools 3.2.0.beta8
 
 
 import java.util.HashSet;
@@ -27,8 +27,7 @@ public class UserGroup  implements java.io.Serializable {
      private Entity entity;
      private Identity identity;
      private char userState;
-     private UserGroup parent;
-     private Set<UserGroup> children = new HashSet<UserGroup>(0);
+     private Set<UserAssociation> parents = new HashSet<UserAssociation>(0);
      private Set<UserRole> roles = new HashSet<UserRole>(0);
 
      // Constructors
@@ -44,12 +43,11 @@ public class UserGroup  implements java.io.Serializable {
         this.userState = userState;
     }
     /** full constructor */
-    public UserGroup(Entity entity, Identity identity, char userState, UserGroup parent, Set<UserGroup> children, Set<UserRole> roles) {
+    public UserGroup(Entity entity, Identity identity, char userState, Set<UserAssociation> parents, Set<UserRole> roles) {
        this.entity = entity;
        this.identity = identity;
        this.userState = userState;
-       this.parent = parent;
-       this.children = children;
+       this.parents = parents;
        this.roles = roles;
     }
    
@@ -82,19 +80,12 @@ public class UserGroup  implements java.io.Serializable {
     public void setUserState(char userState) {
         this.userState = userState;
     }
-    public UserGroup getParent() {
-        return this.parent;
+    public Set<UserAssociation> getParents() {
+        return this.parents;
     }
     
-    public void setParent(UserGroup parent) {
-        this.parent = parent;
-    }
-    public Set<UserGroup> getChildren() {
-        return this.children;
-    }
-    
-    public void setChildren(Set<UserGroup> children) {
-        this.children = children;
+    public void setParents(Set<UserAssociation> parents) {
+        this.parents = parents;
     }
     public Set<UserRole> getRoles() {
         return this.roles;
@@ -135,7 +126,6 @@ public class UserGroup  implements java.io.Serializable {
          
          result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getIdentity() == null ? 0 : this.getIdentity().hashCode() );
-         
          
          
          

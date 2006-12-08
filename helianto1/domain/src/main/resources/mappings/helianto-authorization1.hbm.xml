@@ -47,7 +47,7 @@ service will look-up the user hierarchy roles as well.
 		<!-- 
   				id
 		-->
-		<id name="id" type="long">
+		<id name="id" column="userId" type="long">
 			<generator class="native"/>
 		</id>
 		<discriminator column="type" type="char" />
@@ -77,17 +77,17 @@ service will look-up the user hierarchy roles as well.
 		<property name="userState" type="char" not-null="true"/>
 		<!-- 
 				parent
-		-->
+		
 		<many-to-one name="parent"
 			class="org.helianto.core.UserGroup">
 			<column name="parentId" not-null="false"/>
-		</many-to-one>
+		</many-to-one> -->
 		<!--
-				children
+				parents
 		-->
-		<set name="children" inverse="true" cascade="all">
-			<key column="id" not-null="true"/>
-			<one-to-many class="org.helianto.core.UserGroup" />
+		<set name="parents" inverse="true" cascade="all">
+			<key column="childId" not-null="true"/>
+			<one-to-many class="org.helianto.core.UserAssociation" />
 		</set> 
 		<!--
 				roles

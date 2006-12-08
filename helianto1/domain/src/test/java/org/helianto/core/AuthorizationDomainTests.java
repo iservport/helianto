@@ -16,6 +16,7 @@
 package org.helianto.core;
 
 import java.util.Date;
+import java.util.HashSet;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.type.ActivityState;
@@ -35,10 +36,7 @@ public class AuthorizationDomainTests extends TestCase {
 
         userGroup.setIdentity(new Identity());
 
-        userGroup.setParent(new User());
-        
-        userGroup.getChildren().add(new UserGroup());
-        
+        userGroup.setParents(new HashSet<UserAssociation>());
         userGroup.setUserState(ActivityState.ACTIVE.getValue());
         userGroup.setUserState(ActivityState.CANCELLED.getValue());
         userGroup.setUserState(ActivityState.INITIAL.getValue());
@@ -75,6 +73,36 @@ public class AuthorizationDomainTests extends TestCase {
 
         user.setAccountNonExpired(true);
         user.setAccountNonExpired(false);
+    }
+    
+    public void testUserAssociation() {
+        UserAssociation association = new UserAssociation();
+        
+        association.setId(Long.MAX_VALUE);
+        association.setId(Long.MIN_VALUE);
+
+        association.setParent(new User());
+        association.setParent(new UserGroup());
+        association.setChild(new User());
+        association.setChild(new UserGroup());
+    }
+
+    public void testUserAssociationEquals() {
+        UserAssociation copy, association = new UserAssociation();
+        association.setParent(new User());
+        association.setChild(new User());
+        copy = (UserAssociation) DomainTestSupport.minimalEqualsTest(association);
+
+        copy.setParent(association.getParent());
+        assertFalse(association.equals(copy));
+
+        copy.setParent(null);
+        copy.setChild(association.getChild());
+        assertFalse(association.equals(copy));
+
+        copy.setParent(association.getParent());
+        copy.setChild(association.getChild());
+        assertTrue(association.equals(copy));
     }
 
     public void testUserLog() {

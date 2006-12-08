@@ -67,11 +67,6 @@ public interface UserMgr {
     
     
     /**
-     * <p>Finds or creates <code>UserGroup</code> by <code>Entity</code> and name.</p>
-     */
-    public UserGroup findOrCreateUserGroup(Entity entity, String groupName);
-    
-    /**
      * <code>UserGroup</code> will be unlocked by this action
      * if the <code>Credential</code> is active.
      */

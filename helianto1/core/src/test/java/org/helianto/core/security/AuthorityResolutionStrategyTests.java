@@ -15,13 +15,16 @@
 
 package org.helianto.core.security;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.test.SecurityTestSupport;
 
 public class AuthorityResolutionStrategyTests extends TestCase {
@@ -31,40 +34,51 @@ public class AuthorityResolutionStrategyTests extends TestCase {
     private AuthorityResolutionStrategy authorityResolutionStrategy; 
     
     public void testSimpleDefaultAuthorityResolution() {
-        UserRole userRole = new UserRole();
-        userDetailsAdapter.getUser().getRoles().add(userRole);
-        Set<UserRole> roles = authorityResolutionStrategy.resolveUserRoles();
-        assertEquals(1, roles.size());
-        assertSame(userRole, roles.toArray()[0]);
+        Set<UserRole> roleSet = authorityResolutionStrategy.resolveUserRoles();
+        assertEquals(1, roleSet.size());
+        assertSame(roles[0], roleSet.toArray()[0]);
+    }
+    
+    private UserGroup createUserAssociationWithRole(UserGroup user, int i) {
+        UserGroup parent = new UserGroup();
+        parent.setRoles(new HashSet<UserRole>());
+        parent.getRoles().add(roles[i]);
+        AuthorizationCreator.createUserAssociation(parent, user);
+        return parent;
     }
     
     public void testDefaultAuthorityResolution() {
-        UserRole childUserRole = new UserRole(), parentUserRole = new UserRole();
-        childUserRole.setServiceExtension("1");
-        parentUserRole.setServiceExtension("2");
         User user = userDetailsAdapter.getUser();
-        user.setParent(new UserGroup());
-        user.getRoles().add(childUserRole);
-        user.getParent().getRoles().add(parentUserRole);
-        Set<UserRole> roles = authorityResolutionStrategy.resolveUserRoles();
-        assertEquals(2, roles.size());
-        assertTrue(roles.contains(childUserRole));
-        assertTrue(roles.contains(parentUserRole));
+        createUserAssociationWithRole(user, 1);
+        Set<UserRole> roleSet = authorityResolutionStrategy.resolveUserRoles();
+        assertEquals(2, roleSet.size());
+        assertTrue(roleSet.contains(roles[0]));
+        assertTrue(roleSet.contains(roles[1]));
     }
     
     public void testDuplicateDefaultAuthorityResolution() {
-        UserRole childUserRole = new UserRole(), parentUserRole = new UserRole();
-        childUserRole.setServiceExtension("1");
-        parentUserRole.setServiceExtension("2");
         User user = userDetailsAdapter.getUser();
-        user.setParent(new UserGroup());
-        user.getRoles().add(childUserRole);
-        user.getParent().getRoles().add(parentUserRole);
-        user.getParent().getRoles().add(childUserRole); //too
-        Set<UserRole> roles = authorityResolutionStrategy.resolveUserRoles();
-        assertEquals(2, roles.size());
-        assertTrue(roles.contains(childUserRole));
-        assertTrue(roles.contains(parentUserRole));
+        UserGroup parent = createUserAssociationWithRole(user, 1);
+        createUserAssociationWithRole(parent, 1);
+        Set<UserRole> roleSet = authorityResolutionStrategy.resolveUserRoles();
+        assertEquals(2, roleSet.size());
+        assertTrue(roleSet.contains(roles[0]));
+        assertTrue(roleSet.contains(roles[1]));
+    }
+    
+    private UserRole[] roles;
+    
+    private UserRole[] createUserRoles(int size) {
+        UserRole[] roles = new UserRole[size];
+        for (int i = 0;i<size;i++) {
+            UserRole role = new UserRole();
+            Service service = new Service();
+            role.setUserGroup(userDetailsAdapter.getUser());
+            role.setService(service);
+            role.setServiceExtension(""+i);
+            roles[i] = role;
+        }
+        return roles;
     }
     
     //
@@ -74,6 +88,9 @@ public class AuthorityResolutionStrategyTests extends TestCase {
         userDetailsAdapter = SecurityTestSupport.createUserDetailsAdapter();
         authorityResolutionStrategy = 
             userDetailsAdapter.new DefaultAuthorityResolutionStrategy();
+        roles = createUserRoles(3);
+        // start with one role only
+        userDetailsAdapter.getUser().getRoles().add(roles[0]);
     }
 
 }

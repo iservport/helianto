@@ -17,15 +17,20 @@ package org.helianto.core.service;
 
 import java.util.Locale;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
+import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.creation.OperatorCreator;
+import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.type.IdentityType;
 import org.helianto.core.type.OperationMode;
 
 /**
@@ -35,72 +40,74 @@ import org.helianto.core.type.OperationMode;
  */
 public abstract class AbstractServerMgr implements ServerMgr {
 
-    protected ServiceManagementTemplate serviceManagementTemplate = new DefaultServiceManagementImpl();
-
-    protected SystemConfigurationTemplate systemConfigurationTemplate = new DefaultSystemConfigurationImpl();
-
+    protected AuthenticationDao authenticationDao;
+    
+    protected AuthorizationDao authorizationDao;
+    
     public User createSystemConfiguration(Identity managerIdentity) {
-        Entity defaultEntity = systemConfigurationTemplate
-                .createDefaultEntity();
-        UserRole adminManagerRole = serviceManagementTemplate
-                .createManagerRole(defaultEntity, "ADMIN");
-        User manager = systemConfigurationTemplate.createManager(
-                adminManagerRole, managerIdentity);
+        Entity defaultEntity = createDefaultEntity();
+        UserGroup managerGroup = findOrCreateUserGroup(defaultEntity, "ADMIN", new String[] {"MANAGER"});
+        User manager = AuthorizationCreator.userFactory(managerGroup,
+                managerIdentity);
         return manager;
     }
 
-    // mutators
-
-    public void setServiceManagementTemplate(
-            ServiceManagementTemplate serviceManagementTemplate) {
-        this.serviceManagementTemplate = serviceManagementTemplate;
+    public Entity createDefaultEntity() {
+        Operator operator = OperatorCreator.operatorFactory("DEFAULT",
+                OperationMode.LOCAL, Locale.getDefault());
+        return OperatorCreator.entityFactory(operator, "DEFAULT");
     }
 
-    public void setSystemConfigurationTemplate(
-            SystemConfigurationTemplate systemConfigurationTemplate) {
-        this.systemConfigurationTemplate = systemConfigurationTemplate;
-    }
-
-    // inner classes
-
-    /**
-     * Default implementation of <code>ServiceManagementTemplate</code>.
-     * 
-     * @author Mauricio Fernandes de Castro
-     */
-    public class DefaultServiceManagementImpl implements
-            ServiceManagementTemplate {
-
-        public UserRole createManagerRole(Entity entity, String serviceName) {
-            UserGroup userGroup = AuthorizationCreator.userGroupFactory(entity,
-                    null);
-            Service emptyService = OperatorCreator.serviceFactory(entity
-                    .getOperator(), serviceName);
-            UserRole managerRole = AuthorizationCreator.userRoleFactory(
-                    userGroup, emptyService, "MANAGER");
-            return managerRole;
+    public UserGroup findOrCreateUserGroup(Entity entity, String groupName) {
+        Identity groupIdentity = authenticationDao.findIdentityByPrincipal(groupName);
+        if (groupIdentity==null) {
+            groupIdentity = AuthenticationCreator.identityFactory(groupName, groupName);
+            groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
+            authenticationDao.persistIdentity(groupIdentity);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+groupIdentity);
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Retrieved "+groupIdentity);
+            }
         }
+        UserGroup userGroup = authorizationDao.findUserGroupByNaturalId(entity, groupIdentity);
+        if (userGroup==null) {
+            userGroup = AuthorizationCreator.userGroupFactory(entity, groupIdentity);
+            authorizationDao.persistUserGroup(userGroup);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+userGroup);
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Retrieved "+userGroup);
+            }
+        }
+        return userGroup;
+    }
+    
+    public UserGroup findOrCreateUserGroup(Entity entity, String serviceName, String[] extensions) {
+        UserGroup userGroup = findOrCreateUserGroup(entity, serviceName);
+        Service service = OperatorCreator.serviceFactory(entity
+                .getOperator(), serviceName);
+        for (String extension: extensions) {
+            AuthorizationCreator.userRoleFactory(
+                    userGroup, service, extension);
+        }
+        return userGroup;
+    }
+    
+    //~ collaborators
+
+    public void setAuthenticationDao(AuthenticationDao authenticationDao) {
+        this.authenticationDao = authenticationDao;
     }
 
-    /**
-     * Default implementation of <code>SystemConfigurationTemplate</code>.
-     * 
-     * @author Mauricio Fernandes de Castro
-     */
-    public class DefaultSystemConfigurationImpl implements
-            SystemConfigurationTemplate {
-
-        public Entity createDefaultEntity() {
-            Operator operator = OperatorCreator.operatorFactory("DEFAULT",
-                    OperationMode.LOCAL, Locale.getDefault());
-            return OperatorCreator.entityFactory(operator, "DEFAULT");
-        }
-
-        public User createManager(UserRole managerRole, Identity managerIdentity) {
-            return AuthorizationCreator.userFactory(managerRole.getUserGroup(),
-                    managerIdentity);
-        }
-
+    public void setAuthorizationDao(AuthorizationDao authorizationDao) {
+        this.authorizationDao = authorizationDao;
     }
+
+    private final Log logger = LogFactory.getLog(AbstractServerMgr.class);
 
 }

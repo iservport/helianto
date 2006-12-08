@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 07/12/2006 11:35:10 by Hibernate Tools 3.2.0.beta8
+// Generated 07/12/2006 16:03:04 by Hibernate Tools 3.2.0.beta8
 
 
 import java.util.Set;
@@ -39,8 +39,8 @@ public class User extends org.helianto.core.UserGroup implements java.io.Seriali
         this.userType = userType;
     }
     /** full constructor */
-    public User(Entity entity, Identity identity, char userState, UserGroup parent, Set<UserGroup> children, Set<UserRole> roles, char userType, boolean accountNonExpired) {
-        super(entity, identity, userState, parent, children, roles);        
+    public User(Entity entity, Identity identity, char userState, Set<UserAssociation> parents, Set<UserRole> roles, char userType, boolean accountNonExpired) {
+        super(entity, identity, userState, parents, roles);        
        this.userType = userType;
        this.accountNonExpired = accountNonExpired;
     }

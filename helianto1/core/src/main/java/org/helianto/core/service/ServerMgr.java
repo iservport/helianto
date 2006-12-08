@@ -19,9 +19,11 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 
+import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 
 /**
@@ -32,7 +34,7 @@ import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 public interface ServerMgr {
 
     /**
-     * Set the system up to accept a manager.
+     * Sets the system up to accept a manager.
      * 
      * @param managerIdentity
      * @return new manager <code>User</code>
@@ -40,11 +42,26 @@ public interface ServerMgr {
     public User createSystemConfiguration(Identity managerIdentity);
     
     /**
-     * Create an <code>Operator</code> with name "DEFAULT",
+     * Creates an <code>Entity</code> with name "DEFAULT"
+     */
+    public Entity createDefaultEntity();
+    
+    /**
+     * Creates an <code>Operator</code> with name "DEFAULT",
      * LOCAL mode and default <code>Locale</code>.
      */
     public Operator createLocalDefaultOperator();
-
+    
+    /**
+     * <p>Finds or creates <code>UserGroup</code> by <code>Entity</code> and name.</p>
+     */
+    public UserGroup findOrCreateUserGroup(Entity entity, String groupName);
+    
+    /**
+     * <p>Finds or creates <code>UserGroup</code> by <code>Entity</code> and name.</p>
+     */
+    public UserGroup findOrCreateUserGroup(Entity entity, String serviceName, String[] extensions);
+    
     /**
      * Persist the <code>Operator</code>.
      */

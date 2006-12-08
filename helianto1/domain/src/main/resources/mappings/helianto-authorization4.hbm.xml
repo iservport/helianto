@@ -18,16 +18,16 @@
  limitations under the License.
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_userassoc_m3"
-		name="org.helianto.core.UserAssociation">
+	<class table="core_userlog_m3"
+		name="org.helianto.core.UserLog">
 		<!-- 
-				USER ASSOCIATION
+				USER LOG
 				============================================= 
 		-->
 		<meta attribute="class-description" inherit="false">
 				<![CDATA[
 <p>
-A class to hold user and user groups associations.
+A class to hold user successful logins.
 </p>
 
 @author Mauricio Fernandes de Castro
@@ -36,28 +36,30 @@ A class to hold user and user groups associations.
 		<!-- 
   				id
 		-->
-		<id name="id" column="associationId" type="long">
+		<id name="id" type="long">
 			<generator class="native"/>
 		</id>
 		<natural-id>
 			<!-- 
-					parent user
+					user
 			-->
-			<many-to-one name="parent" 
-				class="org.helianto.core.UserGroup" cascade="save-update,merge"
+			<many-to-one name="user" 
+				class="org.helianto.core.User" cascade="save-update,merge"
 				insert="true">
 				<meta attribute="use-in-equals">true</meta>
-				<column name="parentId"/>
+				<column name="userId"/>
 			</many-to-one>
 			<!-- 
-					child user
+					last event
 			-->
-			<many-to-one name="child" 
-				class="org.helianto.core.UserGroup" cascade="save-update,merge"
-				insert="true">
+			<property name="lastEvent" type="timestamp">
 				<meta attribute="use-in-equals">true</meta>
-				<column name="childId"/>
-			</many-to-one>
+				<column name="lastLogin"/>
+			</property>
 		</natural-id>
+		<!-- 
+				event type
+		-->
+		<property name="eventType" type="byte" not-null="true"/>
 	</class>
 </hibernate-mapping>

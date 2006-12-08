@@ -23,6 +23,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Service;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
@@ -43,8 +44,7 @@ public class AuthorizationCreatorTests extends TestCase {
         assertSame(identity, user.getIdentity());
         assertTrue(user.getIdentity().getUsers().contains(user));
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
-        assertNull(user.getParent());
-        assertEquals(0, user.getChildren().size());
+        assertEquals(0, user.getParents().size());
         assertEquals(0, user.getRoles().size());
     }
 
@@ -67,7 +67,9 @@ public class AuthorizationCreatorTests extends TestCase {
         User user = AuthorizationCreator.userFactory(parent, identity);
 
         assertSame(parent.getEntity(), user.getEntity());
-        assertSame(parent, user.getParent());
+        UserAssociation association = user.getParents().iterator().next();
+        assertSame(parent, association.getParent());
+        assertSame(user, association.getChild());
         assertSame(identity, user.getIdentity());
     }
 
@@ -92,7 +94,9 @@ public class AuthorizationCreatorTests extends TestCase {
         parent.setEntity(new Entity());
         UserGroup userGroup = AuthorizationCreator.userGroupFactory(parent, identity);
         
-        assertSame(parent, userGroup.getParent());
+        UserAssociation association = userGroup.getParents().iterator().next();
+        assertSame(parent, association.getParent());
+        assertSame(userGroup, association.getChild());
         assertSame(parent.getEntity(), userGroup.getEntity());
         assertSame(identity, userGroup.getIdentity());
 

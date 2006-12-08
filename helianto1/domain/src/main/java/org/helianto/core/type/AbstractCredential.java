@@ -20,7 +20,6 @@ package org.helianto.core.type;
  * non persistnt fields.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public abstract class AbstractCredential {
     

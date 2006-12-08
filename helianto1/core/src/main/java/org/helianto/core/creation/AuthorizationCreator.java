@@ -22,6 +22,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Service;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
@@ -48,8 +49,7 @@ public class AuthorizationCreator extends CreatorSupport {
             userGroup.setIdentity(identity);
             identity.getUsers().add(userGroup);
             userGroup.setUserState(ActivityState.ACTIVE.getValue());
-            userGroup.setParent(null);
-            userGroup.setChildren(new HashSet<UserGroup>());
+            userGroup.setParents(new HashSet<UserAssociation>());
             userGroup.setRoles(new HashSet<UserRole>());
             return userGroup;
         } catch (Exception e) {
@@ -85,9 +85,21 @@ public class AuthorizationCreator extends CreatorSupport {
     public static User userFactory(UserGroup requiredParent, Identity identity) {
         assertNotNull(requiredParent);
         User user = userFactory(requiredParent.getEntity(), identity);
-        user.setParent(requiredParent);
-        requiredParent.getChildren().add(user);
+        createUserAssociation(requiredParent, user);
         return user;
+    }
+    
+    /**
+     * Convenience method to create associations between users.
+     * 
+     * @param requiredParent
+     * @param user
+     */
+    public static void createUserAssociation(UserGroup requiredParent, UserGroup user) {
+        UserAssociation association = new UserAssociation();
+        association.setParent(requiredParent);
+        association.setChild(user);
+        user.getParents().add(association);
     }
 
     /**
@@ -111,8 +123,7 @@ public class AuthorizationCreator extends CreatorSupport {
     public static UserGroup userGroupFactory(UserGroup requiredParent, Identity identity) {
         assertNotNull(requiredParent);
         UserGroup userGroup = userFactory(requiredParent.getEntity(), identity);
-        userGroup.setParent(requiredParent);
-        requiredParent.getChildren().add(userGroup);
+        createUserAssociation(requiredParent, userGroup);
         return userGroup;
     }
 
