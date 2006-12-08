@@ -28,7 +28,10 @@ public class DefaultIdentitySelectionStrategy implements
         IdentitySelectionStrategy {
 
     
-    public String createCriteriaAsString(IdentityFilter filter) {
+    /**
+     * Identities for groups are not selected.
+     */
+	public String createCriteriaAsString(IdentityFilter filter) {
         StringBuilder criteria = new StringBuilder();
         if (!filter.getPrincipalSearch().equals("")) {
             criteria.append("lower(identity.principal) like '%")
@@ -55,7 +58,7 @@ public class DefaultIdentitySelectionStrategy implements
         if (criteria.toString().equals("")) {
             return "";
         }
-        return criteria.insert(0, "where ").toString();
+        return criteria.insert(0, "where identity.identityType != 'G' and (").append(")").toString();
     }
 
 }
