@@ -16,27 +16,58 @@
 package org.helianto.core.hibernate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
+import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.test.AuthorizationTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class AuthorizationDaoImplTests extends AuthorizationTestSupport {
     
     private AuthorizationDao authorizationDao;
 
     public void testPersistUserGroup() {
-        //write
+        // write
         UserGroup userGroup = createAndPersistUserGroup(authorizationDao);
         hibernateTemplate.flush();
-        //read
+        // read
         assertEquals(userGroup,  authorizationDao.findUserGroupByNaturalId(userGroup.getEntity(), userGroup.getIdentity()));
+    }
+    
+    public void testPersistUserGroupAndParents() {
+        // if userGroup is persisted parents should also be
+        UserGroup parent1 = createUserGroup();
+        UserGroup parent2 = createUserGroup();
+        UserGroup user = createUserGroup();
+        AuthorizationCreator.createUserAssociation(parent1, user);
+        AuthorizationCreator.createUserAssociation(parent2, user);
+        authorizationDao.persistUserGroup(user);
+        hibernateTemplate.flush();
+        hibernateTemplate.clear();
+        
+        UserGroup found = authorizationDao.findUserGroupByNaturalId(user.getEntity(), user.getIdentity());
+        assertEquals(2, found.getParents().size());
+        Set<UserGroup> userSet = new HashSet<UserGroup>();
+        for (UserAssociation a: found.getParents()) {
+            assertEquals(user, a.getChild());
+            userSet.add(a.getParent());
+        }
+        assertTrue(userSet.contains(parent1));
+        assertTrue(userSet.contains(parent2));
+        
     }
     
     private List<UserGroup> writeUserGroupList() {
