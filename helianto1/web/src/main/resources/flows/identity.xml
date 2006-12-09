@@ -121,7 +121,7 @@
     
     <end-state id="end">
     	<output-mapper>
-   			<mapping source="flowScope.identityForm.credential.identity" target="identity"/>
+			<output-attribute name="identityForm" scope="flow" />
     	</output-mapper>
     </end-state>
     
