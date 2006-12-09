@@ -30,11 +30,12 @@ import org.helianto.core.UserRole;
 import org.helianto.core.type.ActivityState;
 import org.helianto.core.type.UserEventType;
 
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class AuthorizationCreatorTests extends TestCase {
 
-    /*
-     * Test method for 'org.helianto.core.creation.AuthorizationCreator.userFactory(Entity, Identity)'
-     */
     public void testUserFactoryEntityIdentity() {
         Entity entity = new Entity();
         Identity identity = new Identity();
@@ -57,9 +58,6 @@ public class AuthorizationCreatorTests extends TestCase {
         assertEquals("", user.getIdentity().getOptionalAlias());
     }
 
-    /*
-     * Test method for 'org.helianto.core.creation.AuthorizationCreator.userFactory(UserGroup, Identity)'
-     */
     public void testUserFactoryUserGroupIdentity() {
         UserGroup parent = new UserGroup();
         parent.setEntity(new Entity());
@@ -73,9 +71,6 @@ public class AuthorizationCreatorTests extends TestCase {
         assertSame(identity, user.getIdentity());
     }
 
-    /*
-     * Test method for 'org.helianto.core.creation.AuthorizationCreator.userGroupFactory(Entity, Identity)'
-     */
     public void testUserGroupFactoryEntityIdentity() {
         Entity entity = new Entity();
         Identity identity = new Identity();
@@ -85,9 +80,6 @@ public class AuthorizationCreatorTests extends TestCase {
         assertSame(identity, userGroup.getIdentity());
     }
 
-    /*
-     * Test method for 'org.helianto.core.creation.AuthorizationCreator.userGroupFactory(UserGroup, Identity)'
-     */
     public void testUserGroupFactoryUserGroupIdentity() {
         Identity identity = new Identity();
         UserGroup parent = new UserGroup();
@@ -100,6 +92,13 @@ public class AuthorizationCreatorTests extends TestCase {
         assertSame(parent.getEntity(), userGroup.getEntity());
         assertSame(identity, userGroup.getIdentity());
 
+    }
+    
+    public void testCreateUserAssociation() {
+        UserGroup parent = new UserGroup();
+        UserGroup user = new UserGroup();
+        AuthorizationCreator.createUserAssociation(parent, user);
+        assertSame(parent, user.getParents().iterator().next().getParent());
     }
 
     public void testUserFactoryError() {
@@ -115,9 +114,6 @@ public class AuthorizationCreatorTests extends TestCase {
         } catch (Exception e) { fail(); }
     }
 
-    /*
-     * Test method for 'org.helianto.core.creation.AuthorizationCreator.userLogFactory(User, UserEventType, Date)'
-     */
     public void testUserLogFactory() {
         User user = new User();
         Date date = new Date();
