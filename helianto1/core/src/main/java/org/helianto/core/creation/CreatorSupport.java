@@ -17,6 +17,8 @@ package org.helianto.core.creation;
 
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.Assert;
 
 /**
@@ -46,5 +48,7 @@ public class CreatorSupport {
     }
     
     static Date currentDateNormalizer = null;
+
+    protected static final Log logger = LogFactory.getLog(CreatorSupport.class);
 
 }

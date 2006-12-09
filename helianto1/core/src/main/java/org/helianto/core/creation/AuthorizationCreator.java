@@ -51,6 +51,9 @@ public class AuthorizationCreator extends CreatorSupport {
             userGroup.setUserState(ActivityState.ACTIVE.getValue());
             userGroup.setParents(new HashSet<UserAssociation>());
             userGroup.setRoles(new HashSet<UserRole>());
+            if (logger.isDebugEnabled()) {
+                logger.debug("Created: "+userGroup);
+            }
             return userGroup;
         } catch (Exception e) {
             throw new IllegalStateException("Unable to create class "+clazz, e);
@@ -100,6 +103,9 @@ public class AuthorizationCreator extends CreatorSupport {
         association.setParent(requiredParent);
         association.setChild(user);
         user.getParents().add(association);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+association);
+        }
     }
 
     /**
@@ -154,6 +160,9 @@ public class AuthorizationCreator extends CreatorSupport {
         if (requiredUserEventType.equals(UserEventType.LOGIN_SUCCESS)) {
             ((Identity) requiredUser.getIdentity()).setLastLogin(date);
         }
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+userLog);
+        }
         return userLog;
     }
     
@@ -173,6 +182,9 @@ public class AuthorizationCreator extends CreatorSupport {
         userRole.setService(requiredService);
         userRole.setServiceExtension(serviceExtension);
         requiredUser.getRoles().add(userRole);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+userRole);
+        }
         return userRole;
     }
     

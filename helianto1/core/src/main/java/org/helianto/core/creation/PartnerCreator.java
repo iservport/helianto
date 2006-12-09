@@ -47,6 +47,9 @@ public class PartnerCreator extends CreatorSupport {
         partnerData.setCityName("");
         partnerData.setProvince(province);
         partnerData.setPostalCode("");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+partnerData);
+        }
         return partnerData;
     }
     
@@ -61,6 +64,9 @@ public class PartnerCreator extends CreatorSupport {
         sharedEntity.setSharedEntity(requiredEntity);
         sharedEntity.setSharedSince(new Date());
         sharedEntity.setShareMode(ShareMode.RESTRICTED.getValue());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+sharedEntity);
+        }
     	return sharedEntity;
     }
     
@@ -71,10 +77,13 @@ public class PartnerCreator extends CreatorSupport {
      * @param identity
      */
     public static Contact contactFactory(PartnerData partnerData, Identity identity) {
-        Contact cntct = new Contact();
-        cntct.setPartnerData(partnerData);
-        cntct.setIdentity(identity);
-        return cntct;
+        Contact contact = new Contact();
+        contact.setPartnerData(partnerData);
+        contact.setIdentity(identity);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+contact);
+        }
+        return contact;
     }
 
     /**
@@ -143,6 +152,9 @@ public class PartnerCreator extends CreatorSupport {
         partnerKey.setPartner(partner);
         partnerKey.setKeyType(keyType);
         partnerKey.setKeyValue(keyValue);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+partnerKey);
+        }
         return partnerKey;
     }
     
@@ -186,6 +198,9 @@ public class PartnerCreator extends CreatorSupport {
             }
             partner.setSequence(++sequence);
             partnerList.add(partner);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Created: "+partner);
+            }
             return partner;
         } catch (Exception e) {
             throw new RuntimeException("Can't instantiate "+clazz);

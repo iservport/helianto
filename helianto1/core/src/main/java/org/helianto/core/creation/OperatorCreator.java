@@ -65,7 +65,9 @@ public class OperatorCreator extends CreatorSupport {
         operator.setOperatorSourceMailAddress("operator@helianto.org");
         operator.setDefaultEncoding("ISO-8859-1");
         operator.setOperatorHostAddress("http://www.helianto.org");
-
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+operator);
+        }
         return operator;
     }
 
@@ -107,7 +109,9 @@ public class OperatorCreator extends CreatorSupport {
             credential.getIdentity().setPrincipal(serverName);
         } 
         server.setCredential(credential);
-        
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+server);
+        }
         return server;
     }
 
@@ -125,7 +129,9 @@ public class OperatorCreator extends CreatorSupport {
         province.setOperator(requiredOperator);
         province.setCode(code);
         province.setProvinceName(provinceName);
-
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+province);
+        }
         return province;
     }
 
@@ -141,7 +147,9 @@ public class OperatorCreator extends CreatorSupport {
         
         service.setOperator(requiredOperator);
         service.setServiceName(serviceName);
-        
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+service);
+        }
         return service;
     }
         
@@ -152,7 +160,9 @@ public class OperatorCreator extends CreatorSupport {
 
             entity.setOperator(requiredOperator);
             entity.setAlias(uniqueAlias);
-            
+            if (logger.isDebugEnabled()) {
+                logger.debug("Created: "+entity);
+            }
             return entity;
         } catch (Exception e) {
             throw new IllegalStateException("Unable to create class "+clazz, e);
@@ -211,7 +221,9 @@ public class OperatorCreator extends CreatorSupport {
         keyType.setOperator(requiredOperator);
         keyType.setKeyCode(keyCode);
         keyType.setPurpose("");
-        
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+keyType);
+        }
         return keyType;
     }
 

@@ -50,7 +50,9 @@ public class AuthenticationCreator extends CreatorSupport {
         personalData.setLastName("");
         personalData.setAppellation(Appellation.NOT_SUPPLIED.getValue());
         personalData.setGender(Gender.NOT_SUPPLIED.getValue());
-        
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+personalData);
+        }
         return personalData;
     }
 
@@ -75,7 +77,9 @@ public class AuthenticationCreator extends CreatorSupport {
         identity.setPersonalData(personalDataFactory());
         identity.setLastLogin(identity.getCreated());
         identity.setUsers(new HashSet<UserGroup>());
-        
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+identity);
+        }
         return identity;
     }
 
@@ -99,7 +103,9 @@ public class AuthenticationCreator extends CreatorSupport {
         credential.setExpired(null);
         credential.setCredentialState(ActivityState.INITIAL.getValue());
         credential.setEncription(Encription.PLAIN_PASSWORD.getValue());
-        
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+credential);
+        }
         return credential;
     }
     
@@ -112,11 +118,11 @@ public class AuthenticationCreator extends CreatorSupport {
     public static PrivateKey privateKeyFactory(Credential requiredCredential, String privateKeyValue) {
         assertNotNull(requiredCredential);
         PrivateKey privateKey = new PrivateKey();
-        
         privateKey.setCredential(requiredCredential);
-        
         privateKey.setPrivateKey(privateKeyValue);
-        
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created: "+privateKey);
+        }
         return privateKey;
     }
     
