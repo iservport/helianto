@@ -39,7 +39,7 @@ public interface ServerMgr {
      * @param managerIdentity
      * @return new manager <code>User</code>
      */
-    public User createSystemConfiguration(Identity managerIdentity);
+    public User prepareSystemConfiguration(Identity managerIdentity);
     
     /**
      * Creates an <code>Entity</code> with name "DEFAULT"

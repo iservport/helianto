@@ -26,12 +26,14 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.controller.InstallFormAction;
+import org.helianto.web.view.IdentityForm;
 import org.helianto.web.view.UserForm;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
@@ -76,10 +78,13 @@ public class InstallFormActionTests extends TestCase {
     public void testCreateManager() {
         RequestContext context = simulateFormInContext(new UserForm());
         Identity managerIdentity = new Identity();
-        context.getRequestScope().put("identity", managerIdentity);
+        IdentityForm identityForm = new IdentityForm();
+        identityForm.setCredential(new Credential());
+        identityForm.getCredential().setIdentity(managerIdentity);
+        context.getRequestScope().put("identityForm", identityForm);
         User user = new User();
         
-        expect(serverMgr.createSystemConfiguration(managerIdentity))
+        expect(serverMgr.prepareSystemConfiguration(managerIdentity))
             .andReturn(user);
         replay(serverMgr);
         

@@ -15,10 +15,10 @@
 
 package org.helianto.web.controller;
 
-import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
+import org.helianto.web.view.IdentityForm;
 import org.helianto.web.view.UserForm;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
@@ -65,8 +65,11 @@ public class InstallFormAction extends FormAction {
      * Create the manager <code>User</code>.
      */
     public Event createManager(RequestContext context) {
-        Identity managerIdentity = (Identity) getFromRequestScope(context, "identity");
-        User user = serverMgr.createSystemConfiguration(managerIdentity);
+        IdentityForm identityForm = (IdentityForm) getFromRequestScope(context, "identityForm");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Retrieved "+identityForm);
+        }
+        User user = serverMgr.prepareSystemConfiguration(identityForm.getCredential().getIdentity());
         UserForm form = doGetForm(context);
         form.setUser(user);
         return success();

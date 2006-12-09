@@ -33,11 +33,13 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.OperatorDao;
+import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.type.IdentityType;
 import org.helianto.core.type.OperationMode;
 
@@ -47,25 +49,38 @@ public class AbstractServerMgrTests extends TestCase {
 	private ServerMgrImpl serverMgr;
 
 	public void testCreateSystemConfiguration() {
-		Identity managerIdentity = new Identity();
+        Identity managerIdentity = new Identity();
+        Identity managerGroupIdentity = new Identity();
+        Identity userGroupIdentity = new Identity();
 		Entity entity = new Entity();
-		UserGroup userGroup = new UserGroup();
-		userGroup.setEntity(entity);
+        UserGroup managerGroup = AuthorizationTestSupport.createUserGroup();
+        UserGroup userGroup = AuthorizationTestSupport.createUserGroup();
+        managerGroup.setEntity(entity);
+        userGroup.setEntity(entity);
 
-		expect(authenticationDao.findIdentityByPrincipal("ADMIN")).andReturn(
-				managerIdentity);
+        expect(authenticationDao.findIdentityByPrincipal("ADMIN")).andReturn(
+                managerGroupIdentity);
+        expect(authenticationDao.findIdentityByPrincipal("USER")).andReturn(
+                userGroupIdentity);
 		replay(authenticationDao);
 
-		expect(authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
-				isA(Identity.class))).andReturn(userGroup);
+        expect(authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
+                isA(Identity.class))).andReturn(managerGroup);
+        expect(authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
+                isA(Identity.class))).andReturn(userGroup);
 		replay(authorizationDao);
 
-		User manager = serverMgr.createSystemConfiguration(managerIdentity);
+		User manager = serverMgr.prepareSystemConfiguration(managerIdentity);
 		
 		assertSame(managerIdentity, manager.getIdentity());
 		assertSame(entity, manager.getEntity());
-		assertEquals(1, manager.getParents().size());
-		assertSame(userGroup, manager.getParents().iterator().next().getParent());
+		assertEquals(2, manager.getParents().size());
+        Set<UserGroup> userSet = new HashSet<UserGroup>();
+        for (UserAssociation a: manager.getParents()) {
+            userSet.add(a.getParent());
+        }
+        assertTrue(userSet.contains(managerGroup));
+        assertTrue(userSet.contains(userGroup));
 	}
 
 	public void testCreateDefaultEntity() {

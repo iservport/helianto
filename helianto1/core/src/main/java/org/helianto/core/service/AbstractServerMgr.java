@@ -44,11 +44,26 @@ public abstract class AbstractServerMgr implements ServerMgr {
     
     protected AuthorizationDao authorizationDao;
     
-    public User createSystemConfiguration(Identity managerIdentity) {
+    public User prepareSystemConfiguration(Identity managerIdentity) {
         Entity defaultEntity = createDefaultEntity();
-        UserGroup managerGroup = findOrCreateUserGroup(defaultEntity, "ADMIN", new String[] {"MANAGER"});
-        User manager = AuthorizationCreator.userFactory(managerGroup,
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created as default: "+defaultEntity);
+        }
+        authorizationDao.persistEntity(defaultEntity);
+        UserGroup adminGroup = findOrCreateUserGroup(defaultEntity, "ADMIN", new String[] {"MANAGER"});
+        if (logger.isDebugEnabled()) {
+            logger.debug("ADMIN group is: "+adminGroup);
+        }
+        UserGroup userGroup = findOrCreateUserGroup(defaultEntity, "USER", new String[] {"ALL", "DEL"});
+        if (logger.isDebugEnabled()) {
+            logger.debug("USER group is: "+userGroup);
+        }
+        User manager = AuthorizationCreator.userFactory(adminGroup,
                 managerIdentity);
+        AuthorizationCreator.createUserAssociation(userGroup, manager);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created manager (member of ADMIN, USER): "+manager);
+        }
         return manager;
     }
 
