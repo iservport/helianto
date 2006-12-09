@@ -35,7 +35,6 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
 	 */
     
 	public void persistIdentity(Identity identity) {
-		Assert.notNull(identity);
         merge(identity);
     }
 
@@ -44,6 +43,9 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
     }
 
     public Identity findIdentityByPrincipal(String principal) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding identity using principal: "+principal);
+        }
         Identity identity = (Identity) findUnique(IDENTITY_QRY, principal);
         return identity;
     }
@@ -62,17 +64,18 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
 	 */
     
     public void persistCredential(Credential credential) {
-    	Assert.notNull(credential);
         merge(credential);
     }
 
     public void removeCredential(Credential credential) {
-    	Assert.notNull(credential);
         remove(credential);
     }
 
     public Credential findCredentialByIdentity(Identity requiredIdentity) {
     	Assert.notNull(requiredIdentity, "An identity is required");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding credential using identity: "+requiredIdentity);
+        }
         return (Credential) findUnique(CREDENTIAL_QRY, requiredIdentity.getId());
     }
         
