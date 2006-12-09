@@ -69,6 +69,8 @@
 			<bean id="serverTarget"
 				class="org.helianto.core.service.ServerMgrImpl">
 				<property name="operatorDao" ref="operatorDao"/>
+				<property name="authenticationDao" ref="authenticationDao"/>
+				<property name="authorizationDao" ref="authorizationDao"/>
 				<property name="configurableMailSenderFactory" ref="configurableMailSenderFactory"/>
 				<property name="mailMessageComposer" ref="basicMailMessageComposer"/>
 			</bean>
