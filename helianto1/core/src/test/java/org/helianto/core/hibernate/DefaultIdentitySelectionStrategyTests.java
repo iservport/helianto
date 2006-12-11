@@ -31,7 +31,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
         filter.setPrincipalSearch("principalSearch");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter );
-        String expect = "where identity.identityType != 'G' and (" +
+        String expect = "and (" +
                 "lower(identity.principal) like '%principalsearch%' " +
                 "or lower(identity.optionalAlias) like '%nameoraliassearch%' " +
                 "or lower(identity.firstName) like '%nameoraliassearch%' " +
@@ -44,7 +44,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
         filter.setPrincipalSearch("principalSearch");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter );
-        String expect = "where identity.identityType != 'G' and (" +
+        String expect = "and (" +
                 "lower(identity.principal) like '%principalsearch%' )";
         assertEquals(expect, criteria);
     }
@@ -54,7 +54,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
         filter.setPrincipalSearch("");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter );
-        String expect = "where identity.identityType != 'G' and (" +
+        String expect = "and (" +
                 "lower(identity.optionalAlias) like '%nameoraliassearch%' " +
                 "or lower(identity.firstName) like '%nameoraliassearch%' " +
                 "or lower(identity.lastName) like '%nameoraliassearch%' )";

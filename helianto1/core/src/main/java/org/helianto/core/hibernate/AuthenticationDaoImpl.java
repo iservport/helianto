@@ -65,6 +65,7 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
     }
     
     static final String IDENTITY_BY_USERGRP_QRY = 
+        "select userGroup.identity " +
         "from UserGroup userGroup join userGroup.parents parent " +
         "where parent.parent.identity.principal='USER' ";
     

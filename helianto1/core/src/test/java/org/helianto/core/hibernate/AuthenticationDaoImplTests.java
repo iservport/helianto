@@ -63,27 +63,33 @@ public class AuthenticationDaoImplTests extends AbstractCredentialTest {
         assertEquals(e*d, userList.size());
         UserGroup parent = AuthorizationTestSupport.createUserGroup();
         parent.getIdentity().setPrincipal("USER");
+        // we must write one association to each user in the list
+        // having a same parent with identity principal "USER"
         for (UserGroup u:userList) {
         	UserAssociation assoc = new UserAssociation();
         	assoc.setParent(parent);
         	assoc.setChild(u);
         	u.getParents().add(assoc);
+            authenticationDao.persistIdentity(u.getIdentity());
         }
         // read
-        UserGroup userGroup = userList.get((int) Math.random()*e*d);
-//        assertEquals(identity, authenticationDao.findIdentityByPrincipal(identity.getPrincipal()));
-//        IdentityFilter identityFilter = new IdentityFilter();
-//        
-////        assertEquals(i, authenticationDao.findIdentityByCriteria(identityFilter, "").size());
-////        É somente um parâmetro
-////        
-//        assertEquals(i, authenticationDao.findIdentityByCriteria(identityFilter).size());
-//        
-////        assertEquals(identity, authenticationDao.findIdentityByCriteria("where identity.principal='"+identity.getPrincipal()+"' ").get(0));
-////        assertEquals(identity, authenticationDao.findIdentityByCriteria(identityFilter, "");
-//        
-//        assertEquals(identity, authenticationDao.findIdentityByCriteria(identityFilter));
+        IdentityFilter identityFilter = new IdentityFilter();
         
+        List<Identity> identityList = authenticationDao.findIdentityByCriteria(identityFilter);
+        assertEquals(e*d, identityList.size());
+        int index = (int) (Math.random()*e*d);
+        System.out.println("INDEX "+index);
+        Identity identity = identityList.get(index);
+        UserGroup loaded = 
+            identity
+            .getUsers()   // users that share this identity
+            .iterator() 
+            .next()       // the first one
+            .getParents() // parents associated to this one
+            .iterator()
+            .next()       // the first association
+            .getParent(); // the parent inside the association
+        assertEquals("USER", loaded.getIdentity().getPrincipal());
     }
 
     public void testIdentityErrors() {
