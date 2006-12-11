@@ -27,14 +27,14 @@ import org.helianto.core.dao.IdentitySelectionStrategy;
 public class DefaultIdentitySelectionStrategy implements
         IdentitySelectionStrategy {
 
-    
-    /**
-     * Identities for groups are not selected.
-     */
 	public String createCriteriaAsString(IdentityFilter filter) {
+		return createCriteriaAsString(filter, "identity");
+    }
+
+	public String createCriteriaAsString(IdentityFilter filter, String prefix) {
         StringBuilder criteria = new StringBuilder();
         if (!filter.getPrincipalSearch().equals("")) {
-            criteria.append("lower(identity.principal) like '%")
+            criteria.append("lower("+prefix+".principal) like '%")
             .append(filter.getPrincipalSearch().toLowerCase())
             .append("%' ");
         }
@@ -43,22 +43,22 @@ public class DefaultIdentitySelectionStrategy implements
             if (!criteria.toString().equals("")) {
                 criteria.append("or ");
             }
-            criteria.append("lower(identity.optionalAlias) like '%")
+            criteria.append("lower("+prefix+".optionalAlias) like '%")
             .append(nameOrAliasSearch)
             .append("%' ")
             .append("or ")
-            .append("lower(identity.firstName) like '%")
+            .append("lower("+prefix+".firstName) like '%")
             .append(nameOrAliasSearch)
             .append("%' ")
             .append("or ")
-            .append("lower(identity.lastName) like '%")
+            .append("lower("+prefix+".lastName) like '%")
             .append(nameOrAliasSearch)
             .append("%' ");
         }
         if (criteria.toString().equals("")) {
             return "";
         }
-        return criteria.insert(0, "where identity.identityType != 'G' and (").append(")").toString();
-    }
+        return criteria.insert(0, "and (").append(")").toString();
+	}
 
 }

@@ -29,4 +29,11 @@ public interface IdentitySelectionStrategy {
      */
     public String createCriteriaAsString(IdentityFilter filter);
 
+    /**
+     * A method to create citeria as String. User prefix to prepend hql alias
+     * @param filter
+     * @param prefix
+     */
+    public String createCriteriaAsString(IdentityFilter filter, String prefix);
+
 }

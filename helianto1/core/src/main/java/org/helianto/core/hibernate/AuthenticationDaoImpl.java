@@ -21,6 +21,8 @@ import java.util.List;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.IdentityFilter;
+import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.springframework.util.Assert;
 
 /**
@@ -30,6 +32,8 @@ import org.springframework.util.Assert;
  */
 public class AuthenticationDaoImpl extends GenericDaoImpl implements AuthenticationDao {
 
+    private IdentitySelectionStrategy identitySelectionStrategy;
+    
 	/*
 	 * Persist, remove and find identity
 	 */
@@ -54,10 +58,15 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
         "from Identity identity " +
         "where identity.principal = ?";
     
-    public List<Identity> findIdentityByCriteria(String criteria) {
-        List<Identity> identityList = (ArrayList<Identity>) find("from Identity identity " + criteria);
+    public List<Identity> findIdentityByCriteria(IdentityFilter filter) {
+        String criteria = identitySelectionStrategy.createCriteriaAsString(filter, "parent");
+        List<Identity> identityList = (ArrayList<Identity>) find(IDENTITY_BY_USERGRP_QRY + criteria);
         return identityList;
     }
+    
+    static final String IDENTITY_BY_USERGRP_QRY = 
+        "from UserGroup userGroup join userGroup.parents parent " +
+        "where parent.parent.identity.principal='USER' ";
     
 	/*
 	 * Persist, remove and find credential
@@ -82,5 +91,18 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
     static final String CREDENTIAL_QRY = 
         "from Credential credential " +
         "where credential.identity.id = ?";
+
+    //
+    
+    public void init() {
+        if (identitySelectionStrategy==null) {
+            identitySelectionStrategy = new DefaultIdentitySelectionStrategy();
+        }
+    }
+    
+    public void setIdentitySelectionStrategy(
+            IdentitySelectionStrategy identitySelectionStrategy) {
+        this.identitySelectionStrategy = identitySelectionStrategy;
+    }
 
 }

@@ -43,9 +43,9 @@ public interface AuthenticationDao {
     public Identity findIdentityByPrincipal(String principal);
 
     /**
-     * Find <code>Identity</code> list by string criteria.
+     * Find <code>Identity</code> list by <code>IdentityFilter</code>.
      */
-    public List<Identity> findIdentityByCriteria(String criteria);
+    public List<Identity> findIdentityByCriteria(IdentityFilter filter);
 
     /**
      * Persist <code>Credential</code>.

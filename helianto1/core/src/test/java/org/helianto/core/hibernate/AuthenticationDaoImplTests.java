@@ -20,8 +20,13 @@ import java.util.List;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
+import org.helianto.core.UserGroup;
 import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.IdentityFilter;
 import org.helianto.core.junit.AbstractCredentialTest;
+import org.helianto.core.test.AuthorizationTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
 public class AuthenticationDaoImplTests extends AbstractCredentialTest {
@@ -48,8 +53,37 @@ public class AuthenticationDaoImplTests extends AbstractCredentialTest {
         // read
         Identity identity = identityList.get((int) Math.random()*i);
         assertEquals(identity, authenticationDao.findIdentityByPrincipal(identity.getPrincipal()));
-        assertEquals(i, authenticationDao.findIdentityByCriteria("").size());
-        assertEquals(identity, authenticationDao.findIdentityByCriteria("where identity.principal='"+identity.getPrincipal()+"' ").get(0));
+    }
+    
+    public void testFindIdentities() {
+        // write list
+        int e = 2;
+        int d = 3;
+        List<UserGroup> userList = AuthorizationTestSupport.createAndPersistUserGroupList(hibernateTemplate, e, d);
+        assertEquals(e*d, userList.size());
+        UserGroup parent = AuthorizationTestSupport.createUserGroup();
+        parent.getIdentity().setPrincipal("USER");
+        for (UserGroup u:userList) {
+        	UserAssociation assoc = new UserAssociation();
+        	assoc.setParent(parent);
+        	assoc.setChild(u);
+        	u.getParents().add(assoc);
+        }
+        // read
+        UserGroup userGroup = userList.get((int) Math.random()*e*d);
+//        assertEquals(identity, authenticationDao.findIdentityByPrincipal(identity.getPrincipal()));
+//        IdentityFilter identityFilter = new IdentityFilter();
+//        
+////        assertEquals(i, authenticationDao.findIdentityByCriteria(identityFilter, "").size());
+////        É somente um parâmetro
+////        
+//        assertEquals(i, authenticationDao.findIdentityByCriteria(identityFilter).size());
+//        
+////        assertEquals(identity, authenticationDao.findIdentityByCriteria("where identity.principal='"+identity.getPrincipal()+"' ").get(0));
+////        assertEquals(identity, authenticationDao.findIdentityByCriteria(identityFilter, "");
+//        
+//        assertEquals(identity, authenticationDao.findIdentityByCriteria(identityFilter));
+        
     }
 
     public void testIdentityErrors() {

@@ -69,7 +69,7 @@ public class UserMgrImplTests extends TestCase {
             .andReturn(criteria);
         replay(identitySelectionStrategy);
         
-        expect(authenticationDao.findIdentityByCriteria(criteria))
+        expect(authenticationDao.findIdentityByCriteria(filter))        
             .andReturn(identityList);
         replay(authenticationDao);
 
@@ -162,7 +162,14 @@ public class UserMgrImplTests extends TestCase {
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setAuthenticationDao(authenticationDao);
         userMgr.setAuthorizationDao(authorizationDao);
-        userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
+        
+//        
+//        Não encontrei o correspondente, localiza apenas os dois SETs de cima
+//        Vlademir
+//        
+//        userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
+//        
+        
     }
     
     @Override
