@@ -61,9 +61,13 @@ public class UserMgrImplTests extends TestCase {
     }
     
     public void testSelectIdentities() {
+        int size = 10;
         IdentityFilter filter = new IdentityFilter();
         String criteria = "criteria";
-        List<Identity> identityList = new ArrayList<Identity>();;
+        List<Identity> identityList = AuthenticationTestSupport.createIdentityList(size);
+        List<Identity> exclusions = new ArrayList<Identity>();
+        Identity excluded = identityList.get((int) (Math.random()*size));
+        exclusions.add(excluded);
 
         expect(identitySelectionStrategy.createCriteriaAsString(filter))
             .andReturn(criteria);
@@ -73,8 +77,10 @@ public class UserMgrImplTests extends TestCase {
             .andReturn(identityList);
         replay(authenticationDao);
 
-        assertSame(identityList, userMgr.findIdentities(filter));
+        assertSame(identityList, userMgr.findIdentities(filter, exclusions));
         verify(authenticationDao);
+        
+        assertFalse(identityList.contains(excluded));
     }
     
     public void testCreateCredential() {

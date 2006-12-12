@@ -1,20 +1,16 @@
 package org.helianto.core.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
-import org.helianto.core.dao.AuthenticationDao;
-import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.IdentityFilter;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
 import org.helianto.core.type.ActivityState;
@@ -24,12 +20,8 @@ import org.helianto.core.type.ActivityState;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserMgrImpl implements UserMgr, CoreMgr {
+public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 	
-    protected AuthenticationDao authenticationDao;
-    
-    protected AuthorizationDao authorizationDao;
-    
 	/* 
 	 * Create and persist Identity
 	 */
@@ -42,8 +34,9 @@ public class UserMgrImpl implements UserMgr, CoreMgr {
         authenticationDao.persistIdentity(identity);
 	}
     
-    public List<Identity> findIdentities(IdentityFilter filter) {
+    public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions) {
         List<Identity> identityList = authenticationDao.findIdentityByCriteria(filter);
+        identityList.removeAll(exclusions);
         return identityList ;
     }
 
@@ -133,40 +126,4 @@ public class UserMgrImpl implements UserMgr, CoreMgr {
         return true;
     }
     
-    public long findNextInternalNumber(Entity entity, String typeName) {
-        InternalEnumerator enumerator = authorizationDao.findInternalEnumerator(entity, typeName);
-        if (enumerator!=null) {
-            long lastNumber = enumerator.getLastNumber();
-            enumerator.setLastNumber(lastNumber+1);
-            authorizationDao.persistInternalEnumerator(enumerator);
-            return lastNumber;
-        } else  {
-            enumerator = new InternalEnumerator();
-            enumerator.setEntity(entity);
-            enumerator.setTypeName(typeName);
-            enumerator.setLastNumber(2);    
-            authorizationDao.persistInternalEnumerator(enumerator);
-            return 1;
-        }
-    }
-    
-    //
-    
-    public void init() {
-        if (authenticationDao==null) throw new IllegalArgumentException("AuthenticationDao property required");
-        if (authorizationDao==null) throw new IllegalArgumentException("AuthorizationDao property required");
-    }
-    
-    //~ collaborators
-
-    private final Log logger = LogFactory.getLog(SecurityMgrImpl.class);
-
-    public void setAuthenticationDao(AuthenticationDao authenticationDao) {
-        this.authenticationDao = authenticationDao;
-    }
-
-    public void setAuthorizationDao(AuthorizationDao authorizationDao) {
-        this.authorizationDao = authorizationDao;
-    }
-
 }

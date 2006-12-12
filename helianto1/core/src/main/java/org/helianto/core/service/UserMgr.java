@@ -1,5 +1,6 @@
 package org.helianto.core.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.helianto.core.Credential;
@@ -9,7 +10,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.IdentityFilter;
 
-public interface UserMgr {
+public interface UserMgr extends CoreMgr {
 	
     /**
      * <p>An empty <code>Identity</code> to be 
@@ -26,8 +27,9 @@ public interface UserMgr {
      * <p>Selects an <code>Identity</code> list.
      * 
      * @param filter
+     * @param exclusions list to be removed after selection
      */
-    public List<Identity> findIdentities(IdentityFilter filter);
+    public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions);
     
     /**
      * <p>A <code>Credential</code> with an
