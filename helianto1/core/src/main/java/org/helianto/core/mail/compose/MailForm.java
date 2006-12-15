@@ -17,77 +17,48 @@ package org.helianto.core.mail.compose;
 
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
-import org.helianto.core.type.IdentityType;
 
 /**
- * A base class to all forms to be submitted as mail forms.
- * By default, validates the recipient <code>Identity</code>
- * either when setting or getting.
+ * Common interface to all mail forms.
  * 
  * @author Mauricio Fernandes de Castro
+ *
  */
-public class MailForm {
-
-    private Operator operator;
-
-    private Identity recipientIdentity;
-
-    private String subject = "";
+public interface MailForm {
+	
+    /**
+     * Mail content getter.
+     */
+	public String getContent();
     
-    private String content = "";
+    /**
+     * Mail content setter.
+     */
+	public void setContent(String content);
 
     /**
-     * Default constructor for subclasses.
+     * <code>Operator</code> getter.
      */
-    public MailForm() { }
+    public Operator getOperator();
 
     /**
-     * <code>Operator</code> driven constructor.
+     * Recipient <code>Identity</code> getter.
      */
-    public MailForm(Operator operator) { 
-        this.operator = operator;
-    }
+    public Identity getRecipientIdentity();
 
-    public String getContent() {
-		return content;
-	}
-    
-	public void setContent(String content) {
-		this.content = content;
-	}
+    /**
+     * Recipient <code>Identity</code> setter.
+     */
+    public void setRecipientIdentity(Identity recipientIdentity);
 
-	protected Identity validatePrincipal(Identity identity) {
-        if (identity == null
-                || identity.getIdentityType() == IdentityType.NOT_ADDRESSABLE
-                        .getValue()
-                || identity.getIdentityType() == IdentityType.GROUP.getValue()) {
-            throw new IllegalArgumentException("Identity is not addressable.");
-        }
-        return identity;
-    }
+    /**
+     * Subject getter.
+     */
+    public String getSubject();
 
-    public Operator getOperator() {
-        return operator;
-    }
-
-    public Identity getRecipientIdentity() {
-        return validatePrincipal(recipientIdentity);
-    }
-
-    public void setOperator(Operator operator) {
-        this.operator = operator;
-    }
-
-    public void setRecipientIdentity(Identity recipientIdentity) {
-        this.recipientIdentity = validatePrincipal(recipientIdentity);
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
+    /**
+     * Subject setter.
+     */
+    public void setSubject(String subject);
 
 }

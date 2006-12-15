@@ -42,7 +42,7 @@ public class MailFormTests extends TestCase {
     
     public void testMailFormOperatorConstructor() {
         Operator operator = OperatorTestSupport.createOperator();
-        MailForm mailForm = new MailForm(operator);
+        MailForm mailForm = new DefaultMailForm(operator);
         assertSame(operator, mailForm.getOperator());
 
     }
@@ -114,7 +114,7 @@ public class MailFormTests extends TestCase {
     }
     
     public static MailForm createMailForm(Operator operator, Identity identity) {
-        MailForm mailForm = new MailForm();
+    	DefaultMailForm mailForm = new DefaultMailForm();
         mailForm.setOperator(operator);
         mailForm.setRecipientIdentity(identity);
         mailForm.setSubject("SUBJECT");

@@ -23,7 +23,7 @@ import org.helianto.core.Operator;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class PasswordConfirmationMailForm extends MailForm {
+public class PasswordConfirmationMailForm extends DefaultMailForm {
     
     private Credential credential;
 
