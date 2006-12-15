@@ -81,4 +81,8 @@ public class DecoratedPreparator implements MimeMessagePreparator {
         return body;
     }
 
+	public void setMailForm(MailForm mailForm) {
+		this.mailForm = mailForm;
+	}
+
 }
