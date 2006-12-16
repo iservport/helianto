@@ -18,6 +18,9 @@ package org.helianto.core.mail.compose;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * Base class for <code>MailMessageComposer</code> implementations.
@@ -42,5 +45,7 @@ public abstract class AbstractMailMessageComposer implements MailMessageComposer
     protected Set<String> getSupportedKeys() {
         return supportedKeys;
     }
+
+    protected static final Log logger = LogFactory.getLog(AbstractMailMessageComposer.class);
 
 }

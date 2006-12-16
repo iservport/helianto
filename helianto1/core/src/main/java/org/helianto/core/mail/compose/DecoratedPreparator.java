@@ -20,6 +20,8 @@ import java.util.Date;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
@@ -63,6 +65,9 @@ public class DecoratedPreparator implements MimeMessagePreparator {
      */
     public void prepare(MimeMessage mimeMessage) {
         compose();
+        if (logger.isDebugEnabled()) {
+            logger.debug("Message body ready.");
+        }
         MimeMessageHelper helper;
         try {
             helper = new MimeMessageHelper(mimeMessage, true);
@@ -83,10 +88,27 @@ public class DecoratedPreparator implements MimeMessagePreparator {
 
 	public void setMailForm(MailForm mailForm) {
 		this.mailForm = mailForm;
+        if (logger.isDebugEnabled()) {
+            logger.debug("Mail form set to: "+mailForm);
+        }
 	}
 
 	public MailForm getMailForm() {
 		return mailForm;
 	}
+    
+    @Override
+    public String toString() {
+        StringBuilder buffer = new StringBuilder();
+
+        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("recipient").append("='").append(mailForm.getRecipientIdentity().getPrincipal()).append("' ");            
+        buffer.append("subject").append("='").append(mailForm.getSubject()).append("' ");            
+        buffer.append("]");
+        
+        return buffer.toString();
+    }
+
+    protected static final Log logger = LogFactory.getLog(DecoratedPreparator.class);
 
 }

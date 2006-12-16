@@ -19,8 +19,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Server;
 import org.helianto.core.type.ActivityState;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
 /**
  * Subclass of <code>JavaMailSenderImpl</code> implementing
@@ -69,6 +71,18 @@ public class ConfigurableMailSenderImpl extends JavaMailSenderImpl implements
         return valid;
     }
     
+    
+    @Override
+    public void send(MimeMessagePreparator[] mimeMessagePreparator) throws MailException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Sending ...");
+        }
+        super.send(mimeMessagePreparator);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Sent!");
+        }
+    }
+
     public void setAccessServer(Server accessServer) {
         this.accessServer = accessServer;
     }
