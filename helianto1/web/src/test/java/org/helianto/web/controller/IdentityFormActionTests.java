@@ -121,7 +121,7 @@ public class IdentityFormActionTests extends TestCase {
         assertNotNull(mailForm);
         assertSame(operator, mailForm.getOperator());
         assertSame(credential, mailForm.getCredential());
-        assertSame(credential.getIdentity(), mailForm.getRecipientIdentity());
+        assertSame(credential.getIdentity(), mailForm.getRecipientIdentities().iterator().next());
     }
     
     public void testCreateMailFormError() {

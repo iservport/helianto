@@ -150,7 +150,7 @@ public class IdentityFormAction extends FormAction {
             PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm(operator);
             Credential credential = doGetForm(context).getCredential();
             mailForm.setCredential(credential);
-            mailForm.setRecipientIdentity(credential.getIdentity());
+            mailForm.getRecipientIdentities().add(credential.getIdentity());
             return mailForm;
         }
         if (logger.isDebugEnabled()) {
