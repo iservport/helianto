@@ -47,7 +47,7 @@ public class DecoratedPreparatorTests extends TestCase {
         
         assertEquals(1, mimeMessage.getRecipients(Message.RecipientType.TO).length);
         Address toAddress = mimeMessage.getRecipients(Message.RecipientType.TO)[0];
-        assertEquals(mailForm.getRecipientIdentity().getPrincipal(), toAddress.toString());
+        assertEquals(mailForm.getRecipientIdentities().iterator().next().getPrincipal(), toAddress.toString());
         
         assertEquals(1, mimeMessage.getReplyTo().length);
         Address replyAddress = mimeMessage.getReplyTo()[0];

@@ -15,6 +15,8 @@
 
 package org.helianto.core.mail.compose;
 
+import java.util.Set;
+
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 
@@ -42,14 +44,14 @@ public interface MailForm {
     public Operator getOperator();
 
     /**
-     * Recipient <code>Identity</code> getter.
+     * Recipient <code>Identity</code> collection getter.
      */
-    public Identity getRecipientIdentity();
+    public Set<Identity> getRecipientIdentities();
 
     /**
-     * Recipient <code>Identity</code> setter.
+     * Recipient <code>Identity</code> collection setter.
      */
-    public void setRecipientIdentity(Identity recipientIdentity);
+	public void setRecipientIdentities(Set<Identity> identities);
 
     /**
      * Subject getter.

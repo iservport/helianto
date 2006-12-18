@@ -15,7 +15,11 @@
 
 package org.helianto.core.mail.compose;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
@@ -50,7 +54,9 @@ public class BasicMailMessageComposerTests extends TestCase {
         mailForm.setOperator(operator);
         Credential credential = AuthenticationTestSupport.createCredential();
         credential.getIdentity().setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
-        mailForm.setRecipientIdentity(credential.getIdentity());
+        Set<Identity> identities = new HashSet<Identity>();
+        identities.add(credential.getIdentity());
+        mailForm.setRecipientIdentities(identities);
         mailForm.setCredential(credential);
         //test also mail form
         assertSame(operator, mailForm.getOperator());

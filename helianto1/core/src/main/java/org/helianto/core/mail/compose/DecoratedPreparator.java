@@ -16,12 +16,14 @@
 package org.helianto.core.mail.compose;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.Identity;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
@@ -71,7 +73,8 @@ public class DecoratedPreparator implements MimeMessagePreparator {
         MimeMessageHelper helper;
         try {
             helper = new MimeMessageHelper(mimeMessage, true);
-            helper.setTo(mailForm.getRecipientIdentity().getPrincipal());
+            String[] recipients = convertIdentitesToRecipients(mailForm.getRecipientIdentities());
+            helper.setTo(recipients);
             helper.setReplyTo(mailForm.getOperator().getOperatorSourceMailAddress());
             helper.setFrom(mailForm.getOperator().getOperatorSourceMailAddress());
             helper.setSentDate(new Date());
@@ -80,6 +83,25 @@ public class DecoratedPreparator implements MimeMessagePreparator {
         } catch (MessagingException e) {
             throw new IllegalStateException("Unable to preparate message", e);
         }
+    }
+    
+    /**
+     * Convenience method to convert <code>Identity</code> collection to 
+     * array of String recipients.
+     *  
+     * @param identities
+     * @return
+     */
+    protected String[] convertIdentitesToRecipients(Set<Identity> identities) {
+    	if (identities.size()==0) {
+    		throw new IllegalArgumentException("Must have at least one recipient!");
+    	}
+        String[] recipients = new String[identities.size()];
+        int i = 0;
+        for (Identity identity: identities) {
+        	recipients[i++] = identity.getPrincipal();
+        }
+        return recipients;
     }
 
     public StringBuilder getBody() {
@@ -102,7 +124,9 @@ public class DecoratedPreparator implements MimeMessagePreparator {
         StringBuilder buffer = new StringBuilder();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("recipient").append("='").append(mailForm.getRecipientIdentity().getPrincipal()).append("' ");            
+        for (Identity identity: mailForm.getRecipientIdentities()) {
+            buffer.append("recipient").append("='").append(identity.getPrincipal()).append("' ");            
+        }
         buffer.append("subject").append("='").append(mailForm.getSubject()).append("' ");            
         buffer.append("]");
         

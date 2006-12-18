@@ -15,6 +15,9 @@
 
 package org.helianto.core.mail.compose;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.type.IdentityType;
@@ -30,13 +33,13 @@ public class DefaultMailForm implements MailForm {
 
     private Operator operator;
 
-    private Identity recipientIdentity;
+    private Set<Identity> identities;
 
     private String subject = "";
     
     private String content = "";
 
-    /**
+	/**
      * Default constructor for subclasses.
      */
     public DefaultMailForm() { }
@@ -66,21 +69,31 @@ public class DefaultMailForm implements MailForm {
         return identity;
     }
 
-    public Operator getOperator() {
-        return operator;
+	protected Set<Identity> validatePrincipal(Set<Identity> identities) {
+		for (Identity identity: identities) {
+			validatePrincipal(identity);
+		}
+        return identities;
     }
 
-    public Identity getRecipientIdentity() {
-        return validatePrincipal(recipientIdentity);
+    public Operator getOperator() {
+        return operator;
     }
 
     public void setOperator(Operator operator) {
         this.operator = operator;
     }
 
-    public void setRecipientIdentity(Identity recipientIdentity) {
-        this.recipientIdentity = validatePrincipal(recipientIdentity);
-    }
+    public Set<Identity> getRecipientIdentities() {
+    	if (identities==null) {
+    		identities = new HashSet<Identity>();
+    	}
+		return validatePrincipal(identities);
+	}
+
+	public void setRecipientIdentities(Set<Identity> identities) {
+		this.identities = validatePrincipal(identities);
+	}
 
     public String getSubject() {
         return subject;

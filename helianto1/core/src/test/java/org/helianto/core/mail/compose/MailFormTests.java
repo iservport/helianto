@@ -16,6 +16,8 @@
 package org.helianto.core.mail.compose;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 
@@ -35,7 +37,7 @@ public class MailFormTests extends TestCase {
         identity.setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
         MailForm mailForm = createMailForm(operator, identity);
         assertSame(operator, mailForm.getOperator());
-        assertSame(identity, mailForm.getRecipientIdentity());
+        assertSame(identity, mailForm.getRecipientIdentities().iterator().next());
         assertEquals("SUBJECT", mailForm.getSubject());
 
     }
@@ -51,21 +53,12 @@ public class MailFormTests extends TestCase {
         //create with organizational email
         MailForm mailForm = createMailForm();
         
-        try {
-            mailForm.setRecipientIdentity(null);
-            fail();
-        }
-        catch (IllegalArgumentException e) {
-            assertEquals("Identity is not addressable.", e.getMessage());
-        }
-        catch (Exception e) {
-            fail();
-        }
-        
         Identity recipient = AuthenticationTestSupport.createIdentity();
         try {
+        	Set<Identity> identities = new HashSet<Identity>();
             recipient.setIdentityType(IdentityType.NOT_ADDRESSABLE.getValue());
-            mailForm.setRecipientIdentity(recipient);
+            identities.add(recipient);
+            mailForm.setRecipientIdentities(identities);
             fail();
         }
         catch (IllegalArgumentException e) {
@@ -76,8 +69,10 @@ public class MailFormTests extends TestCase {
         }
         
         try {
+        	Set<Identity> identities = new HashSet<Identity>();
             recipient.setIdentityType(IdentityType.GROUP.getValue());
-            mailForm.setRecipientIdentity(recipient);
+            identities.add(recipient);
+            mailForm.setRecipientIdentities(identities);
             fail();
         }
         catch (IllegalArgumentException e) {
@@ -88,13 +83,15 @@ public class MailFormTests extends TestCase {
         }
         
         //personal email is ok
+    	Set<Identity> identities = new HashSet<Identity>();
         recipient.setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
-        mailForm.setRecipientIdentity(recipient);
+        identities.add(recipient);
+        mailForm.setRecipientIdentities(identities);
 
         //but the getter is also validated
         try {
             recipient.setIdentityType(IdentityType.GROUP.getValue());
-            mailForm.getRecipientIdentity();
+            mailForm.getRecipientIdentities();
             fail();
         }
         catch (IllegalArgumentException e) {
@@ -116,7 +113,9 @@ public class MailFormTests extends TestCase {
     public static MailForm createMailForm(Operator operator, Identity identity) {
     	DefaultMailForm mailForm = new DefaultMailForm();
         mailForm.setOperator(operator);
-        mailForm.setRecipientIdentity(identity);
+        Set<Identity> identities = new HashSet<Identity>();
+        identities.add(identity);
+        mailForm.setRecipientIdentities(identities);
         mailForm.setSubject("SUBJECT");
         return mailForm;
     }
