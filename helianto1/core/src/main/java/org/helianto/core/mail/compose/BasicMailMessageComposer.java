@@ -15,6 +15,8 @@
 
 package org.helianto.core.mail.compose;
 
+import java.util.Map;
+
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
 /**
@@ -44,5 +46,10 @@ public class BasicMailMessageComposer extends AbstractMailMessageComposer {
         }
         throw new IllegalArgumentException("Unhandled key: "+key);
     }
+
+	public String composeMessage(String key, Map model) {
+		// not used
+		return null;
+	}
 
 }

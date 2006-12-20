@@ -15,6 +15,8 @@
 
 package org.helianto.core.mail.compose;
 
+import java.util.Map;
+
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
 /**
@@ -29,6 +31,14 @@ public interface MailMessageComposer {
      * @param key
      */
     public boolean supports(String key);
+    
+    /**
+     * Compose a message as string
+     * for a key.
+     * @param key
+     * @param model
+     */
+    public String composeMessage(String key, Map model);
     
     /**
      * Compose a message and hand it to a <code>MimeMessagePreparator</code>

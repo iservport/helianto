@@ -37,7 +37,7 @@ public class BasicMailMessageComposerTests extends TestCase {
 
     public void testComposeMessageUnsupportedKey() {
         try {
-            mailMessageComposer.composeMessage("UNSUPPORTED_KEY", null);
+            mailMessageComposer.composeMessage("UNSUPPORTED_KEY", new DefaultMailForm());
             fail();
         }
         catch (IllegalArgumentException e) {
