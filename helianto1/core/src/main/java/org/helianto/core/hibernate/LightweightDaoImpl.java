@@ -146,5 +146,12 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         }
         return false;
     }
+    
+    protected void flush() {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Flushing session.");
+        }
+        getHibernateTemplate().flush();
+    }
 
 }
