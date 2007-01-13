@@ -22,7 +22,7 @@
 	
 -->
 <hibernate-mapping default-lazy="false">
-	<class table="core_partnerkey_m3" 
+	<class table="core_partnerkey" 
 	    name="org.helianto.core.PartnerKey">
 		<!-- 
 			PARTNER KEY

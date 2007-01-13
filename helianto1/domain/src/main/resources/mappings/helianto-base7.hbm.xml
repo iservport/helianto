@@ -22,7 +22,7 @@
 	
 -->
 <hibernate-mapping default-lazy="false">
-	<class table="core_keytype_m3" 
+	<class table="core_keytype" 
 	    name="org.helianto.core.KeyType">
 		<!-- 
 			KEY TYPE

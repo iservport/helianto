@@ -22,7 +22,7 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_contact_m3" 
+	<class table="core_contact" 
 		name="org.helianto.core.Contact">
 		<!-- 
 				CONTACT

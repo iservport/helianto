@@ -22,7 +22,7 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_entity_m3" discriminator-value="0"
+	<class table="core_entity" discriminator-value="0"
 		name="org.helianto.core.Entity">
 		<!-- 
 				ENTITY

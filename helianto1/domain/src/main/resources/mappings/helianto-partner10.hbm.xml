@@ -22,7 +22,7 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_phone_m3" 
+	<class table="core_phone" 
 		name="org.helianto.core.Phone">
 		<!-- 
 				PHONE 

@@ -22,7 +22,7 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_server_m3" 
+	<class table="core_server" 
 		name="org.helianto.core.Server">
 		<!-- 
 				SERVER

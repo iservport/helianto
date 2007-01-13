@@ -24,7 +24,7 @@
 <hibernate-mapping default-lazy="false">
 	<joined-subclass 
 	    name="org.helianto.core.Supplier" 
-	    table="core_partnersupplier_m3" 
+	    table="core_partnersupplier" 
         extends="org.helianto.core.Partner">
 		<!-- 
 			SUPPLIER

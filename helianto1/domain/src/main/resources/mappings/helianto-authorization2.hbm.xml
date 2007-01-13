@@ -18,7 +18,7 @@
  limitations under the License.
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_userassoc_m3"
+	<class table="core_userassoc"
 		name="org.helianto.core.UserAssociation">
 		<!-- 
 				USER ASSOCIATION

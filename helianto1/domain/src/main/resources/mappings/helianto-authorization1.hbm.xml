@@ -22,7 +22,7 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_user_m3" 
+	<class table="core_user" 
 	    name="org.helianto.core.UserGroup"
 	    discriminator-value="G">
 		<!-- 

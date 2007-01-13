@@ -22,7 +22,7 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_partnerdata_m3" 
+	<class table="core_partnerdata" 
 		name="org.helianto.core.PartnerData">
 		<!-- 
 			PARTNER DATA

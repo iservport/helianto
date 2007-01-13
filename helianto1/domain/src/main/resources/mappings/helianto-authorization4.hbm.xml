@@ -18,7 +18,7 @@
  limitations under the License.
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_userlog_m3"
+	<class table="core_userlog"
 		name="org.helianto.core.UserLog">
 		<!-- 
 				USER LOG

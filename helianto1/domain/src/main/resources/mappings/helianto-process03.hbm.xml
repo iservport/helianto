@@ -40,27 +40,38 @@ A class to define relationships between different document types.
 			<generator class="native"/>
 		</id>
 		<!-- 
-  				parent document
+			natural id
 		-->
-		<many-to-one name="parent" 
-			class="org.helianto.process.Document">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="parentId" unique-key="tree" 
-			    not-null="true"/>
-		</many-to-one>
-		<!-- 
-  				child document
-		-->
-		<many-to-one name="child" 
-			class="org.helianto.process.Document">
-			<meta attribute="use-in-equals">true</meta>
-			<column name="childId" unique-key="tree" 
-			    not-null="false"/>
-		</many-to-one>
-		<!-- 
-  				sequence
-		-->
-		<property name ="sequence" type="int" not-null="true"/>
+		<natural-id>
+			<!-- 
+	  				parent document
+			-->
+			<many-to-one name="parent" 
+				class="org.helianto.process.Document"
+				insert="false" update="false">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="parentId"/>
+			</many-to-one>
+			<!-- 
+	  				child document
+			-->
+			<many-to-one name="child" 
+				class="org.helianto.process.Document"
+				insert="false" update="false">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+				<column name="childId"/>
+			</many-to-one>
+			<!-- 
+	  				sequence
+			-->
+			<property name ="sequence" type="int"
+				insert="false" update="false">
+				<meta attribute="use-in-equals">true</meta>
+				<meta attribute="use-in-tostring">true</meta>
+			</property>
+		</natural-id>
 		<!-- 
   				coefficient
 		-->

@@ -22,7 +22,7 @@
 	
 -->
 <hibernate-mapping default-lazy="false">
-	<class table="core_province_m3" 
+	<class table="core_province" 
 	name="org.helianto.core.Province">
 		<!-- 
 			PROVINCE

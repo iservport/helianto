@@ -18,7 +18,7 @@
  limitations under the License.		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_userrole_m3" 
+	<class table="core_userrole" 
 		name="org.helianto.core.UserRole">
 		<!-- 
 				USER ROLE

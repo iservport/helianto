@@ -23,7 +23,7 @@
 		-->
 <hibernate-mapping default-lazy="false">
 	<joined-subclass name="org.helianto.core.Bank"
-        table="core_partnerbank_m3" 
+        table="core_partnerbank" 
         extends="org.helianto.core.Partner">
 		<!-- 
 			BANK

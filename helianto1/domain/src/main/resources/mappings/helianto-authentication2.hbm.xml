@@ -22,7 +22,7 @@
 		
 		-->
 <hibernate-mapping default-lazy="false">
-	<class table="core_credential_m3" 
+	<class table="core_credential" 
 		name="org.helianto.core.Credential">
 		<!-- 
 			CREDENTIAL

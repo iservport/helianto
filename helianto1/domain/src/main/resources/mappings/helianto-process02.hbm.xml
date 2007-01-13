@@ -67,5 +67,20 @@ documents.
 			document name
 		-->
 		<property name="docName" type="string" length="128" />
+		<!-- 
+  				parent associations
+		-->
+		<set name="parentAssociations" cascade="all" optimistic-lock="false">
+			<key column="parentId" not-null="true" />
+			<one-to-many class="org.helianto.process.Tree"/>
+		</set>
+		<!-- 
+  				child associations
+		-->
+		<list name="childAssociations" cascade="all" optimistic-lock="false">
+			<key column="childId" not-null="true" />
+			<list-index column="sequence" />
+			<one-to-many class="org.helianto.process.Tree"/>
+		</list>
 	</class>
 </hibernate-mapping>
