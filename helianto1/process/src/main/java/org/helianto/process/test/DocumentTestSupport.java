@@ -107,7 +107,8 @@ public class DocumentTestSupport extends AbstractIntegrationTest {
                 externalDocumentList.add(category);
                 for (int j=0;j<size;j++) {
                     ExternalDocument document = createExternalDocument(e, DocumentType.FILE);
-                    document.setParent(category);
+                    // FIXME new association domain model
+//                    document.setParent(category);
                     externalDocumentList.add(document);
                 }
             }

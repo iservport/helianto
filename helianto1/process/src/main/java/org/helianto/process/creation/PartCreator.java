@@ -3,33 +3,64 @@ package org.helianto.process.creation;
 import org.helianto.core.Entity;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Part;
+import org.helianto.process.Tree;
 import org.helianto.process.Unit;
+import org.helianto.process.type.AssociationType;
+import org.springframework.util.Assert;
 
-public interface PartCreator {
+/**
+ * <Code>Part</code> factory methods.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
+public class PartCreator extends AbstractDocumentCreator {
 	
     /**
-     * Create a <code>Part</code> with a drawing.
+     * Creates a <code>Part</code> with a drawing.
      */
-	public Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName);
+	public static Part partWithDrawingFactory(Entity entity, String drawingNumber, String drawingName) {
+        Assert.notNull(entity);
+        return partFactory(entity, drawingNumber, drawingName, true);
+    }
     
     /**
-     * Create a <code>Part</code>.
+     * Creates a <code>Part</code>.
      */
-	public Part partFactory(Entity entity, String partNumber, String partName);
+	public static Part partFactory(Entity entity, String partNumber, String partName) {
+        Assert.notNull(entity);
+        return partFactory(entity, partNumber, partName, false);
+    }
+    
+    /**
+     * Creates a <code>Part</code>.
+     */
+    public static Part partFactory(Entity entity, String partNumber, String partName, boolean hasDrawing) {
+        Assert.notNull(entity);
+        Part part = (Part) documentFactory(Part.class, entity, partNumber);
+        part.setHasDrawing(hasDrawing);
+        return part;
+    }
 
     /**
-     * Create a <code>MaterialType</code>.
+     * Creates a <code>MaterialType</code>.
      */
-	public MaterialType materialTypeFactory(Unit materialUnit, String materialName);
+	public static MaterialType materialTypeFactory(Unit materialUnit, String materialName) {
+        MaterialType materialType = new MaterialType();
+        materialType.setEntity(materialUnit.getEntity());
+        materialType.setMaterialUnit(materialUnit);
+        materialType.setMaterialName(materialName);
+        materialType.setInternalNumber(0);
+        return materialType;
+    }
 
-    /**
-     * Create a <code>Material</code>.
-     */
-	public Part materialFactory(MaterialType materialType, String materialNumber, String materialName);
-	
 	/**
-	 * Create a component.
+	 * Creates a component.
 	 */
-	public Part componentFactory(Part parent, String drawingNumber, String drawingName, double coefficient);
-
+    public static Part componentFactory(Part parent, String drawingNumber, String drawingName, double coefficient) {
+        Part child = partFactory(parent.getEntity(), drawingNumber, drawingName);
+        Tree tree = associationFactory(parent, child, coefficient);
+        tree.setAssociationType(AssociationType.PART_PART.getValue());
+        return child;
+    }
+    
 }

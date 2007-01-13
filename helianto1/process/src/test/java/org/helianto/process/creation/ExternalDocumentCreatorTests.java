@@ -21,6 +21,10 @@ import org.helianto.process.type.DocumentType;
 
 import junit.framework.TestCase;
 
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class ExternalDocumentCreatorTests extends TestCase {
     
     public void testCreateDocument() {

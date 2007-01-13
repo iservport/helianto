@@ -39,16 +39,27 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
     }
 
     public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode) {
-        return (ExternalDocument) findUnique(EXTERNALDOCUMENT_QRY, entity, docCode);
+        return (ExternalDocument) findUnique(EXTERNALDOCUMENT_QRY+EXTERNALDOCUMENT_FILTER, entity, docCode);
     }
     
+    static String EXTERNALDOCUMENT_QRY = "from ExternalDocument externalDocument ";
+    
+    static String EXTERNALDOCUMENT_FILTER = "where externalDocument.entity = ? and externalDocument.docCode = ? ";
+    
     public List<ExternalDocument> findExternalDocumentByEntity(Entity entity) {
-        return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_ENTITY_QRY, entity);
+        return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_QRY+EXTERNALDOCUMENT_FILTER_ENTITY, entity);
     }
 
+    static final String EXTERNALDOCUMENT_FILTER_ENTITY = "where externalDocument.entity = ? ";
+    
     public List<ExternalDocument> findExternalDocumentRootByEntity(Entity entity) {
-        return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_ROOT_QRY, entity);
+        return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_QRY+EXTERNALDOCUMENT_FILTER_ENTITY, entity);
     }
+
+    static final String EXTERNALDOCUMENT_ROOT_QRY = "and externalDocument.parent = null ";
+    
+static final String EXTERNALDOCUMENT_PARENT_QRY = "from ExternalDocument externalDocument " +
+"where externalDocument.parent = ? ";
 
     public List<ExternalDocument> findExternalDocumentByParent(ExternalDocument parent) {
         return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_PARENT_QRY, parent);
@@ -70,14 +81,6 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
         return (ArrayList<Setup>) find(SETUP_QRY, entity);
     }
 
-    static String EXTERNALDOCUMENT_QRY = "from ExternalDocument externalDocument "+
-        "where externalDocument.entity = ? and externalDocument.docCode = ? ";
-    static final String EXTERNALDOCUMENT_ENTITY_QRY = "from ExternalDocument externalDocument " +
-        "where externalDocument.entity = ? ";
-    static final String EXTERNALDOCUMENT_ROOT_QRY = "from ExternalDocument externalDocument " +
-        "where externalDocument.entity = ? and externalDocument.parent = null ";
-    static final String EXTERNALDOCUMENT_PARENT_QRY = "from ExternalDocument externalDocument " +
-        "where externalDocument.parent = ? ";
     static final String PART_QRY = null;
     static final String PROCESS_QRY = null;
     static final String OPERATION_QRY = null;

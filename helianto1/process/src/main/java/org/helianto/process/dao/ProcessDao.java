@@ -25,6 +25,10 @@ import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.Setup;
 
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public interface ProcessDao {
     
     /**
@@ -56,6 +60,8 @@ public interface ProcessDao {
      * <code>ExternalDocument</code> finder by parent.
      */
     public List<ExternalDocument> findExternalDocumentByParent(ExternalDocument parent);
+    
+    //
     
     public List<Part> findPartByEntity(Entity entity);
 

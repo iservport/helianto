@@ -32,6 +32,11 @@ import org.helianto.process.creation.ExternalDocumentCreator;
 import org.helianto.process.dao.ProcessDao;
 import org.helianto.process.type.DocumentType;
 
+/**
+ * Default implementation of <code>ProcessMgr</code> interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     public ExternalDocument createExternalDocumentCategory(Entity entity, String documentCode) {
@@ -45,7 +50,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     public ExternalDocument createExternalFolder(ExternalDocument parent, String documentCode) {
         ExternalDocument externalDocument  = 
             ExternalDocumentCreator.externalDocumentFactory(parent.getEntity(), documentCode, DocumentType.FOLDER);
-        externalDocument.setParent(parent);
+        // FIXME new association domain model
+//        externalDocument.setParent(parent);
         externalDocument.setDocName(documentCode);
         externalDocument.setDocUrl(documentCode+"/");
         return externalDocument;
@@ -54,7 +60,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     public ExternalDocument createExternalFile(ExternalDocument parent, String documentCode) {
         ExternalDocument externalDocument  = 
             ExternalDocumentCreator.externalDocumentFactory(parent.getEntity(), documentCode, DocumentType.FILE);
-        externalDocument.setParent(parent);
+        // FIXME new association domain model
+//        externalDocument.setParent(parent);
         externalDocument.setDocName(documentCode);
         externalDocument.setDocUrl(documentCode+"/");
         return externalDocument;

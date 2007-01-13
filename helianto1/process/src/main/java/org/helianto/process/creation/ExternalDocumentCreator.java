@@ -17,6 +17,7 @@ package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
 import org.helianto.process.ExternalDocument;
+import org.helianto.process.Tree;
 import org.helianto.process.type.DocumentType;
 
 /**
@@ -29,6 +30,14 @@ public class ExternalDocumentCreator extends AbstractDocumentCreator {
     public static ExternalDocument externalDocumentFactory(Entity entity, String documentCode, DocumentType documentType) {
         ExternalDocument externalDocument = (ExternalDocument) documentFactory(ExternalDocument.class, entity, documentCode);
         externalDocument.setDocType(documentType.getValue());
+        return externalDocument;
+    }
+    
+    public static ExternalDocument externalDocumentFactory(ExternalDocument parent, String documentCode, DocumentType documentType) {
+        ExternalDocument externalDocument = (ExternalDocument) documentFactory(ExternalDocument.class, parent.getEntity(), documentCode);
+        externalDocument.setDocType(documentType.getValue());
+        // FIXME new association domain model
+        Tree tree = associationFactory(parent, externalDocument, 0);
         return externalDocument;
     }
     

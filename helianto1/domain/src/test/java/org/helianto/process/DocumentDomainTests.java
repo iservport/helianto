@@ -45,7 +45,6 @@ public class DocumentDomainTests extends TestCase {
 		externalDocument.setDocType(DocumentType.CATEGORY.getValue());
 		externalDocument.setDocType(DocumentType.FILE.getValue());
 		externalDocument.setDocType(DocumentType.FOLDER.getValue());
-        externalDocument.setParent(new ExternalDocument());
 	}
 
 }

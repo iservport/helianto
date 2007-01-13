@@ -23,34 +23,27 @@
 		-->
 <hibernate-mapping default-lazy="false">
 	<joined-subclass 
-	    name="org.helianto.process.ExternalDocument" 
-	    extends="org.helianto.process.Document"
-	    table="process_documentext">
+	    name="org.helianto.process.Process" 
+	    table="process_documentproc" 
+	    extends="org.helianto.process.Document">
 		<!-- 
-			EXTERNAL DOCUMENT
+			PROCESS
 			============================================= 
 		-->
 		<meta attribute="class-description" inherit="false">
 			<![CDATA[
 <p>
-Documents to be stored appart from the datastore.
+A process.
 </p>
 
 @author Mauricio Fernandes de Castro
 				]]>
 		</meta>
-		<key column="id"/>
+		<key column="id" />
 		<!-- 
-			document url
+			internal number
 		-->
-		<property name="docUrl" type="string" length="64" />
-		<!-- 
-			document type
-		-->
-		<property name="docType" type="char"/>
+		<property name="internalNumber" type="long"
+			not-null="false" />
 	</joined-subclass>
 </hibernate-mapping>
-
-
-
-

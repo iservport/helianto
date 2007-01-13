@@ -17,6 +17,7 @@ package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
 import org.helianto.process.Document;
+import org.helianto.process.Tree;
 import org.springframework.util.Assert;
 
 /**
@@ -31,6 +32,9 @@ public class AbstractDocumentCreator {
         return documentFactory(clazz, entity, documentCode, "");
     }
     
+    /**
+     * Internal <code>Document</code> factory.
+     */
     protected static Document documentFactory(Class clazz, Entity entity, String documentCode, String documentName) {
         Assert.notNull(entity);
         Document document;
@@ -42,6 +46,19 @@ public class AbstractDocumentCreator {
         } catch (Exception e) {
             throw new RuntimeException("Can't instantiate "+clazz);
         }
+    }
+    
+    /**
+     * Internal <code>Tree</code> factory.
+     */
+    protected static Tree associationFactory(Document parent, Document child, double coefficient) {
+        Assert.notNull(parent);
+        Assert.notNull(child);
+        Tree tree = new Tree();
+        tree.setParent(parent);
+        tree.setChild(child);
+//      parent.getChildren().add(tree);
+        return tree;
     }
 
 }

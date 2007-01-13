@@ -23,34 +23,45 @@
 		-->
 <hibernate-mapping default-lazy="false">
 	<joined-subclass 
-	    name="org.helianto.process.ExternalDocument" 
-	    extends="org.helianto.process.Document"
-	    table="process_documentext">
+	    name="org.helianto.process.Part" 
+	    table="process_documentpart" 
+	    extends="org.helianto.process.Document">
 		<!-- 
-			EXTERNAL DOCUMENT
+			PART
 			============================================= 
 		-->
 		<meta attribute="class-description" inherit="false">
 			<![CDATA[
 <p>
-Documents to be stored appart from the datastore.
+A part.
 </p>
 
 @author Mauricio Fernandes de Castro
 				]]>
 		</meta>
-		<key column="id"/>
+		<key column="id" />
 		<!-- 
-			document url
+			part type
 		-->
-		<property name="docUrl" type="string" length="64" />
+		<property name="partType" type="int">
+			<column name="partType" precision="2"/>
+		</property>
 		<!-- 
-			document type
+			has drawing
 		-->
-		<property name="docType" type="char"/>
+		<property name="hasDrawing" type="boolean" not-null="true" />
+		<!-- 
+			materialType
+		-->
+		<many-to-one name="materialType"
+			class="org.helianto.process.MaterialType">
+			<column name="materialTypeId" />
+		</many-to-one>
+		<!-- 
+  				weight
+		-->
+		<property name="weight" type="float">
+			<column name="weight" precision="14" scale="4"/>
+		</property>
 	</joined-subclass>
 </hibernate-mapping>
-
-
-
-
