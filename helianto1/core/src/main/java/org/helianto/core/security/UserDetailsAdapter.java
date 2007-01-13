@@ -16,10 +16,7 @@
 package org.helianto.core.security;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.acegisecurity.GrantedAuthority;
@@ -116,7 +113,9 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements
      * @author Mauricio Fernandes de Castro
      */
     public class DefaultAuthorityResolutionStrategy implements
-            AuthorityResolutionStrategy {
+            AuthorityResolutionStrategy, Serializable {
+
+        private static final long serialVersionUID = 1L;
 
         public Set<UserRole> resolveUserRoles() {
             if (logger.isDebugEnabled()) {
