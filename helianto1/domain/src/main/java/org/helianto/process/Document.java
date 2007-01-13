@@ -1,7 +1,11 @@
 package org.helianto.process;
-// Generated 09/12/2006 14:43:19 by Hibernate Tools 3.2.0.beta8
+// Generated 13/01/2007 07:27:02 by Hibernate Tools 3.2.0.beta8
 
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.helianto.core.Entity;
 
 /**
@@ -25,6 +29,8 @@ public class Document  implements java.io.Serializable {
      private Entity entity;
      private String docCode;
      private String docName;
+     private Set<Tree> parentAssociations = new HashSet<Tree>(0);
+     private List<Tree> childAssociations = new ArrayList<Tree>(0);
 
      // Constructors
 
@@ -38,10 +44,12 @@ public class Document  implements java.io.Serializable {
         this.docCode = docCode;
     }
     /** full constructor */
-    public Document(Entity entity, String docCode, String docName) {
+    public Document(Entity entity, String docCode, String docName, Set<Tree> parentAssociations, List<Tree> childAssociations) {
        this.entity = entity;
        this.docCode = docCode;
        this.docName = docName;
+       this.parentAssociations = parentAssociations;
+       this.childAssociations = childAssociations;
     }
    
     // Property accessors
@@ -72,6 +80,20 @@ public class Document  implements java.io.Serializable {
     
     public void setDocName(String docName) {
         this.docName = docName;
+    }
+    public Set<Tree> getParentAssociations() {
+        return this.parentAssociations;
+    }
+    
+    public void setParentAssociations(Set<Tree> parentAssociations) {
+        this.parentAssociations = parentAssociations;
+    }
+    public List<Tree> getChildAssociations() {
+        return this.childAssociations;
+    }
+    
+    public void setChildAssociations(List<Tree> childAssociations) {
+        this.childAssociations = childAssociations;
     }
 
     /**
@@ -105,6 +127,8 @@ public class Document  implements java.io.Serializable {
          
          result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getDocCode() == null ? 0 : this.getDocCode().hashCode() );
+         
+         
          
          return result;
    }   

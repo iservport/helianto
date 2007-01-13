@@ -1,7 +1,9 @@
 package org.helianto.process;
-// Generated 09/12/2006 14:43:19 by Hibernate Tools 3.2.0.beta8
+// Generated 13/01/2007 07:27:02 by Hibernate Tools 3.2.0.beta8
 
 
+import java.util.List;
+import java.util.Set;
 import org.helianto.core.Entity;
 
 /**
@@ -19,7 +21,6 @@ public class ExternalDocument extends org.helianto.process.Document implements j
 
      private String docUrl;
      private char docType;
-     private ExternalDocument parent;
 
      // Constructors
 
@@ -32,11 +33,10 @@ public class ExternalDocument extends org.helianto.process.Document implements j
         super(entity, docCode);        
     }
     /** full constructor */
-    public ExternalDocument(Entity entity, String docCode, String docName, String docUrl, char docType, ExternalDocument parent) {
-        super(entity, docCode, docName);        
+    public ExternalDocument(Entity entity, String docCode, String docName, Set<Tree> parentAssociations, List<Tree> childAssociations, String docUrl, char docType) {
+        super(entity, docCode, docName, parentAssociations, childAssociations);        
        this.docUrl = docUrl;
        this.docType = docType;
-       this.parent = parent;
     }
    
     // Property accessors
@@ -53,13 +53,6 @@ public class ExternalDocument extends org.helianto.process.Document implements j
     
     public void setDocType(char docType) {
         this.docType = docType;
-    }
-    public ExternalDocument getParent() {
-        return this.parent;
-    }
-    
-    public void setParent(ExternalDocument parent) {
-        this.parent = parent;
     }
 
 

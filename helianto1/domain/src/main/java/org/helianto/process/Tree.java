@@ -1,5 +1,5 @@
 package org.helianto.process;
-// Generated 09/12/2006 14:43:19 by Hibernate Tools 3.2.0.beta8
+// Generated 13/01/2007 07:27:02 by Hibernate Tools 3.2.0.beta8
 
 
 
@@ -31,8 +31,9 @@ public class Tree  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public Tree(Document parent, int sequence, double coefficient, int associationType) {
+    public Tree(Document parent, Document child, int sequence, double coefficient, int associationType) {
         this.parent = parent;
+        this.child = child;
         this.sequence = sequence;
         this.coefficient = coefficient;
         this.associationType = associationType;
@@ -98,6 +99,21 @@ public class Tree  implements java.io.Serializable {
         this.method = method;
     }
 
+    /**
+     * toString
+     * @return String
+     */
+     public String toString() {
+	  StringBuffer buffer = new StringBuffer();
+
+      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+      buffer.append("parent").append("='").append(getParent()).append("' ");			
+      buffer.append("child").append("='").append(getChild()).append("' ");			
+      buffer.append("sequence").append("='").append(getSequence()).append("' ");			
+      buffer.append("]");
+      
+      return buffer.toString();
+     }
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
@@ -106,7 +122,8 @@ public class Tree  implements java.io.Serializable {
 		 Tree castOther = ( Tree ) other; 
          
 		 return ( (this.getParent()==castOther.getParent()) || ( this.getParent()!=null && castOther.getParent()!=null && this.getParent().equals(castOther.getParent()) ) )
- && ( (this.getChild()==castOther.getChild()) || ( this.getChild()!=null && castOther.getChild()!=null && this.getChild().equals(castOther.getChild()) ) );
+ && ( (this.getChild()==castOther.getChild()) || ( this.getChild()!=null && castOther.getChild()!=null && this.getChild().equals(castOther.getChild()) ) )
+ && (this.getSequence()==castOther.getSequence());
    }
    
    public int hashCode() {
@@ -115,7 +132,7 @@ public class Tree  implements java.io.Serializable {
          
          result = 37 * result + ( getParent() == null ? 0 : this.getParent().hashCode() );
          result = 37 * result + ( getChild() == null ? 0 : this.getChild().hashCode() );
-         
+         result = 37 * result + this.getSequence();
          
          
          

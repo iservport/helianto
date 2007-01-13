@@ -1,9 +1,10 @@
 package org.helianto.process;
-// Generated 24/09/2006 12:54:25 by Hibernate Tools 3.1.0.beta4
+// Generated 13/01/2007 07:27:02 by Hibernate Tools 3.2.0.beta8
+
 
 import java.util.List;
+import java.util.Set;
 import org.helianto.core.Entity;
-
 
 /**
  * 			
@@ -14,16 +15,13 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-
 public class Process extends org.helianto.process.Document implements java.io.Serializable {
-
 
     // Fields    
 
      private long internalNumber;
 
-
-    // Constructors
+     // Constructors
 
     /** default constructor */
     public Process() {
@@ -33,12 +31,13 @@ public class Process extends org.helianto.process.Document implements java.io.Se
     public Process(Entity entity, String docCode) {
         super(entity, docCode);        
     }
-    
-    
-
+    /** full constructor */
+    public Process(Entity entity, String docCode, String docName, Set<Tree> parentAssociations, List<Tree> childAssociations, long internalNumber) {
+        super(entity, docCode, docName, parentAssociations, childAssociations);        
+       this.internalNumber = internalNumber;
+    }
    
     // Property accessors
-
     public long getInternalNumber() {
         return this.internalNumber;
     }
@@ -46,13 +45,10 @@ public class Process extends org.helianto.process.Document implements java.io.Se
     public void setInternalNumber(long internalNumber) {
         this.internalNumber = internalNumber;
     }
-   
-
-
-
-
 
 
 
 
 }
+
+
