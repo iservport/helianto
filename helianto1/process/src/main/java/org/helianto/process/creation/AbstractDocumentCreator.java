@@ -15,6 +15,8 @@
 
 package org.helianto.process.creation;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.process.Document;
 import org.helianto.process.Tree;
@@ -42,6 +44,9 @@ public class AbstractDocumentCreator {
             document = (Document) clazz.newInstance();
             document.setEntity(entity);
             document.setDocCode(documentCode);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Created "+document);
+            }
             return document;
         } catch (Exception e) {
             throw new RuntimeException("Can't instantiate "+clazz);
@@ -57,8 +62,14 @@ public class AbstractDocumentCreator {
         Tree tree = new Tree();
         tree.setParent(parent);
         tree.setChild(child);
-//      parent.getChildren().add(tree);
+        child.getParentAssociations().add(tree);
+        parent.getChildAssociations().add(tree);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created "+tree);
+        }
         return tree;
     }
+
+    private static final Log logger = LogFactory.getLog(AbstractDocumentCreator.class);
 
 }
