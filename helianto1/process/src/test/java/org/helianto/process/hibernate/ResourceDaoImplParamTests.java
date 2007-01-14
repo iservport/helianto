@@ -27,10 +27,10 @@ import org.helianto.process.Unit;
 import org.helianto.process.creation.ResourceCreatorImpl;
 import org.helianto.process.dao.ResourceDao;
 import org.helianto.process.junit.AbstractMaterialTest;
-import org.helianto.process.junit.AbstractResourceDaoTest;
+import org.helianto.process.test.ResourceTestSupport;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class ResourceDaoImplParamTests extends AbstractResourceDaoTest {
+public class ResourceDaoImplParamTests extends ResourceTestSupport {
 
     // class (interface) under test
     private ResourceDao resourceDao;

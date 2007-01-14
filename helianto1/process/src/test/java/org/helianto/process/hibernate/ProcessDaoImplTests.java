@@ -57,14 +57,12 @@ public class ProcessDaoImplTests extends DocumentTestSupport  {
         ExternalDocument parent = null;
         List<ExternalDocument> list2 = processDao.findExternalDocumentRootByEntity(externalDocument.getEntity());
         for (ExternalDocument e: list2) {
-            // FIXME new association domain model
-//            assertNull(e.getParent());
+            assertEquals(0, e.getParentAssociations().size());
             parent = e;
         }
         List<ExternalDocument> list3 = processDao.findExternalDocumentByParent(parent);
         for (ExternalDocument e: list3) {
-            // FIXME new association domain model
-//            assertEquals(parent, e.getParent());
+            assertEquals(parent, e.getParentAssociations().iterator().next());
         }
     }
 

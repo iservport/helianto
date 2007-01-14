@@ -21,10 +21,10 @@ import java.util.List;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.dao.ResourceDao;
-import org.helianto.process.junit.AbstractResourceDaoTest;
+import org.helianto.process.test.ResourceTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
-public class ResourceDaoImplTests extends AbstractResourceDaoTest {
+public class ResourceDaoImplTests extends ResourceTestSupport {
 
     // class (interface) under test
     private ResourceDao resourceDao;
