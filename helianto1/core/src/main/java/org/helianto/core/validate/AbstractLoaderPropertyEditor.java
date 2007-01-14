@@ -20,40 +20,67 @@ import java.io.Serializable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.orm.hibernate3.HibernateOperations;
 
 /**
- * A base class to <code>HibernateTemplate</code> backed property editors.
+ * Abstract base class to <code>PropertyLoader</code> backed property editors.
+ * 
+ * <p>Use to replace <code>AbstractHibernatePropertyEditor</code> if the
+ * <code>getAsText()</code> method needs to participate in a transaction.
+ * Notice that the service facade that controls the transaction must implement 
+ * <code>PropertyLoader</code>.
+ * </p>
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated in favour of <code>AbstractLoaderPropertyEditor</code>
  */
-public abstract class AbstractHibernatePropertyEditor extends
+public abstract class AbstractLoaderPropertyEditor extends
         PropertyEditorSupport {
 
-    private HibernateOperations hibernateTemplate;
+    private PropertyLoader propertyLoader;
     
-    protected AbstractHibernatePropertyEditor(HibernateOperations hibernateTemplate) {
-        setHibernateTemplate(hibernateTemplate);
+    /**
+     * Required constructor.
+     * 
+     * @param propertyLoader
+     */
+    protected AbstractLoaderPropertyEditor(PropertyLoader propertyLoader) {
+        setPropertyLoader(propertyLoader);
     }
     
-    private AbstractHibernatePropertyEditor() {}
+    /**
+     * Default constructor.
+     * 
+     * @param propertyLoader
+     */
+    private AbstractLoaderPropertyEditor() {}
 
-    protected HibernateOperations getHibernateTemplate() {
-        return hibernateTemplate;
+    /**
+     * <code>PropertyLoader</code> getter.
+     */
+    public PropertyLoader getPropertyLoader() {
+        return propertyLoader;
     }
 
-    private final void setHibernateTemplate(HibernateOperations hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
+    /**
+     * <code>PropertyLoader</code> setter.
+     */
+    public void setPropertyLoader(PropertyLoader propertyLoader) {
+        this.propertyLoader = propertyLoader;
     }
-    
+
+    /**
+     * Loads the object having the supplied key (id) and
+     * sets it as the <code>PropertyEditor</code> value.
+     * 
+     * @param id
+     * @param clazz
+     */
     protected void setAsText(String id, Class clazz) {
         if (logger.isDebugEnabled()) {
             logger.debug("Loaded "+clazz.getName()+" property editor");
         }
         try {
             Serializable key = resolveId(id);
-            Object value = getHibernateTemplate().load(clazz, key);
+            Object value = getPropertyLoader().load(clazz, key);
             super.setValue(value);
             if (logger.isDebugEnabled()) {
                 logger.debug("Loaded property: " + getValue()+" set from id="+id);
@@ -63,6 +90,12 @@ public abstract class AbstractHibernatePropertyEditor extends
         }
     }
     
+    /**
+     * Method to be overriden if the object key is not
+     * an integer.
+     * 
+     * @param id
+     */
     protected Serializable resolveId(String id) {
         int value = Integer.parseInt(id);
         return value;
