@@ -36,4 +36,20 @@ public class ExternalDocumentCreatorTests extends TestCase {
         assertEquals(DocumentType.CATEGORY.getValue(), externalDocument.getDocType());
     }
 
+    public void testCreateDocumentChild() {
+        ExternalDocument parent = new ExternalDocument();
+        Entity entity = new Entity();
+        parent.setEntity(entity);
+        ExternalDocument externalDocument = 
+            ExternalDocumentCreator.externalDocumentFactory(parent, "CODE", DocumentType.CATEGORY);
+        assertSame(entity, externalDocument.getEntity());
+        assertEquals("CODE", externalDocument.getDocCode());
+        assertEquals(DocumentType.CATEGORY.getValue(), externalDocument.getDocType());
+        assertSame(externalDocument, externalDocument.getParentAssociations().iterator().next().getChild());
+        assertSame(parent, externalDocument.getParentAssociations().iterator().next().getParent());
+        assertSame(externalDocument, parent.getChildAssociations().iterator().next().getChild());
+        assertSame(parent, parent.getChildAssociations().iterator().next().getParent());
+        assertEquals(0, parent.getChildAssociations().iterator().next().getSequence());
+    }
+
 }

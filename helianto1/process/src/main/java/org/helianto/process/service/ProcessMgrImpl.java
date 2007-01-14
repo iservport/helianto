@@ -49,9 +49,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     public ExternalDocument createExternalFolder(ExternalDocument parent, String documentCode) {
         ExternalDocument externalDocument  = 
-            ExternalDocumentCreator.externalDocumentFactory(parent.getEntity(), documentCode, DocumentType.FOLDER);
-        // FIXME new association domain model
-//        externalDocument.setParent(parent);
+            ExternalDocumentCreator.externalDocumentFactory(parent, documentCode, DocumentType.FOLDER);
         externalDocument.setDocName(documentCode);
         externalDocument.setDocUrl(documentCode+"/");
         return externalDocument;
@@ -59,9 +57,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     public ExternalDocument createExternalFile(ExternalDocument parent, String documentCode) {
         ExternalDocument externalDocument  = 
-            ExternalDocumentCreator.externalDocumentFactory(parent.getEntity(), documentCode, DocumentType.FILE);
-        // FIXME new association domain model
-//        externalDocument.setParent(parent);
+            ExternalDocumentCreator.externalDocumentFactory(parent, documentCode, DocumentType.FILE);
         externalDocument.setDocName(documentCode);
         externalDocument.setDocUrl(documentCode+"/");
         return externalDocument;
