@@ -53,17 +53,17 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
     static final String EXTERNALDOCUMENT_FILTER_ENTITY = "where externalDocument.entity = ? ";
     
     public List<ExternalDocument> findExternalDocumentRootByEntity(Entity entity) {
-        return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_QRY+EXTERNALDOCUMENT_FILTER_ENTITY, entity);
+        return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_QRY+EXTERNALDOCUMENT_FILTER_ENTITY+EXTERNALDOCUMENT_FILTER_ROOT, entity);
     }
 
-    static final String EXTERNALDOCUMENT_ROOT_QRY = "and externalDocument.parent = null ";
+    static final String EXTERNALDOCUMENT_FILTER_ROOT = "and externalDocument.parentAssociations.size = 0 ";
     
-static final String EXTERNALDOCUMENT_PARENT_QRY = "from ExternalDocument externalDocument " +
-"where externalDocument.parent = ? ";
-
     public List<ExternalDocument> findExternalDocumentByParent(ExternalDocument parent) {
         return (ArrayList<ExternalDocument>) find(EXTERNALDOCUMENT_PARENT_QRY, parent);
     }
+
+    static final String EXTERNALDOCUMENT_PARENT_QRY = "select child from Tree associations " +
+        "where associations.parent = ? ";
 
     public List<Part> findPartByEntity(Entity entity) {
         return (ArrayList<Part>) find(PART_QRY, entity);

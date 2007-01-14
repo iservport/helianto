@@ -53,13 +53,26 @@ public class DocumentTestSupport extends AbstractIntegrationTest {
         } catch(ArrayIndexOutOfBoundsException e) {
             entity = EntityTestSupport.createEntity();
         }
+        ExternalDocument parent;
+        try {
+            parent = (ExternalDocument) args[0];
+        } catch(ClassCastException e) {
+            parent = null;
+        } catch(ArrayIndexOutOfBoundsException e) {
+            parent = null;
+        }
         DocumentType documentType;
         try {
             documentType = (DocumentType) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
             documentType = DocumentType.values()[(int)Math.random() * 3];
         }
-        ExternalDocument externalDocument = ExternalDocumentCreator.externalDocumentFactory(entity, generateKey(20, testKey++), documentType);
+        ExternalDocument externalDocument = null;
+        if (parent == null) {
+            externalDocument = ExternalDocumentCreator.externalDocumentFactory(entity, generateKey(20, testKey++), documentType);
+        } else {
+            externalDocument = ExternalDocumentCreator.externalDocumentFactory(parent, generateKey(20, testKey++), documentType);
+        }
         return externalDocument;
     }
 
