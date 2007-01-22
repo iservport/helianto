@@ -78,8 +78,9 @@ public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
         "where enumerator.entity = ? "+
         "and enumerator.typeName = ? ";
 
-	public void persistInternalEnumerator(InternalEnumerator internalEnumerator) {
-		merge(internalEnumerator);
+	// TODO is internalEnumerator always required to be persisted with saveOrUpdate?
+    public void persistInternalEnumerator(InternalEnumerator internalEnumerator) {
+        saveOrUpdate(internalEnumerator);
 	}
     
 
