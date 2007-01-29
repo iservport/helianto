@@ -40,7 +40,7 @@ public interface LightweightDao {
      * Save an object to the datastore,
      * either inserting or updating it.
      */
-    public void merge(Object object) throws DataAccessException ;
+    public Object merge(Object object) throws DataAccessException ;
 
     /**
      * A method to remove current instance in the 

@@ -46,12 +46,12 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         return this.getHibernateTemplate().load(clazz, key);
     }
 
-    public void merge(Object object) {
+    public Object merge(Object object) {
         Assert.notNull(object);
         if (logger.isDebugEnabled()) {
             logger.debug("** DAO Merging "+object.toString());
         }
-        this.getHibernateTemplate().merge(object);
+        return this.getHibernateTemplate().merge(object);
     }
 
     public void remove(Object object) {

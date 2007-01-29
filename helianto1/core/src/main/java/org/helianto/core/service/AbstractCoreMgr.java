@@ -39,6 +39,9 @@ public class AbstractCoreMgr {
             long lastNumber = enumerator.getLastNumber();
             enumerator.setLastNumber(lastNumber+1);
             authorizationDao.persistInternalEnumerator(enumerator);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Incremented existing InternalEnumerator: "+enumerator);
+            }
             return lastNumber;
         } else  {
             enumerator = new InternalEnumerator();
@@ -46,6 +49,9 @@ public class AbstractCoreMgr {
             enumerator.setTypeName(typeName);
             enumerator.setLastNumber(2);    
             authorizationDao.persistInternalEnumerator(enumerator);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Created InternalEnumerator: "+enumerator);
+            }
             return 1;
         }
     }
