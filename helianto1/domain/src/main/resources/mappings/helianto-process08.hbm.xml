@@ -42,7 +42,7 @@ A base class to add attachments to documents.
 		<!-- 
   				document
 		-->
-		<many-to-one name="document" 
+		<many-to-one name="document" cascade="save-update,persist,merge"
 			class="org.helianto.process.Document">
 			<meta attribute="use-in-equals">true</meta>
 			<column name="documentId" unique-key="document" not-null="true"/>

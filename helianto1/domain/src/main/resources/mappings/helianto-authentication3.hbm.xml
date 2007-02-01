@@ -47,7 +47,7 @@ Private Key.
 			<!-- 
 					credential
 			-->
-			<many-to-one name="credential" cascade="save-update,merge"
+			<many-to-one name="credential" cascade="save-update,persist,merge"
 			    class="org.helianto.core.Credential">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>

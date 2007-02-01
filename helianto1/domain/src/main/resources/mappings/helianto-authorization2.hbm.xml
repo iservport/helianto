@@ -44,7 +44,7 @@ A class to hold user and user groups associations.
 					parent user
 			-->
 			<many-to-one name="parent" 
-				class="org.helianto.core.UserGroup" cascade="save-update,merge"
+				class="org.helianto.core.UserGroup" cascade="save-update,persist,merge"
 				insert="true">
 				<meta attribute="use-in-equals">true</meta>
 				<column name="parentId"/>
@@ -53,7 +53,7 @@ A class to hold user and user groups associations.
 					child user
 			-->
 			<many-to-one name="child" 
-				class="org.helianto.core.UserGroup" cascade="save-update,merge"
+				class="org.helianto.core.UserGroup" cascade="save-update,persist,merge"
 				insert="true">
 				<meta attribute="use-in-equals">true</meta>
 				<column name="childId"/>

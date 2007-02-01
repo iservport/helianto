@@ -48,7 +48,7 @@ customers, suppliers, banks, etc.
 			<!-- 
 	  				partner data
 			-->
-			<many-to-one name="partnerData" cascade="save-update,merge"
+			<many-to-one name="partnerData" cascade="save-update,persist,merge"
 				class="org.helianto.core.PartnerData">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>

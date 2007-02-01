@@ -49,7 +49,7 @@ documents.
 		-->
 		<natural-id>
 			<many-to-one name="entity" class="org.helianto.core.Entity"
-			    cascade="save-update,merge" fetch="select">
+			    cascade="save-update,persist,merge" fetch="select">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
 				<column name="entityId"/>

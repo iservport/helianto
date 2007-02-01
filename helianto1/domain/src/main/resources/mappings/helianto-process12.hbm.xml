@@ -47,7 +47,7 @@ A class to represent parameters values.
 			<!-- 
 				resource or resource group
 			-->
-			<many-to-one name="resource" cascade="save-update,merge"
+			<many-to-one name="resource" cascade="save-update,persist,merge"
 				class="org.helianto.process.ResourceGroup">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
@@ -56,7 +56,7 @@ A class to represent parameters values.
 			<!-- 
 				code
 			-->
-			<many-to-one name="parameter" cascade="save-update,merge"
+			<many-to-one name="parameter" cascade="save-update,persist,merge"
 				class="org.helianto.process.ResourceParameter">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>

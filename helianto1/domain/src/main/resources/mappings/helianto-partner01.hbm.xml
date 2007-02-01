@@ -47,7 +47,7 @@ Represents the relationship between the organization and other entities.
 			<!-- 
 	  				entity
 			-->
-			<many-to-one name="entity" cascade="save-update,merge"
+			<many-to-one name="entity" cascade="save-update,persist,merge"
 				class="org.helianto.core.Entity">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
@@ -65,7 +65,7 @@ Represents the relationship between the organization and other entities.
 		<!-- 
 			province
 		-->
-		<many-to-one name="province" cascade="save-update,merge"
+		<many-to-one name="province" cascade="save-update,persist,merge"
 			class="org.helianto.core.Province">
 			<column name="provinceId"/>
 		</many-to-one>
@@ -96,7 +96,7 @@ Represents the relationship between the organization and other entities.
 		<!--
 				partners
 		-->
-		<set name="partners" inverse="true" cascade="save-update,merge">
+		<set name="partners" inverse="true" cascade="save-update,persist,merge">
 			<key column="partnerId"/>
 			<one-to-many class="org.helianto.core.Partner"/>
 		</set>

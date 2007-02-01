@@ -53,7 +53,7 @@ external hosts.
 			<!-- 
 					operator
 			-->
-			<many-to-one name="operator" cascade="save-update,merge"
+			<many-to-one name="operator" cascade="save-update,persist,merge"
 				class="org.helianto.core.Operator">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
@@ -107,7 +107,7 @@ external hosts.
 		<!-- 
 				credential
 		-->
-		<many-to-one name="credential" cascade="save-update,merge"
+		<many-to-one name="credential" cascade="save-update,persist,merge"
 			class="org.helianto.core.Credential">
 			<meta attribute="use-in-equals">true</meta>
 			<meta attribute="use-in-tostring">true</meta>

@@ -47,7 +47,7 @@ A class to represent a process resource group.
 			<!-- 
 				entity
 			-->
-			<many-to-one name="entity" cascade="save-update,merge"
+			<many-to-one name="entity" cascade="save-update,persist,merge"
 			    class="org.helianto.core.Entity">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
@@ -66,7 +66,7 @@ A class to represent a process resource group.
 			parent
 		-->
 		<many-to-one name="parent" class="org.helianto.process.ResourceGroup"
-			column="parentId" not-null="false" cascade="merge" />
+			column="parentId" not-null="false" cascade="save-update,persist,merge" />
 		<!-- 
 			resource name
 		-->
@@ -78,7 +78,7 @@ A class to represent a process resource group.
 		<!--
 				resources
 		-->
-		<set name="resources" inverse="true" cascade="save-update,merge">
+		<set name="resources" inverse="true" cascade="save-update,persist,merge">
 			<key column="parentId"/>
 			<one-to-many class="org.helianto.process.ResourceGroup"/>
 		</set>

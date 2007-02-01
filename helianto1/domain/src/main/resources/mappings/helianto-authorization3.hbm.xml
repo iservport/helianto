@@ -44,7 +44,7 @@ Represent roles an <code>User</code> can play.
 					user
 			-->
 			<many-to-one name="userGroup"
-				class="org.helianto.core.UserGroup" cascade="save-update,merge">
+				class="org.helianto.core.UserGroup" cascade="save-update,persist,merge">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
 				<column name="userId"/>
@@ -53,7 +53,7 @@ Represent roles an <code>User</code> can play.
 					service
 			-->
 			<many-to-one name="service"
-				class="org.helianto.core.Service" cascade="save-update,merge">
+				class="org.helianto.core.Service" cascade="save-update,persist,merge">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
 				<column name="serviceId"/>

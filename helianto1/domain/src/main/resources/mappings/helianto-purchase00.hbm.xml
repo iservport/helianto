@@ -46,7 +46,7 @@ A domain object to represent a purchase order.
 		<!-- 
 				entity
 		-->
-		<many-to-one name="entity" 
+		<many-to-one name="entity" cascade="save-update,persist,merge"
 			class="org.helianto.core.Entity">
 			<meta attribute="use-in-equals">true</meta>
 			<column name="entityId"/>

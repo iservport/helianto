@@ -44,7 +44,7 @@ The contact domain class.
 			<!-- 
 	  				partner
 			-->
-			<many-to-one name="partnerData" cascade="save-update,merge"
+			<many-to-one name="partnerData" cascade="save-update,persist,merge"
 				class="org.helianto.core.PartnerData">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
@@ -53,7 +53,7 @@ The contact domain class.
 			<!-- 
 	  				identity
 			-->
-			<many-to-one name="identity" cascade="save-update,merge"
+			<many-to-one name="identity" cascade="save-update,persist,merge"
 				class="org.helianto.core.Identity">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>

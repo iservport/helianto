@@ -47,7 +47,7 @@ Represents the relationship between the organization and other entities.
 			<!-- 
 	  				shared entity
 			-->
-			<many-to-one name="sharedEntity" cascade="save-update,merge"
+			<many-to-one name="sharedEntity" cascade="save-update,persist,merge"
 				class="org.helianto.core.Entity">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
@@ -56,7 +56,7 @@ Represents the relationship between the organization and other entities.
 			<!-- 
 	  				partner data
 			-->
-			<many-to-one name="partnerData" cascade="save-update,merge"
+			<many-to-one name="partnerData" cascade="save-update,persist,merge"
 				class="org.helianto.core.PartnerData">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>

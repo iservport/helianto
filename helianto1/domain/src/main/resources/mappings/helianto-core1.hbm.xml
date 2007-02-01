@@ -44,7 +44,7 @@ A class to hold last value for internal number lists.
 					entity
 			-->
 			<many-to-one name="entity" 
-				class="org.helianto.core.Entity" cascade="merge">
+				class="org.helianto.core.Entity" cascade="save-update,persist,merge">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
 				<column name="entityId"/>

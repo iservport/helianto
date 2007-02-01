@@ -47,7 +47,7 @@ A class to represent document versions.
 			<!-- 
 				release
 			-->
-			<many-to-one name="release"
+			<many-to-one name="release" cascade="save-update,persist,merge"
 				class="org.helianto.process.Release">
 				<meta attribute="use-in-equals">true</meta>
 				<column name="releaseId" />

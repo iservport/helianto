@@ -47,7 +47,7 @@ Represents different key values for each <code>PartnerRole</code>.
 			<!-- 
 				partner
 			-->
-			<many-to-one name="partner"
+			<many-to-one name="partner" cascade="save-update,persist,merge"
 				class="org.helianto.core.Partner">
 				<meta attribute="use-in-equals">true</meta>
 				<meta attribute="use-in-tostring">true</meta>
