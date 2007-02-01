@@ -168,14 +168,6 @@ public class UserMgrImplTests extends TestCase {
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setAuthenticationDao(authenticationDao);
         userMgr.setAuthorizationDao(authorizationDao);
-        
-//        
-//        Não encontrei o correspondente, localiza apenas os dois SETs de cima
-//        Vlademir
-//        
-//        userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
-//        
-        
     }
     
     @Override
