@@ -5,7 +5,6 @@ import java.util.Date;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.security.PublicUserDetails;
 

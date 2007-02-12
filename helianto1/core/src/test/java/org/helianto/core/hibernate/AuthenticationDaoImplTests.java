@@ -19,10 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.IdentityFilter;
 import org.helianto.core.junit.AbstractCredentialTest;
@@ -57,39 +56,28 @@ public class AuthenticationDaoImplTests extends AbstractCredentialTest {
     
     public void testFindIdentities() {
         // write list
-        int e = 2;
+        int e = 1;
         int d = 3;
-        List<UserGroup> userList = AuthorizationTestSupport.createAndPersistUserGroupList(hibernateTemplate, e, d);
-        assertEquals(e*d, userList.size());
-        UserGroup parent = AuthorizationTestSupport.createUserGroup();
-        parent.getIdentity().setPrincipal("USER");
-        // we must write one association to each user in the list
-        // having a same parent with identity principal "USER"
-        for (UserGroup u:userList) {
-        	UserAssociation assoc = new UserAssociation();
-        	assoc.setParent(parent);
-        	assoc.setChild(u);
-        	u.getParents().add(assoc);
-            authenticationDao.persistIdentity(u.getIdentity());
-        }
+        List<User> userList = AuthorizationTestSupport.createAndPersistUserList(hibernateTemplate, e, d);
+        userList.addAll(AuthorizationTestSupport.createAndPersistUserList(hibernateTemplate, e, d));
+        assertEquals(2*d, userList.size());
+        User user = userList.get((int) (Math.random()*e*d));
         // read
         IdentityFilter identityFilter = new IdentityFilter();
+        identityFilter.setUser(user);
         
         List<Identity> identityList = authenticationDao.findIdentityByCriteria(identityFilter);
-        assertEquals(e*d, identityList.size());
-        int index = (int) (Math.random()*e*d);
+        assertEquals(d, identityList.size());
+        int index = (int) (Math.random()*d);
         System.out.println("INDEX "+index);
         Identity identity = identityList.get(index);
-        UserGroup loaded = 
+        Entity loaded = 
             identity
             .getUsers()   // users that share this identity
             .iterator() 
             .next()       // the first one
-            .getParents() // parents associated to this one
-            .iterator()
-            .next()       // the first association
-            .getParent(); // the parent inside the association
-        assertEquals("USER", loaded.getIdentity().getPrincipal());
+            .getEntity(); // the parent inside the association
+        assertEquals(loaded.getId(), user.getEntity().getId());
     }
 
     public void testIdentityErrors() {

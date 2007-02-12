@@ -15,8 +15,8 @@
 
 package org.helianto.core.hibernate;
 
+import org.helianto.core.dao.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.dao.IdentityFilter;
-import org.helianto.core.dao.IdentitySelectionStrategy;
 
 /**
  * Default implementation of <code>IdentitySelectionStrategy</code>
@@ -24,24 +24,32 @@ import org.helianto.core.dao.IdentitySelectionStrategy;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultIdentitySelectionStrategy implements
-        IdentitySelectionStrategy {
+public class DefaultIdentitySelectionStrategy extends
+        AbstractUserBackedCriteriaFilter {
 
 	public String createCriteriaAsString(IdentityFilter filter) {
 		return createCriteriaAsString(filter, "identity");
     }
 
-	public String createCriteriaAsString(IdentityFilter filter, String prefix) {
-        StringBuilder criteria = new StringBuilder();
+	/**
+     * Creates the criteria. 
+	 */
+    public String createCriteriaAsString(IdentityFilter filter, String prefix) {
+        StringBuilder criteria = createFilter(filter, prefix);
+        
         if (!filter.getPrincipalSearch().equals("")) {
-            criteria.append("lower("+prefix+".principal) like '%")
+            criteria.append("and ")
+            .append("lower("+prefix+".principal) like '%")
             .append(filter.getPrincipalSearch().toLowerCase())
             .append("%' ");
         }
         if (!filter.getNameOrAliasSearch().equals("")) {
             String nameOrAliasSearch = filter.getNameOrAliasSearch().toLowerCase();
-            if (!criteria.toString().equals("")) {
+            if (!filter.getPrincipalSearch().equals("")) {
                 criteria.append("or ");
+            }
+            else {
+                criteria.append("and ");
             }
             criteria.append("lower("+prefix+".optionalAlias) like '%")
             .append(nameOrAliasSearch)
@@ -58,7 +66,7 @@ public class DefaultIdentitySelectionStrategy implements
         if (criteria.toString().equals("")) {
             return "";
         }
-        return criteria.insert(0, "and (").append(")").toString();
+        return criteria.insert(0, "where (").append(")").toString();
 	}
 
 }

@@ -140,7 +140,7 @@ public class AuthorizationTestSupport extends AbstractIntegrationTest {
     public static List<User> createAndPersistUserList(HibernateTemplate hibernateTemplate, int entityListSize, int identityListSize) {
         List<User> userList = createUserList(entityListSize, identityListSize);
         for (UserGroup x: userList) {
-            hibernateTemplate.merge(x);
+            hibernateTemplate.persist(x);
         }
         hibernateTemplate.flush();
         hibernateTemplate.clear();

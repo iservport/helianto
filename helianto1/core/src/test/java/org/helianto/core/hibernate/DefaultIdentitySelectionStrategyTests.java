@@ -17,6 +17,7 @@ package org.helianto.core.hibernate;
 
 import org.helianto.core.dao.IdentityFilter;
 import org.helianto.core.dao.IdentitySelectionStrategy;
+import org.helianto.core.test.AuthorizationTestSupport;
 
 import junit.framework.TestCase;
 
@@ -26,13 +27,26 @@ import junit.framework.TestCase;
  */
 public class DefaultIdentitySelectionStrategyTests extends TestCase {
 
+    public void testCreateCriteriaAsStringNoUser() {
+        filter.setUser(null);
+        try {
+            identitySelectionStrategy.createCriteriaAsString(filter );
+            fail();
+        } 
+        catch (IllegalArgumentException e) {
+            assertNotNull(e);
+        }
+    }
+    
     public void testCreateCriteriaAsStringFull() {
+        filter.setUser(AuthorizationTestSupport.createUser());
         filter.setNameOrAliasSearch("nameOrAliasSearch");
         filter.setPrincipalSearch("principalSearch");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter );
-        String expect = "and (" +
-                "lower(identity.principal) like '%principalsearch%' " +
+        String expect = "where (" +
+            "identity.id in (select user.identity.id from User user where user.entity.id = 0) and " +
+            "lower(identity.principal) like '%principalsearch%' " +
                 "or lower(identity.optionalAlias) like '%nameoraliassearch%' " +
                 "or lower(identity.firstName) like '%nameoraliassearch%' " +
                 "or lower(identity.lastName) like '%nameoraliassearch%' )";
@@ -40,33 +54,40 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
     }
     
     public void testCreateCriteriaAsStringPrincipal() {
+        filter.setUser(AuthorizationTestSupport.createUser());
         filter.setNameOrAliasSearch("");
         filter.setPrincipalSearch("principalSearch");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter );
-        String expect = "and (" +
-                "lower(identity.principal) like '%principalsearch%' )";
+        String expect = "where (" +
+            "identity.id in (select user.identity.id from User user where user.entity.id = 0) and " +
+            "lower(identity.principal) like '%principalsearch%' )";
         assertEquals(expect, criteria);
     }
     
     public void testCreateCriteriaAsStringNameOrAlias() {
+        filter.setUser(AuthorizationTestSupport.createUser());
         filter.setNameOrAliasSearch("nameOrAliasSearch");
         filter.setPrincipalSearch("");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter );
-        String expect = "and (" +
-                "lower(identity.optionalAlias) like '%nameoraliassearch%' " +
-                "or lower(identity.firstName) like '%nameoraliassearch%' " +
-                "or lower(identity.lastName) like '%nameoraliassearch%' )";
+        String expect = "where (" +
+            "identity.id in (select user.identity.id from User user where user.entity.id = 0) and " +
+            "lower(identity.optionalAlias) like '%nameoraliassearch%' " +
+            "or lower(identity.firstName) like '%nameoraliassearch%' " +
+            "or lower(identity.lastName) like '%nameoraliassearch%' )";
         assertEquals(expect, criteria);
     }
     
     public void testCreateCriteriaAsStringEmpty() {
+        filter.setUser(AuthorizationTestSupport.createUser());
         filter.setNameOrAliasSearch("");
         filter.setPrincipalSearch("");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter );
-        assertEquals("", criteria);
+        String expect = "where (" +
+        "identity.id in (select user.identity.id from User user where user.entity.id = 0) )";
+    assertEquals(expect, criteria);
     }
     
     private IdentitySelectionStrategy identitySelectionStrategy;

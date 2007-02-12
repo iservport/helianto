@@ -50,24 +50,21 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
         if (logger.isDebugEnabled()) {
             logger.debug("Finding identity using principal: "+principal);
         }
-        Identity identity = (Identity) findUnique(IDENTITY_QRY, principal);
+        Identity identity = (Identity) findUnique(IDENTITY_QRY+IDENTITY_FILTER, principal);
         return identity;
     }
 
     static final String IDENTITY_QRY = 
-        "from Identity identity " +
-        "where identity.principal = ?";
+        "from Identity identity ";
+    
+    static final String IDENTITY_FILTER = 
+        "where identity.principal = ? ";
     
     public List<Identity> findIdentityByCriteria(IdentityFilter filter) {
-        String criteria = identitySelectionStrategy.createCriteriaAsString(filter, "parent");
-        List<Identity> identityList = (ArrayList<Identity>) find(IDENTITY_BY_USERGRP_QRY + criteria);
+        String criteria = identitySelectionStrategy.createCriteriaAsString(filter, "identity");
+        List<Identity> identityList = (ArrayList<Identity>) find(IDENTITY_QRY + criteria);
         return identityList;
     }
-    
-    static final String IDENTITY_BY_USERGRP_QRY = 
-        "select userGroup.identity " +
-        "from UserGroup userGroup join userGroup.parents parent " +
-        "where parent.parent.identity.principal='USER' ";
     
 	/*
 	 * Persist, remove and find credential
