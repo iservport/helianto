@@ -13,13 +13,8 @@
  * limitations under the License.
  */
 
-package org.helainto.core.dao;
+package org.helianto.core.hibernate.filter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.helianto.core.Identity;
-import org.helianto.core.dao.IdentityFilter;
 
 import junit.framework.TestCase;
 

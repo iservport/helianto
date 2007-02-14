@@ -15,8 +15,8 @@
 
 package org.helianto.core.hibernate;
 
-import org.helianto.core.dao.IdentityFilter;
 import org.helianto.core.dao.IdentitySelectionStrategy;
+import org.helianto.core.hibernate.filter.IdentityFilter;
 import org.helianto.core.test.AuthorizationTestSupport;
 
 import junit.framework.TestCase;
