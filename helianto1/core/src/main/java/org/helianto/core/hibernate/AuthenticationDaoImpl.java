@@ -21,8 +21,8 @@ import java.util.List;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.dao.AuthenticationDao;
-import org.helianto.core.dao.IdentityFilter;
 import org.helianto.core.dao.IdentitySelectionStrategy;
+import org.helianto.core.hibernate.filter.IdentityFilter;
 import org.springframework.util.Assert;
 
 /**

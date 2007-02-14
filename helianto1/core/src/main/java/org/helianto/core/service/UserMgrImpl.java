@@ -11,7 +11,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
-import org.helianto.core.dao.IdentityFilter;
+import org.helianto.core.hibernate.filter.IdentityFilter;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
 import org.helianto.core.type.ActivityState;
 

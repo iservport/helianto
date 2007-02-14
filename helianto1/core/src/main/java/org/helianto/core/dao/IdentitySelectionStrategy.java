@@ -15,6 +15,8 @@
 
 package org.helianto.core.dao;
 
+import org.helianto.core.hibernate.filter.IdentityFilter;
+
 
 /**
  * A strategy to create <code>Identity</code> selection filters.

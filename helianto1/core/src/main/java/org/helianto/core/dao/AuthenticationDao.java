@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.hibernate.filter.IdentityFilter;
 
 /**
  * Identity and Credential data access interface.

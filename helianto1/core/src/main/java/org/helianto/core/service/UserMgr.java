@@ -8,7 +8,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.dao.IdentityFilter;
+import org.helianto.core.hibernate.filter.IdentityFilter;
 
 public interface UserMgr extends CoreMgr {
 	
