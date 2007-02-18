@@ -19,6 +19,11 @@ import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.security.UserDetailsAdapter;
 
+/**
+ * Security related test support.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class SecurityTestSupport {
     
     public static UserDetailsAdapter createUserDetailsAdapter() {

@@ -40,11 +40,23 @@ public abstract class AbstractUserBackedSelectionStrategy extends AbstractSelect
         if (filter.getUser()==null) {
             throw new IllegalArgumentException("An user must be specified on any filter!");
         }
-        concatenate(criteria, prefix, "id", "in")
-        .append("(select user.identity.id from User user where user.entity.id = ")
-        .append(filter.getUser().getEntity().getId())
-        .append(") ");
+        addUserCriteria(criteria, filter, prefix);
         return criteria;
+    }
+    
+    /**
+     * Subclasses must overide this to actually add any
+     * <code>User</code> dependant citeria.
+     * 
+     * <p>Default implementation compares <code>entity.id</code> 
+     * from source to <code>user.entity.id</code>.</p>
+     * 
+     * @param criteria
+     */
+    protected void addUserCriteria(StringBuilder criteria, UserBackedFilter filter, String prefix) {
+        concatenate(criteria, prefix, "entity.id", "=")
+        .append(filter.getUser().getEntity().getId())
+        .append(" ");
     }
 
 }

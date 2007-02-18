@@ -17,6 +17,7 @@ package org.helianto.core.hibernate;
 
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.hibernate.filter.IdentityFilter;
+import org.helianto.core.hibernate.filter.UserBackedFilter;
 
 /**
  * Default implementation of <code>IdentitySelectionStrategy</code>
@@ -63,5 +64,12 @@ public class DefaultIdentitySelectionStrategy extends AbstractUserBackedSelectio
         }
         return criteria.insert(0, "where (").append(")").toString();
 	}
+
+    protected void addUserCriteria(StringBuilder criteria, UserBackedFilter filter, String prefix) {
+        concatenate(criteria, prefix, "id", "in")
+        .append("(select user.identity.id from User user where user.entity.id = ")
+        .append(filter.getUser().getEntity().getId())
+        .append(") ");
+    }
 
 }
