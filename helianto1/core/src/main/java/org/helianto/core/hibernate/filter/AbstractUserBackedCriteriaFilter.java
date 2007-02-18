@@ -15,37 +15,22 @@
 
 package org.helianto.core.hibernate.filter;
 
+import org.helianto.core.User;
+
 /**
- * Requires an <code>User</code> to perform filtering.
+ * Base class to filters that requires an <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractUserBackedCriteriaFilter extends
-        AbstractCriteriaFilter {
+public abstract class AbstractUserBackedCriteriaFilter implements
+        UserBackedFilter {
     
-    @SuppressWarnings("unused")
-    private StringBuilder createFilter() {
-        return null;
+    private User user;
+    
+    public User getUser() {
+        return user;
     }
-
-    /**
-     * Creates a criteria builder if a <code>User</code> is present, or throws 
-     * <code>IllegalArgumentException</code>.
-     * 
-     * @param filter
-     * @param prefix
-     */
-    protected StringBuilder createFilter(UserBackedFilter filter, String prefix) {
-        StringBuilder criteria = new StringBuilder();
-        
-        if (filter.getUser()==null) {
-            throw new IllegalArgumentException("An user must be specified on any filter!");
-        }
-        concatenate(criteria, prefix, "id", "in")
-        .append("(select user.identity.id from User user where user.entity.id = ")
-        .append(filter.getUser().getEntity().getId())
-        .append(") ");
-        return criteria;
+    public void setUser(User user) {
+        this.user = user;
     }
-
 }

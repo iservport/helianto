@@ -23,13 +23,7 @@ import org.helianto.core.hibernate.filter.IdentityFilter;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface IdentitySelectionStrategy {
-
-    /**
-     * A method to create citeria as String.
-     * @param filter
-     */
-    public String createCriteriaAsString(IdentityFilter filter);
+public interface IdentitySelectionStrategy extends UserBackedSelectionStrategy {
 
     /**
      * A method to create citeria as String. User prefix to prepend hql alias

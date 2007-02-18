@@ -13,27 +13,25 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate.filter;
+package org.helianto.core.dao;
 
-import org.helianto.core.User;
+import org.helianto.core.hibernate.filter.UserBackedFilter;
+
 
 /**
- * Interface to <code>User</code> backed filters.
+ * A strategy to create selection filters based on <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface UserBackedFilter {
-    
+public interface UserBackedSelectionStrategy {
+
     /**
-     * <code>User</code> getter.
-     * @return
+     * Creates a criteria builder if a <code>User</code> is present, or throws 
+     * <code>IllegalArgumentException</code>.
+     * 
+     * @param filter
+     * @param prefix
      */
-    public User getUser();
-    
-    /**
-     * <code>User</code> setter.
-     * @param user
-     */
-    public void setUser(User user);
+    public StringBuilder createFilter(UserBackedFilter filter, String prefix);
 
 }

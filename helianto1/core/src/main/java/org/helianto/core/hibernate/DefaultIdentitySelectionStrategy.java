@@ -15,7 +15,7 @@
 
 package org.helianto.core.hibernate;
 
-import org.helianto.core.hibernate.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.hibernate.filter.IdentityFilter;
 
 /**
@@ -24,12 +24,7 @@ import org.helianto.core.hibernate.filter.IdentityFilter;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultIdentitySelectionStrategy extends
-        AbstractUserBackedCriteriaFilter {
-
-	public String createCriteriaAsString(IdentityFilter filter) {
-		return createCriteriaAsString(filter, "identity");
-    }
+public class DefaultIdentitySelectionStrategy extends AbstractUserBackedSelectionStrategy implements IdentitySelectionStrategy {
 
 	/**
      * Creates the criteria. 

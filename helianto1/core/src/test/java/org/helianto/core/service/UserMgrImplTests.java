@@ -69,7 +69,7 @@ public class UserMgrImplTests extends TestCase {
         Identity excluded = identityList.get((int) (Math.random()*size));
         exclusions.add(excluded);
 
-        expect(identitySelectionStrategy.createCriteriaAsString(filter))
+        expect(identitySelectionStrategy.createCriteriaAsString(filter, "identity"))
             .andReturn(criteria);
         replay(identitySelectionStrategy);
         

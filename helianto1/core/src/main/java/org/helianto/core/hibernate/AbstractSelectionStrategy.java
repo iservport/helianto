@@ -13,25 +13,15 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate.filter;
-
-import org.helianto.core.dao.IdentitySelectionStrategy;
+package org.helianto.core.hibernate;
 
 /**
- * Base class to criteria filters.
+ * Base class to selection strategies.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractCriteriaFilter implements
-    IdentitySelectionStrategy {
-    
-    /**
-     * Creates the criteria builder.
-     */
-    protected StringBuilder createCriteria() {
-        return new StringBuilder();
-    }
-    
+public abstract class AbstractSelectionStrategy {
+
     /**
      * Performs usual prefix cocatenation.
      * 

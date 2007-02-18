@@ -30,7 +30,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
     public void testCreateCriteriaAsStringNoUser() {
         filter.setUser(null);
         try {
-            identitySelectionStrategy.createCriteriaAsString(filter );
+            identitySelectionStrategy.createCriteriaAsString(filter, "identity");
             fail();
         } 
         catch (IllegalArgumentException e) {
@@ -43,7 +43,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
         filter.setNameOrAliasSearch("nameOrAliasSearch");
         filter.setPrincipalSearch("principalSearch");
         String criteria = 
-            identitySelectionStrategy.createCriteriaAsString(filter );
+            identitySelectionStrategy.createCriteriaAsString(filter, "identity");
         String expect = "where (" +
             "identity.id in (select user.identity.id from User user where user.entity.id = 0) and " +
             "lower(identity.principal) like '%principalsearch%' " +
@@ -58,7 +58,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
         filter.setNameOrAliasSearch("");
         filter.setPrincipalSearch("principalSearch");
         String criteria = 
-            identitySelectionStrategy.createCriteriaAsString(filter );
+            identitySelectionStrategy.createCriteriaAsString(filter, "identity");
         String expect = "where (" +
             "identity.id in (select user.identity.id from User user where user.entity.id = 0) and " +
             "lower(identity.principal) like '%principalsearch%' )";
@@ -70,7 +70,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
         filter.setNameOrAliasSearch("nameOrAliasSearch");
         filter.setPrincipalSearch("");
         String criteria = 
-            identitySelectionStrategy.createCriteriaAsString(filter );
+            identitySelectionStrategy.createCriteriaAsString(filter, "identity");
         String expect = "where (" +
             "identity.id in (select user.identity.id from User user where user.entity.id = 0) and " +
             "lower(identity.optionalAlias) like '%nameoraliassearch%' " +
@@ -84,7 +84,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
         filter.setNameOrAliasSearch("");
         filter.setPrincipalSearch("");
         String criteria = 
-            identitySelectionStrategy.createCriteriaAsString(filter );
+            identitySelectionStrategy.createCriteriaAsString(filter, "identity");
         String expect = "where (" +
         "identity.id in (select user.identity.id from User user where user.entity.id = 0) )";
     assertEquals(expect, criteria);
