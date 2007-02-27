@@ -130,6 +130,12 @@ a single authentication scheme and have multiple authorization schemes, one per
 				<column name="userType" not-null="true" default="'I'"/>
 			</property>
 			<!-- 
+					privacy level 
+			-->
+			<property name="privacyLevel" type="char">
+				<column name="privacyLevel" not-null="true" default="'0'"/>
+			</property>
+			<!-- 
 					account non expired 
 			-->
 			<property name="accountNonExpired" type="boolean">

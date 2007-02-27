@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 18/02/2007 09:37:41 by Hibernate Tools 3.2.0.beta8
+// Generated 27/02/2007 06:15:02 by Hibernate Tools 3.2.0.beta8
 
 
 import java.util.Set;
@@ -25,6 +25,7 @@ public class User extends org.helianto.core.UserGroup implements java.io.Seriali
     // Fields    
 
      private char userType;
+     private char privacyLevel;
      private boolean accountNonExpired;
 
      // Constructors
@@ -34,14 +35,16 @@ public class User extends org.helianto.core.UserGroup implements java.io.Seriali
     }
 
 	/** minimal constructor */
-    public User(Entity entity, Identity identity, char userState, char userType) {
+    public User(Entity entity, Identity identity, char userState, char userType, char privacyLevel) {
         super(entity, identity, userState);        
         this.userType = userType;
+        this.privacyLevel = privacyLevel;
     }
     /** full constructor */
-    public User(Entity entity, Identity identity, char userState, Set<UserAssociation> parents, Set<UserRole> roles, char userType, boolean accountNonExpired) {
+    public User(Entity entity, Identity identity, char userState, Set<UserAssociation> parents, Set<UserRole> roles, char userType, char privacyLevel, boolean accountNonExpired) {
         super(entity, identity, userState, parents, roles);        
        this.userType = userType;
+       this.privacyLevel = privacyLevel;
        this.accountNonExpired = accountNonExpired;
     }
    
@@ -52,6 +55,13 @@ public class User extends org.helianto.core.UserGroup implements java.io.Seriali
     
     public void setUserType(char userType) {
         this.userType = userType;
+    }
+    public char getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+    
+    public void setPrivacyLevel(char privacyLevel) {
+        this.privacyLevel = privacyLevel;
     }
     public boolean isAccountNonExpired() {
         return this.accountNonExpired;
