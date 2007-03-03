@@ -15,9 +15,16 @@
 
 package org.helianto.core.test;
 
+import java.util.Date;
+
 import junit.framework.TestCase;
 
 public class DomainTestSupport extends TestCase {
+    
+    public static final String STRING_TEST_VALUE = "TEST";
+    public static final long LONG_TEST_VALUE = Long.MAX_VALUE;
+    public static final int INT_TEST_VALUE = Integer.MAX_VALUE;
+    public static final Date DATE_TEST_VALUE = new Date(Long.MAX_VALUE);
     
     public static Object minimalEqualsTest(Object objectUnderTest) {
         assertNotNull("Cant test equals() with a null object", objectUnderTest);

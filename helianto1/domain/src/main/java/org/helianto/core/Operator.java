@@ -1,5 +1,5 @@
 package org.helianto.core;
-// Generated 18/02/2007 09:37:41 by Hibernate Tools 3.2.0.beta8
+// Generated 03/03/2007 08:02:04 by Hibernate Tools 3.2.0.beta8
 
 
 import java.util.Locale;
