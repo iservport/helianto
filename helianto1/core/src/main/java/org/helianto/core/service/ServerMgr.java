@@ -63,6 +63,15 @@ public interface ServerMgr {
     public UserGroup findOrCreateUserGroup(Entity entity, String serviceName, String[] extensions);
     
     /**
+     * A manager is an <code>User</code> associated to both, an <code>ADMIN</code>
+     * group and an <code>USER</code> group.
+     * 
+     * @param entity
+     * @param managerIdentity
+     */
+    public User createManager(Entity entity, Identity managerIdentity);
+    
+    /**
      * Persist the <code>Operator</code>.
      */
     public void persistOperator(Operator operator);

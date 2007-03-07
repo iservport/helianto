@@ -28,40 +28,45 @@ import org.helianto.core.Operator;
 public interface EntityDao {
     
     /**
-     * Persist <code>Entity</code>.
+     * Persists <code>Entity</code>.
      */
     public void persistEntity(Entity entity);
     
     /**
-     * Remove <code>Entity</code>.
+     * Merges <code>Entity</code>.
+     */
+    public Entity mergeEntity(Entity entity);
+    
+    /**
+     * Removes <code>Entity</code>.
      */
     public void removeEntity(Entity entity);
     
     /**
-     * Find <code>Entity</code> by <code>Operator</code> and alias.
+     * Finds code>Entity</code> by <code>Operator</code> and alias.
      */
     public Entity findEntityByNaturalId(Operator operator, String alias);
     
     /**
-     * Persist <code>DefaultEntity</code>.
+     * Persists <code>DefaultEntity</code>.
      * @deprecated
      */
     public void persistDefaultEntity(DefaultEntity defaultEntity);
     
     /**
-     * Remove <code>DefaultEntity</code>.
+     * Removes <code>DefaultEntity</code>.
      * @deprecated
      */
     public void removeDefaultEntity(DefaultEntity defaultEntity);
     
     /**
-     * Find <code>Entity</code> assigned as default.
+     * Finds <code>Entity</code> assigned as default.
      * @deprecated
      */
     public Entity findDefaultEntity();
     
     /**
-     * Find <code>Entity</code> assigned as default.
+     * Finds <code>Entity</code> assigned as default.
      * 
      * <p>More than one default entity is allowed when
      * distinguished by priority.</p>
@@ -70,7 +75,7 @@ public interface EntityDao {
     public Entity findDefaultEntity(int priority);
     
     /**
-     * Find last <code>InternalEnumerator</code> for the
+     * Finds last <code>InternalEnumerator</code> for the
      * <code>Entity</code> and type.
      * @param entity
      * @param typeName
@@ -79,7 +84,7 @@ public interface EntityDao {
      */public InternalEnumerator findInternalEnumerator(Entity entity, String typeName);
      
      /**
-      * Persist <code>InternalEnumerator</code>.
+      * Persists <code>InternalEnumerator</code>.
       */
      public void persistInternalEnumerator(InternalEnumerator internalEnumerator);
     

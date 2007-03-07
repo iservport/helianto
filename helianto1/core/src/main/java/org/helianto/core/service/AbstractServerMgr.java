@@ -50,20 +50,21 @@ public abstract class AbstractServerMgr implements ServerMgr {
             logger.debug("Created as default: "+defaultEntity);
         }
         authorizationDao.persistEntity(defaultEntity);
-        UserGroup adminGroup = findOrCreateUserGroup(defaultEntity, "ADMIN", new String[] {"MANAGER"});
-        if (logger.isDebugEnabled()) {
-            logger.debug("ADMIN group is: "+adminGroup);
-        }
-        UserGroup userGroup = findOrCreateUserGroup(defaultEntity, "USER", new String[] {"ALL", "DEL"});
-        if (logger.isDebugEnabled()) {
-            logger.debug("USER group is: "+userGroup);
-        }
-        User manager = AuthorizationCreator.userFactory(adminGroup,
-                managerIdentity);
-        AuthorizationCreator.createUserAssociation(userGroup, manager);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created manager (member of ADMIN, USER): "+manager);
-        }
+//        UserGroup adminGroup = findOrCreateUserGroup(defaultEntity, "ADMIN", new String[] {"MANAGER"});
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("ADMIN group is: "+adminGroup);
+//        }
+//        UserGroup userGroup = findOrCreateUserGroup(defaultEntity, "USER", new String[] {"ALL", "DEL"});
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("USER group is: "+userGroup);
+//        }
+//        User manager = AuthorizationCreator.userFactory(adminGroup,
+//                managerIdentity);
+//        AuthorizationCreator.createUserAssociation(userGroup, manager);
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("Created manager (member of ADMIN, USER): "+manager);
+//        }
+        User manager = createManager(defaultEntity, managerIdentity);
         return manager;
     }
 
@@ -113,6 +114,24 @@ public abstract class AbstractServerMgr implements ServerMgr {
         return userGroup;
     }
     
+    public User createManager(Entity entity, Identity managerIdentity) {
+        UserGroup adminGroup = findOrCreateUserGroup(entity, "ADMIN", new String[] {"MANAGER"});
+        if (logger.isDebugEnabled()) {
+            logger.debug("ADMIN group is: "+adminGroup);
+        }
+        UserGroup userGroup = findOrCreateUserGroup(entity, "USER", new String[] {"ALL", "DEL"});
+        if (logger.isDebugEnabled()) {
+            logger.debug("USER group is: "+userGroup);
+        }
+        User manager = AuthorizationCreator.userFactory(adminGroup,
+                managerIdentity);
+        AuthorizationCreator.createUserAssociation(userGroup, manager);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created manager (member of ADMIN, USER): "+manager);
+        }
+        return manager;
+    }
+
     //~ collaborators
 
     public void setAuthenticationDao(AuthenticationDao authenticationDao) {

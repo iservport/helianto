@@ -30,7 +30,11 @@ import org.springframework.util.Assert;
 public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
 
     public void persistEntity(Entity entity) {
-        merge(entity);
+        persist(entity);
+    }
+
+    public Entity mergeEntity(Entity entity) {
+        return (Entity) merge(entity);
     }
 
     public void removeEntity(Entity entity) {

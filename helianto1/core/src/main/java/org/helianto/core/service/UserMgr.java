@@ -47,6 +47,8 @@ public interface UserMgr extends CoreMgr {
      */
     public void persistCredential(Credential credential);
     
+    
+    
     /**
      * <p>A simple <code>User</code> creation given an <code>Endity</code>.</p>
      */
