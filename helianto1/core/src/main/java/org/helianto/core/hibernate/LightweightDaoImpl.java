@@ -36,14 +36,12 @@ import org.springframework.util.Assert;
  */
 public class LightweightDaoImpl extends HibernateDaoSupport implements LightweightDao {
 
-    public Object load(Class clazz, Serializable key) throws DataAccessException {
-        Assert.notNull(clazz);
-        Assert.notNull(key);
+    public void persist(Object object) throws DataAccessException {
+        Assert.notNull(object);
         if (logger.isDebugEnabled()) {
-            logger.debug("** DAO Loading "+clazz.toString()
-                    +" with id "+key.toString());
+            logger.debug("** DAO Persisting "+object);
         }
-        return this.getHibernateTemplate().load(clazz, key);
+        this.getHibernateTemplate().persist(object);
     }
 
     public Object merge(Object object) {
@@ -52,6 +50,16 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
             logger.debug("** DAO Merging "+object.toString());
         }
         return this.getHibernateTemplate().merge(object);
+    }
+
+    public Object load(Class clazz, Serializable key) throws DataAccessException {
+        Assert.notNull(clazz);
+        Assert.notNull(key);
+        if (logger.isDebugEnabled()) {
+            logger.debug("** DAO Loading "+clazz.toString()
+                    +" with id "+key.toString());
+        }
+        return this.getHibernateTemplate().load(clazz, key);
     }
 
     public void remove(Object object) {
@@ -70,22 +78,6 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
             }
             this.getHibernateTemplate().delete(object);
         }
-    }
-
-    public void refresh(Object object) throws DataAccessException {
-        Assert.notNull(object);
-        if (logger.isDebugEnabled()) {
-            logger.debug("** DAO Refreshing "+object);
-        }
-        this.getHibernateTemplate().refresh(object);
-    }
-
-    public void persist(Object object) throws DataAccessException {
-        Assert.notNull(object);
-        if (logger.isDebugEnabled()) {
-            logger.debug("** DAO Persisting "+object);
-        }
-        this.getHibernateTemplate().persist(object);
     }
 
     protected Query queryAssembler(String query, Object... values) {
@@ -147,6 +139,23 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         return false;
     }
     
+    public boolean contains(Object object) throws DataAccessException {
+        Assert.notNull(object);
+        boolean contains = this.getHibernateTemplate().contains(object);
+        if (logger.isDebugEnabled()) {
+            logger.debug("** DAO Session "+(contains ? "contains ": "does not contain ")+object);
+        }
+        return contains;
+    }
+
+    public void refresh(Object object) throws DataAccessException {
+        Assert.notNull(object);
+        if (logger.isDebugEnabled()) {
+            logger.debug("** DAO Refreshing "+object);
+        }
+        this.getHibernateTemplate().refresh(object);
+    }
+
     protected void flush() {
         if (logger.isDebugEnabled()) {
             logger.debug("Flushing session.");

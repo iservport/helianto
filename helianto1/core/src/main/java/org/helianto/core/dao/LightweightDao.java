@@ -37,23 +37,47 @@ public interface LightweightDao {
     public Object load(Class clazz, Serializable key)  throws DataAccessException ;
     
     /**
-     * Save an object to the datastore,
-     * either inserting or updating it.
+     * Copies object state to datastore and make its
+     * instance persistent.
+     * 
+     * @param object
+     * @throws DataAccessException
+     */
+    public void persist(Object object) throws DataAccessException ;
+    
+    /**
+     * Copies object state to datastore and returns
+     * a persistent instance. The supplied instance remains
+     * detached.
+     * 
+     * @param object
+     * @throws DataAccessException
      */
     public Object merge(Object object) throws DataAccessException ;
 
     /**
-     * A method to remove current instance in the 
-     * correspondig table in datastore.
+     * Removes instance from the session.
+     * 
+     * @param object
+     * @throws DataAccessException
      */
     public void remove(Object object) throws DataAccessException ;
     
     /**
-     * Re-loads an object and all its collections.
+     * Re-loads an object from datastore.
+     * 
+     * @param object
+     * @throws DataAccessException
      */
     public void refresh(Object object) throws DataAccessException ;
     
-    public void persist(Object object) throws DataAccessException ;
+    /**
+     * True if session contains the object.
+     * 
+     * @param object
+     * @throws DataAccessException
+     */
+    public boolean contains(Object object) throws DataAccessException;
     
     /**
      * A method to return query results.
