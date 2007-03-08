@@ -88,7 +88,10 @@ public abstract class AbstractServerMgr implements ServerMgr {
                 logger.debug("Retrieved "+groupIdentity);
             }
         }
-        UserGroup userGroup = authorizationDao.findUserGroupByNaturalId(entity, groupIdentity);
+        UserGroup userGroup = null;
+        if (entity.getId()!=0) {
+            userGroup = authorizationDao.findUserGroupByNaturalId(entity, groupIdentity);
+        }
         if (userGroup==null) {
             userGroup = AuthorizationCreator.userGroupFactory(entity, groupIdentity);
             authenticationDao.persistIdentity(groupIdentity);
