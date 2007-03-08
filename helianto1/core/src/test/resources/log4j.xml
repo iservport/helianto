@@ -9,7 +9,7 @@
 		</layout>
 	</appender>
 	<logger name="org.springframework">
-		<level value="DEBUG"/>
+		<level value="INFO"/>
 	</logger>
 	<logger name="org.helianto.core">
 		<level value="DEBUG"/>
@@ -18,7 +18,7 @@
 		<level value="DEBUG"/>
 	</logger>
 	<logger name="org.hsqldb">
-		<level value="DEBUG"/>
+		<level value="INFO"/>
 	</logger>
 	<root>
 		<level value="WARN"/>

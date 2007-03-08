@@ -37,8 +37,6 @@ import org.springframework.mail.javamail.JavaMailSender;
  */
 public class ServerMgrImpl extends AbstractServerMgr {
 
-    protected OperatorDao operatorDao;
-    
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     
     private MailMessageComposer mailMessageComposer;
@@ -85,10 +83,6 @@ public class ServerMgrImpl extends AbstractServerMgr {
     }
 
     // mutators
-
-    public void setOperatorDao(OperatorDao operatorDao) {
-        this.operatorDao = operatorDao;
-    }
 
     public void setConfigurableMailSenderFactory(
             ConfigurableMailSenderFactory configurableMailSenderFactory) {
