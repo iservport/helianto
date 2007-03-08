@@ -36,7 +36,11 @@ public class AuthorizationDaoImpl extends EntityDaoImpl implements Authorization
      */
      
     public void persistUserGroup(UserGroup userGroup) {
-        merge(userGroup);
+        persist(userGroup);
+    }
+    
+    public UserGroup mergeUserGroup(UserGroup userGroup) {
+        return (UserGroup) merge(userGroup);
     }
     
     public void removeUserGroup(UserGroup userGroup) {
@@ -60,10 +64,6 @@ public class AuthorizationDaoImpl extends EntityDaoImpl implements Authorization
     static String USERGROUP_QRY_BY_ENTITY = "from UserGroup userGroup "+
         "where userGroup.entity = ? ";
 
-    public void persistUser(User user) {
-        merge(user);
-    }
-
     public User findUserByNaturalId(Entity requiredEntity, Identity requiredIdentity) {
         Assert.notNull(requiredEntity, "An entity is required");
         Assert.notNull(requiredIdentity, "An identity is required");
@@ -84,9 +84,15 @@ public class AuthorizationDaoImpl extends EntityDaoImpl implements Authorization
         Assert.notNull(user);
         remove(user);
     }
+    
+    // user log
 
     public void persistUserLog(UserLog userLog) {
-        merge(userLog);
+        persist(userLog);
+    }
+    
+    public UserLog mergeUserLog(UserLog userLog) {
+        return (UserLog) merge(userLog);
     }
     
     public void removeUserLog(UserLog userLog) {
@@ -119,12 +125,14 @@ public class AuthorizationDaoImpl extends EntityDaoImpl implements Authorization
         return (ArrayList<UserLog>) find(USERLOG_QRY, requiredUser);
     }
     
-    /*
-     * Persist and find UserRole
-     */
+    // user role
     
     public void persistUserRole(UserRole userRole) {
-        merge(userRole);
+        persist(userRole);
+    }
+
+    public UserRole mergeUserRole(UserRole userRole) {
+        return (UserRole) merge(userRole);
     }
 
     public UserRole findUserRoleByNaturalId(UserGroup userGroup, Service service, String serviceExtension) {

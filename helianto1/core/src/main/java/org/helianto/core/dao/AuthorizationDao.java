@@ -27,64 +27,85 @@ import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 
 public interface AuthorizationDao extends EntityDao {
+    
+    // user group
 
     /**
-     * Persist <code>UserGroup</code>.
+     * Persists <code>UserGroup</code>.
      */
     public void persistUserGroup(UserGroup userGroup);
     
     /**
-     * Remove <code>UserGroup</code>.
+     * Merges <code>UserGroup</code>.
+     */
+    public UserGroup mergeUserGroup(UserGroup userGroup);
+    
+    /**
+     * Removes <code>UserGroup</code>.
      */
     public void removeUserGroup(UserGroup userGroup);
     
     /**
-     * Find <code>UserGroup</code> by  entity and identity.
+     * Finds <code>UserGroup</code> by  entity and identity.
      */
     public UserGroup findUserGroupByNaturalId(Entity entity, Identity identity);
     
     /**
-     * Find <code>UserGroup</code> by  entity.
+     * Finds <code>UserGroup</code> by  entity.
      */
     public List<UserGroup> findUserGroupByEntity(Entity entity);
     
+    // user log
+    
     /**
-     * Persist <code>UserLog</code>.
+     * Persists <code>UserLog</code>.
      */
     public void persistUserLog(UserLog userLog);
     
     /**
-     * Remove <code>UserLog</code>.
+     * Merges <code>UserLog</code>.
+     */
+    public UserLog mergeUserLog(UserLog userLog);
+    
+    /**
+     * Removes <code>UserLog</code>.
      */
     public void removeUserLog(UserLog userLog);
     
     /**
-     * Find <code>UserLog</code> by  user and lastEvent.
+     * Finds <code>UserLog</code> by  user and lastEvent.
      */
     public UserLog findUserLogByNaturalId(User user, Date lastEvent);
     
     /**
-     * Find the last <code>UserLog</code>.
+     * Finds the last <code>UserLog</code>.
      */
     public UserLog findLastUserLog(Identity requiredIdentity);
 
     /**
-     * Find <code>UserLog</code> by user.
+     * Finds <code>UserLog</code> by user.
      */
     public List<UserLog> findUserLogByUser(User requiredUser);
     
+    // user role
+    
     /**
-     * Persist <code>UserRole</code>.
+     * Persists <code>UserRole</code>.
      */
     public void persistUserRole(UserRole userRole);
 
     /**
-     * Remove <code>UserRole</code>.
+     * Merges <code>UserRole</code>.
+     */
+    public UserRole mergeUserRole(UserRole userRole);
+
+    /**
+     * Removes <code>UserRole</code>.
      */
     public void removeUserRole(UserRole userRole);
 
     /**
-     * Find <code>UserRole</code> by  user, service and identity.
+     * Finds <code>UserRole</code> by  user, service and identity.
      */
     public UserRole findUserRoleByNaturalId(UserGroup userGroup, Service service, String serviceExtension);
 
