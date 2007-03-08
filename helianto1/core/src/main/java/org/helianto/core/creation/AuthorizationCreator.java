@@ -27,6 +27,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.type.ActivityState;
+import org.helianto.core.type.PrivacyLevel;
 import org.helianto.core.type.UserEventType;
 import org.helianto.core.type.UserType;
 
@@ -89,6 +90,7 @@ public class AuthorizationCreator extends CreatorSupport {
         assertNotNull(requiredParent);
         User user = userFactory(requiredParent.getEntity(), identity);
         createUserAssociation(requiredParent, user);
+        user.setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
         return user;
     }
     
