@@ -29,12 +29,8 @@ import javax.mail.MessagingException;
 
 import junit.framework.TestCase;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
-import org.helianto.core.User;
-import org.helianto.core.UserRole;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.mail.ConfigurableMailSender;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
@@ -64,6 +60,16 @@ public class ServerMgrImplTests extends TestCase {
         replay(operatorDao);
         
         assertSame(operatorList, serverMgr.findOperator());
+        verify(operatorDao);
+    }
+
+    public void testFindOperatorByName() {
+        Operator operator = new Operator();
+        
+        expect(operatorDao.findOperatorByNaturalId("TEST")).andReturn(operator);
+        replay(operatorDao);
+        
+        assertSame(operator, serverMgr.findOperatorByName("TEST"));
         verify(operatorDao);
     }
 
