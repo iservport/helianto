@@ -29,37 +29,47 @@ import org.helianto.core.hibernate.filter.IdentityFilter;
 public interface AuthenticationDao {
     
     /**
-     * Persist <code>Identity</code>.
+     * Persists <code>Identity</code>.
      */
     public void persistIdentity(Identity identity);
 
     /**
-     * Remove <code>Identity</code>.
+     * Merges <code>Identity</code>.
+     */
+    public Identity mergeIdentity(Identity identity);
+
+    /**
+     * Removes <code>Identity</code>.
      */
     public void removeIdentity(Identity identity);
 
     /**
-     * Find <code>Identity</code> by principal.
+     * Finds <code>Identity</code> by principal.
      */
     public Identity findIdentityByPrincipal(String principal);
 
     /**
-     * Find <code>Identity</code> list by <code>IdentityFilter</code>.
+     * Finds <code>Identity</code> list by <code>IdentityFilter</code>.
      */
     public List<Identity> findIdentityByCriteria(IdentityFilter filter);
 
     /**
-     * Persist <code>Credential</code>.
+     * Persists <code>Credential</code>.
      */
     public void persistCredential(Credential credential);
 
     /**
-     * Remove <code>Credential</code>.
+     * Merges <code>Credential</code>.
+     */
+    public Credential mergeCredential(Credential credential);
+
+    /**
+     * Removes <code>Credential</code>.
      */
     public void removeCredential(Credential credential);
 
     /**
-     * Find <code>Credential</code> by <code>Identity</code>.
+     * Finds <code>Credential</code> by <code>Identity</code>.
      */
     public Credential findCredentialByIdentity(Identity identity);
 

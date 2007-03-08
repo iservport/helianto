@@ -38,8 +38,12 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
 	 * Persist, remove and find identity
 	 */
     
-	public void persistIdentity(Identity identity) {
-        merge(identity);
+    public void persistIdentity(Identity identity) {
+        persist(identity);
+    }
+
+    public Identity mergeIdentity(Identity identity) {
+        return (Identity) merge(identity);
     }
 
     public void removeIdentity(Identity identity) {
@@ -71,7 +75,11 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
 	 */
     
     public void persistCredential(Credential credential) {
-        merge(credential);
+        persist(credential);
+    }
+
+    public Credential mergeCredential(Credential credential) {
+        return (Credential) merge(credential);
     }
 
     public void removeCredential(Credential credential) {
