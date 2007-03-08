@@ -52,6 +52,11 @@ public class ServerMgrImpl extends AbstractServerMgr {
         return operatorList;
     }
 
+    public Operator findOperatorByName(String operatorName) {
+        Operator operator = operatorDao.findOperatorByNaturalId(operatorName);
+        return operator;
+    }
+
     public Operator createLocalDefaultOperator() {
         Operator operator = OperatorCreator.operatorFactory("DEFAULT",
                 OperationMode.LOCAL, Locale.getDefault());

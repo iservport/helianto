@@ -77,10 +77,14 @@ public interface ServerMgr {
     public void persistOperator(Operator operator);
 
     /**
-     * Send a <code>Credential</code> registration using 
-     * mail settings from <code>Operator</code>.
+     * <p>Finds <code>Operator</code> list.</p>
      */
     public List<Operator> findOperator();
+
+    /**
+     * <p>Finds <code>Operator</code> by name.</p>
+     */
+    public Operator findOperatorByName(String operatorName);
 
     /**
      * Send a <code>Credential</code> confirmation mail using 
