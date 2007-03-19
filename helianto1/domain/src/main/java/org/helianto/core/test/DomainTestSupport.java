@@ -73,10 +73,10 @@ public class DomainTestSupport extends TestCase {
      * Create a non-repeatable string value with a given size. 
      */
     public static String getNonRepeatableStringValue(int testKey, int size) {
-        String localKey = (testKey++)+"-"+String.valueOf(new Date().getTime());
+        String localKey = testKey+"-"+String.valueOf(new Date().getTime());
         while (localKey.length()!=size) {
             if (localKey.length() > size) {
-                localKey = localKey.substring(localKey.length()-size, localKey.length());
+                localKey = localKey.substring(0, size);
             } else if (localKey.length() < size) {
                 localKey = localKey.concat(localKey);
             }
