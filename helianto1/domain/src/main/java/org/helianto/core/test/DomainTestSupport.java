@@ -17,8 +17,16 @@ package org.helianto.core.test;
 
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import junit.framework.TestCase;
 
+/**
+ * Classs to support domain tests.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class DomainTestSupport extends TestCase {
     
     public static final String STRING_TEST_VALUE = "TEST";
@@ -26,8 +34,17 @@ public class DomainTestSupport extends TestCase {
     public static final int INT_TEST_VALUE = Integer.MAX_VALUE;
     public static final Date DATE_TEST_VALUE = new Date(Long.MAX_VALUE);
     
+    /**
+     * Provide a new object and do the minimal equalty test.
+     * 
+     * @param objectUnderTest
+     * @return an object of the same type.
+     */
     public static Object minimalEqualsTest(Object objectUnderTest) {
         assertNotNull("Cant test equals() with a null object", objectUnderTest);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Object under test is is "+objectUnderTest);
+        }
         assertTrue(objectUnderTest.equals(objectUnderTest));
         assertFalse(objectUnderTest.equals(null));
         assertFalse(objectUnderTest.equals(new Object()));
@@ -39,7 +56,41 @@ public class DomainTestSupport extends TestCase {
         }
         assertNotNull(copy);
         assertFalse(objectUnderTest.equals(copy));
+        if (logger.isDebugEnabled()) {
+            logger.debug("Copy is "+copy);
+        }
         return copy;
     }
+    
+    /**
+     * Create a non-repeatable string value
+     */
+    public static String getNonRepeatableStringValue(int testKey) {
+        return getNonRepeatableStringValue(testKey, 20);
+    }
 
+    /**
+     * Create a non-repeatable string value with a given size. 
+     */
+    public static String getNonRepeatableStringValue(int testKey, int size) {
+        String localKey = (testKey++)+"-"+String.valueOf(new Date().getTime());
+        while (localKey.length()!=size) {
+            if (localKey.length() > size) {
+                localKey = localKey.substring(localKey.length()-size, localKey.length());
+            } else if (localKey.length() < size) {
+                localKey = localKey.concat(localKey);
+            }
+        }
+        return localKey;
+    }
+
+    /**
+     * Create a non-repeatable int value. 
+     */
+    public static int getNonRepeatableIntValue(int testKey) {
+        return testKey++;
+    }
+
+    protected static Log logger = LogFactory.getLog(DomainTestSupport.class);
+    
 }

@@ -5,6 +5,7 @@ package org.helianto.core;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
 
 /**
  * 				
@@ -80,8 +81,8 @@ public class Identity  implements java.io.Serializable {
         return this.personalData;
     }
     
-    public void setPersonalData(PersonalData personalData) {
-        this.personalData = personalData;
+    public void setPersonalData(PersonalData personalData1) {
+        this.personalData = personalData1;
     }
     public Date getCreated() {
         return this.created;
