@@ -15,51 +15,46 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 		-->
-<beans default-init-method="init">
+<beans default-init-method="">
 
-	<!--
-			imports 	
-	-->
-	<import resource="classpath:/deploy/dataSource.xml"/>
-	<import resource="classpath:/deploy/support.xml"/>
 	<!--
 			Operator dao implementation	
 	-->
 	<bean id="operatorDao" 
-		class="org.helianto.core.hibernate.OperatorDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+		class="org.helianto.core.jpa.OperatorDaoImpl">
+    	<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
 	<!--
 			Authentication dao implementation	
-	-->
+
 	<bean id="authenticationDao" 
-		class="org.helianto.core.hibernate.AuthenticationDaoImpl">
+		class="org.helianto.core.jpa.AuthenticationDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
+	</bean-->
 	<!--
 			Authorization dao implementation	
-	-->
+
 	<bean id="authorizationDao" 
-		class="org.helianto.core.hibernate.AuthorizationDaoImpl">
+		class="org.helianto.core.jpa.AuthorizationDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
+	</bean-->
 	<!--
 			Entity dao implementation	
-	-->
+
 	<bean id="entityDao" 
-		class="org.helianto.core.hibernate.EntityDaoImpl">
+		class="org.helianto.core.jpa.EntityDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
+	</bean-->
 	<!--
 			Partner dao implementation	
-	-->
+
 	<bean id="partnerDao" 
-		class="org.helianto.core.hibernate.PartnerDaoImpl">
+		class="org.helianto.core.jpa.PartnerDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
+	</bean-->
 	<!--
 			Server service bean	
-	-->
+
 	<bean id="serverMgr" 
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
 		parent="mgrTemplate">
@@ -73,10 +68,10 @@
 				<property name="mailMessageComposer" ref="basicMailMessageComposer"/>
 			</bean>
 		</property>
-	</bean>
+	</bean-->
 	<!--
 			User service bean	
-	-->
+
 	<bean id="userMgr" 
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
 		parent="mgrTemplate">
@@ -87,10 +82,10 @@
 				<property name="authorizationDao" ref="authorizationDao"/>
 			</bean>
 		</property>
-	</bean>
+	</bean-->
 	<!--
 			Partner service bean	
-	-->
+
 	<bean id="partnerMgr" 
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
 		parent="mgrTemplate">
@@ -100,13 +95,13 @@
 				<property name="partnerDao" ref="partnerDao"/>
 			</bean>
 		</property>
-	</bean>
+	</bean-->
 	<!-- 
 			Authentication property editor registrar bean	
-	-->
+
 	<bean id="authenticationPropertyEditorRegistrar" 
 		class="org.helianto.core.validate.AuthenticationPropertyEditorRegistrar">
 	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
+	</bean-->
 	
 </beans>

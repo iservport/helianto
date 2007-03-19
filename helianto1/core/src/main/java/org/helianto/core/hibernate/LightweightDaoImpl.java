@@ -32,7 +32,6 @@ import org.springframework.util.Assert;
  * interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public class LightweightDaoImpl extends HibernateDaoSupport implements LightweightDao {
 
@@ -156,11 +155,26 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         this.getHibernateTemplate().refresh(object);
     }
 
-    protected void flush() {
+    public void flush() {
         if (logger.isDebugEnabled()) {
             logger.debug("Flushing session.");
         }
         getHibernateTemplate().flush();
+    }
+    
+    public void clear() {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Clearing session.");
+        }
+        getHibernateTemplate().clear();
+    }
+    
+    // utils
+    
+    public void init() {
+        if (getHibernateTemplate()==null) {
+            throw new IllegalArgumentException("HibernateTemplate required...");
+        }
     }
 
 }

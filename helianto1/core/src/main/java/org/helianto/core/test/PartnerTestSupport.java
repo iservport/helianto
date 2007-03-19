@@ -32,7 +32,7 @@ import org.helianto.core.creation.PartnerCreator;
 import org.helianto.core.dao.PartnerDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class PartnerTestSupport extends AbstractIntegrationTest {
+public class PartnerTestSupport extends AbstractHibernateIntegrationTest {
 
     private static int testKey = 1;
 

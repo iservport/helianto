@@ -25,7 +25,7 @@ import org.helianto.core.dao.EntityDao;
 import org.helianto.core.type.OperationMode;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class EntityTestSupport extends AbstractIntegrationTest {
+public class EntityTestSupport extends AbstractHibernateIntegrationTest {
 
     private static int testKey = 1;
 

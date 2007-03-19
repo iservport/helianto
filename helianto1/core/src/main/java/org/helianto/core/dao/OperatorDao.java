@@ -30,7 +30,9 @@ import org.helianto.core.type.ServerType;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface OperatorDao {
+public interface OperatorDao extends CommonOrmDao {
+    
+    // operator
 
     /**
      * Persist <code>Operator</code>.
@@ -38,9 +40,19 @@ public interface OperatorDao {
     public void persistOperator(Operator operator);
     
     /**
+     * Merge <code>Operator</code>.
+     */
+    public Operator mergeOperator(Operator operator);
+    
+    /**
      * Remove <code>Operator</code>.
      */
     public void removeOperator(Operator operator);
+    
+    /**
+     * Find <code>Operator</code> by primary key.
+     */
+    public Operator findOperator(Object key);
     
     /**
      * Find any registered <code>Operator</code>.
@@ -52,10 +64,17 @@ public interface OperatorDao {
      */
     public Operator findOperatorByNaturalId(String operatorName);
     
+    // key type
+    
     /**
      * Persist <code>KeyType</code>.
      */
     public void persistKeyType(KeyType keyType);
+    
+    /**
+     * Merge <code>KeyType</code>.
+     */
+    public KeyType mergeKeyType(KeyType keyType);
     
     /**
      * Remove <code>KeyType</code>.
@@ -67,10 +86,17 @@ public interface OperatorDao {
      */
     public KeyType findKeyTypeByNaturalId(Operator operator, String keyCode);
     
+    // server
+    
     /**
      * Persist <code>Server</code>.
      */
     public void persistServer(Server server);
+    
+    /**
+     * Merge <code>Server</code>.
+     */
+    public Server mergeServer(Server server);
     
     /**
      * Remove <code>Server</code>.
@@ -93,10 +119,17 @@ public interface OperatorDao {
      */
     public List<Server> findServerActive(Operator operator);
     
+    // province
+    
     /**
      * Persist <code>Province</code>.
      */
     public void persistProvince(Province province);
+    
+    /**
+     * Merge <code>Province</code>.
+     */
+    public Province mergeProvince(Province province);
     
     /**
      * Remove <code>Province</code>.
@@ -108,10 +141,17 @@ public interface OperatorDao {
      */
     public Province findProvinceByNaturalId(Operator operator, String code);
     
+    // service
+    
     /**
      * Persist <code>Service</code>.
      */
     public void persistService(Service service);
+    
+    /**
+     * Merge <code>Service</code>.
+     */
+    public Service mergeService(Service service);
     
     /**
      * Remove <code>Service</code>.
@@ -122,5 +162,5 @@ public interface OperatorDao {
      * Find <code>Service</code> by  operator and serviceName.
      */
     public Service findServiceByNaturalId(Operator operator, String serviceName);
-    
+
 }

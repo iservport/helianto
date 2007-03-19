@@ -24,11 +24,11 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.hibernate.filter.IdentityFilter;
-import org.helianto.core.junit.AbstractCredentialTest;
+import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.AuthorizationTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
-public class AuthenticationDaoImplTests extends AbstractCredentialTest {
+public class AuthenticationDaoImplTests extends AuthenticationTestSupport {
     
     private AuthenticationDao authenticationDao;
     

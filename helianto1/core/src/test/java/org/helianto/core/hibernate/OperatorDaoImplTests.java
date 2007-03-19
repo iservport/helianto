@@ -26,7 +26,6 @@ import org.helianto.core.Service;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.ServerType;
 import org.springframework.dao.DataIntegrityViolationException;
 
 public class OperatorDaoImplTests extends OperatorTestSupport {
@@ -39,8 +38,9 @@ public class OperatorDaoImplTests extends OperatorTestSupport {
 
     public void testPersistOperator() {
         //write
-        Operator operator = createAndPersistOperator(operatorDao);
-        hibernateTemplate.flush();
+        Operator operator = OperatorTestSupport.createOperator();
+        operatorDao.persistOperator(operator);
+        operatorDao.flush();
         //read
         assertEquals(operator,  operatorDao.findOperatorByNaturalId(operator.getOperatorName()));
     }

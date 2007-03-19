@@ -19,7 +19,6 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 
 /**
@@ -30,19 +29,6 @@ import org.springframework.test.AbstractTransactionalSpringContextTests;
 public abstract class AbstractIntegrationTest extends
     AbstractTransactionalSpringContextTests {
 
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/core.xml"
-                };
-    }
-    
-    protected HibernateTemplate hibernateTemplate;
-    
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
-    }
-    
     /**
      * Generate a not repeatable key.
      */
@@ -80,11 +66,6 @@ public abstract class AbstractIntegrationTest extends
         return localKey;
     }
 
-//    @Override
-//    public int getAutowireMode() {
-//        return AUTOWIRE_BY_NAME;
-//    }
-    
     protected static Log logger = LogFactory.getLog(AbstractIntegrationTest.class);
     
 }

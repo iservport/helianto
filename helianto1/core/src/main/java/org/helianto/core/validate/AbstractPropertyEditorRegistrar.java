@@ -38,6 +38,12 @@ public abstract class AbstractPropertyEditorRegistrar implements PropertyEditorR
     public HibernateOperations getHibernateTemplate() {
         return hibernateTemplate;
     }
+    
+    public void init() {
+        if (hibernateTemplate==null) {
+            throw new IllegalArgumentException("HibernateTemplate requierd...");
+        }
+    }
 
     public static final Log logger = LogFactory.getLog(AbstractPropertyEditorRegistrar.class);
 

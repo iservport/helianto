@@ -32,7 +32,7 @@ import org.helianto.core.type.ActivityState;
 import org.helianto.core.type.ServerType;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class OperatorTestSupport extends AbstractIntegrationTest {
+public class OperatorTestSupport extends AbstractHibernateIntegrationTest {
 
     private static int testKey = 1;
 

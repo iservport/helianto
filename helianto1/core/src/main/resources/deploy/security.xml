@@ -17,10 +17,6 @@
 		-->
 <beans>
 	<!--
-			imports 	
-	-->
-	<import resource="classpath*:/deploy/core.xml"/>
-	<!--
 			Security Mgr	
 	-->
 	<bean id="securityMgr" 

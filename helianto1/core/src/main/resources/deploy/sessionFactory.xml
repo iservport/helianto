@@ -20,10 +20,15 @@
 			Hibernate session factory	
 	-->
 	<bean id="sessionFactory" 
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="mappingLocations" 
 			value="classpath*:/mappings/*.hbm.xml"/>		
+		<property name="annotatedClasses">
+			<list>
+				<value>org.helianto.core.Operator</value>
+			</list>
+		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>

@@ -31,7 +31,7 @@ import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.type.UserEventType;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class AuthorizationTestSupport extends AbstractIntegrationTest {
+public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
 
     private static int testKey = 1;
 

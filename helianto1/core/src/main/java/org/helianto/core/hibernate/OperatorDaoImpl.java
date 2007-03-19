@@ -15,6 +15,7 @@
 
 package org.helianto.core.hibernate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +29,22 @@ import org.helianto.core.type.ActivityState;
 
 public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
     
+    // operator
+    
     public void persistOperator(Operator operator) {
-        merge(operator);
+        persist(operator);
+    }
+    
+    public Operator mergeOperator(Operator operator) {
+        return (Operator) merge(operator);
     }
     
     public void removeOperator(Operator operator) {
         remove(operator);
+    }
+    
+    public Operator findOperator(Object key) {
+        return (Operator) load(Operator.class, (Serializable) key);
     }
     
     public List<Operator> findOperatorAll() {
@@ -48,9 +59,15 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
     
     static String OPERATOR_QRY = "from Operator operator " +
             "where operator.operatorName = ? ";
+    
+    // key type
 
     public void persistKeyType(KeyType keyType) {
-        merge(keyType);
+        persist(keyType);
+    }
+    
+    public KeyType mergeKeyType(KeyType keyType) {
+        return (KeyType) merge(keyType);
     }
     
     public void removeKeyType(KeyType keyType) {
@@ -63,9 +80,15 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
     
     static String KEYTYPE_QRY = "from KeyType keyType "+
         "where keyType.operator = ? and keyType.keyCode = ? ";
+    
+    // server
 
     public void persistServer(Server server) {
-        merge(server);
+        persist(server);
+    }
+    
+    public Server mergeServer(Server server) {
+        return (Server) merge(server);
     }
     
     public void removeServer(Server server) {
@@ -88,9 +111,15 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
         "where server.operator = ? " +
         "and server.serverState = ? " +
         "order by server.priority ";
+    
+    // province
 
     public void persistProvince(Province province) {
-        merge(province);
+        persist(province);
+    }
+    
+    public Province mergeProvince(Province province) {
+        return (Province) merge(province);
     }
     
     public void removeProvince(Province province) {
@@ -103,9 +132,15 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
     
     static String PROVINCE_QRY = "from Province province "+
         "where province.operator = ? and province.code = ? ";
+    
+    // service
 
     public void persistService(Service service) {
-        merge(service);
+        persist(service);
+    }
+    
+    public Service mergeService(Service service) {
+        return (Service) merge(service);
     }
     
     public void removeService(Service service) {
