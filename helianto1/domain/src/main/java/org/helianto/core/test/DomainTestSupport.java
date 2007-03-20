@@ -88,7 +88,21 @@ public class DomainTestSupport extends TestCase {
      * Create a non-repeatable int value. 
      */
     public static int getNonRepeatableIntValue(int testKey) {
-        return testKey++;
+        return testKey;
+    }
+
+    /**
+     * Create a non-repeatable int value. 
+     */
+    public static long getNonRepeatableLongValue(int testKey) {
+        return testKey;
+    }
+
+    /**
+     * Create a non-repeatable int value. 
+     */
+    public static Date getNonRepeatableDateValue(int testKey) {
+        return new Date(testKey);
     }
 
     protected static Log logger = LogFactory.getLog(DomainTestSupport.class);
