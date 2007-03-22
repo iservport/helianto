@@ -27,6 +27,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>org.helianto.core.Operator</value>
+				<value>org.helianto.core.UserLog</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

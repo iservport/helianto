@@ -15,7 +15,6 @@
 
 package org.helianto.core.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.Entity;
@@ -26,7 +25,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 
-public interface AuthorizationDao extends EntityDao {
+public interface AuthorizationDao extends EntityDao, UserLogDao {
     
     // user group
 
@@ -55,27 +54,7 @@ public interface AuthorizationDao extends EntityDao {
      */
     public List<UserGroup> findUserGroupByEntity(Entity entity);
     
-    // user log
-    
-    /**
-     * Persists <code>UserLog</code>.
-     */
-    public void persistUserLog(UserLog userLog);
-    
-    /**
-     * Merges <code>UserLog</code>.
-     */
-    public UserLog mergeUserLog(UserLog userLog);
-    
-    /**
-     * Removes <code>UserLog</code>.
-     */
-    public void removeUserLog(UserLog userLog);
-    
-    /**
-     * Finds <code>UserLog</code> by  user and lastEvent.
-     */
-    public UserLog findUserLogByNaturalId(User user, Date lastEvent);
+    // user log additional dao
     
     /**
      * Finds the last <code>UserLog</code>.
