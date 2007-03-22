@@ -105,39 +105,6 @@ public class AuthorizationDomainTests extends TestCase {
         assertTrue(association.equals(copy));
     }
 
-    public void testUserLog() {
-        UserLog userLog = new UserLog();
-        userLog.setId(Long.MAX_VALUE);
-        userLog.setId(Long.MIN_VALUE);
-        
-        userLog.setUser(new User());
-        
-        userLog.setLastEvent(new Date());
-        
-        userLog.setEventType(UserEventType.LOGIN_FAILURE.getValue());
-        userLog.setEventType(UserEventType.LOGIN_SUCCESS.getValue());
-        userLog.setEventType(UserEventType.LOGOUT_SUCCESS.getValue());
-        userLog.setEventType(UserEventType.LOGOUT_TIMEOUT.getValue());
-    }
-
-    public void testUserLogEquals() {
-        UserLog copy, userLog = new UserLog();
-        userLog.setUser(new User());
-        userLog.setLastEvent(new Date());
-        copy = (UserLog) DomainTestSupport.minimalEqualsTest(userLog);
-
-        copy.setUser(userLog.getUser());
-        assertFalse(userLog.equals(copy));
-
-        copy.setUser(null);
-        copy.setLastEvent(userLog.getLastEvent());
-        assertFalse(userLog.equals(copy));
-
-        copy.setUser(userLog.getUser());
-        copy.setLastEvent(userLog.getLastEvent());
-        assertTrue(userLog.equals(copy));
-    }
-
     public void testUserRole() {
         UserRole userRole = new UserRole();
         userRole.setId(Long.MAX_VALUE);
