@@ -64,7 +64,7 @@ public class UserLog implements java.io.Serializable {
      * User getter.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="userId", nullable=true)
+    @JoinColumn(name="userId")
     public User getUser() {
         return this.user;
     }

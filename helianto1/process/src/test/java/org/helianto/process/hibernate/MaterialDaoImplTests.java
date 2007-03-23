@@ -26,7 +26,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 public class MaterialDaoImplTests extends AbstractMaterialTest {
 
     // class (interface) under test
-    private MaterialDao materialDao;
+    private MaterialDao materialDao; 
 
     public void testPersistUnit() {
         //write

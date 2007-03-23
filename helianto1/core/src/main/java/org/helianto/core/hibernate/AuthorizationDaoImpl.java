@@ -31,10 +31,8 @@ import org.springframework.util.Assert;
 
 public class AuthorizationDaoImpl extends EntityDaoImpl implements AuthorizationDao  {
 
-    /*
-     * Dao implementation
-     */
-     
+    //userGroup
+    
     public void persistUserGroup(UserGroup userGroup) {
         persist(userGroup);
     }
@@ -103,7 +101,7 @@ public class AuthorizationDaoImpl extends EntityDaoImpl implements Authorization
         return (UserLog) findUnique(USERLOG_QRY+LASTEVENT_FILTER, user, lastEvent);
     }
     
-    static String USERLOG_QRY = "from UserLog userLog "+
+    static String USERLOG_QRY = "select userLog from UserLog userLog "+
         "where userLog.user = ? ";
 
     static String LASTEVENT_FILTER = "and userLog.lastEvent = ? ";
@@ -117,7 +115,7 @@ public class AuthorizationDaoImpl extends EntityDaoImpl implements Authorization
         return null;
     }
 
-    static final String LASTUSERLOG_QRY = "from UserLog userLog "
+    static final String LASTUSERLOG_QRY = "select userLog from UserLog userLog "
             + "where userLog.user.identity = ? " + "and userLog.lastEvent = ? ";
 
     public List<UserLog> findUserLogByUser(User requiredUser) {

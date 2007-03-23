@@ -81,6 +81,9 @@ public class DomainTestSupport extends TestCase {
                 localKey = localKey.concat(localKey);
             }
         }
+        if (logger.isDebugEnabled()) {
+            logger.debug("New value is "+localKey);
+        }
         return localKey;
     }
 
@@ -88,6 +91,9 @@ public class DomainTestSupport extends TestCase {
      * Create a non-repeatable int value. 
      */
     public static int getNonRepeatableIntValue(int testKey) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("New value is "+testKey);
+        }
         return testKey;
     }
 
@@ -95,6 +101,9 @@ public class DomainTestSupport extends TestCase {
      * Create a non-repeatable int value. 
      */
     public static long getNonRepeatableLongValue(int testKey) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("New value is "+testKey);
+        }
         return testKey;
     }
 
@@ -102,7 +111,11 @@ public class DomainTestSupport extends TestCase {
      * Create a non-repeatable int value. 
      */
     public static Date getNonRepeatableDateValue(int testKey) {
-        return new Date(testKey);
+        Date date = new Date(testKey);
+        if (logger.isDebugEnabled()) {
+            logger.debug("New date is "+date);
+        }
+        return date;
     }
 
     protected static Log logger = LogFactory.getLog(DomainTestSupport.class);

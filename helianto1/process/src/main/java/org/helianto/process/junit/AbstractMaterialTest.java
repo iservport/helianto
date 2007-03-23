@@ -19,14 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.test.AbstractIntegrationTest;
+import org.helianto.core.test.AbstractHibernateIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.Unit;
 import org.helianto.process.creation.MaterialCreator;
 import org.helianto.process.dao.MaterialDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class AbstractMaterialTest extends AbstractIntegrationTest {
+public class AbstractMaterialTest extends AbstractHibernateIntegrationTest {
 
     protected String[] getConfigLocations() {
         return new String[] { 

@@ -16,7 +16,6 @@
 package org.helianto.core.dao;
 
 import java.util.Date;
-import java.util.List;
 
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
@@ -26,7 +25,7 @@ import org.helianto.core.UserLog;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface UserLogDao {
+public interface UserLogDao extends CommonOrmDao {
      
     /**
      * Persist <code>UserLog</code>.

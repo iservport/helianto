@@ -27,13 +27,10 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
     
     public void persistUserLog(User user, Date date) {
         Assert.notNull(user.getIdentity());
-        UserLog userLog = new UserLog();
-        userLog.setUser(user);
         if (date==null) {
             date = new Date();
         }
-        userLog.setLastEvent(date);
-        user.getIdentity().setLastLogin(date);
+        UserLog userLog = UserLog.userLogFactory(user, date);
         authorizationDao.persistUserLog(userLog);
         authenticationDao.persistIdentity(user.getIdentity());
     }

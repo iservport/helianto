@@ -16,12 +16,14 @@
 package org.helianto.core.hibernate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
@@ -29,6 +31,7 @@ import org.helianto.core.UserRole;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.UserLogTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
 /**
@@ -125,7 +128,7 @@ public class AuthorizationDaoImplTests extends AuthorizationTestSupport {
         // write
         List<UserGroup> userGroupList = writeUserGroupList();
         // remove
-        UserGroup userGroup = userGroupList.get((int) Math.random()*userGroupList.size());
+        UserGroup userGroup = userGroupList.get((int) (Math.random()*userGroupList.size()));
         authorizationDao.removeUserGroup(userGroup);
         hibernateTemplate.flush();
         hibernateTemplate.clear();
@@ -153,106 +156,38 @@ public class AuthorizationDaoImplTests extends AuthorizationTestSupport {
 //        }
     }
     
-    public void testPersistUserLog() {
-        //write
-        UserLog userLog = createAndPersistUserLog(authorizationDao);
-        hibernateTemplate.flush();
-        //read
-        assertEquals(userLog,  authorizationDao.findUserLogByNaturalId(userLog.getUser(), userLog.getLastEvent()));
-    }
+    // userLog
     
-    private List<UserLog> writeUserLogList() {
-        int i = 5;
-        int u = 2; // users
-        List<UserLog> userLogList = createAndPersistUserLogList(hibernateTemplate, i, u);
-        assertEquals(i*u, userLogList.size());
-        return userLogList;
-    }
-    
-    public void testFindUserLog() {
-        // write
-        List<UserLog> userLogList = writeUserLogList();
-        // read
-        UserLog userLog = userLogList.get((int) Math.random()*userLogList.size());
-        assertEquals(userLog,  authorizationDao.findUserLogByNaturalId(userLog.getUser(), userLog.getLastEvent()));
-        // TODO add some more finders
-        List<UserLog> list = authorizationDao.findUserLogByUser(userLog.getUser());
-//        assertEquals(d, list.size());
-        for (UserLog l: list) {
-            assertEquals(userLog.getUser(), l.getUser());
+    public void testFindLastUserLog() {
+        User user = createUser();
+        Date date = new Date(Long.MAX_VALUE);
+        UserLog lastUserLog = UserLogTestSupport.createUserLog(user, date);
+        authorizationDao.persistUserLog(lastUserLog);
+        List<UserLog> userLogList = UserLogTestSupport.createUserLogList(10);
+        for (UserLog userLog: userLogList) {
+            userLog.getUser().setIdentity(lastUserLog.getUser().getIdentity());
+            authorizationDao.persistUserLog(userLog);
         }
+        authorizationDao.flush();
+        authorizationDao.clear();
+        assertEquals(lastUserLog, authorizationDao.findLastUserLog(lastUserLog.getUser().getIdentity()));
         
     }
-
-    public void testFindLastUserLog() {
-//        // bulk write
-//        int e = 3, i = 4, d = 3;
-//        List<User> userList = createUserList(e, i);
-//        List<UserLog> userLogList = createUserLogList(userList, d);
-//        assertEquals(e*i*d, userLogList.size());
-//        hibernateTemplate.saveOrUpdateAll(userList);
-//        hibernateTemplate.saveOrUpdateAll(userLogList);
-//        hibernateTemplate.flush();
-//        hibernateTemplate.clear();
-//        User user = userList.get(0);  
-//        // read
-//        UserLog userLog = authorizationDao.findLastUserLog(user.getIdentity());
-//        assertNotNull(userLog);
-//        if (logger.isDebugEnabled()) {
-//            logger.debug("Found "+userLog.getUser()+" - "+userLog.getLastEvent());
-//        }
-//        
-//        Date maxLastLogin = userLog.getLastEvent();
-//        for (User u: userList) {
-//            // check only users within selected identity
-//            if (u.getIdentity().equals(user.getIdentity())) {
-//                List<UserLog> userLogs = authorizationDao.findUserLogByUser(u);
-//                for (UserLog ul: userLogs) {
-//                    if (ul.getLastEvent().getTime() > maxLastLogin.getTime()) {
-//                        fail("Max last login is actually "+ul.getLastEvent());
-//                    }
-//                }
-//            }
-//        }
-//        
-//    }
-//    
-//    public void testUserLogErrors() {
-//        try {
-//             authorizationDao.persistUserLog(null); fail();
-//        } catch (IllegalArgumentException e) { 
-//        } catch (Exception e) { fail(); }
-//        try {
-//             authorizationDao.removeUserLog(null); fail();
-//        } catch (IllegalArgumentException e) { 
-//        } catch (Exception e) { fail(); }
-//        // TODO add some more methods
-//    }
-//
-//    public void testUserLogDuplicate() {
-//        // write
-//        UserLog userLog = createAndPersistUserLog( authorizationDao);
-//        hibernateTemplate.clear();
-//        // duplicate
-//        try {
-//            hibernateTemplate.save(userLog); fail();
-//        } catch (DataIntegrityViolationException e) { 
-//        } catch (Exception e) { fail(); }
-    }
     
-    public void testRemoveUserLog() {
-        // write
-        List<UserLog> userLogList = writeUserLogList();
-        // remove
-        UserLog userLog = userLogList.get((int) Math.random()*userLogList.size());
-        authorizationDao.removeUserLog(userLog);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        // read
-        List<UserLog> all = (ArrayList<UserLog>) hibernateTemplate.find("from UserLog");
-        assertEquals(userLogList.size()-1, all.size());
-        assertFalse(all.contains(userLog));
+    public void testFindUserLogByUser() {
+        List<UserLog> userLogList = UserLogTestSupport.createUserLogList(10);
+        userLogList.addAll(UserLogTestSupport.createUserLogList(10));
+        for (UserLog userLog: userLogList) {
+            authorizationDao.persistUserLog(userLog);
+        }
+        UserLog userLog = userLogList.get((int) (Math.random()*userLogList.size()));
+        List<UserLog> resultUserLog = authorizationDao.findUserLogByUser(userLog.getUser());
+        assertEquals(10, resultUserLog.size());
+        for(UserLog u: resultUserLog) {
+            assertEquals(userLog.getUser(), u.getUser());
+        }
     }
+
     
     /*
      * UserRole

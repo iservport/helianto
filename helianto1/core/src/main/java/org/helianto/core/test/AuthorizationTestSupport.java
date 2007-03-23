@@ -16,7 +16,6 @@
 package org.helianto.core.test;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.Entity;
@@ -24,11 +23,9 @@ import org.helianto.core.Identity;
 import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.AuthorizationDao;
-import org.helianto.core.type.UserEventType;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
@@ -121,6 +118,10 @@ public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
         return user;
     }
 
+    public static List<User> createUserList(int identityListSize) {
+        return createUserList(1, identityListSize);
+    }
+
     public static List<User> createUserList(int entityListSize, int identityListSize) {
         List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
         List<Identity> identityList = AuthenticationTestSupport.createIdentityList(identityListSize);
@@ -147,58 +148,60 @@ public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
         return userList;
     }
     
-    public static UserLog createUserLog(Object... args) {
-        User user;
-        try {
-            user = (User) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            user = AuthorizationTestSupport.createUser();
-        }
-        Date date;
-        try {
-            date = (Date) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            date = new Date();
-        }
-        UserLog userLog = AuthorizationCreator.userLogFactory(user, UserEventType.LOGIN_SUCCESS, date);
-        logger.info("+++ "+userLog);
-        return userLog;
-    }
-
-    public static UserLog createAndPersistUserLog(AuthorizationDao authorizationDao) {
-        UserLog userLog = createUserLog();
-        if (authorizationDao!=null) {
-            authorizationDao.persistUserLog(userLog);
-        }
-        return userLog;
-    }
-
-    public static List<UserLog> createUserLogList(int size, int userListSize) {
-        List<User> userList = AuthorizationTestSupport.createUserList(1, userListSize);
-        return createUserLogList(size, userList);
-    }
-
-    public static List<UserLog> createUserLogList(int size, List<User> userList) {
-        List<UserLog> userLogList = new ArrayList<UserLog>();
-        long milis = new Date().getTime();
-        for (User u: userList) {
-            for (int i=0;i<size;i++) {
-                userLogList.add(createUserLog(u, new Date(milis++)));
-            }
-        }
-        return userLogList;
-    }
-
-    public static List<UserLog> createAndPersistUserLogList(HibernateTemplate hibernateTemplate, int size, int userListSize) {
-        List<UserLog> userLogList = createUserLogList(size, userListSize);
-        for (UserLog x: userLogList) {
-            hibernateTemplate.merge(x);
-        }
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return userLogList;
-    }
-    
+//    // @see UserLogTestSupport
+//    
+//    public static UserLog createUserLog(Object... args) {
+//        User user;
+//        try {
+//            user = (User) args[0];
+//        } catch(ArrayIndexOutOfBoundsException e) {
+//            user = AuthorizationTestSupport.createUser();
+//        }
+//        Date date;
+//        try {
+//            date = (Date) args[1];
+//        } catch(ArrayIndexOutOfBoundsException e) {
+//            date = new Date();
+//        }
+//        UserLog userLog = AuthorizationCreator.userLogFactory(user, UserEventType.LOGIN_SUCCESS, date);
+//        logger.info("+++ "+userLog);
+//        return userLog;
+//    }
+//
+//    public static UserLog createAndPersistUserLog(AuthorizationDao authorizationDao) {
+//        UserLog userLog = createUserLog();
+//        if (authorizationDao!=null) {
+//            authorizationDao.persistUserLog(userLog);
+//        }
+//        return userLog;
+//    }
+//
+//    public static List<UserLog> createUserLogList(int size, int userListSize) {
+//        List<User> userList = AuthorizationTestSupport.createUserList(1, userListSize);
+//        return createUserLogList(size, userList);
+//    }
+//
+//    public static List<UserLog> createUserLogList(int size, List<User> userList) {
+//        List<UserLog> userLogList = new ArrayList<UserLog>();
+//        long milis = new Date().getTime();
+//        for (User u: userList) {
+//            for (int i=0;i<size;i++) {
+//                userLogList.add(createUserLog(u, new Date(milis++)));
+//            }
+//        }
+//        return userLogList;
+//    }
+//
+//    public static List<UserLog> createAndPersistUserLogList(HibernateTemplate hibernateTemplate, int size, int userListSize) {
+//        List<UserLog> userLogList = createUserLogList(size, userListSize);
+//        for (UserLog x: userLogList) {
+//            hibernateTemplate.merge(x);
+//        }
+//        hibernateTemplate.flush();
+//        hibernateTemplate.clear();
+//        return userLogList;
+//    }
+//    
     /*
      * UserRole
      */

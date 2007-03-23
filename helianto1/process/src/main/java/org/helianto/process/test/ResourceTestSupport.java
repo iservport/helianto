@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.test.AbstractIntegrationTest;
+import org.helianto.core.test.AbstractHibernateIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
@@ -33,7 +33,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ResourceTestSupport extends AbstractIntegrationTest {
+public class ResourceTestSupport extends AbstractHibernateIntegrationTest {
 	
 	static int testKey = 1;
 
