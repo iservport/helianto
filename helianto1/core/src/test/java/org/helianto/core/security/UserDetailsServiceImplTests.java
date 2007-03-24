@@ -93,7 +93,7 @@ public class UserDetailsServiceImplTests extends TestCase {
         
         expect(securityMgr.findLastUserLog(identity))
             .andReturn(userLog);
-        securityMgr.persistUserLog(isA(User.class), isA(Date.class));
+        securityMgr.writeUserLog(isA(User.class), isA(Date.class));
         replay(securityMgr);
         return userLog.getUser();
     }
@@ -119,7 +119,7 @@ public class UserDetailsServiceImplTests extends TestCase {
         
         expect(securityMgr.findLastUserLog(identity))
             .andReturn(null);
-        securityMgr.persistUserLog(isA(User.class), isA(Date.class));
+        securityMgr.writeUserLog(isA(User.class), isA(Date.class));
         replay(securityMgr);
         return user;
     }
