@@ -17,13 +17,13 @@ public interface SecurityMgr extends UserMgr {
 	public UserLog findLastUserLog(Identity identity);
 	
     /**
-     * Persist a new <code>UserLog<code> and update the <code>Identity</code>
+     * Write a new <code>UserLog<code> and update the <code>Identity</code>
      * last log date.
      * 
      * @param user
      * @param date
      */
-	public void persistUserLog(User user, Date date);
+	public void writeUserLog(User user, Date date);
 	
     /**
      * Auto-create mode enables a new <code>User</code> creation for the 

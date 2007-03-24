@@ -35,6 +35,15 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
         authenticationDao.persistIdentity(user.getIdentity());
     }
     
+    public void writeUserLog(User user, Date date) {
+        Assert.notNull(user.getIdentity());
+        if (date==null) {
+            date = new Date();
+        }
+        UserLog userLog = UserLog.userLogFactory(user, date);
+        authorizationDao.mergeUserLog(userLog);
+    }
+    
     public boolean isAutoCreateEnabled() {
         return false;
     }

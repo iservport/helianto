@@ -80,7 +80,7 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
             }
             user = userLog.getUser();
         }
-        securityMgr.persistUserLog(user, new Date());
+        securityMgr.writeUserLog(user, new Date());
         return user;
     }
     
