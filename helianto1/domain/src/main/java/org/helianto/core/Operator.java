@@ -17,7 +17,9 @@ package org.helianto.core;
 
 import java.util.Locale;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -88,7 +90,7 @@ public class Operator implements java.io.Serializable {
     /**
      * OperatorName getter.
      */
-    @Column(length=20, unique=true)
+    @Column(length=20)
     public String getOperatorName() {
         return this.operatorName;
     }
@@ -102,7 +104,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Parent getter.
      */
-    @ManyToOne()
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="parentId", nullable=true)
     public Operator getParent() {
         return this.parent;
