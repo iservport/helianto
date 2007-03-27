@@ -36,7 +36,7 @@ public class BaseDomainTests extends TestCase {
 
         operator.setParent(new Operator());
 
-        operator.setLocale(Locale.getDefault());
+//        operator.setLocale(Locale.getDefault());
 
         operator.setOperationMode(OperationMode.LOCAL.getValue());
         operator.setOperationMode(OperationMode.ENTERPRISE.getValue());
