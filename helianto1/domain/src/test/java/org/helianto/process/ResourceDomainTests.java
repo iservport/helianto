@@ -10,7 +10,6 @@ import junit.framework.TestCase;
 public class ResourceDomainTests extends TestCase {
 	
 	private ResourceGroup resourceGroup;
-	private Resource resource;
 	private ResourceParameter resourceParameter;
 	private ResourceParameterValue resourceParameterValue;
 	private Unit unit;
@@ -22,7 +21,6 @@ public class ResourceDomainTests extends TestCase {
 		unit.setEntity(new Entity());
 		unit.setId(Integer.MAX_VALUE);
 		unit.setId(Integer.MIN_VALUE);
-		unit.setParent(new Unit());
 		unit.setUnitCode("");
 		unit.setUnitName("");
 	}
