@@ -19,7 +19,6 @@ import java.util.Locale;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +26,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 /**
  * The <code>Operator</code> domain class represents a mandatory
@@ -58,7 +58,9 @@ import javax.persistence.Transient;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="core_operator")
+@Table(name="core_operator",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorName"})}
+)
 public class Operator implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
