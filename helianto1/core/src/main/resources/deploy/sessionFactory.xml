@@ -28,6 +28,7 @@
 			<list>
 				<value>org.helianto.core.Operator</value>
 				<value>org.helianto.core.UserLog</value>
+				<value>org.helianto.process.Unit</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
