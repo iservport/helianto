@@ -71,17 +71,27 @@ public class OperatorDaoImplTests extends OperatorTestSupport {
         } catch (Exception e) { fail(); }
     }
 
+    /**
+     * Merge and duplicate.
+     */  
     public void testOperatorDuplicate() {
-        // write
-        Operator operator = createAndPersistOperator( operatorDao);
-        hibernateTemplate.clear();
-        // duplicate
+        Operator operator =  OperatorTestSupport.createOperator();
+        operatorDao.mergeOperator(operator);
+        operatorDao.flush();
+        operatorDao.clear();
+        Operator operatorCopy = OperatorTestSupport.createOperator(operator.getOperatorName());
+        System.out.println("Original: "+operatorCopy.getOperatorName());
+        System.out.println("Copy    : "+operatorCopy.getOperatorName());
+        System.out.println("\n ");
+
         try {
-            hibernateTemplate.save(operator); fail();
+            operatorDao.mergeOperator(operatorCopy);
+            operatorDao.flush();
+            fail();
         } catch (DataIntegrityViolationException e) { 
         } catch (Exception e) { fail(); }
     }
-    
+
     public void testRemoveOperator() {
         // bulk write
         int i = 10;
