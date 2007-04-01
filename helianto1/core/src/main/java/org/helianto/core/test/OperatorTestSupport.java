@@ -40,8 +40,14 @@ public class OperatorTestSupport extends AbstractHibernateIntegrationTest {
      * Operator tests 
      */
     
-    public static Operator createOperator() {
-        Operator operator = OperatorCreator.operatorFactory(generateKey(20, testKey++), OperationMode.LOCAL, Locale.getDefault());
+    public static Operator createOperator(Object... args) {
+        String operatorName;
+        try {
+            operatorName = (String) args[0];
+        } catch(ArrayIndexOutOfBoundsException e) {
+            operatorName = DomainTestSupport.getNonRepeatableStringValue(testKey++, 12);
+        }
+        Operator operator = OperatorCreator.operatorFactory(operatorName, OperationMode.LOCAL, Locale.getDefault());
         return operator;
     }
 
