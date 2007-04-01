@@ -18,16 +18,29 @@ package org.helianto.process.hibernate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.dao.ResourceDao;
 import org.helianto.process.test.ResourceTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class ResourceDaoImplTests extends ResourceTestSupport {
-
-    // class (interface) under test
+public class ResourceDaoImplTests  extends AbstractIntegrationTest {
+    
     private ResourceDao resourceDao;
+    private HibernateTemplate hibernateTemplate;
+    
+    @Override
+    protected String[] getConfigLocations() {
+        return new String[] { 
+                "deploy/dataSource.xml",
+                "deploy/sessionFactory.xml",
+                "deploy/transaction.xml",
+                "deploy/core.xml",
+                "deploy/process.xml"
+                };
+    }
 
     /*
      * ResourceGroup tests 
@@ -35,7 +48,7 @@ public class ResourceDaoImplTests extends ResourceTestSupport {
     
     public void testPersistResourceGroup() {
         //write
-        ResourceGroup resourceGroup = createAndPersistResourceGroup(resourceDao);
+        ResourceGroup resourceGroup = ResourceTestSupport.createAndPersistResourceGroup(resourceDao);
         hibernateTemplate.flush();
         //read
         assertEquals(resourceGroup,  resourceDao.findResourceByEntityAndCode(resourceGroup.getEntity(), resourceGroup.getResourceCode()));
@@ -45,7 +58,7 @@ public class ResourceDaoImplTests extends ResourceTestSupport {
         // write list
         int i = 10;
         int e = 2;
-        List<ResourceGroup> resourceGroupList = createAndPersistResourceGroupList(hibernateTemplate, i, e);
+        List<ResourceGroup> resourceGroupList = ResourceTestSupport.createAndPersistResourceGroupList(hibernateTemplate, i, e);
         assertEquals(i*e, resourceGroupList.size());
         // read
         ResourceGroup resourceGroup = resourceGroupList.get((int) Math.random()*i*e);
@@ -75,7 +88,7 @@ public class ResourceDaoImplTests extends ResourceTestSupport {
 
     public void testResourceGroupDuplicate() {
         // write
-        ResourceGroup resourceGroup = createAndPersistResourceGroup( resourceDao);
+        ResourceGroup resourceGroup = ResourceTestSupport.createAndPersistResourceGroup( resourceDao);
         hibernateTemplate.clear();
         // duplicate
         try {
@@ -88,7 +101,7 @@ public class ResourceDaoImplTests extends ResourceTestSupport {
         // bulk write
         int i = 10;
         int e = 2; //entities
-        List<ResourceGroup> resourceGroupList = createAndPersistResourceGroupList(hibernateTemplate, i, e);
+        List<ResourceGroup> resourceGroupList = ResourceTestSupport.createAndPersistResourceGroupList(hibernateTemplate, i, e);
         assertEquals(i*e, resourceGroupList.size());
         // remove
         ResourceGroup resourceGroup = resourceGroupList.get((int) Math.random()*i*e);
@@ -116,7 +129,7 @@ public class ResourceDaoImplTests extends ResourceTestSupport {
     
     public void testPersistResource() {
         //write
-        Resource resource = createAndPersistResource(resourceDao);
+        Resource resource = ResourceTestSupport.createAndPersistResource(resourceDao);
         hibernateTemplate.flush();
         // TODO read
 //        assertEquals(resource,  resourceDao.findResource(resource));
@@ -138,7 +151,7 @@ public class ResourceDaoImplTests extends ResourceTestSupport {
 
     public void testResourceDuplicate() {
         // write
-        Resource resource = createAndPersistResource( resourceDao);
+        Resource resource = ResourceTestSupport.createAndPersistResource( resourceDao);
         hibernateTemplate.clear();
         // duplicate
         try {
@@ -167,15 +180,12 @@ public class ResourceDaoImplTests extends ResourceTestSupport {
 
     // collaborators
 
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/core.xml",
-                "deploy/process.xml" };
-    }
-
     public void setResourceDao(ResourceDao resourceDao) {
         this.resourceDao = resourceDao;
+    }
+
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+        this.hibernateTemplate = hibernateTemplate;
     }
 
 }

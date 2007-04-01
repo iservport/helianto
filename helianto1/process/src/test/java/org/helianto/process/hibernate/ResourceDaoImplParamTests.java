@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
@@ -30,10 +31,21 @@ import org.helianto.process.junit.AbstractMaterialTest;
 import org.helianto.process.test.ResourceTestSupport;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class ResourceDaoImplParamTests extends ResourceTestSupport {
-
-    // class (interface) under test
+public class ResourceDaoImplParamTests extends AbstractIntegrationTest {
+    
     private ResourceDao resourceDao;
+    private HibernateTemplate hibernateTemplate;
+    
+    @Override
+    protected String[] getConfigLocations() {
+        return new String[] { 
+                "deploy/dataSource.xml",
+                "deploy/sessionFactory.xml",
+                "deploy/transaction.xml",
+                "deploy/core.xml",
+                "deploy/process.xml"
+                };
+    }
     
     /*
      * ResourceParameter tests 
@@ -82,11 +94,11 @@ public class ResourceDaoImplParamTests extends ResourceTestSupport {
     
     
     public void testPersistResourceParameter() {
-//        //write
-//        ResourceParameter resourceParameter = createAndPersistResourceParameter(resourceDao);
-//        hibernateTemplate.flush();
-//        //read
-//        assertEquals(resourceParameter,  resourceDao.findResourceParameterByEntityAndCode(resourceParameter.getEntity(), resourceParameter.getParameterCode()));
+        //write
+        ResourceParameter resourceParameter = createAndPersistResourceParameter(resourceDao);
+        hibernateTemplate.flush();
+        //read
+        assertEquals(resourceParameter,  resourceDao.findResourceParameterByEntityAndCode(resourceParameter.getEntity(), resourceParameter.getParameterCode()));
     }
     
     public void testFindResourceParameter() {
@@ -156,7 +168,7 @@ public class ResourceDaoImplParamTests extends ResourceTestSupport {
      */
     
     public static ResourceParameterValue createAndPersistResourceParameterValue(ResourceDao resourceDao) {
-        ResourceGroup resourceGroup = createAndPersistResourceGroup(null);
+        ResourceGroup resourceGroup = ResourceTestSupport.createAndPersistResourceGroup(null);
         ResourceParameter resourceParameter = createAndPersistResourceParameter(null);
         ResourceParameterValue resourceParameterValue = ResourceCreatorImpl.resourceParameterValueFactory(resourceGroup, resourceParameter);
         if (resourceDao!=null) {
@@ -176,7 +188,7 @@ public class ResourceDaoImplParamTests extends ResourceTestSupport {
     
     public static List<ResourceParameterValue> createResourceParameterValueList(int size, int entityListSize) {
         // TODO needs initialization ?
-        List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
+//        List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
         List<ResourceParameterValue> resourceParameterValueList = new ArrayList<ResourceParameterValue>();
 //        for (Entity e: entityList) {
 //            for (int i=0;i<size;i++) {
@@ -250,16 +262,12 @@ public class ResourceDaoImplParamTests extends ResourceTestSupport {
     
     //
 
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/core.xml",
-                "deploy/process.xml" };
-    }
-
     public void setResourceDao(ResourceDao resourceDao) {
         this.resourceDao = resourceDao;
     }
 
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+        this.hibernateTemplate = hibernateTemplate;
+    }
 
 }

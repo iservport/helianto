@@ -17,19 +17,32 @@ package org.helianto.process.hibernate;
 
 import java.util.List;
 
+import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.dao.ProcessDao;
 import org.helianto.process.test.DocumentTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class ProcessDaoImplTests extends DocumentTestSupport  {
+public class ProcessDaoImplTests extends AbstractIntegrationTest {
     
-
     private ProcessDao processDao;
+    private HibernateTemplate hibernateTemplate;
+    
+    @Override
+    protected String[] getConfigLocations() {
+        return new String[] { 
+                "deploy/dataSource.xml",
+                "deploy/sessionFactory.xml",
+                "deploy/transaction.xml",
+                "deploy/core.xml",
+                "deploy/process.xml"
+                };
+    }
 
     public void testPersistExternalDocument() {
         //write
-        ExternalDocument externalDocument = createAndPersistExternalDocument(processDao);
+        ExternalDocument externalDocument = DocumentTestSupport.createAndPersistExternalDocument(processDao);
         hibernateTemplate.flush();
         //read
         assertEquals(externalDocument,  processDao.findExternalDocumentByNaturalId(externalDocument.getEntity(), externalDocument.getDocCode()));
@@ -39,7 +52,7 @@ public class ProcessDaoImplTests extends DocumentTestSupport  {
         int i = 10;
         int p = 3;
         int e = 2; 
-        List<ExternalDocument> externalDocumentList = createAndPersistExternalDocumentList(hibernateTemplate, i, p, e);
+        List<ExternalDocument> externalDocumentList = DocumentTestSupport.createAndPersistExternalDocumentList(hibernateTemplate, i, p, e);
         assertEquals((i+1)*p*e, externalDocumentList.size());
         return externalDocumentList;
     }
@@ -79,7 +92,7 @@ public class ProcessDaoImplTests extends DocumentTestSupport  {
 
     public void testExternalDocumentDuplicate() {
         // write
-        ExternalDocument externalDocument = createAndPersistExternalDocument( processDao);
+        ExternalDocument externalDocument = DocumentTestSupport.createAndPersistExternalDocument( processDao);
         hibernateTemplate.clear();
         // duplicate
         try {
@@ -105,6 +118,10 @@ public class ProcessDaoImplTests extends DocumentTestSupport  {
 
     public void setProcessDao(ProcessDao processDao) {
         this.processDao = processDao;
+    }
+
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+        this.hibernateTemplate = hibernateTemplate;
     }
 
 }
