@@ -18,19 +18,16 @@
 		<level value="INFO"/>
 	</logger>
 	<logger name="com.opensymphony.module.sitemesh">
-		<level value="DEBUG"/>
+		<level value="INFO"/>
 	</logger>
 	<logger name="org.acegisecurity">
-		<level value="DEBUG"/>
+		<level value="INFO"/>
 	</logger>
 	<logger name="org.springframework.orm.hibernate3">
-		<level value="DEBUG"/>
+		<level value="INFO"/>
 	</logger>
 	<logger name="org.helianto.core">
-		<level value="DEBUG"/>
-	</logger>
-	<logger name="net.mlw.vlh">
-		<level value="DEBUG"/>
+		<level value="INFO"/>
 	</logger>
 	<root>
 		<level value="INFO"/>

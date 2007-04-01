@@ -28,12 +28,6 @@ public class MaterialCreator {
         return unit;
     }
 
-    public static Unit unitFactory(Unit parent, String unitCode) {
-        Unit unit = unitFactory(parent.getEntity(), unitCode);
-        unit.setParent(parent);
-        return unit;
-    }
-
     public static MaterialType materialFactory(Unit unit, String materialName) {
         MaterialType MaterialType = new MaterialType();
         MaterialType.setEntity(unit.getEntity());

@@ -119,7 +119,7 @@ public class Unit implements java.io.Serializable {
      */
     @Transient
     public static String getUnitNaturalIdQueryString() {
-        return "select unit from Unit unit where unit.entity = :entity and unit.unitCode = :unitCode ";
+        return "select unit from Unit unit where unit.entity = ? and unit.unitCode = ? ";
     }
 
     /**
@@ -127,7 +127,7 @@ public class Unit implements java.io.Serializable {
      */
     @Transient
     public static String getUnitEntityQueryString() {
-        return "select unit from Unit unit where unit.entity = :entity ";
+        return "select unit from Unit unit where unit.entity = ? ";
     }
 
     /**
