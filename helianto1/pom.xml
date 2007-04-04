@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto</artifactId>
-	<version>0.0.1-m3</version>
+	<version>0.0.1-m4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
 	<inceptionYear>2005</inceptionYear>
@@ -228,7 +228,7 @@
 		<developer>
 			<name>Maurício Fernandes de Castro</name>
 			<id>mauricio</id>
-			<email>mauricio at iservport.com</email>
+			<email>mauricio at iservport dot com</email>
 			<timezone>-3</timezone>
 		</developer>
 	</developers>
