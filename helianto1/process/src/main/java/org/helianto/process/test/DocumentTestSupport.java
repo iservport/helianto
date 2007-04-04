@@ -21,10 +21,10 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.test.AbstractHibernateIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.process.DocumentType;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.creation.ExternalDocumentCreator;
 import org.helianto.process.dao.ProcessDao;
-import org.helianto.process.type.DocumentType;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class DocumentTestSupport extends AbstractHibernateIntegrationTest {

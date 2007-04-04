@@ -18,8 +18,8 @@ package org.helianto.process.service;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Unit;
 import org.helianto.process.MaterialType;
-import org.helianto.process.Unit;
 import org.helianto.process.dao.MaterialDao;
 
 public class MaterialMgrImpl implements MaterialMgr {

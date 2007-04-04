@@ -18,17 +18,17 @@ package org.helianto.process.creation;
 import java.util.ArrayList;
 
 import org.helianto.core.Entity;
+import org.helianto.process.AssociationType;
 import org.helianto.process.Characteristic;
 import org.helianto.process.Document;
 import org.helianto.process.DocumentDetail;
 import org.helianto.process.Operation;
+import org.helianto.process.OperationType;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
 import org.helianto.process.Tree;
-import org.helianto.process.type.AssociationType;
-import org.helianto.process.type.OperationType;
 
 public class ProcessCreator extends AbstractDocumentCreator {
 

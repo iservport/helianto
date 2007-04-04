@@ -23,9 +23,9 @@ import org.helianto.core.test.AbstractHibernateIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.ResourceType;
 import org.helianto.process.creation.ResourceCreatorImpl;
 import org.helianto.process.dao.ResourceDao;
-import org.helianto.process.type.ResourceType;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 /**

@@ -16,8 +16,8 @@
 package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Unit;
 import org.helianto.process.MaterialType;
-import org.helianto.process.Unit;
 
 public class MaterialCreator {
 

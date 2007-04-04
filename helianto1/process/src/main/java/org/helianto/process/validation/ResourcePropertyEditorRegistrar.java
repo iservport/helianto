@@ -18,6 +18,7 @@ package org.helianto.process.validation;
 import java.beans.PropertyEditor;
 
 import org.helianto.core.validate.AbstractHibernatePropertyEditor;
+import org.helianto.core.validate.UnitPropertyEditorRegistrar;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.springframework.beans.PropertyEditorRegistry;

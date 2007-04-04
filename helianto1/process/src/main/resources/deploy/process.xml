@@ -17,12 +17,6 @@
 		-->
 <beans>
 	<!--
-			unit dao	
-	-->
-	<bean id="unitDao" class="org.helianto.process.orm.UnitDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
 			material dao	
 	-->
 	<bean id="materialDao" class="org.helianto.process.hibernate.MaterialDaoImpl">

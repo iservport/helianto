@@ -1,11 +1,11 @@
 package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Unit;
+import org.helianto.process.AssociationType;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Part;
 import org.helianto.process.Tree;
-import org.helianto.process.Unit;
-import org.helianto.process.type.AssociationType;
 import org.springframework.util.Assert;
 
 /**

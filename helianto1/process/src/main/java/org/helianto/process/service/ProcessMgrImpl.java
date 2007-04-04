@@ -20,7 +20,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
-import org.helianto.core.service.PartnerMgrImpl;
+import org.helianto.partner.service.PartnerMgrImpl;
+import org.helianto.process.DocumentType;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
@@ -30,7 +31,6 @@ import org.helianto.process.Resource;
 import org.helianto.process.Setup;
 import org.helianto.process.creation.ExternalDocumentCreator;
 import org.helianto.process.dao.ProcessDao;
-import org.helianto.process.type.DocumentType;
 
 /**
  * Default implementation of <code>ProcessMgr</code> interface.

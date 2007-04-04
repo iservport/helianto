@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Unit;
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.process.MaterialType;
-import org.helianto.process.Unit;
 import org.helianto.process.dao.MaterialDao;
 
 public class MaterialDaoImpl extends GenericDaoImpl implements MaterialDao {

@@ -16,13 +16,13 @@
 package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Partner;
+import org.helianto.core.Unit;
+import org.helianto.partner.Partner;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
-import org.helianto.process.Unit;
-import org.helianto.process.type.ResourceType;
+import org.helianto.process.ResourceType;
 import org.springframework.util.Assert;
 
 /**
