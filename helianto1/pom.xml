@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto</artifactId>
-	<version>0.0.1-m3-SNAPSHOT</version>
+	<version>0.0.1-m3</version>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
 	<inceptionYear>2005</inceptionYear>
@@ -14,6 +14,7 @@
 	<modules>
 		<module>domain</module>
 		<module>core</module>
+		<module>partner</module>
 		<module>process</module>
 		<module>web</module>
 		<module>archetype1</module>
