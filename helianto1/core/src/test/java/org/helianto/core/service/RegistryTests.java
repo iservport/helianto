@@ -21,16 +21,10 @@ public class RegistryTests extends AbstractCoreTest {
 
     private UserMgr userMgr;
 
-    private PartnerMgr partnerMgr;
-
     public void setServerMgr(ServerMgr serverMgr) {
         this.serverMgr = serverMgr;
     }
     
-    public void setPartnerMgr(PartnerMgr partnerMgr) {
-        this.partnerMgr = partnerMgr;
-    }
-
     public void setUserMgr(UserMgr userMgr) {
         this.userMgr = userMgr;
     }
@@ -39,7 +33,6 @@ public class RegistryTests extends AbstractCoreTest {
     public void testInit() {
         assertTrue(serverMgr instanceof ServerMgr);
         assertTrue(userMgr instanceof UserMgr);
-        assertTrue(partnerMgr instanceof PartnerMgr);
     }
 
 }
