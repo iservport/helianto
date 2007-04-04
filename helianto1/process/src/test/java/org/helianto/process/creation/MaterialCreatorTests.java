@@ -16,7 +16,7 @@
 package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
-import org.helianto.process.Unit;
+import org.helianto.core.Unit;
 
 import junit.framework.TestCase;
 

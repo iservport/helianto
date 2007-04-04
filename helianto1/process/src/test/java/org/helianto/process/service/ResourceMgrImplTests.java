@@ -1,9 +1,10 @@
 package org.helianto.process.service;
 
 import static org.easymock.EasyMock.createMock;
-import junit.framework.TestCase;
 
-import org.helianto.core.dao.PartnerDao;
+import org.helianto.partner.dao.PartnerDao;
+
+import junit.framework.TestCase;
 
 public class ResourceMgrImplTests extends TestCase {
 	

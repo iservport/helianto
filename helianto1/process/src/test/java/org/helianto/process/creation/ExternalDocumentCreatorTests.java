@@ -16,8 +16,8 @@
 package org.helianto.process.creation;
 
 import org.helianto.core.Entity;
+import org.helianto.process.DocumentType;
 import org.helianto.process.ExternalDocument;
-import org.helianto.process.type.DocumentType;
 
 import junit.framework.TestCase;
 

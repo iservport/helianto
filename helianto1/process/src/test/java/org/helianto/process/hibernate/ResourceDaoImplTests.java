@@ -38,6 +38,7 @@ public class ResourceDaoImplTests  extends AbstractIntegrationTest {
                 "deploy/sessionFactory.xml",
                 "deploy/transaction.xml",
                 "deploy/core.xml",
+                "deploy/org.helianto.partner.xml",
                 "deploy/process.xml"
                 };
     }

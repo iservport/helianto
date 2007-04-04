@@ -19,12 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Unit;
 import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
-import org.helianto.process.Unit;
 import org.helianto.process.creation.ResourceCreatorImpl;
 import org.helianto.process.dao.ResourceDao;
 import org.helianto.process.junit.AbstractMaterialTest;
@@ -43,6 +43,7 @@ public class ResourceDaoImplParamTests extends AbstractIntegrationTest {
                 "deploy/sessionFactory.xml",
                 "deploy/transaction.xml",
                 "deploy/core.xml",
+                "deploy/org.helianto.partner.xml",
                 "deploy/process.xml"
                 };
     }
