@@ -59,12 +59,18 @@ public abstract class AbstractHibernatePropertyEditor extends
                 logger.debug("Loaded property: " + getValue()+" set from id="+id);
             }
         } catch (Exception e) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Exception caugth during load: " + e.toString());
+            }
             super.setValue(null);
         }
     }
     
     protected Serializable resolveId(String id) {
         int value = Integer.parseInt(id);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Resolved value: " + value);
+        }
         return value;
     }
     

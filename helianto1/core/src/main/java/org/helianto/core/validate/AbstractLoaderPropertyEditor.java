@@ -86,6 +86,9 @@ public abstract class AbstractLoaderPropertyEditor extends
                 logger.debug("Loaded property: " + getValue()+" set from id="+id);
             }
         } catch (Exception e) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Exception caugth during load: " + e.toString());
+            }
             super.setValue(null);
         }
     }
@@ -101,6 +104,6 @@ public abstract class AbstractLoaderPropertyEditor extends
         return value;
     }
     
-    static protected final Log logger = LogFactory.getLog(AbstractHibernatePropertyEditor.class);
+    static protected final Log logger = LogFactory.getLog(AbstractLoaderPropertyEditor.class);
 
 }
