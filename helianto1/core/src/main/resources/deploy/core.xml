@@ -51,10 +51,9 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
-			Partner dao implementation	
+			unit dao	
 	-->
-	<bean id="partnerDao" 
-		class="org.helianto.core.hibernate.PartnerDaoImpl">
+	<bean id="unitDao" class="org.helianto.core.orm.UnitDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
@@ -90,7 +89,6 @@
 	</bean>
 	<!--
 			Partner service bean	
-	-->
 	<bean id="partnerMgr" 
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
 		parent="mgrTemplate">
@@ -101,6 +99,7 @@
 			</bean>
 		</property>
 	</bean>
+	-->
 	<!-- 
 			Authentication property editor registrar bean	
 	-->
