@@ -22,7 +22,12 @@ public class RegistryTests extends AbstractIntegrationTest {
     
     @Override 
     protected String[] getConfigLocations() {
-        return new String[] { "deploy/core.xml", 
+        return new String[] { 
+                "deploy/dataSource.xml",
+                "deploy/sessionFactory.xml",
+                "deploy/transaction.xml",
+                "deploy/core.xml", 
+                "deploy/security.xml", 
                 "deploy/security-http.xml", 
                 "deploy/install.xml", 
                 "deploy/webflow.xml"};

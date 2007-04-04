@@ -17,10 +17,6 @@
 		-->
 <beans>
 	<!--
-			imports 	
-	-->
-	<import resource="classpath*:/deploy/security.xml"/>
-	<!--
 			Web security interceptor 	
 	-->
 	<bean id="filterInvocationInterceptor"
