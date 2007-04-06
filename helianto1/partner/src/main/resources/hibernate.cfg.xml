@@ -11,6 +11,7 @@
 		<mapping class="org.helianto.partner.PartnerAssociationFilter" />
 		<mapping class="org.helianto.partner.PartnerKey" />
 		<mapping class="org.helianto.partner.Phone" />
+		<mapping class="org.helianto.partner.Account" />
 	</session-factory>
 </hibernate-configuration>
 

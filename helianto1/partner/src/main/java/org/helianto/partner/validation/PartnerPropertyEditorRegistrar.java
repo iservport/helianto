@@ -19,6 +19,7 @@ import java.beans.PropertyEditor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.validate.AbstractLoaderPropertyEditorRegistrar;
+import org.helianto.partner.Account;
 import org.helianto.partner.Address;
 import org.helianto.partner.Contact;
 import org.helianto.partner.Partner;
@@ -80,7 +81,14 @@ public class PartnerPropertyEditorRegistrar extends AbstractLoaderPropertyEditor
         }
         registry.registerCustomEditor(PartnerAssociationFilter.class, PartnerAssociationFilterPropertyEditor);
 
-	}
+        // Account
+        PropertyEditor AccountPropertyEditor = new AccountPropertyEditor(getPropertyLoader());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Registering custom editor "+AccountPropertyEditor);
+        }
+        registry.registerCustomEditor(Account.class, AccountPropertyEditor);
+
+    }
 
     public static final Log logger = LogFactory.getLog(PartnerPropertyEditorRegistrar.class);
 

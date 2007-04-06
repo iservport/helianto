@@ -44,6 +44,7 @@ public class Partner implements java.io.Serializable {
     private int id;
     private PartnerAssociation partnerAssociation;
     private int sequence;
+    private Account account;
     private char priority;
     private char partnerState;
 
@@ -86,6 +87,21 @@ public class Partner implements java.io.Serializable {
      */
     public void setSequence(int sequence) {
         this.sequence = sequence;
+    }
+
+    /**
+     * Account getter.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="accountId", nullable=true)
+    public Account getAccount() {
+        return this.account;
+    }
+    /**
+     * Account setter.
+     */
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     /**

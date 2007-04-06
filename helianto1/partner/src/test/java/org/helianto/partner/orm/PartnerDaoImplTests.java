@@ -5,8 +5,11 @@ import java.util.List;
 import org.helianto.core.test.AbstractIntegrationTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import org.helianto.partner.Account;
 import org.helianto.partner.Partner;
+import org.helianto.partner.PartnerAssociation;
 import org.helianto.partner.dao.PartnerDao;
+import org.helianto.partner.test.AccountTestSupport;
 import org.helianto.partner.test.PartnerTestSupport;
 
 /**
@@ -97,6 +100,22 @@ public class PartnerDaoImplTests extends AbstractIntegrationTest {
         partnerDao.removePartner(partner);
 
         assertNull(partnerDao.findPartnerByNaturalId(partner.getPartnerAssociation(), partner.getSequence()));
+    }
+
+    /**
+     * Account association test
+     */
+    public void testAccountAssociation() {
+        Partner partner = PartnerTestSupport.createPartner();
+        Account account = AccountTestSupport.createAccount(partner.getPartnerAssociation().getEntity());
+        partner.setAccount(account);
+        partnerDao.persistPartner(partner);
+        partnerDao.flush();
+        partnerDao.clear();
+        
+        Partner loadedPartner = partnerDao.findPartnerByNaturalId(partner.getPartnerAssociation(), partner.getSequence());
+        assertEquals(partner,  loadedPartner);
+        assertEquals(account, loadedPartner.getAccount());
     }
 
     //- setters
