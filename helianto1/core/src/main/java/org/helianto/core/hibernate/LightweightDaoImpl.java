@@ -61,6 +61,16 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         return this.getHibernateTemplate().load(clazz, key);
     }
 
+    public <T> T find(Class<T> clazz, Serializable key) throws DataAccessException {
+        Assert.notNull(clazz);
+        Assert.notNull(key);
+        if (logger.isDebugEnabled()) {
+            logger.debug("** DAO FINDING "+clazz.toString()
+                    +" with id "+key.toString());
+        }
+        return clazz.cast(this.getHibernateTemplate().load(clazz, key)) ;
+    }
+
     public void remove(Object object) {
         Assert.notNull(object);
         if (object instanceof String) {

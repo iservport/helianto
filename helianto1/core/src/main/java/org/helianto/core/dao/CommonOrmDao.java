@@ -15,6 +15,8 @@
 
 package org.helianto.core.dao;
 
+import java.io.Serializable;
+
 /**
  * Common methods to ORM tools.
  * 
@@ -35,5 +37,12 @@ public interface CommonOrmDao {
      * underlying database.
      */
     public void flush();
+    
+    /**
+     * Retrieve an object from the datastore by id.
+     * @param clazz the object class.
+     * @param key the key to search for
+     */
+    public <T> T find(Class<T> clazz, Serializable key);
 
 }
