@@ -115,7 +115,7 @@ public class PartnerAssociation implements java.io.Serializable {
     @Transient
     public String getPartnerShortName() {
     	if (this.partnerName.length() > 20) {
-            return this.partnerName.substring(20);
+            return this.partnerName.substring(0, 20)+"...";
     	}
         return this.partnerName;
     }
