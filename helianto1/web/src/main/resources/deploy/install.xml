@@ -40,4 +40,11 @@
 		<property name="securityMgr" 
 			ref="securityMgr"/>
 	</bean>
+	<!--
+		User selection action	
+	-->
+	<bean id="userSelectionAction"
+		class="org.helianto.web.controller.UserSelectionAction">
+		<property name="securityMgr" ref="securityMgr"/>
+	</bean>
 </beans>
