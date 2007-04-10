@@ -17,15 +17,15 @@
 -->
 <beans>
 	<!-- 
-		Freemarker configuration
+		Freemarker web configuration
 	-->
 	<bean id="freemarkerWebConfiguration"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<!--property name="configuration" ref="freemarkerConfiguration"/-->
 		<property name="preferFileSystemAccess" value="false"/>
 		<property name="templateLoaderPaths">
 			<list>
 				<value>classpath*:/freemarker/</value>
+				<value>/WEB-INF/classes/freemarker/</value>
 				<value>/WEB-INF/freemarker/</value>
 			</list>
 		</property>
