@@ -208,12 +208,10 @@ public class OperatorTestSupport extends AbstractHibernateIntegrationTest {
     }
 
     public static List<Province> createProvinceList(int size, List<Operator> operatorList) {
-    	int id = 0;
         List<Province> provinceList = new ArrayList<Province>();
         for (Operator x: operatorList) {
             for (int i=0;i<size;i++) {
             	Province province = createProvince(x);
-            	province.setId(id++);
                 provinceList.add(province);
             }
         }
