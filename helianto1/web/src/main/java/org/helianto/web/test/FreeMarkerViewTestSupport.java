@@ -15,7 +15,11 @@
 
 package org.helianto.web.test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
@@ -54,6 +60,8 @@ public class FreeMarkerViewTestSupport extends TestCase {
     protected FreeMarkerConfigurer configurer;
     
     protected BindingResult bindingResult;
+    
+    protected String outputFileName = "";
 
     @Override
     public void setUp() throws IOException, TemplateException, InstantiationException, IllegalAccessException {
@@ -107,9 +115,13 @@ public class FreeMarkerViewTestSupport extends TestCase {
         fv.render(model, request, expectedResponse);
         System.out.println(request.getAttribute("errors"));
         if (visualTest) {
-            String output = expectedResponse.getContentAsString();
-            System.out.println(output);
-            fail();
+            if (!outputFileName.equals("")) {
+                createOutputFile(expectedResponse.getContentAsString().toCharArray(), outputFileName);
+            }
+            else {
+                System.out.println(expectedResponse.getContentAsString());
+            }
+            fail("Forced to fail; please, set the visualTest parameter to false");
         }
         return expectedResponse;
     }
@@ -124,11 +136,53 @@ public class FreeMarkerViewTestSupport extends TestCase {
         MockHttpServletResponse expectedResponse = new MockHttpServletResponse();
         fv.render(model, request, expectedResponse);
         if (visualTest) {
-            String output = expectedResponse.getContentAsString();
-            System.out.println(output);
-            fail();
+            if (!outputFileName.equals("")) {
+                createOutputFile(expectedResponse.getContentAsString().toCharArray(), outputFileName);
+            }
+            else {
+                System.out.println(expectedResponse.getContentAsString());
+            }
+            fail("Forced to fail; please, set the visualTest parameter to false");
         }
         return expectedResponse;
     }
     
+    public void createOutputFile(char[] buffer, String outputFileName) {
+        PrintWriter outputStream = null;
+        String outputDir = "prototype/";
+        String resourcePath = "src/main/resources";
+        try {
+            File dirFile = new File(outputDir);
+            if (dirFile.exists() || dirFile.mkdirs()) {
+                outputStream = 
+                    new PrintWriter(new FileWriter(outputDir.toString()+outputFileName));
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Output is "+outputDir.toString()+outputFileName);
+                }
+            }
+            else {
+                outputStream = 
+                    new PrintWriter(new FileWriter(resourcePath+outputFileName));
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Output is "+resourcePath+outputFileName);
+                }
+            }
+            outputStream.write(buffer);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        }
+    }
+
+    public void setOutputFileName(String outputFileName) {
+        this.outputFileName = outputFileName;
+    }
+    
+    private final Log logger = LogFactory.getLog(FreeMarkerViewTestSupport.class);
+
 }
