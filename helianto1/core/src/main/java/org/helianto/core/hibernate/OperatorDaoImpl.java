@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
-import org.helianto.core.Province;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
 import org.helianto.core.dao.OperatorDao;
@@ -111,27 +110,6 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
         "where server.operator = ? " +
         "and server.serverState = ? " +
         "order by server.priority ";
-    
-    // province
-
-    public void persistProvince(Province province) {
-        persist(province);
-    }
-    
-    public Province mergeProvince(Province province) {
-        return (Province) merge(province);
-    }
-    
-    public void removeProvince(Province province) {
-        remove(province);
-    }
-    
-    public Province findProvinceByNaturalId(Operator operator, String code) {
-        return (Province) findUnique(PROVINCE_QRY, operator, code);
-    }
-    
-    static String PROVINCE_QRY = "from Province province "+
-        "where province.operator = ? and province.code = ? ";
     
     // service
 

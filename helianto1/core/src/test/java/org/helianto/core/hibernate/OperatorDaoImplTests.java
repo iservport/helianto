@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
-import org.helianto.core.Province;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
 import org.helianto.core.dao.OperatorDao;
@@ -237,66 +236,6 @@ public class OperatorDaoImplTests extends OperatorTestSupport {
         List<Server> all = (ArrayList<Server>) hibernateTemplate.find("from Server");
         assertEquals(i*o-1, all.size());
         assertFalse(all.contains(server));
-    }
-
-    public void testPersistProvince() {
-        //write
-        Province province = createAndPersistProvince(operatorDao);
-        hibernateTemplate.flush();
-        //read
-        assertEquals(province,  operatorDao.findProvinceByNaturalId(province.getOperator(), province.getCode()));
-    }
-    
-    private List<Province> writeProvinceList() {
-        int i = 10;
-        int o = 2;
-        List<Province> provinceList = createAndPersistProvinceList(hibernateTemplate, i, o);
-        assertEquals(i*o, provinceList.size());
-        return provinceList;
-    }
-    
-    public void testFindProvince() {
-        // write list
-        List<Province> provinceList = writeProvinceList();
-        // read
-        Province province = provinceList.get((int) Math.random()*provinceList.size());
-        assertEquals(province,  operatorDao.findProvinceByNaturalId(province.getOperator(), province.getCode()));
-    }
-
-    public void testProvinceErrors() {
-        try {
-             operatorDao.persistProvince(null); fail();
-        } catch (IllegalArgumentException e) { 
-        } catch (Exception e) { fail(); }
-        try {
-             operatorDao.removeProvince(null); fail();
-        } catch (IllegalArgumentException e) { 
-        } catch (Exception e) { fail(); }
-    }
-
-    public void testProvinceDuplicate() {
-        // write
-        Province province = createAndPersistProvince( operatorDao);
-        hibernateTemplate.clear();
-        // duplicate
-        try {
-            hibernateTemplate.save(province); fail();
-        } catch (DataIntegrityViolationException e) { 
-        } catch (Exception e) { fail(); }
-    }
-    
-    public void testRemoveProvince() {
-        // write list
-        List<Province> provinceList = writeProvinceList();
-        // remove
-        Province province = provinceList.get((int) Math.random()*provinceList.size());
-        operatorDao.removeProvince(province);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        // read
-        List<Province> all = (ArrayList<Province>) hibernateTemplate.find("from Province");
-        assertEquals(provinceList.size()-1, all.size());
-        assertFalse(all.contains(province));
     }
 
     public void testPersistService() {

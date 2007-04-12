@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
-import org.helianto.core.Province;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
 import org.helianto.core.type.ActivityState;
@@ -118,28 +117,6 @@ public interface OperatorDao extends CommonOrmDao {
      * @see ActivityState
      */
     public List<Server> findServerActive(Operator operator);
-    
-    // province
-    
-    /**
-     * Persist <code>Province</code>.
-     */
-    public void persistProvince(Province province);
-    
-    /**
-     * Merge <code>Province</code>.
-     */
-    public Province mergeProvince(Province province);
-    
-    /**
-     * Remove <code>Province</code>.
-     */
-    public void removeProvince(Province province);
-    
-    /**
-     * Find <code>Province</code> by  operator and code.
-     */
-    public Province findProvinceByNaturalId(Operator operator, String code);
     
     // service
     

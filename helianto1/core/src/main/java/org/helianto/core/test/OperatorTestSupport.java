@@ -22,13 +22,12 @@ import java.util.Locale;
 import org.helianto.core.Credential;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
-import org.helianto.core.Province;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
-import org.helianto.core.type.OperationMode;
 import org.helianto.core.type.ActivityState;
+import org.helianto.core.type.OperationMode;
 import org.helianto.core.type.ServerType;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
@@ -177,55 +176,6 @@ public class OperatorTestSupport extends AbstractHibernateIntegrationTest {
         hibernateTemplate.flush();
         hibernateTemplate.clear();
         return serverList;
-    }
-    
-    /*
-     * Province tests 
-     */
-    
-    public static Province createProvince(Object... args) {
-        Operator operator;
-        try {
-            operator = (Operator) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            operator = createOperator();
-        }
-        Province province = OperatorCreator.provinceFactory(operator, generateKey(20, testKey++), generateKey(20));
-        return province;
-    }
-
-    public static Province createAndPersistProvince(OperatorDao operatorDao) {
-        Province province = createProvince();
-        if (operatorDao!=null) {
-            operatorDao.persistProvince(province);
-        }
-        return province;
-    }
-
-    public static List<Province> createProvinceList(int size, int operatorListSize) {
-        List<Operator> operatorList = OperatorTestSupport.createOperatorList(operatorListSize);
-        return createProvinceList(size, operatorList);
-    }
-
-    public static List<Province> createProvinceList(int size, List<Operator> operatorList) {
-        List<Province> provinceList = new ArrayList<Province>();
-        for (Operator x: operatorList) {
-            for (int i=0;i<size;i++) {
-            	Province province = createProvince(x);
-                provinceList.add(province);
-            }
-        }
-        return provinceList;
-    }
-
-    public static List<Province> createAndPersistProvinceList(HibernateTemplate hibernateTemplate, int i, int operatorListSize) {
-        List<Province> provinceList = createProvinceList(i, operatorListSize);
-        for (Province x: provinceList) {
-            hibernateTemplate.merge(x);
-        }
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return provinceList;
     }
     
     /*

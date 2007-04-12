@@ -30,6 +30,13 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
+			Province dao implementation	
+	-->
+	<bean id="provinceDao" 
+		class="org.helianto.core.hibernate.ProvinceDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
 			Authentication dao implementation	
 	-->
 	<bean id="authenticationDao" 
