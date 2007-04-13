@@ -15,15 +15,13 @@
 
 package org.helianto.core;
 
-import java.util.Date;
 import java.util.HashSet;
+
+import junit.framework.TestCase;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.UserEventType;
 import org.helianto.core.type.UserType;
-
-import junit.framework.TestCase;
 
 public class AuthorizationDomainTests extends TestCase {
 
@@ -103,37 +101,6 @@ public class AuthorizationDomainTests extends TestCase {
         copy.setParent(association.getParent());
         copy.setChild(association.getChild());
         assertTrue(association.equals(copy));
-    }
-
-    public void testUserRole() {
-        UserRole userRole = new UserRole();
-        userRole.setId(Long.MAX_VALUE);
-        userRole.setId(Long.MIN_VALUE);
-        
-        userRole.setUserGroup(new UserGroup());
-        userRole.setUserGroup(new User());
-        
-        userRole.setService(new Service());
-        
-        userRole.setServiceExtension("");
-    }
-
-    public void testUserRoleEquals() {
-        UserRole copy, userRole = new UserRole();
-        userRole.setUserGroup(new UserGroup());
-        userRole.setService(new Service());
-        copy = (UserRole) DomainTestSupport.minimalEqualsTest(userRole);
-
-        copy.setUserGroup(userRole.getUserGroup());
-        assertFalse(userRole.equals(copy));
-
-        copy.setUserGroup(null);
-        copy.setService(userRole.getService());
-        assertFalse(userRole.equals(copy));
-
-        copy.setUserGroup(userRole.getUserGroup());
-        copy.setService(userRole.getService());
-        assertTrue(userRole.equals(copy));
     }
 
 }

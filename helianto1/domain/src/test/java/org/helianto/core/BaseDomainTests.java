@@ -15,8 +15,6 @@
 
 package org.helianto.core;
 
-import java.util.Locale;
-
 import junit.framework.TestCase;
 
 import org.helianto.core.test.DomainTestSupport;
@@ -114,36 +112,6 @@ public class BaseDomainTests extends TestCase {
         copy.setServerName("TEST");
         copy.setCredential(server.getCredential());
         assertTrue(server.equals(copy));
-    }
-
-    public void testProvince() {
-        Province province = new Province();
-        province.setId(Integer.MAX_VALUE);
-        province.setId(Integer.MIN_VALUE);
-
-        province.setOperator(new Operator());
-
-        province.setCode("");
-
-        province.setProvinceName("");
-    }
-
-    public void testProvinceEquals() {
-        Province copy, province = new Province();
-        province.setOperator(new Operator());
-        province.setCode("TEST");
-        copy = (Province) DomainTestSupport.minimalEqualsTest(province);
-
-        copy.setOperator(province.getOperator());
-        assertFalse(province.equals(copy));
-
-        copy.setOperator(null);
-        copy.setCode("TEST");
-        assertFalse(province.equals(copy));
-
-        copy.setOperator(province.getOperator());
-        copy.setCode("TEST");
-        assertTrue(province.equals(copy));
     }
 
     public void testService() {
