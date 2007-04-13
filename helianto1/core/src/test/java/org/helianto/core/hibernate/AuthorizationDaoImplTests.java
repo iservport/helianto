@@ -27,7 +27,6 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
-import org.helianto.core.UserRole;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.test.AuthorizationTestSupport;
@@ -189,72 +188,6 @@ public class AuthorizationDaoImplTests extends AuthorizationTestSupport {
     }
 
     
-    /*
-     * UserRole
-     */
-
-    public void testPersistUserRole() {
-        //write
-        UserRole userRole = createAndPersistUserRole(authorizationDao);
-        hibernateTemplate.flush();
-        //read
-        assertEquals(userRole,  authorizationDao.findUserRoleByNaturalId(userRole.getUserGroup(), userRole.getService(), userRole.getServiceExtension()));
-    }
-    
-    private List<UserRole> writeUserRole() {
-        int i= 5, 
-        e = 3, 
-        d = 4, 
-        s = 2;
-        List<UserRole> userRoleList = createAndPersistUserRoleList(hibernateTemplate, i, e, d, s);
-        assertEquals(i*e*d*s, userRoleList.size());
-        return userRoleList;
-    }
-    
-    public void testFindUserRole() {
-        // write list
-        List<UserRole> userRoleList = writeUserRole();
-        // read
-        UserRole userRole = userRoleList.get((int) Math.random()*userRoleList.size());
-        assertEquals(userRole,  authorizationDao.findUserRoleByNaturalId(userRole.getUserGroup(), userRole.getService(), userRole.getServiceExtension()));
-    }
-
-    public void testUserRoleErrors() {
-        try {
-            authorizationDao.persistUserRole(null); fail();
-       } catch (IllegalArgumentException e) { 
-       } catch (Exception e) { fail(); }
-       try {
-           authorizationDao.removeUserRole(null); fail();
-      } catch (IllegalArgumentException e) { 
-      } catch (Exception e) { fail(); }
-    }
-
-    public void testUserRoleDuplicate() {
-        // write
-        UserRole userRole = createAndPersistUserRole(authorizationDao);
-        hibernateTemplate.clear();
-        // duplicate
-        try {
-            hibernateTemplate.save(userRole); fail();
-        } catch (DataIntegrityViolationException e) { 
-        } catch (Exception e) { fail(); }
-    }
-    
-    public void testRemoveUserRole() {
-        // write
-        List<UserRole> userRoleList = writeUserRole();
-        // remove
-        UserRole userRole = userRoleList.get((int) Math.random()*userRoleList.size());
-        authorizationDao.removeUserRole(userRole);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        // read
-        List<UserRole> all = (ArrayList<UserRole>) hibernateTemplate.find("from UserRole");
-        assertEquals(userRoleList.size()-1, all.size());
-        assertFalse(all.contains(userRole));
-    }
-
     //~ collaborator mutators
     
     public void setAuthorizationDao(AuthorizationDao authorizationDao) {
