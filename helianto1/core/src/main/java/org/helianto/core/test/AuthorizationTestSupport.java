@@ -234,7 +234,7 @@ public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
     public static List<UserRole> createAndPersistUserRoleList(HibernateTemplate hibernateTemplate, int size, int entityListSize, int identityListSize, int serviceListSize) {
         List<UserRole> userRoleList = createUserRoleList(size, entityListSize, identityListSize, serviceListSize);
         for (UserRole x: userRoleList) {
-            hibernateTemplate.merge(x);
+            hibernateTemplate.persist(x);
         }
         hibernateTemplate.flush();
         hibernateTemplate.clear();

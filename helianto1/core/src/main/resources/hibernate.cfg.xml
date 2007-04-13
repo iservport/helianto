@@ -6,6 +6,7 @@
 	<session-factory>
 		<mapping class="org.helianto.core.Operator" />
 		<mapping class="org.helianto.core.Province" />
+		<mapping class="org.helianto.core.UserRole" />
 		<mapping class="org.helianto.core.UserLog" />
 		<mapping class="org.helianto.core.Unit" />
 	</session-factory>
