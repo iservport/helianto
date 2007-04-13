@@ -1,80 +1,99 @@
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.helianto.core;
-// Generated 08/03/2007 19:38:51 by Hibernate Tools 3.2.0.beta8
 
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
- * 			
  * <p>
  * Represent roles an <code>User</code> can play.
  * </p>
  * @author Mauricio Fernandes de Castro
- * 				
- * 		
  */
+@javax.persistence.Entity
+@Table(name="core_userrole",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"userId", "serviceId", "serviceExtension"})}
+)
 public class UserRole  implements java.io.Serializable {
 
-    // Fields    
-
-     private long id;
-     private UserGroup userGroup;
-     private Service service;
-     private String serviceExtension;
-
-     // Constructors
+    private static final long serialVersionUID = 1L;
+    private long id;
+    private UserGroup userGroup;
+    private Service service;
+    private String serviceExtension;
 
     /** default constructor */
     public UserRole() {
     }
 
-    /** full constructor */
-    public UserRole(UserGroup userGroup, Service service, String serviceExtension) {
-       this.userGroup = userGroup;
-       this.service = service;
-       this.serviceExtension = serviceExtension;
-    }
-   
     // Property accessors
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public long getId() {
         return this.id;
     }
-    
     public void setId(long id) {
         this.id = id;
     }
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="userId", nullable=true)
     public UserGroup getUserGroup() {
         return this.userGroup;
     }
-    
     public void setUserGroup(UserGroup userGroup) {
         this.userGroup = userGroup;
     }
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="serviceId", nullable=true)
     public Service getService() {
         return this.service;
     }
-    
     public void setService(Service service) {
         this.service = service;
     }
+
+    @Column(length=8)
     public String getServiceExtension() {
         return this.serviceExtension;
     }
-    
     public void setServiceExtension(String serviceExtension) {
         this.serviceExtension = serviceExtension;
     }
+    
 
     /**
      * toString
      * @return String
      */
      public String toString() {
-	  StringBuffer buffer = new StringBuffer();
+      StringBuffer buffer = new StringBuffer();
 
       buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-      buffer.append("userGroup").append("='").append(getUserGroup()).append("' ");			
-      buffer.append("service").append("='").append(getService()).append("' ");			
-      buffer.append("serviceExtension").append("='").append(getServiceExtension()).append("' ");			
+      buffer.append("userGroup").append("='").append(getUserGroup()).append("' ");          
+      buffer.append("service").append("='").append(getService()).append("' ");          
+      buffer.append("serviceExtension").append("='").append(getServiceExtension()).append("' ");            
       buffer.append("]");
       
       return buffer.toString();
@@ -82,11 +101,11 @@ public class UserRole  implements java.io.Serializable {
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
-		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof UserRole) ) return false;
-		 UserRole castOther = ( UserRole ) other; 
+         if ( (other == null ) ) return false;
+         if ( !(other instanceof UserRole) ) return false;
+         UserRole castOther = ( UserRole ) other; 
          
-		 return ( (this.getUserGroup()==castOther.getUserGroup()) || ( this.getUserGroup()!=null && castOther.getUserGroup()!=null && this.getUserGroup().equals(castOther.getUserGroup()) ) )
+         return ( (this.getUserGroup()==castOther.getUserGroup()) || ( this.getUserGroup()!=null && castOther.getUserGroup()!=null && this.getUserGroup().equals(castOther.getUserGroup()) ) )
  && ( (this.getService()==castOther.getService()) || ( this.getService()!=null && castOther.getService()!=null && this.getService().equals(castOther.getService()) ) )
  && ( (this.getServiceExtension()==castOther.getServiceExtension()) || ( this.getServiceExtension()!=null && castOther.getServiceExtension()!=null && this.getServiceExtension().equals(castOther.getServiceExtension()) ) );
    }
