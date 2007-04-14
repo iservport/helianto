@@ -21,12 +21,15 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.validate.AbstractLoaderPropertyEditorRegistrar;
 import org.helianto.partner.Account;
 import org.helianto.partner.Address;
+import org.helianto.partner.Agent;
 import org.helianto.partner.Contact;
+import org.helianto.partner.Customer;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerAssociation;
 import org.helianto.partner.PartnerAssociationFilter;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.Phone;
+import org.helianto.partner.Supplier;
 import org.springframework.beans.PropertyEditorRegistry;
 
 /**
@@ -47,46 +50,67 @@ public class PartnerPropertyEditorRegistrar extends AbstractLoaderPropertyEditor
         registry.registerCustomEditor(Contact.class, AddressPropertyEditor);
         
         // partnerAssociation
-        PropertyEditor PartnerAssociationPropertyEditor = new PartnerAssociationPropertyEditor(getPropertyLoader());
+        PropertyEditor partnerAssociationPropertyEditor = new PartnerAssociationPropertyEditor(getPropertyLoader());
         if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+PartnerAssociationPropertyEditor);
+            logger.debug("Registering custom editor "+partnerAssociationPropertyEditor);
         }
-        registry.registerCustomEditor(PartnerAssociation.class, PartnerAssociationPropertyEditor);
+        registry.registerCustomEditor(PartnerAssociation.class, partnerAssociationPropertyEditor);
         
         // partnerKey
-        PropertyEditor PartnerKeyPropertyEditor = new PartnerKeyPropertyEditor(getPropertyLoader());
+        PropertyEditor partnerKeyPropertyEditor = new PartnerKeyPropertyEditor(getPropertyLoader());
         if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+PartnerKeyPropertyEditor);
+            logger.debug("Registering custom editor "+partnerKeyPropertyEditor);
         }
-        registry.registerCustomEditor(PartnerKey.class, PartnerKeyPropertyEditor);
+        registry.registerCustomEditor(PartnerKey.class, partnerKeyPropertyEditor);
         
         // partner
-        PropertyEditor PartnerPropertyEditor = new PartnerPropertyEditor(getPropertyLoader());
+        PropertyEditor partnerPropertyEditor = new PartnerPropertyEditor(getPropertyLoader());
         if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+PartnerPropertyEditor);
+            logger.debug("Registering custom editor "+partnerPropertyEditor);
         }
-        registry.registerCustomEditor(Partner.class, PartnerPropertyEditor);
+        registry.registerCustomEditor(Partner.class, partnerPropertyEditor);
         
-        // phone
-        PropertyEditor PhonePropertyEditor = new PhonePropertyEditor(getPropertyLoader());
+        // Agent
+        PropertyEditor agentPropertyEditor = new AgentPropertyEditor(getPropertyLoader());
         if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+PhonePropertyEditor);
+            logger.debug("Registering custom editor "+agentPropertyEditor);
         }
-        registry.registerCustomEditor(Phone.class, PhonePropertyEditor);
+        registry.registerCustomEditor(Agent.class, agentPropertyEditor);
+        
+        // Customer
+        PropertyEditor customerPropertyEditor = new CustomerPropertyEditor(getPropertyLoader());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Registering custom editor "+customerPropertyEditor);
+        }
+        registry.registerCustomEditor(Customer.class, customerPropertyEditor);
+        
+        // Supplier
+        PropertyEditor supplierPropertyEditor = new SupplierPropertyEditor(getPropertyLoader());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Registering custom editor "+supplierPropertyEditor);
+        }
+        registry.registerCustomEditor(Supplier.class, supplierPropertyEditor);
+
+        // phone
+        PropertyEditor phonePropertyEditor = new PhonePropertyEditor(getPropertyLoader());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Registering custom editor "+phonePropertyEditor);
+        }
+        registry.registerCustomEditor(Phone.class, phonePropertyEditor);
 
         // PartnerAssociationFilter
-        PropertyEditor PartnerAssociationFilterPropertyEditor = new PartnerAssociationFilterPropertyEditor(getPropertyLoader());
+        PropertyEditor partnerAssociationFilterPropertyEditor = new PartnerAssociationFilterPropertyEditor(getPropertyLoader());
         if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+PartnerAssociationFilterPropertyEditor);
+            logger.debug("Registering custom editor "+partnerAssociationFilterPropertyEditor);
         }
-        registry.registerCustomEditor(PartnerAssociationFilter.class, PartnerAssociationFilterPropertyEditor);
+        registry.registerCustomEditor(PartnerAssociationFilter.class, partnerAssociationFilterPropertyEditor);
 
         // Account
-        PropertyEditor AccountPropertyEditor = new AccountPropertyEditor(getPropertyLoader());
+        PropertyEditor accountPropertyEditor = new AccountPropertyEditor(getPropertyLoader());
         if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+AccountPropertyEditor);
+            logger.debug("Registering custom editor "+accountPropertyEditor);
         }
-        registry.registerCustomEditor(Account.class, AccountPropertyEditor);
+        registry.registerCustomEditor(Account.class, accountPropertyEditor);
 
     }
 

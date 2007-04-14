@@ -45,6 +45,21 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 
+	<bean id="agentDao" 
+		class="org.helianto.partner.orm.AgentDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+
+	<bean id="customerDao" 
+		class="org.helianto.partner.orm.CustomerDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+
+	<bean id="supplierDao" 
+		class="org.helianto.partner.orm.SupplierDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
 	<bean id="partnerKeyDao" 
 		class="org.helianto.partner.orm.PartnerKeyDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
