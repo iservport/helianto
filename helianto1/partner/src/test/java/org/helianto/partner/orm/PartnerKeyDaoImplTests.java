@@ -2,32 +2,19 @@ package org.helianto.partner.orm;
 
 import java.util.List;
 
-import org.helianto.core.test.AbstractIntegrationTest;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.dao.PartnerKeyDao;
 import org.helianto.partner.test.PartnerKeyTestSupport;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * <code>PartnerKeyDao</code> tests.
  *
  * @author Mauricio Fernandes de Castro
  */
-public class PartnerKeyDaoImplTests extends AbstractIntegrationTest {
+public class PartnerKeyDaoImplTests extends AbstractPartnerDaoImplConfig {
     
     private PartnerKeyDao partnerKeyDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.partner.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>PartnerKey</code>.

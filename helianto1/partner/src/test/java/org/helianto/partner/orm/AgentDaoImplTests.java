@@ -2,7 +2,6 @@ package org.helianto.partner.orm;
 
 import java.util.List;
 
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.partner.Agent;
 import org.helianto.partner.Partner;
 import org.helianto.partner.dao.AgentDao;
@@ -15,21 +14,10 @@ import org.springframework.dao.DataIntegrityViolationException;
  *
  * @author Mauricio Fernandes de Castro
  */
-public class AgentDaoImplTests extends AbstractIntegrationTest {
+public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
     
     private PartnerDao partnerDao;
     private AgentDao agentDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.partner.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>Partner</code>.

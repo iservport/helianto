@@ -2,32 +2,19 @@ package org.helianto.partner.orm;
 
 import java.util.List;
 
-import org.helianto.core.test.AbstractIntegrationTest;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import org.helianto.partner.PartnerAssociationFilter;
 import org.helianto.partner.dao.PartnerAssociationFilterDao;
 import org.helianto.partner.test.PartnerAssociationFilterTestSupport;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * <code>PartnerAssociationFilterDao</code> tests.
  *
  * @author Mauricio Fernandes de Castro
  */
-public class PartnerAssociationFilterDaoImplTests extends AbstractIntegrationTest {
+public class PartnerAssociationFilterDaoImplTests extends AbstractPartnerDaoImplConfig {
     
     private PartnerAssociationFilterDao partnerAssociationFilterDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.partner.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>PartnerAssociationFilter</code>.

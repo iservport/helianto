@@ -2,32 +2,19 @@ package org.helianto.partner.orm;
 
 import java.util.List;
 
-import org.helianto.core.test.AbstractIntegrationTest;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import org.helianto.partner.Contact;
 import org.helianto.partner.dao.ContactDao;
 import org.helianto.partner.test.ContactTestSupport;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * <code>ContactDao</code> tests.
  *
  * @author Mauricio Fernandes de Castro
  */
-public class ContactDaoImplTests extends AbstractIntegrationTest {
+public class ContactDaoImplTests extends AbstractPartnerDaoImplConfig {
     
     private ContactDao contactDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.partner.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>Contact</code>.

@@ -2,7 +2,6 @@ package org.helianto.partner.orm;
 
 import java.util.List;
 
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import org.helianto.partner.Supplier;
@@ -15,21 +14,10 @@ import org.helianto.partner.test.SupplierTestSupport;
  *
  * @author Mauricio Fernandes de Castro
  */
-public class SupplierDaoImplTests extends AbstractIntegrationTest {
+public class SupplierDaoImplTests extends AbstractPartnerDaoImplConfig {
 
     private SupplierDao supplierDao;
     private PartnerDao partnerDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.partner.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>Supplier</code>.

@@ -2,32 +2,19 @@ package org.helianto.partner.orm;
 
 import java.util.List;
 
-import org.helianto.core.test.AbstractIntegrationTest;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import org.helianto.partner.Address;
 import org.helianto.partner.dao.AddressDao;
 import org.helianto.partner.test.AddressTestSupport;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * <code>AddressDao</code> tests.
  *
  * @author Mauricio Fernandes de Castro
  */
-public class AddressDaoImplTests extends AbstractIntegrationTest {
+public class AddressDaoImplTests extends AbstractPartnerDaoImplConfig {
     
     private AddressDao addressDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.partner.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>Address</code>.
