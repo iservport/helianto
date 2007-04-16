@@ -77,21 +77,29 @@
 
 	<!--
 			Service bean	
+	-->
 	<bean id="partnerMgr" 
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
 		parent="mgrTemplate">
 		<property name="target">
-			<bean id="serverTarget"
-				class="org.helianto.partner.service.ServerMgrImpl">
-				<property name="operatorDao" ref="operatorDao"/>
-				<property name="authenticationDao" ref="authenticationDao"/>
-				<property name="authorizationDao" ref="authorizationDao"/>
-				<property name="configurableMailSenderFactory" ref="configurableMailSenderFactory"/>
-				<property name="mailMessageComposer" ref="basicMailMessageComposer"/>
+			<bean id="partnerTarget"
+				class="org.helianto.partner.service.PartnerMgrImpl">
+				<property name="provinceDao" ref="provinceDao"/>
+				<property name="partnerDao" ref="partnerDao"/>
+				<property name="addressDao" ref="addressDao"/>
+				<property name="contactDao" ref="contactDao"/>
+				<property name="partnerAssociationDao" ref="partnerAssociationDao"/>
+				<property name="partnerAssociationFilterDao" ref="partnerAssociationFilterDao"/>
+				<property name="partnerKeyDao" ref="partnerKeyDao"/>
+				<property name="phoneDao" ref="phoneDao"/>
+				<property name="accountDao" ref="accountDao"/>
+				<property name="agentDao" ref="agentDao"/>
+				<property name="customerDao" ref="customerDao"/>
+				<property name="supplierDao" ref="supplierDao"/>
 			</bean>
 		</property>
 	</bean>
-	-->
+
 	<!-- 
 			Authentication property editor registrar bean	
 	<bean id="partnerPropertyEditorRegistrar" 

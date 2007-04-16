@@ -37,7 +37,6 @@ import org.springframework.dao.DataAccessException;
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsService {
 

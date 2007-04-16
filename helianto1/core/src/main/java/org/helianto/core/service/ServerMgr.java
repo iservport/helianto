@@ -27,7 +27,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 
 /**
- * A base service layer interface for the core package.
+ * Default base service layer interface for the core package.
  * 
  * @author Mauricio Fernandes de Castro
  */
