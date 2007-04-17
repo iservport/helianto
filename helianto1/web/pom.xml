@@ -11,7 +11,7 @@
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-web</artifactId>
 	<version>0.0.1-m4-SNAPSHOT</version>
-	<name>The Helianto Project Web Module</name>
+	<name>Web</name>
 	<packaging>jar</packaging>
 
 	<description>Helianto project web module.</description>

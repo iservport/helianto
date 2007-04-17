@@ -11,7 +11,7 @@
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-domain</artifactId>
 	<version>0.0.1-m4-SNAPSHOT</version>
-	<name>The Helianto Project Domain Module</name>
+	<name>Domain</name>
 
 	<description>Helianto project domain module.</description>
 

@@ -11,7 +11,7 @@
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-partner</artifactId>
 	<version>0.0.1-m4-SNAPSHOT</version>
-	<name>The Helianto Project Partner Module</name>
+	<name>Partner</name>
 
 	<description>Helianto project partner module.</description>
 

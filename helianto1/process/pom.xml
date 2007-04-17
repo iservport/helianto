@@ -10,7 +10,7 @@
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-process</artifactId>
 	<version>0.0.1-m4-SNAPSHOT</version>
-	<name>The Helianto Project Process Module</name>
+	<name>Process</name>
 	
 	<description>Helianto project process module.</description>
 	

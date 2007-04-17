@@ -10,6 +10,7 @@
 		<src>http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=4</src>
 		<href>http://www.sourceforge.net</href>
 	</bannerRight>
+
 	<body>
 		<links>
 			<item name="Spring Framework"
@@ -40,8 +41,8 @@
 				target="_blank" />
 		</menu>
 
-		${modules}
-		
+		<menu ref="modules"/>
+
 		<menu ref="reports"/>
 
 		<!-- powered-by>
