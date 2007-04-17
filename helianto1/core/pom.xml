@@ -11,7 +11,7 @@
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-core</artifactId>
 	<version>0.0.1-m4-SNAPSHOT</version>
-	<name>The Helianto Project Core Module</name>
+	<name>Core</name>
 
 	<description>Helianto project core module.</description>
 

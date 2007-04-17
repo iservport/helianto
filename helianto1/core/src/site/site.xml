@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Helianto">
-	<bannerRight>
+	<bannerLeft>
 		<name>Helianto</name>
 		<src>images/helianto-t.gif</src>
 		<href>http://www.helianto.org/</href>
+	</bannerLeft>
+	<bannerRight>
+		<name>Hosted by SourceForge</name>
+		<src>http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=4</src>
+		<href>http://www.sourceforge.net</href>
 	</bannerRight>
 	<body>
 		<links>
@@ -16,11 +21,23 @@
 				href="http://maven.apache.org/maven2/"/>
 		</links>
 		
-		<menu name="The Helianto Project Partner Module">
+		<menu ref="parent"/>
+
+		<menu name="Helianto Core Module">
 			<item name="Introduction" href="index.html"/>
 		</menu>
 		
-		${reports}
+		<menu name="Use Cases">
+			<item name="Simple User" href="simpleuser.html"/>
+			<item name="Entity User" href="entityuser.html"/>
+			<item name="Update Personal Data" href="updatepd.html"/>
+			<item name="Simple Authentication and Authorization" href="simpleauthn.html"/>
+			<item name="Clear Password" href="clearpwd.html"/>
+		</menu>
 		
+		<menu ref="modules"/>
+
+		<menu ref="reports"/>
+
 	</body>
 </project>
