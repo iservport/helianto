@@ -9,19 +9,19 @@
 		</layout>
 	</appender>
 	<logger name="org.springframework">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<logger name="org.hibernate">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<logger name="org.helianto.core">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<logger name="org.helianto.process">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<logger name="org.hsqldb">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<root>
 		<level value="WARN"/>
