@@ -12,7 +12,8 @@ public class PartnerMgrInjectionTests extends AbstractPartnerDaoImplConfig {
     private PartnerMgr partnerMgr;
     
     public void testInit() {
-        ((PartnerMgrImpl) partnerMgr).init();
+        partnerMgr.getClass();
+        // the container invokes init
     }
     
     //- setters

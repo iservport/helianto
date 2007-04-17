@@ -17,6 +17,8 @@ package org.helianto.partner.service;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.dao.ProvinceDao;
@@ -115,6 +117,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     //- init
     
     public void init() {
+        logger.info("Starting");
         if (provinceDao==null) {
             throw new IllegalArgumentException("ProvinceDao property required");
         }
@@ -152,5 +155,7 @@ public class PartnerMgrImpl implements PartnerMgr {
             throw new IllegalArgumentException("SupplierDao property required");
         }
     }
+    
+    private Log logger = LogFactory.getLog(PartnerMgrImpl.class);
 
 }
