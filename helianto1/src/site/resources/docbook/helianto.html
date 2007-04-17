@@ -1,0 +1,612 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Helianto project</title><link xmlns="" href="styles/html/acegi.css" rel="stylesheet" type="text/css" /><meta content="DocBook XSL Stylesheets V1.67.2" name="generator" /></head><body><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a id="N10002" />Helianto project</h1></div><div><h2 class="subtitle">Reference Documentation</h2></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Maur&iacute;cio</span> <span class="surname">Fernandes de Castro</span></h3></div></div></div><div><p class="releaseinfo">0.0.1-m4-SNAPSHOT</p></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#preface">Preface</a></span></dt><dt><span class="chapter"><a href="#helianto">1. The Helianto Project</a></span></dt><dd><dl><dt><span class="sect1"><a href="#helianto-introduction">1.1. Introduction</a></span></dt><dd><dl><dt><span =""><a href="#helianto-introduction-mission">1.1.1. Mission</a></span></dt><dt><span class="sect2"><a href="#helianto-introduction-acknowledgements">1.1.2. Acknowledgements</a></span></dt><dt><span class="sect2"><a href="#helianto-introduction-requirements">1.1.3. Software Requirements</a></span></dt></dl></dd><dt><span class="sect1"><a href="#helianto-arch">1.2. Architecture</a></span></dt><dt><span class="sect1"><a href="#helianto-core">1.3. Core module</a></span></dt><dd><dl><dt><span =""><a href="#helianto-core-domain">1.3.1. Core domain classes</a></span></dt><dt><span class="sect2"><a href="#helianto-core-config">1.3.2. Basic configuration</a></span></dt><dt><span class="sect2"><a href="#helianto-core-dao">1.3.3. The persistence layer</a></span></dt><dt><span class="sect2"><a href="#helianto-core-security">1.3.4. Security</a></span></dt></dl></dd><dt><span class="sect1"><a href="#helianto-partner">1.4. Partner module</a></span></dt><dt><span class="sect1"><a href="#helianto-process">1.5. Process module</a></span></dt><dd><dl><dt><span =""><a href="#helianto-process-overview">1.5.1. 
+					The
+					<code class="literal">helianto-process</code>
+					package
+				</a></span></dt><dt><span class="sect2"><a href="#helianto-process-domain">1.5.2. The Process domain model</a></span></dt></dl></dd><dt><span class="sect1"><a href="#helianto-product">1.6. Product module</a></span></dt><dd><dl><dt><span =""><a href="#helianto-product-abstract">1.6.1. 
+					The
+					<code class="literal">helianto-product</code>
+					package
+				</a></span></dt><dt><span class="sect2"><a href="#helianto-product-domain">1.6.2. The Product domain model</a></span></dt></dl></dd><dt><span class="sect1"><a href="#helianto-fac">1.7. Finance and accountability module</a></span></dt><dt><span class="sect1"><a href="#helianto-access">1.8. 
+				A template application including access control
+			</a></span></dt></dl></dd><dt><span class="chapter"><a href="#appendices">2. Apendices</a></span></dt><dd><dl><dt><span class="sect1"><a href="#helianto-orm">2.1. 
+				Appendix A - Hibernate and Object relational mapping
+				(ORM)
+			</a></span></dt><dt><span class="sect1"><a href="#helianto-di">2.2. 
+				Appendix B - Spring Framework and Dependency injection
+			</a></span></dt><dt><span class="sect1"><a href="#helianto-security">2.3. Appendix C - Acegi Security</a></span></dt><dd><dl><dt><span =""><a href="#helianto-security-objects">2.3.1. Security object</a></span></dt></dl></dd></dl></dd></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="preface" />Preface</h2></div></div></div><p>
+			The Helianto Project was born after a discussion on how to
+			leverage the competitive advantage of group of small
+			organizations having different competences in the sotware
+			business. The key value behind the Helianto mission
+			development was to promote collaboration in disciplines
+			where all members might have common requirements.
+		</p><p>
+			The name "Helianto" derives from the latin word for the
+			sunflower plant. The idea showed up from an original sketch,
+			where a couple of functional modules were drawn in a central
+			corolla, surrounded by as many application "petals" as
+			desired. The name still remains associated to the sunflower
+			geometry, although the project focuses only the corolla.
+		</p><p>
+			Helianto is not meant to be a product to be used out of the
+			box. Actually, it requires customization and some expertise
+			in object oriented programming to become a productivity
+			tool. It strongly relies on
+			<code class="literal">Spring framework</code>
+			to achieve the majority of its goals. Those who are familiar
+			with Spring's concepts like dependency injection and aspect
+			orientation will be more comfortable here. And those who are
+			not, will find at Helianto a fast and convenient learning
+			path.
+		</p><p>
+			At last, Helianto gained an inital momentum to become an
+			open source project when the possibilities arround the
+			"corolla" outnumbered the original group expectations. Since
+			then, Helianto is distributed under the "Apache License v.
+			2.0".
+		</p><p>
+			Currently, Helianto has a work in progress status. This
+			document is currently in the process of being written, so
+			not all topics are covered. Contributions are welcome.
+		</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="helianto" />Chapter&nbsp;1.&nbsp;The Helianto Project</h2></div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-introduction" />1.1.&nbsp;Introduction</h2></div></div></div><p>
+			    Developers using Helianto will find it appropriate to shorten 
+			    development cycle on the server side.
+			</p><p>
+				Helianto tries to capture common project issues and
+				combine it with sound project pratices. Many designers
+				need to model entities like customers or suppliers,
+				payables and receivables, and so forth. Helianto
+				provides extensible domain and service classes for them.
+				Many designers have a growing interest on ORM. Helianto
+				provides basic configuration for Spring and Hibernate to
+				achieve this, as well as the corresponding OR code
+				for the supplied domain classes. Many designers would
+				refactor the code to reduce coupling. Helianto enforces
+				the use of dependency injection. Some have realized EJB
+				is quite complex and will find here how to keep
+				declarative transaction management simple. Some would
+				like to benefit from a non invasive security framework.
+				Helianto provides configuration and a template for a
+				secure web application using Acegi Security.
+			</p><p>
+				Helianto strongly relies on Spring to achieve all of
+				this. It also embeds a couple of design decisions that
+				narrow the power of Spring. It is a trade off. In one
+				hand, you have to follow a pre-configured application,
+				but in the other, you may get ready shortly.
+			</p><p>
+				The key value to develop Helianto classes and resources
+				is to keep wide scope and flexibility to ease
+				composition or extension.
+			</p><p>In most cases, to create an application backed by Helianto, the developer would:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+						use maven to create a project and resolve dependencies,
+					</p></li><li><p>
+						create the presentation layer to invoke the
+						service layer methods available through Helianto 
+						packages,
+					</p></li><li><p>
+						customize the jdbc connection through the
+						hibernate.properties file (tables in the
+						datastore are automatically created), and
+					</p></li><li><p>test and deploy the appllication to a
+					   servlet container, like Tomcat.</p></li></ul></div><p>
+				If the application requirements become more specific,
+				the developer would also have to create or extend domain
+				classes, create or
+				extend service facades and wire them to the dependency
+				injection container registry.
+			</p><p>
+				Throughout this document, many of the aspects of such
+				customization will be described in deeper detail. See
+				the appendices for a brief conceptual introduction along
+				for some of the collaborating open source packages.
+			</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-mission" />1.1.1.&nbsp;Mission</h3></div></div></div><p>
+				The mission is important for developers and users to keep
+				expectations and development efforts within some basic direction.
+			</p><p>
+					The Helianto Project Mission
+				</p><p>
+					Continuously develop a server-side application base framework
+					that:
+				</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+							enforces separation of concerns,
+						</p></li><li><p>
+							is as decoupled as possible from the
+							presentation layer, allowing the desired
+							customization to expose service and
+							persistence layers that fits best its
+							purpose,
+						</p></li><li><p>
+							provides an extensible and flexible service
+							layer to accomodate both simple and complex
+							project requirements,
+						</p></li><li><p>
+							concurrently provides a common domain model
+							to solve well known business problems and a
+							persistence layer as decoupled as possible
+							from the datastore, and
+						</p></li><li><p>
+							enforces good programming practices like
+							design patterns usage, rich documentation
+							and extensive testing.
+						</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-acknowledgements" />1.1.2.&nbsp;Acknowledgements</h3></div></div></div><p>
+					The Helianto project includes software developed by
+					the Apache Software Foundation
+					(http://www.apache.org), the Spring Framework
+					Project (http://www.springframework.org) and the
+					Acegi Security System for Spring Project
+					(http://acegisecurity.sourceforge.net). It also
+					includes software from Hibernate
+					(http://www.hibernate.org).
+				</p><p>
+					It is virtually impossible to say thank you to all
+					the people who contributed in some way to the
+					current state of this project. Many of them are
+					project leaders of the packages mentioned above.
+					
+				</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-introduction-requirements" />1.1.3.&nbsp;Software Requirements</h3></div></div></div><p>
+					At compile time:
+				</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+							The source code includes generics and enumerators,
+							therefore a jdk 1.5 or higher is required.
+						</p></li><li><p>
+							Eclipse platform and the appropriate plugins as well
+							as Apache Maven (v. 2.x) are recomended, although not
+							required. Of course, there are many dependencies
+							listed in the pom files, and Maven will help to have
+							them ready to use.
+						</p></li></ul></div><p>
+					At run time:
+				</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+							Jre 1.5 or higher is also required.
+						</p></li><li><p>
+							A servlet container, like Tomcat. There is no
+							requirement to an EJB container, although the 
+							service layer components can be easily wrapped 
+							as EJB's.
+						</p></li><li><p>
+							Any sql database can be used as long as the
+							appropriate properties are overriden in the
+							hibernate.properties file.
+						</p></li></ul></div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-arch" />1.2.&nbsp;Architecture</h2></div></div></div><p>
+				<div class="mediaobject" align="center"><img src="images/arch.png" align="middle" /><div class="caption"><p>Figure 2: Architecture.</p></div></div>
+			</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-core" />1.3.&nbsp;Core module</h2></div></div></div><p>
+				The core module has two major responsibilities:
+			</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>create the configuration required to instantiate
+					basic persistence and service beans, and</p></li><li><p>
+						implement a basic domain model and services.
+					</p></li></ul></div><p>
+				All the configuration is declarative, mostly in the
+				form of xml files, and will be explained in the next
+				section.
+			</p><p>
+				The basic domain model comprehends user and entity
+				relationship, as follows.
+			</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-domain" />1.3.1.&nbsp;Core domain classes</h3></div></div></div><p>
+					The org.helianto.core.Entity is an Helianto top abstraction and 
+					a key domain object. Its responsibility is to isolate information 
+					from external parties. An entity may represent a whole
+					organization or a single person. In other words, if accounting
+					or maintenance data from one organization should not be 
+				    freely accessed by a second organization or person, they must 
+				    be distinguished by entity.
+				</p><p>
+				    Please notice that org.helianto.core.Entity is completely
+				    different from the javax.persistence.Entity used in the persistence
+				    layer. In future releases, the class org.helianto.core.Entity 
+				    may be renamed to avoid confusion.
+				</p><p>
+					The key to access an entity is an unique alias. A second distinction level,
+					introduced by the class org.helianto.core.Operator, is avaliable to provide 
+					scalability. As a consequence,
+					the entity alias should not be repeated within the group of 
+					entities controlled by an operator.
+				</p><p>
+					The need for such an operator abstraction is easier to understand when
+					a single datastore is required to hold data with different key 
+					characteristics, like language, country or access to services.
+					For applications limited to small organization boundaries 
+					(obviously sharing the same language, etc.), Helianto offers
+					appropriate service layer methods that hide the operator.
+				</p><p>
+					In both cases, for large or small datastores, the operator acts as a
+					bridge between entities and top level features.
+				</p><p>
+					<div class="mediaobject" align="center"><img src="images/base.png" align="middle" /><div class="caption"><p>Entity model.</p></div></div>
+				</p><p>
+					Next important domain abstraction is represented by the org.helianto.core.User
+					class. First thing to note is that the every user belongs to a single entity. 
+                    It means that the user class has a local reference to the owning entity, or,
+                    if you prefer the relational model, the user table has a foreign key to associate it
+                    to the entity table.
+				</p><p>
+				    The user main responsibility is to hold authorization data. Thus, authorization
+				    is granted as a per entity basis. To allow one individual to access services in
+				    several entities, the user class delegates authentication responsibilities to a couple of 
+				    distinct domain classes: org.helianto.core.Identity and org.helianto.core.Credential.
+				</p><p>
+				    The Acegi Security package approaches authorization and authentication requirements
+				    in a very mature way (see appendix C). The org.helianto.core.security.UserDetailsServiceImpl
+				    class makes extensive use of Acegi's interfaces and classes to securely place the authenticated 
+				    user instance at reach from any application layer.
+				</p><p>
+				    So far, the Helianto built-in support to obtain an authenticated user is a simple
+				    solution to many core application issues:
+				</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>the user aggregates a set of user roles and the corresponding keys
+						to registered services (see org.helianto.core.UserRole and 
+						org.helianto.core.Service) allowing the customization of user
+						authorization,</p></li><li><p>the user aggregates an identity and his/her personal data,</p></li><li><p>the user has a reference to the owning entity, exposing
+						    a parameter appropriate to select other domain classes, like accounts, customers,
+						    resources, etc.,</p></li><li><p>the owning entity, available through the user, gives access to basic 
+						parameters, like language, locale specific date and time format, a set of 
+						regional parameters as provinces (see org.helianto.core.Province) and 
+						applicable keys (see org.helianto.core.KeyType), as well as mail transport
+						or store server configuration (see org.helianto.core.Server),</p></li><li><p>user and its superclass, org.helianto.core.UserGroup, can be
+						associated to each other to create an hierarchical authorization model.</p></li></ul></div><p>
+					<div class="mediaobject" align="center"><img src="images/authorization.png" align="middle" /><div class="caption"><p>Authorization model.</p></div></div>
+				</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-config" />1.3.2.&nbsp;Basic configuration</h3></div></div></div><p>The core module also contains basic configuration files:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>dataSource.xml: sets an Apache DBCP connection
+						    pool up, according to properties defined in the file
+						    hibernate.properties,</p></li><li><p>sessionFactory.xml: sets an Hibernate Session Factory up, using
+						    Spring Framework classes, and defines conventions to both Hibernate
+						    mappings location and JPA annotated classes configuration,</p></li><li><p>transaction.xml: sets a transaction manager and a manager template up, in
+						    order to ease the declarative transaction management feature of the
+						    Spring Framework,</p></li><li><p>security.xml: wires up the Acegi Security classes required to work
+						    with the domain model described above,</p></li><li><p>support.xml: several message related beans,</p></li><li><p>core.xml: data access objects and service managers for the
+						    core domain model.</p></li></ul></div><p>All files above conform to the spring-beans.dtd, i.e., they
+				    define how a Spring Framework context will be created. By convention,
+				    they are all located at the library classpath unde the "deploy/" folder. Please,
+				    check the Appendix B for a short overview of the dependency injection
+				    concept.</p><p>Two other (already mentioned) Hibernate specific configuration files
+				    deserve a closer look:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>hibernate.properties: sets the jdbc driver, connection url,
+						    hibernate dialect, user and password and other optional parameters
+						    required to connect to a database,</p></li><li><p>hibernate.cfg.xml: declares JPA annotated classes.</p></li></ul></div><p>The default /hibernate.properties file (see below) must be overriden
+				    in the final application classpath root to customize the database 
+				    connection. Please notice that the hibernate.hbm2ddl.auto=update configuration
+				    is only required to create and update the database structure just after the
+				    application installation and can be commented out to improve performance.</p><p>
+				<pre class="programlisting">
+					
+hibernate.connection.driver_class=org.hsqldb.jdbcDriver
+hibernate.connection.url=jdbc:hsqldb:file:target/testdb/db;shutdown=true
+hibernate.dialect=org.hibernate.dialect.HSQLDialect
+
+hibernate.max_fetch_depth=3
+
+hibernate.hbm2ddl.auto=update
+hibernate.show_sql=true
+hibernate.connection.pool_size=3
+
+hibernate.connection.username=sa
+hibernate.connection.password=
+						
+				</pre>
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-dao" />1.3.3.&nbsp;The persistence layer</h3></div></div></div><p>[Pending]</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-core-security" />1.3.4.&nbsp;Security</h3></div></div></div><p>Security can be activated in the presentation layer, but also in the service 
+				    layer thanks to the <code class="literal">Acegi Security for Spring</code> package (see appendix for details).
+				    Not much as implementing an interface is necessary to satisfy Acegi's programming 
+				    requirements. All the rest can be done in a declarative fashion. Helianto has such 
+				    implementation and a couple of declared configurations ready.</p><p>The class <code class="literal">org.helianto.core.security.UserDetailsServiceImpl</code>
+				    implements the interface <code class="literal">org.acegisecurity.userdetails.UserDetailsService</code>.
+				    Just after the user credentials are supplied, this class looks in the datastore for a matching
+				    <code class="literal">User</code>. One of three alternatives is followed:</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+							username and password do not match and are rejected,
+						</p></li><li><p>
+							as one single credential (username and password) may be connected 
+							to more than one entity, the entity selection is taken from the 
+							last choice registerd in an <code class="literal">UserLog</code> domain object,
+						</p></li><li><p>
+							if there is no <code class="literal">UserLog</code> yet, the 
+							<code class="literal">UserDetailsServiceImpl</code> tries to guess an <code class="literal">Entity</code>.
+						</p></li></ul></div><p>[Pending]</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-partner" />1.4.&nbsp;Partner module</h2></div></div></div><p>
+				The partner module introduces customers, suppliers and other organization related third parties.
+			</p><p>
+			    Partners start to exist to some entity just after a simple registration. The key to access a org.helianto.partner.PartnerRegistry is
+			    a partner alias string, unique within the entity.
+			</p><p>[Pending]</p><p>
+				It is
+				sometimes desirable to share specifc information
+				accross multiple entities. Customers would
+				eventually like to share product data (at their
+				discretion) with suppliers. Helianto is designed to
+				create partners either as domain objects local to an
+				entity, designated as "weak" relationships, or as
+				entities themselves in a so called "strong"
+				relationship. Also, weak partners can be converted
+				to strong partners.
+			</p><p>
+					<div class="mediaobject" align="center"><img src="images/partner.png" align="middle" /><div class="caption"><p>Partner model.</p></div></div>
+				</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-process" />1.5.&nbsp;Process module</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-process-overview" />1.5.1.&nbsp;
+					The
+					<code class="literal">helianto-process</code>
+					package
+				</h3></div></div></div><p>
+					The
+					<code class="literal">helianto-process</code>
+					package, as the name suggests, introduces a
+					comprehensive process approach to Helianto.
+					Processes may be taken as organizational or
+					production, and may be related to parts, products or
+					other processes. The module responsibilities are:
+				</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+							provide a base class,
+							<code class="literal">Document</code>
+							, to be root for all process components,
+							allowing for polimorphism among parts,
+							products, processes and operations,
+						</p></li><li><p>
+							provide product and process trees, and
+							services to maintain them,
+						</p></li><li><p>
+							provide manufacturing specific domain and
+							services,
+						</p></li><li><p>
+							provide base classes for resource
+							management.
+						</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-process-domain" />1.5.2.&nbsp;The Process domain model</h3></div></div></div><p>
+					<div class="mediaobject" align="center"><img src="images/document.png" align="middle" /><div class="caption"><p>Document association.</p></div></div>
+				</p><p>
+					<div class="mediaobject" align="center"><img src="images/process.png" align="middle" /><div class="caption"><p>Document hierarchy.</p></div></div>
+				</p><p>[Pending]</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-product" />1.6.&nbsp;Product module</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-product-abstract" />1.6.1.&nbsp;
+					The
+					<code class="literal">helianto-product</code>
+					package
+				</h3></div></div></div><p>
+					The
+					<code class="literal">helianto-product</code>
+					package is designed to provide product and price information to
+					processes. The module responsibilities are:
+				</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+							handle,
+							<code class="literal">Proposal</code>
+							s and
+							<code class="literal">Price</code>
+							list,
+						</p></li><li><p>
+							provide services to calculate prices.
+						</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-product-domain" />1.6.2.&nbsp;The Product domain model</h3></div></div></div><p>[Pending]</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-fac" />1.7.&nbsp;Finance and accountability module</h2></div></div></div><p>[pending]</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-access" />1.8.&nbsp;
+				A template application including access control
+			</h2></div></div></div><p>[pending]</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="appendices" />Chapter&nbsp;2.&nbsp;Apendices</h2></div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-orm" />2.1.&nbsp;
+				Appendix A - Hibernate and Object relational mapping
+				(ORM)
+			</h2></div></div></div><p>
+				Object relational frameworks' primary job is to hide the
+				relational mechanics of SQL databases behind a graph of
+				in memory object instances. Database records are
+				inserted, update or deleted after object state
+				transitions and the developer is no longer required to
+				issue SQL statements directly.
+			</p><p>
+				Hibernate (www.hibernate.org) is the current ORM choice
+				for the Helianto project, but there is no restriction in
+				the code to future adoptions of an alternative approach,
+				like Oracle's Top Link or any implementation of JDO.
+			</p><p>
+				This appendix will explain, in short, some fundamentals
+				of Hibernate. For further clarification, please, see the
+				Hibernate documentation.
+			</p><p>
+				As SQL code is decoupled from the application code, it
+				is possible to easily switch database vendors. Doing
+				this, in Hibernate (and Helianto), is a matter of
+				configuration. See the chapter "Configuration" on this
+				guide for detailed instructions on how to change the
+				hibernate.properties file.
+			</p><p>
+				Hibernate's key abstraction lies in the Session
+				interface. A session represents a basic unit of work and
+				should be fully understood by developers extending the
+				<code class="literal">org.helianto.core.GenericDao</code>
+				implemetations.
+			</p><p>A good start comes from the Session java docs:</p><div class="blockquote"><blockquote class="blockquote"><p>
+					The main function of the Session is to offer create,
+					read and delete operations for instances of mapped
+					entity classes.
+				</p></blockquote></div><p>
+				As the above term
+				<code class="literal">mapped entity</code>
+				suggests, some sort of mapping is required to accomodate
+				relational and object oriented perspectives togheter. Of
+				course, only mapped entities can be made persistent.
+			</p><p>
+				By the mapping, in the form of a xml file, Hibernate
+				knows how an instance is associated to a database table.
+				Here is a sample:
+			</p><p>
+				<pre class="programlisting">
+					
+&lt;hibernate-mapping default-lazy="false"&gt;
+	&lt;class table="core_credential" 
+		name="org.helianto.core.Credential"&gt;
+		&lt;!-- 
+				CREDENTIAL
+				============================================= 
+		--&gt;
+		&lt;!-- 
+  				id
+		--&gt;
+		&lt;id name="id" type="long"&gt;
+			&lt;generator class="native"/&gt;
+		&lt;/id&gt;
+		&lt;!-- 
+				principal
+		--&gt;
+		&lt;property name="principal" type="string"&gt;
+			&lt;meta attribute="use-in-equals"&gt;true&lt;/meta&gt;
+			&lt;column name="principal" length="64" not-null="true" 
+				unique="true"/&gt;
+		&lt;/property&gt;
+		&lt;!-- 
+				password
+		--&gt;
+		&lt;property name="password" type="string" length="20"/&gt;
+...
+						
+				</pre>
+			</p><p>
+				The above listing requires two other artifacs to work
+				with:
+			</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+						a table named
+						<code class="literal">core_credential</code>
+						in the database, with fields
+						<code class="literal">id</code>
+						,
+						<code class="literal">principal</code>
+						,
+						<code class="literal">password</code>
+						and other (ommited),
+					</p></li><li><p>
+						a serializable POJO class
+						<code class="literal">org.helianto.core.Credential</code>
+						with fields
+						<code class="literal">id</code>
+						,
+						<code class="literal">principal</code>
+						,
+						<code class="literal">password</code>
+						and other (ommited), and corresponding getters
+						and setters following the Java Beans convention
+						like
+						<code class="literal">long getId()</code>
+						,
+						<code class="literal">setId(long id)</code>
+						,
+						<code class="literal">String getPrincipal()</code>
+						,
+						<code class="literal">
+							setPrincipal(String principal)
+						</code>
+						,
+						<code class="literal">String getPassword()</code>
+						,
+						<code class="literal">setPassword(String password)</code>
+						, etc.
+					</p></li></ul></div><p>
+				There are many strategies to obtain a concise set of
+				such artifacts. The choice made in Helianto is known as
+				<code class="literal">middle-out</code>
+				, where the developer is responsible for the mapping
+				file construction and the framework does its job by
+				automatically generating the POJO's and updating the
+				database schema accordingly.
+			</p><p>
+				Mapped entities instances may exist in one of three
+				states:
+			</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+						transient: never persistent, not associated with
+						any Session,
+					</p></li><li><p>
+						persistent: associated with a unique Session,
+					</p></li><li><p>
+						detached: previously persistent, not associated
+						with any Session.
+					</p></li></ul></div><p>
+				The following state diagram tries to capture the
+				possible transitions among such states.
+			</p><p>
+				<div class="mediaobject" align="center"><img src="images/hibernateSession.png" align="middle" /><div class="caption"><p>
+							Hibernate Session and Mapped Entities
+							States.
+						</p></div></div>
+			</p><p>
+				After a session flush, the mapped entities are
+				synchronized with database. Previous
+				<code class="literal">save()</code>
+				and
+				<code class="literal">persist()</code>
+				transitions result in an SQL INSERT,
+				<code class="literal">delete()</code>
+				in an SQL DELETE and
+				<code class="literal">update()</code>
+				or
+				<code class="literal">merge()</code>
+				in an SQL UPDATE.
+			</p><p>
+				Please, see the Hibernate documentation for further
+				details.
+			</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-di" />2.2.&nbsp;
+				Appendix B - Spring Framework and Dependency injection
+			</h2></div></div></div><p>
+				First thing to say about dependency injection is that it
+				is not invasive. It does not require your code to
+				inherit state or behaviour from some class, or to
+				implement any particular interface. It also means that
+				you wil not have to take things away from your code if
+				you decide you had enough from it, and will now follow
+				the next buzzword framework.
+			</p><p>
+				The action may start just after two minor adjustments
+				arround your code, or even, arround legacy code:
+			</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+						at design time, you choose the objects to
+						instantiate (and how they collaborate) in a
+						declarative fashion,
+					</p></li><li><p>
+						at run time, an IoC container takes first the
+						control of the program flow, and uses the
+						declared configuration to actually instantiate
+						the objects.
+					</p></li></ul></div><p>
+				The application logic may then follow, with or without
+				additional collaboration from the container.
+			</p><p>
+				For those who are still asking what benefits a container
+				to jumpstart the application may bring, let's say that:
+			</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+						less coupling means less plumbing or glue code,
+						so you are free to focus on the business,
+					</p></li><li><p>
+						dependencies become explicit and away of the
+						code, a good reason to follow the well known
+						best pratice "program to an interface, not to
+						the implementation",
+					</p></li><li><p>
+						test driven development becomes easier, and
+					</p></li><li><p>
+						dependency injection containers are lightweight.
+					</p></li></ul></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="helianto-security" />2.3.&nbsp;Appendix C - Acegi Security</h2></div></div></div><p>
+				The helianto project relies on the
+				<code class="literal">Acegi-security for Spring</code>
+				package to provide user authentication and
+				authorization. The following sections have a restricted
+				view of some main objects and concepts, while the Acegi
+				web site documentation is comprehensive and recommended
+				for those who look for deeper understanding.
+			</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="helianto-security-objects" />2.3.1.&nbsp;Security object</h3></div></div></div><p>
+					The security object plays a major role inside
+					<code class="literal">Acegi-security for Spring</code>
+					package as it coordinates the transitions required
+					to secure an object. For the purposes of this
+					document, the
+					<code class="literal">FilterInvocation</code>
+					security object is examined, and how it enables HTTP
+					resources to be secured.
+				</p><p>
+					<div class="mediaobject" align="center"><img src="images/acegi-security.png" align="middle" /><div class="caption"><p>
+								Acegi configuration.
+							</p></div></div>
+				</p><p>
+					The security interceptor has some important
+					collaborators with distinct responsibilities:
+				</p><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>
+							An
+							<code class="literal">Authentication</code>
+							object to hold the username, password and
+							the authorities granted to the user.
+						</p></li><li><p>
+							A
+							<code class="literal">ContextHolder</code>
+							which holds the
+							<code class="literal">Authentication</code>
+							object in a
+							<code class="literal">ThreadLocal</code>
+							-bound object.
+						</p></li><li><p>
+							An
+							<code class="literal">AuthenticationManager</code>
+							to authenticate the
+							<code class="literal">Authentication</code>
+							object presented via the
+							<code class="literal">ContextHolder</code>
+							.
+						</p></li></ul></div></div></div></div></div></body></html>
