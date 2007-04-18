@@ -31,22 +31,7 @@ import org.helianto.process.junit.AbstractMaterialTest;
 import org.helianto.process.test.ResourceTestSupport;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class ResourceDaoImplParamTests extends AbstractIntegrationTest {
-    
-    private ResourceDao resourceDao;
-    private HibernateTemplate hibernateTemplate;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.partner.xml",
-                "deploy/process.xml"
-                };
-    }
+public class ResourceDaoImplParamTests extends AbstractProcesssIntegrationTest {
     
     /*
      * ResourceParameter tests 
@@ -259,16 +244,4 @@ public class ResourceDaoImplParamTests extends AbstractIntegrationTest {
     }
 
     
-    
-    
-    //
-
-    public void setResourceDao(ResourceDao resourceDao) {
-        this.resourceDao = resourceDao;
-    }
-
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
-    }
-
 }

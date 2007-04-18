@@ -24,23 +24,8 @@ import org.helianto.process.test.DocumentTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class ProcessDaoImplTests extends AbstractIntegrationTest {
+public class ProcessDaoImplTests extends AbstractProcesssIntegrationTest {
     
-    private ProcessDao processDao;
-    private HibernateTemplate hibernateTemplate;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.partner.xml",
-                "deploy/process.xml"
-                };
-    }
-
     public void testPersistExternalDocument() {
         //write
         ExternalDocument externalDocument = DocumentTestSupport.createAndPersistExternalDocument(processDao);
@@ -115,14 +100,6 @@ public class ProcessDaoImplTests extends AbstractIntegrationTest {
 //        List<ExternalDocument> all = (ArrayList<ExternalDocument>) hibernateTemplate.find("from ExternalDocument");
 //        assertEquals(externalDocumentList.size()-1, all.size());
 //        assertFalse(all.contains(externalDocument));
-    }
-
-    public void setProcessDao(ProcessDao processDao) {
-        this.processDao = processDao;
-    }
-
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
     }
 
 }

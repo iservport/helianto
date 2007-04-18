@@ -8,6 +8,12 @@
 				value="%p --- %C{1}.%M(%L) | %m%n"/>
 		</layout>
 	</appender>
+	<logger name="org.springframework">
+		<level value="ERROR"/>
+	</logger>
+	<logger name="org.hibernate">
+		<level value="ERROR"/>
+	</logger>
 	<logger name="org.helianto.core">
 		<level value="ERROR"/>
 	</logger>

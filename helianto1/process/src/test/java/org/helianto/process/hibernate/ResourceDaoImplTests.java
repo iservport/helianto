@@ -26,23 +26,8 @@ import org.helianto.process.test.ResourceTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class ResourceDaoImplTests  extends AbstractIntegrationTest {
+public class ResourceDaoImplTests  extends AbstractProcesssIntegrationTest {
     
-    private ResourceDao resourceDao;
-    private HibernateTemplate hibernateTemplate;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.partner.xml",
-                "deploy/process.xml"
-                };
-    }
-
     /*
      * ResourceGroup tests 
      */
@@ -180,13 +165,5 @@ public class ResourceDaoImplTests  extends AbstractIntegrationTest {
     }
 
     // collaborators
-
-    public void setResourceDao(ResourceDao resourceDao) {
-        this.resourceDao = resourceDao;
-    }
-
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
-    }
 
 }
