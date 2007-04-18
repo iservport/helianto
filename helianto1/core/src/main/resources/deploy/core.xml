@@ -18,25 +18,6 @@
 <beans default-init-method="init">
 
 	<!--
-			imports 	
-	-->
-	<import resource="classpath:/deploy/dataSource.xml"/>
-	<import resource="classpath:/deploy/support.xml"/>
-	<!--
-			Operator dao implementation	
-	-->
-	<bean id="operatorDao" 
-		class="org.helianto.core.hibernate.OperatorDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
-			Province dao implementation	
-	-->
-	<bean id="provinceDao" 
-		class="org.helianto.core.hibernate.ProvinceDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
 			Authentication dao implementation	
 	-->
 	<bean id="authenticationDao" 
@@ -55,12 +36,6 @@
 	-->
 	<bean id="entityDao" 
 		class="org.helianto.core.hibernate.EntityDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
-			unit dao	
-	-->
-	<bean id="unitDao" class="org.helianto.core.orm.UnitDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--

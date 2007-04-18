@@ -19,12 +19,4 @@
 		<finalName>helianto-core</finalName>
 	</build>
 
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>helianto-domain</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
-
 </project>

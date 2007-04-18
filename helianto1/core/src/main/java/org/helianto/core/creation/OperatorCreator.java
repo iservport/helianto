@@ -23,7 +23,6 @@ import org.helianto.core.Encription;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Individual;
-import org.helianto.core.KeyType;
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Organization;
@@ -206,25 +205,6 @@ public class OperatorCreator extends CreatorSupport {
         individual.setIdentity(requiredIentity);
         
         return individual;
-    }
-
-    /**
-     * Default <code>KeyType</code> creator.
-     * 
-     * @param requiredOperator
-     * @param keyCode
-     */
-    public static KeyType keyTypeFactory(Operator requiredOperator, String keyCode) {
-        assertNotNull(requiredOperator);
-        KeyType keyType = new KeyType();
-        
-        keyType.setOperator(requiredOperator);
-        keyType.setKeyCode(keyCode);
-        keyType.setPurpose("");
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created: "+keyType);
-        }
-        return keyType;
     }
 
 }

@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
-import org.helianto.core.KeyType;
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
@@ -72,50 +71,6 @@ public class OperatorTestSupport extends AbstractHibernateIntegrationTest {
         hibernateTemplate.flush();
         hibernateTemplate.clear();
         return operatorList;
-    }
-    
-    /*
-     * KeyType tests 
-     */
-    
-    public static KeyType createKeyType(Object... args) {
-        Operator operator;
-        try {
-            operator = (Operator) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            operator = createOperator();
-        }
-        KeyType keyType = OperatorCreator.keyTypeFactory(operator, generateKey(20, testKey++));
-        return keyType;
-    }
-
-    public static KeyType createAndPersistKeyType(OperatorDao operatorDao) {
-        KeyType keyType = createKeyType();
-        if (operatorDao!=null) {
-            operatorDao.persistKeyType(keyType);
-        }
-        return keyType;
-    }
-
-    public static List<KeyType> createKeyTypeList(int size, int operatorListSize) {
-        List<Operator> operatorList = createOperatorList(operatorListSize);
-        List<KeyType> keyTypeList = new ArrayList<KeyType>();
-        for (Operator x: operatorList) {
-            for (int i=0;i<size;i++) {
-                keyTypeList.add(createKeyType(x));
-            }
-        }
-        return keyTypeList;
-    }
-
-    public static List<KeyType> createAndPersistKeyTypeList(HibernateTemplate hibernateTemplate, int i, int o) {
-        List<KeyType> keyTypeList = createKeyTypeList(i, o);
-        for (KeyType k: keyTypeList) {
-            hibernateTemplate.merge(k);
-        }
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return keyTypeList;
     }
     
     /*

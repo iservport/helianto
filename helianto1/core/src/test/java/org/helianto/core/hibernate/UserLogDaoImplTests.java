@@ -24,6 +24,8 @@ public class UserLogDaoImplTests extends AbstractIntegrationTest {
                 "deploy/dataSource.xml",
                 "deploy/sessionFactory.xml",
                 "deploy/transaction.xml",
+                "deploy/support.xml",
+                "deploy/org.helianto.core.xml",
                 "deploy/core.xml"
                 };
     }

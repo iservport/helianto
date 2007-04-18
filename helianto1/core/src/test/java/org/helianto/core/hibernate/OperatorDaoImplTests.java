@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.ActivityState;
-import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
@@ -105,68 +104,6 @@ public class OperatorDaoImplTests extends OperatorTestSupport {
         List<Operator> all = (ArrayList<Operator>) hibernateTemplate.find("from Operator");
         assertEquals(i-1, all.size());
         assertFalse(all.contains(operator));
-    }
-
-    /*
-     * Operator
-     */
-
-    public void testPersistKeyType() {
-        //write
-        KeyType keyType = createAndPersistKeyType(operatorDao);
-        hibernateTemplate.flush();
-        //read
-        assertEquals(keyType,  operatorDao.findKeyTypeByNaturalId(keyType.getOperator(), keyType.getKeyCode()));
-    }
-    
-    public void testFindKeyType() {
-        // write list
-        int i = 10;
-        int o = 2;
-        List<KeyType> keyTypeList = createAndPersistKeyTypeList(hibernateTemplate, i, o);
-        assertEquals(i*o, keyTypeList.size());
-        // read
-        KeyType keyType = keyTypeList.get((int) Math.random()*i*o);
-        assertEquals(keyType,  operatorDao.findKeyTypeByNaturalId(keyType.getOperator(), keyType.getKeyCode()));
-    }
-
-    public void testKeyTypeErrors() {
-        try {
-             operatorDao.persistKeyType(null); fail();
-        } catch (IllegalArgumentException e) { 
-        } catch (Exception e) { fail(); }
-        try {
-             operatorDao.removeKeyType(null); fail();
-        } catch (IllegalArgumentException e) { 
-        } catch (Exception e) { fail(); }
-    }
-
-    public void testKeyTypeDuplicate() {
-        // write
-        KeyType keyType = createAndPersistKeyType( operatorDao);
-        hibernateTemplate.clear();
-        // duplicate
-        try {
-            hibernateTemplate.save(keyType); fail();
-        } catch (DataIntegrityViolationException e) { 
-        } catch (Exception e) { fail(); }
-    }
-    
-    public void testRemoveKeyType() {
-        // bulk write
-        int i = 10;
-        int o = 2;
-        List<KeyType> keyTypeList = createAndPersistKeyTypeList(hibernateTemplate, i, o);
-        assertEquals(i*o, keyTypeList.size());
-        // remove
-        KeyType keyType = keyTypeList.get((int) Math.random()*i*o);
-        operatorDao.removeKeyType(keyType);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        // read
-        List<KeyType> all = (ArrayList<KeyType>) hibernateTemplate.find("from KeyType");
-        assertEquals(i*o-1, all.size());
-        assertFalse(all.contains(keyType));
     }
 
     /*

@@ -25,7 +25,6 @@ import org.helianto.core.Encription;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Individual;
-import org.helianto.core.KeyType;
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Organization;
@@ -151,18 +150,6 @@ public class OperatorCreatorTests extends TestCase {
     }
 
     /*
-     * Test method for 'org.helianto.core.creation.BaseCreator.keyTypeFactory(Operator, String)'
-     */
-    public void testKeyTypeFactory() {
-        Operator operator = new Operator();
-        KeyType keyType = OperatorCreator.keyTypeFactory(operator, "CODE");
-        
-        assertSame(operator, keyType.getOperator());
-        assertEquals("CODE", keyType.getKeyCode());
-        assertEquals("", keyType.getPurpose());
-    }
-
-    /*
      * Assertion errors
      */
     public void testErrors() {
@@ -192,10 +179,6 @@ public class OperatorCreatorTests extends TestCase {
         } catch (Exception e) { fail(); }
         try {
             OperatorCreator.individualFactory(new Operator(), null); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            OperatorCreator.keyTypeFactory(null, ""); fail();
         } catch (IllegalArgumentException e) {
         } catch (Exception e) { fail(); }
     }

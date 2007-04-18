@@ -9,6 +9,7 @@
 		<mapping class="org.helianto.core.UserRole" />
 		<mapping class="org.helianto.core.UserLog" />
 		<mapping class="org.helianto.core.Unit" />
+		<mapping class="org.helianto.core.KeyType" />
 	</session-factory>
 </hibernate-configuration>
 
