@@ -24,9 +24,9 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.ActivityState;
 import org.helianto.core.Server;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.ServerType;
+import org.helianto.core.ServerType;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 

@@ -19,12 +19,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
 import org.helianto.core.dao.OperatorDao;
-import org.helianto.core.type.ActivityState;
 
 public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
     

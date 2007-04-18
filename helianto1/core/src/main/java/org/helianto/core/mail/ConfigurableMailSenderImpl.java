@@ -17,8 +17,8 @@ package org.helianto.core.mail;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.ActivityState;
 import org.helianto.core.Server;
-import org.helianto.core.type.ActivityState;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;

@@ -17,11 +17,11 @@ package org.helianto.core.mail;
 
 import java.util.List;
 
+import org.helianto.core.ActivityState;
+import org.helianto.core.Encription;
 import org.helianto.core.Server;
+import org.helianto.core.ServerType;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.Encription;
-import org.helianto.core.type.ServerType;
 
 import junit.framework.TestCase;
 

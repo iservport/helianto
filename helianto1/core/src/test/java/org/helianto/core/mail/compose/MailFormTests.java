@@ -24,10 +24,10 @@ import javax.mail.MessagingException;
 import junit.framework.TestCase;
 
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.core.type.IdentityType;
 
 public class MailFormTests extends TestCase {
     

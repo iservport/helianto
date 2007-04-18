@@ -17,12 +17,12 @@ package org.helianto.core.dao;
 
 import java.util.List;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
+import org.helianto.core.ServerType;
 import org.helianto.core.Service;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.ServerType;
 
 /**
  * <code>Operator</code> data access interface.

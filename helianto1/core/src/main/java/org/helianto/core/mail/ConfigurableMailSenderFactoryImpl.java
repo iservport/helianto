@@ -20,7 +20,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Server;
-import org.helianto.core.type.ServerType;
+import org.helianto.core.ServerType;
 
 /**
  * Default inplementation for <code>ConfigurableMailSenderFactory</code>.

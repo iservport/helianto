@@ -18,7 +18,6 @@ package org.helianto.core;
 import java.util.Date;
 
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.core.type.UserEventType;
 
 import junit.framework.TestCase;
 

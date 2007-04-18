@@ -17,12 +17,12 @@ package org.helianto.core.service;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.service.ServerMgr;
-import org.helianto.core.type.OperationMode;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 
 public class CreateManagerTest extends AbstractTransactionalSpringContextTests {

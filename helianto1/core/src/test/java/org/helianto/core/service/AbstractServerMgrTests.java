@@ -31,6 +31,8 @@ import junit.framework.TestCase;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityType;
+import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
@@ -40,8 +42,6 @@ import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.test.AuthorizationTestSupport;
-import org.helianto.core.type.IdentityType;
-import org.helianto.core.type.OperationMode;
 
 public class AbstractServerMgrTests extends TestCase {
 

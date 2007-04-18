@@ -18,18 +18,18 @@ package org.helianto.core.creation;
 import java.util.Date;
 import java.util.HashSet;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.PrivacyLevel;
 import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
+import org.helianto.core.UserEventType;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.PrivacyLevel;
-import org.helianto.core.type.UserEventType;
-import org.helianto.core.type.UserType;
+import org.helianto.core.UserType;
 
 /**
  * Authorization required classes factory methods.

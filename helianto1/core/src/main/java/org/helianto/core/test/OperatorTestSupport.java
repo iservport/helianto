@@ -19,16 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.KeyType;
+import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
+import org.helianto.core.ServerType;
 import org.helianto.core.Service;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.OperationMode;
-import org.helianto.core.type.ServerType;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class OperatorTestSupport extends AbstractHibernateIntegrationTest {

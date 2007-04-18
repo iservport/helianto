@@ -15,10 +15,10 @@
 
 package org.helianto.core.mail;
 
+import org.helianto.core.ActivityState;
+import org.helianto.core.Encription;
 import org.helianto.core.Server;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.Encription;
 
 import junit.framework.TestCase;
 

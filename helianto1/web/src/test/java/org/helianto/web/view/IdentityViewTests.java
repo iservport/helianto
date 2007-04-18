@@ -17,8 +17,8 @@ package org.helianto.web.view;
 
 import java.io.IOException;
 
+import org.helianto.core.IdentityType;
 import org.helianto.core.test.AuthenticationTestSupport;
-import org.helianto.core.type.IdentityType;
 import org.helianto.web.test.FreeMarkerViewTestSupport;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;

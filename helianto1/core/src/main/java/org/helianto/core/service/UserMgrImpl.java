@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
@@ -13,7 +14,6 @@ import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.hibernate.filter.IdentityFilter;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
-import org.helianto.core.type.ActivityState;
 
 /**
  * Default <code>UserMgr</code> implementation.

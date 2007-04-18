@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
+import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.UserType;
+import org.helianto.core.UserType;
 
 /**
  * A class compatible to an anonymous <code>UserDetails</code> implementation.

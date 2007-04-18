@@ -18,13 +18,13 @@ package org.helianto.core.hibernate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.core.type.ActivityState;
 import org.springframework.dao.DataIntegrityViolationException;
 
 public class OperatorDaoImplTests extends OperatorTestSupport {

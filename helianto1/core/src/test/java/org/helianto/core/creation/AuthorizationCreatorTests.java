@@ -19,16 +19,16 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
+import org.helianto.core.UserEventType;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.UserEventType;
 
 /**
  * 

@@ -2,13 +2,13 @@ package org.helianto.core.service;
 
 import java.util.Date;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
-import org.helianto.core.type.ActivityState;
 import org.springframework.util.Assert;
 
 public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {

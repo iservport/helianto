@@ -19,9 +19,9 @@ import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.User;
-import org.helianto.core.type.ActivityState;
 import org.springframework.util.Assert;
 
 /**

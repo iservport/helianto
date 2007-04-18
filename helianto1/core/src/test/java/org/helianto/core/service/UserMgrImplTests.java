@@ -27,6 +27,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
@@ -38,7 +39,6 @@ import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.hibernate.filter.IdentityFilter;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.AuthorizationTestSupport;
-import org.helianto.core.type.ActivityState;
 
 public class UserMgrImplTests extends TestCase {
     

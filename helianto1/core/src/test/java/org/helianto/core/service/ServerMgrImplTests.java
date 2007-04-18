@@ -29,6 +29,7 @@ import javax.mail.MessagingException;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.dao.OperatorDao;
@@ -38,7 +39,6 @@ import org.helianto.core.mail.compose.DecoratedPreparator;
 import org.helianto.core.mail.compose.MailMessageComposer;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.mail.compose.PasswordConfirmationMailMessageDecorator;
-import org.helianto.core.type.OperationMode;
 
 public class ServerMgrImplTests extends TestCase {
     

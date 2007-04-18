@@ -19,20 +19,20 @@ import java.util.Locale;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
+import org.helianto.core.Encription;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Individual;
 import org.helianto.core.KeyType;
+import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Organization;
 import org.helianto.core.Province;
 import org.helianto.core.Server;
+import org.helianto.core.ServerType;
 import org.helianto.core.Service;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.Encription;
-import org.helianto.core.type.OperationMode;
-import org.helianto.core.type.ServerType;
 
 public class OperatorCreatorTests extends TestCase {
 

@@ -28,6 +28,7 @@ import junit.framework.TestCase;
 
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.TestingAuthenticationToken;
+import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
@@ -36,7 +37,6 @@ import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.test.SecurityTestSupport;
-import org.helianto.core.type.ActivityState;
 
 public class SecurityMgrImplTests extends TestCase {
 

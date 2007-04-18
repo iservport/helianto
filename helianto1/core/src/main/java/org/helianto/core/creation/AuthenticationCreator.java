@@ -17,17 +17,17 @@ package org.helianto.core.creation;
 
 import java.util.HashSet;
 
+import org.helianto.core.ActivityState;
+import org.helianto.core.Appellation;
 import org.helianto.core.Credential;
+import org.helianto.core.Encription;
+import org.helianto.core.Gender;
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityType;
+import org.helianto.core.Notification;
 import org.helianto.core.PersonalData;
 import org.helianto.core.PrivateKey;
 import org.helianto.core.UserGroup;
-import org.helianto.core.type.Appellation;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.Encription;
-import org.helianto.core.type.Gender;
-import org.helianto.core.type.IdentityType;
-import org.helianto.core.type.Notification;
 
 /**
  * Authentication required classes factory methods.

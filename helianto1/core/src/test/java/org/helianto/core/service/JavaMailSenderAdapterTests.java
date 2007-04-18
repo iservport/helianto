@@ -44,17 +44,17 @@ import javax.mail.internet.MimeMultipart;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.ActivityState;
+import org.helianto.core.Encription;
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityType;
 import org.helianto.core.Server;
+import org.helianto.core.ServerType;
 import org.helianto.core.mail.JavaMailSenderAdapter;
 import org.helianto.core.mail.MockJavaMailSender;
 import org.helianto.core.mail.ServerUtilsTemplate;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.core.type.ActivityState;
-import org.helianto.core.type.Encription;
-import org.helianto.core.type.IdentityType;
-import org.helianto.core.type.ServerType;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 public class JavaMailSenderAdapterTests extends TestCase {
