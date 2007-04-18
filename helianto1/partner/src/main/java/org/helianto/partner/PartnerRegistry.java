@@ -40,10 +40,10 @@ import org.helianto.core.Entity;
  * @author Willian Tezza
  */
 @javax.persistence.Entity
-@Table(name="prtnr_partnerassoc",
+@Table(name="prtnr_registry",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "partnerAlias"})}
 )
-public class PartnerAssociation implements java.io.Serializable {
+public class PartnerRegistry implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -54,7 +54,7 @@ public class PartnerAssociation implements java.io.Serializable {
     private Set<Address> addresses = new HashSet<Address>(0);
 
     /** default constructor */
-    public PartnerAssociation() {
+    public PartnerRegistry() {
     }
 
     // Property accessors
@@ -123,7 +123,7 @@ public class PartnerAssociation implements java.io.Serializable {
     /**
      * Partners getter.
      */
-    @OneToMany(mappedBy="partnerAssociation")
+    @OneToMany(mappedBy="partnerRegistry")
     public Set<Partner> getPartners() {
         return this.partners;
     }
@@ -137,7 +137,7 @@ public class PartnerAssociation implements java.io.Serializable {
     /**
      * Addresses getter.
      */
-    @OneToMany(mappedBy="partnerAssociation")
+    @OneToMany(mappedBy="partnerRegistry")
     public Set<Address> getAddresses() {
         return this.addresses;
     }
@@ -154,19 +154,19 @@ public class PartnerAssociation implements java.io.Serializable {
      * @param entity
      * @param partnerAlias
      */
-    public static PartnerAssociation partnerAssociationFactory(Entity entity, String partnerAlias) {
-        PartnerAssociation partnerAssociation = new PartnerAssociation();
-        partnerAssociation.setEntity(entity);
-        partnerAssociation.setPartnerAlias(partnerAlias);
-        return partnerAssociation;
+    public static PartnerRegistry partnerAssociationFactory(Entity entity, String partnerAlias) {
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        partnerRegistry.setEntity(entity);
+        partnerRegistry.setPartnerAlias(partnerAlias);
+        return partnerRegistry;
     }
 
     /**
-     * <code>PartnerAssociation</code> natural id query.
+     * <code>PartnerRegistry</code> natural id query.
      */
     @Transient
     public static String getPartnerAssociationNaturalIdQueryString() {
-        return "select partnerAssociation from PartnerAssociation partnerAssociation where partnerAssociation.entity = ? and partnerAssociation.partnerAlias = ? ";
+        return "select partnerRegistry from PartnerRegistry partnerRegistry where partnerRegistry.entity = ? and partnerRegistry.partnerAlias = ? ";
     }
 
     /**
@@ -190,8 +190,8 @@ public class PartnerAssociation implements java.io.Serializable {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof PartnerAssociation) ) return false;
-         PartnerAssociation castOther = (PartnerAssociation) other; 
+         if ( !(other instanceof PartnerRegistry) ) return false;
+         PartnerRegistry castOther = (PartnerRegistry) other; 
          
          return ((this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ))
              && ((this.getPartnerAlias()==castOther.getPartnerAlias()) || ( this.getPartnerAlias()!=null && castOther.getPartnerAlias()!=null && this.getPartnerAlias().equals(castOther.getPartnerAlias()) ));

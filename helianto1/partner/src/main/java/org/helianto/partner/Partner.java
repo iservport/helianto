@@ -35,14 +35,14 @@ import javax.persistence.UniqueConstraint;
  */
 @javax.persistence.Entity
 @Table(name="prtnr_partner",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerAssociationId", "sequence"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "sequence"})}
 )
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Partner implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private PartnerAssociation partnerAssociation;
+    private PartnerRegistry partnerRegistry;
     private int sequence;
     private Account account;
     private char priority;
@@ -62,18 +62,18 @@ public class Partner implements java.io.Serializable {
     }
 
     /**
-     * PartnerAssociation getter.
+     * PartnerRegistry getter.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="partnerAssociationId", nullable=true)
-    public PartnerAssociation getPartnerAssociation() {
-        return this.partnerAssociation;
+    @JoinColumn(name="partnerRegistryId", nullable=true)
+    public PartnerRegistry getPartnerRegistry() {
+        return this.partnerRegistry;
     }
     /**
-     * PartnerAssociation setter.
+     * PartnerRegistry setter.
      */
-    public void setPartnerAssociation(PartnerAssociation partnerAssociation) {
-        this.partnerAssociation = partnerAssociation;
+    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
+        this.partnerRegistry = partnerRegistry;
     }
 
     /**
@@ -133,14 +133,14 @@ public class Partner implements java.io.Serializable {
     /**
      * <code>Partner</code> factory.
      * 
-     * @param partnerAssociation
+     * @param partnerRegistry
      * @param sequence
      */
-    public static Partner partnerFactory(PartnerAssociation partnerAssociation, int sequence) {
+    public static Partner partnerFactory(PartnerRegistry partnerRegistry, int sequence) {
         Partner partner = new Partner();
-        partner.setPartnerAssociation(partnerAssociation);
+        partner.setPartnerRegistry(partnerRegistry);
         partner.setSequence(sequence);
-        partnerAssociation.getPartners().add(partner);
+        partnerRegistry.getPartners().add(partner);
         return partner;
     }
 
@@ -149,7 +149,7 @@ public class Partner implements java.io.Serializable {
      */
     @Transient
     public static String getPartnerNaturalIdQueryString() {
-        return "select partner from Partner partner where partner.partnerAssociation = ? and partner.sequence = ? ";
+        return "select partner from Partner partner where partner.partnerRegistry = ? and partner.sequence = ? ";
     }
 
     /**
@@ -160,7 +160,7 @@ public class Partner implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("partnerAssociation").append("='").append(getPartnerAssociation()).append("' ");
+        buffer.append("partnerRegistry").append("='").append(getPartnerRegistry()).append("' ");
         buffer.append("sequence").append("='").append(getSequence()).append("' ");
         buffer.append("]");
       
@@ -176,7 +176,7 @@ public class Partner implements java.io.Serializable {
          if ( !(other instanceof Partner) ) return false;
          Partner castOther = (Partner) other; 
          
-         return ((this.getPartnerAssociation()==castOther.getPartnerAssociation()) || ( this.getPartnerAssociation()!=null && castOther.getPartnerAssociation()!=null && this.getPartnerAssociation().equals(castOther.getPartnerAssociation()) ))
+         return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ))
              && ((this.getSequence()==castOther.getSequence()));
    }
    
@@ -185,7 +185,7 @@ public class Partner implements java.io.Serializable {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getPartnerAssociation() == null ? 0 : this.getPartnerAssociation().hashCode() );
+         result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
          result = 37 * result + (int) this.getSequence();
          return result;
    }   

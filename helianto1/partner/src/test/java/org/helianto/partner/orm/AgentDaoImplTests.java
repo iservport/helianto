@@ -36,7 +36,7 @@ public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
     public void testFindOnePartner() {
     	Agent partner = writeAgent();
 
-        assertEquals(partner,  agentDao.findAgentByNaturalId(partner.getPartnerAssociation(), partner.getSequence()));
+        assertEquals(partner,  agentDao.findAgentByNaturalId(partner.getPartnerRegistry(), partner.getSequence()));
     }
     
     /*
@@ -62,7 +62,7 @@ public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
         List<Agent> agentList = writeAgentList();
 
         Agent agent = agentList.get((int) (Math.random()*agentList.size()));
-        assertEquals(agent,  agentDao.findAgentByNaturalId(agent.getPartnerAssociation(), agent.getSequence()));
+        assertEquals(agent,  agentDao.findAgentByNaturalId(agent.getPartnerRegistry(), agent.getSequence()));
     }
 
     /**
@@ -70,7 +70,7 @@ public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     public void testAgentDuplicate() {
         Agent agent =  writeAgent();
-        Agent agentCopy = AgentTestSupport.createAgent(agent.getPartnerAssociation(), agent.getSequence());
+        Agent agentCopy = AgentTestSupport.createAgent(agent.getPartnerRegistry(), agent.getSequence());
 
         try {
             partnerDao.mergePartner(agentCopy); fail();
@@ -86,7 +86,7 @@ public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
         Agent agent = agentList.get((int) (Math.random()*agentList.size()));
         partnerDao.removePartner(agent);
 
-        assertNull(agentDao.findAgentByNaturalId(agent.getPartnerAssociation(), agent.getSequence()));
+        assertNull(agentDao.findAgentByNaturalId(agent.getPartnerRegistry(), agent.getSequence()));
     }
 
     //- setters

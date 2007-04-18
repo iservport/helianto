@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Address;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * Class to support <code>AddressDao</code> tests.
@@ -18,13 +18,13 @@ public class AddressTestSupport {
 
     /**
      * Test support method to create a <code>Address</code>.
-     * @param partnerAssociation optional PartnerAssociation 
+     * @param partnerRegistry optional PartnerRegistry 
      * @param sequence optional int 
      */
     public static Address createAddress(Object... args) {
-        PartnerAssociation partnerAssociation;
+        PartnerRegistry partnerAssociation;
         try {
-            partnerAssociation = (PartnerAssociation) args[0];
+            partnerAssociation = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
             partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
         }
@@ -54,7 +54,7 @@ public class AddressTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Address> createAddressList(int addressListSize, int partnerAssociationListSize) {
-        List<PartnerAssociation> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
 
         return createAddressList(addressListSize, partnerAssociationList);
     }
@@ -65,11 +65,11 @@ public class AddressTestSupport {
      * @param addressListSize
      * @param partnerAssociationList
      */
-    public static List<Address> createAddressList(int addressListSize, List<PartnerAssociation> partnerAssociationList) {
+    public static List<Address> createAddressList(int addressListSize, List<PartnerRegistry> partnerAssociationList) {
         List<Address> addressList = new ArrayList<Address>();
-        for (PartnerAssociation partnerAssociation: partnerAssociationList) {
+        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
 	        for (int i=0;i<addressListSize;i++) {
-    	        addressList.add(createAddress(partnerAssociation));
+    	        addressList.add(createAddress(partnerRegistry));
         	}
         }
         return addressList;

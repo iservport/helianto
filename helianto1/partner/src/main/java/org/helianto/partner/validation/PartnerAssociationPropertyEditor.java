@@ -16,7 +16,7 @@ package org.helianto.partner.validation;
 
 import org.helianto.core.validate.AbstractLoaderPropertyEditor;
 import org.helianto.core.validate.PropertyLoader;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * Default <code>PropertyLoader</code> backed <code>PartnerAssociation</code>
@@ -33,13 +33,13 @@ public class PartnerAssociationPropertyEditor extends
 
 	@Override
 	public String getAsText() {
-		return String.valueOf(((PartnerAssociation) getValue())
+		return String.valueOf(((PartnerRegistry) getValue())
 				.getPartnerAlias());
 	}
 
 	@Override
 	public void setAsText(String id) throws IllegalArgumentException {
-		setAsText(id, PartnerAssociation.class);
+		setAsText(id, PartnerRegistry.class);
 	}
 
 }

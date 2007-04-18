@@ -17,7 +17,7 @@ package org.helianto.partner.orm;
 
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Contact;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.ContactDao;
 
 /**
@@ -48,11 +48,11 @@ public class ContactDaoImpl extends GenericDaoImpl implements ContactDao {
         remove(contact);
     }
     
-    public Contact findContactByNaturalId(PartnerAssociation partnerAssociation, int sequence) {
+    public Contact findContactByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique contact with partnerAssociation='"+partnerAssociation+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique contact with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
         }
-        return (Contact) findUnique(Contact.getAddressNaturalIdQueryString(), partnerAssociation, sequence);
+        return (Contact) findUnique(Contact.getAddressNaturalIdQueryString(), partnerRegistry, sequence);
     }
     
     

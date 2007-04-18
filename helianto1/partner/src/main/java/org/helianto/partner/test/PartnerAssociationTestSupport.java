@@ -7,7 +7,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * Class to support <code>PartnerAssociationDao</code> tests.
@@ -23,7 +23,7 @@ public class PartnerAssociationTestSupport {
      * @param entity optional Entity 
      * @param partnerAlias optional String 
      */
-    public static PartnerAssociation createPartnerAssociation(Object... args) {
+    public static PartnerRegistry createPartnerAssociation(Object... args) {
         Entity entity;
         try {
             entity = (Entity) args[0];
@@ -36,8 +36,8 @@ String partnerAlias;
         } catch(ArrayIndexOutOfBoundsException e) {
             partnerAlias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
         }
-        PartnerAssociation partnerAssociation = PartnerAssociation.partnerAssociationFactory(entity, partnerAlias);
-        return partnerAssociation;
+        PartnerRegistry partnerRegistry = PartnerRegistry.partnerAssociationFactory(entity, partnerAlias);
+        return partnerRegistry;
     }
 
     /**
@@ -45,7 +45,7 @@ String partnerAlias;
      *
      * @param partnerAssociationListSize
      */
-    public static List<PartnerAssociation> createPartnerAssociationList(int partnerAssociationListSize) {
+    public static List<PartnerRegistry> createPartnerAssociationList(int partnerAssociationListSize) {
         return createPartnerAssociationList(partnerAssociationListSize, 1);
     }
 
@@ -55,7 +55,7 @@ String partnerAlias;
      * @param partnerAssociationListSize
      * @param entityListSize
      */
-    public static List<PartnerAssociation> createPartnerAssociationList(int partnerAssociationListSize, int entityListSize) {
+    public static List<PartnerRegistry> createPartnerAssociationList(int partnerAssociationListSize, int entityListSize) {
         List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
 
         return createPartnerAssociationList(partnerAssociationListSize, entityList);
@@ -67,8 +67,8 @@ String partnerAlias;
      * @param partnerAssociationListSize
      * @param entityList
      */
-    public static List<PartnerAssociation> createPartnerAssociationList(int partnerAssociationListSize, List<Entity> entityList) {
-        List<PartnerAssociation> partnerAssociationList = new ArrayList<PartnerAssociation>();
+    public static List<PartnerRegistry> createPartnerAssociationList(int partnerAssociationListSize, List<Entity> entityList) {
+        List<PartnerRegistry> partnerAssociationList = new ArrayList<PartnerRegistry>();
         for (Entity entity: entityList) {
 	        for (int i=0;i<partnerAssociationListSize;i++) {
     	        partnerAssociationList.add(createPartnerAssociation(entity));

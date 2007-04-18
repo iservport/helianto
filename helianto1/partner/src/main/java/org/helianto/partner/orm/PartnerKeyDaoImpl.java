@@ -17,7 +17,7 @@ package org.helianto.partner.orm;
 
 import org.helianto.core.KeyType;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.dao.PartnerKeyDao;
 
@@ -49,16 +49,16 @@ public class PartnerKeyDaoImpl extends GenericDaoImpl implements PartnerKeyDao {
         remove(partnerKey);
     }
     
-    public PartnerKey findPartnerKeyByNaturalId(PartnerAssociation partnerAssociation, KeyType keyType) {
+    public PartnerKey findPartnerKeyByNaturalId(PartnerRegistry partnerRegistry, KeyType keyType) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique partnerKey with partnerAssociation='"+partnerAssociation+"' and keyType='"+keyType+"' ");
+            logger.debug("Finding unique partnerKey with partnerRegistry='"+partnerRegistry+"' and keyType='"+keyType+"' ");
         }
-        return (PartnerKey) findUnique(PartnerKey.getPartnerKeyNaturalIdQueryString(), partnerAssociation, keyType);
+        return (PartnerKey) findUnique(PartnerKey.getPartnerKeyNaturalIdQueryString(), partnerRegistry, keyType);
     }
     
     
 	static String PARTNERKEY_ENTITY_QRY = "select partnerKey from PartnerKey partnerKey "+
-	    "where partnerKey.entity = :entity ";
+	    "where partnerKey.entity = ? ";
 
 
 }

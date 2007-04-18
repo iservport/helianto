@@ -105,14 +105,14 @@ public class Contact extends Address {
      * 
      * @param identity
      */
-    public static Contact contactFactory(PartnerAssociation partnerAssociation, int sequence, Identity identity) {
+    public static Contact contactFactory(PartnerRegistry partnerRegistry, int sequence, Identity identity) {
         Contact contact = new Contact();
-        contact.setPartnerAssociation(partnerAssociation);
+        contact.setPartnerRegistry(partnerRegistry);
         contact.setSequence(sequence);
         contact.setAddressType(AddressType.PERSONAL.getValue());
         contact.setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
         contact.setIdentity(identity);
-        partnerAssociation.getAddresses().add(contact);
+        partnerRegistry.getAddresses().add(contact);
         return contact;
     }
 
@@ -121,7 +121,7 @@ public class Contact extends Address {
      */
     @Transient
     public static String getContactNaturalIdQueryString() {
-        return "select contact from Contact contact where contact.partnerAssociation = ? and contact.sequence = ? ";
+        return "select contact from Contact contact where contact.partnerRegistry = ? and contact.sequence = ? ";
     }
 
 }

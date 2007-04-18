@@ -35,7 +35,7 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
     public void testFindOnePartner() {
         Partner partner = writePartner();
 
-        assertEquals(partner,  partnerDao.findPartnerByNaturalId(partner.getPartnerAssociation(), partner.getSequence()));
+        assertEquals(partner,  partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry(), partner.getSequence()));
     }
     
     /*
@@ -61,7 +61,7 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
         List<Partner> partnerList = writePartnerList();
 
         Partner partner = partnerList.get((int) (Math.random()*partnerList.size()));
-        assertEquals(partner,  partnerDao.findPartnerByNaturalId(partner.getPartnerAssociation(), partner.getSequence()));
+        assertEquals(partner,  partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry(), partner.getSequence()));
     }
 
     /**
@@ -69,7 +69,7 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     public void testPartnerDuplicate() {
         Partner partner =  writePartner();
-        Partner partnerCopy = PartnerTestSupport.createPartner(partner.getPartnerAssociation(), partner.getSequence());
+        Partner partnerCopy = PartnerTestSupport.createPartner(partner.getPartnerRegistry(), partner.getSequence());
 
         try {
             partnerDao.mergePartner(partnerCopy); fail();
@@ -85,7 +85,7 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
         Partner partner = partnerList.get((int) (Math.random()*partnerList.size()));
         partnerDao.removePartner(partner);
 
-        assertNull(partnerDao.findPartnerByNaturalId(partner.getPartnerAssociation(), partner.getSequence()));
+        assertNull(partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry(), partner.getSequence()));
     }
 
     /**
@@ -93,13 +93,13 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
      */
     public void testAccountAssociation() {
         Partner partner = PartnerTestSupport.createPartner();
-        Account account = AccountTestSupport.createAccount(partner.getPartnerAssociation().getEntity());
+        Account account = AccountTestSupport.createAccount(partner.getPartnerRegistry().getEntity());
         partner.setAccount(account);
         partnerDao.persistPartner(partner);
         partnerDao.flush();
         partnerDao.clear();
         
-        Partner loadedPartner = partnerDao.findPartnerByNaturalId(partner.getPartnerAssociation(), partner.getSequence());
+        Partner loadedPartner = partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry(), partner.getSequence());
         assertEquals(partner,  loadedPartner);
         assertEquals(account, loadedPartner.getAccount());
     }

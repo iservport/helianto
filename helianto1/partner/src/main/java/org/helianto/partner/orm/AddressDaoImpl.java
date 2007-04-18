@@ -17,7 +17,7 @@ package org.helianto.partner.orm;
 
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Address;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.AddressDao;
 
 /**
@@ -48,16 +48,16 @@ public class AddressDaoImpl extends GenericDaoImpl implements AddressDao {
         remove(address);
     }
     
-    public Address findAddressByNaturalId(PartnerAssociation partnerAssociation, int sequence) {
+    public Address findAddressByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique address with partnerAssociation='"+partnerAssociation+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique address with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
         }
-        return (Address) findUnique(Address.getAddressNaturalIdQueryString(), partnerAssociation, sequence);
+        return (Address) findUnique(Address.getAddressNaturalIdQueryString(), partnerRegistry, sequence);
     }
     
     
 	static String ADDRESS_ENTITY_QRY = "select address from Address address "+
-	    "where address.entity = :entity ";
+	    "where address.entity = ? ";
 
 
 }

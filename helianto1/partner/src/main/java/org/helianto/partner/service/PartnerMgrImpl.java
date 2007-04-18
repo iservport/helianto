@@ -22,13 +22,13 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.dao.ProvinceDao;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.AccountDao;
 import org.helianto.partner.dao.AddressDao;
 import org.helianto.partner.dao.AgentDao;
 import org.helianto.partner.dao.ContactDao;
 import org.helianto.partner.dao.CustomerDao;
-import org.helianto.partner.dao.PartnerAssociationDao;
+import org.helianto.partner.dao.PartnerRegistryDao;
 import org.helianto.partner.dao.PartnerAssociationFilterDao;
 import org.helianto.partner.dao.PartnerDao;
 import org.helianto.partner.dao.PartnerKeyDao;
@@ -45,7 +45,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private ProvinceDao provinceDao;
     private AddressDao addressDao;
     private ContactDao contactDao;
-    private PartnerAssociationDao partnerAssociationDao;
+    private PartnerRegistryDao partnerRegistryDao;
     private PartnerAssociationFilterDao partnerAssociationFilterDao;
     private PartnerDao partnerDao;
     private PartnerKeyDao partnerKeyDao;
@@ -59,17 +59,17 @@ public class PartnerMgrImpl implements PartnerMgr {
         return provinceDao.findProvinceByOperator(operator);
     }
 
-    public void writePartnerAssociation(PartnerAssociation partnerAssociation) {
+    public void writePartnerRegistry(PartnerRegistry partnerRegistry) {
         // TODO Auto-generated method stub
         
     }
 
-    public void removePartnerAssociation(PartnerAssociation partnerAssociation) {
+    public void removePartnerRegistry(PartnerRegistry partnerRegistry) {
         // TODO Auto-generated method stub
         
     }
 
-    public List<PartnerAssociation> findPartnerAssociation(String partnerAssociationSearchString) {
+    public List<PartnerRegistry> findPartnerRegistry(String partnerAssociationSearchString) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -94,8 +94,8 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void setCustomerDao(CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
-    public void setPartnerAssociationDao(PartnerAssociationDao partnerAssociationDao) {
-        this.partnerAssociationDao = partnerAssociationDao;
+    public void setPartnerRegistryDao(PartnerRegistryDao partnerRegistryDao) {
+        this.partnerRegistryDao = partnerRegistryDao;
     }
     public void setPartnerAssociationFilterDao(
             PartnerAssociationFilterDao partnerAssociationFilterDao) {
@@ -127,8 +127,8 @@ public class PartnerMgrImpl implements PartnerMgr {
         if (contactDao==null) {
             throw new IllegalArgumentException("ContactDao property required");
         }
-        if (partnerAssociationDao==null) {
-            throw new IllegalArgumentException("PartnerAssociationDao property required");
+        if (partnerRegistryDao==null) {
+            throw new IllegalArgumentException("PartnerRegistryDao property required");
         }
         if (partnerAssociationFilterDao==null) {
             throw new IllegalArgumentException("PartnerAssociationFilterDao property required");

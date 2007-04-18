@@ -15,14 +15,14 @@ public class AgentTests extends TestCase {
      * Test <code>Agent</code> static factory method.
      */
     public void testAgentFactory() {
-        PartnerAssociation partnerAssociation = new PartnerAssociation();
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Agent agent = Agent.agentFactory(partnerAssociation, sequence);
+        Agent agent = Agent.agentFactory(partnerRegistry, sequence);
         
-        assertSame(partnerAssociation, agent.getPartnerAssociation());
+        assertSame(partnerRegistry, agent.getPartnerRegistry());
         assertEquals(sequence, agent.getSequence());
-        assertTrue(partnerAssociation.getPartners().contains(agent));
+        assertTrue(partnerRegistry.getPartners().contains(agent));
         
     }
     

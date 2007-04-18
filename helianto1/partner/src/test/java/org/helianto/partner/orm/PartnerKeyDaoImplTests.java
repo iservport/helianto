@@ -33,7 +33,7 @@ public class PartnerKeyDaoImplTests extends AbstractPartnerDaoImplConfig {
     public void testFindOnePartnerKey() {
         PartnerKey partnerKey = writePartnerKey();
 
-        assertEquals(partnerKey,  partnerKeyDao.findPartnerKeyByNaturalId(partnerKey.getPartnerAssociation(), partnerKey.getKeyType()));
+        assertEquals(partnerKey,  partnerKeyDao.findPartnerKeyByNaturalId(partnerKey.getPartnerRegistry(), partnerKey.getKeyType()));
     }
     
     /*
@@ -59,7 +59,7 @@ public class PartnerKeyDaoImplTests extends AbstractPartnerDaoImplConfig {
         List<PartnerKey> partnerKeyList = writePartnerKeyList();
 
         PartnerKey partnerKey = partnerKeyList.get((int) (Math.random()*partnerKeyList.size()));
-        assertEquals(partnerKey,  partnerKeyDao.findPartnerKeyByNaturalId(partnerKey.getPartnerAssociation(), partnerKey.getKeyType()));
+        assertEquals(partnerKey,  partnerKeyDao.findPartnerKeyByNaturalId(partnerKey.getPartnerRegistry(), partnerKey.getKeyType()));
     }
 
     /**
@@ -67,7 +67,7 @@ public class PartnerKeyDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     public void testPartnerKeyDuplicate() {
         PartnerKey partnerKey =  writePartnerKey();
-        PartnerKey partnerKeyCopy = PartnerKeyTestSupport.createPartnerKey(partnerKey.getPartnerAssociation(), partnerKey.getKeyType());
+        PartnerKey partnerKeyCopy = PartnerKeyTestSupport.createPartnerKey(partnerKey.getPartnerRegistry(), partnerKey.getKeyType());
 
         try {
             partnerKeyDao.mergePartnerKey(partnerKeyCopy); fail();
@@ -83,7 +83,7 @@ public class PartnerKeyDaoImplTests extends AbstractPartnerDaoImplConfig {
         PartnerKey partnerKey = partnerKeyList.get((int) (Math.random()*partnerKeyList.size()));
         partnerKeyDao.removePartnerKey(partnerKey);
 
-        assertNull(partnerKeyDao.findPartnerKeyByNaturalId(partnerKey.getPartnerAssociation(), partnerKey.getKeyType()));
+        assertNull(partnerKeyDao.findPartnerKeyByNaturalId(partnerKey.getPartnerRegistry(), partnerKey.getKeyType()));
     }
 
     //- setters

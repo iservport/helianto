@@ -37,14 +37,14 @@ public class Customer extends Partner implements java.io.Serializable {
     /**
      * <code>Customer</code> factory.
      * 
-     * @param partnerAssociation
+     * @param partnerRegistry
      * @param sequence
      */
-    public static Customer customerFactory(PartnerAssociation partnerAssociation, int sequence) {
+    public static Customer customerFactory(PartnerRegistry partnerRegistry, int sequence) {
         Customer customer = new Customer();
-        customer.setPartnerAssociation(partnerAssociation);
+        customer.setPartnerRegistry(partnerRegistry);
         customer.setSequence(sequence);
-        partnerAssociation.getPartners().add(customer);
+        partnerRegistry.getPartners().add(customer);
         return customer;
     }
 
@@ -53,7 +53,7 @@ public class Customer extends Partner implements java.io.Serializable {
      */
     @Transient
     public static String getCustomerNaturalIdQueryString() {
-        return "select customer from Customer customer where customer.partnerAssociation = ? and customer.sequence = ? ";
+        return "select customer from Customer customer where customer.partnerRegistry = ? and customer.sequence = ? ";
     }
 }
 

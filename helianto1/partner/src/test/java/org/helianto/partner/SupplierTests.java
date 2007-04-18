@@ -4,7 +4,7 @@ import org.helianto.core.test.DomainTestSupport;
 
 import junit.framework.TestCase;
 
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.Supplier;
 
 /**
@@ -18,14 +18,14 @@ public class SupplierTests extends TestCase {
      * Test <code>Supplier</code> static factory method.
      */
     public void testSupplierFactory() {
-        PartnerAssociation partnerAssociation = new PartnerAssociation();
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Supplier supplier = Supplier.supplierFactory(partnerAssociation, sequence);
+        Supplier supplier = Supplier.supplierFactory(partnerRegistry, sequence);
         
-        assertSame(partnerAssociation, supplier.getPartnerAssociation());
+        assertSame(partnerRegistry, supplier.getPartnerRegistry());
         assertEquals(sequence, supplier.getSequence());
-        assertTrue(partnerAssociation.getPartners().contains(supplier));
+        assertTrue(partnerRegistry.getPartners().contains(supplier));
         
     }
     

@@ -17,7 +17,7 @@ package org.helianto.partner.orm;
 
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.PartnerDao;
 
 /**
@@ -48,16 +48,16 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
         remove(partner);
     }
     
-    public Partner findPartnerByNaturalId(PartnerAssociation partnerAssociation, int sequence) {
+    public Partner findPartnerByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique partner with partnerAssociation='"+partnerAssociation+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique partner with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
         }
-        return (Partner) findUnique(Partner.getPartnerNaturalIdQueryString(), partnerAssociation, sequence);
+        return (Partner) findUnique(Partner.getPartnerNaturalIdQueryString(), partnerRegistry, sequence);
     }
     
     
 	static String PARTNER_ENTITY_QRY = "select partner from Partner partner "+
-	    "where partner.entity = :entity ";
+	    "where partner.entity = ? ";
 
 
 }

@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 import org.helianto.core.KeyType;
 
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerKey;
 
 /**
@@ -20,12 +20,12 @@ public class PartnerKeyTests extends TestCase {
      * Test <code>PartnerKey</code> static factory method.
      */
     public void testPartnerKeyFactory() {
-        PartnerAssociation partnerAssociation = new PartnerAssociation();
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
         KeyType keyType = new KeyType();
         
-        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partnerAssociation, keyType);
+        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partnerRegistry, keyType);
         
-        assertSame(partnerAssociation, partnerKey.getPartnerAssociation());
+        assertSame(partnerRegistry, partnerKey.getPartnerRegistry());
         assertSame(keyType, partnerKey.getKeyType());
         
     }
@@ -34,21 +34,21 @@ public class PartnerKeyTests extends TestCase {
      * Test <code>PartnerKey</code> equals() method.
      */
     public void testPartnerKeyEquals() {
-        PartnerAssociation partnerAssociation = new PartnerAssociation();
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
         KeyType keyType = new KeyType();
         
-        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partnerAssociation, keyType);
+        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partnerRegistry, keyType);
         PartnerKey copy = (PartnerKey) DomainTestSupport.minimalEqualsTest(partnerKey);
         
-        copy.setPartnerAssociation(null);
+        copy.setPartnerRegistry(null);
         copy.setKeyType(keyType);
         assertFalse(partnerKey.equals(copy));
 
-        copy.setPartnerAssociation(partnerAssociation);
+        copy.setPartnerRegistry(partnerRegistry);
         copy.setKeyType(null);
         assertFalse(partnerKey.equals(copy));
 
-        copy.setPartnerAssociation(partnerAssociation);
+        copy.setPartnerRegistry(partnerRegistry);
         copy.setKeyType(keyType);
 
         assertTrue(partnerKey.equals(copy));

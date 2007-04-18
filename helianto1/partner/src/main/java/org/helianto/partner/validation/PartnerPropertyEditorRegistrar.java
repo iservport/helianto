@@ -25,7 +25,7 @@ import org.helianto.partner.Agent;
 import org.helianto.partner.Contact;
 import org.helianto.partner.Customer;
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerAssociationFilter;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.Phone;
@@ -54,7 +54,7 @@ public class PartnerPropertyEditorRegistrar extends AbstractLoaderPropertyEditor
         if (logger.isDebugEnabled()) {
             logger.debug("Registering custom editor "+partnerAssociationPropertyEditor);
         }
-        registry.registerCustomEditor(PartnerAssociation.class, partnerAssociationPropertyEditor);
+        registry.registerCustomEditor(PartnerRegistry.class, partnerAssociationPropertyEditor);
         
         // partnerKey
         PropertyEditor partnerKeyPropertyEditor = new PartnerKeyPropertyEditor(getPropertyLoader());

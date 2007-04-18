@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
-import org.helianto.partner.PartnerAssociation;
-import org.helianto.partner.dao.PartnerAssociationDao;
+import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.dao.PartnerRegistryDao;
 import org.helianto.partner.test.PartnerAssociationTestSupport;
 
 /**
@@ -15,41 +15,41 @@ import org.helianto.partner.test.PartnerAssociationTestSupport;
  */
 public class PartnerAssociationDaoImplTests extends AbstractPartnerDaoImplConfig {
     
-    private PartnerAssociationDao partnerAssociationDao;
+    private PartnerRegistryDao partnerRegistryDao;
     
     /*
      * Hook to persist one <code>PartnerAssociation</code>.
      */  
-    protected PartnerAssociation writePartnerAssociation() {
-        PartnerAssociation partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
-        partnerAssociationDao.persistPartnerAssociation(partnerAssociation);
-        partnerAssociationDao.flush();
-        partnerAssociationDao.clear();
-        return partnerAssociation;
+    protected PartnerRegistry writePartnerAssociation() {
+        PartnerRegistry partnerRegistry = PartnerAssociationTestSupport.createPartnerAssociation();
+        partnerRegistryDao.persistPartnerRegistry(partnerRegistry);
+        partnerRegistryDao.flush();
+        partnerRegistryDao.clear();
+        return partnerRegistry;
     }
     
     /**
      * Find by natural id.
      */  
     public void testFindOnePartnerAssociation() {
-        PartnerAssociation partnerAssociation = writePartnerAssociation();
+        PartnerRegistry partnerRegistry = writePartnerAssociation();
 
-        assertEquals(partnerAssociation,  partnerAssociationDao.findPartnerAssociationByNaturalId(partnerAssociation.getEntity(), partnerAssociation.getPartnerAlias()));
+        assertEquals(partnerRegistry,  partnerRegistryDao.findPartnerRegistryByNaturalId(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias()));
     }
     
     /*
      * Hook to persist a <code>PartnerAssociation</code> list.
      */  
-    protected List<PartnerAssociation> writePartnerAssociationList() {
+    protected List<PartnerRegistry> writePartnerAssociationList() {
         int partnerAssociationListSize = 10;
         int entityListSize = 2;
-        List<PartnerAssociation> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize, entityListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize, entityListSize);
         assertEquals(partnerAssociationListSize * entityListSize, partnerAssociationList.size());
-        for (PartnerAssociation partnerAssociation: partnerAssociationList) {
-            partnerAssociationDao.persistPartnerAssociation(partnerAssociation);
+        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
+            partnerRegistryDao.persistPartnerRegistry(partnerRegistry);
         }
-        partnerAssociationDao.flush();
-        partnerAssociationDao.clear();
+        partnerRegistryDao.flush();
+        partnerRegistryDao.clear();
         return partnerAssociationList;
     }
     
@@ -57,21 +57,21 @@ public class PartnerAssociationDaoImplTests extends AbstractPartnerDaoImplConfig
      * Find from a list.
      */  
     public void testFindListPartnerAssociation() {
-        List<PartnerAssociation> partnerAssociationList = writePartnerAssociationList();
+        List<PartnerRegistry> partnerAssociationList = writePartnerAssociationList();
 
-        PartnerAssociation partnerAssociation = partnerAssociationList.get((int) (Math.random()*partnerAssociationList.size()));
-        assertEquals(partnerAssociation,  partnerAssociationDao.findPartnerAssociationByNaturalId(partnerAssociation.getEntity(), partnerAssociation.getPartnerAlias()));
+        PartnerRegistry partnerRegistry = partnerAssociationList.get((int) (Math.random()*partnerAssociationList.size()));
+        assertEquals(partnerRegistry,  partnerRegistryDao.findPartnerRegistryByNaturalId(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias()));
     }
 
     /**
      * Merge and duplicate.
      */  
     public void testPartnerAssociationDuplicate() {
-        PartnerAssociation partnerAssociation =  writePartnerAssociation();
-        PartnerAssociation partnerAssociationCopy = PartnerAssociationTestSupport.createPartnerAssociation(partnerAssociation.getEntity(), partnerAssociation.getPartnerAlias());
+        PartnerRegistry partnerRegistry =  writePartnerAssociation();
+        PartnerRegistry partnerRegistryCopy = PartnerAssociationTestSupport.createPartnerAssociation(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias());
 
         try {
-            partnerAssociationDao.mergePartnerAssociation(partnerAssociationCopy); fail();
+            partnerRegistryDao.mergePartnerRegistry(partnerRegistryCopy); fail();
         } catch (DataIntegrityViolationException e) { 
         } catch (Exception e) { fail(); }
     }
@@ -80,17 +80,17 @@ public class PartnerAssociationDaoImplTests extends AbstractPartnerDaoImplConfig
      * Remove.
      */  
     public void testRemovePartnerAssociation() {
-        List<PartnerAssociation> partnerAssociationList = writePartnerAssociationList();
-        PartnerAssociation partnerAssociation = partnerAssociationList.get((int) (Math.random()*partnerAssociationList.size()));
-        partnerAssociationDao.removePartnerAssociation(partnerAssociation);
+        List<PartnerRegistry> partnerAssociationList = writePartnerAssociationList();
+        PartnerRegistry partnerRegistry = partnerAssociationList.get((int) (Math.random()*partnerAssociationList.size()));
+        partnerRegistryDao.removePartnerRegistry(partnerRegistry);
 
-        assertNull(partnerAssociationDao.findPartnerAssociationByNaturalId(partnerAssociation.getEntity(), partnerAssociation.getPartnerAlias()));
+        assertNull(partnerRegistryDao.findPartnerRegistryByNaturalId(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias()));
     }
 
     //- setters
 
-    public void setPartnerAssociationDao(PartnerAssociationDao partnerAssociationDao) {
-        this.partnerAssociationDao = partnerAssociationDao;
+    public void setPartnerAssociationDao(PartnerRegistryDao partnerRegistryDao) {
+        this.partnerRegistryDao = partnerRegistryDao;
     }
     
 }

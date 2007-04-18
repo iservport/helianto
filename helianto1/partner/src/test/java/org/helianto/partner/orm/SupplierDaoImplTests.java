@@ -36,7 +36,7 @@ public class SupplierDaoImplTests extends AbstractPartnerDaoImplConfig {
     public void testFindOneSupplier() {
         Supplier supplier = writeSupplier();
 
-        assertEquals(supplier,  supplierDao.findSupplierByNaturalId(supplier.getPartnerAssociation(), supplier.getSequence()));
+        assertEquals(supplier,  supplierDao.findSupplierByNaturalId(supplier.getPartnerRegistry(), supplier.getSequence()));
     }
     
     /*
@@ -62,7 +62,7 @@ public class SupplierDaoImplTests extends AbstractPartnerDaoImplConfig {
         List<Supplier> supplierList = writeSupplierList();
 
         Supplier supplier = supplierList.get((int) (Math.random()*supplierList.size()));
-        assertEquals(supplier,  supplierDao.findSupplierByNaturalId(supplier.getPartnerAssociation(), supplier.getSequence()));
+        assertEquals(supplier,  supplierDao.findSupplierByNaturalId(supplier.getPartnerRegistry(), supplier.getSequence()));
     }
 
     /**
@@ -70,7 +70,7 @@ public class SupplierDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     public void testSupplierDuplicate() {
         Supplier supplier =  writeSupplier();
-        Supplier supplierCopy = SupplierTestSupport.createSupplier(supplier.getPartnerAssociation(), supplier.getSequence());
+        Supplier supplierCopy = SupplierTestSupport.createSupplier(supplier.getPartnerRegistry(), supplier.getSequence());
 
         try {
             partnerDao.mergePartner(supplierCopy); fail();
@@ -86,7 +86,7 @@ public class SupplierDaoImplTests extends AbstractPartnerDaoImplConfig {
         Supplier supplier = supplierList.get((int) (Math.random()*supplierList.size()));
         partnerDao.removePartner(supplier);
 
-        assertNull(supplierDao.findSupplierByNaturalId(supplier.getPartnerAssociation(), supplier.getSequence()));
+        assertNull(supplierDao.findSupplierByNaturalId(supplier.getPartnerRegistry(), supplier.getSequence()));
     }
 
     //- setters

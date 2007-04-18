@@ -17,7 +17,7 @@ package org.helianto.partner.orm;
 
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Agent;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.AgentDao;
 
 /**
@@ -27,11 +27,11 @@ import org.helianto.partner.dao.AgentDao;
  */
 public class AgentDaoImpl extends GenericDaoImpl implements AgentDao {
      
-    public Agent findAgentByNaturalId(PartnerAssociation partnerAssociation, int sequence) {
+    public Agent findAgentByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique agent with partnerAssociation='"+partnerAssociation+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique agent with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
         }
-        return (Agent) findUnique(Agent.getAgentNaturalIdQueryString(), partnerAssociation, sequence);
+        return (Agent) findUnique(Agent.getAgentNaturalIdQueryString(), partnerRegistry, sequence);
     }
     
     

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * Class to support <code>PartnerDao</code> tests.
@@ -22,9 +22,9 @@ public class PartnerTestSupport {
      * @param sequence optional int 
      */
     public static Partner createPartner(Object... args) {
-        PartnerAssociation partnerAssociation;
+        PartnerRegistry partnerAssociation;
         try {
-            partnerAssociation = (PartnerAssociation) args[0];
+            partnerAssociation = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
             partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
         }
@@ -54,7 +54,7 @@ public class PartnerTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Partner> createPartnerList(int partnerListSize, int partnerAssociationListSize) {
-        List<PartnerAssociation> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
 
         return createPartnerList(partnerListSize, partnerAssociationList);
     }
@@ -65,11 +65,11 @@ public class PartnerTestSupport {
      * @param partnerListSize
      * @param partnerAssociationList
      */
-    public static List<Partner> createPartnerList(int partnerListSize, List<PartnerAssociation> partnerAssociationList) {
+    public static List<Partner> createPartnerList(int partnerListSize, List<PartnerRegistry> partnerAssociationList) {
         List<Partner> partnerList = new ArrayList<Partner>();
-        for (PartnerAssociation partnerAssociation: partnerAssociationList) {
+        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
 	        for (int i=0;i<partnerListSize;i++) {
-    	        partnerList.add(createPartner(partnerAssociation));
+    	        partnerList.add(createPartner(partnerRegistry));
         	}
         }
         return partnerList;

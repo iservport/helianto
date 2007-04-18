@@ -16,7 +16,7 @@
 package org.helianto.partner.orm;
 
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.Supplier;
 import org.helianto.partner.dao.SupplierDao;
 
@@ -27,11 +27,11 @@ import org.helianto.partner.dao.SupplierDao;
  */
 public class SupplierDaoImpl extends GenericDaoImpl implements SupplierDao {
      
-    public Supplier findSupplierByNaturalId(PartnerAssociation partnerAssociation, int sequence) {
+    public Supplier findSupplierByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique supplier with partnerAssociation='"+partnerAssociation+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique supplier with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
         }
-        return (Supplier) findUnique(Supplier.getSupplierNaturalIdQueryString(), partnerAssociation, sequence);
+        return (Supplier) findUnique(Supplier.getSupplierNaturalIdQueryString(), partnerRegistry, sequence);
     }
     
     

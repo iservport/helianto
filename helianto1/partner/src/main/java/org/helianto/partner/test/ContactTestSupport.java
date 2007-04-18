@@ -7,7 +7,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Contact;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * Class to support <code>ContactDao</code> tests.
@@ -25,9 +25,9 @@ public class ContactTestSupport {
      * @param identity optional Identity 
      */
     public static Contact createContact(Object... args) {
-        PartnerAssociation partnerAssociation;
+        PartnerRegistry partnerAssociation;
         try {
-            partnerAssociation = (PartnerAssociation) args[0];
+            partnerAssociation = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
             partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
         }
@@ -63,7 +63,7 @@ public class ContactTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Contact> createContactList(int contactListSize, int partnerAssociationListSize) {
-        List<PartnerAssociation> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
 
         return createContactList(contactListSize, partnerAssociationList);
     }
@@ -74,11 +74,11 @@ public class ContactTestSupport {
      * @param contactListSize
      * @param partnerAssociationList
      */
-    public static List<Contact> createContactList(int contactListSize, List<PartnerAssociation> partnerAssociationList) {
+    public static List<Contact> createContactList(int contactListSize, List<PartnerRegistry> partnerAssociationList) {
         List<Contact> contactList = new ArrayList<Contact>();
-        for (PartnerAssociation partnerAssociation: partnerAssociationList) {
+        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
             for (int i=0;i<contactListSize;i++) {
-                contactList.add(createContact(partnerAssociation));
+                contactList.add(createContact(partnerRegistry));
             }
         }
         return contactList;

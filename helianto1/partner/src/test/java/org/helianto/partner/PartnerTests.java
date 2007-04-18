@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * <code>Partner</code> domain tests.
@@ -19,14 +19,14 @@ public class PartnerTests extends TestCase {
      * Test <code>Partner</code> static factory method.
      */
     public void testPartnerFactory() {
-        PartnerAssociation partnerAssociation = new PartnerAssociation();
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Partner partner = Partner.partnerFactory(partnerAssociation, sequence);
+        Partner partner = Partner.partnerFactory(partnerRegistry, sequence);
         
-        assertSame(partnerAssociation, partner.getPartnerAssociation());
+        assertSame(partnerRegistry, partner.getPartnerRegistry());
         assertEquals(sequence, partner.getSequence());
-        assertTrue(partnerAssociation.getPartners().contains(partner));
+        assertTrue(partnerRegistry.getPartners().contains(partner));
         
     }
     
@@ -34,21 +34,21 @@ public class PartnerTests extends TestCase {
      * Test <code>Partner</code> equals() method.
      */
     public void testPartnerEquals() {
-        PartnerAssociation partnerAssociation = new PartnerAssociation();
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Partner partner = Partner.partnerFactory(partnerAssociation, sequence);
+        Partner partner = Partner.partnerFactory(partnerRegistry, sequence);
         Partner copy = (Partner) DomainTestSupport.minimalEqualsTest(partner);
         
-        copy.setPartnerAssociation(null);
+        copy.setPartnerRegistry(null);
         copy.setSequence(sequence);
         assertFalse(partner.equals(copy));
 
-        copy.setPartnerAssociation(partnerAssociation);
+        copy.setPartnerRegistry(partnerRegistry);
         copy.setSequence(0);
         assertFalse(partner.equals(copy));
 
-        copy.setPartnerAssociation(partnerAssociation);
+        copy.setPartnerRegistry(partnerRegistry);
         copy.setSequence(sequence);
 
         assertTrue(partner.equals(copy));

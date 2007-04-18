@@ -35,7 +35,7 @@ public class CustomerDaoImplTests extends AbstractPartnerDaoImplConfig {
     public void testFindOneCustomer() {
         Customer customer = writeCustomer();
 
-        assertEquals(customer,  customerDao.findCustomerByNaturalId(customer.getPartnerAssociation(), customer.getSequence()));
+        assertEquals(customer,  customerDao.findCustomerByNaturalId(customer.getPartnerRegistry(), customer.getSequence()));
     }
     
     /*
@@ -61,7 +61,7 @@ public class CustomerDaoImplTests extends AbstractPartnerDaoImplConfig {
         List<Customer> customerList = writeCustomerList();
 
         Customer customer = customerList.get((int) (Math.random()*customerList.size()));
-        assertEquals(customer,  customerDao.findCustomerByNaturalId(customer.getPartnerAssociation(), customer.getSequence()));
+        assertEquals(customer,  customerDao.findCustomerByNaturalId(customer.getPartnerRegistry(), customer.getSequence()));
     }
 
     /**
@@ -69,7 +69,7 @@ public class CustomerDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     public void testCustomerDuplicate() {
         Customer customer =  writeCustomer();
-        Customer customerCopy = CustomerTestSupport.createCustomer(customer.getPartnerAssociation(), customer.getSequence());
+        Customer customerCopy = CustomerTestSupport.createCustomer(customer.getPartnerRegistry(), customer.getSequence());
 
         try {
             partnerDao.mergePartner(customerCopy); fail();
@@ -85,7 +85,7 @@ public class CustomerDaoImplTests extends AbstractPartnerDaoImplConfig {
         Customer customer = customerList.get((int) (Math.random()*customerList.size()));
         partnerDao.removePartner(customer);
 
-        assertNull(customerDao.findCustomerByNaturalId(customer.getPartnerAssociation(), customer.getSequence()));
+        assertNull(customerDao.findCustomerByNaturalId(customer.getPartnerRegistry(), customer.getSequence()));
     }
 
     //- setters

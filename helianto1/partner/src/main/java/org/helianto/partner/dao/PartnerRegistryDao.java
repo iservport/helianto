@@ -17,34 +17,34 @@ package org.helianto.partner.dao;
 
 import org.helianto.core.Entity;
 import org.helianto.core.dao.CommonOrmDao;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
- * <code>PartnerAssociation</code> data access interface.
+ * <code>PartnerRegistry</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface PartnerAssociationDao extends CommonOrmDao {
+public interface PartnerRegistryDao extends CommonOrmDao {
      
     /**
-     * Persist <code>PartnerAssociation</code>.
+     * Persist <code>PartnerRegistry</code>.
      */
-    public void persistPartnerAssociation(PartnerAssociation partnerAssociation);
+    public void persistPartnerRegistry(PartnerRegistry partnerRegistry);
     
     /**
-     * Merge <code>PartnerAssociation</code>.
+     * Merge <code>PartnerRegistry</code>.
      */
-    public PartnerAssociation mergePartnerAssociation(PartnerAssociation partnerAssociation);
+    public PartnerRegistry mergePartnerRegistry(PartnerRegistry partnerRegistry);
     
     /**
-     * Remove <code>PartnerAssociation</code>.
+     * Remove <code>PartnerRegistry</code>.
      */
-    public void removePartnerAssociation(PartnerAssociation partnerAssociation);
+    public void removePartnerRegistry(PartnerRegistry partnerRegistry);
     
     /**
-     * Find <code>PartnerAssociation</code> by <code>Entity</code> and partnerAlias.
+     * Find <code>PartnerRegistry</code> by <code>Entity</code> and partnerAlias.
      */
-    public PartnerAssociation findPartnerAssociationByNaturalId(Entity entity, String partnerAlias);
+    public PartnerRegistry findPartnerRegistryByNaturalId(Entity entity, String partnerAlias);
     
     
     

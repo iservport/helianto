@@ -6,7 +6,7 @@
 	<session-factory>
 		<mapping class="org.helianto.partner.Address" />
 		<mapping class="org.helianto.partner.Contact" />
-		<mapping class="org.helianto.partner.PartnerAssociation" />
+		<mapping class="org.helianto.partner.PartnerRegistry" />
 		<mapping class="org.helianto.partner.Partner" />
 		<mapping class="org.helianto.partner.Agent" />
 		<mapping class="org.helianto.partner.Customer" />

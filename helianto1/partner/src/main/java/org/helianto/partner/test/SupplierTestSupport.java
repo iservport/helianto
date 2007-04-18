@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.Supplier;
 import org.helianto.partner.test.PartnerAssociationTestSupport;
 
@@ -23,9 +23,9 @@ public class SupplierTestSupport {
      * @param sequence optional int 
      */
     public static Supplier createSupplier(Object... args) {
-        PartnerAssociation partnerAssociation;
+        PartnerRegistry partnerAssociation;
         try {
-            partnerAssociation = (PartnerAssociation) args[0];
+            partnerAssociation = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
             partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
         }
@@ -55,7 +55,7 @@ public class SupplierTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Supplier> createSupplierList(int supplierListSize, int partnerAssociationListSize) {
-        List<PartnerAssociation> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
 
         return createSupplierList(supplierListSize, partnerAssociationList);
     }
@@ -66,11 +66,11 @@ public class SupplierTestSupport {
      * @param supplierListSize
      * @param partnerAssociationList
      */
-    public static List<Supplier> createSupplierList(int supplierListSize, List<PartnerAssociation> partnerAssociationList) {
+    public static List<Supplier> createSupplierList(int supplierListSize, List<PartnerRegistry> partnerAssociationList) {
         List<Supplier> supplierList = new ArrayList<Supplier>();
-        for (PartnerAssociation partnerAssociation: partnerAssociationList) {
+        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
 	        for (int i=0;i<supplierListSize;i++) {
-    	        supplierList.add(createSupplier(partnerAssociation));
+    	        supplierList.add(createSupplier(partnerRegistry));
         	}
         }
         return supplierList;

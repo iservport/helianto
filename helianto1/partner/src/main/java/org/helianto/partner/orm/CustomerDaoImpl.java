@@ -17,7 +17,7 @@ package org.helianto.partner.orm;
 
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Customer;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.CustomerDao;
 
 /**
@@ -27,11 +27,11 @@ import org.helianto.partner.dao.CustomerDao;
  */
 public class CustomerDaoImpl extends GenericDaoImpl implements CustomerDao {
      
-    public Customer findCustomerByNaturalId(PartnerAssociation partnerAssociation, int sequence) {
+    public Customer findCustomerByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique customer with partnerAssociation='"+partnerAssociation+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique customer with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
         }
-        return (Customer) findUnique(Customer.getCustomerNaturalIdQueryString(), partnerAssociation, sequence);
+        return (Customer) findUnique(Customer.getCustomerNaturalIdQueryString(), partnerRegistry, sequence);
     }
     
     

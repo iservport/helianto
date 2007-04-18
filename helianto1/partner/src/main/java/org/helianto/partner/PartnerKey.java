@@ -35,13 +35,13 @@ import org.helianto.core.KeyType;
  */
 @javax.persistence.Entity
 @Table(name="prtnr_partnerKey",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerAssociationId", "keyTypeId"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "keyTypeId"})}
 )
 public class PartnerKey implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private PartnerAssociation partnerAssociation;
+    private PartnerRegistry partnerRegistry;
     private KeyType keyType;
     private String keyValue;
 
@@ -59,18 +59,18 @@ public class PartnerKey implements java.io.Serializable {
     }
 
     /**
-     * PartnerAssociation getter.
+     * PartnerRegistry getter.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="partnerAssociationId", nullable=true)
-    public PartnerAssociation getPartnerAssociation() {
-        return this.partnerAssociation;
+    @JoinColumn(name="partnerRegistryId", nullable=true)
+    public PartnerRegistry getPartnerRegistry() {
+        return this.partnerRegistry;
     }
     /**
-     * PartnerAssociation setter.
+     * PartnerRegistry setter.
      */
-    public void setPartnerAssociation(PartnerAssociation partnerAssociation) {
-        this.partnerAssociation = partnerAssociation;
+    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
+        this.partnerRegistry = partnerRegistry;
     }
 
     /**
@@ -105,12 +105,12 @@ public class PartnerKey implements java.io.Serializable {
     /**
      * <code>PartnerKey</code> factory.
      * 
-     * @param partnerAssociation
+     * @param partnerRegistry
      * @param keyType
      */
-    public static PartnerKey partnerKeyFactory(PartnerAssociation partnerAssociation, KeyType keyType) {
+    public static PartnerKey partnerKeyFactory(PartnerRegistry partnerRegistry, KeyType keyType) {
         PartnerKey partnerKey = new PartnerKey();
-        partnerKey.setPartnerAssociation(partnerAssociation);
+        partnerKey.setPartnerRegistry(partnerRegistry);
         partnerKey.setKeyType(keyType);
         return partnerKey;
     }
@@ -120,7 +120,7 @@ public class PartnerKey implements java.io.Serializable {
      */
     @Transient
     public static String getPartnerKeyNaturalIdQueryString() {
-        return "select partnerKey from PartnerKey partnerKey where partnerKey.partnerAssociation = ? and partnerKey.keyType = ? ";
+        return "select partnerKey from PartnerKey partnerKey where partnerKey.partnerRegistry = ? and partnerKey.keyType = ? ";
     }
 
     /**
@@ -131,7 +131,7 @@ public class PartnerKey implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("partnerAssociation").append("='").append(getPartnerAssociation()).append("' ");
+        buffer.append("partnerRegistry").append("='").append(getPartnerRegistry()).append("' ");
         buffer.append("keyType").append("='").append(getKeyType()).append("' ");
         buffer.append("]");
       
@@ -147,7 +147,7 @@ public class PartnerKey implements java.io.Serializable {
          if ( !(other instanceof PartnerKey) ) return false;
          PartnerKey castOther = (PartnerKey) other; 
          
-         return ((this.getPartnerAssociation()==castOther.getPartnerAssociation()) || ( this.getPartnerAssociation()!=null && castOther.getPartnerAssociation()!=null && this.getPartnerAssociation().equals(castOther.getPartnerAssociation()) ))
+         return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ))
              && ((this.getKeyType()==castOther.getKeyType()) || ( this.getKeyType()!=null && castOther.getKeyType()!=null && this.getKeyType().equals(castOther.getKeyType()) ));
    }
    
@@ -156,7 +156,7 @@ public class PartnerKey implements java.io.Serializable {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getPartnerAssociation() == null ? 0 : this.getPartnerAssociation().hashCode() );
+         result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
          result = 37 * result + ( getKeyType() == null ? 0 : this.getKeyType().hashCode() );
          return result;
    }   

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * <p>
@@ -39,14 +39,14 @@ public class Supplier extends Partner implements java.io.Serializable {
     /**
      * <code>Supplier</code> factory.
      * 
-     * @param partnerAssociation
+     * @param partnerRegistry
      * @param sequence
      */
-    public static Supplier supplierFactory(PartnerAssociation partnerAssociation, int sequence) {
+    public static Supplier supplierFactory(PartnerRegistry partnerRegistry, int sequence) {
         Supplier supplier = new Supplier();
-        supplier.setPartnerAssociation(partnerAssociation);
+        supplier.setPartnerRegistry(partnerRegistry);
         supplier.setSequence(sequence);
-        partnerAssociation.getPartners().add(supplier);
+        partnerRegistry.getPartners().add(supplier);
         return supplier;
     }
 
@@ -55,7 +55,7 @@ public class Supplier extends Partner implements java.io.Serializable {
      */
     @Transient
     public static String getSupplierNaturalIdQueryString() {
-        return "select supplier from Supplier supplier where supplier.partnerAssociation = ? and supplier.sequence = ? ";
+        return "select supplier from Supplier supplier where supplier.partnerRegistry = ? and supplier.sequence = ? ";
     }
 
 }

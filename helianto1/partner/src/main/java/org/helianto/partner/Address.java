@@ -44,7 +44,7 @@ import org.helianto.core.Province;
  */
 @javax.persistence.Entity
 @Table(name="prtnr_contact",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerAssociationId", "sequence"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "sequence"})}
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
@@ -56,7 +56,7 @@ public class Address implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private PartnerAssociation partnerAssociation;
+    private PartnerRegistry partnerRegistry;
     private int sequence;
     private char addressType;
     private String address1;
@@ -83,18 +83,18 @@ public class Address implements java.io.Serializable {
     }
 
     /**
-     * PartnerAssociation getter.
+     * PartnerRegistry getter.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="partnerAssociationId", nullable=true)
-    public PartnerAssociation getPartnerAssociation() {
-        return this.partnerAssociation;
+    @JoinColumn(name="partnerRegistryId", nullable=true)
+    public PartnerRegistry getPartnerRegistry() {
+        return this.partnerRegistry;
     }
     /**
-     * PartnerAssociation setter.
+     * PartnerRegistry setter.
      */
-    public void setPartnerAssociation(PartnerAssociation partnerAssociation) {
-        this.partnerAssociation = partnerAssociation;
+    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
+        this.partnerRegistry = partnerRegistry;
     }
 
     /**
@@ -252,16 +252,16 @@ public class Address implements java.io.Serializable {
     /**
      * <code>Address</code> factory.
      * 
-     * @param partnerAssociation
+     * @param partnerRegistry
      * @param sequence
      */
-    public static Address addressFactory(PartnerAssociation partnerAssociation, int sequence) {
+    public static Address addressFactory(PartnerRegistry partnerRegistry, int sequence) {
         Address address = new Address();
-        address.setPartnerAssociation(partnerAssociation);
+        address.setPartnerRegistry(partnerRegistry);
         address.setSequence(sequence);
         address.setAddressType(AddressType.MAIN.getValue());
         address.setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
-        partnerAssociation.getAddresses().add(address);
+        partnerRegistry.getAddresses().add(address);
         return address;
     }
 
@@ -270,7 +270,7 @@ public class Address implements java.io.Serializable {
      */
     @Transient
     public static String getAddressNaturalIdQueryString() {
-        return "select address from Address address where address.partnerAssociation = ? and address.sequence = ? ";
+        return "select address from Address address where address.partnerRegistry = ? and address.sequence = ? ";
     }
 
     /**
@@ -281,7 +281,7 @@ public class Address implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("partnerAssociation").append("='").append(getPartnerAssociation()).append("' ");
+        buffer.append("partnerRegistry").append("='").append(getPartnerRegistry()).append("' ");
         buffer.append("sequence").append("='").append(getSequence()).append("' ");
         buffer.append("]");
       
@@ -297,7 +297,7 @@ public class Address implements java.io.Serializable {
          if ( !(other instanceof Address) ) return false;
          Address castOther = (Address) other; 
          
-         return ((this.getPartnerAssociation()==castOther.getPartnerAssociation()) || ( this.getPartnerAssociation()!=null && castOther.getPartnerAssociation()!=null && this.getPartnerAssociation().equals(castOther.getPartnerAssociation()) ))
+         return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ))
              && ((this.getSequence()==castOther.getSequence()));
    }
    
@@ -306,7 +306,7 @@ public class Address implements java.io.Serializable {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getPartnerAssociation() == null ? 0 : this.getPartnerAssociation().hashCode() );
+         result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
          result = 37 * result + (int) this.getSequence();
          return result;
    }   

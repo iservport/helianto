@@ -52,14 +52,14 @@ public class Agent extends Partner implements java.io.Serializable {
     /**
      * <code>Agent</code> factory.
      * 
-     * @param partnerAssociation
+     * @param partnerRegistry
      * @param sequence
      */
-    public static Agent agentFactory(PartnerAssociation partnerAssociation, int sequence) {
+    public static Agent agentFactory(PartnerRegistry partnerRegistry, int sequence) {
         Agent agent = new Agent();
-        agent.setPartnerAssociation(partnerAssociation);
+        agent.setPartnerRegistry(partnerRegistry);
         agent.setSequence(sequence);
-        partnerAssociation.getPartners().add(agent);
+        partnerRegistry.getPartners().add(agent);
         return agent;
     }
 
@@ -68,7 +68,7 @@ public class Agent extends Partner implements java.io.Serializable {
      */
     @Transient
     public static String getAgentNaturalIdQueryString() {
-        return "select agent from Agent agent where agent.partnerAssociation = ? and agent.sequence = ? ";
+        return "select agent from Agent agent where agent.partnerRegistry = ? and agent.sequence = ? ";
     }
 
 }

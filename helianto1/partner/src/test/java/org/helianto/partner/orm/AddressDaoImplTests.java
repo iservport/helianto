@@ -33,7 +33,7 @@ public class AddressDaoImplTests extends AbstractPartnerDaoImplConfig {
     public void testFindOneAddress() {
         Address address = writeAddress();
 
-        assertEquals(address,  addressDao.findAddressByNaturalId(address.getPartnerAssociation(), address.getSequence()));
+        assertEquals(address,  addressDao.findAddressByNaturalId(address.getPartnerRegistry(), address.getSequence()));
     }
     
     /*
@@ -59,7 +59,7 @@ public class AddressDaoImplTests extends AbstractPartnerDaoImplConfig {
         List<Address> addressList = writeAddressList();
 
         Address address = addressList.get((int) (Math.random()*addressList.size()));
-        assertEquals(address,  addressDao.findAddressByNaturalId(address.getPartnerAssociation(), address.getSequence()));
+        assertEquals(address,  addressDao.findAddressByNaturalId(address.getPartnerRegistry(), address.getSequence()));
     }
 
     /**
@@ -67,7 +67,7 @@ public class AddressDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     public void testAddressDuplicate() {
         Address address =  writeAddress();
-        Address addressCopy = AddressTestSupport.createAddress(address.getPartnerAssociation(), address.getSequence());
+        Address addressCopy = AddressTestSupport.createAddress(address.getPartnerRegistry(), address.getSequence());
 
         try {
             addressDao.mergeAddress(addressCopy); fail();
@@ -83,7 +83,7 @@ public class AddressDaoImplTests extends AbstractPartnerDaoImplConfig {
         Address address = addressList.get((int) (Math.random()*addressList.size()));
         addressDao.removeAddress(address);
 
-        assertNull(addressDao.findAddressByNaturalId(address.getPartnerAssociation(), address.getSequence()));
+        assertNull(addressDao.findAddressByNaturalId(address.getPartnerRegistry(), address.getSequence()));
     }
 
     //- setters

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Customer;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.test.PartnerAssociationTestSupport;
 
 /**
@@ -23,9 +23,9 @@ public class CustomerTestSupport {
      * @param sequence optional int 
      */
     public static Customer createCustomer(Object... args) {
-        PartnerAssociation partnerAssociation;
+        PartnerRegistry partnerAssociation;
         try {
-            partnerAssociation = (PartnerAssociation) args[0];
+            partnerAssociation = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
             partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
         }
@@ -55,7 +55,7 @@ public class CustomerTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Customer> createCustomerList(int customerListSize, int partnerAssociationListSize) {
-        List<PartnerAssociation> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
 
         return createCustomerList(customerListSize, partnerAssociationList);
     }
@@ -66,11 +66,11 @@ public class CustomerTestSupport {
      * @param customerListSize
      * @param partnerAssociationList
      */
-    public static List<Customer> createCustomerList(int customerListSize, List<PartnerAssociation> partnerAssociationList) {
+    public static List<Customer> createCustomerList(int customerListSize, List<PartnerRegistry> partnerAssociationList) {
         List<Customer> customerList = new ArrayList<Customer>();
-        for (PartnerAssociation partnerAssociation: partnerAssociationList) {
+        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
 	        for (int i=0;i<customerListSize;i++) {
-    	        customerList.add(createCustomer(partnerAssociation));
+    	        customerList.add(createCustomer(partnerRegistry));
         	}
         }
         return customerList;

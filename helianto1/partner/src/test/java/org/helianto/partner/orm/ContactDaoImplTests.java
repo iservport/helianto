@@ -33,7 +33,7 @@ public class ContactDaoImplTests extends AbstractPartnerDaoImplConfig {
     public void testFindOneContact() {
         Contact contact = writeContact();
 
-        assertEquals(contact,  contactDao.findContactByNaturalId(contact.getPartnerAssociation(), contact.getSequence()));
+        assertEquals(contact,  contactDao.findContactByNaturalId(contact.getPartnerRegistry(), contact.getSequence()));
     }
     
     /*
@@ -59,7 +59,7 @@ public class ContactDaoImplTests extends AbstractPartnerDaoImplConfig {
         List<Contact> contactList = writeContactList();
 
         Contact contact = contactList.get((int) (Math.random()*contactList.size()));
-        assertEquals(contact,  contactDao.findContactByNaturalId(contact.getPartnerAssociation(), contact.getSequence()));
+        assertEquals(contact,  contactDao.findContactByNaturalId(contact.getPartnerRegistry(), contact.getSequence()));
     }
 
     /**
@@ -67,7 +67,7 @@ public class ContactDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     public void testContactDuplicate() {
         Contact contact =  writeContact();
-        Contact contactCopy = ContactTestSupport.createContact(contact.getPartnerAssociation(), contact.getSequence());
+        Contact contactCopy = ContactTestSupport.createContact(contact.getPartnerRegistry(), contact.getSequence());
 
         try {
             contactDao.mergeContact(contactCopy); fail();
@@ -83,7 +83,7 @@ public class ContactDaoImplTests extends AbstractPartnerDaoImplConfig {
         Contact contact = contactList.get((int) (Math.random()*contactList.size()));
         contactDao.removeContact(contact);
 
-        assertNull(contactDao.findContactByNaturalId(contact.getPartnerAssociation(), contact.getSequence()));
+        assertNull(contactDao.findContactByNaturalId(contact.getPartnerRegistry(), contact.getSequence()));
     }
 
     //- setters

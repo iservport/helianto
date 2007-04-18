@@ -30,8 +30,8 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 
-	<bean id="partnerAssociationDao" 
-		class="org.helianto.partner.orm.PartnerAssociationDaoImpl">
+	<bean id="partnerRegistryDao" 
+		class="org.helianto.partner.orm.PartnerRegistryDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 
@@ -88,7 +88,7 @@
 				<property name="partnerDao" ref="partnerDao"/>
 				<property name="addressDao" ref="addressDao"/>
 				<property name="contactDao" ref="contactDao"/>
-				<property name="partnerAssociationDao" ref="partnerAssociationDao"/>
+				<property name="partnerRegistryDao" ref="partnerRegistryDao"/>
 				<property name="partnerAssociationFilterDao" ref="partnerAssociationFilterDao"/>
 				<property name="partnerKeyDao" ref="partnerKeyDao"/>
 				<property name="phoneDao" ref="phoneDao"/>

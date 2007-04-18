@@ -17,7 +17,7 @@ package org.helianto.partner.dao;
 
 import org.helianto.core.dao.CommonOrmDao;
 import org.helianto.partner.Contact;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * <code>Contact</code> data access interface.
@@ -44,7 +44,7 @@ public interface ContactDao extends CommonOrmDao {
     /**
      * Find <code>Contact</code> by <code>PartnerAssociation</code> and sequence.
      */
-    public Contact findContactByNaturalId(PartnerAssociation partnerAssociation, int sequence);
+    public Contact findContactByNaturalId(PartnerRegistry partnerRegistry, int sequence);
     
     
     

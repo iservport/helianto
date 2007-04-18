@@ -17,7 +17,7 @@ package org.helianto.partner.dao;
 
 import org.helianto.core.KeyType;
 import org.helianto.core.dao.CommonOrmDao;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerKey;
 
 /**
@@ -45,7 +45,7 @@ public interface PartnerKeyDao extends CommonOrmDao {
     /**
      * Find <code>PartnerKey</code> by <code>PartnerAssociation</code> and <code>KeyType</code>.
      */
-    public PartnerKey findPartnerKeyByNaturalId(PartnerAssociation partnerAssociation, KeyType keyType);
+    public PartnerKey findPartnerKeyByNaturalId(PartnerRegistry partnerRegistry, KeyType keyType);
     
     
     

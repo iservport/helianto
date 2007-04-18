@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Agent;
-import org.helianto.partner.PartnerAssociation;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * Class to support <code>AgentDao</code> tests.
@@ -22,9 +22,9 @@ public class AgentTestSupport {
      * @param sequence optional int 
      */
     public static Agent createAgent(Object... args) {
-        PartnerAssociation partnerAssociation;
+        PartnerRegistry partnerAssociation;
         try {
-            partnerAssociation = (PartnerAssociation) args[0];
+            partnerAssociation = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
             partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
         }
@@ -54,7 +54,7 @@ public class AgentTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Agent> createAgentList(int agentListSize, int partnerAssociationListSize) {
-        List<PartnerAssociation> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
 
         return createAgentList(agentListSize, partnerAssociationList);
     }
@@ -65,11 +65,11 @@ public class AgentTestSupport {
      * @param agentListSize
      * @param partnerAssociationList
      */
-    public static List<Agent> createAgentList(int agentListSize, List<PartnerAssociation> partnerAssociationList) {
+    public static List<Agent> createAgentList(int agentListSize, List<PartnerRegistry> partnerAssociationList) {
         List<Agent> agentList = new ArrayList<Agent>();
-        for (PartnerAssociation partnerAssociation: partnerAssociationList) {
+        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
 	        for (int i=0;i<agentListSize;i++) {
-	        	agentList.add(createAgent(partnerAssociation));
+	        	agentList.add(createAgent(partnerRegistry));
         	}
         }
         return agentList;
