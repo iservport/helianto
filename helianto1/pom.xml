@@ -13,7 +13,6 @@
 	</description>
 	<url>http://www.helianto.org</url>
 	<modules>
-		<!-- module>domain</module-->
 		<module>core</module>
 		<module>partner</module>
 		<module>process</module>
