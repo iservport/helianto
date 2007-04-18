@@ -10,11 +10,10 @@
 		<config>core/src/main/resources/deploy/support.xml</config>
 		<config>web/src/main/resources/deploy/webflow.xml</config>
 		<config>web/src/main/resources/deploy/security-http.xml</config>
-		<config>core/src/main/resources/deploy/core.xml</config>
 		<config>web/src/main/resources/deploy/install.xml</config>
+		<config>core/src/main/resources/deploy/core.xml</config>
 		<config>web/src/main/resources/deploy/freemarker.xml</config>
 		<config>core/src/main/resources/deploy/dataSource.xml</config>
-		<config>process/src/main/resources/deploy/process.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

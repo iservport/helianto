@@ -7,19 +7,20 @@
 	<name>The Helianto Project</name>
 	<version>0.0.1-m4-SNAPSHOT</version>
 	<description>
-		Helianto project is designed to provide an easy path to build a secure ORM/dependency injection server 
-		side application. Helianto strongly relies on the Spring Framework, Acegi Security and Hibernate to 
-		achieve this. 
+		Helianto project is designed to provide an easy path to build a
+		secure ORM/dependency injection server side application.
+		Helianto strongly relies on the Spring Framework, Acegi Security
+		and Hibernate to achieve this.
 	</description>
 	<url>http://www.helianto.org</url>
 	<modules>
-		<module>core</module>
-		<module>partner</module>
-		<module>process</module>
-		<module>web</module>
+			<module>core</module>
+			<module>partner</module>
+			<module>process</module>
+			<module>web</module>
 		<!-- 
-		<module>archetype1</module>
-		 -->
+			<module>archetype1</module>
+		-->
 	</modules>
 	<issueManagement>
 		<system>jira</system>
@@ -48,7 +49,9 @@
 		<developerConnection>
 			scm:https://svn.sourceforge.net/svnroot/helianto/trunk/helianto1
 		</developerConnection>
-		<url>http://svn.sourceforge.net/viewvc/helianto/trunk/helianto1/</url>
+		<url>
+			http://svn.sourceforge.net/viewvc/helianto/trunk/helianto1/
+		</url>
 	</scm>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -85,6 +88,10 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -227,18 +234,10 @@
 		</dependency>
 	</dependencies>
 	<!-- 
-	 !   Reporting
-	 !-->
+		!   Reporting
+		!-->
 	<reporting>
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>surefire-report-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jxr-maven-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<artifactId>
 					maven-project-info-reports-plugin
