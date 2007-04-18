@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.KeyType;
-import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.partner.PartnerRegistry;
+import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.partner.PartnerKey;
+import org.helianto.partner.PartnerRegistry;
 
 /**
  * Class to support <code>PartnerKeyDao</code> tests.
@@ -31,7 +31,7 @@ public class PartnerKeyTestSupport {
         try {
             keyType = (KeyType) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            keyType = OperatorTestSupport.createKeyType();
+            keyType = KeyTypeTestSupport.createKeyType();
         }
         PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partnerAssociation, keyType);
         return partnerKey;
@@ -54,7 +54,7 @@ public class PartnerKeyTestSupport {
      */
     public static List<PartnerKey> createPartnerKeyList(int partnerAssociationListSize, int keyTypeListSize) {
         List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
-        List<KeyType> keyTypeList = OperatorTestSupport.createKeyTypeList(keyTypeListSize, 1);
+        List<KeyType> keyTypeList = KeyTypeTestSupport.createKeyTypeList(keyTypeListSize, 1);
         return createPartnerKeyList(partnerAssociationList, keyTypeList);
     }
 
