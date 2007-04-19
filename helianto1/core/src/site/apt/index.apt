@@ -4,6 +4,6 @@ Welcome to The Helianto Project Core Module
 
 * Overview
 
-  Usual business partners are customers, suppliers, banks, agents, etc.
-  The partner module groups all of them and provides for address and contact
-  information.
+  Helianto core module, in contrast with other modules, exposes both basic domain and service classes.
+  It is also the base for conventions that affect the other modules as well.
+  
