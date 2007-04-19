@@ -21,7 +21,6 @@ import java.util.List;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
-import org.helianto.core.Service;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.test.OperatorTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -173,66 +172,6 @@ public class OperatorDaoImplTests extends OperatorTestSupport {
         List<Server> all = (ArrayList<Server>) hibernateTemplate.find("from Server");
         assertEquals(i*o-1, all.size());
         assertFalse(all.contains(server));
-    }
-
-    public void testPersistService() {
-        //write
-        Service service = createAndPersistService(operatorDao);
-        hibernateTemplate.flush();
-        //read
-        assertEquals(service,  operatorDao.findServiceByNaturalId(service.getOperator(), service.getServiceName()));
-    }
-    
-    private List<Service> writeServiceList() {
-        int i = 10;
-        int o = 2;
-        List<Service> serviceList = createAndPersistServiceList(hibernateTemplate, i, o);
-        assertEquals(i*o, serviceList.size());
-        return serviceList;
-    }
-    
-    public void testFindService() {
-        // write
-        List<Service> serviceList = writeServiceList();
-        // read
-        Service service = serviceList.get((int) Math.random()*serviceList.size());
-        assertEquals(service,  operatorDao.findServiceByNaturalId(service.getOperator(), service.getServiceName()));
-    }
-
-    public void testServiceErrors() {
-        try {
-             operatorDao.persistService(null); fail();
-        } catch (IllegalArgumentException e) { 
-        } catch (Exception e) { fail(); }
-        try {
-             operatorDao.removeService(null); fail();
-        } catch (IllegalArgumentException e) { 
-        } catch (Exception e) { fail(); }
-    }
-
-    public void testServiceDuplicate() {
-        // write
-        Service service = createAndPersistService(operatorDao);
-        hibernateTemplate.clear();
-        // duplicate
-        try {
-            hibernateTemplate.save(service); fail();
-        } catch (DataIntegrityViolationException e) { 
-        } catch (Exception e) { fail(); }
-    }
-    
-    public void testRemoveService() {
-        // write
-        List<Service> serviceList = writeServiceList();
-        // remove
-        Service service = serviceList.get((int) Math.random()*serviceList.size());
-        operatorDao.removeService(service);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        // read
-        List<Service> all = (ArrayList<Service>) hibernateTemplate.find("from Service");
-        assertEquals(serviceList.size()-1, all.size());
-        assertFalse(all.contains(service));
     }
 
     // mutators

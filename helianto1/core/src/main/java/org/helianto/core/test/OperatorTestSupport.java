@@ -25,7 +25,6 @@ import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
-import org.helianto.core.Service;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -133,52 +132,4 @@ public class OperatorTestSupport extends AbstractHibernateIntegrationTest {
         return serverList;
     }
     
-    /*
-     * Service tests 
-     */
-    
-    public static Service createService(Object... args) {
-        Operator operator;
-        try {
-            operator = (Operator) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            operator = createOperator();
-        }
-        Service service = OperatorCreator.serviceFactory(operator, generateKey(20, testKey++));
-        return service;
-    }
-
-    public static Service createAndPersistService(OperatorDao operatorDao) {
-        Service service = createService();
-        if (operatorDao!=null) {
-            operatorDao.persistService(service);
-        }
-        return service;
-    }
-
-    public static List<Service> createServiceList(int size, int operatorListSize) {
-        List<Operator> operatorList = OperatorTestSupport.createOperatorList(operatorListSize);
-        return createServiceList(size, operatorList);
-    }
-
-    public static List<Service> createServiceList(int size, List<Operator> operatorList) {
-        List<Service> serviceList = new ArrayList<Service>();
-        for (Operator x: operatorList) {
-            for (int i=0;i<size;i++) {
-                serviceList.add(createService(x));
-            }
-        }
-        return serviceList;
-    }
-
-    public static List<Service> createAndPersistServiceList(HibernateTemplate hibernateTemplate, int i, int operatorListSize) {
-        List<Service> serviceList = createServiceList(i, operatorListSize);
-        for (Service x: serviceList) {
-            hibernateTemplate.merge(x);
-        }
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return serviceList;
-    }
-
 }

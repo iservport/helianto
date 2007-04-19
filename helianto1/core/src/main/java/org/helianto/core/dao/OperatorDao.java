@@ -18,11 +18,9 @@ package org.helianto.core.dao;
 import java.util.List;
 
 import org.helianto.core.ActivityState;
-import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
-import org.helianto.core.Service;
 
 /**
  * <code>Operator</code> data access interface.
@@ -63,28 +61,6 @@ public interface OperatorDao extends CommonOrmDao {
      */
     public Operator findOperatorByNaturalId(String operatorName);
     
-    // key type
-    
-    /**
-     * Persist <code>KeyType</code>.
-     */
-    public void persistKeyType(KeyType keyType);
-    
-    /**
-     * Merge <code>KeyType</code>.
-     */
-    public KeyType mergeKeyType(KeyType keyType);
-    
-    /**
-     * Remove <code>KeyType</code>.
-     */
-    public void removeKeyType(KeyType keyType);
-    
-    /**
-     * Find <code>KeyType</code> by operator and keyCode.
-     */
-    public KeyType findKeyTypeByNaturalId(Operator operator, String keyCode);
-    
     // server
     
     /**
@@ -118,26 +94,4 @@ public interface OperatorDao extends CommonOrmDao {
      */
     public List<Server> findServerActive(Operator operator);
     
-    // service
-    
-    /**
-     * Persist <code>Service</code>.
-     */
-    public void persistService(Service service);
-    
-    /**
-     * Merge <code>Service</code>.
-     */
-    public Service mergeService(Service service);
-    
-    /**
-     * Remove <code>Service</code>.
-     */
-    public void removeService(Service service);
-    
-    /**
-     * Find <code>Service</code> by  operator and serviceName.
-     */
-    public Service findServiceByNaturalId(Operator operator, String serviceName);
-
 }

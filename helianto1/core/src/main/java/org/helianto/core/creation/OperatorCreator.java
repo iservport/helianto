@@ -29,7 +29,6 @@ import org.helianto.core.Organization;
 import org.helianto.core.Province;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
-import org.helianto.core.Service;
 
 /**
  * Operator required classes factory methods.
@@ -134,24 +133,6 @@ public class OperatorCreator extends CreatorSupport {
         return province;
     }
 
-    /**
-     * Default <code>Service</code> creator.
-     * 
-     * @param requiredOperator
-     * @param serviceName
-     */
-    public static Service serviceFactory(Operator requiredOperator, String serviceName) {
-        assertNotNull(requiredOperator);
-        Service service = new Service();
-        
-        service.setOperator(requiredOperator);
-        service.setServiceName(serviceName);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created: "+service);
-        }
-        return service;
-    }
-        
     private static Entity internalEntityFactory(Class<? extends Entity> clazz, Operator requiredOperator, String uniqueAlias) {
         assertNotNull(requiredOperator);
         try {

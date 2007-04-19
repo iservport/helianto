@@ -217,7 +217,7 @@ public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
         try {
             service = (Service) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            service = OperatorTestSupport.createService();
+            service = ServiceTestSupport.createService();
         }
         UserRole userRole = AuthorizationCreator.userRoleFactory(user, service, generateKey(20, testKey++));
         return userRole;
@@ -243,7 +243,7 @@ public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
 
     public static List<UserRole> createUserRoleList(int size, int entityListSize, int identityListSize, int serviceListSize) {
         List<User> userList = createUserList(entityListSize, identityListSize);
-        List<Service> serviceList = OperatorTestSupport.createServiceList(serviceListSize, 1);
+        List<Service> serviceList = ServiceTestSupport.createServiceList(serviceListSize, 1);
         List<UserRole> userRoleList = new ArrayList<UserRole>();
         for (User u: userList) {
             for (Service s: serviceList) {

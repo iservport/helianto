@@ -14,29 +14,31 @@
  */
 package org.helianto.core.validate;
 
+import org.helianto.core.validate.AbstractLoaderPropertyEditor;
+import org.helianto.core.validate.PropertyLoader;
 
-import org.helianto.core.KeyType;
+import org.helianto.core.Service;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>KeyType</code> property editor.
+ * Default <code>PropertyLoader</code> backed <code>Service</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class KeyTypePropertyEditor extends AbstractLoaderPropertyEditor {
+public class ServicePropertyEditor extends AbstractLoaderPropertyEditor {
     
-    public KeyTypePropertyEditor(PropertyLoader propertyLoader) {
+    public ServicePropertyEditor(PropertyLoader propertyLoader) {
         super(propertyLoader);
     }
     
     @Override
     public String getAsText() {
-        KeyType keyType = (KeyType) getValue();
-        return String.valueOf(keyType.getKeyCode());
+        Service service = (Service) getValue();
+        return String.valueOf(service.getServiceName());
     }
     
     @Override
     public void setAsText(String id) throws IllegalArgumentException {
-        setAsText(id, KeyType.class);
+        setAsText(id, Service.class);
     }
 
 }

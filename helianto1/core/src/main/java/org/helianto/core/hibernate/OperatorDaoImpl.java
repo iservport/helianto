@@ -20,10 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.ActivityState;
-import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
-import org.helianto.core.Service;
 import org.helianto.core.dao.OperatorDao;
 
 public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
@@ -59,27 +57,6 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
     static String OPERATOR_QRY = "from Operator operator " +
             "where operator.operatorName = ? ";
     
-    // key type
-
-    public void persistKeyType(KeyType keyType) {
-        persist(keyType);
-    }
-    
-    public KeyType mergeKeyType(KeyType keyType) {
-        return (KeyType) merge(keyType);
-    }
-    
-    public void removeKeyType(KeyType keyType) {
-        remove(keyType);
-    }
-    
-    public KeyType findKeyTypeByNaturalId(Operator operator, String keyCode) {
-        return (KeyType) findUnique(KEYTYPE_QRY, operator, keyCode);
-    }
-    
-    static String KEYTYPE_QRY = "from KeyType keyType "+
-        "where keyType.operator = ? and keyType.keyCode = ? ";
-    
     // server
 
     public void persistServer(Server server) {
@@ -111,25 +88,4 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
         "and server.serverState = ? " +
         "order by server.priority ";
     
-    // service
-
-    public void persistService(Service service) {
-        persist(service);
-    }
-    
-    public Service mergeService(Service service) {
-        return (Service) merge(service);
-    }
-    
-    public void removeService(Service service) {
-        remove(service);
-    }
-    
-    public Service findServiceByNaturalId(Operator operator, String serviceName) {
-        return (Service) findUnique(SERVICE_QRY, operator, serviceName);
-    }
-    
-    static String SERVICE_QRY = "from Service service "+
-        "where service.operator = ? and service.serviceName = ? ";
-
 }

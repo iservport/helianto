@@ -28,10 +28,8 @@ import org.helianto.core.Individual;
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Organization;
-import org.helianto.core.Province;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
-import org.helianto.core.Service;
 
 public class OperatorCreatorTests extends TestCase {
 
@@ -89,29 +87,6 @@ public class OperatorCreatorTests extends TestCase {
     }
 
     /*
-     * Test method for 'org.helianto.core.creation.BaseCreator.provinceFactory(Operator, String, String)'
-     */
-    public void testProvinceFactory() {
-        Operator operator = new Operator();
-        Province province = OperatorCreator.provinceFactory(operator, "CODE", "NAME");
-        
-        assertSame(operator, province.getOperator());
-        assertEquals("CODE", province.getCode());
-        assertEquals("NAME", province.getProvinceName());
-    }
-
-    /*
-     * Test method for 'org.helianto.core.creation.BaseCreator.serviceFactory(Operator, String)'
-     */
-    public void testServiceFactory() {
-        Operator operator = new Operator();
-        Service service = OperatorCreator.serviceFactory(operator, "NAME");
-
-        assertSame(operator, service.getOperator());
-        assertEquals("NAME", service.getServiceName());
-    }
-
-    /*
      * Test method for 'org.helianto.core.creation.BaseCreator.entityFactory(Operator, String)'
      */
     public void testEntityFactory() {
@@ -159,10 +134,6 @@ public class OperatorCreatorTests extends TestCase {
         } catch (Exception e) { fail(); }
         try {
             OperatorCreator.provinceFactory(null, "", ""); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            OperatorCreator.serviceFactory(null, ""); fail();
         } catch (IllegalArgumentException e) {
         } catch (Exception e) { fail(); }
         try {

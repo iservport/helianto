@@ -48,6 +48,7 @@
 			<bean id="serverTarget"
 				class="org.helianto.core.service.ServerMgrImpl">
 				<property name="operatorDao" ref="operatorDao"/>
+				<property name="serviceDao" ref="serviceDao"/>
 				<property name="authenticationDao" ref="authenticationDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
 				<property name="configurableMailSenderFactory" ref="configurableMailSenderFactory"/>

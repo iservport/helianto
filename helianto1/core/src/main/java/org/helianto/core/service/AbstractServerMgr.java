@@ -33,6 +33,7 @@ import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.OperatorDao;
+import org.helianto.core.dao.ServiceDao;
 
 /**
  * <code>ServerMgr</code> base class.
@@ -42,6 +43,7 @@ import org.helianto.core.dao.OperatorDao;
 public abstract class AbstractServerMgr implements ServerMgr {
 
     protected OperatorDao operatorDao;
+    protected ServiceDao serviceDao;
     
     protected AuthenticationDao authenticationDao;
     
@@ -111,9 +113,9 @@ public abstract class AbstractServerMgr implements ServerMgr {
     
     public UserGroup findOrCreateUserGroup(Entity entity, String serviceName, String[] extensions) {
         UserGroup userGroup = findOrCreateUserGroup(entity, serviceName);
-        Service service = operatorDao.findServiceByNaturalId(entity.getOperator(), serviceName);
+        Service service = serviceDao.findServiceByNaturalId(entity.getOperator(), serviceName);
         if (service==null) {
-            service = OperatorCreator.serviceFactory(entity
+            service = Service.serviceFactory(entity
                     .getOperator(), serviceName);
         }
         for (String extension: extensions) {
@@ -145,6 +147,10 @@ public abstract class AbstractServerMgr implements ServerMgr {
 
     public void setOperatorDao(OperatorDao operatorDao) {
         this.operatorDao = operatorDao;
+    }
+
+    public void setServiceDao(ServiceDao serviceDao) {
+        this.serviceDao = serviceDao;
     }
 
     public void setAuthenticationDao(AuthenticationDao authenticationDao) {
