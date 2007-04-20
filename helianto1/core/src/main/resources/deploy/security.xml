@@ -25,6 +25,7 @@
 		<property name="target">
 			<bean id="securityTarget"
 				class="org.helianto.core.service.SecurityMgrImpl">
+				<property name="userLogDao" ref="userLogDao"/>
 				<property name="authenticationDao" ref="authenticationDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
 			</bean>

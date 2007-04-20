@@ -4,11 +4,14 @@
 
 <hibernate-configuration>
 	<session-factory>
-		<mapping class="org.helianto.core.Operator" />
+		<mapping class="org.helianto.core.Entity" />
+		<mapping class="org.helianto.core.InternalEnumerator" />
 		<mapping class="org.helianto.core.Service" />
-		<mapping class="org.helianto.core.Province" />
-		<mapping class="org.helianto.core.UserRole" />
 		<mapping class="org.helianto.core.UserLog" />
+		<mapping class="org.helianto.core.UserRole" />
+
+		<mapping class="org.helianto.core.Operator" />
+		<mapping class="org.helianto.core.Province" />
 		<mapping class="org.helianto.core.Unit" />
 		<mapping class="org.helianto.core.KeyType" />
 	</session-factory>

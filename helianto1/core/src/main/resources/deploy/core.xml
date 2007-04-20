@@ -32,13 +32,6 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
-			Entity dao implementation	
-	-->
-	<bean id="entityDao" 
-		class="org.helianto.core.hibernate.EntityDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
 			Server service bean	
 	-->
 	<bean id="serverMgr" 
@@ -48,6 +41,7 @@
 			<bean id="serverTarget"
 				class="org.helianto.core.service.ServerMgrImpl">
 				<property name="operatorDao" ref="operatorDao"/>
+				<property name="entityDao" ref="entityDao"/>
 				<property name="serviceDao" ref="serviceDao"/>
 				<property name="authenticationDao" ref="authenticationDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
@@ -67,6 +61,7 @@
 				class="org.helianto.core.service.UserMgrImpl">
 				<property name="authenticationDao" ref="authenticationDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
+				<property name="internalEnumeratorDao" ref="internalEnumeratorDao"/>
 			</bean>
 		</property>
 	</bean>
@@ -87,7 +82,7 @@
 			Authentication property editor registrar bean	
 	-->
 	<bean id="authenticationPropertyEditorRegistrar" 
-		class="org.helianto.core.validate.AuthenticationPropertyEditorRegistrar">
+		class="org.helianto.core.validation.AuthenticationPropertyEditorRegistrar">
 	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	

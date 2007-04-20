@@ -29,6 +29,10 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 
+	<bean id="entityDao" 
+		class="org.helianto.core.orm.EntityDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 	<bean id="keyTypeDao" 
 		class="org.helianto.core.orm.KeyTypeDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
@@ -41,5 +45,18 @@
 	    class="org.helianto.core.orm.UnitDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
+	<bean id="userLogDao" 
+	    class="org.helianto.core.orm.UserLogDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+    <bean id="userRoleDao" 
+        class="org.helianto.core.orm.UserRoleDaoImpl">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+    </bean>
+	<bean id="internalEnumeratorDao" 
+		class="org.helianto.core.orm.InternalEnumeratorDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
 
 </beans>
