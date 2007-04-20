@@ -18,7 +18,7 @@ import java.beans.PropertyEditor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.validate.AbstractLoaderPropertyEditorRegistrar;
+import org.helianto.core.validation.AbstractLoaderPropertyEditorRegistrar;
 import org.helianto.partner.Account;
 import org.helianto.partner.Address;
 import org.helianto.partner.Agent;

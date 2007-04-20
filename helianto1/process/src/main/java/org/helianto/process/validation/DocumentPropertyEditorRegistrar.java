@@ -18,8 +18,8 @@ package org.helianto.process.validation;
 import java.beans.PropertyEditor;
 import java.io.Serializable;
 
-import org.helianto.core.validate.AbstractHibernatePropertyEditor;
-import org.helianto.core.validate.AbstractPropertyEditorRegistrar;
+import org.helianto.core.validation.AbstractHibernatePropertyEditor;
+import org.helianto.core.validation.AbstractPropertyEditorRegistrar;
 import org.helianto.process.Document;
 import org.helianto.process.ExternalDocument;
 import org.springframework.beans.PropertyEditorRegistry;

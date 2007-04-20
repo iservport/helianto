@@ -14,8 +14,8 @@
  */
 package org.helianto.partner.validation;
 
-import org.helianto.core.validate.AbstractLoaderPropertyEditor;
-import org.helianto.core.validate.PropertyLoader;
+import org.helianto.core.validation.AbstractLoaderPropertyEditor;
+import org.helianto.core.validation.PropertyLoader;
 import org.helianto.partner.Customer;
 
 
