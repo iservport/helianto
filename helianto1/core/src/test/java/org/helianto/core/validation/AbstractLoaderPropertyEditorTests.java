@@ -13,13 +13,16 @@
  * limitations under the License.
  */
 
-package org.helianto.core.validate;
+package org.helianto.core.validation;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
+
+import org.helianto.core.validation.AbstractLoaderPropertyEditor;
+import org.helianto.core.validation.PropertyLoader;
 
 import junit.framework.TestCase;
 

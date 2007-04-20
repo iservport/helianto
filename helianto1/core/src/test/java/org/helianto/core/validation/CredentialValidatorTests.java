@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.validate;
+package org.helianto.core.validation;
 
 import junit.framework.TestCase;
 
@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.creation.AuthenticationCreator;
+import org.helianto.core.validation.CredentialValidator;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;

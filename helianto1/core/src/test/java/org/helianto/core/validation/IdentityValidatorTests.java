@@ -13,13 +13,14 @@
  * limitations under the License.
  */
 
-package org.helianto.core.validate;
+package org.helianto.core.validation;
 
 import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Identity;
+import org.helianto.core.validation.IdentityValidator;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;

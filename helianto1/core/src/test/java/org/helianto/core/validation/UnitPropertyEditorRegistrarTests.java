@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
-package org.helianto.core.validate;
+package org.helianto.core.validation;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Unit;
+import org.helianto.core.validation.UnitPropertyEditorRegistrar;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.orm.hibernate3.HibernateOperations;
