@@ -1,39 +1,40 @@
-/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.helianto.core;
-
-import junit.framework.TestCase;
 
 import org.helianto.core.test.DomainTestSupport;
 
+import junit.framework.TestCase;
+
+import org.helianto.core.UserGroup;
+import org.helianto.core.Service;
+
+import org.helianto.core.UserRole;
+
+/**
+ * <code>UserRole</code> domain tests.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class UserRoleTests extends TestCase {
-
-    public void testUserRole() {
-        UserRole userRole = new UserRole();
-        userRole.setId(Long.MAX_VALUE);
-        userRole.setId(Long.MIN_VALUE);
+    
+    /**
+     * Test <code>UserRole</code> static factory method.
+     */
+    public void testUserRoleFactory() {
+        UserGroup userGroup = new UserGroup();
+        Service service = new Service();
+        String serviceExtension = DomainTestSupport.STRING_TEST_VALUE;
         
-        userRole.setUserGroup(new UserGroup());
-        userRole.setUserGroup(new User());
+        UserRole userRole = UserRole.userRoleFactory(userGroup, service, serviceExtension);
         
-        userRole.setService(new Service());
+        assertSame(userGroup, userRole.getUserGroup());
+        assertSame(service, userRole.getService());
+        assertEquals(serviceExtension, userRole.getServiceExtension());
         
-        userRole.setServiceExtension("");
     }
-
+    
+    /**
+     * Test <code>UserRole</code> equals() method.
+     */
     public void testUserRoleEquals() {
         UserRole copy, userRole = new UserRole();
         userRole.setUserGroup(new UserGroup());
