@@ -28,6 +28,7 @@ import org.helianto.core.Notification;
 import org.helianto.core.PersonalData;
 import org.helianto.core.PrivateKey;
 import org.helianto.core.UserGroup;
+import org.helianto.core.test.DomainTestSupport;
 
 /**
  * Authentication required classes factory methods.
@@ -35,6 +36,8 @@ import org.helianto.core.UserGroup;
  * @author Mauricio Fernandes de Castro
  */
 public class AuthenticationCreator extends CreatorSupport {
+    
+    private static int testKey = 0;
 
     /**
      * <code>PersonalData</code> is created by default with
@@ -67,6 +70,12 @@ public class AuthenticationCreator extends CreatorSupport {
      * @see Notification
      */
     public static Identity identityFactory(String principal, String optionalAlias) {
+        if (principal == null) {
+            principal = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
+        }
+        if (optionalAlias == null) {
+            optionalAlias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
+        }
         Identity identity = new Identity();
         
         identity.setPrincipal(principal);

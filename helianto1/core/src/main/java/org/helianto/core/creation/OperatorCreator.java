@@ -20,12 +20,9 @@ import java.util.Locale;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Encription;
-import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.Individual;
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
-import org.helianto.core.Organization;
 import org.helianto.core.Province;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
@@ -131,61 +128,6 @@ public class OperatorCreator extends CreatorSupport {
             logger.debug("Created: "+province);
         }
         return province;
-    }
-
-    private static Entity internalEntityFactory(Class<? extends Entity> clazz, Operator requiredOperator, String uniqueAlias) {
-        assertNotNull(requiredOperator);
-        try {
-            Entity entity = clazz.newInstance();
-
-            entity.setOperator(requiredOperator);
-            entity.setAlias(uniqueAlias);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Created: "+entity);
-            }
-            return entity;
-        } catch (Exception e) {
-            throw new IllegalStateException("Unable to create class "+clazz, e);
-        }
-    }
-
-    /**
-     * Default <code>Entity</code> creator.
-     * 
-     * @param requiredOperator
-     * @param uniqueAlias
-     */
-    public static Entity entityFactory(Operator requiredOperator, String uniqueAlias) {
-        return internalEntityFactory(Entity.class, requiredOperator, uniqueAlias);
-    }
-
-    /**
-     * Default <code>Organization</code> creator.
-     * 
-     * @param requiredOperator
-     * @param uniqueAlias
-     * @param businessName
-     */
-    public static Organization organizationFactory(Operator requiredOperator, String uniqueAlias, String businessName) {
-        Organization organization = (Organization) internalEntityFactory(Organization.class, requiredOperator, uniqueAlias);
-        organization.setBusinessName(businessName);
-        
-        return organization;
-    }
-
-    /**
-     * Default <code>Individual</code> creator.
-     * Makes alias same as the <code>Identity</code> principal
-     * 
-     * @param requiredOperator
-     * @param requiredIentity
-     */
-    public static Individual individualFactory(Operator requiredOperator, Identity requiredIentity) {
-        assertNotNull(requiredIentity);
-        Individual individual = (Individual) internalEntityFactory(Individual.class, requiredOperator, requiredIentity.getPrincipal());
-        individual.setIdentity(requiredIentity);
-        
-        return individual;
     }
 
 }

@@ -15,19 +15,15 @@
 
 package org.helianto.core.creation;
 
-import java.util.Date;
 import java.util.HashSet;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.PrivacyLevel;
-import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
-import org.helianto.core.UserEventType;
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.UserType;
 
@@ -135,59 +131,4 @@ public class AuthorizationCreator extends CreatorSupport {
         return userGroup;
     }
 
-    /**
-     * Default <code>UserLog</code> creator.
-     * 
-     * Created with current system date. If requiredUserEventType is
-     * UserEventType.LOGIN_SUCCESS, <code>Identity</code> last login date is 
-     * also set to date.
-     * 
-     * @param requiredUser
-     * @param requiredUserEventType
-     * @param date
-     * 
-     * @see UserEventType
-     */
-    public static UserLog userLogFactory(User requiredUser, UserEventType requiredUserEventType, Date date) {
-        assertNotNull(requiredUser);
-        assertNotNull(requiredUserEventType);
-        UserLog userLog = new UserLog();
-        
-        userLog.setUser(requiredUser);
-        if (date==null) {
-            date = currentDate();
-        }
-        userLog.setLastEvent(date);
-        userLog.setEventType(requiredUserEventType.getValue());
-        if (requiredUserEventType.equals(UserEventType.LOGIN_SUCCESS)) {
-            ((Identity) requiredUser.getIdentity()).setLastLogin(date);
-        }
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created: "+userLog);
-        }
-        return userLog;
-    }
-    
-    /**
-     * Default <code>UserRole</code> creator.
-     * 
-     * @param requiredUser
-     * @param requiredService
-     * @param serviceExtension
-     */
-    public static UserRole userRoleFactory(UserGroup requiredUser, Service requiredService, String serviceExtension) {
-        assertNotNull(requiredUser);
-        assertNotNull(requiredService);
-        UserRole userRole = new UserRole();
-        
-        userRole.setUserGroup(requiredUser);
-        userRole.setService(requiredService);
-        userRole.setServiceExtension(serviceExtension);
-        requiredUser.getRoles().add(userRole);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created: "+userRole);
-        }
-        return userRole;
-    }
-    
 }
