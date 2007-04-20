@@ -16,21 +16,17 @@
 package org.helianto.core.hibernate;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.test.AuthorizationTestSupport;
-import org.helianto.core.test.UserLogTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
 /**
@@ -154,39 +150,6 @@ public class AuthorizationDaoImplTests extends AuthorizationTestSupport {
 //            assertEquals(user.getEntity(), u.getEntity());
 //        }
     }
-    
-    // userLog
-    
-    public void testFindLastUserLog() {
-        User user = createUser();
-        Date date = new Date(Long.MAX_VALUE);
-        UserLog lastUserLog = UserLogTestSupport.createUserLog(user, date);
-        authorizationDao.persistUserLog(lastUserLog);
-        List<UserLog> userLogList = UserLogTestSupport.createUserLogList(10);
-        for (UserLog userLog: userLogList) {
-            userLog.getUser().setIdentity(lastUserLog.getUser().getIdentity());
-            authorizationDao.persistUserLog(userLog);
-        }
-        authorizationDao.flush();
-        authorizationDao.clear();
-        assertEquals(lastUserLog, authorizationDao.findLastUserLog(lastUserLog.getUser().getIdentity()));
-        
-    }
-    
-    public void testFindUserLogByUser() {
-        List<UserLog> userLogList = UserLogTestSupport.createUserLogList(10);
-        userLogList.addAll(UserLogTestSupport.createUserLogList(10));
-        for (UserLog userLog: userLogList) {
-            authorizationDao.persistUserLog(userLog);
-        }
-        UserLog userLog = userLogList.get((int) (Math.random()*userLogList.size()));
-        List<UserLog> resultUserLog = authorizationDao.findUserLogByUser(userLog.getUser());
-        assertEquals(10, resultUserLog.size());
-        for(UserLog u: resultUserLog) {
-            assertEquals(userLog.getUser(), u.getUser());
-        }
-    }
-
     
     //~ collaborator mutators
     
