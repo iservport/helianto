@@ -42,7 +42,7 @@ public class CredentialValidatorTests extends TestCase {
     public void setUp() {
         Identity identity = new Identity();
         identity.setPrincipal("ABC");
-        credential = AuthenticationCreator.credentialFactory(identity, "empty");
+        credential = Credential.credentialFactory(identity, "empty");
         credentialValidator = new CredentialValidator();
         errors = new BindException(credential, "credential");
     }

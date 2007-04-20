@@ -22,6 +22,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
+import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -35,13 +36,14 @@ import org.springframework.util.Assert;
 public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
     
     private UserLogDao userLogDao;
+    private CredentialDao credentialDao;
 
 	public Identity findIdentityByPrincipal(String principal) {
 		return authenticationDao.findIdentityByPrincipal(principal);
 	}
 
 	public Credential findCredentialByIdentity(Identity identity) {
-		return authenticationDao.findCredentialByIdentity(identity);
+		return credentialDao.findCredentialByNaturalId(identity);
 	}
 
 	public UserLog findLastUserLog(Identity identity) {
@@ -96,6 +98,10 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
 
     public void setUserLogDao(UserLogDao userLogDao) {
         this.userLogDao = userLogDao;
+    }
+    
+    public void setCredentialDao(CredentialDao credentialDao) {
+        this.credentialDao = credentialDao;
     }
     
 }

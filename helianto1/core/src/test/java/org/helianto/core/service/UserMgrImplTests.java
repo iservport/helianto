@@ -35,6 +35,7 @@ import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.hibernate.filter.IdentityFilter;
@@ -101,11 +102,11 @@ public class UserMgrImplTests extends TestCase {
     public void testPersistCredential() {
         Credential credential = new Credential();
         
-        authenticationDao.persistCredential(credential);
-        replay(authenticationDao);
+        credentialDao.persistCredential(credential);
+        replay(credentialDao);
         
         userMgr.persistCredential(credential);
-        verify(authenticationDao);
+        verify(credentialDao);
     }
     
     public void testUserState() {
@@ -160,6 +161,7 @@ public class UserMgrImplTests extends TestCase {
     private AuthenticationDao authenticationDao;
     private AuthorizationDao authorizationDao;
     private InternalEnumeratorDao internalEnumeratorDao;
+    private CredentialDao credentialDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
     
     @Override
@@ -172,12 +174,17 @@ public class UserMgrImplTests extends TestCase {
         userMgr.setAuthorizationDao(authorizationDao);
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
         userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
+        credentialDao = createMock(CredentialDao.class);
+        userMgr.setCredentialDao(credentialDao);
+
     }
     
     @Override
     public void tearDown() {
         reset(authenticationDao);
         reset(authorizationDao);
+        reset(internalEnumeratorDao);
+        reset(credentialDao);
         reset(identitySelectionStrategy);
     }
     

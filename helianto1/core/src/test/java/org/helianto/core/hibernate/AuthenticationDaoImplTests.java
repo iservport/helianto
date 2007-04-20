@@ -18,7 +18,6 @@ package org.helianto.core.hibernate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
@@ -113,65 +112,6 @@ public class AuthenticationDaoImplTests extends AuthenticationTestSupport {
         assertFalse(all.contains(identity));
     }
 
-    /*
-     * Credential tests 
-     */
-    
-    public void testPersistCredential() {
-        //write
-        Credential credential = createAndPersistCredential(authenticationDao);
-        hibernateTemplate.flush();
-        //read
-        assertEquals(credential,  authenticationDao.findCredentialByIdentity(credential.getIdentity()));
-    }
-    
-    public void testFindCredential() {
-        // write list
-        int i = 10;
-        List<Credential> credentialList = createAndPersistCredentialList(hibernateTemplate, i);
-        assertEquals(i, credentialList.size());
-        // read
-        Credential credential = credentialList.get((int) Math.random()*i);
-        assertEquals(credential,  authenticationDao.findCredentialByIdentity(credential.getIdentity()));
-    }
-
-    public void testCredentialErrors() {
-        try {
-            authenticationDao.persistCredential(null); fail();
-       } catch (IllegalArgumentException e) { 
-       } catch (Exception e) { fail(); }
-       try {
-           authenticationDao.findCredentialByIdentity(null); fail();
-      } catch (IllegalArgumentException e) { 
-      } catch (Exception e) { fail(); }
-    }
-
-    public void testCredentialDuplicate() {
-        // write
-        Credential credential = createAndPersistCredential(authenticationDao);
-        hibernateTemplate.clear();
-        // duplicate
-        try {
-            hibernateTemplate.save(credential); fail();
-        } catch (DataIntegrityViolationException e) { 
-        } catch (Exception e) { fail(); }
-    }
-    
-    public void testRemoveCredential() {
-        // bulk write
-        int i = 10;
-        List<Credential> credentialList = createAndPersistCredentialList(hibernateTemplate, i);
-        assertEquals(i, credentialList.size());
-        // remove
-        Credential credential = credentialList.get((int) Math.random()*i);
-        authenticationDao.removeCredential(credential);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        // read
-        List<Credential> all = (ArrayList<Credential>) hibernateTemplate.find("from Credential");
-        assertEquals(i-1, all.size());
-        assertFalse(all.contains(credential));
-    }
     //~ collaborator mutators
     
     public void setAuthenticationDao(AuthenticationDao authenticationDao) {

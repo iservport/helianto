@@ -22,6 +22,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.CredentialDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class AuthenticationTestSupport extends AbstractHibernateIntegrationTest {
@@ -67,11 +68,11 @@ public class AuthenticationTestSupport extends AbstractHibernateIntegrationTest 
         } catch(ArrayIndexOutOfBoundsException e) {
             identity = AuthenticationTestSupport.createIdentity();
         }
-        Credential credential = AuthenticationCreator.credentialFactory(identity, "");
+        Credential credential = Credential.credentialFactory(identity, "");
         return credential;
     }
 
-    public static Credential createAndPersistCredential(AuthenticationDao credentialDao) {
+    public static Credential createAndPersistCredential(CredentialDao credentialDao) {
         Credential credential = createCredential();
         if (credentialDao!=null) {
             credentialDao.persistCredential(credential);
@@ -91,7 +92,7 @@ public class AuthenticationTestSupport extends AbstractHibernateIntegrationTest 
         List<Identity> identities = createIdentityList(size);
         List<Credential> credentialList = new ArrayList<Credential>();
         for (Identity i: identities) {
-            credentialList.add(AuthenticationCreator.credentialFactory(i, ""));
+            credentialList.add(Credential.credentialFactory(i, ""));
         }
         return credentialList ;
     }

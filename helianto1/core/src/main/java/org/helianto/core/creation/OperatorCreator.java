@@ -100,7 +100,7 @@ public class OperatorCreator extends CreatorSupport {
         server.setRequiredEncription(Encription.PLAIN_PASSWORD.getValue());
         if (credential==null) {
             Identity identity = AuthenticationCreator.identityFactory("", "");
-            credential = AuthenticationCreator.credentialFactory(identity, "");
+            credential = Credential.credentialFactory(identity, "");
             credential.getIdentity().setPrincipal(serverName);
         } 
         server.setCredential(credential);

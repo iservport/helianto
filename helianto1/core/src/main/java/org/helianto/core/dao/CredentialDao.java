@@ -15,41 +15,39 @@
 
 package org.helianto.core.dao;
 
-import java.util.List;
+import org.helianto.core.Credential;
+import org.helianto.core.dao.CommonOrmDao;
+
 
 import org.helianto.core.Identity;
-import org.helianto.core.hibernate.filter.IdentityFilter;
 
 /**
- * Identity and Credential data access interface.
+ * <code>Credential</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface AuthenticationDao {
+public interface CredentialDao extends CommonOrmDao {
+     
+    /**
+     * Persist <code>Credential</code>.
+     */
+    public void persistCredential(Credential credential);
     
     /**
-     * Persists <code>Identity</code>.
+     * Merge <code>Credential</code>.
      */
-    public void persistIdentity(Identity identity);
-
+    public Credential mergeCredential(Credential credential);
+    
     /**
-     * Merges <code>Identity</code>.
+     * Remove <code>Credential</code>.
      */
-    public Identity mergeIdentity(Identity identity);
-
+    public void removeCredential(Credential credential);
+    
     /**
-     * Removes <code>Identity</code>.
+     * Find <code>Credential</code> by <code>Identity</code>.
      */
-    public void removeIdentity(Identity identity);
-
-    /**
-     * Finds <code>Identity</code> by principal.
-     */
-    public Identity findIdentityByPrincipal(String principal);
-
-    /**
-     * Finds <code>Identity</code> list by <code>IdentityFilter</code>.
-     */
-    public List<Identity> findIdentityByCriteria(IdentityFilter filter);
-
+    public Credential findCredentialByNaturalId(Identity identity);
+    
+    
+    
 }

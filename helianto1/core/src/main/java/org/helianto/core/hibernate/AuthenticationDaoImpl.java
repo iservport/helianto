@@ -18,12 +18,10 @@ package org.helianto.core.hibernate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.hibernate.filter.IdentityFilter;
-import org.springframework.util.Assert;
 
 /**
  * Hibernate implementation for <code>CredentialDao</code> interface.
@@ -69,36 +67,6 @@ public class AuthenticationDaoImpl extends GenericDaoImpl implements Authenticat
         List<Identity> identityList = (ArrayList<Identity>) find(IDENTITY_QRY + criteria);
         return identityList;
     }
-    
-	/*
-	 * Persist, remove and find credential
-	 */
-    
-    public void persistCredential(Credential credential) {
-        persist(credential);
-    }
-
-    public Credential mergeCredential(Credential credential) {
-        return (Credential) merge(credential);
-    }
-
-    public void removeCredential(Credential credential) {
-        remove(credential);
-    }
-
-    public Credential findCredentialByIdentity(Identity requiredIdentity) {
-    	Assert.notNull(requiredIdentity, "An identity is required");
-        if (logger.isDebugEnabled()) {
-            logger.debug("Finding credential using identity: "+requiredIdentity);
-        }
-        return (Credential) findUnique(CREDENTIAL_QRY, requiredIdentity.getId());
-    }
-        
-    static final String CREDENTIAL_QRY = 
-        "from Credential credential " +
-        "where credential.identity.id = ?";
-
-    //
     
     public void init() {
         if (identitySelectionStrategy==null) {

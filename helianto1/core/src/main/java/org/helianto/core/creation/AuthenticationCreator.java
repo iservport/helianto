@@ -17,10 +17,8 @@ package org.helianto.core.creation;
 
 import java.util.HashSet;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Appellation;
 import org.helianto.core.Credential;
-import org.helianto.core.Encription;
 import org.helianto.core.Gender;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
@@ -92,32 +90,6 @@ public class AuthenticationCreator extends CreatorSupport {
         return identity;
     }
 
-    /**
-     * <code>Credential</code> created with current system 
-     * date, initially set as <code>INITIAL</code>.
-     * 
-     * @param requiredIdentity 
-     * @param password
-     * 
-     * @see CredentialState
-     */
-    public static Credential credentialFactory(Identity requiredIdentity, String password) {
-        Credential credential = new Credential();
-        assertNotNull(requiredIdentity);
-        credential.setIdentity(requiredIdentity);
-        credential.setPassword(password);
-        credential.setVerifyPassword("");
-        credential.setPasswordDirty(false);
-        credential.setLastModified(currentDate());
-        credential.setExpired(null);
-        credential.setCredentialState(ActivityState.INITIAL.getValue());
-        credential.setEncription(Encription.PLAIN_PASSWORD.getValue());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created: "+credential);
-        }
-        return credential;
-    }
-    
     /**
      * <code>PrivateKey</code> created with minumum requirements.
      * 

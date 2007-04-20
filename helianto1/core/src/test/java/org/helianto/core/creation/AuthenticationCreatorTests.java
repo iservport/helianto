@@ -17,18 +17,16 @@ package org.helianto.core.creation;
 
 import java.util.Date;
 
-import org.helianto.core.ActivityState;
+import junit.framework.TestCase;
+
 import org.helianto.core.Appellation;
 import org.helianto.core.Credential;
-import org.helianto.core.Encription;
 import org.helianto.core.Gender;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
 import org.helianto.core.Notification;
 import org.helianto.core.PersonalData;
 import org.helianto.core.PrivateKey;
-
-import junit.framework.TestCase;
 
 public class AuthenticationCreatorTests extends TestCase {
 
@@ -68,29 +66,11 @@ public class AuthenticationCreatorTests extends TestCase {
     }
 
     /*
-     * Test method for 'org.helianto.core.creation.AuthenticationCreator.credentialFactory(Identity, String)'
-     */
-    public void testCredentialFactory() {
-        AuthenticationCreator.currentDateNormalizer = new Date();
-        Identity identity = AuthenticationCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
-        Credential credential = AuthenticationCreator.credentialFactory(identity, "PASSWORD");
-        
-        assertSame(identity, credential.getIdentity());
-        assertEquals("PASSWORD", credential.getPassword());
-        assertEquals("", credential.getVerifyPassword());
-        assertFalse(credential.isPasswordDirty());
-        assertSame(AuthenticationCreator.currentDateNormalizer, credential.getLastModified());
-        assertNull(credential.getExpired());
-        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
-        assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
-    }
-
-    /*
      * Test method for 'org.helianto.core.creation.AuthenticationCreator.privateKeyFactory(Credential, String)'
      */
     public void testPrivateKeyFactory() {
         Identity identity = AuthenticationCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
-        Credential credential = AuthenticationCreator.credentialFactory(identity, "PASSWORD");
+        Credential credential = Credential.credentialFactory(identity, "PASSWORD");
         PrivateKey privateKey =  AuthenticationCreator.privateKeyFactory(credential, "KEY");
         
         assertSame(credential, privateKey.getCredential());

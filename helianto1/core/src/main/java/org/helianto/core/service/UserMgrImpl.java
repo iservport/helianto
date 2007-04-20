@@ -12,6 +12,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
+import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.hibernate.filter.IdentityFilter;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
 
@@ -21,6 +22,8 @@ import org.helianto.core.security.PublicUserDetailsSwitcher;
  * @author Mauricio Fernandes de Castro
  */
 public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
+    
+    private CredentialDao credentialDao;
 	
 	/* 
 	 * Create and persist Identity
@@ -45,7 +48,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 	 */
 
     public Credential createCredential(Identity identity) {
-        return AuthenticationCreator.credentialFactory(identity, "empty");
+        return Credential.credentialFactory(identity, "empty");
     }
 
     public Credential createCredentialAndIdentity() {
@@ -54,7 +57,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     }
 
 	public void persistCredential(Credential credential) {
-        authenticationDao.persistCredential(credential);
+        credentialDao.persistCredential(credential);
 	}
 
 	/* 
@@ -124,6 +127,10 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 //        } 
 //        secureUser.setUser(userDao.createAndPersistUserLog(newUser));
         return true;
+    }
+
+    public void setCredentialDao(CredentialDao credentialDao) {
+        this.credentialDao = credentialDao;
     }
     
 }

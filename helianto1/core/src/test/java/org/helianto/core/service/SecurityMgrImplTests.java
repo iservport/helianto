@@ -35,6 +35,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.test.SecurityTestSupport;
@@ -60,12 +61,12 @@ public class SecurityMgrImplTests extends TestCase {
         Identity identity = new Identity();
         Credential credential = new Credential();
         
-        expect(authenticationDao.findCredentialByIdentity(identity))
+        expect(credentialDao.findCredentialByNaturalId(identity))
             .andReturn(credential);
-        replay(authenticationDao);
+        replay(credentialDao);
         
         assertSame(credential, securityMgr.findCredentialByIdentity(identity));
-        verify(authenticationDao);
+        verify(credentialDao);
     }
 
     public void testFindLastUserLog() {
@@ -168,6 +169,7 @@ public class SecurityMgrImplTests extends TestCase {
     
     private AuthenticationDao authenticationDao;
     private AuthorizationDao authorizationDao;
+    private CredentialDao credentialDao;
     private UserLogDao userLogDao;
     
     //~ setup
@@ -179,6 +181,8 @@ public class SecurityMgrImplTests extends TestCase {
         securityMgr.setAuthenticationDao(authenticationDao);
         authorizationDao = createMock(AuthorizationDao.class);
         securityMgr.setAuthorizationDao(authorizationDao);
+        credentialDao = createMock(CredentialDao.class);
+        securityMgr.setCredentialDao(credentialDao);
         userLogDao = createMock(UserLogDao.class);
         securityMgr.setUserLogDao(userLogDao);
     }
@@ -187,6 +191,8 @@ public class SecurityMgrImplTests extends TestCase {
     public void tearDown() {
         reset(authenticationDao);
         reset(authorizationDao);
+        reset(credentialDao);
+        reset(userLogDao);
     }
 
 }
