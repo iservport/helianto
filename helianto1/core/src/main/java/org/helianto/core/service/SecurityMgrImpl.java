@@ -1,3 +1,18 @@
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.helianto.core.service;
 
 import java.util.Date;
@@ -7,11 +22,19 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
+import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.springframework.util.Assert;
 
+/**
+ * Default implementatio for <code>SecurityMgr</code> interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
+    
+    private UserLogDao userLogDao;
 
 	public Identity findIdentityByPrincipal(String principal) {
 		return authenticationDao.findIdentityByPrincipal(principal);
@@ -22,7 +45,7 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
 	}
 
 	public UserLog findLastUserLog(Identity identity) {
-		return authorizationDao.findLastUserLog(identity);
+		return userLogDao.findLastUserLog(identity);
 	}
     
     public void persistUserLog(User user, Date date) {
@@ -31,7 +54,7 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
             date = new Date();
         }
         UserLog userLog = UserLog.userLogFactory(user, date);
-        authorizationDao.persistUserLog(userLog);
+        userLogDao.persistUserLog(userLog);
         authenticationDao.persistIdentity(user.getIdentity());
     }
     
@@ -41,7 +64,7 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
             date = new Date();
         }
         UserLog userLog = UserLog.userLogFactory(user, date);
-        authorizationDao.mergeUserLog(userLog);
+        userLogDao.mergeUserLog(userLog);
     }
     
     public boolean isAutoCreateEnabled() {
@@ -69,6 +92,10 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
     
     public PublicUserDetails findSecureUser() {
         return UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
+    }
+
+    public void setUserLogDao(UserLogDao userLogDao) {
+        this.userLogDao = userLogDao;
     }
     
 }

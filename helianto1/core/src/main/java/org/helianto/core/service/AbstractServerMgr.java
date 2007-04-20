@@ -27,11 +27,13 @@ import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.dao.ServiceDao;
 
@@ -44,6 +46,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
 
     protected OperatorDao operatorDao;
     protected ServiceDao serviceDao;
+    protected EntityDao entityDao;
     
     protected AuthenticationDao authenticationDao;
     
@@ -54,21 +57,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         if (logger.isDebugEnabled()) {
             logger.debug("Created as default: "+defaultEntity);
         }
-        authorizationDao.persistEntity(defaultEntity);
-//        UserGroup adminGroup = findOrCreateUserGroup(defaultEntity, "ADMIN", new String[] {"MANAGER"});
-//        if (logger.isDebugEnabled()) {
-//            logger.debug("ADMIN group is: "+adminGroup);
-//        }
-//        UserGroup userGroup = findOrCreateUserGroup(defaultEntity, "USER", new String[] {"ALL", "DEL"});
-//        if (logger.isDebugEnabled()) {
-//            logger.debug("USER group is: "+userGroup);
-//        }
-//        User manager = AuthorizationCreator.userFactory(adminGroup,
-//                managerIdentity);
-//        AuthorizationCreator.createUserAssociation(userGroup, manager);
-//        if (logger.isDebugEnabled()) {
-//            logger.debug("Created manager (member of ADMIN, USER): "+manager);
-//        }
+        entityDao.persistEntity(defaultEntity);
         User manager = createManager(defaultEntity, managerIdentity);
         return manager;
     }
@@ -76,7 +65,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
     public Entity createDefaultEntity() {
         Operator operator = OperatorCreator.operatorFactory("DEFAULT",
                 OperationMode.LOCAL, Locale.getDefault());
-        return OperatorCreator.entityFactory(operator, "DEFAULT");
+        return Entity.entityFactory(operator, "DEFAULT");
     }
 
     public UserGroup findOrCreateUserGroup(Entity entity, String groupName) {
@@ -119,7 +108,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
                     .getOperator(), serviceName);
         }
         for (String extension: extensions) {
-            AuthorizationCreator.userRoleFactory(
+            UserRole.userRoleFactory(
                     userGroup, service, extension);
         }
         return userGroup;
@@ -151,6 +140,10 @@ public abstract class AbstractServerMgr implements ServerMgr {
 
     public void setServiceDao(ServiceDao serviceDao) {
         this.serviceDao = serviceDao;
+    }
+
+    public void setEntityDao(EntityDao entityDao) {
+        this.entityDao = entityDao;
     }
 
     public void setAuthenticationDao(AuthenticationDao authenticationDao) {
