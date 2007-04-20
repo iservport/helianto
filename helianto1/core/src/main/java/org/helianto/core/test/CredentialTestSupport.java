@@ -24,12 +24,14 @@ import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.dao.AuthenticationDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class CredentialTestSupport  extends EntityTestSupport {
+/**
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
+public class CredentialTestSupport  {
 
     public static Identity createIdentity() {
-        String principal = generateKey(20);
-        String optionalAlias = generateKey(20);
-        Identity identity = AuthenticationCreator.identityFactory(principal, optionalAlias);
+        Identity identity = AuthenticationCreator.identityFactory("", "");
         return identity;
     }
 

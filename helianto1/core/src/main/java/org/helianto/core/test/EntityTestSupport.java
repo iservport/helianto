@@ -1,36 +1,28 @@
-/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.helianto.core.test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Entity;
-import org.helianto.core.OperationMode;
+
+
 import org.helianto.core.Operator;
-import org.helianto.core.creation.OperatorCreator;
-import org.helianto.core.dao.EntityDao;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.helianto.core.test.OperatorTestSupport;
 
-public class EntityTestSupport extends AbstractHibernateIntegrationTest {
+import org.helianto.core.Entity;
 
-    private static int testKey = 1;
+/**
+ * Class to support <code>EntityDao</code> tests.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
+public class EntityTestSupport {
+
+    private static int testKey;
 
     /**
-     * Create test <code>Entity</code>.
+     * Test support method to create a <code>Entity</code>.
+     * @param operator optional Operator 
+     * @param alias optional String 
      */
     public static Entity createEntity(Object... args) {
         Operator operator;
@@ -39,34 +31,51 @@ public class EntityTestSupport extends AbstractHibernateIntegrationTest {
         } catch(ArrayIndexOutOfBoundsException e) {
             operator = OperatorTestSupport.createOperator();
         }
-        Entity entity = OperatorCreator.entityFactory(operator, generateKey(20, testKey++));
-        logger.info("+++ "+entity);
+        String alias;
+        try {
+            alias = (String) args[1];
+        } catch(ArrayIndexOutOfBoundsException e) {
+            alias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
+        }
+        Entity entity = Entity.entityFactory(operator, alias);
         return entity;
     }
 
-    public static Entity createAndPersistEntity(EntityDao entityDao) {
-        Entity entity = createEntity();
-        if (entityDao!=null) {
-            entityDao.persistEntity(entity);
-        }
-        return entity;
+    /**
+     * Test support method to create a <code>Entity</code> list.
+     *
+     * @param entityListSize
+     */
+    public static List<Entity> createEntityList(int entityListSize) {
+        return createEntityList(entityListSize, 1);
     }
 
-    public static List<Entity> createEntityList(int size) {
-        Operator operator = OperatorCreator.operatorFactory(generateKey(20, testKey++), OperationMode.LOCAL, null);
-        List<Entity> entities = new ArrayList<Entity>();
-        for (int i = 0; i<size; i++) {
-            entities.add(createEntity(operator));
-        }
-        return entities;
+    /**
+     * Test support method to create a <code>Entity</code> list.
+     *
+     * @param entityListSize
+     * @param operatorListSize
+     */
+    public static List<Entity> createEntityList(int entityListSize, int operatorListSize) {
+        List<Operator> operatorList = OperatorTestSupport.createOperatorList(operatorListSize);
+
+        return createEntityList(entityListSize, operatorList);
     }
 
-    public static List<Entity> createAndPersistEntityList(HibernateTemplate hibernateTemplate, int i) {
-        List<Entity> entityList = createEntityList(i);
-        hibernateTemplate.saveOrUpdateAll(entityList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
+    /**
+     * Test support method to create a <code>Entity</code> list.
+     *
+     * @param entityListSize
+     * @param operatorList
+     */
+    public static List<Entity> createEntityList(int entityListSize, List<Operator> operatorList) {
+        List<Entity> entityList = new ArrayList<Entity>();
+        for (Operator operator: operatorList) {
+            for (int i=0;i<entityListSize;i++) {
+                entityList.add(createEntity(operator));
+            }
+        }
         return entityList;
     }
-    
+
 }
