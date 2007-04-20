@@ -29,7 +29,7 @@ import org.helianto.core.UserRole;
 import org.helianto.core.dao.AuthorizationDao;
 import org.springframework.util.Assert;
 
-public class AuthorizationDaoImpl extends EntityDaoImpl implements AuthorizationDao  {
+public class AuthorizationDaoImpl extends GenericDaoImpl implements AuthorizationDao  {
 
     //userGroup
     
