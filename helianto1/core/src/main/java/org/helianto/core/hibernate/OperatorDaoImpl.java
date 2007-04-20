@@ -48,13 +48,13 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
         return (ArrayList<Operator>) find(OPERATOR_ALL_QRY);
     }
     
-    static String OPERATOR_ALL_QRY = "from Operator operator ";
+    static String OPERATOR_ALL_QRY = "select operator from Operator operator ";
 
     public Operator findOperatorByNaturalId(String operatorName) {
         return (Operator) findUnique(OPERATOR_QRY, operatorName);
     }
     
-    static String OPERATOR_QRY = "from Operator operator " +
+    static String OPERATOR_QRY = "select operator from Operator operator " +
             "where operator.operatorName = ? ";
     
     // server

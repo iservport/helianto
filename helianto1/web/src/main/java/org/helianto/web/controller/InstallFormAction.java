@@ -15,6 +15,8 @@
 
 package org.helianto.web.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.User;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
@@ -56,6 +58,9 @@ public class InstallFormAction extends FormAction {
      */
     public Event ifNew(RequestContext context) {
         if (serverMgr.findOperator().size()==0) {
+        	if (logger.isDebugEnabled()) {
+        		logger.debug("No operator present: new installation!");
+        	}
             return yes();
         }
         return no();
