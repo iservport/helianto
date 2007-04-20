@@ -28,8 +28,10 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.hibernate.AuthenticationDaoImplTests;
 import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.UserRoleTestSupport;
 
 public class UserDetailsAdapterTests extends TestCase {
     
@@ -99,7 +101,7 @@ public class UserDetailsAdapterTests extends TestCase {
         User user = AuthorizationTestSupport.createUser();
         Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
         user.setIdentity(credential.getIdentity());
-        UserRole userRole = AuthorizationTestSupport.createUserRole();
+        UserRole userRole = UserRoleTestSupport.createUserRole();
         String conv = "ROLE_"+userRole.getService().getServiceName()+"_"+userRole.getServiceExtension();
         assertEquals(conv, new UserDetailsAdapter(user, credential).convertUserRoleToString(userRole));
     }
@@ -107,9 +109,12 @@ public class UserDetailsAdapterTests extends TestCase {
     //
     
     public void testGrantedAuthorities() {
-        int i = 4, e = 3, d = 4, s = 3;
-        List<UserRole> userRoleList = AuthorizationTestSupport.createUserRoleList(i, e, d, s);
-        User user = (User) userRoleList.get((int) Math.random()*userRoleList.size()).getUserGroup();
+        int i = 4, g = 4, s = 3;
+        List<UserRole> userRoleList = UserRoleTestSupport.createUserRoleList(i, g, s);
+        UserGroup userGroup = userRoleList.get((int) Math.random()*userRoleList.size()).getUserGroup();
+        System.out.println(userGroup);
+        User user = AuthorizationTestSupport.createUser();
+        AuthorizationCreator.createUserAssociation(userGroup, user);
         Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
         user.setIdentity(credential.getIdentity());
         UserDetailsAdapter userDetails = new UserDetailsAdapter(user, credential);

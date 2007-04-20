@@ -35,6 +35,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.test.SecurityTestSupport;
 
@@ -71,12 +72,12 @@ public class SecurityMgrImplTests extends TestCase {
         Identity identity = new Identity();
         UserLog userLog = new UserLog();
         
-        expect(authorizationDao.findLastUserLog(identity))
+        expect(userLogDao.findLastUserLog(identity))
             .andReturn(userLog);
-        replay(authorizationDao);
+        replay(userLogDao);
         
         assertSame(userLog, securityMgr.findLastUserLog(identity));
-        verify(authorizationDao);
+        verify(userLogDao);
     }
 
     public void testPersistUserLogError() {
@@ -93,13 +94,13 @@ public class SecurityMgrImplTests extends TestCase {
         User user = new User();
         user.setIdentity(identity);
         
-        authorizationDao.persistUserLog(isA(UserLog.class));
-        replay(authorizationDao);
+        userLogDao.persistUserLog(isA(UserLog.class));
+        replay(userLogDao);
         authenticationDao.persistIdentity(user.getIdentity());
         replay(authenticationDao);
         
         securityMgr.persistUserLog(user,date);
-        verify(authorizationDao);
+        verify(userLogDao);
         verify(authenticationDao);
         assertSame(date, identity.getLastLogin());
     }
@@ -109,14 +110,14 @@ public class SecurityMgrImplTests extends TestCase {
         User user = new User();
         user.setIdentity(identity);
         
-        authorizationDao.persistUserLog(isA(UserLog.class));
-        replay(authorizationDao);
+        userLogDao.persistUserLog(isA(UserLog.class));
+        replay(userLogDao);
         authenticationDao.persistIdentity(user.getIdentity());
         replay(authenticationDao);
         
         Date date = new Date();
         securityMgr.persistUserLog(user,null);
-        verify(authorizationDao);
+        verify(userLogDao);
         verify(authenticationDao);
         assertTrue(Math.abs(date.getTime() - identity.getLastLogin().getTime()) < 1000);
     }
@@ -167,6 +168,7 @@ public class SecurityMgrImplTests extends TestCase {
     
     private AuthenticationDao authenticationDao;
     private AuthorizationDao authorizationDao;
+    private UserLogDao userLogDao;
     
     //~ setup
     
@@ -177,6 +179,8 @@ public class SecurityMgrImplTests extends TestCase {
         securityMgr.setAuthenticationDao(authenticationDao);
         authorizationDao = createMock(AuthorizationDao.class);
         securityMgr.setAuthorizationDao(authorizationDao);
+        userLogDao = createMock(UserLogDao.class);
+        securityMgr.setUserLogDao(userLogDao);
     }
     
     @Override

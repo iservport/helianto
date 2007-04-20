@@ -52,7 +52,7 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
         if (operator==null) {
             operator = OperatorCreator.operatorFactory("DEFAULT", OperationMode.LOCAL, null);
         }
-        Entity entity = OperatorCreator.entityFactory(operator, entityName );
+        Entity entity = Entity.entityFactory(operator, entityName );
         
         Identity identity = AuthenticationCreator.identityFactory(principal, optionalALias);
         User manager = serverMgr.createManager(entity, identity);

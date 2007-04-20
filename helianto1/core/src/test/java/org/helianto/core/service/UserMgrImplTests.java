@@ -36,6 +36,7 @@ import org.helianto.core.User;
 import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
+import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.hibernate.filter.IdentityFilter;
 import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.AuthorizationTestSupport;
@@ -133,13 +134,13 @@ public class UserMgrImplTests extends TestCase {
         enumerator.setLastNumber(10);
         Entity entity = new Entity();
         
-        expect(authorizationDao.findInternalEnumerator(entity, "TYPE_NAME"))
+        expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(entity, "TYPE_NAME"))
             .andReturn(enumerator);
-        authorizationDao.persistInternalEnumerator(enumerator);
-        replay(authorizationDao);
+        internalEnumeratorDao.persistInternalEnumerator(enumerator);
+        replay(internalEnumeratorDao);
         
         assertEquals(10, userMgr.findNextInternalNumber(entity, "TYPE_NAME"));
-        verify(authorizationDao);
+        verify(internalEnumeratorDao);
         assertEquals(11, enumerator.getLastNumber());
     }
     
@@ -147,17 +148,18 @@ public class UserMgrImplTests extends TestCase {
         InternalEnumerator enumerator = null;
         Entity entity = new Entity();
         
-        expect(authorizationDao.findInternalEnumerator(entity, "TYPE_NAME"))
+        expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(entity, "TYPE_NAME"))
             .andReturn(enumerator);
-        authorizationDao.persistInternalEnumerator(isA(InternalEnumerator.class));
-        replay(authorizationDao);
+        internalEnumeratorDao.persistInternalEnumerator(isA(InternalEnumerator.class));
+        replay(internalEnumeratorDao);
         
         assertEquals(1, userMgr.findNextInternalNumber(entity, "TYPE_NAME"));
-        verify(authorizationDao);
+        verify(internalEnumeratorDao);
     }
     
     private AuthenticationDao authenticationDao;
     private AuthorizationDao authorizationDao;
+    private InternalEnumeratorDao internalEnumeratorDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
     
     @Override
@@ -168,6 +170,8 @@ public class UserMgrImplTests extends TestCase {
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setAuthenticationDao(authenticationDao);
         userMgr.setAuthorizationDao(authorizationDao);
+        internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
+        userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
     }
     
     @Override
