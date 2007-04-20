@@ -28,11 +28,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-
-import org.helianto.core.User;
 /**
  * Represent the memory of main user actions, as
  * login, logout, and so forth.
+ *
+ * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
 @Table(name="core_userlog",
@@ -44,6 +44,7 @@ public class UserLog implements java.io.Serializable {
     private int id;
     private User user;
     private Date lastEvent;
+
     private int eventType;
 
     /** default constructor */
@@ -63,7 +64,7 @@ public class UserLog implements java.io.Serializable {
      * User getter.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="userId")
+    @JoinColumn(name="userId", nullable=true)
     public User getUser() {
         return this.user;
     }
@@ -111,8 +112,8 @@ public class UserLog implements java.io.Serializable {
         UserLog userLog = new UserLog();
         userLog.setUser(user);
         userLog.setLastEvent(lastEvent);
-        user.getIdentity().setLastLogin(lastEvent);
-        userLog.setEventType(UserEventType.LOGIN_SUCCESS.getValue());
+        userLog.setEventType(EventType.LOGIN_ATTEMPT.getValue());
+        userLog.getUser().getIdentity().setLastLogin(lastEvent);
         return userLog;
     }
 
@@ -121,7 +122,7 @@ public class UserLog implements java.io.Serializable {
      */
     @Transient
     public static String getUserLogNaturalIdQueryString() {
-        return "select userLog from UserLog userLog where userLog.user = :user and userLog.lastEvent = :lastEvent ";
+        return "select userLog from UserLog userLog where userLog.user = ? and userLog.lastEvent = ? ";
     }
 
     /**

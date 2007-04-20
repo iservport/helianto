@@ -23,6 +23,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -101,6 +102,31 @@ public class UserRole  implements java.io.Serializable {
     }
 
     /**
+     * Default <code>UserRole</code> creator.
+     * 
+     * @param user
+     * @param service
+     * @param serviceExtension
+     */
+    public static UserRole userRoleFactory(UserGroup user, Service service, String serviceExtension) {
+        UserRole userRole = new UserRole();
+        
+        userRole.setUserGroup(user);
+        userRole.setService(service);
+        userRole.setServiceExtension(serviceExtension);
+        user.getRoles().add(userRole);
+        return userRole;
+    }
+    
+    /**
+     * <code>UserRole</code> natural id query.
+     */
+    @Transient
+    public static String getUserRoleNaturalIdQueryString() {
+        return "select userRole from UserRole userRole where userRole.userGroup = ? and userRole.service = ? and userRole.serviceExtension = ? ";
+    }
+
+    /**
      * toString
      * @return String
      */
@@ -135,8 +161,7 @@ public class UserRole  implements java.io.Serializable {
          result = 37 * result + ( getService() == null ? 0 : this.getService().hashCode() );
          result = 37 * result + ( getServiceExtension() == null ? 0 : this.getServiceExtension().hashCode() );
          return result;
-   }   
-
+   }
 
 }
 

@@ -15,26 +15,27 @@
 
 package org.helianto.core;
 
+
 /**
- * User event types.
+ * Event types.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum UserEventType {
-    
-    LOGIN_FAILURE((byte) 0),
-    LOGIN_SUCCESS((byte) 1),
-    LOGOUT_TIMEOUT((byte) 2),
-    LOGOUT_SUCCESS((byte) 3);
-    
-    private byte value;
+public enum EventType {
 
-    private UserEventType(byte value) {
+    LOGIN_ATTEMPT(-1),
+    LOGIN(0),
+    CREATE(1),
+    UPDATE(2),
+    REMOVE(3);
+    
+    private int value;
+    
+    private EventType(int value) {
         this.value = value;
     }
-
-    public byte getValue() {
-        return value;
+    public int getValue() {
+        return this.value;
     }
 
 }
