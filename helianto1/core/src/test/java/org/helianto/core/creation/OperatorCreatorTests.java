@@ -22,12 +22,8 @@ import junit.framework.TestCase;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Encription;
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.Individual;
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
-import org.helianto.core.Organization;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
 
@@ -86,45 +82,7 @@ public class OperatorCreatorTests extends TestCase {
         assertSame("", server.getCredential().getPassword());
     }
 
-    /*
-     * Test method for 'org.helianto.core.creation.BaseCreator.entityFactory(Operator, String)'
-     */
-    public void testEntityFactory() {
-        Operator operator = new Operator();
-        Entity entity = OperatorCreator.entityFactory(operator, "ALIAS");
-
-        assertSame(operator, entity.getOperator());
-        assertEquals("ALIAS", entity.getAlias());
-    }
-
-    /*
-     * Test method for 'org.helianto.core.creation.BaseCreator.organizationFactory(Operator, String, String)'
-     */
-    public void testOrganizationFactory() {
-        Operator operator = new Operator();
-        Organization organization = OperatorCreator.organizationFactory(operator, "ALIAS", "BUSINESS");
-
-        assertSame(operator, organization.getOperator());
-        assertEquals("ALIAS", organization.getAlias());
-        assertTrue(organization instanceof Entity);
-        assertEquals("BUSINESS", organization.getBusinessName());
-    }
-
-    /*
-     * Test method for 'org.helianto.core.creation.BaseCreator.individualFactory(Operator, Identity)'
-     */
-    public void testIndividualFactory() {
-        Operator operator = new Operator();
-        Identity identity = new Identity();
-        Individual individual = OperatorCreator.individualFactory(operator, identity);
-
-        assertSame(operator, individual.getOperator());
-        assertSame(identity, individual.getIdentity());
-        assertEquals(identity.getPrincipal(), individual.getAlias());
-        assertTrue(individual instanceof Entity);
-    }
-
-    /*
+   /*
      * Assertion errors
      */
     public void testErrors() {
@@ -134,22 +92,6 @@ public class OperatorCreatorTests extends TestCase {
         } catch (Exception e) { fail(); }
         try {
             OperatorCreator.provinceFactory(null, "", ""); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            OperatorCreator.entityFactory(null, ""); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            OperatorCreator.organizationFactory(null, "", ""); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            OperatorCreator.individualFactory(null, new Identity()); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            OperatorCreator.individualFactory(new Operator(), null); fail();
         } catch (IllegalArgumentException e) {
         } catch (Exception e) { fail(); }
     }

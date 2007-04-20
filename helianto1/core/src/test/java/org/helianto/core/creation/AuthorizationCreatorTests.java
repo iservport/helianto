@@ -15,20 +15,14 @@
 
 package org.helianto.core.creation;
 
-import java.util.Date;
-
 import junit.framework.TestCase;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
-import org.helianto.core.UserEventType;
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
-import org.helianto.core.UserRole;
 
 /**
  * 
@@ -47,15 +41,6 @@ public class AuthorizationCreatorTests extends TestCase {
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
         assertEquals(0, user.getParents().size());
         assertEquals(0, user.getRoles().size());
-    }
-
-    public void testUserFactoryEntityIdentityDefaults() {
-        Entity entity = new Entity();
-        User user = AuthorizationCreator.userFactory(entity, null);
-        
-        assertSame(entity, user.getEntity());
-        assertEquals("", user.getIdentity().getPrincipal());
-        assertEquals("", user.getIdentity().getOptionalAlias());
     }
 
     public void testUserFactoryUserGroupIdentity() {
@@ -114,66 +99,4 @@ public class AuthorizationCreatorTests extends TestCase {
         } catch (Exception e) { fail(); }
     }
 
-    public void testUserLogFactory() {
-        User user = new User();
-        Date date = new Date();
-        UserLog userLog = AuthorizationCreator.userLogFactory(user, UserEventType.LOGOUT_TIMEOUT, date);
-        
-        assertSame(user, userLog.getUser());
-        assertSame(date, userLog.getLastEvent());
-        assertEquals(UserEventType.LOGOUT_TIMEOUT.getValue(), userLog.getEventType());
-    }
-
-    public void testUserLogFactoryNullDate() {
-        // TODO use currentDate()
-        User user = AuthorizationCreator.userFactory(new Entity(), new Identity());
-        Date date = new Date();
-        UserLog userLog = AuthorizationCreator.userLogFactory(user, UserEventType.LOGIN_FAILURE, null);
-        assertSame(user, userLog.getUser());
-        assertTrue(Math.abs(date.getTime() - userLog.getLastEvent().getTime()) < 1000);
-    }
-    
-    public void testUserLogFactoryError() {
-        try {
-            AuthorizationCreator.userLogFactory(null, null, null); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            AuthorizationCreator.userLogFactory(new User(), null, null); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            AuthorizationCreator.userLogFactory(null, UserEventType.LOGIN_FAILURE, null); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-    }
-
-    /*
-     * Test method for 'org.helianto.core.creation.AuthorizationCreator.userRoleFactory(User, Service, String)'
-     */
-    public void testUserRoleFactory() {
-        Service service = new Service();
-        User user = new User();
-        UserRole userRole = AuthorizationCreator.userRoleFactory(user, service, "EXT");
-        
-        assertSame(service, userRole.getService());
-        assertSame(user, userRole.getUserGroup());
-        assertEquals("EXT", userRole.getServiceExtension());
-        assertTrue(user.getRoles().contains(userRole));
-    }
-
-    public void testUserRoleFactoryError() {
-        try {
-            AuthorizationCreator.userRoleFactory(null, new Service(), ""); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            AuthorizationCreator.userRoleFactory(new User(), null, ""); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            AuthorizationCreator.userRoleFactory(new User(), new Service(), null);
-        } catch (Exception e) { fail(); }
-    }
-    
 }
