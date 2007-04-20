@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
@@ -39,7 +38,7 @@ public class ResourceDaoImplParamTests extends AbstractProcesssIntegrationTest {
     
     public static ResourceParameter createAndPersistResourceParameter(ResourceDao resourceDao) {
         Unit unit = AbstractMaterialTest.createAndPersistUnit(null);
-        Entity entity = EntityTestSupport.createAndPersistEntity(null);
+        Entity entity = EntityTestSupport.createEntity();
         ResourceParameter resourceParameter = ResourceCreatorImpl.resourceParameterFactory(entity, generateKey(20), unit);
         if (resourceDao!=null) {
             resourceDao.persistResourceParameter(resourceParameter);
