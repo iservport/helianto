@@ -15,38 +15,39 @@
 
 package org.helianto.core.dao;
 
-import org.helianto.core.Entity;
+import org.helianto.core.UserRole;
 import org.helianto.core.dao.CommonOrmDao;
 
 
-import org.helianto.core.Operator;
+import org.helianto.core.UserGroup;
+import org.helianto.core.Service;
 
 /**
- * <code>Entity</code> data access interface.
+ * <code>UserRole</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface EntityDao extends CommonOrmDao {
+public interface UserRoleDao extends CommonOrmDao {
      
     /**
-     * Persist <code>Entity</code>.
+     * Persist <code>UserRole</code>.
      */
-    public void persistEntity(Entity entity);
+    public void persistUserRole(UserRole userRole);
     
     /**
-     * Merge <code>Entity</code>.
+     * Merge <code>UserRole</code>.
      */
-    public Entity mergeEntity(Entity entity);
+    public UserRole mergeUserRole(UserRole userRole);
     
     /**
-     * Remove <code>Entity</code>.
+     * Remove <code>UserRole</code>.
      */
-    public void removeEntity(Entity entity);
+    public void removeUserRole(UserRole userRole);
     
     /**
-     * Find <code>Entity</code> by <code>Operator</code> and alias.
+     * Find <code>UserRole</code> by <code>UserGroup</code> and <code>Service</code> and serviceExtension.
      */
-    public Entity findEntityByNaturalId(Operator operator, String alias);
+    public UserRole findUserRoleByNaturalId(UserGroup userGroup, Service service, String serviceExtension);
     
     
     

@@ -20,12 +20,10 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Service;
-import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 
-public interface AuthorizationDao extends EntityDao, UserLogDao {
+public interface AuthorizationDao extends CommonOrmDao {
     
     // user group
 
@@ -53,18 +51,6 @@ public interface AuthorizationDao extends EntityDao, UserLogDao {
      * Finds <code>UserGroup</code> by  entity.
      */
     public List<UserGroup> findUserGroupByEntity(Entity entity);
-    
-    // user log additional dao
-    
-    /**
-     * Finds the last <code>UserLog</code>.
-     */
-    public UserLog findLastUserLog(Identity requiredIdentity);
-
-    /**
-     * Finds <code>UserLog</code> by user.
-     */
-    public List<UserLog> findUserLogByUser(User requiredUser);
     
     // user role
     

@@ -16,9 +16,14 @@
 package org.helianto.core.dao;
 
 import java.util.Date;
+import java.util.List;
+
+import org.helianto.core.Identity;
+import org.helianto.core.UserLog;
+import org.helianto.core.dao.CommonOrmDao;
+
 
 import org.helianto.core.User;
-import org.helianto.core.UserLog;
 
 /**
  * <code>UserLog</code> data access interface.
@@ -46,6 +51,16 @@ public interface UserLogDao extends CommonOrmDao {
      * Find <code>UserLog</code> by <code>User</code> and lastEvent.
      */
     public UserLog findUserLogByNaturalId(User user, Date lastEvent);
+    
+    /**
+     * Find <code>UserLog</code> by <code>User</code>.
+     */
+    public List<UserLog> findUserLogByUser(User user);
+
+    /**
+     * Find last <code>UserLog</code> by <code>Identity</code>.
+     */
+    public UserLog findLastUserLog(Identity identity);
     
     
     

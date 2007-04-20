@@ -15,38 +15,38 @@
 
 package org.helianto.core.dao;
 
-import org.helianto.core.Entity;
+import org.helianto.core.InternalEnumerator;
 import org.helianto.core.dao.CommonOrmDao;
 
 
-import org.helianto.core.Operator;
+import org.helianto.core.Entity;
 
 /**
- * <code>Entity</code> data access interface.
+ * <code>InternalEnumerator</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface EntityDao extends CommonOrmDao {
+public interface InternalEnumeratorDao extends CommonOrmDao {
      
     /**
-     * Persist <code>Entity</code>.
+     * Persist <code>InternalEnumerator</code>.
      */
-    public void persistEntity(Entity entity);
+    public void persistInternalEnumerator(InternalEnumerator internalEnumerator);
     
     /**
-     * Merge <code>Entity</code>.
+     * Merge <code>InternalEnumerator</code>.
      */
-    public Entity mergeEntity(Entity entity);
+    public InternalEnumerator mergeInternalEnumerator(InternalEnumerator internalEnumerator);
     
     /**
-     * Remove <code>Entity</code>.
+     * Remove <code>InternalEnumerator</code>.
      */
-    public void removeEntity(Entity entity);
+    public void removeInternalEnumerator(InternalEnumerator internalEnumerator);
     
     /**
-     * Find <code>Entity</code> by <code>Operator</code> and alias.
+     * Find <code>InternalEnumerator</code> by <code>Entity</code> and typeName.
      */
-    public Entity findEntityByNaturalId(Operator operator, String alias);
+    public InternalEnumerator findInternalEnumeratorByNaturalId(Entity entity, String typeName);
     
     
     
