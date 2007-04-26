@@ -29,6 +29,7 @@
 				<property name="identityDao" ref="identityDao"/>
 				<property name="credentialDao" ref="credentialDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
+				<property name="internalEnumeratorDao" ref="internalEnumeratorDao"/>
 			</bean>
 		</property>
 	</bean>
