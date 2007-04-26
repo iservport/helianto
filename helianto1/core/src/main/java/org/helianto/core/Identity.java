@@ -22,6 +22,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -170,7 +171,7 @@ public class Identity implements java.io.Serializable {
     /**
      * Users getter.
      */
-    @OneToMany(mappedBy = "identity", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "identity", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
     public Set<UserGroup> getUsers() {
         return this.users;
     }
