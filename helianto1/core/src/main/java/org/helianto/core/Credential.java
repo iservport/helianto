@@ -229,6 +229,7 @@ public class Credential implements java.io.Serializable {
      * toString
      * @return String
      */
+    @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
 
@@ -242,6 +243,7 @@ public class Credential implements java.io.Serializable {
    /**
     * equals
     */
+    @Override
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
@@ -254,6 +256,7 @@ public class Credential implements java.io.Serializable {
    /**
     * hashCode
     */
+    @Override
    public int hashCode() {
          int result = 17;
          result = 37 * result + ( getIdentity() == null ? 0 : this.getIdentity().hashCode() );

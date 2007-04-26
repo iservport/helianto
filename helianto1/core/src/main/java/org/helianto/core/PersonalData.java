@@ -1,79 +1,114 @@
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.helianto.core;
-// Generated 08/03/2007 19:38:51 by Hibernate Tools 3.2.0.beta8
 
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
- * 				
  * <p>
  * Personal data, if any.
  * </p>
- * 	
+ * 
  * @author Mauricio Fernandes de Castro
- * 				
- * 			
  */
-public class PersonalData  implements java.io.Serializable {
+@Embeddable
+public class PersonalData implements Serializable {
 
-    // Fields    
-
-     private String firstName;
-     private String lastName;
-     private char gender;
-     private int appellation;
-
-     // Constructors
+    private static final long serialVersionUID = 1L;
+    private String firstName;
+    private String lastName;
+    private char gender;
+    private int appellation;
 
     /** default constructor */
     public PersonalData() {
     }
 
-	/** minimal constructor */
-    public PersonalData(char gender, int appellation) {
-        this.gender = gender;
-        this.appellation = appellation;
-    }
-    /** full constructor */
-    public PersonalData(String firstName, String lastName, char gender, int appellation) {
-       this.firstName = firstName;
-       this.lastName = lastName;
-       this.gender = gender;
-       this.appellation = appellation;
-    }
-   
-    // Property accessors
+    /**
+     * FirstName getter.
+     */
+    @Column(length=32)
     public String getFirstName() {
         return this.firstName;
     }
-    
+    /**
+     * FirstName setter.
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
+    /**
+     * LastName getter.
+     */
+    @Column(length=32)
     public String getLastName() {
         return this.lastName;
     }
-    
+    /**
+     * LastName setter.
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    /**
+     * Gender getter.
+     */
     public char getGender() {
         return this.gender;
     }
-    
+    /**
+     * Gender setter.
+     */
     public void setGender(char gender) {
         this.gender = gender;
     }
+
+    /**
+     * Appellation getter.
+     */
     public int getAppellation() {
         return this.appellation;
     }
-    
+    /**
+     * Appellation setter.
+     */
     public void setAppellation(int appellation) {
         this.appellation = appellation;
     }
 
-
-
+    /**
+     * <code>PersonalData</code> is created by default with
+     * appellation and gender as <code>NOT_SUPPLIED</code>.
+     * 
+     * @see Appellation
+     * @see Gender
+     */
+    public static PersonalData personalDataFactory(String firstName, String lastName) {
+        PersonalData personalData = new PersonalData();
+        
+        personalData.setFirstName(firstName);
+        personalData.setLastName(lastName);
+        personalData.setAppellation(Appellation.NOT_SUPPLIED.getValue());
+        personalData.setGender(Gender.NOT_SUPPLIED.getValue());
+        return personalData;
+    }
 
 }
-
-
