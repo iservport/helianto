@@ -18,7 +18,7 @@ package org.helianto.web.view;
 import java.io.IOException;
 
 import org.helianto.core.IdentityType;
-import org.helianto.core.test.AuthenticationTestSupport;
+import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.web.test.FreeMarkerViewTestSupport;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -87,7 +87,7 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
     public void setUp() throws IOException, TemplateException, InstantiationException, IllegalAccessException {
         super.setUp();
         IdentityForm identityForm = new IdentityForm();
-        identityForm.setCredential(AuthenticationTestSupport.createCredential());
+        identityForm.setCredential(CredentialTestSupport.createCredential());
         identityForm.getCredential().getIdentity().setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
         identityForm.getCredential().getIdentity().getPersonalData().setFirstName("First Name");
         identityForm.getCredential().getIdentity().getPersonalData().setLastName("Last Name");

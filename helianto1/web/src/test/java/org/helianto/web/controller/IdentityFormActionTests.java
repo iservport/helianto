@@ -33,7 +33,7 @@ import org.helianto.core.Operator;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
-import org.helianto.core.test.AuthenticationTestSupport;
+import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.web.view.IdentityForm;
 import org.springframework.webflow.execution.Event;
@@ -113,7 +113,7 @@ public class IdentityFormActionTests extends TestCase {
         IdentityFormAction localIdentityFormAction = new IdentityFormAction();
         Operator operator = OperatorTestSupport.createOperator();
         context.getFlowScope().put("operator", operator);
-        Credential credential = AuthenticationTestSupport.createCredential();
+        Credential credential = CredentialTestSupport.createCredential();
         credential.getIdentity().setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
         form.setCredential(credential);
         

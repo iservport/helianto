@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Identity;
-import org.helianto.core.test.AuthenticationTestSupport;
+import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Contact;
 import org.helianto.partner.PartnerRegistry;
@@ -41,7 +41,7 @@ public class ContactTestSupport {
         try {
             identity = (Identity) args[2];
         } catch(ArrayIndexOutOfBoundsException e) {
-            identity = AuthenticationTestSupport.createIdentity();
+            identity = IdentityTestSupport.createIdentity();
         }
         Contact contact = Contact.contactFactory(partnerAssociation, sequence, identity);
         return contact;
