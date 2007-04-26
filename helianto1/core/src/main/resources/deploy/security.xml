@@ -46,7 +46,7 @@
 			</bean>
 		</property>
 		<property name="userResolutionStrategy">
-			<bean id="identityResolutionStrategy"
+			<bean id="userResolutionStrategy"
 				class="org.helianto.core.security.SimpleUserResolver">
 				<property name="securityMgr" ref="securityMgr"/>
 			</bean>
