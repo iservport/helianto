@@ -35,9 +35,10 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.creation.AuthorizationCreator;
-import org.helianto.core.hibernate.AuthenticationDaoImplTests;
 import org.helianto.core.service.SecurityMgr;
+import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserLogTestSupport;
 import org.springframework.dao.DataRetrievalFailureException;
 
@@ -51,7 +52,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     private IdentityResolutionStrategy identityResolutionStrategy;
     
     public void testLoadAndValidateCredential() {
-        Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
+        Credential credential = CredentialTestSupport.createCredential();
         credential.setIdentity(new Identity());
         
         expect(securityMgr.findCredentialByIdentity(credential.getIdentity()))
@@ -99,9 +100,9 @@ public class UserDetailsServiceImplTests extends TestCase {
     }
 
     public void testLoadOrCreateUser() {
-        Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
+        Credential credential = CredentialTestSupport.createCredential();
         Identity identity = credential.getIdentity();
-        User user = prepareSuccessfullLoadOrCreateUser(identity);;
+        User user = prepareSuccessfullLoadOrCreateUser(identity);
         
         assertSame(user, userDetailsService.loadOrCreateUser(identity));
         verify(securityMgr);
@@ -125,7 +126,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     }
 
     public void testLoadOrCreateUserFirstLogin() {
-        Identity identity = AuthenticationDaoImplTests.createAndPersistIdentity(null);
+        Identity identity = IdentityTestSupport.createIdentity();
         User user = prepareSuccessfullLoadOrCreateUserFirstLogin(identity, 3);
         
         assertSame(user.getIdentity(), userDetailsService.loadOrCreateUser(identity).getIdentity());
@@ -133,7 +134,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     }
 
     public void testLoadOrCreateUserNoUser() {
-        Identity identity = AuthenticationDaoImplTests.createAndPersistIdentity(null);
+        Identity identity = IdentityTestSupport.createIdentity();
         
         expect(securityMgr.findLastUserLog(identity))
             .andReturn(null);

@@ -18,14 +18,14 @@ package org.helianto.core.mail.compose;
 import java.util.HashSet;
 import java.util.Set;
 
+import junit.framework.TestCase;
+
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
-import org.helianto.core.test.AuthenticationTestSupport;
+import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-
-import junit.framework.TestCase;
 
 /**
  * 
@@ -52,7 +52,7 @@ public class BasicMailMessageComposerTests extends TestCase {
         PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm();
         Operator operator = OperatorTestSupport.createOperator();
         mailForm.setOperator(operator);
-        Credential credential = AuthenticationTestSupport.createCredential();
+        Credential credential = CredentialTestSupport.createCredential();
         credential.getIdentity().setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
         Set<Identity> identities = new HashSet<Identity>();
         identities.add(credential.getIdentity());

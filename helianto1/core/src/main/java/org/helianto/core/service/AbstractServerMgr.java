@@ -28,7 +28,6 @@ import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.AuthenticationDao;
@@ -71,7 +70,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
     public UserGroup findOrCreateUserGroup(Entity entity, String groupName) {
         Identity groupIdentity = authenticationDao.findIdentityByPrincipal(groupName);
         if (groupIdentity==null) {
-            groupIdentity = AuthenticationCreator.identityFactory(groupName, groupName);
+            groupIdentity = Identity.identityFactory(groupName, groupName);
             groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
             authenticationDao.persistIdentity(groupIdentity);
             if (logger.isDebugEnabled()) {

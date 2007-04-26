@@ -26,14 +26,14 @@ import junit.framework.TestCase;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
-import org.helianto.core.test.AuthenticationTestSupport;
+import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 
 public class MailFormTests extends TestCase {
     
     public void testMailForm() {
         Operator operator = OperatorTestSupport.createOperator();
-        Identity identity = AuthenticationTestSupport.createIdentity();
+        Identity identity = IdentityTestSupport.createIdentity();
         identity.setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
         MailForm mailForm = createMailForm(operator, identity);
         assertSame(operator, mailForm.getOperator());
@@ -53,7 +53,7 @@ public class MailFormTests extends TestCase {
         //create with organizational email
         MailForm mailForm = createMailForm();
         
-        Identity recipient = AuthenticationTestSupport.createIdentity();
+        Identity recipient = IdentityTestSupport.createIdentity();
         try {
         	Set<Identity> identities = new HashSet<Identity>();
             recipient.setIdentityType(IdentityType.NOT_ADDRESSABLE.getValue());
@@ -105,7 +105,7 @@ public class MailFormTests extends TestCase {
     
     public static MailForm createMailForm() {
         Operator operator = OperatorTestSupport.createOperator();
-        Identity identity = AuthenticationTestSupport.createIdentity();
+        Identity identity = IdentityTestSupport.createIdentity();
         identity.setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
         return createMailForm(operator, identity);
     }

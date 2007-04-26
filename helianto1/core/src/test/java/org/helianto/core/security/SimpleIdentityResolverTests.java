@@ -23,7 +23,7 @@ import static org.easymock.EasyMock.verify;
 
 import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.helianto.core.Identity;
-import org.helianto.core.hibernate.AuthenticationDaoImplTests;
+import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.service.SecurityMgr;
 
 import junit.framework.TestCase;
@@ -36,7 +36,7 @@ public class SimpleIdentityResolverTests extends TestCase {
     private SecurityMgr securityMgr;
     
     private Identity prepapreSuccessfullLoadAndValidate(String principal) {
-        Identity identity = AuthenticationDaoImplTests.createAndPersistIdentity(null);
+        Identity identity = IdentityTestSupport.createIdentity();
 
         expect(securityMgr.findIdentityByPrincipal(principal))
             .andReturn(identity);

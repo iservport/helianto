@@ -19,10 +19,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
-import org.helianto.core.User;
-import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.OperatorCreator;
-import org.helianto.core.service.ServerMgr;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 
 public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
@@ -54,8 +51,8 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
         }
         Entity entity = Entity.entityFactory(operator, entityName );
         
-        Identity identity = AuthenticationCreator.identityFactory(principal, optionalALias);
-        User manager = serverMgr.createManager(entity, identity);
+        Identity identity = Identity.identityFactory(principal, optionalALias);
+        serverMgr.createManager(entity, identity);
 
     }
 

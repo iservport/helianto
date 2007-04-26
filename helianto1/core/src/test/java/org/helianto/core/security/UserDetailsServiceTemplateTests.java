@@ -23,8 +23,8 @@ import org.acegisecurity.userdetails.UserDetails;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.hibernate.AuthenticationDaoImplTests;
 import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.CredentialTestSupport;
 
 public class UserDetailsServiceTemplateTests extends TestCase {
 
@@ -36,7 +36,7 @@ public class UserDetailsServiceTemplateTests extends TestCase {
     
     List<User> userList = AuthorizationTestSupport.createUserList(1, 1);
     User user = userList.get(0);
-    Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
+    Credential credential = CredentialTestSupport.createCredential();
     Identity identity = userList.get(0).getIdentity();
 
     public class UserDetailsServiceStub extends AbstractUserDetailsServiceTemplate {

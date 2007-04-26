@@ -19,13 +19,13 @@ import junit.framework.TestCase;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Operator;
-import org.helianto.core.test.AuthenticationTestSupport;
+import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 
 public class PasswordConfirmationMailFormTests extends TestCase {
 
     public void testMailForm() {
-        Credential credential = AuthenticationTestSupport.createCredential();
+        Credential credential = CredentialTestSupport.createCredential();
         PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm();
         mailForm.setCredential(credential);
         assertSame(credential, mailForm.getCredential());

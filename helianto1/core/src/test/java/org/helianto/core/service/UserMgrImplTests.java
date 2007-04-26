@@ -39,8 +39,9 @@ import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.hibernate.filter.IdentityFilter;
-import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.CredentialTestSupport;
+import org.helianto.core.test.IdentityTestSupport;
 
 public class UserMgrImplTests extends TestCase {
     
@@ -66,7 +67,7 @@ public class UserMgrImplTests extends TestCase {
         int size = 10;
         IdentityFilter filter = new IdentityFilter();
         String criteria = "criteria";
-        List<Identity> identityList = AuthenticationTestSupport.createIdentityList(size);
+        List<Identity> identityList = IdentityTestSupport.createIdentityList(size);
         List<Identity> exclusions = new ArrayList<Identity>();
         Identity excluded = identityList.get((int) (Math.random()*size));
         exclusions.add(excluded);
@@ -111,7 +112,7 @@ public class UserMgrImplTests extends TestCase {
     
     public void testUserState() {
         User user = AuthorizationTestSupport.createUser();
-        Credential credential = AuthenticationTestSupport.createCredential(user.getIdentity());
+        Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
         assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
         

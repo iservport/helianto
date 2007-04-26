@@ -15,17 +15,10 @@
 
 package org.helianto.core.creation;
 
-import java.util.Date;
-
 import junit.framework.TestCase;
 
-import org.helianto.core.Appellation;
 import org.helianto.core.Credential;
-import org.helianto.core.Gender;
 import org.helianto.core.Identity;
-import org.helianto.core.IdentityType;
-import org.helianto.core.Notification;
-import org.helianto.core.PersonalData;
 import org.helianto.core.PrivateKey;
 
 public class AuthenticationCreatorTests extends TestCase {
@@ -33,43 +26,11 @@ public class AuthenticationCreatorTests extends TestCase {
     /*
      * Test method for 'org.helianto.core.creation.AuthenticationCreator.personalDataFactory()'
      */
-    public void testPersonalDataFactory() {
-        PersonalData personalData = 
-            AuthenticationCreator.personalDataFactory();
-        
-        assertEquals("", personalData.getFirstName());
-        assertEquals("", personalData.getLastName());
-        assertEquals(Appellation.NOT_SUPPLIED.getValue(),
-                personalData.getAppellation());
-        assertEquals(Gender.NOT_SUPPLIED.getValue(),
-                personalData.getGender());
-    }
-
-    /*
-     * Test method for 'org.helianto.core.creation.AuthenticationCreator.identityFactory(String, String)'
-     */
-    public void testIdentityFactory() {
-        AuthenticationCreator.currentDateNormalizer = new Date();
-        Identity identity = AuthenticationCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
-        
-        assertEquals("PRINCIPAL", identity.getPrincipal());
-        assertEquals("OPTIONAL_ALIAS", identity.getOptionalAlias());
-        assertSame(AuthenticationCreator.currentDateNormalizer, identity.getCreated());
-        assertEquals(IdentityType.NOT_ADDRESSABLE.getValue(), identity.getIdentityType());
-        assertEquals(Notification.BY_REQUEST.getValue(), identity.getNotification());
-        assertEquals(Appellation.NOT_SUPPLIED.getValue(),
-                identity.getPersonalData().getAppellation());
-        assertEquals(Gender.NOT_SUPPLIED.getValue(),
-                identity.getPersonalData().getGender());
-        assertSame(AuthenticationCreator.currentDateNormalizer, identity.getLastLogin());
-        assertEquals(0, identity.getUsers().size());
-    }
-
     /*
      * Test method for 'org.helianto.core.creation.AuthenticationCreator.privateKeyFactory(Credential, String)'
      */
     public void testPrivateKeyFactory() {
-        Identity identity = AuthenticationCreator.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Identity identity = Identity.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
         Credential credential = Credential.credentialFactory(identity, "PASSWORD");
         PrivateKey privateKey =  AuthenticationCreator.privateKeyFactory(credential, "KEY");
         

@@ -29,18 +29,19 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.creation.AuthorizationCreator;
-import org.helianto.core.hibernate.AuthenticationDaoImplTests;
+import org.helianto.core.test.CredentialTestSupport;
+import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 
 public class UserDetailsAdapterTests extends TestCase {
     
     public void testUserDetailsAdapterError() {
-        Identity id1 = AuthenticationDaoImplTests.createAndPersistIdentity(null);
-        Identity id2 = AuthenticationDaoImplTests.createAndPersistIdentity(null);
+        Identity id1 = IdentityTestSupport.createIdentity();
+        Identity id2 = IdentityTestSupport.createIdentity();
         User user = AuthorizationTestSupport.createUser();
         user.setIdentity(id1);
-        Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
+        Credential credential = CredentialTestSupport.createCredential();
         credential.setIdentity(id2);
         // credential and user do not share a common identity
         // FIXME
@@ -65,7 +66,7 @@ public class UserDetailsAdapterTests extends TestCase {
 
     public void testAbstractUserDetailsAndInterfaces() {
         User user = AuthorizationTestSupport.createUser();
-        Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
+        Credential credential = CredentialTestSupport.createCredential();
         user.setIdentity(credential.getIdentity());
         UserDetails userDetails = new UserDetailsAdapter(user, credential);
         assertSame(user, ((PublicUserDetails) userDetails).getUser());
@@ -99,7 +100,7 @@ public class UserDetailsAdapterTests extends TestCase {
     
     public void testConvertUserRoleToString() {
         User user = AuthorizationTestSupport.createUser();
-        Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
+        Credential credential = CredentialTestSupport.createCredential();
         user.setIdentity(credential.getIdentity());
         UserRole userRole = UserRoleTestSupport.createUserRole();
         String conv = "ROLE_"+userRole.getService().getServiceName()+"_"+userRole.getServiceExtension();
@@ -115,7 +116,7 @@ public class UserDetailsAdapterTests extends TestCase {
         System.out.println(userGroup);
         User user = AuthorizationTestSupport.createUser();
         AuthorizationCreator.createUserAssociation(userGroup, user);
-        Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
+        Credential credential = CredentialTestSupport.createCredential();
         user.setIdentity(credential.getIdentity());
         UserDetailsAdapter userDetails = new UserDetailsAdapter(user, credential);
         GrantedAuthority[] authorities = userDetails.getAuthorities();
@@ -133,7 +134,7 @@ public class UserDetailsAdapterTests extends TestCase {
         assertEquals(e*d, userList.size());
         User user = userList.get((int) Math.random()*userList.size());
         assertEquals(e, user.getIdentity().getUsers().size());
-        Credential credential = AuthenticationDaoImplTests.createAndPersistCredential(null);
+        Credential credential = CredentialTestSupport.createCredential();
         credential.setIdentity(user.getIdentity());
         PublicUserDetailsSwitcher userDetails = new UserDetailsAdapter(user, credential);
         assertEquals(e, userDetails.getUsers().size());

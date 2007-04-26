@@ -10,7 +10,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.creation.AuthenticationCreator;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.hibernate.filter.IdentityFilter;
@@ -30,7 +29,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 	 */
 
     public Identity createEmptyIdentity() {
-		return AuthenticationCreator.identityFactory("", "");
+		return Identity.identityFactory("", "");
 	}
 
 	public void persistIdentity(Identity identity) {
