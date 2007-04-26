@@ -20,6 +20,10 @@
 	<!--
 			Dao implementation	
 	-->
+	<bean id="identityDao" 
+		class="org.helianto.core.orm.IdentityDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 	<bean id="credentialDao" 
 		class="org.helianto.core.orm.CredentialDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>

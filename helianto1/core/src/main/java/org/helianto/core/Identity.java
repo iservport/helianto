@@ -217,6 +217,14 @@ public class Identity implements java.io.Serializable {
     }
 
     /**
+     * <code>Identity</code> query all.
+     */
+    @Transient
+    public static String getIdentityQueryAllString() {
+        return "select identity from Identity identity ";
+    }
+
+    /**
      * <code>Identity</code> natural id query.
      */
     @Transient
