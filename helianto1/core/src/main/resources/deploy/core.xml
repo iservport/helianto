@@ -18,13 +18,6 @@
 <beans default-init-method="init">
 
 	<!--
-			Authentication dao implementation	
-	-->
-	<bean id="authenticationDao" 
-		class="org.helianto.core.hibernate.AuthenticationDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
 			Authorization dao implementation	
 	-->
 	<bean id="authorizationDao" 
@@ -43,7 +36,7 @@
 				<property name="operatorDao" ref="operatorDao"/>
 				<property name="entityDao" ref="entityDao"/>
 				<property name="serviceDao" ref="serviceDao"/>
-				<property name="authenticationDao" ref="authenticationDao"/>
+				<property name="identityDao" ref="identityDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
 				<property name="configurableMailSenderFactory" ref="configurableMailSenderFactory"/>
 				<property name="mailMessageComposer" ref="basicMailMessageComposer"/>
@@ -59,8 +52,8 @@
 		<property name="target">
 			<bean id="userTarget"
 				class="org.helianto.core.service.UserMgrImpl">
+				<property name="identityDao" ref="identityDao"/>
 				<property name="credentialDao" ref="credentialDao"/>
-				<property name="authenticationDao" ref="authenticationDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
 				<property name="internalEnumeratorDao" ref="internalEnumeratorDao"/>
 			</bean>

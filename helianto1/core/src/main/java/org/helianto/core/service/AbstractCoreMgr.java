@@ -19,9 +19,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
-import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
+import org.springframework.beans.factory.annotation.Required;
 
 /**
  * Core base class.
@@ -30,7 +31,7 @@ import org.helianto.core.dao.InternalEnumeratorDao;
  */
 public class AbstractCoreMgr {
 
-    protected AuthenticationDao authenticationDao;
+    protected IdentityDao identityDao;
     
     protected AuthorizationDao authorizationDao;
     protected InternalEnumeratorDao internalEnumeratorDao;
@@ -61,20 +62,22 @@ public class AbstractCoreMgr {
     //
     
     public void init() {
-        if (authenticationDao==null) throw new IllegalArgumentException("AuthenticationDao property required");
-        if (authorizationDao==null) throw new IllegalArgumentException("AuthorizationDao property required");
+    	// see @Required
     }
     
     //~ collaborators
 
-    public void setAuthenticationDao(AuthenticationDao authenticationDao) {
-        this.authenticationDao = authenticationDao;
+    @Required
+    public void setIdentityDao(IdentityDao identityDao) {
+        this.identityDao = identityDao;
     }
 
+    @Required
     public void setAuthorizationDao(AuthorizationDao authorizationDao) {
         this.authorizationDao = authorizationDao;
     }
 
+    @Required
     public void setInternalEnumeratorDao(InternalEnumeratorDao internalEnumeratorDao) {
         this.internalEnumeratorDao = internalEnumeratorDao;
     }

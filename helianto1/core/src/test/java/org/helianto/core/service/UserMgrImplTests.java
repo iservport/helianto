@@ -33,7 +33,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
-import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
@@ -56,11 +56,11 @@ public class UserMgrImplTests extends TestCase {
     public void testPersistIdentity() {
         Identity identity = new Identity();
         
-        authenticationDao.persistIdentity(identity);
-        replay(authenticationDao);
+        identityDao.persistIdentity(identity);
+        replay(identityDao);
         
         userMgr.persistIdentity(identity);
-        verify(authenticationDao);
+        verify(identityDao);
     }
     
     public void testSelectIdentities() {
@@ -76,12 +76,12 @@ public class UserMgrImplTests extends TestCase {
             .andReturn(criteria);
         replay(identitySelectionStrategy);
         
-        expect(authenticationDao.findIdentityByCriteria(filter))        
+        expect(identityDao.findIdentityByCriteria(filter))        
             .andReturn(identityList);
-        replay(authenticationDao);
+        replay(identityDao);
 
         assertSame(identityList, userMgr.findIdentities(filter, exclusions));
-        verify(authenticationDao);
+        verify(identityDao);
         
         assertFalse(identityList.contains(excluded));
     }
@@ -159,7 +159,7 @@ public class UserMgrImplTests extends TestCase {
         verify(internalEnumeratorDao);
     }
     
-    private AuthenticationDao authenticationDao;
+    private IdentityDao identityDao;
     private AuthorizationDao authorizationDao;
     private InternalEnumeratorDao internalEnumeratorDao;
     private CredentialDao credentialDao;
@@ -168,10 +168,10 @@ public class UserMgrImplTests extends TestCase {
     @Override
     public void setUp() {
         userMgr = new UserMgrImpl();
-        authenticationDao = createMock(AuthenticationDao.class);
+        identityDao = createMock(IdentityDao.class);
         authorizationDao = createMock(AuthorizationDao.class);
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
-        userMgr.setAuthenticationDao(authenticationDao);
+        userMgr.setIdentityDao(identityDao);
         userMgr.setAuthorizationDao(authorizationDao);
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
         userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
@@ -182,7 +182,7 @@ public class UserMgrImplTests extends TestCase {
     
     @Override
     public void tearDown() {
-        reset(authenticationDao);
+        reset(identityDao);
         reset(authorizationDao);
         reset(internalEnumeratorDao);
         reset(credentialDao);

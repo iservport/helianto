@@ -27,6 +27,7 @@ import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.MailMessageComposer;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.mail.javamail.JavaMailSender;
 
 /**
@@ -37,7 +38,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 public class ServerMgrImpl extends AbstractServerMgr {
 
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
-    
     private MailMessageComposer mailMessageComposer;
 
     public void persistOperator(Operator operator) {
@@ -70,24 +70,17 @@ public class ServerMgrImpl extends AbstractServerMgr {
     //
 
     public void init() {
-        if (operatorDao == null) {
-            throw new IllegalArgumentException("OperatorDao property required");
-        }
-        if (configurableMailSenderFactory == null) {
-            throw new IllegalArgumentException("configurableMailSenderFactory property required");
-        }
-        if (mailMessageComposer == null) {
-            throw new IllegalArgumentException("mailMessageComposer property required");
-        }
     }
 
     // mutators
 
+    @Required
     public void setConfigurableMailSenderFactory(
             ConfigurableMailSenderFactory configurableMailSenderFactory) {
         this.configurableMailSenderFactory = configurableMailSenderFactory;
     }
 
+    @Required
     public void setMailMessageComposer(MailMessageComposer mailMessageComposer) {
         this.mailMessageComposer = mailMessageComposer;
     }

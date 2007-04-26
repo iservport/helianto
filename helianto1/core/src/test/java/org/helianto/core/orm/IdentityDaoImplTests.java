@@ -9,6 +9,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.hibernate.filter.IdentityFilter;
 import org.helianto.core.test.IdentityTestSupport;
@@ -23,6 +24,7 @@ import org.helianto.core.test.IdentityTestSupport;
 public class IdentityDaoImplTests extends AbstractIntegrationTest {
 
     private IdentityDao identityDao;
+    private AuthorizationDao authorizationDao;
     
     @Override
     protected String[] getConfigLocations() {
@@ -107,13 +109,15 @@ public class IdentityDaoImplTests extends AbstractIntegrationTest {
     
     //- additional
 
-    // TODO
-    public void todotestFindIdentities() {
+    public void testFindIdentities() {
         // write list
         int e = 1;
         int d = 3;
         List<User> userList = AuthorizationTestSupport.createUserList(e, d);
         userList.addAll(AuthorizationTestSupport.createUserList(e, d));
+        for (User user: userList) {
+        	authorizationDao.persistUserGroup(user);
+        }
         assertEquals(2*d, userList.size());
         User user = userList.get((int) (Math.random()*e*d));
         // read
@@ -138,6 +142,10 @@ public class IdentityDaoImplTests extends AbstractIntegrationTest {
 
     public void setIdentityDao(IdentityDao identityDao) {
         this.identityDao = identityDao;
+    }
+    
+    public void setAuthorizationDao(AuthorizationDao authorizationDao) {
+        this.authorizationDao = authorizationDao;
     }
     
 }

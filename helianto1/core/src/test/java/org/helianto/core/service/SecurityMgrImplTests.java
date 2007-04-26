@@ -33,7 +33,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
-import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.UserLogDao;
@@ -49,12 +49,12 @@ public class SecurityMgrImplTests extends TestCase {
         String principal = "123";
         Identity identity = new Identity();
         
-        expect(authenticationDao.findIdentityByPrincipal(principal))
+        expect(identityDao.findIdentityByNaturalId(principal))
             .andReturn(identity);
-        replay(authenticationDao);
+        replay(identityDao);
         
         assertSame(identity, securityMgr.findIdentityByPrincipal(principal));
-        verify(authenticationDao);
+        verify(identityDao);
     }
 
     public void testFindCredentialByIdentity() {
@@ -97,12 +97,12 @@ public class SecurityMgrImplTests extends TestCase {
         
         userLogDao.persistUserLog(isA(UserLog.class));
         replay(userLogDao);
-        authenticationDao.persistIdentity(user.getIdentity());
-        replay(authenticationDao);
+        identityDao.persistIdentity(user.getIdentity());
+        replay(identityDao);
         
         securityMgr.persistUserLog(user,date);
         verify(userLogDao);
-        verify(authenticationDao);
+        verify(identityDao);
         assertSame(date, identity.getLastLogin());
     }
 
@@ -113,13 +113,13 @@ public class SecurityMgrImplTests extends TestCase {
         
         userLogDao.persistUserLog(isA(UserLog.class));
         replay(userLogDao);
-        authenticationDao.persistIdentity(user.getIdentity());
-        replay(authenticationDao);
+        identityDao.persistIdentity(user.getIdentity());
+        replay(identityDao);
         
         Date date = new Date();
         securityMgr.persistUserLog(user,null);
         verify(userLogDao);
-        verify(authenticationDao);
+        verify(identityDao);
         assertTrue(Math.abs(date.getTime() - identity.getLastLogin().getTime()) < 1000);
     }
     
@@ -167,7 +167,7 @@ public class SecurityMgrImplTests extends TestCase {
     
     //~ collaborators
     
-    private AuthenticationDao authenticationDao;
+    private IdentityDao identityDao;
     private AuthorizationDao authorizationDao;
     private CredentialDao credentialDao;
     private UserLogDao userLogDao;
@@ -177,8 +177,8 @@ public class SecurityMgrImplTests extends TestCase {
     @Override
     public void setUp() {
         securityMgr = new SecurityMgrImpl();
-        authenticationDao = createMock(AuthenticationDao.class);
-        securityMgr.setAuthenticationDao(authenticationDao);
+        identityDao = createMock(IdentityDao.class);
+        securityMgr.setIdentityDao(identityDao);
         authorizationDao = createMock(AuthorizationDao.class);
         securityMgr.setAuthorizationDao(authorizationDao);
         credentialDao = createMock(CredentialDao.class);
@@ -189,7 +189,7 @@ public class SecurityMgrImplTests extends TestCase {
     
     @Override
     public void tearDown() {
-        reset(authenticationDao);
+        reset(identityDao);
         reset(authorizationDao);
         reset(credentialDao);
         reset(userLogDao);

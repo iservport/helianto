@@ -21,6 +21,10 @@
 	-->
 	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
 	<!-- 
+		Enable @Required Support
+	-->
+	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+	<!-- 
 		Messages
 	-->
 	<bean id="messageSource"

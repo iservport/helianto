@@ -25,6 +25,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.DataRetrievalFailureException;
 
 /**
@@ -103,17 +104,21 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
         throw new UsernameNotFoundException("No User defined for Credential with principal: ");
     }
     
-    private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
-
+    //- collabs
+    
+    @Required
     public void setIdentityResolutionStrategy(
             IdentityResolutionStrategy identityResolutionStrategy) {
         this.identityResolutionStrategy = identityResolutionStrategy;
     }
 
+    @Required
     public void setUserResolutionStrategy(
             UserResolutionStrategy userResolutionStrategy) {
         this.userResolutionStrategy = userResolutionStrategy;
     }
+
+    private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
 
 }
 

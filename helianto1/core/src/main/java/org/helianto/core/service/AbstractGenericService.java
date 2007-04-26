@@ -18,25 +18,26 @@ package org.helianto.core.service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.dao.GenericDao;
+import org.springframework.beans.factory.annotation.Required;
 
 /**
  * Base class to services using the <code>GenericDao</code>.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id $
  */
 public abstract class AbstractGenericService implements GenericService {
     
-    public static final Log logger = LogFactory.getLog(AbstractGenericService.class);
-
     protected GenericDao genericDao;
 
     public GenericDao getGenericDao() {
         return genericDao;
     }
 
+    @Required
     public void setGenericDao(GenericDao genericDao) {
         this.genericDao = genericDao;
     }
     
+    public static final Log logger = LogFactory.getLog(AbstractGenericService.class);
+
 }

@@ -30,11 +30,12 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.creation.OperatorCreator;
-import org.helianto.core.dao.AuthenticationDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.EntityDao;
+import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.dao.ServiceDao;
+import org.springframework.beans.factory.annotation.Required;
 
 /**
  * <code>ServerMgr</code> base class.
@@ -46,9 +47,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
     protected OperatorDao operatorDao;
     protected ServiceDao serviceDao;
     protected EntityDao entityDao;
-    
-    protected AuthenticationDao authenticationDao;
-    
+    protected IdentityDao identityDao;
     protected AuthorizationDao authorizationDao;
     
     public User prepareSystemConfiguration(Identity managerIdentity) {
@@ -68,11 +67,11 @@ public abstract class AbstractServerMgr implements ServerMgr {
     }
 
     public UserGroup findOrCreateUserGroup(Entity entity, String groupName) {
-        Identity groupIdentity = authenticationDao.findIdentityByPrincipal(groupName);
+        Identity groupIdentity = identityDao.findIdentityByNaturalId(groupName);
         if (groupIdentity==null) {
             groupIdentity = Identity.identityFactory(groupName, groupName);
             groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
-            authenticationDao.persistIdentity(groupIdentity);
+            identityDao.persistIdentity(groupIdentity);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+groupIdentity);
             }
@@ -87,7 +86,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         }
         if (userGroup==null) {
             userGroup = AuthorizationCreator.userGroupFactory(entity, groupIdentity);
-            authenticationDao.persistIdentity(groupIdentity);
+            identityDao.persistIdentity(groupIdentity);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+userGroup);
             }
@@ -133,22 +132,27 @@ public abstract class AbstractServerMgr implements ServerMgr {
 
     //~ collaborators
 
+    @Required
     public void setOperatorDao(OperatorDao operatorDao) {
         this.operatorDao = operatorDao;
     }
 
+    @Required
     public void setServiceDao(ServiceDao serviceDao) {
         this.serviceDao = serviceDao;
     }
 
+    @Required
     public void setEntityDao(EntityDao entityDao) {
         this.entityDao = entityDao;
     }
 
-    public void setAuthenticationDao(AuthenticationDao authenticationDao) {
-        this.authenticationDao = authenticationDao;
+    @Required
+    public void setIdentityDao(IdentityDao identityDao) {
+        this.identityDao = identityDao;
     }
 
+    @Required
     public void setAuthorizationDao(AuthorizationDao authorizationDao) {
         this.authorizationDao = authorizationDao;
     }

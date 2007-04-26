@@ -24,6 +24,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.service.SecurityMgr;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -84,10 +85,13 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
      */
     public abstract User loadOrCreateUser(Identity identity);
     
-    private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
-
+    //- collabs
+    
+    @Required
     public void setSecurityMgr(SecurityMgr securityMgr) {
         this.securityMgr = securityMgr;
     }
+
+    private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
 
 }

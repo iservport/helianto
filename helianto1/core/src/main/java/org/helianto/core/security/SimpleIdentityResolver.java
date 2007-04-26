@@ -18,6 +18,7 @@ package org.helianto.core.security;
 import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.helianto.core.Identity;
 import org.helianto.core.service.SecurityMgr;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 
 public class SimpleIdentityResolver implements IdentityResolutionStrategy {
@@ -40,7 +41,10 @@ public class SimpleIdentityResolver implements IdentityResolutionStrategy {
         }
         return identity;
     }
+    
+    //- collabs
 
+    @Required
     public void setSecurityMgr(SecurityMgr securityMgr) {
         this.securityMgr = securityMgr;
     }

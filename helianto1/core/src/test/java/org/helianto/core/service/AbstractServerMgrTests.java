@@ -38,7 +38,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.dao.AuthenticationDao;
+import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.test.AuthorizationTestSupport;
@@ -58,11 +58,11 @@ public class AbstractServerMgrTests extends TestCase {
         managerGroup.setEntity(entity);
         userGroup.setEntity(entity);
 
-        expect(authenticationDao.findIdentityByPrincipal("ADMIN")).andReturn(
+        expect(identityDao.findIdentityByNaturalId("ADMIN")).andReturn(
                 managerGroupIdentity);
-        expect(authenticationDao.findIdentityByPrincipal("USER")).andReturn(
+        expect(identityDao.findIdentityByNaturalId("USER")).andReturn(
                 userGroupIdentity);
-		replay(authenticationDao);
+		replay(identityDao);
 
         expect(authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
                 isA(Identity.class))).andReturn(managerGroup);
@@ -96,10 +96,10 @@ public class AbstractServerMgrTests extends TestCase {
 		Entity entity = new Entity();
 		
 
-		expect(authenticationDao.findIdentityByPrincipal("NAME")).andReturn(
+		expect(identityDao.findIdentityByNaturalId("NAME")).andReturn(
 				null);
-		authenticationDao.persistIdentity(isA(Identity.class));
-		replay(authenticationDao);
+		identityDao.persistIdentity(isA(Identity.class));
+		replay(identityDao);
 
 		expect(
 				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
@@ -108,7 +108,7 @@ public class AbstractServerMgrTests extends TestCase {
 		replay(authorizationDao);
 
 		UserGroup userGroup = serverMgr.findOrCreateUserGroup(entity, "NAME");
-		verify(authenticationDao);
+		verify(identityDao);
 
 		assertSame(entity, userGroup.getEntity());
 		assertEquals("NAME", userGroup.getIdentity().getPrincipal());
@@ -121,9 +121,9 @@ public class AbstractServerMgrTests extends TestCase {
 		Identity groupIdentity = new Identity();
 		Entity entity = new Entity();
 
-		expect(authenticationDao.findIdentityByPrincipal("NAME")).andReturn(
+		expect(identityDao.findIdentityByNaturalId("NAME")).andReturn(
 				groupIdentity);
-		replay(authenticationDao);
+		replay(identityDao);
 
 		expect(
 				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
@@ -132,7 +132,7 @@ public class AbstractServerMgrTests extends TestCase {
 		replay(authorizationDao);
 
 		UserGroup userGroup = serverMgr.findOrCreateUserGroup(entity, "NAME");
-		verify(authenticationDao);
+		verify(identityDao);
 
 		assertSame(entity, userGroup.getEntity());
 		assertSame(groupIdentity, userGroup.getIdentity());
@@ -143,9 +143,9 @@ public class AbstractServerMgrTests extends TestCase {
 		Entity entity = new Entity();
 		UserGroup userGroup = new UserGroup();
 
-		expect(authenticationDao.findIdentityByPrincipal("NAME")).andReturn(
+		expect(identityDao.findIdentityByNaturalId("NAME")).andReturn(
 				groupIdentity);
-		replay(authenticationDao);
+		replay(identityDao);
 
 		expect(
 				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
@@ -153,7 +153,7 @@ public class AbstractServerMgrTests extends TestCase {
 		replay(authorizationDao);
 
 		assertSame(userGroup, serverMgr.findOrCreateUserGroup(entity, "NAME"));
-		verify(authenticationDao);
+		verify(identityDao);
 
 	}
 
@@ -164,9 +164,9 @@ public class AbstractServerMgrTests extends TestCase {
 		entity.setOperator(defaultOperator);
 		UserGroup userGroup = new UserGroup();
 
-		expect(authenticationDao.findIdentityByPrincipal("ADMIN")).andReturn(
+		expect(identityDao.findIdentityByNaturalId("ADMIN")).andReturn(
 				groupIdentity);
-		replay(authenticationDao);
+		replay(identityDao);
 
 		expect(
 				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
@@ -174,7 +174,7 @@ public class AbstractServerMgrTests extends TestCase {
 		replay(authorizationDao);
 
 		assertSame(userGroup, serverMgr.findOrCreateUserGroup(entity, "ADMIN", new String[] {"MANAGER"}));
-		verify(authenticationDao);
+		verify(identityDao);
 		
 		assertEquals(1, userGroup.getRoles().size());
 		UserRole admin = userGroup.getRoles().iterator().next();
@@ -192,9 +192,9 @@ public class AbstractServerMgrTests extends TestCase {
 		entity.setOperator(defaultOperator);
 		UserGroup userGroup = new UserGroup();
 
-		expect(authenticationDao.findIdentityByPrincipal("ADMIN")).andReturn(
+		expect(identityDao.findIdentityByNaturalId("ADMIN")).andReturn(
 				groupIdentity);
-		replay(authenticationDao);
+		replay(identityDao);
 
 		expect(
 				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
@@ -203,7 +203,7 @@ public class AbstractServerMgrTests extends TestCase {
 
 		String[] extensions = new String[] {"MANAGER", "ALL"};
 		assertSame(userGroup, serverMgr.findOrCreateUserGroup(entity, "ADMIN", extensions));
-		verify(authenticationDao);
+		verify(identityDao);
 		
 		assertEquals(2, userGroup.getRoles().size());
 		Set<UserRole> verifyRoles = new HashSet<UserRole>();
@@ -223,26 +223,26 @@ public class AbstractServerMgrTests extends TestCase {
 
 	private OperatorDao operatorDao;
 
-	private AuthenticationDao authenticationDao;
+	private IdentityDao identityDao;
 
 	private AuthorizationDao authorizationDao;
 
 	@Override
 	public void setUp() {
 		operatorDao = createMock(OperatorDao.class);
-		authenticationDao = createMock(AuthenticationDao.class);
+		identityDao = createMock(IdentityDao.class);
 		authorizationDao = createMock(AuthorizationDao.class);
 
 		serverMgr = new ServerMgrImpl();
 		serverMgr.setOperatorDao(operatorDao);
-		serverMgr.setAuthenticationDao(authenticationDao);
+		serverMgr.setIdentityDao(identityDao);
 		serverMgr.setAuthorizationDao(authorizationDao);
 	}
 
 	@Override
 	public void tearDown() {
 		reset(operatorDao);
-		reset(authenticationDao);
+		reset(identityDao);
 		reset(authorizationDao);
 	}
 

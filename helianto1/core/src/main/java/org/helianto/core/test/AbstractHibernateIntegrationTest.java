@@ -15,6 +15,7 @@
 
 package org.helianto.core.test;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 /**
@@ -38,6 +39,7 @@ public class AbstractHibernateIntegrationTest extends AbstractIntegrationTest {
     
     protected HibernateTemplate hibernateTemplate;
     
+    @Required
     public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
         this.hibernateTemplate = hibernateTemplate;
     }

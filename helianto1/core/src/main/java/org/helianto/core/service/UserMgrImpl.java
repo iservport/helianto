@@ -13,7 +13,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.hibernate.filter.IdentityFilter;
-import org.helianto.core.security.PublicUserDetailsSwitcher;
+import org.springframework.beans.factory.annotation.Required;
 
 /**
  * Default <code>UserMgr</code> implementation.
@@ -22,7 +22,7 @@ import org.helianto.core.security.PublicUserDetailsSwitcher;
  */
 public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     
-    private CredentialDao credentialDao;
+    protected CredentialDao credentialDao;
 	
 	/* 
 	 * Create and persist Identity
@@ -33,11 +33,11 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 	}
 
 	public void persistIdentity(Identity identity) {
-        authenticationDao.persistIdentity(identity);
+		identityDao.persistIdentity(identity);
 	}
     
     public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions) {
-        List<Identity> identityList = authenticationDao.findIdentityByCriteria(filter);
+        List<Identity> identityList = identityDao.findIdentityByCriteria(filter);
         identityList.removeAll(exclusions);
         return identityList ;
     }
@@ -108,26 +108,9 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         user.setUserState(ActivityState.SUSPENDED.getValue());
     }
     
-    public boolean switchAuthorizedUser(PublicUserDetailsSwitcher secureUser, String entityAlias) {
-        //FIXME
-//        if (!(secureUser.getUsers().size() > 1)) {
-//            return false;
-//        }
-//        User newUser = null;    /**
-//        for (User u: secureUser.getUsers()) {
-//             if (u.getEntity().getAlias().compareTo(entityAlias)==0) {
-//                 newUser = u;
-//             }
-//        }
-//        if (newUser==null) {
-//            throw new IllegalArgumentException("Unable to change to entity " +
-//                    entityAlias+": there is no corresponding user for " +
-//                    "credential "+secureUser.getUser().getIdentity().getPrincipal());
-//        } 
-//        secureUser.setUser(userDao.createAndPersistUserLog(newUser));
-        return true;
-    }
-
+    //- collaborators
+    
+    @Required
     public void setCredentialDao(CredentialDao credentialDao) {
         this.credentialDao = credentialDao;
     }
