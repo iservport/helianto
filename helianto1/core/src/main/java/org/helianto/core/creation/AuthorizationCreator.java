@@ -41,7 +41,7 @@ public class AuthorizationCreator extends CreatorSupport {
             userGroup.setEntity(entity);
 
             if (identity==null) {
-                identity = AuthenticationCreator.identityFactory("", "");
+                identity = Identity.identityFactory("", "");
             }
             userGroup.setIdentity(identity);
             identity.getUsers().add(userGroup);

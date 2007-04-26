@@ -28,7 +28,7 @@ public class SecurityTestSupport {
     
     public static UserDetailsAdapter createUserDetailsAdapter() {
         User user = AuthorizationTestSupport.createUser();
-        Credential credential = AuthenticationTestSupport.createCredential(user.getIdentity());
+        Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
         return new UserDetailsAdapter(user, credential);
     }
 

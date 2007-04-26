@@ -15,86 +15,81 @@
 
 package org.helianto.core.test;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import org.helianto.core.Credential;
-import org.helianto.core.Identity;
-import org.helianto.core.creation.AuthenticationCreator;
-import org.helianto.core.dao.AuthenticationDao;
-import org.helianto.core.dao.CredentialDao;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-
+/**
+ * @deprecated
+ * @author Mauricio Fernandes de Castro
+ */
 public class AuthenticationTestSupport extends AbstractHibernateIntegrationTest {
     
-    private static int testKey = 1;
+//    private static int testKey = 1;
 
-    public static Identity createIdentity() {
-        String principal = generateKey(20, testKey++);
-        String optionalAlias = generateKey(12);
-        Identity identity = AuthenticationCreator.identityFactory(principal, optionalAlias);
-        logger.info("+++ "+identity);
-        return identity;
-    }
-
-    public static Identity createAndPersistIdentity(AuthenticationDao credentialDao) {
-        Identity identity = createIdentity();
-        if (credentialDao!=null) {
-            credentialDao.persistIdentity(identity);
-        }
-        return identity;
-    }
-
-    public static List<Identity> createAndPersistIdentityList(HibernateTemplate hibernateTemplate, int i) {
-        List<Identity> identityList = createIdentityList(i);
-        hibernateTemplate.saveOrUpdateAll(identityList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return identityList;
-    }
-    
-    public static List<Identity> createIdentityList(int size) {
-        List<Identity> identities = new ArrayList<Identity>();
-        for (int i=0;i<size;i++) {
-            identities.add(createIdentity());
-        }
-        return identities ;
-    }
-
-    public static Credential createCredential(Object... args) {
-        Identity identity;
-        try {
-            identity = (Identity) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            identity = AuthenticationTestSupport.createIdentity();
-        }
-        Credential credential = Credential.credentialFactory(identity, "");
-        return credential;
-    }
-
-    public static Credential createAndPersistCredential(CredentialDao credentialDao) {
-        Credential credential = createCredential();
-        if (credentialDao!=null) {
-            credentialDao.persistCredential(credential);
-        }
-        return credential;
-    }
-
-    public static List<Credential> createAndPersistCredentialList(HibernateTemplate hibernateTemplate, int i) {
-        List<Credential> credentialList = createCredentialList(i);
-        hibernateTemplate.saveOrUpdateAll(credentialList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return credentialList;
-    }
-    
-    public static List<Credential> createCredentialList(int size) {
-        List<Identity> identities = createIdentityList(size);
-        List<Credential> credentialList = new ArrayList<Credential>();
-        for (Identity i: identities) {
-            credentialList.add(Credential.credentialFactory(i, ""));
-        }
-        return credentialList ;
-    }
-
+//    public static Identity createIdentity() {
+//        String principal = generateKey(20, testKey++);
+//        String optionalAlias = generateKey(12);
+//        Identity identity = AuthenticationCreator.identityFactory(principal, optionalAlias);
+//        logger.info("+++ "+identity);
+//        return identity;
+//    }
+//
+//    public static Identity createAndPersistIdentity(AuthenticationDao credentialDao) {
+//        Identity identity = createIdentity();
+//        if (credentialDao!=null) {
+//            credentialDao.persistIdentity(identity);
+//        }
+//        return identity;
+//    }
+//
+//    public static List<Identity> createAndPersistIdentityList(HibernateTemplate hibernateTemplate, int i) {
+//        List<Identity> identityList = createIdentityList(i);
+//        hibernateTemplate.saveOrUpdateAll(identityList);
+//        hibernateTemplate.flush();
+//        hibernateTemplate.clear();
+//        return identityList;
+//    }
+//    
+//    public static List<Identity> createIdentityList(int size) {
+//        List<Identity> identities = new ArrayList<Identity>();
+//        for (int i=0;i<size;i++) {
+//            identities.add(createIdentity());
+//        }
+//        return identities ;
+//    }
+//
+//    public static Credential createCredential(Object... args) {
+//        Identity identity;
+//        try {
+//            identity = (Identity) args[0];
+//        } catch(ArrayIndexOutOfBoundsException e) {
+//            identity = AuthenticationTestSupport.createIdentity();
+//        }
+//        Credential credential = Credential.credentialFactory(identity, "");
+//        return credential;
+//    }
+//
+//    public static Credential createAndPersistCredential(CredentialDao credentialDao) {
+//        Credential credential = createCredential();
+//        if (credentialDao!=null) {
+//            credentialDao.persistCredential(credential);
+//        }
+//        return credential;
+//    }
+//
+//    public static List<Credential> createAndPersistCredentialList(HibernateTemplate hibernateTemplate, int i) {
+//        List<Credential> credentialList = createCredentialList(i);
+//        hibernateTemplate.saveOrUpdateAll(credentialList);
+//        hibernateTemplate.flush();
+//        hibernateTemplate.clear();
+//        return credentialList;
+//    }
+//    
+//    public static List<Credential> createCredentialList(int size) {
+//        List<Identity> identities = createIdentityList(size);
+//        List<Credential> credentialList = new ArrayList<Credential>();
+//        for (Identity i: identities) {
+//            credentialList.add(Credential.credentialFactory(i, ""));
+//        }
+//        return credentialList ;
+//    }
+//
 }

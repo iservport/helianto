@@ -15,18 +15,8 @@
 
 package org.helianto.core.creation;
 
-import java.util.HashSet;
-
-import org.helianto.core.Appellation;
 import org.helianto.core.Credential;
-import org.helianto.core.Gender;
-import org.helianto.core.Identity;
-import org.helianto.core.IdentityType;
-import org.helianto.core.Notification;
-import org.helianto.core.PersonalData;
 import org.helianto.core.PrivateKey;
-import org.helianto.core.UserGroup;
-import org.helianto.core.test.DomainTestSupport;
 
 /**
  * Authentication required classes factory methods.
@@ -37,59 +27,59 @@ public class AuthenticationCreator extends CreatorSupport {
     
     private static int testKey = 0;
 
-    /**
-     * <code>PersonalData</code> is created by default with
-     * appellation and gender as <code>NOT_SUPPLIED</code>.
-     * 
-     * @see Appellation
-     * @see Gender
-     */
-    public static PersonalData personalDataFactory() {
-        PersonalData personalData = new PersonalData();
-        
-        personalData.setFirstName("");
-        personalData.setLastName("");
-        personalData.setAppellation(Appellation.NOT_SUPPLIED.getValue());
-        personalData.setGender(Gender.NOT_SUPPLIED.getValue());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created: "+personalData);
-        }
-        return personalData;
-    }
-
-    /**
-     * <code>Identity</code> created with current system date, <code>NOT_ADDRESSABLE</code>
-     * and flagged to be notified only <code>BY_REQUEST</code>.
-     *
-     * @param principal
-     * @param optionalAlias
-     * 
-     * @see IdentityType
-     * @see Notification
-     */
-    public static Identity identityFactory(String principal, String optionalAlias) {
-        if (principal == null) {
-            principal = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
-        }
-        if (optionalAlias == null) {
-            optionalAlias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
-        }
-        Identity identity = new Identity();
-        
-        identity.setPrincipal(principal);
-        identity.setOptionalAlias(optionalAlias);
-        identity.setCreated(currentDate());
-        identity.setIdentityType(IdentityType.NOT_ADDRESSABLE.getValue());
-        identity.setNotification(Notification.BY_REQUEST.getValue());
-        identity.setPersonalData(personalDataFactory());
-        identity.setLastLogin(identity.getCreated());
-        identity.setUsers(new HashSet<UserGroup>());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created: "+identity);
-        }
-        return identity;
-    }
-
+//    /**
+//     * <code>PersonalData</code> is created by default with
+//     * appellation and gender as <code>NOT_SUPPLIED</code>.
+//     * 
+//     * @see Appellation
+//     * @see Gender
+//     */
+//    public static PersonalData personalDataFactory() {
+//        PersonalData personalData = new PersonalData();
+//        
+//        personalData.setFirstName("");
+//        personalData.setLastName("");
+//        personalData.setAppellation(Appellation.NOT_SUPPLIED.getValue());
+//        personalData.setGender(Gender.NOT_SUPPLIED.getValue());
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("Created: "+personalData);
+//        }
+//        return personalData;
+//    }
+//
+//    /**
+//     * <code>Identity</code> created with current system date, <code>NOT_ADDRESSABLE</code>
+//     * and flagged to be notified only <code>BY_REQUEST</code>.
+//     *
+//     * @param principal
+//     * @param optionalAlias
+//     * 
+//     * @see IdentityType
+//     * @see Notification
+//     */
+//    public static Identity identityFactory(String principal, String optionalAlias) {
+//        if (principal == null) {
+//            principal = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
+//        }
+//        if (optionalAlias == null) {
+//            optionalAlias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
+//        }
+//        Identity identity = new Identity();
+//        
+//        identity.setPrincipal(principal);
+//        identity.setOptionalAlias(optionalAlias);
+//        identity.setCreated(currentDate());
+//        identity.setIdentityType(IdentityType.NOT_ADDRESSABLE.getValue());
+//        identity.setNotification(Notification.BY_REQUEST.getValue());
+//        identity.setPersonalData(personalDataFactory());
+//        identity.setLastLogin(identity.getCreated());
+//        identity.setUsers(new HashSet<UserGroup>());
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("Created: "+identity);
+//        }
+//        return identity;
+//    }
+//
     /**
      * <code>PrivateKey</code> created with minumum requirements.
      * 

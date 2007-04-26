@@ -19,43 +19,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Identity;
-import org.helianto.core.creation.AuthenticationCreator;
-import org.helianto.core.dao.AuthenticationDao;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
 /**
+ * Class to support <code>IdentityDao</code> tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityTestSupport  {
+public class IdentityTestSupport {
 
-    public static Identity createIdentity() {
-        Identity identity = AuthenticationCreator.identityFactory("", "");
-        return identity;
-    }
+    private static int testKey;
 
-    public static Identity createAndPersistIdentity(AuthenticationDao credentialDao) {
-        Identity identity = createIdentity();
-        if (credentialDao!=null) {
-            credentialDao.persistIdentity(identity);
+    /**
+     * Test support method to create a <code>Identity</code>.
+     * @param principal optional String 
+     * @param optionalAlias optional String 
+     */
+    public static Identity createIdentity(Object... args) {
+        String principal;
+        try {
+            principal = (String) args[0];
+        } catch(ArrayIndexOutOfBoundsException e) {
+            principal = DomainTestSupport.getNonRepeatableStringValue(testKey++, 64);
         }
+        String optionalAlias;
+        try {
+            optionalAlias = (String) args[0];
+        } catch(ArrayIndexOutOfBoundsException e) {
+            optionalAlias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
+        }
+        Identity identity = Identity.identityFactory(principal, optionalAlias);
         return identity;
     }
 
-    public static List<Identity> createAndPersistIdentityList(HibernateTemplate hibernateTemplate, int i) {
-        List<Identity> identityList = createIdentities(i);
-        hibernateTemplate.saveOrUpdateAll(identityList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
+    /**
+     * Test support method to create a <code>Identity</code> list.
+     *
+     * @param identityListSize
+     */
+    public static List<Identity> createIdentityList(int identityListSize) {
+        List<Identity> identityList = new ArrayList<Identity>();
+            for (int i=0;i<identityListSize;i++) {
+                identityList.add(createIdentity());
+            }
         return identityList;
-    }
-    
-    public static List<Identity> createIdentities(int size) {
-        List<Identity> identities = new ArrayList<Identity>();
-        for (int i=0;i<size;i++) {
-            identities.add(AuthenticationCreator.identityFactory("PRINCIPAL"+i, "ALIAS"+i));
-        }
-        return identities ;
     }
 
 }

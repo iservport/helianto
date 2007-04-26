@@ -28,7 +28,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
 
-    private static int testKey = 1;
+//    private static int testKey = 1;
 
     /*
      * UserGroup tests 
@@ -45,7 +45,7 @@ public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
         try {
             identity = (Identity) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            identity = AuthenticationTestSupport.createIdentity();
+            identity = IdentityTestSupport.createIdentity();
         }
         UserGroup userGroup = AuthorizationCreator.userGroupFactory(entity, identity);
         logger.info("+++ "+userGroup);
@@ -67,7 +67,7 @@ public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
 
     public static List<UserGroup> createUserGroupList(int entityListSize, int identityListSize) {
         List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
-        List<Identity> identityList = AuthenticationTestSupport.createIdentityList(identityListSize);
+        List<Identity> identityList = IdentityTestSupport.createIdentityList(identityListSize);
         return createUserGroupList(entityList, identityList);
     }
 
@@ -106,7 +106,7 @@ public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
         try {
             identity = (Identity) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            identity = AuthenticationTestSupport.createIdentity();
+            identity = IdentityTestSupport.createIdentity();
         }
         User user = AuthorizationCreator.userFactory(entity, identity);
         return user;
@@ -126,7 +126,7 @@ public class AuthorizationTestSupport extends AbstractHibernateIntegrationTest {
 
     public static List<User> createUserList(int entityListSize, int identityListSize) {
         List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
-        List<Identity> identityList = AuthenticationTestSupport.createIdentityList(identityListSize);
+        List<Identity> identityList = IdentityTestSupport.createIdentityList(identityListSize);
         return createUserList(entityList, identityList);
     }
 

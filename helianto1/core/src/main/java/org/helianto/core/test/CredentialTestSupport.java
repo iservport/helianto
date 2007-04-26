@@ -40,7 +40,7 @@ public class CredentialTestSupport {
      * @param credentialListSize
      */
     public static List<Credential> createCredentialList(int credentialListSize) {
-        List<Identity> identityList = AuthenticationTestSupport.createIdentityList(credentialListSize);
+        List<Identity> identityList = IdentityTestSupport.createIdentityList(credentialListSize);
         return createCredentialList(identityList);
     }
 
