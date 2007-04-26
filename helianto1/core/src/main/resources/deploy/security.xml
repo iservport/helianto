@@ -45,6 +45,12 @@
 				<property name="securityMgr" ref="securityMgr"/>
 			</bean>
 		</property>
+		<property name="userResolutionStrategy">
+			<bean id="identityResolutionStrategy"
+				class="org.helianto.core.security.SimpleUserResolver">
+				<property name="securityMgr" ref="securityMgr"/>
+			</bean>
+		</property>
 	</bean>
 	<!--
 			Security test dao

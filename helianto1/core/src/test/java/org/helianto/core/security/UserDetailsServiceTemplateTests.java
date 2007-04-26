@@ -26,6 +26,9 @@ import org.helianto.core.User;
 import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
 
+/**
+ * @author Mauricio Fernandes de Castro
+ */
 public class UserDetailsServiceTemplateTests extends TestCase {
 
     public void testLoadUserByUsername() {

@@ -21,6 +21,11 @@ import org.helianto.core.service.SecurityMgr;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 
+/**
+ * Strategy to resolve an <code>Identity</code>.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class SimpleIdentityResolver implements IdentityResolutionStrategy {
 
     private SecurityMgr securityMgr;

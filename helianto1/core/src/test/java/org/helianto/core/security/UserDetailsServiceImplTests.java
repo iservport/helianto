@@ -17,39 +17,52 @@ package org.helianto.core.security;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import junit.framework.TestCase;
 
-import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.helianto.core.Credential;
-import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.UserLog;
-import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.service.SecurityMgr;
+import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
-import org.helianto.core.test.UserLogTestSupport;
 import org.springframework.dao.DataRetrievalFailureException;
 
 
+/**
+ * @author Mauricio Fernandes de Castro
+ */
 public class UserDetailsServiceImplTests extends TestCase {
     
     // class under test
     private UserDetailsServiceImpl userDetailsService;
-    // collaborators
-    private SecurityMgr securityMgr;
-    private IdentityResolutionStrategy identityResolutionStrategy;
+    
+    public void testIdentityResolutionStrategy() {
+    	String principal = "TEST";
+    	Identity identity = IdentityTestSupport.createIdentity();
+    	
+		expect(identityResolutionStrategy.loadAndValidateIdentity(principal))
+		    .andReturn(identity);
+		replay(identityResolutionStrategy);
+    	
+		assertSame(identity, userDetailsService.loadAndValidateIdentity(principal));
+		verify(identityResolutionStrategy);
+    }
+    
+    public void testUserResolutionStrategy() {
+    	Identity identity = IdentityTestSupport.createIdentity();
+    	User user = AuthorizationTestSupport.createUser();
+    	
+		expect(userResolutionStrategy.loadOrCreateUser(identity))
+		    .andReturn(user);
+		replay(userResolutionStrategy);
+    	
+		assertSame(user, userDetailsService.loadOrCreateUser(identity));
+		verify(userResolutionStrategy);
+    }
     
     public void testLoadAndValidateCredential() {
         Credential credential = CredentialTestSupport.createCredential();
@@ -88,82 +101,28 @@ public class UserDetailsServiceImplTests extends TestCase {
         verify(securityMgr);
     }
     
-    private User prepareSuccessfullLoadOrCreateUser(Identity identity) {
-        UserLog userLog = UserLogTestSupport.createUserLog();
-        userLog.getUser().setIdentity(identity);
-        
-        expect(securityMgr.findLastUserLog(identity))
-            .andReturn(userLog);
-        securityMgr.writeUserLog(isA(User.class), isA(Date.class));
-        replay(securityMgr);
-        return userLog.getUser();
-    }
-
-    public void testLoadOrCreateUser() {
-        Credential credential = CredentialTestSupport.createCredential();
-        Identity identity = credential.getIdentity();
-        User user = prepareSuccessfullLoadOrCreateUser(identity);
-        
-        assertSame(user, userDetailsService.loadOrCreateUser(identity));
-        verify(securityMgr);
-    }
-    
-    private User prepareSuccessfullLoadOrCreateUserFirstLogin(Identity identity, int e) {
-        List<Entity> entityList = EntityTestSupport.createEntityList(e);
-        List<User> userList = new ArrayList<User>();
-        for (Entity entity: entityList) {
-            User u = AuthorizationCreator.userFactory(entity, identity);
-            userList.add(u);
-            identity.getUsers().add(u);
-        }
-        User user = userList.get((int) Math.random()*e);
-        
-        expect(securityMgr.findLastUserLog(identity))
-            .andReturn(null);
-        securityMgr.writeUserLog(isA(User.class), isA(Date.class));
-        replay(securityMgr);
-        return user;
-    }
-
-    public void testLoadOrCreateUserFirstLogin() {
-        Identity identity = IdentityTestSupport.createIdentity();
-        User user = prepareSuccessfullLoadOrCreateUserFirstLogin(identity, 3);
-        
-        assertSame(user.getIdentity(), userDetailsService.loadOrCreateUser(identity).getIdentity());
-        verify(securityMgr);
-    }
-
-    public void testLoadOrCreateUserNoUser() {
-        Identity identity = IdentityTestSupport.createIdentity();
-        
-        expect(securityMgr.findLastUserLog(identity))
-            .andReturn(null);
-        expect(securityMgr.isAutoCreateEnabled())
-            .andReturn(false);
-        replay(securityMgr);
-        
-        try {
-            userDetailsService.loadOrCreateUser(identity); fail();
-        } catch (UsernameNotFoundException e) {
-        } catch (Exception e) { fail(); }
-        verify(securityMgr);
-    }
-
+    // collaborators
+    private SecurityMgr securityMgr;
+    private IdentityResolutionStrategy identityResolutionStrategy;
+    private UserResolutionStrategy userResolutionStrategy;
     // setup
     
     @Override
     public void setUp() {
         securityMgr = createMock(SecurityMgr.class);
         identityResolutionStrategy = createMock(IdentityResolutionStrategy.class);
+        userResolutionStrategy = createMock(UserResolutionStrategy.class);
         userDetailsService = new UserDetailsServiceImpl();
         userDetailsService.setSecurityMgr(securityMgr);
         userDetailsService.setIdentityResolutionStrategy(identityResolutionStrategy);
+        userDetailsService.setUserResolutionStrategy(userResolutionStrategy);
     }
     
     @Override
     public void tearDown() {
         reset(securityMgr);
         reset(identityResolutionStrategy);
+        reset(userResolutionStrategy);
     }
     
 }
