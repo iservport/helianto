@@ -30,7 +30,7 @@ import org.springframework.util.Assert;
  * @deprecated
  * @author Mauricio Fernandes de Castro
  */
-public class UserDaoImpl extends AuthenticationDaoImpl {
+public class UserDaoImpl extends GenericDaoImpl {
 	
 	/*
 	 * Persist, remove and find user.
