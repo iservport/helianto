@@ -21,9 +21,9 @@ import java.util.List;
 import org.helianto.core.Identity;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
+import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.hibernate.DefaultIdentitySelectionStrategy;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.helianto.core.hibernate.filter.IdentityFilter;
 
 /**
  * Default implementation of <code>Identity</code> data access interface.

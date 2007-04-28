@@ -19,6 +19,7 @@ package org.helianto.core.hibernate;
  * Base class to selection strategies.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated use {@link org.helianto.core.filter.CriteriaBuilder}
  */
 public abstract class AbstractSelectionStrategy {
 

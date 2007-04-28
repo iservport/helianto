@@ -13,23 +13,24 @@
  * limitations under the License.
  */
 
-package org.helianto.core.dao;
+package org.helianto.core.filter;
 
-import org.helianto.core.filter.IdentityFilter;
-
+import org.helianto.core.User;
 
 /**
- * A strategy to create <code>Identity</code> selection filters.
+ * Base class to filters that requires an <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface IdentitySelectionStrategy extends UserBackedSelectionStrategy {
-
-    /**
-     * A method to create citeria as String. User prefix to prepend hql alias
-     * @param filter
-     * @param prefix
-     */
-    public String createCriteriaAsString(IdentityFilter filter, String prefix);
-
+public abstract class AbstractUserBackedCriteriaFilter implements
+        UserBackedFilter {
+    
+    private User user;
+    
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

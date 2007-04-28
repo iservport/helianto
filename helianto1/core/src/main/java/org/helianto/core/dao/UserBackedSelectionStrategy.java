@@ -15,7 +15,7 @@
 
 package org.helianto.core.dao;
 
-import org.helianto.core.hibernate.filter.UserBackedFilter;
+import org.helianto.core.filter.UserBackedFilter;
 
 
 /**

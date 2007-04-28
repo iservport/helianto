@@ -11,7 +11,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.IdentityDao;
-import org.helianto.core.hibernate.filter.IdentityFilter;
+import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.test.IdentityTestSupport;
 
 

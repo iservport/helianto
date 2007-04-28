@@ -38,7 +38,7 @@ import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
-import org.helianto.core.hibernate.filter.IdentityFilter;
+import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;

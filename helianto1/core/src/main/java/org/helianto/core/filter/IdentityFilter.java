@@ -13,9 +13,10 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate.filter;
+package org.helianto.core.filter;
 
 import java.io.Serializable;
+
 
 /**
  * <code>Identity</code> filter.

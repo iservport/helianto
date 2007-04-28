@@ -13,24 +13,27 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate.filter;
+package org.helianto.core.filter;
 
 import org.helianto.core.User;
 
 /**
- * Base class to filters that requires an <code>User</code>.
+ * Interface to <code>User</code> backed filters.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractUserBackedCriteriaFilter implements
-        UserBackedFilter {
+public interface UserBackedFilter {
     
-    private User user;
+    /**
+     * <code>User</code> getter.
+     * @return
+     */
+    public User getUser();
     
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
+    /**
+     * <code>User</code> setter.
+     * @param user
+     */
+    public void setUser(User user);
+
 }

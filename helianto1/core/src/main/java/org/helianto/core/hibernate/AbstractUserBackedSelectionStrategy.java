@@ -16,13 +16,14 @@
 package org.helianto.core.hibernate;
 
 import org.helianto.core.dao.UserBackedSelectionStrategy;
-import org.helianto.core.hibernate.filter.UserBackedFilter;
+import org.helianto.core.filter.UserBackedFilter;
 
 /**
  * Base class to selection strategies using an 
  * <code>UserBackedFilter</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated use {@link org.helianto.core.filter.CriteriaBuilder}
  */
 public abstract class AbstractUserBackedSelectionStrategy extends AbstractSelectionStrategy implements
         UserBackedSelectionStrategy {

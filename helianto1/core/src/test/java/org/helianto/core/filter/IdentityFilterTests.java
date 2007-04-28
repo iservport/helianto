@@ -13,27 +13,31 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate.filter;
+package org.helianto.core.filter;
 
-import org.helianto.core.User;
+
+import junit.framework.TestCase;
 
 /**
- * Interface to <code>User</code> backed filters.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface UserBackedFilter {
+public class IdentityFilterTests extends TestCase {
+
+    public void testNameOrAliasSearch() {
+        filter.setNameOrAliasSearch("nameOrAliasSearch");
+        assertEquals("nameOrAliasSearch", filter.getNameOrAliasSearch());
+    }
+
+    public void testPrincipalSearch() {
+        filter.setPrincipalSearch("principalSearch");
+        assertEquals("principalSearch", filter.getPrincipalSearch());
+    }
     
-    /**
-     * <code>User</code> getter.
-     * @return
-     */
-    public User getUser();
+    private IdentityFilter filter;
     
-    /**
-     * <code>User</code> setter.
-     * @param user
-     */
-    public void setUser(User user);
+    public void setUp() {
+        filter = new IdentityFilter();
+    }
 
 }

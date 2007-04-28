@@ -16,8 +16,8 @@
 package org.helianto.core.hibernate;
 
 import org.helianto.core.dao.IdentitySelectionStrategy;
-import org.helianto.core.hibernate.filter.IdentityFilter;
-import org.helianto.core.hibernate.filter.UserBackedFilter;
+import org.helianto.core.filter.IdentityFilter;
+import org.helianto.core.filter.UserBackedFilter;
 
 /**
  * Default implementation of <code>IdentitySelectionStrategy</code>

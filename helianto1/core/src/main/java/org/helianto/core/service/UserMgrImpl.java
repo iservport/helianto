@@ -12,7 +12,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.CredentialDao;
-import org.helianto.core.hibernate.filter.IdentityFilter;
+import org.helianto.core.filter.IdentityFilter;
 import org.springframework.beans.factory.annotation.Required;
 
 /**

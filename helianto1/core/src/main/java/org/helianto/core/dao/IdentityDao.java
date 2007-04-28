@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.helianto.core.Identity;
 import org.helianto.core.dao.CommonOrmDao;
-import org.helianto.core.hibernate.filter.IdentityFilter;
+import org.helianto.core.filter.IdentityFilter;
 
 
 
