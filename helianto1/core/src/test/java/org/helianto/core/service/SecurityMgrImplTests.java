@@ -28,14 +28,13 @@ import junit.framework.TestCase;
 
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.TestingAuthenticationToken;
-import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
-import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.CredentialDao;
+import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.test.SecurityTestSupport;
@@ -121,32 +120,6 @@ public class SecurityMgrImplTests extends TestCase {
         verify(userLogDao);
         verify(identityDao);
         assertTrue(Math.abs(date.getTime() - identity.getLastLogin().getTime()) < 1000);
-    }
-    
-    public void testVerifyPasswordSuccess() {
-        Credential credential = new Credential();
-        String password = String.valueOf(new Date().getTime());
-        credential.setPassword(password);
-        credential.setVerifyPassword(password);
-        
-        assertTrue(securityMgr.verifyPassword(credential));
-        assertEquals(password, credential.getPassword());
-        assertEquals("", credential.getVerifyPassword());
-        assertEquals(ActivityState.ACTIVE.getValue(), credential.getCredentialState());
-        assertFalse(credential.isPasswordDirty());
-    }
-    
-    public void testVerifyPasswordError() {
-        Credential credential = new Credential();
-        String password = String.valueOf(new Date().getTime());
-        credential.setPassword(password);
-        credential.setVerifyPassword(password+"1");
-        
-        assertFalse(securityMgr.verifyPassword(credential));
-        assertEquals("", credential.getPassword());
-        assertEquals("", credential.getVerifyPassword());
-        assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
-        assertTrue(credential.isPasswordDirty());
     }
     
     public void testFindSecureUser() {

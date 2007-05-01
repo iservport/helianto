@@ -68,13 +68,6 @@ public interface SecurityMgr extends UserMgr {
 	public User autoCreateUser(Identity identity);
     
     /**
-     * If password matches verifyPassword returns true, else
-     * cleans password and verifyPassword, set passwordDirty
-     * to true and returns false.
-     */
-    public boolean verifyPassword(Credential credential);
-    
-    /**
      * <p>Utility method to find <code>PublicUserDetails</code> stored in a security context.</p>
      */
     public PublicUserDetails findSecureUser();

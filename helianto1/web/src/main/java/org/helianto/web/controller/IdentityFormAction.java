@@ -24,14 +24,13 @@ import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.web.view.IdentityForm;
-import org.springframework.validation.Errors;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
- * Follows the identity.xml flow.
+ * Web flow mediator to the the identity flow.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -46,12 +45,12 @@ public class IdentityFormAction extends FormAction {
     }
     
     /**
-     * Delegates to <code>SecurityMgr#createCredentialAndIdentity()</code>
-     * and populates the form with the new <code>Credential</code>.
+     * Delegate to <code>SecurityMgr#createCredentialAndIdentity()</code>
+     * to populate the form with the new <code>Credential</code>.
      */
     public Event create(RequestContext context) {
         IdentityForm form = doGetForm(context);
-        Credential credential = securityMgr.createCredentialAndIdentity();
+        Credential credential = Credential.credentialFactory();
         form.setCredential(credential);
         if (logger.isDebugEnabled()) {
             logger.debug("Set property credential to "+credential+" on form " +form);
@@ -73,7 +72,7 @@ public class IdentityFormAction extends FormAction {
     
     public Event verify(RequestContext context) {
         Credential credential = doGetForm(context).getCredential();
-        if (securityMgr.verifyPassword(credential)) {
+        if (Credential.verifyPassword(credential)) {
             return success();
         }
         return error();

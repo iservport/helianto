@@ -37,7 +37,7 @@
     </action-state>
 
     <view-state id="identity.details.view" view="identity/details">
-		<transition on="previous" to="identity.details.view"/>
+		<transition on="previous" to="identity.principal.view"/>
 		<transition on="next" to="ifPersonal"/>
     </view-state>
     

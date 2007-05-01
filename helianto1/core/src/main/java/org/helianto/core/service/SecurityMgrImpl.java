@@ -17,7 +17,6 @@ package org.helianto.core.service;
 
 import java.util.Date;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
@@ -77,20 +76,6 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
         return null;
     }
 
-    public boolean verifyPassword(Credential credential) {
-        if (credential.getPassword().compareTo(credential.getVerifyPassword())!=0) {
-            credential.setPassword("");
-            credential.setVerifyPassword("");
-            credential.setPasswordDirty(true);
-            credential.setCredentialState(ActivityState.SUSPENDED.getValue());
-            return false;
-        }
-        credential.setVerifyPassword("");
-        credential.setPasswordDirty(false);
-        credential.setCredentialState(ActivityState.ACTIVE.getValue());
-        return true;
-    }
-    
     public PublicUserDetails findSecureUser() {
         return UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
     }

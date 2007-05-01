@@ -16,7 +16,6 @@
 package org.helianto.web.controller;
 
 import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
@@ -55,17 +54,10 @@ public class IdentityFormActionTests extends TestCase {
     }
     
     public void testCreate() {
-        Credential credential = new Credential();
-        
-        expect(securityMgr.createCredentialAndIdentity())
-            .andReturn(credential);
-        replay(securityMgr);
-        
         Event event = identityFormAction.create(context);
         assertEquals(event.getId(), "success");
-        verify(securityMgr);
         
-        assertSame(credential, ((IdentityForm) context.getFlowScope().get("identityForm")).getCredential());
+        assertTrue(((IdentityForm) context.getFlowScope().get("identityForm")).getCredential() instanceof Credential);
     }
     
     public void testPersistIdentity() {
@@ -82,30 +74,24 @@ public class IdentityFormActionTests extends TestCase {
     }
     
     public void testVerifySuccess() {
-        Credential credential = new Credential();
+        Credential credential = Credential.credentialFactory();
+        credential.setPassword("TEST");
+        credential.setVerifyPassword("TEST");
         form.setCredential(credential);
-        
-        expect(securityMgr.verifyPassword(credential))
-            .andReturn(true);
-        replay(securityMgr);
         
         Event event = identityFormAction.verify(context);
         assertEquals(event.getId(), "success");
-        verify(securityMgr);
         
     }
     
     public void testVerifyError() {
-        Credential credential = new Credential();
+        Credential credential = Credential.credentialFactory();
+        credential.setPassword("TEST1");
+        credential.setVerifyPassword("TEST2");
         form.setCredential(credential);
-        
-        expect(securityMgr.verifyPassword(credential))
-            .andReturn(false);
-        replay(securityMgr);
         
         Event event = identityFormAction.verify(context);
         assertEquals(event.getId(), "error");
-        verify(securityMgr);
         
     }
     

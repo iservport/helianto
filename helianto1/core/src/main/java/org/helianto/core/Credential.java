@@ -47,6 +47,9 @@ import org.helianto.core.Identity;
 public class Credential implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String ALLOWED_CHARS_IN_PASSWORD = 
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%_";
+    public static final int DEFAULT_PASSWORD_SIZE = 8;
     private long id;
     private Identity identity;
     private int version;
@@ -169,6 +172,39 @@ public class Credential implements java.io.Serializable {
     public void setEncription(byte encription) {
         this.encription = encription;
     }
+    
+    /**
+     * Create a random password of size <code>DEFAULT_PASSWORD_SIZE</code>
+     * containing only characters in <code>ALLOWED_CHARS_IN_PASSWORD</code>.
+     */
+    public static String passwordFactory() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0;i<DEFAULT_PASSWORD_SIZE;i++) {
+            int index = (int) (ALLOWED_CHARS_IN_PASSWORD.length() * Math.random());
+            sb.append(ALLOWED_CHARS_IN_PASSWORD.charAt(index));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Empty <code>Identity</code> and password <code>Credential</code> factory.
+     * 
+     * @param identity
+     */
+    public static Credential credentialFactory() {
+        Identity identity = Identity.identityFactory("");
+        return credentialFactory(identity, passwordFactory());
+    }
+
+    /**
+     * Empty <code>Identity</code> <code>Credential</code> factory.
+     * 
+     * @param identity
+     */
+    public static Credential credentialFactory(String password) {
+        Identity identity = Identity.identityFactory("");
+        return credentialFactory(identity, password);
+    }
 
     /**
      * <code>Credential</code> factory.
@@ -217,6 +253,24 @@ public class Credential implements java.io.Serializable {
         this.passwordDirty = passwordDirty;
     }
 
+    /**
+     * Password verifier.
+     */
+    @Transient
+    public static boolean verifyPassword(Credential credential) {
+        if (credential.getPassword().compareTo(credential.getVerifyPassword())!=0) {
+            credential.setPassword("");
+            credential.setVerifyPassword("");
+            credential.setPasswordDirty(true);
+            credential.setCredentialState(ActivityState.SUSPENDED.getValue());
+            return false;
+        }
+        credential.setVerifyPassword("");
+        credential.setPasswordDirty(false);
+        credential.setCredentialState(ActivityState.ACTIVE.getValue());
+        return true;
+    }
+    
     /**
      * <code>Credential</code> natural id query.
      */
