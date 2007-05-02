@@ -21,7 +21,7 @@ public enum AssociationType {
      * control plan to provide for phase resolution.</p>
      * 
      */
-    CHARACTERISTIC_SPECIFICATION(0),
+    CHARACTERISTIC_SPECIFICATION('A'),
     /**
      * A control plan may have a specification.
      * 
@@ -29,14 +29,21 @@ public enum AssociationType {
      * characteristic since it is also descendant of a 
      * charcteristic.</p>
      */
-    CONTROLPLAN_SPECIFICATION(1),
+    CONTROLPLAN_SPECIFICATION('B'),
     /**
      * An operation may have characteristics.
      * 
      * <p>The specification is the natural descendant of an
      * operation that includes inspection.</p>
      */
-    OPERATION_CHARACTERISTIC(2),
+    OPERATION_CHARACTERISTIC('C'),
+    /**
+     * An operation may have associated parts.
+     * 
+     * <p>A part may be a descendant of an
+     * operation.</p>
+     */
+    OPERATION_PART('D'),
     /**
      * An operation may have specifications.
      * 
@@ -44,55 +51,55 @@ public enum AssociationType {
      * operation since it is also descendant of a 
      * charcteristic.</p>
      */
-    OPERATION_SPECIFICATION(3),
+    OPERATION_SPECIFICATION('E'),
     /**
      * The association is part to characterisitic.
      * 
      * <p>If a characterisitic is a descendant of a part, it should be 
      * later associated with one or more processes.</p>
      */
-    PART_CHARACTERISTIC(4),
+    PART_CHARACTERISTIC('F'),
     /**
      * The association is part to a component part.
      */
-    PART_PART(5),
+    PART_PART('G'),
     /**
      * The association is part to process.
      */
-    PART_PROCESS(6),
+    PART_PROCESS('H'),
     /**
      * The association is part to specification.
      * 
      * <p>If a specification is a descendant of a part, it should be 
      * later associated with a characterisitic.</p>
      */
-    PART_SPECIFICATION(7),
+    PART_SPECIFICATION('I'),
     /**
      * The association is process to control plan.
      */
-    PROCESS_CONTROLPLAN(8),
+    PROCESS_CONTROLPLAN('J'),
     /**
      * The association is process to operation.
      * 
      * <p>The operation is the natural descendant of a
      * process.</p>
      */
-    PROCESS_OPERATION(9),
+    PROCESS_OPERATION('K'),
     /**
      * The association is process to part.
      * 
      * <p>Such associations allow the creation of process
      * families.</p>
      */
-    PROCESS_PART(10);
+    PROCESS_PART('L');
     
-    private int value;
+    private char value;
     
-    private AssociationType(int value) {
+    private AssociationType(char value) {
         this.value = value;
     }
     
-    public int getValue() {
+    public char getValue() {
         return value;
     }
 

@@ -32,13 +32,6 @@ public class Operation extends org.helianto.process.Document implements java.io.
     public Operation() {
     }
 
-	/** minimal constructor */
-    public Operation(Entity entity, String docCode, int operationType, long operationTime) {
-        super(entity, docCode);        
-        this.operationType = operationType;
-        this.operationTime = operationTime;
-    }
-    
    
     // Property accessors
 

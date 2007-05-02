@@ -28,17 +28,6 @@ public class ExternalDocument extends org.helianto.process.Document implements j
     public ExternalDocument() {
     }
 
-	/** minimal constructor */
-    public ExternalDocument(Entity entity, String docCode) {
-        super(entity, docCode);        
-    }
-    /** full constructor */
-    public ExternalDocument(Entity entity, String docCode, String docName, Set<Tree> parentAssociations, List<Tree> childAssociations, String docUrl, char docType) {
-        super(entity, docCode, docName, parentAssociations, childAssociations);        
-       this.docUrl = docUrl;
-       this.docType = docType;
-    }
-   
     // Property accessors
     public String getDocUrl() {
         return this.docUrl;

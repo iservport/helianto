@@ -29,7 +29,6 @@ import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
-import org.helianto.process.creation.ExternalDocumentCreator;
 import org.helianto.process.dao.ProcessDao;
 
 /**
@@ -38,30 +37,6 @@ import org.helianto.process.dao.ProcessDao;
  * @author Mauricio Fernandes de Castro
  */
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
-
-    public ExternalDocument createExternalDocumentCategory(Entity entity, String documentCode) {
-        ExternalDocument externalDocument  = 
-            ExternalDocumentCreator.externalDocumentFactory(entity, documentCode, DocumentType.CATEGORY);
-        externalDocument.setDocName(documentCode);
-        externalDocument.setDocUrl(documentCode+"/");
-        return externalDocument;
-    }
-
-    public ExternalDocument createExternalFolder(ExternalDocument parent, String documentCode) {
-        ExternalDocument externalDocument  = 
-            ExternalDocumentCreator.externalDocumentFactory(parent, documentCode, DocumentType.FOLDER);
-        externalDocument.setDocName(documentCode);
-        externalDocument.setDocUrl(documentCode+"/");
-        return externalDocument;
-    }
-
-    public ExternalDocument createExternalFile(ExternalDocument parent, String documentCode) {
-        ExternalDocument externalDocument  = 
-            ExternalDocumentCreator.externalDocumentFactory(parent, documentCode, DocumentType.FILE);
-        externalDocument.setDocName(documentCode);
-        externalDocument.setDocUrl(documentCode+"/");
-        return externalDocument;
-    }
 
     public Part createPart(Entity entity, boolean hasDrawing) {
         // TODO Auto-generated method stub

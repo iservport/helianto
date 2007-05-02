@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.process.orm;
 
 import org.helianto.core.test.AbstractIntegrationTest;
 
@@ -21,10 +21,16 @@ public class AbstractProcessTest extends AbstractIntegrationTest {
 
     @Override
     protected String[] getConfigLocations() {
-        return new String[] { "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml", "deploy/support.xml",
-                "deploy/transaction.xml", "deploy/core.xml",
-                "deploy/process.xml" };
+        return new String[] { 
+                "deploy/dataSource.xml",
+                "deploy/sessionFactory.xml",
+                "deploy/transaction.xml",
+                "deploy/support.xml",
+                "deploy/core.xml",
+                "deploy/org.helianto.core.xml",
+                "deploy/org.helianto.partner.xml",
+                "deploy/org.helianto.process.xml"
+                };
     }
-
+    
 }

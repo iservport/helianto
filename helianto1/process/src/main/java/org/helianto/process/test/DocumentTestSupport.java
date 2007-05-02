@@ -19,132 +19,77 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.test.AbstractHibernateIntegrationTest;
+import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.process.DocumentType;
-import org.helianto.process.ExternalDocument;
-import org.helianto.process.creation.ExternalDocumentCreator;
-import org.helianto.process.dao.ProcessDao;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.helianto.process.Document;
 
-public class DocumentTestSupport extends AbstractHibernateIntegrationTest {
 
-    private static int testKey = 1;
+/**
+ * Class to support <code>DocumentDao</code> tests.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
+public class DocumentTestSupport {
 
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/core.xml",
-                "deploy/process.xml"
-                };
-    }
+    private static int testKey;
 
-    /*
-     * ExternalDocument tests 
-     */
-    
     /**
-     * Test support method to create a <code>ExternalDocument</code>.
-     * Optionally takes <code>Entity</code> and <code>DocumentType</code> params.
+     * Test support method to create a <code>Document</code>.
+     * @param entity optional Entity 
+     * @param docCode optional String 
      */
-    public static ExternalDocument createExternalDocument(Object... args) {
+    public static Document createDocument(Object... args) {
         Entity entity;
         try {
             entity = (Entity) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
             entity = EntityTestSupport.createEntity();
         }
-        ExternalDocument parent;
+        String docCode;
         try {
-            parent = (ExternalDocument) args[0];
-        } catch(ClassCastException e) {
-            parent = null;
+            docCode = (String) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            parent = null;
+            docCode = DomainTestSupport.getNonRepeatableStringValue(testKey++, 24);
         }
-        DocumentType documentType;
-        try {
-            documentType = (DocumentType) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            documentType = DocumentType.values()[(int)Math.random() * 3];
-        }
-        ExternalDocument externalDocument = null;
-        if (parent == null) {
-            externalDocument = ExternalDocumentCreator.externalDocumentFactory(entity, generateKey(20, testKey++), documentType);
-        } else {
-            externalDocument = ExternalDocumentCreator.externalDocumentFactory(parent, generateKey(20, testKey++), documentType);
-        }
-        return externalDocument;
+        Document document = Document.documentFactory(entity, docCode);
+        return document;
     }
 
     /**
-     * Test support method to create and persist a <code>ExternalDocument</code>.
+     * Test support method to create a <code>Document</code> list.
+     *
+     * @param documentListSize
      */
-    public static ExternalDocument createAndPersistExternalDocument(ProcessDao processDao) {
-        ExternalDocument externalDocument = createExternalDocument();
-        if (processDao!=null) {
-            processDao.persistDocument(externalDocument);
-        }
-        return externalDocument;
+    public static List<Document> createDocumentList(int documentListSize) {
+        return createDocumentList(documentListSize, 1);
     }
 
     /**
-     * Test support method to create a <code>ExternalDocument</code> list.
-     * @param size of list for each Entity
+     * Test support method to create a <code>Document</code> list.
+     *
+     * @param documentListSize
      * @param entityListSize
      */
-    public static List<ExternalDocument> createExternalDocumentList(int size, int entityListSize) {
+    public static List<Document> createDocumentList(int documentListSize, int entityListSize) {
         List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
-        return createExternalDocumentList(size, entityList);
-    }
 
-    public static List<ExternalDocument> createExternalDocumentList(int size, int parentSize, int entityListSize) {
-        List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
-        return createExternalDocumentList(size, parentSize, entityList);
-    }
-
-    public static List<ExternalDocument> createExternalDocumentList(int size, List<Entity> entityList) {
-        List<ExternalDocument> externalDocumentList = new ArrayList<ExternalDocument>();
-        for (Entity e: entityList) {
-            for (int i=0;i<size;i++) {
-                externalDocumentList.add(createExternalDocument(e));
-            }
-        }
-        return externalDocumentList;
-    }
-
-    public static List<ExternalDocument> createExternalDocumentList(int size, int parentSize, List<Entity> entityList) {
-        List<ExternalDocument> externalDocumentList = new ArrayList<ExternalDocument>();
-        for (Entity e: entityList) {
-            for (int i=0;i<parentSize;i++) {
-                ExternalDocument category = createExternalDocument(e, DocumentType.CATEGORY);
-                externalDocumentList.add(category);
-                for (int j=0;j<size;j++) {
-                    ExternalDocument document = createExternalDocument(e, DocumentType.FILE);
-                    // FIXME new association domain model
-//                    document.setParent(category);
-                    externalDocumentList.add(document);
-                }
-            }
-        }
-        return externalDocumentList;
+        return createDocumentList(documentListSize, entityList);
     }
 
     /**
-     * Test support method to create and persist a <code>ExternalDocument</code> list.
-     * @param hibernateTemplate
-     * @param size
-     * @param 
+     * Test support method to create a <code>Document</code> list.
+     *
+     * @param documentListSize
+     * @param entityList
      */
-    public static List<ExternalDocument> createAndPersistExternalDocumentList(HibernateTemplate hibernateTemplate, int i, int p, int e) {
-        List<ExternalDocument> externalDocumentList = createExternalDocumentList(i, p, e);
-        for (ExternalDocument x: externalDocumentList) {
-            hibernateTemplate.merge(x);
+    public static List<Document> createDocumentList(int documentListSize, List<Entity> entityList) {
+        List<Document> documentList = new ArrayList<Document>();
+        for (Entity entity: entityList) {
+            for (int i=0;i<documentListSize;i++) {
+                documentList.add(createDocument(entity));
+            }
         }
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return externalDocumentList;
+        return documentList;
     }
-    
-    
-    
+
 }

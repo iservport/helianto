@@ -4,6 +4,9 @@
 
 <hibernate-configuration>
 	<session-factory>
+		<mapping class="org.helianto.process.Document" />
+		<mapping class="org.helianto.process.DocumentAssociation" />
+		<mapping class="org.helianto.process.Part" />
 	</session-factory>
 </hibernate-configuration>
 

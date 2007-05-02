@@ -15,19 +15,19 @@
 		<level value="warn"/>
 	</logger>
 	<logger name="org.springframework">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<logger name="com.opensymphony.module.sitemesh">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<logger name="org.acegisecurity">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<logger name="org.springframework.orm.hibernate3">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<logger name="org.helianto.core">
-		<level value="INFO"/>
+		<level value="ERROR"/>
 	</logger>
 	<root>
 		<level value="INFO"/>

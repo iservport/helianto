@@ -27,16 +27,6 @@ public class Process extends org.helianto.process.Document implements java.io.Se
     public Process() {
     }
 
-	/** minimal constructor */
-    public Process(Entity entity, String docCode) {
-        super(entity, docCode);        
-    }
-    /** full constructor */
-    public Process(Entity entity, String docCode, String docName, Set<Tree> parentAssociations, List<Tree> childAssociations, long internalNumber) {
-        super(entity, docCode, docName, parentAssociations, childAssociations);        
-       this.internalNumber = internalNumber;
-    }
-   
     // Property accessors
     public long getInternalNumber() {
         return this.internalNumber;

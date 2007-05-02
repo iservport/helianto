@@ -31,15 +31,6 @@ public class Specification extends org.helianto.process.Document implements java
     public Specification() {
     }
 
-	/** minimal constructor */
-    public Specification(Entity entity, String docCode, SpecificationLimit specificationLimit) {
-        super(entity, docCode);        
-        this.specificationLimit = specificationLimit;
-    }
-    
-    
-
-   
     // Property accessors
 
     public Unit getUnit() {

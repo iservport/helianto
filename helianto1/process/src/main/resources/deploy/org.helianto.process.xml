@@ -17,15 +17,23 @@
 		-->
 <beans>
 	<!--
-			material dao	
+			dao implementation	
 	-->
-	<bean id="materialDao" class="org.helianto.process.hibernate.MaterialDaoImpl">
+	<bean id="documentDao" 
+		class="org.helianto.process.orm.DocumentDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
-	<!--
-			resource dao	
-	-->
-	<bean id="resourceDao" class="org.helianto.process.hibernate.ResourceDaoImpl">
+	<bean id="documentAssociationDao" 
+		class="org.helianto.process.orm.DocumentAssociationDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="materialDao" 
+	    class="org.helianto.process.hibernate.MaterialDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="resourceDao" 
+	    class="org.helianto.process.hibernate.ResourceDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--

@@ -37,21 +37,6 @@ import org.helianto.process.Setup;
 public interface ProcessMgr extends PartnerMgr {
 
     /**
-     * <code>ExternalDocument</code> of type category factory method.
-     */
-    public ExternalDocument createExternalDocumentCategory(Entity entity, String documentCode);
-
-    /**
-     * <code>ExternalDocument</code> of type folder factory method.
-     */
-    public ExternalDocument createExternalFolder(ExternalDocument parent, String documentCode);
-
-    /**
-     * <code>ExternalDocument</code> of type file factory method.
-     */
-    public ExternalDocument createExternalFile(ExternalDocument parent, String documentCode);
-
-    /**
      * Part factory method.
      */
     public Part createPart(Entity entity, boolean hasDrawing);

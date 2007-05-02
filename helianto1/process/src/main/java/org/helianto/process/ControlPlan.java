@@ -29,15 +29,6 @@ public class ControlPlan extends org.helianto.process.Process implements java.io
     public ControlPlan() {
     }
 
-	/** minimal constructor */
-    public ControlPlan(Entity entity, String docCode, int phase) {
-        super(entity, docCode);        
-        this.phase = phase;
-    }
-    
-   
-
-   
     // Property accessors
 
     public int getPhase() {

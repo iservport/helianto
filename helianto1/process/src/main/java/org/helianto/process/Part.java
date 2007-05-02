@@ -1,82 +1,141 @@
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.helianto.process;
-// Generated 08/03/2007 19:38:51 by Hibernate Tools 3.2.0.beta8
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
-import java.util.List;
-import java.util.Set;
 import org.helianto.core.Entity;
-
+import org.helianto.partner.Partner;
 /**
- * 			
  * <p>
- * A part.
+ * Represents a <code>Part</code>.  
  * </p>
  * @author Mauricio Fernandes de Castro
- * 				
- * 		
  */
-public class Part extends org.helianto.process.Document implements java.io.Serializable {
+@javax.persistence.Entity
+public class Part extends Document implements java.io.Serializable {
 
-    // Fields    
-
-     private int partType;
-     private boolean hasDrawing;
-     private MaterialType materialType;
-     private float weight;
-
-     // Constructors
+    private static final long serialVersionUID = 1L;
+    private boolean hasDrawing;
+    private Partner designResponsibility;
+    private float weight;
 
     /** default constructor */
     public Part() {
     }
 
-	/** minimal constructor */
-    public Part(Entity entity, String docCode, boolean hasDrawing) {
-        super(entity, docCode);        
-        this.hasDrawing = hasDrawing;
-    }
-    /** full constructor */
-    public Part(Entity entity, String docCode, String docName, Set<Tree> parentAssociations, List<Tree> childAssociations, int partType, boolean hasDrawing, MaterialType materialType, float weight) {
-        super(entity, docCode, docName, parentAssociations, childAssociations);        
-       this.partType = partType;
-       this.hasDrawing = hasDrawing;
-       this.materialType = materialType;
-       this.weight = weight;
-    }
-   
     // Property accessors
-    public int getPartType() {
-        return this.partType;
-    }
-    
-    public void setPartType(int partType) {
-        this.partType = partType;
-    }
-    public boolean isHasDrawing() {
+    /**
+     * HasDrawing getter.
+     */
+    public boolean getHasDrawing() {
         return this.hasDrawing;
     }
-    
+    /**
+     * HasDrawing setter.
+     */
     public void setHasDrawing(boolean hasDrawing) {
         this.hasDrawing = hasDrawing;
     }
-    public MaterialType getMaterialType() {
-        return this.materialType;
+
+    /**
+     * DesignResponsibility getter.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="partnerId", nullable=true)
+    public Partner getDesignResponsibility() {
+        return this.designResponsibility;
     }
-    
-    public void setMaterialType(MaterialType materialType) {
-        this.materialType = materialType;
+    /**
+     * DesignResponsibility setter.
+     */
+    public void setDesignResponsibility(Partner designResponsibility) {
+        this.designResponsibility = designResponsibility;
     }
+
+    /**
+     * Weight getter.
+     */
+    @Column(precision=10, scale=4)
     public float getWeight() {
         return this.weight;
     }
-    
+    /**
+     * Weight setter.
+     */
     public void setWeight(float weight) {
         this.weight = weight;
     }
+    //1.1
+    /**
+     * <code>Part</code> factory.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public static Part partFactory(Entity entity, String docCode) {
+        return (Part) documentFactory(Part.class, entity, docCode);
+    }
 
+    //1.2
+    /**
+     * <code>Part</code> factory.
+     * 
+     * @param parent
+     * @param docCode
+     * @param coefficient
+     */
+    public static Part partFactory(Part parent, String docCode, double coefficient) {
+        return (Part) documentFactory(Part.class, parent, docCode, coefficient, AssociationType.PART_PART);
+    }
 
+    //1.3
+    /**
+     * <code>Part</code> factory.
+     * 
+     * @param parent
+     * @param docCode
+     * @param coefficient
+     */
+    public static Part partFactory(Operation parent, String docCode, double coefficient) {
+        return (Part) documentFactory(Part.class, parent, docCode, coefficient, AssociationType.OPERATION_PART);
+    }
 
+    //1.4
+    /**
+     * <code>Part</code> factory.
+     * 
+     * @param parent
+     * @param docCode
+     * @param coefficient
+     */
+    public static Part partFactory(Process parent, String docCode, double coefficient) {
+        return (Part) documentFactory(Part.class, parent, docCode, coefficient, AssociationType.PROCESS_PART);
+    }
+
+    /**
+     * <code>Part</code> natural id query.
+     */
+    @Transient
+    public static String getDocumentNaturalIdQueryString() {
+        return "select part from Part part where part.entity = ? and part.docCode = ? ";
+    }
 
 }
-
-
