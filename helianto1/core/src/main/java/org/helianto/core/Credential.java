@@ -118,6 +118,20 @@ public class Credential implements java.io.Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    /**
+     * Password reset.
+     */
+    @Transient
+    public void resetPassword() {
+        this.password = "";
+    }
+    /**
+     * Password generator.
+     */
+    @Transient
+    public void generatePassword() {
+        this.password = Credential.passwordFactory();
+    }
 
     /**
      * CredentialState getter.
