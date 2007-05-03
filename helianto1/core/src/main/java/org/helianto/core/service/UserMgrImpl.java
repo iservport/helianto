@@ -32,7 +32,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 		return Identity.identityFactory("", "");
 	}
 
-	public void persistIdentity(Identity identity) {
+	public void writeIdentity(Identity identity) {
 		identityDao.persistIdentity(identity);
 	}
     
@@ -55,7 +55,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         return createCredential(identity);
     }
 
-	public void persistCredential(Credential credential) {
+	public void writeCredential(Credential credential) {
         credentialDao.persistCredential(credential);
 	}
 

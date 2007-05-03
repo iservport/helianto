@@ -33,15 +33,9 @@ import org.helianto.core.filter.IdentityFilter;
 public interface UserMgr extends CoreMgr {
 	
     /**
-     * <p>An empty <code>Identity</code> to be 
-     * submitted to the presentation layer.</p>
+     * <p>Write <code>Identity</code>.</p>
      */
-    public Identity createEmptyIdentity();
-    
-    /**
-     * <p>Persist <code>Identity</code>.</p>
-     */
-    public void persistIdentity(Identity identity);
+    public void writeIdentity(Identity identity);
     
     /**
      * <p>Selects an <code>Identity</code> list.
@@ -63,9 +57,9 @@ public interface UserMgr extends CoreMgr {
     public Credential createCredential(Identity identity);
     
     /**
-     * <p>Persist <code>Credential</code>.</p>
+     * <p>Write <code>Credential</code>.</p>
      */
-    public void persistCredential(Credential credential);
+    public void writeCredential(Credential credential);
     
     
     

@@ -59,7 +59,7 @@ public class UserMgrImplTests extends TestCase {
         identityDao.persistIdentity(identity);
         replay(identityDao);
         
-        userMgr.persistIdentity(identity);
+        userMgr.writeIdentity(identity);
         verify(identityDao);
     }
     
@@ -106,7 +106,7 @@ public class UserMgrImplTests extends TestCase {
         credentialDao.persistCredential(credential);
         replay(credentialDao);
         
-        userMgr.persistCredential(credential);
+        userMgr.writeCredential(credential);
         verify(credentialDao);
     }
     
