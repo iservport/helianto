@@ -37,8 +37,8 @@
 			ref="authenticationPropertyEditorRegistrar"/>
 		<property name="serverMgr" 
 			ref="serverMgr"/>
-		<property name="securityMgr" 
-			ref="securityMgr"/>
+		<property name="userMgr" 
+			ref="userMgr"/>
 	</bean>
 	<!--
 		User selection action	

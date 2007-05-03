@@ -26,15 +26,17 @@ import javax.mail.MessagingException;
 import junit.framework.TestCase;
 
 import org.helianto.core.Credential;
-import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
+import org.helianto.core.service.UserMgr;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.web.view.IdentityForm;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
@@ -53,24 +55,53 @@ public class IdentityFormActionTests extends TestCase {
         assertEquals(IdentityForm.class, identityFormAction.getFormObjectClass());
     }
     
-    public void testCreate() {
-        Event event = identityFormAction.create(context);
+    public void testCreateNecessary() {
+        Event event = identityFormAction.createIfNecessary(context);
         assertEquals(event.getId(), "success");
         
-        assertTrue(((IdentityForm) context.getFlowScope().get("identityForm")).getCredential() instanceof Credential);
+        assertTrue((identityFormAction.doGetForm(context).getCredential()) instanceof Credential);
     }
     
-    public void testPersistIdentity() {
-        form.setCredential(new Credential());
-        Identity identity = new Identity();
-        form.getCredential().setIdentity(identity);
-        
-        securityMgr.persistIdentity(form.getCredential().getIdentity());
-        replay(securityMgr);
-
-        Event event = identityFormAction.persistIdentity(context);
+    public void testCreateNotNecessary() {
+        Credential credential = CredentialTestSupport.createCredential();
+        form.setCredential(credential);
+        Event event = identityFormAction.createIfNecessary(context);
         assertEquals(event.getId(), "success");
-        verify(securityMgr);
+        
+        assertSame(credential, identityFormAction.doGetForm(context).getCredential());
+    }
+    
+    public void testWriteIdentity() {
+        Credential credential = CredentialTestSupport.createCredential();
+        form.setCredential(credential);
+        
+        userMgr.writeIdentity(form.getCredential().getIdentity());
+        replay(userMgr);
+
+        Event event = identityFormAction.writeIdentity(context);
+        assertEquals(event.getId(), "success");
+        verify(userMgr);
+    }
+    
+    public void testNonUnique() {
+        Credential credential = CredentialTestSupport.createCredential();
+        form.setCredential(credential);
+        BindingResult bindingResult = new BeanPropertyBindingResult(form, "identityFormAction");
+        context.getFlashScope().put("errors", bindingResult);
+
+        Event event = identityFormAction.nonUnique(context);
+        assertEquals(event.getId(), "error");
+    }
+    
+    public void testGeneratePassword() {
+        Credential credential = CredentialTestSupport.createCredential();
+        form.setCredential(credential);
+        String password = credential.getPassword();
+
+        Event event = identityFormAction.generatePassword(context);
+        assertEquals(event.getId(), "success");
+        
+        assertFalse(credential.getPassword().equals(password));
     }
     
     public void testVerifySuccess() {
@@ -153,7 +184,7 @@ public class IdentityFormActionTests extends TestCase {
     // collabs
     private RequestContext context;
     private IdentityForm form;
-    private SecurityMgr securityMgr;
+    private UserMgr userMgr;
     private ServerMgr serverMgr;
     private PasswordConfirmationMailForm mailForm;
     
@@ -169,15 +200,15 @@ public class IdentityFormActionTests extends TestCase {
         };
         context.getFlowScope().put(identityFormAction.getFormObjectName(), form);
         
-        securityMgr = createMock(SecurityMgr.class);
+        userMgr = createMock(SecurityMgr.class);
         serverMgr = createMock(ServerMgr.class);
-        identityFormAction.setSecurityMgr(securityMgr);
+        identityFormAction.setUserMgr(userMgr);
         identityFormAction.setServerMgr(serverMgr);
     }
     
     @Override
     public void tearDown() {
-        reset(securityMgr);
+        reset(userMgr);
         reset(serverMgr);
     }
     

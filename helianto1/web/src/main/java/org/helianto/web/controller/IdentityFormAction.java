@@ -21,9 +21,11 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
-import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
+import org.helianto.core.service.UserMgr;
 import org.helianto.web.view.IdentityForm;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.validation.Errors;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
 import org.springframework.webflow.execution.Event;
@@ -36,7 +38,7 @@ import org.springframework.webflow.execution.RequestContext;
  */
 public class IdentityFormAction extends FormAction {
     
-    private SecurityMgr securityMgr;
+    private UserMgr userMgr;
     private ServerMgr serverMgr;
     
     public IdentityFormAction() {
@@ -45,37 +47,56 @@ public class IdentityFormAction extends FormAction {
     }
     
     /**
-     * Delegate to <code>SecurityMgr#createCredentialAndIdentity()</code>
-     * to populate the form with the new <code>Credential</code>.
+     * Create <code>Credential</code> if the corresponding
+     * form property is null.
      */
-    public Event create(RequestContext context) {
+    public Event createIfNecessary(RequestContext context) {
         IdentityForm form = doGetForm(context);
-        Credential credential = Credential.credentialFactory();
-        form.setCredential(credential);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Set property credential to "+credential+" on form " +form);
+        if (form.getCredential()==null) {
+            Credential credential = Credential.credentialFactory();
+            form.setCredential(credential);
+            if (logger.isDebugEnabled()) {
+                logger.debug("New credential set to "+credential+" set to form " +form);
+            }
+        }
+        else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Credential "+form.getCredential()+" already loaded ");
+            }
         }
         return success();
     }
     
     /**
-     * Simply delegates to <code>securityMgr.persistIdentity(Identity)</code>.
+     * Write <code>Identity</code> to the datastore.
      */
-    public Event persistIdentity(RequestContext context) {
+    public Event writeIdentity(RequestContext context) {
         Identity identity = doGetForm(context).getCredential().getIdentity();
-        securityMgr.persistIdentity(identity);
+        userMgr.writeIdentity(identity);
         if (logger.isDebugEnabled()) {
             logger.debug("Persisted identity "+identity);
         }
         return success();
     }
     
-    public Event verify(RequestContext context) {
-        Credential credential = doGetForm(context).getCredential();
-        if (Credential.verifyPassword(credential)) {
-            return success();
-        }
+    /**
+     * Update errors object if non unique.
+     */
+    public Event nonUnique(RequestContext context) {
+        Errors errors = (Errors) context.getFlashScope().get("errors");
+        errors.rejectValue("credential.identity.principal", 
+                "principal.error.duplicate", 
+                "Duplicate principal, please choose another.");
         return error();
+    }
+    
+    /**
+     * Generate a random password.
+     */
+    public Event generatePassword(RequestContext context) {
+        Credential credential = doGetForm(context).getCredential();
+        credential.generatePassword();
+        return success();
     }
     
     public Event send(RequestContext context) {
@@ -97,24 +118,17 @@ public class IdentityFormAction extends FormAction {
         return error();
     }
     
-    public Event generatePassword(RequestContext context) {
-        
-        return success();
-    }
-    
-    public Event nonUnique(RequestContext context) {
-        IdentityForm form = doGetForm(context);
-//        Errors errors = (Errors) context.getFlashScope().get("errors");
-//        errors.rejectValue("credential.identity.principal", 
-//                "principal.error.duplicate", 
-//                "Duplicate principal, please choose another.");
-        //TODO non unique identity
+    public Event verify(RequestContext context) {
+        Credential credential = doGetForm(context).getCredential();
+        if (Credential.verifyPassword(credential)) {
+            return success();
+        }
         return error();
     }
     
     public Event persistFinal(RequestContext context) {
         IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
-        securityMgr.persistCredential(form.getCredential());
+        userMgr.writeCredential(form.getCredential());
         return success();
     }
     
@@ -161,20 +175,16 @@ public class IdentityFormAction extends FormAction {
     //- utilities
     
     public void init() {
-        if (securityMgr==null) {
-            throw new IllegalArgumentException("Required securityMgr");
-        }
-        if (serverMgr==null) {
-            throw new IllegalArgumentException("Required serverMgr");
-        }
     }
     
     //~ collaborators
 
-    public void setSecurityMgr(SecurityMgr securityMgr) {
-        this.securityMgr =  securityMgr;
+    @Required
+    public void setUserMgr(UserMgr userMgr) {
+        this.userMgr =  userMgr;
     }
 
+    @Required
     public void setServerMgr(ServerMgr serverMgr) {
         this.serverMgr = serverMgr;
     }
