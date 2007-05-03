@@ -187,10 +187,10 @@ public class Document implements java.io.Serializable {
      * @param entity
      * @param docCode
      */
-    public static Document documentFactory(Class clazz, Entity entity, String docCode) {
-        Document document = null;
+    public static <T extends Document> T documentFactory(Class<T> clazz, Entity entity, String docCode) {
+        T document = null;
         try {
-            document = (Document) clazz.newInstance();
+            document = clazz.newInstance();
         } catch (Exception e) {
             throw new IllegalArgumentException("Unable to create document of class "+clazz);
         }
@@ -208,8 +208,8 @@ public class Document implements java.io.Serializable {
      * @param docCode
      * @param associationType
      */
-    public static Document documentFactory(Class clazz, Document parent, String docCode, double coefficient, AssociationType associationType) {
-        Document document = documentFactory(clazz, parent.getEntity(), docCode);
+    public static <T extends Document> T documentFactory(Class<T> clazz, Document parent, String docCode, double coefficient, AssociationType associationType) {
+        T document = documentFactory(clazz, parent.getEntity(), docCode);
         DocumentAssociation association = DocumentAssociation.documentAssociationFactory(parent, document);
         association.setCoefficient(coefficient);
         association.setAssociationType(associationType.getValue());
