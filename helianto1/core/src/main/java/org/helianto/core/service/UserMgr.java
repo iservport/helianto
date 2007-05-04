@@ -33,7 +33,7 @@ import org.helianto.core.filter.IdentityFilter;
 public interface UserMgr extends CoreMgr {
 	
     /**
-     * <p>Write <code>Identity</code>.</p>
+     * <p>Write <code>Identity</code> to datastore.</p>
      */
     public void writeIdentity(Identity identity);
     
@@ -49,19 +49,7 @@ public interface UserMgr extends CoreMgr {
      * <p>A <code>Credential</code> with an
      * associated new <code>Identity</code>.</p>
      */
-    public Credential createCredentialAndIdentity();
-    
-    /**
-     * <p>A <code>Credential</code>.</p>
-     */
-    public Credential createCredential(Identity identity);
-    
-    /**
-     * <p>Write <code>Credential</code>.</p>
-     */
     public void writeCredential(Credential credential);
-    
-    
     
     /**
      * <p>A simple <code>User</code> creation given an <code>Endity</code>.</p>

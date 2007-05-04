@@ -45,13 +45,13 @@ public class ConfigurableMailSenderImplTests extends TestCase {
         //not an active credential
         transportServer.getCredential().setCredentialState(ActivityState.SUSPENDED.getValue());
         transportServer.getCredential().setEncription(Encription.PLAIN_PASSWORD.getValue());
-        doTestIvalidServer(transportServer);
+        doTestInvalidServer(transportServer);
         //invalid encription
         transportServer.getCredential().setCredentialState(ActivityState.ACTIVE.getValue());
-        transportServer.getCredential().setEncription(Byte.MAX_VALUE);
-        doTestIvalidServer(transportServer);
+        transportServer.getCredential().setEncription(' ');
+        doTestInvalidServer(transportServer);
         //null
-        doTestIvalidServer(null);
+        doTestInvalidServer(null);
     }
     
     public void testSetAccessServer() {
@@ -62,7 +62,7 @@ public class ConfigurableMailSenderImplTests extends TestCase {
         assertSame(accessServer, configurableMailSenderImpl.getAccessServer());
     }
     
-    public void doTestIvalidServer(Server server) {
+    public void doTestInvalidServer(Server server) {
         try {
             configurableMailSenderImpl.setTransportServer(server);
             fail();

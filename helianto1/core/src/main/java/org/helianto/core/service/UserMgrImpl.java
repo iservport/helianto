@@ -24,16 +24,10 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     
     protected CredentialDao credentialDao;
 	
-	/* 
-	 * Create and persist Identity
-	 */
-
-    public Identity createEmptyIdentity() {
-		return Identity.identityFactory("", "");
-	}
+	// identity
 
 	public void writeIdentity(Identity identity) {
-		identityDao.persistIdentity(identity);
+		identityDao.mergeIdentity(identity);
 	}
     
     public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions) {
@@ -42,29 +36,16 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         return identityList ;
     }
 
-	/* 
-	 * Create and persist Credential
-	 */
-
-    public Credential createCredential(Identity identity) {
-        return Credential.credentialFactory(identity, "empty");
-    }
-
-    public Credential createCredentialAndIdentity() {
-        Identity identity = createEmptyIdentity();
-        return createCredential(identity);
-    }
+	// credential
 
 	public void writeCredential(Credential credential) {
-        credentialDao.persistCredential(credential);
+        credentialDao.mergeCredential(credential);
 	}
 
-	/* 
-	 * Create and persist User
-	 */
+	// user
 
 	public User createUser(Entity entity) {
-        Identity identity = createEmptyIdentity();
+        Identity identity = Identity.identityFactory("");
         return createUser(identity, entity);
     }
     

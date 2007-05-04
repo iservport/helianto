@@ -126,10 +126,10 @@ public class JavaMailSenderAdapterTests extends TestCase {
         serverList = OperatorTestSupport.createServerList(2, 1);
         Server transportServer = serverList.get(0);
         transportServer.setServerType(ServerType.SMTP_SERVER.getValue());
-        transportServer.setRequiredEncription((byte) 64);
+        transportServer.setRequiredEncription(Encription.PLAIN_PASSWORD.getValue());
         Server accessServer = serverList.get(1);
         accessServer.setServerType(ServerType.POP3_SERVER.getValue());
-        accessServer.setRequiredEncription((byte) 64);
+        accessServer.setRequiredEncription(Encription.PLAIN_PASSWORD.getValue());
         
         try {
             utils.selectFirstAvailableMailTransportServer(serverList);

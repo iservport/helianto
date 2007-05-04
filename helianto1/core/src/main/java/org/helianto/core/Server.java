@@ -30,7 +30,7 @@ public class Server  implements java.io.Serializable {
      private char serverType;
      private byte priority;
      private char serverState;
-     private byte requiredEncription;
+     private char requiredEncription;
      private Credential credential;
 
      // Constructors
@@ -39,29 +39,6 @@ public class Server  implements java.io.Serializable {
     public Server() {
     }
 
-	/** minimal constructor */
-    public Server(Operator operator, String serverName, char serverType, byte priority, char serverState, byte requiredEncription) {
-        this.operator = operator;
-        this.serverName = serverName;
-        this.serverType = serverType;
-        this.priority = priority;
-        this.serverState = serverState;
-        this.requiredEncription = requiredEncription;
-    }
-    /** full constructor */
-    public Server(Operator operator, String serverName, String serverHostAddress, int serverPort, String serverDesc, char serverType, byte priority, char serverState, byte requiredEncription, Credential credential) {
-       this.operator = operator;
-       this.serverName = serverName;
-       this.serverHostAddress = serverHostAddress;
-       this.serverPort = serverPort;
-       this.serverDesc = serverDesc;
-       this.serverType = serverType;
-       this.priority = priority;
-       this.serverState = serverState;
-       this.requiredEncription = requiredEncription;
-       this.credential = credential;
-    }
-   
     // Property accessors
     public int getId() {
         return this.id;
@@ -126,11 +103,11 @@ public class Server  implements java.io.Serializable {
     public void setServerState(char serverState) {
         this.serverState = serverState;
     }
-    public byte getRequiredEncription() {
+    public char getRequiredEncription() {
         return this.requiredEncription;
     }
     
-    public void setRequiredEncription(byte requiredEncription) {
+    public void setRequiredEncription(char requiredEncription) {
         this.requiredEncription = requiredEncription;
     }
     public Credential getCredential() {

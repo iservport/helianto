@@ -47,16 +47,10 @@ public class UserMgrImplTests extends TestCase {
     
     private UserMgrImpl userMgr;
     
-    public void testCreateEmptyIdentity() {
-        Identity identity = userMgr.createEmptyIdentity();
-        assertEquals("", identity.getPrincipal());
-        assertEquals("", identity.getOptionalAlias());
-    }
-    
-    public void testPersistIdentity() {
-        Identity identity = new Identity();
+    public void testWriteIdentity() {
+        Identity managedIdentity = null, identity = new Identity();
         
-        identityDao.persistIdentity(identity);
+        expect(identityDao.mergeIdentity(identity)).andReturn(managedIdentity);
         replay(identityDao);
         
         userMgr.writeIdentity(identity);
@@ -86,24 +80,10 @@ public class UserMgrImplTests extends TestCase {
         assertFalse(identityList.contains(excluded));
     }
     
-    public void testCreateCredential() {
-        Identity identity = new Identity();
-        Credential credential = userMgr.createCredential(identity);
-        assertSame(identity, credential.getIdentity());
-        assertEquals("empty", credential.getPassword());
-    }
-
-    public void testCreateCredentialAndIdentity() {
-        Credential credential = userMgr.createCredentialAndIdentity();
-        assertEquals("", credential.getIdentity().getPrincipal());
-        assertEquals("", credential.getIdentity().getOptionalAlias());
-        assertEquals("empty", credential.getPassword());
-    }
-
-    public void testPersistCredential() {
-        Credential credential = new Credential();
+    public void testWriteCredential() {
+        Credential managedCredential = null, credential = new Credential();
         
-        credentialDao.persistCredential(credential);
+        expect(credentialDao.mergeCredential(credential)).andReturn(managedCredential);
         replay(credentialDao);
         
         userMgr.writeCredential(credential);

@@ -57,7 +57,7 @@ public class Credential implements java.io.Serializable {
     private char credentialState;
     private Date lastModified;
     private Date expired;
-    private byte encription;
+    private char encription;
     //transient fields
     private String verifyPassword;
     private boolean passwordDirty;
@@ -177,13 +177,13 @@ public class Credential implements java.io.Serializable {
     /**
      * Encription getter.
      */
-    public byte getEncription() {
+    public char getEncription() {
         return this.encription;
     }
     /**
      * Encription setter.
      */
-    public void setEncription(byte encription) {
+    public void setEncription(char encription) {
         this.encription = encription;
     }
     

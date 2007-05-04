@@ -101,8 +101,8 @@ external hosts.
 		<!-- 
 			required encription
 		-->
-		<property name="requiredEncription" type="byte" >
-			<column name="requiredEncription" not-null="true" default="0"/>
+		<property name="requiredEncription" type="char" >
+			<column name="requiredEncription" not-null="true" default="'P'"/>
 		</property>
 		<!-- 
 				credential
