@@ -160,6 +160,16 @@ public class CriteriaBuilder {
     }
 
     /**
+     * String appender.
+     * 
+     * @param content
+     */
+    public CriteriaBuilder appendLike(String content) {
+        criteria.append("'%").append(content).append("%' ");
+        return this;
+    }
+
+    /**
      * Integer appender.
      * 
      * @param content

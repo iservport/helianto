@@ -74,7 +74,7 @@ public class CredentialTests extends TestCase {
         
         assertEquals(Credential.DEFAULT_PASSWORD_SIZE, password.length());
         for (int i =0; i<Credential.DEFAULT_PASSWORD_SIZE;i++) {
-            assertTrue(Credential.ALLOWED_CHARS_IN_PASSWORD.indexOf(password.charAt(i))>0);
+            assertTrue(Credential.ALLOWED_CHARS_IN_PASSWORD.indexOf(password.charAt(i))>-1);
         }
         
     }

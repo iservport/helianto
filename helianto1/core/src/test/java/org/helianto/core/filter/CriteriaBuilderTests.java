@@ -104,6 +104,11 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("STRING ",criteriaBuilder.getCriteriaAsString());
     }
     
+    public void testStringLikeAppender() {
+        assertTrue(criteriaBuilder.appendLike("STRING") instanceof CriteriaBuilder);
+        assertEquals("'%STRING%' ",criteriaBuilder.getCriteriaAsString());
+    }
+    
     public void testIntegerAppender() {
         assertTrue(criteriaBuilder.append(Integer.MAX_VALUE) instanceof CriteriaBuilder);
         assertEquals("2147483647 ",criteriaBuilder.getCriteriaAsString());
