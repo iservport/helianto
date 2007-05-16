@@ -221,8 +221,8 @@ public class Identity implements java.io.Serializable {
      * <code>Identity</code> query all.
      */
     @Transient
-    public static String getIdentityQueryAllString() {
-        return "select identity from Identity identity ";
+    public static StringBuilder getIdentityQueryAllString() {
+        return new StringBuilder("select identity from Identity identity ");
     }
 
     /**

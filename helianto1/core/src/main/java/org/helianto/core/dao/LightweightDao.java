@@ -90,6 +90,16 @@ public interface LightweightDao {
     public Collection find(String query, Object... values) throws DataAccessException ;
 
     /**
+     * A method to return query results.
+     * 
+     * <p>
+     * Uses JSE 5.0 variable argument.
+     * </p>
+     * 
+     */
+    public Collection find(StringBuilder query, Object... values) throws DataAccessException;
+    
+    /**
      * A method to return a single object from query results.
      * 
      * <p>
