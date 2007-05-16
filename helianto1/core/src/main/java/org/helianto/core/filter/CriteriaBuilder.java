@@ -99,10 +99,27 @@ public class CriteriaBuilder {
      * @param sqlOperator
      */
     public CriteriaBuilder appendSegment(String fieldName, String sqlOperator) {
+        return appendSegment(fieldName, sqlOperator, "");
+    }
+    
+    /**
+     * Filed name appender that can suppress the initial connector.
+     * 
+     * @param fieldName
+     * @param sqlOperator
+     * @param sqlFunction
+     */
+    public CriteriaBuilder appendSegment(String fieldName, String sqlOperator, String sqlFunction) {
         segmentCount++;
+        if (!sqlFunction.equals("")) {
+            criteria.append(sqlFunction).append("(");
+        }
         criteria.append(prefix).append(".")
-            .append(fieldName)
-            .append(" ")
+            .append(fieldName);
+        if (!sqlFunction.equals("")) {
+            criteria.append(sqlFunction).append(")");
+        }
+        criteria.append(" ")
             .append(sqlOperator)
             .append(" ");
         return this;
