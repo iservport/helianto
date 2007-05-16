@@ -30,7 +30,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
     public static String USER_CRITERIA = "identity.id in (" +
         "select user.identity.id from User user where user.entity.id =  0 )  ";
     public static String USER_PRINCIPAL_CRITERIA = USER_CRITERIA +
-        "AND lower(identity.principallower) like '%principalsearch%' ";
+        "AND lower(identity.principal) like '%principalsearch%' ";
 
     private IdentitySelectionStrategy identitySelectionStrategy;
 

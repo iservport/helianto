@@ -117,7 +117,7 @@ public class CriteriaBuilder {
         criteria.append(prefix).append(".")
             .append(fieldName);
         if (!sqlFunction.equals("")) {
-            criteria.append(sqlFunction).append(")");
+            criteria.append(")");
         }
         criteria.append(" ")
             .append(sqlOperator)
