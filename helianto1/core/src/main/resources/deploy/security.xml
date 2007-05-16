@@ -27,6 +27,7 @@
 				class="org.helianto.core.service.SecurityMgrImpl">
 				<property name="userLogDao" ref="userLogDao"/>
 				<property name="identityDao" ref="identityDao"/>
+				<property name="identitySelectionStrategy" ref="defaultIdentitySelectionStrategy"/>
 				<property name="credentialDao" ref="credentialDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
 				<property name="internalEnumeratorDao" ref="internalEnumeratorDao"/>
