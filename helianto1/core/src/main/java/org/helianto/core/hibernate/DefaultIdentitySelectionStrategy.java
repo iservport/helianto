@@ -25,6 +25,7 @@ import org.helianto.core.filter.UserBackedFilter;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Deprecated
 public class DefaultIdentitySelectionStrategy extends AbstractUserBackedSelectionStrategy implements IdentitySelectionStrategy {
 
 	/**

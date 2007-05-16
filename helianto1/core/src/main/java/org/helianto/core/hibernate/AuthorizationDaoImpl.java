@@ -78,6 +78,14 @@ public class AuthorizationDaoImpl extends GenericDaoImpl implements Authorizatio
         return (ArrayList<User>) find(USER_ENTITY_QRY, requiredEntity);
     }
     
+    public List<UserGroup> findUserGroupByCriteria(String criteria) {
+        return (ArrayList<UserGroup>) find("from UserGroup userGroup "+criteria);
+    }
+    
+    public List<User> findUserByCriteria(String criteria) {
+        return (ArrayList<User>) find("from User user "+criteria);
+    }
+    
     public void removeUser(User user) {
         Assert.notNull(user);
         remove(user);

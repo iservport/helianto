@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
@@ -65,6 +67,10 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         return authorizationDao.findUserGroupByEntity(entity);
     }
     
+    public List<User> findUsers(String criteria) {
+        return authorizationDao.findUserByCriteria(criteria);
+    }
+    
     /**
      * Helper method to convert principal to lower case.
      */
@@ -95,5 +101,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     public void setCredentialDao(CredentialDao credentialDao) {
         this.credentialDao = credentialDao;
     }
-    
+
+    private static final Log logger = LogFactory.getLog(UserMgrImpl.class);
+
 }

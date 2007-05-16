@@ -71,6 +71,11 @@ public interface UserMgr extends CoreMgr {
      */
     public List<UserGroup> findUserByEntity(Entity entity);
     
+    /**
+     * <p>List <code>UserGroup</code> by string criteria.</p>
+     */
+    public List<User> findUsers(String criteria);
+    
     
     /**
      * <code>UserGroup</code> will be unlocked by this action

@@ -20,6 +20,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Service;
+import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 
@@ -48,9 +49,19 @@ public interface AuthorizationDao extends CommonOrmDao {
     public UserGroup findUserGroupByNaturalId(Entity entity, Identity identity);
     
     /**
-     * Finds <code>UserGroup</code> by  entity.
+     * Find <code>UserGroup</code> by  entity.
      */
     public List<UserGroup> findUserGroupByEntity(Entity entity);
+    
+    /**
+     * Find <code>UserGroup</code> by criteria.
+     */
+    public List<UserGroup> findUserGroupByCriteria(String criteria);
+    
+    /**
+     * Find <code>User</code> by criteria.
+     */
+    public List<User> findUserByCriteria(String criteria);
     
     // user role
     
