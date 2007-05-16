@@ -115,6 +115,10 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         return queryAssembler(query,  values).list();
     }
 
+    public Collection find(StringBuilder query, Object... values) throws DataAccessException {
+        return find(query.toString(), values);
+    }
+
     public Object findUnique(String query, Object... values) throws DataAccessException {
         Assert.notNull(query);
         Collection list = find(query, values);
