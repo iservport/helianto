@@ -18,10 +18,6 @@ package org.helianto.core.dao;
 import java.util.List;
 
 import org.helianto.core.Identity;
-import org.helianto.core.dao.CommonOrmDao;
-import org.helianto.core.filter.IdentityFilter;
-
-
 
 /**
  * <code>Identity</code> data access interface.
@@ -51,8 +47,8 @@ public interface IdentityDao extends CommonOrmDao {
     public Identity findIdentityByNaturalId(String principal);
     
     /**
-     * Find <code>Identity</code> by principal.
+     * Find <code>Identity</code> by criteria.
      */
-    public List<Identity> findIdentityByCriteria(IdentityFilter identityFilter);   
+    public List<Identity> findIdentities(String criteria);   
     
 }

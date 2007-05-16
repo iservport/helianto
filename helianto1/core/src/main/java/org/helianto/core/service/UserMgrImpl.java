@@ -14,6 +14,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.CredentialDao;
+import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -25,6 +26,8 @@ import org.springframework.beans.factory.annotation.Required;
 public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     
     protected CredentialDao credentialDao;
+    
+    private IdentitySelectionStrategy identitySelectionStrategy;
 	
 	// identity
 
@@ -33,8 +36,15 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 	}
     
     public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions) {
-        List<Identity> identityList = identityDao.findIdentityByCriteria(filter);
+        String criteria = identitySelectionStrategy.createCriteriaAsString(filter, "identity");
+        List<Identity> identityList = identityDao.findIdentities(criteria);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Found "+identityList.size()+" item(s)");
+        }
         identityList.removeAll(exclusions);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Removed "+exclusions.size()+" item(s)");
+        }
         return identityList ;
     }
 
@@ -100,6 +110,12 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     @Required
     public void setCredentialDao(CredentialDao credentialDao) {
         this.credentialDao = credentialDao;
+    }
+
+    @Required
+    public void setIdentitySelectionStrategy(
+            IdentitySelectionStrategy identitySelectionStrategy) {
+        this.identitySelectionStrategy = identitySelectionStrategy;
     }
 
     private static final Log logger = LogFactory.getLog(UserMgrImpl.class);

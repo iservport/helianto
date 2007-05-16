@@ -15,7 +15,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 		-->
-<beans default-init-method="init">
+<beans>
 
 	<!--
 			Dao implementation	
@@ -65,6 +65,12 @@
 		class="org.helianto.core.orm.InternalEnumeratorDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
+
+	<!--
+			selection strategy	
+	-->
+	<bean id="defaultIdentitySelectionStrategy" 
+		class="org.helianto.core.hibernate.DefaultIdentitySelectionStrategy"/>
 	
 
 </beans>

@@ -19,14 +19,14 @@ import org.helianto.core.filter.IdentityFilter;
 
 
 /**
- * A strategy to create <code>Identity</code> selection filters.
+ * <code>Identity</code> selection strategy. 
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface IdentitySelectionStrategy extends UserBackedSelectionStrategy {
-
+public interface IdentitySelectionStrategy {
+    
     /**
-     * A method to create citeria as String. User prefix to prepend hql alias
+     * Create citeria as String. User prefix to prepend hql alias
      * @param filter
      * @param prefix
      */

@@ -15,62 +15,98 @@
 
 package org.helianto.core.hibernate;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.dao.IdentitySelectionStrategy;
+import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.IdentityFilter;
-import org.helianto.core.filter.UserBackedFilter;
 
 /**
  * Default implementation of <code>IdentitySelectionStrategy</code>
- * interface.
+ * interface. Selects identities from any <code>User</code> that
+ * belongs to the same <code>Entity</code> as the current 
+ * <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Deprecated
-public class DefaultIdentitySelectionStrategy extends AbstractUserBackedSelectionStrategy implements IdentitySelectionStrategy {
+public class DefaultIdentitySelectionStrategy  implements IdentitySelectionStrategy {
 
-	/**
-     * Creates the criteria. 
-	 */
     public String createCriteriaAsString(IdentityFilter filter, String prefix) {
-        StringBuilder criteria = createFilter(filter, prefix);
+        CriteriaBuilder mainCriteriaBuilder = new CriteriaBuilder(prefix);
         
-        if (!filter.getPrincipalSearch().equals("")) {
-            criteria.append("and ")
-            .append("lower("+prefix+".principal) like '%")
-            .append(filter.getPrincipalSearch().toLowerCase())
-            .append("%' ");
+        appendEntityFromUserBackedFilter(filter, mainCriteriaBuilder);
+        appendPrincipalSearchFilter(filter, mainCriteriaBuilder);
+        // TODO create second level criteria to optionalAlias, firstName and lastName (below)
+        
+        if (logger.isDebugEnabled()) {
+            logger.debug("Filter query: "+mainCriteriaBuilder.getCriteriaAsString());
         }
-        if (!filter.getNameOrAliasSearch().equals("")) {
-            String nameOrAliasSearch = filter.getNameOrAliasSearch().toLowerCase();
-            if (!filter.getPrincipalSearch().equals("")) {
-                criteria.append("or ");
-            }
-            else {
-                criteria.append("and ");
-            }
-            criteria.append("lower("+prefix+".optionalAlias) like '%")
-            .append(nameOrAliasSearch)
-            .append("%' ")
-            .append("or ")
-            .append("lower("+prefix+".firstName) like '%")
-            .append(nameOrAliasSearch)
-            .append("%' ")
-            .append("or ")
-            .append("lower("+prefix+".lastName) like '%")
-            .append(nameOrAliasSearch)
-            .append("%' ");
+        return mainCriteriaBuilder.getCriteriaAsString();
+    }
+    
+    /**
+     * Mandatory <code>Entity</code> filter segment.
+     * @param filter
+     * @param criteriaBuilder
+     */
+    protected void appendEntityFromUserBackedFilter(IdentityFilter filter, CriteriaBuilder criteriaBuilder) {
+        if (filter.getUser()==null) {
+            throw new IllegalArgumentException("User required!");
         }
-        if (criteria.toString().equals("")) {
-            return "";
-        }
-        return criteria.insert(0, "where (").append(")").toString();
-	}
-
-    protected void addUserCriteria(StringBuilder criteria, UserBackedFilter filter, String prefix) {
-        concatenate(criteria, prefix, "id", "in")
+        criteriaBuilder.appendAnd().appendSegment("id", "in")
         .append("(select user.identity.id from User user where user.entity.id = ")
         .append(filter.getUser().getEntity().getId())
         .append(") ");
     }
+    
+    /**
+     * <code>principalSearch</code> filter segment (not case sensitive)
+     * @param filter
+     * @param criteriaBuilder
+     */
+    protected void appendPrincipalSearchFilter(IdentityFilter filter, CriteriaBuilder criteriaBuilder) {
+        if (!filter.getPrincipalSearch().equals("")) {
+            criteriaBuilder.appendAnd().appendSegment("principal", "like", "lower")
+            .appendLike(filter.getPrincipalSearch().toLowerCase());
+       }
+    }
+    
+    /**
+     * <code>optionalAlias</code> filter segment (not case sensitive)
+     * @param filter
+     * @param criteriaBuilder
+     */
+    protected void appendOptionalAliasSearchFilter(IdentityFilter filter, CriteriaBuilder criteriaBuilder) {
+        if (!filter.getNameOrAliasSearch().equals("")) {
+            criteriaBuilder.appendAnd().appendSegment("optionalAlias", "like", "lower")
+            .appendLike(filter.getNameOrAliasSearch().toLowerCase());
+       }
+    }
+    
+    /**
+     * <code>firstName</code> filter segment (not case sensitive)
+     * @param filter
+     * @param criteriaBuilder
+     */
+    protected void appendFirstNameSearchFilter(IdentityFilter filter, CriteriaBuilder criteriaBuilder) {
+        if (!filter.getNameOrAliasSearch().equals("")) {
+            criteriaBuilder.appendAnd().appendSegment("firstName", "like", "lower")
+            .appendLike(filter.getNameOrAliasSearch().toLowerCase());
+       }
+    }
+    
+    /**
+     * <code>lastName</code> filter segment (not case sensitive)
+     * @param filter
+     * @param criteriaBuilder
+     */
+    protected void appendLastNameSearchFilter(IdentityFilter filter, CriteriaBuilder criteriaBuilder) {
+        if (!filter.getNameOrAliasSearch().equals("")) {
+            criteriaBuilder.appendAnd().appendSegment("lastName", "like", "lower")
+            .appendLike(filter.getNameOrAliasSearch().toLowerCase());
+       }
+    }
+    
+    private static Log logger = LogFactory.getLog(DefaultIdentitySelectionStrategy.class);
 
 }

@@ -1,18 +1,12 @@
 package org.helianto.core.orm;
 
-import org.helianto.core.test.AbstractIntegrationTest;
-import org.helianto.core.test.AuthorizationTestSupport;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import java.util.List;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.User;
-import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.IdentityDao;
-import org.helianto.core.filter.IdentityFilter;
+import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.IdentityTestSupport;
+import org.springframework.dao.DataIntegrityViolationException;
 
 
 
@@ -24,7 +18,6 @@ import org.helianto.core.test.IdentityTestSupport;
 public class IdentityDaoImplTests extends AbstractIntegrationTest {
 
     private IdentityDao identityDao;
-    private AuthorizationDao authorizationDao;
     
     @Override
     protected String[] getConfigLocations() {
@@ -81,6 +74,7 @@ public class IdentityDaoImplTests extends AbstractIntegrationTest {
 
         Identity identity = identityList.get((int) (Math.random()*identityList.size()));
         assertEquals(identity,  identityDao.findIdentityByNaturalId(identity.getPrincipal()));
+        assertEquals(identity,  identityDao.findIdentities("identity.principal = '"+identity.getPrincipal()+"'").get(0));
     }
 
     /**
@@ -107,45 +101,10 @@ public class IdentityDaoImplTests extends AbstractIntegrationTest {
         assertNull(identityDao.findIdentityByNaturalId(identity.getPrincipal()));
     }
     
-    //- additional
-
-    public void testFindIdentities() {
-        // write list
-        int e = 1;
-        int d = 3;
-        List<User> userList = AuthorizationTestSupport.createUserList(e, d);
-        userList.addAll(AuthorizationTestSupport.createUserList(e, d));
-        for (User user: userList) {
-        	authorizationDao.persistUserGroup(user);
-        }
-        assertEquals(2*d, userList.size());
-        User user = userList.get((int) (Math.random()*e*d));
-        // read
-        IdentityFilter identityFilter = new IdentityFilter();
-        identityFilter.setUser(user);
-        
-        List<Identity> identityList = identityDao.findIdentityByCriteria(identityFilter);
-        assertEquals(d, identityList.size());
-        int index = (int) (Math.random()*d);
-        System.out.println("INDEX "+index);
-        Identity identity = identityList.get(index);
-        Entity loaded = 
-            identity
-            .getUsers()   // users that share this identity
-            .iterator() 
-            .next()       // the first one
-            .getEntity(); // the parent inside the association
-        assertEquals(loaded.getId(), user.getEntity().getId());
-    }
-
     //- setters
 
     public void setIdentityDao(IdentityDao identityDao) {
         this.identityDao = identityDao;
-    }
-    
-    public void setAuthorizationDao(AuthorizationDao authorizationDao) {
-        this.authorizationDao = authorizationDao;
     }
     
 }

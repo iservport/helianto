@@ -20,9 +20,6 @@ import java.util.List;
 
 import org.helianto.core.Identity;
 import org.helianto.core.dao.IdentityDao;
-import org.helianto.core.dao.IdentitySelectionStrategy;
-import org.helianto.core.filter.IdentityFilter;
-import org.helianto.core.hibernate.DefaultIdentitySelectionStrategy;
 import org.helianto.core.hibernate.GenericDaoImpl;
 
 /**
@@ -31,8 +28,6 @@ import org.helianto.core.hibernate.GenericDaoImpl;
  * @author Mauricio Fernandes de Castro
  */
 public class IdentityDaoImpl extends GenericDaoImpl implements IdentityDao {
-
-    private IdentitySelectionStrategy identitySelectionStrategy;
 
     public void persistIdentity(Identity identity) {
         if (logger.isDebugEnabled()) {
@@ -64,29 +59,13 @@ public class IdentityDaoImpl extends GenericDaoImpl implements IdentityDao {
                 Identity.getIdentityNaturalIdQueryString(), principal);
     }
 
-    //
-
-    public List<Identity> findIdentityByCriteria(IdentityFilter filter) {
-        String criteria = identitySelectionStrategy.createCriteriaAsString(
-                filter, "identity");
-        List<Identity> identityList = (ArrayList<Identity>) find(Identity
-                .getIdentityQueryAllString()
-                + criteria);
-        return identityList;
-    }
-
-    // -
-
-    @Override
-    public void init() {
-        if (identitySelectionStrategy == null) {
-            identitySelectionStrategy = new DefaultIdentitySelectionStrategy();
+    public List<Identity> findIdentities(String criteria) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding identity list with criteria='" + criteria
+                    + "' ");
         }
-    }
-
-    public void setIdentitySelectionStrategy(
-            IdentitySelectionStrategy identitySelectionStrategy) {
-        this.identitySelectionStrategy = identitySelectionStrategy;
+        return (ArrayList<Identity>) find(Identity
+                .getIdentityQueryAllString().append("where ").append(criteria));
     }
 
 }

@@ -70,7 +70,7 @@ public class UserMgrImplTests extends TestCase {
             .andReturn(criteria);
         replay(identitySelectionStrategy);
         
-        expect(identityDao.findIdentityByCriteria(filter))        
+        expect(identityDao.findIdentities(criteria))        
             .andReturn(identityList);
         replay(identityDao);
 
@@ -149,10 +149,11 @@ public class UserMgrImplTests extends TestCase {
     public void setUp() {
         userMgr = new UserMgrImpl();
         identityDao = createMock(IdentityDao.class);
-        authorizationDao = createMock(AuthorizationDao.class);
-        identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setIdentityDao(identityDao);
+        authorizationDao = createMock(AuthorizationDao.class);
         userMgr.setAuthorizationDao(authorizationDao);
+        identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
+        userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
         userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
         credentialDao = createMock(CredentialDao.class);
