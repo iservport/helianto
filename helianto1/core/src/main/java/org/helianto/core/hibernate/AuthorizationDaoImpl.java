@@ -83,7 +83,7 @@ public class AuthorizationDaoImpl extends GenericDaoImpl implements Authorizatio
     }
     
     public List<User> findUserByCriteria(String criteria) {
-        return (ArrayList<User>) find("from User user "+criteria);
+        return (ArrayList<User>) find("from User user where "+criteria);
     }
     
     public void removeUser(User user) {
