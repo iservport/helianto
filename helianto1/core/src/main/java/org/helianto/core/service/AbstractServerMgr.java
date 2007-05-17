@@ -26,6 +26,7 @@ import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.creation.AuthorizationCreator;
@@ -123,7 +124,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         }
         User manager = AuthorizationCreator.userFactory(adminGroup,
                 managerIdentity);
-        AuthorizationCreator.createUserAssociation(userGroup, manager);
+        UserAssociation.userAssociationFactory(userGroup, manager);
         if (logger.isDebugEnabled()) {
             logger.debug("Created manager (member of ADMIN, USER): "+manager);
         }

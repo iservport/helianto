@@ -53,12 +53,25 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
      */
     public final UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         if (logger.isDebugEnabled()) {
-            logger.debug("Attempt login with username "+username);
+            logger.debug("Attempting login with username "+username);
         }
         Identity identity = loadAndValidateIdentity(username);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Step 1 successful: Identity principal is "+identity.getPrincipal());
+        }
         Credential credential = loadAndValidateCredential(identity);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Step 2 successful: Identity has a valid Credential");
+        }
         User user = loadOrCreateUser(identity);
-        return new UserDetailsAdapter(user, credential);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Step 3 successful: User is loaded");
+        }
+        UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(user, credential);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Step 4 successful: User details are prepared");
+        }
+        return userDetailsAdapter;
     }
     
     /**

@@ -42,6 +42,11 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
     private Credential credential;
 
     /**
+     * Default constructor
+     */
+    AbstractUserDetails() {}
+    
+    /**
      * Minimal constructor.
      */
     public AbstractUserDetails(User user, Credential credential) {
@@ -63,6 +68,9 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
             }
             return pud;
     	}
+        if (logger.isDebugEnabled()) {
+            logger.debug("PublicUserDetails not found!");
+        }
     	return null;
     }
     
@@ -115,6 +123,9 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
     protected final void setUser(User user) {
         validateUserAndCredentialCompatibility();
         this.user = user;
+        if (logger.isDebugEnabled()) {
+            logger.debug("User set");
+        }
     }
     
     protected final void validateUserAndCredentialCompatibility() {
@@ -123,9 +134,10 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
         if(!user.getIdentity().equals(credential.getIdentity())) {
             throw new IllegalArgumentException("User and Credential must share the same Identity");
         }
+        if (logger.isDebugEnabled()) {
+            logger.debug("User and Credential share the same Identity");
+        }
     }
-    
-    AbstractUserDetails() {}
     
     static final Log logger = LogFactory.getLog(AbstractUserDetails.class);
     

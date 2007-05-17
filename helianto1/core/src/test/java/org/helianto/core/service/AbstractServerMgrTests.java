@@ -74,9 +74,9 @@ public class AbstractServerMgrTests extends TestCase {
 		
 		assertSame(managerIdentity, manager.getIdentity());
 		assertSame(entity, manager.getEntity());
-		assertEquals(2, manager.getParents().size());
+		assertEquals(2, manager.getParentAssociations().size());
         Set<UserGroup> userSet = new HashSet<UserGroup>();
-        for (UserAssociation a: manager.getParents()) {
+        for (UserAssociation a: manager.getParentAssociations()) {
             userSet.add(a.getParent());
         }
         assertTrue(userSet.contains(managerGroup));

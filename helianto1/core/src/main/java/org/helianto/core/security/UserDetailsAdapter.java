@@ -134,7 +134,7 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements
                 logger.debug("Adding roles level "+level+" from "+userGroup);
             }
             level++;
-            for (UserAssociation association: userGroup.getParents()) {
+            for (UserAssociation association: userGroup.getParentAssociations()) {
                 // then, for every association we must retrieve a parent
                 recusrseUserRoles(association.getParent(), roles, level);
             }

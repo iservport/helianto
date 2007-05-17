@@ -26,12 +26,12 @@ import org.acegisecurity.userdetails.UserDetails;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.creation.AuthorizationCreator;
+import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
-import org.helianto.core.test.AuthorizationTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 
 public class UserDetailsAdapterTests extends TestCase {
@@ -115,7 +115,7 @@ public class UserDetailsAdapterTests extends TestCase {
         UserGroup userGroup = userRoleList.get((int) Math.random()*userRoleList.size()).getUserGroup();
         System.out.println(userGroup);
         User user = AuthorizationTestSupport.createUser();
-        AuthorizationCreator.createUserAssociation(userGroup, user);
+        UserAssociation.userAssociationFactory(userGroup, user);
         Credential credential = CredentialTestSupport.createCredential();
         user.setIdentity(credential.getIdentity());
         UserDetailsAdapter userDetails = new UserDetailsAdapter(user, credential);

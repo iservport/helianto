@@ -9,6 +9,9 @@
 		<mapping class="org.helianto.core.Entity" />
 		<mapping class="org.helianto.core.InternalEnumerator" />
 		<mapping class="org.helianto.core.Service" />
+		<mapping class="org.helianto.core.UserAssociation" />
+		<mapping class="org.helianto.core.UserGroup" />
+		<mapping class="org.helianto.core.User" />
 		<mapping class="org.helianto.core.UserLog" />
 		<mapping class="org.helianto.core.UserRole" />
 

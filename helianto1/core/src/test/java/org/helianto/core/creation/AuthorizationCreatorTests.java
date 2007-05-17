@@ -39,7 +39,7 @@ public class AuthorizationCreatorTests extends TestCase {
         assertSame(identity, user.getIdentity());
         assertTrue(user.getIdentity().getUsers().contains(user));
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
-        assertEquals(0, user.getParents().size());
+        assertEquals(0, user.getParentAssociations().size());
         assertEquals(0, user.getRoles().size());
     }
 
@@ -50,7 +50,7 @@ public class AuthorizationCreatorTests extends TestCase {
         User user = AuthorizationCreator.userFactory(parent, identity);
 
         assertSame(parent.getEntity(), user.getEntity());
-        UserAssociation association = user.getParents().iterator().next();
+        UserAssociation association = user.getParentAssociations().iterator().next();
         assertSame(parent, association.getParent());
         assertSame(user, association.getChild());
         assertSame(identity, user.getIdentity());
@@ -71,7 +71,7 @@ public class AuthorizationCreatorTests extends TestCase {
         parent.setEntity(new Entity());
         UserGroup userGroup = AuthorizationCreator.userGroupFactory(parent, identity);
         
-        UserAssociation association = userGroup.getParents().iterator().next();
+        UserAssociation association = userGroup.getParentAssociations().iterator().next();
         assertSame(parent, association.getParent());
         assertSame(userGroup, association.getChild());
         assertSame(parent.getEntity(), userGroup.getEntity());
@@ -79,13 +79,6 @@ public class AuthorizationCreatorTests extends TestCase {
 
     }
     
-    public void testCreateUserAssociation() {
-        UserGroup parent = new UserGroup();
-        UserGroup user = new UserGroup();
-        AuthorizationCreator.createUserAssociation(parent, user);
-        assertSame(parent, user.getParents().iterator().next().getParent());
-    }
-
     public void testUserFactoryError() {
         Entity entity = null;
         try {

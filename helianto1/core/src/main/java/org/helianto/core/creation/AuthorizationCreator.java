@@ -46,7 +46,7 @@ public class AuthorizationCreator extends CreatorSupport {
             userGroup.setIdentity(identity);
             identity.getUsers().add(userGroup);
             userGroup.setUserState(ActivityState.ACTIVE.getValue());
-            userGroup.setParents(new HashSet<UserAssociation>());
+            userGroup.setParentAssociations(new HashSet<UserAssociation>());
             userGroup.setRoles(new HashSet<UserRole>());
             if (logger.isDebugEnabled()) {
                 logger.debug("Created: "+userGroup);
@@ -85,27 +85,11 @@ public class AuthorizationCreator extends CreatorSupport {
     public static User userFactory(UserGroup requiredParent, Identity identity) {
         assertNotNull(requiredParent);
         User user = userFactory(requiredParent.getEntity(), identity);
-        createUserAssociation(requiredParent, user);
+        UserAssociation.userAssociationFactory(requiredParent, user);
         user.setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
         return user;
     }
     
-    /**
-     * Convenience method to create associations between users.
-     * 
-     * @param requiredParent
-     * @param user
-     */
-    public static void createUserAssociation(UserGroup requiredParent, UserGroup user) {
-        UserAssociation association = new UserAssociation();
-        association.setParent(requiredParent);
-        association.setChild(user);
-        user.getParents().add(association);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created: "+association);
-        }
-    }
-
     /**
      * Default <code>UserGroup</code> creator.
      * 
@@ -127,7 +111,7 @@ public class AuthorizationCreator extends CreatorSupport {
     public static UserGroup userGroupFactory(UserGroup requiredParent, Identity identity) {
         assertNotNull(requiredParent);
         UserGroup userGroup = userFactory(requiredParent.getEntity(), identity);
-        createUserAssociation(requiredParent, userGroup);
+        UserAssociation.userAssociationFactory(requiredParent, userGroup);
         return userGroup;
     }
 

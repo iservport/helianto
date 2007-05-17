@@ -22,9 +22,9 @@ import junit.framework.TestCase;
 
 import org.helianto.core.Service;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.test.SecurityTestSupport;
 
 public class AuthorityResolutionStrategyTests extends TestCase {
@@ -43,7 +43,7 @@ public class AuthorityResolutionStrategyTests extends TestCase {
         UserGroup parent = new UserGroup();
         parent.setRoles(new HashSet<UserRole>());
         parent.getRoles().add(roles[i]);
-        AuthorizationCreator.createUserAssociation(parent, user);
+        UserAssociation.userAssociationFactory(parent, user);
         return parent;
     }
     
