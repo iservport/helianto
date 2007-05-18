@@ -36,10 +36,6 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
     
     private UserLogDao userLogDao;
 
-	public Identity findIdentityByPrincipal(String principal) {
-		return identityDao.findIdentityByNaturalId(principal);
-	}
-
 	public Credential findCredentialByIdentity(Identity identity) {
 		return credentialDao.findCredentialByNaturalId(identity);
 	}

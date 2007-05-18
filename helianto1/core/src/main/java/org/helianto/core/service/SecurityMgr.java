@@ -30,11 +30,6 @@ import org.helianto.core.security.PublicUserDetails;
  */
 public interface SecurityMgr extends UserMgr {
 	
-	/**
-     * Find <core>Identity</core> by principal.
-	 */
-    public Identity findIdentityByPrincipal(String principal);
-	
     /**
      * Find <core>Credential</core> by <core>Identity</core>.
      */

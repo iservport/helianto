@@ -34,6 +34,10 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 		identityDao.mergeIdentity(identity);
 	}
     
+    public Identity findIdentityByPrincipal(String principal) {
+        return identityDao.findIdentityByNaturalId(principal);
+    }
+
     public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions) {
         String criteria = identitySelectionStrategy.createCriteriaAsString(filter, "identity");
         List<Identity> identityList = identityDao.findIdentities(criteria);

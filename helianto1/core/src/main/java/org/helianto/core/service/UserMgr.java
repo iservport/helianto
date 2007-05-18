@@ -38,6 +38,11 @@ public interface UserMgr extends CoreMgr {
     public void writeIdentity(Identity identity);
     
     /**
+     * Find <core>Identity</core> by principal.
+     */
+    public Identity findIdentityByPrincipal(String principal);
+    
+    /**
      * <p>Selects an <code>Identity</code> list.
      * 
      * @param filter
