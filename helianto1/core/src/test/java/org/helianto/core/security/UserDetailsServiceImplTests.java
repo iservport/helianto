@@ -26,7 +26,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.service.SecurityMgr;
-import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.UserTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -54,7 +54,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     
     public void testUserResolutionStrategy() {
     	Identity identity = IdentityTestSupport.createIdentity();
-    	User user = AuthorizationTestSupport.createUser();
+    	User user = UserTestSupport.createUser();
     	
 		expect(userResolutionStrategy.loadOrCreateUser(identity))
 		    .andReturn(user);

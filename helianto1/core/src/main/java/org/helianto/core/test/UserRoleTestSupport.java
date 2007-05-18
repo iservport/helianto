@@ -42,7 +42,7 @@ public class UserRoleTestSupport {
         try {
             userGroup = (UserGroup) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            userGroup = AuthorizationTestSupport.createUserGroup();
+            userGroup = UserGroupTestSupport.createUserGroup();
         }
         Service service;
         try {
@@ -77,7 +77,7 @@ public class UserRoleTestSupport {
      * @param serviceListSize
      */
     public static List<UserRole> createUserRoleList(int userRoleListSize, int userGroupListSize, int serviceListSize) {
-        List<UserGroup> userGroupList = AuthorizationTestSupport.createUserGroupList(userGroupListSize);
+        List<UserGroup> userGroupList = UserGroupTestSupport.createUserGroupList(userGroupListSize);
         List<Service> serviceList = ServiceTestSupport.createServiceList(serviceListSize);
 
         return createUserRoleList(userRoleListSize, userGroupList, serviceList);

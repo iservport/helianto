@@ -17,7 +17,7 @@ package org.helianto.core.hibernate;
 
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
-import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.UserTestSupport;
 
 import junit.framework.TestCase;
 
@@ -53,7 +53,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
     }
     
     public void testCreateCriteriaAsStringPrincipal() {
-        filter.setUser(AuthorizationTestSupport.createUser());
+        filter.setUser(UserTestSupport.createUser());
         filter.setNameOrAliasSearch("");
         filter.setPrincipalSearch("principalSearch");
         String criteria = 
@@ -64,7 +64,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
     
     // TODO activate test when corresponding method is ok
     public void pendingTestCreateCriteriaAsStringFull() {
-        filter.setUser(AuthorizationTestSupport.createUser());
+        filter.setUser(UserTestSupport.createUser());
         filter.setNameOrAliasSearch("nameOrAliasSearch");
         filter.setPrincipalSearch("principalSearch");
         String criteria = 
@@ -80,7 +80,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
     
     // TODO activate test when corresponding method is ok
     public void pendingTestCreateCriteriaAsStringNameOrAlias() {
-        filter.setUser(AuthorizationTestSupport.createUser());
+        filter.setUser(UserTestSupport.createUser());
         filter.setNameOrAliasSearch("nameOrAliasSearch");
         filter.setPrincipalSearch("");
         String criteria = 
@@ -100,6 +100,6 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
         identitySelectionStrategy = 
             new DefaultIdentitySelectionStrategy();
         filter = new IdentityFilter();
-        filter.setUser(AuthorizationTestSupport.createUser());
+        filter.setUser(UserTestSupport.createUser());
     }
 }

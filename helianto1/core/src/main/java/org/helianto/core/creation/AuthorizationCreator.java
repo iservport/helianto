@@ -33,7 +33,7 @@ import org.helianto.core.UserType;
  * @author Mauricio Fernandes de Castro
  */
 public class AuthorizationCreator extends CreatorSupport {
-    
+    /*
     private static UserGroup internalUserGroupFactory(Class<? extends UserGroup> clazz, Entity entity, Identity identity) {
         assertNotNull(entity, "Entity must not be null");
         try {
@@ -55,7 +55,7 @@ public class AuthorizationCreator extends CreatorSupport {
         } catch (Exception e) {
             throw new IllegalStateException("Unable to create class "+clazz, e);
         }
-    }
+    } */
     
     /**
      * Default <code>User</code> creator.
@@ -66,13 +66,13 @@ public class AuthorizationCreator extends CreatorSupport {
      * @param identity if null, default is new empty identity
      * 
      * @see UserType
-     */
+     */ /*
     public static User userFactory(Entity requiredEntity, Identity identity) {
         User user = (User) internalUserGroupFactory(User.class, requiredEntity, identity);
         user.setUserType(UserType.INTERNAL.getValue());
         user.setAccountNonExpired(true);
         return user;
-    }
+    } */
 
     /**
      * Default member <code>User</code> creator.
@@ -81,24 +81,24 @@ public class AuthorizationCreator extends CreatorSupport {
      * @param identity if null, default is new empty identity
 
      * @see UserType
-     */
+     */ /*
     public static User userFactory(UserGroup requiredParent, Identity identity) {
         assertNotNull(requiredParent);
         User user = userFactory(requiredParent.getEntity(), identity);
         UserAssociation.userAssociationFactory(requiredParent, user);
         user.setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
         return user;
-    }
+    } */
     
     /**
      * Default <code>UserGroup</code> creator.
      * 
      * @param requiredEntity
      * @param identity
-     */
+     */ /*
     public static UserGroup userGroupFactory(Entity requiredEntity, Identity identity) {
         return internalUserGroupFactory(UserGroup.class, requiredEntity, identity);
-    }
+    } */
     
     /**
      * Default member <code>UserGroup</code> creator.
@@ -107,12 +107,12 @@ public class AuthorizationCreator extends CreatorSupport {
      * @param identity if null, default is new empty identity
 
      * @see UserType
-     */
+     */ /*
     public static UserGroup userGroupFactory(UserGroup requiredParent, Identity identity) {
         assertNotNull(requiredParent);
         UserGroup userGroup = userFactory(requiredParent.getEntity(), identity);
         UserAssociation.userAssociationFactory(requiredParent, userGroup);
         return userGroup;
-    }
+    } */
 
 }

@@ -28,12 +28,13 @@ import org.helianto.core.UserGroup;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Deprecated
 public class AuthorizationCreatorTests extends TestCase {
 
     public void testUserFactoryEntityIdentity() {
         Entity entity = new Entity();
         Identity identity = new Identity();
-        User user = AuthorizationCreator.userFactory(entity, identity);
+        User user = User.userFactory(entity, identity);
         
         assertSame(entity, user.getEntity());
         assertSame(identity, user.getIdentity());
@@ -47,7 +48,7 @@ public class AuthorizationCreatorTests extends TestCase {
         UserGroup parent = new UserGroup();
         parent.setEntity(new Entity());
         Identity identity = new Identity();
-        User user = AuthorizationCreator.userFactory(parent, identity);
+        User user = User.userFactory(parent, identity);
 
         assertSame(parent.getEntity(), user.getEntity());
         UserAssociation association = user.getParentAssociations().iterator().next();
@@ -59,7 +60,7 @@ public class AuthorizationCreatorTests extends TestCase {
     public void testUserGroupFactoryEntityIdentity() {
         Entity entity = new Entity();
         Identity identity = new Identity();
-        UserGroup userGroup = AuthorizationCreator.userGroupFactory(entity, identity);
+        UserGroup userGroup = UserGroup.userGroupFactory(entity, identity);
         
         assertSame(entity, userGroup.getEntity());
         assertSame(identity, userGroup.getIdentity());
@@ -69,7 +70,7 @@ public class AuthorizationCreatorTests extends TestCase {
         Identity identity = new Identity();
         UserGroup parent = new UserGroup();
         parent.setEntity(new Entity());
-        UserGroup userGroup = AuthorizationCreator.userGroupFactory(parent, identity);
+        UserGroup userGroup = UserGroup.userGroupFactory(parent, identity);
         
         UserAssociation association = userGroup.getParentAssociations().iterator().next();
         assertSame(parent, association.getParent());
@@ -79,17 +80,4 @@ public class AuthorizationCreatorTests extends TestCase {
 
     }
     
-    public void testUserFactoryError() {
-        Entity entity = null;
-        try {
-            AuthorizationCreator.userFactory(entity, null); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        UserGroup parent = null;
-        try {
-            AuthorizationCreator.userFactory(parent, null); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-    }
-
 }

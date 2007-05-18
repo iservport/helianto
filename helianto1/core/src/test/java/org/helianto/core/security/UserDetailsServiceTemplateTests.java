@@ -23,7 +23,7 @@ import org.acegisecurity.userdetails.UserDetails;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.UserTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
 
 /**
@@ -37,7 +37,7 @@ public class UserDetailsServiceTemplateTests extends TestCase {
         assertSame(credential, ((SecureUserDetails) userDetails).getCredential());
     }
     
-    List<User> userList = AuthorizationTestSupport.createUserList(1, 1);
+    List<User> userList = UserTestSupport.createUserList(1, 1);
     User user = userList.get(0);
     Credential credential = CredentialTestSupport.createCredential();
     Identity identity = userList.get(0).getIdentity();

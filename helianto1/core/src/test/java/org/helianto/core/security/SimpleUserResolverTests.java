@@ -26,20 +26,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
+import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserLogTestSupport;
-import org.helianto.core.creation.AuthorizationCreator;
-import org.helianto.core.service.SecurityMgr;
-
-import junit.framework.TestCase;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -75,7 +74,7 @@ public class SimpleUserResolverTests extends TestCase {
         List<Entity> entityList = EntityTestSupport.createEntityList(e);
         List<User> userList = new ArrayList<User>();
         for (Entity entity: entityList) {
-            User u = AuthorizationCreator.userFactory(entity, identity);
+            User u = User.userFactory(entity, identity);
             userList.add(u);
             identity.getUsers().add(u);
         }

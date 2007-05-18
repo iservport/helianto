@@ -29,7 +29,6 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.EntityDao;
@@ -86,7 +85,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
             userGroup = authorizationDao.findUserGroupByNaturalId(entity, groupIdentity);
         }
         if (userGroup==null) {
-            userGroup = AuthorizationCreator.userGroupFactory(entity, groupIdentity);
+            userGroup = UserGroup.userGroupFactory(entity, groupIdentity);
             identityDao.persistIdentity(groupIdentity);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+userGroup);
@@ -122,7 +121,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         if (logger.isDebugEnabled()) {
             logger.debug("USER group is: "+userGroup);
         }
-        User manager = AuthorizationCreator.userFactory(adminGroup,
+        User manager = User.userFactory(adminGroup,
                 managerIdentity);
         UserAssociation.userAssociationFactory(userGroup, manager);
         if (logger.isDebugEnabled()) {

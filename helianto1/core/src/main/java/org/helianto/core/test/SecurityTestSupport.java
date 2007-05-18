@@ -27,7 +27,7 @@ import org.helianto.core.security.UserDetailsAdapter;
 public class SecurityTestSupport {
     
     public static UserDetailsAdapter createUserDetailsAdapter() {
-        User user = AuthorizationTestSupport.createUser();
+        User user = UserTestSupport.createUser();
         Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
         return new UserDetailsAdapter(user, credential);
     }

@@ -1,7 +1,7 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.test.AbstractIntegrationTest;
-import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.UserTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Date;
@@ -108,7 +108,7 @@ public class UserLogDaoImplTests extends AbstractIntegrationTest {
     //- additional tests
 
     public void testFindLastUserLog() {
-        User user = AuthorizationTestSupport.createUser();
+        User user = UserTestSupport.createUser();
         Date date = new Date(Long.MAX_VALUE);
         UserLog lastUserLog = UserLogTestSupport.createUserLog(user, date);
         userLogDao.persistUserLog(lastUserLog);

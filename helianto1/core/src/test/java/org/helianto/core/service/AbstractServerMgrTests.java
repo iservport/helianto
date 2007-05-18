@@ -41,7 +41,7 @@ import org.helianto.core.UserRole;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.OperatorDao;
-import org.helianto.core.test.AuthorizationTestSupport;
+import org.helianto.core.test.UserGroupTestSupport;
 
 public class AbstractServerMgrTests extends TestCase {
 
@@ -53,8 +53,8 @@ public class AbstractServerMgrTests extends TestCase {
         Identity managerGroupIdentity = new Identity();
         Identity userGroupIdentity = new Identity();
 		Entity entity = new Entity();
-        UserGroup managerGroup = AuthorizationTestSupport.createUserGroup();
-        UserGroup userGroup = AuthorizationTestSupport.createUserGroup();
+        UserGroup managerGroup = UserGroupTestSupport.createUserGroup();
+        UserGroup userGroup = UserGroupTestSupport.createUserGroup();
         managerGroup.setEntity(entity);
         userGroup.setEntity(entity);
 

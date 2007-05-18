@@ -41,7 +41,7 @@ public class UserLogTestSupport {
         try {
             user = (User) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            user = AuthorizationTestSupport.createUser();
+            user = UserTestSupport.createUser();
         }
         Date lastEvent;
         try {
@@ -69,7 +69,7 @@ public class UserLogTestSupport {
      * @param userListSize
      */
     public static List<UserLog> createUserLogList(int userLogListSize, int userListSize) {
-        List<User> userList = AuthorizationTestSupport.createUserList(userListSize);
+        List<User> userList = UserTestSupport.createUserList(userListSize);
 
         return createUserLogList(userLogListSize, userList);
     }

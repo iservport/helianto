@@ -16,7 +16,6 @@
 package org.helianto.core;
 
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Transient;
 /**
  * <p>
  * The user account.
@@ -88,62 +87,56 @@ public class User extends UserGroup implements java.io.Serializable {
      * <code>User</code> factory.
      * 
      * @param entity
+     */
+    public static User userFactory(Entity entity) {
+        return userFactory(entity, null);
+    }
+
+    /**
+     * <code>User</code> factory.
+     * 
+     * @param entity
      * @param identity
      */
     public static User userFactory(Entity entity, Identity identity) {
-        User user = new User();
-        user.setEntity(entity);
-        user.setIdentity(identity);
+        User user = internalUserGroupFactory(User.class, entity, identity);
+        user.setUserType(UserType.INTERNAL.getValue());
+        user.setAccountNonExpired(true);
+        return user;
+    }
+
+    /**
+     * <code>User</code> factory.
+     * 
+     * @param entity
+     */
+    public static User userFactory(UserGroup parent) {
+        return userFactory(parent, null);
+    }
+
+    /**
+     * <code>User</code> factory.
+     * 
+     * @param entity
+     */
+    public static User userFactory(UserGroup parent, Identity identity) {
+        User user = userFactory(parent.getEntity(), identity);
+        UserAssociation.userAssociationFactory(parent, user);
         return user;
     }
 
     /**
      * <code>User</code> natural id query.
      */
-    @Transient
-    public static String getUserNaturalIdQueryString() {
-        return "select user from User user where user.entity = ? and user.identity = ? ";
+    public static StringBuffer getUserQueryString() {
+        return new StringBuffer("select user from User user ");
     }
 
     /**
-     * toString
-     * @return String
+     * <code>User</code> natural id query.
      */
-    @Override
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("entity").append("='").append(getEntity()).append("' ");
-        buffer.append("identity").append("='").append(getIdentity()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
+    public static String getUserNaturalIdQueryString() {
+        return getUserQueryString().append("where user.entity = ? and user.identity = ? ").toString();
     }
-
-   /**
-    * equals
-    */
-    @Override
-    public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof User) ) return false;
-         User castOther = (User) other; 
-         
-         return ((this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ))
-             && ((this.getIdentity()==castOther.getIdentity()) || ( this.getIdentity()!=null && castOther.getIdentity()!=null && this.getIdentity().equals(castOther.getIdentity()) ));
-   }
-   
-   /**
-    * hashCode
-    */
-   @Override
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
-         result = 37 * result + ( getIdentity() == null ? 0 : this.getIdentity().hashCode() );
-         return result;
-   }   
 
 }

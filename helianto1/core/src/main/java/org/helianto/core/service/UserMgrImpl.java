@@ -12,7 +12,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.creation.AuthorizationCreator;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
@@ -62,7 +61,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     }
     
     public User createUser(Identity identity, Entity entity) {
-        return AuthorizationCreator.userFactory(entity, identity);
+        return User.userFactory(entity, identity);
     }
 
     public void persistUser(User user) {

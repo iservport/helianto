@@ -33,7 +33,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
  * 			
@@ -168,24 +167,80 @@ public class UserGroup implements java.io.Serializable {
     }
 
     /**
+     * Internal <code>UserGroup</code> factory.
+     * 
+     * @param clazz
+     * @param entity
+     * @param identity
+     */
+    protected static <T extends UserGroup> T internalUserGroupFactory(Class<T> clazz, Entity entity, Identity identity) {
+        try {
+            T userGroup = clazz.newInstance();
+            userGroup.setEntity(entity);
+            if (identity==null) {
+                identity = Identity.identityFactory("", "");
+            }
+            userGroup.setIdentity(identity);
+            identity.getUsers().add(userGroup);
+            userGroup.setUserState(ActivityState.ACTIVE.getValue());
+            return userGroup;
+        } catch (Exception e) {
+            throw new IllegalStateException("Unable to create class "+clazz, e);
+        }
+    }
+    
+    /**
+     * <code>UserGroup</code> factory.
+     * 
+     * @param entity
+     */
+    public static UserGroup userGroupFactory(Entity entity) {
+        return internalUserGroupFactory(UserGroup.class, entity, null);
+    }
+
+    /**
      * <code>UserGroup</code> factory.
      * 
      * @param entity
      * @param identity
      */
     public static UserGroup userGroupFactory(Entity entity, Identity identity) {
-        UserGroup userGroup = new UserGroup();
-        userGroup.setEntity(entity);
-        userGroup.setIdentity(identity);
+        return internalUserGroupFactory(UserGroup.class, entity, identity);
+    }
+
+    /**
+     * <code>UserGroup</code> factory.
+     * 
+     * @param parent
+     */
+    public static UserGroup userGroupFactory(UserGroup parent) {
+        return userGroupFactory(parent, null);
+    }
+
+    /**
+     * <code>UserGroup</code> factory.
+     * 
+     * @param parent
+     * @param identity
+     */
+    public static UserGroup userGroupFactory(UserGroup parent, Identity identity) {
+        UserGroup userGroup = userGroupFactory(parent.getEntity(), identity);
+        UserAssociation.userAssociationFactory(parent, userGroup);
         return userGroup;
     }
 
     /**
      * <code>UserGroup</code> natural id query.
      */
-    @Transient
+    public static StringBuffer getUserGroupQueryString() {
+        return new StringBuffer("select userGroup from UserGroup userGroup ");
+    }
+
+    /**
+     * <code>UserGroup</code> natural id query.
+     */
     public static String getUserGroupNaturalIdQueryString() {
-        return "select userGroup from UserGroup userGroup where userGroup.entity = ? and userGroup.identity = ? ";
+        return getUserGroupQueryString().append("where userGroup.entity = ? and userGroup.identity = ? ").toString();
     }
 
     /**
