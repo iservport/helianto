@@ -78,7 +78,7 @@ public class OperatorCreatorTests extends TestCase {
         Server server = OperatorCreator.serverFactory(operator, "NAME", null, null);
         
         assertEquals(ServerType.SMTP_SERVER.getValue(), server.getServerType());
-        assertSame("NAME", server.getCredential().getIdentity().getPrincipal());
+        assertEquals("NAME".toLowerCase(), server.getCredential().getIdentity().getPrincipal());
         assertSame("", server.getCredential().getPassword());
     }
 

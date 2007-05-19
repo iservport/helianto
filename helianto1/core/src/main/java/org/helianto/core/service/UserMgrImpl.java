@@ -75,7 +75,11 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
                 convertToLowerCase(locale, principal));
         authorizationDao.persistUserGroup(user);
     }
-    
+
+    public void writeUser(User user) {
+        authorizationDao.mergeUserGroup(user);
+    }
+
     public List<UserGroup> findUserByEntity(Entity entity) {
         return authorizationDao.findUserGroupByEntity(entity);
     }

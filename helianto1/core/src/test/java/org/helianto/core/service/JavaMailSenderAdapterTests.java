@@ -21,41 +21,29 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import javax.mail.Address;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
-import javax.mail.Transport;
 import javax.mail.URLName;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
 import junit.framework.TestCase;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Encription;
-import org.helianto.core.Identity;
-import org.helianto.core.IdentityType;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
 import org.helianto.core.mail.JavaMailSenderAdapter;
 import org.helianto.core.mail.MockJavaMailSender;
 import org.helianto.core.mail.ServerUtilsTemplate;
-import org.helianto.core.test.AuthenticationTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 public class JavaMailSenderAdapterTests extends TestCase {
     
@@ -180,7 +168,7 @@ public class JavaMailSenderAdapterTests extends TestCase {
         @Override
         public void connect(String host, String user, String password) throws MessagingException {
             assertEquals("STORE_ADDRESS", host);
-            assertEquals("STORE_USER", user);
+            assertEquals("STORE_USER".toLowerCase(), user);
             assertEquals("STORE_PASSWORD", password);
             connected = true;
         }

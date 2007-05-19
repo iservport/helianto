@@ -80,10 +80,15 @@ public class Identity implements java.io.Serializable {
         return this.principal;
     }
     /**
-     * Principal setter.
+     * Principal setter (convert to lower case).
      */
     public void setPrincipal(String principal) {
-        this.principal = principal;
+        if (principal!=null) {
+            this.principal = principal.toLowerCase();
+        }
+        else {
+            this.principal = null;
+        }
     }
 
     /**

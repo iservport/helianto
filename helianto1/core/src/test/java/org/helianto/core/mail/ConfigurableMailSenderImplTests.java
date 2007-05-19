@@ -87,7 +87,7 @@ public class ConfigurableMailSenderImplTests extends TestCase {
         configurableMailSenderImpl.setTransportServer(transportServer);
         configurableMailSenderImpl.init();
         assertEquals("HOST_ADDRESS", configurableMailSenderImpl.getHost());
-        assertEquals("USERNAME", configurableMailSenderImpl.getUsername());
+        assertEquals("USERNAME".toLowerCase(), configurableMailSenderImpl.getUsername());
         assertEquals("PASSWORD", configurableMailSenderImpl.getPassword());
         assertEquals(Integer.MAX_VALUE, configurableMailSenderImpl.getPort());
         assertEquals("ENCODING", configurableMailSenderImpl.getDefaultEncoding());

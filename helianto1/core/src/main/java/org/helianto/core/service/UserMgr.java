@@ -69,7 +69,13 @@ public interface UserMgr extends CoreMgr {
     /**
      * <p>Persist the <code>User</code>.</p>
      */
+    @Deprecated
     public void persistUser(User user);
+    
+    /**
+     * <p>Write <code>User</code>.</p>
+     */
+    public void writeUser(User user);
     
     /**
      * <p>List <code>UserGroup</code> by <code>Entity</code>.</p>

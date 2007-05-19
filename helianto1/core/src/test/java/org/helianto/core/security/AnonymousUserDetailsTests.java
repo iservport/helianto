@@ -6,7 +6,7 @@ public class AnonymousUserDetailsTests extends TestCase {
 	
 	public void testAnonymous() {
 		PublicUserDetails pud = new AnonymousUserDetails();
-		assertEquals("ANONYMOUS", pud.getUser().getIdentity().getPrincipal());
+		assertEquals("ANONYMOUS".toLowerCase(), pud.getUser().getIdentity().getPrincipal());
 	}
 
 }

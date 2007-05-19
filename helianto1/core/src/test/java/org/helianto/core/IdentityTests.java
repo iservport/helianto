@@ -21,7 +21,7 @@ public class IdentityTests extends TestCase {
         
         Identity identity = Identity.identityFactory(principal);
         
-        assertEquals(principal, identity.getPrincipal());
+        assertEquals(principal.toLowerCase(), identity.getPrincipal());
         
     }
     
@@ -31,7 +31,7 @@ public class IdentityTests extends TestCase {
     public void testIdentityFactoryFull() {
         Identity identity = Identity.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
         
-        assertEquals("PRINCIPAL", identity.getPrincipal());
+        assertEquals("PRINCIPAL".toLowerCase(), identity.getPrincipal());
         assertEquals("OPTIONAL_ALIAS", identity.getOptionalAlias());
         assertNotNull(identity.getCreated());
         assertTrue(identity.getCreated() instanceof Date);
