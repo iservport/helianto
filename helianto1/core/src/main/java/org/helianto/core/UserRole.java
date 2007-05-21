@@ -100,6 +100,14 @@ public class UserRole  implements java.io.Serializable {
     public void setServiceExtension(String serviceExtension) {
         this.serviceExtension = serviceExtension;
     }
+    
+    /**
+     * UserRoleName getter.
+     */
+    @Transient
+    public String getUserRoleName() {
+        return "ROLE_"+service.getServiceName().toUpperCase()+"_"+serviceExtension;
+    }
 
     /**
      * Default <code>UserRole</code> creator.

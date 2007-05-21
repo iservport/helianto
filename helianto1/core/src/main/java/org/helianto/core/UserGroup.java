@@ -33,6 +33,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
  * 			
@@ -109,6 +110,14 @@ public class UserGroup implements java.io.Serializable {
      */
     public void setIdentity(Identity identity) {
         this.identity = identity;
+    }
+    
+    /**
+     * UserPrincipal getter.
+     */
+    @Transient
+    public String getUserPrincipal() {
+        return this.identity.getPrincipal();
     }
 
     /**
