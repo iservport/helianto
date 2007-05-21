@@ -51,7 +51,7 @@ public class AbstractCoreMgr {
             enumerator.setEntity(entity);
             enumerator.setTypeName(typeName);
             enumerator.setLastNumber(2);    
-            internalEnumeratorDao.persistInternalEnumerator(enumerator);
+            internalEnumeratorDao.mergeInternalEnumerator(enumerator);
             if (logger.isDebugEnabled()) {
                 logger.debug("Created InternalEnumerator: "+enumerator);
             }

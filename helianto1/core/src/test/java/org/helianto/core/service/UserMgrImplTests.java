@@ -127,12 +127,13 @@ public class UserMgrImplTests extends TestCase {
     }
     
     public void testFindNextInternalNumberFirstCall() {
-        InternalEnumerator enumerator = null;
+        InternalEnumerator discarded = null, enumerator = null;
         Entity entity = new Entity();
         
         expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(entity, "TYPE_NAME"))
             .andReturn(enumerator);
-        internalEnumeratorDao.persistInternalEnumerator(isA(InternalEnumerator.class));
+        expect(internalEnumeratorDao.mergeInternalEnumerator(isA(InternalEnumerator.class)))
+            .andReturn(discarded);
         replay(internalEnumeratorDao);
         
         assertEquals(1, userMgr.findNextInternalNumber(entity, "TYPE_NAME"));
