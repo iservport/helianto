@@ -68,7 +68,12 @@ public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
             }
             return (ArrayList<Entity>) find(Entity.getEntityQueryStringBuilder().append("where ").append(criteria));
         }
-        throw new IllegalStateException("Cirteria must neither be empty nor null.");
+        else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finding full entity list");
+            }
+            return (ArrayList<Entity>) find(Entity.getEntityQueryStringBuilder());
+        }
     }
     
 }
