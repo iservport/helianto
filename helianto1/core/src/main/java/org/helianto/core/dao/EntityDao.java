@@ -15,6 +15,8 @@
 
 package org.helianto.core.dao;
 
+import java.util.List;
+
 import org.helianto.core.Entity;
 import org.helianto.core.dao.CommonOrmDao;
 
@@ -47,6 +49,11 @@ public interface EntityDao extends CommonOrmDao {
      * Find <code>Entity</code> by <code>Operator</code> and alias.
      */
     public Entity findEntityByNaturalId(Operator operator, String alias);
+    
+    /**
+     * Find <code>Entity</code> list by String criteria.
+     */
+    public List<Entity> findEntities(String criteria);
     
     
     
