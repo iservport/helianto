@@ -151,11 +151,19 @@ public class Entity implements java.io.Serializable {
     }
 
     /**
+     * <code>Entity</code> query.
+     */
+    @Transient
+    public static StringBuilder getEntityQueryStringBuilder() {
+        return new StringBuilder("select entity from Entity entity ");
+    }
+
+    /**
      * <code>Entity</code> natural id query.
      */
     @Transient
     public static String getEntityNaturalIdQueryString() {
-        return "select entity from Entity entity where entity.operator = ? and entity.alias = ? ";
+        return getEntityQueryStringBuilder().append("where entity.operator = ? and entity.alias = ? ").toString();
     }
 
     /**
