@@ -83,7 +83,7 @@ public class IdentityFormActionTests extends TestCase {
         verify(userMgr);
     }
     
-    public void testNonUnique() {
+    public void testNonUnique() throws Exception {
         Credential credential = CredentialTestSupport.createCredential();
         form.setCredential(credential);
         BindingResult bindingResult = new BeanPropertyBindingResult(form, "identityFormAction");

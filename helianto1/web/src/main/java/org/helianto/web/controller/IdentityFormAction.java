@@ -81,9 +81,10 @@ public class IdentityFormAction extends FormAction {
     
     /**
      * Update errors object if non unique.
+     * @throws Exception 
      */
-    public Event nonUnique(RequestContext context) {
-        Errors errors = (Errors) context.getFlashScope().get("errors");
+    public Event nonUnique(RequestContext context) throws Exception {
+        Errors errors = getFormErrors(context);
         errors.rejectValue("credential.identity.principal", 
                 "principal.error.duplicate", 
                 "Duplicate principal, please choose another.");
