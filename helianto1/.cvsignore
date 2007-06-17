@@ -11,6 +11,4 @@ dist
 .springBeans
 .xdoclet
 .packaging
-.classpath
 .tomcatplugin
-.project
