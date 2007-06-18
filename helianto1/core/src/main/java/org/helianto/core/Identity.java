@@ -193,9 +193,7 @@ public class Identity implements java.io.Serializable {
      * @param principal
      */
     public static Identity identityFactory(String principal) {
-        Identity identity = new Identity();
-        identity.setPrincipal(principal);
-        return identity;
+        return identityFactory(principal, "");
     }
 
     /**
