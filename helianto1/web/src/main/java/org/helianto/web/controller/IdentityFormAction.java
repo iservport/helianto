@@ -51,6 +51,9 @@ public class IdentityFormAction extends FormAction {
      * form property is null.
      */
     public Event createIfNecessary(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         IdentityForm form = doGetForm(context);
         if (form.getCredential()==null) {
             Credential credential = Credential.credentialFactory();
@@ -71,6 +74,9 @@ public class IdentityFormAction extends FormAction {
      * Write <code>Identity</code> to the datastore.
      */
     public Event writeIdentity(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         Identity identity = doGetForm(context).getCredential().getIdentity();
         userMgr.writeIdentity(identity);
         if (logger.isDebugEnabled()) {
@@ -84,6 +90,9 @@ public class IdentityFormAction extends FormAction {
      * @throws Exception 
      */
     public Event nonUnique(RequestContext context) throws Exception {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         Errors errors = getFormErrors(context);
         errors.rejectValue("credential.identity.principal", 
                 "principal.error.duplicate", 
@@ -95,12 +104,18 @@ public class IdentityFormAction extends FormAction {
      * Generate a random password.
      */
     public Event generatePassword(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         Credential credential = doGetForm(context).getCredential();
         credential.generatePassword();
         return success();
     }
     
     public Event send(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         PasswordConfirmationMailForm mailForm = createMailForm(context);
         if (mailForm!=null) {
             try {
@@ -120,6 +135,9 @@ public class IdentityFormAction extends FormAction {
     }
     
     public Event verify(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         Credential credential = doGetForm(context).getCredential();
         if (Credential.verifyPassword(credential)) {
             return success();
@@ -128,6 +146,9 @@ public class IdentityFormAction extends FormAction {
     }
     
     public Event persistFinal(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
         userMgr.writeCredential(form.getCredential());
         return success();
