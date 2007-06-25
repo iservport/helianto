@@ -69,7 +69,7 @@ public interface ServerMgr {
      * @param entity
      * @param managerIdentity
      */
-    public User createManager(Entity entity, Identity managerIdentity);
+    public User writeManager(Entity entity, Identity managerIdentity);
     
     /**
      * Persist the <code>Operator</code>.

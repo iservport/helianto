@@ -36,8 +36,10 @@
 				<property name="operatorDao" ref="operatorDao"/>
 				<property name="entityDao" ref="entityDao"/>
 				<property name="serviceDao" ref="serviceDao"/>
+				<property name="userRoleDao" ref="userRoleDao"/>
 				<property name="identityDao" ref="identityDao"/>
-				<property name="authorizationDao" ref="authorizationDao"/>
+				<property name="userGroupDao" ref="userGroupDao"/>
+				<property name="userDao" ref="userDao"/>
 				<property name="configurableMailSenderFactory" ref="configurableMailSenderFactory"/>
 				<property name="mailMessageComposer" ref="basicMailMessageComposer"/>
 			</bean>

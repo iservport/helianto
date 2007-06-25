@@ -39,7 +39,7 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.IdentityDao;
-import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.test.UserGroupTestSupport;
 
@@ -64,11 +64,11 @@ public class AbstractServerMgrTests extends TestCase {
                 userGroupIdentity);
 		replay(identityDao);
 
-        expect(authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
+        expect(userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
                 isA(Identity.class))).andReturn(managerGroup);
-        expect(authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
+        expect(userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
                 isA(Identity.class))).andReturn(userGroup);
-		replay(authorizationDao);
+		replay(userGroupDao);
 
 		User manager = serverMgr.prepareSystemConfiguration(managerIdentity);
 		
@@ -102,10 +102,10 @@ public class AbstractServerMgrTests extends TestCase {
 		replay(identityDao);
 
 		expect(
-				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
+				userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
 						isA(Identity.class))).andReturn(null);
-		authorizationDao.persistUserGroup(isA(UserGroup.class));
-		replay(authorizationDao);
+		userGroupDao.persistUserGroup(isA(UserGroup.class));
+		replay(userGroupDao);
 
 		UserGroup userGroup = serverMgr.findOrCreateUserGroup(entity, "NAME");
 		verify(identityDao);
@@ -126,10 +126,10 @@ public class AbstractServerMgrTests extends TestCase {
 		replay(identityDao);
 
 		expect(
-				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
+				userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
 						isA(Identity.class))).andReturn(null);
-		authorizationDao.persistUserGroup(isA(UserGroup.class));
-		replay(authorizationDao);
+		userGroupDao.persistUserGroup(isA(UserGroup.class));
+		replay(userGroupDao);
 
 		UserGroup userGroup = serverMgr.findOrCreateUserGroup(entity, "NAME");
 		verify(identityDao);
@@ -148,9 +148,9 @@ public class AbstractServerMgrTests extends TestCase {
 		replay(identityDao);
 
 		expect(
-				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
+				userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
 						isA(Identity.class))).andReturn(userGroup);
-		replay(authorizationDao);
+		replay(userGroupDao);
 
 		assertSame(userGroup, serverMgr.findOrCreateUserGroup(entity, "NAME"));
 		verify(identityDao);
@@ -169,9 +169,9 @@ public class AbstractServerMgrTests extends TestCase {
 		replay(identityDao);
 
 		expect(
-				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
+				userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
 						isA(Identity.class))).andReturn(userGroup);
-		replay(authorizationDao);
+		replay(userGroupDao);
 
 		assertSame(userGroup, serverMgr.findOrCreateUserGroup(entity, "ADMIN", new String[] {"MANAGER"}));
 		verify(identityDao);
@@ -197,9 +197,9 @@ public class AbstractServerMgrTests extends TestCase {
 		replay(identityDao);
 
 		expect(
-				authorizationDao.findUserGroupByNaturalId(isA(Entity.class),
+				userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
 						isA(Identity.class))).andReturn(userGroup);
-		replay(authorizationDao);
+		replay(userGroupDao);
 
 		String[] extensions = new String[] {"MANAGER", "ALL"};
 		assertSame(userGroup, serverMgr.findOrCreateUserGroup(entity, "ADMIN", extensions));
@@ -225,25 +225,25 @@ public class AbstractServerMgrTests extends TestCase {
 
 	private IdentityDao identityDao;
 
-	private AuthorizationDao authorizationDao;
+	private UserGroupDao userGroupDao;
 
 	@Override
 	public void setUp() {
 		operatorDao = createMock(OperatorDao.class);
 		identityDao = createMock(IdentityDao.class);
-		authorizationDao = createMock(AuthorizationDao.class);
+		userGroupDao = createMock(UserGroupDao.class);
 
 		serverMgr = new ServerMgrImpl();
 		serverMgr.setOperatorDao(operatorDao);
 		serverMgr.setIdentityDao(identityDao);
-		serverMgr.setAuthorizationDao(authorizationDao);
+		serverMgr.setUserGroupDao(userGroupDao);
 	}
 
 	@Override
 	public void tearDown() {
 		reset(operatorDao);
 		reset(identityDao);
-		reset(authorizationDao);
+		reset(userGroupDao);
 	}
 
 }

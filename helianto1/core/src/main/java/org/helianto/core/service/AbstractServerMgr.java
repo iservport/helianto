@@ -30,11 +30,13 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.creation.OperatorCreator;
-import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.dao.UserDao;
+import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.dao.ServiceDao;
+import org.helianto.core.dao.UserRoleDao;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -46,9 +48,11 @@ public abstract class AbstractServerMgr implements ServerMgr {
 
     protected OperatorDao operatorDao;
     protected ServiceDao serviceDao;
+    protected UserRoleDao userRoleDao;
     protected EntityDao entityDao;
     protected IdentityDao identityDao;
-    protected AuthorizationDao authorizationDao;
+    protected UserGroupDao userGroupDao;
+    protected UserDao userDao;
     
     public User prepareSystemConfiguration(Identity managerIdentity) {
         Entity defaultEntity = createDefaultEntity();
@@ -56,7 +60,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
             logger.debug("Created as default: "+defaultEntity);
         }
         entityDao.persistEntity(defaultEntity);
-        User manager = createManager(defaultEntity, managerIdentity);
+        User manager = writeManager(defaultEntity, managerIdentity);
         return manager;
     }
 
@@ -65,7 +69,95 @@ public abstract class AbstractServerMgr implements ServerMgr {
                 OperationMode.LOCAL, Locale.getDefault());
         return Entity.entityFactory(operator, "DEFAULT");
     }
+    
+    public Identity findOrCreateIdentity(String principal) {
+        Identity identity = identityDao.findIdentityByNaturalId(principal);
+        if (identity==null) {
+            identity = Identity.identityFactory(principal, principal);
+            identityDao.persistIdentity(identity);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+identity);
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Retrieved "+identity);
+            }
+        }
+        return identity;
+    }
 
+    public UserGroup findOrCreateUserGroup(Entity entity, Identity groupIdentity) {
+        UserGroup userGroup = null;
+        if (entity.getId()!=0) {
+            userGroup = userGroupDao.findUserGroupByNaturalId(entity, groupIdentity);
+        }
+        if (userGroup==null) {
+            userGroup = UserGroup.userGroupFactory(entity, groupIdentity);
+            identityDao.persistIdentity(groupIdentity);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+userGroup);
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Retrieved "+userGroup);
+            }
+        }
+        return userGroup;
+    }
+
+    public User findOrCreateUser(Entity entity, Identity identity) {
+        User user = null;
+        if (entity.getId()!=0) {
+            user = userDao.findUserByNaturalId(entity, identity);
+        }
+        if (user==null) {
+            user = User.userFactory(entity, identity);
+            identityDao.persistIdentity(identity);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+user);
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Retrieved "+user);
+            }
+        }
+        return user;
+    }
+
+    public Service findOrCreateService(Entity entity, String serviceName) {
+        Service service = serviceDao.findServiceByNaturalId(entity.getOperator(), serviceName);
+        if (service==null) {
+            service = Service.serviceFactory(entity
+                    .getOperator(), serviceName);
+            serviceDao.persistService(service);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+service);
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Retrieved "+service);
+            }
+        }
+        return service;
+    }
+
+    public UserRole findOrCreateUserRole(UserGroup userGroup, Service service, String extension) {
+        UserRole userRole = userRoleDao.findUserRoleByNaturalId(userGroup, service, extension);
+        if (userRole==null) {
+            userRole = UserRole.userRoleFactory(
+                    userGroup, service, extension);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Persisted "+userRole);
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Retrieved "+userRole);
+            }
+        }
+        return userRole;
+    }
+
+    @Deprecated
     public UserGroup findOrCreateUserGroup(Entity entity, String groupName) {
         Identity groupIdentity = identityDao.findIdentityByNaturalId(groupName);
         if (groupIdentity==null) {
@@ -82,7 +174,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         }
         UserGroup userGroup = null;
         if (entity.getId()!=0) {
-            userGroup = authorizationDao.findUserGroupByNaturalId(entity, groupIdentity);
+            userGroup = userGroupDao.findUserGroupByNaturalId(entity, groupIdentity);
         }
         if (userGroup==null) {
             userGroup = UserGroup.userGroupFactory(entity, groupIdentity);
@@ -98,6 +190,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         return userGroup;
     }
     
+    @Deprecated
     public UserGroup findOrCreateUserGroup(Entity entity, String serviceName, String[] extensions) {
         UserGroup userGroup = findOrCreateUserGroup(entity, serviceName);
         Service service = serviceDao.findServiceByNaturalId(entity.getOperator(), serviceName);
@@ -112,20 +205,28 @@ public abstract class AbstractServerMgr implements ServerMgr {
         return userGroup;
     }
     
-    public User createManager(Entity entity, Identity managerIdentity) {
-        UserGroup adminGroup = findOrCreateUserGroup(entity, "ADMIN", new String[] {"MANAGER"});
-        if (logger.isDebugEnabled()) {
-            logger.debug("ADMIN group is: "+adminGroup);
+    public UserGroup grant(Entity entity, String serviceName, String[] extensions) {
+        Identity groupIdentity = findOrCreateIdentity(serviceName);
+        groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
+        UserGroup userGroup = findOrCreateUserGroup(entity, groupIdentity);
+        Service service = findOrCreateService(entity, serviceName);
+        for (String extension: extensions) {
+            UserRole userRole = findOrCreateUserRole(userGroup, service, extension);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Role granted: "+userRole);
+            }
         }
-        UserGroup userGroup = findOrCreateUserGroup(entity, "USER", new String[] {"ALL", "DEL"});
-        if (logger.isDebugEnabled()) {
-            logger.debug("USER group is: "+userGroup);
-        }
+        return userGroup;
+    }
+    
+    public User writeManager(Entity entity, Identity managerIdentity) {
+        UserGroup adminGroup = grant(entity, "ADMIN", new String[] {"MANAGER"});
+        UserGroup userGroup = grant(entity, "USER", new String[] {"ALL", "DEL"});
         User manager = User.userFactory(adminGroup,
                 managerIdentity);
         UserAssociation.userAssociationFactory(userGroup, manager);
         if (logger.isDebugEnabled()) {
-            logger.debug("Created manager (member of ADMIN, USER): "+manager);
+            logger.debug("Manager (member of ADMIN, USER): "+manager);
         }
         return manager;
     }
@@ -143,6 +244,11 @@ public abstract class AbstractServerMgr implements ServerMgr {
     }
 
     @Required
+    public void setUserRoleDao(UserRoleDao userRoleDao) {
+        this.userRoleDao = userRoleDao;
+    }
+
+    @Required
     public void setEntityDao(EntityDao entityDao) {
         this.entityDao = entityDao;
     }
@@ -153,8 +259,13 @@ public abstract class AbstractServerMgr implements ServerMgr {
     }
 
     @Required
-    public void setAuthorizationDao(AuthorizationDao authorizationDao) {
-        this.authorizationDao = authorizationDao;
+    public void setUserGroupDao(UserGroupDao userGroupDao) {
+        this.userGroupDao = userGroupDao;
+    }
+
+    @Required
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     private final Log logger = LogFactory.getLog(AbstractServerMgr.class);

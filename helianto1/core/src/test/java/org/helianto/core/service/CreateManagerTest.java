@@ -32,7 +32,12 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
     @Override
     protected String[] getConfigLocations() {
         return new String[] { 
-                "deploy/core.xml"
+                "deploy/dataSource.xml",
+                "deploy/sessionFactory.xml",
+                "deploy/transaction.xml",
+                "deploy/support.xml",
+                "deploy/core.xml",
+                "deploy/org.helianto.core.xml"
                 };
     }
 
@@ -52,7 +57,7 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
         Entity entity = Entity.entityFactory(operator, entityName );
         
         Identity identity = Identity.identityFactory(principal, optionalALias);
-        serverMgr.createManager(entity, identity);
+        serverMgr.writeManager(entity, identity);
 
     }
 
