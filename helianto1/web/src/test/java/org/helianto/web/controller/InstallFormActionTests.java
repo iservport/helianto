@@ -84,7 +84,7 @@ public class InstallFormActionTests extends TestCase {
         context.getRequestScope().put("identityForm", identityForm);
         User user = new User();
         
-        expect(serverMgr.prepareSystemConfiguration(managerIdentity))
+        expect(serverMgr.writeManager(managerIdentity))
             .andReturn(user);
         replay(serverMgr);
         

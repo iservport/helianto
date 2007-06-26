@@ -15,8 +15,6 @@
 
 package org.helianto.web.controller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.helianto.core.User;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
@@ -74,7 +72,7 @@ public class InstallFormAction extends FormAction {
         if (logger.isDebugEnabled()) {
             logger.debug("Retrieved "+identityForm);
         }
-        User user = serverMgr.prepareSystemConfiguration(identityForm.getCredential().getIdentity());
+        User user = serverMgr.writeManager(identityForm.getCredential().getIdentity());
         UserForm form = doGetForm(context);
         form.setUser(user);
         return success();
