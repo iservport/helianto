@@ -66,6 +66,14 @@ public interface ServerMgr {
      * A manager is an <code>User</code> associated to both, an <code>ADMIN</code>
      * group and an <code>USER</code> group.
      * 
+     * @param managerIdentity
+     */
+    public User writeManager(Identity managerIdentity);
+    
+    /**
+     * A manager is an <code>User</code> associated to both, an <code>ADMIN</code>
+     * group and an <code>USER</code> group.
+     * 
      * @param entity
      * @param managerIdentity
      */
