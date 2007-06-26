@@ -54,6 +54,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
     protected UserGroupDao userGroupDao;
     protected UserDao userDao;
     
+    @Deprecated
     public User prepareSystemConfiguration(Identity managerIdentity) {
         Entity defaultEntity = createDefaultEntity();
         if (logger.isDebugEnabled()) {
@@ -64,6 +65,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         return manager;
     }
 
+    @Deprecated
     public Entity createDefaultEntity() {
         Operator operator = OperatorCreator.operatorFactory("DEFAULT",
                 OperationMode.LOCAL, Locale.getDefault());
@@ -218,7 +220,18 @@ public abstract class AbstractServerMgr implements ServerMgr {
         }
         return userGroup;
     }
+
     
+    public User writeManager(Identity managerIdentity) {
+        Operator operator = OperatorCreator.operatorFactory("DEFAULT",
+                OperationMode.LOCAL, Locale.getDefault());
+        Entity entity = Entity.entityFactory(operator, "DEFAULT");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Entity created with defaults: "+entity);
+        }
+        return writeManager(entity, managerIdentity);
+    }
+
     public User writeManager(Entity entity, Identity managerIdentity) {
         UserGroup adminGroup = grant(entity, "ADMIN", new String[] {"MANAGER"});
         UserGroup userGroup = grant(entity, "USER", new String[] {"ALL", "DEL"});
