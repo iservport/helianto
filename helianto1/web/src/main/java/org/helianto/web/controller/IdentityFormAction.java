@@ -145,7 +145,7 @@ public class IdentityFormAction extends FormAction {
         return error();
     }
     
-    public Event persistFinal(RequestContext context) {
+    public Event writeCredential(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
         }

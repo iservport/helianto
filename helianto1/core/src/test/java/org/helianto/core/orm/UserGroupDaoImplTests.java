@@ -103,26 +103,34 @@ public class UserGroupDaoImplTests extends AbstractIntegrationTest {
     
     //- additional
     
-    public void testPersistUserGroupAndParents() {
-        // if userGroup is persisted parents should also be
-        UserGroup parent1 = UserGroupTestSupport.createUserGroup();
-        UserGroup parent2 = UserGroupTestSupport.createUserGroup();
+    public void testPersistUserGroupAndChildren() {
+        // if userGroup is persisted children should also be
+        UserGroup child1 = UserGroupTestSupport.createUserGroup();
+        UserGroup child2 = UserGroupTestSupport.createUserGroup();
         UserGroup user = UserGroupTestSupport.createUserGroup();
-        UserAssociation.userAssociationFactory(parent1, user);
-        UserAssociation.userAssociationFactory(parent2, user);
+        UserAssociation.userAssociationFactory(user, child1);
+        UserAssociation.userAssociationFactory(child1, child2);
         userGroupDao.persistUserGroup(user);
         userGroupDao.flush();
         userGroupDao.clear();
         
         UserGroup found = userGroupDao.findUserGroupByNaturalId(user.getEntity(), user.getIdentity());
-        assertEquals(2, found.getParentAssociations().size());
+        assertEquals(1, found.getChildAssociations().size());
         Set<UserGroup> userSet = new HashSet<UserGroup>();
-        for (UserAssociation a: found.getParentAssociations()) {
-            assertEquals(user, a.getChild());
-            userSet.add(a.getParent());
+        for (UserAssociation a: found.getChildAssociations()) {
+            assertEquals(user, a.getParent());
+            userSet.add(a.getChild());
         }
-        assertTrue(userSet.contains(parent1));
-        assertTrue(userSet.contains(parent2));
+        assertTrue(userSet.contains(child1));
+
+        found = userGroupDao.findUserGroupByNaturalId(child1.getEntity(), child1.getIdentity());
+        assertEquals(1, found.getChildAssociations().size());
+        userSet = new HashSet<UserGroup>();
+        for (UserAssociation a: found.getChildAssociations()) {
+            assertEquals(child1, a.getParent());
+            userSet.add(a.getChild());
+        }
+        assertTrue(userSet.contains(child2));
         
     }
     

@@ -55,6 +55,9 @@ public class InstallFormAction extends FormAction {
      * Test if there is already at least one operator.
      */
     public Event ifNew(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         if (serverMgr.findOperator().size()==0) {
         	if (logger.isDebugEnabled()) {
         		logger.debug("No operator present: new installation!");
@@ -68,6 +71,9 @@ public class InstallFormAction extends FormAction {
      * Create the manager <code>User</code>.
      */
     public Event createManager(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         IdentityForm identityForm = (IdentityForm) getFromRequestScope(context, "identityForm");
         if (logger.isDebugEnabled()) {
             logger.debug("Retrieved "+identityForm);
@@ -79,11 +85,14 @@ public class InstallFormAction extends FormAction {
     }
     
     /**
-     * Create the manager <code>User</code>.
+     * Write manager <code>User</code>.
      */
-    public Event persistManager(RequestContext context) {
+    public Event writeManager(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
         UserForm form = doGetForm(context);
-        userMgr.persistUser(form.getUser());
+        userMgr.writeUser(form.getUser());
         return success();
     }
         

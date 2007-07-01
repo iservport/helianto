@@ -73,19 +73,19 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         Locale locale = user.getEntity().getOperator().getLocale();
         user.getIdentity().setPrincipal(
                 convertToLowerCase(locale, principal));
-        authorizationDao.persistUserGroup(user);
+        userGroupDao.persistUserGroup(user);
     }
 
     public void writeUser(User user) {
-        authorizationDao.mergeUserGroup(user);
+        userGroupDao.mergeUserGroup(user);
     }
 
     public List<UserGroup> findUserByEntity(Entity entity) {
-        return authorizationDao.findUserGroupByEntity(entity);
+        return userGroupDao.findUserGroupByEntity(entity);
     }
     
     public List<User> findUsers(String criteria) {
-        return authorizationDao.findUserByCriteria(criteria);
+        return userGroupDao.findUserByCriteria(criteria);
     }
     
     /**

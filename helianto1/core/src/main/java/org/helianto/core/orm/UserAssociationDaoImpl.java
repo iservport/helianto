@@ -28,16 +28,17 @@ public class UserAssociationDaoImpl extends GenericDaoImpl implements UserAssoci
      
     public void persistUserAssociation(UserAssociation userAssociation) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Persisting "+userAssociation);
+            logger.debug("Persisting user association parent and "+userAssociation);
         }
-        persist(userAssociation);
+        persist(userAssociation.getParent());
     }
     
     public UserAssociation mergeUserAssociation(UserAssociation userAssociation) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Merging "+userAssociation);
+            logger.debug("Merging  user association parent and "+userAssociation);
         }
-        return (UserAssociation) merge(userAssociation);
+        UserGroup mergedParent = (UserGroup) merge(userAssociation.getParent());
+        return mergedParent.getChildAssociations().iterator().next();
     }
     
     public void removeUserAssociation(UserAssociation userAssociation) {

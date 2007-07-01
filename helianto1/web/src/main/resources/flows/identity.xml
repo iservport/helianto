@@ -104,12 +104,12 @@
     
     <view-state id="identity.confirm.view" view="identity/confirm">
 		<transition on="change" to="ifPersonal"/>
-		<transition on="confirm" to="persistFinal">
+		<transition on="confirm" to="writeCredential">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
     </view-state>
     
-    <action-state id="persistFinal">
+    <action-state id="writeCredential">
     	<action bean="identityAction"/>
 		<transition on="success" to="end"/>
         <transition on-exception="org.springframework.dao.DataIntegrityViolationException" 

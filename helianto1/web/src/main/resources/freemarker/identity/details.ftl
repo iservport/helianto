@@ -74,8 +74,8 @@
 		
 		<tr class="t_title">
 		<td colspan="3">
-		<input type="submit" name="_eventId_page1" value="<@spring.messageText "button.previous", "Previous"/>" class="btn" /> | 
-		<input type="submit" name="_eventId_page3" value="<@spring.messageText "button.next", "Next"/>" class="btn" /></td>
+		<input type="submit" name="_eventId_previous" value="<@spring.messageText "button.previous", "Previous"/>" class="btn" /> | 
+		<input type="submit" name="_eventId_next" value="<@spring.messageText "button.next", "Next"/>" class="btn" /></td>
 		</tr>
 
 		<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>

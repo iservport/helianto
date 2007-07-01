@@ -61,7 +61,7 @@ public class UserAssociation implements java.io.Serializable {
     /**
      * Parent getter.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne()
     @JoinColumn(name="parentId", nullable=true)
     public UserGroup getParent() {
         return this.parent;

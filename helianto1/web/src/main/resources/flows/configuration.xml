@@ -31,10 +31,10 @@
     </action-state>
 
     <view-state id="rename.view" view="configuration/rename">
-		<transition on="next" to="persistManager"/>
+		<transition on="next" to="writeManager"/>
     </view-state>
 
-    <action-state id="persistManager">
+    <action-state id="writeManager">
     	<entry-actions>
 	    	<action bean="installAction" method="bind"/>
     	</entry-actions>

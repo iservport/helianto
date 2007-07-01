@@ -103,7 +103,7 @@ public class InstallFormActionTests extends TestCase {
         userMgr.persistUser(form.getUser());
         replay(serverMgr);
 
-        Event event = installFormAction.persistManager(context);
+        Event event = installFormAction.writeManager(context);
         assertEquals(event.getId(), "success");
         verify(serverMgr);
     }

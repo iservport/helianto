@@ -136,7 +136,7 @@ public class UserGroup implements java.io.Serializable {
     /**
      * ParentAssociations getter.
      */
-    @OneToMany(mappedBy="child", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="child", fetch=FetchType.EAGER)
     public Set<UserAssociation> getParentAssociations() {
         return this.parentAssociations;
     }
@@ -150,7 +150,7 @@ public class UserGroup implements java.io.Serializable {
     /**
      * ChildAssociations getter.
      */
-    @OneToMany(mappedBy="parent", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
     public Set<UserAssociation> getChildAssociations() {
         return this.childAssociations;
     }

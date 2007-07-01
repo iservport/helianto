@@ -30,6 +30,7 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.creation.OperatorCreator;
+import org.helianto.core.dao.UserAssociationDao;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.dao.EntityDao;
@@ -53,6 +54,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
     protected IdentityDao identityDao;
     protected UserGroupDao userGroupDao;
     protected UserDao userDao;
+    protected UserAssociationDao userAssociationDao;
     
     @Deprecated
     public User prepareSystemConfiguration(Identity managerIdentity) {
@@ -207,7 +209,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         return userGroup;
     }
     
-    public UserGroup grant(Entity entity, String serviceName, String[] extensions) {
+    protected UserGroup grant(Entity entity, String serviceName, String[] extensions) {
         Identity groupIdentity = findOrCreateIdentity(serviceName);
         groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
         UserGroup userGroup = findOrCreateUserGroup(entity, groupIdentity);
@@ -218,6 +220,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
                 logger.debug("Role granted: "+userRole);
             }
         }
+        userGroupDao.mergeUserGroup(userGroup);
         return userGroup;
     }
 
@@ -235,9 +238,15 @@ public abstract class AbstractServerMgr implements ServerMgr {
     public User writeManager(Entity entity, Identity managerIdentity) {
         UserGroup adminGroup = grant(entity, "ADMIN", new String[] {"MANAGER"});
         UserGroup userGroup = grant(entity, "USER", new String[] {"ALL", "DEL"});
-        User manager = User.userFactory(adminGroup,
-                managerIdentity);
-        UserAssociation.userAssociationFactory(userGroup, manager);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Parent groups ADMIN, USER stored ");
+        }
+        User manager = User.userFactory(entity, managerIdentity);
+        UserAssociation adminAssociation = UserAssociation.userAssociationFactory(adminGroup, manager);
+        userAssociationDao.mergeUserAssociation(adminAssociation);
+        UserAssociation userAssociation = UserAssociation.userAssociationFactory(userGroup, manager);
+        userAssociationDao.mergeUserAssociation(userAssociation);
+//        userGroupDao.mergeUserGroup(manager);
         if (logger.isDebugEnabled()) {
             logger.debug("Manager (member of ADMIN, USER): "+manager);
         }
@@ -279,6 +288,11 @@ public abstract class AbstractServerMgr implements ServerMgr {
     @Required
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    @Required
+    public void setUserAssociationDao(UserAssociationDao userAssociationDao) {
+        this.userAssociationDao = userAssociationDao;
     }
 
     private final Log logger = LogFactory.getLog(AbstractServerMgr.class);

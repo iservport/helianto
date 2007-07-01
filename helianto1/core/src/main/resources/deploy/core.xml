@@ -39,6 +39,7 @@
 				<property name="userRoleDao" ref="userRoleDao"/>
 				<property name="identityDao" ref="identityDao"/>
 				<property name="userGroupDao" ref="userGroupDao"/>
+				<property name="userAssociationDao" ref="userAssociationDao"/>
 				<property name="userDao" ref="userDao"/>
 				<property name="configurableMailSenderFactory" ref="configurableMailSenderFactory"/>
 				<property name="mailMessageComposer" ref="basicMailMessageComposer"/>
@@ -57,6 +58,7 @@
 				<property name="identityDao" ref="identityDao"/>
 				<property name="identitySelectionStrategy" ref="defaultIdentitySelectionStrategy"/>
 				<property name="credentialDao" ref="credentialDao"/>
+				<property name="userGroupDao" ref="userGroupDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
 				<property name="internalEnumeratorDao" ref="internalEnumeratorDao"/>
 			</bean>

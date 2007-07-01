@@ -22,6 +22,7 @@ import org.helianto.core.InternalEnumerator;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
+import org.helianto.core.dao.UserGroupDao;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -34,6 +35,7 @@ public class AbstractCoreMgr {
     protected IdentityDao identityDao;
     
     protected AuthorizationDao authorizationDao;
+    protected UserGroupDao userGroupDao;
     protected InternalEnumeratorDao internalEnumeratorDao;
     
     public long findNextInternalNumber(Entity entity, String typeName) {
@@ -75,6 +77,11 @@ public class AbstractCoreMgr {
     @Required
     public void setAuthorizationDao(AuthorizationDao authorizationDao) {
         this.authorizationDao = authorizationDao;
+    }
+
+    @Required
+    public void setUserGroupDao(UserGroupDao userGroupDao) {
+        this.userGroupDao = userGroupDao;
     }
 
     @Required

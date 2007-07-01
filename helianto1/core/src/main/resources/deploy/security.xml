@@ -30,6 +30,7 @@
 				<property name="identitySelectionStrategy" ref="defaultIdentitySelectionStrategy"/>
 				<property name="credentialDao" ref="credentialDao"/>
 				<property name="authorizationDao" ref="authorizationDao"/>
+				<property name="userGroupDao" ref="userGroupDao"/>
 				<property name="internalEnumeratorDao" ref="internalEnumeratorDao"/>
 			</bean>
 		</property>
@@ -86,6 +87,7 @@
 		<property name="userCache" ref="userCache"/>
 		<!--property name="passwordEncoder" ref="passwordEncoder"/-->
 	</bean>
+	
 	<!--
 			Anonymous authentication provider 	
 	-->
@@ -113,7 +115,7 @@
 				<property name="cacheName" value="userCache"/>
 			</bean>
 		</property>
-	</bean>
+	</bean>	
 	<!--
 			Role voter 	
 	-->
