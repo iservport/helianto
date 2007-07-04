@@ -6,7 +6,7 @@ import java.util.List;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Customer;
 import org.helianto.partner.PartnerRegistry;
-import org.helianto.partner.test.PartnerAssociationTestSupport;
+import org.helianto.partner.test.PartnerRegistryTestSupport;
 
 /**
  * Class to support <code>CustomerDao</code> tests.
@@ -27,7 +27,7 @@ public class CustomerTestSupport {
         try {
             partnerAssociation = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
+            partnerAssociation = PartnerRegistryTestSupport.createPartnerRegistry();
         }
         int sequence;
         try {
@@ -55,7 +55,7 @@ public class CustomerTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Customer> createCustomerList(int customerListSize, int partnerAssociationListSize) {
-        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerAssociationListSize);
 
         return createCustomerList(customerListSize, partnerAssociationList);
     }

@@ -52,7 +52,7 @@ public class PartnerRegistryDaoImpl extends GenericDaoImpl implements PartnerReg
         if (logger.isDebugEnabled()) {
             logger.debug("Finding unique partnerRegistry with entity='"+entity+"' and partnerAlias='"+partnerAlias+"' ");
         }
-        return (PartnerRegistry) findUnique(PartnerRegistry.getPartnerAssociationNaturalIdQueryString(), entity, partnerAlias);
+        return (PartnerRegistry) findUnique(PartnerRegistry.getPartnerRegistryNaturalIdQueryString(), entity, partnerAlias);
     }
     
     

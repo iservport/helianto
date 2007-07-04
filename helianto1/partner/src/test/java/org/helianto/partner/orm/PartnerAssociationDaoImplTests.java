@@ -6,7 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.PartnerRegistryDao;
-import org.helianto.partner.test.PartnerAssociationTestSupport;
+import org.helianto.partner.test.PartnerRegistryTestSupport;
 
 /**
  * <code>PartnerAssociationDao</code> tests.
@@ -21,7 +21,7 @@ public class PartnerAssociationDaoImplTests extends AbstractPartnerDaoImplConfig
      * Hook to persist one <code>PartnerAssociation</code>.
      */  
     protected PartnerRegistry writePartnerAssociation() {
-        PartnerRegistry partnerRegistry = PartnerAssociationTestSupport.createPartnerAssociation();
+        PartnerRegistry partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
         partnerRegistryDao.persistPartnerRegistry(partnerRegistry);
         partnerRegistryDao.flush();
         partnerRegistryDao.clear();
@@ -43,7 +43,7 @@ public class PartnerAssociationDaoImplTests extends AbstractPartnerDaoImplConfig
     protected List<PartnerRegistry> writePartnerAssociationList() {
         int partnerAssociationListSize = 10;
         int entityListSize = 2;
-        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize, entityListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerAssociationListSize, entityListSize);
         assertEquals(partnerAssociationListSize * entityListSize, partnerAssociationList.size());
         for (PartnerRegistry partnerRegistry: partnerAssociationList) {
             partnerRegistryDao.persistPartnerRegistry(partnerRegistry);
@@ -68,7 +68,7 @@ public class PartnerAssociationDaoImplTests extends AbstractPartnerDaoImplConfig
      */  
     public void testPartnerAssociationDuplicate() {
         PartnerRegistry partnerRegistry =  writePartnerAssociation();
-        PartnerRegistry partnerRegistryCopy = PartnerAssociationTestSupport.createPartnerAssociation(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias());
+        PartnerRegistry partnerRegistryCopy = PartnerRegistryTestSupport.createPartnerRegistry(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias());
 
         try {
             partnerRegistryDao.mergePartnerRegistry(partnerRegistryCopy); fail();

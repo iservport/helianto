@@ -154,7 +154,7 @@ public class PartnerRegistry implements java.io.Serializable {
      * @param entity
      * @param partnerAlias
      */
-    public static PartnerRegistry partnerAssociationFactory(Entity entity, String partnerAlias) {
+    public static PartnerRegistry partnerRegistryFactory(Entity entity, String partnerAlias) {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         partnerRegistry.setEntity(entity);
         partnerRegistry.setPartnerAlias(partnerAlias);
@@ -165,7 +165,7 @@ public class PartnerRegistry implements java.io.Serializable {
      * <code>PartnerRegistry</code> natural id query.
      */
     @Transient
-    public static String getPartnerAssociationNaturalIdQueryString() {
+    public static String getPartnerRegistryNaturalIdQueryString() {
         return "select partnerRegistry from PartnerRegistry partnerRegistry where partnerRegistry.entity = ? and partnerRegistry.partnerAlias = ? ";
     }
 

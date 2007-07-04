@@ -25,7 +25,7 @@ public class PartnerKeyTestSupport {
         try {
             partnerAssociation = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
+            partnerAssociation = PartnerRegistryTestSupport.createPartnerRegistry();
         }
         KeyType keyType;
         try {
@@ -53,7 +53,7 @@ public class PartnerKeyTestSupport {
      * @param keyTypeListSize
      */
     public static List<PartnerKey> createPartnerKeyList(int partnerAssociationListSize, int keyTypeListSize) {
-        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerAssociationListSize);
         List<KeyType> keyTypeList = KeyTypeTestSupport.createKeyTypeList(keyTypeListSize, 1);
         return createPartnerKeyList(partnerAssociationList, keyTypeList);
     }

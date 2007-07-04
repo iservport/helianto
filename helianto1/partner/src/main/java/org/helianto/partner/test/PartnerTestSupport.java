@@ -18,15 +18,15 @@ public class PartnerTestSupport {
 
     /**
      * Test support method to create a <code>Partner</code>.
-     * @param partnerAssociation optional PartnerAssociation 
+     * @param partnerRegistry optional PartnerRegistry 
      * @param sequence optional int 
      */
     public static Partner createPartner(Object... args) {
-        PartnerRegistry partnerAssociation;
+        PartnerRegistry partnerRegistry;
         try {
-            partnerAssociation = (PartnerRegistry) args[0];
+            partnerRegistry = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
+            partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
         }
         int sequence;
         try {
@@ -34,7 +34,7 @@ public class PartnerTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             sequence = DomainTestSupport.getNonRepeatableIntValue(testKey++);
         }
-        Partner partner = Partner.partnerFactory(partnerAssociation, sequence);
+        Partner partner = Partner.partnerFactory(partnerRegistry, sequence);
         return partner;
     }
 
@@ -54,7 +54,7 @@ public class PartnerTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Partner> createPartnerList(int partnerListSize, int partnerAssociationListSize) {
-        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerAssociationListSize);
 
         return createPartnerList(partnerListSize, partnerAssociationList);
     }

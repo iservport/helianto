@@ -26,7 +26,7 @@ public class AddressTestSupport {
         try {
             partnerAssociation = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            partnerAssociation = PartnerAssociationTestSupport.createPartnerAssociation();
+            partnerAssociation = PartnerRegistryTestSupport.createPartnerRegistry();
         }
         int sequence;
         try {
@@ -54,7 +54,7 @@ public class AddressTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Address> createAddressList(int addressListSize, int partnerAssociationListSize) {
-        List<PartnerRegistry> partnerAssociationList = PartnerAssociationTestSupport.createPartnerAssociationList(partnerAssociationListSize);
+        List<PartnerRegistry> partnerAssociationList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerAssociationListSize);
 
         return createAddressList(addressListSize, partnerAssociationList);
     }

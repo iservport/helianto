@@ -22,7 +22,7 @@ public class PartnerRegistryTests extends TestCase {
         Entity entity = new Entity();
         String partnerAlias = DomainTestSupport.STRING_TEST_VALUE;
         
-        PartnerRegistry partnerRegistry = PartnerRegistry.partnerAssociationFactory(entity, partnerAlias);
+        PartnerRegistry partnerRegistry = PartnerRegistry.partnerRegistryFactory(entity, partnerAlias);
         
         assertSame(entity, partnerRegistry.getEntity());
         assertEquals(partnerAlias, partnerRegistry.getPartnerAlias());
@@ -36,7 +36,7 @@ public class PartnerRegistryTests extends TestCase {
         Entity entity = new Entity();
         String partnerAlias = DomainTestSupport.STRING_TEST_VALUE;
         
-        PartnerRegistry partnerRegistry = PartnerRegistry.partnerAssociationFactory(entity, partnerAlias);
+        PartnerRegistry partnerRegistry = PartnerRegistry.partnerRegistryFactory(entity, partnerAlias);
         PartnerRegistry copy = (PartnerRegistry) DomainTestSupport.minimalEqualsTest(partnerRegistry);
         
         copy.setEntity(null);
