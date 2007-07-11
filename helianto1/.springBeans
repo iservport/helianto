@@ -4,7 +4,16 @@
 		<configExtension>xml</configExtension>
 	</configExtensions>
 	<configs>
-		<config>core/src/main/resources/deploy/org.helianto.core.xml</config>
+		<config>core/src/main/resources/deploy/security.xml</config>
+		<config>core/src/main/resources/deploy/sessionFactory.xml</config>
+		<config>core/src/main/resources/deploy/transaction.xml</config>
+		<config>core/src/main/resources/deploy/support.xml</config>
+		<config>web/src/main/resources/deploy/webflow.xml</config>
+		<config>web/src/main/resources/deploy/security-http.xml</config>
+		<config>web/src/main/resources/deploy/install.xml</config>
+		<config>core/src/main/resources/deploy/core.xml</config>
+		<config>web/src/main/resources/deploy/freemarker.xml</config>
+		<config>core/src/main/resources/deploy/dataSource.xml</config>
 	</configs>
 	<configSets>
 	</configSets>
