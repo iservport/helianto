@@ -15,7 +15,7 @@
 		<level value="ERROR"/>
 	</logger>
 	<logger name="org.helianto.core">
-		<level value="ERROR"/>
+		<level value="DEBUG"/>
 	</logger>
 	<logger name="org.hsqldb">
 		<level value="ERROR"/>

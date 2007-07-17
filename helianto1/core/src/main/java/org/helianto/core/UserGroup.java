@@ -241,15 +241,15 @@ public class UserGroup implements java.io.Serializable {
     /**
      * <code>UserGroup</code> natural id query.
      */
-    public static StringBuffer getUserGroupQueryString() {
-        return new StringBuffer("select userGroup from UserGroup userGroup ");
+    public static StringBuilder getUserGroupQueryStringBuilder() {
+        return new StringBuilder("select userGroup from UserGroup userGroup ");
     }
 
     /**
      * <code>UserGroup</code> natural id query.
      */
     public static String getUserGroupNaturalIdQueryString() {
-        return getUserGroupQueryString().append("where userGroup.entity = ? and userGroup.identity = ? ").toString();
+        return getUserGroupQueryStringBuilder().append("where userGroup.entity = ? and userGroup.identity = ? ").toString();
     }
 
     /**

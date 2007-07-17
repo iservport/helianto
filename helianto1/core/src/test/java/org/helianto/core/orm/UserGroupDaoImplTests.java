@@ -4,11 +4,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.helianto.core.Entity;
+import org.helianto.core.Identity;
+import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.test.AbstractIntegrationTest;
+import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
+import org.helianto.core.test.UserTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 /**
  * <code>UserGroupDao</code> tests.
@@ -134,7 +140,36 @@ public class UserGroupDaoImplTests extends AbstractIntegrationTest {
         
     }
     
+    public void testFindUserByCriteria() {
+    	List<Identity> identityList =  IdentityTestSupport.createIdentityList(5);
+		List<Entity> entityList = EntityTestSupport.createEntityList(3);
+		persistUserList(UserTestSupport.createUserList(entityList, identityList));
+    	String criteria = "user.identity.id = "+identityList.get(0).getId();
+		List<User> userList = userGroupDao.findUserByCriteria(criteria);
+		assertEquals(userList.size(), entityList.size());
+    }
+    
+    /*
+     * help to write a list
+     */
+    private void persistUserGroupList(List<UserGroup> userGroupList) {
+    	for (UserGroup userGroup: userGroupList) {
+    		userGroupDao.persistUserGroup(userGroup);
+    	}
+    	userGroupDao.flush();
+    	userGroupDao.clear();
+    }
 
+    /*
+     * help to write a list
+     */
+    private void persistUserList(List<User> userList) {
+    	for (User user: userList) {
+    		userGroupDao.persistUserGroup(user);
+    	}
+    	userGroupDao.flush();
+    	userGroupDao.clear();
+    }
 
     //- setters
 

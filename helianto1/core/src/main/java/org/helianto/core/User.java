@@ -128,15 +128,15 @@ public class User extends UserGroup implements java.io.Serializable {
     /**
      * <code>User</code> natural id query.
      */
-    public static StringBuffer getUserQueryString() {
-        return new StringBuffer("select user from User user ");
+    public static StringBuilder getUserQueryStringBuilder() {
+        return new StringBuilder("select user from User user ");
     }
 
     /**
      * <code>User</code> natural id query.
      */
     public static String getUserNaturalIdQueryString() {
-        return getUserQueryString().append("where user.entity = ? and user.identity = ? ").toString();
+        return getUserQueryStringBuilder().append("where user.entity = ? and user.identity = ? ").toString();
     }
 
 }

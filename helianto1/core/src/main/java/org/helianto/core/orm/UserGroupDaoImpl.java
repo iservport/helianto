@@ -15,6 +15,7 @@
 
 package org.helianto.core.orm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
@@ -23,6 +24,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
+
 /**
  * Default implementation of <code>UserGroup</code> data access interface.
  * 
@@ -63,14 +65,28 @@ public class UserGroupDaoImpl extends GenericDaoImpl implements UserGroupDao {
 	    "where userGroup.entity = ? ";
 
 
+	@SuppressWarnings("unchecked")
 	public List<User> findUserByCriteria(String criteria) {
-		// TODO Auto-generated method stub
-		return null;
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding user list with criteria ='"+criteria+"'");
+        }
+        if (criteria.equals("")) {
+            ArrayList<User> find = (ArrayList<User>) find(User.getUserQueryStringBuilder());
+			return find;
+        }
+        return (ArrayList<User>) find(User.getUserQueryStringBuilder().append("where ").append(criteria));
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<UserGroup> findUserGroupByCriteria(String criteria) {
-		// TODO Auto-generated method stub
-		return null;
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding userGroup list with criteria ='"+criteria+"'");
+        }
+        if (criteria.equals("")) {
+            ArrayList<UserGroup> find = (ArrayList<UserGroup>) find(UserGroup.getUserGroupQueryStringBuilder());
+			return find;
+        }
+        return (ArrayList<UserGroup>) find(UserGroup.getUserGroupQueryStringBuilder().append("where ").append(criteria));
 	}
 
 	public List<UserGroup> findUserGroupByEntity(Entity entity) {
