@@ -294,6 +294,10 @@ public abstract class AbstractServerMgr implements ServerMgr {
     public void setUserAssociationDao(UserAssociationDao userAssociationDao) {
         this.userAssociationDao = userAssociationDao;
     }
+    
+    public void init() {
+    	System.out.println("-----------------------------");
+    }
 
     private final Log logger = LogFactory.getLog(AbstractServerMgr.class);
 
