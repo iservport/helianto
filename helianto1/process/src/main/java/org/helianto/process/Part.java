@@ -19,7 +19,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
 import org.helianto.partner.Partner;
@@ -30,6 +32,7 @@ import org.helianto.partner.Partner;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
+@Table(name="proc_part")
 public class Part extends Document implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
