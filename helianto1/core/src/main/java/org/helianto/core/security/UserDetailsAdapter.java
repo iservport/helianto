@@ -17,6 +17,7 @@ package org.helianto.core.security;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.acegisecurity.GrantedAuthority;
@@ -73,6 +74,10 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements
         super(user, credential);
     }
 
+    public UserDetailsAdapter(List<User> userList, User user, Credential credential) {
+        super(userList, user, credential);
+    }
+
     public GrantedAuthority[] getAuthorities() {
         Set<UserRole> roles = authorityResolutionStrategy.resolveUserRoles();
         GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
@@ -89,22 +94,6 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements
         sb.append("ROLE_").append(userRole.getService().getServiceName())
                 .append("_").append(userRole.getServiceExtension());
         return sb.toString();
-    }
-
-    public Set<UserGroup> getUsers() {
-        return getUser().getIdentity().getUsers();
-    }
-
-    public void setCurrentUser(User user) {
-        Set<UserGroup> userSet = getUsers();
-        boolean acceptable = false;
-        for (UserGroup u : userSet) {
-            if (u.equals(user)) {
-                acceptable = true;
-                setUser(user);
-            }
-        }
-        Assert.isTrue(acceptable, "Unable to change to user " + user);
     }
 
     /**

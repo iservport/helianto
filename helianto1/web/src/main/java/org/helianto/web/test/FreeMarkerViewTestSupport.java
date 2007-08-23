@@ -98,6 +98,7 @@ public class FreeMarkerViewTestSupport extends TestCase {
         fv.setApplicationContext(wac);
         fv.setExposeSpringMacroHelpers(true);
         fv.setBeanName(templateName);
+        fv.setEncoding("ISO-8859-1");
         fv.afterPropertiesSet();
         return fv;
     }
@@ -113,7 +114,12 @@ public class FreeMarkerViewTestSupport extends TestCase {
         MockHttpServletResponse expectedResponse = new MockHttpServletResponse();
         FreeMarkerView fv = prepareView(templateName);
         fv.render(model, request, expectedResponse);
-        System.out.println(request.getAttribute("errors"));
+        if (logger.isDebugEnabled()) {
+            logger.debug("Url "+fv.getUrl());
+            if (request.getAttribute("errors")!=null) {
+                logger.debug("Errors: "+request.getAttribute("errors"));
+            }
+        }
         if (visualTest) {
             if (!outputFileName.equals("")) {
                 createOutputFile(expectedResponse.getContentAsString().toCharArray(), outputFileName);
@@ -135,6 +141,7 @@ public class FreeMarkerViewTestSupport extends TestCase {
     protected MockHttpServletResponse processView(FreeMarkerView fv, boolean visualTest) throws Exception {
         MockHttpServletResponse expectedResponse = new MockHttpServletResponse();
         fv.render(model, request, expectedResponse);
+        fv.setEncoding("ISO-8859-1");
         if (visualTest) {
             if (!outputFileName.equals("")) {
                 createOutputFile(expectedResponse.getContentAsString().toCharArray(), outputFileName);

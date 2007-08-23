@@ -15,10 +15,9 @@
 
 package org.helianto.core.security;
 
-import java.util.Set;
+import java.util.List;
 
 import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 
 /**
  * Implementations
@@ -31,9 +30,9 @@ import org.helianto.core.UserGroup;
 public interface PublicUserDetailsSwitcher extends PublicUserDetails {
 
     /**
-     * Get the connected <code>UserGroup</code> set.
+     * List <code>User</code>s sharing the same <code>Identity</code>.
      */
-    public Set<UserGroup> getUsers();
+    public List<User> getUsers();
     
     /**
      * Set the <code>UserLog</code>.
@@ -44,6 +43,6 @@ public interface PublicUserDetailsSwitcher extends PublicUserDetails {
      * the current one will change the <code>GrantedAuthority</code>
      * array.</p>
      */
-    public void setCurrentUser(User user);
+    public void selectUser(User user) throws AttemptToSwitchToUnauthenticatedUserException;
     
 }

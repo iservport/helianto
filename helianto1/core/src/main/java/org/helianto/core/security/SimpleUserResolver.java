@@ -15,14 +15,12 @@
 
 package org.helianto.core.security;
 
-import java.util.Date;
+import java.util.List;
 
-import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.service.SecurityMgr;
 import org.springframework.beans.factory.annotation.Required;
@@ -36,47 +34,45 @@ public class SimpleUserResolver implements UserResolutionStrategy {
 
     private SecurityMgr securityMgr;
     
-    /**
-     * Load or create an <code>User</code>
-     * 
-     * @param identity
-     * @return a valid User
-     */
-	public User loadOrCreateUser(Identity identity) {
-        User user = null;
-        UserLog userLog = securityMgr.findLastUserLog(identity);
-        if (userLog==null) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("First login");
-            }
-            user = guessOrCreateUser(identity);
-        } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Last login "+userLog.getLastEvent());
-            }
-            user = userLog.getUser();
-        }
-        securityMgr.writeUserLog(user, new Date());
-        return user;
+	public List<User> loadUsers(Identity identity) {
+        return securityMgr.findUsers(getUserFromIdentityMatchSelectionCriteria(identity));
 	}
     
-    /**
-     * Take the first available matching <code>User</code>.
-     * 
-     */
-    final User guessOrCreateUser(Identity identity) {
-        for (UserGroup u: identity.getUsers()) {
-            if (u instanceof User) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("First available user from identity "+identity+" selected");
-                }
-                return (User) u;
+	public User selectUserFromPreviousLogin(List<User> users) {
+        UserLog userLog = securityMgr.findLastUserLog(users);
+        if (userLog!=null) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Selected user matching the last login "+userLog.getLastEvent());
             }
+            return userLog.getUser();
+        } 
+        logger.warn("User has never logged in!");
+        return null;
+	}
+    
+	public User selectUserIfAny(List<User> users) {
+        for (User user: users) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("First available user selected");
+            }
+            return user;
         }
+        return null;
+	}
+
+	public User createUser(Identity identity) {
         if (securityMgr.isAutoCreateEnabled()) {
             return securityMgr.autoCreateUser(identity);
         }
-        throw new UsernameNotFoundException("No User defined for Credential with principal: ");
+        return null;
+	}
+
+    protected String getUserFromIdentityMatchSelectionCriteria(Identity identity) {
+    	return new StringBuilder()
+    	.append("user.identity.id = ")
+    	.append(identity.getId())
+    	.append(" ")
+    	.toString();
     }
     
     //- collabs

@@ -15,13 +15,13 @@
 
 package org.helianto.core.security;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.Date;
+import java.util.List;
+
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.dao.DataRetrievalFailureException;
 
 /**
  * Custom implementation for the {@link org.acegisecurity.userdetails.UserDetailsService}
@@ -41,25 +41,31 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     
     @Override
     public Credential loadAndValidateCredential(Identity identity) {
-        try {
-            //TODO find only active credential
-            Credential credential = securityMgr.findCredentialByIdentity(identity);
-            if (credential!=null) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("User credential loaded");
-                }
-                return credential;
-            } else {
-                throw new DataRetrievalFailureException("Bad credential");
-            }
-        } catch (Exception e) {
-            throw new DataRetrievalFailureException("General login failure", e);
-        }
+        return identityResolutionStrategy.loadAndValidateCredential(identity);
     }
     
     @Override
-    public User loadOrCreateUser(Identity identity) {
-        return userResolutionStrategy.loadOrCreateUser(identity);
+    public List<User> loadUsers(Identity identity) {
+        return userResolutionStrategy.loadUsers(identity);
+    }
+    
+    @Override
+    public User selectUser(List<User> userList) {
+        User user = userResolutionStrategy.selectUserFromPreviousLogin(userList);
+        if (user==null) {
+        	user = userResolutionStrategy.selectUserIfAny(userList);
+        }
+        return user;
+    }
+    
+    @Override
+    public User createUser(Identity identity) {
+        return userResolutionStrategy.createUser(identity);
+    }
+    
+    @Override
+    public void logUser(User user) {
+    	securityMgr.writeUserLog(user, new Date());
     }
     
     //- collabs
@@ -75,8 +81,6 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
             UserResolutionStrategy userResolutionStrategy) {
         this.userResolutionStrategy = userResolutionStrategy;
     }
-
-    private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
 
 }
 

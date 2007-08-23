@@ -5,7 +5,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
-	<version>0.0.1-m4-SNAPSHOT</version>
+	<version>0.0.1-20070823</version>
 	<description>
 		Helianto project is designed to provide an easy path to build a
 		secure ORM/dependency injection server side application.

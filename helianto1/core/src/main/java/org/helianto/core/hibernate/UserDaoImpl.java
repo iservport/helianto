@@ -71,18 +71,18 @@ public class UserDaoImpl extends GenericDaoImpl {
         merge(userLog);
     }
 
-    public UserLog findLastUserLog(Identity requiredIdentity) {
-        Assert.notNull(requiredIdentity);
-		if (requiredIdentity.getLastLogin() != null) {
-			return (UserLog) findUnique(LASTUSERLOG_QRY, requiredIdentity, 
-                    requiredIdentity.getLastLogin());
-		}
-		return null;
-	}
-
-	static final String LASTUSERLOG_QRY = "from UserLog userLog "
-			+ "where userLog.user.identity = ? " + "and userLog.lastLogin = ? ";
-
+//    public UserLog findLastUserLog(Identity requiredIdentity) {
+//        Assert.notNull(requiredIdentity);
+//		if (requiredIdentity.getLastLogin() != null) {
+//			return (UserLog) findUnique(LASTUSERLOG_QRY, requiredIdentity, 
+//                    requiredIdentity.getLastLogin());
+//		}
+//		return null;
+//	}
+//
+//	static final String LASTUSERLOG_QRY = "from UserLog userLog "
+//			+ "where userLog.user.identity = ? " + "and userLog.lastLogin = ? ";
+//
     public List<UserLog> findUserLogByUser(User requiredUser) {
         Assert.notNull(requiredUser);
         return (ArrayList<UserLog>) find(USERLOG_QUERY, requiredUser);

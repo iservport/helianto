@@ -15,6 +15,9 @@
 
 package org.helianto.core.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -28,8 +31,19 @@ public class SecurityTestSupport {
     
     public static UserDetailsAdapter createUserDetailsAdapter() {
         User user = UserTestSupport.createUser();
+        return createUserDetailsAdapter(user);
+    }
+
+    public static UserDetailsAdapter createUserDetailsAdapter(User user) {
+        List<User> users = new ArrayList<User>();
+        users.add(user);
+        return createUserDetailsAdapter(users);
+    }
+
+    public static UserDetailsAdapter createUserDetailsAdapter(List<User> users) {
+    	User user = users.get(0);
         Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
-        return new UserDetailsAdapter(user, credential);
+        return new UserDetailsAdapter(users, user, credential);
     }
 
 }

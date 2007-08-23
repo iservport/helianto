@@ -113,7 +113,6 @@ public class UserLog implements java.io.Serializable {
         userLog.setUser(user);
         userLog.setLastEvent(lastEvent);
         userLog.setEventType(EventType.LOGIN_ATTEMPT.getValue());
-        userLog.getUser().getIdentity().setLastLogin(lastEvent);
         return userLog;
     }
 

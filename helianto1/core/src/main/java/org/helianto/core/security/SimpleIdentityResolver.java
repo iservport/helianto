@@ -16,9 +16,13 @@
 package org.helianto.core.security;
 
 import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.service.SecurityMgr;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.util.Assert;
 
 /**
@@ -34,7 +38,6 @@ public class SimpleIdentityResolver implements IdentityResolutionStrategy {
      * Load and validate an <code>Identity</code>
      * 
      * @param principal
-     * @return
      */
     public Identity loadAndValidateIdentity(String principal) {
         Identity identity = null;
@@ -47,11 +50,35 @@ public class SimpleIdentityResolver implements IdentityResolutionStrategy {
         return identity;
     }
     
+    /**
+     * Load and validate a <code>Credential</code>
+     * 
+     * @param identity
+     */
+    public Credential loadAndValidateCredential(Identity identity) {
+        try {
+            //TODO find only active credential
+            Credential credential = securityMgr.findCredentialByIdentity(identity);
+            if (credential!=null) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("User credential loaded");
+                }
+                return credential;
+            } else {
+                throw new DataRetrievalFailureException("Bad credential");
+            }
+        } catch (Exception e) {
+            throw new DataRetrievalFailureException("General login failure", e);
+        }
+    }
+    
     //- collabs
 
     @Required
     public void setSecurityMgr(SecurityMgr securityMgr) {
         this.securityMgr = securityMgr;
     }
+    
+    private static Log logger = LogFactory.getLog(SimpleIdentityResolver.class);
     
 }

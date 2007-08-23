@@ -190,7 +190,6 @@ public class UserGroup implements java.io.Serializable {
                 identity = Identity.identityFactory("", "");
             }
             userGroup.setIdentity(identity);
-            identity.getUsers().add(userGroup);
             userGroup.setUserState(ActivityState.ACTIVE.getValue());
             return userGroup;
         } catch (Exception e) {

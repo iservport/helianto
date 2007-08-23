@@ -16,17 +16,12 @@
 package org.helianto.core;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -54,10 +49,9 @@ public class Identity implements java.io.Serializable {
     private String optionalAlias;
     private PersonalData personalData;
     private Date created;
-    private Date lastLogin;
+//    private Date lastLogin;
     private char identityType;
     private char notification;
-    private Set<UserGroup> users = new HashSet<UserGroup>();
 
     /** default constructor */
     public Identity() {
@@ -133,20 +127,20 @@ public class Identity implements java.io.Serializable {
         this.created = created;
     }
 
-    /**
-     * LastLogin getter.
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getLastLogin() {
-        return this.lastLogin;
-    }
-    /**
-     * LastLogin setter.
-     */
-    public void setLastLogin(Date lastLogin) {
-        this.lastLogin = lastLogin;
-    }
-
+//    /**
+//     * LastLogin getter.
+//     */
+//    @Temporal(TemporalType.TIMESTAMP)
+//    public Date getLastLogin() {
+//        return this.lastLogin;
+//    }
+//    /**
+//     * LastLogin setter.
+//     */
+//    public void setLastLogin(Date lastLogin) {
+//        this.lastLogin = lastLogin;
+//    }
+//
     /**
      * IdentityType getter.
      */
@@ -171,20 +165,6 @@ public class Identity implements java.io.Serializable {
      */
     public void setNotification(char notification) {
         this.notification = notification;
-    }
-
-    /**
-     * Users getter.
-     */
-    @OneToMany(mappedBy = "identity", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
-    public Set<UserGroup> getUsers() {
-        return this.users;
-    }
-    /**
-     * Users setter.
-     */
-    public void setUsers(Set<UserGroup> users) {
-        this.users = users;
     }
 
     /**
@@ -215,8 +195,7 @@ public class Identity implements java.io.Serializable {
         identity.setIdentityType(IdentityType.NOT_ADDRESSABLE.getValue());
         identity.setNotification(Notification.BY_REQUEST.getValue());
         identity.setPersonalData(PersonalData.personalDataFactory("", ""));
-        identity.setLastLogin(identity.getCreated());
-        identity.setUsers(new HashSet<UserGroup>());
+//        identity.setLastLogin(identity.getCreated());
         return identity;
     }
 

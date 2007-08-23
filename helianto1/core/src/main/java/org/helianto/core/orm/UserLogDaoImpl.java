@@ -19,12 +19,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.springframework.util.Assert;
 /**
  * Default implementation of <code>UserLog</code> data access interface.
  * 
@@ -65,23 +63,53 @@ public class UserLogDaoImpl extends GenericDaoImpl implements UserLogDao {
 	    "where userLog.user = ? ";
 
 
-    public List<UserLog> findUserLogByUser(User user) {
+    @SuppressWarnings("unchecked")
+	public List<UserLog> findUserLogByUser(User user) {
         if (logger.isDebugEnabled()) {
             logger.debug("Finding userLog list with user='"+user);
         }
         return (ArrayList<UserLog>) find(USERLOG_USER_QRY, user);
     }
     
-    public UserLog findLastUserLog(Identity requiredIdentity) {
-        Assert.notNull(requiredIdentity);
-        if (requiredIdentity.getLastLogin() != null) {
-            return (UserLog) findUnique(LASTUSERLOG_QRY, requiredIdentity, 
-                    requiredIdentity.getLastLogin());
+    public UserLog findLastUserLog(List<User> users) {
+        if (!users.isEmpty()) {
+            return (UserLog) findUnique(
+            		LASTUSERLOG_USER_QRY
+            		.append(elements(users))
+            		.append("and userLog.lastEvent = ? ")
+            		.toString(), 
+            		findLastUserLogDate(users));
         }
         return null;
     }
 
-    static final String LASTUSERLOG_QRY = "select userLog from UserLog userLog "
-            + "where userLog.user.identity = ? " + "and userLog.lastEvent = ? ";
+    static final StringBuilder LASTUSERLOG_USER_QRY = 
+    	new StringBuilder("select userLog from UserLog userLog ")
+    		.append("where userLog.user.id in ");
+    
+    public Date findLastUserLogDate(List<User> users) {
+        if (!users.isEmpty()) {
+            return (Date) findUnique(LASTUSERLOGDATE_QRY.append(elements(users)).toString());
+        }
+        throw new IllegalArgumentException("At least one user should be supplied to find the last user log date.");
+    }
+
+    static final StringBuilder LASTUSERLOGDATE_QRY = 
+    	new StringBuilder("select max(lastUserLog.lastEvent) as lastEvent from UserLog lastUserLog ")
+			.append("where lastUserLog.user.id in ");
+    
+    /**
+     * Mimic the elements function from hibernate ...
+     * @param users
+     * @return (id0, id1, ... idn)
+     */
+    private String elements(List<User> users) {
+    	StringBuilder sb = new StringBuilder("(");
+    	for (User user: users) {
+    		sb.append(user.getId()).append(",");
+    	}
+    	sb.deleteCharAt(sb.length()-1).append(") ");
+    	return sb.toString();
+    }
 
 }

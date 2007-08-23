@@ -15,6 +15,9 @@
 
 package org.helianto.core.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.logging.Log;
@@ -37,8 +40,8 @@ import org.springframework.util.Assert;
  */
 public abstract class AbstractUserDetails implements UserDetails, PublicUserDetails, SecureUserDetails {
     
+    private List<User> users;
     private User user;
-    
     private Credential credential;
 
     /**
@@ -50,9 +53,19 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
      * Minimal constructor.
      */
     public AbstractUserDetails(User user, Credential credential) {
-        this.user = user;
+        this.users = new ArrayList<User>();
+        users.add(user);
         this.credential = credential;
-        validateUserAndCredentialCompatibility();
+        selectUser(user);
+    }
+    
+    /**
+     * Full constructor.
+     */
+    public AbstractUserDetails(List<User> users, User user, Credential credential) {
+        this.users = users;
+        this.credential = credential;
+        selectUser(user);
     }
     
     /**
@@ -95,7 +108,7 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
     }
 
     public boolean isEnabled() {
-        // TODO replace auto-ebnable
+        // TODO replace auto-enable
         char state = credential.getCredentialState();
         if (state==ActivityState.ACTIVE.getValue() || 
                 state==ActivityState.INITIAL.getValue()) {
@@ -120,15 +133,22 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
         return user;
     }
     
-    protected final void setUser(User user) {
-        validateUserAndCredentialCompatibility();
+    public final void selectUser(User user) {
+    	if (!users.contains(user)) {
+    		throw new AttemptToSwitchToUnauthenticatedUserException();
+    	}
+        validateUserAndCredentialCompatibility(user);
         this.user = user;
         if (logger.isDebugEnabled()) {
-            logger.debug("User set");
+            logger.debug("User selected");
         }
     }
     
-    protected final void validateUserAndCredentialCompatibility() {
+    public List<User> getUsers() {
+        return users;
+    }
+    
+    protected final void validateUserAndCredentialCompatibility(User user) {
         Assert.notNull(user, "Required to UserDetailsAdapter");
         Assert.notNull(credential, "Required to UserDetailsAdapter");
         if(!user.getIdentity().equals(credential.getIdentity())) {

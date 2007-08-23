@@ -18,7 +18,6 @@ package org.helianto.web.controller;
 import java.util.Date;
 
 import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.PublicUserDetailsSwitcher;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -41,7 +40,7 @@ public class UserSelectionAction extends MultiAction {
      * Action decision state to control if the selection is hidden or shown.
      * <p>
      * If the selection result is the same as the current, signals
-     * the view to hide the selection if is beeing shown, or to 
+     * the view to hide the selection if is being shown, or to 
      * show the selection if hidden. If the selection result is 
      * not the same as the current, the the selection is not switched.
      * </p>
@@ -55,7 +54,7 @@ public class UserSelectionAction extends MultiAction {
         PublicUserDetails secureUser = UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
         String userEntity = parameters.get("userEntity");
         if (secureUser.getUser().getEntity().getId()==Long.parseLong(userEntity)) {
-            if (secureUser.getUser().getIdentity().getUsers().size()==1) {
+            if (((PublicUserDetailsSwitcher) secureUser).getUsers().size()==1) {
                 // nothing to do, the user has no other associated entities
                 return result("doNothing");
             }
@@ -88,9 +87,9 @@ public class UserSelectionAction extends MultiAction {
         ParameterMap parameters = context.getRequestParameters();
         PublicUserDetailsSwitcher secureUser = (PublicUserDetailsSwitcher) UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
         long userEntity = parameters.getLong("userEntity");
-        for (UserGroup user: secureUser.getUsers()) {
+        for (User user: secureUser.getUsers()) {
             if (user.getEntity().getId()==userEntity) {
-                secureUser.setCurrentUser((User) user);
+                secureUser.selectUser(user);
                 if (logger.isDebugEnabled()) {
                     logger.debug("New user is "+user);
                 }

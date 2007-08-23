@@ -15,23 +15,44 @@
 
 package org.helianto.core.security;
 
+import java.util.List;
+
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 
 /**
- * A common interface for all user resolution strategies.
+ * A common interface for <code>User</code> resolution strategies.
  * 
  * @author Mauricio Fernandes de Castro
  */
 public interface UserResolutionStrategy {
     
     /**
-     * Load and validate an <code>User</code> or,
-     * optionally, create it.
+     * Load all <code>User</code>s sharing the same <code>Identity</code>.
      * 
      * @param identity
-     * @return
      */
-    public User loadOrCreateUser(Identity identity);
+    public List<User> loadUsers(Identity identity);
+
+    /**
+     * Select a valid <code>User</code> from a previous login.
+     * 
+     * @param userList
+     */
+    public User selectUserFromPreviousLogin(List<User> userList);
+
+    /**
+     * Select a valid <code>User</code> from the list.
+     * 
+     * @param userList
+     */
+    public User selectUserIfAny(List<User> userList);
+
+    /**
+     * Create a valid <code>User</code>.
+     * 
+     * @param identity
+     */
+    public User createUser(Identity identity);
 
 }

@@ -21,45 +21,86 @@ import junit.framework.TestCase;
 
 import org.acegisecurity.userdetails.UserDetails;
 import org.helianto.core.Credential;
+import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.test.UserTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
+import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.test.IdentityTestSupport;
+import org.helianto.core.test.UserTestSupport;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
 public class UserDetailsServiceTemplateTests extends TestCase {
 
-    public void testLoadUserByUsername() {
+    public void testLoadUserByUsernameSuccess() {
         UserDetails userDetails = new UserDetailsServiceStub().loadUserByUsername("TEST");
-        assertSame(user, ((PublicUserDetails) userDetails).getUser());
-        assertSame(credential, ((SecureUserDetails) userDetails).getCredential());
+        assertSame(selectedUser, ((PublicUserDetails) userDetails).getUser());
+        assertSame(loadedCredential, ((SecureUserDetails) userDetails).getCredential());
     }
     
-    List<User> userList = UserTestSupport.createUserList(1, 1);
-    User user = userList.get(0);
-    Credential credential = CredentialTestSupport.createCredential();
-    Identity identity = userList.get(0).getIdentity();
+    // domain objects
+    
+    List<User> loadedUsers;
+    User selectedUser, createdUser;
+    Credential loadedCredential;
+    Identity loadedIdentity;
+    boolean create = false;
 
+    @Override
+    public void setUp() {
+    	List<Entity> entityList = EntityTestSupport.createEntityList(3);
+    	List<Identity> identityList = IdentityTestSupport.createIdentityList(1);
+        loadedIdentity = identityList.get(0);
+        loadedUsers = UserTestSupport.createUserList(entityList, identityList);
+        selectedUser = loadedUsers.get(0);
+        createdUser = UserTestSupport.createUser();
+        loadedCredential = CredentialTestSupport.createCredential(loadedIdentity);
+    }
+    
     public class UserDetailsServiceStub extends AbstractUserDetailsServiceTemplate {
-        
-        @Override
-        public Identity loadAndValidateIdentity(String principal) {
-            return identity;
-        }
 
-        @Override
-        public Credential loadAndValidateCredential(Identity identity) {
-            credential.setIdentity(identity);
-            return credential;
-        }
+		@Override
+		public Identity loadAndValidateIdentity(String principal) {
+			assertEquals("TEST", principal);
+			return loadedIdentity;
+		}
 
-        @Override
-        public User loadOrCreateUser(Identity identity) {
-            return user;
-        }
+		@Override
+		public Credential loadAndValidateCredential(Identity identity) {
+			assertSame(loadedIdentity, identity);
+			return loadedCredential;
+		}
+
+		@Override
+		public List<User> loadUsers(Identity identity) {
+			assertSame(loadedIdentity, identity);
+			return loadedUsers;
+		}
+
+		@Override
+		public User selectUser(List<User> users) {
+			assertSame(loadedUsers, users);
+			return selectedUser;
+		}
         
+		@Override
+		public User createUser(Identity identity) {
+			assertSame(loadedIdentity, identity);
+			return createdUser;
+		}
+
+		@Override
+		public void logUser(User user) {
+			if (create) {
+				assertSame(createdUser, user);
+			}
+			else {
+				assertSame(selectedUser, user);
+			}
+		}
+
     }
     
 }

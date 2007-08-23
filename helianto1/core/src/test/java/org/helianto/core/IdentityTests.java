@@ -41,9 +41,6 @@ public class IdentityTests extends TestCase {
                 identity.getPersonalData().getAppellation());
         assertEquals(Gender.NOT_SUPPLIED.getValue(),
                 identity.getPersonalData().getGender());
-        assertNotNull(identity.getLastLogin());
-        assertTrue(identity.getLastLogin() instanceof Date);
-        assertEquals(0, identity.getUsers().size());
     }
 
     /**

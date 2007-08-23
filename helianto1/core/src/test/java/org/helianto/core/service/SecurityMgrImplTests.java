@@ -22,7 +22,9 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -69,14 +71,14 @@ public class SecurityMgrImplTests extends TestCase {
     }
 
     public void testFindLastUserLog() {
-        Identity identity = new Identity();
         UserLog userLog = new UserLog();
+        List<User> users = new ArrayList<User>();
         
-        expect(userLogDao.findLastUserLog(identity))
+        expect(userLogDao.findLastUserLog(users))
             .andReturn(userLog);
         replay(userLogDao);
         
-        assertSame(userLog, securityMgr.findLastUserLog(identity));
+        assertSame(userLog, securityMgr.findLastUserLog(users));
         verify(userLogDao);
     }
 
@@ -102,26 +104,8 @@ public class SecurityMgrImplTests extends TestCase {
         securityMgr.persistUserLog(user,date);
         verify(userLogDao);
         verify(identityDao);
-        assertSame(date, identity.getLastLogin());
     }
 
-    public void testPersistUserLogNullDate() {
-        Identity identity = new Identity();
-        User user = new User();
-        user.setIdentity(identity);
-        
-        userLogDao.persistUserLog(isA(UserLog.class));
-        replay(userLogDao);
-        identityDao.persistIdentity(user.getIdentity());
-        replay(identityDao);
-        
-        Date date = new Date();
-        securityMgr.persistUserLog(user,null);
-        verify(userLogDao);
-        verify(identityDao);
-        assertTrue(Math.abs(date.getTime() - identity.getLastLogin().getTime()) < 1000);
-    }
-    
     public void testFindSecureUser() {
         PublicUserDetails pud = SecurityTestSupport.createUserDetailsAdapter();
         SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(pud, null, null));

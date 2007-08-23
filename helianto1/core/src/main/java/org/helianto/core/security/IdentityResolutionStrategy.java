@@ -15,10 +15,11 @@
 
 package org.helianto.core.security;
 
+import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 
 /**
- * A common interface for all identity resolution strategies.
+ * A common interface for all <code>Identity</code> resolution strategies.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -31,5 +32,13 @@ public interface IdentityResolutionStrategy {
      * @return
      */
     public Identity loadAndValidateIdentity(String principal);
+    
+    /**
+     * Load and validate a <code>Credential</code>.
+     * 
+     * @param principal
+     * @return
+     */
+    public Credential loadAndValidateCredential(Identity identity);
 
 }

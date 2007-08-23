@@ -45,7 +45,6 @@ public class UserLogTests extends TestCase {
         
         assertSame(user, userLog.getUser());
         assertEquals(lastEvent, userLog.getLastEvent());
-        assertEquals(userLog.getUser().getIdentity().getLastLogin(), lastEvent);
         assertEquals(EventType.LOGIN_ATTEMPT.getValue(), userLog.getEventType());
         
     }

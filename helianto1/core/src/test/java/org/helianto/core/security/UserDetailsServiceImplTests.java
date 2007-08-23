@@ -17,19 +17,22 @@ package org.helianto.core.security;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
+
+import java.util.Date;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.service.SecurityMgr;
-import org.helianto.core.test.UserTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
-import org.helianto.core.test.IdentityTestSupport;
-import org.springframework.dao.DataRetrievalFailureException;
+import org.helianto.core.test.UserTestSupport;
 
 
 /**
@@ -42,7 +45,7 @@ public class UserDetailsServiceImplTests extends TestCase {
     
     public void testIdentityResolutionStrategy() {
     	String principal = "TEST";
-    	Identity identity = IdentityTestSupport.createIdentity();
+    	Identity identity = new Identity();
     	
 		expect(identityResolutionStrategy.loadAndValidateIdentity(principal))
 		    .andReturn(identity);
@@ -52,53 +55,73 @@ public class UserDetailsServiceImplTests extends TestCase {
 		verify(identityResolutionStrategy);
     }
     
-    public void testUserResolutionStrategy() {
-    	Identity identity = IdentityTestSupport.createIdentity();
-    	User user = UserTestSupport.createUser();
+    public void testLoadAndValidateCredential() {
+        Credential credential = CredentialTestSupport.createCredential();
+        
+        expect(identityResolutionStrategy.loadAndValidateCredential(credential.getIdentity()))
+            .andReturn(credential);
+        replay(identityResolutionStrategy);
+        
+        assertSame(credential, userDetailsService.loadAndValidateCredential(credential.getIdentity()));
+        verify(identityResolutionStrategy);
+    }
+
+    public void testLoadUsers() {
+    	Identity identity = new Identity();
+    	List<User> users = UserTestSupport.createUserList(3);
     	
-		expect(userResolutionStrategy.loadOrCreateUser(identity))
-		    .andReturn(user);
+		expect(userResolutionStrategy.loadUsers(identity))
+		    .andReturn(users);
 		replay(userResolutionStrategy);
     	
-		assertSame(user, userDetailsService.loadOrCreateUser(identity));
+		assertSame(users, userDetailsService.loadUsers(identity));
 		verify(userResolutionStrategy);
     }
     
-    public void testLoadAndValidateCredential() {
-        Credential credential = CredentialTestSupport.createCredential();
-        credential.setIdentity(new Identity());
+    public void testSelectUser() {
+    	List<User> users = UserTestSupport.createUserList(3);
+    	
+        expect(userResolutionStrategy.selectUserFromPreviousLogin(users))
+            .andReturn(users.get(0));
+        replay(userResolutionStrategy);
         
-        expect(securityMgr.findCredentialByIdentity(credential.getIdentity()))
-            .andReturn(credential);
-        replay(securityMgr);
-        
-        assertSame(credential,userDetailsService.loadAndValidateCredential(credential.getIdentity()));
-        verify(securityMgr);
+        assertSame(users.get(0), userDetailsService.selectUser(users));
+        verify(userResolutionStrategy);
     }
 
-    public void testLoadAndValidateCredentialNull() {
-        expect(securityMgr.findCredentialByIdentity(new Identity()))
+    public void testSelectUserFirstLogin() {
+    	List<User> users = UserTestSupport.createUserList(3);
+    	
+        expect(userResolutionStrategy.selectUserFromPreviousLogin(users))
             .andReturn(null);
-        replay(securityMgr);
+        expect(userResolutionStrategy.selectUserIfAny(users))
+        	.andReturn(users.get(0));
+        replay(userResolutionStrategy);
         
-        try {
-            userDetailsService.loadAndValidateCredential(new Identity()); fail();
-        } catch (DataRetrievalFailureException e) {
-        } catch (Exception e) { fail(); }
-        verify(securityMgr);
+        assertSame(users.get(0), userDetailsService.selectUser(users));
+        verify(userResolutionStrategy);
     }
 
     
-    public void testLoadAndValidateCredentialError() {
-        expect(securityMgr.findCredentialByIdentity(new Identity()))
-            .andThrow(new DataRetrievalFailureException(""));
+    public void testCreateUser() {
+    	Identity identity = new Identity();
+    	User user = new User();
+    	
+        expect(userResolutionStrategy.createUser(identity))
+            .andReturn(user);
+        replay(userResolutionStrategy);
+        
+        assertSame(user, userDetailsService.createUser(identity));
+        verify(userResolutionStrategy);
+    }
+    
+    public void testLogUser() {
+    	securityMgr.writeUserLog(isA(User.class), isA(Date.class));
         replay(securityMgr);
         
-        try {
-            userDetailsService.loadAndValidateCredential(new Identity()); fail();
-        } catch (DataRetrievalFailureException e) {
-        } catch (Exception e) { fail(); }
+        userDetailsService.logUser(new User());
         verify(securityMgr);
+    		
     }
     
     // collaborators

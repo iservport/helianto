@@ -108,18 +108,20 @@ public class UserLogDaoImplTests extends AbstractIntegrationTest {
     //- additional tests
 
     public void testFindLastUserLog() {
-        User user = UserTestSupport.createUser();
-        Date date = new Date(Long.MAX_VALUE);
-        UserLog lastUserLog = UserLogTestSupport.createUserLog(user, date);
-        userLogDao.persistUserLog(lastUserLog);
-        List<UserLog> userLogList = UserLogTestSupport.createUserLogList(10);
+    	// make 5 logs for each of 2 users
+    	List<User> userList = UserTestSupport.createUserList(2);
+        List<UserLog> userLogList = UserLogTestSupport.createUserLogList(5, userList);
+        // pick one to be the last
+        UserLog lastUserLog = userLogList.get((int) (Math.random()*userLogList.size()));
+        lastUserLog.setLastEvent(new Date(Long.MAX_VALUE));
+        // persist
         for (UserLog userLog: userLogList) {
-            userLog.getUser().setIdentity(lastUserLog.getUser().getIdentity());
             userLogDao.persistUserLog(userLog);
         }
         userLogDao.flush();
         userLogDao.clear();
-        assertEquals(lastUserLog, userLogDao.findLastUserLog(lastUserLog.getUser().getIdentity()));
+        
+        assertEquals(lastUserLog, userLogDao.findLastUserLog(userList));
         
     }
     

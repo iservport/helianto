@@ -38,7 +38,6 @@ public class AuthorizationCreatorTests extends TestCase {
         
         assertSame(entity, user.getEntity());
         assertSame(identity, user.getIdentity());
-        assertTrue(user.getIdentity().getUsers().contains(user));
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
         assertEquals(0, user.getParentAssociations().size());
         assertEquals(0, user.getRoles().size());

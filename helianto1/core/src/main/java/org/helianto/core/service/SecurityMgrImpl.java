@@ -16,6 +16,7 @@
 package org.helianto.core.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
@@ -40,8 +41,12 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
 		return credentialDao.findCredentialByNaturalId(identity);
 	}
 
-	public UserLog findLastUserLog(Identity identity) {
-		return userLogDao.findLastUserLog(identity);
+//	public UserLog findLastUserLog(Identity identity) {
+//		return userLogDao.findLastUserLog(identity);
+//	}
+//    
+	public UserLog findLastUserLog(List<User> users) {
+		return userLogDao.findLastUserLog(users);
 	}
     
     public void persistUserLog(User user, Date date) {

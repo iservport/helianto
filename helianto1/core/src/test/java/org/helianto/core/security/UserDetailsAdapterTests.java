@@ -31,6 +31,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
+import org.helianto.core.test.SecurityTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
 
@@ -129,28 +130,15 @@ public class UserDetailsAdapterTests extends TestCase {
     }
     
     public void testPublicUserDetailsSwitcher() {
-        int e = 3, d = 4;
-        List<User> userList = UserTestSupport.createUserList(e, d);
-        assertEquals(e*d, userList.size());
-        User user = userList.get((int) Math.random()*userList.size());
-        assertEquals(e, user.getIdentity().getUsers().size());
-        Credential credential = CredentialTestSupport.createCredential();
-        credential.setIdentity(user.getIdentity());
-        PublicUserDetailsSwitcher userDetails = new UserDetailsAdapter(user, credential);
-        assertEquals(e, userDetails.getUsers().size());
-        for (UserGroup u: userDetails.getUsers()) {
-            assertTrue(user.getIdentity().getUsers().contains(u));
-        }
-        // take another user
-        UserGroup newUser = null;
-        for (UserGroup u: userDetails.getUsers()) {
-            if (!u.equals(user)) {
-                newUser = u;
-                break;
-            }
-        }
-        userDetails.setCurrentUser((User) newUser);
-        assertSame(newUser, userDetails.getUser());
+    	// 3 entities, same identity
+        List<User> userList = UserTestSupport.createUserList(3, 1);
+        PublicUserDetailsSwitcher userDetails = SecurityTestSupport.createUserDetailsAdapter(userList);
+        
+        assertSame(userList.get(0), userDetails.getUser());
+
+        User user = userList.get((int) (1 + (Math.random()*userList.size()) - 1));
+        userDetails.selectUser(user);
+        assertSame(user, userDetails.getUser());
     }
     
 }

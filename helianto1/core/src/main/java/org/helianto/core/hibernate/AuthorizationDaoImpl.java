@@ -114,23 +114,6 @@ public class AuthorizationDaoImpl extends GenericDaoImpl implements Authorizatio
 
     static String LASTEVENT_FILTER = "and userLog.lastEvent = ? ";
 
-    public UserLog findLastUserLog(Identity requiredIdentity) {
-        Assert.notNull(requiredIdentity);
-        if (requiredIdentity.getLastLogin() != null) {
-            return (UserLog) findUnique(LASTUSERLOG_QRY, requiredIdentity, 
-                    requiredIdentity.getLastLogin());
-        }
-        return null;
-    }
-
-    static final String LASTUSERLOG_QRY = "select userLog from UserLog userLog "
-            + "where userLog.user.identity = ? " + "and userLog.lastEvent = ? ";
-
-    public List<UserLog> findUserLogByUser(User requiredUser) {
-        Assert.notNull(requiredUser);
-        return (ArrayList<UserLog>) find(USERLOG_QRY, requiredUser);
-    }
-    
     // user role
     
     public void persistUserRole(UserRole userRole) {

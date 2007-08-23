@@ -17,28 +17,22 @@ package org.helianto.core.security;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.acegisecurity.userdetails.UsernameNotFoundException;
-import org.helianto.core.Credential;
-import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.service.SecurityMgr;
-import org.helianto.core.test.CredentialTestSupport;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserLogTestSupport;
+import org.helianto.core.test.UserTestSupport;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -47,70 +41,81 @@ public class SimpleUserResolverTests extends TestCase {
 
     // class under test
     private SimpleUserResolver simpleUserResolver;
+
+    public void testLoadUsers() {
+    	Identity identity = IdentityTestSupport.createIdentity();
+    	List<User> users = new ArrayList<User>();
+    	
+    	expect(securityMgr.findUsers(simpleUserResolver.getUserFromIdentityMatchSelectionCriteria(identity)))
+    	    .andReturn(users);
+        replay(securityMgr);
+    	
+    	assertSame(users,simpleUserResolver.loadUsers(identity));
+        verify(securityMgr);
+    }
+    
+    public void testSelectUserFromPreviousLoginFailure() {
+    	List<User> users = new ArrayList<User>();
+    	UserLog userLog = null;
+    	
+    	expect(securityMgr.findLastUserLog(users))
+    		.andReturn(userLog);
+        replay(securityMgr);
+    	
+    	assertNull(simpleUserResolver.selectUserFromPreviousLogin(users));
+        verify(securityMgr);
+    }
+
+    public void testSelectUserFromPreviousLoginSuccess() {
+    	List<User> users = new ArrayList<User>();
+    	User user = new User();
+    	UserLog userLog = UserLogTestSupport.createUserLog(user);
+    	
+    	expect(securityMgr.findLastUserLog(users))
+    		.andReturn(userLog);
+        replay(securityMgr);
+    	
+    	assertSame(user, simpleUserResolver.selectUserFromPreviousLogin(users));
+        verify(securityMgr);
+    }
+    
+    public void testSelectUserIfAnyFailure() {
+    	List<User> users = new ArrayList<User>();
+    	
+    	assertNull(simpleUserResolver.selectUserIfAny(users));
+    }
+
+    public void testSelectUserIfAnySuccess() {
+    	List<User> users = UserTestSupport.createUserList(2);
+    	
+    	assertSame(users.get(0), simpleUserResolver.selectUserIfAny(users));
+    }
+    
+    public void testCreateUserNoAuto() {
+    	Identity identity = new Identity();
+    	
+    	expect(securityMgr.isAutoCreateEnabled()).andReturn(false);
+    	replay(securityMgr);
+    	
+    	assertNull(simpleUserResolver.createUser(identity));
+        verify(securityMgr);
+    }
+
+    public void testCreateUserAuto() {
+    	Identity identity = IdentityTestSupport.createIdentity();
+    	User user = new User();
+    	
+    	expect(securityMgr.isAutoCreateEnabled()).andReturn(true);
+    	expect(securityMgr.autoCreateUser(identity))
+    		.andReturn(user);
+    	replay(securityMgr);
+    	
+    	assertSame(user, simpleUserResolver.createUser(identity));
+    }
+
     // collaborators
     private SecurityMgr securityMgr;
     
-    private User prepareSuccessfullLoadOrCreateUser(Identity identity) {
-        UserLog userLog = UserLogTestSupport.createUserLog();
-        userLog.getUser().setIdentity(identity);
-        
-        expect(securityMgr.findLastUserLog(identity))
-            .andReturn(userLog);
-        securityMgr.writeUserLog(isA(User.class), isA(Date.class));
-        replay(securityMgr);
-        return userLog.getUser();
-    }
-
-    public void testLoadOrCreateUser() {
-        Credential credential = CredentialTestSupport.createCredential();
-        Identity identity = credential.getIdentity();
-        User user = prepareSuccessfullLoadOrCreateUser(identity);
-        
-        assertSame(user, simpleUserResolver.loadOrCreateUser(identity));
-        verify(securityMgr);
-    }
-    
-    private User prepareSuccessfullLoadOrCreateUserFirstLogin(Identity identity, int e) {
-        List<Entity> entityList = EntityTestSupport.createEntityList(e);
-        List<User> userList = new ArrayList<User>();
-        for (Entity entity: entityList) {
-            User u = User.userFactory(entity, identity);
-            userList.add(u);
-            identity.getUsers().add(u);
-        }
-        User user = userList.get((int) Math.random()*e);
-        
-        expect(securityMgr.findLastUserLog(identity))
-            .andReturn(null);
-        securityMgr.writeUserLog(isA(User.class), isA(Date.class));
-        replay(securityMgr);
-        return user;
-    }
-
-    public void testLoadOrCreateUserFirstLogin() {
-        Identity identity = IdentityTestSupport.createIdentity();
-        User user = prepareSuccessfullLoadOrCreateUserFirstLogin(identity, 3);
-        
-        assertSame(user.getIdentity(), simpleUserResolver.loadOrCreateUser(identity).getIdentity());
-        verify(securityMgr);
-    }
-
-    public void testLoadOrCreateUserNoUser() {
-        Identity identity = IdentityTestSupport.createIdentity();
-        
-        expect(securityMgr.findLastUserLog(identity))
-            .andReturn(null);
-        expect(securityMgr.isAutoCreateEnabled())
-            .andReturn(false);
-        replay(securityMgr);
-        
-        try {
-        	simpleUserResolver.loadOrCreateUser(identity); fail();
-        } catch (UsernameNotFoundException e) {
-        } catch (Exception e) { fail(); }
-        verify(securityMgr);
-    }
-
     @Override
     public void setUp() {
         securityMgr = createMock(SecurityMgr.class);
