@@ -73,12 +73,11 @@ public class UserLogDaoImpl extends GenericDaoImpl implements UserLogDao {
     
     public UserLog findLastUserLog(List<User> users) {
         if (!users.isEmpty()) {
-            return (UserLog) findUnique(
-            		LASTUSERLOG_USER_QRY
-            		.append(elements(users))
-            		.append("and userLog.lastEvent = ? ")
-            		.toString(), 
-            		findLastUserLogDate(users));
+        	StringBuilder sb = new StringBuilder()
+    			.append(LASTUSERLOG_USER_QRY)
+    			.append(elements(users))
+            	.append("and userLog.lastEvent = ? ");
+            return (UserLog) findUnique(sb.toString(), findLastUserLogDate(users));
         }
         return null;
     }
@@ -89,7 +88,10 @@ public class UserLogDaoImpl extends GenericDaoImpl implements UserLogDao {
     
     public Date findLastUserLogDate(List<User> users) {
         if (!users.isEmpty()) {
-            return (Date) findUnique(LASTUSERLOGDATE_QRY.append(elements(users)).toString());
+        	StringBuilder sb = new StringBuilder()
+        		.append(LASTUSERLOGDATE_QRY)
+        		.append(elements(users));
+            return (Date) findUnique(sb.toString());
         }
         throw new IllegalArgumentException("At least one user should be supplied to find the last user log date.");
     }
@@ -108,7 +110,10 @@ public class UserLogDaoImpl extends GenericDaoImpl implements UserLogDao {
     	for (User user: users) {
     		sb.append(user.getId()).append(",");
     	}
-    	sb.deleteCharAt(sb.length()-1).append(") ");
+    	sb.append("0) ");
+        if (logger.isDebugEnabled()) {
+            logger.debug("User elemets are "+sb.toString());
+        }
     	return sb.toString();
     }
 
