@@ -97,7 +97,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         }
         if (userGroup==null) {
             userGroup = UserGroup.userGroupFactory(entity, groupIdentity);
-            identityDao.persistIdentity(groupIdentity);
+            userGroupDao.persistUserGroup(userGroup);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+userGroup);
             }
@@ -116,7 +116,7 @@ public abstract class AbstractServerMgr implements ServerMgr {
         }
         if (user==null) {
             user = User.userFactory(entity, identity);
-            identityDao.persistIdentity(identity);
+            userGroupDao.persistUserGroup(user);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+user);
             }
