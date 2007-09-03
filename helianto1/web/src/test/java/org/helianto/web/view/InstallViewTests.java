@@ -28,19 +28,19 @@ public class InstallViewTests extends FreeMarkerViewTestSupport {
 
     public void testInfoView() throws Exception {
     	setOutputFileName("info.htm");
-        processView("configuration/info.ftl", model, true);
+        processView("configuration/info.ftl", model, false);
     }
     
     public void testRenameView() throws Exception {
     	setOutputFileName("rename.htm");
-        processView("configuration/rename.ftl", model, true);
+        processView("configuration/rename.ftl", model, false);
     }
 
     public void testRenameViewErrors() throws Exception {
     	setOutputFileName("renameError.htm");
         bindingResult.rejectValue("user.entity.alias", null, "ERROR IN alias");
         model.put(BindingResult.MODEL_KEY_PREFIX+"userForm", bindingResult);
-        processView("configuration/rename.ftl", model, true);
+        processView("configuration/rename.ftl", model, false);
     }
 
     @Override
