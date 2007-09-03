@@ -17,6 +17,7 @@ public class Setup  implements java.io.Serializable {
     // Fields    
 
      private long id;
+     private Operation operation;
      private Resource resource;
      private int priority;
      private long setupTime;
