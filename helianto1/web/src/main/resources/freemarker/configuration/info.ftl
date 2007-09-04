@@ -3,6 +3,8 @@
 <#import "/macros/box.ftl" as bx />
 <#import "/macros/swf.ftl" as fl />
 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
 <@hd.head "Welcome">
 	  <link href="style-blue.css" rel="stylesheet" />
 </@hd.head>

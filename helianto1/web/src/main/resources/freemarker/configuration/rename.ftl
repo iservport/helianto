@@ -3,8 +3,11 @@
 <#import "/macros/box.ftl" as bx />
 <#import "/macros/swf.ftl" as fl />
 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<@hd.head "Rename" />
+<@hd.head "Rename" >
+	  <link href="style-blue.css" rel="stylesheet" />
+</@hd.head>
 <body>
 <div style="height: 120px;"></div>
 <div id="layout">
@@ -40,6 +43,7 @@
 		</form>
 
 		<div id="navigator">
+		<h3>Navigation</h3>
 		<ol>
 			<li><@fl.anchor "back">Identity registration</@fl.anchor></li>
 			<li>Operator and Entity name</li>
