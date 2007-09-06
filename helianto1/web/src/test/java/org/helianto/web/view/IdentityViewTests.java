@@ -33,6 +33,7 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
     }
 
     public void testPrincipalView() throws Exception {
+    	setOutputFileName("principal.htm");
         processView("identity/principal.ftl", model, false);
     }
 

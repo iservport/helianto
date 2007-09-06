@@ -1,26 +1,28 @@
-<div id="summary">
-<table>
-
-	<tr class="smTitle">
-	<td colspan="2">Summary</td>
-	</tr>
-
+<table style="width: 16em;">
 	<@mark 0 >Unique identification</@mark>
 	<@mark 1 >Registration details</@mark>
 	<@mark 2 >Personal data</@mark>
 	<@mark 3 >Password selection</@mark>
 	<@mark 4 >Confirmation</@mark>
-	
 </table>
-</div>
 
 <#macro mark value=0 >
 	<tr>
-	<#if page &gt;=value>
-		<td>+</td>
-	<#else>
-		<td>-</td>
-	</#if>
-		<td><#nested/></td>
+	<td>
+		<#if page &gt;=value>
+			[+]
+		<#else>
+			[-]
+		</#if>
+	</td>
+	<td>
+		<#if page=value+1>
+			<@fl.anchor "previous"><#nested/></@fl.anchor>
+		<#elseif page=value-1>
+			<@fl.anchor "next"><#nested/></@fl.anchor>
+		<#else>
+			<#nested/>
+		</#if>
+	</td>
 	</tr>
 </#macro>
