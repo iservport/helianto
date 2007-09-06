@@ -37,7 +37,21 @@ public enum IdentityType {
     /**
      * Requires a personal email as principal.
      */
-    PERSONAL_EMAIL('P');
+    PERSONAL_EMAIL('P'),
+    // The following new types will replace the previous
+    // old ones in future releases
+    /**
+     * The principal is any user supplied e-mail.
+     */
+    EMAIL('E'),
+    /**
+     * The principal is a plain identity.
+     */
+    PLAIN('I'),
+    /**
+     * The principal is automatically assigned by the system.
+     */
+    SYSTEM_GENERATED('S');
     
     private char value;
     
