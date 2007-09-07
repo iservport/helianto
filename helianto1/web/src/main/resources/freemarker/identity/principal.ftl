@@ -33,22 +33,27 @@
 	<div id="main">
 	
 		<div id="navigator" style="position: relative; float: right;">
-			<h3>Navigation</h3>
+			<h3>Summary</h3>
 			<#include "summary.ftl"/>
 		</div>
 		
-		<div id="detail" style="position: relative; float: right;">
-			<h3>OR choose</h3>
-			<p>a plain ID.</p>
-		</div>
-	
-		<div id="detail">
+		<div id="detail" style="width: 20em;">
 			<h3>Provide your e-mail</h3>
-			<p>By default, your identity will be connected to your e-mail.</p>
+			<div id="detail" style="float: right; margin: 4em -6em 0 1em;">
+				<h3>OR choose</h3>
+				<p>If you do not want to supply your e-mail, try
+				one of the alternatives below:</p>
+				<ul>
+				<li>a plain ID.</li>
+				<li>a system generated ID.</li>
+				</ul>
+			</div>
+			<p><b>By default,</b> your identity will be connected to your e-mail.</p>
 		</div>
 	
-		<p>Notice that your email is required to prevent duplicate 
-		  identity registration.</p>
+		<p>Please, notice that your e-mail is an easy way to prevent duplicate 
+		  identity registration and also to keep you up to date with system 
+		  notifications.</p>
 		  
 		<form action="admin.htm" method="POST">
 		<@bx.table "Identification">
@@ -71,6 +76,12 @@
 		</form>
 		
 	</div>
+
+	<div id="navigator" style="position: relative; float: right;">
+		<h3>Privacy</h3>
+		<p>Check our privacy policy.</p>
+	</div>
+		
 </div>
 </body>
 </html>

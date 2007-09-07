@@ -27,11 +27,6 @@ import freemarker.template.TemplateException;
 
 public class IdentityViewTests extends FreeMarkerViewTestSupport {
 
-    public void testSummary() throws Exception {
-        model.put("page", 1);
-        processView("identity/summary.ftl", model, false);
-    }
-
     public void testPrincipalView() throws Exception {
     	setOutputFileName("principal.htm");
         processView("identity/principal.ftl", model, false);
