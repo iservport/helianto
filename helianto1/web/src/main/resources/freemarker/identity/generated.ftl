@@ -61,7 +61,7 @@
 		<@bx.table "Identification">
 	
 		<tr>
-		<@fl.submit "Next"/>
+		<@fl.submit "next"/>
 		</tr>
 
 		<@fl.flowKey/>

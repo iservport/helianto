@@ -76,7 +76,7 @@
 		</@bx.group>
 
 		<tr>
-		<@fl.submit "Next"/>
+		<@fl.submit "next"/>
 		</tr>
 
 		<@fl.flowKey/>
