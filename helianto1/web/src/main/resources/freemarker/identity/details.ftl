@@ -47,15 +47,6 @@
 		wish to request the messages manually.</p>
 		</@bx.row>
 		
-		<#include "/core/options/notification.ftl" />
-		
-		<@bx.group>
-			<@bx.row>Notification type:</@bx.row>
-			<@bx.row>
-			<@spring.formSingleSelect "identityForm.credential.identity.notification", notificationTypes />
-			</@bx.row>
-		</@bx.group>
-
 		<@bx.row>
 		<p>If you share the email previously supplied as your unique 
 		identity with some other people or organization, you may not 

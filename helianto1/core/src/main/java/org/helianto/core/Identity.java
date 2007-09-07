@@ -192,10 +192,9 @@ public class Identity implements java.io.Serializable {
         identity.setPrincipal(principal);
         identity.setOptionalAlias(optionalAlias);
         identity.setCreated(new Date());
-        identity.setIdentityType(IdentityType.NOT_ADDRESSABLE.getValue());
-        identity.setNotification(Notification.BY_REQUEST.getValue());
+        identity.setIdentityType(IdentityType.EMAIL.getValue());
+        identity.setNotification(Notification.AUTOMATIC.getValue());
         identity.setPersonalData(PersonalData.personalDataFactory("", ""));
-//        identity.setLastLogin(identity.getCreated());
         return identity;
     }
 

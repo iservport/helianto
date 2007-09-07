@@ -35,8 +35,8 @@ public class IdentityTests extends TestCase {
         assertEquals("OPTIONAL_ALIAS", identity.getOptionalAlias());
         assertNotNull(identity.getCreated());
         assertTrue(identity.getCreated() instanceof Date);
-        assertEquals(IdentityType.NOT_ADDRESSABLE.getValue(), identity.getIdentityType());
-        assertEquals(Notification.BY_REQUEST.getValue(), identity.getNotification());
+        assertEquals(IdentityType.EMAIL .getValue(), identity.getIdentityType());
+        assertEquals(Notification.AUTOMATIC.getValue(), identity.getNotification());
         assertEquals(Appellation.NOT_SUPPLIED.getValue(),
                 identity.getPersonalData().getAppellation());
         assertEquals(Gender.NOT_SUPPLIED.getValue(),

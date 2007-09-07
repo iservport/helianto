@@ -27,12 +27,28 @@ import freemarker.template.TemplateException;
 
 public class IdentityViewTests extends FreeMarkerViewTestSupport {
 
+    public void testSummary() throws Exception {
+        model.put("page", 1);
+        processView("identity/summary.ftl", model, false);
+    }
+
     public void testPrincipalView() throws Exception {
     	setOutputFileName("principal.htm");
         processView("identity/principal.ftl", model, false);
     }
 
+    public void testPlainView() throws Exception {
+    	setOutputFileName("plain.htm");
+        processView("identity/plain.ftl", model, false);
+    }
+
+    public void testGeneratedView() throws Exception {
+    	setOutputFileName("generated.htm");
+        processView("identity/generated.ftl", model, false);
+    }
+
     public void testPrincipalViewErrors() throws Exception {
+    	setOutputFileName("principalError.htm");
         bindingResult.rejectValue("credential.identity.principal", null, "ERROR IN principal");
         model.put(BindingResult.MODEL_KEY_PREFIX+"identityForm", bindingResult);
         processView("identity/principal.ftl", model, false);
@@ -76,6 +92,7 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
     }
     
     public void testConfirmView() throws Exception {
+    	setOutputFileName("confirm.htm");
         processView("identity/confirm.ftl", model, false);
     }
     
@@ -84,7 +101,7 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
         super.setUp();
         IdentityForm identityForm = new IdentityForm();
         identityForm.setCredential(CredentialTestSupport.createCredential());
-        identityForm.getCredential().getIdentity().setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
+        identityForm.getCredential().getIdentity().setIdentityType(IdentityType.EMAIL.getValue());
         identityForm.getCredential().getIdentity().getPersonalData().setFirstName("First Name");
         identityForm.getCredential().getIdentity().getPersonalData().setLastName("Last Name");
         model.put("identityForm", identityForm);

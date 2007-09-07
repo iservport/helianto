@@ -16,11 +16,52 @@
     	<action bean="identityAction"/>
 		<transition on="success" to="identity.principal.view"/>
     </action-state>
+    
+    <!--
+     ! Following three views are part of the
+     ! identification phase required by the registration
+     ! process. The client may choose to supply the principal:
+     ! (1) as e-mail,
+     ! (2) as a plain token, or
+     ! (3) let the system generate it.
+    // -->
 
     <view-state id="identity.principal.view" view="identity/principal">
 		<transition on="next" to="writeIdentity">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
+		<transition on="plain" to="identity.plain.view"/>
+		<transition on="generated" to="identity.generated.view"/>
+		<transition on="privacy" to="identity.privacy.view"/>
+    </view-state>
+
+    <view-state id="identity.plain.view" view="identity/plain">
+		<transition on="next" to="writeIdentity">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="principal" to="identity.principal.view"/>
+		<transition on="generated" to="identity.generated.view"/>
+		<transition on="privacy" to="identity.privacy.view"/>
+    </view-state>
+
+    <view-state id="identity.generated.view" view="identity/generated">
+		<transition on="next" to="writeIdentity">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="plain" to="identity.plain.view"/>
+		<transition on="principal" to="identity.principal.view"/>
+		<transition on="privacy" to="identity.privacy.view"/>
+    </view-state>
+
+    <!--
+     ! If there are concerns on privacy, they should be 
+     ! addressed here.
+    // -->
+
+    <view-state id="identity.privacy.view" view="identity/principal">
+		<transition on="principal" to="identity.principal.view"/>
+		<transition on="plain" to="identity.plain.view"/>
+		<transition on="generated" to="identity.generated.view"/>
     </view-state>
 
     <action-state id="writeIdentity">

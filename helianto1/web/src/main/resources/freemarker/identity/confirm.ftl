@@ -2,90 +2,97 @@
 <#import "/macros/layout.ftl" as lo />
 <#import "/macros/box.ftl" as bx />
 <#import "/macros/head.ftl" as hd />
+<#import "/macros/swf.ftl" as fl />
 <#import "/macros/cancelForm.ftl" as cf />
  
 <@spring.bind "identityForm.credential.*" /> 
 
-<html>
-<@hd.head />
-<@lo.layout>
-	<@lo.east>
-	
-		<@bx.table "Confirmation">
-		
-		<@bx.row>
-		<p>Your credential has been successfully registered. Your next
-		action may be a service request, where the supplied principal and 
-		password will be required.</p>
-		</@bx.row>
-		
-		<@bx.row>
-		<#assign page=4/>
-		<#include "summary.ftl"/>
-		</@bx.row>
-	
-		</@bx.table>
+<#include "/core/options/notification.ftl"/>
+<#include "/core/options/identityType.ftl"/>
+<#include "/core/options/gender.ftl"/>
+<#include "/core/options/appellation.ftl"/>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<@hd.head "Registration">
+	  <link href="style-blue.css" rel="stylesheet" />
+</@hd.head>
+<body>
+<div style="height: 120px;"></div>
+
+<div id="layout">
+
+	<div id="sidebar">
+	
+		<h2>Registration process</h2>
+		
+		<p>Your <span class="me">Identity</span>
+		and <span class="me">Credential</span> has been successfully registered.</p>
+
+		<#assign page=0/>
 		<@cf.cancelForm "admin.htm"/>
 		
-	</@lo.east>
-	<@lo.west>
-
+	</div>
 	
-		<form action="admin.htm" method="POST">
-		<@bx.table "${identityForm.credential.identity.principal}">
+	<div id="main">
 	
-		<@bx.row>Optional alias:
+		<div id="navigator" style="position: relative; float: right;">
+			<h3>Summary</h3>
+			<#include "summary.ftl"/>
+		</div>
+		
+		
+		<p>Please confirm your data.</p>
+		
+		<p>Optional alias:
 		<b>${identityForm.credential.identity.optionalAlias}</b>
-		</@bx.row>
+		</p>
 
-		<#include "/core/options/notification.ftl"/>
-
-		<@bx.row>Notification type: 
+		<p>Notification type: 
 		<b>${notificationTypes[identityForm.credential.identity.notification]}</b>
-		</@bx.row>
+		</p>
 
-		<#include "/core/options/identityType.ftl"/>
-
-		<@bx.row>Identity type: 
+		<p>Identity type: 
 		<b>${identityTypes[identityForm.credential.identity.identityType]}</b>
-		</@bx.row>
+		</p>
 
 		<#if identityForm.credential.identity.identityType='P' >
 
-		<@bx.row>First name: 
+		<p>First name: 
 		<b>${identityForm.credential.identity.personalData.firstName}</b>
-		</@bx.row>
+		</p>
 
-		<@bx.row>Last name: 
+		<p>Last name: 
 		<b>${identityForm.credential.identity.personalData.lastName}</b>
-		</@bx.row>
+		</p>
 
-		<#include "/core/options/gender.ftl"/>
-		
-		<@bx.row>Gender: 
+		<p>Gender: 
 		<b>${gender[identityForm.credential.identity.personalData.gender]}</b>
-		</@bx.row>
+		</p>
 		
-		<#include "/core/options/appellation.ftl"/>
-		
-		<@bx.row>Appellation: 
+		<p>Appellation: 
 		<b>${appellation[identityForm.credential.identity.personalData.appellation?string]}</b>
-		</@bx.row>
+		</p>
 
 		</#if>
 
-		<tr class="t_title">
-		<td colspan="3">
-		<input type="submit" name="_eventId_page2" value="<@spring.messageText "button.previous", "Previous"/>" class="btn" /> | 
-		<input type="submit" name="_eventId_confirm" value="<@spring.messageText "button.next", "Next"/>" class="btn" /></td>
+		<form action="admin.htm" method="POST">
+		<@bx.table "${identityForm.credential.identity.principal}">
+
+		<tr>
+		<@fl.submit "page2", "Previous"/>
+		<@fl.submit "confirm", "Confirm"/>
 		</tr>
 
-		<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
-		
 		</@bx.table>
-		</form>
+
+		<@fl.flowKey/>
 		
-	</@lo.west>
-</@lo.layout>
+		</form>
+		</div>
+				
+	</div>
+
+</div>
+</body>
 </html>

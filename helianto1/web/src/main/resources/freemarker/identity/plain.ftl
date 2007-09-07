@@ -38,40 +38,32 @@
 		</div>
 		
 		<div id="detail">
-			<h3>Provide your e-mail</h3>
+			<h3>Provide your ID</h3>
 			<div id="narrow_detail" style="float: right; margin: 4em -6em 0 1em;">
 				<h3>OR choose</h3>
-				<p>If you do not want to supply your e-mail, try
+				<p>You can still try
 				one of the alternatives below:</p>
 				<ul>
-				<li><@fl.anchor "plain">a plain ID</@fl.anchor></li>
+				<li><@fl.anchor "principal">an e-mail ID</@fl.anchor></li>
 				<li><@fl.anchor "generated">a system generated ID</@fl.anchor></li>
 				</ul>
 			</div>
-			<p><b>By default,</b> your identity will be connected to your e-mail.</p>
+			<p>A plain ID keeps your e-mail private but it
+				does not allow you to receive automatic
+				notification from the system.</p>
 		</div>
 	
-		<p>Please, notice that your e-mail is an easy way to prevent duplicate 
-		  identity registration and also to keep you up to date with system 
-		  notifications.</p>
+		<p>A plain ID does not allow for spaces or special characters and 
+		must begin with a letter.</p>
 		  
 		<div id="wide_detail">
 		<form action="admin.htm" method="POST">
 		<@bx.table "Identification">
 	
 		<@bx.group >
-			<@bx.row>E-mail:</@bx.row>
+			<@bx.row>Plain ID:</@bx.row>
 			<@bx.row>
 			<@spring.formInput "identityForm.credential.identity.principal", 'size="32"'/>
-			</@bx.row>
-		</@bx.group>
-
-		<#include "/core/options/notification.ftl" />
-		
-		<@bx.group>
-			<@bx.row>Send system notification:</@bx.row>
-			<@bx.row>
-			<@spring.formSingleSelect "identityForm.credential.identity.notification", notificationTypes />
 			</@bx.row>
 		</@bx.group>
 
