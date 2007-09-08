@@ -26,30 +26,38 @@
      ! (3) let the system generate it.
     // -->
 
+	<!-- 01 -->
     <view-state id="identity.principal.view" view="identity/principal">
-		<transition on="next" to="writeIdentity">
+		<transition on="personalData" to="identity.personal.view">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
+		<transition on="skipPersonalData" to="writeIdentity">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="generated" to="identity.generated.view"/>
 		<transition on="plain" to="identity.plain.view"/>
-		<transition on="generated" to="identity.generated.view"/>
 		<transition on="privacy" to="identity.privacy.view"/>
     </view-state>
 
-    <view-state id="identity.plain.view" view="identity/plain">
-		<transition on="next" to="writeIdentity">
-	    	<action bean="identityAction" method="bind"/>
-		</transition>
-		<transition on="principal" to="identity.principal.view"/>
-		<transition on="generated" to="identity.generated.view"/>
-		<transition on="privacy" to="identity.privacy.view"/>
-    </view-state>
-
+	<!-- 02 -->
     <view-state id="identity.generated.view" view="identity/generated">
-		<transition on="next" to="writeIdentity">
+		<transition on="personalData" to="identity.personal.view">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
 		<transition on="plain" to="identity.plain.view"/>
 		<transition on="principal" to="identity.principal.view"/>
+    </view-state>
+
+	<!-- 03 -->
+    <view-state id="identity.plain.view" view="identity/plain">
+		<transition on="personalData" to="identity.personal.view">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="skipPersonalData" to="writeIdentity">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="principal" to="identity.principal.view"/>
+		<transition on="generated" to="identity.generated.view"/>
 		<transition on="privacy" to="identity.privacy.view"/>
     </view-state>
 
@@ -58,12 +66,28 @@
      ! addressed here.
     // -->
 
+	<!-- 04 -->
     <view-state id="identity.privacy.view" view="identity/principal">
 		<transition on="principal" to="identity.principal.view"/>
 		<transition on="plain" to="identity.plain.view"/>
 		<transition on="generated" to="identity.generated.view"/>
     </view-state>
 
+    <!--
+     ! Personal Data view.
+    // -->
+
+	<!-- 05 -->
+    <view-state id="identity.personal.view" view="identity/personal">
+		<transition on="next" to="ifNotAddressable">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="principal" to="identity.principal.view"/>
+		<transition on="generated" to="identity.generated.view"/>
+		<transition on="plain" to="identity.plain.view"/>
+    </view-state>
+    
+	<!-- 06 -->
     <action-state id="writeIdentity">
     	<action bean="identityAction"/>
 		<transition on="success" to="identity.details.view"/>
@@ -71,31 +95,12 @@
         	to="nonUnique"/>
     </action-state>
     
+    <!-- 07 -->
     <action-state id="nonUnique">
     	<action bean="identityAction"/>
 		<transition on="error" to="identity.principal.view"/>
     </action-state>
 
-    <view-state id="identity.details.view" view="identity/details">
-		<transition on="previous" to="identity.principal.view"/>
-		<transition on="next" to="ifPersonal">
-	    	<action bean="identityAction" method="bind"/>
-		</transition>
-    </view-state>
-    
-    <decision-state id="ifPersonal">
-    	<if test="${flowScope.identityForm.credential.identity.identityType == 'P'}" 
-    	    then="identity.personal.view" 
-    	    else="ifNotAddressable" />
-    </decision-state>
-
-    <view-state id="identity.personal.view" view="identity/personal">
-		<transition on="previous" to="identity.details.view"/>
-		<transition on="next" to="ifNotAddressable">
-	    	<action bean="identityAction" method="bind"/>
-		</transition>
-    </view-state>
-    
     <decision-state id="ifNotAddressable">
     	<if test="${flowScope.identityForm.credential.identity.identityType == 'N'}" 
     	    then="identity.password.view" 

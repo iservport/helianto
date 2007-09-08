@@ -52,16 +52,18 @@
 			personal data you supply on next page.</p>
 		</div>
 	
-		<p>Please, notice that your e-mail is an easy way to prevent duplicate 
-		  identity registration and also to keep you up to date with system 
+		<p>Please, notice that e-mail ID prevents duplicate 
+		  identity registration and can also keep you up to date with system 
 		  notifications.</p>
 		  
 		<div id="wide_detail">
 		<form action="admin.htm" method="POST">
 		<@bx.table "Identification">
 	
+		<@bx.row>To generate your ID, the system will rely on your personal data:</@bx.row>
+		
 		<tr>
-		<@fl.submit "next"/>
+		<@fl.submit "personalData", "Complete your Personal Data"/>
 		</tr>
 
 		<@fl.flowKey/>

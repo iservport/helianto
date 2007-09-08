@@ -67,8 +67,14 @@
 			</@bx.row>
 		</@bx.group>
 
+		<@bx.row>Now, you can:</@bx.row>
+		
 		<tr>
-		<@fl.submit "next"/>
+		<@fl.submit "personalData", "Complete your Personal Data"/>
+		</tr>
+
+		<tr>
+		<@fl.submit "paswordSelection", "Skip Personal Data, go to Password Selection"/>
 		</tr>
 
 		<@fl.flowKey/>

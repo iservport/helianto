@@ -27,11 +27,6 @@ import freemarker.template.TemplateException;
 
 public class IdentityViewTests extends FreeMarkerViewTestSupport {
 
-    public void testSummary() throws Exception {
-        model.put("page", 1);
-        processView("identity/summary.ftl", model, false);
-    }
-
     public void testPrincipalView() throws Exception {
     	setOutputFileName("principal.htm");
         processView("identity/principal.ftl", model, false);
@@ -54,23 +49,14 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
         processView("identity/principal.ftl", model, false);
     }
 
-    public void testDetailsView() throws Exception {
-        processView("identity/details.ftl", model, false);
-    }
-    
-    public void testDetailsViewErrors() throws Exception {
-        bindingResult.rejectValue("credential.identity.optionalAlias", null, "ERROR IN optionalAlias");
-        bindingResult.rejectValue("credential.identity.notification", null, "ERROR IN notification");
-        bindingResult.rejectValue("credential.identity.identityType", null, "ERROR IN identityType");
-        model.put(BindingResult.MODEL_KEY_PREFIX+"identityForm", bindingResult);
-        processView("identity/details.ftl", model, false);
-    }
-    
     public void testPersonalView() throws Exception {
+    	setOutputFileName("personal.htm");
         processView("identity/personal.ftl", model, false);
     }
     
     public void testPersonalViewErrors() throws Exception {
+    	setOutputFileName("personalError.htm");
+        bindingResult.rejectValue("credential.identity.optionalAlias", null, "ERROR IN optionalAlias");
         bindingResult.rejectValue("credential.identity.personalData.lastName", null, "ERROR IN lastName");
         bindingResult.rejectValue("credential.identity.personalData.appellation", null, "ERROR IN appellation");
         model.put(BindingResult.MODEL_KEY_PREFIX+"identityForm", bindingResult);

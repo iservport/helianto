@@ -51,8 +51,8 @@
 			<p><b>By default,</b> your identity will be connected to your e-mail.</p>
 		</div>
 	
-		<p>Please, notice that your e-mail is an easy way to prevent duplicate 
-		  identity registration and also to keep you up to date with system 
+		<p>Please, notice that e-mail ID prevents duplicate 
+		  identity registration and can also keep you up to date with system 
 		  notifications.</p>
 		  
 		<div id="wide_detail">
@@ -69,14 +69,20 @@
 		<#include "/core/options/notification.ftl" />
 		
 		<@bx.group>
-			<@bx.row>Send system notification:</@bx.row>
+			<@bx.row>Choose system notification option:</@bx.row>
 			<@bx.row>
 			<@spring.formSingleSelect "identityForm.credential.identity.notification", notificationTypes />
 			</@bx.row>
 		</@bx.group>
 
+		<@bx.row>Now, you can:</@bx.row>
+		
 		<tr>
-		<@fl.submit "next"/>
+		<@fl.submit "personalData", "Complete your Personal Data"/>
+		</tr>
+
+		<tr>
+		<@fl.submit "paswordSelection", "Skip Personal Data, go to Password Selection"/>
 		</tr>
 
 		<@fl.flowKey/>
