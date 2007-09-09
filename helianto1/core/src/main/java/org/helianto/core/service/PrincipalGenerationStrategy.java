@@ -20,7 +20,7 @@ import org.helianto.core.Identity;
 /**
  * Strategy to generate a principal to the <code>Identity</code>.
  * 
- * @author Maurício Fernandes de Castro
+ * @author MaurÃ­cio Fernandes de Castro
  */
 public interface PrincipalGenerationStrategy {
 	

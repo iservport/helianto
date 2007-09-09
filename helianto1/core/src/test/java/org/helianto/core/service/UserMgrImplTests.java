@@ -49,12 +49,17 @@ public class UserMgrImplTests extends TestCase {
     
     public void testWriteIdentity() {
         Identity managedIdentity = null, identity = new Identity();
+        identity.setPrincipal("principal");
+        
+        principalGenerationStrategy.generatePrincipal(identity, 0);
+        replay(principalGenerationStrategy);
         
         expect(identityDao.mergeIdentity(identity)).andReturn(managedIdentity);
         replay(identityDao);
         
         userMgr.writeIdentity(identity);
         verify(identityDao);
+        verify(principalGenerationStrategy);
     }
     
     public void testSelectIdentities() {
@@ -145,6 +150,7 @@ public class UserMgrImplTests extends TestCase {
     private InternalEnumeratorDao internalEnumeratorDao;
     private CredentialDao credentialDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
+    private PrincipalGenerationStrategy principalGenerationStrategy;
     
     @Override
     public void setUp() {
@@ -155,6 +161,8 @@ public class UserMgrImplTests extends TestCase {
         userMgr.setAuthorizationDao(authorizationDao);
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
+        principalGenerationStrategy = createMock(PrincipalGenerationStrategy.class);
+        userMgr.setPrincipalGenerationStrategy(principalGenerationStrategy);
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
         userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
         credentialDao = createMock(CredentialDao.class);
@@ -169,6 +177,7 @@ public class UserMgrImplTests extends TestCase {
         reset(internalEnumeratorDao);
         reset(credentialDao);
         reset(identitySelectionStrategy);
+        reset(principalGenerationStrategy);
     }
     
 }
