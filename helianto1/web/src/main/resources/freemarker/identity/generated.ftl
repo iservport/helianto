@@ -25,7 +25,6 @@
 		and <span class="me">Credential</span>.</p>
 		<p>The following steps will guide you through the registration process.</p>
 
-		<#assign page=0/>
 		<@cf.cancelForm "admin.htm"/>
 		
 	</div>
@@ -45,7 +44,7 @@
 				one of the alternatives below:</p>
 				<ul>
 				<li><@fl.anchor "principal">an e-mail ID</@fl.anchor></li>
-				<li><@fl.anchor "generated">a plain ID</@fl.anchor></li>
+				<li><@fl.anchor "plain">a plain ID</@fl.anchor></li>
 				</ul>
 			</div>
 			<p>Let the system generate an ID for you. It will use the
@@ -74,11 +73,6 @@
 				
 	</div>
 
-	<div id="navigator" style="position: relative; float: right;">
-		<h3>Privacy</h3>
-		<p>Check our <@fl.anchor "privacy">privacy</@fl.anchor> policy.</p>
-	</div>
-		
 </div>
 </body>
 </html>

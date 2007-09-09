@@ -7,14 +7,15 @@
 <#import "/macros/cancelForm.ftl" as cf />
 <@spring.bind "identityForm.credential.*" /> 
 
+<#include "/core/options/gender.ftl"/>
+<#include "/core/options/appellation.ftl"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <@hd.head "Personal Data">
 	  <link href="style-blue.css" rel="stylesheet" />
 </@hd.head>
 <body>
-<div style="height: 120px;"></div>
-
 <div id="layout">
 
 	<div id="header">
@@ -38,7 +39,6 @@
 		<li><@fl.anchor "generated">system generated ID</@fl.anchor></li>
 		</ul>
 
-		<#assign page=1/>
 		<@cf.cancelForm "admin.htm"/>
 
 	</div>
@@ -63,6 +63,13 @@
 		</@bx.group>
 
 		<@bx.group >
+			<@bx.row>Make system references to your identity as:</@bx.row>
+			<@bx.row>
+			<@spring.formSingleSelect "identityForm.credential.identity.personalData.appellation", appellation />
+			</@bx.row>
+		</@bx.group>
+		
+		<@bx.group >
 			<@bx.row>First name:</@bx.row>
 			<@bx.row>
 			<@spring.formInput "identityForm.credential.identity.personalData.firstName", 'size="32"' />
@@ -76,8 +83,6 @@
 			</@bx.row>
 		</@bx.group>
 		
-		<#include "/core/options/gender.ftl"/>
-		
 		<@bx.group >
 			<@bx.row>Gender:</@bx.row>
 			<@bx.row>
@@ -85,18 +90,8 @@
 			</@bx.row>
 		</@bx.group>
 		
-		<#include "/core/options/appellation.ftl"/>
-		
-		<@bx.group >
-			<@bx.row>Appellation:</@bx.row>
-			<@bx.row>
-			<@spring.formSingleSelect "identityForm.credential.identity.personalData.appellation", appellation />
-			</@bx.row>
-		</@bx.group>
-		
-		
 		<tr>
-		<@fl.submit "next", "Write identity and select password"/>
+		<@fl.submit "writeIdentity", "Write identity and select password"/>
 		</tr>
 
 		<@fl.flowKey/>

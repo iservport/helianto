@@ -12,8 +12,6 @@
 	  <link href="style-blue.css" rel="stylesheet" />
 </@hd.head>
 <body>
-<div style="height: 120px;"></div>
-
 <div id="layout">
 
 	<div id="sidebar">
@@ -25,7 +23,6 @@
 		and <span class="me">Credential</span>.</p>
 		<p>The following steps will guide you through the registration process.</p>
 
-		<#assign page=0/>
 		<@cf.cancelForm "admin.htm"/>
 		
 	</div>
@@ -74,7 +71,7 @@
 		</tr>
 
 		<tr>
-		<@fl.submit "paswordSelection", "Skip Personal Data, go to Password Selection"/>
+		<@fl.submit "skipPersonalData", "Skip Personal Data, go to Password Selection"/>
 		</tr>
 
 		<@fl.flowKey/>

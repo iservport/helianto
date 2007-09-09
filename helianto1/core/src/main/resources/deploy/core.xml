@@ -46,24 +46,6 @@
 			</bean>
 		</property>
 	</bean>
-	<!--
-			User service bean	
-	-->
-	<bean id="userMgr" 
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
-		parent="mgrTemplate">
-		<property name="target">
-			<bean id="userTarget"
-				class="org.helianto.core.service.UserMgrImpl">
-				<property name="identityDao" ref="identityDao"/>
-				<property name="identitySelectionStrategy" ref="defaultIdentitySelectionStrategy"/>
-				<property name="credentialDao" ref="credentialDao"/>
-				<property name="userGroupDao" ref="userGroupDao"/>
-				<property name="authorizationDao" ref="authorizationDao"/>
-				<property name="internalEnumeratorDao" ref="internalEnumeratorDao"/>
-			</bean>
-		</property>
-	</bean>
 	<!-- 
 			Authentication property editor registrar bean	
 	-->

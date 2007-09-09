@@ -1,4 +1,4 @@
-<#assign appellation0>not supplied</#assign>
+<#assign appellation0>using alias</#assign>
 <#assign appellation1>Miss</#assign>
 <#assign appellation2>Mr. ou Mrs.</#assign>
 <#assign appellation3>Ms.</#assign>

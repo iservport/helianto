@@ -67,7 +67,7 @@
     // -->
 
 	<!-- 04 -->
-    <view-state id="identity.privacy.view" view="identity/principal">
+    <view-state id="identity.privacy.view" view="identity/privacy">
 		<transition on="principal" to="identity.principal.view"/>
 		<transition on="plain" to="identity.plain.view"/>
 		<transition on="generated" to="identity.generated.view"/>
@@ -79,7 +79,7 @@
 
 	<!-- 05 -->
     <view-state id="identity.personal.view" view="identity/personal">
-		<transition on="next" to="ifNotAddressable">
+		<transition on="writeIdentity" to="writeIdentity">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
 		<transition on="principal" to="identity.principal.view"/>

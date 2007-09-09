@@ -49,6 +49,11 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
         processView("identity/principal.ftl", model, false);
     }
 
+    public void testPrivacyView() throws Exception {
+    	setOutputFileName("privacy.htm");
+        processView("identity/privacy.ftl", model, false);
+    }
+    
     public void testPersonalView() throws Exception {
     	setOutputFileName("personal.htm");
         processView("identity/personal.ftl", model, false);
@@ -57,8 +62,10 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
     public void testPersonalViewErrors() throws Exception {
     	setOutputFileName("personalError.htm");
         bindingResult.rejectValue("credential.identity.optionalAlias", null, "ERROR IN optionalAlias");
+        bindingResult.rejectValue("credential.identity.personalData.firstName", null, "ERROR IN firstName");
         bindingResult.rejectValue("credential.identity.personalData.lastName", null, "ERROR IN lastName");
         bindingResult.rejectValue("credential.identity.personalData.appellation", null, "ERROR IN appellation");
+        bindingResult.rejectValue("credential.identity.personalData.gender", null, "ERROR IN gender");
         model.put(BindingResult.MODEL_KEY_PREFIX+"identityForm", bindingResult);
         processView("identity/personal.ftl", model, false);
     }
