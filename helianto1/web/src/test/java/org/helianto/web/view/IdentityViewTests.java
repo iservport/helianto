@@ -72,7 +72,7 @@ public class IdentityViewTests extends FreeMarkerViewTestSupport {
     
     public void testCredentialView() throws Exception {
     	setOutputFileName("credential.htm");
-        processView("identity/credential.ftl", model, true);
+        processView("identity/credential.ftl", model, false);
     }
     
     public void testPasswordView() throws Exception {
