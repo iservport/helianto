@@ -6,8 +6,10 @@
 
 <@spring.bind "identityForm.credential.*" /> 
 
-<html>
-<@hd.head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<@hd.head "Password selection">
+	  <link href="style-blue.css" rel="stylesheet" />
 	<script language="javascript">
 function dontsend (choice) {
 sendBtn = document.getElementById("_eventId_send");
@@ -20,28 +22,27 @@ return false;
 };
 	</script>
 </@hd.head>
-<@lo.layout>
-	<@lo.east>
+<body>
+<div id="layout">
+
+	<div id="sidebar">
 	
-		<@bx.table "Password selection">
+		<h2>Password selection"</h2>
 		
-		<@bx.row>
 		<p>The password required to protect your identity may 
 	    be updated either on-line or emailed to you.</p>
-		</@bx.row>
 		
-		<@bx.row>
-		<#assign page=3/>
-		<#include "summary.ftl"/>
-		</@bx.row>
-	
-		</@bx.table>
-
 		<@cf.cancelForm "admin.htm"/>
 		
-	</@lo.east>
-	<@lo.west>
-
+	</div>
+	
+	<div id="main">
+	
+		<div id="navigator" style="position: relative; float: right;">
+			<h3>Summary</h3>
+			<#include "summary.ftl"/>
+		</div>
+		
 		<form action="admin.htm" method="POST">
 		<@bx.table "${identityForm.credential.identity.principal}">
 		
@@ -73,6 +74,8 @@ return false;
 		<#include "passwordForm.ftl">
 		</form>
 
-	</@lo.west>
-</@lo.layout>
+	</div>
+
+</div>
+</body>
 </html>

@@ -72,32 +72,26 @@ public class IdentityFormAction extends FormAction {
     
     /**
      * Write <code>Identity</code> to the datastore.
+     * @throws Exception 
      */
-    public Event writeIdentity(RequestContext context) {
+    public Event writeIdentity(RequestContext context) throws Exception {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
         }
         Identity identity = doGetForm(context).getCredential().getIdentity();
-        userMgr.writeIdentity(identity);
+        try {
+            userMgr.writeIdentity(identity);
+        } catch (Exception e) {
+            Errors errors = getFormErrors(context);
+            errors.rejectValue("credential.identity.principal", 
+                    "principal.error.duplicate", 
+                    "Duplicate principal, please choose another.");
+            return error();
+        }
         if (logger.isDebugEnabled()) {
             logger.debug("Persisted identity "+identity);
         }
         return success();
-    }
-    
-    /**
-     * Update errors object if non unique.
-     * @throws Exception 
-     */
-    public Event nonUnique(RequestContext context) throws Exception {
-        if (logger.isDebugEnabled()) {
-            logger.debug("!---- STARTED");
-        }
-        Errors errors = getFormErrors(context);
-        errors.rejectValue("credential.identity.principal", 
-                "principal.error.duplicate", 
-                "Duplicate principal, please choose another.");
-        return error();
     }
     
     /**

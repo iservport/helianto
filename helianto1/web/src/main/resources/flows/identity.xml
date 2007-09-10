@@ -90,23 +90,11 @@
 	<!-- 06 -->
     <action-state id="writeIdentity">
     	<action bean="identityAction"/>
-		<transition on="success" to="identity.details.view"/>
-        <transition on-exception="org.springframework.dao.DataIntegrityViolationException" 
-        	to="nonUnique"/>
+		<transition on="success" to="identity.credential.view"/>
+		<transition on="error" to="identity.principal.view"/>
     </action-state>
     
     <!-- 07 -->
-    <action-state id="nonUnique">
-    	<action bean="identityAction"/>
-		<transition on="error" to="identity.principal.view"/>
-    </action-state>
-
-    <decision-state id="ifNotAddressable">
-    	<if test="${flowScope.identityForm.credential.identity.identityType == 'N'}" 
-    	    then="identity.password.view" 
-    	    else="identity.credential.view" />
-    </decision-state>
-
     <view-state id="identity.credential.view" view="identity/credential">
 		<transition on="send" to="ifNewPassword"/>
 		<transition on="next" to="identity.confirm.view">
