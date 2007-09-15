@@ -98,6 +98,10 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         userGroupDao.mergeUserGroup(user);
     }
 
+    public void writeUser(UserGroup userGroup) {
+        userGroupDao.mergeUserGroup(userGroup);
+    }
+
     public List<UserGroup> findUserByEntity(Entity entity) {
         return userGroupDao.findUserGroupByEntity(entity);
     }

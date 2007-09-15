@@ -78,6 +78,11 @@ public interface UserMgr extends CoreMgr {
     public void writeUser(User user);
     
     /**
+     * <p>Write <code>UserGroup</code>.</p>
+     */
+    public void writeUser(UserGroup userGroup);
+    
+    /**
      * <p>List <code>UserGroup</code> by <code>Entity</code>.</p>
      */
     public List<UserGroup> findUserByEntity(Entity entity);

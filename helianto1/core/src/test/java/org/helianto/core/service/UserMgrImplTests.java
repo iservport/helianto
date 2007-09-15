@@ -33,11 +33,13 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
+import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.test.UserTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
@@ -145,12 +147,35 @@ public class UserMgrImplTests extends TestCase {
         verify(internalEnumeratorDao);
     }
     
+    public void testWriteUser() {
+    	UserGroup user = new User();
+    	UserGroup managedUserGroup = new UserGroup();
+    	
+    	expect(userGroupDao.mergeUserGroup(user)).andReturn(managedUserGroup);
+    	replay(userGroupDao);
+    	
+    	userMgr.writeUser(user);
+    	verify(userGroupDao);
+    }
+    
+    public void testWriteUserGroup() {
+    	UserGroup userGroup = new UserGroup();
+    	UserGroup managedUserGroup = new UserGroup();
+    	
+    	expect(userGroupDao.mergeUserGroup(userGroup)).andReturn(managedUserGroup);
+    	replay(userGroupDao);
+    	
+    	userMgr.writeUser(userGroup);
+    	verify(userGroupDao);
+    }
+    
     private IdentityDao identityDao;
     private AuthorizationDao authorizationDao;
     private InternalEnumeratorDao internalEnumeratorDao;
     private CredentialDao credentialDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
+    private UserGroupDao userGroupDao;
     
     @Override
     public void setUp() {
@@ -167,7 +192,8 @@ public class UserMgrImplTests extends TestCase {
         userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
         credentialDao = createMock(CredentialDao.class);
         userMgr.setCredentialDao(credentialDao);
-
+        userGroupDao = createMock(UserGroupDao.class);
+        userMgr.setUserGroupDao(userGroupDao);
     }
     
     @Override
@@ -178,6 +204,7 @@ public class UserMgrImplTests extends TestCase {
         reset(credentialDao);
         reset(identitySelectionStrategy);
         reset(principalGenerationStrategy);
+        reset(userGroupDao);
     }
     
 }
