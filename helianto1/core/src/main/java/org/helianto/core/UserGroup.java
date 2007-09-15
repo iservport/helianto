@@ -229,7 +229,9 @@ public class UserGroup implements java.io.Serializable {
     public static UserGroup userGroupFactory(Entity entity, String userKey) {
     	Identity identity = Identity.identityFactory(userKey, userKey);
     	identity.setIdentityType(IdentityType.GROUP.getValue());
-        return internalUserGroupFactory(UserGroup.class, entity, identity);
+    	UserGroup userGroup = internalUserGroupFactory(UserGroup.class, entity, identity);
+    	userGroup.setUserKey(userKey);
+        return userGroup;
     }
 
     /**

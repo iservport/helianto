@@ -18,8 +18,6 @@ package org.helianto.core.service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.IdentityType;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
@@ -31,22 +29,16 @@ import org.helianto.core.UserRole;
  */
 public class DefaultRoleDefinitionStrategy implements RoleDefinitionStrategy {
 
-	// Code under development
-	// I want to make things easier to create groups
-	// and assign roles to users using groups.
 	public UserGroup grant(Entity entity, Service service,
 			String[] extensions) {
-//        Identity groupIdentity = findOrCreateIdentity(serviceName);
-//        groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
-//        UserGroup userGroup = findOrCreateUserGroup(entity, groupIdentity);
-//        for (String extension: extensions) {
-//            UserRole userRole = findOrCreateUserRole(userGroup, service, extension);
-//            if (logger.isDebugEnabled()) {
-//                logger.debug("Role granted: "+userRole);
-//            }
-//        }
-//        return userGroup;
-		return null;
+        UserGroup userGroup = UserGroup.userGroupFactory(entity, service.getServiceName());
+        for (String extension: extensions) {
+            UserRole userRole = UserRole.userRoleFactory(userGroup, service, extension);;
+            if (logger.isDebugEnabled()) {
+                logger.debug("Role granted: "+userRole);
+            }
+        }
+        return userGroup;
 	}
 	
 	public static final Log logger = LogFactory.getLog(DefaultRoleDefinitionStrategy.class);
