@@ -62,6 +62,7 @@ public class UserGroup implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
+    private String userKey;
     private Identity identity;
     private char userState;
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
@@ -95,6 +96,20 @@ public class UserGroup implements java.io.Serializable {
      */
     public void setEntity(Entity entity) {
         this.entity = entity;
+    }
+
+    /**
+     * UserKey getter.
+     */
+    @Column(length=32)
+    public String getUserKey() {
+        return this.userKey;
+    }
+    /**
+     * UserKey setter.
+     */
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
     }
 
     /**
@@ -204,6 +219,17 @@ public class UserGroup implements java.io.Serializable {
      */
     public static UserGroup userGroupFactory(Entity entity) {
         return internalUserGroupFactory(UserGroup.class, entity, null);
+    }
+
+    /**
+     * <code>UserGroup</code> factory.
+     * 
+     * @param entity
+     */
+    public static UserGroup userGroupFactory(Entity entity, String userKey) {
+    	Identity identity = Identity.identityFactory(userKey, userKey);
+    	identity.setIdentityType(IdentityType.GROUP.getValue());
+        return internalUserGroupFactory(UserGroup.class, entity, identity);
     }
 
     /**
