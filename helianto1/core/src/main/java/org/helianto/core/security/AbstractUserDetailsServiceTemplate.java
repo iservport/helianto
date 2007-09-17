@@ -79,6 +79,7 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         }
         else {
             user = createUser(identity);
+            userList.add(user);
             if (logger.isDebugEnabled()) {
                 logger.debug("Step 4 successful: User is created");
             }
@@ -86,7 +87,7 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         if (user==null) {
             throw new UsernameNotFoundException("Not a valid username: "+username);
         }
-        UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(user, credential);
+        UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(userList, user, credential);
         if (logger.isDebugEnabled()) {
             logger.debug("Step 5 successful: User details instance is prepared");
         }
