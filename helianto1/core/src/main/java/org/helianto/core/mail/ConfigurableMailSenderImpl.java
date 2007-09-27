@@ -15,6 +15,10 @@
 
 package org.helianto.core.mail;
 
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Store;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.ActivityState;
@@ -75,6 +79,10 @@ public class ConfigurableMailSenderImpl extends JavaMailSenderImpl implements
     @Override
     public void send(MimeMessagePreparator[] mimeMessagePreparator) throws MailException {
         if (logger.isDebugEnabled()) {
+            logger.debug("Try to connect to store");
+        }
+        tryToConnectToPopBeforeSmtp();
+        if (logger.isDebugEnabled()) {
             logger.debug("Sending ...");
         }
         super.send(mimeMessagePreparator);
@@ -82,6 +90,45 @@ public class ConfigurableMailSenderImpl extends JavaMailSenderImpl implements
             logger.debug("Sent!");
         }
     }
+    
+    /**
+     * A hook to provide sending pre-process. Default implementation
+     * tries to connect to a POP store. This is a required procedure 
+     * whith some MTA to prevent unauthorized mail relay.
+     *
+     */
+    protected void tryToConnectToPopBeforeSmtp() {
+    	Store store = null;
+        try {
+                store = getSession().getStore("pop3");
+        } catch (NoSuchProviderException e) {
+            logger.warn("Unable to create a store within this mail session!", e);
+        }
+        try {
+            if (accessServer==null) {
+                logger.warn("Unable to connect to store before sending a message: access server not available.");
+            }
+            String host = accessServer.getServerHostAddress();
+            String username = accessServer.getCredential().getIdentity()
+                    .getPrincipal();
+            String password = accessServer.getCredential().getPassword();
+            store.connect(host, username, password);
+        } catch (Exception e) {
+            logger.warn("Exception ignored: ", e);
+        }
+    }
+    
+    protected void tryToClosePop() {
+		try {
+			Store store = getSession().getStore("POP3");
+			store.close();
+		} catch (NoSuchProviderException e) {
+			logger.warn("Unable to retrieve a POP3 store within this mail session!", e);
+		} catch (MessagingException e) {
+			logger.warn("Unable to close the POP3 store within this mail session!", e);
+		}
+	}
+    
 
     public void setAccessServer(Server accessServer) {
         this.accessServer = accessServer;
