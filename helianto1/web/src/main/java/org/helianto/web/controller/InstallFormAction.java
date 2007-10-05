@@ -96,6 +96,19 @@ public class InstallFormAction extends FormAction {
         return success();
     }
         
+    /**
+     * Save password.
+     */
+    public Event writePassword(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
+        UserForm form = doGetForm(context);
+        // TODO
+        userMgr.writeCredential(null);
+        return success();
+    }
+        
     //~ utilities
     protected UserForm doGetForm(RequestContext context) {
         AttributeMap flowScope = context.getFlowScope();

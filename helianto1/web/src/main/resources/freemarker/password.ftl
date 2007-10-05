@@ -28,8 +28,18 @@
 		</tr>
 		
 		<tr>
-		<td>Password:</td>
+		<td>Old password:</td>
 		<td><input type="password" name="j_password" size="10"/></td>
+		</tr>
+		
+		<tr>
+		<td>New password:</td>
+		<td><input type="password" name="j_password1" size="10"/></td>
+		</tr>
+		
+		<tr>
+		<td>Confirm new password:</td>
+		<td><input type="password" name="j_password2" size="10"/></td>
 		</tr>
 		
 		<tr>
@@ -37,11 +47,7 @@
 		</tr>
 		
 		<tr>
-		<td colspan="2"><@fl.anchor "configuration">Need a password?</@fl.anchor></td>
-		</tr>
-		
-		<tr>
-		<td colspan="2"><@fl.anchor "changePassword">Or change yours ...</@fl.anchor></td>
+		<td colspan="2"><@fl.anchor "configuration">Need a username?</@fl.anchor></td>
 		</tr>
 		
 		</table>

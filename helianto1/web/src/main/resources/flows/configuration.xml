@@ -10,7 +10,13 @@
 		<action bean="installAction" method="setupForm" />
 	</start-actions>
 
-	<start-state idref="info.view" />
+	<start-state idref="ifNew" />
+
+    <action-state id="ifNew">
+    	<action bean="installAction"/>
+		<transition on="no" to="end"/>
+		<transition on="yes" to="info.view"/>
+    </action-state>
 
     <view-state id="info.view" view="configuration/info">
 		<transition on="next" to="identity.subflow"/>

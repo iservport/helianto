@@ -5,27 +5,26 @@
               http://www.springframework.org/schema/webflow
               http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
 
-	<start-actions>
-		<!-- create the backing form object and initialize a empty errors collection -->
+	<!-- start-actions>
 		<action bean="installAction" method="setupForm" />
-	</start-actions>
+	</start-actions-->
 
-	<start-state idref="ifNew" />
+	<start-state idref="login.view" />
 
-    <action-state id="ifNew">
-    	<action bean="installAction"/>
-		<transition on="no" to="login.view"/>
-		<transition on="yes" to="configuration.subflow"/>
-    </action-state>
+    <view-state id="login.view" view="login">
+		<transition on="configuration" to="configuration.subflow"/>
+		<transition on="changePassword" to="changePassword.subflow"/>
+		<transition on="enter" to="end"/>
+    </view-state>
 
     <subflow-state id="configuration.subflow" flow="configuration">
 		<transition on="end" to="login.view"/>
     </subflow-state>
     
-    <view-state id="login.view" view="login">
-		<transition on="enter" to="end"/>
-    </view-state>
-
+    <subflow-state id="changePassword.subflow" flow="changePassword">
+		<transition on="end" to="login.view"/>
+    </subflow-state>
+    
 	<end-state id="end" />
 	
 </flow>
