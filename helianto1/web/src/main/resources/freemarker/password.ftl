@@ -13,35 +13,43 @@
      # SIDEBAR
      #-->
 	<div id="sidebar">
-		<p>In order to proceed, your identification will be required.</p>
+		<p>Please, change your password.</p>
 	</div>
     <#--
      # MAIN
      #-->
 	<div id="main">
-	<form name="loginForm" method="POST" action="j_acegi_security_check" >
+	<form name="loginForm" method="POST" action="admin.htm" >
 		<table>
 		
-		<tr>
-		<td>Username:</td>
-		<td><input type="text" name="j_username" size="16"/></td>
-		</tr>
-		
-		<tr>
-		<td>Old password:</td>
-		<td><input type="password" name="j_password" size="10"/></td>
-		</tr>
-		
-		<tr>
-		<td>New password:</td>
-		<td><input type="password" name="j_password1" size="10"/></td>
-		</tr>
-		
-		<tr>
-		<td>Confirm new password:</td>
-		<td><input type="password" name="j_password2" size="10"/></td>
-		</tr>
-		
+		<@bx.group >
+			<@bx.row >Username:</@bx.row>
+			<@bx.row>
+			<@spring.formInput "credentialForm.credential.identity", 'size="16" maxlength="64"'/>
+			</@bx.row>
+		</@bx.group>
+
+		<@bx.group >
+			<@bx.row >Current password:</@bx.row>
+			<@bx.row>
+			<@spring.formInput "credentialForm.currentPassword", 'size="16" maxlength="64"'/>
+			</@bx.row>
+		</@bx.group>
+
+		<@bx.group >
+			<@bx.row >New password:</@bx.row>
+			<@bx.row>
+			<@spring.formInput "credentialForm.credential.password", 'size="16" maxlength="64"'/>
+			</@bx.row>
+		</@bx.group>
+
+		<@bx.group >
+			<@bx.row >Confirm new password:</@bx.row>
+			<@bx.row>
+			<@spring.formInput "credentialForm.credential.verifyPassword", 'size="16" maxlength="64"'/>
+			</@bx.row>
+		</@bx.group>
+
 		<tr>
 		<td colspan="2"><input type="submit" alignment="center" value="Enter"></td>
 		</tr>
@@ -53,7 +61,7 @@
 		</table>
 		<input type="hidden" name="_flowExecutionKey
 		       value="${flowExecutionKey}"/>
-		<input type="hidden" name="_eventId" value="enter"/>
+		<input type="hidden" name="_eventId" value="verifyPassword"/>
 	</form>
 	</div>
 </body>

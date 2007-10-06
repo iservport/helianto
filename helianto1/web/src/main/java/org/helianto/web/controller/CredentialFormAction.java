@@ -2,7 +2,6 @@ package org.helianto.web.controller;
 
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.view.CredentialForm;
-import org.helianto.web.view.IdentityForm;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.execution.Event;
@@ -28,11 +27,23 @@ public class CredentialFormAction extends FormAction {
     /**
      * Delegate to <code>UserMgr</code> to write <code>Credential</code>.
      */
+    public Event verifyPassword(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
+        CredentialForm form = (CredentialForm) context.getFlowScope().get("credentialForm");
+        userMgr.writeCredential(form.getCredential());
+        return success();
+    }
+
+    /**
+     * Delegate to <code>UserMgr</code> to write <code>Credential</code>.
+     */
     public Event writeCredential(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
         }
-        IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
+        CredentialForm form = (CredentialForm) context.getFlowScope().get("credentialForm");
         userMgr.writeCredential(form.getCredential());
         return success();
     }

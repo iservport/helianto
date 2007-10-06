@@ -32,6 +32,7 @@ public class CredentialForm implements Serializable {
     public static final char VERIFY_PASSWORD_ONLINE = 'V';
 
     private Credential credential;
+    private String currentPassword = "";
     private char sendOption = SEND_NEW_PASSWORD;
     
     public Credential getCredential() {
@@ -41,6 +42,14 @@ public class CredentialForm implements Serializable {
     public void setCredential(Credential credential) {
         this.credential = credential;
     }
+
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
 
     public char getSendOption() {
         return sendOption;
