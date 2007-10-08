@@ -24,6 +24,21 @@ public class CredentialFormTests extends TestCase {
         assertSame(credential, credentialForm.getCredential());
     }
     
+    public void testCurrentPassword() {
+    	credentialForm.setCurrentPassword("CURRENT");
+        assertSame("CURRENT", credentialForm.getCurrentPassword());
+    }
+    
+    public void testNewPassword() {
+    	credentialForm.setNewPassword("NEW");
+        assertSame("NEW", credentialForm.getNewPassword());
+    }
+    
+    public void testVerifyPassword() {
+    	credentialForm.setVerifyPassword("VERIFY");
+        assertSame("VERIFY", credentialForm.getVerifyPassword());
+    }
+    
     public void testSendOption1() {
     	char sendOption = CredentialForm.SEND_CURRENT_PASSWORD;
     	credentialForm.setSendOption(sendOption);

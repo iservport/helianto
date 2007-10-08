@@ -25,7 +25,7 @@
 		<@bx.group >
 			<@bx.row >Username:</@bx.row>
 			<@bx.row>
-			<@spring.formInput "credentialForm.credential.identity", 'size="16" maxlength="64"'/>
+			<@spring.formInput "credentialForm.credential.identity.principal", 'size="16" maxlength="64"'/>
 			</@bx.row>
 		</@bx.group>
 
@@ -39,14 +39,14 @@
 		<@bx.group >
 			<@bx.row >New password:</@bx.row>
 			<@bx.row>
-			<@spring.formInput "credentialForm.credential.password", 'size="16" maxlength="64"'/>
+			<@spring.formInput "credentialForm.newPassword", 'size="16" maxlength="64"'/>
 			</@bx.row>
 		</@bx.group>
 
 		<@bx.group >
 			<@bx.row >Confirm new password:</@bx.row>
 			<@bx.row>
-			<@spring.formInput "credentialForm.credential.verifyPassword", 'size="16" maxlength="64"'/>
+			<@spring.formInput "credentialForm.verifyPassword", 'size="16" maxlength="64"'/>
 			</@bx.row>
 		</@bx.group>
 
