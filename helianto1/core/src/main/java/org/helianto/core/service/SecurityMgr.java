@@ -36,11 +36,11 @@ public interface SecurityMgr extends UserMgr {
      */
 	public Credential findCredentialByIdentity(Identity identity);
 	
-//    /**
-//     * Find the last <core>UserLog</core> by <core>Identity</core>.
-//     */
-//	public UserLog findLastUserLog(Identity identity);
-//	
+    /**
+     * Find <core>Credential</core> by principal.
+     */
+	public Credential findCredentialByPrincipal(String princpal);
+	
     /**
      * Find the last <core>UserLog</core> by <core>User</core> list.
      */

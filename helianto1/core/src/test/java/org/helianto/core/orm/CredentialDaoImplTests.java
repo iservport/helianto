@@ -48,6 +48,15 @@ public class CredentialDaoImplTests extends AbstractIntegrationTest {
         assertEquals(credential,  credentialDao.findCredentialByNaturalId(credential.getIdentity()));
     }
     
+    /**
+     * Find by principal.
+     */  
+    public void testFindOneCredentialByPrincipal() {
+        Credential credential = writeCredential();
+
+        assertEquals(credential,  credentialDao.findCredentialByPrincipal(credential.getIdentity().getPrincipal()));
+    }
+    
     /*
      * Hook to persist a <code>Credential</code> list.
      */  

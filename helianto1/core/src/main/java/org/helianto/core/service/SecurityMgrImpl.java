@@ -41,10 +41,10 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
 		return credentialDao.findCredentialByNaturalId(identity);
 	}
 
-//	public UserLog findLastUserLog(Identity identity) {
-//		return userLogDao.findLastUserLog(identity);
-//	}
-//    
+	public Credential findCredentialByPrincipal(String princpal) {
+		return credentialDao.findCredentialByPrincipal(princpal);
+	}
+
 	public UserLog findLastUserLog(List<User> users) {
 		return userLogDao.findLastUserLog(users);
 	}

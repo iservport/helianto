@@ -64,6 +64,18 @@ public class UserMgrImplTests extends TestCase {
         verify(principalGenerationStrategy);
     }
     
+    public void testFindIdentityByPrincipal() {
+        String principal = "123";
+        Identity identity = new Identity();
+        
+        expect(identityDao.findIdentityByNaturalId(principal))
+            .andReturn(identity);
+        replay(identityDao);
+        
+        assertSame(identity, userMgr.findIdentityByPrincipal(principal));
+        verify(identityDao);
+    }
+
     public void testSelectIdentities() {
         int size = 10;
         IdentityFilter filter = new IdentityFilter();

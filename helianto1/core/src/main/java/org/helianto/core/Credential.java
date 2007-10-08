@@ -294,6 +294,14 @@ public class Credential implements java.io.Serializable {
     }
 
     /**
+     * Shorthand <code>Credential</code> principal query.
+     */
+    @Transient
+    public static String getCredentialPrincipalQueryString() {
+        return "select credential from Credential credential where credential.identity.principal = ? ";
+    }
+
+    /**
      * toString
      * @return String
      */

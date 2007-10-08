@@ -48,6 +48,11 @@ public interface CredentialDao extends CommonOrmDao {
      */
     public Credential findCredentialByNaturalId(Identity identity);
     
+    /**
+     * Find <code>Credential</code> by principal.
+     */
+    public Credential findCredentialByPrincipal(String principal);
+    
     
     
 }

@@ -46,18 +46,6 @@ public class SecurityMgrImplTests extends TestCase {
     // class under test
     private SecurityMgrImpl securityMgr;
 
-    public void testFindIdentityByPrincipal() {
-        String principal = "123";
-        Identity identity = new Identity();
-        
-        expect(identityDao.findIdentityByNaturalId(principal))
-            .andReturn(identity);
-        replay(identityDao);
-        
-        assertSame(identity, securityMgr.findIdentityByPrincipal(principal));
-        verify(identityDao);
-    }
-
     public void testFindCredentialByIdentity() {
         Identity identity = new Identity();
         Credential credential = new Credential();
@@ -67,6 +55,17 @@ public class SecurityMgrImplTests extends TestCase {
         replay(credentialDao);
         
         assertSame(credential, securityMgr.findCredentialByIdentity(identity));
+        verify(credentialDao);
+    }
+
+    public void testFindCredentialByPrincipal() {
+        Credential credential = new Credential();
+        
+        expect(credentialDao.findCredentialByPrincipal("PRINCIPAL"))
+            .andReturn(credential);
+        replay(credentialDao);
+        
+        assertSame(credential, securityMgr.findCredentialByPrincipal("PRINCIPAL"));
         verify(credentialDao);
     }
 

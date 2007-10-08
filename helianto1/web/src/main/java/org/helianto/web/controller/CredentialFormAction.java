@@ -1,5 +1,7 @@
 package org.helianto.web.controller;
 
+import org.helianto.core.Credential;
+import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.view.CredentialForm;
 import org.springframework.beans.factory.annotation.Required;
@@ -15,6 +17,7 @@ import org.springframework.webflow.execution.RequestContext;
 public class CredentialFormAction extends FormAction {
 
     private UserMgr userMgr;
+    private SecurityMgr securityMgr;
 
     /**
      * Standard form constructor
@@ -25,14 +28,21 @@ public class CredentialFormAction extends FormAction {
     }
 
     /**
+     * Convenience to retrieve <code>CredentialForm</code>.
+     */
+    public CredentialForm doGetTaskForm(RequestContext context) {
+        return (CredentialForm) context.getFlowScope().get(getFormObjectName());
+    }
+    
+    /**
      * Delegate to <code>UserMgr</code> to write <code>Credential</code>.
      */
     public Event verifyPassword(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
         }
-        CredentialForm form = (CredentialForm) context.getFlowScope().get("credentialForm");
-        userMgr.writeCredential(form.getCredential());
+        CredentialForm form = doGetTaskForm(context);
+        Credential credential = securityMgr.findCredentialByPrincipal(form.getCredential().getIdentity().getPrincipal());
         return success();
     }
 
@@ -43,7 +53,7 @@ public class CredentialFormAction extends FormAction {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
         }
-        CredentialForm form = (CredentialForm) context.getFlowScope().get("credentialForm");
+        CredentialForm form = doGetTaskForm(context);
         userMgr.writeCredential(form.getCredential());
         return success();
     }
@@ -51,6 +61,11 @@ public class CredentialFormAction extends FormAction {
 	@Required
     public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;
+	}
+
+	@Required
+	public void setSecurityMgr(SecurityMgr securityMgr) {
+		this.securityMgr = securityMgr;
 	}
     
 }

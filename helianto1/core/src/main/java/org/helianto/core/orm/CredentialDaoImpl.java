@@ -57,8 +57,11 @@ public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
         return (Credential) findUnique(Credential.getCredentialNaturalIdQueryString(), identity);
     }
     
-    
-	static String CREDENTIAL_ENTITY_QRY = "select credential from Credential credential "+
-	    "where credential.entity = ? ";
+    public Credential findCredentialByPrincipal(String principal) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding unique credential with principal='"+principal+"' ");
+        }
+        return (Credential) findUnique(Credential.getCredentialPrincipalQueryString(), principal);
+    }
     
 }
