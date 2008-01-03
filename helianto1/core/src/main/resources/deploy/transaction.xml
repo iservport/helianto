@@ -34,6 +34,7 @@
 			<props>
 				<prop key="prepare*">PROPAGATION_REQUIRED</prop>
 				<prop key="write*">PROPAGATION_REQUIRED</prop>
+				<prop key="store*">PROPAGATION_REQUIRED</prop>
 				<prop key="read*">PROPAGATION_REQUIRED</prop>
 				<prop key="persist*">PROPAGATION_REQUIRED</prop>
 				<prop key="find*">PROPAGATION_REQUIRED</prop>
