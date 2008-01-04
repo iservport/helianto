@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-core</artifactId>
-	<version>0.0.1-20070823</version>
+	<version>0.0.1-20080103</version>
 	<name>Core</name>
 
 	<description>Helianto project core module.</description>

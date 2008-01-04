@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-process</artifactId>
-	<version>0.0.1-20070823</version>
+	<version>0.0.1-20080103</version>
 	<name>Process</name>
 	
 	<description>Helianto project process module.</description>
