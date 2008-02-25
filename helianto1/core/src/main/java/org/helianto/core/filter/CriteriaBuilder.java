@@ -181,6 +181,18 @@ public class CriteriaBuilder {
      * 
      * @param content
      */
+    public CriteriaBuilder appendString(String content) {
+        criteria.append("'")
+        .append(content)
+        .append("' ");
+        return this;
+    }
+
+    /**
+     * String appender.
+     * 
+     * @param content
+     */
     public CriteriaBuilder appendLike(String content) {
         criteria.append("'%").append(content).append("%' ");
         return this;
