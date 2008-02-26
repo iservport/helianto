@@ -52,9 +52,13 @@ public interface DocumentDao extends CommonOrmDao {
     
     /**
      * Find <code>Document</code> by criteria.
+     * @Deprecated use findDocuments
      */
     public List<Document> findDocumentByCriteria(String criteria);
     
-    
+    /**
+     * Find <code>Document</code> by criteria.
+     */
+    public List<Document> findDocuments(String criteria);    
     
 }
