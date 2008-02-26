@@ -57,7 +57,7 @@ public class DocumentDaoImpl extends GenericDaoImpl implements DocumentDao {
         return (Document) findUnique(Document.getDocumentNaturalIdQueryString(), entity, docCode);
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Document> findDocumentByCriteria(String criteria) {
         if (criteria.equals("")) {
             throw new IllegalArgumentException("Criteria must not be empty!");
@@ -74,9 +74,9 @@ public class DocumentDaoImpl extends GenericDaoImpl implements DocumentDao {
             logger.debug("Finding document list with criteria ='"+criteria+"'");
         }
         if (criteria.equals("")) {
-            return (ArrayList<Document>) find(Document.getDocumentAllQueryString());
+            return (ArrayList<Document>) find(Document.getDocumentQueryStringBuilder());
         }
-        return (ArrayList<Document>) find(new StringBuilder(Document.getDocumentAllQueryString()).append("where ").append(criteria));
+        return (ArrayList<Document>) find(new StringBuilder(Document.getDocumentQueryStringBuilder()).append("where ").append(criteria));
     }
     
 }
