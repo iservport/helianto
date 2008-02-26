@@ -217,15 +217,24 @@ public class Document implements java.io.Serializable {
     }
 
     /**
+     * <code>Document</code> query <code>StringBuilder</code>.
+     */
+    @Transient
+    public static StringBuilder getDocumentQueryStringBuilder() {
+        return new StringBuilder("select document from Document document ");
+    }
+
+    /**
      * <code>Document</code> natural id query.
      */
     @Transient
     public static String getDocumentNaturalIdQueryString() {
-        return "select document from Document document where document.entity = ? and document.docCode = ? ";
+        return getDocumentQueryStringBuilder().append("where document.entity = ? and document.docCode = ? ").toString();
     }
 
     /**
      * <code>Document</code> all records query.
+     * @deprecated use getDocumentQueryStringBuilder()
      */
     @Transient
     public static String getDocumentAllQueryString() {
