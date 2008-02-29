@@ -19,6 +19,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.ActivityState;
@@ -26,11 +28,12 @@ import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
+import org.helianto.core.dao.UserSelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
-import org.springframework.beans.factory.annotation.Required;
 
 /**
  * Default <code>UserMgr</code> implementation.
@@ -42,10 +45,10 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     protected CredentialDao credentialDao;
     
     private IdentitySelectionStrategy identitySelectionStrategy;
+    private UserSelectionStrategy userSelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
 	
 	// identity
-
 	public void writeIdentity(Identity identity) {
 		int attemptCount = 0;
 		principalGenerationStrategy.generatePrincipal(identity, attemptCount);
@@ -102,6 +105,19 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         userGroupDao.mergeUserGroup(userGroup);
     }
 
+	public List<User> findUsers(UserFilter userFilter) {
+		String criteria = userSelectionStrategy.createCriteriaAsString(userFilter, "user");
+		List<User> userList = userGroupDao.findUserByCriteria(criteria);
+    	if (logger.isDebugEnabled() && userList!=null) {
+    		logger.debug("Found user list of size "+userList.size());
+    	}
+        return userList;
+	}
+
+	public User storeUser(User user) {
+        return (User) userGroupDao.mergeUserGroup(user);
+	}
+
     public List<UserGroup> findUserByEntity(Entity entity) {
         return userGroupDao.findUserGroupByEntity(entity);
     }
@@ -136,18 +152,24 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     
     //- collaborators
     
-    @Required
+    @Resource
     public void setCredentialDao(CredentialDao credentialDao) {
         this.credentialDao = credentialDao;
     }
 
-    @Required
+    @Resource
     public void setIdentitySelectionStrategy(
             IdentitySelectionStrategy identitySelectionStrategy) {
         this.identitySelectionStrategy = identitySelectionStrategy;
     }
 
-    @Required
+    @Resource
+    public void setUserSelectionStrategy(
+    		UserSelectionStrategy userSelectionStrategy) {
+        this.userSelectionStrategy = userSelectionStrategy;
+    }
+
+    @Resource
 	public void setPrincipalGenerationStrategy(
 			PrincipalGenerationStrategy principalGenerationStrategy) {
 		this.principalGenerationStrategy = principalGenerationStrategy;

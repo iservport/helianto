@@ -15,15 +15,16 @@
 
 package org.helianto.core.service;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
-import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
+import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.dao.UserGroupDao;
-import org.springframework.beans.factory.annotation.Required;
 
 /**
  * Core base class.
@@ -69,22 +70,22 @@ public class AbstractCoreMgr {
     
     //~ collaborators
 
-    @Required
+    @Resource
     public void setIdentityDao(IdentityDao identityDao) {
         this.identityDao = identityDao;
     }
 
-    @Required
+    @Resource
     public void setAuthorizationDao(AuthorizationDao authorizationDao) {
         this.authorizationDao = authorizationDao;
     }
 
-    @Required
+    @Resource
     public void setUserGroupDao(UserGroupDao userGroupDao) {
         this.userGroupDao = userGroupDao;
     }
 
-    @Required
+    @Resource
     public void setInternalEnumeratorDao(InternalEnumeratorDao internalEnumeratorDao) {
         this.internalEnumeratorDao = internalEnumeratorDao;
     }

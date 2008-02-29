@@ -33,6 +33,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
+import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.AuthorizationDao;
@@ -40,6 +41,7 @@ import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.dao.UserGroupDao;
+import org.helianto.core.dao.UserSelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.test.UserTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
@@ -159,14 +161,30 @@ public class UserMgrImplTests extends TestCase {
         verify(internalEnumeratorDao);
     }
     
-    public void testWriteUser() {
-    	UserGroup user = new User();
-    	UserGroup managedUserGroup = new UserGroup();
+    public void testStoreUser() {
+    	User user = new User();
+    	User managedUser = new User();
     	
-    	expect(userGroupDao.mergeUserGroup(user)).andReturn(managedUserGroup);
+    	expect(userGroupDao.mergeUserGroup(user)).andReturn(managedUser);
     	replay(userGroupDao);
     	
-    	userMgr.writeUser(user);
+    	assertSame(managedUser, userMgr.storeUser(user));
+    	verify(userGroupDao);
+    }
+    
+    public void testFindUsers() {
+    	UserFilter userFilter = new UserFilter();
+    	List<User> userList = new ArrayList<User>();
+    	String criteria = "TEST";
+    	
+    	expect(userSelectionStrategy.createCriteriaAsString(userFilter, "user")).andReturn(criteria);
+    	replay(userSelectionStrategy);
+
+    	expect(userGroupDao.findUserByCriteria(criteria)).andReturn(userList);
+    	replay(userGroupDao);
+    	
+    	assertSame(userList, userMgr.findUsers(userFilter));
+    	verify(userSelectionStrategy);
     	verify(userGroupDao);
     }
     
@@ -186,6 +204,7 @@ public class UserMgrImplTests extends TestCase {
     private InternalEnumeratorDao internalEnumeratorDao;
     private CredentialDao credentialDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
+    private UserSelectionStrategy userSelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private UserGroupDao userGroupDao;
     
@@ -198,6 +217,8 @@ public class UserMgrImplTests extends TestCase {
         userMgr.setAuthorizationDao(authorizationDao);
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
+        userSelectionStrategy = createMock(UserSelectionStrategy.class);
+        userMgr.setUserSelectionStrategy(userSelectionStrategy);
         principalGenerationStrategy = createMock(PrincipalGenerationStrategy.class);
         userMgr.setPrincipalGenerationStrategy(principalGenerationStrategy);
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
@@ -215,6 +236,7 @@ public class UserMgrImplTests extends TestCase {
         reset(internalEnumeratorDao);
         reset(credentialDao);
         reset(identitySelectionStrategy);
+        reset(userSelectionStrategy);
         reset(principalGenerationStrategy);
         reset(userGroupDao);
     }

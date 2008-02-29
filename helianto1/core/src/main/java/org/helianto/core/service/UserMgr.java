@@ -22,6 +22,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.IdentityFilter;
 
@@ -73,7 +74,13 @@ public interface UserMgr extends CoreMgr {
     public void persistUser(User user);
     
     /**
+     * <p>Store <code>User</code> and return a managed instance.</p>
+     */
+    public User storeUser(User user);
+    
+    /**
      * <p>Write <code>User</code>.</p>
+     * @deprecated use storeUser
      */
     public void writeUser(User user);
     
@@ -91,6 +98,11 @@ public interface UserMgr extends CoreMgr {
      * <p>List <code>UserGroup</code> by string criteria.</p>
      */
     public List<User> findUsers(String criteria);
+    
+    /**
+     * <p>List <code>UserGroup</code> by string criteria.</p>
+     */
+    public List<User> findUsers(UserFilter userFilter);
     
     
     /**
