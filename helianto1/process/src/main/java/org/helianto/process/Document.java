@@ -78,9 +78,6 @@ public class Document implements java.io.Serializable {
     public Entity getEntity() {
         return this.entity;
     }
-    /**
-     * Entity setter.
-     */
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
