@@ -141,11 +141,11 @@ public class UserGroup implements java.io.Serializable {
     public char getUserState() {
         return this.userState;
     }
-    /**
-     * UserState setter.
-     */
     public void setUserState(char userState) {
         this.userState = userState;
+    }
+    public void setUserState(UserState userState) {
+        this.userState = userState.getValue();
     }
 
     /**

@@ -50,11 +50,11 @@ public class User extends UserGroup implements java.io.Serializable {
     public char getUserType() {
         return this.userType;
     }
-    /**
-     * UserType setter.
-     */
     public void setUserType(char userType) {
         this.userType = userType;
+    }
+    public void setUserType(UserType userType) {
+        this.userType = userType.getValue();
     }
 
     /**
@@ -63,9 +63,6 @@ public class User extends UserGroup implements java.io.Serializable {
     public char getPrivacyLevel() {
         return this.privacyLevel;
     }
-    /**
-     * PrivacyLevel setter.
-     */
     public void setPrivacyLevel(char privacyLevel) {
         this.privacyLevel = privacyLevel;
     }
@@ -76,9 +73,6 @@ public class User extends UserGroup implements java.io.Serializable {
     public boolean isAccountNonExpired() {
         return this.accountNonExpired;
     }
-    /**
-     * AccountNonExpired setter.
-     */
     public void setAccountNonExpired(boolean accountNonExpired) {
         this.accountNonExpired = accountNonExpired;
     }
