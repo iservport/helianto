@@ -18,6 +18,8 @@ package org.helianto.core.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
@@ -25,11 +27,10 @@ import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 
 /**
- * Default implementatio for <code>SecurityMgr</code> interface.
+ * Default implementation for <code>SecurityMgr</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -81,7 +82,7 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
         return UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
     }
 
-    @Required
+    @Resource
     public void setUserLogDao(UserLogDao userLogDao) {
         this.userLogDao = userLogDao;
     }

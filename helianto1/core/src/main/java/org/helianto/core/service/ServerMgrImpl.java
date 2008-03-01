@@ -80,7 +80,7 @@ public class ServerMgrImpl extends AbstractServerMgr {
         this.configurableMailSenderFactory = configurableMailSenderFactory;
     }
 
-    @Resource
+    @Resource(name="basicMailMessageComposer")
     public void setMailMessageComposer(MailMessageComposer mailMessageComposer) {
         this.mailMessageComposer = mailMessageComposer;
     }
