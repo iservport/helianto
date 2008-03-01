@@ -17,6 +17,8 @@ package org.helianto.partner.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Operator;
@@ -28,10 +30,10 @@ import org.helianto.partner.dao.AddressDao;
 import org.helianto.partner.dao.AgentDao;
 import org.helianto.partner.dao.ContactDao;
 import org.helianto.partner.dao.CustomerDao;
-import org.helianto.partner.dao.PartnerRegistryDao;
 import org.helianto.partner.dao.PartnerAssociationFilterDao;
 import org.helianto.partner.dao.PartnerDao;
 import org.helianto.partner.dao.PartnerKeyDao;
+import org.helianto.partner.dao.PartnerRegistryDao;
 import org.helianto.partner.dao.PhoneDao;
 import org.helianto.partner.dao.SupplierDao;
 
@@ -76,84 +78,54 @@ public class PartnerMgrImpl implements PartnerMgr {
 
     //- collaborators
     
+    @Resource
     public void setProvinceDao(ProvinceDao provinceDao) {
         this.provinceDao = provinceDao;
     }
+    @Resource
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
     }
+    @Resource
     public void setAddressDao(AddressDao addressDao) {
         this.addressDao = addressDao;
     }
+    @Resource
     public void setAgentDao(AgentDao agentDao) {
         this.agentDao = agentDao;
     }
+    @Resource
     public void setContactDao(ContactDao contactDao) {
         this.contactDao = contactDao;
     }
+    @Resource
     public void setCustomerDao(CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
+    @Resource
     public void setPartnerRegistryDao(PartnerRegistryDao partnerRegistryDao) {
         this.partnerRegistryDao = partnerRegistryDao;
     }
+    @Resource
     public void setPartnerAssociationFilterDao(
             PartnerAssociationFilterDao partnerAssociationFilterDao) {
         this.partnerAssociationFilterDao = partnerAssociationFilterDao;
     }
+    @Resource
     public void setPartnerDao(PartnerDao partnerDao) {
         this.partnerDao = partnerDao;
     }
+    @Resource
     public void setPartnerKeyDao(PartnerKeyDao partnerKeyDao) {
         this.partnerKeyDao = partnerKeyDao;
     }
+    @Resource
     public void setPhoneDao(PhoneDao phoneDao) {
         this.phoneDao = phoneDao;
     }
+    @Resource
     public void setSupplierDao(SupplierDao supplierDao) {
         this.supplierDao = supplierDao;
-    }
-    
-    //- init
-    
-    public void init() {
-        logger.info("Starting");
-        if (provinceDao==null) {
-            throw new IllegalArgumentException("ProvinceDao property required");
-        }
-        if (addressDao==null) {
-            throw new IllegalArgumentException("AddressDao property required");
-        }
-        if (contactDao==null) {
-            throw new IllegalArgumentException("ContactDao property required");
-        }
-        if (partnerRegistryDao==null) {
-            throw new IllegalArgumentException("PartnerRegistryDao property required");
-        }
-        if (partnerAssociationFilterDao==null) {
-            throw new IllegalArgumentException("PartnerAssociationFilterDao property required");
-        }
-        if (partnerDao==null) {
-            throw new IllegalArgumentException("PartnerDao property required");
-        }
-        if (partnerKeyDao==null) {
-            throw new IllegalArgumentException("PartnerKeyDao property required");
-        }
-        if (phoneDao==null) {
-            throw new IllegalArgumentException("PhoneDao property required");
-        }
-        if (accountDao==null) {
-            throw new IllegalArgumentException("AccountDao property required");
-        }
-        if (agentDao==null) {
-            throw new IllegalArgumentException("AgentDao property required");
-        }
-        if (customerDao==null) {
-            throw new IllegalArgumentException("CustomerDao property required");
-        }
-        if (supplierDao==null) {
-            throw new IllegalArgumentException("SupplierDao property required");
-        }
     }
     
     private Log logger = LogFactory.getLog(PartnerMgrImpl.class);

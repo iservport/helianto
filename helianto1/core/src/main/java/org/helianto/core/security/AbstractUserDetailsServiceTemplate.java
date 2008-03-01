@@ -89,11 +89,11 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         }
         UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(userList, user, credential);
         if (logger.isDebugEnabled()) {
-            logger.debug("Step 5 successful: User details instance is prepared");
+            logger.debug("Step 5 successful: User details instance is prepared: USER IS SUCCESSFULLY LOADED");
         }
         logUser(user);
         if (logger.isDebugEnabled()) {
-            logger.debug("Step 6 successful: User log created");
+            logger.debug("Step 6 successful: User log created: USER LOAD PROCESS FINISHED");
         }
         return userDetailsAdapter;
     }

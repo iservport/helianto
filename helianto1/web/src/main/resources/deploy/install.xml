@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd">
+               
+    <context:annotation-config/>
+    
 <!--
 	Copyright 2005 I Serv Consultoria Empresarial Ltda.
 	
@@ -15,7 +27,7 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 -->
-<beans default-init-method="init">
+
 	<!--
 		identity action
 	-->
@@ -23,10 +35,6 @@
 		class="org.helianto.web.controller.InstallFormAction">
 		<property name="propertyEditorRegistrar" 
 			ref="authenticationPropertyEditorRegistrar"/>
-		<property name="serverMgr" 
-			ref="serverMgr"/>
-		<property name="userMgr" 
-			ref="userMgr"/>
 	</bean>
 	<!--
 		identity action
@@ -35,10 +43,6 @@
 		class="org.helianto.web.controller.IdentityFormAction">
 		<property name="propertyEditorRegistrar" 
 			ref="authenticationPropertyEditorRegistrar"/>
-		<property name="serverMgr" 
-			ref="serverMgr"/>
-		<property name="userMgr" 
-			ref="userMgr"/>
 	</bean>
 	<!--
 		credential action
@@ -47,14 +51,11 @@
 		class="org.helianto.web.controller.CredentialFormAction">
 		<property name="propertyEditorRegistrar" 
 			ref="authenticationPropertyEditorRegistrar"/>
-		<property name="userMgr" ref="userMgr"/>
-		<property name="securityMgr" ref="securityMgr"/>
 	</bean>
 	<!--
 		User selection action	
 	-->
 	<bean id="userSelectionAction"
 		class="org.helianto.web.controller.UserSelectionAction">
-		<property name="securityMgr" ref="securityMgr"/>
 	</bean>
 </beans>

@@ -18,6 +18,7 @@ package org.helianto.core.service;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.Resource;
 import javax.mail.MessagingException;
 
 import org.helianto.core.OperationMode;
@@ -27,7 +28,6 @@ import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.MailMessageComposer;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.mail.javamail.JavaMailSender;
 
 /**
@@ -74,13 +74,13 @@ public class ServerMgrImpl extends AbstractServerMgr {
 
     // mutators
 
-    @Required
+    @Resource
     public void setConfigurableMailSenderFactory(
             ConfigurableMailSenderFactory configurableMailSenderFactory) {
         this.configurableMailSenderFactory = configurableMailSenderFactory;
     }
 
-    @Required
+    @Resource
     public void setMailMessageComposer(MailMessageComposer mailMessageComposer) {
         this.mailMessageComposer = mailMessageComposer;
     }

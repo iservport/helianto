@@ -21,7 +21,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.partner.service.PartnerMgrImpl;
-import org.helianto.process.DocumentType;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
@@ -37,6 +36,8 @@ import org.helianto.process.dao.ProcessDao;
  * @author Mauricio Fernandes de Castro
  */
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
+
+    private ProcessDao processDao;
 
     public Part createPart(Entity entity, boolean hasDrawing) {
         // TODO Auto-generated method stub
@@ -103,19 +104,18 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return processDao.findExternalDocumentByParent(parent);
     }
 
-//    public 
-    
-    public static final Log logger = LogFactory.getLog(ProcessMgrImpl.class);
-
-    private ProcessDao processDao;
-
-    public void setProcessDao(ProcessDao processDao) {
-        this.processDao = processDao;
-    }
-
     public void persistMaterial(MaterialType material) {
         // TODO Auto-generated method stub
         
     }
+
+    // collaborators
+
+    @javax.annotation.Resource
+    public void setProcessDao(ProcessDao processDao) {
+        this.processDao = processDao;
+    }
+
+    public static final Log logger = LogFactory.getLog(ProcessMgrImpl.class);
 
 }

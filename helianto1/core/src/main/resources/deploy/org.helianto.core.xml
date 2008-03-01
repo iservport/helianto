@@ -91,19 +91,19 @@
 	<!--
 			identity selection strategy	
 	-->
-	<bean id="defaultIdentitySelectionStrategy" 
+	<bean id="identitySelectionStrategy" 
 		class="org.helianto.core.hibernate.DefaultIdentitySelectionStrategy"/>
 	
 	<!--
 			user selection strategy	
 	-->
-	<bean id="defaultUserSelectionStrategy" 
+	<bean id="userSelectionStrategy" 
 		class="org.helianto.core.orm.DefaultUserSelectionStrategy"/>
 	
 	<!--
 			principal generation strategy	
 	-->
-	<bean id="defaultPrincipalGenerationStrategy" 
+	<bean id="principalGenerationStrategy" 
 		class="org.helianto.core.service.DefaultPrincipalGenerationStrategy"/>
 	
 	<!--
@@ -115,6 +115,18 @@
 		<property name="target">
 			<bean id="userTarget"
 				class="org.helianto.core.service.UserMgrImpl">
+			</bean>
+		</property>
+	</bean>
+	<!--
+			Server service bean	
+	-->
+	<bean id="serverMgr" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="serverTarget"
+				class="org.helianto.core.service.ServerMgrImpl">
 			</bean>
 		</property>
 	</bean>

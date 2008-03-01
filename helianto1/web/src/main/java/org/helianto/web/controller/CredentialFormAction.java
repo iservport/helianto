@@ -4,7 +4,6 @@ import org.helianto.core.Credential;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.view.CredentialForm;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
@@ -43,6 +42,7 @@ public class CredentialFormAction extends FormAction {
         }
         CredentialForm form = doGetTaskForm(context);
         Credential credential = securityMgr.findCredentialByPrincipal(form.getCredential().getIdentity().getPrincipal());
+        
         return success();
     }
 
@@ -58,12 +58,12 @@ public class CredentialFormAction extends FormAction {
         return success();
     }
 
-	@Required
+    @javax.annotation.Resource
     public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;
 	}
 
-	@Required
+    @javax.annotation.Resource
 	public void setSecurityMgr(SecurityMgr securityMgr) {
 		this.securityMgr = securityMgr;
 	}

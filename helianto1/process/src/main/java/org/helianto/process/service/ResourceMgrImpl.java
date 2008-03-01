@@ -22,7 +22,6 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 import org.helianto.partner.Partner;
-import org.helianto.partner.dao.PartnerDao;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceParameter;
@@ -30,12 +29,16 @@ import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.ResourceType;
 import org.helianto.process.creation.ResourceCreatorImpl;
 import org.helianto.process.dao.ResourceDao;
-import org.springframework.beans.factory.annotation.Required;
 
+/**
+ * Default implementation for <code>ResourceMgr</code> interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public class ResourceMgrImpl implements ResourceMgr {
 	
-	static final Log logger = LogFactory.getLog(ResourceMgrImpl.class);
-    
+    private ResourceDao resourceDao;
+
 	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
         return ResourceCreatorImpl.resourceGroupFactory(entity, rootEquipentCode, ResourceType.EQUIPMENT);
     }
@@ -49,7 +52,7 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
     
     public void persistResourceGroup(ResourceGroup resourceGroup) {
-        getResourceDao().persistResourceGroup(resourceGroup);
+        resourceDao.persistResourceGroup(resourceGroup);
     }
     
     //
@@ -140,27 +143,13 @@ public class ResourceMgrImpl implements ResourceMgr {
         return resourceDao.findResourceParameterByEntityAndCode(entity, resourceParameterCode);
     }
     
-    // accesssors and mutators
+    // collaborators
 
-    private PartnerDao partnerDao;
-    private ResourceDao resourceDao;
-
-	public PartnerDao getPartnerDao() {
-		return partnerDao;
-	}
-
-    public ResourceDao getResourceDao() {
-        return resourceDao;
-    }
-
-	@Required
-    public void setPartnerDao(PartnerDao partnerDao) {
-		this.partnerDao = partnerDao;
-	}
-
-    @Required
+    @javax.annotation.Resource
     public void setResourceDao(ResourceDao resourceDao) {
         this.resourceDao = resourceDao;
     }
 
+	static final Log logger = LogFactory.getLog(ResourceMgrImpl.class);
+    
 }

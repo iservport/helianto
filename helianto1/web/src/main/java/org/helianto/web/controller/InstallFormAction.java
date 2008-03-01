@@ -33,7 +33,6 @@ import org.springframework.webflow.execution.RequestContext;
 public class InstallFormAction extends FormAction {
     
     private ServerMgr serverMgr;
-    
     private UserMgr userMgr;
     
     
@@ -122,10 +121,13 @@ public class InstallFormAction extends FormAction {
 
 
     //~ collaborators
+    
+    @javax.annotation.Resource
     public void setServerMgr(ServerMgr serverMgr) {
         this.serverMgr = serverMgr;
     }
 
+    @javax.annotation.Resource
     public void setUserMgr(UserMgr userMgr) {
         this.userMgr = userMgr;
     }

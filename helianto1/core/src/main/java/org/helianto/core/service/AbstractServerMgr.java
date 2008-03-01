@@ -17,6 +17,8 @@ package org.helianto.core.service;
 
 import java.util.Locale;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
@@ -30,15 +32,14 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.creation.OperatorCreator;
-import org.helianto.core.dao.UserAssociationDao;
-import org.helianto.core.dao.UserDao;
-import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.dao.ServiceDao;
+import org.helianto.core.dao.UserAssociationDao;
+import org.helianto.core.dao.UserDao;
+import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.dao.UserRoleDao;
-import org.springframework.beans.factory.annotation.Required;
 
 /**
  * <code>ServerMgr</code> base class.
@@ -255,42 +256,42 @@ public abstract class AbstractServerMgr implements ServerMgr {
 
     //~ collaborators
 
-    @Required
+    @Resource
     public void setOperatorDao(OperatorDao operatorDao) {
         this.operatorDao = operatorDao;
     }
 
-    @Required
+    @Resource
     public void setServiceDao(ServiceDao serviceDao) {
         this.serviceDao = serviceDao;
     }
 
-    @Required
+    @Resource
     public void setUserRoleDao(UserRoleDao userRoleDao) {
         this.userRoleDao = userRoleDao;
     }
 
-    @Required
+    @Resource
     public void setEntityDao(EntityDao entityDao) {
         this.entityDao = entityDao;
     }
 
-    @Required
+    @Resource
     public void setIdentityDao(IdentityDao identityDao) {
         this.identityDao = identityDao;
     }
 
-    @Required
+    @Resource
     public void setUserGroupDao(UserGroupDao userGroupDao) {
         this.userGroupDao = userGroupDao;
     }
 
-    @Required
+    @Resource
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
-    @Required
+    @Resource
     public void setUserAssociationDao(UserAssociationDao userAssociationDao) {
         this.userAssociationDao = userAssociationDao;
     }

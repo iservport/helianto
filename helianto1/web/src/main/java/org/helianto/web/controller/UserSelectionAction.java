@@ -101,16 +101,9 @@ public class UserSelectionAction extends MultiAction {
         return success();
     }
     
-    //- init
-    
-    public void init() {
-        if (securityMgr==null) {
-            throw new IllegalArgumentException("SecurityMgr is null");
-        }
-    }
-    
     //- collaborators
 
+    @javax.annotation.Resource
     public void setSecurityMgr(SecurityMgr securityMgr) {
         this.securityMgr = securityMgr;
     }

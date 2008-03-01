@@ -24,7 +24,6 @@ import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.view.IdentityForm;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.validation.Errors;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
@@ -195,12 +194,12 @@ public class IdentityFormAction extends FormAction {
     
     //~ collaborators
 
-    @Required
+    @javax.annotation.Resource
     public void setUserMgr(UserMgr userMgr) {
         this.userMgr =  userMgr;
     }
 
-    @Required
+    @javax.annotation.Resource
     public void setServerMgr(ServerMgr serverMgr) {
         this.serverMgr = serverMgr;
     }

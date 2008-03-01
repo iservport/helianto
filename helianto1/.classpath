@@ -3,10 +3,8 @@
 	<classpathentry kind="src" path="core/src/main/java"/>
 	<classpathentry kind="src" path="core/src/main/resources"/>
 	<classpathentry kind="src" path="core/src/test/java"/>
-	<classpathentry kind="src" path="core/src/test/resources"/>
 	<classpathentry kind="src" path="partner/src/main/java"/>
 	<classpathentry kind="src" path="partner/src/main/resources"/>
-	<classpathentry kind="src" path="partner/src/test/resources"/>
 	<classpathentry kind="src" path="partner/src/test/java"/>
 	<classpathentry kind="src" path="process/src/main/java"/>
 	<classpathentry kind="src" path="process/src/main/resources"/>

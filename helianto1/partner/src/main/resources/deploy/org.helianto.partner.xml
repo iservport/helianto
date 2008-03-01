@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd">
+               
+    <context:annotation-config/>
+    
 	<!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
 
@@ -15,7 +27,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 		-->
-<beans default-init-method="init">
 
 	<!--
 			Dao implementation	
@@ -84,18 +95,6 @@
 		<property name="target">
 			<bean id="partnerTarget"
 				class="org.helianto.partner.service.PartnerMgrImpl">
-				<property name="provinceDao" ref="provinceDao"/>
-				<property name="partnerDao" ref="partnerDao"/>
-				<property name="addressDao" ref="addressDao"/>
-				<property name="contactDao" ref="contactDao"/>
-				<property name="partnerRegistryDao" ref="partnerRegistryDao"/>
-				<property name="partnerAssociationFilterDao" ref="partnerAssociationFilterDao"/>
-				<property name="partnerKeyDao" ref="partnerKeyDao"/>
-				<property name="phoneDao" ref="phoneDao"/>
-				<property name="accountDao" ref="accountDao"/>
-				<property name="agentDao" ref="agentDao"/>
-				<property name="customerDao" ref="customerDao"/>
-				<property name="supplierDao" ref="supplierDao"/>
 			</bean>
 		</property>
 	</bean>
