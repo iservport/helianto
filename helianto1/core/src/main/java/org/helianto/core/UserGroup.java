@@ -91,9 +91,6 @@ public class UserGroup implements java.io.Serializable {
     public Entity getEntity() {
         return this.entity;
     }
-    /**
-     * Entity setter.
-     */
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
@@ -105,9 +102,6 @@ public class UserGroup implements java.io.Serializable {
     public String getUserKey() {
         return this.userKey;
     }
-    /**
-     * UserKey setter.
-     */
     public void setUserKey(String userKey) {
         this.userKey = userKey;
     }
@@ -120,19 +114,22 @@ public class UserGroup implements java.io.Serializable {
     public Identity getIdentity() {
         return this.identity;
     }
-    /**
-     * Identity setter.
-     */
     public void setIdentity(Identity identity) {
         this.identity = identity;
     }
-    
     /**
      * UserPrincipal getter.
      */
     @Transient
     public String getUserPrincipal() {
         return this.identity.getPrincipal();
+    }
+    /**
+     * UserName getter.
+     */
+    @Transient
+    public String getUserName() {
+        return this.identity.getIdentityName();
     }
 
     /**
@@ -155,9 +152,6 @@ public class UserGroup implements java.io.Serializable {
     public Set<UserAssociation> getParentAssociations() {
         return this.parentAssociations;
     }
-    /**
-     * ParentAssociations setter.
-     */
     public void setParentAssociations(Set<UserAssociation> parentAssociations) {
         this.parentAssociations = parentAssociations;
     }
@@ -169,9 +163,6 @@ public class UserGroup implements java.io.Serializable {
     public Set<UserAssociation> getChildAssociations() {
         return this.childAssociations;
     }
-    /**
-     * ChildAssociations setter.
-     */
     public void setChildAssociations(Set<UserAssociation> childAssociations) {
         this.childAssociations = childAssociations;
     }
@@ -183,9 +174,6 @@ public class UserGroup implements java.io.Serializable {
     public Set<UserRole> getRoles() {
         return this.roles;
     }
-    /**
-     * Roles setter.
-     */
     public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }

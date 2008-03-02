@@ -73,9 +73,6 @@ public class Identity implements java.io.Serializable {
     public String getPrincipal() {
         return this.principal;
     }
-    /**
-     * Principal setter (convert to lower case).
-     */
     public void setPrincipal(String principal) {
         if (principal!=null) {
             this.principal = principal.toLowerCase();
@@ -92,9 +89,6 @@ public class Identity implements java.io.Serializable {
     public String getOptionalAlias() {
         return this.optionalAlias;
     }
-    /**
-     * OptionalAlias setter.
-     */
     public void setOptionalAlias(String optionalAlias) {
         this.optionalAlias = optionalAlias;
     }
@@ -106,11 +100,17 @@ public class Identity implements java.io.Serializable {
     public PersonalData getPersonalData() {
         return this.personalData;
     }
-    /**
-     * PersonalData setter.
-     */
     public void setPersonalData(PersonalData personalData) {
         this.personalData = personalData;
+    }
+    @Transient
+    public String getIdentityName() {
+    	if (getPersonalData()==null) {
+    		return "";
+    	}
+    	return new StringBuilder(getPersonalData().getFirstName())
+    	    .append(" ")
+    	    .append(getPersonalData().getLastName()).toString();
     }
 
     /**
@@ -120,38 +120,21 @@ public class Identity implements java.io.Serializable {
     public Date getCreated() {
         return this.created;
     }
-    /**
-     * Created setter.
-     */
     public void setCreated(Date created) {
         this.created = created;
     }
 
-//    /**
-//     * LastLogin getter.
-//     */
-//    @Temporal(TemporalType.TIMESTAMP)
-//    public Date getLastLogin() {
-//        return this.lastLogin;
-//    }
-//    /**
-//     * LastLogin setter.
-//     */
-//    public void setLastLogin(Date lastLogin) {
-//        this.lastLogin = lastLogin;
-//    }
-//
     /**
      * IdentityType getter.
      */
     public char getIdentityType() {
         return this.identityType;
     }
-    /**
-     * IdentityType setter.
-     */
     public void setIdentityType(char identityType) {
         this.identityType = identityType;
+    }
+    public void setIdentityType(IdentityType identityType) {
+        this.identityType = identityType.getValue();
     }
 
     /**
@@ -160,11 +143,11 @@ public class Identity implements java.io.Serializable {
     public char getNotification() {
         return this.notification;
     }
-    /**
-     * Notification setter.
-     */
     public void setNotification(char notification) {
         this.notification = notification;
+    }
+    public void setNotification(Notification notification) {
+        this.notification = notification.getValue();
     }
 
     /**
