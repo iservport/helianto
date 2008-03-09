@@ -18,55 +18,39 @@ package org.helianto.core.validation;
 import java.beans.PropertyEditorSupport;
 import java.io.Serializable;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.SessionFactory;
 
 /**
- * Abstract base class to <code>PropertyLoader</code> backed property editors.
- * 
- * <p>Use to replace <code>AbstractHibernatePropertyEditor</code> if the
- * <code>getAsText()</code> method needs to participate in a transaction.
- * Notice that the service facade that controls the transaction must implement 
- * <code>PropertyLoader</code>.
- * </p>
+ * Abstract base class to <code>SessionFactory</code> backed property editors.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
  */
-public abstract class AbstractLoaderPropertyEditor extends
+public abstract class AbstractSessionPropertyEditor extends
         PropertyEditorSupport {
 
-    private PropertyLoader propertyLoader;
-    
-    /**
-     * Required constructor.
-     * 
-     * @param propertyLoader
-     */
-    protected AbstractLoaderPropertyEditor(PropertyLoader propertyLoader) {
-        setPropertyLoader(propertyLoader);
-    }
+	private SessionFactory sessionFactory;
     
     /**
      * Default constructor.
-     * 
-     * @param propertyLoader
      */
-    @SuppressWarnings("unused")
-	private AbstractLoaderPropertyEditor() {}
+	public AbstractSessionPropertyEditor() {}
 
     /**
-     * <code>PropertyLoader</code> getter.
+     * <code>SessionFactory</code> getter.
      */
-    public PropertyLoader getPropertyLoader() {
-        return propertyLoader;
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
-
     /**
-     * <code>PropertyLoader</code> setter.
+     * <code>SessionFactory</code> setter.
      */
-    public void setPropertyLoader(PropertyLoader propertyLoader) {
-        this.propertyLoader = propertyLoader;
+    @Resource
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     /**
@@ -83,7 +67,7 @@ public abstract class AbstractLoaderPropertyEditor extends
         }
         try {
             Serializable key = resolveId(id);
-            Object value = getPropertyLoader().load(clazz, key);
+            Object value = this.sessionFactory.getCurrentSession().load(clazz, key);
             super.setValue(value);
             if (logger.isDebugEnabled()) {
                 logger.debug("Loaded property: " + getValue()+" set from id="+id);
@@ -107,6 +91,6 @@ public abstract class AbstractLoaderPropertyEditor extends
         return value;
     }
     
-    static protected final Log logger = LogFactory.getLog(AbstractLoaderPropertyEditor.class);
+    static protected final Log logger = LogFactory.getLog(AbstractSessionPropertyEditor.class);
 
 }
