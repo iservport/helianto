@@ -16,14 +16,14 @@
 	limitations under the License.
 -->
 <beans>
-	<!-- 
+    <!-- 
+        Exception translation bean post processor 
+    -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>	
+    <!-- 
 		Enable @AspectJ Support
 	-->
 	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
-	<!-- 
-		Enable @Required Support
-	-->
-	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
 	<!-- 
 		Messages
 	-->
