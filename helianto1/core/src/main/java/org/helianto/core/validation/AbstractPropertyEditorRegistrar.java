@@ -15,6 +15,8 @@
 
 package org.helianto.core.validation;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.PropertyEditorRegistrar;
@@ -31,6 +33,7 @@ public abstract class AbstractPropertyEditorRegistrar implements PropertyEditorR
 
     private HibernateOperations hibernateTemplate;
     
+    @Resource
     public void setHibernateTemplate(HibernateOperations hibernateTemplate) {
         this.hibernateTemplate = hibernateTemplate;
     }
