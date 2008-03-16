@@ -135,5 +135,7 @@
 		</property>
 	</bean>
 
+	<bean id="categoryPropertyEditor" 
+		class="org.helianto.core.validation.CategoryPropertyEditor"/>
 
 </beans>
