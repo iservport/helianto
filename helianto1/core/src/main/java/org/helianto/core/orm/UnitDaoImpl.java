@@ -15,10 +15,13 @@
 
 package org.helianto.core.orm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
-import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.core.dao.UnitDao;
+import org.helianto.core.hibernate.GenericDaoImpl;
 
 
 /**
@@ -56,8 +59,21 @@ public class UnitDaoImpl extends GenericDaoImpl implements UnitDao {
         return (Unit) findUnique(Unit.getUnitNaturalIdQueryString(), entity, unitCode);
     }
     
+	@SuppressWarnings("unchecked")
+	public List<Unit> findUnits(String criteria) {
+        if (criteria!=null && !criteria.equals("")) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finding unit list with criteria='"+criteria+"' ");
+            }
+            return (ArrayList<Unit>) find(Unit.getUnitQueryStringBuilder().append("where ").append(criteria));
+        }
+        else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finding full entity list");
+            }
+            return (ArrayList<Unit>) find(Unit.getUnitQueryStringBuilder());
+        }
+	}
     
-	static String UNIT_ENTITY_QRY = "select unit from Unit unit "+
-	    "where unit.entity = :entity ";
     
 }

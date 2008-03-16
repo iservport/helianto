@@ -15,9 +15,10 @@
 
 package org.helianto.core.dao;
 
+import java.util.List;
+
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
-import org.helianto.core.dao.CommonOrmDao;
 
 
 /**
@@ -46,6 +47,11 @@ public interface UnitDao extends CommonOrmDao {
      * Find <code>Unit</code> by <code>Entity</code> and unitCode.
      */
     public Unit findUnitByNaturalId(Entity entity, String unitCode);
+    
+    /**
+     * Find <code>Unit</code> by string criteria.
+     */
+    public List<Unit> findUnits(String criteria);
     
     
     

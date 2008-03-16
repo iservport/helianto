@@ -1,4 +1,4 @@
-package org.helianto.core.hibernate;
+package org.helianto.core.orm;
 
 import java.util.List;
 
@@ -32,11 +32,16 @@ public class UnitDaoImplTests extends AbstractIntegrationTest {
     /*
      * Hook to persist one <code>Unit</code>.
      */  
-    protected Unit writeUnit() {
-        Unit unit = UnitTestSupport.createUnit();
+    protected Unit writeUnit(Unit unit) {
         unitDao.persistUnit(unit);
         unitDao.flush();
         unitDao.clear();
+        return unit;
+    }
+    
+    protected Unit writeUnit() {
+        Unit unit = UnitTestSupport.createUnit();
+        writeUnit(unit);
         return unit;
     }
     
@@ -44,9 +49,19 @@ public class UnitDaoImplTests extends AbstractIntegrationTest {
      * Find by natural id.
      */  
     public void testFindOneUnit() {
-        Unit unit = writeUnit();
+        Unit unit = UnitTestSupport.createUnit();
+        writeUnit(unit);
 
         assertEquals(unit,  unitDao.findUnitByNaturalId(unit.getEntity(), unit.getUnitCode()));
+    }
+    
+    /**
+     * Find by natural id.
+     */  
+    public void testFindUnits() {
+    	List<Unit> unitList = writeUnitList();
+
+        assertEquals(10,  unitDao.findUnits("entity.id = "+unitList.get(0).getEntity().getId()).size());
     }
     
     /*

@@ -115,19 +115,19 @@ public class Unit implements java.io.Serializable {
     }
 
     /**
+     * <code>Unit</code> query.
+     */
+    @Transient
+    public static StringBuilder getUnitQueryStringBuilder() {
+        return new StringBuilder("select unit from Unit unit ");
+    }   
+
+    /**
      * <code>Unit</code> natural id query.
      */
     @Transient
     public static String getUnitNaturalIdQueryString() {
-        return "select unit from Unit unit where unit.entity = ? and unit.unitCode = ? ";
-    }
-
-    /**
-     * <code>Unit</code> master query.
-     */
-    @Transient
-    public static String getUnitEntityQueryString() {
-        return "select unit from Unit unit where unit.entity = ? ";
+        return getUnitQueryStringBuilder().append("where unit.entity = ? and unit.unitCode = ? ").toString();
     }
 
     /**
@@ -166,6 +166,6 @@ public class Unit implements java.io.Serializable {
          result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getUnitCode() == null ? 0 : this.getUnitCode().hashCode() );
          return result;
-   }   
+   }
 
 }
