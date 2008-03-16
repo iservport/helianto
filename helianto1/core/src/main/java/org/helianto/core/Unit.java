@@ -45,6 +45,7 @@ public class Unit implements java.io.Serializable {
     private Category category;
     private String unitCode;
     private String unitName;
+    private char priority;
 
     /** default constructor */
     public Unit() {
@@ -106,6 +107,16 @@ public class Unit implements java.io.Serializable {
     }
 
     /**
+     * Priority.
+     */
+	public char getPriority() {
+		return priority;
+	}
+	public void setPriority(char priority) {
+		this.priority = priority;
+	}
+
+    /**
      * <code>Unit</code> factory.
      * 
      * @param entity
@@ -115,6 +126,7 @@ public class Unit implements java.io.Serializable {
         Unit unit = new Unit();
         unit.setEntity(entity);
         unit.setUnitCode(unitCode);
+        unit.setPriority('1');
         return unit;
     }
 

@@ -26,6 +26,7 @@ public class UnitTests extends TestCase {
         
         assertSame(entity, unit.getEntity());
         assertEquals(unitCode, unit.getUnitCode());
+        assertEquals('1', unit.getPriority());
         
     }
     

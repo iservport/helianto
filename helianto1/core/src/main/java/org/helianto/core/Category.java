@@ -46,6 +46,7 @@ public class Category implements java.io.Serializable {
     private int categoryGroup;
     private String categoryCode;
     private String categoryName;
+    private char priority;
 
     /** default constructor */
     public Category() {
@@ -108,6 +109,16 @@ public class Category implements java.io.Serializable {
     }
 
     /**
+     * Priority.
+     */
+	public char getPriority() {
+		return priority;
+	}
+	public void setPriority(char priority) {
+		this.priority = priority;
+	}
+
+    /**
      * Factory method.
      */
     public static Category categoryFactory(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
@@ -115,6 +126,7 @@ public class Category implements java.io.Serializable {
         category.setEntity(entity);
         category.setCategoryGroup(categoryGroup);
         category.setCategoryCode(categoryCode);
+        category.setPriority('1');
         return category;
     }
 

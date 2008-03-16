@@ -26,6 +26,7 @@ public class CategoryTests extends TestCase {
         assertSame(entity, category.getEntity());
         assertEquals(CategoryGroup.INSTRUMENT.getValue(), category.getCategoryGroup());
         assertEquals(categoryCode, category.getCategoryCode());
+        assertEquals('1', category.getPriority());
         
     }
     /**
