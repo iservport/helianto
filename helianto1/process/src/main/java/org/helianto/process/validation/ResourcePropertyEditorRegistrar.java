@@ -18,17 +18,16 @@ package org.helianto.process.validation;
 import java.beans.PropertyEditor;
 
 import org.helianto.core.validation.AbstractHibernatePropertyEditor;
-import org.helianto.core.validation.UnitPropertyEditorRegistrar;
+import org.helianto.core.validation.AbstractPropertyEditorRegistrar;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroup;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.orm.hibernate3.HibernateOperations;
 
 public class ResourcePropertyEditorRegistrar extends
-        UnitPropertyEditorRegistrar {
+AbstractPropertyEditorRegistrar {
 
     public void registerCustomEditors(PropertyEditorRegistry registry) {
-        super.registerCustomEditors(registry);
         PropertyEditor resourceGroupPropertyEditor = new ResourceGroupPropertyEditor(getHibernateTemplate());
         if (logger.isDebugEnabled()) {
             logger.debug("Registering custom editor "+resourceGroupPropertyEditor);

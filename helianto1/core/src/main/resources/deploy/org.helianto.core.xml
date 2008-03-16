@@ -138,4 +138,7 @@
 	<bean id="categoryPropertyEditor" 
 		class="org.helianto.core.validation.CategoryPropertyEditor"/>
 
+	<bean id="unitPropertyEditor" 
+		class="org.helianto.core.validation.UnitPropertyEditor"/>
+
 </beans>

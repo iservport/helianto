@@ -1,20 +1,13 @@
 package org.helianto.core.validation;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Unit;
-import org.springframework.orm.hibernate3.HibernateOperations;
 
 /**
- * Default hibernate backed <code>Unit</code> property editor.
+ * Default <code>SessionFactory</code> backed <code>Unit</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UnitPropertyEditor extends AbstractHibernatePropertyEditor {
-
-    public UnitPropertyEditor(HibernateOperations hibernateTemplate) {
-        super(hibernateTemplate);
-    }
+public class UnitPropertyEditor extends AbstractSessionPropertyEditor {
 
     @Override
     public String getAsText() {
@@ -25,8 +18,5 @@ public class UnitPropertyEditor extends AbstractHibernatePropertyEditor {
     public void setAsText(String id) throws IllegalArgumentException {
         setAsText(id, Unit.class);
     }
-
-    public static final Log logger = LogFactory
-            .getLog(AbstractPropertyEditorRegistrar.class);
 
 }
