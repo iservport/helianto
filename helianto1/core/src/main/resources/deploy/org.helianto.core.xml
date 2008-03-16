@@ -71,6 +71,10 @@
 		class="org.helianto.core.orm.UserDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
+	<bean id="categoryDao" 
+	    class="org.helianto.core.orm.CategoryDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 	<bean id="unitDao" 
 	    class="org.helianto.core.orm.UnitDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
