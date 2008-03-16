@@ -42,6 +42,7 @@ public class Unit implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
+    private Category category;
     private String unitCode;
     private String unitName;
 
@@ -66,11 +67,20 @@ public class Unit implements java.io.Serializable {
     public Entity getEntity() {
         return this.entity;
     }
-    /**
-     * Entity setter.
-     */
     public void setEntity(Entity entity) {
         this.entity = entity;
+    }
+
+    /**
+     * Category getter.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="categoryId", nullable=true)
+    public Category getCategory() {
+        return this.category;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     /**
@@ -80,9 +90,6 @@ public class Unit implements java.io.Serializable {
     public String getUnitCode() {
         return this.unitCode;
     }
-    /**
-     * UnitCode setter.
-     */
     public void setUnitCode(String unitCode) {
         this.unitCode = unitCode;
     }
@@ -94,9 +101,6 @@ public class Unit implements java.io.Serializable {
     public String getUnitName() {
         return this.unitName;
     }
-    /**
-     * UnitName setter.
-     */
     public void setUnitName(String unitName) {
         this.unitName = unitName;
     }
@@ -110,6 +114,20 @@ public class Unit implements java.io.Serializable {
     public static Unit unitFactory(Entity entity, String unitCode) {
         Unit unit = new Unit();
         unit.setEntity(entity);
+        unit.setUnitCode(unitCode);
+        return unit;
+    }
+
+    /**
+     * <code>Unit</code> factory.
+     * 
+     * @param entity
+     * @param unitCode
+     */
+    public static Unit unitFactory(Category category, String unitCode) {
+        Unit unit = new Unit();
+        unit.setEntity(category.getEntity());
+        unit.setCategory(category);
         unit.setUnitCode(unitCode);
         return unit;
     }
