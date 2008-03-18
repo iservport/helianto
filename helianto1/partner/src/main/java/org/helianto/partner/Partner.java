@@ -145,11 +145,19 @@ public class Partner implements java.io.Serializable {
     }
 
     /**
+     * <code>Partner</code> query.
+     */
+    @Transient
+    public static StringBuilder getPartnerQueryStringBuilder() {
+    	return new StringBuilder("select partner from Partner partner ");
+    }   
+
+    /**
      * <code>Partner</code> natural id query.
      */
     @Transient
     public static String getPartnerNaturalIdQueryString() {
-        return "select partner from Partner partner where partner.partnerRegistry = ? and partner.sequence = ? ";
+    	return getPartnerQueryStringBuilder().append("where partner.partnerRegistry = ? and partner.sequence = ? ").toString();
     }
 
     /**
@@ -188,6 +196,6 @@ public class Partner implements java.io.Serializable {
          result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
          result = 37 * result + (int) this.getSequence();
          return result;
-   }   
+   }
 
 }

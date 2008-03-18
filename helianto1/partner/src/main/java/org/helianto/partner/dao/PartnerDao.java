@@ -15,6 +15,8 @@
 
 package org.helianto.partner.dao;
 
+import java.util.List;
+
 import org.helianto.core.dao.CommonOrmDao;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerRegistry;
@@ -45,6 +47,11 @@ public interface PartnerDao extends CommonOrmDao {
      * Find <code>Partner</code> by <code>PartnerAssociation</code> and sequence.
      */
     public Partner findPartnerByNaturalId(PartnerRegistry partnerRegistry, int sequence);
+    
+    /**
+     * Find <code>Partner</code> by string criteria.
+     */
+    public List<Partner> findPartners(String criteria);
     
     
     
