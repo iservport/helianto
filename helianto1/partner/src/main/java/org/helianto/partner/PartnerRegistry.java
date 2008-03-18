@@ -36,8 +36,6 @@ import org.helianto.core.Entity;
  * Represents the relationship between the organization and other entities.  
  * </p>
  * @author Mauricio Fernandes de Castro
- * @author Vlademir Teixeira
- * @author Willian Tezza
  */
 @javax.persistence.Entity
 @Table(name="prtnr_registry",
@@ -67,16 +65,13 @@ public class PartnerRegistry implements java.io.Serializable {
     }
 
     /**
-     * Entity getter.
+     * Entity.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
     }
-    /**
-     * Entity setter.
-     */
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
@@ -88,29 +83,23 @@ public class PartnerRegistry implements java.io.Serializable {
     public String getPartnerAlias() {
         return this.partnerAlias;
     }
-    /**
-     * PartnerAlias setter.
-     */
     public void setPartnerAlias(String partnerAlias) {
         this.partnerAlias = partnerAlias;
     }
 
     /**
-     * PartnerName getter.
+     * PartnerName.
      */
     @Column(length=64)
     public String getPartnerName() {
         return this.partnerName;
     }
-    /**
-     * PartnerName setter.
-     */
     public void setPartnerName(String partnerName) {
         this.partnerName = partnerName;
     }
 
     /**
-     * PartnerName (short) getter.
+     * PartnerName (short).
      */
     @Transient
     public String getPartnerShortName() {
@@ -127,9 +116,6 @@ public class PartnerRegistry implements java.io.Serializable {
     public Set<Partner> getPartners() {
         return this.partners;
     }
-    /**
-     * Partners setter.
-     */
     public void setPartners(Set<Partner> partners) {
         this.partners = partners;
     }
@@ -141,9 +127,6 @@ public class PartnerRegistry implements java.io.Serializable {
     public Set<Address> getAddresses() {
         return this.addresses;
     }
-    /**
-     * Addresses setter.
-     */
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
     }
@@ -162,11 +145,19 @@ public class PartnerRegistry implements java.io.Serializable {
     }
 
     /**
+     * <code>PartnerRegistry</code> query.
+     */
+    @Transient
+    public static StringBuilder getPartnerRegistryQueryStringBuilder() {
+    	return new StringBuilder("select partnerRegistry from PartnerRegistry partnerRegistry ");
+    }   
+
+    /**
      * <code>PartnerRegistry</code> natural id query.
      */
     @Transient
     public static String getPartnerRegistryNaturalIdQueryString() {
-        return "select partnerRegistry from PartnerRegistry partnerRegistry where partnerRegistry.entity = ? and partnerRegistry.partnerAlias = ? ";
+    	return getPartnerRegistryQueryStringBuilder().append("where partnerRegistry.entity = ? and partnerRegistry.partnerAlias = ? ").toString();
     }
 
     /**

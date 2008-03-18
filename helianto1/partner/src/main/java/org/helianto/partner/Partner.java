@@ -31,7 +31,6 @@ import javax.persistence.UniqueConstraint;
  * Represents the relationship between the organization and other entities.  
  * </p>
  * @author Mauricio Fernandes de Castro
- * @author Vlademir Teixeira
  */
 @javax.persistence.Entity
 @Table(name="prtnr_partner",
@@ -62,29 +61,23 @@ public class Partner implements java.io.Serializable {
     }
 
     /**
-     * PartnerRegistry getter.
+     * PartnerRegistry.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PartnerRegistry getPartnerRegistry() {
         return this.partnerRegistry;
     }
-    /**
-     * PartnerRegistry setter.
-     */
     public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
         this.partnerRegistry = partnerRegistry;
     }
 
     /**
-     * Sequence getter.
+     * Sequence.
      */
     public int getSequence() {
         return this.sequence;
     }
-    /**
-     * Sequence setter.
-     */
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
@@ -97,9 +90,6 @@ public class Partner implements java.io.Serializable {
     public Account getAccount() {
         return this.account;
     }
-    /**
-     * Account setter.
-     */
     public void setAccount(Account account) {
         this.account = account;
     }
@@ -110,9 +100,6 @@ public class Partner implements java.io.Serializable {
     public char getPriority() {
         return this.priority;
     }
-    /**
-     * Priority setter.
-     */
     public void setPriority(char priority) {
         this.priority = priority;
     }
@@ -123,11 +110,11 @@ public class Partner implements java.io.Serializable {
     public char getPartnerState() {
         return this.partnerState;
     }
-    /**
-     * PartnerState setter.
-     */
     public void setPartnerState(char partnerState) {
         this.partnerState = partnerState;
+    }
+    public void setPartnerState(PartnerState partnerState) {
+        this.partnerState = partnerState.getValue();
     }
 
     /**

@@ -15,6 +15,9 @@
 
 package org.helianto.partner.orm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.PartnerRegistry;
@@ -55,7 +58,22 @@ public class PartnerRegistryDaoImpl extends GenericDaoImpl implements PartnerReg
         return (PartnerRegistry) findUnique(PartnerRegistry.getPartnerRegistryNaturalIdQueryString(), entity, partnerAlias);
     }
     
-    
+	@SuppressWarnings("unchecked")
+	public List<PartnerRegistry> findPartnerRegistries(String criteria) {
+        if (criteria!=null && !criteria.equals("")) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finding partner list with criteria='"+criteria+"' ");
+            }
+            return (ArrayList<PartnerRegistry>) find(PartnerRegistry.getPartnerRegistryQueryStringBuilder().append("where ").append(criteria));
+        }
+        else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finding full entity list");
+            }
+            return (ArrayList<PartnerRegistry>) find(PartnerRegistry.getPartnerRegistryQueryStringBuilder());
+        }
+	}
+        
 	static String PARTNERASSOCIATION_ENTITY_QRY = "select partnerRegistry from PartnerRegistry partnerRegistry "+
 	    "where partnerRegistry.entity = ? ";
 
