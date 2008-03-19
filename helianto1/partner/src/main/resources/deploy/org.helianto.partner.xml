@@ -46,11 +46,6 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 
-	<bean id="partnerAssociationFilterDao" 
-		class="org.helianto.partner.orm.PartnerAssociationFilterDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-
 	<bean id="partnerDao" 
 		class="org.helianto.partner.orm.PartnerDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
@@ -100,11 +95,12 @@
 	</bean>
 
 	<!-- 
-			Authentication property editor registrar bean	
-	<bean id="partnerPropertyEditorRegistrar" 
-		class="org.helianto.partner.validate.AuthenticationPropertyEditorRegistrar">
-	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	-->
+			Property editors
+	-->	
+	<bean id="partnerRegistryPropertyEditor" 
+		class="org.helianto.partner.validation.PartnerRegistryPropertyEditor"/>
+	<bean id="partnerPropertyEditor" 
+		class="org.helianto.partner.validation.PartnerPropertyEditor"/>
+	
 	
 </beans>

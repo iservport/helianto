@@ -11,7 +11,6 @@
 		<mapping class="org.helianto.partner.Agent" />
 		<mapping class="org.helianto.partner.Customer" />
 		<mapping class="org.helianto.partner.Supplier" />
-		<mapping class="org.helianto.partner.PartnerAssociationFilter" />
 		<mapping class="org.helianto.partner.PartnerKey" />
 		<mapping class="org.helianto.partner.Phone" />
 		<mapping class="org.helianto.partner.Account" />

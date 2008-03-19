@@ -15,24 +15,24 @@
 package org.helianto.partner.validation;
 
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
-import org.helianto.partner.Partner;
+import org.helianto.partner.PartnerRegistry;
 
 /**
- * Default <code>Session</code> backed <code>Partner</code> property
+ * Default <code>Session</code> backed <code>PartnerRegistry</code> property
  * editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class PartnerPropertyEditor extends AbstractSessionPropertyEditor {
+public class PartnerRegistryPropertyEditor extends AbstractSessionPropertyEditor {
 
 	@Override
 	public String getAsText() {
-		return String.valueOf(((Partner) getValue()).getSequence());
+		return String.valueOf(((PartnerRegistry) getValue()).getPartnerAlias());
 	}
 
 	@Override
 	public void setAsText(String id) throws IllegalArgumentException {
-		setAsText(id, Partner.class);
+		setAsText(id, PartnerRegistry.class);
 	}
 
 }

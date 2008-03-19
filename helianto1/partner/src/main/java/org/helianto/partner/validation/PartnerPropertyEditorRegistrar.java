@@ -24,10 +24,8 @@ import org.helianto.partner.Address;
 import org.helianto.partner.Agent;
 import org.helianto.partner.Contact;
 import org.helianto.partner.Customer;
-import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerRegistry;
-import org.helianto.partner.PartnerAssociationFilter;
 import org.helianto.partner.PartnerKey;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.Phone;
 import org.helianto.partner.Supplier;
 import org.springframework.beans.PropertyEditorRegistry;
@@ -63,13 +61,6 @@ public class PartnerPropertyEditorRegistrar extends AbstractLoaderPropertyEditor
         }
         registry.registerCustomEditor(PartnerKey.class, partnerKeyPropertyEditor);
         
-        // partner
-        PropertyEditor partnerPropertyEditor = new PartnerPropertyEditor(getPropertyLoader());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+partnerPropertyEditor);
-        }
-        registry.registerCustomEditor(Partner.class, partnerPropertyEditor);
-        
         // Agent
         PropertyEditor agentPropertyEditor = new AgentPropertyEditor(getPropertyLoader());
         if (logger.isDebugEnabled()) {
@@ -97,13 +88,6 @@ public class PartnerPropertyEditorRegistrar extends AbstractLoaderPropertyEditor
             logger.debug("Registering custom editor "+phonePropertyEditor);
         }
         registry.registerCustomEditor(Phone.class, phonePropertyEditor);
-
-        // PartnerAssociationFilter
-        PropertyEditor partnerAssociationFilterPropertyEditor = new PartnerAssociationFilterPropertyEditor(getPropertyLoader());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+partnerAssociationFilterPropertyEditor);
-        }
-        registry.registerCustomEditor(PartnerAssociationFilter.class, partnerAssociationFilterPropertyEditor);
 
         // Account
         PropertyEditor accountPropertyEditor = new AccountPropertyEditor(getPropertyLoader());

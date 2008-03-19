@@ -30,7 +30,6 @@ import org.helianto.partner.dao.AddressDao;
 import org.helianto.partner.dao.AgentDao;
 import org.helianto.partner.dao.ContactDao;
 import org.helianto.partner.dao.CustomerDao;
-import org.helianto.partner.dao.PartnerAssociationFilterDao;
 import org.helianto.partner.dao.PartnerDao;
 import org.helianto.partner.dao.PartnerKeyDao;
 import org.helianto.partner.dao.PartnerRegistryDao;
@@ -48,7 +47,6 @@ public class PartnerMgrImpl implements PartnerMgr {
     private AddressDao addressDao;
     private ContactDao contactDao;
     private PartnerRegistryDao partnerRegistryDao;
-    private PartnerAssociationFilterDao partnerAssociationFilterDao;
     private PartnerDao partnerDao;
     private PartnerKeyDao partnerKeyDao;
     private PhoneDao phoneDao;
@@ -105,11 +103,6 @@ public class PartnerMgrImpl implements PartnerMgr {
     @Resource
     public void setPartnerRegistryDao(PartnerRegistryDao partnerRegistryDao) {
         this.partnerRegistryDao = partnerRegistryDao;
-    }
-    @Resource
-    public void setPartnerAssociationFilterDao(
-            PartnerAssociationFilterDao partnerAssociationFilterDao) {
-        this.partnerAssociationFilterDao = partnerAssociationFilterDao;
     }
     @Resource
     public void setPartnerDao(PartnerDao partnerDao) {
