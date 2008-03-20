@@ -14,21 +14,16 @@
  */
 package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
+import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.partner.Customer;
 
 
 /**
- * Default <code>PropertyLoader</code> backed <code>Customer</code> property editor.
+ * Default <code>Session</code> backed <code>Customer</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class CustomerPropertyEditor extends AbstractLoaderPropertyEditor {
-    
-    public CustomerPropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
+public class CustomerPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

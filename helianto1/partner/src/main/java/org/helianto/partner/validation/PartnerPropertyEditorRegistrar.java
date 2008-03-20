@@ -39,14 +39,6 @@ public class PartnerPropertyEditorRegistrar extends AbstractLoaderPropertyEditor
 
 	public void registerCustomEditors(PropertyEditorRegistry registry) {
 		
-		// address or contact
-        PropertyEditor AddressPropertyEditor = new AddressPropertyEditor(getPropertyLoader());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+AddressPropertyEditor);
-        }
-        registry.registerCustomEditor(Address.class, AddressPropertyEditor);
-        registry.registerCustomEditor(Contact.class, AddressPropertyEditor);
-        
         // partnerAssociation
         PropertyEditor partnerAssociationPropertyEditor = new PartnerAssociationPropertyEditor(getPropertyLoader());
         if (logger.isDebugEnabled()) {
@@ -68,20 +60,6 @@ public class PartnerPropertyEditorRegistrar extends AbstractLoaderPropertyEditor
         }
         registry.registerCustomEditor(Agent.class, agentPropertyEditor);
         
-        // Customer
-        PropertyEditor customerPropertyEditor = new CustomerPropertyEditor(getPropertyLoader());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+customerPropertyEditor);
-        }
-        registry.registerCustomEditor(Customer.class, customerPropertyEditor);
-        
-        // Supplier
-        PropertyEditor supplierPropertyEditor = new SupplierPropertyEditor(getPropertyLoader());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Registering custom editor "+supplierPropertyEditor);
-        }
-        registry.registerCustomEditor(Supplier.class, supplierPropertyEditor);
-
         // phone
         PropertyEditor phonePropertyEditor = new PhonePropertyEditor(getPropertyLoader());
         if (logger.isDebugEnabled()) {

@@ -99,8 +99,14 @@
 	-->	
 	<bean id="partnerRegistryPropertyEditor" 
 		class="org.helianto.partner.validation.PartnerRegistryPropertyEditor"/>
+	<bean id="addressPropertyEditor" 
+		class="org.helianto.partner.validation.AddressPropertyEditor"/>
 	<bean id="partnerPropertyEditor" 
 		class="org.helianto.partner.validation.PartnerPropertyEditor"/>
+	<bean id="customerPropertyEditor" 
+		class="org.helianto.partner.validation.CustomerPropertyEditor"/>
+	<bean id="supplierPropertyEditor" 
+		class="org.helianto.partner.validation.SupplierPropertyEditor"/>
 	
 	
 </beans>

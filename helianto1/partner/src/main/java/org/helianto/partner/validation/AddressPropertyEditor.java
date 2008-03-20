@@ -14,32 +14,24 @@
  */
 package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
+import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.partner.Address;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>Address</code> property editor.
+ * Default <code>Session</code> backed <code>Address</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class AddressPropertyEditor extends AbstractLoaderPropertyEditor {
+public class AddressPropertyEditor extends AbstractSessionPropertyEditor {
     
-    public AddressPropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
     @Override
     public String getAsText() {
         return String.valueOf(((Address) getValue()).getSequence());
     }
+    
     @Override
     public void setAsText(String id) throws IllegalArgumentException {
         setAsText(id, Address.class);
     }
 
 }
-   
-/* registry snippet
-
-*/
-
