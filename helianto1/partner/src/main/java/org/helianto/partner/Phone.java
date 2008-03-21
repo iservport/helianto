@@ -166,6 +166,7 @@ public class Phone implements java.io.Serializable {
         Phone phone = new Phone();
         phone.setAddress(address);
         phone.setSequence(sequence);
+        address.getPhones().add(phone);
         return phone;
     }
 
