@@ -23,6 +23,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -90,9 +91,6 @@ public class Address implements java.io.Serializable {
     public PartnerRegistry getPartnerRegistry() {
         return this.partnerRegistry;
     }
-    /**
-     * PartnerRegistry setter.
-     */
     public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
         this.partnerRegistry = partnerRegistry;
     }
@@ -103,9 +101,6 @@ public class Address implements java.io.Serializable {
     public int getSequence() {
         return this.sequence;
     }
-    /**
-     * Sequence setter.
-     */
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
@@ -116,11 +111,11 @@ public class Address implements java.io.Serializable {
     public char getAddressType() {
         return this.addressType;
     }
-    /**
-     * AddressType setter.
-     */
     public void setAddressType(char addressType) {
         this.addressType = addressType;
+    }
+    public void setAddressType(AddressType addressType) {
+        this.addressType = addressType.getValue();
     }
 
     /**
@@ -130,9 +125,6 @@ public class Address implements java.io.Serializable {
     public String getAddress1() {
         return this.address1;
     }
-    /**
-     * Address1 setter.
-     */
     public void setAddress1(String address1) {
         this.address1 = address1;
     }
@@ -144,9 +136,6 @@ public class Address implements java.io.Serializable {
     public String getAddress2() {
         return this.address2;
     }
-    /**
-     * Address2 setter.
-     */
     public void setAddress2(String address2) {
         this.address2 = address2;
     }
@@ -158,9 +147,6 @@ public class Address implements java.io.Serializable {
     public String getAddress3() {
         return this.address3;
     }
-    /**
-     * Address3 setter.
-     */
     public void setAddress3(String address3) {
         this.address3 = address3;
     }
@@ -172,9 +158,6 @@ public class Address implements java.io.Serializable {
     public String getCityName() {
         return this.cityName;
     }
-    /**
-     * CityName setter.
-     */
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
@@ -186,9 +169,6 @@ public class Address implements java.io.Serializable {
     public String getPostalCode() {
         return this.postalCode;
     }
-    /**
-     * PostalCode setter.
-     */
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
@@ -200,9 +180,6 @@ public class Address implements java.io.Serializable {
     public String getPostOfficeBox() {
         return this.postOfficeBox;
     }
-    /**
-     * PostOfficeBox setter.
-     */
     public void setPostOfficeBox(String postOfficeBox) {
         this.postOfficeBox = postOfficeBox;
     }
@@ -213,9 +190,6 @@ public class Address implements java.io.Serializable {
     public char getPrivacyLevel() {
         return this.privacyLevel;
     }
-    /**
-     * PrivacyLevel setter.
-     */
     public void setPrivacyLevel(char privacyLevel) {
         this.privacyLevel = privacyLevel;
     }
@@ -228,9 +202,6 @@ public class Address implements java.io.Serializable {
     public Province getProvince() {
         return this.province;
     }
-    /**
-     * Province setter.
-     */
     public void setProvince(Province province) {
         this.province = province;
     }
@@ -238,13 +209,10 @@ public class Address implements java.io.Serializable {
     /**
      * Phones getter.
      */
-    @OneToMany(mappedBy="address")
+    @OneToMany(mappedBy="address", fetch=FetchType.EAGER)
     public Set<Phone> getPhones() {
         return this.phones;
     }
-    /**
-     * Phones setter.
-     */
     public void setPhones(Set<Phone> phones) {
         this.phones = phones;
     }
