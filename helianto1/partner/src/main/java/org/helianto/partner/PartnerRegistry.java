@@ -20,6 +20,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -112,7 +113,7 @@ public class PartnerRegistry implements java.io.Serializable {
     /**
      * Partners getter.
      */
-    @OneToMany(mappedBy="partnerRegistry")
+    @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
     public Set<Partner> getPartners() {
         return this.partners;
     }
@@ -123,7 +124,7 @@ public class PartnerRegistry implements java.io.Serializable {
     /**
      * Addresses getter.
      */
-    @OneToMany(mappedBy="partnerRegistry")
+    @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
     public Set<Address> getAddresses() {
         return this.addresses;
     }
