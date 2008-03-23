@@ -46,6 +46,13 @@ public class CriteriaBuilder {
     /**
      * Default constructor.
      */
+    public CriteriaBuilder() {
+        this("", DEFAULT_SQL_CONVERSION_DATE_FORMAT);
+    }
+    
+    /**
+     * Default prefix constructor.
+     */
     public CriteriaBuilder(String prefix) {
         this(prefix, DEFAULT_SQL_CONVERSION_DATE_FORMAT);
     }
@@ -114,8 +121,13 @@ public class CriteriaBuilder {
         if (!sqlFunction.equals("")) {
             criteria.append(sqlFunction).append("(");
         }
-        criteria.append(prefix).append(".")
+        if (prefix.equals("")) {
+            criteria.append(fieldName);
+        }
+        else {
+            criteria.append(prefix).append(".")
             .append(fieldName);
+        }
         if (!sqlFunction.equals("")) {
             criteria.append(")");
         }

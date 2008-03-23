@@ -31,6 +31,14 @@ public class CriteriaBuilderTests extends TestCase {
     private CriteriaBuilder criteriaBuilder;
     
     public void testDefaultConstructor() {
+    	criteriaBuilder = new CriteriaBuilder();
+        DateFormat formatter = criteriaBuilder.getFormatter();
+        Date date = new Date(0);
+        assertEquals("1969-12-31 21:00:00", formatter.format(date));
+        assertEquals("", criteriaBuilder.getPrefix());
+    }
+    
+    public void testPrefixConstructor() {
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
         assertEquals("1969-12-31 21:00:00", formatter.format(date));
