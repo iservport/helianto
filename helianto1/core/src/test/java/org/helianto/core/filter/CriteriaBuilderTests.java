@@ -112,6 +112,11 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("STRING ",criteriaBuilder.getCriteriaAsString());
     }
     
+    public void testStringWithPrefixAppender() {
+        assertTrue(criteriaBuilder.appendWithPrefix("STRING") instanceof CriteriaBuilder);
+        assertEquals("PREFIX.STRING ",criteriaBuilder.getCriteriaAsString());
+    }
+    
     public void testStringLikeAppender() {
         assertTrue(criteriaBuilder.appendLike("STRING") instanceof CriteriaBuilder);
         assertEquals("'%STRING%' ",criteriaBuilder.getCriteriaAsString());

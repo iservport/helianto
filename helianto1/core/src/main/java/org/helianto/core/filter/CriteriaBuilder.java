@@ -193,6 +193,19 @@ public class CriteriaBuilder {
      * 
      * @param content
      */
+    public CriteriaBuilder appendWithPrefix(String content) {
+        criteria.append(prefix)
+        .append(".")
+        .append(content)
+        .append(" ");
+        return this;
+    }
+
+    /**
+     * String appender.
+     * 
+     * @param content
+     */
     public CriteriaBuilder appendString(String content) {
         criteria.append("'")
         .append(content)
