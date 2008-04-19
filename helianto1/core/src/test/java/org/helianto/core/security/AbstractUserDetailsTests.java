@@ -17,8 +17,8 @@ package org.helianto.core.security;
 
 import junit.framework.TestCase;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.userdetails.UserDetails;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.userdetails.UserDetails;
 import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.test.SecurityTestSupport;

@@ -19,7 +19,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.acegisecurity.userdetails.UserDetails;
+import org.springframework.security.userdetails.UserDetails;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;

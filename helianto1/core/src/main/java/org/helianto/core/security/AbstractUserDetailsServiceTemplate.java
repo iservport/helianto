@@ -17,9 +17,9 @@ package org.helianto.core.security;
 
 import java.util.List;
 
-import org.acegisecurity.userdetails.UserDetails;
-import org.acegisecurity.userdetails.UserDetailsService;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.UserDetailsService;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
@@ -68,20 +68,20 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         }
         List<User> userList = loadUsers(identity);
         if (logger.isDebugEnabled()) {
-            logger.debug("Step 3 successful: User list is loaded");
+            logger.debug("Step 3 successful: User list is loaded with "+userList.size()+" item(s).");
         }
         User user = null;
         if (!userList.isEmpty()) {
             user = selectUser(userList);
             if (logger.isDebugEnabled()) {
-                logger.debug("Step 4 successful: User is selected");
+                logger.debug("Step 4 successful: User selected as "+user.getIdentity().getIdentityName());
             }
         }
         else {
             user = createUser(identity);
             userList.add(user);
             if (logger.isDebugEnabled()) {
-                logger.debug("Step 4 successful: User is created");
+                logger.debug("Step 4 successful: Created user as "+user.getIdentity().getIdentityName());
             }
         }
         if (user==null) {

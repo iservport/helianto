@@ -21,7 +21,7 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 
-import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.test.CredentialTestSupport;

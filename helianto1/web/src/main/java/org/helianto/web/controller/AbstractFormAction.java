@@ -1,6 +1,6 @@
 package org.helianto.web.controller;
 
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.context.SecurityContextHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.security.PublicUserDetails;

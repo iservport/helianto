@@ -28,8 +28,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.acegisecurity.context.SecurityContextHolder;
-import org.acegisecurity.providers.TestingAuthenticationToken;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.providers.TestingAuthenticationToken;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;

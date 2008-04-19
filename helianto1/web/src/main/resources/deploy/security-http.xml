@@ -20,7 +20,7 @@
 			Web security interceptor 	
 	-->
 	<bean id="filterInvocationInterceptor"
-		class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
+		class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
 		<property name="authenticationManager"
 			ref="authenticationManager"/>
 		<property name="accessDecisionManager"
@@ -38,7 +38,7 @@
 			Filter chain 	
 	-->
 	<bean id="filterChainProxy"
-		class="org.acegisecurity.util.FilterChainProxy">
+		class="org.springframework.security.util.FilterChainProxy">
 		<property name="filterInvocationDefinitionSource">
 			<value> 
 				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
@@ -51,7 +51,7 @@
 			Anonymous processing filter 	
 	-->
 	<bean id="anonymousProcessingFilter"
-		class="org.acegisecurity.providers.anonymous.AnonymousProcessingFilter">
+		class="org.springframework.security.providers.anonymous.AnonymousProcessingFilter">
 		<property name="key" value="foobar"/>
 		<property name="userAttribute"
 			value="anonymousUser,ROLE_ANONYMOUS"/>
@@ -60,9 +60,9 @@
 			Context integration filter 	
 	-->
 	<bean id="httpSessionContextIntegrationFilter"
-		class="org.acegisecurity.context.HttpSessionContextIntegrationFilter">
-		<property name="context"
-			value="org.acegisecurity.context.SecurityContextImpl"/>
+		class="org.springframework.security.context.HttpSessionContextIntegrationFilter">
+		<property name="contextClass"
+			value="org.springframework.security.context.SecurityContextImpl"/>
 	</bean>
 	<!--
 			Security enforcement filter 	
@@ -75,10 +75,10 @@
 			ref="authenticationProcessingFilterEntryPoint"/>
 	</bean> -->
 	<bean id="exceptionTranslationFilter" 
-	    class="org.acegisecurity.ui.ExceptionTranslationFilter">
+	    class="org.springframework.security.ui.ExceptionTranslationFilter">
 		<property name="authenticationEntryPoint">
 			<bean id="authenticationEntryPoint" 
-			    class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+			    class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
 				<property name="loginFormUrl" value="/admin.htm"/>
 				<property name="forceHttps" value="false"/>
 			</bean>
@@ -91,7 +91,7 @@
 			Authentication processing filter 	
 	-->
 	<bean id="authenticationProcessingFilter"
-		class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+		class="org.springframework.security.ui.webapp.AuthenticationProcessingFilter">
 		<property name="authenticationManager"
 			ref="authenticationManager"/>
 		<property name="authenticationFailureUrl"
@@ -99,13 +99,29 @@
 		<property name="defaultTargetUrl" value="/"/>
 		<property name="filterProcessesUrl"
 			value="/j_acegi_security_check"/>
+		  <property name="exceptionMappings">
+		    <props>
+				<prop key="org.springframework.security.AccountExpiredException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.AuthenticationCredentialsNotFoundException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.AuthenticationServiceException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.BadCredentialsException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.concurrent.ConcurrentLoginException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.CredentialsExpiredException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.DisabledException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.InsufficientAuthenticationException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.LockedException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.ui.digestauth.NonceExpiredException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.providers.ProviderNotFoundException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.providers.cas.ProxyUntrustedException">/admin.htm?login_error=1</prop>
+				<prop key="org.springframework.security.concurrent.SessionAlreadyUsedException">/admin.htm?login_error=1</prop>		    </props>
+		  </property>
 	</bean>
 	
 	<!--
 			Authentication processing filter entry point	
 	
 	<bean id="authenticationProcessingFilterEntryPoint"
-		class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+		class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
 		<property name="loginFormUrl" value="/login.html"/>
 		<property name="forceHttps" value="false"/>
 	</bean> -->
@@ -113,7 +129,7 @@
 			Web access decision manager	
 	-->
 	<bean id="httpRequestAccessDecisionManager"
-		class="org.acegisecurity.vote.AffirmativeBased">
+		class="org.springframework.security.vote.AffirmativeBased">
 		<property name="allowIfAllAbstainDecisions" value="false"/>
 		<property name="decisionVoters">
 			<list>

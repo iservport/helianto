@@ -75,7 +75,7 @@
 			Security provider manager
 	-->
 	<bean id="authenticationManager"
-		class="org.acegisecurity.providers.ProviderManager">
+		class="org.springframework.security.providers.ProviderManager">
 		<property name="providers">
 			<list>
 				<ref local="daoAuthenticationProvider"/>
@@ -87,7 +87,7 @@
 			Authentication provider 	
 	-->
 	<bean id="daoAuthenticationProvider"
-		class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+		class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
 		<property name="userDetailsService" ref="userDetailsService"/>
 		<property name="userCache" ref="userCache"/>
 		<!--property name="passwordEncoder" ref="passwordEncoder"/-->
@@ -97,19 +97,19 @@
 			Anonymous authentication provider 	
 	-->
 	<bean id="anonymousAuthenticationProvider"
-		class="org.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider">
+		class="org.springframework.security.providers.anonymous.AnonymousAuthenticationProvider">
 		<property name="key" value="foobar"/>
 	</bean>
 	<!--
 			Password encoder 	
 	-->
 	<bean id="passwordEncoder"
-		class="org.acegisecurity.providers.encoding.Md5PasswordEncoder"/>
+		class="org.springframework.security.providers.encoding.Md5PasswordEncoder"/>
 	<!--
 			User cache 	
 	-->
 	<bean id="userCache"
-		class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
+		class="org.springframework.security.providers.dao.cache.EhCacheBasedUserCache">
 		<property name="cache">
 			<bean id="userCacheBackend"
 				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
@@ -124,6 +124,6 @@
 	<!--
 			Role voter 	
 	-->
-	<bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter"/>
+	<bean id="roleVoter" class="org.springframework.security.vote.RoleVoter"/>
 	
 </beans>
