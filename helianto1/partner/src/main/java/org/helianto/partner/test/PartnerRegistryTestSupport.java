@@ -37,6 +37,7 @@ public class PartnerRegistryTestSupport {
             partnerAlias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
         }
         PartnerRegistry partnerRegistry = PartnerRegistry.partnerRegistryFactory(entity, partnerAlias);
+        partnerRegistry.setPartnerName("Name of "+partnerAlias);
         return partnerRegistry;
     }
 

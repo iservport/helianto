@@ -83,7 +83,7 @@ public class FreeMarkerViewTestSupport extends TestCase {
         wac.refresh();
 
         model = new HashMap<String, Object>();
-        model.put("flowExecutionKey", "flowExecutionKeyValue");
+        model.put("flowExecutionKey", "fKey");
     }
     
     /**
