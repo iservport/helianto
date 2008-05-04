@@ -7,6 +7,7 @@
 		<mapping class="org.helianto.process.Document" />
 		<mapping class="org.helianto.process.DocumentAssociation" />
 		<mapping class="org.helianto.process.Part" />
+		<mapping class="org.helianto.process.Cause" />
 	</session-factory>
 </hibernate-configuration>
 
