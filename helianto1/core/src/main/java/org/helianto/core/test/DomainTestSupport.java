@@ -35,12 +35,14 @@ public class DomainTestSupport extends TestCase {
     public static final Date DATE_TEST_VALUE = new Date(Long.MAX_VALUE);
     
     /**
-     * Provide a new object and do the minimal equalty test.
+     * Verify equalty between the object under test and other. If other is 
+     * null, try to create a copy.
      * 
      * @param objectUnderTest
+     * @param other
      * @return an object of the same type.
      */
-    public static Object minimalEqualsTest(Object objectUnderTest) {
+    public static Object minimalEqualsTest(Object objectUnderTest, Object other) {
         assertNotNull("Cant test equals() with a null object", objectUnderTest);
         if (logger.isDebugEnabled()) {
             logger.debug("Object under test is is "+objectUnderTest);
@@ -48,18 +50,29 @@ public class DomainTestSupport extends TestCase {
         assertTrue(objectUnderTest.equals(objectUnderTest));
         assertFalse(objectUnderTest.equals(null));
         assertFalse(objectUnderTest.equals(new Object()));
-        Object copy = null;
-        try {
-            copy = objectUnderTest.getClass().newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertNotNull(copy);
-        assertFalse(objectUnderTest.equals(copy));
+    	if (other==null) {
+            try {
+                other = objectUnderTest.getClass().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    	}
+        assertNotNull(other);
+        assertFalse(objectUnderTest.equals(other));
         if (logger.isDebugEnabled()) {
-            logger.debug("Copy is "+copy);
+            logger.debug("Copy is "+other);
         }
-        return copy;
+        return other;
+    }
+    
+    /**
+     * Provide a new object and do the minimal equalty test.
+     * 
+     * @param objectUnderTest
+     * @return an object of the same type.
+     */
+    public static Object minimalEqualsTest(Object objectUnderTest) {
+        return minimalEqualsTest(objectUnderTest, null);
     }
     
     /**
