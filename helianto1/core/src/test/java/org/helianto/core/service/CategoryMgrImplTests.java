@@ -40,7 +40,7 @@ public class CategoryMgrImplTests extends TestCase {
     	List<Category> categoryList = new ArrayList<Category>();
     	String criteria = "TEST";
     	
-    	expect(categorySelectionStrategy.createCriteriaAsString(categoryFilter, "user")).andReturn(criteria);
+    	expect(categorySelectionStrategy.createCriteriaAsString(categoryFilter, "category")).andReturn(criteria);
     	replay(categorySelectionStrategy);
 
     	expect(categoryDao.findCategories(criteria)).andReturn(categoryList);

@@ -47,9 +47,9 @@ public class DomainTestSupport extends TestCase {
         if (logger.isDebugEnabled()) {
             logger.debug("Object under test is is "+objectUnderTest);
         }
-        assertTrue(objectUnderTest.equals(objectUnderTest));
-        assertFalse(objectUnderTest.equals(null));
-        assertFalse(objectUnderTest.equals(new Object()));
+        assertTrue("equals() failed", objectUnderTest.equals(objectUnderTest));
+        assertFalse("null object", objectUnderTest.equals(null));
+        assertFalse("equals(new Object) passed", objectUnderTest.equals(new Object()));
     	if (other==null) {
             try {
                 other = objectUnderTest.getClass().newInstance();

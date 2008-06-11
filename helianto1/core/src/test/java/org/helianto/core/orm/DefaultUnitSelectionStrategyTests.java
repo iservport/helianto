@@ -30,8 +30,9 @@ import org.helianto.core.test.CategoryTestSupport;
 public class DefaultUnitSelectionStrategyTests extends TestCase {
     
     public static String C1 = "unit.entity.id = 0 ";
-    public static String C2 = "AND unit.category.id = 0 ";
-    public static String C3 = "AND unit.unitNameLike like '%NAME_LIKE%' ";
+    public static String C2 = "AND unit.unitCode = 'CODE' ";
+    public static String C3 = "AND unit.category.id = 0 ";
+    public static String C4 = "AND unit.unitNameLike like '%NAME_LIKE%' ";
 
     private UnitSelectionStrategy unitSelectionStrategy;
 
@@ -61,12 +62,12 @@ public class DefaultUnitSelectionStrategyTests extends TestCase {
     public void testCreateCriteriaAsStringCategory() {
     	Category category = CategoryTestSupport.createCategory();
         filter.setCategory(category);
-        assertEquals(C1+C2, unitSelectionStrategy.createCriteriaAsString(filter, "unit"));
+        assertEquals(C1+C3, unitSelectionStrategy.createCriteriaAsString(filter, "unit"));
     }
     
     public void testCreateCriteriaAsStringUnitNameLike() {
         filter.setUnitNameLike("NAME_LIKE");
-        assertEquals(C1+C3, unitSelectionStrategy.createCriteriaAsString(filter, "unit"));
+        assertEquals(C1+C4, unitSelectionStrategy.createCriteriaAsString(filter, "unit"));
     }
     
     private UnitFilter filter;

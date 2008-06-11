@@ -93,16 +93,16 @@
 	</bean>
 
 	<!--
-			identity selection strategy	
+			selection strategies	
 	-->
 	<bean id="identitySelectionStrategy" 
 		class="org.helianto.core.hibernate.DefaultIdentitySelectionStrategy"/>
-	
-	<!--
-			user selection strategy	
-	-->
 	<bean id="userSelectionStrategy" 
 		class="org.helianto.core.orm.DefaultUserSelectionStrategy"/>
+	<bean id="categorySelectionStrategy" 
+		class="org.helianto.core.orm.DefaultCategorySelectionStrategy"/>
+	<bean id="unitSelectionStrategy" 
+		class="org.helianto.core.orm.DefaultUnitSelectionStrategy"/>
 	
 	<!--
 			principal generation strategy	
@@ -131,6 +131,30 @@
 		<property name="target">
 			<bean id="serverTarget"
 				class="org.helianto.core.service.ServerMgrImpl">
+			</bean>
+		</property>
+	</bean>
+	<!--
+			Category service bean	
+	-->
+	<bean id="categoryMgr" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="categoryTarget"
+				class="org.helianto.core.service.CategoryMgrImpl">
+			</bean>
+		</property>
+	</bean>
+	<!--
+			Unit service bean	
+	-->
+	<bean id="unitMgr" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="unitTarget"
+				class="org.helianto.core.service.UnitMgrImpl">
 			</bean>
 		</property>
 	</bean>
