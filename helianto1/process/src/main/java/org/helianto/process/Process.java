@@ -15,7 +15,13 @@
 
 package org.helianto.process;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.helianto.core.Entity;
 
 /**
  * <p>
@@ -28,24 +34,72 @@ import javax.persistence.Table;
 public class Process extends Document implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long internalNumber;
+    protected long internalNumber;
 
     /** default constructor */
     public Process() {
     }
 
-    // Property accessors
+    /**
+     * Internal number.
+     * <p>Process <code>DocCode</code> is immediately re-generated as
+     * "PRC#" followed by the internal number.
+     * </p>
+     */
     public long getInternalNumber() {
         return this.internalNumber;
     }
-    
     public void setInternalNumber(long internalNumber) {
         this.internalNumber = internalNumber;
+        StringBuilder prefix = new StringBuilder("PRC#");
+        setDocCode(prefix.append(internalNumber).toString());
+    }
+    
+    /**
+     * List of child <code>Operation</code>.
+     */
+    @Transient
+    public List<Operation> getOperations() {
+    	List<Operation> operations = new ArrayList<Operation>();
+    	for (DocumentAssociation documentAssociation: this.getChildAssociations()) {
+    		if (documentAssociation.getAssociationType()==AssociationType.PROCESS_OPERATION.getValue()) {
+    			operations.add((Operation) documentAssociation.getChild());
+    		}
+    	}
+    	return operations;
+    }
+    
+    /**
+     * <code>Process</code> factory.
+     * 
+     * @param entity
+     * @param internalNumber
+     */
+    public static Process processFactory(Entity entity, long internalNumber) {
+    	Process process = documentFactory(Process.class, entity, "");
+    	process.setInternalNumber(internalNumber);
+    	return process;
     }
 
+    /**
+     * <code>Process</code> query <code>StringBuilder</code>.
+     */
+    @Transient
+    public static StringBuilder getProcessQueryStringBuilder() {
+        return new StringBuilder("select process from Process process ");
+    }
 
-
-
+    /**
+     * <code>Process</code> natural id query.
+     */
+    @Transient
+    public static String getProcessNaturalIdQueryString() {
+        return getProcessQueryStringBuilder().append("where process.entity = ? and process.internalNumber = ? ").toString();
+    }
+    
+    public boolean equals(Object other) {
+		 if ( !(other instanceof Process) ) return false;
+		 return super.equals(other);
+ }
+ 
 }
-
-

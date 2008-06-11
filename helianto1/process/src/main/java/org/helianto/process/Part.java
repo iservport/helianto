@@ -43,16 +43,12 @@ public class Part extends Document implements java.io.Serializable {
     public Part() {
     }
 
-    // Property accessors
     /**
-     * HasDrawing getter.
+     * Has drawing flag.
      */
     public boolean getHasDrawing() {
         return this.hasDrawing;
     }
-    /**
-     * HasDrawing setter.
-     */
     public void setHasDrawing(boolean hasDrawing) {
         this.hasDrawing = hasDrawing;
     }
@@ -65,9 +61,6 @@ public class Part extends Document implements java.io.Serializable {
     public Partner getDesignResponsibility() {
         return this.designResponsibility;
     }
-    /**
-     * DesignResponsibility setter.
-     */
     public void setDesignResponsibility(Partner designResponsibility) {
         this.designResponsibility = designResponsibility;
     }
@@ -79,12 +72,10 @@ public class Part extends Document implements java.io.Serializable {
     public float getWeight() {
         return this.weight;
     }
-    /**
-     * Weight setter.
-     */
     public void setWeight(float weight) {
         this.weight = weight;
     }
+    
     //1.1
     /**
      * <code>Part</code> factory.
@@ -133,11 +124,24 @@ public class Part extends Document implements java.io.Serializable {
     }
 
     /**
+     * <code>Part</code> query <code>StringBuilder</code>.
+     */
+    @Transient
+    public static StringBuilder getPartQueryStringBuilder() {
+        return new StringBuilder("select part from Part part ");
+    }
+
+    /**
      * <code>Part</code> natural id query.
      */
     @Transient
-    public static String getDocumentNaturalIdQueryString() {
-        return "select part from Part part where part.entity = ? and part.docCode = ? ";
+    public static String getPartNaturalIdQueryString() {
+        return getPartQueryStringBuilder().append("where part.entity = ? and part.docCode = ? ").toString();
     }
-
+    
+    public boolean equals(Object other) {
+		 if ( !(other instanceof Part) ) return false;
+		 return super.equals(other);
+ }
+ 
 }

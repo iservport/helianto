@@ -38,13 +38,13 @@ public class DocumentVersion  implements java.io.Serializable {
 
  	private static final long serialVersionUID = 1L;
 	private int id;
-     private Release release;
-     private Document document;
-     private int majorNumber;
-     private int minorNumber;
-     private int releaseAction;
-     private char activityCode;
-     private String changeSummary;
+    private Release release;
+    private Document document;
+    private int majorNumber;
+    private int minorNumber;
+    private int releaseAction;
+    private char activityCode;
+    private String changeSummary;
 
     /** default constructor */
     public DocumentVersion() {

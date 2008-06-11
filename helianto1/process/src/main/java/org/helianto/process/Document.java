@@ -56,6 +56,7 @@ public class Document implements java.io.Serializable {
     private String docFile;
     private Set<DocumentAssociation> parentAssociations = new HashSet<DocumentAssociation>();
     private Set<DocumentAssociation> childAssociations = new HashSet<DocumentAssociation>();
+    private Set<Characteristic> characteristics = new HashSet<Characteristic>();
 
     /** default constructor */
     public Document() {
@@ -89,9 +90,6 @@ public class Document implements java.io.Serializable {
     public String getDocCode() {
         return this.docCode;
     }
-    /**
-     * DocCode setter.
-     */
     public void setDocCode(String docCode) {
         this.docCode = docCode;
     }
@@ -103,9 +101,6 @@ public class Document implements java.io.Serializable {
     public int getVersion() {
         return this.version;
     }
-    /**
-     * Version setter.
-     */
     public void setVersion(int version) {
         this.version = version;
     }
@@ -117,9 +112,6 @@ public class Document implements java.io.Serializable {
     public String getDocName() {
         return this.docName;
     }
-    /**
-     * DocName setter.
-     */
     public void setDocName(String docName) {
         this.docName = docName;
     }
@@ -131,9 +123,6 @@ public class Document implements java.io.Serializable {
     public String getDocFile() {
         return this.docFile;
     }
-    /**
-     * DocFile setter.
-     */
     public void setDocFile(String docFile) {
         this.docFile = docFile;
     }
@@ -145,9 +134,6 @@ public class Document implements java.io.Serializable {
     public Set<DocumentAssociation> getParentAssociations() {
         return this.parentAssociations;
     }
-    /**
-     * ParentAssociations setter.
-     */
     public void setParentAssociations(Set<DocumentAssociation> parentAssociations) {
         this.parentAssociations = parentAssociations;
     }
@@ -159,11 +145,19 @@ public class Document implements java.io.Serializable {
     public Set<DocumentAssociation> getChildAssociations() {
         return this.childAssociations;
     }
-    /**
-     * ChildAssociations setter.
-     */
     public void setChildAssociations(Set<DocumentAssociation> childAssociations) {
         this.childAssociations = childAssociations;
+    }
+
+    /**
+     * Characteristics.
+     */
+    @OneToMany(mappedBy="document", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<Characteristic> getCharacteristics() {
+        return this.characteristics;
+    }
+    public void setCharacteristics(Set<Characteristic> characteristics) {
+        this.characteristics = characteristics;
     }
 
     //1
