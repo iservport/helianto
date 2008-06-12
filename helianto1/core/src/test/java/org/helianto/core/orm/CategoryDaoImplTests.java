@@ -5,7 +5,6 @@ import java.util.List;
 import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.dao.CategoryDao;
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -14,21 +13,9 @@ import org.springframework.dao.DataIntegrityViolationException;
  *
  * @author Mauricio Fernandes de Castro
  */
-public class CategoryDaoImplTests extends AbstractIntegrationTest {
+public class CategoryDaoImplTests extends AbstractHibernateIntegrationTest {
     
     private CategoryDao categoryDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/org.helianto.core.xml",
-                "deploy/core.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>Category</code>.

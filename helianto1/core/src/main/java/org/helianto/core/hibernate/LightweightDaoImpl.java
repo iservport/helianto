@@ -19,12 +19,15 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.dao.LightweightDao;
 import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.util.Assert;
 
 /**
@@ -33,14 +36,16 @@ import org.springframework.util.Assert;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class LightweightDaoImpl extends HibernateDaoSupport implements LightweightDao {
+public class LightweightDaoImpl implements LightweightDao {
+	
+	protected SessionFactory sessionFactory;
 
     public void persist(Object object) throws DataAccessException {
         Assert.notNull(object);
         if (logger.isDebugEnabled()) {
             logger.debug("** DAO Persisting "+object);
         }
-        this.getHibernateTemplate().persist(object);
+        this.sessionFactory.getCurrentSession().persist(object);
     }
 
     public Object merge(Object object) {
@@ -48,17 +53,18 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         if (logger.isDebugEnabled()) {
             logger.debug("** DAO Merging "+object.toString());
         }
-        return this.getHibernateTemplate().merge(object);
+        return this.sessionFactory.getCurrentSession().merge(object);
     }
 
-    public Object load(Class clazz, Serializable key) throws DataAccessException {
+    @SuppressWarnings("unchecked")
+	public Object load(Class clazz, Serializable key) throws DataAccessException {
         Assert.notNull(clazz);
         Assert.notNull(key);
         if (logger.isDebugEnabled()) {
             logger.debug("** DAO Loading "+clazz.toString()
                     +" with id "+key.toString());
         }
-        return this.getHibernateTemplate().load(clazz, key);
+        return this.sessionFactory.getCurrentSession().load(clazz, key);
     }
 
     public <T> T find(Class<T> clazz, Serializable key) throws DataAccessException {
@@ -68,10 +74,11 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
             logger.debug("** DAO FINDING "+clazz.toString()
                     +" with id "+key.toString());
         }
-        return clazz.cast(this.getHibernateTemplate().load(clazz, key)) ;
+        return clazz.cast(this.sessionFactory.getCurrentSession().load(clazz, key)) ;
     }
 
-    public void remove(Object object) {
+    @SuppressWarnings("unchecked")
+	public void remove(Object object) {
         Assert.notNull(object);
         if (object instanceof String) {
             remove(find(object.toString()));
@@ -80,20 +87,21 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
             if (logger.isDebugEnabled()) {
                 logger.debug("** DAO Deleting collection of size "+collection.size());
             }
-            this.getHibernateTemplate().deleteAll(collection);
+            for (Object item: collection) {
+            	this.sessionFactory.getCurrentSession().delete(item);
+            }
         } else {
             if (logger.isDebugEnabled()) {
                 logger.debug("** DAO Deleting "+object.toString());
             }
-            this.getHibernateTemplate().delete(object);
+            this.sessionFactory.getCurrentSession().delete(object);
         }
     }
 
     protected Query queryAssembler(String query, Object... values) {
         Assert.notNull(query);
         try {
-            Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
-            Query result = session.createQuery(query);
+            Query result = this.sessionFactory.getCurrentSession().createQuery(query);
             int i = 0;
             for (Object value: values) {
                 result.setParameter(i++, value);
@@ -107,7 +115,8 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         }
     }
     
-    public Collection find(String query, Object... values) throws DataAccessException {
+    @SuppressWarnings("unchecked")
+	public Collection find(String query, Object... values) throws DataAccessException {
         Assert.notNull(query);
         if (logger.isDebugEnabled()) {
             logger.debug("** DAO finding ["+query+"] with "+values);
@@ -115,11 +124,13 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         return queryAssembler(query,  values).list();
     }
 
-    public Collection find(StringBuilder query, Object... values) throws DataAccessException {
+    @SuppressWarnings("unchecked")
+	public Collection find(StringBuilder query, Object... values) throws DataAccessException {
         return find(query.toString(), values);
     }
 
-    public Object findUnique(String query, Object... values) throws DataAccessException {
+    @SuppressWarnings("unchecked")
+	public Object findUnique(String query, Object... values) throws DataAccessException {
         Assert.notNull(query);
         Collection list = find(query, values);
         if (isUnique(list)) {
@@ -130,7 +141,8 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         throw new DataIntegrityViolationException("Unique object expected");
     }
 
-    public boolean isUnique(Collection collection) {
+    @SuppressWarnings("unchecked")
+	public boolean isUnique(Collection collection) {
         Assert.notNull(collection);
         if (collection.size()==1) {
             if (logger.isDebugEnabled()) {
@@ -141,7 +153,8 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         return false;
     }
 
-    public boolean isEmpty(Collection collection) {
+    @SuppressWarnings("unchecked")
+	public boolean isEmpty(Collection collection) {
         Assert.notNull(collection);
         if (collection.isEmpty()) {
             if (logger.isDebugEnabled()) {
@@ -154,7 +167,7 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
     
     public boolean contains(Object object) throws DataAccessException {
         Assert.notNull(object);
-        boolean contains = this.getHibernateTemplate().contains(object);
+        boolean contains = this.sessionFactory.getCurrentSession().contains(object);
         if (logger.isDebugEnabled()) {
             logger.debug("** DAO Session "+(contains ? "contains ": "does not contain ")+object);
         }
@@ -166,29 +179,30 @@ public class LightweightDaoImpl extends HibernateDaoSupport implements Lightweig
         if (logger.isDebugEnabled()) {
             logger.debug("** DAO Refreshing "+object);
         }
-        this.getHibernateTemplate().refresh(object);
+        this.sessionFactory.getCurrentSession().refresh(object);
     }
 
     public void flush() {
         if (logger.isDebugEnabled()) {
             logger.debug("Flushing session.");
         }
-        getHibernateTemplate().flush();
+        this.sessionFactory.getCurrentSession().flush();
     }
     
     public void clear() {
         if (logger.isDebugEnabled()) {
             logger.debug("Clearing session.");
         }
-        getHibernateTemplate().clear();
+        this.sessionFactory.getCurrentSession().clear();
     }
     
-    // utils
     
-    public void init() {
-        if (getHibernateTemplate()==null) {
-            throw new IllegalArgumentException("HibernateTemplate required...");
-        }
-    }
+    
+    @Resource
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+    
+    protected static final Log logger = LogFactory.getLog(LightweightDaoImpl.class);
 
 }

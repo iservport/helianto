@@ -28,18 +28,17 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.providers.TestingAuthenticationToken;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
-import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.test.SecurityTestSupport;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.providers.TestingAuthenticationToken;
 
 public class SecurityMgrImplTests extends TestCase {
 
@@ -124,7 +123,6 @@ public class SecurityMgrImplTests extends TestCase {
     //~ collaborators
     
     private IdentityDao identityDao;
-    private AuthorizationDao authorizationDao;
     private CredentialDao credentialDao;
     private UserLogDao userLogDao;
     
@@ -135,8 +133,6 @@ public class SecurityMgrImplTests extends TestCase {
         securityMgr = new SecurityMgrImpl();
         identityDao = createMock(IdentityDao.class);
         securityMgr.setIdentityDao(identityDao);
-        authorizationDao = createMock(AuthorizationDao.class);
-        securityMgr.setAuthorizationDao(authorizationDao);
         credentialDao = createMock(CredentialDao.class);
         securityMgr.setCredentialDao(credentialDao);
         userLogDao = createMock(UserLogDao.class);
@@ -146,7 +142,6 @@ public class SecurityMgrImplTests extends TestCase {
     @Override
     public void tearDown() {
         reset(identityDao);
-        reset(authorizationDao);
         reset(credentialDao);
         reset(userLogDao);
     }

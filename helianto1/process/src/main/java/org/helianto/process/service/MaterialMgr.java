@@ -15,34 +15,11 @@
 
 package org.helianto.process.service;
 
-import java.util.List;
-
-import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 import org.helianto.process.MaterialType;
 
 public interface MaterialMgr {
 
-    /**
-     * Unit factory method.
-     */
-    public Unit createUnit(Entity entity);
-    
-    /**
-     * Persist an <code>Unit</code>.
-     */
-    public void persistUnit(Unit unit);
-    
-    /**
-     * Find <code>Unit</code> by <code>Entity</code> and code.
-     */
-    public Unit findUnitByNaturalId(Entity entity, String unitCode);
-    
-    /**
-     * Find <code>Unit</code> list for this <code>Entity</code>
-     */
-    public List<Unit> findUnitByEntity(Entity entity);
-    
     /**
      * Material factory method.
      */

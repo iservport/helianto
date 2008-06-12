@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate;
+package org.helianto.core.orm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,15 @@ import java.util.List;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.dao.ProvinceDao;
+import org.helianto.core.hibernate.GenericDaoImpl;
+import org.springframework.stereotype.Repository;
 
+/**
+ * Default implementation of <code>Province</code> data access interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
+@Repository("provinceDao")
 public class ProvinceDaoImpl extends GenericDaoImpl implements ProvinceDao {
     
     public void persistProvince(Province province) {
@@ -43,6 +51,7 @@ public class ProvinceDaoImpl extends GenericDaoImpl implements ProvinceDao {
     static String PROVINCE_QRY = "from Province province "+
         "where province.operator = ? and province.code = ? ";
 
+	@SuppressWarnings("unchecked")
 	public List<Province> findProvinceByOperator(Operator operator) {
         return (ArrayList<Province>) find(PROVINCE_OPERATOR_QRY, operator);
 	}

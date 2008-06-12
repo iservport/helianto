@@ -23,11 +23,13 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 
 import org.helianto.core.UserGroup;
 import org.helianto.core.Service;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>UserRole</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("userRoleDao")
 public class UserRoleDaoImpl extends GenericDaoImpl implements UserRoleDao {
      
     public void persistUserRole(UserRole userRole) {

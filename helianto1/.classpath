@@ -9,7 +9,6 @@
 	<classpathentry kind="src" path="process/src/main/java"/>
 	<classpathentry kind="src" path="process/src/main/resources"/>
 	<classpathentry kind="src" path="process/src/test/java"/>
-	<classpathentry kind="src" path="process/src/test/resources"/>
 	<classpathentry kind="src" path="web/src/main/java"/>
 	<classpathentry kind="src" path="web/src/main/resources"/>
 	<classpathentry kind="src" path="web/src/test/java"/>

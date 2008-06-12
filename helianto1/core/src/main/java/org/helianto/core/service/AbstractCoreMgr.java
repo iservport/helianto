@@ -21,7 +21,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
-import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.dao.UserGroupDao;
@@ -35,7 +34,6 @@ public class AbstractCoreMgr {
 
     protected IdentityDao identityDao;
     
-    protected AuthorizationDao authorizationDao;
     protected UserGroupDao userGroupDao;
     protected InternalEnumeratorDao internalEnumeratorDao;
     
@@ -73,11 +71,6 @@ public class AbstractCoreMgr {
     @Resource
     public void setIdentityDao(IdentityDao identityDao) {
         this.identityDao = identityDao;
-    }
-
-    @Resource
-    public void setAuthorizationDao(AuthorizationDao authorizationDao) {
-        this.authorizationDao = authorizationDao;
     }
 
     @Resource

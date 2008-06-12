@@ -22,11 +22,13 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>User</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("userDao")
 public class UserDaoImpl extends GenericDaoImpl implements UserDao {
      
     public void persistUser(User user) {

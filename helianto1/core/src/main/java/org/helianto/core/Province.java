@@ -82,6 +82,23 @@ public class Province  implements java.io.Serializable {
     }
 
     /**
+     * Default <code>Province</code> creator.
+     * 
+     * @param requiredOperator
+     * @param code
+     * @param provinceName
+     */
+    public static Province provinceFactory(Operator requiredOperator, String code, String provinceName) {
+        Province province = new Province();
+
+        province.setOperator(requiredOperator);
+        province.setCode(code);
+        province.setProvinceName(provinceName);
+        return province;
+    }
+
+
+    /**
      * toString
      * @return String
      */

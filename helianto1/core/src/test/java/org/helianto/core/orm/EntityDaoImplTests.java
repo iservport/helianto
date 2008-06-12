@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.dao.EntityDao;
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 /**
@@ -12,21 +11,9 @@ import org.springframework.dao.DataIntegrityViolationException;
  *
  * @author Mauricio Fernandes de Castro
  */
-public class EntityDaoImplTests extends AbstractIntegrationTest {
+public class EntityDaoImplTests extends AbstractHibernateIntegrationTest {
 
     private EntityDao entityDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.core.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>Entity</code>.

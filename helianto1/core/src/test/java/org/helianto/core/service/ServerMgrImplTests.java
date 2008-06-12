@@ -33,6 +33,7 @@ import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.dao.OperatorDao;
+import org.helianto.core.dao.ServerDao;
 import org.helianto.core.mail.ConfigurableMailSender;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.DecoratedPreparator;
@@ -99,8 +100,8 @@ public class ServerMgrImplTests extends TestCase {
             new PasswordConfirmationMailMessageDecorator(
                     new DecoratedPreparator(mailForm));
     	
-        expect(operatorDao.findServerActive(mailForm.getOperator())).andReturn(serverList);
-        replay(operatorDao);
+        expect(serverDao.findServerActive(mailForm.getOperator())).andReturn(serverList);
+        replay(serverDao);
 
         expect(configurableMailSenderFactory.create(serverList)).andReturn(sender);
         replay(configurableMailSenderFactory);
@@ -117,6 +118,7 @@ public class ServerMgrImplTests extends TestCase {
     // collabs
     
     private OperatorDao operatorDao;
+    private ServerDao serverDao;
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
     private ConfigurableMailSender sender;
@@ -124,6 +126,7 @@ public class ServerMgrImplTests extends TestCase {
     @Override
     public void setUp() {
         operatorDao = createMock(OperatorDao.class);
+        serverDao = createMock(ServerDao.class);
         configurableMailSenderFactory = createMock(ConfigurableMailSenderFactory.class);
         mailMessageComposer = createMock(MailMessageComposer.class);
         
@@ -131,6 +134,7 @@ public class ServerMgrImplTests extends TestCase {
         
         serverMgr = new ServerMgrImpl();
         serverMgr.setOperatorDao(operatorDao);
+        serverMgr.setServerDao(serverDao);
         serverMgr.setConfigurableMailSenderFactory(configurableMailSenderFactory);
         serverMgr.setMailMessageComposer(mailMessageComposer);
     }
@@ -138,6 +142,7 @@ public class ServerMgrImplTests extends TestCase {
     @Override
     public void tearDown() {
         reset(operatorDao);
+        reset(serverDao);
 //        reset(serviceManagementTemplate);
 //        reset(systemConfigurationTemplate);
         reset(configurableMailSenderFactory);

@@ -18,25 +18,21 @@ package org.helianto.process.dao;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Unit;
 import org.helianto.process.MaterialType;
 
+/**
+ * <code>Material</code> data access interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public interface MaterialDao {
 
-    public void persistUnit(Unit unit);
-
     public void persistMaterialType(MaterialType materialType);
-
-    public List<Unit> findUnitByEntity(Entity entity);
-    
-    public Unit findUnitByNaturalId(Entity entity, String unitCode);
 
     public List<MaterialType> findMaterialTypeByEntity(Entity entity);
     
     public MaterialType findMaterialTypeByEntityAnd(Entity entity, long internalNumber);
     
-    public void removeUnit(Unit unit);
-
     public void removeMaterialType(MaterialType materialType);
 
 }

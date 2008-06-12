@@ -11,7 +11,8 @@
            http://www.springframework.org/schema/tx/spring-tx.xsd">
                
     <context:annotation-config/>
-    
+	<context:component-scan base-package="org.helianto.core.orm"/>
+	    
 	<!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
 
@@ -29,7 +30,7 @@
 		-->
 	<!--
 			Dao implementation	
-	-->
+	-
 	<bean id="identityDao" 
 		class="org.helianto.core.orm.IdentityDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
@@ -39,14 +40,13 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="operatorDao" 
-		class="org.helianto.core.hibernate.OperatorDaoImpl">
+		class="org.helianto.core.orm.OperatorDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="serviceDao" 
 		class="org.helianto.core.orm.ServiceDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
-
 	<bean id="entityDao" 
 		class="org.helianto.core.orm.EntityDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
@@ -56,7 +56,7 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="provinceDao" 
-		class="org.helianto.core.hibernate.ProvinceDaoImpl">
+		class="org.helianto.core.orm.ProvinceDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="userAssociationDao" 
@@ -90,7 +90,7 @@
 	<bean id="internalEnumeratorDao" 
 		class="org.helianto.core.orm.InternalEnumeratorDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
+	</bean> -->
 
 	<!--
 			selection strategies	
@@ -159,6 +159,14 @@
 		</property>
 	</bean>
 
+	<!-- 
+			Authentication property editor registrar bean	
+	-->
+	<bean id="authenticationPropertyEditorRegistrar" 
+		class="org.helianto.core.validation.AuthenticationPropertyEditorRegistrar">
+	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
 	<bean id="categoryPropertyEditor" 
 		class="org.helianto.core.validation.CategoryPropertyEditor"/>
 

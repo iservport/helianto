@@ -13,19 +13,19 @@
  * limitations under the License.
  */
 
-package org.helianto.process.hibernate;
+package org.helianto.core.orm;
 
 import org.helianto.core.test.AbstractIntegrationTest;
-import org.helianto.process.dao.ProcessDao;
-import org.helianto.process.dao.ResourceDao;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.hibernate.SessionFactory;
 
-public class AbstractProcesssIntegrationTest extends AbstractIntegrationTest {
-    
-    protected ResourceDao resourceDao;
-    protected ProcessDao processDao;
-    protected HibernateTemplate hibernateTemplate;
-    
+
+/**
+ * A base class for service layer integration tests requiring Hibernate.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
+public class AbstractHibernateIntegrationTest extends AbstractIntegrationTest {
+
     @Override
     protected String[] getConfigLocations() {
         return new String[] { 
@@ -33,24 +33,14 @@ public class AbstractProcesssIntegrationTest extends AbstractIntegrationTest {
                 "deploy/sessionFactory.xml",
                 "deploy/transaction.xml",
                 "deploy/support.xml",
-                "deploy/core.xml",
                 "deploy/org.helianto.core.xml",
-                "deploy/org.helianto.partner.xml",
-                "deploy/org.helianto.process.xml"
                 };
     }
-
-
-    public void setResourceDao(ResourceDao resourceDao) {
-        this.resourceDao = resourceDao;
+    
+    protected SessionFactory sessionFactory;
+    
+    public void setSessionFactory(SessionFactory sessionFactory) {
+    	this.sessionFactory = sessionFactory;
     }
-
-    public void setProcessDao(ProcessDao processDao) {
-        this.processDao = processDao;
-    }
-
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
-    }
-
+    
 }

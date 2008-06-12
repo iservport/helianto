@@ -19,12 +19,14 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.Supplier;
 import org.helianto.partner.dao.SupplierDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Supplier</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("supplierDao")
 public class SupplierDaoImpl extends GenericDaoImpl implements SupplierDao {
      
     public Supplier findSupplierByNaturalId(PartnerRegistry partnerRegistry, int sequence) {

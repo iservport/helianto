@@ -25,11 +25,13 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 
 
 import org.helianto.core.Operator;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>Entity</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("entityDao")
 public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
      
     public void persistEntity(Entity entity) {
@@ -61,7 +63,8 @@ public class EntityDaoImpl extends GenericDaoImpl implements EntityDao {
     }
     
     
-    public List<Entity> findEntities(String criteria) {
+    @SuppressWarnings("unchecked")
+	public List<Entity> findEntities(String criteria) {
         if (criteria!=null && !criteria.equals("")) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Finding entity list with criteria='"+criteria+"' ");

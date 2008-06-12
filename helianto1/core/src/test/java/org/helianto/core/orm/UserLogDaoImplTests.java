@@ -1,39 +1,22 @@
 package org.helianto.core.orm;
 
-import org.helianto.core.test.AbstractIntegrationTest;
-import org.helianto.core.test.UserTestSupport;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import java.util.Date;
 import java.util.List;
 
+import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.test.UserLogTestSupport;
-
-
-
-import org.helianto.core.User;
+import org.helianto.core.test.UserTestSupport;
+import org.springframework.dao.DataIntegrityViolationException;
 /**
  * <code>UserLogDao</code> tests.
  *
  * @author Mauricio Fernandes de Castro
  */
-public class UserLogDaoImplTests extends AbstractIntegrationTest {
+public class UserLogDaoImplTests extends AbstractHibernateIntegrationTest {
 
     private UserLogDao userLogDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.core.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>UserLog</code>.

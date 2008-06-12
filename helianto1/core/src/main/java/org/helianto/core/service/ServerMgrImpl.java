@@ -62,7 +62,7 @@ public class ServerMgrImpl extends AbstractServerMgr {
 
     public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
             throws MessagingException {
-        List<Server> serverList = operatorDao.findServerActive(mailForm.getOperator());
+        List<Server> serverList = serverDao.findServerActive(mailForm.getOperator());
         JavaMailSender sender = configurableMailSenderFactory.create(serverList);
         sender.send(mailMessageComposer.composeMessage("PASSWORD", mailForm));
     }

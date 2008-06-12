@@ -19,11 +19,13 @@ import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.dao.ServiceDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>Service</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("serviceDao")
 public class ServiceDaoImpl extends GenericDaoImpl implements ServiceDao {
      
     public void persistService(Service service) {

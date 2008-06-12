@@ -19,12 +19,14 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Customer;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.CustomerDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Customer</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("customerDao")
 public class CustomerDaoImpl extends GenericDaoImpl implements CustomerDao {
      
     public Customer findCustomerByNaturalId(PartnerRegistry partnerRegistry, int sequence) {

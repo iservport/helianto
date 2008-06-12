@@ -16,6 +16,7 @@
 package org.helianto.process;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -103,8 +104,7 @@ public class Specification implements java.io.Serializable {
     /**
      * Specification limit.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="specificationLimitId", nullable=true)
+    @Embedded
     public SpecificationLimit getSpecificationLimit() {
         return this.specificationLimit;
     }
@@ -118,11 +118,26 @@ public class Specification implements java.io.Serializable {
      * @param document
      * @param characteristic
      */
-    public static Specification characteristicFactory(Document document, Characteristic characteristic) {
-    	Specification specification = new Specification();
+    public static <T extends Specification> T specificationFactory(Class<T> clazz, Document document, Characteristic characteristic) {
+    	T specification = null;
+        try {
+        	specification = clazz.newInstance();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unable to create specification of class "+clazz);
+        }
         specification.setDocument(document);
         specification.setCharacteristic(characteristic);
         return specification;
+    }
+
+    /**
+     * <code>Specification</code> factory.
+     * 
+     * @param document
+     * @param characteristic
+     */
+    public static Specification specificationFactory(Document document, Characteristic characteristic) {
+        return specificationFactory(Specification.class, document, characteristic);
     }
 
     /**

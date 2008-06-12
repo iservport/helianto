@@ -24,12 +24,14 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>UserGroup</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("userGroupDao")
 public class UserGroupDaoImpl extends GenericDaoImpl implements UserGroupDao {
      
     public void persistUserGroup(UserGroup userGroup) {

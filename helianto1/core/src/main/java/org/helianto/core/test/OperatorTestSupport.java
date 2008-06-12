@@ -19,24 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.helianto.core.ActivityState;
-import org.helianto.core.Credential;
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
-import org.helianto.core.Server;
-import org.helianto.core.ServerType;
 import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class OperatorTestSupport extends AbstractHibernateIntegrationTest {
+public class OperatorTestSupport {
 
     private static int testKey = 1;
 
-    /*
-     * Operator tests 
-     */
-    
     public static Operator createOperator(Object... args) {
         String operatorName;
         try {
@@ -70,66 +62,6 @@ public class OperatorTestSupport extends AbstractHibernateIntegrationTest {
         hibernateTemplate.flush();
         hibernateTemplate.clear();
         return operatorList;
-    }
-    
-    /*
-     * Server tests 
-     */
-    
-    public static Server createServer(Object... args) {
-        Operator operator;
-        try {
-            operator = (Operator) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            operator = createOperator();
-        }
-        Credential credential;
-        try {
-            credential = (Credential) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            credential = CredentialTestSupport.createCredential();
-        }
-        ServerType serverType = ServerType.values()[testKey % 3];
-        Server server = OperatorCreator.serverFactory(operator, generateKey(20, testKey++), serverType, credential);
-        logger.info("+++ "+server);
-        return server;
-    }
-
-    public static Server createAndPersistServer(OperatorDao operatorDao) {
-        Server server = createServer();
-        if (operatorDao!=null) {
-            operatorDao.persistServer(server);
-        }
-        return server;
-    }
-
-    public static List<Server> createServerList(int size, int operatorListSize) {
-        List<Operator> operatorList = createOperatorList(operatorListSize);
-        return createServerList(size, operatorList);
-    }
-
-    public static List<Server> createServerList(int size, List<Operator> operatorList) {
-        List<Server> serverList = new ArrayList<Server>();
-        Credential credential = CredentialTestSupport.createCredential();
-        for (Operator o: operatorList) {
-            for (int i=0;i<size;i++) {
-                Server server = createServer(o, credential);
-                server.setPriority((byte) (Math.random()*size));  //random priority
-                server.setServerState(ActivityState.values()[(int) Math.random()*ActivityState.values().length].getValue());  //random state
-                serverList.add(server);
-            }
-        }
-        return serverList;
-    }
-
-    public static List<Server> createAndPersistServerList(HibernateTemplate hibernateTemplate, int i, int o) {
-        List<Server> serverList = createServerList(i, o);
-        for (Server s: serverList) {
-            hibernateTemplate.merge(s);
-        }
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return serverList;
     }
     
 }

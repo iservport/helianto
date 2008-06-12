@@ -19,12 +19,14 @@ import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Account;
 import org.helianto.partner.dao.AccountDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Account</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("accountDao")
 public class AccountDaoImpl extends GenericDaoImpl implements AccountDao {
      
     public void persistAccount(Account account) {

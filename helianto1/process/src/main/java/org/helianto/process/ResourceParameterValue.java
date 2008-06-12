@@ -1,28 +1,51 @@
-package org.helianto.process;
-// Generated 08/03/2007 19:38:51 by Hibernate Tools 3.2.0.beta8
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+package org.helianto.process;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
+
 /**
- * 			
  * <p>
  * A class to represent parameters values.
  * </p>
  * @author Mauricio Fernandes de Castro
- * 				
- * 		
  */
+@javax.persistence.Entity
+@Table(name="proc_resparamvalue",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"resourceId", "parameterId"})}
+)
 public class ResourceParameterValue  implements java.io.Serializable {
 
-    // Fields    
-
-     private int id;
-     private ResourceGroup resource;
-     private ResourceParameter parameter;
-     private BigDecimal parameterNumericValue;
-     private String parameterTextValue;
-     private boolean suppressed;
+	private static final long serialVersionUID = 1L;
+	private int id;
+    private ResourceGroup resource;
+    private ResourceParameter parameter;
+    private BigDecimal parameterNumericValue;
+    private String parameterTextValue;
+    private boolean suppressed;
 
      // Constructors
 
@@ -30,65 +53,82 @@ public class ResourceParameterValue  implements java.io.Serializable {
     public ResourceParameterValue() {
     }
 
-	/** minimal constructor */
-    public ResourceParameterValue(ResourceGroup resource, ResourceParameter parameter, boolean suppressed) {
-        this.resource = resource;
-        this.parameter = parameter;
-        this.suppressed = suppressed;
-    }
-    /** full constructor */
-    public ResourceParameterValue(ResourceGroup resource, ResourceParameter parameter, BigDecimal parameterNumericValue, String parameterTextValue, boolean suppressed) {
-       this.resource = resource;
-       this.parameter = parameter;
-       this.parameterNumericValue = parameterNumericValue;
-       this.parameterTextValue = parameterTextValue;
-       this.suppressed = suppressed;
-    }
-   
-    // Property accessors
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
-    
     public void setId(int id) {
         this.id = id;
     }
+    
+    /**
+     * Resource group.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="resourceId", nullable=true)
     public ResourceGroup getResource() {
         return this.resource;
     }
-    
     public void setResource(ResourceGroup resource) {
         this.resource = resource;
     }
+    
+    /**
+     * Resource parameter.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="parameterId", nullable=true)
     public ResourceParameter getParameter() {
         return this.parameter;
     }
-    
     public void setParameter(ResourceParameter parameter) {
         this.parameter = parameter;
     }
+    
     public BigDecimal getParameterNumericValue() {
         return this.parameterNumericValue;
     }
-    
     public void setParameterNumericValue(BigDecimal parameterNumericValue) {
         this.parameterNumericValue = parameterNumericValue;
     }
+    
     public String getParameterTextValue() {
         return this.parameterTextValue;
     }
-    
     public void setParameterTextValue(String parameterTextValue) {
         this.parameterTextValue = parameterTextValue;
     }
+    
     public boolean isSuppressed() {
         return this.suppressed;
     }
-    
     public void setSuppressed(boolean suppressed) {
         this.suppressed = suppressed;
     }
 
+    public static ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
+        ResourceParameterValue resourceParameterValue = new ResourceParameterValue();
+		resourceParameterValue.setResource(resourceGroup);
+		resourceParameterValue.setParameter(resourceParameter);
+    	return resourceParameterValue;
+    }
+
+    /**
+     * <code>ResourceParameterValue</code> query <code>StringBuilder</code>.
+     */
+    @Transient
+    public static StringBuilder getResourceParameterValueQueryStringBuilder() {
+        return new StringBuilder("select resourceParameterValue from ResourceParameterValue resourceParameterValue ");
+    }
+
+    /**
+     * <code>ResourceParameterValue</code> natural id query.
+     */
+    @Transient
+    public static String getResourceParameterValueNaturalIdQueryString() {
+        return getResourceParameterValueQueryStringBuilder().append("where resourceParameterValue.resourceGroup = ? and resourceParameterValue.resourceParameter = ? ").toString();
+    }
+    
     /**
      * toString
      * @return String

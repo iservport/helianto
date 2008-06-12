@@ -15,8 +15,6 @@
 
 package org.helianto.core.hibernate;
 
-import java.util.Iterator;
-
 import org.helianto.core.dao.GenericDao;
 import org.springframework.util.Assert;
 
@@ -33,7 +31,7 @@ public class GenericDaoImpl extends LightweightDaoImpl implements GenericDao {
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Saving "+object.toString());
         }
-        this.getHibernateTemplate().save(object);
+        this.sessionFactory.getCurrentSession().save(object);
     }
 
     public void saveOrUpdate(Object object) {
@@ -41,7 +39,7 @@ public class GenericDaoImpl extends LightweightDaoImpl implements GenericDao {
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Saving or updating "+object.toString());
         }
-        this.getHibernateTemplate().saveOrUpdate(object);
+        this.sessionFactory.getCurrentSession().saveOrUpdate(object);
     }
 
     public void update(Object object) {
@@ -49,7 +47,7 @@ public class GenericDaoImpl extends LightweightDaoImpl implements GenericDao {
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Updating "+object.toString());
         }
-        this.getHibernateTemplate().update(object);
+        this.sessionFactory.getCurrentSession().update(object);
     }
 
     public void evict(Object object) {
@@ -57,31 +55,7 @@ public class GenericDaoImpl extends LightweightDaoImpl implements GenericDao {
         if (logger.isDebugEnabled()) {
             logger.debug("\n        Evicting (removing from session cache) "+object.toString());
         }
-        this.getHibernateTemplate().evict(object);
+        this.sessionFactory.getCurrentSession().evict(object);
     }
     
-    public Iterator iterate(String query, Object values) {
-        if (values != null) {
-            if (values instanceof Object[]) {
-                Object[] valueList = (Object[]) values;
-                for (int i = 0; i<valueList.length; i++) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("\n        Parameter "+i+"="+valueList[i]);
-                    }
-                }
-                return this.getHibernateTemplate().iterate(query, valueList);
-            } else {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("\n        Single parameter is "+values);
-                }
-                return this.getHibernateTemplate().iterate(query, values);
-            }
-        } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n        No parameters");
-            }
-            return this.getHibernateTemplate().iterate(query);
-        }
-    }
-
 }

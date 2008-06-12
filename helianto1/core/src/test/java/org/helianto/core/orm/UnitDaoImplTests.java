@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.helianto.core.Unit;
 import org.helianto.core.dao.UnitDao;
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.UnitTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -13,21 +12,9 @@ import org.springframework.dao.DataIntegrityViolationException;
  *
  * @author Mauricio Fernandes de Castro
  */
-public class UnitDaoImplTests extends AbstractIntegrationTest {
+public class UnitDaoImplTests extends AbstractHibernateIntegrationTest {
     
     private UnitDao unitDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/org.helianto.core.xml",
-                "deploy/core.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>Unit</code>.

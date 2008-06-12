@@ -22,11 +22,13 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 
 
 import org.helianto.core.Identity;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>Credential</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("credentialDao")
 public class CredentialDaoImpl extends GenericDaoImpl implements CredentialDao {
      
     public void persistCredential(Credential credential) {

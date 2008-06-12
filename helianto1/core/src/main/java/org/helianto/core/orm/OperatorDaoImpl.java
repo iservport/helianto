@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate;
+package org.helianto.core.orm;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,10 +23,16 @@ import org.helianto.core.ActivityState;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.dao.OperatorDao;
+import org.helianto.core.hibernate.GenericDaoImpl;
+import org.springframework.stereotype.Repository;
 
+/**
+ * Default implementation of <code>Operator</code> data access interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
+@Repository("operatorDao")
 public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
-    
-    // operator
     
     public void persistOperator(Operator operator) {
         persist(operator);
@@ -44,7 +50,8 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
         return (Operator) load(Operator.class, (Serializable) key);
     }
     
-    public List<Operator> findOperatorAll() {
+    @SuppressWarnings("unchecked")
+	public List<Operator> findOperatorAll() {
         return (ArrayList<Operator>) find(OPERATOR_ALL_QRY);
     }
     
@@ -79,7 +86,8 @@ public class OperatorDaoImpl extends GenericDaoImpl implements OperatorDao {
         "where server.operator = ? " +
         "and server.serverName = ? ";
 
-    public List<Server> findServerActive(Operator operator) {
+    @SuppressWarnings("unchecked")
+	public List<Server> findServerActive(Operator operator) {
         return (ArrayList<Server>) find(SERVER_QRY_ACTIVE, operator, ActivityState.ACTIVE.getValue());
     }
     

@@ -15,7 +15,8 @@
 
 package org.helianto.core.hibernate;
 
-import org.helianto.core.test.AbstractHibernateIntegrationTest;
+import org.helianto.core.orm.AbstractHibernateIntegrationTest;
+
 
 public class LightweightDaoImplTests extends AbstractHibernateIntegrationTest {
     
@@ -80,8 +81,6 @@ public class LightweightDaoImplTests extends AbstractHibernateIntegrationTest {
     
     @Override
     public void onSetUpInTransaction() {
-        lightweightDaoImpl = new LightweightDaoImpl();
-        lightweightDaoImpl.setHibernateTemplate(hibernateTemplate);
     }
 
 }

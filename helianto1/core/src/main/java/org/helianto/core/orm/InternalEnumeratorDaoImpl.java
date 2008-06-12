@@ -22,11 +22,13 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 
 
 import org.helianto.core.Entity;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>InternalEnumerator</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("internalEnumeratorDao")
 public class InternalEnumeratorDaoImpl extends GenericDaoImpl implements InternalEnumeratorDao {
      
     public void persistInternalEnumerator(InternalEnumerator internalEnumerator) {

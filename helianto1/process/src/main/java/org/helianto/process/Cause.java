@@ -62,7 +62,6 @@ public class Cause implements java.io.Serializable {
     public Cause() {
     }
 
-    // Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;

@@ -13,14 +13,13 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate;
+package org.helianto.core.orm;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Province;
 import org.helianto.core.dao.ProvinceDao;
-import org.helianto.core.test.AbstractHibernateIntegrationTest;
 import org.helianto.core.test.ProvinceTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -28,10 +27,26 @@ public class ProvinceDaoImplTests extends AbstractHibernateIntegrationTest {
 
     private ProvinceDao provinceDao;
     
+    /*
+     * Hook to persist one <code>Province</code>.
+     */  
+    protected Province writeProvince(Province province) {
+    	provinceDao.persistProvince(province);
+    	provinceDao.flush();
+    	provinceDao.clear();
+        return province;
+    }
+    
+    protected Province writeProvince() {
+    	Province province = ProvinceTestSupport.createProvince();
+    	writeProvince(province);
+        return province;
+    }
+    
+
     public void testPersistProvince() {
         //write
-        Province province = ProvinceTestSupport.createAndPersistProvince(provinceDao);
-        hibernateTemplate.flush();
+        Province province = writeProvince();
         //read
         assertEquals(province,  provinceDao.findProvinceByNaturalId(province.getOperator(), province.getCode()));
     }
@@ -39,7 +54,10 @@ public class ProvinceDaoImplTests extends AbstractHibernateIntegrationTest {
     private List<Province> writeProvinceList() {
         int i = 10;
         int o = 2;
-        List<Province> provinceList = ProvinceTestSupport.createAndPersistProvinceList(hibernateTemplate, i, o);
+        List<Province> provinceList = ProvinceTestSupport.createProvinceList(i, o);
+        for (Province province: provinceList) {
+        	provinceDao.persistProvince(province);
+        }
         assertEquals(i*o, provinceList.size());
         return provinceList;
     }
@@ -63,27 +81,30 @@ public class ProvinceDaoImplTests extends AbstractHibernateIntegrationTest {
         } catch (Exception e) { fail(); }
     }
 
+    /**
+     * Merge and duplicate.
+     */  
     public void testProvinceDuplicate() {
-        // write
-        Province province = ProvinceTestSupport.createAndPersistProvince( provinceDao);
-        hibernateTemplate.clear();
-        // duplicate
+    	Province province = writeProvince();
+    	Province provinceCopy = ProvinceTestSupport.createProvince(province.getOperator(), province.getCode());
+
         try {
-            hibernateTemplate.save(province); fail();
+        	provinceDao.mergeProvince(provinceCopy); fail();
         } catch (DataIntegrityViolationException e) { 
         } catch (Exception e) { fail(); }
     }
     
-    public void testRemoveProvince() {
+    @SuppressWarnings({ "unchecked", "deprecation" })
+	public void testRemoveProvince() {
         // write list
         List<Province> provinceList = writeProvinceList();
         // remove
         Province province = provinceList.get((int) Math.random()*provinceList.size());
         provinceDao.removeProvince(province);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
+        provinceDao.flush();
+        provinceDao.clear();
         // read
-        List<Province> all = (ArrayList<Province>) hibernateTemplate.find("from Province");
+        List<Province> all = (ArrayList<Province>) sessionFactory.getCurrentSession().find("select province from Province province ");
         assertEquals(provinceList.size()-1, all.size());
         assertFalse(all.contains(province));
     }

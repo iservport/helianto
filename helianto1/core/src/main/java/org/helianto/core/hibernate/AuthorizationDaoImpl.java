@@ -29,6 +29,10 @@ import org.helianto.core.UserRole;
 import org.helianto.core.dao.AuthorizationDao;
 import org.springframework.util.Assert;
 
+/**
+ * @author Maurício Fernandes de Castro
+ * @deprecated
+ */
 public class AuthorizationDaoImpl extends GenericDaoImpl implements AuthorizationDao  {
 
     //userGroup

@@ -23,11 +23,13 @@ import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>UserLog</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("userLogDao")
 public class UserLogDaoImpl extends GenericDaoImpl implements UserLogDao {
      
     public void persistUserLog(UserLog userLog) {

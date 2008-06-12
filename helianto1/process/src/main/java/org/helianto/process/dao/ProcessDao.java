@@ -26,6 +26,7 @@ import org.helianto.process.Process;
 import org.helianto.process.Setup;
 
 /**
+ * <code>Process</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */

@@ -19,19 +19,18 @@ package org.helianto.core;
  */
 public class Server  implements java.io.Serializable {
 
-    // Fields    
-
-     private int id;
-     private Operator operator;
-     private String serverName;
-     private String serverHostAddress;
-     private int serverPort;
-     private String serverDesc;
-     private char serverType;
-     private byte priority;
-     private char serverState;
-     private char requiredEncription;
-     private Credential credential;
+	private static final long serialVersionUID = 1L;
+	private int id;
+    private Operator operator;
+    private String serverName;
+    private String serverHostAddress;
+    private int serverPort;
+    private String serverDesc;
+    private char serverType;
+    private byte priority;
+    private char serverState;
+    private char requiredEncription;
+    private Credential credential;
 
      // Constructors
 
@@ -119,6 +118,46 @@ public class Server  implements java.io.Serializable {
     }
 
     /**
+     * Default <code>Server</code> creator.
+     * 
+     * Set ServerState to ActivityState.ACTIVE and
+     * RequiredEncription to Encription.PLAIN_PASSWORD by default.
+     * 
+     * @param requiredOperator
+     * @param serverName
+     * @param serverType if null, default is ServerType.SMTP_SERVER
+     * @param credential if null, create one with serverName and empty password
+     * 
+     * @see ServerType
+     * @see ActivityState
+     * @see Encription
+     */
+    public static Server serverFactory(Operator requiredOperator, String serverName, ServerType serverType, Credential credential) {
+        Server server = new Server();
+
+        server.setOperator(requiredOperator);
+        server.setServerName(serverName);
+        server.setServerHostAddress("");
+        server.setServerPort(-1);
+        server.setServerDesc("");
+        if (serverType==null) {
+            server.setServerType(ServerType.SMTP_SERVER.getValue());
+        } else {
+            server.setServerType(serverType.getValue());
+        }
+        server.setPriority((byte) 1);
+        server.setServerState(ActivityState.ACTIVE.getValue());
+        server.setRequiredEncription(Encription.PLAIN_PASSWORD.getValue());
+        if (credential==null) {
+            Identity identity = Identity.identityFactory("", "");
+            credential = Credential.credentialFactory(identity, "");
+            credential.getIdentity().setPrincipal(serverName);
+        } 
+        server.setCredential(credential);
+        return server;
+    }
+
+    /**
      * toString
      * @return String
      */
@@ -128,7 +167,6 @@ public class Server  implements java.io.Serializable {
       buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
       buffer.append("operator").append("='").append(getOperator()).append("' ");			
       buffer.append("serverName").append("='").append(getServerName()).append("' ");			
-      buffer.append("credential").append("='").append(getCredential()).append("' ");			
       buffer.append("]");
       
       return buffer.toString();
@@ -141,8 +179,7 @@ public class Server  implements java.io.Serializable {
 		 Server castOther = ( Server ) other; 
          
 		 return ( (this.getOperator()==castOther.getOperator()) || ( this.getOperator()!=null && castOther.getOperator()!=null && this.getOperator().equals(castOther.getOperator()) ) )
- && ( (this.getServerName()==castOther.getServerName()) || ( this.getServerName()!=null && castOther.getServerName()!=null && this.getServerName().equals(castOther.getServerName()) ) )
- && ( (this.getCredential()==castOther.getCredential()) || ( this.getCredential()!=null && castOther.getCredential()!=null && this.getCredential().equals(castOther.getCredential()) ) );
+             && ( (this.getServerName()==castOther.getServerName()) || ( this.getServerName()!=null && castOther.getServerName()!=null && this.getServerName().equals(castOther.getServerName()) ) );
    }
    
    public int hashCode() {

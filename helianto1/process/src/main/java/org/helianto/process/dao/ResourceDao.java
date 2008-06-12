@@ -19,105 +19,23 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.process.Resource;
-import org.helianto.process.ResourceGroup;
-import org.helianto.process.ResourceParameter;
-import org.helianto.process.ResourceParameterValue;
-import org.helianto.process.ResourceType;
 
+/**
+ * <code>Resource</code> data access interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
 public interface ResourceDao {
     
     /**
-     * Persist a <code>ResourceGroup</code> or <code>Resource</code>.
+     * Find <code>Resource</code>s by naturall id.
      */
-    public void persistResourceGroup(ResourceGroup resourceGroup);
-    
-    /**
-     * Remove a <code>ResourceGroup</code> or <code>Resource</code>.
-     */
-    public void removeResourceGroup(ResourceGroup resourceGroup);
+    public Resource findResourceByNaturalId(Entity entity, String resourceCode);
 
     /**
-     * Persist a <code>ResourceParameter</code>.
+     * Find <code>Resource</code>s by string criteria.
      */
-	public void persistResourceParameter(ResourceParameter resourceParameter);
+    public List<Resource> findResources(String criteria);
 
-    /**
-     * Remove a <code>ResourceParameter</code>.
-     */
-    public void removeResourceParameter(ResourceParameter resourceParameter);
-
-    /**
-     * Persist a <code>ResourceParameterValue</code>.
-     */
-	public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue);
-	
-    /**
-     * Remove a <code>ResourceParameterValue</code>.
-     */
-    public void removeResourceParameterValue(ResourceParameterValue resourceParameterValue);
-
-    /**
-     * Find <code>ResourceGroup</code>s and <code>Resources</code> by <code>Entity</code>.
-     */
-    public List<ResourceGroup> findResourceAndGroupByEntity(Entity entity);
-    
-    /**
-     * Find <code>Resource</code>s by <code>Entity</code>.
-     */
-    public List<Resource> findResourceByEntity(Entity entity);
-    
-    /**
-     * Find <code>ResourceGroup</code>s and <code>Resources</code> by <code>Entity</code> 
-     * and <code>ResourceType</code>.
-     */
-    public List<ResourceGroup> findResourceAndGroupByEntityAndType(Entity entity, ResourceType resourceType);
-    
-    /**
-     * Find <code>Resource</code>s by <code>Entity</code>
-     * and <code>ResourceType</code>.
-     */
-    public List<Resource> findResourceByEntityAndType(Entity entity, ResourceType resourceType);
-    
-    /**
-     * Find <code>ResourceGroup</code>s and <code>Resources</code> by parent.
-     */
-    public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup);
-    
-    /**
-     * Find <code>ResourceGroup</code>s by <code>Entity</code> where
-     * parent is null.
-     */
-    public List<ResourceGroup> findRootResourceByEntity(Entity entity);
-    
-    /**
-     * Find <code>ResourceGroup</code>s by <code>Entity</code> and <code>ResourceType</code> where
-     * parent is null.
-     */
-    public List<ResourceGroup> findRootResourceByEntityAndType(Entity entity, ResourceType resourceType);
-
-    /**
-     * Find <code>ResourceGroup</code> or <code>Resource</code> by <code>Entity</code> and code.
-     */
-    public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode);
-    
-    /**
-     * Find <code>ResourceParameter</code> by <code>Entity</code>.
-     */
-    public List<ResourceParameter> findResourceParameterByEntity(Entity entity);
-    
-    /**
-     * Find <code>ResourceParameter</code> by  parent <code>ResourceParameter</code>.
-     */
-    public List<ResourceParameter> findResourceParameterByParent(ResourceParameter parent);
-    
-    /**
-     * Find <code>ResourceParameterValue</code> by <code>ResourceGroup</code> or <code>Resource</code>.
-     */
-    public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup);
-
-    /**
-     * Find <code>ResourceParameter</code> by <code>Entity</code> and code.
-     */
-    public ResourceParameter findResourceParameterByEntityAndCode(Entity entity, String resourceParameterCode);
 
 }

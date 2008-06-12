@@ -11,6 +11,7 @@
            http://www.springframework.org/schema/tx/spring-tx.xsd">
                
     <context:annotation-config/>
+	<context:component-scan base-package="org.helianto.process.orm"/>
     
 	<!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
@@ -29,26 +30,6 @@
 		-->
 
 	<!--
-			dao implementation	
-	-->
-	<bean id="documentDao" 
-		class="org.helianto.process.orm.DocumentDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<bean id="documentAssociationDao" 
-		class="org.helianto.process.orm.DocumentAssociationDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	
-	<bean id="materialDao" 
-	    class="org.helianto.process.hibernate.MaterialDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<bean id="resourceDao" 
-	    class="org.helianto.process.hibernate.ResourceDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
 			Resource service bean	
 	-->
 	<bean id="resourceMgr" 
@@ -59,26 +40,6 @@
 				class="org.helianto.process.service.ResourceMgrImpl">
 			</bean>
 		</property>
-	</bean>
-	<!--
-		Resource property editor registrar
-	-->
-	<bean id="resourcePropertyEditorRegistrar" 
-	    class="org.helianto.process.validation.ResourcePropertyEditorRegistrar">
-	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
-		Document property editor registrar
-	-->
-	<bean id="documentPropertyEditorRegistrar" 
-	    class="org.helianto.process.validation.DocumentPropertyEditorRegistrar">
-	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	<!--
-			process dao	
-	-->
-	<bean id="processDao" class="org.helianto.process.hibernate.ProcessDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<!--
 			process service bean	
@@ -93,4 +54,19 @@
 		</property>
 	</bean>
 	
+	<!--
+		Resource property editor registrar
+	-->
+	<bean id="resourcePropertyEditorRegistrar" 
+	    class="org.helianto.process.validation.ResourcePropertyEditorRegistrar">
+	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<!--
+		Document property editor registrar
+	-->
+	<bean id="documentPropertyEditorRegistrar" 
+	    class="org.helianto.process.validation.DocumentPropertyEditorRegistrar">
+	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+
 </beans>

@@ -15,12 +15,12 @@
 
 package org.helianto.core.mail;
 
+import junit.framework.TestCase;
+
 import org.helianto.core.ActivityState;
 import org.helianto.core.Encription;
 import org.helianto.core.Server;
-import org.helianto.core.test.OperatorTestSupport;
-
-import junit.framework.TestCase;
+import org.helianto.core.test.ServerTestSupport;
 
 /**
  * 
@@ -31,7 +31,7 @@ public class ConfigurableMailSenderImplTests extends TestCase {
     private ConfigurableMailSenderImpl configurableMailSenderImpl;
     
     private Server createValidServer() {
-        Server server = OperatorTestSupport.createServer();
+        Server server = ServerTestSupport.createServer();
         server.setRequiredEncription(Encription.PLAIN_PASSWORD.getValue());
         server.getCredential().setCredentialState(ActivityState.ACTIVE.getValue());
         server.getCredential().setEncription(Encription.PLAIN_PASSWORD.getValue());

@@ -5,7 +5,6 @@ import java.util.List;
 import org.helianto.core.User;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.dao.UserGroupDao;
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.UserTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 /**
@@ -13,22 +12,10 @@ import org.springframework.dao.DataIntegrityViolationException;
  *
  * @author Mauricio Fernandes de Castro
  */
-public class UserDaoImplTests extends AbstractIntegrationTest {
+public class UserDaoImplTests extends AbstractHibernateIntegrationTest {
 
     private UserDao userDao;
     private UserGroupDao userGroupDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.core.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>User</code>.

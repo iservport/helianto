@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process.hibernate;
+package org.helianto.process.orm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,14 @@ import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.Setup;
 import org.helianto.process.dao.ProcessDao;
+import org.springframework.stereotype.Repository;
 
+/**
+ * Default implementation of <code>Process</code> data access interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
+@Repository("processDao")
 public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
 
     public void persistDocument(Document document) {

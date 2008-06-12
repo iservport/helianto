@@ -11,6 +11,7 @@
            http://www.springframework.org/schema/tx/spring-tx.xsd">
                
     <context:annotation-config/>
+	<context:component-scan base-package="org.helianto.partner.orm"/>
     
 	<!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
@@ -27,59 +28,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 		-->
-
-	<!--
-			Dao implementation	
-	-->
-	<bean id="addressDao" 
-		class="org.helianto.partner.orm.AddressDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-
-	<bean id="contactDao" 
-		class="org.helianto.partner.orm.ContactDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-
-	<bean id="partnerRegistryDao" 
-		class="org.helianto.partner.orm.PartnerRegistryDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-
-	<bean id="partnerDao" 
-		class="org.helianto.partner.orm.PartnerDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-
-	<bean id="agentDao" 
-		class="org.helianto.partner.orm.AgentDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-
-	<bean id="customerDao" 
-		class="org.helianto.partner.orm.CustomerDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-
-	<bean id="supplierDao" 
-		class="org.helianto.partner.orm.SupplierDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	
-	<bean id="partnerKeyDao" 
-		class="org.helianto.partner.orm.PartnerKeyDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-
-	<bean id="phoneDao" 
-		class="org.helianto.partner.orm.PhoneDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-
-	<bean id="accountDao" 
-		class="org.helianto.partner.orm.AccountDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
 
 	<!--
 			Service bean	

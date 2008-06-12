@@ -15,6 +15,7 @@
 		<mapping class="org.helianto.process.Characteristic" />
 		<mapping class="org.helianto.process.ControlPlan" />
 		<mapping class="org.helianto.process.MeasurementTechnique" />
+		<mapping class="org.helianto.process.Specification" />
 		<mapping class="org.helianto.process.Method" />
 	</session-factory>
 </hibernate-configuration>

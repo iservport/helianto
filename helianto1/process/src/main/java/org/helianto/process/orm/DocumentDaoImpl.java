@@ -22,11 +22,13 @@ import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.process.Document;
 import org.helianto.process.dao.DocumentDao;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>Document</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("documentDao")
 public class DocumentDaoImpl extends GenericDaoImpl implements DocumentDao {
      
     public void persistDocument(Document document) {

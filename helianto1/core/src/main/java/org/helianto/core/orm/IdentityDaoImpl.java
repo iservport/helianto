@@ -21,12 +21,14 @@ import java.util.List;
 import org.helianto.core.Identity;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Identity</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("identityDao")
 public class IdentityDaoImpl extends GenericDaoImpl implements IdentityDao {
 
     public void persistIdentity(Identity identity) {
@@ -59,7 +61,8 @@ public class IdentityDaoImpl extends GenericDaoImpl implements IdentityDao {
                 Identity.getIdentityNaturalIdQueryString(), principal);
     }
 
-    public List<Identity> findIdentities(String criteria) {
+    @SuppressWarnings("unchecked")
+	public List<Identity> findIdentities(String criteria) {
         if (logger.isDebugEnabled()) {
             logger.debug("Finding identity list with criteria='" + criteria
                     + "' ");

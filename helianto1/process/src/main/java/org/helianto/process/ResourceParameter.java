@@ -23,6 +23,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
@@ -64,7 +65,7 @@ public class ResourceParameter implements java.io.Serializable {
     }
     
     /**
-     * Entity getter.
+     * Entity.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="entityId", nullable=true)
@@ -148,11 +149,23 @@ public class ResourceParameter implements java.io.Serializable {
      * @param entity
      * @param parameterCode
      */
-    public static ResourceParameter resourceGroupFactory(Entity entity, String parameterCode) {
-        ResourceParameter resourceParameter = new ResourceParameter();
-        resourceParameter.setEntity(entity);
-        resourceParameter.setParameterCode(parameterCode);
+    public static ResourceParameter resourceParameterFactory(Entity entity, String parameterCode) {
+    	ResourceParameter resourceParameter = new ResourceParameter();
+		resourceParameter.setEntity(entity);
+		resourceParameter.setParameterCode(parameterCode);
         return resourceParameter;
+    }
+
+    /**
+     * <code>ResourceParameter</code> factory.
+     * 
+     * @param unit
+     * @param parameterCode
+     */
+    public static ResourceParameter resourceParameterFactory(Unit unit, String parameterCode) {
+    	ResourceParameter resourceParameter = resourceParameterFactory(unit.getEntity(), parameterCode);
+		resourceParameter.setUnit(unit);
+    	return resourceParameter;
     }
 
     /**
@@ -162,11 +175,31 @@ public class ResourceParameter implements java.io.Serializable {
      * @param parameterCode
      */
     public static ResourceParameter resourceParameterFactory(ResourceParameter parent, String parameterCode) {
-    	ResourceParameter resourceParameter = resourceGroupFactory(parent.getEntity(), parameterCode);
+    	if (parent==null) {
+    		throw new IllegalArgumentException("Parent resource parameter should not be null!");
+    	}
+    	ResourceParameter resourceParameter = resourceParameterFactory(parent.getEntity(), parameterCode);
     	resourceParameter.setParent(parent);
     	resourceParameter.setUnit(parent.getUnit());
     	return resourceParameter;
     }
+
+    /**
+     * <code>ResourceParameter</code> query <code>StringBuilder</code>.
+     */
+    @Transient
+    public static StringBuilder getResourceParameterQueryStringBuilder() {
+        return new StringBuilder("select resourceParameter from ResourceParameter resourceParameter ");
+    }
+
+    /**
+     * <code>ResourceParameter</code> natural id query.
+     */
+    @Transient
+    public static String getResourceParameterNaturalIdQueryString() {
+        return getResourceParameterQueryStringBuilder().append("where resourceParameter.entity = ? and resourceParameter.parameterCode = ? ").toString();
+    }
+    
     /**
      * toString
      * @return String

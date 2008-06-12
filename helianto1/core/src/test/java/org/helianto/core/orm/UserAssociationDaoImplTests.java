@@ -4,29 +4,15 @@ import java.util.List;
 
 import org.helianto.core.UserAssociation;
 import org.helianto.core.dao.UserAssociationDao;
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.UserAssociationTestSupport;
-import org.springframework.dao.DataIntegrityViolationException;
 /**
  * <code>UserAssociationDao</code> tests.
  *
  * @author Mauricio Fernandes de Castro
  */
-public class UserAssociationDaoImplTests extends AbstractIntegrationTest {
+public class UserAssociationDaoImplTests extends AbstractHibernateIntegrationTest {
 
     private UserAssociationDao userAssociationDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.core.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>UserAssociation</code>.

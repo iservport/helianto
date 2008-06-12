@@ -15,9 +15,6 @@
 
 package org.helianto.process.service;
 
-import java.util.List;
-
-import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 import org.helianto.process.MaterialType;
 import org.helianto.process.dao.MaterialDao;
@@ -26,32 +23,11 @@ public class MaterialMgrImpl implements MaterialMgr {
     
     private MaterialDao materialDao;
 
-    public void persistUnit(Unit unit) {
-        materialDao.persistUnit(unit);
-    }
-
-    public void persistMaterial(MaterialType MaterialType) {
-        materialDao.persistMaterialType(MaterialType);
-    }
-
-    public Unit findUnitByNaturalId(Entity entity, String unitCode) {
-        return materialDao.findUnitByNaturalId(entity, unitCode);
-    }
-
-    public List<Unit> findUnitByEntity(Entity entity) {
-        return materialDao.findUnitByEntity(entity);
-    }
-
     public MaterialType createMaterialType(Unit unit) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    public Unit createUnit(Entity entity) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
     //
 
     public void setMaterialDao(MaterialDao materialDao) {

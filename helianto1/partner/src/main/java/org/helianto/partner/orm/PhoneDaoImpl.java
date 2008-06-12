@@ -19,12 +19,14 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Address;
 import org.helianto.partner.Phone;
 import org.helianto.partner.dao.PhoneDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Phone</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("phoneDao")
 public class PhoneDaoImpl extends GenericDaoImpl implements PhoneDao {
      
     public void persistPhone(Phone phone) {

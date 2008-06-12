@@ -17,15 +17,15 @@
 		-->
 <beans>
 	<!--
-			Hibernate session factory	
+			Abstract session factory	
 	-->
-	<bean id="sessionFactory" 
+	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="mappingLocations" 
 			value="classpath*:/mappings/*.hbm.xml"/>		
 		<property name="configLocations" 
-			value="classpath*:/hibernate.cfg.xml"/>		
+			value="classpath*:/configuration/*.cfg.xml"/>		
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -47,12 +47,5 @@
 		class="org.springframework.orm.hibernate3.HibernateTemplate">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-	<!--
-			Hibernate generic dao implementation	
-	-->
-	<bean id="genericDao" 
-		class="org.helianto.core.hibernate.GenericDaoImpl">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
 	
 </beans>

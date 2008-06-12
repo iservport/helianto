@@ -20,7 +20,7 @@ import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.Transient;
 
 /**
  * <p>
@@ -29,9 +29,7 @@ import javax.persistence.UniqueConstraint;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="proc_method",
-	    uniqueConstraints = {@UniqueConstraint(columnNames={"documentId", "characteristicId"})}
-	)
+@Table(name="proc_method")
 public class Method extends Specification implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -88,7 +86,31 @@ public class Method extends Specification implements java.io.Serializable {
         this.controlMethod = control;
     }
 
+    /**
+     * <code>Method</code> factory.
+     * 
+     * @param document
+     * @param characteristic
+     */
+    public static Method methodFactory(Document document, Characteristic characteristic) {
+        return specificationFactory(Method.class, document, characteristic);
+    }
 
+    /**
+     * <code>Method</code> query <code>StringBuilder</code>.
+     */
+    @Transient
+    public static StringBuilder getMethodQueryStringBuilder() {
+        return new StringBuilder("select method from Method method ");
+    }
+
+    /**
+     * <code>Method</code> natural id query.
+     */
+    @Transient
+    public static String getMethodNaturalIdQueryString() {
+        return getMethodQueryStringBuilder().append("where method.document = ? and method.characteristic = ? ").toString();
+    }
 
 
 }

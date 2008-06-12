@@ -33,7 +33,6 @@ public abstract class AbstractPartnerDaoImplConfig extends
                 "deploy/transaction.xml",
                 "deploy/support.xml",
                 "deploy/org.helianto.core.xml",
-                "deploy/core.xml",
                 "deploy/org.helianto.partner.xml"
                 };
     }

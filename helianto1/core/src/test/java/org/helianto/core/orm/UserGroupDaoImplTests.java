@@ -10,7 +10,6 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.UserGroupDao;
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
@@ -21,21 +20,9 @@ import org.springframework.dao.DataIntegrityViolationException;
  *
  * @author Mauricio Fernandes de Castro
  */
-public class UserGroupDaoImplTests extends AbstractIntegrationTest {
+public class UserGroupDaoImplTests extends AbstractHibernateIntegrationTest {
     
     private UserGroupDao userGroupDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.core.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>UserGroup</code>.

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.helianto.core.Identity;
 import org.helianto.core.dao.IdentityDao;
-import org.helianto.core.test.AbstractIntegrationTest;
 import org.helianto.core.test.IdentityTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -15,21 +14,9 @@ import org.springframework.dao.DataIntegrityViolationException;
  *
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityDaoImplTests extends AbstractIntegrationTest {
+public class IdentityDaoImplTests extends AbstractHibernateIntegrationTest {
 
     private IdentityDao identityDao;
-    
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/core.xml",
-                "deploy/org.helianto.core.xml"
-                };
-    }
     
     /*
      * Hook to persist one <code>Identity</code>.

@@ -63,7 +63,7 @@ public interface ResourceMgr {
      * Delegates to {@link ResourceDao#persistResourceGroup(ResourceGroup)}.
      * </p>  
      */
-    public void persistResourceGroup(ResourceGroup resourceGroup);
+    public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup);
     
     /**
      * <p>
@@ -88,14 +88,7 @@ public interface ResourceMgr {
      * a given owner.
      * </p> 
      */
-    public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner partner);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceDao#persistResource(Resource)}.
-     * </p>  
-     */
-    public void persistResource(Resource resource);
+    public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner);
     
     /**
      * <p>
@@ -158,7 +151,7 @@ public interface ResourceMgr {
      * Delegates to {@link ResourceDao#persistResourceParameter(ResourceParameter)}.
      * </p>  
      */
-    public void persistResourceParameter(ResourceParameter resourceParameter);
+    public ResourceParameter storeResourceParameter(ResourceParameter resourceParameter);
     
     /**
      * <p>

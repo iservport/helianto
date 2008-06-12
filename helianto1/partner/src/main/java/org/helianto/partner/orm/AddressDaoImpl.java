@@ -19,12 +19,14 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Address;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.AddressDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Address</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("addressDao")
 public class AddressDaoImpl extends GenericDaoImpl implements AddressDao {
      
     public void persistAddress(Address address) {

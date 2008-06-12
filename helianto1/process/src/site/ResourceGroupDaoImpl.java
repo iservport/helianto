@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process.hibernate;
+package org.helianto.process.orm;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -55,45 +55,4 @@ public class OperatorCreatorTests extends TestCase {
     /*
      * Test method for 'org.helianto.core.creation.BaseCreator.serverFactory(Operator, String, ServerType, Credential)'
      */
-    public void testServerFactory() {
-        Operator operator = new Operator();
-        Credential credential = new Credential();
-        Server server = OperatorCreator.serverFactory(operator, "NAME", ServerType.HTTP_SERVER, credential);
-        
-        assertSame(operator, server.getOperator());
-        assertEquals("NAME", server.getServerName());
-        assertEquals(-1, server.getServerPort());
-        assertEquals(ServerType.HTTP_SERVER.getValue(), server.getServerType());
-        assertSame(credential, server.getCredential());
-        
-        assertEquals("", server.getServerHostAddress());
-        assertEquals("", server.getServerDesc());
-        assertEquals((byte) 1, server.getPriority());
-        assertEquals(ActivityState.ACTIVE.getValue(), server.getServerState());
-        assertEquals(Encription.PLAIN_PASSWORD.getValue(), server.getRequiredEncription());
-    }
-
-    public void testServerFactoryDefaults() {
-        Operator operator = new Operator();
-        Server server = OperatorCreator.serverFactory(operator, "NAME", null, null);
-        
-        assertEquals(ServerType.SMTP_SERVER.getValue(), server.getServerType());
-        assertEquals("NAME".toLowerCase(), server.getCredential().getIdentity().getPrincipal());
-        assertSame("", server.getCredential().getPassword());
-    }
-
-   /*
-     * Assertion errors
-     */
-    public void testErrors() {
-        try {
-            OperatorCreator.serverFactory(null, "", ServerType.HTTP_SERVER, new Credential()); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-        try {
-            OperatorCreator.provinceFactory(null, "", ""); fail();
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
-    }
-
 }

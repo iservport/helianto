@@ -19,12 +19,14 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Contact;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.ContactDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Contact</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("contactDao")
 public class ContactDaoImpl extends GenericDaoImpl implements ContactDao {
      
     public void persistContact(Contact contact) {

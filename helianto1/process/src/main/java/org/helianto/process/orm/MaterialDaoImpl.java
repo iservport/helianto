@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process.hibernate;
+package org.helianto.process.orm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,14 @@ import org.helianto.core.Unit;
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.process.MaterialType;
 import org.helianto.process.dao.MaterialDao;
+import org.springframework.stereotype.Repository;
 
+/**
+ * Default implementation of <code>Material</code> data access interface.
+ * 
+ * @author Mauricio Fernandes de Castro
+ */
+@Repository("materialDao")
 public class MaterialDaoImpl extends GenericDaoImpl implements MaterialDao {
 
     public void persistUnit(Unit unit) {
@@ -34,7 +41,8 @@ public class MaterialDaoImpl extends GenericDaoImpl implements MaterialDao {
         merge(materialType);
     }
 
-    public List<Unit> findUnitByEntity(Entity entity) {
+    @SuppressWarnings("unchecked")
+	public List<Unit> findUnitByEntity(Entity entity) {
         return (ArrayList<Unit>) find(UNIT_QRY, entity);
     }
     
@@ -47,7 +55,8 @@ public class MaterialDaoImpl extends GenericDaoImpl implements MaterialDao {
     
     static String UNIT_UNIQUE_FILTER = "and unit.unitCode = ? ";
 
-    public List<MaterialType> findMaterialTypeByEntity(Entity entity) {
+    @SuppressWarnings("unchecked")
+	public List<MaterialType> findMaterialTypeByEntity(Entity entity) {
         return (ArrayList<MaterialType>) find(MATERIALTYPE_QRY, entity);
     }
 

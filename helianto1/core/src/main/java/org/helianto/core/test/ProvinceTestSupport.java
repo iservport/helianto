@@ -20,11 +20,10 @@ import java.util.List;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.ProvinceDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class ProvinceTestSupport extends AbstractHibernateIntegrationTest {
+public class ProvinceTestSupport {
 
     private static int testKey = 1;
 
@@ -35,7 +34,13 @@ public class ProvinceTestSupport extends AbstractHibernateIntegrationTest {
         } catch(ArrayIndexOutOfBoundsException e) {
             operator = OperatorTestSupport.createOperator();
         }
-        Province province = OperatorCreator.provinceFactory(operator, generateKey(20, testKey++), generateKey(20));
+        String code;
+        try {
+        	code = (String) args[1];
+        } catch(ArrayIndexOutOfBoundsException e) {
+        	code = DomainTestSupport.getNonRepeatableStringValue(20, testKey++);
+        }
+        Province province = Province.provinceFactory(operator, code, DomainTestSupport.getNonRepeatableStringValue(20, testKey));
         return province;
     }
 

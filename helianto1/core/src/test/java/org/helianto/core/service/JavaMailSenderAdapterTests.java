@@ -44,13 +44,14 @@ import org.helianto.core.mail.JavaMailSenderAdapter;
 import org.helianto.core.mail.MockJavaMailSender;
 import org.helianto.core.mail.ServerUtilsTemplate;
 import org.helianto.core.test.OperatorTestSupport;
+import org.helianto.core.test.ServerTestSupport;
 
 public class JavaMailSenderAdapterTests extends TestCase {
     
     private JavaMailSenderAdapter javaMailSenderAdapter;
     
     public void testSetServerList() {
-        serverList = OperatorTestSupport.createServerList(2, 1);
+        serverList = ServerTestSupport.createServerList(2, 1);
         Server transportServer = serverList.get(0);
         transportServer.setServerHostAddress("HOST_ADDRESS");
         
@@ -71,7 +72,7 @@ public class JavaMailSenderAdapterTests extends TestCase {
     public void testSendMimeMessage() throws AddressException, MessagingException {
         MockJavaMailSender mockSender = new MockJavaMailSender();
         
-        serverList = OperatorTestSupport.createServerList(2, 1);
+        serverList = ServerTestSupport.createServerList(2, 1);
         Server transportServer = serverList.get(0);
         transportServer.setServerHostAddress("HOST_ADDRESS");
         
@@ -111,7 +112,7 @@ public class JavaMailSenderAdapterTests extends TestCase {
     
     public void testServerUtilsTemplate() {
         ServerUtilsTemplate utils = javaMailSenderAdapter.new DefaultServerUtils();
-        serverList = OperatorTestSupport.createServerList(2, 1);
+        serverList = ServerTestSupport.createServerList(2, 1);
         Server transportServer = serverList.get(0);
         transportServer.setServerType(ServerType.SMTP_SERVER.getValue());
         transportServer.setRequiredEncription(Encription.PLAIN_PASSWORD.getValue());

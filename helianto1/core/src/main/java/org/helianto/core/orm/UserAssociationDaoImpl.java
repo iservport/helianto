@@ -19,11 +19,13 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.UserAssociationDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>UserAssociation</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("userAssociationDao")
 public class UserAssociationDaoImpl extends GenericDaoImpl implements UserAssociationDao {
      
     public void persistUserAssociation(UserAssociation userAssociation) {

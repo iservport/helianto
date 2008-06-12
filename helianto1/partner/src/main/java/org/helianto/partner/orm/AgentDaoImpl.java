@@ -19,12 +19,14 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Agent;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.dao.AgentDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Agent</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("agentDao")
 public class AgentDaoImpl extends GenericDaoImpl implements AgentDao {
      
     public Agent findAgentByNaturalId(PartnerRegistry partnerRegistry, int sequence) {

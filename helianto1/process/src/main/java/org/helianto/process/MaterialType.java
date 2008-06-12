@@ -1,91 +1,136 @@
-package org.helianto.process;
-// Generated 08/03/2007 19:38:51 by Hibernate Tools 3.2.0.beta8
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+package org.helianto.process;
+
+import javax.persistence.CascadeType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 
 /**
- * 				
  * <p>
  * A class to represent a material type.
  * </p>
  * @author Mauricio Fernandes de Castro
- * 				
- * 		
  */
+@javax.persistence.Entity
+@Table(name="proc_material",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "internalNumber"})}
+)
 public class MaterialType  implements java.io.Serializable {
 
-    // Fields    
-
-     private long id;
-     private Entity entity;
-     private long internalNumber;
-     private MaterialType parent;
-     private Unit materialUnit;
-     private String materialName;
-
-     // Constructors
+	private static final long serialVersionUID = 1L;
+	private int id;
+    private Entity entity;
+    private long internalNumber;
+    private int version;
+    private MaterialType parent;
+    private Unit materialUnit;
+    private String materialName;
 
     /** default constructor */
     public MaterialType() {
     }
 
-	/** minimal constructor */
-    public MaterialType(Unit materialUnit) {
-        this.materialUnit = materialUnit;
-    }
-    /** full constructor */
-    public MaterialType(Entity entity, long internalNumber, MaterialType parent, Unit materialUnit, String materialName) {
-       this.entity = entity;
-       this.internalNumber = internalNumber;
-       this.parent = parent;
-       this.materialUnit = materialUnit;
-       this.materialName = materialName;
-    }
-   
-    // Property accessors
-    public long getId() {
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
         return this.id;
     }
-    
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
+
+    /**
+     * Entity.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
     }
-    
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
+
+    /**
+     * Internal number.
+     */
     public long getInternalNumber() {
         return this.internalNumber;
     }
-    
     public void setInternalNumber(long internalNumber) {
         this.internalNumber = internalNumber;
     }
+
+    /**
+     * Version.
+     */
+    @Version
+    public int getVersion() {
+        return this.version;
+    }
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="parentId", nullable=true)
     public MaterialType getParent() {
         return this.parent;
     }
-    
     public void setParent(MaterialType parent) {
         this.parent = parent;
     }
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="unitId", nullable=true)
     public Unit getMaterialUnit() {
         return this.materialUnit;
     }
-    
     public void setMaterialUnit(Unit materialUnit) {
         this.materialUnit = materialUnit;
     }
+    
     public String getMaterialName() {
         return this.materialName;
     }
-    
     public void setMaterialName(String materialName) {
         this.materialName = materialName;
+    }
+
+    public static MaterialType materialTypeFactory(Unit unit, String materialName) {
+        MaterialType MaterialType = new MaterialType();
+        MaterialType.setEntity(unit.getEntity());
+        MaterialType.setMaterialUnit(unit);
+        MaterialType.setMaterialName(materialName);
+        return MaterialType;
+    }
+
+    public static MaterialType materialTypeFactory(MaterialType parent, Unit unit, String materialName) {
+        MaterialType MaterialType = materialTypeFactory(unit, materialName);
+        MaterialType.setParent(parent);
+        return MaterialType;
     }
 
 
@@ -96,21 +141,15 @@ public class MaterialType  implements java.io.Serializable {
 		 MaterialType castOther = ( MaterialType ) other; 
          
 		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
- && (this.getInternalNumber()==castOther.getInternalNumber());
+             && (this.getInternalNumber()==castOther.getInternalNumber());
    }
    
    public int hashCode() {
          int result = 17;
-         
-         
          result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + (int) this.getInternalNumber();
-         
-         
-         
          return result;
    }   
-
 
 }
 

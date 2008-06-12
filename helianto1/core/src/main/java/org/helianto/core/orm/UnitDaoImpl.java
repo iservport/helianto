@@ -22,6 +22,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 import org.helianto.core.dao.UnitDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -29,6 +30,7 @@ import org.helianto.core.hibernate.GenericDaoImpl;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("unitDao")
 public class UnitDaoImpl extends GenericDaoImpl implements UnitDao {
      
     public void persistUnit(Unit unit) {

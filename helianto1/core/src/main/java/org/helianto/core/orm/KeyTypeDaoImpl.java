@@ -22,11 +22,13 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 
 
 import org.helianto.core.Operator;
+import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>KeyType</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("keyTypeDao")
 public class KeyTypeDaoImpl extends GenericDaoImpl implements KeyTypeDao {
      
     public void persistKeyType(KeyType keyType) {

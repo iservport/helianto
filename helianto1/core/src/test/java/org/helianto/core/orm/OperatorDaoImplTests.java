@@ -13,19 +13,17 @@
  * limitations under the License.
  */
 
-package org.helianto.core.hibernate;
+package org.helianto.core.orm;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Operator;
-import org.helianto.core.Server;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.test.OperatorTestSupport;
 import org.springframework.dao.DataIntegrityViolationException;
 
-public class OperatorDaoImplTests extends OperatorTestSupport {
+public class OperatorDaoImplTests extends AbstractHibernateIntegrationTest {
 
     private OperatorDao operatorDao;
     
@@ -45,7 +43,12 @@ public class OperatorDaoImplTests extends OperatorTestSupport {
     public void testFindOperator() {
         // write list
         int i = 10;
-        List<Operator> operatorList = createAndPersistOperatorList(hibernateTemplate, i);
+        List<Operator> operatorList = OperatorTestSupport.createOperatorList(i);
+        for (Operator operator: operatorList) {
+            operatorDao.persistOperator(operator);
+        }
+        operatorDao.flush();
+        operatorDao.clear();
         assertEquals(i, operatorList.size());
         // read
         Operator operator = operatorList.get((int) Math.random()*i);
@@ -89,89 +92,26 @@ public class OperatorDaoImplTests extends OperatorTestSupport {
         } catch (Exception e) { fail(); }
     }
 
-    public void testRemoveOperator() {
-        // bulk write
+    @SuppressWarnings({ "deprecation", "unchecked" })
+	public void testRemoveOperator() {
+        // write list
         int i = 10;
-        List<Operator> operatorList = createAndPersistOperatorList(hibernateTemplate, i);
+        List<Operator> operatorList = OperatorTestSupport.createOperatorList(i);
+        for (Operator operator: operatorList) {
+            operatorDao.persistOperator(operator);
+        }
+        operatorDao.flush();
+        operatorDao.clear();
         assertEquals(i, operatorList.size());
         // remove
         Operator operator = operatorList.get((int) Math.random()*i);
         operatorDao.removeOperator(operator);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
+        operatorDao.flush();
+        operatorDao.clear();
         // read
-        List<Operator> all = (ArrayList<Operator>) hibernateTemplate.find("from Operator");
+        List<Operator> all = (ArrayList<Operator>) sessionFactory.getCurrentSession().find("from Operator");
         assertEquals(i-1, all.size());
         assertFalse(all.contains(operator));
-    }
-
-    /*
-     * Server
-     */
-
-    public void testPersistServer() {
-        //write
-        Server server = createAndPersistServer(operatorDao);
-        hibernateTemplate.flush();
-        //read
-        assertEquals(server,  operatorDao.findServerByNaturalId(server.getOperator(), server.getServerName()));
-    }
-    
-    public void testFindServer() {
-        // write list
-        int i = 12;
-        int o = 2;
-        List<Server> serverList = createAndPersistServerList(hibernateTemplate, i, o);
-        assertEquals(i*o, serverList.size());
-        // read
-        Server server = serverList.get((int) Math.random()*serverList.size());
-        List<Server> list = operatorDao.findServerActive(server.getOperator());
-        byte priority = 0;
-        for (Server s: list) {
-            assertEquals(server.getOperator(), s.getOperator());
-            assertEquals(ActivityState.ACTIVE.getValue(), s.getServerState());
-            assertTrue(s.getPriority()>=priority);
-            priority = s.getPriority();
-        }
-    }
-
-    public void testServerErrors() {
-        try {
-             operatorDao.persistServer(null); fail();
-        } catch (IllegalArgumentException e) { 
-        } catch (Exception e) { fail(); }
-        try {
-             operatorDao.removeServer(null); fail();
-        } catch (IllegalArgumentException e) { 
-        } catch (Exception e) { fail(); }
-    }
-
-    public void testServerDuplicate() {
-        // write
-        Server server = createAndPersistServer( operatorDao);
-        hibernateTemplate.clear();
-        // duplicate
-        try {
-            hibernateTemplate.save(server); fail();
-        } catch (DataIntegrityViolationException e) { 
-        } catch (Exception e) { fail(); }
-    }
-    
-    public void testRemoveServer() {
-        // bulk write
-        int i = 10;
-        int o = 2;
-        List<Server> serverList = createAndPersistServerList(hibernateTemplate, i, o);
-        assertEquals(i*o, serverList.size());
-        // remove
-        Server server = serverList.get((int) Math.random()*i*o);
-        operatorDao.removeServer(server);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        // read
-        List<Server> all = (ArrayList<Server>) hibernateTemplate.find("from Server");
-        assertEquals(i*o-1, all.size());
-        assertFalse(all.contains(server));
     }
 
     // mutators

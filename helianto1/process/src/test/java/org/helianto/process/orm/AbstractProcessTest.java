@@ -26,7 +26,6 @@ public class AbstractProcessTest extends AbstractIntegrationTest {
                 "deploy/sessionFactory.xml",
                 "deploy/transaction.xml",
                 "deploy/support.xml",
-                "deploy/core.xml",
                 "deploy/org.helianto.core.xml",
                 "deploy/org.helianto.partner.xml",
                 "deploy/org.helianto.process.xml"

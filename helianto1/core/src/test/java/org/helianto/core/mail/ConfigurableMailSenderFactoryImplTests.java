@@ -17,13 +17,13 @@ package org.helianto.core.mail;
 
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.helianto.core.ActivityState;
 import org.helianto.core.Encription;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
-import org.helianto.core.test.OperatorTestSupport;
-
-import junit.framework.TestCase;
+import org.helianto.core.test.ServerTestSupport;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class ConfigurableMailSenderFactoryImplTests extends TestCase {
     //helper methods
 
     private List<Server> createServerList() {
-        List<Server> serverList = OperatorTestSupport.createServerList(3, 1);
+        List<Server> serverList = ServerTestSupport.createServerList(3, 1);
         prepareServer(serverList.get(0), ServerType.SMTP_SERVER);
         serverList.get(0).setServerHostAddress("HOST_ADDRESS");
         prepareServer(serverList.get(1), ServerType.POP3_SERVER);

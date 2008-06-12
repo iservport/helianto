@@ -4,12 +4,12 @@
 	<parent>
 		<artifactId>helianto</artifactId>
 		<groupId>org.helianto</groupId>
-		<version>0.0.1-20080419</version>
+		<version>0.0.1-20080612</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-process</artifactId>
-	<version>0.0.1-20080610</version>
+	<version>0.0.1-20080612</version>
 	<name>Process</name>
 	
 	<description>Helianto project process module.</description>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>helianto-partner</artifactId>
-			<version>0.0.1-20080419</version>
+			<version>0.0.1-20080612</version>
 		</dependency>
 	</dependencies>
 

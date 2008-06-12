@@ -19,12 +19,14 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.process.Document;
 import org.helianto.process.DocumentAssociation;
 import org.helianto.process.dao.DocumentAssociationDao;
+import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>DocumentAssociation</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Repository("documentAssociationDao")
 public class DocumentAssociationDaoImpl extends GenericDaoImpl implements DocumentAssociationDao {
      
     public void removeDocumentAssociation(DocumentAssociation documentAssociation) {

@@ -35,17 +35,16 @@ import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
-import org.helianto.core.dao.IdentityDao;
-import org.helianto.core.dao.AuthorizationDao;
 import org.helianto.core.dao.CredentialDao;
+import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.dao.UserSelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
-import org.helianto.core.test.UserTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
+import org.helianto.core.test.UserTestSupport;
 
 public class UserMgrImplTests extends TestCase {
     
@@ -200,7 +199,6 @@ public class UserMgrImplTests extends TestCase {
     }
     
     private IdentityDao identityDao;
-    private AuthorizationDao authorizationDao;
     private InternalEnumeratorDao internalEnumeratorDao;
     private CredentialDao credentialDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
@@ -213,8 +211,6 @@ public class UserMgrImplTests extends TestCase {
         userMgr = new UserMgrImpl();
         identityDao = createMock(IdentityDao.class);
         userMgr.setIdentityDao(identityDao);
-        authorizationDao = createMock(AuthorizationDao.class);
-        userMgr.setAuthorizationDao(authorizationDao);
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
         userSelectionStrategy = createMock(UserSelectionStrategy.class);
@@ -232,7 +228,6 @@ public class UserMgrImplTests extends TestCase {
     @Override
     public void tearDown() {
         reset(identityDao);
-        reset(authorizationDao);
         reset(internalEnumeratorDao);
         reset(credentialDao);
         reset(identitySelectionStrategy);

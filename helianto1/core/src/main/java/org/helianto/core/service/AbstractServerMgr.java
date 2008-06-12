@@ -35,6 +35,7 @@ import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.OperatorDao;
+import org.helianto.core.dao.ServerDao;
 import org.helianto.core.dao.ServiceDao;
 import org.helianto.core.dao.UserAssociationDao;
 import org.helianto.core.dao.UserDao;
@@ -49,6 +50,7 @@ import org.helianto.core.dao.UserRoleDao;
 public abstract class AbstractServerMgr implements ServerMgr {
 
     protected OperatorDao operatorDao;
+    protected ServerDao serverDao;
     protected ServiceDao serviceDao;
     protected UserRoleDao userRoleDao;
     protected EntityDao entityDao;
@@ -254,11 +256,16 @@ public abstract class AbstractServerMgr implements ServerMgr {
         return manager;
     }
 
-    //~ collaborators
+    //~ collaborators 
 
     @Resource
     public void setOperatorDao(OperatorDao operatorDao) {
         this.operatorDao = operatorDao;
+    }
+
+    @Resource
+    public void setServerDao(ServerDao serverDao) {
+        this.serverDao = serverDao;
     }
 
     @Resource

@@ -112,7 +112,7 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
      * @param entity
      * @param resourceCode
      */
-    public static Resource resourceGroupFactory(Entity entity, String resourceCode) {
+    public static Resource resourceFactory(Entity entity, String resourceCode) {
         return resourceGroupFactory(Resource.class, entity, resourceCode);
     }
 
@@ -122,7 +122,7 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
      * @param parent
      * @param resourceCode
      */
-    public static Resource resourceGroupFactory(ResourceGroup parent, String resourceCode) {
+    public static Resource resourceFactory(ResourceGroup parent, String resourceCode) {
     	Resource resource =  resourceGroupFactory(Resource.class, parent.getEntity(), resourceCode);
     	resource.setParent(parent);
     	resource.setResourceType(parent.getResourceType());
