@@ -21,6 +21,7 @@ import java.util.List;
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.SimplePartnerRegistry;
 import org.helianto.partner.dao.PartnerDao;
 import org.springframework.stereotype.Repository;
 
@@ -53,11 +54,11 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
         remove(partner);
     }
     
-    public Partner findPartnerByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
+    public Partner findPartnerByNaturalId(PartnerRegistry partnerRegistry) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique partner with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique partner with partnerRegistry='"+partnerRegistry+"' ");
         }
-        return (Partner) findUnique(Partner.getPartnerNaturalIdQueryString(), partnerRegistry, sequence);
+        return (Partner) findUnique(Partner.getPartnerNaturalIdQueryString(), partnerRegistry);
     }
     
     
@@ -71,14 +72,26 @@ public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
         }
         else {
             if (logger.isDebugEnabled()) {
-                logger.debug("Finding full entity list");
+                logger.debug("Finding full partner list");
             }
             return (ArrayList<Partner>) find(Partner.getPartnerQueryStringBuilder());
         }
 	}
     
-	static String PARTNER_ENTITY_QRY = "select partner from Partner partner "+
-	    "where partner.entity = ? ";
-
-
+	@SuppressWarnings("unchecked")
+	public List<SimplePartnerRegistry> findSimplePartnerRegistries(String criteria) {
+        if (criteria!=null && !criteria.equals("")) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finding simple partner registry list with criteria='"+criteria+"' ");
+            }
+            return (ArrayList<SimplePartnerRegistry>) find(SimplePartnerRegistry.getSimplePartnerRegistryQueryStringBuilder().append("where ").append(criteria));
+        }
+        else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finding full simple partner registry list");
+            }
+            return (ArrayList<SimplePartnerRegistry>) find(SimplePartnerRegistry.getSimplePartnerRegistryQueryStringBuilder());
+        }
+	}
+    
 }

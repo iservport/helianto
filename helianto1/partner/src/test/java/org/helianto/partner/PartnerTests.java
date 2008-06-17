@@ -20,12 +20,10 @@ public class PartnerTests extends TestCase {
      */
     public void testPartnerFactory() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
-        int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Partner partner = Partner.partnerFactory(partnerRegistry, sequence);
+        Partner partner = Partner.partnerFactory(partnerRegistry);
         
         assertSame(partnerRegistry, partner.getPartnerRegistry());
-        assertEquals(sequence, partner.getSequence());
         assertTrue(partnerRegistry.getPartners().contains(partner));
         
     }
@@ -35,22 +33,14 @@ public class PartnerTests extends TestCase {
      */
     public void testPartnerEquals() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
-        int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Partner partner = Partner.partnerFactory(partnerRegistry, sequence);
+        Partner partner = Partner.partnerFactory(partnerRegistry);
         Partner copy = (Partner) DomainTestSupport.minimalEqualsTest(partner);
         
         copy.setPartnerRegistry(null);
-        copy.setSequence(sequence);
         assertFalse(partner.equals(copy));
 
         copy.setPartnerRegistry(partnerRegistry);
-        copy.setSequence(0);
-        assertFalse(partner.equals(copy));
-
-        copy.setPartnerRegistry(partnerRegistry);
-        copy.setSequence(sequence);
-
         assertTrue(partner.equals(copy));
     }
 

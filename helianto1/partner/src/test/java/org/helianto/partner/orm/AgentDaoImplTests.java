@@ -23,20 +23,20 @@ public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
      * Hook to persist one <code>Partner</code>.
      */  
     protected Agent writeAgent() {
-    	Agent partner = AgentTestSupport.createAgent();
-        partnerDao.persistPartner(partner);
+    	Agent agent = AgentTestSupport.createAgent();
+        partnerDao.persistPartner(agent);
         partnerDao.flush();
         partnerDao.clear();
-        return partner;
+        return agent;
     }
     
     /**
      * Find by natural id.
      */  
-    public void testFindOnePartner() {
-    	Agent partner = writeAgent();
+    public void testFindOneAgent() {
+    	Agent agent = writeAgent();
 
-        assertEquals(partner,  agentDao.findAgentByNaturalId(partner.getPartnerRegistry(), partner.getSequence()));
+        assertEquals(agent,  agentDao.findAgentByNaturalId(agent.getPartnerRegistry()));
     }
     
     /*
@@ -44,9 +44,8 @@ public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     protected List<Agent> writeAgentList() {
         int agentListSize = 10;
-        int partnerAssociationListSize = 2;
-        List<Agent> agentList = AgentTestSupport.createAgentList(agentListSize, partnerAssociationListSize);
-        assertEquals(agentListSize * partnerAssociationListSize, agentList.size());
+        List<Agent> agentList = AgentTestSupport.createAgentList(agentListSize);
+        assertEquals(agentListSize, agentList.size());
         for (Partner partner: agentList) {
             partnerDao.persistPartner(partner);
         }
@@ -62,7 +61,7 @@ public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
         List<Agent> agentList = writeAgentList();
 
         Agent agent = agentList.get((int) (Math.random()*agentList.size()));
-        assertEquals(agent,  agentDao.findAgentByNaturalId(agent.getPartnerRegistry(), agent.getSequence()));
+        assertEquals(agent,  agentDao.findAgentByNaturalId(agent.getPartnerRegistry()));
     }
 
     /**
@@ -70,7 +69,7 @@ public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     public void testAgentDuplicate() {
         Agent agent =  writeAgent();
-        Agent agentCopy = AgentTestSupport.createAgent(agent.getPartnerRegistry(), agent.getSequence());
+        Agent agentCopy = AgentTestSupport.createAgent(agent.getPartnerRegistry());
 
         try {
             partnerDao.mergePartner(agentCopy); fail();
@@ -86,7 +85,7 @@ public class AgentDaoImplTests extends AbstractPartnerDaoImplConfig {
         Agent agent = agentList.get((int) (Math.random()*agentList.size()));
         partnerDao.removePartner(agent);
 
-        assertNull(agentDao.findAgentByNaturalId(agent.getPartnerRegistry(), agent.getSequence()));
+        assertNull(agentDao.findAgentByNaturalId(agent.getPartnerRegistry()));
     }
 
     //- setters

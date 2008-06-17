@@ -3,10 +3,8 @@ package org.helianto.partner.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.Supplier;
-import org.helianto.partner.test.PartnerRegistryTestSupport;
 
 /**
  * Class to support <code>SupplierDao</code> tests.
@@ -15,27 +13,18 @@ import org.helianto.partner.test.PartnerRegistryTestSupport;
  */
 public class SupplierTestSupport {
 
-    private static int testKey;
-
     /**
      * Test support method to create a <code>Supplier</code>.
-     * @param partnerAssociation optional PartnerAssociation 
-     * @param sequence optional int 
+     * @param partnerRegistry optional PartnerRegistry 
      */
     public static Supplier createSupplier(Object... args) {
-        PartnerRegistry partnerAssociation;
+        PartnerRegistry partnerRegistry;
         try {
-            partnerAssociation = (PartnerRegistry) args[0];
+            partnerRegistry = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            partnerAssociation = PartnerRegistryTestSupport.createPartnerRegistry();
+            partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
         }
-        int sequence;
-        try {
-            sequence = (Integer) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            sequence = DomainTestSupport.getNonRepeatableIntValue(testKey++);
-        }
-        Supplier supplier = Supplier.supplierFactory(partnerAssociation, sequence);
+        Supplier supplier = Supplier.supplierFactory(partnerRegistry);
         return supplier;
     }
 
@@ -45,33 +34,20 @@ public class SupplierTestSupport {
      * @param supplierListSize
      */
     public static List<Supplier> createSupplierList(int supplierListSize) {
-        return createSupplierList(supplierListSize, 1);
+        List<PartnerRegistry> partnerRegistryList = PartnerRegistryTestSupport.createPartnerRegistryList(supplierListSize);
+
+        return createSupplierList(partnerRegistryList);
     }
 
     /**
      * Test support method to create a <code>Supplier</code> list.
      *
-     * @param supplierListSize
-     * @param partnerAssociationListSize
+     * @param partnerRegistryList
      */
-    public static List<Supplier> createSupplierList(int supplierListSize, int partnerAssociationListSize) {
-        List<PartnerRegistry> partnerAssociationList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerAssociationListSize);
-
-        return createSupplierList(supplierListSize, partnerAssociationList);
-    }
-
-    /**
-     * Test support method to create a <code>Supplier</code> list.
-     *
-     * @param supplierListSize
-     * @param partnerAssociationList
-     */
-    public static List<Supplier> createSupplierList(int supplierListSize, List<PartnerRegistry> partnerAssociationList) {
+    public static List<Supplier> createSupplierList(List<PartnerRegistry> partnerRegistryList) {
         List<Supplier> supplierList = new ArrayList<Supplier>();
-        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
-	        for (int i=0;i<supplierListSize;i++) {
-    	        supplierList.add(createSupplier(partnerRegistry));
-        	}
+        for (PartnerRegistry partnerRegistry: partnerRegistryList) {
+    	    supplierList.add(createSupplier(partnerRegistry));
         }
         return supplierList;
     }

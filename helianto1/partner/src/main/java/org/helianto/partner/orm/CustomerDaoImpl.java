@@ -29,15 +29,11 @@ import org.springframework.stereotype.Repository;
 @Repository("customerDao")
 public class CustomerDaoImpl extends GenericDaoImpl implements CustomerDao {
      
-    public Customer findCustomerByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
+    public Customer findCustomerByNaturalId(PartnerRegistry partnerRegistry) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique customer with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique customer with partnerRegistry='"+partnerRegistry+"' ");
         }
-        return (Customer) findUnique(Customer.getCustomerNaturalIdQueryString(), partnerRegistry, sequence);
+        return (Customer) findUnique(Customer.getCustomerNaturalIdQueryString(), partnerRegistry);
     }
-    
-    
-	static String CUSTOMER_ENTITY_QRY = "select customer from Customer customer "+
-	    "where customer.entity = :entity ";
     
 }

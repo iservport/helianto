@@ -29,12 +29,11 @@ import org.springframework.stereotype.Repository;
 @Repository("agentDao")
 public class AgentDaoImpl extends GenericDaoImpl implements AgentDao {
      
-    public Agent findAgentByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
+    public Agent findAgentByNaturalId(PartnerRegistry partnerRegistry) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique agent with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique agent with partnerRegistry='"+partnerRegistry+"' ");
         }
-        return (Agent) findUnique(Agent.getAgentNaturalIdQueryString(), partnerRegistry, sequence);
+        return (Agent) findUnique(Agent.getAgentNaturalIdQueryString(), partnerRegistry);
     }
-    
     
 }

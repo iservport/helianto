@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.helianto.partner.Account;
 import org.helianto.partner.Partner;
+import org.helianto.partner.SimplePartnerRegistry;
 import org.helianto.partner.dao.PartnerDao;
 import org.helianto.partner.test.AccountTestSupport;
 import org.helianto.partner.test.PartnerTestSupport;
@@ -35,7 +36,7 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
     public void testFindOnePartner() {
         Partner partner = writePartner();
 
-        assertEquals(partner,  partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry(), partner.getSequence()));
+        assertEquals(partner,  partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry()));
     }
     
     /*
@@ -43,9 +44,8 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     protected List<Partner> writePartnerList() {
         int partnerListSize = 10;
-        int partnerAssociationListSize = 2;
-        List<Partner> partnerList = PartnerTestSupport.createPartnerList(partnerListSize, partnerAssociationListSize);
-        assertEquals(partnerListSize * partnerAssociationListSize, partnerList.size());
+        List<Partner> partnerList = PartnerTestSupport.createPartnerList(partnerListSize);
+        assertEquals(partnerListSize, partnerList.size());
         for (Partner partner: partnerList) {
             partnerDao.persistPartner(partner);
         }
@@ -61,7 +61,23 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
         List<Partner> partnerList = writePartnerList();
 
         Partner partner = partnerList.get((int) (Math.random()*partnerList.size()));
-        assertEquals(partner,  partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry(), partner.getSequence()));
+        assertEquals(partner,  partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry()));
+        
+        List<SimplePartnerRegistry> simplePartnerList = partnerDao.findSimplePartnerRegistries("");
+        for (SimplePartnerRegistry sp: simplePartnerList) {
+        	System.out.println(sp+" >"+sp.getType());
+        }
+    }
+
+    public void testFindListSimplePartnerRegistry() {
+        List<Partner> partnerList = writePartnerList();
+
+        Partner partner = partnerList.get((int) (Math.random()*partnerList.size()));
+        List<SimplePartnerRegistry> simplePartnerList = partnerDao.findSimplePartnerRegistries("partnerRegistry.entity.id = "+partner.getPartnerRegistry().getEntity().getId() +
+        		"and partnerRegistry.partnerAlias = '"+partner.getPartnerRegistry().getPartnerAlias()+"'");
+        for (SimplePartnerRegistry sp: simplePartnerList) {
+        	System.out.println(sp+" >"+sp.getType());
+        }
     }
 
     /**
@@ -69,7 +85,7 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
      */  
     public void testPartnerDuplicate() {
         Partner partner =  writePartner();
-        Partner partnerCopy = PartnerTestSupport.createPartner(partner.getPartnerRegistry(), partner.getSequence());
+        Partner partnerCopy = PartnerTestSupport.createPartner(partner.getPartnerRegistry());
 
         try {
             partnerDao.mergePartner(partnerCopy); fail();
@@ -85,7 +101,7 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
         Partner partner = partnerList.get((int) (Math.random()*partnerList.size()));
         partnerDao.removePartner(partner);
 
-        assertNull(partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry(), partner.getSequence()));
+        assertNull(partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry()));
     }
 
     /**
@@ -99,7 +115,7 @@ public class PartnerDaoImplTests extends AbstractPartnerDaoImplConfig {
         partnerDao.flush();
         partnerDao.clear();
         
-        Partner loadedPartner = partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry(), partner.getSequence());
+        Partner loadedPartner = partnerDao.findPartnerByNaturalId(partner.getPartnerRegistry());
         assertEquals(partner,  loadedPartner);
         assertEquals(account, loadedPartner.getAccount());
     }

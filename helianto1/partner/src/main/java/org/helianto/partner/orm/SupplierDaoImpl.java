@@ -29,15 +29,11 @@ import org.springframework.stereotype.Repository;
 @Repository("supplierDao")
 public class SupplierDaoImpl extends GenericDaoImpl implements SupplierDao {
      
-    public Supplier findSupplierByNaturalId(PartnerRegistry partnerRegistry, int sequence) {
+    public Supplier findSupplierByNaturalId(PartnerRegistry partnerRegistry) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique supplier with partnerRegistry='"+partnerRegistry+"' and sequence='"+sequence+"' ");
+            logger.debug("Finding unique supplier with partnerRegistry='"+partnerRegistry+"' ");
         }
-        return (Supplier) findUnique(Supplier.getSupplierNaturalIdQueryString(), partnerRegistry, sequence);
+        return (Supplier) findUnique(Supplier.getSupplierNaturalIdQueryString(), partnerRegistry);
     }
-    
-    
-	static String SUPPLIER_ENTITY_QRY = "select supplier from Supplier supplier "+
-	    "where supplier.entity = ? ";
     
 }

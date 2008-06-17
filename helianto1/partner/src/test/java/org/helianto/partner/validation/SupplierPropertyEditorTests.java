@@ -3,6 +3,7 @@ package org.helianto.partner.validation;
 import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.Supplier;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
@@ -13,12 +14,13 @@ public class SupplierPropertyEditorTests extends TestCase {
 
 	public void testGetAsText() {
 		Supplier supplier = new Supplier();
-		supplier.setSequence(1);
+		supplier.setPartnerRegistry(new PartnerRegistry());
+		supplier.getPartnerRegistry().setPartnerAlias("ALIAS");
 		supplierPropertyEditor.setValue(supplier);
 		
 		EasyMock.replay(sessionFactory);
 		
-		assertEquals("1", supplierPropertyEditor.getAsText());
+		assertEquals("ALIAS", supplierPropertyEditor.getAsText());
 		EasyMock.verify(sessionFactory);
 	}
 

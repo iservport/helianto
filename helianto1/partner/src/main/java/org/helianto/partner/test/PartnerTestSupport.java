@@ -3,7 +3,6 @@ package org.helianto.partner.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerRegistry;
 
@@ -14,12 +13,9 @@ import org.helianto.partner.PartnerRegistry;
  */
 public class PartnerTestSupport {
 
-    private static int testKey;
-
     /**
      * Test support method to create a <code>Partner</code>.
      * @param partnerRegistry optional PartnerRegistry 
-     * @param sequence optional int 
      */
     public static Partner createPartner(Object... args) {
         PartnerRegistry partnerRegistry;
@@ -28,13 +24,7 @@ public class PartnerTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
         }
-        int sequence;
-        try {
-            sequence = (Integer) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            sequence = DomainTestSupport.getNonRepeatableIntValue(testKey++);
-        }
-        Partner partner = Partner.partnerFactory(partnerRegistry, sequence);
+        Partner partner = Partner.partnerFactory(partnerRegistry);
         return partner;
     }
 
@@ -44,33 +34,20 @@ public class PartnerTestSupport {
      * @param partnerListSize
      */
     public static List<Partner> createPartnerList(int partnerListSize) {
-        return createPartnerList(partnerListSize, 1);
+        List<PartnerRegistry> partnerRegistryList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerListSize);
+
+        return createPartnerList(partnerRegistryList);
     }
 
     /**
      * Test support method to create a <code>Partner</code> list.
      *
-     * @param partnerListSize
-     * @param partnerAssociationListSize
+     * @param partnerRegistryList
      */
-    public static List<Partner> createPartnerList(int partnerListSize, int partnerAssociationListSize) {
-        List<PartnerRegistry> partnerAssociationList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerAssociationListSize);
-
-        return createPartnerList(partnerListSize, partnerAssociationList);
-    }
-
-    /**
-     * Test support method to create a <code>Partner</code> list.
-     *
-     * @param partnerListSize
-     * @param partnerAssociationList
-     */
-    public static List<Partner> createPartnerList(int partnerListSize, List<PartnerRegistry> partnerAssociationList) {
+    public static List<Partner> createPartnerList(List<PartnerRegistry> partnerRegistryList) {
         List<Partner> partnerList = new ArrayList<Partner>();
-        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
-	        for (int i=0;i<partnerListSize;i++) {
-    	        partnerList.add(createPartner(partnerRegistry));
-        	}
+        for (PartnerRegistry partnerRegistry: partnerRegistryList) {
+   	        partnerList.add(createPartner(partnerRegistry));
         }
         return partnerList;
     }

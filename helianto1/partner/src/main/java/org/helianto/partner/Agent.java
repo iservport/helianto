@@ -15,7 +15,7 @@
 
 package org.helianto.partner;
 
-import javax.persistence.Table;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Transient;
 
 
@@ -26,7 +26,7 @@ import javax.persistence.Transient;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="prtnr_agent")
+@DiscriminatorValue("A")
 public class Agent extends Partner implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,24 +53,35 @@ public class Agent extends Partner implements java.io.Serializable {
      * <code>Agent</code> factory.
      * 
      * @param partnerRegistry
-     * @param sequence
      */
-    public static Agent agentFactory(PartnerRegistry partnerRegistry, int sequence) {
-        Agent agent = new Agent();
-        agent.setPartnerRegistry(partnerRegistry);
-        agent.setSequence(sequence);
-        partnerRegistry.getPartners().add(agent);
-        return agent;
+    public static Agent agentFactory(PartnerRegistry partnerRegistry) {
+        return internalPartnerFactory(Agent.class, partnerRegistry);
     }
+
+    /**
+     * <code>Agent</code> query.
+     */
+    @Transient
+    public static StringBuilder getAgentQueryStringBuilder() {
+    	return new StringBuilder("select agent from Agent agent ");
+    }   
 
     /**
      * <code>Agent</code> natural id query.
      */
     @Transient
     public static String getAgentNaturalIdQueryString() {
-        return "select agent from Agent agent where agent.partnerRegistry = ? and agent.sequence = ? ";
+    	return getAgentQueryStringBuilder().append("where agent.partnerRegistry = ? and agent.class = 'A' ").toString();
     }
 
+   /**
+    * equals
+    */
+   public boolean equals(Object other) {
+         if ( !(other instanceof Agent) ) return false;
+         return super.equals(other);
+   }
+   
 }
 
 

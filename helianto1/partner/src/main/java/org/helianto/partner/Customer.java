@@ -15,7 +15,7 @@
 
 package org.helianto.partner;
 
-import javax.persistence.Table;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Transient;
 
 
@@ -26,7 +26,7 @@ import javax.persistence.Transient;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="prtnr_customer")
+@DiscriminatorValue("C")
 public class Customer extends Partner implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,24 +37,36 @@ public class Customer extends Partner implements java.io.Serializable {
     /**
      * <code>Customer</code> factory.
      * 
-     * @param partnerRegistry
-     * @param sequence
+     * @param customer
      */
-    public static Customer customerFactory(PartnerRegistry partnerRegistry, int sequence) {
-        Customer customer = new Customer();
-        customer.setPartnerRegistry(partnerRegistry);
-        customer.setSequence(sequence);
-        partnerRegistry.getPartners().add(customer);
-        return customer;
+    public static Customer customerFactory(PartnerRegistry partnerRegistry) {
+        return internalPartnerFactory(Customer.class, partnerRegistry);
     }
+
+    /**
+     * <code>Customer</code> query.
+     */
+    @Transient
+    public static StringBuilder getCustomerQueryStringBuilder() {
+    	return new StringBuilder("select customer from Customer customer ");
+    }   
 
     /**
      * <code>Customer</code> natural id query.
      */
     @Transient
     public static String getCustomerNaturalIdQueryString() {
-        return "select customer from Customer customer where customer.partnerRegistry = ? and customer.sequence = ? ";
+    	return getCustomerQueryStringBuilder().append("where customer.partnerRegistry = ? and customer.class = 'C' ").toString();
     }
+
+   /**
+    * equals
+    */
+   public boolean equals(Object other) {
+         if ( !(other instanceof Customer) ) return false;
+         return super.equals(other);
+   }
+   
 }
 
 

@@ -28,7 +28,7 @@ public class CustomerPropertyEditor extends AbstractSessionPropertyEditor {
     @Override
     public String getAsText() {
         Customer customer = (Customer) getValue();
-        return String.valueOf(customer.getSequence());
+        return String.valueOf(customer.getPartnerRegistry().getPartnerAlias());
     }
     
     @Override

@@ -29,7 +29,7 @@ public interface AgentDao extends CommonOrmDao {
     /**
      * Find <code>Partner</code> by <code>PartnerAssociation</code> and sequence.
      */
-    public Agent findAgentByNaturalId(PartnerRegistry partnerRegistry, int sequence);
+    public Agent findAgentByNaturalId(PartnerRegistry partnerRegistry);
     
     
     

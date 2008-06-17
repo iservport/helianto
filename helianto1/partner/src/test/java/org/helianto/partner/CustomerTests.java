@@ -1,10 +1,8 @@
 package org.helianto.partner;
 
-import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.Customer;
-import org.helianto.partner.PartnerRegistry;
-
 import junit.framework.TestCase;
+
+import org.helianto.core.test.DomainTestSupport;
 
 /**
  * <code>Customer</code> domain tests.
@@ -18,16 +16,30 @@ public class CustomerTests extends TestCase {
      */
     public void testCustomerFactory() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
-        int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Customer customer = Customer.customerFactory(partnerRegistry, sequence);
+        Customer customer = Customer.customerFactory(partnerRegistry);
         
         assertSame(partnerRegistry, customer.getPartnerRegistry());
-        assertEquals(sequence, customer.getSequence());
         assertTrue(partnerRegistry.getPartners().contains(customer));
         
     }
     
+    /**
+     * Test <code>Customer</code> equals() method.
+     */
+    public void testCustomerEquals() {
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        
+        Customer customer = Customer.customerFactory(partnerRegistry);
+        Customer copy = (Customer) DomainTestSupport.minimalEqualsTest(customer);
+        
+        copy.setPartnerRegistry(null);
+        assertFalse(customer.equals(copy));
+
+        copy.setPartnerRegistry(partnerRegistry);
+        assertTrue(customer.equals(copy));
+    }
+
 }
     
     

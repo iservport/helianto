@@ -2,9 +2,8 @@ package org.helianto.sales;
 
 import java.io.Serializable;
 import java.util.Date;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.helianto.core.Customer;
-import org.helianto.process.Product;
+
+import org.helianto.partner.Customer;
 
 
 /** 

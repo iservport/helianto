@@ -4,9 +4,6 @@ import org.helianto.core.test.DomainTestSupport;
 
 import junit.framework.TestCase;
 
-import org.helianto.partner.PartnerRegistry;
-import org.helianto.partner.Supplier;
-
 /**
  * <code>Supplier</code> domain tests.
  * 
@@ -19,16 +16,30 @@ public class SupplierTests extends TestCase {
      */
     public void testSupplierFactory() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
-        int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Supplier supplier = Supplier.supplierFactory(partnerRegistry, sequence);
+        Supplier supplier = Supplier.supplierFactory(partnerRegistry);
         
         assertSame(partnerRegistry, supplier.getPartnerRegistry());
-        assertEquals(sequence, supplier.getSequence());
         assertTrue(partnerRegistry.getPartners().contains(supplier));
         
     }
     
+    /**
+     * Test <code>Supplier</code> equals() method.
+     */
+    public void testSupplierEquals() {
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        
+        Supplier supplier = Supplier.supplierFactory(partnerRegistry);
+        Supplier copy = (Supplier) DomainTestSupport.minimalEqualsTest(supplier);
+        
+        copy.setPartnerRegistry(null);
+        assertFalse(supplier.equals(copy));
+
+        copy.setPartnerRegistry(partnerRegistry);
+        assertTrue(supplier.equals(copy));
+    }
+
 }
     
     

@@ -14,8 +14,7 @@
  */
 package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
+import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.partner.Agent;
 
 
@@ -24,16 +23,12 @@ import org.helianto.partner.Agent;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class AgentPropertyEditor extends AbstractLoaderPropertyEditor {
-    
-    public AgentPropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
+public class AgentPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {
         Agent agent = (Agent) getValue();
-        return String.valueOf(agent.getSequence());
+        return String.valueOf(agent.getPartnerRegistry().getPartnerAlias());
     }
     
     @Override

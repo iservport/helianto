@@ -27,7 +27,7 @@ public class SupplierPropertyEditor extends AbstractSessionPropertyEditor {
     @Override
     public String getAsText() {
         Supplier supplier = (Supplier) getValue();
-        return String.valueOf(supplier.getSequence());
+        return String.valueOf(supplier.getPartnerRegistry().getPartnerAlias());
     }
     
     @Override

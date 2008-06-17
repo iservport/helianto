@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
 import org.helianto.partner.Partner;
+import org.helianto.partner.PartnerRegistry;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 
@@ -13,12 +14,13 @@ public class PartnerPropertyEditorTests extends TestCase {
 
 	public void testGetAsText() {
 		Partner partner = new Partner();
-		partner.setSequence(1);
+		partner.setPartnerRegistry(new PartnerRegistry());
+		partner.getPartnerRegistry().setPartnerAlias("ALIAS");
 		partnerPropertyEditor.setValue(partner);
 		
 		EasyMock.replay(sessionFactory);
 		
-		assertEquals("1", partnerPropertyEditor.getAsText());
+		assertEquals("ALIAS", partnerPropertyEditor.getAsText());
 		EasyMock.verify(sessionFactory);
 	}
 

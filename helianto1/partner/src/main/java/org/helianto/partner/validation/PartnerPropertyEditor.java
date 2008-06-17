@@ -27,7 +27,8 @@ public class PartnerPropertyEditor extends AbstractSessionPropertyEditor {
 
 	@Override
 	public String getAsText() {
-		return String.valueOf(((Partner) getValue()).getSequence());
+		Partner partner = (Partner) getValue();
+        return String.valueOf(partner.getPartnerRegistry().getPartnerAlias());
 	}
 
 	@Override

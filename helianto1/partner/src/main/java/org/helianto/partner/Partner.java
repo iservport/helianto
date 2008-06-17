@@ -16,6 +16,9 @@
 package org.helianto.partner;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,15 +37,16 @@ import javax.persistence.UniqueConstraint;
  */
 @javax.persistence.Entity
 @Table(name="prtnr_partner",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "sequence"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "type"})}
 )
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
+@DiscriminatorValue("P")
 public class Partner implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
     private PartnerRegistry partnerRegistry;
-    private int sequence;
     private Account account;
     private char priority;
     private char partnerState;
@@ -70,16 +74,6 @@ public class Partner implements java.io.Serializable {
     }
     public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
         this.partnerRegistry = partnerRegistry;
-    }
-
-    /**
-     * Sequence.
-     */
-    public int getSequence() {
-        return this.sequence;
-    }
-    public void setSequence(int sequence) {
-        this.sequence = sequence;
     }
 
     /**
@@ -123,12 +117,26 @@ public class Partner implements java.io.Serializable {
      * @param partnerRegistry
      * @param sequence
      */
-    public static Partner partnerFactory(PartnerRegistry partnerRegistry, int sequence) {
-        Partner partner = new Partner();
+    protected static <T extends Partner> T internalPartnerFactory(Class<T> clazz, PartnerRegistry partnerRegistry) {
+        T partner = null;
+        try {
+        	partner = clazz.newInstance();
+        } 
+        catch (Exception e) {
+        	throw new RuntimeException("Unable to instantiate partner or descendant.");
+        }
         partner.setPartnerRegistry(partnerRegistry);
-        partner.setSequence(sequence);
         partnerRegistry.getPartners().add(partner);
         return partner;
+    }
+
+    /**
+     * <code>Partner</code> factory.
+     * 
+     * @param partnerRegistry
+     */
+    public static Partner partnerFactory(PartnerRegistry partnerRegistry) {
+        return internalPartnerFactory(Partner.class, partnerRegistry);
     }
 
     /**
@@ -144,7 +152,7 @@ public class Partner implements java.io.Serializable {
      */
     @Transient
     public static String getPartnerNaturalIdQueryString() {
-    	return getPartnerQueryStringBuilder().append("where partner.partnerRegistry = ? and partner.sequence = ? ").toString();
+    	return getPartnerQueryStringBuilder().append("where partner.partnerRegistry = ? and partner.class = 'P' ").toString();
     }
 
     /**
@@ -156,7 +164,6 @@ public class Partner implements java.io.Serializable {
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("partnerRegistry").append("='").append(getPartnerRegistry()).append("' ");
-        buffer.append("sequence").append("='").append(getSequence()).append("' ");
         buffer.append("]");
       
         return buffer.toString();
@@ -171,8 +178,7 @@ public class Partner implements java.io.Serializable {
          if ( !(other instanceof Partner) ) return false;
          Partner castOther = (Partner) other; 
          
-         return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ))
-             && ((this.getSequence()==castOther.getSequence()));
+         return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ));
    }
    
    /**
@@ -181,7 +187,6 @@ public class Partner implements java.io.Serializable {
    public int hashCode() {
          int result = 17;
          result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
-         result = 37 * result + (int) this.getSequence();
          return result;
    }
 
