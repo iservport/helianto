@@ -21,7 +21,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.process.Document;
+import org.helianto.process.ProcessDocument;
 
 
 /**
@@ -29,7 +29,7 @@ import org.helianto.process.Document;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DocumentTestSupport {
+public class ProcessDocumentTestSupport {
 
     private static int testKey;
 
@@ -38,7 +38,7 @@ public class DocumentTestSupport {
      * @param entity optional Entity 
      * @param docCode optional String 
      */
-    public static Document createDocument(Object... args) {
+    public static ProcessDocument createDocument(Object... args) {
         Entity entity;
         try {
             entity = (Entity) args[0];
@@ -51,7 +51,7 @@ public class DocumentTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             docCode = DomainTestSupport.getNonRepeatableStringValue(testKey++, 24);
         }
-        Document document = Document.documentFactory(entity, docCode);
+        ProcessDocument document = ProcessDocument.processDocumentFactory(entity, docCode);
         return document;
     }
 
@@ -60,7 +60,7 @@ public class DocumentTestSupport {
      *
      * @param documentListSize
      */
-    public static List<Document> createDocumentList(int documentListSize) {
+    public static List<ProcessDocument> createDocumentList(int documentListSize) {
         return createDocumentList(documentListSize, 1);
     }
 
@@ -70,7 +70,7 @@ public class DocumentTestSupport {
      * @param documentListSize
      * @param entityListSize
      */
-    public static List<Document> createDocumentList(int documentListSize, int entityListSize) {
+    public static List<ProcessDocument> createDocumentList(int documentListSize, int entityListSize) {
         List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
 
         return createDocumentList(documentListSize, entityList);
@@ -82,8 +82,8 @@ public class DocumentTestSupport {
      * @param documentListSize
      * @param entityList
      */
-    public static List<Document> createDocumentList(int documentListSize, List<Entity> entityList) {
-        List<Document> documentList = new ArrayList<Document>();
+    public static List<ProcessDocument> createDocumentList(int documentListSize, List<Entity> entityList) {
+        List<ProcessDocument> documentList = new ArrayList<ProcessDocument>();
         for (Entity entity: entityList) {
             for (int i=0;i<documentListSize;i++) {
                 documentList.add(createDocument(entity));

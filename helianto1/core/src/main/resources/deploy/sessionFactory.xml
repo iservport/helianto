@@ -17,7 +17,7 @@
 		-->
 <beans>
 	<!--
-			Abstract session factory	
+			Session factory	
 	-->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">

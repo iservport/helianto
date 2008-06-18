@@ -46,7 +46,7 @@ public class Specification implements java.io.Serializable {
     
 	private static final long serialVersionUID = 1L;
     private int id;
-	private Document document;
+	private ProcessDocument document;
 	private Characteristic characteristic;
 	private Unit unit;
     private SpecificationLimit specificationLimit;
@@ -70,10 +70,10 @@ public class Specification implements java.io.Serializable {
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="documentId", nullable=true)
-	public Document getDocument() {
+	public ProcessDocument getDocument() {
 		return document;
 	}
-	public void setDocument(Document document) {
+	public void setDocument(ProcessDocument document) {
 		this.document = document;
 	}
 
@@ -118,7 +118,7 @@ public class Specification implements java.io.Serializable {
      * @param document
      * @param characteristic
      */
-    public static <T extends Specification> T specificationFactory(Class<T> clazz, Document document, Characteristic characteristic) {
+    public static <T extends Specification> T specificationFactory(Class<T> clazz, ProcessDocument document, Characteristic characteristic) {
     	T specification = null;
         try {
         	specification = clazz.newInstance();
@@ -136,7 +136,7 @@ public class Specification implements java.io.Serializable {
      * @param document
      * @param characteristic
      */
-    public static Specification specificationFactory(Document document, Characteristic characteristic) {
+    public static Specification specificationFactory(ProcessDocument document, Characteristic characteristic) {
         return specificationFactory(Specification.class, document, characteristic);
     }
 

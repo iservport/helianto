@@ -16,7 +16,7 @@
 package org.helianto.process.dao;
 
 import org.helianto.core.dao.CommonOrmDao;
-import org.helianto.process.Document;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.DocumentAssociation;
 
 
@@ -35,7 +35,7 @@ public interface DocumentAssociationDao extends CommonOrmDao {
     /**
      * Find <code>DocumentAssociation</code> by <code>Document</code> and <code>Document</code>.
      */
-    public DocumentAssociation findDocumentAssociationByNaturalId(Document parent, Document child);
+    public DocumentAssociation findDocumentAssociationByNaturalId(ProcessDocument parent, ProcessDocument child);
     
     
     

@@ -15,7 +15,7 @@ import org.helianto.core.Entity;
  * 				
  * 		
  */
-public class ExternalDocument extends org.helianto.process.Document implements java.io.Serializable {
+public class ExternalDocument extends org.helianto.process.ProcessDocument implements java.io.Serializable {
 
     // Fields    
 

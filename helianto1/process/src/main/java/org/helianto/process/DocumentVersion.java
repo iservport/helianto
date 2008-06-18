@@ -39,7 +39,7 @@ public class DocumentVersion  implements java.io.Serializable {
  	private static final long serialVersionUID = 1L;
 	private int id;
     private Release release;
-    private Document document;
+    private ProcessDocument document;
     private int majorNumber;
     private int minorNumber;
     private int releaseAction;
@@ -75,10 +75,10 @@ public class DocumentVersion  implements java.io.Serializable {
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="documentId", nullable=true)
-    public Document getDocument() {
+    public ProcessDocument getDocument() {
         return this.document;
     }
-    public void setDocument(Document document) {
+    public void setDocument(ProcessDocument document) {
         this.document = document;
     }
     

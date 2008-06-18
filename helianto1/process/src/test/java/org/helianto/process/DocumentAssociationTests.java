@@ -3,7 +3,7 @@ package org.helianto.process;
 import junit.framework.TestCase;
 
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.process.Document;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.DocumentAssociation;
 
 /**
@@ -17,8 +17,8 @@ public class DocumentAssociationTests extends TestCase {
      * Test <code>DocumentAssociation</code> static factory method.
      */
     public void testDocumentAssociationFactory() {
-        Document parent = new Document();
-        Document child = new Document();
+        ProcessDocument parent = new ProcessDocument();
+        ProcessDocument child = new ProcessDocument();
         
         DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child);
         
@@ -33,8 +33,8 @@ public class DocumentAssociationTests extends TestCase {
      * Test <code>DocumentAssociation</code> equals() method.
      */
     public void testDocumentAssociationEquals() {
-        Document parent = new Document();
-        Document child = new Document();
+        ProcessDocument parent = new ProcessDocument();
+        ProcessDocument child = new ProcessDocument();
         
         DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child);
         DocumentAssociation copy = (DocumentAssociation) DomainTestSupport.minimalEqualsTest(documentAssociation);

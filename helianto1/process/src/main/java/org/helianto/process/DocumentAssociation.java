@@ -39,8 +39,8 @@ public class DocumentAssociation implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private Document parent;
-    private Document child;
+    private ProcessDocument parent;
+    private ProcessDocument child;
     private int version;
     private int sequence;
     private char associationType;
@@ -64,13 +64,13 @@ public class DocumentAssociation implements java.io.Serializable {
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="parentId", nullable=true)
-    public Document getParent() {
+    public ProcessDocument getParent() {
         return this.parent;
     }
     /**
      * Parent setter.
      */
-    public void setParent(Document parent) {
+    public void setParent(ProcessDocument parent) {
         this.parent = parent;
     }
 
@@ -79,13 +79,13 @@ public class DocumentAssociation implements java.io.Serializable {
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="childId", nullable=true)
-    public Document getChild() {
+    public ProcessDocument getChild() {
         return this.child;
     }
     /**
      * Child setter.
      */
-    public void setChild(Document child) {
+    public void setChild(ProcessDocument child) {
         this.child = child;
     }
 
@@ -148,7 +148,7 @@ public class DocumentAssociation implements java.io.Serializable {
      * @param parent
      * @param child
      */
-    public static DocumentAssociation documentAssociationFactory(Document parent, Document child) {
+    public static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child) {
         DocumentAssociation documentAssociation = new DocumentAssociation();
         documentAssociation.setParent(parent);
         documentAssociation.setChild(child);

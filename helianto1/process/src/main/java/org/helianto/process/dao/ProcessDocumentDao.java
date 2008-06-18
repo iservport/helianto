@@ -21,44 +21,38 @@ import org.helianto.core.dao.CommonOrmDao;
 
 
 import org.helianto.core.Entity;
-import org.helianto.process.Document;
+import org.helianto.process.ProcessDocument;
 
 /**
- * <code>Document</code> data access interface.
+ * <code>ProcessDocument</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface DocumentDao extends CommonOrmDao {
+public interface ProcessDocumentDao extends CommonOrmDao {
      
     /**
-     * Persist <code>Document</code>.
+     * Persist <code>ProcessDocument</code>.
      */
-    public void persistDocument(Document document);
+    public void persistProcessDocument(ProcessDocument processDocument);
     
     /**
-     * Merge <code>Document</code>.
+     * Merge <code>ProcessDocument</code>.
      */
-    public Document mergeDocument(Document document);
+    public ProcessDocument mergeProcessDocument(ProcessDocument processDocument);
     
     /**
-     * Remove <code>Document</code>.
+     * Remove <code>ProcessDocument</code>.
      */
-    public void removeDocument(Document document);
+    public void removeProcessDocument(ProcessDocument processDocument);
     
     /**
-     * Find <code>Document</code> by <code>Entity</code> and docCode.
+     * Find <code>ProcessDocument</code> by <code>Entity</code> and docCode.
      */
-    public Document findDocumentByNaturalId(Entity entity, String docCode);
+    public ProcessDocument findProcessDocumentByNaturalId(Entity entity, String docCode);
     
     /**
-     * Find <code>Document</code> by criteria.
-     * @Deprecated use findDocuments
+     * Find <code>ProcessDocument</code> by criteria.
      */
-    public List<Document> findDocumentByCriteria(String criteria);
-    
-    /**
-     * Find <code>Document</code> by criteria.
-     */
-    public List<Document> findDocuments(String criteria);    
+    public List<ProcessDocument> findProcessDocuments(String criteria);    
     
 }

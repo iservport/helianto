@@ -3,7 +3,7 @@ package org.helianto.process;
 /**
  * Simple test class extending Document
  */
-public class DocumentExtension extends Document {
+public class DocumentExtension extends ProcessDocument {
 
 	private static final long serialVersionUID = 1L;
 

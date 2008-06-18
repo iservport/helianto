@@ -17,7 +17,7 @@ public class Attachment  implements java.io.Serializable {
     // Fields    
 
      private long id;
-     private Document document;
+     private ProcessDocument document;
      private int sequence;
      private byte[] content;
      private String attachDesc;
@@ -29,12 +29,12 @@ public class Attachment  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public Attachment(Document document, int sequence) {
+    public Attachment(ProcessDocument document, int sequence) {
         this.document = document;
         this.sequence = sequence;
     }
     /** full constructor */
-    public Attachment(Document document, int sequence, byte[] content, String attachDesc) {
+    public Attachment(ProcessDocument document, int sequence, byte[] content, String attachDesc) {
        this.document = document;
        this.sequence = sequence;
        this.content = content;
@@ -49,11 +49,11 @@ public class Attachment  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    public Document getDocument() {
+    public ProcessDocument getDocument() {
         return this.document;
     }
     
-    public void setDocument(Document document) {
+    public void setDocument(ProcessDocument document) {
         this.document = document;
     }
     public int getSequence() {

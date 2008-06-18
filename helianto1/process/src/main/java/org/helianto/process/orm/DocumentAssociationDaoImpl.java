@@ -16,7 +16,7 @@
 package org.helianto.process.orm;
 
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.helianto.process.Document;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.DocumentAssociation;
 import org.helianto.process.dao.DocumentAssociationDao;
 import org.springframework.stereotype.Repository;
@@ -36,7 +36,7 @@ public class DocumentAssociationDaoImpl extends GenericDaoImpl implements Docume
         remove(documentAssociation);
     }
     
-    public DocumentAssociation findDocumentAssociationByNaturalId(Document parent, Document child) {
+    public DocumentAssociation findDocumentAssociationByNaturalId(ProcessDocument parent, ProcessDocument child) {
         if (logger.isDebugEnabled()) {
             logger.debug("Finding unique documentAssociation with parent='"+parent+"' and child='"+child+"' ");
         }

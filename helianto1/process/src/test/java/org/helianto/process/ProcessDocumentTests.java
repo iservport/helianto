@@ -11,7 +11,7 @@ import org.helianto.core.test.DomainTestSupport;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DocumentTests extends TestCase {
+public class ProcessDocumentTests extends TestCase {
     
     /**
      * Test <code>Document</code> static factory method.
@@ -20,7 +20,7 @@ public class DocumentTests extends TestCase {
         Entity entity = new Entity();
         String docCode = DomainTestSupport.STRING_TEST_VALUE;
 
-		Document document = Document.documentFactory(DocumentExtension.class, entity, docCode);
+		ProcessDocument document = ProcessDocument.documentFactory(DocumentExtension.class, entity, docCode);
 
         assertTrue(document instanceof DocumentExtension);
 		assertSame(entity, document.getEntity());
@@ -35,9 +35,9 @@ public class DocumentTests extends TestCase {
         Entity entity = new Entity();
         String docCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        Document document = Document.documentFactory(entity, docCode);
+        ProcessDocument document = ProcessDocument.processDocumentFactory(entity, docCode);
         
-        assertTrue(document instanceof Document);
+        assertTrue(document instanceof ProcessDocument);
         assertSame(entity, document.getEntity());
         assertEquals(docCode, document.getDocCode());
         
@@ -49,10 +49,10 @@ public class DocumentTests extends TestCase {
     public void testDocumentFactoryAssociation() {
         Entity entity = new Entity();
         String docCode = DomainTestSupport.STRING_TEST_VALUE;
-        Document parent = Document.documentFactory(entity, "PARENT");
+        ProcessDocument parent = ProcessDocument.processDocumentFactory(entity, "PARENT");
         parent.setEntity(entity);
         
-        Document child = Document.documentFactory(DocumentExtension.class, parent, docCode, 0.001, AssociationType.PART_PART);
+        ProcessDocument child = ProcessDocument.documentFactory(DocumentExtension.class, parent, docCode, 0.001, AssociationType.PART_PART);
         
         assertTrue(child instanceof DocumentExtension);
         assertSame(entity, child.getEntity());
@@ -76,8 +76,8 @@ public class DocumentTests extends TestCase {
         Entity entity = new Entity();
         String docCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        Document document = Document.documentFactory(entity, docCode);
-        Document copy = (Document) DomainTestSupport.minimalEqualsTest(document);
+        ProcessDocument document = ProcessDocument.processDocumentFactory(entity, docCode);
+        ProcessDocument copy = (ProcessDocument) DomainTestSupport.minimalEqualsTest(document);
         
         copy.setEntity(null);
         copy.setDocCode(docCode);

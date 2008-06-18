@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.helianto.process.DocumentAssociation;
 import org.helianto.process.dao.DocumentAssociationDao;
-import org.helianto.process.dao.DocumentDao;
+import org.helianto.process.dao.ProcessDocumentDao;
 import org.helianto.process.test.DocumentAssociationTestSupport;
 
 
@@ -18,14 +18,14 @@ import org.helianto.process.test.DocumentAssociationTestSupport;
 public class DocumentAssociationDaoImplTests extends AbstractProcessTest {
 
     private DocumentAssociationDao documentAssociationDao;
-    private DocumentDao documentDao;
+    private ProcessDocumentDao documentDao;
     
     /*
      * Hook to persist one <code>DocumentAssociation</code> using a <code>Document</code>.
      */  
     protected DocumentAssociation writeDocumentAssociation() {
         DocumentAssociation documentAssociation = DocumentAssociationTestSupport.createDocumentAssociation();
-        documentDao.persistDocument(documentAssociation.getParent());
+        documentDao.persistProcessDocument(documentAssociation.getParent());
         documentAssociationDao.flush();
         documentAssociationDao.clear();
         return documentAssociation;
@@ -49,7 +49,7 @@ public class DocumentAssociationDaoImplTests extends AbstractProcessTest {
         List<DocumentAssociation> documentAssociationList = DocumentAssociationTestSupport.createDocumentAssociationList(parentListSize, childListSize);
         assertEquals(parentListSize * childListSize, documentAssociationList.size());
         for (DocumentAssociation documentAssociation: documentAssociationList) {
-            documentDao.persistDocument(documentAssociation.getParent());
+            documentDao.persistProcessDocument(documentAssociation.getParent());
         }
         documentAssociationDao.flush();
         documentAssociationDao.clear();
@@ -83,7 +83,7 @@ public class DocumentAssociationDaoImplTests extends AbstractProcessTest {
         this.documentAssociationDao = documentAssociationDao;
     }
     
-    public void setDocumentDao(DocumentDao documentDao) {
+    public void setDocumentDao(ProcessDocumentDao documentDao) {
         this.documentDao = documentDao;
     }
     

@@ -18,7 +18,7 @@ package org.helianto.process.dao;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.process.Document;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
@@ -35,7 +35,7 @@ public interface ProcessDao {
     /**
      * Persist <code>Document</code> and subclasses.
      */
-    public void persistDocument(Document document);
+    public void persistDocument(ProcessDocument document);
 
     public void persistSetup(Setup setup);
 
@@ -75,6 +75,6 @@ public interface ProcessDao {
     /**
      * Remove <code>Document</code> and subclasses.
      */
-    public void removeDocument(Document document);
+    public void removeDocument(ProcessDocument document);
 
 }

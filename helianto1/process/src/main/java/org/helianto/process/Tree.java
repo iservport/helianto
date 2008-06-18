@@ -17,8 +17,8 @@ public class Tree  implements java.io.Serializable {
     // Fields    
 
      private long id;
-     private Document parent;
-     private Document child;
+     private ProcessDocument parent;
+     private ProcessDocument child;
      private int sequence;
      private double coefficient;
      private int associationType;
@@ -31,7 +31,7 @@ public class Tree  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public Tree(Document parent, Document child, int sequence, double coefficient, int associationType) {
+    public Tree(ProcessDocument parent, ProcessDocument child, int sequence, double coefficient, int associationType) {
         this.parent = parent;
         this.child = child;
         this.sequence = sequence;
@@ -39,7 +39,7 @@ public class Tree  implements java.io.Serializable {
         this.associationType = associationType;
     }
     /** full constructor */
-    public Tree(Document parent, Document child, int sequence, double coefficient, int associationType, Method method) {
+    public Tree(ProcessDocument parent, ProcessDocument child, int sequence, double coefficient, int associationType, Method method) {
        this.parent = parent;
        this.child = child;
        this.sequence = sequence;
@@ -56,18 +56,18 @@ public class Tree  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    public Document getParent() {
+    public ProcessDocument getParent() {
         return this.parent;
     }
     
-    public void setParent(Document parent) {
+    public void setParent(ProcessDocument parent) {
         this.parent = parent;
     }
-    public Document getChild() {
+    public ProcessDocument getChild() {
         return this.child;
     }
     
-    public void setChild(Document child) {
+    public void setChild(ProcessDocument child) {
         this.child = child;
     }
     public int getSequence() {

@@ -20,8 +20,8 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.helianto.process.Document;
-import org.helianto.process.dao.DocumentDao;
+import org.helianto.process.ProcessDocument;
+import org.helianto.process.dao.ProcessDocumentDao;
 import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>Document</code> data access interface.
@@ -29,56 +29,45 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("documentDao")
-public class DocumentDaoImpl extends GenericDaoImpl implements DocumentDao {
+public class ProcessDocumentDaoImpl extends GenericDaoImpl implements ProcessDocumentDao {
      
-    public void persistDocument(Document document) {
+    public void persistProcessDocument(ProcessDocument document) {
         if (logger.isDebugEnabled()) {
             logger.debug("Persisting "+document);
         }
         persist(document);
     }
     
-    public Document mergeDocument(Document document) {
+    public ProcessDocument mergeProcessDocument(ProcessDocument document) {
         if (logger.isDebugEnabled()) {
             logger.debug("Merging "+document);
         }
-        return (Document) merge(document);
+        return (ProcessDocument) merge(document);
     }
     
-    public void removeDocument(Document document) {
+    public void removeProcessDocument(ProcessDocument document) {
         if (logger.isDebugEnabled()) {
             logger.debug("Removing "+document);
         }
         remove(document);
     }
     
-    public Document findDocumentByNaturalId(Entity entity, String docCode) {
+    public ProcessDocument findProcessDocumentByNaturalId(Entity entity, String docCode) {
         if (logger.isDebugEnabled()) {
             logger.debug("Finding unique document with entity='"+entity+"' and docCode='"+docCode+"' ");
         }
-        return (Document) findUnique(Document.getDocumentNaturalIdQueryString(), entity, docCode);
-    }
-    
-    @SuppressWarnings({ "unchecked", "deprecation" })
-	public List<Document> findDocumentByCriteria(String criteria) {
-        if (criteria.equals("")) {
-            throw new IllegalArgumentException("Criteria must not be empty!");
-        }
-        if (logger.isDebugEnabled()) {
-            logger.debug("Finding document list with criteria='"+criteria+"' ");
-        }
-        return (ArrayList<Document>) find(Document.getDocumentAllQueryString()+criteria);
+        return (ProcessDocument) findUnique(ProcessDocument.getDocumentNaturalIdQueryString(), entity, docCode);
     }
     
     @SuppressWarnings("unchecked")
-	public List<Document> findDocuments(String criteria) {
+	public List<ProcessDocument> findProcessDocuments(String criteria) {
         if (logger.isDebugEnabled()) {
             logger.debug("Finding document list with criteria ='"+criteria+"'");
         }
         if (criteria.equals("")) {
-            return (ArrayList<Document>) find(Document.getDocumentQueryStringBuilder());
+            return (ArrayList<ProcessDocument>) find(ProcessDocument.getDocumentQueryStringBuilder());
         }
-        return (ArrayList<Document>) find(new StringBuilder(Document.getDocumentQueryStringBuilder()).append("where ").append(criteria));
+        return (ArrayList<ProcessDocument>) find(new StringBuilder(ProcessDocument.getDocumentQueryStringBuilder()).append("where ").append(criteria));
     }
     
 }

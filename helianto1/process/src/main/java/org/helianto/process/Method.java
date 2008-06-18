@@ -92,7 +92,7 @@ public class Method extends Specification implements java.io.Serializable {
      * @param document
      * @param characteristic
      */
-    public static Method methodFactory(Document document, Characteristic characteristic) {
+    public static Method methodFactory(ProcessDocument document, Characteristic characteristic) {
         return specificationFactory(Method.class, document, characteristic);
     }
 

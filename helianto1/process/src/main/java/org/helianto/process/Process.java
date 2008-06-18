@@ -31,7 +31,7 @@ import org.helianto.core.Entity;
  */
 @javax.persistence.Entity
 @Table(name="proc_process")
-public class Process extends Document implements java.io.Serializable {
+public class Process extends ProcessDocument implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     protected long internalNumber;

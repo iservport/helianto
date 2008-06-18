@@ -17,7 +17,7 @@ public class DocumentDetail  implements java.io.Serializable {
     // Fields    
 
      private long id;
-     private Document document;
+     private ProcessDocument document;
      private int sequence;
      private String detailDesc;
 
@@ -32,7 +32,7 @@ public class DocumentDetail  implements java.io.Serializable {
         this.sequence = sequence;
     }
     /** full constructor */
-    public DocumentDetail(Document document, int sequence, String detailDesc) {
+    public DocumentDetail(ProcessDocument document, int sequence, String detailDesc) {
        this.document = document;
        this.sequence = sequence;
        this.detailDesc = detailDesc;
@@ -46,11 +46,11 @@ public class DocumentDetail  implements java.io.Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    public Document getDocument() {
+    public ProcessDocument getDocument() {
         return this.document;
     }
     
-    public void setDocument(Document document) {
+    public void setDocument(ProcessDocument document) {
         this.document = document;
     }
     public int getSequence() {

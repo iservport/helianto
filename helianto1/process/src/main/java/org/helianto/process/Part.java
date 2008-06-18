@@ -32,7 +32,7 @@ import org.helianto.partner.Partner;
  */
 @javax.persistence.Entity
 @Table(name="proc_part")
-public class Part extends Document implements java.io.Serializable {
+public class Part extends ProcessDocument implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private boolean hasDrawing;

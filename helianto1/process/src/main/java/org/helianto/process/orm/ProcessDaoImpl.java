@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.helianto.process.Document;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
 @Repository("processDao")
 public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
 
-    public void persistDocument(Document document) {
+    public void persistDocument(ProcessDocument document) {
         merge(document);
     }
 
@@ -97,7 +97,7 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
         "from Tree tree where tree.parent.id = ? " +
         "and tree.child = ?";
 
-    public void removeDocument(Document document) {
+    public void removeDocument(ProcessDocument document) {
         remove(document);
         
     }

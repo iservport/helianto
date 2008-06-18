@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 import org.helianto.core.validation.AbstractHibernatePropertyEditor;
 import org.helianto.core.validation.AbstractPropertyEditorRegistrar;
-import org.helianto.process.Document;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.ExternalDocument;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.orm.hibernate3.HibernateOperations;
@@ -33,7 +33,7 @@ public class DocumentPropertyEditorRegistrar extends
         if (logger.isDebugEnabled()) {
             logger.debug("Registering custom editor "+documentPropertyEditor);
         }
-        registry.registerCustomEditor(Document.class, documentPropertyEditor);
+        registry.registerCustomEditor(ProcessDocument.class, documentPropertyEditor);
 
         PropertyEditor externalDocumentPropertyEditor = new ExternalDocumentPropertyEditor(getHibernateTemplate());
         if (logger.isDebugEnabled()) {
@@ -54,7 +54,7 @@ public class DocumentPropertyEditorRegistrar extends
         }
         @Override
         public String getAsText() {
-            return String.valueOf(((Document) getValue()).getDocCode());
+            return String.valueOf(((ProcessDocument) getValue()).getDocCode());
         }
         @Override
         public void setAsText(String id) throws IllegalArgumentException {

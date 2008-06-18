@@ -3,7 +3,7 @@ package org.helianto.process.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.process.Document;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.DocumentAssociation;
 
 
@@ -20,17 +20,17 @@ public class DocumentAssociationTestSupport {
      * @param child optional Document 
      */
     public static DocumentAssociation createDocumentAssociation(Object... args) {
-        Document parent;
+        ProcessDocument parent;
         try {
-            parent = (Document) args[0];
+            parent = (ProcessDocument) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            parent = DocumentTestSupport.createDocument();
+            parent = ProcessDocumentTestSupport.createDocument();
         }
-        Document child;
+        ProcessDocument child;
         try {
-            child = (Document) args[1];
+            child = (ProcessDocument) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            child = DocumentTestSupport.createDocument();
+            child = ProcessDocumentTestSupport.createDocument();
         }
         DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child);
         return documentAssociation;
@@ -52,8 +52,8 @@ public class DocumentAssociationTestSupport {
      * @param childListSize
      */
     public static List<DocumentAssociation> createDocumentAssociationList(int parentListSize, int childListSize) {
-        List<Document> parentList = DocumentTestSupport.createDocumentList(parentListSize);
-        List<Document> childList = DocumentTestSupport.createDocumentList(childListSize);
+        List<ProcessDocument> parentList = ProcessDocumentTestSupport.createDocumentList(parentListSize);
+        List<ProcessDocument> childList = ProcessDocumentTestSupport.createDocumentList(childListSize);
         return createDocumentAssociationList(parentList, childList);
     }
 
@@ -64,10 +64,10 @@ public class DocumentAssociationTestSupport {
      * @param parentList
      * @param childList
      */
-    public static List<DocumentAssociation> createDocumentAssociationList(List<Document> parentList, List<Document> childList) {
+    public static List<DocumentAssociation> createDocumentAssociationList(List<ProcessDocument> parentList, List<ProcessDocument> childList) {
         List<DocumentAssociation> documentAssociationList = new ArrayList<DocumentAssociation>();
-        for (Document parent: parentList) {
-            for (Document child: childList) {
+        for (ProcessDocument parent: parentList) {
+            for (ProcessDocument child: childList) {
     	        documentAssociationList.add(createDocumentAssociation(parent, child));
             }
         }

@@ -16,7 +16,7 @@ public class MethodTests extends TestCase {
      * Test <code>MeasurementTechnique</code> static factory method.
      */
     public void testMethodFactoryClass() {
-    	Document document = new Document();
+    	ProcessDocument document = new ProcessDocument();
     	Characteristic characteristic = new Characteristic();
 
     	Method method = Method.methodFactory(document, characteristic);
@@ -31,7 +31,7 @@ public class MethodTests extends TestCase {
      * Test <code>Method</code> equals() method.
      */
     public void testMethodEquals() {
-    	Document document = new Document();
+    	ProcessDocument document = new ProcessDocument();
     	Characteristic characteristic = new Characteristic();
 
     	Method method = Method.methodFactory(document, characteristic);
