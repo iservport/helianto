@@ -15,22 +15,14 @@
 
 package org.helianto.process;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import org.helianto.core.Entity;
@@ -40,11 +32,7 @@ import org.helianto.core.Entity;
  * </p>
  * @author Mauricio Fernandes de Castro
  */
-@javax.persistence.Entity
-@Table(name="proc_document",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
-)
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
 public class Document implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,9 +42,6 @@ public class Document implements java.io.Serializable {
     private int version;
     private String docName;
     private String docFile;
-    private Set<DocumentAssociation> parentAssociations = new HashSet<DocumentAssociation>();
-    private Set<DocumentAssociation> childAssociations = new HashSet<DocumentAssociation>();
-    private Set<Characteristic> characteristics = new HashSet<Characteristic>();
 
     /** default constructor */
     public Document() {
@@ -128,51 +113,6 @@ public class Document implements java.io.Serializable {
     }
 
     /**
-     * ParentAssociations getter.
-     */
-    @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    public Set<DocumentAssociation> getParentAssociations() {
-        return this.parentAssociations;
-    }
-    public void setParentAssociations(Set<DocumentAssociation> parentAssociations) {
-        this.parentAssociations = parentAssociations;
-    }
-
-    /**
-     * ChildAssociations getter.
-     */
-    @OneToMany(mappedBy="child", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    public Set<DocumentAssociation> getChildAssociations() {
-        return this.childAssociations;
-    }
-    public void setChildAssociations(Set<DocumentAssociation> childAssociations) {
-        this.childAssociations = childAssociations;
-    }
-
-    /**
-     * Characteristics.
-     */
-    @OneToMany(mappedBy="document", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    public Set<Characteristic> getCharacteristics() {
-        return this.characteristics;
-    }
-    public void setCharacteristics(Set<Characteristic> characteristics) {
-        this.characteristics = characteristics;
-    }
-
-    //1
-    /**
-     * <code>Document</code> factory.
-     * 
-     * @param entity
-     * @param docCode
-     */
-    public static Document documentFactory(Entity entity, String docCode) {
-        return documentFactory(Document.class, entity, docCode);
-    }
-
-    //2
-    /**
      * <code>Document</code> general factory.
      * 
      * @param entity
@@ -188,48 +128,6 @@ public class Document implements java.io.Serializable {
         document.setEntity(entity);
         document.setDocCode(docCode);
         return document;
-    }
-
-    //3
-    /**
-     * <code>Document</code> general factory.
-     * 
-     * @param clazz
-     * @param parent
-     * @param docCode
-     * @param associationType
-     */
-    public static <T extends Document> T documentFactory(Class<T> clazz, Document parent, String docCode, double coefficient, AssociationType associationType) {
-        T document = documentFactory(clazz, parent.getEntity(), docCode);
-        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(parent, document);
-        association.setCoefficient(coefficient);
-        association.setAssociationType(associationType.getValue());
-        return document;
-    }
-
-    /**
-     * <code>Document</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getDocumentQueryStringBuilder() {
-        return new StringBuilder("select document from Document document ");
-    }
-
-    /**
-     * <code>Document</code> natural id query.
-     */
-    @Transient
-    public static String getDocumentNaturalIdQueryString() {
-        return getDocumentQueryStringBuilder().append("where document.entity = ? and document.docCode = ? ").toString();
-    }
-
-    /**
-     * <code>Document</code> all records query.
-     * @deprecated use getDocumentQueryStringBuilder()
-     */
-    @Transient
-    public static String getDocumentAllQueryString() {
-        return "select document from Document document where ";
     }
 
     /**
