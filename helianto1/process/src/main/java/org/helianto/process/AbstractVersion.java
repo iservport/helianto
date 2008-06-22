@@ -15,12 +15,9 @@
 
 package org.helianto.process;
 
-import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -34,7 +31,6 @@ public class AbstractVersion  implements java.io.Serializable {
 
  	private static final long serialVersionUID = 1L;
 	private int id;
-    private Release release;
     private int majorNumber;
     private int minorNumber;
     private int releaseAction;
@@ -51,18 +47,6 @@ public class AbstractVersion  implements java.io.Serializable {
     }
     public void setId(int id) {
         this.id = id;
-    }
-    
-    /**
-     * Versions are grouped by release.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="releaseId", nullable=true)
-    public Release getRelease() {
-        return this.release;
-    }
-    public void setRelease(Release release) {
-        this.release = release;
     }
     
     public int getMajorNumber() {

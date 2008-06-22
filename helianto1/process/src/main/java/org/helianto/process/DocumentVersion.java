@@ -34,12 +34,25 @@ import javax.persistence.UniqueConstraint;
 public class DocumentVersion extends AbstractVersion implements java.io.Serializable {
 
  	private static final long serialVersionUID = 1L;
+ 	private Release release;
     private ProcessDocument document;
 
     /** default constructor */
     public DocumentVersion() {
     }
 
+    /**
+     * Versions are grouped by release.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="releaseId", nullable=true)
+    public Release getRelease() {
+        return this.release;
+    }
+    public void setRelease(Release release) {
+        this.release = release;
+    }
+    
     /**
      * Owning document.
      */

@@ -16,17 +16,17 @@
 package org.helianto.process;
 
 /**
- * Activity code enum.
+ * Release action enum.
  * 
  * @author Mauricio Fernandes de Castro
  */
 public enum ReleaseAction {
 
-    NOT_APPLICABLE('N'),
-    INACTIVE('I'),
-    ACTIVE_FOR_PRODUCTION('P'),
-    ACTIVE_FOR_SERVICE('S'),
-    ACTIVE_FOR_PRODUCTION_AND_SERVICE('A');
+    INCLUDE('I'),
+    MINOR_CHANGE('M'),
+    MAJOR_CHANGE('C'),
+    REMOVE('X'),
+    REINTRODUCE('R');
     
     private char value;
     
