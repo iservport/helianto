@@ -33,7 +33,7 @@ public class AbstractVersion  implements java.io.Serializable {
 	private int id;
     private int majorNumber;
     private int minorNumber;
-    private int releaseAction;
+    private char releaseAction;
     private char activityCode;
     private String changeSummary;
 
@@ -63,10 +63,10 @@ public class AbstractVersion  implements java.io.Serializable {
         this.minorNumber = minorNumber;
     }
     
-    public int getReleaseAction() {
+    public char getReleaseAction() {
         return this.releaseAction;
     }
-    public void setReleaseAction(int releaseAction) {
+    public void setReleaseAction(char releaseAction) {
         this.releaseAction = releaseAction;
     }
     public void setReleaseAction(ReleaseAction releaseAction) {
