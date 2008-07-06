@@ -16,6 +16,7 @@
 package org.helianto.web.controller;
 
 import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
@@ -26,6 +27,7 @@ import javax.mail.MessagingException;
 import junit.framework.TestCase;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
@@ -35,8 +37,6 @@ import org.helianto.core.service.UserMgr;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.web.view.IdentityForm;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
@@ -73,12 +73,13 @@ public class IdentityFormActionTests extends TestCase {
     
     public void testWriteIdentity() throws Exception {
         Credential credential = CredentialTestSupport.createCredential();
+        Identity managedIdentity = new Identity();
         form.setCredential(credential);
         
-        userMgr.writeIdentity(form.getCredential().getIdentity());
+        expect(userMgr.storeIdentity(form.getCredential().getIdentity())).andReturn(managedIdentity);
         replay(userMgr);
 
-        Event event = identityFormAction.writeIdentity(context);
+        Event event = identityFormAction.storeIdentity(context);
         assertEquals(event.getId(), "success");
         verify(userMgr);
     }

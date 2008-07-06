@@ -73,13 +73,14 @@ public class IdentityFormAction extends FormAction {
      * Write <code>Identity</code> to the datastore.
      * @throws Exception 
      */
-    public Event writeIdentity(RequestContext context) throws Exception {
+    public Event storeIdentity(RequestContext context) throws Exception {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
         }
-        Identity identity = doGetForm(context).getCredential().getIdentity();
+        IdentityForm identityForm = doGetForm(context);
+        Identity identity = identityForm.getCredential().getIdentity();
         try {
-            userMgr.writeIdentity(identity);
+        	identityForm.getCredential().setIdentity(userMgr.storeIdentity(identity));
         } catch (Exception e) {
             Errors errors = getFormErrors(context);
             errors.rejectValue("credential.identity.principal", 
@@ -91,6 +92,29 @@ public class IdentityFormAction extends FormAction {
             logger.debug("Persisted identity "+identity);
         }
         return success();
+    }
+    
+    /**
+     * @deprecated in favor of storeIdentity
+     */
+    public Event writeIdentity(RequestContext context) throws Exception {
+        return storeIdentity(context);
+    }
+    
+    public Event storeCredential(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
+        IdentityForm identityForm = doGetForm(context);
+        identityForm.setCredential(userMgr.storeCredential(identityForm.getCredential()));
+        return success();
+    }
+    
+    /**
+     * @deprecated in favor of storeCredential
+     */
+    public Event writeCredential(RequestContext context) {
+        return storeCredential(context);
     }
     
     /**
@@ -136,15 +160,6 @@ public class IdentityFormAction extends FormAction {
             return success();
         }
         return error();
-    }
-    
-    public Event writeCredential(RequestContext context) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("!---- STARTED");
-        }
-        IdentityForm form = (IdentityForm) context.getFlowScope().get("identityForm");
-        userMgr.writeCredential(form.getCredential());
-        return success();
     }
     
     //~ utilities

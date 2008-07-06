@@ -23,7 +23,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
@@ -48,13 +47,6 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     private UserSelectionStrategy userSelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
 	
-	// identity
-	public void writeIdentity(Identity identity) {
-		int attemptCount = 0;
-		principalGenerationStrategy.generatePrincipal(identity, attemptCount);
-		identityDao.mergeIdentity(identity);
-	}
-	
     public Identity findIdentityByPrincipal(String principal) {
         return identityDao.findIdentityByNaturalId(principal);
     }
@@ -72,10 +64,14 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         return identityList ;
     }
 
-	// credential
-
-	public void writeCredential(Credential credential) {
-        credentialDao.mergeCredential(credential);
+	public Identity storeIdentity(Identity identity) {
+		int attemptCount = 0;
+		principalGenerationStrategy.generatePrincipal(identity, attemptCount);
+		return identityDao.mergeIdentity(identity);
+	}
+	
+	public Credential storeCredential(Credential credential) {
+        return credentialDao.mergeCredential(credential);
 	}
 
 	// user
@@ -97,12 +93,8 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         userGroupDao.persistUserGroup(user);
     }
 
-    public void writeUser(User user) {
-        userGroupDao.mergeUserGroup(user);
-    }
-
-    public void writeUser(UserGroup userGroup) {
-        userGroupDao.mergeUserGroup(userGroup);
+    public UserGroup storeUserGroup(UserGroup userGroup) {
+        return userGroupDao.mergeUserGroup(userGroup);
     }
 
 	public List<User> findUsers(UserFilter userFilter) {
@@ -114,14 +106,6 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         return userList;
 	}
 
-	public User storeUser(User user) {
-        return (User) userGroupDao.mergeUserGroup(user);
-	}
-
-    public List<UserGroup> findUserByEntity(Entity entity) {
-        return userGroupDao.findUserGroupByEntity(entity);
-    }
-    
     public List<User> findUsers(String criteria) {
         return userGroupDao.findUserByCriteria(criteria);
     }
@@ -135,21 +119,46 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         }
         throw new RuntimeException("Principal should not be null or empty.");
     }
+    
+    //deprecated methods
 
-    public void activateUser(UserGroup user, Credential credential) {
-        if (credential.getCredentialState()==ActivityState.ACTIVE.getValue()) {
-            user.setUserState(ActivityState.ACTIVE.getValue());
-        }
+    /**
+     * @deprecated in favor of storeIdentity
+     */
+	public void writeIdentity(Identity identity) {
+		int attemptCount = 0;
+		principalGenerationStrategy.generatePrincipal(identity, attemptCount);
+		identityDao.mergeIdentity(identity);
+	}
+	
+    /**
+     * @deprecated in favor of storeCredential
+     */
+	public void writeCredential(Credential credential) {
+        credentialDao.mergeCredential(credential);
+	}
+
+    /**
+     * @deprecated in favor of storeUserGroup
+     */
+    public void writeUser(User user) {
+        userGroupDao.mergeUserGroup(user);
     }
-    
-    public void cancelUser(UserGroup user) {
-        user.setUserState(ActivityState.CANCELLED.getValue());
+
+    /**
+     * @deprecated in favor of storeUserGroup
+     */
+    public void writeUser(UserGroup userGroup) {
+        userGroupDao.mergeUserGroup(userGroup);
     }
-    
-    public void suspendUser(UserGroup user) {
-        user.setUserState(ActivityState.SUSPENDED.getValue());
-    }
-    
+
+    /**
+     * @deprecated in favor of storeUserGroup
+     */
+	public User storeUser(User user) {
+        return (User) userGroupDao.mergeUserGroup(user);
+	}
+
     //- collaborators
     
     @Resource

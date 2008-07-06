@@ -4,6 +4,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.view.CredentialForm;
+import org.helianto.web.view.IdentityForm;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
@@ -49,15 +50,22 @@ public class CredentialFormAction extends FormAction {
     /**
      * Delegate to <code>UserMgr</code> to write <code>Credential</code>.
      */
-    public Event writeCredential(RequestContext context) {
+    public Event storeCredential(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
         }
-        CredentialForm form = doGetTaskForm(context);
-        userMgr.writeCredential(form.getCredential());
+        CredentialForm credentialForm = doGetTaskForm(context);
+        credentialForm.setCredential(userMgr.storeCredential(credentialForm.getCredential()));
         return success();
     }
-
+    
+    /**
+     * @deprecated in favor of storeCredential
+     */
+    public Event writeCredential(RequestContext context) {
+        return storeCredential(context);
+    }
+    
     @javax.annotation.Resource
     public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;

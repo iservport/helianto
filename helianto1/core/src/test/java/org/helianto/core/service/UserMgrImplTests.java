@@ -50,7 +50,7 @@ public class UserMgrImplTests extends TestCase {
     
     private UserMgrImpl userMgr;
     
-    public void testWriteIdentity() {
+    public void testStoreIdentity() {
         Identity managedIdentity = null, identity = new Identity();
         identity.setPrincipal("principal");
         
@@ -60,7 +60,7 @@ public class UserMgrImplTests extends TestCase {
         expect(identityDao.mergeIdentity(identity)).andReturn(managedIdentity);
         replay(identityDao);
         
-        userMgr.writeIdentity(identity);
+        assertSame(managedIdentity, userMgr.storeIdentity(identity));
         verify(identityDao);
         verify(principalGenerationStrategy);
     }
@@ -100,13 +100,13 @@ public class UserMgrImplTests extends TestCase {
         assertFalse(identityList.contains(excluded));
     }
     
-    public void testWriteCredential() {
+    public void testStoreCredential() {
         Credential managedCredential = null, credential = new Credential();
         
         expect(credentialDao.mergeCredential(credential)).andReturn(managedCredential);
         replay(credentialDao);
         
-        userMgr.writeCredential(credential);
+        assertSame(managedCredential, userMgr.storeCredential(credential));
         verify(credentialDao);
     }
     
@@ -115,20 +115,6 @@ public class UserMgrImplTests extends TestCase {
         Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
         assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
-        
-        user.setUserState(ActivityState.INITIAL.getValue());
-        userMgr.activateUser(user, credential);
-        assertEquals(ActivityState.INITIAL.getValue(), user.getUserState());
-        
-        credential.setCredentialState(ActivityState.ACTIVE.getValue());
-        userMgr.activateUser(user, credential);
-        assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
-        
-        userMgr.suspendUser(user);
-        assertEquals(ActivityState.SUSPENDED.getValue(), user.getUserState());
-        
-        userMgr.cancelUser(user);
-        assertEquals(ActivityState.CANCELLED.getValue(), user.getUserState());
     }
     
     public void testFindNextInternalNumber() {
@@ -160,17 +146,6 @@ public class UserMgrImplTests extends TestCase {
         verify(internalEnumeratorDao);
     }
     
-    public void testStoreUser() {
-    	User user = new User();
-    	User managedUser = new User();
-    	
-    	expect(userGroupDao.mergeUserGroup(user)).andReturn(managedUser);
-    	replay(userGroupDao);
-    	
-    	assertSame(managedUser, userMgr.storeUser(user));
-    	verify(userGroupDao);
-    }
-    
     public void testFindUsers() {
     	UserFilter userFilter = new UserFilter();
     	List<User> userList = new ArrayList<User>();
@@ -187,14 +162,14 @@ public class UserMgrImplTests extends TestCase {
     	verify(userGroupDao);
     }
     
-    public void testWriteUserGroup() {
+    public void testStoreUserGroup() {
     	UserGroup userGroup = new UserGroup();
     	UserGroup managedUserGroup = new UserGroup();
     	
     	expect(userGroupDao.mergeUserGroup(userGroup)).andReturn(managedUserGroup);
     	replay(userGroupDao);
     	
-    	userMgr.writeUser(userGroup);
+    	userMgr.storeUserGroup(userGroup);
     	verify(userGroupDao);
     }
     

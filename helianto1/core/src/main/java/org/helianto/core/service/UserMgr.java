@@ -34,11 +34,6 @@ import org.helianto.core.filter.IdentityFilter;
 public interface UserMgr extends CoreMgr {
 	
     /**
-     * <p>Write <code>Identity</code> to datastore.</p>
-     */
-    public void writeIdentity(Identity identity);
-    
-    /**
      * Find <core>Identity</core> by principal.
      */
     public Identity findIdentityByPrincipal(String principal);
@@ -52,10 +47,16 @@ public interface UserMgr extends CoreMgr {
     public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions);
     
     /**
-     * <p>A <code>Credential</code> with an
-     * associated new <code>Identity</code>.</p>
+     * Store the given <code>Identity</code> and return a managed object.
+     * @param identity
      */
-    public void writeCredential(Credential credential);
+    public Identity storeIdentity(Identity identity);
+    
+    /**
+     * Store the given <code>Credential</code> and return a managed object.
+     * @param identity
+     */
+    public Credential storeCredential(Credential credential);
     
     /**
      * <p>A simple <code>User</code> creation given an <code>Endity</code>.</p>
@@ -68,6 +69,34 @@ public interface UserMgr extends CoreMgr {
     public User createUser(Identity identity, Entity entity);
     
     /**
+     * <p>List <code>UserGroup</code> by string criteria.</p>
+     */
+    public List<User> findUsers(String criteria);
+    
+    /**
+     * <p>List <code>UserGroup</code> by string criteria.</p>
+     */
+    public List<User> findUsers(UserFilter userFilter);
+    
+    /**
+     * <p>Store <code>UserGroup</code> and return a managed instance.</p>
+     */
+    public UserGroup storeUserGroup(UserGroup userGroup);
+    
+    /**
+     * <p>Write <code>Identity</code> to datastore.</p>
+     * @deprecated in favor of storeIdentity
+     */
+    public void writeIdentity(Identity identity);
+    
+    /**
+     * <p>A <code>Credential</code> with an
+     * associated new <code>Identity</code>.</p>
+     * @deprecated in favor of storeCredential
+     */
+    public void writeCredential(Credential credential);
+    
+    /**
      * <p>Persist the <code>User</code>.</p>
      */
     @Deprecated
@@ -75,6 +104,7 @@ public interface UserMgr extends CoreMgr {
     
     /**
      * <p>Store <code>User</code> and return a managed instance.</p>
+     * @deprecated use storeUser(UserGroup userGroup)
      */
     public User storeUser(User user);
     
@@ -86,41 +116,8 @@ public interface UserMgr extends CoreMgr {
     
     /**
      * <p>Write <code>UserGroup</code>.</p>
+     * @deprecated use storeUser
      */
     public void writeUser(UserGroup userGroup);
     
-    /**
-     * <p>List <code>UserGroup</code> by <code>Entity</code>.</p>
-     */
-    public List<UserGroup> findUserByEntity(Entity entity);
-    
-    /**
-     * <p>List <code>UserGroup</code> by string criteria.</p>
-     */
-    public List<User> findUsers(String criteria);
-    
-    /**
-     * <p>List <code>UserGroup</code> by string criteria.</p>
-     */
-    public List<User> findUsers(UserFilter userFilter);
-    
-    
-    /**
-     * <code>UserGroup</code> will be unlocked by this action
-     * if the <code>Credential</code> is active.
-     */
-    public void activateUser(UserGroup user, Credential credential);
-    
-    /**
-     * <code>UserGroup</code> will be locked by this action.
-     */
-    public void cancelUser(UserGroup user);
-    
-    /**
-     * <code>UserGroup</code> will be locked by this action. 
-     * Unlike <code>cancelUser()</code>, this is supposed to be 
-     * a temporary action.
-     */
-    public void suspendUser(UserGroup user);
-
 }
