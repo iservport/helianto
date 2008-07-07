@@ -104,7 +104,7 @@ public class InstallFormAction extends FormAction {
         }
         UserForm form = doGetForm(context);
         // TODO
-        userMgr.writeCredential(null);
+//        userMgr.storeCredential(null);
         return success();
     }
         

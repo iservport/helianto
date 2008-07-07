@@ -110,6 +110,16 @@ public class SecurityMgrImplTests extends TestCase {
         assertSame(pud, securityMgr.findSecureUser());
     }
     
+    public void testStoreCredential() {
+        Credential managedCredential = null, credential = new Credential();
+        
+        expect(credentialDao.mergeCredential(credential)).andReturn(managedCredential);
+        replay(credentialDao);
+        
+        assertSame(managedCredential, securityMgr.storeCredential(credential));
+        verify(credentialDao);
+    }
+    
     //~ pending
 
     public void testIsAutoCreateEnabled() {

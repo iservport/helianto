@@ -50,4 +50,8 @@
 		<property name="flowExecutor" ref="flowExecutor" />
 		<property name="defaultFlowId" value="home" />
 	</bean>
+	
+	<bean name="startUpAction"
+		class="org.helianto.web.controller.StartUpAction" />
+
 </beans>

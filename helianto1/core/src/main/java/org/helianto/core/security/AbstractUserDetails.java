@@ -128,6 +128,10 @@ public abstract class AbstractUserDetails implements UserDetails, PublicUserDeta
     public Credential getCredential() {
         return credential;
     }
+    public void setCredential(Credential credential) {
+    	this.credential = credential;
+    }
+
 
     public User getUser() {
         return user;

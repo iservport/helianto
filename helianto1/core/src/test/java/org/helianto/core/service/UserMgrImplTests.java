@@ -33,9 +33,9 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
-import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
@@ -98,16 +98,6 @@ public class UserMgrImplTests extends TestCase {
         verify(identityDao);
         
         assertFalse(identityList.contains(excluded));
-    }
-    
-    public void testStoreCredential() {
-        Credential managedCredential = null, credential = new Credential();
-        
-        expect(credentialDao.mergeCredential(credential)).andReturn(managedCredential);
-        replay(credentialDao);
-        
-        assertSame(managedCredential, userMgr.storeCredential(credential));
-        verify(credentialDao);
     }
     
     public void testUserState() {
@@ -173,9 +163,21 @@ public class UserMgrImplTests extends TestCase {
     	verify(userGroupDao);
     }
     
+    public void testStoreUserGroupAssociation() {
+    	UserGroup userGroup = new UserGroup();
+    	UserAssociation parentAssociation = new UserAssociation();
+    	UserAssociation managedUserAssociation = new UserAssociation();
+    	managedUserAssociation.setChild(userGroup);
+    	
+    	expect(userGroupDao.mergeUserAssociation(parentAssociation)).andReturn(managedUserAssociation);
+    	replay(userGroupDao);
+    	
+    	assertSame(userGroup, userMgr.storeUserGroup(parentAssociation));
+    	verify(userGroupDao);
+    }
+    
     private IdentityDao identityDao;
     private InternalEnumeratorDao internalEnumeratorDao;
-    private CredentialDao credentialDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
     private UserSelectionStrategy userSelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
@@ -194,8 +196,6 @@ public class UserMgrImplTests extends TestCase {
         userMgr.setPrincipalGenerationStrategy(principalGenerationStrategy);
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
         userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
-        credentialDao = createMock(CredentialDao.class);
-        userMgr.setCredentialDao(credentialDao);
         userGroupDao = createMock(UserGroupDao.class);
         userMgr.setUserGroupDao(userGroupDao);
     }
@@ -204,7 +204,6 @@ public class UserMgrImplTests extends TestCase {
     public void tearDown() {
         reset(identityDao);
         reset(internalEnumeratorDao);
-        reset(credentialDao);
         reset(identitySelectionStrategy);
         reset(userSelectionStrategy);
         reset(principalGenerationStrategy);

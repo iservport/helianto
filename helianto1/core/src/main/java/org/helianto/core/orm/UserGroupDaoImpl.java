@@ -21,6 +21,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
@@ -47,6 +48,13 @@ public class UserGroupDaoImpl extends GenericDaoImpl implements UserGroupDao {
         }
         return (UserGroup) merge(userGroup);
     }
+    
+	public UserAssociation mergeUserAssociation(UserAssociation userAssociation) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Merging "+userAssociation);
+        }
+        return (UserAssociation) merge(userAssociation);
+	}
     
     public void removeUserGroup(UserGroup userGroup) {
         if (logger.isDebugEnabled()) {
@@ -91,9 +99,4 @@ public class UserGroupDaoImpl extends GenericDaoImpl implements UserGroupDao {
         return (ArrayList<UserGroup>) find(UserGroup.getUserGroupQueryStringBuilder().append("where ").append(criteria));
 	}
 
-	public List<UserGroup> findUserGroupByEntity(Entity entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-    
 }

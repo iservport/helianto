@@ -17,13 +17,11 @@ package org.helianto.core.dao;
 
 import java.util.List;
 
-import org.helianto.core.UserGroup;
-import org.helianto.core.dao.CommonOrmDao;
-
-
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
+import org.helianto.core.UserGroup;
 
 /**
  * <code>UserGroup</code> data access interface.
@@ -43,6 +41,11 @@ public interface UserGroupDao extends CommonOrmDao {
     public UserGroup mergeUserGroup(UserGroup userGroup);
     
     /**
+     * Merge <code>UserAssociation</code>.
+     */
+    public UserAssociation mergeUserAssociation(UserAssociation userAssociation);
+    
+    /**
      * Remove <code>UserGroup</code>.
      */
     public void removeUserGroup(UserGroup userGroup);
@@ -53,11 +56,6 @@ public interface UserGroupDao extends CommonOrmDao {
     public UserGroup findUserGroupByNaturalId(Entity entity, Identity identity);
 
     //
-    /**
-     * Find <code>UserGroup</code> by  entity.
-     */
-    public List<UserGroup> findUserGroupByEntity(Entity entity);
-    
     /**
      * Find <code>UserGroup</code> by criteria.
      */

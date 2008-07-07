@@ -18,10 +18,10 @@ package org.helianto.core.service;
 import java.util.Collection;
 import java.util.List;
 
-import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.IdentityFilter;
@@ -53,12 +53,6 @@ public interface UserMgr extends CoreMgr {
     public Identity storeIdentity(Identity identity);
     
     /**
-     * Store the given <code>Credential</code> and return a managed object.
-     * @param identity
-     */
-    public Credential storeCredential(Credential credential);
-    
-    /**
      * <p>A simple <code>User</code> creation given an <code>Endity</code>.</p>
      */
     public User createUser(Entity entity);
@@ -84,17 +78,16 @@ public interface UserMgr extends CoreMgr {
     public UserGroup storeUserGroup(UserGroup userGroup);
     
     /**
+     * <p>Store <code>UserGroup</code> and return a managed instance.</p>
+     * <p>Convenient to store a recently created user or group.</p>
+     */
+    public UserGroup storeUserGroup(UserAssociation parentAssociation);
+    
+    /**
      * <p>Write <code>Identity</code> to datastore.</p>
      * @deprecated in favor of storeIdentity
      */
     public void writeIdentity(Identity identity);
-    
-    /**
-     * <p>A <code>Credential</code> with an
-     * associated new <code>Identity</code>.</p>
-     * @deprecated in favor of storeCredential
-     */
-    public void writeCredential(Credential credential);
     
     /**
      * <p>Persist the <code>User</code>.</p>

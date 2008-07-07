@@ -23,13 +23,12 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
-import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.UserSelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
@@ -40,8 +39,6 @@ import org.helianto.core.filter.IdentityFilter;
  * @author Mauricio Fernandes de Castro
  */
 public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
-    
-    protected CredentialDao credentialDao;
     
     private IdentitySelectionStrategy identitySelectionStrategy;
     private UserSelectionStrategy userSelectionStrategy;
@@ -70,10 +67,6 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 		return identityDao.mergeIdentity(identity);
 	}
 	
-	public Credential storeCredential(Credential credential) {
-        return credentialDao.mergeCredential(credential);
-	}
-
 	// user
 
 	public User createUser(Entity entity) {
@@ -95,6 +88,11 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 
     public UserGroup storeUserGroup(UserGroup userGroup) {
         return userGroupDao.mergeUserGroup(userGroup);
+    }
+
+    public UserGroup storeUserGroup(UserAssociation parentAssociation) {
+    	UserAssociation managedUserAssociation = userGroupDao.mergeUserAssociation(parentAssociation);
+        return managedUserAssociation.getChild();
     }
 
 	public List<User> findUsers(UserFilter userFilter) {
@@ -132,13 +130,6 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 	}
 	
     /**
-     * @deprecated in favor of storeCredential
-     */
-	public void writeCredential(Credential credential) {
-        credentialDao.mergeCredential(credential);
-	}
-
-    /**
      * @deprecated in favor of storeUserGroup
      */
     public void writeUser(User user) {
@@ -161,11 +152,6 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 
     //- collaborators
     
-    @Resource
-    public void setCredentialDao(CredentialDao credentialDao) {
-        this.credentialDao = credentialDao;
-    }
-
     @Resource
     public void setIdentitySelectionStrategy(
             IdentitySelectionStrategy identitySelectionStrategy) {

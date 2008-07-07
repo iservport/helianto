@@ -29,4 +29,9 @@ public interface SecureUserDetails {
      */
     public Credential getCredential();
 
+    /**
+     * Update the <code>User Credential</code>.
+     */
+    public void setCredential(Credential credential);
+
 }

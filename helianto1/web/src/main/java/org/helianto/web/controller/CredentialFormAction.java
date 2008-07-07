@@ -1,10 +1,24 @@
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.helianto.web.controller;
 
 import org.helianto.core.Credential;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.view.CredentialForm;
-import org.helianto.web.view.IdentityForm;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
@@ -55,7 +69,7 @@ public class CredentialFormAction extends FormAction {
             logger.debug("!---- STARTED");
         }
         CredentialForm credentialForm = doGetTaskForm(context);
-        credentialForm.setCredential(userMgr.storeCredential(credentialForm.getCredential()));
+        credentialForm.setCredential(securityMgr.storeCredential(credentialForm.getCredential()));
         return success();
     }
     

@@ -23,6 +23,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
 import org.helianto.core.security.PublicUserDetails;
+import org.helianto.core.security.SecureUserDetails;
 
 /**
  * Default security service layer interface for the core package.
@@ -41,6 +42,18 @@ public interface SecurityMgr extends UserMgr {
      */
 	public Credential findCredentialByPrincipal(String princpal);
 	
+    /**
+     * Store the given <code>Credential</code> and return a managed object.
+     * @param identity
+     */
+    public Credential storeCredential(Credential credential);
+    
+    /**
+     * Store the given <code>Credential</code> and update the secure user.
+     * @param identity
+     */
+    public void storeCredential(SecureUserDetails secureUser);
+    
     /**
      * Find the last <core>UserLog</core> by <core>User</core> list.
      */

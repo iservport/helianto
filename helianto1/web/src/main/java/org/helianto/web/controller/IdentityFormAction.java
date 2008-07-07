@@ -106,7 +106,7 @@ public class IdentityFormAction extends FormAction {
             logger.debug("!---- STARTED");
         }
         IdentityForm identityForm = doGetForm(context);
-        identityForm.setCredential(userMgr.storeCredential(identityForm.getCredential()));
+        userMgr.storeIdentity((identityForm.getCredential().getIdentity()));
         return success();
     }
     

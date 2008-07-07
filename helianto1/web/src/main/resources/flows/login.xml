@@ -5,24 +5,40 @@
               http://www.springframework.org/schema/webflow
               http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
 
-	<!-- start-actions>
-		<action bean="installAction" method="setupForm" />
-	</start-actions-->
+	<start-state idref="startUp" />
 
-	<start-state idref="login.view" />
-
+	<!-- 
+     ! Login
+     ! VIEW
+     ! -->
     <view-state id="login.view" view="login">
-		<transition on="configuration" to="configuration.subflow"/>
 		<transition on="changePassword" to="changePassword.subflow"/>
-		<transition on="enter" to="end"/>
+		<transition on="enter" to="postLogin"/>
     </view-state>
 
+	<action-state id="startUp">
+		<action bean="startUpAction" />
+		<transition on="login" to="preLogin" />
+		<transition on="install" to="configuration.subflow"/>
+	</action-state>
+
+	<action-state id="preLogin">
+		<action bean="startUpAction" />
+		<transition on="success" to="login.view" />
+	</action-state>
+
+	<action-state id="postLogin">
+		<action bean="startUpAction" />
+		<transition on="success" to="end" />
+		<transition on="error" to="login.view" />
+	</action-state>
+
     <subflow-state id="configuration.subflow" flow="configuration">
-		<transition on="end" to="login.view"/>
+		<transition on="end" to="preLogin"/>
     </subflow-state>
     
     <subflow-state id="changePassword.subflow" flow="changePassword">
-		<transition on="end" to="login.view"/>
+		<transition on="end" to="preLogin"/>
     </subflow-state>
     
 	<end-state id="end" />

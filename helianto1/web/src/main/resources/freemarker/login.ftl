@@ -36,14 +36,6 @@
 		<td colspan="2"><input type="submit" alignment="center" value="Enter"></td>
 		</tr>
 		
-		<tr>
-		<td colspan="2"><@fl.anchor "configuration">Need a password?</@fl.anchor></td>
-		</tr>
-		
-		<tr>
-		<td colspan="2"><@fl.anchor "changePassword">Or change yours ...</@fl.anchor></td>
-		</tr>
-		
 		</table>
 		<input type="hidden" name="_flowExecutionKey
 		       value="${flowExecutionKey}"/>
