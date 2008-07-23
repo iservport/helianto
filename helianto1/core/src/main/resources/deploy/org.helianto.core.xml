@@ -167,6 +167,9 @@
 	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	
+	<bean id="entityPropertyEditor" 
+		class="org.helianto.core.validation.EntityPropertyEditor"/>
+
 	<bean id="categoryPropertyEditor" 
 		class="org.helianto.core.validation.CategoryPropertyEditor"/>
 

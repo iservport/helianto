@@ -30,6 +30,7 @@
 			    CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 				PATTERN_TYPE_APACHE_ANT
 				/admin.htm*=ROLE_ANONYMOUS
+				/atom/*=ROLE_ANONYMOUS
 				/home.htm*=ROLE_USER_ALL
 			</value>
 		</property>
