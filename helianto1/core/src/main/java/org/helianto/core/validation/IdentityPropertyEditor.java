@@ -16,24 +16,24 @@ package org.helianto.core.validation;
 
 import java.io.Serializable;
 
-import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 
 /**
- * Default <code>SessionFactory</code> backed <code>Entity</code> property editor.
+ * Default <code>SessionFactory</code> backed <code>Identity</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class EntityPropertyEditor extends AbstractSessionPropertyEditor {
+public class IdentityPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {
-    	Entity entity = (Entity) getValue();
-        return String.valueOf(entity.getId());
+    	Identity identity = (Identity) getValue();
+        return String.valueOf(identity.getId());
     }
     
     @Override
     public void setAsText(String id) throws IllegalArgumentException {
-        setAsText(id, Entity.class);
+        setAsText(id, Identity.class);
     }
 
     /**

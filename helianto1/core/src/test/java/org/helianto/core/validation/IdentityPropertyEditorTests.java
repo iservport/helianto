@@ -18,40 +18,40 @@ package org.helianto.core.validation;
 import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
-import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class EntityPropertyEditorTests extends TestCase {
+public class IdentityPropertyEditorTests extends TestCase {
 	
-	private EntityPropertyEditor entityPropertyEditor;
+	private IdentityPropertyEditor identityPropertyEditor;
 
 	public void testGetAsText() {
-		Entity entity = new Entity();
-		entity.setId(Long.MAX_VALUE);
-		entityPropertyEditor.setValue(entity);
+		Identity identity = new Identity();
+		identity.setId(Long.MAX_VALUE);
+		identityPropertyEditor.setValue(identity);
 		
 		EasyMock.replay(sessionFactory);
 		
-		assertEquals(String.valueOf(Long.MAX_VALUE), entityPropertyEditor.getAsText());
+		assertEquals(String.valueOf(Long.MAX_VALUE), identityPropertyEditor.getAsText());
 		EasyMock.verify(sessionFactory);
 	}
 
 	public void testSetAsTextString() {
 		Session session = EasyMock.createMock(Session.class);
-		Entity entity = new Entity();
+		Identity identity = new Identity();
 		
 		EasyMock.expect(sessionFactory.getCurrentSession()).andReturn(session);
 		EasyMock.replay(sessionFactory);
 		
-		EasyMock.expect(session.load(Entity.class, Long.MAX_VALUE)).andReturn(entity);
+		EasyMock.expect(session.load(Identity.class, Long.MAX_VALUE)).andReturn(identity);
 		EasyMock.replay(session);
 		
-		entityPropertyEditor.setAsText(String.valueOf(Long.MAX_VALUE));
-		assertSame(entity, entityPropertyEditor.getValue());
+		identityPropertyEditor.setAsText(String.valueOf(Long.MAX_VALUE));
+		assertSame(identity, identityPropertyEditor.getValue());
 		EasyMock.verify(sessionFactory);
 		
 		EasyMock.reset(session);
@@ -61,9 +61,9 @@ public class EntityPropertyEditorTests extends TestCase {
 	
 	@Override
 	public void setUp() {
-		entityPropertyEditor = new EntityPropertyEditor();
+		identityPropertyEditor = new IdentityPropertyEditor();
 		sessionFactory = EasyMock.createMock(SessionFactory.class);
-		entityPropertyEditor.setSessionFactory(sessionFactory);
+		identityPropertyEditor.setSessionFactory(sessionFactory);
 		
 	}
 	
