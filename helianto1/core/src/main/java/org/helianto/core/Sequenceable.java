@@ -28,9 +28,14 @@ public interface Sequenceable {
 	public Entity getEntity();
 	
 	/**
-	 * InternalNumber.
+	 * InternalNumber getter.
 	 */
 	public long getInternalNumber();
+
+	/**
+	 * InternalNumber setter.
+	 */
+	public void setInternalNumber(long internalNumber);
 
 	/**
 	 * InternalNumber key.
