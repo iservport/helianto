@@ -24,18 +24,22 @@ import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
+import org.helianto.process.ProcessFilter;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
 
 /**
- * Default implementation of the 
  * <code>ProcessMgr</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public interface ProcessMgr extends PartnerMgr {
 
+    /**
+     * Find processes.
+     */
+    public List<Process> findProcesses(ProcessFilter filter);
+    
     /**
      * Part factory method.
      */

@@ -26,9 +26,11 @@ import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
+import org.helianto.process.ProcessFilter;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
 import org.helianto.process.dao.ProcessDao;
+import org.helianto.process.dao.ProcessSelectionStrategy;
 
 /**
  * Default implementation of <code>ProcessMgr</code> interface.
@@ -38,8 +40,26 @@ import org.helianto.process.dao.ProcessDao;
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     private ProcessDao processDao;
+    private ProcessSelectionStrategy processSelectionStrategy;
 
-    public Part createPart(Entity entity, boolean hasDrawing) {
+	@Override
+	public List<Process> findProcesses(ProcessFilter filter) {
+		String criteria = processSelectionStrategy.createCriteriaAsString(filter, "process");
+        List<Process> processList = processDao.findProcesses(criteria);
+        if (logger.isDebugEnabled() && processList.size()>0) {
+            logger.debug("Found "+processList.size()+" item(s)");
+        }
+        if (filter.getExclusions().size()>0) {
+            processList.removeAll(filter.getExclusions());
+            if (logger.isDebugEnabled()) {
+                logger.debug("Removed "+filter.getExclusions()+" item(s)");
+            }
+        }
+        return processList ;
+	}
+
+    @Deprecated
+	public Part createPart(Entity entity, boolean hasDrawing) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -109,11 +129,16 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         
     }
 
-    // collaborators
+    // collaborators 
 
     @javax.annotation.Resource
     public void setProcessDao(ProcessDao processDao) {
         this.processDao = processDao;
+    }
+
+    @javax.annotation.Resource(name="processSelectionStrategy")
+    public void setProcessSelectionStrategy(ProcessSelectionStrategy processSelectionStrategy) {
+        this.processSelectionStrategy = processSelectionStrategy;
     }
 
     public static final Log logger = LogFactory.getLog(ProcessMgrImpl.class);

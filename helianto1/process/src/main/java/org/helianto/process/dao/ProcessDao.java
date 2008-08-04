@@ -39,6 +39,11 @@ public interface ProcessDao {
 
     public void persistSetup(Setup setup);
 
+    /**
+     * <code>Process</code> finder.
+     */
+    public List<Process> findProcesses(String criteria);
+    
     
     //
 

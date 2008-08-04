@@ -45,6 +45,18 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
         merge(setup);
     }
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Process> findProcesses(String criteria) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding process list with criteria ='"+criteria+"'");
+        }
+        if (criteria.equals("")) {
+            return (ArrayList<Process>) find(Process.getProcessQueryStringBuilder());
+        }
+        return (ArrayList<Process>) find(new StringBuilder(Process.getProcessQueryStringBuilder()).append("where ").append(criteria));
+    }
+
     public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode) {
         return (ExternalDocument) findUnique(EXTERNALDOCUMENT_QRY+EXTERNALDOCUMENT_FILTER, entity, docCode);
     }
