@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Sequenceable;
 
 /**
  * <p>
@@ -31,7 +32,7 @@ import org.helianto.core.Entity;
  */
 @javax.persistence.Entity
 @Table(name="proc_process")
-public class Process extends ProcessDocument implements java.io.Serializable {
+public class Process extends ProcessDocument implements java.io.Serializable, Sequenceable {
 
     private static final long serialVersionUID = 1L;
     protected long internalNumber;
@@ -40,6 +41,15 @@ public class Process extends ProcessDocument implements java.io.Serializable {
     public Process() {
     }
 
+    /**
+     * Internal number key.
+     */
+    @Transient
+	@Override
+	public String getInternalNumberKey() {
+		return "PROC";
+	}
+ 
     /**
      * Internal number.
      * <p>Process <code>DocCode</code> is immediately re-generated as
@@ -101,5 +111,5 @@ public class Process extends ProcessDocument implements java.io.Serializable {
 		 if ( !(other instanceof Process) ) return false;
 		 return super.equals(other);
  }
- 
+
 }
