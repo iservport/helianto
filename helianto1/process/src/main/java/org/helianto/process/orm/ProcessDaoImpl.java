@@ -20,11 +20,11 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.helianto.process.ProcessDocument;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.Setup;
 import org.helianto.process.dao.ProcessDao;
 import org.springframework.stereotype.Repository;
@@ -56,6 +56,30 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
         }
         return (ArrayList<Process>) find(new StringBuilder(Process.getProcessQueryStringBuilder()).append("where ").append(criteria));
     }
+
+	@Override
+	public void persistProcessDocument(ProcessDocument processDocument) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Persisting process document "+processDocument);
+        }
+        persist(processDocument);
+	}
+
+	@Override
+	public ProcessDocument mergeProcessDocument(ProcessDocument processDocument) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Merging process document "+processDocument);
+        }
+        return (ProcessDocument) merge(processDocument);
+	}
+
+	@Override
+	public void removeProcessDocument(ProcessDocument processDocument) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Removing process document "+processDocument);
+        }
+        remove(processDocument);
+	}
 
     public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode) {
         return (ExternalDocument) findUnique(EXTERNALDOCUMENT_QRY+EXTERNALDOCUMENT_FILTER, entity, docCode);

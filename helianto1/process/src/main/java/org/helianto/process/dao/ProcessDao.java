@@ -44,6 +44,21 @@ public interface ProcessDao {
      */
     public List<Process> findProcesses(String criteria);
     
+    /**
+     * Persist <code>ProcessDocument</code> and subclasses.
+     */
+    public void persistProcessDocument(ProcessDocument processDocument);
+
+    /**
+     * Merge <code>Document</code> and subclasses.
+     */
+    public ProcessDocument mergeProcessDocument(ProcessDocument processDocument);
+
+    /**
+     * Remove <code>ProcessDocument</code> and subclasses.
+     */
+    public void removeProcessDocument(ProcessDocument processDocument);
+
     
     //
 

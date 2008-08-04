@@ -58,6 +58,12 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return processList ;
 	}
 
+	@Override
+	public Process storeProcess(Process process) {
+		// TODO validate internal number
+		return (Process) processDao.mergeProcessDocument(process);
+	}
+
     @Deprecated
 	public Part createPart(Entity entity, boolean hasDrawing) {
         // TODO Auto-generated method stub

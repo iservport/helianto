@@ -41,6 +41,11 @@ public interface ProcessMgr extends PartnerMgr {
     public List<Process> findProcesses(ProcessFilter filter);
     
     /**
+     * Store process.
+     */
+    public Process storeProcess(Process process);
+    
+    /**
      * Part factory method.
      */
     public Part createPart(Entity entity, boolean hasDrawing);
