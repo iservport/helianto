@@ -46,7 +46,6 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
     }
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Process> findProcesses(String criteria) {
         if (logger.isDebugEnabled()) {
             logger.debug("Finding process list with criteria ='"+criteria+"'");
@@ -57,7 +56,6 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
         return (ArrayList<Process>) find(new StringBuilder(Process.getProcessQueryStringBuilder()).append("where ").append(criteria));
     }
 
-	@Override
 	public void persistProcessDocument(ProcessDocument processDocument) {
         if (logger.isDebugEnabled()) {
             logger.debug("Persisting process document "+processDocument);
@@ -65,7 +63,6 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
         persist(processDocument);
 	}
 
-	@Override
 	public ProcessDocument mergeProcessDocument(ProcessDocument processDocument) {
         if (logger.isDebugEnabled()) {
             logger.debug("Merging process document "+processDocument);
@@ -73,7 +70,6 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
         return (ProcessDocument) merge(processDocument);
 	}
 
-	@Override
 	public void removeProcessDocument(ProcessDocument processDocument) {
         if (logger.isDebugEnabled()) {
             logger.debug("Removing process document "+processDocument);
