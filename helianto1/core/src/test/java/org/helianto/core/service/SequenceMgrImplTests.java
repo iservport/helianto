@@ -96,21 +96,17 @@ public class SequenceMgrImplTests extends TestCase {
     	
     	private long internalNumber = 0;
 
-		@Override
 		public Entity getEntity() {
 			return entity;
 		}
 
-		@Override
 		public void setInternalNumber(long internalNumber) {
 			this.internalNumber = internalNumber;
 		}
-		@Override
 		public long getInternalNumber() {
 			return this.internalNumber;
 		}
 
-		@Override
 		public String getInternalNumberKey() {
 			return "TEST";
 		}
