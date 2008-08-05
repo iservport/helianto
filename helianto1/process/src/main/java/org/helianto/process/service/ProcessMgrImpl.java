@@ -20,6 +20,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
+import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.service.PartnerMgrImpl;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.MaterialType;
@@ -41,6 +42,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     private ProcessDao processDao;
     private ProcessSelectionStrategy processSelectionStrategy;
+    private SequenceMgr sequenceMgr;
 
 	@Override
 	public List<Process> findProcesses(ProcessFilter filter) {
@@ -60,7 +62,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
 	@Override
 	public Process storeProcess(Process process) {
-		// TODO validate internal number
+		sequenceMgr.validateInternalNumber(process);
 		return (Process) processDao.mergeProcessDocument(process);
 	}
 
@@ -135,7 +137,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         
     }
 
-    // collaborators 
+    // collaborators  
 
     @javax.annotation.Resource
     public void setProcessDao(ProcessDao processDao) {
@@ -145,6 +147,11 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     @javax.annotation.Resource(name="processSelectionStrategy")
     public void setProcessSelectionStrategy(ProcessSelectionStrategy processSelectionStrategy) {
         this.processSelectionStrategy = processSelectionStrategy;
+    }
+
+    @javax.annotation.Resource
+    public void setSequenceMgr(SequenceMgr sequenceMgr) {
+        this.sequenceMgr = sequenceMgr;
     }
 
     public static final Log logger = LogFactory.getLog(ProcessMgrImpl.class);
