@@ -45,7 +45,6 @@ public class Process extends ProcessDocument implements java.io.Serializable, Se
      * Internal number key.
      */
     @Transient
-	@Override
 	public String getInternalNumberKey() {
 		return "PROC";
 	}
