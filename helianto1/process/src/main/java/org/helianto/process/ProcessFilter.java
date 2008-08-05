@@ -56,6 +56,7 @@ public class ProcessFilter implements Serializable , UserBackedFilter {
      */
     public void reset() {
     	setInternalNumber(0);
+    	setDocNameLike("");
     	setExclusions(new HashSet<Process>(0));
     }
     
