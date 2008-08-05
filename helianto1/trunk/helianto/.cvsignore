@@ -1,0 +1,14 @@
+work
+target
+testdb
+drawings
+helianto
+org
+deprecated
+dist
+
+.settings
+.springBeans
+.xdoclet
+.packaging
+.tomcatplugin
