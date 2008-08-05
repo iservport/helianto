@@ -44,7 +44,6 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     private ProcessSelectionStrategy processSelectionStrategy;
     private SequenceMgr sequenceMgr;
 
-	@Override
 	public List<Process> findProcesses(ProcessFilter filter) {
 		String criteria = processSelectionStrategy.createCriteriaAsString(filter, "process");
         List<Process> processList = processDao.findProcesses(criteria);
@@ -60,7 +59,6 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return processList ;
 	}
 
-	@Override
 	public Process storeProcess(Process process) {
 		sequenceMgr.validateInternalNumber(process);
 		return (Process) processDao.mergeProcessDocument(process);
