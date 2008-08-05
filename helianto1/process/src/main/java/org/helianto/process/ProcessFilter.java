@@ -32,6 +32,7 @@ public class ProcessFilter implements Serializable , UserBackedFilter {
     private static final long serialVersionUID = 1L;
     private User user;
     private long internalNumber;
+    private String docNameLike;
     private Collection<Process> exclusions;
     
     /**
@@ -69,13 +70,23 @@ public class ProcessFilter implements Serializable , UserBackedFilter {
     }
     
     /**
-     * Internal number criterion field
+     * Internal number criterion field.
      */
 	public long getInternalNumber() {
 		return internalNumber;
 	}
 	public void setInternalNumber(long internalNumber) {
 		this.internalNumber = internalNumber;
+	}
+
+    /**
+     * Processes name criterion field.
+     */
+	public String getDocNameLike() {
+		return docNameLike;
+	}
+	public void setDocNameLike(String docNameLike) {
+		this.docNameLike = docNameLike;
 	}
 
     /**
@@ -87,6 +98,5 @@ public class ProcessFilter implements Serializable , UserBackedFilter {
     public void setExclusions(Collection<Process> exclusions) {
         this.exclusions = exclusions;
     }
-
 
 }

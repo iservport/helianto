@@ -30,6 +30,9 @@ public class DefaultProcessSelectionStrategy implements ProcessSelectionStrategy
         	appendInternalNumberFilter(filter, mainCriteriaBuilder);
         	filter.reset();
         }
+        else {
+        	appendDocNameLikeFilter(filter, mainCriteriaBuilder);
+        }
         
         if (logger.isDebugEnabled()) {
             logger.debug("Filter query: "+mainCriteriaBuilder.getCriteriaAsString());
@@ -45,6 +48,18 @@ public class DefaultProcessSelectionStrategy implements ProcessSelectionStrategy
     protected void appendInternalNumberFilter(ProcessFilter filter, CriteriaBuilder criteriaBuilder) {
         criteriaBuilder.appendAnd().appendSegment("internalNumber", "=")
         .append(filter.getInternalNumber());
+    }
+    
+    /**
+     * <code>docNameLike</code> filter segment
+     * @param filter
+     * @param criteriaBuilder
+     */
+    protected void appendDocNameLikeFilter(ProcessFilter filter, CriteriaBuilder criteriaBuilder) {
+    	if (filter.getDocNameLike().length()>0) {
+            criteriaBuilder.appendAnd().appendSegment("docNameLike", "like")
+            .appendLike(filter.getDocNameLike());
+    	}
     }
     
     private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
