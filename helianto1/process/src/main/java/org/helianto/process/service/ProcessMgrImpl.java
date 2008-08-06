@@ -50,7 +50,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         if (logger.isDebugEnabled() && processList.size()>0) {
             logger.debug("Found "+processList.size()+" item(s)");
         }
-        if (filter.getExclusions().size()>0) {
+        if (filter.getExclusions()!=null && filter.getExclusions().size()>0) {
             processList.removeAll(filter.getExclusions());
             if (logger.isDebugEnabled()) {
                 logger.debug("Removed "+filter.getExclusions()+" item(s)");
