@@ -32,7 +32,7 @@ public class ProcessFilter implements Serializable , UserBackedFilter {
     private static final long serialVersionUID = 1L;
     private User user;
     private long internalNumber;
-    private String docNameLike;
+    private String docNameLike = "";
     private Collection<Process> exclusions;
     
     /**
