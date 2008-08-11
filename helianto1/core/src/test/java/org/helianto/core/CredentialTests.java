@@ -26,7 +26,7 @@ public class CredentialTests extends TestCase {
         assertEquals("", credential.getVerifyPassword());
         assertFalse(credential.isPasswordDirty());
         assertNull(credential.getExpired());
-        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
+        assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
         
     }
@@ -42,7 +42,7 @@ public class CredentialTests extends TestCase {
         assertEquals("", credential.getVerifyPassword());
         assertFalse(credential.isPasswordDirty());
         assertNull(credential.getExpired());
-        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
+        assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
         
     }
@@ -61,7 +61,7 @@ public class CredentialTests extends TestCase {
         assertEquals("", credential.getVerifyPassword());
         assertFalse(credential.isPasswordDirty());
         assertNull(credential.getExpired());
-        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
+        assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
         
     }

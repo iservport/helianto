@@ -104,7 +104,7 @@ public class UserMgrImplTests extends TestCase {
         User user = UserTestSupport.createUser();
         Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
-        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
+        assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
     }
     
     public void testFindNextInternalNumber() {

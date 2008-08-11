@@ -233,7 +233,7 @@ public class Credential implements java.io.Serializable {
         credential.setPasswordDirty(false);
         credential.setLastModified(new Date());
         credential.setExpired(null);
-        credential.setCredentialState(ActivityState.INITIAL.getValue());
+        credential.setCredentialState(ActivityState.SUSPENDED.getValue());
         credential.setEncription(Encription.PLAIN_PASSWORD.getValue());
         return credential;
     }
