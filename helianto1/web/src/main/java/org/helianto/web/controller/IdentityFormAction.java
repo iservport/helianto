@@ -17,10 +17,11 @@ package org.helianto.web.controller;
 
 import javax.mail.MessagingException;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
-import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
+import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.view.IdentityForm;
@@ -38,6 +39,7 @@ import org.springframework.webflow.execution.RequestContext;
 public class IdentityFormAction extends FormAction {
     
     private UserMgr userMgr;
+    private SecurityMgr securityMgr;
     private ServerMgr serverMgr;
     
     public IdentityFormAction() {
@@ -70,17 +72,29 @@ public class IdentityFormAction extends FormAction {
     }
     
     /**
-     * Write <code>Identity</code> to the datastore.
+     * Store <code>Identity</code> to the datastore using a suspendend credential.
      * @throws Exception 
      */
-    public Event storeIdentity(RequestContext context) throws Exception {
+    public Event storeSuspendedCredential(RequestContext context) throws Exception {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+        }
+        return storeCredential(context, ActivityState.SUSPENDED);
+    }
+    
+    /**
+     * Store <code>Credential</code> to the datastore using a given state.
+     * @throws Exception 
+     */
+    protected Event storeCredential(RequestContext context, ActivityState credentialState) throws Exception {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
         }
         IdentityForm identityForm = doGetForm(context);
-        Identity identity = identityForm.getCredential().getIdentity();
+        Credential credential = identityForm.getCredential();
+        credential.setCredentialState(credentialState.getValue());
         try {
-        	identityForm.getCredential().setIdentity(userMgr.storeIdentity(identity));
+        	identityForm.setCredential(securityMgr.storeCredential(credential));
         } catch (Exception e) {
             Errors errors = getFormErrors(context);
             errors.rejectValue("credential.identity.principal", 
@@ -89,32 +103,24 @@ public class IdentityFormAction extends FormAction {
             return error();
         }
         if (logger.isDebugEnabled()) {
-            logger.debug("Persisted identity "+identity);
+            logger.debug("Persisted suspendend credential "+credential);
         }
         return success();
     }
     
     /**
-     * @deprecated in favor of storeIdentity
+     * @deprecated in favor of storeSuspendedCredential
      */
     public Event writeIdentity(RequestContext context) throws Exception {
-        return storeIdentity(context);
-    }
-    
-    public Event storeCredential(RequestContext context) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("!---- STARTED");
-        }
-        IdentityForm identityForm = doGetForm(context);
-        userMgr.storeIdentity((identityForm.getCredential().getIdentity()));
-        return success();
+        return storeCredential(context, ActivityState.SUSPENDED);
     }
     
     /**
-     * @deprecated in favor of storeCredential
+     * Store active <code>Credential</code> to the datastore.
+     * @throws Exception 
      */
-    public Event writeCredential(RequestContext context) {
-        return storeCredential(context);
+    public Event storeActiveCredential(RequestContext context) throws Exception {
+        return storeCredential(context, ActivityState.ACTIVE);
     }
     
     /**
@@ -207,11 +213,16 @@ public class IdentityFormAction extends FormAction {
     public void init() {
     }
     
-    //~ collaborators
+    //~ collaborators 
 
     @javax.annotation.Resource
     public void setUserMgr(UserMgr userMgr) {
         this.userMgr =  userMgr;
+    }
+
+    @javax.annotation.Resource
+    public void setSecurityMgr(SecurityMgr securityMgr) {
+        this.securityMgr =  securityMgr;
     }
 
     @javax.annotation.Resource

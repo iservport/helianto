@@ -31,7 +31,7 @@
 		<transition on="personalData" to="identity.personal.view">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
-		<transition on="skipPersonalData" to="writeIdentity">
+		<transition on="skipPersonalData" to="storeSuspendedCredential">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
 		<transition on="generated" to="identity.generated.view"/>
@@ -53,7 +53,7 @@
 		<transition on="personalData" to="identity.personal.view">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
-		<transition on="skipPersonalData" to="writeIdentity">
+		<transition on="skipPersonalData" to="storeSuspendedCredential">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
 		<transition on="principal" to="identity.principal.view"/>
@@ -79,7 +79,7 @@
 
 	<!-- 05 -->
     <view-state id="identity.personal.view" view="identity/personal">
-		<transition on="writeIdentity" to="writeIdentity">
+		<transition on="storeSuspendedCredential" to="storeSuspendedCredential">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
 		<transition on="principal" to="identity.principal.view"/>
@@ -88,7 +88,7 @@
     </view-state>
     
 	<!-- 06 -->
-    <action-state id="writeIdentity">
+    <action-state id="storeSuspendedCredential">
     	<action bean="identityAction"/>
 		<transition on="success" to="identity.credential.view"/>
 		<transition on="error" to="identity.principal.view"/>
@@ -138,13 +138,13 @@
     
     <view-state id="identity.confirm.view" view="identity/confirm">
 		<transition on="change" to="ifPersonal"/>
-		<transition on="confirm" to="writeCredential">
+		<transition on="confirm" to="storeActiveCredential">
 	    	<action bean="identityAction" method="bind"/>
 		</transition>
     </view-state>
     
-    <action-state id="writeCredential">
-    	<action bean="identityAction"/>
+    <action-state id="storeActiveCredential">
+    	<action bean="storeCredential"/>
 		<transition on="success" to="end"/>
         <transition on-exception="org.springframework.dao.DataIntegrityViolationException" 
         	to="nonUnique"/>

@@ -71,19 +71,19 @@ public class IdentityFormActionTests extends TestCase {
         assertSame(credential, identityFormAction.doGetForm(context).getCredential());
     }
     
-    public void testWriteIdentity() throws Exception {
-        Credential credential = CredentialTestSupport.createCredential();
-        Identity managedIdentity = new Identity();
-        form.setCredential(credential);
-        
-        expect(userMgr.storeIdentity(form.getCredential().getIdentity())).andReturn(managedIdentity);
-        replay(userMgr);
-
-        Event event = identityFormAction.storeIdentity(context);
-        assertEquals(event.getId(), "success");
-        verify(userMgr);
-    }
-    
+//    public void testWriteIdentity() throws Exception {
+//        Credential credential = CredentialTestSupport.createCredential();
+//        Identity managedIdentity = new Identity();
+//        form.setCredential(credential);
+//        
+//        expect(userMgr.storeIdentity(form.getCredential().getIdentity())).andReturn(managedIdentity);
+//        replay(userMgr);
+//
+//        Event event = identityFormAction.storeIdentity(context);
+//        assertEquals(event.getId(), "success");
+//        verify(userMgr);
+//    }
+//    
 //    public void testNonUnique() throws Exception {
 //        Credential credential = CredentialTestSupport.createCredential();
 //        form.setCredential(credential);
