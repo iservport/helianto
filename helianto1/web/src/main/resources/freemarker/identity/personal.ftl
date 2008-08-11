@@ -91,7 +91,7 @@
 		</@bx.group>
 		
 		<tr>
-		<@fl.submit "writeIdentity", "Write identity and select password"/>
+		<@fl.submit "storeSuspendedCredential", "Write identity and select password"/>
 		</tr>
 
 		<@fl.flowKey/>
