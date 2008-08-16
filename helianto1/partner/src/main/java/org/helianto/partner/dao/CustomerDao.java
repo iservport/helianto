@@ -27,7 +27,7 @@ import org.helianto.partner.PartnerRegistry;
 public interface CustomerDao extends CommonOrmDao {
      
     /**
-     * Find <code>Customer</code> by <code>PartnerRegistry</code> and sequence.
+     * Find <code>Customer</code> by <code>PartnerRegistry</code> and type.
      */
     public Customer findCustomerByNaturalId(PartnerRegistry partnerRegistry);
     

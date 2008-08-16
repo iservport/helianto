@@ -12,30 +12,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractSessionPropertyEditor;
-import org.helianto.partner.Partner;
-import org.springframework.stereotype.Component;
+package org.helianto.partner.dao;
+
+import org.helianto.core.dao.CommonOrmDao;
+import org.helianto.partner.Manufacturer;
+import org.helianto.partner.PartnerRegistry;
 
 /**
- * Default <code>Session</code> backed <code>Partner</code> property
- * editor.
+ * <code>Manufacturer</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("partnerPropertyEditor")
-public class PartnerPropertyEditor extends AbstractSessionPropertyEditor {
-
-	@Override
-	public String getAsText() {
-		Partner partner = (Partner) getValue();
-        return String.valueOf(partner.getPartnerRegistry().getPartnerAlias());
-	}
-
-	@Override
-	public void setAsText(String id) throws IllegalArgumentException {
-		setAsText(id, Partner.class);
-	}
-
+public interface ManufacturerDao extends CommonOrmDao {
+     
+    /**
+     * Find <code>Manufacturer</code> by <code>PartnerRegistry</code> and type.
+     */
+    public Manufacturer findManufacturerByNaturalId(PartnerRegistry partnerRegistry);
+    
+    
+    
 }

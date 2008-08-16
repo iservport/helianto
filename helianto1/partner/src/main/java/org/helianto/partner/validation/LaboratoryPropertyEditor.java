@@ -15,27 +15,27 @@
 package org.helianto.partner.validation;
 
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
-import org.helianto.partner.Partner;
+import org.helianto.partner.Laboratory;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>Session</code> backed <code>Partner</code> property
- * editor.
+ * Default <code>Session</code> backed <code>Laboratory</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("partnerPropertyEditor")
-public class PartnerPropertyEditor extends AbstractSessionPropertyEditor {
-
-	@Override
-	public String getAsText() {
-		Partner partner = (Partner) getValue();
-        return String.valueOf(partner.getPartnerRegistry().getPartnerAlias());
-	}
-
-	@Override
-	public void setAsText(String id) throws IllegalArgumentException {
-		setAsText(id, Partner.class);
-	}
+@Component("laboratoryPropertyEditor")
+public class LaboratoryPropertyEditor extends AbstractSessionPropertyEditor {
+    
+    @Override
+    public String getAsText() {
+        Laboratory laboratory = (Laboratory) getValue();
+        return String.valueOf(laboratory.getPartnerRegistry().getPartnerAlias());
+    }
+    
+    @Override
+    public void setAsText(String id) throws IllegalArgumentException {
+        setAsText(id, Laboratory.class);
+    }
 
 }
+

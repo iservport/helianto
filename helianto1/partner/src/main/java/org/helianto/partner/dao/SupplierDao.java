@@ -27,7 +27,7 @@ import org.helianto.partner.Supplier;
 public interface SupplierDao extends CommonOrmDao {
      
     /**
-     * Find <code>Supplier</code> by <code>PartnerRegistry</code> and sequence.
+     * Find <code>Supplier</code> by <code>PartnerRegistry</code> and type.
      */
     public Supplier findSupplierByNaturalId(PartnerRegistry partnerRegistry);
     

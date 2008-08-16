@@ -16,6 +16,7 @@ package org.helianto.partner.validation;
 
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.partner.Customer;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -23,6 +24,7 @@ import org.helianto.partner.Customer;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component("customerPropertyEditor")
 public class CustomerPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override

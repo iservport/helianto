@@ -16,12 +16,14 @@ package org.helianto.partner.validation;
 
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.partner.Address;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>Session</code> backed <code>Address</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component("addressPropertyEditor")
 public class AddressPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override

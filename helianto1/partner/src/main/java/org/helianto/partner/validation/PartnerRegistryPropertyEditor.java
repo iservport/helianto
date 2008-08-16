@@ -16,6 +16,7 @@ package org.helianto.partner.validation;
 
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.partner.PartnerRegistry;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>Session</code> backed <code>PartnerRegistry</code> property
@@ -23,6 +24,7 @@ import org.helianto.partner.PartnerRegistry;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component("partnerRegistryPropertyEditor")
 public class PartnerRegistryPropertyEditor extends AbstractSessionPropertyEditor {
 
 	@Override
