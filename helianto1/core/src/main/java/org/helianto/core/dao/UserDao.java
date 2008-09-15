@@ -17,12 +17,9 @@ package org.helianto.core.dao;
 
 import java.util.List;
 
-import org.helianto.core.User;
-import org.helianto.core.dao.CommonOrmDao;
-
-
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.User;
 
 /**
  * <code>User</code> data access interface.

@@ -24,7 +24,6 @@ import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
-import org.helianto.web.view.IdentityForm;
 import org.springframework.validation.Errors;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;

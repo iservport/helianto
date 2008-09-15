@@ -15,11 +15,8 @@
 
 package org.helianto.core.dao;
 
-import org.helianto.core.InternalEnumerator;
-import org.helianto.core.dao.CommonOrmDao;
-
-
 import org.helianto.core.Entity;
+import org.helianto.core.InternalEnumerator;
 
 /**
  * <code>InternalEnumerator</code> data access interface.

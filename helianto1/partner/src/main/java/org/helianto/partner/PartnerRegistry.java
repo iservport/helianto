@@ -78,7 +78,7 @@ public class PartnerRegistry implements java.io.Serializable {
     }
 
     /**
-     * PartnerAlias getter.
+     * PartnerAlias.
      */
     @Column(length=20)
     public String getPartnerAlias() {

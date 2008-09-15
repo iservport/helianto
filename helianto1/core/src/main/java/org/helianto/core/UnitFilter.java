@@ -19,17 +19,17 @@ import java.io.Serializable;
 
 import org.helianto.core.Category;
 import org.helianto.core.User;
+import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.UserBackedFilter;
 
 /**
  * Unit filter.
  * 
- * @author MaurÃ­cio Fernandes de Castro
+ * @author Maurício Fernandes de Castro
  */
-public class UnitFilter implements UserBackedFilter, Serializable {
+public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 	
 	private static final long serialVersionUID = 1L;
-	private User user;
 	private Category category;
 	private String unitCode;
 	private String unitNameLike;
@@ -48,13 +48,6 @@ public class UnitFilter implements UserBackedFilter, Serializable {
 	public void reset() {
 		setUnitCode("");
 		setUnitNameLike("");
-	}
-
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	/**

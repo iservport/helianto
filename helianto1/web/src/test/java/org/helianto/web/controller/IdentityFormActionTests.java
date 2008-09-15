@@ -36,7 +36,6 @@ import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.web.view.IdentityForm;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;

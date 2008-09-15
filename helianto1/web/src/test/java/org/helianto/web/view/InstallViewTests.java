@@ -18,6 +18,7 @@ package org.helianto.web.view;
 import java.io.IOException;
 
 import org.helianto.core.test.UserTestSupport;
+import org.helianto.web.controller.UserForm;
 import org.helianto.web.test.FreeMarkerViewTestSupport;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;

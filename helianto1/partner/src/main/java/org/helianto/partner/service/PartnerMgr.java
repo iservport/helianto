@@ -17,9 +17,8 @@ package org.helianto.partner.service;
 
 import java.util.List;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
 import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.PartnerRegistryFilter;
 
 /**
  * Default service layer interface for the partner package.
@@ -29,14 +28,14 @@ import org.helianto.partner.PartnerRegistry;
 public interface PartnerMgr {
 
     /**
-     * Find a <code>Province</code> list by <code>Operator</code>.
+     * Find <code>PartnerRegistry</code>.
      */
-    public List<Province> findProvinceByOperator(Operator operator);
-
+	public List<PartnerRegistry> findPartnerRegistries(PartnerRegistryFilter partnerRegistryFilter);
+	
     /**
      * Write <code>PartnerRegistry</code> to the datastore.
      */
-    public void writePartnerRegistry(PartnerRegistry partnerRegistry);
+    public PartnerRegistry storePartnerRegistry(PartnerRegistry partnerRegistry);
 
     /**
      * Remove <code>PartnerRegistry</code> from the datastore.

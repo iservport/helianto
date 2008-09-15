@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.helianto.core.Operator;
 import org.helianto.core.service.ServerMgr;
-import org.helianto.web.view.OperatorForm;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
 import org.springframework.webflow.execution.Event;

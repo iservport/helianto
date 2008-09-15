@@ -13,23 +13,40 @@
  * limitations under the License.
  */
 
-package org.helianto.core.dao;
+package org.helianto.web.controller;
 
-import org.helianto.core.CategoryFilter;
+import java.io.Serializable;
 
+import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 
 /**
- * Interface to category selection strategy.
- * 
+ * A form backing POJO to the operation flow.
+ *  
  * @author Mauricio Fernandes de Castro
  */
-public interface CategorySelectionStrategy {
-	
-	/**
-	 * 
-	 * @param filter
-	 * @return
-	 */
-	public String createCriteriaAsString(CategoryFilter filter, String prefix);
+public class OperatorForm  implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
+    private Operator operator;
+    
+    private Entity entity;
+
+    public Entity getEntity() {
+        return entity;
+    }
+
+    public Operator getOperator() {
+        return operator;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
+    public void setOperator(Operator operator) {
+        this.operator = operator;
+    }
 
 }

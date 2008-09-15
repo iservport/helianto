@@ -1,14 +1,33 @@
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.helianto.core;
-// Generated 08/03/2007 19:38:51 by Hibernate Tools 3.2.0.beta8
 
-
+import javax.persistence.CascadeType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
- * 				
- * <p>
  * Domain object to indicate which <code>Entity</code>
  * may be taken by default when required by an association.
- * </p>
+ *
  * <p>
  * This is usefull for environments where all domain objects may be associated
  * to a single <code>Entity</code>.
@@ -17,52 +36,46 @@ package org.helianto.core;
  * Each <code>DefaultEntity</code> should have a corresponding {@link Partner}.
  * </p>
  * @author Mauricio Fernandes de Castro
- * 				
- * 		
  */
+@javax.persistence.Entity
+@Table(name="core_defaultentity",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "priority"})}
+)
 public class DefaultEntity  implements java.io.Serializable {
 
-    // Fields    
-
-     private int id;
-     private Entity entity;
-     private int priority;
-
-     // Constructors
+	private static final long serialVersionUID = 1L;
+    private int id;
+    private Entity entity;
+    private int priority;
 
     /** default constructor */
     public DefaultEntity() {
     }
 
-	/** minimal constructor */
-    public DefaultEntity(int priority) {
-        this.priority = priority;
-    }
-    /** full constructor */
-    public DefaultEntity(Entity entity, int priority) {
-       this.entity = entity;
-       this.priority = priority;
-    }
-   
     // Property accessors
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
-    
     public void setId(int id) {
         this.id = id;
     }
+
+    /**
+     * Entity.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
     }
-    
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
+    
     public int getPriority() {
         return this.priority;
     }
-    
     public void setPriority(int priority) {
         this.priority = priority;
     }
@@ -79,10 +92,7 @@ public class DefaultEntity  implements java.io.Serializable {
    
    public int hashCode() {
          int result = 17;
-         
-         
          result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
-         
          return result;
    }   
 

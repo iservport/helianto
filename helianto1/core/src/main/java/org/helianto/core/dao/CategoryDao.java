@@ -15,14 +15,10 @@
 
 package org.helianto.core.dao;
 
-import org.helianto.core.Category;
-import org.helianto.core.CategoryGroup;
-
-import org.helianto.core.dao.CommonOrmDao;
-
 import java.util.List;
 
-
+import org.helianto.core.Category;
+import org.helianto.core.CategoryGroup;
 import org.helianto.core.Entity;
 
 /**

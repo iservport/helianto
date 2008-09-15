@@ -29,11 +29,11 @@ public class AbstractHibernateIntegrationTest extends AbstractIntegrationTest {
     @Override
     protected String[] getConfigLocations() {
         return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/org.helianto.core.xml",
+                "META-INF/spring/dataSource.xml",
+                "META-INF/spring/sessionFactory.xml",
+                "META-INF/spring/transaction.xml",
+                "META-INF/spring/support.xml",
+                "META-INF/spring/core-context.xml",
                 };
     }
     

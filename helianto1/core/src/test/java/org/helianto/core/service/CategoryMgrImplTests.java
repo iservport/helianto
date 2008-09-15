@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 import org.helianto.core.Category;
 import org.helianto.core.CategoryFilter;
 import org.helianto.core.dao.CategoryDao;
-import org.helianto.core.dao.CategorySelectionStrategy;
+import org.helianto.core.filter.SelectionStrategy;
 
 public class CategoryMgrImplTests extends TestCase {
     
@@ -63,14 +63,15 @@ public class CategoryMgrImplTests extends TestCase {
     }
     
     private CategoryDao categoryDao;
-    private CategorySelectionStrategy categorySelectionStrategy;
+    private SelectionStrategy<CategoryFilter> categorySelectionStrategy;
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void setUp() {
         categoryMgr = new CategoryMgrImpl();
         categoryDao = createMock(CategoryDao.class);
         categoryMgr.setCategoryDao(categoryDao);
-        categorySelectionStrategy = createMock(CategorySelectionStrategy.class);
+        categorySelectionStrategy = createMock(SelectionStrategy.class);
         categoryMgr.setCategorySelectionStrategy(categorySelectionStrategy);
     }
     

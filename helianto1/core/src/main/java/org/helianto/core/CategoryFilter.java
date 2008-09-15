@@ -15,31 +15,19 @@
 
 package org.helianto.core;
 
-import java.io.Serializable;
-
-import org.helianto.core.CategoryGroup;
-import org.helianto.core.User;
-import org.helianto.core.filter.UserBackedFilter;
+import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 
 /**
  * Category filter.
  * 
- * @author MaurÃ­cio Fernandes de Castro
+ * @author Maurício Fernandes de Castro
  */
-public class CategoryFilter implements	Serializable, UserBackedFilter {
+public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 
 	private static final long serialVersionUID = 1L;
-	private User user;
 	private CategoryGroup categoryGroup;
 	private String categoryCode;
 	private String categoryNameLike;
-	
-	public User getUser() {
-		return this.user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
 	
 	/**
 	 * Factory method.

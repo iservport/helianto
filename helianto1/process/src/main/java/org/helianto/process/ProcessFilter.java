@@ -15,22 +15,20 @@
 
 package org.helianto.process;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
 import org.helianto.core.User;
-import org.helianto.core.filter.UserBackedFilter;
+import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 
 /**
  * Filter to <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessFilter implements Serializable , UserBackedFilter {
+public class ProcessFilter extends AbstractUserBackedCriteriaFilter {
 
     private static final long serialVersionUID = 1L;
-    private User user;
     private long internalNumber;
     private String docNameLike = "";
     private Collection<Process> exclusions;
@@ -58,16 +56,6 @@ public class ProcessFilter implements Serializable , UserBackedFilter {
     	setInternalNumber(0);
     	setDocNameLike("");
     	setExclusions(new HashSet<Process>(0));
-    }
-    
-    /**
-     * User to meet <code>UserBackedFilter</code> interface requirements.
-     */
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
     }
     
     /**

@@ -33,8 +33,6 @@ import org.helianto.core.User;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.controller.InstallFormAction;
-import org.helianto.web.view.IdentityForm;
-import org.helianto.web.view.UserForm;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;

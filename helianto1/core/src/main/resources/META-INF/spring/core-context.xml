@@ -35,10 +35,6 @@
 		class="org.helianto.core.hibernate.DefaultIdentitySelectionStrategy"/>
 	<bean id="userSelectionStrategy" 
 		class="org.helianto.core.orm.DefaultUserSelectionStrategy"/>
-	<bean id="categorySelectionStrategy" 
-		class="org.helianto.core.orm.DefaultCategorySelectionStrategy"/>
-	<bean id="unitSelectionStrategy" 
-		class="org.helianto.core.orm.DefaultUnitSelectionStrategy"/>
 	
 	<!--
 			principal generation strategy	

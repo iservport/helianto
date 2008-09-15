@@ -64,9 +64,6 @@ public class Service implements java.io.Serializable {
     public Operator getOperator() {
         return this.operator;
     }
-    /**
-     * Operator setter.
-     */
     public void setOperator(Operator operator) {
         this.operator = operator;
     }
@@ -78,9 +75,6 @@ public class Service implements java.io.Serializable {
     public String getServiceName() {
         return this.serviceName;
     }
-    /**
-     * ServiceName setter.
-     */
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }

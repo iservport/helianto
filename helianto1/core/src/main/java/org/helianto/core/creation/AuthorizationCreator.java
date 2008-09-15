@@ -15,17 +15,6 @@
 
 package org.helianto.core.creation;
 
-import java.util.HashSet;
-
-import org.helianto.core.ActivityState;
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.PrivacyLevel;
-import org.helianto.core.User;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
-import org.helianto.core.UserType;
 
 /**
  * Authorization required classes factory methods.

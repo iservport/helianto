@@ -21,10 +21,9 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
-import org.helianto.core.dao.ProvinceDao;
+import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.PartnerRegistryFilter;
 import org.helianto.partner.dao.AccountDao;
 import org.helianto.partner.dao.AddressDao;
 import org.helianto.partner.dao.AgentDao;
@@ -41,12 +40,13 @@ import org.helianto.partner.dao.SupplierDao;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@SuppressWarnings("restriction")
 public class PartnerMgrImpl implements PartnerMgr {
 
-    private ProvinceDao provinceDao;
     private AddressDao addressDao;
     private ContactDao contactDao;
     private PartnerRegistryDao partnerRegistryDao;
+	private SelectionStrategy<PartnerRegistryFilter> partnerRegistrySelectionStrategy;
     private PartnerDao partnerDao;
     private PartnerKeyDao partnerKeyDao;
     private PhoneDao phoneDao;
@@ -55,18 +55,21 @@ public class PartnerMgrImpl implements PartnerMgr {
     private CustomerDao customerDao;
     private SupplierDao supplierDao;
 
-    public List<Province> findProvinceByOperator(Operator operator) {
-        return provinceDao.findProvinceByOperator(operator);
-    }
+	public List<PartnerRegistry> findPartnerRegistries(PartnerRegistryFilter partnerRegistryFilter) {
+		String criteria = partnerRegistrySelectionStrategy.createCriteriaAsString(partnerRegistryFilter, "partnerRegistry");
+		List<PartnerRegistry> partnerRegistryList = partnerRegistryDao.findPartnerRegistries(criteria);
+    	if (logger.isDebugEnabled() && partnerRegistryList!=null) {
+    		logger.debug("Found partner registry list of size "+partnerRegistryList.size());
+    	}
+		return partnerRegistryList;
+	}
 
-    public void writePartnerRegistry(PartnerRegistry partnerRegistry) {
-        // TODO Auto-generated method stub
-        
-    }
-
+	public PartnerRegistry storePartnerRegistry(PartnerRegistry partnerRegistry) {
+		return partnerRegistryDao.mergePartnerRegistry(partnerRegistry);
+	}
+	
     public void removePartnerRegistry(PartnerRegistry partnerRegistry) {
-        // TODO Auto-generated method stub
-        
+    	partnerRegistryDao.removePartnerRegistry(partnerRegistry);
     }
 
     public List<PartnerRegistry> findPartnerRegistry(String partnerAssociationSearchString) {
@@ -76,10 +79,6 @@ public class PartnerMgrImpl implements PartnerMgr {
 
     //- collaborators
     
-    @Resource
-    public void setProvinceDao(ProvinceDao provinceDao) {
-        this.provinceDao = provinceDao;
-    }
     @Resource
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
@@ -104,6 +103,10 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void setPartnerRegistryDao(PartnerRegistryDao partnerRegistryDao) {
         this.partnerRegistryDao = partnerRegistryDao;
     }
+	@Resource
+	public void setPartnerRegistrySelectionStrategy(SelectionStrategy<PartnerRegistryFilter> partnerRegistrySelectionStrategy) {
+		this.partnerRegistrySelectionStrategy = partnerRegistrySelectionStrategy;
+	}
     @Resource
     public void setPartnerDao(PartnerDao partnerDao) {
         this.partnerDao = partnerDao;

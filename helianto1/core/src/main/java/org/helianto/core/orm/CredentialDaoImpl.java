@@ -16,12 +16,9 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
-
-
-
-import org.helianto.core.Identity;
 import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>Credential</code> data access interface.

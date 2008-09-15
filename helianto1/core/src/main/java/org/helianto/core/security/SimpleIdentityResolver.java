@@ -15,7 +15,6 @@
 
 package org.helianto.core.security;
 
-import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
@@ -23,6 +22,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.service.SecurityMgr;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.springframework.util.Assert;
 
 /**

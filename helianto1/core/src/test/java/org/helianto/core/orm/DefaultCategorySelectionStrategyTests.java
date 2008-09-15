@@ -19,7 +19,7 @@ import junit.framework.TestCase;
 
 import org.helianto.core.CategoryFilter;
 import org.helianto.core.CategoryGroup;
-import org.helianto.core.dao.CategorySelectionStrategy;
+import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.core.test.UserTestSupport;
 
 /**
@@ -32,7 +32,7 @@ public class DefaultCategorySelectionStrategyTests extends TestCase {
     public static String C2 = "AND category.categoryCode = 'CODE' ";
     public static String C3 = "AND category.categoryNameLike like '%NAME_LIKE%' ";
 
-    private CategorySelectionStrategy categorySelectionStrategy;
+    private SelectionStrategy<CategoryFilter> categorySelectionStrategy;
 
     public void testCreateCriteriaAsStringNoUser() {
         filter.setUser(null);

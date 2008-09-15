@@ -1,0 +1,21 @@
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.helianto.process.shared_services
+Bundle-Version: 0.2.20080913
+Bundle-Name: Helianto process module
+Bundle-Vendor: i-Serv Consultoria Empresarial
+Import-Library: org.hibernate.ejb,
+ org.springframework.spring
+Provide-Package: org.helianto.core,
+ org.helianto.core.creation,
+ org.helianto.core.dao,
+ org.helianto.core.filter,
+ org.helianto.core.hibernate,
+ org.helianto.core.mail,
+ org.helianto.core.mail.compose,
+ org.helianto.core.orm,
+ org.helianto.core.security,
+ org.helianto.core.service,
+ org.helianto.core.test,
+ org.helianto.core.transform,
+ org.helianto.core.transform.mail,
+ org.helianto.core.validation

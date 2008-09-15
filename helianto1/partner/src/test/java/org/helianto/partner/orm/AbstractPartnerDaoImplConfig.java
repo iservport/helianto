@@ -28,12 +28,12 @@ public abstract class AbstractPartnerDaoImplConfig extends
     @Override
     protected String[] getConfigLocations() {
         return new String[] { 
-                "deploy/dataSource.xml",
-                "deploy/sessionFactory.xml",
-                "deploy/transaction.xml",
-                "deploy/support.xml",
-                "deploy/org.helianto.core.xml",
-                "deploy/org.helianto.partner.xml"
+                "META-INF/spring/dataSource.xml",
+                "META-INF/spring/sessionFactory.xml",
+                "META-INF/spring/transaction.xml",
+                "META-INF/spring/support.xml",
+                "META-INF/spring/core-context.xml",
+                "META-INF/spring/partner-context.xml"
                 };
     }
     

@@ -5,18 +5,20 @@
 	<parent>
 		<artifactId>helianto</artifactId>
 		<groupId>org.helianto</groupId>
-		<version>0.0.1-20080612</version>
+		<version>0.2.20080913</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-core</artifactId>
-	<version>0.0.1-20080612</version>
+	<version>0.2.20080913</version>
 	<name>Core</name>
 
 	<description>Helianto project core module.</description>
 
 	<build>
 		<finalName>helianto-core</finalName>
+	    <plugins>
+	    </plugins>
 	</build>
 
 </project>

@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
 import org.helianto.core.dao.UnitDao;
-import org.helianto.core.dao.UnitSelectionStrategy;
+import org.helianto.core.filter.SelectionStrategy;
 
 public class UnitMgrImplTests extends TestCase {
     
@@ -63,14 +63,15 @@ public class UnitMgrImplTests extends TestCase {
     }
     
     private UnitDao unitDao;
-    private UnitSelectionStrategy unitSelectionStrategy;
+    private SelectionStrategy<UnitFilter> unitSelectionStrategy;
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void setUp() {
         unitMgr = new UnitMgrImpl();
         unitDao = createMock(UnitDao.class);
         unitMgr.setUnitDao(unitDao);
-        unitSelectionStrategy = createMock(UnitSelectionStrategy.class);
+        unitSelectionStrategy = createMock(SelectionStrategy.class);
         unitMgr.setUnitSelectionStrategy(unitSelectionStrategy);
     }
     

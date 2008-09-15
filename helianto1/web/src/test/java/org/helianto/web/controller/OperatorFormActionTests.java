@@ -33,7 +33,6 @@ import junit.framework.TestCase;
 import org.helianto.core.Operator;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.web.controller.OperatorFormAction;
-import org.helianto.web.view.OperatorForm;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;

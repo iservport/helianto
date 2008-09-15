@@ -32,6 +32,8 @@ import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
+import org.helianto.core.Operator;
+import org.helianto.core.Province;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
@@ -39,11 +41,13 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
+import org.helianto.core.dao.ProvinceDao;
 import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.dao.UserSelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
+import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.UserTestSupport;
 
 public class UserMgrImplTests extends TestCase {
@@ -176,12 +180,26 @@ public class UserMgrImplTests extends TestCase {
     	verify(userGroupDao);
     }
     
+    public void testFindProvinceByOperator() {
+        Operator operator = OperatorTestSupport.createOperator();
+        List<Province> provinceList = new ArrayList<Province>();
+        
+        expect(provinceDao.findProvinceByOperator(operator))
+            .andReturn(provinceList);
+        replay(provinceDao);
+        
+        assertSame(provinceList, userMgr.findProvinceByOperator(operator));
+        verify(provinceDao);
+    }
+    
     private IdentityDao identityDao;
     private InternalEnumeratorDao internalEnumeratorDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
     private UserSelectionStrategy userSelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private UserGroupDao userGroupDao;
+    private ProvinceDao provinceDao;
+
     
     @Override
     public void setUp() {
@@ -198,6 +216,8 @@ public class UserMgrImplTests extends TestCase {
         userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
         userGroupDao = createMock(UserGroupDao.class);
         userMgr.setUserGroupDao(userGroupDao);
+        provinceDao = createMock(ProvinceDao.class);
+        userMgr.setProvinceDao(provinceDao);
     }
     
     @Override
@@ -208,6 +228,7 @@ public class UserMgrImplTests extends TestCase {
         reset(userSelectionStrategy);
         reset(principalGenerationStrategy);
         reset(userGroupDao);
+        reset(provinceDao);
     }
     
 }

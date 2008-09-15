@@ -5,6 +5,7 @@ import java.io.Serializable;
 import junit.framework.TestCase;
 
 import org.helianto.core.Credential;
+import org.helianto.web.controller.CredentialForm;
 
 /**
  * 

@@ -3,11 +3,7 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import org.helianto.core.Entity;
-import org.helianto.core.test.EntityTestSupport;
-
 import org.helianto.core.InternalEnumerator;
 
 /**

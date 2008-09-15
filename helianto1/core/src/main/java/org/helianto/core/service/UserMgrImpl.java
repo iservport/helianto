@@ -25,11 +25,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.Operator;
+import org.helianto.core.Province;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.IdentitySelectionStrategy;
+import org.helianto.core.dao.ProvinceDao;
 import org.helianto.core.dao.UserSelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
 
@@ -43,6 +46,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     private IdentitySelectionStrategy identitySelectionStrategy;
     private UserSelectionStrategy userSelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
+    private ProvinceDao provinceDao;
 	
     public Identity findIdentityByPrincipal(String principal) {
         return identityDao.findIdentityByNaturalId(principal);
@@ -150,6 +154,10 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         return (User) userGroupDao.mergeUserGroup(user);
 	}
 
+    public List<Province> findProvinceByOperator(Operator operator) {
+        return provinceDao.findProvinceByOperator(operator);
+    }
+
     //- collaborators
     
     @Resource
@@ -169,6 +177,11 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 			PrincipalGenerationStrategy principalGenerationStrategy) {
 		this.principalGenerationStrategy = principalGenerationStrategy;
 	}
+
+    @Resource
+    public void setProvinceDao(ProvinceDao provinceDao) {
+        this.provinceDao = provinceDao;
+    }
 
     private static final Log logger = LogFactory.getLog(UserMgrImpl.class);
 

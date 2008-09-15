@@ -22,21 +22,21 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Unit;
-import org.helianto.core.dao.UnitDao;
-
 import org.helianto.core.UnitFilter;
-import org.helianto.core.dao.UnitSelectionStrategy;
+import org.helianto.core.dao.UnitDao;
+import org.helianto.core.filter.SelectionStrategy;
 
 
 /**
  * Default implementation to unit interface.
  * 
- * @author MaurÃ­cio Fernandes de Castro
+ * @author Maurício Fernandes de Castro
  */
+@SuppressWarnings("restriction")
 public class UnitMgrImpl implements UnitMgr {
     
     private UnitDao unitDao;
-    private UnitSelectionStrategy unitSelectionStrategy;
+    private SelectionStrategy<UnitFilter> unitSelectionStrategy;
     
 	public List<Unit> findUnits(UnitFilter unitFilter) {
     	String criteria = unitSelectionStrategy.createCriteriaAsString(unitFilter, "unit");
@@ -68,7 +68,7 @@ public class UnitMgrImpl implements UnitMgr {
     }
 
     @Resource
-	public void setUnitSelectionStrategy(UnitSelectionStrategy unitSelectionStrategy) {
+	public void setUnitSelectionStrategy(SelectionStrategy<UnitFilter> unitSelectionStrategy) {
 		this.unitSelectionStrategy = unitSelectionStrategy;
 	}
 

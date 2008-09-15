@@ -23,6 +23,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserLog;
+import org.helianto.core.dao.AuthorizationDao;
 import org.springframework.util.Assert;
 
 /**

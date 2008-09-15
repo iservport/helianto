@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.web.view;
+package org.helianto.web.controller;
 
 import java.io.Serializable;
 

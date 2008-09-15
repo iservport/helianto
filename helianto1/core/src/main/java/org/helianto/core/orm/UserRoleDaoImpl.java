@@ -15,14 +15,11 @@
 
 package org.helianto.core.orm;
 
+import org.helianto.core.Service;
+import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.UserRoleDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
-
-
-
-import org.helianto.core.UserGroup;
-import org.helianto.core.Service;
 import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>UserRole</code> data access interface.

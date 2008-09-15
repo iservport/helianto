@@ -19,9 +19,9 @@ import junit.framework.TestCase;
 
 import org.helianto.core.Category;
 import org.helianto.core.UnitFilter;
-import org.helianto.core.dao.UnitSelectionStrategy;
-import org.helianto.core.test.UserTestSupport;
+import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.core.test.CategoryTestSupport;
+import org.helianto.core.test.UserTestSupport;
 
 /**
  * 
@@ -34,7 +34,7 @@ public class DefaultUnitSelectionStrategyTests extends TestCase {
     public static String C3 = "AND unit.category.id = 0 ";
     public static String C4 = "AND unit.unitNameLike like '%NAME_LIKE%' ";
 
-    private UnitSelectionStrategy unitSelectionStrategy;
+    private SelectionStrategy<UnitFilter> unitSelectionStrategy;
 
     public void testCreateCriteriaAsStringNoUser() {
         filter.setUser(null);

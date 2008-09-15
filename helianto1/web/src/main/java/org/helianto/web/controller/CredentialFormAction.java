@@ -18,7 +18,6 @@ package org.helianto.web.controller;
 import org.helianto.core.Credential;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
-import org.helianto.web.view.CredentialForm;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;

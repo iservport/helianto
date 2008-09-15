@@ -77,7 +77,7 @@ public class Partner implements java.io.Serializable {
     }
 
     /**
-     * Account getter.
+     * Account.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="accountId", nullable=true)
@@ -89,7 +89,7 @@ public class Partner implements java.io.Serializable {
     }
 
     /**
-     * Priority getter.
+     * Priority.
      */
     public char getPriority() {
         return this.priority;

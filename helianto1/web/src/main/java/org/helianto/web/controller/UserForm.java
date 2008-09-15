@@ -13,41 +13,29 @@
  * limitations under the License.
  */
 
-package org.helianto.web.view;
+package org.helianto.web.controller;
 
 import java.io.Serializable;
 
-import org.helianto.core.Credential;
+import org.helianto.core.User;
 
 /**
- * <code>Identity</code> form.
- *  
+ * <code>User</code> form.
+ * 
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityForm implements Serializable {
+public class UserForm  implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    public static final char SEND_CURRENT_PASSWORD = 'C';
-    public static final char SEND_NEW_PASSWORD = 'N';
-    public static final char VERIFY_PASSWORD_ONLINE = 'V';
 
-    private Credential credential;
-    private char sendOption = SEND_NEW_PASSWORD;
-    
-    public Credential getCredential() {
-        return credential;
+    private User user;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setCredential(Credential credential) {
-        this.credential = credential;
-    }
-
-    public char getSendOption() {
-        return sendOption;
-    }
-
-    public void setSendOption(char sendOption) {
-        this.sendOption = sendOption;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
@@ -61,7 +49,7 @@ public class IdentityForm implements Serializable {
 
         buffer.append(getClass().getName()).append("@").append(
                 Integer.toHexString(hashCode())).append(" [");
-        buffer.append("credential").append("='").append(getCredential()).append("' ");
+        buffer.append("user").append("='").append(getUser()).append("' ");
         buffer.append("]");
 
         return buffer.toString();

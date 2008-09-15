@@ -15,12 +15,9 @@
 
 package org.helianto.core.dao;
 
-import org.helianto.core.UserRole;
-import org.helianto.core.dao.CommonOrmDao;
-
-
-import org.helianto.core.UserGroup;
 import org.helianto.core.Service;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 
 /**
  * <code>UserRole</code> data access interface.

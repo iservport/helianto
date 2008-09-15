@@ -18,13 +18,13 @@ package org.helianto.core.security;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.userdetails.UserDetails;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.User;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
 /**

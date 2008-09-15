@@ -22,20 +22,20 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Category;
-import org.helianto.core.dao.CategoryDao;
-
 import org.helianto.core.CategoryFilter;
-import org.helianto.core.dao.CategorySelectionStrategy;
+import org.helianto.core.dao.CategoryDao;
+import org.helianto.core.filter.SelectionStrategy;
 
 /**
  * Default implementation to category interface.
  * 
- * @author MaurÃ­cio Fernandes de Castro
+ * @author Maurício Fernandes de Castro
  */
+@SuppressWarnings("restriction")
 public class CategoryMgrImpl implements CategoryMgr {
     
     private CategoryDao categoryDao;
-    private CategorySelectionStrategy categorySelectionStrategy;
+    private SelectionStrategy<CategoryFilter> categorySelectionStrategy;
     
 	public List<Category> findCategories(CategoryFilter categoryFilter) {
     	String criteria = categorySelectionStrategy.createCriteriaAsString(categoryFilter, "category");
@@ -67,7 +67,7 @@ public class CategoryMgrImpl implements CategoryMgr {
     }
 
     @Resource
-	public void setCategorySelectionStrategy(CategorySelectionStrategy categorySelectionStrategy) {
+	public void setCategorySelectionStrategy(SelectionStrategy<CategoryFilter> categorySelectionStrategy) {
 		this.categorySelectionStrategy = categorySelectionStrategy;
 	}
 

@@ -16,9 +16,6 @@
 package org.helianto.core.dao;
 
 import org.helianto.core.Credential;
-import org.helianto.core.dao.CommonOrmDao;
-
-
 import org.helianto.core.Identity;
 
 /**

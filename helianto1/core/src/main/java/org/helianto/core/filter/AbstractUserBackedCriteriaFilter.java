@@ -15,6 +15,8 @@
 
 package org.helianto.core.filter;
 
+import java.io.Serializable;
+
 import org.helianto.core.User;
 
 /**
@@ -22,8 +24,9 @@ import org.helianto.core.User;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@SuppressWarnings("serial")
 public abstract class AbstractUserBackedCriteriaFilter implements
-        UserBackedFilter {
+        UserBackedFilter, Serializable {
     
     private User user;
     

@@ -18,8 +18,6 @@ package org.helianto.web.controller;
 import org.helianto.core.User;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
-import org.helianto.web.view.IdentityForm;
-import org.helianto.web.view.UserForm;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
 import org.springframework.webflow.execution.Event;

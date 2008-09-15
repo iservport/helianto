@@ -56,30 +56,24 @@ public class PrivateKey implements java.io.Serializable {
     }
 
     /**
-     * Credential getter.
+     * Credential.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="credentialId", nullable=true)
     public Credential getCredential() {
         return this.credential;
     }
-    /**
-     * Credential setter.
-     */
     public void setCredential(Credential credential) {
         this.credential = credential;
     }
 
     /**
-     * PrivateKey getter.
+     * PrivateKey content.
      */
     @Column(length=2048)
     public String getPrivateKey() {
         return this.privateKey;
     }
-    /**
-     * PrivateKey setter.
-     */
     public void setPrivateKey(String privateKey) {
         this.privateKey = privateKey;
     }

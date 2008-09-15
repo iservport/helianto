@@ -20,6 +20,8 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.Operator;
+import org.helianto.core.Province;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
@@ -113,4 +115,9 @@ public interface UserMgr extends CoreMgr {
      */
     public void writeUser(UserGroup userGroup);
     
+    /**
+     * Find a <code>Province</code> list by <code>Operator</code>.
+     */
+    public List<Province> findProvinceByOperator(Operator operator);
+
 }

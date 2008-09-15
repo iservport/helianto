@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
-	<configExtensions>
-		<configExtension>xml</configExtension>
-	</configExtensions>
+	<version>1</version>
+	<pluginVersion><![CDATA[2.1.0.v200808011800]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>core/src/main/resources/deploy/security.xml</config>
-		<config>core/src/main/resources/deploy/sessionFactory.xml</config>
-		<config>core/src/main/resources/deploy/transaction.xml</config>
-		<config>core/src/main/resources/deploy/support.xml</config>
-		<config>web/src/main/resources/deploy/webflow.xml</config>
-		<config>web/src/main/resources/deploy/security-http.xml</config>
-		<config>web/src/main/resources/deploy/install.xml</config>
-		<config>core/src/main/resources/deploy/core.xml</config>
-		<config>web/src/main/resources/deploy/freemarker.xml</config>
-		<config>core/src/main/resources/deploy/dataSource.xml</config>
+		<config>core/src/main/resources/META-INF/spring/security.xml</config>
+		<config>core/src/main/resources/META-INF/spring/sessionFactory.xml</config>
+		<config>core/src/main/resources/META-INF/spring/support.xml</config>
+		<config>core/src/main/resources/META-INF/spring/transaction.xml</config>
+		<config>process/src/main/resources/META-INF/spring/process-osgi-context.xml</config>
+		<config>web/src/main/resources/META-INF/spring/install.xml</config>
+		<config>web/src/main/resources/META-INF/spring/security-http.xml</config>
+		<config>web/src/main/resources/META-INF/spring/webflow.xml</config>
 	</configs>
 	<configSets>
 	</configSets>
