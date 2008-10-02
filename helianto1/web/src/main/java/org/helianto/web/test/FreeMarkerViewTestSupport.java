@@ -62,6 +62,27 @@ public class FreeMarkerViewTestSupport extends TestCase {
     protected BindingResult bindingResult;
     
     protected String outputFileName = "";
+    
+    /**
+     * Default implementation returns "classpath:/freemarker/".
+     */
+    protected String getTemplateLoaderPath() {
+    	return "classpath:/freemarker/";
+    }
+
+    /**
+     * Default implementation returns "ISO-8859-1".
+     */
+    protected String getDefaultEncoding() {
+    	return "ISO-8859-1";
+    }
+    
+    /**
+     * Default implementation false.
+     */
+    protected boolean getPreferFileSystemAccess() {
+    	return false;
+    }
 
     @Override
     public void setUp() throws IOException, TemplateException, InstantiationException, IllegalAccessException {
@@ -74,9 +95,9 @@ public class FreeMarkerViewTestSupport extends TestCase {
         request.setAttribute(DispatcherServlet.THEME_RESOLVER_ATTRIBUTE, new FixedThemeResolver());
         
         configurer = new FreeMarkerConfigurer();
-        configurer.setTemplateLoaderPath("classpath:/freemarker/");
-        configurer.setDefaultEncoding("ISO-8859-1");
-        configurer.setPreferFileSystemAccess(false);
+        configurer.setTemplateLoaderPath(getTemplateLoaderPath());
+        configurer.setDefaultEncoding(getDefaultEncoding());
+        configurer.setPreferFileSystemAccess(getPreferFileSystemAccess());
         configurer.afterPropertiesSet();
 
         wac.getDefaultListableBeanFactory().registerSingleton("freeMarkerConfigurer", configurer);
@@ -98,7 +119,7 @@ public class FreeMarkerViewTestSupport extends TestCase {
         fv.setApplicationContext(wac);
         fv.setExposeSpringMacroHelpers(true);
         fv.setBeanName(templateName);
-        fv.setEncoding("ISO-8859-1");
+        fv.setEncoding(getDefaultEncoding());
         fv.afterPropertiesSet();
         return fv;
     }
@@ -141,7 +162,7 @@ public class FreeMarkerViewTestSupport extends TestCase {
     protected MockHttpServletResponse processView(FreeMarkerView fv, boolean visualTest) throws Exception {
         MockHttpServletResponse expectedResponse = new MockHttpServletResponse();
         fv.render(model, request, expectedResponse);
-        fv.setEncoding("ISO-8859-1");
+        fv.setEncoding(getDefaultEncoding());
         if (visualTest) {
             if (!outputFileName.equals("")) {
                 createOutputFile(expectedResponse.getContentAsString().toCharArray(), outputFileName);

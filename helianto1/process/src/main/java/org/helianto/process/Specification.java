@@ -17,18 +17,10 @@ package org.helianto.process;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-
-import org.helianto.core.Unit;
 
 
 /**		
@@ -38,68 +30,30 @@ import org.helianto.core.Unit;
  * @author Mauricio Fernandes de Castro	
  */
 @javax.persistence.Entity
-@Table(name="proc_spec",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"documentId", "characteristicId"})}
-)
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Specification implements java.io.Serializable {
+@Table(name="proc_spec")
+public class Specification extends ProcessDocument {
     
 	private static final long serialVersionUID = 1L;
-    private int id;
-	private ProcessDocument document;
-	private Characteristic characteristic;
-	private Unit unit;
-    private SpecificationLimit specificationLimit;
+	private int specificationType;
+	private SpecificationLimit specificationLimit;
+    private MeasurementTechnique measurementTechnique;
 
-
-    /** default constructor */
+	/** default constructor */
     public Specification() {
     }
 
-    // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     /**
-     * Document.
+     * Specification type.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="documentId", nullable=true)
-	public ProcessDocument getDocument() {
-		return document;
+    public int getSpecificationType() {
+		return specificationType;
 	}
-	public void setDocument(ProcessDocument document) {
-		this.document = document;
+	public void setSpecificationType(int specificationType) {
+		this.specificationType = specificationType;
 	}
-
-    /**
-     * Characteristic.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="characteristicId", nullable=true)
-	public Characteristic getCharacteristic() {
-		return characteristic;
+	public void setSpecificationType(SpecificationType specificationType) {
+		this.specificationType = specificationType.getValue();
 	}
-	public void setCharacteristic(Characteristic characteristic) {
-		this.characteristic = characteristic;
-	}
-
-    /**
-     * Unit.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="unitId", nullable=true)
-    public Unit getUnit() {
-        return this.unit;
-    }
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
 
     /**
      * Specification limit.
@@ -113,32 +67,16 @@ public class Specification implements java.io.Serializable {
     }
     
     /**
-     * <code>Specification</code> factory.
-     * 
-     * @param document
-     * @param characteristic
+     * Measurement technique.
      */
-    public static <T extends Specification> T specificationFactory(Class<T> clazz, ProcessDocument document, Characteristic characteristic) {
-    	T specification = null;
-        try {
-        	specification = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create specification of class "+clazz);
-        }
-        specification.setDocument(document);
-        specification.setCharacteristic(characteristic);
-        return specification;
-    }
-
-    /**
-     * <code>Specification</code> factory.
-     * 
-     * @param document
-     * @param characteristic
-     */
-    public static Specification specificationFactory(ProcessDocument document, Characteristic characteristic) {
-        return specificationFactory(Specification.class, document, characteristic);
-    }
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="measurementTechniqueId", nullable=true)
+    public MeasurementTechnique getMeasurementTechnique() {
+		return measurementTechnique;
+	}
+	public void setMeasurementTechnique(MeasurementTechnique measurementTechnique) {
+		this.measurementTechnique = measurementTechnique;
+	}
 
     /**
      * <code>Specification</code> query <code>StringBuilder</code>.
@@ -153,7 +91,7 @@ public class Specification implements java.io.Serializable {
      */
     @Transient
     public static String getSpecificationNaturalIdQueryString() {
-        return getSpecificationQueryStringBuilder().append("where specification.document = ? and specification.characteristic = ? ").toString();
+        return getSpecificationQueryStringBuilder().append("where specification.entity = ? and specification.docCode = ? ").toString();
     }
 
     /**
@@ -165,36 +103,20 @@ public class Specification implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("document").append("='").append(getDocument()).append("' ");
-        buffer.append("characteristic").append("='").append(getCharacteristic()).append("' ");
+        buffer.append("specificationType").append("='").append(getSpecificationType()).append("' ");
+        buffer.append("specificationLimit").append("='").append(getSpecificationLimit()).append("' ");
         buffer.append("]");
       
         return buffer.toString();
     }
 
-   /**
-    * equals
-    */
-   @Override
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof Specification) ) return false;
-         Specification castOther = (Specification) other; 
-         
-         return ((this.getDocument()==castOther.getDocument()) || ( this.getDocument()!=null && castOther.getDocument()!=null && this.getDocument().equals(castOther.getDocument()) ))
-             && ((this.getCharacteristic()==castOther.getCharacteristic()) || ( this.getCharacteristic()!=null && castOther.getCharacteristic()!=null && this.getCharacteristic().equals(castOther.getCharacteristic()) ));
-   }
-   
-   /**
-    * hashCode
-    */
-   @Override
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getDocument() == null ? 0 : this.getDocument().hashCode() );
-         result = 37 * result + ( getCharacteristic() == null ? 0 : this.getCharacteristic().hashCode() );
-         return result;
-   }   
-
+    /**
+     * equals
+     */
+    @Override
+    public boolean equals(Object other) {
+          if ( !(other instanceof Specification) ) return false;
+          return super.equals(other);
+    }
+    
 }

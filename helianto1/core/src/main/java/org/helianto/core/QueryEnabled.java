@@ -13,22 +13,30 @@
  * limitations under the License.
  */
 
-package org.helianto.process.dao;
 
-import org.helianto.process.ProcessFilter;
+package org.helianto.core;
+
 
 /**
- * <code>Process</code> selection strategy interface.
+ * Persistent objects implementing this interfaces can
+ * be easily retrieved using any <code>LightweightDao</code>
+ * implementation.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface ProcessSelectionStrategy {
+public interface QueryEnabled {
 
     /**
-     * Create citeria as String. User prefix to prepend hql alias
-     * @param filter
-     * @param prefix
+     * Get the alias to be used in queries.
      */
-    public String createCriteriaAsString(ProcessFilter filter, String prefix);
+    public String getObjectAlias();
+
+    /**
+     * Create a natural id query.
+     * 
+     * @param selectClause
+     * @param alias
+     */
+    public String getNaturalIdQueryString(StringBuilder selectClause);
 
 }

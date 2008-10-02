@@ -56,6 +56,17 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
         return (ArrayList<Process>) find(new StringBuilder(Process.getProcessQueryStringBuilder()).append("where ").append(criteria));
     }
 
+	@SuppressWarnings("unchecked")
+	public List<Operation> findOperations(String criteria) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding process list with criteria ='"+criteria+"'");
+        }
+        if (criteria.equals("")) {
+            return (ArrayList<Operation>) find(Operation.getOperationQueryStringBuilder());
+        }
+        return (ArrayList<Operation>) find(new StringBuilder(Operation.getOperationQueryStringBuilder()).append("where ").append(criteria));
+	}
+
 	public void persistProcessDocument(ProcessDocument processDocument) {
         if (logger.isDebugEnabled()) {
             logger.debug("Persisting process document "+processDocument);

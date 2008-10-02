@@ -57,7 +57,7 @@ public class PartnerFilterTests extends TestCase {
 	
 	public void testReset() {
 		PartnerFilter partnerFilter = PartnerFilter.partnerFilterFactory(new User());
-		assertNull(partnerFilter.getPartnerNameLike());
+		partnerFilter.setPartnerNameLike("TEST");
 		partnerFilter.reset();
 		assertEquals("", partnerFilter.getPartnerNameLike());
 	}

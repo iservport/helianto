@@ -38,7 +38,7 @@ import org.helianto.core.Entity;
 @Table(name="core_category",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "categoryGroup", "categoryCode"})}
 )
-public class Category implements java.io.Serializable {
+public class Category implements java.io.Serializable, QueryEnabled {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -145,6 +145,25 @@ public class Category implements java.io.Serializable {
     public static String getCategoryNaturalIdQueryString() {
         return getCategoryQueryStringBuilder().append("where category.entity = ? and category.categoryGroup = ?  and category.categoryCode = ? ").toString();
     }
+
+    /**
+     * <code>Category</code> query alias.
+     */
+    @Transient
+	public String getObjectAlias() {
+		return "category";
+	}
+
+    /**
+     * <code>Category</code> natural id query.
+     */
+    @Transient
+	public String getNaturalIdQueryString(StringBuilder selectClause) {
+		return selectClause.append("where ")
+		.append(getObjectAlias()).append(".entity = ? and ")
+		.append(getObjectAlias()).append(".categoryGroup = ?  and ")
+		.append(getObjectAlias()).append(".categoryCode = ? ").toString();
+	}
 
     /**
      * toString

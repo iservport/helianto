@@ -21,6 +21,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 /**
@@ -43,43 +44,97 @@ public class Operation extends Process implements java.io.Serializable {
     }
 
     /**
-     * OperationType getter.
+     * Operation type.
      */
     public int getOperationType() {
         return this.operationType;
     }
-    /**
-     * OperationType setter.
-     */
     public void setOperationType(int operationType) {
         this.operationType = operationType;
     }
+    public void setOperationType(OperationType operationType) {
+        this.operationType = operationType.getValue();
+    }
 
     /**
-     * OperationTime getter.
+     * Operation time.
      */
     public long getOperationTime() {
         return this.operationTime;
     }
-    /**
-     * OperationTime setter.
-     */
     public void setOperationTime(long operationTime) {
         this.operationTime = operationTime;
     }
 
     /**
-     * Setups getter.
+     * Setups.
      */
     @OneToMany(mappedBy="operation", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public List<Setup> getSetups() {
         return this.setups;
     }
-    /**
-     * Setups setter.
-     */
     public void setSetups(List<Setup> setups) {
         this.setups = setups;
     }
+
+    /**
+     * <code>Operation</code> query <code>StringBuilder</code>.
+     */
+    @Transient
+    public static StringBuilder getOperationQueryStringBuilder() {
+        return new StringBuilder("select operation from Operation operation ");
+    }
+
+    /**
+     * <code>Operation</code> natural id query.
+     */
+    @Transient
+    public static String getOperationNaturalIdQueryString() {
+        return getOperationQueryStringBuilder().append("where process.entity = ? and operation.internalNumber = ? ").toString();
+    }
+    
+    //1.1
+    /**
+     * <code>Operation</code> component factory.
+     * 
+     * @param componentCode
+     * @param internalNumber
+     * @param sequence
+     */
+    public DocumentAssociation operationRequirementFactory(String componentCode, long internalNumber, int sequence) {
+    	DocumentAssociation documentAssociation = documentAssociationFactory(Part.class, componentCode, sequence);
+        return documentAssociation;
+    }
+
+    //1.2
+    /**
+     * <code>Operation</code> subprocess factory.
+     * 
+     * @param processCode
+     * @param internalNumber
+     * @param sequence
+     */
+    public DocumentAssociation operationProcessFactory(String processCode, long internalNumber, int sequence) {
+    	DocumentAssociation documentAssociation = documentAssociationFactory(Process.class, processCode, sequence);
+        return documentAssociation;
+    }
+
+    //1.3
+    /**
+     * <code>Operation</code> characteristic factory.
+     * 
+     * @param characteristicCode
+     * @param internalNumber
+     * @param sequence
+     */
+    public DocumentAssociation operationCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
+    	DocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
+        return documentAssociation;
+    }
+
+    public boolean equals(Object other) {
+		 if ( !(other instanceof Operation) ) return false;
+		 return super.equals(other);
+	}
 
 }

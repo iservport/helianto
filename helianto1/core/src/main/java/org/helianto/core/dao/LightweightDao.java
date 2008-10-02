@@ -15,98 +15,38 @@
 
 package org.helianto.core.dao;
 
-import java.io.Serializable;
 import java.util.Collection;
-import org.springframework.dao.DataAccessException;
 
 /**
- * A lightweight dao interface.
+ * A convenient sub-set of persistence operations.
  * 
- * @author Mauricio Fernandes de Castro
+ * @author Mauricio Fernandes de Castro.
  */
-public interface LightweightDao {
+public interface LightweightDao<T> {
 
     /**
-     * Retrieve an object from the datastore by id.
-     * @param clazz the object class.
-     * @param key the key to search for
-     * @return the object if found, or null.
-     * @throws org.springframework.dao.DataRetrievalFailureException if can't 
-     * connect to the datastore.
+     * Persist a managed object.
      */
-    public Object load(Class clazz, Serializable key)  throws DataAccessException ;
+    public void persist(T managedObject);
     
     /**
-     * Copies object state to datastore and make its
-     * instance persistent.
-     * 
-     * @param object
-     * @throws DataAccessException
+     * Merge an object into a persisted managed object.
      */
-    public void persist(Object object) throws DataAccessException ;
+    public T merge(T object);
     
     /**
-     * Copies object state to datastore and returns
-     * a persistent instance. The supplied instance remains
-     * detached.
-     * 
-     * @param object
-     * @throws DataAccessException
+     * Remove an object.
      */
-    public Object merge(Object object) throws DataAccessException ;
-
-    /**
-     * Removes instance from the session.
-     * 
-     * @param object
-     * @throws DataAccessException
-     */
-    public void remove(Object object) throws DataAccessException ;
+    public void remove(T object);
     
     /**
-     * Re-loads an object from datastore.
-     * 
-     * @param object
-     * @throws DataAccessException
+     * Find using natural keys.
      */
-    public void refresh(Object object) throws DataAccessException ;
+    public T findByNaturalId(T object, Object... uniqueKeys);
     
     /**
-     * True if session contains the object.
-     * 
-     * @param object
-     * @throws DataAccessException
+     * Find by criteria.
      */
-    public boolean contains(Object object) throws DataAccessException;
+    public Collection<T> find(T object, String criteria);
     
-    /**
-     * A method to return query results.
-     * 
-     * <p>
-     * Uses JSE 5.0 variable argument.
-     * </p>
-     * 
-     */
-    public Collection find(String query, Object... values) throws DataAccessException ;
-
-    /**
-     * A method to return query results.
-     * 
-     * <p>
-     * Uses JSE 5.0 variable argument.
-     * </p>
-     * 
-     */
-    public Collection find(StringBuilder query, Object... values) throws DataAccessException;
-    
-    /**
-     * A method to return a single object from query results.
-     * 
-     * <p>
-     * Uses JSE 5.0 variable argument.
-     * </p>
-     * 
-     */
-    public Object findUnique(String query, Object... values) throws DataAccessException ;
-
 }

@@ -15,9 +15,12 @@
 
 package org.helianto.process.orm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.helianto.process.ProcessDocument;
 import org.helianto.process.DocumentAssociation;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.dao.DocumentAssociationDao;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +32,20 @@ import org.springframework.stereotype.Repository;
 @Repository("documentAssociationDao")
 public class DocumentAssociationDaoImpl extends GenericDaoImpl implements DocumentAssociationDao {
      
+	public void persistDocumentAssociation(DocumentAssociation documentAssociation) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Persisting "+documentAssociation);
+        }
+		persist(documentAssociation);
+	}
+    
+	public DocumentAssociation mergeDocumentAssociation(DocumentAssociation documentAssociation) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Merging "+documentAssociation);
+        }
+		return (DocumentAssociation) merge(documentAssociation);
+	}
+
     public void removeDocumentAssociation(DocumentAssociation documentAssociation) {
         if (logger.isDebugEnabled()) {
             logger.debug("Removing "+documentAssociation);
@@ -42,6 +59,17 @@ public class DocumentAssociationDaoImpl extends GenericDaoImpl implements Docume
         }
         return (DocumentAssociation) findUnique(DocumentAssociation.getDocumentAssociationNaturalIdQueryString(), parent, child);
     }
-    
+
+	@SuppressWarnings("unchecked")
+	public List<DocumentAssociation> findDocumentAssociations(String criteria) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding process list with criteria ='"+criteria+"'");
+        }
+        if (criteria.equals("")) {
+            return (ArrayList<DocumentAssociation>) find(DocumentAssociation.getDocumentAssociationQueryStringBuilder());
+        }
+        return (ArrayList<DocumentAssociation>) find(new StringBuilder(DocumentAssociation.getDocumentAssociationQueryStringBuilder()).append("where ").append(criteria));
+	}
+
     
 }

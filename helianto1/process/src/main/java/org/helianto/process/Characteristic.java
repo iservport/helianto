@@ -17,14 +17,12 @@ package org.helianto.process;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
+
+import org.helianto.core.Unit;
 
 
 /**
@@ -34,64 +32,55 @@ import javax.persistence.UniqueConstraint;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="proc_char",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"documentId", "sequence"})}
-)
-public class Characteristic implements java.io.Serializable {
+@Table(name="proc_charac")
+public class Characteristic extends ProcessDocument {
 	
 	private static final long serialVersionUID = 1L;
-    private int id;
-	private ProcessDocument document;
-	private int sequence;
-	private String characteristicName;
+	private String nominalValue;
+	private Unit unit;
+	private char characteristicType;
 	private int classification;
 
     /** default constructor */
     public Characteristic() {
     }
     
-    // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     /**
-     * Document.
+     * Nominal value.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="documentId", nullable=true)
-	public ProcessDocument getDocument() {
-		return document;
+    @Column(length=20)
+	public String getNominalValue() {
+		return nominalValue;
 	}
-	public void setDocument(ProcessDocument document) {
-		this.document = document;
-	}
-
-    /**
-     * Sequence.
-     */
-	public int getSequence() {
-		return sequence;
-	}
-	public void setSequence(int sequence) {
-		this.sequence = sequence;
-	}
-
-    /**
-     * Characteristic name.
-     */
-	@Column(length=32)
-	public String getCharacteristicName() {
-		return characteristicName;
-	}
-	public void setCharacteristicName(String characteristicName) {
-		this.characteristicName = characteristicName;
+	public void setNominalValue(String nominalValue) {
+		this.nominalValue = nominalValue;
 	}
 	
+    /**
+     * Unit.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="unitId", nullable=true)
+	public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+
+    /**
+     * Type of characteristic.
+     */
+	public char getCharacteristicType() {
+		return characteristicType;
+	}
+	public void setCharacteristicType(char characteristicType) {
+		this.characteristicType = characteristicType;
+	}
+	public void setCharacteristicType(CharacteristicType characteristicType) {
+		this.characteristicType = characteristicType.getValue();
+	}
+
     /**
      * Classification.
      */
@@ -102,31 +91,17 @@ public class Characteristic implements java.io.Serializable {
         this.classification = classification;
     }
     
-    private static Characteristic internalCharacteristicFactory(ProcessDocument document, int sequence) {
-    	Characteristic characteristic = new Characteristic();
-        characteristic.setDocument(document);
-        characteristic.setSequence(sequence);
-        return characteristic;
-    }
-
+    //1.1
     /**
-     * <code>Characteristic</code> factory.
+     * <code>Characteristic</code> specification factory.
      * 
-     * @param part
+     * @param specificationCode
+     * @param internalNumber
      * @param sequence
      */
-    public static Characteristic characteristicFactory(Part part, int sequence) {
-        return internalCharacteristicFactory(part, sequence);
-    }
-
-    /**
-     * <code>Characteristic</code> factory.
-     * 
-     * @param process
-     * @param sequence
-     */
-    public static Characteristic characteristicFactory(Process process, int sequence) {
-        return internalCharacteristicFactory(process, sequence);
+    public DocumentAssociation characteristicSpecificationFactory(String specificationCode, long internalNumber, int sequence) {
+    	DocumentAssociation documentAssociation = documentAssociationFactory(Specification.class, specificationCode, sequence);
+        return documentAssociation;
     }
 
     /**
@@ -145,45 +120,13 @@ public class Characteristic implements java.io.Serializable {
         return getCharacteristicQueryStringBuilder().append("where characteristic.document = ? and characteristic.sequence = ? ").toString();
     }
 
-    /**
-     * toString
-     * @return String
-     */
-    @Override
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("document").append("='").append(getDocument()).append("' ");
-        buffer.append("sequence").append("='").append(getSequence()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
-    }
-
    /**
     * equals
     */
    @Override
    public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
          if ( !(other instanceof Characteristic) ) return false;
-         Characteristic castOther = (Characteristic) other; 
-         
-         return ((this.getDocument()==castOther.getDocument()) || ( this.getDocument()!=null && castOther.getDocument()!=null && this.getDocument().equals(castOther.getDocument()) ))
-         && (this.getSequence()==castOther.getSequence());
+         return super.equals(other);
    }
    
-   /**
-    * hashCode
-    */
-   @Override
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getDocument() == null ? 0 : this.getDocument().hashCode() );
-         result = 37 * result + (int) this.getSequence();
-         return result;
-   }   
-
 }

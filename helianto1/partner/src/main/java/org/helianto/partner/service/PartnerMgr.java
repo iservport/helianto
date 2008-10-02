@@ -17,6 +17,9 @@ package org.helianto.partner.service;
 
 import java.util.List;
 
+import org.helianto.partner.Address;
+import org.helianto.partner.Partner;
+import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 
@@ -43,8 +46,28 @@ public interface PartnerMgr {
     public void removePartnerRegistry(PartnerRegistry partnerRegistry);
 
     /**
-     * Find a <code>PartnerAssociation</code> list using text criteria.
+     * Find <code>Partner</code>.
      */
-    public List<PartnerRegistry> findPartnerRegistry(String partnerRegistrySearchString);
+	public List<? extends Partner> findPartners(PartnerFilter partnerFilter);
+
+    /**
+     * Write <code>Partner</code> to the datastore.
+     */
+	public PartnerRegistry storePartner(Partner partner);
+
+    /**
+     * Remove <code>Partner</code> from the datastore.
+     */
+	public void removePartner(Partner partner);
+
+    /**
+     * Write <code>Address</code> to the datastore.
+     */
+	public PartnerRegistry storeAddress(Address address);
+
+    /**
+     * REmove <code>Address</code> from the datastore.
+     */
+	public PartnerRegistry removeAddress(Address address);
 
 }

@@ -17,7 +17,7 @@ package org.helianto.core.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.dao.GenericDao;
+import org.helianto.core.dao.GenericHibernateDao;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -27,14 +27,14 @@ import org.springframework.beans.factory.annotation.Required;
  */
 public abstract class AbstractGenericService implements GenericService {
     
-    protected GenericDao genericDao;
+    protected GenericHibernateDao genericDao;
 
-    public GenericDao getGenericDao() {
+    public GenericHibernateDao getGenericDao() {
         return genericDao;
     }
 
     @Required
-    public void setGenericDao(GenericDao genericDao) {
+    public void setGenericDao(GenericHibernateDao genericDao) {
         this.genericDao = genericDao;
     }
     

@@ -17,6 +17,7 @@ package org.helianto.core.filter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.Entity;
 import org.helianto.core.orm.DefaultCategorySelectionStrategy;
 
 /**
@@ -32,8 +33,10 @@ public abstract class AbstractSelectionStrategy<T extends AbstractUserBackedCrit
 	 */
 	public final String createCriteriaAsString(T filter, String prefix) {
         CriteriaBuilder mainCriteriaBuilder = new CriteriaBuilder(prefix);
-        mainCriteriaBuilder.appendEntityFromUserBackedFilter(filter);
-        
+        if (filter.getUser()==null) {
+            throw new IllegalArgumentException("User required!");
+        }
+        appendEntityFilter(filter.getUser().getEntity(), mainCriteriaBuilder);
         preProcessFilter(filter, mainCriteriaBuilder);
         
         if (isSelection(filter)) {
@@ -51,6 +54,17 @@ public abstract class AbstractSelectionStrategy<T extends AbstractUserBackedCrit
         return mainCriteriaBuilder.getCriteriaAsString();
     }
 	
+    /**
+     * Append an <code>Entity</code> filter.
+     * 
+     * @param entity
+	 * @param mainCriteriaBuilder
+     */
+	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.appendSegment("entity.id", "=")
+        .append(entity.getId());
+    }
+    
 	/**
 	 * Filter pre-processor.
 	 * 
@@ -116,7 +130,7 @@ public abstract class AbstractSelectionStrategy<T extends AbstractUserBackedCrit
      * @param criteriaBuilder
      */
     protected void appendEqualFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent.length()>0) {
+    	if (fieldContent!=null && fieldContent.length()>0) {
             criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
             .appendString(fieldContent);
         }
@@ -144,7 +158,7 @@ public abstract class AbstractSelectionStrategy<T extends AbstractUserBackedCrit
      * @param criteriaBuilder
      */
     protected void appendLikeFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent.length()>0) {
+    	if (fieldContent!=null && fieldContent.length()>0) {
     		criteriaBuilder.appendAnd().appendSegment(fieldName, "like")
             .appendLike(fieldContent);
         }

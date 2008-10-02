@@ -16,22 +16,29 @@
 package org.helianto.process.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
+import org.helianto.core.Node;
+import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.service.PartnerMgrImpl;
+import org.helianto.process.Characteristic;
+import org.helianto.process.DocumentAssociation;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
 import org.helianto.process.Part;
 import org.helianto.process.Process;
+import org.helianto.process.ProcessDocument;
+import org.helianto.process.ProcessDocumentFilter;
 import org.helianto.process.ProcessFilter;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
+import org.helianto.process.dao.DocumentAssociationDao;
 import org.helianto.process.dao.ProcessDao;
-import org.helianto.process.dao.ProcessSelectionStrategy;
 
 /**
  * Default implementation of <code>ProcessMgr</code> interface.
@@ -41,8 +48,15 @@ import org.helianto.process.dao.ProcessSelectionStrategy;
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     private ProcessDao processDao;
-    private ProcessSelectionStrategy processSelectionStrategy;
+    private SelectionStrategy<ProcessFilter> processSelectionStrategy;
+    private DocumentAssociationDao documentAssociationDao;
     private SequenceMgr sequenceMgr;
+    
+    public List<Node> prepareTree(ProcessDocument processDocument) {
+    	ProcessNode root = new ProcessNode(processDocument);
+    	List<Node> processTree = sequenceMgr.prepareTree(root);
+    	return processTree;
+    }
 
 	public List<Process> findProcesses(ProcessFilter filter) {
 		String criteria = processSelectionStrategy.createCriteriaAsString(filter, "process");
@@ -64,27 +78,78 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 		return (Process) processDao.mergeProcessDocument(process);
 	}
 
-    @Deprecated
-	public Part createPart(Entity entity, boolean hasDrawing) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public DocumentAssociation storeDocumentAssociation(DocumentAssociation documentAssociation) {
+		return (DocumentAssociation) documentAssociationDao.mergeDocumentAssociation(documentAssociation);
+	}
 
-    public void associateParts(Part parent, Part child, double coefficient, int sequence) {
-        // TODO Auto-generated method stub
-        
-    }
+	public List<DocumentAssociation> findOperations(Process process) {
+		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(process);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created filter "+filter);
+        }
+		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
+		List<DocumentAssociation> operationList = documentAssociationDao.findDocumentAssociations(criteria);
+        if (logger.isDebugEnabled() && operationList.size()>0) {
+            logger.debug("Found "+operationList.size()+" item(s)");
+        }
+        return operationList ;
+	}
 
+	/**
+	 * Create a criteria string from a filter.
+	 * 
+	 * @param filter
+	 * @param prefix
+	 */
+	protected String createProcessDocumentCriteriaAsString(ProcessDocumentFilter filter, String prefix) {
+		return new StringBuilder()
+			.append(prefix)
+			.append(".parent.id=")
+			.append(filter.getDocument().getId())
+			.append(" order by ")
+			.append(prefix)
+			.append(".sequence ")
+			.toString();
+	}
+	
     public Process createProcess(Entity entity) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    public Operation createOperation(Process process) {
-        // TODO Auto-generated method stub
-        return null;
+    public DocumentAssociation prepareOperation(Process process) {
+    	return process.processOperationFactory("", 0, 0);
+    }
+    
+    public List<DocumentAssociation> findCharacteristics(Operation operation) {
+		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(operation);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created filter "+filter);
+        }
+		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
+		List<DocumentAssociation> characteristicList = documentAssociationDao.findDocumentAssociations(criteria);
+        if (logger.isDebugEnabled() && characteristicList.size()>0) {
+            logger.debug("Found "+characteristicList.size()+" item(s)");
+        }
+        return characteristicList ;
     }
 
+    public DocumentAssociation prepareCharacteristic(Operation operation) {
+    	Set<DocumentAssociation> characteristicSet = operation.getChildAssociations();
+        if (logger.isDebugEnabled() && characteristicSet.size()>0) {
+            logger.debug("Found "+characteristicSet.size()+" item(s) before insertion.");
+        }
+    	return operation.operationCharacteristicFactory("", 0, 0);
+    }
+    
+    public DocumentAssociation prepareSpecification(Characteristic characteristic) {
+    	Set<DocumentAssociation> specificationSet = characteristic.getChildAssociations();
+        if (logger.isDebugEnabled() && specificationSet.size()>0) {
+            logger.debug("Found "+specificationSet.size()+" item(s) before insertion.");
+        }
+    	return characteristic.characteristicSpecificationFactory("", 0, 0);
+    }
+    
     public Setup createSetupFactory(Operation operation, Resource resource) {
         // TODO Auto-generated method stub
         return null;
@@ -134,8 +199,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         // TODO Auto-generated method stub
         
     }
-
-    // collaborators  
+    
+    // collaborators  DocumentAssociationDao documentAssociationDao
 
     @javax.annotation.Resource
     public void setProcessDao(ProcessDao processDao) {
@@ -143,8 +208,13 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
 
     @javax.annotation.Resource(name="processSelectionStrategy")
-    public void setProcessSelectionStrategy(ProcessSelectionStrategy processSelectionStrategy) {
+    public void setProcessSelectionStrategy(SelectionStrategy<ProcessFilter> processSelectionStrategy) {
         this.processSelectionStrategy = processSelectionStrategy;
+    }
+
+    @javax.annotation.Resource
+    public void setDocumentAssociationDao(DocumentAssociationDao documentAssociationDao) {
+        this.documentAssociationDao = documentAssociationDao;
     }
 
     @javax.annotation.Resource

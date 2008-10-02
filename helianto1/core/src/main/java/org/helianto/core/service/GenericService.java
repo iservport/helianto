@@ -15,7 +15,7 @@
 
 package org.helianto.core.service;
 
-import org.helianto.core.dao.GenericDao;
+import org.helianto.core.dao.GenericHibernateDao;
 
 /**
  * A generic service interface.
@@ -27,11 +27,11 @@ public interface GenericService {
     /**
      * @return Returns the genericDao.
      */
-    public GenericDao getGenericDao();
+    public GenericHibernateDao getGenericDao();
 
     /**
      * @param genericDao The genericDao to set.
      */
-    public void setGenericDao(GenericDao genericDao);
+    public void setGenericDao(GenericHibernateDao genericDao);
     
 }

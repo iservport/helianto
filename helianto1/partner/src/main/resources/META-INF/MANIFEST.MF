@@ -2,6 +2,5 @@ Bundle-SymbolicName: org.helianto.partner.shared_services
 Bundle-Version: 0.2.20080913
 Bundle-Name: Helianto partner module
 Bundle-Vendor: i-Serv Consultoria Empresarial
-Import-Bundle: com.springsource.org.apache.commons.logging,
- org.helianto.core
+Import-Bundle: com.springsource.org.apache.commons.logging
 Import-Library: org.springframework.spring

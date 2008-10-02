@@ -43,7 +43,6 @@ public class ProcessDocument extends Document implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private Set<DocumentAssociation> parentAssociations = new HashSet<DocumentAssociation>();
     private Set<DocumentAssociation> childAssociations = new HashSet<DocumentAssociation>();
-    private Set<Characteristic> characteristics = new HashSet<Characteristic>();
 
     /** default constructor */
     public ProcessDocument() {
@@ -52,7 +51,7 @@ public class ProcessDocument extends Document implements java.io.Serializable {
     /**
      * ParentAssociations getter.
      */
-    @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="child", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<DocumentAssociation> getParentAssociations() {
         return this.parentAssociations;
     }
@@ -63,7 +62,7 @@ public class ProcessDocument extends Document implements java.io.Serializable {
     /**
      * ChildAssociations getter.
      */
-    @OneToMany(mappedBy="child", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<DocumentAssociation> getChildAssociations() {
         return this.childAssociations;
     }
@@ -71,17 +70,7 @@ public class ProcessDocument extends Document implements java.io.Serializable {
         this.childAssociations = childAssociations;
     }
 
-    /**
-     * Characteristics.
-     */
-    @OneToMany(mappedBy="document", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    public Set<Characteristic> getCharacteristics() {
-        return this.characteristics;
-    }
-    public void setCharacteristics(Set<Characteristic> characteristics) {
-        this.characteristics = characteristics;
-    }
-
+    //1.1
     /**
      * <code>ProcessDocument</code> factory.
      * 
@@ -89,23 +78,26 @@ public class ProcessDocument extends Document implements java.io.Serializable {
      * @param docCode
      */
     public static ProcessDocument processDocumentFactory(Entity entity, String docCode) {
-        return documentFactory(ProcessDocument.class, entity, docCode);
+        return Document.documentFactory(ProcessDocument.class, entity, docCode);
     }
 
+    //1.2
     /**
-     * <code>Document</code> general factory.
+     * <code>ProcessDocument</code> general factory.
+     * 
+     * <p>
+     * Create a new child <code>ProcessDocument</code> and a new
+     * <code>DocumentAssociation</code> to contain it.
+     * </p>
      * 
      * @param clazz
-     * @param parent
      * @param docCode
-     * @param associationType
+     * @param sequence
      */
-    public static <T extends ProcessDocument> T documentFactory(Class<T> clazz, ProcessDocument parent, String docCode, double coefficient, AssociationType associationType) {
-        T document = documentFactory(clazz, parent.getEntity(), docCode);
-        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(parent, document);
-        association.setCoefficient(coefficient);
-        association.setAssociationType(associationType.getValue());
-        return document;
+    protected <T extends ProcessDocument> DocumentAssociation documentAssociationFactory(Class<T> childClazz, String childCode, int sequence) {
+    	ProcessDocument document = ProcessDocument.documentFactory(childClazz, getEntity(), childCode);
+        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(this, document, sequence);
+        return association;
     }
 
     /**

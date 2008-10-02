@@ -89,6 +89,7 @@ public class CriteriaBuilder {
      * <code>IllegalArgumentException</code>.
      * 
      * @param filter
+     * @deprecated
      */
     public CriteriaBuilder appendEntityFromUserBackedFilter(UserBackedFilter filter) {
         if (filter.getUser()==null) {

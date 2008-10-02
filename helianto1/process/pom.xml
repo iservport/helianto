@@ -4,12 +4,12 @@
 	<parent>
 		<artifactId>helianto</artifactId>
 		<groupId>org.helianto</groupId>
-		<version>0.2.20080913</version>
+		<version>0.2.1-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-process</artifactId>
-	<version>0.2.20080913</version>
+	<version>0.2.1-SNAPSHOT</version>
 	<name>Process</name>
 	
 	<description>Helianto project process module.</description>

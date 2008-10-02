@@ -15,9 +15,11 @@
 
 package org.helianto.process.dao;
 
+import java.util.List;
+
 import org.helianto.core.dao.CommonOrmDao;
-import org.helianto.process.ProcessDocument;
 import org.helianto.process.DocumentAssociation;
+import org.helianto.process.ProcessDocument;
 
 
 /**
@@ -28,6 +30,16 @@ import org.helianto.process.DocumentAssociation;
 public interface DocumentAssociationDao extends CommonOrmDao {
      
     /**
+     * Persist <code>DocumentAssociation</code>.
+     */
+    public void persistDocumentAssociation(DocumentAssociation documentAssociation);
+    
+    /**
+     * Merge <code>DocumentAssociation</code>.
+     */
+    public DocumentAssociation mergeDocumentAssociation(DocumentAssociation documentAssociation);
+    
+    /**
      * Remove <code>DocumentAssociation</code>.
      */
     public void removeDocumentAssociation(DocumentAssociation documentAssociation);
@@ -36,6 +48,11 @@ public interface DocumentAssociationDao extends CommonOrmDao {
      * Find <code>DocumentAssociation</code> by <code>Document</code> and <code>Document</code>.
      */
     public DocumentAssociation findDocumentAssociationByNaturalId(ProcessDocument parent, ProcessDocument child);
+    
+    /**
+     * Find <code>DocumentAssociation</code> list.
+     */
+    public List<DocumentAssociation> findDocumentAssociations(String criteria);
     
     
     

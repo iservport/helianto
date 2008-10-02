@@ -15,10 +15,13 @@
 
 package org.helianto.core.service;
 
+import java.util.List;
+
+import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
 
 /**
- * A service to create sequences.
+ * A service to create sequences and trees.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -33,5 +36,12 @@ public interface SequenceMgr {
 	 * @param sequenceable
 	 */
 	public void validateInternalNumber(Sequenceable sequenceable);
+	
+	/**
+	 * Create a tree.
+	 * 
+	 * @param root
+	 */
+	public List<Node> prepareTree(Node root);
 	
 }

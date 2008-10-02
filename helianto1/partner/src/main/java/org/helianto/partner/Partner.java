@@ -75,6 +75,10 @@ public class Partner implements java.io.Serializable {
     public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
         this.partnerRegistry = partnerRegistry;
     }
+    @Transient
+    public String getPartnerAlias() {
+    	return getPartnerRegistry().getPartnerAlias();
+    }
 
     /**
      * Account.
@@ -99,7 +103,7 @@ public class Partner implements java.io.Serializable {
     }
 
     /**
-     * PartnerState getter.
+     * Partner state.
      */
     public char getPartnerState() {
         return this.partnerState;

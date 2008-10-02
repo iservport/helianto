@@ -17,8 +17,8 @@ public class DocumentAssociationTests extends TestCase {
      * Test <code>DocumentAssociation</code> static factory method.
      */
     public void testDocumentAssociationFactory() {
-        ProcessDocument parent = new ProcessDocument();
-        ProcessDocument child = new ProcessDocument();
+        ProcessDocument parent = new Part();
+        ProcessDocument child = new Part();
         
         DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child);
         
@@ -33,8 +33,8 @@ public class DocumentAssociationTests extends TestCase {
      * Test <code>DocumentAssociation</code> equals() method.
      */
     public void testDocumentAssociationEquals() {
-        ProcessDocument parent = new ProcessDocument();
-        ProcessDocument child = new ProcessDocument();
+        ProcessDocument parent = new Part();
+        ProcessDocument child = new Part();
         
         DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child);
         DocumentAssociation copy = (DocumentAssociation) DomainTestSupport.minimalEqualsTest(documentAssociation);

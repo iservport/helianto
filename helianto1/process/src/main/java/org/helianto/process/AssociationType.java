@@ -11,39 +11,62 @@ package org.helianto.process;
 public enum AssociationType {
     
     /**
-     * A characteristic should have a specification for 
-     * each process development phase.
-     * 
-     * <p>The specification is the natural descendant of a
-     * characteristic.</p>
-     * 
-     * <p>The specification should be also descendant of a 
-     * control plan to provide for phase resolution.</p>
-     * 
+     * Association to a component of a part.
      */
-    CHARACTERISTIC_SPECIFICATION('A'),
+    PART_PART('A', Part.class, Part.class, true),
+    
     /**
-     * A control plan may have a specification.
-     * 
-     * <p>The specification may be a descendant of a
-     * characteristic since it is also descendant of a 
-     * charcteristic.</p>
+     * Association to a child process appropriate to manufacture 
+     * to manufacture the parent part.
      */
-    CONTROLPLAN_SPECIFICATION('B'),
+    PART_PROCESS('B', Part.class, Process.class, true),
+    
     /**
-     * An operation may have characteristics.
+     * Association to a characterisitic that describes a part.
      * 
-     * <p>The specification is the natural descendant of an
-     * operation that includes inspection.</p>
      */
-    OPERATION_CHARACTERISTIC('C'),
+    PART_CHARACTERISTIC('C', Part.class, Characteristic.class, true),
+
     /**
-     * An operation may have associated parts.
+     * The association is part to specification.
      * 
-     * <p>A part may be a descendant of an
-     * operation.</p>
+     * <p>If a specification is a descendant of a part, it should be 
+     * later associated with a characterisitic.</p>
      */
-    OPERATION_PART('D'),
+    PART_SPECIFICATION('D', Part.class, Characteristic.class, true),
+    
+    /**
+     * Direct association to a part required by a process.
+     * 
+     * <p>
+     * Not recommended: parts required by a process should be 
+     * associated using operations and the corresponding 
+     * OPERATION_PART association.
+     * </p>
+     */
+    PROCESS_PART('E', Process.class, Part.class, false),
+    
+    /**
+     * Association to an operation describing a process.
+     * 
+     */
+    PROCESS_OPERATION('F', Process.class, Operation.class, true),
+    
+    /**
+     * Association to a control plan of a process.
+     */
+    PROCESS_CONTROLPLAN('G', Process.class, ControlPlan.class, true),
+
+    /**
+     * Association to a required component within a process operation.
+     */
+    OPERATION_PART('H', Operation.class, Part.class, true),
+
+    /**
+     * Association to a required sub-process within a process operation.
+     */
+    OPERATION_PROCESS('I', Operation.class, Process.class, true),
+
     /**
      * An operation may have specifications.
      * 
@@ -51,56 +74,64 @@ public enum AssociationType {
      * operation since it is also descendant of a 
      * charcteristic.</p>
      */
-    OPERATION_SPECIFICATION('E'),
+    OPERATION_SPECIFICATION('J', Operation.class, Specification.class, true),
+    
     /**
-     * The association is part to characterisitic.
+     * Association to a required characteristic within a process operation.
+     */
+    OPERATION_CHARACTERISTIC('K', Operation.class, Characteristic.class, true),
+    
+    /**
+     * A characteristic should have a specification for 
+     * each process development phase.
      * 
-     * <p>If a characterisitic is a descendant of a part, it should be 
-     * later associated with one or more processes.</p>
      */
-    PART_CHARACTERISTIC('F'),
+    CHARACTERISTIC_SPECIFICATION('L', Characteristic.class, Specification.class, true),
+    
     /**
-     * The association is part to a component part.
-     */
-    PART_PART('G'),
-    /**
-     * The association is part to process.
-     */
-    PART_PROCESS('H'),
-    /**
-     * The association is part to specification.
+     * A control plan may have a specification.
      * 
-     * <p>If a specification is a descendant of a part, it should be 
-     * later associated with a characterisitic.</p>
      */
-    PART_SPECIFICATION('I'),
-    /**
-     * The association is process to control plan.
-     */
-    PROCESS_CONTROLPLAN('J'),
-    /**
-     * The association is process to operation.
-     * 
-     * <p>The operation is the natural descendant of a
-     * process.</p>
-     */
-    PROCESS_OPERATION('K'),
-    /**
-     * The association is process to part.
-     * 
-     * <p>Such associations allow the creation of process
-     * families.</p>
-     */
-    PROCESS_PART('L');
+    CONTROLPLAN_SPECIFICATION('M', ControlPlan.class, Specification.class, true);
+    
     
     private char value;
+    private Class<ProcessDocument> parentType;
+    private Class<ProcessDocument> childType;
+    private boolean recommended;
     
-    private AssociationType(char value) {
+    @SuppressWarnings("unchecked")
+	private AssociationType(char value, Class parentType, Class childType, boolean recommended) {
+        this.value = value;
+        this.parentType = parentType;
+        this.childType = childType;
         this.value = value;
     }
     
     public char getValue() {
         return value;
+    }
+
+    public boolean isRecommended() {
+        return recommended;
+    }
+    
+    /**
+     * Resolve the <code>AssociationType</code> from given association
+     * classes.
+     * 
+     * @param parentType
+     * @param childType
+     */
+    @SuppressWarnings("unchecked")
+	public static AssociationType resolveAssociationType(Class parentType, Class childType) {
+    	for (AssociationType associationType: AssociationType.values()) {
+    		if (associationType.parentType.equals(parentType) 
+    				&& associationType.childType.equals(childType)) {
+    			return associationType;
+    		}
+    	}
+    	return null;
     }
 
 }

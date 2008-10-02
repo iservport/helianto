@@ -32,7 +32,6 @@ public class SpecificationLimit  implements java.io.Serializable {
 	private BigDecimal leftLimit;
     private BigDecimal rightLimit;
     private BigDecimal nominalValue;
-    private int specificationType;
 
 
     /** default constructor */
@@ -59,13 +58,6 @@ public class SpecificationLimit  implements java.io.Serializable {
     public void setNominalValue(BigDecimal nominalValue) {
         this.nominalValue = nominalValue;
     }
-
-    public int getSpecificationType() {
-        return this.specificationType;
-    }    
-    public void setSpecificationType(int specificationType) {
-        this.specificationType = specificationType;
-    }
     
     /**
 	 * Factory method.
@@ -74,12 +66,11 @@ public class SpecificationLimit  implements java.io.Serializable {
 	 * @param rightLimit
 	 * @param nominalValue
 	 */
-    public SpecificationLimit specificationLimitFactory(BigDecimal leftLimit, BigDecimal rightLimit, BigDecimal nominalValue, int specificationType) {
+    public SpecificationLimit specificationLimitFactory(BigDecimal leftLimit, BigDecimal rightLimit, BigDecimal nominalValue) {
     	SpecificationLimit specificationLimit = new SpecificationLimit();
     	specificationLimit.setLeftLimit(leftLimit);
     	specificationLimit.setRightLimit(rightLimit);
     	specificationLimit.setNominalValue(nominalValue);
-    	specificationLimit.setSpecificationType(specificationType);
     	return specificationLimit;
     }
     

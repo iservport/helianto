@@ -26,8 +26,7 @@ import org.springframework.test.AbstractTransactionalSpringContextTests;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractIntegrationTest extends
-    AbstractTransactionalSpringContextTests {
+public abstract class AbstractIntegrationTest extends AbstractTransactionalSpringContextTests {
 
     /**
      * Generate a not repeatable key.

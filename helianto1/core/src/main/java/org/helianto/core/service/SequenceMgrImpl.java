@@ -15,12 +15,15 @@
 
 package org.helianto.core.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
+import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SequenceMgrImpl implements SequenceMgr {
 	
 	private InternalEnumeratorDao internalEnumeratorDao;
+	private TreeBuilder treeBuilder;
 
 	@Transactional(readOnly=false)
 	public void validateInternalNumber(Sequenceable sequenceable) {
@@ -73,6 +77,11 @@ public class SequenceMgrImpl implements SequenceMgr {
         }
     }
     
+	public List<Node> prepareTree(Node root) {
+		treeBuilder.buildTree(root);
+		return treeBuilder.getTree();
+	}
+
     // collabs
     
 	@Resource
@@ -80,6 +89,11 @@ public class SequenceMgrImpl implements SequenceMgr {
 		this.internalEnumeratorDao = internalEnumeratorDao;
 	}
     
+	@Resource
+	public void setTreeBuilder(TreeBuilder treeBuilder) {
+		this.treeBuilder = treeBuilder;
+	}
+
 	private static final Log logger = LogFactory.getLog(SequenceMgrImpl.class);
 
 }

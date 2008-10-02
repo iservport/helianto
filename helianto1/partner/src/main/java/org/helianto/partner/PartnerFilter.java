@@ -29,7 +29,7 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	
 	private static final long serialVersionUID = 1L;
 	private Class<? extends Partner> clazz = Partner.class;
-	private String partnerNameLike;
+	private String partnerNameLike = "";
 	private char partnerState;
 	private char priority = '0';
 

@@ -9,6 +9,8 @@
 		<mapping class="org.helianto.process.DocumentAssociation" />
 		<mapping class="org.helianto.process.Part" />
 		<mapping class="org.helianto.process.Process" />
+		<mapping class="org.helianto.process.Setup" />
+		<mapping class="org.helianto.process.Operation" />
 		<mapping class="org.helianto.process.Cause" />
 		<mapping class="org.helianto.process.ResourceGroup" />
 		<mapping class="org.helianto.process.Resource" />

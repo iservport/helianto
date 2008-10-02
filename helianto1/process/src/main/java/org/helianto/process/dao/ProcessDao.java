@@ -90,6 +90,8 @@ public interface ProcessDao {
     
     public List<Operation> findOperationByProcess(Entity entity);
 
+    public List<Operation> findOperations(String criteria);
+
     public List<Setup> findSetupByEntity(Entity entity);
     
     /**

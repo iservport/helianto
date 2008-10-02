@@ -3,13 +3,12 @@ Bundle-SymbolicName: org.helianto.core.shared_services
 Bundle-Version: 0.2.20080913
 Bundle-Name: Helianto core module
 Bundle-Vendor: i-Serv Consultoria Empresarial
-Import-Library: org.hibernate.ejb;version="[3.3.1.ga,3.3.1.ga]",
- org.springframework.spring;version="[2.5.5.A,2.5.5.A]"
+Import-Library: org.hibernate.ejb;version="[3.3.1.ga,3.3.1.ga]"
 Import-Bundle: com.springsource.org.apache.commons.dbcp;version="[1.2.2.osgi,1.2.2.osgi]",
  com.springsource.org.hsqldb;version="1.8.0.9",
  com.springsource.org.apache.commons.logging;version="[1.1.1,2.0.0)",
  com.springsource.javax.mail,
- org.springframework.security
+ org.springframework.security;version="[2.0.2.A,3.0.0)"
 Provide-Package: org.helianto.core,
  org.helianto.core.creation,
  org.helianto.core.dao,

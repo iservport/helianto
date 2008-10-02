@@ -51,17 +51,12 @@ public class Process extends ProcessDocument implements java.io.Serializable, Se
  
     /**
      * Internal number.
-     * <p>Process <code>DocCode</code> is immediately re-generated as
-     * "PRC#" followed by the internal number.
-     * </p>
      */
     public long getInternalNumber() {
         return this.internalNumber;
     }
     public void setInternalNumber(long internalNumber) {
         this.internalNumber = internalNumber;
-        StringBuilder prefix = new StringBuilder("PRC#");
-        setDocCode(prefix.append(internalNumber).toString());
     }
     
     /**
@@ -71,23 +66,65 @@ public class Process extends ProcessDocument implements java.io.Serializable, Se
     public List<Operation> getOperations() {
     	List<Operation> operations = new ArrayList<Operation>();
     	for (DocumentAssociation documentAssociation: this.getChildAssociations()) {
-    		if (documentAssociation.getAssociationType()==AssociationType.PROCESS_OPERATION.getValue()) {
+    		if (documentAssociation.getChild() instanceof Operation) {
     			operations.add((Operation) documentAssociation.getChild());
     		}
     	}
     	return operations;
     }
     
+    //1.1
     /**
      * <code>Process</code> factory.
      * 
      * @param entity
+     * @param processCode
      * @param internalNumber
      */
-    public static Process processFactory(Entity entity, long internalNumber) {
-    	Process process = documentFactory(Process.class, entity, "");
+    public static Process processFactory(Entity entity, String processCode, long internalNumber) {
+    	Process process = documentFactory(Process.class, entity, processCode);
     	process.setInternalNumber(internalNumber);
     	return process;
+    }
+
+    //1.2
+    /**
+     * <code>Process</code> operation factory.
+     * 
+     * @param operationCode
+     * @param internalNumber
+     * @param sequence
+     */
+    public DocumentAssociation processOperationFactory(String operationCode, long internalNumber, int sequence) {
+    	DocumentAssociation documentAssociation = documentAssociationFactory(Operation.class, operationCode, sequence);
+        return documentAssociation;
+    }
+
+    //1.3
+    /**
+     * <code>Process</code> characteristic factory.
+     * 
+     * @param characteristicCode
+     * @param internalNumber
+     * @param sequence
+     */
+    public DocumentAssociation processCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
+    	DocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
+        return documentAssociation;
+    }
+
+    //1.4
+    /**
+     * <code>Process</code> control plan factory.
+     * 
+     * @param controlPlanCode
+     * @param internalNumber
+     * @param phase
+     */
+    public DocumentAssociation processControlPlanFactory(String controlPlanCode, long internalNumber, ProcessPhase phase) {
+    	DocumentAssociation documentAssociation = documentAssociationFactory(ControlPlan.class, controlPlanCode, phase.getValue());
+    	((ControlPlan) documentAssociation.getChild()).setPhase(phase);
+    	return documentAssociation;
     }
 
     /**

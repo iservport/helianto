@@ -18,12 +18,13 @@ package org.helianto.process.service;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Node;
 import org.helianto.partner.service.PartnerMgr;
-import org.helianto.process.ExternalDocument;
-import org.helianto.process.MaterialType;
+import org.helianto.process.Characteristic;
+import org.helianto.process.DocumentAssociation;
 import org.helianto.process.Operation;
-import org.helianto.process.Part;
 import org.helianto.process.Process;
+import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessFilter;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
@@ -31,9 +32,36 @@ import org.helianto.process.Setup;
 /**
  * <code>ProcessMgr</code> interface.
  * 
+ * <p>
+ * Usual process requirements may be signifcantly different depending on 
+ * application area. For instance, a business model may require one process per part
+ * and have operations that are most likely unique to that process, while 
+ * a different model should allow zero or more parts to be attached to a previously
+ * existing process. In addition, process details may be described in many ways,
+ * including control plans and characteristics.
+ * </p>
+ * 
+ * <p>
+ * This process interface is designed to provide services including methods either to hide
+ * or to expose such complexity at the user discretion. Presentation layer calls may be targeted
+ * at one of the correspondent overloaded methods according to the business model required by
+ * the business model. It relies on the hierarchy of the
+ * <code>ProcessDocument</code> class, where parts, processes, operations, characteristics
+ * and control plans are its descendants and may be related to each other through the
+ * <code>DocumentAssociation</code> hierarchy.
+ * </p>
+ * <p></p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 public interface ProcessMgr extends PartnerMgr {
+	
+	/**
+	 * Create a process node tree.
+	 * 
+	 * @param processDocument
+	 */
+	public List<Node> prepareTree(ProcessDocument processDocument);
 
     /**
      * Find processes.
@@ -41,29 +69,44 @@ public interface ProcessMgr extends PartnerMgr {
     public List<Process> findProcesses(ProcessFilter filter);
     
     /**
-     * Store process.
-     */
-    public Process storeProcess(Process process);
-    
-    /**
-     * Part factory method.
-     */
-    public Part createPart(Entity entity, boolean hasDrawing);
-    
-    /**
-     * Part association method.
-     */
-    public void associateParts(Part parent, Part child, double coefficient, int sequence);
-    
-    /**
      * Process factory method.
      */
     public Process createProcess(Entity entity);
     
     /**
-     * Operation factory method.
+     * Store process.
      */
-    public Operation createOperation(Process process);
+    public Process storeProcess(Process process);
+    
+    /**
+     * Find associations having child operations for a process.
+     */
+    public List<DocumentAssociation> findOperations(Process process);
+    
+    /**
+     * Associated operation creation.
+     */
+    public DocumentAssociation prepareOperation(Process process);
+    
+    /**
+     * Find characteristics.
+     */
+    public List<DocumentAssociation> findCharacteristics(Operation operation);
+    
+    /**
+     * Associated characteristic creation.
+     */
+    public DocumentAssociation prepareCharacteristic(Operation operation);
+    
+    /**
+     * Associated specification creation.
+     */
+    public DocumentAssociation prepareSpecification(Characteristic characteristic);
+    
+    /**
+     * Store document associations.
+     */
+    public DocumentAssociation storeDocumentAssociation(DocumentAssociation documentAssociation);
     
     /**
      * Setup factory method.
@@ -71,53 +114,8 @@ public interface ProcessMgr extends PartnerMgr {
     public Setup createSetupFactory(Operation operation, Resource resource);
     
     /**
-     * Persist an <code>ExternalDocument</code>.
-     */
-    public void persistExternalDocument(ExternalDocument externalDocument);
-    
-    /**
-     * Persist a <code>Material</code>.
-     */
-    public void persistMaterial(MaterialType material);
-    
-    /**
-     * Persist a <code>Part</code>.
-     */
-    public void persistPart(Part part);
-    
-    /**
-     * Persist a <code>Process</code>.
-     */
-    public void persistProcess(Process process);
-    
-    /**
-     * Persist an <code>Operation</code>.
-     */
-    public void persistOperation(Operation operation);
-    
-    /**
      * Persist an <code>Setup</code>.
      */
     public void persistSetup(Setup setup);
-    
-    /**
-     * Find <code>ExternalDocument</code> by <code>Entity</code> and code.
-     */
-    public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode);
-    
-    /**
-     * Find <code>ExternalDocument</code> list for this <code>Entity</code>
-     */
-    public List<ExternalDocument> findExternalDocumentByEntity(Entity entity);
-
-    /**
-     * Find <code>ExternalDocument</code> list for this <code>Entity</code> where parent is null.
-     */
-    public List<ExternalDocument> findExternalDocumentRootByEntity(Entity entity);
-
-    /**
-     * Find <code>ExternalDocument</code> list for the parent.
-     */
-    public List<ExternalDocument> findExternalDocumentByParent(ExternalDocument parent);
     
 }

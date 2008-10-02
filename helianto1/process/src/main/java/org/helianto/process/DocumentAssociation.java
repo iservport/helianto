@@ -16,15 +16,15 @@
 package org.helianto.process;
 
 import javax.persistence.CascadeType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
+
+import org.helianto.core.AbstractAssociation;
 /**
  * <p>
  * Represents a <code>DocumentAssociation</code>.  
@@ -35,113 +35,59 @@ import javax.persistence.Version;
 @Table(name="proc_documentAssoc",
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
-public class DocumentAssociation implements java.io.Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class DocumentAssociation extends AbstractAssociation<ProcessDocument, ProcessDocument> {
 
     private static final long serialVersionUID = 1L;
-    private int id;
-    private ProcessDocument parent;
-    private ProcessDocument child;
-    private int version;
-    private int sequence;
     private char associationType;
     private double coefficient;
 
-    /** default constructor */
+	/** default constructor */
     public DocumentAssociation() {
     }
 
-    // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     /**
-     * Parent getter.
+     * Parent document.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="parentId", nullable=true)
     public ProcessDocument getParent() {
         return this.parent;
     }
-    /**
-     * Parent setter.
-     */
-    public void setParent(ProcessDocument parent) {
-        this.parent = parent;
-    }
 
     /**
-     * Child getter.
+     * Child document.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="childId", nullable=true)
     public ProcessDocument getChild() {
         return this.child;
     }
-    /**
-     * Child setter.
-     */
-    public void setChild(ProcessDocument child) {
-        this.child = child;
-    }
 
     /**
-     * Version getter.
-     */
-    @Version
-    public int getVersion() {
-        return this.version;
-    }
-    /**
-     * Version setter.
-     */
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    /**
-     * Sequence getter.
-     */
-    public int getSequence() {
-        return this.sequence;
-    }
-    /**
-     * Sequence setter.
-     */
-    public void setSequence(int sequence) {
-        this.sequence = sequence;
-    }
-
-    /**
-     * AssociationType getter.
+     * Association type.
      */
     public char getAssociationType() {
         return this.associationType;
     }
-    /**
-     * AssociationType setter.
-     */
     public void setAssociationType(char associationType) {
         this.associationType = associationType;
     }
+    public void setAssociationType(AssociationType associationType) {
+        this.associationType = associationType.getValue();
+    }
 
     /**
-     * Coefficient getter.
+     * Coefficient.
      */
     public double getCoefficient() {
         return this.coefficient;
     }
-    /**
-     * Coefficient setter.
-     */
     public void setCoefficient(double coefficient) {
         this.coefficient = coefficient;
     }
 
+    //1.1
     /**
      * <code>DocumentAssociation</code> factory.
      * 
@@ -149,12 +95,38 @@ public class DocumentAssociation implements java.io.Serializable {
      * @param child
      */
     public static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child) {
+        return DocumentAssociation.documentAssociationFactory(parent, child, 0);
+    }
+
+    //1.2
+    /**
+     * <code>DocumentAssociation</code> factory.
+     * 
+     * @param parent
+     * @param child
+     * @param sequence
+     */
+    protected static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, int sequence) {
+    	AssociationType associationType = AssociationType.resolveAssociationType(parent.getClass(), child.getClass());
+    	if (associationType==null) {
+    		throw new IllegalArgumentException("Invalid association");
+    	}
         DocumentAssociation documentAssociation = new DocumentAssociation();
         documentAssociation.setParent(parent);
         documentAssociation.setChild(child);
         parent.getChildAssociations().add(documentAssociation);
         child.getParentAssociations().add(documentAssociation);
+        documentAssociation.setSequence(sequence);
+        documentAssociation.setAssociationType(associationType);
         return documentAssociation;
+    }
+
+    /**
+     * <code>Process</code> query <code>StringBuilder</code>.
+     */
+    @Transient
+    public static StringBuilder getDocumentAssociationQueryStringBuilder() {
+        return new StringBuilder("select documentAssociation from DocumentAssociation documentAssociation ");
     }
 
     /**
@@ -162,9 +134,9 @@ public class DocumentAssociation implements java.io.Serializable {
      */
     @Transient
     public static String getDocumentAssociationNaturalIdQueryString() {
-        return "select documentAssociation from DocumentAssociation documentAssociation where documentAssociation.parent = ? and documentAssociation.child = ? ";
+        return getDocumentAssociationQueryStringBuilder().append("where documentAssociation.parent = ? and documentAssociation.child = ? ").toString();
     }
-
+    
     /**
      * toString
      * @return String
@@ -175,6 +147,8 @@ public class DocumentAssociation implements java.io.Serializable {
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
         buffer.append("parent").append("='").append(getParent()).append("' ");
         buffer.append("child").append("='").append(getChild()).append("' ");
+        buffer.append("sequence").append("='").append(getSequence()).append("' ");
+        buffer.append("associationType").append("='").append(getAssociationType()).append("' ");
         buffer.append("]");
       
         return buffer.toString();
@@ -184,23 +158,8 @@ public class DocumentAssociation implements java.io.Serializable {
     * equals
     */
    public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
          if ( !(other instanceof DocumentAssociation) ) return false;
-         DocumentAssociation castOther = (DocumentAssociation) other; 
-         
-         return ((this.getParent()==castOther.getParent()) || ( this.getParent()!=null && castOther.getParent()!=null && this.getParent().equals(castOther.getParent()) ))
-             && ((this.getChild()==castOther.getChild()) || ( this.getChild()!=null && castOther.getChild()!=null && this.getChild().equals(castOther.getChild()) ));
+         return super.equals(other);
    }
    
-   /**
-    * hashCode
-    */
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getParent() == null ? 0 : this.getParent().hashCode() );
-         result = 37 * result + ( getChild() == null ? 0 : this.getChild().hashCode() );
-         return result;
-   }   
-
 }

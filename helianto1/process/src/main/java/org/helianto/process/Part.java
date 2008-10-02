@@ -89,38 +89,29 @@ public class Part extends ProcessDocument implements java.io.Serializable {
 
     //1.2
     /**
-     * <code>Part</code> factory.
+     * <code>Part</code> component factory.
      * 
-     * @param parent
-     * @param docCode
+     * @param componentCode
+     * @param sequence
      * @param coefficient
      */
-    public static Part partFactory(Part parent, String docCode, double coefficient) {
-        return (Part) documentFactory(Part.class, parent, docCode, coefficient, AssociationType.PART_PART);
+    public DocumentAssociation partComponentFactory(String componentCode, int sequence, double coefficient) {
+    	DocumentAssociation documentAssociation = documentAssociationFactory(Part.class, componentCode, sequence);
+    	documentAssociation.setCoefficient(coefficient);
+        return documentAssociation;
     }
 
     //1.3
     /**
-     * <code>Part</code> factory.
+     * <code>Part</code> characteristic factory.
      * 
-     * @param parent
-     * @param docCode
-     * @param coefficient
+     * @param characteristicCode
+     * @param sequence
      */
-    public static Part partFactory(Operation parent, String docCode, double coefficient) {
-        return (Part) documentFactory(Part.class, parent, docCode, coefficient, AssociationType.OPERATION_PART);
-    }
-
-    //1.4
-    /**
-     * <code>Part</code> factory.
-     * 
-     * @param parent
-     * @param docCode
-     * @param coefficient
-     */
-    public static Part partFactory(Process parent, String docCode, double coefficient) {
-        return (Part) documentFactory(Part.class, parent, docCode, coefficient, AssociationType.PROCESS_PART);
+    public DocumentAssociation partCharacteristicFactory(String characteristicCode, int sequence) {
+    	DocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
+    	((Characteristic) documentAssociation.getChild()).setCharacteristicType(CharacteristicType.PRODUCT);
+        return documentAssociation;
     }
 
     /**

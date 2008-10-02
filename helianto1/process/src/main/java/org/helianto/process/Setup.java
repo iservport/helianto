@@ -1,27 +1,48 @@
 package org.helianto.process;
-// Generated 08/03/2007 19:38:51 by Hibernate Tools 3.2.0.beta8
 
+import javax.persistence.CascadeType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
+import javax.persistence.UniqueConstraint;
 
 /**
- * 				
  * <p>
- * A class to represent a setup.
+ * Represents a <code>Setup</code> in a <code>Resource</code>.  
  * </p>
  * @author Mauricio Fernandes de Castro
- * 				
- * 		
  */
+@javax.persistence.Entity
+@Table(name="proc_setup",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"operationId", "resourceId"})}
+)
 public class Setup  implements java.io.Serializable {
 
-    // Fields    
-
-     private long id;
-     private Operation operation;
-     private Resource resource;
-     private int priority;
-     private long setupTime;
-     private long transportTime;
+    private static final long serialVersionUID = 1L;
+    private int id;
+    private Operation operation;
+    private Resource resource;
+    private int priority;
+    private long setupTime;
+    private long transportTime;
 
      // Constructors
 
@@ -29,47 +50,64 @@ public class Setup  implements java.io.Serializable {
     public Setup() {
     }
 
-    /** full constructor */
-    public Setup(Resource resource, int priority, long setupTime, long transportTime) {
-       this.resource = resource;
-       this.priority = priority;
-       this.setupTime = setupTime;
-       this.transportTime = transportTime;
-    }
-   
-    // Property accessors
-    public long getId() {
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
         return this.id;
     }
-    
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
+    
+    /**
+     * Parent operation.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="operationId", nullable=true)
+    public Operation getOperation() {
+		return operation;
+	}
+	public void setOperation(Operation operation) {
+		this.operation = operation;
+	}
+
+    /**
+     * Related resource.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="resourceId", nullable=true)
     public Resource getResource() {
         return this.resource;
     }
-    
     public void setResource(Resource resource) {
         this.resource = resource;
     }
+    
+    /**
+     * Priority.
+     */
     public int getPriority() {
         return this.priority;
     }
-    
     public void setPriority(int priority) {
         this.priority = priority;
     }
+    
+    /**
+     * Setup time.
+     */
     public long getSetupTime() {
         return this.setupTime;
     }
-    
     public void setSetupTime(long setupTime) {
         this.setupTime = setupTime;
     }
+    
+    /**
+     * Transport time.
+     */
     public long getTransportTime() {
         return this.transportTime;
     }
-    
     public void setTransportTime(long transportTime) {
         this.transportTime = transportTime;
     }
@@ -82,17 +120,13 @@ public class Setup  implements java.io.Serializable {
 		 Setup castOther = ( Setup ) other; 
          
 		 return ( (this.getResource()==castOther.getResource()) || ( this.getResource()!=null && castOther.getResource()!=null && this.getResource().equals(castOther.getResource()) ) )
- && (this.getPriority()==castOther.getPriority());
+		 	   && (this.getPriority()==castOther.getPriority());
    }
    
    public int hashCode() {
          int result = 17;
-         
-         
          result = 37 * result + ( getResource() == null ? 0 : this.getResource().hashCode() );
          result = 37 * result + this.getPriority();
-         
-         
          return result;
    }   
 

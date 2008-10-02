@@ -7,7 +7,11 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <service id="sequenceMgr" ref="sequenceMgr" interface="org.helianto.core.SequenceMgr" />
-    <service id="userMgr" ref="userMgr" interface="org.helianto.core.UserMgr" />
+    <service id="userMgr"     ref="userMgr"     interface="org.helianto.core.UserMgr" />
+    <service id="serverMgr"   ref="serverMgr"   interface="org.helianto.core.ServerMgr" />
+    <service id="categoryMgr" ref="categoryMgr" interface="org.helianto.core.CategoryMgr" />
+    <service id="securityMgr" ref="securityMgr" interface="org.helianto.core.SecurityMgr" />
+    <service id="unitMgr"     ref="unitMgr"     interface="org.helianto.core.UnitMgr" />
     <reference id="dataSource" interface="javax.sql.DataSource"/>
 
 </beans:beans>

@@ -15,10 +15,7 @@
 
 package org.helianto.process;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -35,7 +32,6 @@ public class Method extends Specification implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private int sampleSize;
     private String sampleFrequency;
-    private MeasurementTechnique measurementTechnique;
     private String controlMethod;
 
     /** default constructor */
@@ -64,18 +60,6 @@ public class Method extends Specification implements java.io.Serializable {
     }
     
     /**
-     * Measurement technique.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="measurementTechniqueId", nullable=true)
-    public MeasurementTechnique getMeasurementTechnique() {
-        return this.measurementTechnique;
-    }
-    public void setMeasurementTechnique(MeasurementTechnique measurementTechnique) {
-        this.measurementTechnique = measurementTechnique;
-    }
-    
-    /**
      * Control method.
      */
     @Column(length=32)
@@ -84,16 +68,6 @@ public class Method extends Specification implements java.io.Serializable {
     }
     public void setControlMethod(String control) {
         this.controlMethod = control;
-    }
-
-    /**
-     * <code>Method</code> factory.
-     * 
-     * @param document
-     * @param characteristic
-     */
-    public static Method methodFactory(ProcessDocument document, Characteristic characteristic) {
-        return specificationFactory(Method.class, document, characteristic);
     }
 
     /**
@@ -109,10 +83,18 @@ public class Method extends Specification implements java.io.Serializable {
      */
     @Transient
     public static String getMethodNaturalIdQueryString() {
-        return getMethodQueryStringBuilder().append("where method.document = ? and method.characteristic = ? ").toString();
+        return getMethodQueryStringBuilder().append("where method.entity = ? and method.docCode = ? ").toString();
     }
-
-
+    
+    /**
+     * equals
+     */
+    @Override
+    public boolean equals(Object other) {
+          if ( !(other instanceof Method) ) return false;
+          return super.equals(other);
+    }
+    
 }
 
 

@@ -22,6 +22,9 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.partner.Address;
+import org.helianto.partner.Partner;
+import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 import org.helianto.partner.dao.AccountDao;
@@ -48,6 +51,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private PartnerRegistryDao partnerRegistryDao;
 	private SelectionStrategy<PartnerRegistryFilter> partnerRegistrySelectionStrategy;
     private PartnerDao partnerDao;
+	private SelectionStrategy<PartnerFilter> partnerSelectionStrategy;
     private PartnerKeyDao partnerKeyDao;
     private PhoneDao phoneDao;
     private AccountDao accountDao;
@@ -72,10 +76,32 @@ public class PartnerMgrImpl implements PartnerMgr {
     	partnerRegistryDao.removePartnerRegistry(partnerRegistry);
     }
 
-    public List<PartnerRegistry> findPartnerRegistry(String partnerAssociationSearchString) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public List<? extends Partner> findPartners(PartnerFilter partnerFilter) {
+		String criteria = partnerSelectionStrategy.createCriteriaAsString(partnerFilter, "partner");
+		List<Partner> partnerList = partnerDao.findPartners(criteria);
+    	if (logger.isDebugEnabled() && partnerList!=null) {
+    		logger.debug("Found partner list of size "+partnerList.size());
+    	}
+		return partnerList;
+	}
+
+	public PartnerRegistry storePartner(Partner partner) {
+		Partner managed = partnerDao.mergePartner(partner);
+		return managed.getPartnerRegistry();
+	}
+
+	public void removePartner(Partner partner) {
+		partnerDao.removePartner(partner);
+	}
+
+	public PartnerRegistry storeAddress(Address address) {
+		Address managed =  addressDao.mergeAddress(address);
+		return managed.getPartnerRegistry();
+	}
+
+	public PartnerRegistry removeAddress(Address address) {
+		throw new IllegalArgumentException("Not yet implemented");
+	}
 
     //- collaborators
     
@@ -111,6 +137,10 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void setPartnerDao(PartnerDao partnerDao) {
         this.partnerDao = partnerDao;
     }
+	@Resource
+	public void setPartnerSelectionStrategy(SelectionStrategy<PartnerFilter> partnerSelectionStrategy) {
+		this.partnerSelectionStrategy = partnerSelectionStrategy;
+	}
     @Resource
     public void setPartnerKeyDao(PartnerKeyDao partnerKeyDao) {
         this.partnerKeyDao = partnerKeyDao;

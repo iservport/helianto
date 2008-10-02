@@ -17,6 +17,7 @@ package org.helianto.core.filter;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.Entity;
 import org.helianto.core.test.UserTestSupport;
 
 /**
@@ -40,6 +41,13 @@ public class AbstractSelectionStrategyTests extends TestCase {
 		isSelection = false;
 		selectionStrategy.createCriteriaAsString(new UserBackedCriteriaFilterStub(), "TEST");
 		assertEquals("TEST-PRE-TEST-FILTER-TEST-POST", chain.toString());
+	}
+	
+	public void testAppendEntityFromUserBackedFilter() {
+		CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
+		Entity entity = new Entity();
+		((AbstractSelectionStrategy<UserBackedCriteriaFilterStub>) selectionStrategy).appendEntityFilter(entity, criteriaBuilder);
+		assertEquals("entity.id = 0 ", criteriaBuilder.getCriteriaAsString());
 	}
 	
 	public void testAppendEqualFilterString() {
