@@ -77,6 +77,7 @@ public class AbstractSelectionStrategyTests extends TestCase {
 		UserBackedCriteriaFilterStub() {
 			setUser(UserTestSupport.createUser());
 		}
+		public void reset() {}
 	}
 
 	class SelectionStrategyStub extends AbstractSelectionStrategy<UserBackedCriteriaFilterStub> {

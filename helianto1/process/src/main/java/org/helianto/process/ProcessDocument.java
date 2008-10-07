@@ -101,19 +101,19 @@ public class ProcessDocument extends Document implements java.io.Serializable {
     }
 
     /**
-     * <code>Document</code> query <code>StringBuilder</code>.
+     * <code>ProcessDocument</code> query <code>StringBuilder</code>.
      */
     @Transient
-    public static StringBuilder getDocumentQueryStringBuilder() {
+    public static StringBuilder getProcessDocumentQueryStringBuilder() {
         return new StringBuilder("select processDocument from ProcessDocument processDocument ");
     }
 
     /**
-     * <code>Document</code> natural id query.
+     * <code>ProcessDocument</code> natural id query.
      */
     @Transient
-    public static String getDocumentNaturalIdQueryString() {
-        return getDocumentQueryStringBuilder().append("where processDocument.entity = ? and processDocument.docCode = ? ").toString();
+    public static String getProcessDocumentNaturalIdQueryString() {
+        return getProcessDocumentQueryStringBuilder().append("where processDocument.entity = ? and processDocument.docCode = ? ").toString();
     }
 
    /**

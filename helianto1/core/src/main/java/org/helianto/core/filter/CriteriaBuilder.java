@@ -207,6 +207,19 @@ public class CriteriaBuilder {
      * 
      * @param content
      */
+    public CriteriaBuilder append(Class<?> clazz) {
+        criteria.append(prefix)
+        .append(".class=")
+        .append(clazz.getSimpleName())
+        .append(" ");
+        return this;
+    }
+
+    /**
+     * String appender.
+     * 
+     * @param content
+     */
     public CriteriaBuilder appendString(String content) {
         criteria.append("'")
         .append(content)

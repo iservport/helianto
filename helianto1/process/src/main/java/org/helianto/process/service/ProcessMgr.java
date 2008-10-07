@@ -19,13 +19,14 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
+import org.helianto.core.User;
 import org.helianto.partner.service.PartnerMgr;
 import org.helianto.process.Characteristic;
 import org.helianto.process.DocumentAssociation;
 import org.helianto.process.Operation;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
-import org.helianto.process.ProcessFilter;
+import org.helianto.process.ProcessDocumentFilter;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
 
@@ -64,9 +65,9 @@ public interface ProcessMgr extends PartnerMgr {
 	public List<Node> prepareTree(ProcessDocument processDocument);
 
     /**
-     * Find processes.
+     * Find process documents.
      */
-    public List<Process> findProcesses(ProcessFilter filter);
+    public List<ProcessDocument> findProcessDocuments(ProcessDocumentFilter filter);
     
     /**
      * Process factory method.
@@ -74,14 +75,14 @@ public interface ProcessMgr extends PartnerMgr {
     public Process createProcess(Entity entity);
     
     /**
-     * Store process.
+     * Store process document. If sequenceable, fix the sequence.
      */
-    public Process storeProcess(Process process);
+    public ProcessDocument storeProcessDocument(ProcessDocument processDocument);
     
     /**
      * Find associations having child operations for a process.
      */
-    public List<DocumentAssociation> findOperations(Process process);
+    public List<DocumentAssociation> findOperations(User user, Process process);
     
     /**
      * Associated operation creation.
@@ -91,7 +92,7 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Find characteristics.
      */
-    public List<DocumentAssociation> findCharacteristics(Operation operation);
+    public List<DocumentAssociation> findCharacteristics(User user, Operation operation);
     
     /**
      * Associated characteristic creation.

@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Repository("documentDao")
+@Repository("processDocumentDao")
 public class ProcessDocumentDaoImpl extends GenericDaoImpl implements ProcessDocumentDao {
      
     public void persistProcessDocument(ProcessDocument document) {
@@ -56,7 +56,7 @@ public class ProcessDocumentDaoImpl extends GenericDaoImpl implements ProcessDoc
         if (logger.isDebugEnabled()) {
             logger.debug("Finding unique document with entity='"+entity+"' and docCode='"+docCode+"' ");
         }
-        return (ProcessDocument) findUnique(ProcessDocument.getDocumentNaturalIdQueryString(), entity, docCode);
+        return (ProcessDocument) findUnique(ProcessDocument.getProcessDocumentNaturalIdQueryString(), entity, docCode);
     }
     
     @SuppressWarnings("unchecked")
@@ -65,9 +65,9 @@ public class ProcessDocumentDaoImpl extends GenericDaoImpl implements ProcessDoc
             logger.debug("Finding document list with criteria ='"+criteria+"'");
         }
         if (criteria.equals("")) {
-            return (ArrayList<ProcessDocument>) find(ProcessDocument.getDocumentQueryStringBuilder());
+            return (ArrayList<ProcessDocument>) find(ProcessDocument.getProcessDocumentQueryStringBuilder());
         }
-        return (ArrayList<ProcessDocument>) find(new StringBuilder(ProcessDocument.getDocumentQueryStringBuilder()).append("where ").append(criteria));
+        return (ArrayList<ProcessDocument>) find(new StringBuilder(ProcessDocument.getProcessDocumentQueryStringBuilder()).append("where ").append(criteria));
     }
     
 }

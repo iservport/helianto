@@ -15,7 +15,6 @@
 
 package org.helianto.core.filter;
 
-import java.io.Serializable;
 
 
 /**
@@ -23,22 +22,28 @@ import java.io.Serializable;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityFilter extends AbstractUserBackedCriteriaFilter implements Serializable,UserBackedFilter {
+public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
 
     private static final long serialVersionUID = 1L;
     private String principalSearch = "";
     private String nameOrAliasSearch = "";
 
-    public String getNameOrAliasSearch() {
-        return nameOrAliasSearch;
-    }
     public String getPrincipalSearch() {
         return principalSearch;
+    }
+    public void setPrincipalSearch(String principalSearch) {
+        this.principalSearch = principalSearch;
+    }
+    
+    public String getNameOrAliasSearch() {
+        return nameOrAliasSearch;
     }
     public void setNameOrAliasSearch(String nameOrAliasSearch) {
         this.nameOrAliasSearch = nameOrAliasSearch;
     }
-    public void setPrincipalSearch(String principalSearch) {
-        this.principalSearch = principalSearch;
+
+    public void reset() {
+    	setPrincipalSearch("");
+    	setNameOrAliasSearch("");
     }
 }

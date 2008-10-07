@@ -16,6 +16,7 @@
 package org.helianto.core.filter;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 
 import org.helianto.core.User;
 
@@ -36,4 +37,42 @@ public abstract class AbstractUserBackedCriteriaFilter implements
     public void setUser(User user) {
         this.user = user;
     }
+    
+    /**
+     * Static factory method.
+     * 
+     * @param clazz
+     * @param user
+     */
+    public static <T extends UserBackedFilter> T filterFactory(Class<T> clazz, User user) {
+    	try {
+    		T userBackedFilter = clazz.newInstance();
+    		userBackedFilter.setUser(user);
+    		return userBackedFilter;
+    	}
+    	catch (Exception e) {
+    		throw new IllegalArgumentException("Unable to create filter ", e);
+    	}
+    }
+
+    /**
+     * Static factory method.
+     * 
+     * @param enclosingInstance
+     * @param clazz
+     * @param user
+     */
+    @SuppressWarnings("unchecked")
+	public static <T extends UserBackedFilter> T filterFactory(Object enclosingInstance, Class<T> clazz, User user) {
+    	try {
+    		Constructor<?> c = clazz.getConstructors()[0];
+    		T userBackedFilter = (T) c.newInstance(enclosingInstance);
+    		userBackedFilter.setUser(user);
+    		return userBackedFilter;
+    	}
+    	catch (Exception e) {
+    		throw new IllegalArgumentException("Unable to create filter ", e);
+    	}
+    }
+
 }

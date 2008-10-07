@@ -35,5 +35,10 @@ public interface UserBackedFilter {
      * @param user
      */
     public void setUser(User user);
+    
+    /**
+     * Reset filter
+     */
+    public void reset();
 
 }

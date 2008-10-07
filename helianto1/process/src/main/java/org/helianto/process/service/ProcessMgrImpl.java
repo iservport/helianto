@@ -22,23 +22,22 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
+import org.helianto.core.Sequenceable;
+import org.helianto.core.User;
 import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.service.PartnerMgrImpl;
 import org.helianto.process.Characteristic;
 import org.helianto.process.DocumentAssociation;
-import org.helianto.process.ExternalDocument;
-import org.helianto.process.MaterialType;
 import org.helianto.process.Operation;
-import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentFilter;
-import org.helianto.process.ProcessFilter;
 import org.helianto.process.Resource;
 import org.helianto.process.Setup;
 import org.helianto.process.dao.DocumentAssociationDao;
-import org.helianto.process.dao.ProcessDao;
+import org.helianto.process.dao.ProcessDocumentDao;
+import org.helianto.process.dao.SetupDao;
 
 /**
  * Default implementation of <code>ProcessMgr</code> interface.
@@ -47,8 +46,9 @@ import org.helianto.process.dao.ProcessDao;
  */
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
-    private ProcessDao processDao;
-    private SelectionStrategy<ProcessFilter> processSelectionStrategy;
+    private ProcessDocumentDao processDocumentDao;
+    private SetupDao setupDao;
+    private SelectionStrategy<ProcessDocumentFilter> processDocumentSelectionStrategy;
     private DocumentAssociationDao documentAssociationDao;
     private SequenceMgr sequenceMgr;
     
@@ -58,32 +58,34 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     	return processTree;
     }
 
-	public List<Process> findProcesses(ProcessFilter filter) {
-		String criteria = processSelectionStrategy.createCriteriaAsString(filter, "process");
-        List<Process> processList = processDao.findProcesses(criteria);
-        if (logger.isDebugEnabled() && processList.size()>0) {
-            logger.debug("Found "+processList.size()+" item(s)");
+    public List<ProcessDocument> findProcessDocuments(ProcessDocumentFilter filter) {
+		String criteria = processDocumentSelectionStrategy.createCriteriaAsString(filter, "processDocument");
+        List<ProcessDocument> processDocumentList = processDocumentDao.findProcessDocuments(criteria);
+        if (logger.isDebugEnabled() && processDocumentList.size()>0) {
+            logger.debug("Found "+processDocumentList.size()+" item(s)");
         }
         if (filter.getExclusions()!=null && filter.getExclusions().size()>0) {
-            processList.removeAll(filter.getExclusions());
+        	processDocumentList.removeAll(filter.getExclusions());
             if (logger.isDebugEnabled()) {
                 logger.debug("Removed "+filter.getExclusions()+" item(s)");
             }
         }
-        return processList ;
+        return processDocumentList ;
 	}
 
-	public Process storeProcess(Process process) {
-		sequenceMgr.validateInternalNumber(process);
-		return (Process) processDao.mergeProcessDocument(process);
+  	public ProcessDocument storeProcessDocument(ProcessDocument processDocument) {
+  		if (processDocument instanceof Sequenceable) {
+  			sequenceMgr.validateInternalNumber((Sequenceable) processDocument);
+  		}
+		return (Process) processDocumentDao.mergeProcessDocument(processDocument);
 	}
 
 	public DocumentAssociation storeDocumentAssociation(DocumentAssociation documentAssociation) {
 		return (DocumentAssociation) documentAssociationDao.mergeDocumentAssociation(documentAssociation);
 	}
 
-	public List<DocumentAssociation> findOperations(Process process) {
-		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(process);
+	public List<DocumentAssociation> findOperations(User user, Process process) {
+		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(user, process);
         if (logger.isDebugEnabled()) {
             logger.debug("Created filter "+filter);
         }
@@ -121,8 +123,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     	return process.processOperationFactory("", 0, 0);
     }
     
-    public List<DocumentAssociation> findCharacteristics(Operation operation) {
-		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(operation);
+    public List<DocumentAssociation> findCharacteristics(User user, Operation operation) {
+		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(user, operation);
         if (logger.isDebugEnabled()) {
             logger.debug("Created filter "+filter);
         }
@@ -155,61 +157,25 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return null;
     }
 
-    public void persistExternalDocument(ExternalDocument externalDocument) {
-        processDao.persistDocument(externalDocument);
-    }
-
-    public void persistPart(Part part) {
-        processDao.persistDocument(part);
-    }
-
-    public void persistProcess(Process process) {
-        if (process.getInternalNumber()==0) {
-            //FIXME internal number should return long ...
-//            process.setInternalNumber(new Long(currentNumber(process.getEntity(), "PROC")));
-        }
-        processDao.persistDocument(process);
-    }
-
-    public void persistOperation(Operation operation) {
-        processDao.persistDocument(operation);
-    }
-
     public void persistSetup(Setup setup) {
-        processDao.persistSetup(setup);
+    	setupDao.persistSetup(setup);
     }
 
-    public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode) {
-        return processDao.findExternalDocumentByNaturalId(entity, docCode);
-    }
-    
-    public List<ExternalDocument> findExternalDocumentByEntity(Entity entity) {
-        return processDao.findExternalDocumentByEntity(entity);
-    }
-
-    public List<ExternalDocument> findExternalDocumentRootByEntity(Entity entity) {
-        return processDao.findExternalDocumentRootByEntity(entity);
-    }
-
-    public List<ExternalDocument> findExternalDocumentByParent(ExternalDocument parent) {
-        return processDao.findExternalDocumentByParent(parent);
-    }
-
-    public void persistMaterial(MaterialType material) {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    // collaborators  DocumentAssociationDao documentAssociationDao
+    // collaborators 
 
     @javax.annotation.Resource
-    public void setProcessDao(ProcessDao processDao) {
-        this.processDao = processDao;
+    public void setProcessDocumentDao(ProcessDocumentDao processDocumentDao) {
+        this.processDocumentDao = processDocumentDao;
     }
 
-    @javax.annotation.Resource(name="processSelectionStrategy")
-    public void setProcessSelectionStrategy(SelectionStrategy<ProcessFilter> processSelectionStrategy) {
-        this.processSelectionStrategy = processSelectionStrategy;
+    @javax.annotation.Resource
+    public void setSetupDao(SetupDao setupDao) {
+        this.setupDao = setupDao;
+    }
+
+    @javax.annotation.Resource(name="processDocumentSelectionStrategy")
+    public void setProcessDocumentSelectionStrategy(SelectionStrategy<ProcessDocumentFilter> processDocumentSelectionStrategy) {
+        this.processDocumentSelectionStrategy = processDocumentSelectionStrategy;
     }
 
     @javax.annotation.Resource

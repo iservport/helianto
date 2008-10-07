@@ -35,16 +35,6 @@ public interface ExternalDocumentMgr {
     public void persistExternalDocument(ExternalDocument externalDocument);
     
     /**
-     * Persist an <code>Operation</code>.
-     */
-    public void persistOperation(Operation operation);
-    
-    /**
-     * Persist an <code>Setup</code>.
-     */
-    public void persistSetup(Setup setup);
-    
-    /**
      * Find <code>ExternalDocument</code> by <code>Entity</code> and code.
      */
     public ExternalDocument findExternalDocumentByNaturalId(Entity entity, String docCode);

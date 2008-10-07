@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 /* Copyright 2005 I Serv Consultoria Empresarial Ltda.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -112,6 +113,22 @@ public class Setup  implements java.io.Serializable {
         this.transportTime = transportTime;
     }
 
+
+    /**
+     * <code>Setup</code> query <code>StringBuilder</code>.
+     */
+    @Transient
+    public static StringBuilder getSetupQueryStringBuilder() {
+        return new StringBuilder("select setup from Setup setup ");
+    }
+
+    /**
+     * <code>Setup</code> natural id query.
+     */
+    @Transient
+    public static String getSetupNaturalIdQueryString() {
+        return getSetupQueryStringBuilder().append("where setup.operation = ? and setup.resource = ? ").toString();
+    }
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;

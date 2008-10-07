@@ -189,6 +189,8 @@ public class CriteriaBuilderTests extends TestCase {
 
         public void setUser(User arg0) {}
         
+        public void reset() {}
+        
     }
 
 }

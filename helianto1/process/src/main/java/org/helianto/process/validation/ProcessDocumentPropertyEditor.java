@@ -16,6 +16,7 @@ package org.helianto.process.validation;
 
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.process.ProcessDocument;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Component;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Scope("prototype")
 @Component("processDocumentPropertyEditor")
 public class ProcessDocumentPropertyEditor extends AbstractSessionPropertyEditor {
     

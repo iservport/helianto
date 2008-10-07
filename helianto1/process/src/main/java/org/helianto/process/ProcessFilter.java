@@ -25,6 +25,7 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
  * Filter to <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated use ProcessDocumentFilter
  */
 public class ProcessFilter extends AbstractUserBackedCriteriaFilter {
 
