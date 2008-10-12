@@ -3,6 +3,7 @@ package org.helianto.process.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.process.AssociationType;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.DocumentAssociation;
 
@@ -32,7 +33,7 @@ public class DocumentAssociationTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             child = ProcessDocumentTestSupport.createDocument();
         }
-        DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child);
+        DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
         return documentAssociation;
     }
 

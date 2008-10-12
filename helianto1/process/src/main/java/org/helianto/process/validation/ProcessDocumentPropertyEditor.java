@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Scope("prototype")
 @Component("processDocumentPropertyEditor")
 public class ProcessDocumentPropertyEditor extends AbstractSessionPropertyEditor {
     
