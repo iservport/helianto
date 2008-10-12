@@ -20,7 +20,7 @@ public class DocumentAssociationTests extends TestCase {
         ProcessDocument parent = new Part();
         ProcessDocument child = new Part();
         
-        DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child);
+        DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
         
         assertSame(parent, documentAssociation.getParent());
         assertTrue(parent.getChildAssociations().contains(documentAssociation));
@@ -36,7 +36,7 @@ public class DocumentAssociationTests extends TestCase {
         ProcessDocument parent = new Part();
         ProcessDocument child = new Part();
         
-        DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child);
+        DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
         DocumentAssociation copy = (DocumentAssociation) DomainTestSupport.minimalEqualsTest(documentAssociation);
         
         copy.setParent(null);

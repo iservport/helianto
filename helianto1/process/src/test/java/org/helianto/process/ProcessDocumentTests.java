@@ -65,9 +65,6 @@ public class ProcessDocumentTests extends TestCase {
         assertEquals(1, parent.getChildAssociations().size());
         assertSame(child, parent.getChildAssociations().iterator().next().getChild());
         
-        assertEquals(AssociationType.PART_PART.getValue(), parent.getChildAssociations().iterator().next().getAssociationType());
-        assertEquals(0.001, parent.getChildAssociations().iterator().next().getCoefficient(), 0.0001);
-        
     }
     
     /**
