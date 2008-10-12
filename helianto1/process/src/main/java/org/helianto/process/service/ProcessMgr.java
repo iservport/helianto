@@ -85,9 +85,9 @@ public interface ProcessMgr extends PartnerMgr {
     public List<DocumentAssociation> findOperations(User user, Process process);
     
     /**
-     * Associated operation creation.
+     * Association creation.
      */
-    public DocumentAssociation prepareOperation(Process process);
+    public DocumentAssociation prepareAssociation(ProcessDocument parent, Object child);
     
     /**
      * Find characteristics.

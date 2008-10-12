@@ -24,7 +24,7 @@ public class DefaultProcessDocumentSelectionStrategy extends AbstractSelectionSt
 	        if (logger.isDebugEnabled()) {
 	            logger.debug("Document class is: '"+filter.getClazz()+"'");
 	        }
-			mainCriteriaBuilder.append(filter.getClazz());
+			mainCriteriaBuilder.appendAnd().append(filter.getClazz());
 		}
 	}
 
@@ -44,7 +44,7 @@ public class DefaultProcessDocumentSelectionStrategy extends AbstractSelectionSt
 
 	@Override
 	protected void doFilter(ProcessDocumentFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("docNameLike", filter.getDocNameLike(), mainCriteriaBuilder);
+		appendLikeFilter("docName", filter.getDocNameLike(), mainCriteriaBuilder);
 	}
 
 	private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);

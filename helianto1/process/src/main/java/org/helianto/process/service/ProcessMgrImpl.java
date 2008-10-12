@@ -27,6 +27,7 @@ import org.helianto.core.User;
 import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.service.PartnerMgrImpl;
+import org.helianto.process.AssociationType;
 import org.helianto.process.Characteristic;
 import org.helianto.process.DocumentAssociation;
 import org.helianto.process.Operation;
@@ -53,7 +54,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     private SequenceMgr sequenceMgr;
     
     public List<Node> prepareTree(ProcessDocument processDocument) {
-    	ProcessNode root = new ProcessNode(processDocument);
+    	ProcessDocument managedProcessDocument = processDocumentDao.mergeProcessDocument(processDocument);
+    	ProcessNode root = new ProcessNode(managedProcessDocument);
     	List<Node> processTree = sequenceMgr.prepareTree(root);
     	return processTree;
     }
@@ -77,7 +79,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
   		if (processDocument instanceof Sequenceable) {
   			sequenceMgr.validateInternalNumber((Sequenceable) processDocument);
   		}
-		return (Process) processDocumentDao.mergeProcessDocument(processDocument);
+		return (ProcessDocument) processDocumentDao.mergeProcessDocument(processDocument);
 	}
 
 	public DocumentAssociation storeDocumentAssociation(DocumentAssociation documentAssociation) {
@@ -119,8 +121,21 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return null;
     }
 
-    public DocumentAssociation prepareOperation(Process process) {
-    	return process.processOperationFactory("", 0, 0);
+    public DocumentAssociation prepareAssociation(ProcessDocument parent, Object child) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Parent class is "+parent.getClass());
+            logger.debug("Child class is "+child.getClass());
+        }
+    	AssociationType associationType = AssociationType.resolveAssociationType(parent.getClass(), child.getClass());
+    	if (associationType==null) {
+    		logger.warn("Unknown association");
+    		associationType = AssociationType.GENERAL;
+    	}
+    	else if (associationType.equals(AssociationType.GENERAL)) {
+    		logger.warn("Possible invalid association");
+    	}
+    	DocumentAssociation documentAssociation = parent.documentAssociationFactory((ProcessDocument) child, 0);
+    	return documentAssociation;
     }
     
     public List<DocumentAssociation> findCharacteristics(User user, Operation operation) {
