@@ -92,7 +92,13 @@ public enum AssociationType {
      * A control plan may have a specification.
      * 
      */
-    CONTROLPLAN_SPECIFICATION('M', ControlPlan.class, Specification.class, true);
+    CONTROLPLAN_SPECIFICATION('M', ControlPlan.class, Specification.class, true),
+    
+    /**
+     * General association.
+     * 
+     */
+    GENERAL('X', ProcessDocument.class, ProcessDocument.class, true);
     
     
     private char value;
@@ -105,7 +111,7 @@ public enum AssociationType {
         this.value = value;
         this.parentType = parentType;
         this.childType = childType;
-        this.value = value;
+        this.recommended = recommended;
     }
     
     public char getValue() {

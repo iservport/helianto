@@ -85,6 +85,18 @@ public class ProcessDocument extends Document implements java.io.Serializable {
     /**
      * <code>ProcessDocument</code> general factory.
      * 
+     * @param child
+     * @param sequence
+     */
+    public DocumentAssociation documentAssociationFactory(ProcessDocument child, int sequence) {
+        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(this, child, AssociationType.GENERAL, sequence);
+        return association;
+    }
+
+    //1.3
+    /**
+     * <code>ProcessDocument</code> general factory.
+     * 
      * <p>
      * Create a new child <code>ProcessDocument</code> and a new
      * <code>DocumentAssociation</code> to contain it.
@@ -96,7 +108,7 @@ public class ProcessDocument extends Document implements java.io.Serializable {
      */
     protected <T extends ProcessDocument> DocumentAssociation documentAssociationFactory(Class<T> childClazz, String childCode, int sequence) {
     	ProcessDocument document = ProcessDocument.documentFactory(childClazz, getEntity(), childCode);
-        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(this, document, sequence);
+        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(this, document, AssociationType.GENERAL, sequence);
         return association;
     }
 

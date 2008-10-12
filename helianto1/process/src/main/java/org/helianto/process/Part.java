@@ -95,9 +95,8 @@ public class Part extends ProcessDocument implements java.io.Serializable {
      * @param sequence
      * @param coefficient
      */
-    public DocumentAssociation partComponentFactory(String componentCode, int sequence, double coefficient) {
+    public DocumentAssociation partComponentFactory(String componentCode, int sequence) {
     	DocumentAssociation documentAssociation = documentAssociationFactory(Part.class, componentCode, sequence);
-    	documentAssociation.setCoefficient(coefficient);
         return documentAssociation;
     }
 

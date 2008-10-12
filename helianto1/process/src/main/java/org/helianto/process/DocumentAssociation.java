@@ -15,6 +15,8 @@
 
 package org.helianto.process;
 
+import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -40,7 +42,9 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
 
     private static final long serialVersionUID = 1L;
     private char associationType;
-    private double coefficient;
+    private char associationRole;
+    private BigDecimal leftLimit = BigDecimal.ZERO;
+	private BigDecimal rightLimit = BigDecimal.ZERO;
 
 	/** default constructor */
     public DocumentAssociation() {
@@ -78,14 +82,38 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
     }
 
     /**
-     * Coefficient.
+     * Association role.
      */
-    public double getCoefficient() {
-        return this.coefficient;
-    }
-    public void setCoefficient(double coefficient) {
-        this.coefficient = coefficient;
-    }
+    public char getAssociationRole() {
+		return associationRole;
+	}
+	public void setAssociationRole(char associationRole) {
+		this.associationRole = associationRole;
+	}
+	public void setAssociationRole(AssociationRole associationRole) {
+		this.associationRole = associationRole.getValue();
+	}
+
+	/**
+     * Associated left limit.
+     */
+    public BigDecimal getLeftLimit() {
+		return leftLimit;
+	}
+	public void setLeftLimit(BigDecimal leftLimit) {
+		this.leftLimit = leftLimit;
+	}
+
+	/**
+     * Associated right limit.
+     */
+	public BigDecimal getRightLimit() {
+		return rightLimit;
+	}
+	public void setRightLimit(BigDecimal rightLimit) {
+		this.rightLimit = rightLimit;
+	}
+
 
     //1.1
     /**
@@ -94,8 +122,8 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
      * @param parent
      * @param child
      */
-    public static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child) {
-        return DocumentAssociation.documentAssociationFactory(parent, child, 0);
+    public static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, AssociationType associationType) {
+        return DocumentAssociation.documentAssociationFactory(parent, child, associationType, 0);
     }
 
     //1.2
@@ -106,11 +134,7 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
      * @param child
      * @param sequence
      */
-    protected static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, int sequence) {
-    	AssociationType associationType = AssociationType.resolveAssociationType(parent.getClass(), child.getClass());
-    	if (associationType==null) {
-    		throw new IllegalArgumentException("Invalid association");
-    	}
+    protected static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, AssociationType associationType, int sequence) {
         DocumentAssociation documentAssociation = new DocumentAssociation();
         documentAssociation.setParent(parent);
         documentAssociation.setChild(child);
@@ -118,6 +142,7 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
         child.getParentAssociations().add(documentAssociation);
         documentAssociation.setSequence(sequence);
         documentAssociation.setAssociationType(associationType);
+        documentAssociation.setAssociationRole(AssociationRole.NONE);
         return documentAssociation;
     }
 
