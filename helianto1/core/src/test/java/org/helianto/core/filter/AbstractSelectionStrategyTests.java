@@ -58,8 +58,14 @@ public class AbstractSelectionStrategyTests extends TestCase {
 	
 	public void testAppendEqualFilterInteger() {
 		CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
-		((AbstractSelectionStrategy<UserBackedCriteriaFilterStub>) selectionStrategy).appendEqualFilter("fieldName", 1, criteriaBuilder);
-		assertEquals("fieldName = 1 ", criteriaBuilder.getCriteriaAsString());
+		((AbstractSelectionStrategy<UserBackedCriteriaFilterStub>) selectionStrategy).appendEqualFilter("fieldName", Integer.MAX_VALUE, criteriaBuilder);
+		assertEquals("fieldName = 2147483647 ", criteriaBuilder.getCriteriaAsString());
+	}
+	
+	public void testAppendEqualFilterLong() {
+		CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
+		((AbstractSelectionStrategy<UserBackedCriteriaFilterStub>) selectionStrategy).appendEqualFilter("fieldName", Long.MAX_VALUE, criteriaBuilder);
+		assertEquals("fieldName = 9223372036854775807 ", criteriaBuilder.getCriteriaAsString());
 	}
 	
 	public void testAppendLikeFilter() {

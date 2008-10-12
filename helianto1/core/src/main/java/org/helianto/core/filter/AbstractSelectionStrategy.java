@@ -157,6 +157,20 @@ public abstract class AbstractSelectionStrategy<T extends AbstractUserBackedCrit
      * @param fieldContent
      * @param criteriaBuilder
      */
+    protected void appendEqualFilter(String fieldName, long fieldContent, CriteriaBuilder criteriaBuilder) {
+    	if (fieldContent>0) {
+            criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
+            .append(fieldContent);
+        }
+    }
+    
+    /**
+     * Base String filter segment.
+     * 
+     * @param fieldName
+     * @param fieldContent
+     * @param criteriaBuilder
+     */
     protected void appendLikeFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
     	if (fieldContent!=null && fieldContent.length()>0) {
     		criteriaBuilder.appendAnd().appendSegment(fieldName, "like")
