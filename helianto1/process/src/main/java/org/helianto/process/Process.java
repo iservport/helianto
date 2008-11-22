@@ -59,16 +59,26 @@ public class Process extends ProcessDocument implements java.io.Serializable, Se
         this.internalNumber = internalNumber;
     }
     
-    /**
+    @Transient
+    public List<DocumentAssociation> getOperationAssociations() {
+    	List<DocumentAssociation> childAssociationList = new ArrayList<DocumentAssociation>();
+    	for (DocumentAssociation documentAssociation: this.getChildAssociations()) {
+    		if (documentAssociation.getChild() instanceof Operation) {
+    			childAssociationList.add(documentAssociation);
+    		}
+    	}
+    	return childAssociationList;
+    }
+    
+	/**
      * List of child <code>Operation</code>.
      */
     @Transient
     public List<Operation> getOperations() {
+    	List<DocumentAssociation> operationAssociations = getOperationAssociations();
     	List<Operation> operations = new ArrayList<Operation>();
-    	for (DocumentAssociation documentAssociation: this.getChildAssociations()) {
-    		if (documentAssociation.getChild() instanceof Operation) {
-    			operations.add((Operation) documentAssociation.getChild());
-    		}
+    	for (DocumentAssociation documentAssociation: operationAssociations) {
+    		operations.add((Operation) documentAssociation.getChild());
     	}
     	return operations;
     }
