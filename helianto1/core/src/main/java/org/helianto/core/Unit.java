@@ -80,6 +80,11 @@ public class Unit implements java.io.Serializable {
     public Category getCategory() {
         return this.category;
     }
+    @Transient
+    public String getCategoryName() {
+    	if (this.category==null) return "";
+    	return this.category.getCategoryName();
+    }
     public void setCategory(Category category) {
         this.category = category;
     }

@@ -20,12 +20,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Interface to represent a tree node. 
+ * Interface to represent a tree node required by a <code>TreeBuilder</code>. 
  *
  * <p>
  * Any tree assembled with nodes implementing this interface are
  * simple ordered lists. Implementing classes must assure
- * appropriate ordering using level and sequence.
+ * appropriate ordering using getLevel() and getSequence().
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
@@ -43,12 +43,12 @@ public interface Node extends Comparable<Node>, Serializable {
 	public String getCaption();
 	
 	/**
-	 * Exposed level.
+	 * Level used to provide ordering and identation.
 	 */
 	public int getLevel();
 	
 	/**
-	 * Exposed sequence.
+	 * Sequence used to provide ordering within a level.
 	 */
 	public int getSequence();
 	
@@ -61,6 +61,11 @@ public interface Node extends Comparable<Node>, Serializable {
 	 * True if node is expanded.
 	 */
 	public boolean isExpanded();
+	
+	/**
+	 * True if node is editable.
+	 */
+	public boolean isEditable();
 	
 	/**
 	 * Child list.

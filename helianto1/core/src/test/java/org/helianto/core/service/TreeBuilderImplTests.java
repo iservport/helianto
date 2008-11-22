@@ -21,6 +21,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.AbstractNode;
 import org.helianto.core.Identity;
 import org.helianto.core.Node;
 import org.helianto.core.test.IdentityTestSupport;

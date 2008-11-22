@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.core;
 
 import org.helianto.core.Node;
 
@@ -30,16 +30,25 @@ public abstract class AbstractNode<T> implements Node {
 	private int level = 0;
 	private int sequence = 0;
 	private boolean expanded = false;
+	private boolean editable = true;
 	private String icon = "";
 	
 	/**
 	 * Constructor.
 	 */
-	public AbstractNode(long id, T payLoad,  int level, int sequence) {
+	public AbstractNode(long id, T payLoad,  int level, int sequence, boolean editable) {
 		this.id = id;
 		this.payLoad = payLoad;
 		this.level = level;
 		this.sequence = sequence;
+		this.editable = editable;
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public AbstractNode(long id, T payLoad,  int level, int sequence) {
+		this(id, payLoad,  level, sequence, true);
 	}
 
 	public long getId() {
@@ -56,10 +65,16 @@ public abstract class AbstractNode<T> implements Node {
 		return payLoad;
 	}
 
+	/**
+	 * Level used to provide ordering and identation.
+	 */
 	public int getLevel() {
 		return level;
 	}
 
+	/**
+	 * Sequence used to provide ordering within a level.
+	 */
 	public int getSequence() {
 		return sequence;
 	}
@@ -67,11 +82,21 @@ public abstract class AbstractNode<T> implements Node {
 		this.sequence = sequence;
 	}
 
+	/**
+	 * True if node is expanded.
+	 */
 	public boolean isExpanded() {
 		return expanded;
 	}
 	public void setExpanded(boolean expanded) {
 		this.expanded = expanded;
+	}
+
+	/**
+	 * True if node is editable.
+	 */
+	public boolean isEditable() {
+		return editable;
 	}
 
 	public String getIcon() {
@@ -99,12 +124,17 @@ public abstract class AbstractNode<T> implements Node {
 		if ((other == null)) return false;
 		if (!(other instanceof AbstractNode)) return false;
 		AbstractNode<T> castOther = (AbstractNode) other;
-
-		return ((this.getPayLoad() == castOther.getPayLoad()) 
-				|| (this.getPayLoad() != null
-				&& castOther.getPayLoad() != null && this.getPayLoad().equals(
-				   castOther.getPayLoad()))
-				&& (this.getLevel()==castOther.getLevel()));
+		
+		return (
+				((this.getPayLoad() == castOther.getPayLoad()) 
+				|| 
+				(
+				 this.getPayLoad() != null
+				 && castOther.getPayLoad() != null 
+				 && this.getPayLoad().equals(castOther.getPayLoad())
+				))
+				&& (this.getLevel()==castOther.getLevel())
+			   );
 	}
 
 	/**
