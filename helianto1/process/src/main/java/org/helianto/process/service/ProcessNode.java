@@ -18,15 +18,22 @@ package org.helianto.process.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.helianto.core.AbstractNode;
 import org.helianto.core.Association;
 import org.helianto.core.Node;
-import org.helianto.core.service.AbstractNode;
 import org.helianto.process.DocumentAssociation;
 import org.helianto.process.ProcessDocument;
 
 /**
+ * Implement <code>Node</code> interface to provide a process tree.
+ * 
+ * <p>
+ * Process nodes wrap a <code>ProcessDocument</code> to provide child
+ * nodes trough <code>DocumentAssociation</code>.
+ * </p>
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -46,6 +53,7 @@ public class ProcessNode extends AbstractNode<ProcessDocument> {
 	/**
 	 * Constructor.
 	 * 
+	 * @param id
 	 * @param payLoad
 	 * @param level
 	 * @param sequence
@@ -54,22 +62,44 @@ public class ProcessNode extends AbstractNode<ProcessDocument> {
 		super(id, payLoad, level, sequence);
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 * @param payLoad
+	 * @param level
+	 * @param sequence
+	 * @param editable
+	 */
+	public ProcessNode(long id, ProcessDocument payLoad, int level, int sequence, boolean editable) {
+		super(id, payLoad, level, sequence, editable);
+	}
+
 	public String getCaption() {
 		return getPayLoad().getDocCode();
 	}
 
 	public List<Node> getChildList() {
 		List<Node> childList = new ArrayList<Node>();
-		Set<DocumentAssociation> associationSet = getPayLoad().getChildAssociations();
-		for (DocumentAssociation documentAssociation: associationSet) {
-			childList.add(childNodeFactory((Association<ProcessDocument, ProcessDocument>) documentAssociation));
+		List<DocumentAssociation> associationList = getPayLoad().getChildAssociationList();
+    	if (logger.isDebugEnabled()) {
+    		logger.debug("Found "+associationList.size()+" association(s) under sequence "+getSequence());
+    	}
+		for (DocumentAssociation documentAssociation: associationList) {
+			// make inherited associations read-only
+			if (documentAssociation.getParent().equals(getPayLoad())) {
+				childList.add(childNodeFactory(documentAssociation, true));
+			}
+			else {
+				childList.add(childNodeFactory(documentAssociation, false));
+			}
 		}
 		Collections.sort(childList);
 		return childList;
 	}
 	
-	private Node childNodeFactory(Association<ProcessDocument, ProcessDocument> association) {
-		Node node = new ProcessNode(association.getId(), association.getChild(), getLevel()+1, association.getSequence());
+	private Node childNodeFactory(Association<ProcessDocument, ProcessDocument> association, boolean editable) {
+		Node node = new ProcessNode(association.getId(), association.getChild(), getLevel()+1, association.getSequence(), editable);
 		return node;
 	}
 
@@ -81,5 +111,7 @@ public class ProcessNode extends AbstractNode<ProcessDocument> {
 		if (!(other instanceof ProcessDocumentNode)) return false;
 		return super.equals(other);
 	}
+	
+	private static final Log logger = LogFactory.getLog(ProcessNode.class);
 
 }
