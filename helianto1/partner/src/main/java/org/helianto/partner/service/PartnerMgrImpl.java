@@ -85,9 +85,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerList;
 	}
 
-	public PartnerRegistry storePartner(Partner partner) {
-		Partner managed = partnerDao.mergePartner(partner);
-		return managed.getPartnerRegistry();
+	public Partner storePartner(Partner partner) {
+		return partnerDao.mergePartner(partner);
 	}
 
 	public void removePartner(Partner partner) {

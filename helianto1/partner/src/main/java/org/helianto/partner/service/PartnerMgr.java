@@ -53,7 +53,7 @@ public interface PartnerMgr {
     /**
      * Write <code>Partner</code> to the datastore.
      */
-	public PartnerRegistry storePartner(Partner partner);
+	public Partner storePartner(Partner partner);
 
     /**
      * Remove <code>Partner</code> from the datastore.
