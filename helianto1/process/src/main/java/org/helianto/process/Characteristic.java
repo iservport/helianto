@@ -33,7 +33,7 @@ import org.helianto.core.Unit;
  */
 @javax.persistence.Entity
 @Table(name="proc_charac")
-public class Characteristic extends ProcessDocument {
+public class Characteristic extends DerivedProcessDocument {
 	
 	private static final long serialVersionUID = 1L;
 	private String nominalValue;

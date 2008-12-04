@@ -32,7 +32,7 @@ import org.helianto.core.Sequenceable;
  */
 @javax.persistence.Entity
 @Table(name="proc_process")
-public class Process extends ProcessDocument implements java.io.Serializable, Sequenceable {
+public class Process extends DerivedProcessDocument implements Sequenceable {
 
     private static final long serialVersionUID = 1L;
     protected long internalNumber;

@@ -18,17 +18,13 @@ package org.helianto.process;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -36,9 +32,23 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
 /**
+ * Base class to a document hierarchy to be used in engineering structures.  
  * <p>
- * Represents a document to be used in processes.  
+ * Concrete classes based on <code>ProcessDocument</code> are
+ * allowed to participate in complex product and process structures just
+ * adding appropriate parent and child associations. See {@link DocumentAssociation}
+ * and {@link AssociationType} for restrictions on structure creation.
  * </p>
+ * <p>
+ * Having a common base class makes the API service layer free to take full 
+ * advantage of polimorphism to organize trees. The key value of such
+ * concept is flexibility. Many different industries require the 
+ * engineering structure to be created in a particular manner. Some focus on the
+ * production process first and then associate parts to be manufactured in 
+ * accordance to that process. Other prefer to develop a process for a given
+ * part, in some cases, group of parts. Processes may have characteristics, 
+ * as well as parts.
+ * <p>
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -49,25 +59,14 @@ import org.helianto.core.Entity;
 public class ProcessDocument extends Document implements java.io.Serializable, Comparator<DocumentAssociation> {
 
     private static final long serialVersionUID = 1L;
-    private ProcessDocument parent;
     private Set<DocumentAssociation> parentAssociations = new HashSet<DocumentAssociation>();
     private Set<DocumentAssociation> childAssociations = new HashSet<DocumentAssociation>();
+    private char inheritanceType = org.helianto.process.InheritanceType.FINAL.getValue();
+
 
     /** default constructor */
     public ProcessDocument() {
     }
-
-    /**
-	 * Parent process document
-	 */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="parentId", nullable=true)
-	public ProcessDocument getParent() {
-		return parent;
-	}
-	public void setParent(ProcessDocument parent) {
-		this.parent = parent;
-	}
 
     /**
      * ParentAssociations getter.
@@ -96,38 +95,6 @@ public class ProcessDocument extends Document implements java.io.Serializable, C
     @Transient
     public List<DocumentAssociation> getChildAssociationList() {
     	List<DocumentAssociation> childAssociationList = new ArrayList<DocumentAssociation>(this.getChildAssociations());
-    	if (getParent()!=null && parent.getChildAssociationList().size()>0) {
-    		Map<Integer, DocumentAssociation> documentAssociationMap = new HashMap<Integer, DocumentAssociation>();
-    		List<DocumentAssociation> parentAssociations = parent.getChildAssociationList();
-    		// copy in documentAssociationMap all associations from local process
-    		for(DocumentAssociation association: childAssociationList) {
-        		documentAssociationMap.put(association.getSequence(), association);
-    		}
-    		// copy in documentAssociationMap only associations that ...
-    		for (DocumentAssociation parentAssociation: parentAssociations) {
-    			DocumentAssociation localAssociation = documentAssociationMap.get(parentAssociation.getSequence());
-    			// do not exist as local,
-    			if (localAssociation==null) {
-        			documentAssociationMap.put(parentAssociation.getSequence(), parentAssociation);
-    			}
-    			// or is marked incomplete
-    			else if (false) {
-    				// TODO incomplete associations must result in a combination
-    				// between parent and local associations
-    				// for those who are familiar with OO programming (!)
-    				// incomplete is a kind of abstract association that
-    				// provides only part of the information required by the process
-    			}
-    			// or is marked suppressing
-    			else if (false) {
-    				// TODO a suppressing local association
-    				// removes the parent association from the resulting list
-    				documentAssociationMap.remove(localAssociation.getSequence());
-    			}
-    		}
-    		// replace the previously computed list with the complete one
-    		childAssociationList = new ArrayList<DocumentAssociation>(documentAssociationMap.values());
-    	}
     	Collections.sort(childAssociationList, this);
 		return childAssociationList;
 	}
@@ -136,6 +103,19 @@ public class ProcessDocument extends Document implements java.io.Serializable, C
     	return first.getSequence() - last.getSequence();
     }
        
+	/**
+	 * Inheritance type.
+	 */
+	public char getInheritanceType() {
+		return inheritanceType;
+	}
+	public void setInheritanceType(char inheritanceType) {
+		this.inheritanceType = inheritanceType;
+	}
+	public void setInheritanceType(org.helianto.process.InheritanceType inheritanceType) {
+		this.inheritanceType = inheritanceType.getValue();
+	}
+
     //1.1
     /**
      * <code>ProcessDocument</code> factory.

@@ -6,6 +6,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.filter.AbstractSelectionStrategy;
 import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.orm.DefaultCategorySelectionStrategy;
+import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,16 @@ public class DefaultPartnerSelectionStrategy extends AbstractSelectionStrategy<P
     }
 
 	@Override
+	protected void preProcessFilter(PartnerFilter filter, CriteriaBuilder mainCriteriaBuilder) {
+		if (!filter.getClazz().equals(Partner.class)) {
+	        if (logger.isDebugEnabled()) {
+	            logger.debug("Partner class is: '"+filter.getClazz()+"'");
+	        }
+			mainCriteriaBuilder.appendAnd().append(filter.getClazz());
+		}
+	}
+
+	@Override
 	protected boolean isSelection(PartnerFilter filter) {
 		return false;
 	}
@@ -37,7 +48,6 @@ public class DefaultPartnerSelectionStrategy extends AbstractSelectionStrategy<P
 	protected void doFilter(PartnerFilter filter, CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("partnerNameLike", filter.getPartnerNameLike(), mainCriteriaBuilder);
         appendEqualFilter("priority", filter.getPriority(), mainCriteriaBuilder);
-        appendEqualFilter("class", filter.getClazz().toString(), mainCriteriaBuilder);
 	}
 
     private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);

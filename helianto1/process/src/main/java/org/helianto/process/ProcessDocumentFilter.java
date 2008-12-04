@@ -32,6 +32,7 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	private long internalNumber;
 	private Document document;
 	private String docNameLike = "";
+	private char inheritanceType = ' ';
 	private Class<? extends ProcessDocument> clazz = ProcessDocument.class;
     private Collection<? extends ProcessDocument> exclusions;
 	
@@ -117,6 +118,16 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	}
 	public void setDocNameLike(String docNameLike) {
 		this.docNameLike = docNameLike;
+	}
+
+	/**
+	 * Inheritance type.
+	 */
+	public char getInheritanceType() {
+		return inheritanceType;
+	}
+	public void setInheritanceType(char inheritanceType) {
+		this.inheritanceType = inheritanceType;
 	}
 
 	/**

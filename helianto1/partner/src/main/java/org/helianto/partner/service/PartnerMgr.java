@@ -63,7 +63,7 @@ public interface PartnerMgr {
     /**
      * Write <code>Address</code> to the datastore.
      */
-	public PartnerRegistry storeAddress(Address address);
+	public Address storeAddress(Address address);
 
     /**
      * REmove <code>Address</code> from the datastore.

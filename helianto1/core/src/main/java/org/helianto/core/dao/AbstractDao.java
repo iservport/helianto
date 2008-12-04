@@ -30,7 +30,6 @@ import org.hibernate.SessionFactory;
  * 
  * @author Mauricio Fernandes de Castro.
  */
-@SuppressWarnings("restriction")
 public abstract class AbstractDao<T extends QueryEnabled> implements LightweightDao<T> {
 
 	protected SessionFactory sessionFactory;

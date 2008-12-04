@@ -93,9 +93,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 		partnerDao.removePartner(partner);
 	}
 
-	public PartnerRegistry storeAddress(Address address) {
-		Address managed =  addressDao.mergeAddress(address);
-		return managed.getPartnerRegistry();
+	public Address storeAddress(Address address) {
+		return addressDao.mergeAddress(address);
 	}
 
 	public PartnerRegistry removeAddress(Address address) {

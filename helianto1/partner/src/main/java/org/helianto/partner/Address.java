@@ -91,6 +91,16 @@ public class Address implements java.io.Serializable {
     public PartnerRegistry getPartnerRegistry() {
         return this.partnerRegistry;
     }
+    @Transient
+    public String getPartnerAlias() {
+    	if (this.partnerRegistry==null) return "";
+    	return this.partnerRegistry.getPartnerAlias();
+    }
+    @Transient
+    public String getPartnerName() {
+    	if (this.partnerRegistry==null) return "";
+    	return this.partnerRegistry.getPartnerName();
+    }
     public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
         this.partnerRegistry = partnerRegistry;
     }

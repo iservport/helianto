@@ -20,6 +20,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -76,10 +77,9 @@ public class Entity implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private long id;
+    private int version;
     private Operator operator;
     private String alias;
-
-    private int version;
 
     /** default constructor */
     public Entity() {
@@ -95,46 +95,37 @@ public class Entity implements java.io.Serializable {
     }
 
     /**
-     * Operator getter.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="operatorId", nullable=true)
-    public Operator getOperator() {
-        return this.operator;
-    }
-    /**
-     * Operator setter.
-     */
-    public void setOperator(Operator operator) {
-        this.operator = operator;
-    }
-
-    /**
-     * Alias getter.
-     */
-    @Column(length=20)
-    public String getAlias() {
-        return this.alias;
-    }
-    /**
-     * Alias setter.
-     */
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
-    /**
-     * Version getter.
+     * Version.
      */
     @Version
     public int getVersion() {
         return this.version;
     }
-    /**
-     * Version setter.
-     */
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    /**
+     * Operator, lazy loaded.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
+    @JoinColumn(name="operatorId", nullable=true)
+    public Operator getOperator() {
+        return this.operator;
+    }
+    public void setOperator(Operator operator) {
+        this.operator = operator;
+    }
+
+    /**
+     * Alias.
+     */
+    @Column(length=20)
+    public String getAlias() {
+        return this.alias;
+    }
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     /**

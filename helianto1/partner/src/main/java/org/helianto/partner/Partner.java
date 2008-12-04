@@ -72,12 +72,16 @@ public class Partner implements java.io.Serializable {
     public PartnerRegistry getPartnerRegistry() {
         return this.partnerRegistry;
     }
-    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
-        this.partnerRegistry = partnerRegistry;
-    }
     @Transient
     public String getPartnerAlias() {
     	return getPartnerRegistry().getPartnerAlias();
+    }
+    @Transient
+    public String getPartnerName() {
+    	return getPartnerRegistry().getPartnerName();
+    }
+    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
+        this.partnerRegistry = partnerRegistry;
     }
 
     /**
@@ -131,6 +135,7 @@ public class Partner implements java.io.Serializable {
         }
         partner.setPartnerRegistry(partnerRegistry);
         partnerRegistry.getPartners().add(partner);
+        partner.setPartnerState(PartnerState.IDLE.getValue());
         return partner;
     }
 

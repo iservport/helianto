@@ -45,6 +45,7 @@ public class DefaultProcessDocumentSelectionStrategy extends AbstractSelectionSt
 	@Override
 	protected void doFilter(ProcessDocumentFilter filter, CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("docName", filter.getDocNameLike(), mainCriteriaBuilder);
+		appendEqualFilter("inheritanceType", filter.getInheritanceType(), mainCriteriaBuilder);
 	}
 
 	private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
