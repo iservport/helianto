@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Sequenceable;
 
 /**
  * <p>
@@ -28,9 +29,10 @@ import org.helianto.core.Entity;
  */
 @javax.persistence.Entity
 @Table(name="proc_controlplan")
-public class ControlPlan extends Process implements java.io.Serializable {
+public class ControlPlan extends Document implements Sequenceable {
 
 	private static final long serialVersionUID = 1L;
+    protected long internalNumber;
     private int phase;
 
 
@@ -38,6 +40,23 @@ public class ControlPlan extends Process implements java.io.Serializable {
     public ControlPlan() {
     }
 
+    /**
+     * Internal number.
+     */
+    public long getInternalNumber() {
+        return this.internalNumber;
+    }
+    public void setInternalNumber(long internalNumber) {
+        this.internalNumber = internalNumber;
+        StringBuilder prefix = new StringBuilder("CTP#");
+        setDocCode(prefix.append(internalNumber).toString());
+    }
+    @Transient
+	public String getInternalNumberKey() {
+		return "CTRLPLN";
+	}
+ 
+    
     /**
      * Phase.
      */
@@ -49,13 +68,6 @@ public class ControlPlan extends Process implements java.io.Serializable {
     }
     public void setPhase(ProcessPhase phase) {
         this.phase = phase.getValue();
-    }
-    
-    @Override
-    public void setInternalNumber(long internalNumber) {
-        this.internalNumber = internalNumber;
-        StringBuilder prefix = new StringBuilder("CTP#");
-        setDocCode(prefix.append(internalNumber).toString());
     }
     
     /**

@@ -10,8 +10,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.process.ProcessDocument;
-import org.helianto.process.DocumentAssociation;
 
 /**
  * <code>DocumentAssociation</code> domain tests.
@@ -24,8 +22,8 @@ public class DocumentAssociationTests extends TestCase {
      * Test <code>DocumentAssociation</code> static factory method.
      */
     public void testDocumentAssociationFactory() {
-        ProcessDocument parent = new Part();
-        ProcessDocument child = new Part();
+        ProcessDocument parent = new Process();
+        ProcessDocument child = new Process();
         
         DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
         
@@ -40,8 +38,8 @@ public class DocumentAssociationTests extends TestCase {
      * Test <code>DocumentAssociation</code> equals() method.
      */
     public void testDocumentAssociationEquals() {
-        ProcessDocument parent = new Part();
-        ProcessDocument child = new Part();
+        ProcessDocument parent = new Process();
+        ProcessDocument child = new Process();
         
         DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
         DocumentAssociation copy = (DocumentAssociation) DomainTestSupport.minimalEqualsTest(documentAssociation);

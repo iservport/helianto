@@ -18,6 +18,7 @@ package org.helianto.process;
 import java.math.BigDecimal;
 
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -51,9 +52,10 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
     }
 
     /**
-     * Parent document.
+     * Parent document (lazy loaded).
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+    		   fetch=FetchType.LAZY)
     @JoinColumn(name="parentId", nullable=true)
     public ProcessDocument getParent() {
         return this.parent;

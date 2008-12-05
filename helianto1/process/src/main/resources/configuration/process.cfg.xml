@@ -7,7 +7,6 @@
 		<mapping class="org.helianto.process.Release" />
 		<mapping class="org.helianto.process.ProcessDocument" />
 		<mapping class="org.helianto.process.DocumentAssociation" />
-		<mapping class="org.helianto.process.Part" />
 		<mapping class="org.helianto.process.Process" />
 		<mapping class="org.helianto.process.Setup" />
 		<mapping class="org.helianto.process.Operation" />
@@ -19,7 +18,6 @@
 		<mapping class="org.helianto.process.ControlPlan" />
 		<mapping class="org.helianto.process.MeasurementTechnique" />
 		<mapping class="org.helianto.process.Specification" />
-		<mapping class="org.helianto.process.Method" />
 	</session-factory>
 </hibernate-configuration>
 

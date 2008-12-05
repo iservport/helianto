@@ -23,6 +23,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.helianto.core.Sequenceable;
+
 
 /**
  * <p>
@@ -32,9 +34,10 @@ import javax.persistence.Transient;
  */
 @javax.persistence.Entity
 @Table(name="proc_operation")
-public class Operation extends Process implements java.io.Serializable {
+public class Operation extends DerivedProcessDocument implements Sequenceable {
 
     private static final long serialVersionUID = 1L;
+    protected long internalNumber;
     private int operationType;
     private long operationTime;
     private List<Setup> setups = new ArrayList<Setup>(0);
@@ -43,6 +46,20 @@ public class Operation extends Process implements java.io.Serializable {
     public Operation() {
     }
 
+    /**
+     * Internal number.
+     */
+    public long getInternalNumber() {
+        return this.internalNumber;
+    }
+    public void setInternalNumber(long internalNumber) {
+        this.internalNumber = internalNumber;
+    }
+    @Transient
+	public String getInternalNumberKey() {
+		return "OPER";
+	}
+ 
     /**
      * Operation type.
      */
@@ -95,19 +112,6 @@ public class Operation extends Process implements java.io.Serializable {
     
     //1.1
     /**
-     * <code>Operation</code> component factory.
-     * 
-     * @param componentCode
-     * @param internalNumber
-     * @param sequence
-     */
-    public DocumentAssociation operationRequirementFactory(String componentCode, long internalNumber, int sequence) {
-    	DocumentAssociation documentAssociation = documentAssociationFactory(Part.class, componentCode, sequence);
-        return documentAssociation;
-    }
-
-    //1.2
-    /**
      * <code>Operation</code> subprocess factory.
      * 
      * @param processCode
@@ -119,7 +123,7 @@ public class Operation extends Process implements java.io.Serializable {
         return documentAssociation;
     }
 
-    //1.3
+    //1.2
     /**
      * <code>Operation</code> characteristic factory.
      * 

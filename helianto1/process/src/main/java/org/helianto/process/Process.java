@@ -42,14 +42,6 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
     }
 
     /**
-     * Internal number key.
-     */
-    @Transient
-	public String getInternalNumberKey() {
-		return "PROC";
-	}
- 
-    /**
      * Internal number.
      */
     public long getInternalNumber() {
@@ -58,7 +50,11 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
     public void setInternalNumber(long internalNumber) {
         this.internalNumber = internalNumber;
     }
-    
+    @Transient
+	public String getInternalNumberKey() {
+		return "PROC";
+	}
+ 
     @Transient
     public List<DocumentAssociation> getOperationAssociations() {
     	List<DocumentAssociation> childAssociationList = new ArrayList<DocumentAssociation>();
@@ -121,20 +117,6 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
     public DocumentAssociation processCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
     	DocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
         return documentAssociation;
-    }
-
-    //1.4
-    /**
-     * <code>Process</code> control plan factory.
-     * 
-     * @param controlPlanCode
-     * @param internalNumber
-     * @param phase
-     */
-    public DocumentAssociation processControlPlanFactory(String controlPlanCode, long internalNumber, ProcessPhase phase) {
-    	DocumentAssociation documentAssociation = documentAssociationFactory(ControlPlan.class, controlPlanCode, phase.getValue());
-    	((ControlPlan) documentAssociation.getChild()).setPhase(phase);
-    	return documentAssociation;
     }
 
     /**

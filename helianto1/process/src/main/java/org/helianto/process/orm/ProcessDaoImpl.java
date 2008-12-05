@@ -22,7 +22,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.process.ExternalDocument;
 import org.helianto.process.Operation;
-import org.helianto.process.Part;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.Setup;
@@ -114,10 +113,6 @@ public class ProcessDaoImpl extends GenericDaoImpl implements ProcessDao {
 
     static final String EXTERNALDOCUMENT_PARENT_QRY = "select child from Tree associations " +
         "where associations.parent = ? ";
-
-    public List<Part> findPartByEntity(Entity entity) {
-        return (ArrayList<Part>) find(PART_QRY, entity);
-    }
 
     public List<Process> findProcessByEntity(Entity entity) {
         return (ArrayList<Process>) find(PROCESS_QRY, entity);

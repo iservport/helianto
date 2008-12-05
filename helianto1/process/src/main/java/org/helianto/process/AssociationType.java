@@ -11,42 +11,6 @@ package org.helianto.process;
 public enum AssociationType {
     
     /**
-     * Association to a component of a part.
-     */
-    PART_PART('A', Part.class, Part.class, true),
-    
-    /**
-     * Association to a child process appropriate to manufacture 
-     * to manufacture the parent part.
-     */
-    PART_PROCESS('B', Part.class, Process.class, true),
-    
-    /**
-     * Association to a characterisitic that describes a part.
-     * 
-     */
-    PART_CHARACTERISTIC('C', Part.class, Characteristic.class, true),
-
-    /**
-     * The association is part to specification.
-     * 
-     * <p>If a specification is a descendant of a part, it should be 
-     * later associated with a characterisitic.</p>
-     */
-    PART_SPECIFICATION('D', Part.class, Characteristic.class, true),
-    
-    /**
-     * Direct association to a part required by a process.
-     * 
-     * <p>
-     * Not recommended: parts required by a process should be 
-     * associated using operations and the corresponding 
-     * OPERATION_PART association.
-     * </p>
-     */
-    PROCESS_PART('E', Process.class, Part.class, false),
-    
-    /**
      * Association to an operation describing a process.
      * 
      */
@@ -56,11 +20,6 @@ public enum AssociationType {
      * Association to a control plan of a process.
      */
     PROCESS_CONTROLPLAN('G', Process.class, ControlPlan.class, true),
-
-    /**
-     * Association to a required component within a process operation.
-     */
-    OPERATION_PART('H', Operation.class, Part.class, true),
 
     /**
      * Association to a required sub-process within a process operation.

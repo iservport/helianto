@@ -16,18 +16,16 @@
 package org.helianto.process;
 
 import javax.persistence.Column;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.Embeddable;
 
 /**
  * <p>
- * A method extends a specification to add the evaluation or measurement technique.
+ * A method provides sampling and control information.
  * </p>
  * @author Mauricio Fernandes de Castro
  */
-@javax.persistence.Entity
-@Table(name="proc_method")
-public class Method extends Specification implements java.io.Serializable {
+@Embeddable
+public class Method implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int sampleSize;
@@ -70,31 +68,6 @@ public class Method extends Specification implements java.io.Serializable {
         this.controlMethod = control;
     }
 
-    /**
-     * <code>Method</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getMethodQueryStringBuilder() {
-        return new StringBuilder("select method from Method method ");
-    }
-
-    /**
-     * <code>Method</code> natural id query.
-     */
-    @Transient
-    public static String getMethodNaturalIdQueryString() {
-        return getMethodQueryStringBuilder().append("where method.entity = ? and method.docCode = ? ").toString();
-    }
-    
-    /**
-     * equals
-     */
-    @Override
-    public boolean equals(Object other) {
-          if ( !(other instanceof Method) ) return false;
-          return super.equals(other);
-    }
-    
 }
 
 

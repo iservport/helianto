@@ -16,6 +16,7 @@
 package org.helianto.core.dao;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -36,23 +37,29 @@ public abstract class AbstractDao<T extends QueryEnabled> implements Lightweight
 
 	@SuppressWarnings("unchecked")
 	public Collection<T> find(T object, String criteria) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique '"+object.getObjectAlias());
-        }
-        StringBuilder selectClause = createSelectClause(object);
+        StringBuilder queryBuilder = createSelectClause(object);
         if (!criteria.equals("")) {
-        	selectClause.append(criteria);
+        	queryBuilder.append("where ").append(criteria);
         }
-        return (Collection<T>) internalFind(selectClause.toString()).list();
+        Collection<T> resultList = internalFind(queryBuilder.toString()).list();
+        if (logger.isDebugEnabled()) {
+            logger.debug("Found "+resultList.size()+" item(s)");
+        }
+        return resultList;
 	}
 
 	@SuppressWarnings("unchecked")
 	public T findByNaturalId(T object, Object... uniqueKeys) {
+        String query = object.getNaturalIdQueryString(createSelectClause(object));
+        List<T> resultList = internalFind(query, uniqueKeys).list();
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique '"+object.getObjectAlias());
+            logger.debug("Found "+resultList.size()+" item(s)");
         }
-        StringBuilder selectClause = createSelectClause(object);
-        return (T) internalFind(selectClause.toString(), uniqueKeys).list().iterator().next();
+        if (resultList.size()!=1) {
+            logger.warn("Not unique, returning null");
+            return null;
+        }
+        return (T) internalFind(query, uniqueKeys).list().iterator().next();
 	}
 	
 	protected StringBuilder createSelectClause(T object) {
@@ -98,10 +105,13 @@ public abstract class AbstractDao<T extends QueryEnabled> implements Lightweight
             Query result = this.sessionFactory.getCurrentSession().createQuery(query);
             int i = 0;
             for (Object value: values) {
-                result.setParameter(i++, value);
                 if (logger.isDebugEnabled()) {
                     logger.debug("Parameter "+i+"="+value);
                 }
+                result.setParameter(i++, value);
+            }
+            if (logger.isDebugEnabled()) {
+                logger.debug("Query is "+result.getQueryString());
             }
             return result;
         } catch (Exception e) {

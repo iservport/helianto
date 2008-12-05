@@ -37,6 +37,7 @@ public class Specification extends ProcessDocument {
 	private int specificationType;
 	private SpecificationLimit specificationLimit;
     private MeasurementTechnique measurementTechnique;
+    private Method method;
 
 	/** default constructor */
     public Specification() {
@@ -79,6 +80,17 @@ public class Specification extends ProcessDocument {
 	}
 
     /**
+     * Method.
+     */
+    @Embedded
+	public Method getMethod() {
+		return method;
+	}
+    public void setMethod(Method method) {
+		this.method = method;
+	}
+
+	/**
      * <code>Specification</code> query <code>StringBuilder</code>.
      */
     @Transient

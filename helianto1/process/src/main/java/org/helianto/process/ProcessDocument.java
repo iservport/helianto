@@ -71,7 +71,8 @@ public class ProcessDocument extends Document implements java.io.Serializable, C
     /**
      * ParentAssociations getter.
      */
-    @OneToMany(mappedBy="child", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="child", 
+    		   cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<DocumentAssociation> getParentAssociations() {
         return this.parentAssociations;
     }
@@ -82,7 +83,8 @@ public class ProcessDocument extends Document implements java.io.Serializable, C
     /**
      * ChildAssociations getter.
      */
-    @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="parent", 
+    		   cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<DocumentAssociation> getChildAssociations() {
         return this.childAssociations;
     }
