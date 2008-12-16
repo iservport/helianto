@@ -95,6 +95,13 @@ public abstract class AbstractDao<T extends QueryEnabled> implements Lightweight
 		this.sessionFactory.getCurrentSession().delete(object);
 	}
 
+	public void evict(T object) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Evicting "+object);
+        }
+		this.sessionFactory.getCurrentSession().evict(object);
+	}
+
     @Resource
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;

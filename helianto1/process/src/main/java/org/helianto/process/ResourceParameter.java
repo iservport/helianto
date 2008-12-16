@@ -208,7 +208,6 @@ public class ResourceParameter implements java.io.Serializable {
 	  StringBuffer buffer = new StringBuffer();
 
       buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-      buffer.append("entity").append("='").append(getEntity()).append("' ");			
       buffer.append("parameterCode").append("='").append(getParameterCode()).append("' ");			
       buffer.append("]");
       
@@ -227,7 +226,6 @@ public class ResourceParameter implements java.io.Serializable {
    
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getParameterCode() == null ? 0 : this.getParameterCode().hashCode() );
          return result;
    }   

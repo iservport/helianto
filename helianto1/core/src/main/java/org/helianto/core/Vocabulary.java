@@ -110,12 +110,7 @@ public class Vocabulary  implements java.io.Serializable {
    
    public int hashCode() {
          int result = 17;
-         
-         
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getCode() == null ? 0 : this.getCode().hashCode() );
-         
-         
          return result;
    }   
 

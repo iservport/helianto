@@ -145,7 +145,6 @@ public class Account implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("entity").append("='").append(getEntity()).append("' ");
         buffer.append("accountCode").append("='").append(getAccountCode()).append("' ");
         buffer.append("]");
       
@@ -170,7 +169,6 @@ public class Account implements java.io.Serializable {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getAccountCode() == null ? 0 : this.getAccountCode().hashCode() );
          return result;
    }   

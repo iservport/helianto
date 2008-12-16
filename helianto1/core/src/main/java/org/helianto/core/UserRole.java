@@ -163,8 +163,6 @@ public class UserRole  implements java.io.Serializable {
    
    public int hashCode() {
          int result = 17;
-         
-         
          result = 37 * result + ( getUserGroup() == null ? 0 : this.getUserGroup().hashCode() );
          result = 37 * result + ( getService() == null ? 0 : this.getService().hashCode() );
          result = 37 * result + ( getServiceExtension() == null ? 0 : this.getServiceExtension().hashCode() );

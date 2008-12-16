@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
@@ -56,12 +57,13 @@ import org.helianto.core.Entity;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
 @Inheritance(strategy = InheritanceType.JOINED)
-public class ProcessDocument extends Document implements java.io.Serializable, Comparator<DocumentAssociation> {
+public class ProcessDocument extends Document implements Comparator<DocumentAssociation> {
 
     private static final long serialVersionUID = 1L;
     private Set<DocumentAssociation> parentAssociations = new HashSet<DocumentAssociation>();
     private Set<DocumentAssociation> childAssociations = new HashSet<DocumentAssociation>();
     private char inheritanceType = org.helianto.process.InheritanceType.FINAL.getValue();
+    private String processColor = "ccccccff";
 
 
     /** default constructor */
@@ -118,7 +120,18 @@ public class ProcessDocument extends Document implements java.io.Serializable, C
 		this.inheritanceType = inheritanceType.getValue();
 	}
 
-    //1.1
+	/**
+	 * Optional 3-byte hexadecimal color (RGB).
+	 */
+	@Column(length=6)
+	public String getProcessColor() {
+		return processColor;
+	}
+    public void setProcessColor(String processColor) {
+		this.processColor = processColor;
+	}
+
+	//1.1
     /**
      * <code>ProcessDocument</code> factory.
      * 

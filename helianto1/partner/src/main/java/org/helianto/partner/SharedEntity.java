@@ -88,7 +88,6 @@ public class SharedEntity  implements java.io.Serializable {
 	  StringBuffer buffer = new StringBuffer();
 
       buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-      buffer.append("sharedEntity").append("='").append(getSharedEntity()).append("' ");			
       buffer.append("partnerRegistry").append("='").append(getPartnerRegistry()).append("' ");			
       buffer.append("]");
       
@@ -107,12 +106,7 @@ public class SharedEntity  implements java.io.Serializable {
    
    public int hashCode() {
          int result = 17;
-         
-         
-         result = 37 * result + ( getSharedEntity() == null ? 0 : this.getSharedEntity().hashCode() );
          result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
-         
-         
          return result;
    }   
 

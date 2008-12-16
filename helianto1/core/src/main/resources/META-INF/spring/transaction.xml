@@ -32,7 +32,7 @@
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="prepare*">PROPAGATION_REQUIRED</prop>
+				<prop key="prepare*">PROPAGATION_NESTED</prop>
 				<prop key="write*">PROPAGATION_REQUIRED</prop>
 				<prop key="store*">PROPAGATION_REQUIRED</prop>
 				<prop key="store*">PROPAGATION_REQUIRED</prop>

@@ -20,14 +20,14 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
-
-import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,9 +50,8 @@ import freemarker.template.TemplateException;
  * test inside Spring code.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated see AbstractFreeMarkerViewTestSupport
  */
-public class FreeMarkerViewTestSupport extends TestCase {
+public abstract class AbstractFreeMarkerViewTestSupport {
 
     protected StaticWebApplicationContext wac;
 
@@ -87,7 +86,6 @@ public class FreeMarkerViewTestSupport extends TestCase {
     	return false;
     }
 
-    @Override
     public void setUp() throws IOException, TemplateException, InstantiationException, IllegalAccessException {
         wac = new StaticWebApplicationContext();
         wac.setServletContext(new MockServletContext());
@@ -144,7 +142,7 @@ public class FreeMarkerViewTestSupport extends TestCase {
                 logger.debug("Errors: "+request.getAttribute("errors"));
             }
         }
-        searchTransition(expectedResponse.getContentAsString());
+        List<String> transitionList = searchTransition(expectedResponse.getContentAsString());
         if (visualTest) {
             if (!outputFileName.equals("")) {
                 createOutputFile(expectedResponse.getContentAsString().toCharArray(), outputFileName);
@@ -152,7 +150,10 @@ public class FreeMarkerViewTestSupport extends TestCase {
             else {
                 System.out.println(expectedResponse.getContentAsString());
             }
-            fail("Forced to fail; please, set the visualTest parameter to false");
+            for (String transition: transitionList) {
+            	System.out.println(transition);
+            }
+            throw new IllegalArgumentException("Forced to fail; please, set the visualTest parameter to false");
         }
         return expectedResponse;
     }
@@ -174,7 +175,7 @@ public class FreeMarkerViewTestSupport extends TestCase {
             else {
                 System.out.println(expectedResponse.getContentAsString());
             }
-            fail("Forced to fail; please, set the visualTest parameter to false");
+            throw new IllegalArgumentException("Forced to fail; please, set the visualTest parameter to false");
         }
         return expectedResponse;
     }
@@ -210,18 +211,21 @@ public class FreeMarkerViewTestSupport extends TestCase {
             }
         }
     }
-    
-    protected boolean searchTransition(CharSequence text) {
-    	Pattern pattern = Pattern.compile("_eventId.*$");
+
+    protected List<String> searchTransition(CharSequence text) {
+    	Pattern pattern = Pattern.compile("_eventId.*\"");
     	Matcher matcher = pattern.matcher(text);
-        boolean found = false;
+        List<String> transitionList = new ArrayList<String>();
+    	if (logger.isDebugEnabled()) {
+        	logger.debug("Searching transitions");
+    	}
         while (matcher.find()) {
         	if (logger.isDebugEnabled()) {
             	logger.debug("Found " + matcher.group()+" at "+matcher.start());
         	}
-            found = true;
+        	transitionList.add(matcher.group());
         }
-        return found;
+        return transitionList;
 
     }
 
@@ -229,6 +233,6 @@ public class FreeMarkerViewTestSupport extends TestCase {
         this.outputFileName = outputFileName;
     }
     
-    private final Log logger = LogFactory.getLog(FreeMarkerViewTestSupport.class);
+    private final Log logger = LogFactory.getLog(AbstractFreeMarkerViewTestSupport.class);
 
 }

@@ -173,7 +173,6 @@ public class Unit implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("entity").append("='").append(getEntity()).append("' ");
         buffer.append("unitCode").append("='").append(getUnitCode()).append("' ");
         buffer.append("]");
       
@@ -198,7 +197,6 @@ public class Unit implements java.io.Serializable {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getUnitCode() == null ? 0 : this.getUnitCode().hashCode() );
          return result;
    }

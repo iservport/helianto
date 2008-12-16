@@ -14,12 +14,11 @@ package org.helianto.process;
  */
 public class DocumentDetail  implements java.io.Serializable {
 
-    // Fields    
-
-     private long id;
-     private ProcessDocument document;
-     private int sequence;
-     private String detailDesc;
+	private static final long serialVersionUID = 1L;
+	private long id;
+    private ProcessDocument document;
+    private int sequence;
+    private String detailDesc;
 
      // Constructors
 

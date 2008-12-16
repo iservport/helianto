@@ -40,6 +40,11 @@ public interface LightweightDao<T> {
     public void remove(T object);
     
     /**
+     * Evict an object.
+     */
+    public void evict(T object);
+    
+    /**
      * Find using natural keys.
      */
     public T findByNaturalId(T object, Object... uniqueKeys);

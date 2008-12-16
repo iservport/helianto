@@ -134,6 +134,19 @@ public class MaterialType  implements java.io.Serializable {
     }
 
 
+	/**
+     * toString
+     * @return String
+     */
+	@Override
+	public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        builder.append("internalNumber").append("='").append(getInternalNumber()).append("' ");
+        builder.append("]");
+        return builder.toString();
+    }
+
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
 		 if ( (other == null ) ) return false;
@@ -146,7 +159,6 @@ public class MaterialType  implements java.io.Serializable {
    
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + (int) this.getInternalNumber();
          return result;
    }   

@@ -11,25 +11,20 @@ package org.helianto.process;
 public enum AssociationRole {
     
     /**
-     * Association has no role.
+     * Association has no control requirement.
      * 
      */
     NONE('N', false),
     /**
-     * Association is the entry point.
+     * Association requires a start time control.
      * 
      */
-    ENTRY_POINT('E', true),
+    CONTROL_START_TIME('S', true),
     /**
-     * Association requires a control before start.
+     * Association requires an end time control.
      * 
      */
-    REQUIRE_CONTROL_BEFORE_START('B', true),
-    /**
-     * Association requires a control after end.
-     * 
-     */
-    REQUIRE_CONTROL_AFTER_END('A', true);
+    CONROL_END_TIME('E', true);
     
     
     private char value;
@@ -40,12 +35,38 @@ public enum AssociationRole {
         this.controlled = controlled;
     }
     
+	/**
+	 * Char value assigned to the enumeration.
+	 */
     public char getValue() {
         return value;
     }
 
+    /**
+     * True if control is required.
+     */
     public boolean isControlled() {
         return controlled;
+    }
+    
+    /**
+     * Retrieve an <tt>AssociationRole</tt> instance given the char value.
+     */
+    public static AssociationRole getAssociationRole(char value) {
+    	for (AssociationRole associationRole: AssociationRole.values()) {
+    		if (associationRole.getValue()==value) {
+    			return associationRole;
+    		}
+    	}
+    	throw new IllegalArgumentException(value+" is not a valid value for AssociationRole");
+    }
+    
+    /**
+     * True if control is required.
+     */
+    public static boolean isControlled(char value) {
+    	AssociationRole associationRole = getAssociationRole(value);
+        return associationRole.isControlled();
     }
     
 }

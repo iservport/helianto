@@ -14,13 +14,12 @@ package org.helianto.process;
  */
 public class Attachment  implements java.io.Serializable {
 
-    // Fields    
-
-     private long id;
-     private ProcessDocument document;
-     private int sequence;
-     private byte[] content;
-     private String attachDesc;
+	private static final long serialVersionUID = 1L;
+	private long id;
+    private ProcessDocument document;
+    private int sequence;
+    private byte[] content;
+    private String attachDesc;
 
      // Constructors
 

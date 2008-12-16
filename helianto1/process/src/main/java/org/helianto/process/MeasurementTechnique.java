@@ -144,7 +144,6 @@ public class MeasurementTechnique implements java.io.Serializable {
 	  StringBuffer buffer = new StringBuffer();
 
       buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-      buffer.append("entity").append("='").append(getEntity()).append("' ");			
       buffer.append("measurementTechniqueCode").append("='").append(getMeasurementTechniqueCode()).append("' ");			
       buffer.append("]");
       
@@ -163,7 +162,6 @@ public class MeasurementTechnique implements java.io.Serializable {
    
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getMeasurementTechniqueCode() == null ? 0 : this.getMeasurementTechniqueCode().hashCode() );
          return result;
    }   

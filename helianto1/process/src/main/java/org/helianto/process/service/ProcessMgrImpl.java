@@ -76,10 +76,12 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	}
 
   	public ProcessDocument storeProcessDocument(ProcessDocument processDocument) {
-  		if (processDocument instanceof Sequenceable) {
-  			sequenceMgr.validateInternalNumber((Sequenceable) processDocument);
+  		ProcessDocument managedProcessDocument = 
+  			(ProcessDocument) processDocumentDao.mergeProcessDocument(processDocument);
+  		if (managedProcessDocument instanceof Sequenceable) {
+  			sequenceMgr.validateInternalNumber((Sequenceable) managedProcessDocument);
   		}
-		return (ProcessDocument) processDocumentDao.mergeProcessDocument(processDocument);
+		return managedProcessDocument;
 	}
 
 	public DocumentAssociation storeDocumentAssociation(DocumentAssociation documentAssociation) {

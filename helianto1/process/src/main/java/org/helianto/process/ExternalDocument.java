@@ -12,12 +12,11 @@ package org.helianto.process;
  * 				
  * 		
  */
-public class ExternalDocument extends org.helianto.process.ProcessDocument implements java.io.Serializable {
+public class ExternalDocument extends ProcessDocument implements java.io.Serializable {
 
-    // Fields    
-
-     private String docUrl;
-     private char docType;
+	private static final long serialVersionUID = 1L;
+	private String docUrl;
+    private char docType;
 
      // Constructors
 

@@ -29,7 +29,7 @@ import javax.persistence.UniqueConstraint;
  * <p>
  * Represents the relationship between the organization and other entities.  
  * </p>
- * @author Vlademir Teixeira
+ * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
 @Table(name="prtnr_phone",

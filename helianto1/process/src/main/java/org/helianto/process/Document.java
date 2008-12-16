@@ -26,6 +26,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import org.helianto.core.Entity;
+import org.helianto.core.TopLevelCodedEntity;
 /**
  * <p>
  * Represents a <code>Document</code>.  
@@ -33,7 +34,7 @@ import org.helianto.core.Entity;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public class Document implements java.io.Serializable {
+public class Document implements java.io.Serializable, TopLevelCodedEntity {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -112,6 +113,12 @@ public class Document implements java.io.Serializable {
         this.docFile = docFile;
     }
 
+	public TopLevelCodedEntity setKey(Entity entity, String docCode) {
+		this.setEntity(entity);
+		this.setDocCode(docCode);
+		return this;
+	}
+
     /**
      * <code>Document</code> general factory.
      * 
@@ -139,7 +146,6 @@ public class Document implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("entity").append("='").append(getEntity()).append("' ");
         buffer.append("docCode").append("='").append(getDocCode()).append("' ");
         buffer.append("]");
       
@@ -156,8 +162,18 @@ public class Document implements java.io.Serializable {
          if ( !(other instanceof Document) ) return false;
          Document castOther = (Document) other; 
          
-         return ((this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ))
-             && ((this.getDocCode()==castOther.getDocCode()) || ( this.getDocCode()!=null && castOther.getDocCode()!=null && this.getDocCode().equals(castOther.getDocCode()) ));
+         return ( ( this.getEntity()==castOther.getEntity()) 
+        		    || ( this.getEntity()!=null 
+        			     && castOther.getEntity()!=null 
+        			     && this.getEntity().equals(castOther.getEntity()
+        			   ) 
+        		))
+             && ( ( this.getDocCode()==castOther.getDocCode()) 
+            	    || ( this.getDocCode()!=null 
+            	    	 && castOther.getDocCode()!=null 
+            	    	 && this.getDocCode().equals(castOther.getDocCode()
+            	    	)
+            	));
    }
    
    /**
@@ -166,7 +182,6 @@ public class Document implements java.io.Serializable {
    @Override
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getEntity() == null ? 0 : this.getEntity().hashCode() );
          result = 37 * result + ( getDocCode() == null ? 0 : this.getDocCode().hashCode() );
          return result;
    }   

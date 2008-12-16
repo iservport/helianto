@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
@@ -99,5 +100,32 @@ public abstract class DerivedProcessDocument extends ProcessDocument {
     	Collections.sort(childAssociationList, this);
 		return childAssociationList;
 	}
+    
+    @Transient
+    public String[] getProcessColorChain() {
+    	Stack<ProcessDocument> processDocumentStack = getProcessDocumentStack();
+    	int processStackSize = processDocumentStack.size();
+    	String[] processColorChain = new String[processStackSize];
+    	for (int i = 0;i<processStackSize;i++) {
+    		processColorChain[i] = processDocumentStack.pop().getProcessColor();
+    	}
+    	return processColorChain;
+    }
+
+    @Transient
+    public Stack<ProcessDocument> getProcessDocumentStack() {
+    	Stack<ProcessDocument> processStack = new Stack<ProcessDocument>();
+    	DerivedProcessDocument parent = this;
+    	do {
+    		processStack.push(parent);
+    		try {
+        		parent = (DerivedProcessDocument) parent.getParent();
+    		}
+    		catch (Exception e) {
+    			parent = null;
+    		}
+    	} while (parent!=null);
+    	return processStack;
+    }
 
 }

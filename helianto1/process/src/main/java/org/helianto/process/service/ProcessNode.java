@@ -22,7 +22,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.AbstractNode;
-import org.helianto.core.Association;
 import org.helianto.core.Node;
 import org.helianto.process.DocumentAssociation;
 import org.helianto.process.ProcessDocument;
@@ -31,57 +30,66 @@ import org.helianto.process.ProcessDocument;
  * Implement <code>Node</code> interface to provide a process tree.
  * 
  * <p>
- * Process nodes wrap a <code>ProcessDocument</code> to provide child
- * nodes trough <code>DocumentAssociation</code>.
+ * Process nodes wrap <code>DocumentAssociation</code>s.
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessNode extends AbstractNode<ProcessDocument> {
+public class ProcessNode extends AbstractNode<DocumentAssociation> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param payLoad
+	 * @param root
 	 */
-	public ProcessNode(ProcessDocument payLoad) {
-		super(payLoad.getId(), payLoad, 0, 0);
+	public ProcessNode(ProcessDocument root) {
+		this(new DocumentAssociation(), 0, 0, false);
+		getPayLoad().setChild(root);
 	}
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param id
 	 * @param payLoad
 	 * @param level
 	 * @param sequence
 	 */
-	public ProcessNode(long id, ProcessDocument payLoad, int level, int sequence) {
-		super(id, payLoad, level, sequence);
+	public ProcessNode(DocumentAssociation payLoad, int level, int sequence) {
+		this(payLoad, level, sequence, true);
 	}
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param id
 	 * @param payLoad
 	 * @param level
 	 * @param sequence
 	 * @param editable
 	 */
-	public ProcessNode(long id, ProcessDocument payLoad, int level, int sequence, boolean editable) {
-		super(id, payLoad, level, sequence, editable);
+	public ProcessNode(DocumentAssociation payLoad, int level, int sequence, boolean editable) {
+		super(payLoad.getId(), payLoad, level, sequence, editable);
 	}
 
-	public String getCaption() {
-		return getPayLoad().getDocCode();
+	/**
+	 * Child node factory.
+	 * 
+	 * @param childAssociation
+	 * @param editable
+	 */
+	public final Node childNodeFactory(DocumentAssociation childAssociation, boolean editable) {
+		Node node = new ProcessNode(childAssociation, getLevel()+1, childAssociation.getSequence(), editable);
+		return node;
 	}
 
-	public List<Node> getChildList() {
+	public final String getCaption() {
+		return getPayLoad().getChild().getDocCode();
+	}
+
+	public final List<Node> getChildList() {
 		List<Node> childList = new ArrayList<Node>();
-		List<DocumentAssociation> associationList = getPayLoad().getChildAssociationList();
+		List<DocumentAssociation> associationList = getPayLoad().getChild().getChildAssociationList();
     	if (logger.isDebugEnabled()) {
     		logger.debug("Found "+associationList.size()+" association(s) under sequence "+getSequence());
     	}
@@ -98,16 +106,11 @@ public class ProcessNode extends AbstractNode<ProcessDocument> {
 		return childList;
 	}
 	
-	private Node childNodeFactory(Association<ProcessDocument, ProcessDocument> association, boolean editable) {
-		Node node = new ProcessNode(association.getId(), association.getChild(), getLevel()+1, association.getSequence(), editable);
-		return node;
-	}
-
 	/**
 	 * equals
 	 */
 	@Override
-	public boolean equals(Object other) {
+	public final boolean equals(Object other) {
 		if (!(other instanceof ProcessDocumentNode)) return false;
 		return super.equals(other);
 	}

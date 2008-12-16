@@ -15,12 +15,7 @@
 
 package org.helianto.core;
 
-import java.io.Serializable;
-
-import org.helianto.core.Category;
-import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
-import org.helianto.core.filter.UserBackedFilter;
 
 /**
  * Unit filter.
