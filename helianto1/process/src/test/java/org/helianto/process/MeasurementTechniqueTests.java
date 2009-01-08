@@ -2,7 +2,7 @@ package org.helianto.process;
 
 import junit.framework.TestCase;
 
-import org.helianto.core.Entity;
+import org.helianto.core.Unit;
 import org.helianto.core.test.DomainTestSupport;
 
 
@@ -17,12 +17,12 @@ public class MeasurementTechniqueTests extends TestCase {
      * Test <code>MeasurementTechnique</code> static factory method.
      */
     public void testMeasurementTechniqueFactoryClass() {
-    	Entity entity = new Entity();
+    	Unit unit = new Unit();
 
-    	MeasurementTechnique measurementTechnique = MeasurementTechnique.measurementTechniqueFactory(entity, "CODE");
+    	MeasurementTechnique measurementTechnique = MeasurementTechnique.measurementTechniqueFactory(unit, "CODE");
 
         assertTrue(measurementTechnique instanceof MeasurementTechnique);
-		assertSame(entity, measurementTechnique.getEntity());
+		assertSame(unit, measurementTechnique.getUnit());
         assertEquals("CODE", measurementTechnique.getMeasurementTechniqueCode());
         
     }
@@ -31,21 +31,21 @@ public class MeasurementTechniqueTests extends TestCase {
      * Test <code>MeasurementTechnique</code> equals() method.
      */
     public void testMeasurementTechniqueEquals() {
-    	Entity entity = new Entity();
+    	Unit unit = new Unit();
 
-    	MeasurementTechnique measurementTechnique = MeasurementTechnique.measurementTechniqueFactory(entity, "CODE");
+    	MeasurementTechnique measurementTechnique = MeasurementTechnique.measurementTechniqueFactory(unit, "CODE");
 
     	MeasurementTechnique copy = (MeasurementTechnique) DomainTestSupport.minimalEqualsTest(measurementTechnique);
         
-        copy.setEntity(null);
+        copy.setUnit(null);
         copy.setMeasurementTechniqueCode("CODE");
         assertFalse(measurementTechnique.equals(copy));
 
-        copy.setEntity(entity);
+        copy.setUnit(unit);
         copy.setMeasurementTechniqueCode("");
         assertFalse(measurementTechnique.equals(copy));
 
-        copy.setEntity(entity);
+        copy.setUnit(unit);
         copy.setMeasurementTechniqueCode("CODE");
 
         assertTrue(measurementTechnique.equals(copy));

@@ -21,7 +21,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.User;
 import org.helianto.partner.service.PartnerMgr;
-import org.helianto.process.Characteristic;
 import org.helianto.process.DocumentAssociation;
 import org.helianto.process.Operation;
 import org.helianto.process.Process;
@@ -90,6 +89,11 @@ public interface ProcessMgr extends PartnerMgr {
     public DocumentAssociation prepareAssociation(ProcessDocument parent, Object child);
     
     /**
+     * Association creation with defaults.
+     */
+    public DocumentAssociation prepareAssociation(ProcessDocument parent, int sequence);
+    
+    /**
      * Find characteristics.
      */
     public List<DocumentAssociation> findCharacteristics(User user, Operation operation);
@@ -98,11 +102,6 @@ public interface ProcessMgr extends PartnerMgr {
      * Associated characteristic creation.
      */
     public DocumentAssociation prepareCharacteristic(Operation operation);
-    
-    /**
-     * Associated specification creation.
-     */
-    public DocumentAssociation prepareSpecification(Characteristic characteristic);
     
     /**
      * Store document associations.

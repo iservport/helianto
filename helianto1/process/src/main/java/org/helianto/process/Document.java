@@ -43,6 +43,7 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
     private int version;
     private String docName;
     private String docFile;
+    private char priority;
 
     /** default constructor */
     public Document() {
@@ -118,6 +119,16 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
 		this.setDocCode(docCode);
 		return this;
 	}
+
+    /**
+     * Priority.
+     */
+    public char getPriority() {
+        return this.priority;
+    }
+    public void setPriority(char priority) {
+        this.priority = priority;
+    }
 
     /**
      * <code>Document</code> general factory.

@@ -33,6 +33,7 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	private Document document;
 	private String docNameLike = "";
 	private char inheritanceType = ' ';
+	private char priority = '0';
 	private Class<? extends ProcessDocument> clazz = ProcessDocument.class;
     private Collection<? extends ProcessDocument> exclusions;
 	
@@ -71,13 +72,14 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	/**
-	 * Process document code.
+	 * <<Chain>> Process document code.
 	 */
 	public String getDocCode() {
 		return docCode;
 	}
-	public void setDocCode(String docCode) {
+	public ProcessDocumentFilter setDocCode(String docCode) {
 		this.docCode = docCode;
+		return this;
 	}
 
 	/**
@@ -111,6 +113,40 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	/**
+	 * Discriminator
+	 */
+	public char getDiscriminator() {
+		if (clazz.equals(ControlMethod.class)) {
+			return 'S'; 
+		}
+		if (clazz.equals(Characteristic.class)) {
+			return 'K'; 
+		}
+		if (clazz.equals(Operation.class)) {
+			return 'O'; 
+		}
+		if (clazz.equals(Process.class)) {
+			return 'P'; 
+		}
+		return ' ';
+	}
+
+	public void setDiscriminator(char discriminator) {
+		if (discriminator=='S') {
+			clazz = ControlMethod.class; 
+		}
+		if (discriminator=='K') {
+			clazz = Characteristic.class; 
+		}
+		if (discriminator=='O') {
+			clazz = Operation.class; 
+		}
+		if (discriminator=='P') {
+			clazz = Process.class; 
+		}
+	}
+
+	/**
 	 * Process name like.
 	 */
     public String getDocNameLike() {
@@ -128,6 +164,16 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	}
 	public void setInheritanceType(char inheritanceType) {
 		this.inheritanceType = inheritanceType;
+	}
+
+	/**
+	 * Priority
+	 */
+	public char getPriority() {
+		return priority;
+	}
+	public void setPriority(char priority) {
+		this.priority = priority;
 	}
 
 	/**

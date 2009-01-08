@@ -39,6 +39,7 @@ public class PartnerRegistryFilter extends AbstractUserBackedCriteriaFilter impl
 	public static PartnerRegistryFilter partnerRegistryFilterFactory(User user) {
 		PartnerRegistryFilter partnerRegistryFilter = new PartnerRegistryFilter();
 		partnerRegistryFilter.setUser(user);
+		partnerRegistryFilter.reset();
 		return partnerRegistryFilter;
 	}
 	

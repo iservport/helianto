@@ -25,6 +25,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
+import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,12 +37,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class SequenceMgrImpl implements SequenceMgr {
 	
 	private InternalEnumeratorDao internalEnumeratorDao;
+	private EntityDao entityDao;
 	private TreeBuilder treeBuilder;
 
 	@Transactional(readOnly=false)
 	public void validateInternalNumber(Sequenceable sequenceable) {
         if (sequenceable.getInternalNumber()==0) {
-            long internalNumber = findNextInternalNumber(sequenceable.getEntity(), sequenceable.getInternalNumberKey());
+        	Entity managedEntity = entityDao.mergeEntity(sequenceable.getEntity());
+            long internalNumber = findNextInternalNumber(managedEntity, sequenceable.getInternalNumberKey());
             sequenceable.setInternalNumber(internalNumber);
             if (logger.isDebugEnabled()) {
                 logger.debug("Created key for new "+sequenceable.getInternalNumberKey()+" "+sequenceable.getInternalNumber());
@@ -82,11 +85,16 @@ public class SequenceMgrImpl implements SequenceMgr {
 		return treeBuilder.getTree();
 	}
 
-    // collabs
+    // collabs 
     
 	@Resource
 	public void setInternalEnumeratorDao(InternalEnumeratorDao internalEnumeratorDao) {
 		this.internalEnumeratorDao = internalEnumeratorDao;
+	}
+    
+	@Resource
+	public void setEntityDao(EntityDao entityDao) {
+		this.entityDao = entityDao;
 	}
     
 	@Resource

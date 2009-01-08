@@ -79,7 +79,7 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
     	return operations;
     }
     
-    //1.1
+    //1.0
     /**
      * <code>Process</code> factory.
      * 
@@ -92,6 +92,16 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
     	process.setInternalNumber(internalNumber);
     	return process;
     }
+
+	//1.1
+    /**
+     * Return an association with a new <tt>Operation</tt>.
+     */
+	@Override
+	public DocumentAssociation documentAssociationFactory(int sequence) {
+		String operationCode = new StringBuilder("OP").append(sequence).toString();
+		return processOperationFactory(operationCode, 0, sequence);
+	}
 
     //1.2
     /**

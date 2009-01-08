@@ -20,25 +20,15 @@ public class ProcessDocumentTests extends TestCase {
         Entity entity = new Entity();
         String docCode = DomainTestSupport.STRING_TEST_VALUE;
 
-		ProcessDocument document = ProcessDocument.documentFactory(DocumentExtension.class, entity, docCode);
+    	ProcessDocument document = new ProcessDocument() {
+			private static final long serialVersionUID = 1L;
+			public DocumentAssociation documentAssociationFactory(int sequence) {
+				return null;
+			}
+    	};
+    	document.setKey(entity, docCode);
 
-        assertTrue(document instanceof DocumentExtension);
 		assertSame(entity, document.getEntity());
-        assertEquals(docCode, document.getDocCode());
-        
-    }
-    
-    /**
-     * Test <code>Document</code> static factory method.
-     */
-    public void testDocumentFactory() {
-        Entity entity = new Entity();
-        String docCode = DomainTestSupport.STRING_TEST_VALUE;
-        
-        ProcessDocument document = ProcessDocument.processDocumentFactory(entity, docCode);
-        
-        assertTrue(document instanceof ProcessDocument);
-        assertSame(entity, document.getEntity());
         assertEquals(docCode, document.getDocCode());
         
     }
@@ -50,8 +40,13 @@ public class ProcessDocumentTests extends TestCase {
     public void no_testDocumentFactoryAssociation() {
         Entity entity = new Entity();
         String docCode = DomainTestSupport.STRING_TEST_VALUE;
-        ProcessDocument parent = ProcessDocument.processDocumentFactory(entity, "PARENT");
-        parent.setEntity(entity);
+    	ProcessDocument parent = new ProcessDocument() {
+			private static final long serialVersionUID = 1L;
+			public DocumentAssociation documentAssociationFactory(int sequence) {
+				return null;
+			}
+    	};
+    	parent.setKey(entity, "PARENT");
         
         ProcessDocument child = ProcessDocument.documentFactory(DocumentExtension.class, entity, docCode);
         
@@ -65,30 +60,6 @@ public class ProcessDocumentTests extends TestCase {
         assertEquals(1, parent.getChildAssociations().size());
         assertSame(child, parent.getChildAssociations().iterator().next().getChild());
         
-    }
-    
-    /**
-     * Test <code>Document</code> equals() method.
-     */
-    public void testDocumentEquals() {
-        Entity entity = new Entity();
-        String docCode = DomainTestSupport.STRING_TEST_VALUE;
-        
-        ProcessDocument document = ProcessDocument.processDocumentFactory(entity, docCode);
-        ProcessDocument copy = (ProcessDocument) DomainTestSupport.minimalEqualsTest(document);
-        
-        copy.setEntity(null);
-        copy.setDocCode(docCode);
-        assertFalse(document.equals(copy));
-
-        copy.setEntity(entity);
-        copy.setDocCode(null);
-        assertFalse(document.equals(copy));
-
-        copy.setEntity(entity);
-        copy.setDocCode(docCode);
-
-        assertTrue(document.equals(copy));
     }
     
 }

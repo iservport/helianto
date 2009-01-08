@@ -38,7 +38,7 @@ public class DefaultProcessDocumentSelectionStrategy extends AbstractSelectionSt
         if (logger.isDebugEnabled()) {
             logger.debug("Document code is: '"+filter.getDocCode()+"'");
         }
-        mainCriteriaBuilder.appendAnd().appendSegment("docCode", "=").append(filter.getDocCode());
+        mainCriteriaBuilder.appendAnd().appendSegment("docCode", "=").appendString(filter.getDocCode());
     	filter.reset();
 	}
 

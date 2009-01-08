@@ -15,7 +15,9 @@
 
 package org.helianto.partner;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -130,6 +132,10 @@ public class PartnerRegistry implements java.io.Serializable {
     }
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
+    }
+    @Transient
+    public List<Address> getAddressList() {
+    	return new ArrayList<Address>(getAddresses());
     }
 
     /**

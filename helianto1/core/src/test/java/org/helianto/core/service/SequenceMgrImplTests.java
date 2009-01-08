@@ -26,19 +26,22 @@ import junit.framework.TestCase;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Sequenceable;
+import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
 
 public class SequenceMgrImplTests extends TestCase {
     
     private SequenceMgrImpl sequenceMgr;
-    private Entity entity = new Entity();
+    private Entity entity = new Entity(), managedEntity = new Entity();
     
     public void testValidateInternalNumberZeroNotNull() {
     	Sequenceable sequenceable = new SequenceableStub();
     	InternalEnumerator enumerator = new InternalEnumerator();
     	enumerator.setLastNumber(1000);
     	
-    	expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(entity, "TEST")).andReturn(enumerator);
+    	expect(entityDao.mergeEntity(entity)).andReturn(managedEntity);
+    	replay(entityDao);
+    	expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(managedEntity, "TEST")).andReturn(enumerator);
     	internalEnumeratorDao.persistInternalEnumerator(enumerator);
     	replay(internalEnumeratorDao);
     	
@@ -46,6 +49,7 @@ public class SequenceMgrImplTests extends TestCase {
     	assertEquals(1001, enumerator.getLastNumber());
     	assertEquals(1000, sequenceable.getInternalNumber());
     	verify(internalEnumeratorDao);
+    	verify(entityDao);
     }
     
     /**
@@ -69,7 +73,9 @@ public class SequenceMgrImplTests extends TestCase {
     	Sequenceable sequenceable = new SequenceableStub();
     	InternalEnumerator enumerator = null, managedEnumerator = new InternalEnumerator();
     	
-    	expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(entity, "TEST")).andReturn(enumerator);
+    	expect(entityDao.mergeEntity(entity)).andReturn(managedEntity);
+    	replay(entityDao);
+    	expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(managedEntity, "TEST")).andReturn(enumerator);
     	expect(internalEnumeratorDao.mergeInternalEnumerator(isA(InternalEnumerator.class))).andReturn(managedEnumerator);
     	replay(internalEnumeratorDao);
     	
@@ -79,17 +85,21 @@ public class SequenceMgrImplTests extends TestCase {
     }
     
     private InternalEnumeratorDao internalEnumeratorDao;
+    private EntityDao entityDao;
     
     @Override
     public void setUp() {
         sequenceMgr = new SequenceMgrImpl();
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
+        entityDao = createMock(EntityDao.class);
         sequenceMgr.setInternalEnumeratorDao(internalEnumeratorDao);
+        sequenceMgr.setEntityDao(entityDao);
     }
     
     @Override
     public void tearDown() {
         reset(internalEnumeratorDao);
+        reset(entityDao);
     }
     
     public class SequenceableStub implements Sequenceable {

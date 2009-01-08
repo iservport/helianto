@@ -33,10 +33,10 @@ public abstract class AbstractSelectionStrategy<T extends AbstractUserBackedCrit
 	 */
 	public final String createCriteriaAsString(T filter, String prefix) {
         CriteriaBuilder mainCriteriaBuilder = new CriteriaBuilder(prefix);
-        if (filter.getUser()==null) {
-            throw new IllegalArgumentException("User required!");
+        if (filter.getEntity()==null) {
+            throw new IllegalArgumentException("User or entity required!");
         }
-        appendEntityFilter(filter.getUser().getEntity(), mainCriteriaBuilder);
+        appendEntityFilter(filter.getEntity(), mainCriteriaBuilder);
         preProcessFilter(filter, mainCriteriaBuilder);
         
         if (isSelection(filter)) {

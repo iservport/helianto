@@ -15,6 +15,8 @@
 
 package org.helianto.core;
 
+import java.util.Locale;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -115,6 +117,12 @@ public class Entity implements java.io.Serializable {
     }
     public void setOperator(Operator operator) {
         this.operator = operator;
+    }
+    
+    @Transient
+    public Locale getLocale() {
+    	// TODO create locale field.
+    	return Locale.getDefault();
     }
 
     /**

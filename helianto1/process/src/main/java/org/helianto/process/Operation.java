@@ -110,7 +110,7 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
         return getOperationQueryStringBuilder().append("where process.entity = ? and operation.internalNumber = ? ").toString();
     }
     
-    //1.1
+    //1.0
     /**
      * <code>Operation</code> subprocess factory.
      * 
@@ -123,6 +123,16 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
         return documentAssociation;
     }
 
+	//1.1
+    /**
+     * Return an association with a new <tt>Characteristic</tt>.
+     */
+	@Override
+	public DocumentAssociation documentAssociationFactory(int sequence) {
+		String characteristicCode = new StringBuilder("CH").append(sequence).toString();
+		return operationCharacteristicFactory(characteristicCode, 0, sequence);
+	}
+
     //1.2
     /**
      * <code>Operation</code> characteristic factory.
@@ -133,10 +143,20 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
      */
     public DocumentAssociation operationCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
     	DocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
+    	setDefaults((Characteristic) documentAssociation.getChild());
         return documentAssociation;
     }
 
-    public boolean equals(Object other) {
+    /**
+     * Set defaults.
+	 * @param child
+	 */
+	private void setDefaults(Characteristic child) {
+		child.setCharacteristicType(CharacteristicType.PROCESS);
+		child.setInheritanceType(InheritanceType.FINAL);
+	}
+
+	public boolean equals(Object other) {
 		 if ( !(other instanceof Operation) ) return false;
 		 return super.equals(other);
 	}

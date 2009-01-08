@@ -22,6 +22,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.ProcessDocument;
+import org.helianto.process.Process;
 
 
 /**
@@ -51,7 +52,8 @@ public class ProcessDocumentTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             docCode = DomainTestSupport.getNonRepeatableStringValue(testKey++, 24);
         }
-        ProcessDocument document = ProcessDocument.processDocumentFactory(entity, docCode);
+        ProcessDocument document = new Process();
+        document.setKey(entity, docCode);
         return document;
     }
 

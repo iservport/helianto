@@ -30,7 +30,12 @@ public class ProcessTests extends TestCase {
     	Entity entity = new Entity();
 
     	Process process = new Process(), copy = new Process();
-    	ProcessDocument parent = new ProcessDocument();
+    	ProcessDocument parent = new ProcessDocument() {
+			private static final long serialVersionUID = 1L;
+			public DocumentAssociation documentAssociationFactory(int sequence) {
+				return null;
+			}
+    	};
 
         assertFalse(process.setKey(entity, "CODE")  .equals(parent.setKey(entity, "CODE")));
         assertTrue (process.setKey(null, null)      .equals(copy.setKey(null, null)));

@@ -53,6 +53,11 @@ public interface ProcessDocumentDao extends CommonOrmDao {
     /**
      * Find <code>ProcessDocument</code> by criteria.
      */
-    public List<ProcessDocument> findProcessDocuments(String criteria);    
+    public List<ProcessDocument> findProcessDocuments(String criteria);
+
+	/**
+	 * Detach the object from the session.
+	 */
+	public void evict(ProcessDocument processDocument);    
     
 }

@@ -110,8 +110,7 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
 	@Override
 	public int hashCode() {
 		int result = 17;
-		result = 37 * result
-				+ (getParent() == null ? 0 : this.getParent().hashCode());
+        result = 37 * result + (int) this.getSequence();
 		result = 37 * result
 				+ (getChild() == null ? 0 : this.getChild().hashCode());
 		return result;

@@ -57,13 +57,13 @@ import org.helianto.core.Entity;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
 @Inheritance(strategy = InheritanceType.JOINED)
-public class ProcessDocument extends Document implements Comparator<DocumentAssociation> {
+public abstract class ProcessDocument extends Document implements Comparator<DocumentAssociation> {
 
     private static final long serialVersionUID = 1L;
     private Set<DocumentAssociation> parentAssociations = new HashSet<DocumentAssociation>();
     private Set<DocumentAssociation> childAssociations = new HashSet<DocumentAssociation>();
     private char inheritanceType = org.helianto.process.InheritanceType.FINAL.getValue();
-    private String processColor = "ccccccff";
+    private String processColor = "";
 
 
     /** default constructor */
@@ -131,7 +131,7 @@ public class ProcessDocument extends Document implements Comparator<DocumentAsso
 		this.processColor = processColor;
 	}
 
-	//1.1
+	//1.0
     /**
      * <code>ProcessDocument</code> factory.
      * 
@@ -141,6 +141,14 @@ public class ProcessDocument extends Document implements Comparator<DocumentAsso
     public static ProcessDocument processDocumentFactory(Entity entity, String docCode) {
         return Document.documentFactory(ProcessDocument.class, entity, docCode);
     }
+
+    //1.1
+    /**
+     * <code>ProcessDocument</code> general factory.
+     * 
+     * @param sequence
+     */
+    public abstract DocumentAssociation documentAssociationFactory(int sequence);
 
     //1.2
     /**
@@ -169,7 +177,8 @@ public class ProcessDocument extends Document implements Comparator<DocumentAsso
      */
     protected <T extends ProcessDocument> DocumentAssociation documentAssociationFactory(Class<T> childClazz, String childCode, int sequence) {
     	ProcessDocument document = ProcessDocument.documentFactory(childClazz, getEntity(), childCode);
-        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(this, document, AssociationType.GENERAL, sequence);
+    	AssociationType associationType = AssociationType.resolveAssociationType(getClass(), childClazz);
+        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(this, document, associationType, sequence);
         return association;
     }
 

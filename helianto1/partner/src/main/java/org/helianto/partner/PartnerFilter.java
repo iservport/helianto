@@ -19,19 +19,21 @@ import java.io.Serializable;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.PolymorphicFilter;
 
 /**
  * Partner filter.
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements Serializable {
+public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements Serializable, PolymorphicFilter<Partner> {
 	
 	private static final long serialVersionUID = 1L;
-	private Class<? extends Partner> clazz = Partner.class;
+	private String partnerAlias = "";
 	private String partnerNameLike = "";
 	private char partnerState;
 	private char priority = '0';
+	private Class<? extends Partner> clazz = Partner.class;
 
 	/**
 	 * Factory method.
@@ -41,6 +43,7 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	public static PartnerFilter partnerFilterFactory(User user) {
 		PartnerFilter partnerFilter = new PartnerFilter();
 		partnerFilter.setUser(user);
+		partnerFilter.reset();
 		return partnerFilter;
 	}
 	
@@ -54,6 +57,7 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 		PartnerFilter partnerFilter = new PartnerFilter();
 		partnerFilter.setUser(user);
 		partnerFilter.setClazz(clazz);
+		partnerFilter.reset();
 		return partnerFilter;
 	}
 	
@@ -72,6 +76,54 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	}
 	public void setClazz(Class<? extends Partner> clazz) {
 		this.clazz = clazz;
+	}
+	
+	public char getDiscriminator() {
+		if (clazz.equals(Customer.class)) {
+			return 'C'; 
+		}
+		if (clazz.equals(Supplier.class)) {
+			return 'S'; 
+		}
+		if (clazz.equals(Agent.class)) {
+			return 'A'; 
+		}
+		if (clazz.equals(Manufacturer.class)) {
+			return 'M'; 
+		}
+		if (clazz.equals(Laboratory.class)) {
+			return 'L'; 
+		}
+		return ' ';
+	}
+
+	public void setDiscriminator(char discriminator) {
+		if (discriminator=='C') {
+			clazz = Customer.class; 
+		}
+		if (discriminator=='S') {
+			clazz = Supplier.class; 
+		}
+		if (discriminator=='A') {
+			clazz = Agent.class; 
+		}
+		if (discriminator=='M') {
+			clazz = Manufacturer.class; 
+		}
+		if (discriminator=='L') {
+			clazz = Laboratory.class; 
+		}
+	}
+
+	/**
+	 * <<Chain>> Partner alias
+	 */
+	public String getPartnerAlias() {
+		return partnerAlias;
+	}
+	public PartnerFilter setPartnerAlias(String partnerAlias) {
+		this.partnerAlias = partnerAlias;
+		return this;
 	}
 
 	/**

@@ -64,6 +64,13 @@ public class Characteristic extends DerivedProcessDocument {
 	public Unit getUnit() {
 		return unit;
 	}
+    @Transient
+    public String getUnitCode() {
+    	if (unit!=null) {
+    		return unit.getUnitCode();
+    	}
+    	return "";
+    }
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
@@ -91,17 +98,30 @@ public class Characteristic extends DerivedProcessDocument {
         this.classification = classification;
     }
     
-    //1.1
+	//1.1
     /**
-     * <code>Characteristic</code> specification factory.
+     * Return an association with a new <tt>ControlMethod</tt>.
      * 
-     * @param specificationCode
-     * @param internalNumber
      * @param sequence
      */
-    public DocumentAssociation characteristicSpecificationFactory(String specificationCode, long internalNumber, int sequence) {
-    	DocumentAssociation documentAssociation = documentAssociationFactory(Specification.class, specificationCode, sequence);
-        return documentAssociation;
+	@Override
+	public Method documentAssociationFactory(int sequence) {
+		ControlMethod child = ControlMethod.documentFactory(ControlMethod.class, getEntity(), "");
+		return documentAssociationFactory(child,sequence);
+	}
+
+    //1.2
+    /**
+     * <code>Characteristic</code> method factory.
+     * 
+     * @param child
+     * @param sequence
+     */
+    public Method documentAssociationFactory(ControlMethod child, int sequence) {
+    	Method method = (Method) DocumentAssociation.documentAssociationFactory(Method.class, this, child, AssociationType.CHARACTERISTIC_METHOD, sequence);
+    	method.setLeftLimitRequired(true);
+    	method.setRightLimitRequired(true);
+        return method;
     }
 
     /**

@@ -17,9 +17,6 @@ package org.helianto.process;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +29,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Unit;
 
 /**
  * <p>
@@ -43,18 +41,15 @@ import org.helianto.core.Entity;
 @Table(name="proc_measurement",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "measurementTechniqueCode"})}
 )
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-    name="type",
-    discriminatorType=DiscriminatorType.CHAR
-)
-@DiscriminatorValue("M")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class MeasurementTechnique implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int id;
     private Entity entity;
     private String measurementTechniqueCode;
+    private String measurementTechniqueName;
+    private Unit unit;
 
     /** default constructor */
     public MeasurementTechnique() {
@@ -69,7 +64,7 @@ public class MeasurementTechnique implements java.io.Serializable {
     }
     
     /**
-     * Entity getter.
+     * Entity.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="entityId", nullable=true)
@@ -79,7 +74,24 @@ public class MeasurementTechnique implements java.io.Serializable {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-    
+
+    /**
+     * Measurement unit.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="unitId", nullable=true)
+    public Unit getUnit() {
+        return this.unit;
+    }
+    @Transient
+    public String getUnitCode() {
+    	if (this.unit==null) return "";
+    	return this.unit.getUnitCode();
+    }
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
     /**
      * Measurement technique code.
      */
@@ -92,11 +104,25 @@ public class MeasurementTechnique implements java.io.Serializable {
     }
     
     /**
+     * Measurement technique name.
+     */
+    @Column(length=64)
+    public String getMeasurementTechniqueName() {
+        return this.measurementTechniqueName;
+    }
+    @Transient
+    public String getName() {
+        return this.measurementTechniqueName;
+    }
+    public void setMeasurementTechniqueName(String measurementTechniqueName) {
+        this.measurementTechniqueName = measurementTechniqueName;
+    }
+    
+    /**
      * <code>MeasurementTechnique</code> factory.
      * 
      * @param clazz
-     * @param entity
-     * @param resourceCode
+     * @param measurementTechniqueCode
      */
     public static <T extends MeasurementTechnique> T measurementTechniqueFactory(Class<T> clazz, Entity entity, String measurementTechniqueCode) {
         T measurementTechnique = null;
@@ -114,10 +140,22 @@ public class MeasurementTechnique implements java.io.Serializable {
      * <code>MeasurementTechnique</code> factory.
      * 
      * @param entity
-     * @param measurementTechnique
+     * @param measurementTechniqueCode
      */
     public static MeasurementTechnique measurementTechniqueFactory(Entity entity, String measurementTechniqueCode) {
         return measurementTechniqueFactory(MeasurementTechnique.class, entity, measurementTechniqueCode);
+    }
+
+    /**
+     * <code>MeasurementTechnique</code> factory.
+     * 
+     * @param unit
+     * @param measurementTechniqueCode
+     */
+    public static MeasurementTechnique measurementTechniqueFactory(Unit unit, String measurementTechniqueCode) {
+    	MeasurementTechnique measurementTechnique = measurementTechniqueFactory(MeasurementTechnique.class, unit.getEntity(), measurementTechniqueCode);
+    	measurementTechnique.setUnit(unit);
+    	return measurementTechnique;
     }
 
     /**
@@ -156,7 +194,7 @@ public class MeasurementTechnique implements java.io.Serializable {
 		 if ( !(other instanceof MeasurementTechnique) ) return false;
 		 MeasurementTechnique castOther = ( MeasurementTechnique ) other; 
          
-		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
+		 return ( (this.getUnit()==castOther.getUnit()) || ( this.getUnit()!=null && castOther.getUnit()!=null && this.getUnit().equals(castOther.getUnit()) ) )
              && ( (this.getMeasurementTechniqueCode()==castOther.getMeasurementTechniqueCode()) || ( this.getMeasurementTechniqueCode()!=null && castOther.getMeasurementTechniqueCode()!=null && this.getMeasurementTechniqueCode().equals(castOther.getMeasurementTechniqueCode()) ) );
    }
    

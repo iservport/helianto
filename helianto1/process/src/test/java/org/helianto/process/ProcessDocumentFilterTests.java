@@ -52,7 +52,12 @@ public class ProcessDocumentFilterTests extends TestCase {
 	}
 	
 	public void testDocument() {
-		Document document = new ProcessDocument();
+		Document document = new ProcessDocument() {
+			private static final long serialVersionUID = 1L;
+			public DocumentAssociation documentAssociationFactory(int sequence) {
+				return null;
+			}
+		};
 		ProcessDocumentFilter processDocumentFilter = 
 			ProcessDocumentFilter.processDocumentFilterFactory(new User(), Process.class);
 		processDocumentFilter.setDocument(document);

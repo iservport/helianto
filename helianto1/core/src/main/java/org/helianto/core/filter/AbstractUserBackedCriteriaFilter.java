@@ -18,6 +18,7 @@ package org.helianto.core.filter;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 
 /**
@@ -28,6 +29,25 @@ import org.helianto.core.User;
 @SuppressWarnings("serial")
 public abstract class AbstractUserBackedCriteriaFilter implements
         UserBackedFilter, Serializable {
+	
+	/**
+	 * Default constructor
+	 */
+	protected AbstractUserBackedCriteriaFilter() {}
+    
+	/**
+	 * Entity based constructor.
+	 */
+	protected AbstractUserBackedCriteriaFilter(Entity entity) {
+		setEntity(entity);
+	}
+    
+	/**
+	 * User based constructor.
+	 */
+	protected AbstractUserBackedCriteriaFilter(User user) {
+		setUser(user);
+	}
     
     private User user;
     
@@ -36,6 +56,21 @@ public abstract class AbstractUserBackedCriteriaFilter implements
     }
     public void setUser(User user) {
         this.user = user;
+        if (user==null) {
+            this.entity = null;
+        }
+        else {
+            this.entity = user.getEntity();
+        }
+    }
+    
+    private Entity entity;
+    
+    public Entity getEntity() {
+        return entity;
+    }
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
     
     /**

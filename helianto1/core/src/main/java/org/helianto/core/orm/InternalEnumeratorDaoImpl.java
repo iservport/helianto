@@ -54,7 +54,7 @@ public class InternalEnumeratorDaoImpl extends GenericDaoImpl implements Interna
     
     public InternalEnumerator findInternalEnumeratorByNaturalId(Entity entity, String typeName) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique internalEnumerator with entity='"+entity+"' and typeName='"+typeName+"' ");
+            logger.debug("Finding unique internalEnumerator with entity='"+entity.getAlias()+"' and typeName='"+typeName+"' ");
         }
         return (InternalEnumerator) findUnique(InternalEnumerator.getInternalEnumeratorNaturalIdQueryString(), entity, typeName);
     }

@@ -18,9 +18,10 @@ package org.helianto.process;
 import java.math.BigDecimal;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -38,7 +39,11 @@ import org.helianto.core.AbstractAssociation;
 @Table(name="proc_documentAssoc",
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
-@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(
+    name="type",
+    discriminatorType=DiscriminatorType.CHAR
+)
+@DiscriminatorValue("A")
 public class DocumentAssociation extends AbstractAssociation<ProcessDocument, ProcessDocument> {
 
     private static final long serialVersionUID = 1L;
@@ -54,17 +59,16 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
     /**
      * Parent document (lazy loaded).
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-    		   fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="parentId", nullable=true)
     public ProcessDocument getParent() {
         return this.parent;
     }
 
     /**
-     * Child document.
+     * Child document, require two phase store.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="childId", nullable=true)
     public ProcessDocument getChild() {
         return this.child;
@@ -123,6 +127,7 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
      * 
      * @param parent
      * @param child
+     * @param associationType
      */
     public static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, AssociationType associationType) {
         return DocumentAssociation.documentAssociationFactory(parent, child, associationType, 0);
@@ -134,18 +139,38 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
      * 
      * @param parent
      * @param child
+     * @param associationType
      * @param sequence
      */
     protected static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, AssociationType associationType, int sequence) {
-        DocumentAssociation documentAssociation = new DocumentAssociation();
-        documentAssociation.setParent(parent);
-        documentAssociation.setChild(child);
-        parent.getChildAssociations().add(documentAssociation);
-        child.getParentAssociations().add(documentAssociation);
-        documentAssociation.setSequence(sequence);
-        documentAssociation.setAssociationType(associationType);
-        documentAssociation.setAssociationRole(AssociationRole.NONE);
-        return documentAssociation;
+        return documentAssociationFactory(DocumentAssociation.class, parent, child, associationType, sequence);
+    }
+
+    //1.3
+    /**
+     * <code>DocumentAssociation</code> factory.
+     * 
+     * @param clazz
+     * @param parent
+     * @param child
+     * @param associationType
+     * @param sequence
+     */
+    protected static DocumentAssociation documentAssociationFactory(Class<? extends DocumentAssociation> clazz, ProcessDocument parent, ProcessDocument child, AssociationType associationType, int sequence) {
+        DocumentAssociation documentAssociation;
+		try {
+			documentAssociation = clazz.newInstance();
+	        documentAssociation.setParent(parent);
+	        documentAssociation.setChild(child);
+	        parent.getChildAssociations().add(documentAssociation);
+	        child.getParentAssociations().add(documentAssociation);
+	        documentAssociation.setSequence(sequence);
+	        documentAssociation.setAssociationType(associationType);
+	        documentAssociation.setAssociationRole(AssociationRole.NONE);
+	        return documentAssociation;
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Unable to create instance of "+clazz, e);
+		}
     }
 
     /**
@@ -172,9 +197,8 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("parent").append("='").append(getParent()).append("' ");
-        buffer.append("child").append("='").append(getChild()).append("' ");
         buffer.append("sequence").append("='").append(getSequence()).append("' ");
+        buffer.append("child").append("='").append(getChild()).append("' ");
         buffer.append("associationType").append("='").append(getAssociationType()).append("' ");
         buffer.append("]");
       

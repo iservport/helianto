@@ -94,12 +94,17 @@ public class ProcessNode extends AbstractNode<DocumentAssociation> {
     		logger.debug("Found "+associationList.size()+" association(s) under sequence "+getSequence());
     	}
 		for (DocumentAssociation documentAssociation: associationList) {
-			// make inherited associations read-only
-			if (documentAssociation.getParent().equals(getPayLoad())) {
+			if (documentAssociation.getParent().equals(getPayLoad().getChild())) {
 				childList.add(childNodeFactory(documentAssociation, true));
+		    	if (logger.isDebugEnabled()) {
+		    		logger.debug("Added "+documentAssociation+" as editable node");
+		    	}
 			}
 			else {
 				childList.add(childNodeFactory(documentAssociation, false));
+		    	if (logger.isDebugEnabled()) {
+		    		logger.debug("Added "+documentAssociation+" as not editable node");
+		    	}
 			}
 		}
 		Collections.sort(childList);

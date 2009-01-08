@@ -42,7 +42,7 @@ public class PartnerRegistryFilterTests extends TestCase {
 	
 	public void testReset() {
 		PartnerRegistryFilter partnerRegistryFilter = PartnerRegistryFilter.partnerRegistryFilterFactory(new User());
-		assertNull(partnerRegistryFilter.getPartnerNameLike());
+		partnerRegistryFilter.setPartnerNameLike(null);
 		partnerRegistryFilter.reset();
 		assertEquals("", partnerRegistryFilter.getPartnerNameLike());
 	}

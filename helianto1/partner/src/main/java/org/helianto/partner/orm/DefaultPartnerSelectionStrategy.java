@@ -37,17 +37,18 @@ public class DefaultPartnerSelectionStrategy extends AbstractSelectionStrategy<P
 
 	@Override
 	protected boolean isSelection(PartnerFilter filter) {
-		return false;
+		return (filter.getPartnerAlias().length()>0);
 	}
 
 	@Override
 	protected void doSelect(PartnerFilter filter, CriteriaBuilder mainCriteriaBuilder) {
+        appendEqualFilter("partnerRegistry.partnerAlias", filter.getPartnerAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
 	protected void doFilter(PartnerFilter filter, CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("partnerNameLike", filter.getPartnerNameLike(), mainCriteriaBuilder);
-        appendEqualFilter("priority", filter.getPriority(), mainCriteriaBuilder);
+		appendEqualFilter("priority", filter.getPriority(), mainCriteriaBuilder);
 	}
 
     private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);

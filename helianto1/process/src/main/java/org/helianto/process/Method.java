@@ -15,59 +15,123 @@
 
 package org.helianto.process;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import java.math.BigDecimal;
+
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
 
 /**
  * <p>
- * A method provides sampling and control information.
+ * Methods to associate with characteristic in a control plan.
  * </p>
  * @author Mauricio Fernandes de Castro
  */
-@Embeddable
-public class Method implements java.io.Serializable {
-
-    private static final long serialVersionUID = 1L;
-    private int sampleSize;
-    private String sampleFrequency;
-    private String controlMethod;
+@javax.persistence.Entity
+@DiscriminatorValue("M")
+public class Method extends DocumentAssociation {
+	
+	private static final long serialVersionUID = 1L;
+    private MeasurementTechnique measurementTechnique;
+    private boolean leftLimitRequired;
+	private boolean rightLimitRequired;
+    private BigDecimal sampleSize = BigDecimal.ONE;
 
     /** default constructor */
     public Method() {
     }
+    
+    /**
+     * Measurement technique.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="measurementTechniqueId", nullable=true)
+    public MeasurementTechnique getMeasurementTechnique() {
+		return measurementTechnique;
+	}
+	public void setMeasurementTechnique(MeasurementTechnique measurementTechnique) {
+		this.measurementTechnique = measurementTechnique;
+	}
+
+	@Transient
+	public String getUnitCode() {
+		return ((Characteristic) getParent()).getUnitCode();
+	}
+
+    /**
+	 * True if left limit is required
+	 */
+	public boolean isLeftLimitRequired() {
+		return leftLimitRequired;
+	}
+	public void setLeftLimitRequired(boolean leftLimitRequired) {
+		this.leftLimitRequired = leftLimitRequired;
+	}
+
+	/**
+	 * True if right limit is required
+	 */
+	public boolean isRightLimitRequired() {
+		return rightLimitRequired;
+	}
+	public void setRightLimitRequired(boolean rightLimitRequired) {
+		this.rightLimitRequired = rightLimitRequired;
+	}
+
+    /**
+     * Specification type.
+     */
+	@Transient
+    public SpecificationType getSpecificationType() {
+		if (isLeftLimitRequired() && isRightLimitRequired()) {
+			return SpecificationType.VARIABLE_BILATERAL;
+		}
+		if (isLeftLimitRequired()) {
+			return SpecificationType.VARIABLE_UNILATERAL_MIN;
+		}
+		if (isRightLimitRequired()) {
+			return SpecificationType.VARIABLE_UNILATERAL_MAX;
+		}
+		return SpecificationType.ATTRIBUTE;
+	}
 
     /**
      * Sample size.
      */
-    public int getSampleSize() {
+    public BigDecimal getSampleSize() {
         return this.sampleSize;
     }
-    public void setSampleSize(int sampleSize) {
+    public void setSampleSize(BigDecimal sampleSize) {
         this.sampleSize = sampleSize;
     }
     
-    /**
-     * Sample frequency.
-     */
-    @Column(length=20)
-    public String getSampleFrequency() {
-        return this.sampleFrequency;
-    }
-    public void setSampleFrequency(String sampleFrequency) {
-        this.sampleFrequency = sampleFrequency;
-    }
     
     /**
-     * Control method.
+     * <code>Method</code> query <code>StringBuilder</code>.
      */
-    @Column(length=32)
-    public String getControlMethod() {
-        return this.controlMethod;
-    }
-    public void setControlMethod(String control) {
-        this.controlMethod = control;
+    @Transient
+    public static StringBuilder getCharacteristicQueryStringBuilder() {
+        return new StringBuilder("select method from Method method ");
     }
 
+    /**
+     * <code>Characteristic</code> natural id query.
+     */
+    @Transient
+    public static String getCharacteristicNaturalIdQueryString() {
+        return getCharacteristicQueryStringBuilder().append("where method.parent = ? and method.child = ? ").toString();
+    }
+
+   /**
+    * equals
+    */
+   @Override
+   public boolean equals(Object other) {
+         if ( !(other instanceof Method) ) return false;
+         return super.equals(other);
+   }
+   
 }
-
-

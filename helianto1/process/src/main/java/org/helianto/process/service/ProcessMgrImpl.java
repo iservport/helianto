@@ -28,7 +28,6 @@ import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.service.PartnerMgrImpl;
 import org.helianto.process.AssociationType;
-import org.helianto.process.Characteristic;
 import org.helianto.process.DocumentAssociation;
 import org.helianto.process.Operation;
 import org.helianto.process.Process;
@@ -85,7 +84,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	}
 
 	public DocumentAssociation storeDocumentAssociation(DocumentAssociation documentAssociation) {
-		return (DocumentAssociation) documentAssociationDao.mergeDocumentAssociation(documentAssociation);
+		DocumentAssociation managedDocumentAssociation = documentAssociationDao.mergeDocumentAssociation(documentAssociation);
+		return managedDocumentAssociation;
 	}
 
 	public List<DocumentAssociation> findOperations(User user, Process process) {
@@ -140,6 +140,16 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     	return documentAssociation;
     }
     
+    public DocumentAssociation prepareAssociation(ProcessDocument parent, int sequence) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Parent class is "+parent.getClass());
+        }
+        ProcessDocument managedParent = processDocumentDao.mergeProcessDocument(parent);
+        DocumentAssociation documentAssociation = managedParent.documentAssociationFactory(sequence);
+        processDocumentDao.evict(managedParent);
+    	return documentAssociation;
+    }
+    
     public List<DocumentAssociation> findCharacteristics(User user, Operation operation) {
 		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(user, operation);
         if (logger.isDebugEnabled()) {
@@ -153,20 +163,13 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return characteristicList ;
     }
 
+    @Deprecated
     public DocumentAssociation prepareCharacteristic(Operation operation) {
     	Set<DocumentAssociation> characteristicSet = operation.getChildAssociations();
         if (logger.isDebugEnabled() && characteristicSet.size()>0) {
             logger.debug("Found "+characteristicSet.size()+" item(s) before insertion.");
         }
     	return operation.operationCharacteristicFactory("", 0, 0);
-    }
-    
-    public DocumentAssociation prepareSpecification(Characteristic characteristic) {
-    	Set<DocumentAssociation> specificationSet = characteristic.getChildAssociations();
-        if (logger.isDebugEnabled() && specificationSet.size()>0) {
-            logger.debug("Found "+specificationSet.size()+" item(s) before insertion.");
-        }
-    	return characteristic.characteristicSpecificationFactory("", 0, 0);
     }
     
     public Setup createSetupFactory(Operation operation, Resource resource) {

@@ -35,28 +35,28 @@ public class ProcessDocumentDaoImpl extends GenericDaoImpl implements ProcessDoc
         if (logger.isDebugEnabled()) {
             logger.debug("Persisting "+document);
         }
-        persist(document);
+        super.persist(document);
     }
     
     public ProcessDocument mergeProcessDocument(ProcessDocument document) {
         if (logger.isDebugEnabled()) {
             logger.debug("Merging "+document);
         }
-        return (ProcessDocument) merge(document);
+        return (ProcessDocument) super.merge(document);
     }
     
     public void removeProcessDocument(ProcessDocument document) {
         if (logger.isDebugEnabled()) {
             logger.debug("Removing "+document);
         }
-        remove(document);
+        super.remove(document);
     }
     
     public ProcessDocument findProcessDocumentByNaturalId(Entity entity, String docCode) {
         if (logger.isDebugEnabled()) {
             logger.debug("Finding unique document with entity='"+entity+"' and docCode='"+docCode+"' ");
         }
-        return (ProcessDocument) findUnique(ProcessDocument.getProcessDocumentNaturalIdQueryString(), entity, docCode);
+        return (ProcessDocument) super.findUnique(ProcessDocument.getProcessDocumentNaturalIdQueryString(), entity, docCode);
     }
     
     @SuppressWarnings("unchecked")
@@ -67,7 +67,14 @@ public class ProcessDocumentDaoImpl extends GenericDaoImpl implements ProcessDoc
         if (criteria.equals("")) {
             return (ArrayList<ProcessDocument>) find(ProcessDocument.getProcessDocumentQueryStringBuilder());
         }
-        return (ArrayList<ProcessDocument>) find(new StringBuilder(ProcessDocument.getProcessDocumentQueryStringBuilder()).append("where ").append(criteria));
+        return (ArrayList<ProcessDocument>) super.find(new StringBuilder(ProcessDocument.getProcessDocumentQueryStringBuilder()).append("where ").append(criteria));
     }
+
+	public void evict(ProcessDocument processDocument) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Evicting "+processDocument);
+        }
+        super.evict(processDocument);
+	}
     
 }

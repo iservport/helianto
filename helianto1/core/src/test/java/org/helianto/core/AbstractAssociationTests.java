@@ -15,14 +15,21 @@
 
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.io.Serializable;
 
-import junit.framework.TestCase;
+import org.helianto.core.test.IdentityTestSupport;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class AbstractAssociationTests extends TestCase {
+public class AbstractAssociationTests {
 
 	private AssociationStub association;
 
@@ -44,42 +51,66 @@ public class AbstractAssociationTests extends TestCase {
 
 	}
 
-	public void testConstructor() {
+	@Test
+	public void constructor() {
 		assertNotNull(association);
 		assertTrue(association instanceof Serializable);
 		assertTrue(association instanceof Association);
 	}
 
-	public void testId() {
+	@Test
+	public void id() {
 		association.setId(Integer.MAX_VALUE);
 		assertEquals(Integer.MAX_VALUE, association.getId());
 	}
 
-	public void testVersion() {
+	@Test
+	public void version() {
 		association.setVersion(Integer.MAX_VALUE);
 		assertEquals(Integer.MAX_VALUE, association.getVersion());
 	}
 
-	public void testSequence() {
+	@Test
+	public void sequence() {
 		association.setSequence(Integer.MAX_VALUE);
 		assertEquals(Integer.MAX_VALUE, association.getSequence());
 	}
 
-	public void testParent() {
+	@Test
+	public void parent() {
 		Identity parent = new Identity();
 		association.setParent(parent);
 		assertSame(parent, association.getParent());
 	}
 
-	public void testChild() {
+	@Test
+	public void child() {
 		Identity child = new Identity();
 		association.setChild(child);
 		assertSame(child, association.getChild());
 	}
 
-	@Override
+	/**
+	 * Important: usually the unique key members are used in hash,
+	 * but, for ORM tuning purposes, the parent field in subclasses
+	 * may be set as LAZY loaded. Avoid to use it in hashCode or you will 
+	 * have to deal with LazyInitializationException more frequently.
+	 */
+	@Test
+	public void hashTest() {
+		association.setSequence(10);
+		association.setChild(IdentityTestSupport.createIdentity("CHILD"));
+		association.setParent(IdentityTestSupport.createIdentity());
+//		System.out.println("Child hash "+association.getChild().hashCode());
+//		int result = 23643 + association.getChild().hashCode(); 
+		assertEquals(94655468, association.hashCode());
+		association.getParent().setPrincipal("PARENT");
+		assertEquals(94655468, association.hashCode());
+	}
+
+	@Before
 	public void setUp() {
 		association = new AssociationStub();
 	}
-
+	
 }

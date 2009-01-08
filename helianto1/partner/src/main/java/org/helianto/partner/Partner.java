@@ -136,6 +136,7 @@ public class Partner implements java.io.Serializable {
         partner.setPartnerRegistry(partnerRegistry);
         partnerRegistry.getPartners().add(partner);
         partner.setPartnerState(PartnerState.IDLE.getValue());
+        partner.setPriority('0');
         return partner;
     }
 

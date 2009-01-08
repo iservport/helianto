@@ -135,9 +135,6 @@ public class GenericDaoImpl extends LightweightDaoImpl implements GenericHiberna
             int i = 0;
             for (Object value: values) {
                 result.setParameter(i++, value);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Parameter "+i+"="+value);
-                }
             }
             return result;
         } catch (Exception e) {

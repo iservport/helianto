@@ -9,12 +9,33 @@ package org.helianto.process;
  * @author Mauricio Fernandes de Castro
  */
 public enum AssociationType {
+	
+	/*
+	 * Most common associations belong to the chain 
+	 * process-operation-characteristic-specification
+	 */
     
     /**
      * Association to an operation describing a process.
      * 
      */
-    PROCESS_OPERATION('F', Process.class, Operation.class, true),
+    PROCESS_OPERATION('O', Process.class, Operation.class, true),
+    
+    /**
+     * Association to a required characteristic within a process operation.
+     */
+    OPERATION_CHARACTERISTIC('K', Operation.class, Characteristic.class, true),
+
+    /**
+     * A characteristic should have a method for 
+     * each process development phase.
+     * 
+     */
+    CHARACTERISTIC_METHOD('S', Characteristic.class, Method.class, true),
+    
+	/*
+	 * Other associations
+	 */
     
     /**
      * Association to a control plan of a process.
@@ -25,33 +46,6 @@ public enum AssociationType {
      * Association to a required sub-process within a process operation.
      */
     OPERATION_PROCESS('I', Operation.class, Process.class, true),
-
-    /**
-     * An operation may have specifications.
-     * 
-     * <p>The specification may be a descendant of an
-     * operation since it is also descendant of a 
-     * charcteristic.</p>
-     */
-    OPERATION_SPECIFICATION('J', Operation.class, Specification.class, true),
-    
-    /**
-     * Association to a required characteristic within a process operation.
-     */
-    OPERATION_CHARACTERISTIC('K', Operation.class, Characteristic.class, true),
-    
-    /**
-     * A characteristic should have a specification for 
-     * each process development phase.
-     * 
-     */
-    CHARACTERISTIC_SPECIFICATION('L', Characteristic.class, Specification.class, true),
-    
-    /**
-     * A control plan may have a specification.
-     * 
-     */
-    CONTROLPLAN_SPECIFICATION('M', ControlPlan.class, Specification.class, true),
     
     /**
      * General association.

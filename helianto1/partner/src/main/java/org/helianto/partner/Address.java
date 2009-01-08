@@ -53,7 +53,7 @@ import org.helianto.core.Province;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class Address implements java.io.Serializable {
+public class Address implements java.io.Serializable, Comparable<Address> {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -251,6 +251,10 @@ public class Address implements java.io.Serializable {
         return "select address from Address address where address.partnerRegistry = ? and address.sequence = ? ";
     }
 
+    public int compareTo(Address next) {
+    	return this.sequence - next.sequence;
+    }   
+
     /**
      * toString
      * @return String
@@ -287,6 +291,6 @@ public class Address implements java.io.Serializable {
          result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
          result = 37 * result + (int) this.getSequence();
          return result;
-   }   
+   }
 
 }
