@@ -18,6 +18,7 @@ package org.helianto.process.dao;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.process.ResourceAssociation;
 import org.helianto.process.ResourceGroup;
 
 /**
@@ -38,7 +39,12 @@ public interface ResourceGroupDao {
     public ResourceGroup mergeResourceGroup(ResourceGroup resourceGroup);
     
     /**
-     * Remove a <code>ResourceGroup</code> or <code>Resource</code>.
+     * Remove a <code>ResourceGroup</code> or <code>Resource</code> from the session.
+     */
+    public void evictResourceGroup(ResourceGroup resourceGroup);
+
+    /**
+     * Remove a <code>ResourceGroup</code> or <code>Resource</code> from the data store.
      */
     public void removeResourceGroup(ResourceGroup resourceGroup);
 
@@ -51,5 +57,10 @@ public interface ResourceGroupDao {
      * Find <code>ResourceGroup</code>s by string criteria.
      */
     public List<ResourceGroup> findResourceGroups(String criteria);
+
+    /**
+     * Merge a <code>ResourceAssociation</code>.
+     */
+	public ResourceAssociation mergeResourceAssociation(ResourceAssociation resourceAssociation);
 
 }

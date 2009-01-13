@@ -19,10 +19,6 @@ public enum ResourceType {
      */
     FIXTURE('F'),
     /**
-     * The resource is an instrument.
-     */
-    INSTRUMENT('I'),
-    /**
      * The resource is a tool.
      */
     TOOL('T');

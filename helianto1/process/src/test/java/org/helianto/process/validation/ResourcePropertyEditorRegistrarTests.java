@@ -54,26 +54,6 @@ public class ResourcePropertyEditorRegistrarTests extends TestCase {
         
     }
     
-    public void testResource() {
-        
-        Resource loaded = new Resource();
-        loaded.setResourceCode("TEST");
-        
-        expect(hibernateTemplate.load(ResourceGroup.class, 5)).andReturn(loaded);
-        replay(hibernateTemplate);
-        
-        ResourceForm resourceForm = new ResourceForm();
-        BeanWrapper bw = new BeanWrapperImpl(resourceForm);
-        registrar.registerCustomEditors(bw);
-        
-        bw.setPropertyValue("resource", "5");
-        verify(hibernateTemplate);
-        assertSame(loaded, resourceForm.getResource());
-        
-        String textValue = ((Resource) bw.getPropertyValue("resource")).getResourceCode();
-        assertEquals("TEST", textValue);
-        
-    }
     
     public void setUp() {
         hibernateTemplate = createMock(HibernateOperations.class);

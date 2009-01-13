@@ -15,14 +15,19 @@
 
 package org.helianto.process;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import org.helianto.core.Entity;
 import org.helianto.partner.Partner;
 
 /**			
@@ -41,11 +46,12 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     private Partner manufacturer;
     private Partner owner;
     private boolean keyResource;
+    private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
 
      // Constructors
 
     /** default constructor */
-    public Resource() {
+    protected Resource() {
     }
 
     /**
@@ -80,6 +86,13 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     public Partner getManufacturer() {
         return this.manufacturer;
     }
+    @Transient
+    public String getManufacturerAlias() {
+    	if (getManufacturer()!=null) {
+    		return getManufacturer().getPartnerAlias();
+    	}
+    	return "";
+    }
     public void setManufacturer(Partner manufacturer) {
         this.manufacturer = manufacturer;
     }
@@ -91,6 +104,13 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     @JoinColumn(name="ownerId", nullable=true)
     public Partner getOwner() {
         return this.owner;
+    }
+    @Transient
+    public String getOwnerAlias() {
+    	if (getOwner()!=null) {
+    		return getOwner().getPartnerAlias();
+    	}
+    	return "";
     }
     public void setOwner(Partner owner) {
         this.owner = owner;
@@ -107,27 +127,22 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     }
     
     /**
-     * <code>Resource</code> factory.
-     * 
-     * @param entity
-     * @param resourceCode
+     * Set of parent <code>ResourceAssociation</code>s.
      */
-    public static Resource resourceFactory(Entity entity, String resourceCode) {
-        return resourceGroupFactory(Resource.class, entity, resourceCode);
+    @OneToMany(mappedBy="child", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<ResourceAssociation> getParentAssociations() {
+    	return this.parentAssociations;
+    }   
+    public void setParentAssociations(Set<ResourceAssociation> parentAssociations) {
+    	this.parentAssociations = parentAssociations;
+    }
+    @Transient
+    public List<ResourceAssociation> getParentAssociationList() {
+    	List<ResourceAssociation> parentAssociationList = new ArrayList<ResourceAssociation>();
+    	parentAssociationList.addAll(getParentAssociations());
+    	return parentAssociationList;
     }
 
-    /**
-     * <code>Resource</code> factory.
-     * 
-     * @param parent
-     * @param resourceCode
-     */
-    public static Resource resourceFactory(ResourceGroup parent, String resourceCode) {
-    	Resource resource =  resourceGroupFactory(Resource.class, parent.getEntity(), resourceCode);
-    	resource.setParent(parent);
-    	resource.setResourceType(parent.getResourceType());
-    	return resource;
-    }
 
     /**
      * <code>Resource</code> query <code>StringBuilder</code>.

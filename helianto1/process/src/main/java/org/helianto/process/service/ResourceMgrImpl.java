@@ -21,13 +21,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
-import org.helianto.partner.Partner;
+import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.process.Resource;
+import org.helianto.process.ResourceAssociation;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.ResourceGroupFilter;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.ResourceType;
-import org.helianto.process.dao.ResourceDao;
 import org.helianto.process.dao.ResourceGroupDao;
 import org.helianto.process.dao.ResourceParameterDao;
 import org.helianto.process.dao.ResourceParameterValueDao;
@@ -39,11 +40,6 @@ import org.helianto.process.dao.ResourceParameterValueDao;
  */
 public class ResourceMgrImpl implements ResourceMgr {
 	
-    private ResourceGroupDao resourceGroupDao;
-    private ResourceDao resourceDao;
-    private ResourceParameterDao resourceParameterDao;
-    private ResourceParameterValueDao resourceParameterValueDao;
-
 	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
 		ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(entity, rootEquipentCode);
 		resourceGroup.setResourceType(ResourceType.EQUIPMENT);
@@ -58,28 +54,42 @@ public class ResourceMgrImpl implements ResourceMgr {
         return ResourceGroup.resourceGroupFactory(parentGroup, resourceCode);
     }
     
+	public ResourceGroup prepareResourceGroup(ResourceGroup resourceGroup) {
+		ResourceGroup managedResourceGroup = resourceGroupDao.mergeResourceGroup(resourceGroup);
+		managedResourceGroup.getChildAssociations();
+		resourceGroupDao.evictResourceGroup(resourceGroup);
+		return managedResourceGroup;
+	}
+
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup) {
     	return resourceGroupDao.mergeResourceGroup(resourceGroup);
     }
     
+	public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter) {
+		String criteria = resourceGroupSelectionStrategy.createCriteriaAsString(resourceGroupFilter, "resourceGroup");
+		List<ResourceGroup> resourceGroupList = resourceGroupDao.findResourceGroups(criteria);
+		if (logger.isDebugEnabled() && resourceGroupList!=null) {
+			logger.debug("Found resource group list of size "+resourceGroupList.size());
+		}
+		return resourceGroupList;
+	}
+    
+	public void removeResourceAssociation(ResourceAssociation resourceAssociation, boolean removeOrphan) {
+		// TODO remove resource association
+	}
+
+	public void removeResource(Resource resource) {
+		// TODO remove resource
+	}
+
     //
 
-    public Resource prepareResource(ResourceGroup parentGroup) {
-        return prepareResource(parentGroup, "");
-    }
-
-    public Resource prepareResource(ResourceGroup parentGroup, String resourceCode) {
-        return createResource(parentGroup, resourceCode, null);
-    }
-
-	public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner) {
-		Resource resource = Resource.resourceFactory(parentGroup, resourceCode);
-		resource.setOwner(owner);
-		return resource;
+	public ResourceAssociation storeResourceAssociation(ResourceAssociation resourceAssociation) {
+		return resourceGroupDao.mergeResourceAssociation(resourceAssociation);
 	}
 	
-    //
-    
+	//
+
     public ResourceParameter createResourceParameter(Entity entity) {
         return ResourceParameter.resourceParameterFactory(entity, "");
     }
@@ -114,45 +124,16 @@ public class ResourceMgrImpl implements ResourceMgr {
     	resourceParameterValueDao.persistResourceParameterValue(resourceParameterValue);
     }
     
-    //
-
-    public List<ResourceGroup> findResourceByEntity(Entity entity) {
-        throw new RuntimeException("Not yet implemented");
-    }
-
-	public List<ResourceGroup> findRootResourceByEntity(Entity entity) {
-        throw new RuntimeException("Not yet implemented");
-	}
-
-    public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup) {
-        throw new RuntimeException("Not yet implemented");
-    }
-    
-    public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode) {
-        throw new RuntimeException("Not yet implemented");
-    }
-    
-    public List<ResourceParameter> findResourceParameterByEntity(Entity entity) {
-        throw new RuntimeException("Not yet implemented");
-    }
-    
-    public List<ResourceParameter> findResourceParameterByParent(ResourceParameter parent) {
-        throw new RuntimeException("Not yet implemented");
-    }
-    
-    public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup) {
-        throw new RuntimeException("Not yet implemented");
-    }
-    
-    public ResourceParameter findResourceParameterByEntityAndCode(Entity entity, String resourceParameterCode) {
-        throw new RuntimeException("Not yet implemented");
-    }
-    
     // collaborators
 
-    @javax.annotation.Resource
-    public void setResourceDao(ResourceDao resourceDao) {
-        this.resourceDao = resourceDao;
+    private ResourceGroupDao resourceGroupDao;
+    private SelectionStrategy<ResourceGroupFilter> resourceGroupSelectionStrategy;
+    private ResourceParameterDao resourceParameterDao;
+    private ResourceParameterValueDao resourceParameterValueDao;
+
+    @javax.annotation.Resource(name="resourceGroupSelectionStrategy")
+    public void setResourceGroupSelectionStrategy(SelectionStrategy<ResourceGroupFilter> resourceGroupSelectionStrategy) {
+        this.resourceGroupSelectionStrategy = resourceGroupSelectionStrategy;
     }
 
     @javax.annotation.Resource
@@ -171,5 +152,5 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
 
 	static final Log logger = LogFactory.getLog(ResourceMgrImpl.class);
-    
+
 }

@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.hibernate.GenericDaoImpl;
+import org.helianto.process.ResourceAssociation;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.dao.ResourceGroupDao;
 import org.springframework.stereotype.Repository;
@@ -48,6 +49,13 @@ public class ResourceGroupDaoImpl extends GenericDaoImpl implements ResourceGrou
         return (ResourceGroup) merge(resourceGroup);
     }
     
+    public void evictResourceGroup(ResourceGroup resourceGroup) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Evicting "+resourceGroup);
+        }
+        evict(resourceGroup);
+    }
+
     public void removeResourceGroup(ResourceGroup resourceGroup) {
         if (logger.isDebugEnabled()) {
             logger.debug("Removing "+resourceGroup);
@@ -57,7 +65,7 @@ public class ResourceGroupDaoImpl extends GenericDaoImpl implements ResourceGrou
 
     public ResourceGroup findResourceGroupByNaturalId(Entity entity, String resourceCode) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique document with entity='"+entity+"' and docCode='"+resourceCode+"' ");
+            logger.debug("Finding unique resource with entity='"+entity+"' and docCode='"+resourceCode+"' ");
         }
         return (ResourceGroup) findUnique(ResourceGroup.getResourceGroupNaturalIdQueryString(), entity, resourceCode);
     }
@@ -65,11 +73,18 @@ public class ResourceGroupDaoImpl extends GenericDaoImpl implements ResourceGrou
     @SuppressWarnings("unchecked")
 	public List<ResourceGroup> findResourceGroups(String criteria) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Finding document list with criteria ='"+criteria+"'");
+            logger.debug("Finding resource list with criteria ='"+criteria+"'");
         }
         if (criteria.equals("")) {
             return (ArrayList<ResourceGroup>) find(ResourceGroup.getResourceGroupQueryStringBuilder());
         }
         return (ArrayList<ResourceGroup>) find(new StringBuilder(ResourceGroup.getResourceGroupQueryStringBuilder()).append("where ").append(criteria));
     }
+
+	public ResourceAssociation mergeResourceAssociation(ResourceAssociation resourceAssociation) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Merging "+resourceAssociation);
+        }
+        return (ResourceAssociation) merge(resourceAssociation);
+	}
 }

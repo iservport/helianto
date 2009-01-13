@@ -41,8 +41,10 @@ public class Characteristic extends DerivedProcessDocument {
 	private char characteristicType;
 	private int classification;
 
-    /** default constructor */
-    public Characteristic() {
+    /** default package constructor */
+    Characteristic() {
+		setCharacteristicType(CharacteristicType.PROCESS);
+		setInheritanceType(InheritanceType.FINAL);
     }
     
     /**

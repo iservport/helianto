@@ -39,13 +39,24 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter {
 	 * Create the filter for a given type.
 	 * 
 	 * @param user
+	 */
+	public static ResourceGroupFilter resourceGroupFilterFactory(User user) {
+		ResourceGroupFilter filter = new ResourceGroupFilter();
+		filter.setUser(user);
+		filter.reset();
+		return filter;
+	}
+
+	/**
+	 * Create the filter for a given type.
+	 * 
+	 * @param user
 	 * @param clazz
 	 */
 	public static ResourceGroupFilter resourceGroupFilterFactory(User user, Class<? extends ResourceGroup> clazz) {
-		ResourceGroupFilter resourceGroupFilter = new ResourceGroupFilter();
-		resourceGroupFilter.setUser(user);
-		resourceGroupFilter.setClazz(clazz);
-		return resourceGroupFilter;
+		ResourceGroupFilter filter = ResourceGroupFilter.resourceGroupFilterFactory(user);
+		filter.setClazz(clazz);
+		return filter;
 	}
 
 	/**

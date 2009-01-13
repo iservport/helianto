@@ -59,7 +59,6 @@ public class ResourceDomainTests extends TestCase {
         resourceGroup.setResourceName("");
         resourceGroup.setResourceType(ResourceType.EQUIPMENT.getValue());
         resourceGroup.setResourceType(ResourceType.FIXTURE.getValue());
-        resourceGroup.setResourceType(ResourceType.INSTRUMENT.getValue());
         resourceGroup.setResourceType(ResourceType.TOOL.getValue());
         
         assertTrue(resourceGroup.equals(resourceGroup));

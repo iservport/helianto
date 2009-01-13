@@ -14,6 +14,7 @@
 		<mapping class="org.helianto.process.Cause" />
 		<mapping class="org.helianto.process.ResourceGroup" />
 		<mapping class="org.helianto.process.Resource" />
+		<mapping class="org.helianto.process.ResourceAssociation" />
 		<mapping class="org.helianto.process.ResourceParameter" />
 		<mapping class="org.helianto.process.Characteristic" />
 		<mapping class="org.helianto.process.ControlPlan" />

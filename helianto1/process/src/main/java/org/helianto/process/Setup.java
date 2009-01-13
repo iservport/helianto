@@ -26,8 +26,12 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
+ * Represents a <code>Setup</code>.  
  * <p>
- * Represents a <code>Setup</code> in a <code>Resource</code>.  
+ * The operation setup must be able to relate both <tt>Resource</tt>s
+ * and <tt>ResourceGroup</tt>s. Besides the operation itself is not
+ * likely runnable on a resource group, such flexibility allows the 
+ * actual choice to be delegated to a subsequent planning phase.
  * </p>
  * @author Mauricio Fernandes de Castro
  */
@@ -40,15 +44,16 @@ public class Setup  implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private Operation operation;
-    private Resource resource;
+    private ResourceGroup resource;
     private int priority;
     private long setupTime;
     private long transportTime;
 
      // Constructors
 
-    /** default constructor */
-    public Setup() {
+    /** default package constructor */
+    Setup() {
+    	setPriority(0);
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -72,14 +77,14 @@ public class Setup  implements java.io.Serializable {
 	}
 
     /**
-     * Related resource.
+     * Related resource or resource group.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="resourceId", nullable=true)
-    public Resource getResource() {
+    public ResourceGroup getResource() {
         return this.resource;
     }
-    public void setResource(Resource resource) {
+    public void setResource(ResourceGroup resource) {
         this.resource = resource;
     }
     
@@ -111,6 +116,20 @@ public class Setup  implements java.io.Serializable {
     }
     public void setTransportTime(long transportTime) {
         this.transportTime = transportTime;
+    }
+    
+    /**
+     * Package factory method.
+     * 
+     * @param operation
+     * @param resourceGroup
+     */
+    static Setup setupFactory(Operation operation, ResourceGroup resourceGroup) {
+    	Setup setup = new Setup();
+    	setup.setOperation(operation);
+    	operation.getSetups().add(setup);
+    	setup.setResource(resourceGroup);
+    	return setup;
     }
 
 

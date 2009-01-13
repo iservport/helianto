@@ -178,6 +178,6 @@ public abstract class AbstractSelectionStrategy<T extends AbstractUserBackedCrit
         }
     }
     
-    private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
+    protected static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
 
 }

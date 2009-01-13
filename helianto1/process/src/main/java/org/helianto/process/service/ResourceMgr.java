@@ -19,9 +19,10 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
-import org.helianto.partner.Partner;
 import org.helianto.process.Resource;
+import org.helianto.process.ResourceAssociation;
 import org.helianto.process.ResourceGroup;
+import org.helianto.process.ResourceGroupFilter;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.dao.ResourceDao;
@@ -66,57 +67,36 @@ public interface ResourceMgr {
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup);
     
     /**
-     * <p>
-     * Create a <code>Resource</code> for the parent <code>ResourceGroup</code> with
-     * an empty resource code (to be filled at the presentation layer) and 
-     * prepare the current <code>Division</code> to be the default owner.
-     * </p> 
+     * Store <tt>ResourceAssociation</tt>.  
      */
-    public Resource prepareResource(ResourceGroup parentGroup);
+    public ResourceAssociation storeResourceAssociation(ResourceAssociation resourceAssociation);
     
     /**
-     * <p>
-     * Create a <code>Resource</code> for the parent <code>ResourceGroup</code> and
-     * prepare the current <code>Division</code> to be the default owner.
-     * </p> 
+     * Load lazy collections, if any. 
      */
-    public Resource prepareResource(ResourceGroup parentGroup, String resourceCode);
+    public ResourceGroup prepareResourceGroup(ResourceGroup resourceGroup);
     
     /**
-     * <p>
-     * Create a <code>Resource</code> for the parent <code>ResourceGroup</code> with
-     * a given owner.
-     * </p> 
+     * Find <tt>ResourceGroup</tt>s using filter.
+     * 
+     * @param resourceGroupFilter
      */
-    public Resource createResource(ResourceGroup parentGroup, String resourceCode, Partner owner);
+    public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter);
     
     /**
-     * <p>
-     * Delegates to {@link ResourceDao#findRootResourceByEntity(Entity)}.
-     * </p>  
+     * Remove a <tt>ResourceAssociation</tt> from its <tt>ResourceGroup</tt>.
+     * 
+     * @param resourceAssociation
+     * @param removeOrphan
      */
-    public List<ResourceGroup> findRootResourceByEntity(Entity entity);
-    
+	public void removeResourceAssociation(ResourceAssociation resourceAssociation, boolean removeOrphan);
+
     /**
-     * <p>
-     * Delegates to {@link ResourceDao#findResourceByEntity(Entity)}.
-     * </p>  
+     * Remove a <tt>Resource</tt>.
+     * 
+     * @param resource
      */
-    public List<ResourceGroup> findResourceByEntity(Entity entity);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceDao#findResourceByParent(ResourceGroup)}.
-     * </p>  
-     */
-    public List<ResourceGroup> findResourceByParent(ResourceGroup resourceGroup);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceDao#findResourceByEntityAndCode(Entity, String)}.
-     * </p>  
-     */
-    public ResourceGroup findResourceByEntityAndCode(Entity entity, String resourceCode);
+    public void removeResource(Resource resource);
     
     /**
      * <p>
@@ -174,33 +154,5 @@ public interface ResourceMgr {
      * </p>  
      */
     public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceDao#findResourceParameterByEntity(Entity)}.
-     * </p>  
-     */
-    public List<ResourceParameter> findResourceParameterByEntity(Entity entity);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceDao#findResourceParameterByParent(ResourceParameter)}.
-     * </p>  
-     */
-    public List<ResourceParameter> findResourceParameterByParent(ResourceParameter parent);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceDao#findResourceParameterValueByResource(ResourceGroup)}.
-     * </p>  
-     */
-    public List<ResourceParameterValue> findResourceParameterValueByResource(ResourceGroup resourceGroup);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceDao#findResourceByEntityAndCode(Entity, String)}.
-     * </p>  
-     */
-    public ResourceParameter findResourceParameterByEntityAndCode(Entity entity, String resourceParameterCode);
     
 }

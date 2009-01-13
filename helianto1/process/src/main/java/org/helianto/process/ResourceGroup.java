@@ -15,7 +15,9 @@
 
 package org.helianto.process;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -62,7 +64,7 @@ public class ResourceGroup implements java.io.Serializable {
     private ResourceGroup parent;
     private String resourceName;
     private char resourceType;
-    private Set<ResourceGroup> resources = new HashSet<ResourceGroup>(0);
+    private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
 
     /** default constructor */
     public ResourceGroup() {
@@ -136,14 +138,20 @@ public class ResourceGroup implements java.io.Serializable {
     }
     
     /**
-     * Set of child <code>ResourceGroup</code>.
+     * Set of child <code>ResourceAssociation</code>s.
      */
     @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-     public Set<ResourceGroup> getResources() {
-        return this.resources;
+    public Set<ResourceAssociation> getChildAssociations() {
+    	return this.childAssociations;
+    }   
+    public void setChildAssociations(Set<ResourceAssociation> childAssociations) {
+    	this.childAssociations = childAssociations;
     }
-    public void setResources(Set<ResourceGroup> resources) {
-        this.resources = resources;
+    @Transient
+    public List<ResourceAssociation> getChildAssociationList() {
+    	List<ResourceAssociation> childAssociationList = new ArrayList<ResourceAssociation>();
+    	childAssociationList.addAll(getChildAssociations());
+    	return childAssociationList;
     }
 
     /**
@@ -153,7 +161,7 @@ public class ResourceGroup implements java.io.Serializable {
      * @param entity
      * @param resourceCode
      */
-    public static <T extends ResourceGroup> T resourceGroupFactory(Class<T> clazz, Entity entity, String resourceCode) {
+    protected static <T extends ResourceGroup> T resourceGroupFactory(Class<T> clazz, Entity entity, String resourceCode) {
         T resourceGroup = null;
         try {
         	resourceGroup = clazz.newInstance();
@@ -187,6 +195,19 @@ public class ResourceGroup implements java.io.Serializable {
     	resourceGroup.setParent(parent);
     	resourceGroup.setResourceType(parent.getResourceType());
     	return resourceGroup;
+    }
+    
+    /**
+     * Preferred method to create a <code>Resource</code>.
+     * 
+     * @param sequence
+     */
+    public ResourceAssociation associatedResourceFactory(int sequence) {
+    	String resourceCode = new StringBuilder(getResourceCode()).append("-").append(sequence).toString();
+    	Resource resource = resourceGroupFactory(Resource.class, this.getEntity(), resourceCode);
+    	resource.setResourceType(getResourceType());
+    	ResourceAssociation resourceAssociation = ResourceAssociation.resourceAssociationFactory(ResourceAssociation.class, this, resource, sequence);
+    	return resourceAssociation;
     }
 
     /**
@@ -233,7 +254,7 @@ public class ResourceGroup implements java.io.Serializable {
          int result = 17;
          result = 37 * result + ( getResourceCode() == null ? 0 : this.getResourceCode().hashCode() );
          return result;
-   }   
+   }
 
 }
 

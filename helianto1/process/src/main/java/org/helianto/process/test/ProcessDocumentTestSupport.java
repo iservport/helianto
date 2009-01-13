@@ -36,7 +36,7 @@ public class ProcessDocumentTestSupport {
 
     /**
      * Test support method to create a <code>Document</code>.
-     * @param entity optional Entity 
+     * @param entity optional Entity or docCode
      * @param docCode optional String 
      */
     public static ProcessDocument createDocument(Object... args) {
@@ -49,7 +49,7 @@ public class ProcessDocumentTestSupport {
         String docCode;
         try {
             docCode = (String) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
+        } catch(ArrayIndexOutOfBoundsException e1) {
             docCode = DomainTestSupport.getNonRepeatableStringValue(testKey++, 24);
         }
         ProcessDocument document = new Process();

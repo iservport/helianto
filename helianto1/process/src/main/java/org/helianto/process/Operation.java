@@ -143,18 +143,18 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
      */
     public DocumentAssociation operationCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
     	DocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
-    	setDefaults((Characteristic) documentAssociation.getChild());
         return documentAssociation;
     }
 
     /**
-     * Set defaults.
-	 * @param child
-	 */
-	private void setDefaults(Characteristic child) {
-		child.setCharacteristicType(CharacteristicType.PROCESS);
-		child.setInheritanceType(InheritanceType.FINAL);
-	}
+     * <code>Operation</code> setup factory.
+     * 
+     * @param resourceGroup
+     */
+    public Setup operationSetupFactory(ResourceGroup resourceGroup) {
+    	Setup setup = Setup.setupFactory(this, resourceGroup);
+        return setup;
+    }
 
 	public boolean equals(Object other) {
 		 if ( !(other instanceof Operation) ) return false;

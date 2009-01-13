@@ -15,16 +15,25 @@ public class CustomerTestSupport {
 
     /**
      * Test support method to create a <code>Customer</code>.
-     * @param partnerAssociation optional PartnerAssociation 
+     * @param partnerRegistry optional partnerRegistry 
      */
     public static Customer createCustomer(Object... args) {
-        PartnerRegistry partnerAssociation;
+        PartnerRegistry partnerRegistry;
         try {
-            partnerAssociation = (PartnerRegistry) args[0];
+            partnerRegistry = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            partnerAssociation = PartnerRegistryTestSupport.createPartnerRegistry();
-        }
-        Customer customer = Customer.customerFactory(partnerAssociation);
+            partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
+	    } catch(ClassCastException e) {
+	        partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
+	        try {
+	            String partnerAlias = (String) args[0];
+	            partnerRegistry.setPartnerAlias(partnerAlias);
+	        } catch(Exception e1) {
+	            // nop
+	        }
+	
+	    }
+        Customer customer = Customer.customerFactory(partnerRegistry);
         return customer;
     }
 
