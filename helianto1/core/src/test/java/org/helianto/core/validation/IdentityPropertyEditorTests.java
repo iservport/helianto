@@ -15,20 +15,25 @@
 
 package org.helianto.core.validation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import org.easymock.EasyMock;
 import org.helianto.core.Identity;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityPropertyEditorTests extends TestCase {
+public class IdentityPropertyEditorTests {
 	
 	private IdentityPropertyEditor identityPropertyEditor;
 
+	@Test
 	public void testGetAsText() {
 		Identity identity = new Identity();
 		identity.setId(Long.MAX_VALUE);
@@ -40,6 +45,7 @@ public class IdentityPropertyEditorTests extends TestCase {
 		EasyMock.verify(sessionFactory);
 	}
 
+	@Test
 	public void testSetAsTextString() {
 		Session session = EasyMock.createMock(Session.class);
 		Identity identity = new Identity();
@@ -59,7 +65,7 @@ public class IdentityPropertyEditorTests extends TestCase {
 	
 	private SessionFactory sessionFactory;
 	
-	@Override
+	@Before
 	public void setUp() {
 		identityPropertyEditor = new IdentityPropertyEditor();
 		sessionFactory = EasyMock.createMock(SessionFactory.class);
@@ -67,7 +73,7 @@ public class IdentityPropertyEditorTests extends TestCase {
 		
 	}
 	
-	@Override
+	@After
 	public void tearDown() {
 		EasyMock.reset(sessionFactory);
 	}

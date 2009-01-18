@@ -15,31 +15,35 @@
 
 package org.helianto.core.validation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import org.easymock.EasyMock;
 import org.helianto.core.Category;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class CategoryPropertyEditorTests extends TestCase {
+public class CategoryPropertyEditorTests {
 	
-	private CategoryPropertyEditor categoryPropertyEditor;
-
+	@Test
 	public void testGetAsText() {
 		Category category = new Category();
-		category.setId(Integer.MAX_VALUE);
+		category.setCategoryCode("CODE");
 		categoryPropertyEditor.setValue(category);
 		
 		EasyMock.replay(sessionFactory);
 		
-		assertEquals(String.valueOf(Integer.MAX_VALUE), categoryPropertyEditor.getAsText());
+		assertEquals("CODE", categoryPropertyEditor.getAsText());
 		EasyMock.verify(sessionFactory);
 	}
-
+	
+	@Test
 	public void testSetAsTextString() {
 		Session session = EasyMock.createMock(Session.class);
 		Category category = new Category();
@@ -57,9 +61,10 @@ public class CategoryPropertyEditorTests extends TestCase {
 		EasyMock.reset(session);
 	}
 	
+	private CategoryPropertyEditor categoryPropertyEditor;
 	private SessionFactory sessionFactory;
 	
-	@Override
+	@Before
 	public void setUp() {
 		categoryPropertyEditor = new CategoryPropertyEditor();
 		sessionFactory = EasyMock.createMock(SessionFactory.class);
@@ -67,7 +72,7 @@ public class CategoryPropertyEditorTests extends TestCase {
 		
 	}
 	
-	@Override
+	@After
 	public void tearDown() {
 		EasyMock.reset(sessionFactory);
 	}

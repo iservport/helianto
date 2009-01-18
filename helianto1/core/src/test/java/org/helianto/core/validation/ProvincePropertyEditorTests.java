@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import org.easymock.EasyMock;
-import org.helianto.core.Unit;
+import org.helianto.core.Province;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.junit.After;
@@ -29,46 +29,46 @@ import org.junit.Test;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class UnitPropertyEditorTests {
+public class ProvincePropertyEditorTests {
 	
 	@Test
 	public void testGetAsText() {
-		Unit unit = new Unit();
-		unit.setUnitCode("CODE");
-		unitPropertyEditor.setValue(unit);
+		Province province = new Province();
+		province.setProvinceCode("CODE");
+		provincePropertyEditor.setValue(province);
 		
 		EasyMock.replay(sessionFactory);
 		
-		assertEquals("CODE", unitPropertyEditor.getAsText());
+		assertEquals("CODE", provincePropertyEditor.getAsText());
 		EasyMock.verify(sessionFactory);
 	}
 	
 	@Test
 	public void testSetAsTextString() {
 		Session session = EasyMock.createMock(Session.class);
-		Unit unit = new Unit();
+		Province province = new Province();
 		
 		EasyMock.expect(sessionFactory.getCurrentSession()).andReturn(session);
 		EasyMock.replay(sessionFactory);
 		
-		EasyMock.expect(session.load(Unit.class, 1)).andReturn(unit);
+		EasyMock.expect(session.load(Province.class, 1)).andReturn(province);
 		EasyMock.replay(session);
 		
-		unitPropertyEditor.setAsText("1");
-		assertSame(unit, unitPropertyEditor.getValue());
+		provincePropertyEditor.setAsText("1");
+		assertSame(province, provincePropertyEditor.getValue());
 		EasyMock.verify(sessionFactory);
 		
 		EasyMock.reset(session);
 	}
 	
-	private UnitPropertyEditor unitPropertyEditor;
+	private ProvincePropertyEditor provincePropertyEditor;
 	private SessionFactory sessionFactory;
 	
 	@Before
 	public void setUp() {
-		unitPropertyEditor = new UnitPropertyEditor();
+		provincePropertyEditor = new ProvincePropertyEditor();
 		sessionFactory = EasyMock.createMock(SessionFactory.class);
-		unitPropertyEditor.setSessionFactory(sessionFactory);
+		provincePropertyEditor.setSessionFactory(sessionFactory);
 		
 	}
 	

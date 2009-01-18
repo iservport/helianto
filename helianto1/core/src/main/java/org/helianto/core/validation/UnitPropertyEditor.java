@@ -1,12 +1,14 @@
 package org.helianto.core.validation;
 
 import org.helianto.core.Unit;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>SessionFactory</code> backed <code>Unit</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component
 public class UnitPropertyEditor extends AbstractSessionPropertyEditor {
 
     @Override

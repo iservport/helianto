@@ -17,18 +17,20 @@ package org.helianto.core.validation;
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
 
 import org.helianto.core.Category;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>SessionFactory</code> backed <code>Category</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component
 public class CategoryPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {
         Category category = (Category) getValue();
-        return String.valueOf(category.getId());
+        return String.valueOf(category.getCategoryCode());
     }
     
     @Override

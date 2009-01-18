@@ -17,12 +17,14 @@ package org.helianto.core.validation;
 import java.io.Serializable;
 
 import org.helianto.core.Identity;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>SessionFactory</code> backed <code>Identity</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component
 public class IdentityPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override

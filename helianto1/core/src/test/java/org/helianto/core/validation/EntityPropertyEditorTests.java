@@ -15,31 +15,35 @@
 
 package org.helianto.core.validation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import org.easymock.EasyMock;
 import org.helianto.core.Entity;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class EntityPropertyEditorTests extends TestCase {
+public class EntityPropertyEditorTests {
 	
-	private EntityPropertyEditor entityPropertyEditor;
-
+	@Test
 	public void testGetAsText() {
 		Entity entity = new Entity();
-		entity.setId(Long.MAX_VALUE);
+		entity.setAlias("ALIAS");
 		entityPropertyEditor.setValue(entity);
 		
 		EasyMock.replay(sessionFactory);
 		
-		assertEquals(String.valueOf(Long.MAX_VALUE), entityPropertyEditor.getAsText());
+		assertEquals("ALIAS", entityPropertyEditor.getAsText());
 		EasyMock.verify(sessionFactory);
 	}
-
+	
+	@Test
 	public void testSetAsTextString() {
 		Session session = EasyMock.createMock(Session.class);
 		Entity entity = new Entity();
@@ -57,9 +61,10 @@ public class EntityPropertyEditorTests extends TestCase {
 		EasyMock.reset(session);
 	}
 	
+	private EntityPropertyEditor entityPropertyEditor;
 	private SessionFactory sessionFactory;
 	
-	@Override
+	@Before
 	public void setUp() {
 		entityPropertyEditor = new EntityPropertyEditor();
 		sessionFactory = EasyMock.createMock(SessionFactory.class);
@@ -67,7 +72,7 @@ public class EntityPropertyEditorTests extends TestCase {
 		
 	}
 	
-	@Override
+	@After
 	public void tearDown() {
 		EasyMock.reset(sessionFactory);
 	}

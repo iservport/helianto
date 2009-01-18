@@ -17,18 +17,20 @@ package org.helianto.core.validation;
 import java.io.Serializable;
 
 import org.helianto.core.Entity;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>SessionFactory</code> backed <code>Entity</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component
 public class EntityPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {
     	Entity entity = (Entity) getValue();
-        return String.valueOf(entity.getId());
+        return String.valueOf(entity.getAlias());
     }
     
     @Override
