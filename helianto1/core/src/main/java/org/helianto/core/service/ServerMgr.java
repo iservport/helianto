@@ -15,13 +15,10 @@
 
 package org.helianto.core.service;
 
-import java.util.List;
-
 import javax.mail.MessagingException;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
@@ -33,25 +30,6 @@ import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
  */
 public interface ServerMgr {
 
-    /**
-     * Sets the system up to accept a manager.
-     * 
-     * @param managerIdentity
-     * @return new manager <code>User</code>
-     */
-    public User prepareSystemConfiguration(Identity managerIdentity);
-    
-    /**
-     * Creates an <code>Entity</code> with name "DEFAULT"
-     */
-    public Entity createDefaultEntity();
-    
-    /**
-     * Creates an <code>Operator</code> with name "DEFAULT",
-     * LOCAL mode and default <code>Locale</code>.
-     */
-    public Operator createLocalDefaultOperator();
-    
     /**
      * <p>Finds or creates <code>UserGroup</code> by <code>Entity</code> and name.</p>
      */
@@ -79,21 +57,6 @@ public interface ServerMgr {
      */
     public User writeManager(Entity entity, Identity managerIdentity);
     
-    /**
-     * Persist the <code>Operator</code>.
-     */
-    public void persistOperator(Operator operator);
-
-    /**
-     * <p>Finds <code>Operator</code> list.</p>
-     */
-    public List<Operator> findOperator();
-
-    /**
-     * <p>Finds <code>Operator</code> by name.</p>
-     */
-    public Operator findOperatorByName(String operatorName);
-
     /**
      * Send a <code>Credential</code> confirmation mail using 
      * a <code>PasswordConfirmationMailForm</code>.
