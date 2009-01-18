@@ -26,23 +26,23 @@ import junit.framework.TestCase;
  */
 public class AbstractNodeTests extends TestCase {
 	
-	private AbstractNode<StubPayLoad> stubNode;
-	private StubPayLoad payLoad;
+	private AbstractNode<StubContent> stubNode;
+	private StubContent content;
 	
-	public class StubPayLoad {
+	public class StubContent {
 	}
 	
 	private List<Node> childList = new ArrayList<Node>();
 	
-	public class StubNode extends AbstractNode<StubPayLoad> {
+	public class StubNode extends AbstractNode<StubContent> {
 
 		private static final long serialVersionUID = 1L;
 
-		public StubNode(long id, StubPayLoad payLoad, int level, int sequence) {
+		public StubNode(long id, StubContent payLoad, int level, int sequence) {
 			super(id, payLoad, level, sequence);
 		}
 
-		public StubNode(long id, StubPayLoad payLoad, int level, int sequence, boolean editable) {
+		public StubNode(long id, StubContent payLoad, int level, int sequence, boolean editable) {
 			super(id, payLoad, level, sequence, editable);
 		}
 
@@ -58,23 +58,23 @@ public class AbstractNodeTests extends TestCase {
 	
 	public void testConstructor() {
 		assertEquals(1000, stubNode.getId());
-		assertSame(payLoad, stubNode.getPayLoad());
+		assertSame(content, stubNode.getContent());
 		assertEquals(10, stubNode.getLevel());
 		assertEquals(100, stubNode.getSequence());
 		assertTrue(stubNode.isEditable());
 	}
 	
 	public void testConstructorNotEditable() {
-		stubNode = new StubNode(1000, payLoad, 10, 100, false);
+		stubNode = new StubNode(1000, content, 10, 100, false);
 		assertEquals(1000, stubNode.getId());
-		assertSame(payLoad, stubNode.getPayLoad());
+		assertSame(content, stubNode.getContent());
 		assertEquals(10, stubNode.getLevel());
 		assertEquals(100, stubNode.getSequence());
 		assertFalse(stubNode.isEditable());
 	}
 	
-	public void testPayLoad() {
-		assertSame(payLoad, stubNode.getPayLoad());
+	public void testContent() {
+		assertSame(content, stubNode.getContent());
 	}
 	
 	public void testCaption() {
@@ -92,46 +92,46 @@ public class AbstractNodeTests extends TestCase {
 	}
 	
 	public void testCompareToPrevious() {
-		Node previous = new StubNode(1001, payLoad, 9, 100);
+		Node previous = new StubNode(1001, content, 9, 100);
 		assertEquals(1, stubNode.compareTo(previous));
-		Node previous2 = new StubNode(1001, payLoad, 9, 99);
+		Node previous2 = new StubNode(1001, content, 9, 99);
 		assertEquals(1, stubNode.compareTo(previous2));
-		Node previous3 = new StubNode(1001, payLoad, 9, 101);
+		Node previous3 = new StubNode(1001, content, 9, 101);
 		assertEquals(1, stubNode.compareTo(previous3));
-		Node previousSequence = new StubNode(1001, payLoad, 10, 99);
+		Node previousSequence = new StubNode(1001, content, 10, 99);
 		assertEquals(1, stubNode.compareTo(previousSequence));
 	}
 	
 	public void testCompareToNext() {
-		Node next = new StubNode(1001, payLoad, 11, 100);
+		Node next = new StubNode(1001, content, 11, 100);
 		assertEquals(-1, stubNode.compareTo(next));
-		Node next2 = new StubNode(1001, payLoad, 11, 99);
+		Node next2 = new StubNode(1001, content, 11, 99);
 		assertEquals(-1, stubNode.compareTo(next2));
-		Node next3 = new StubNode(1001, payLoad, 11, 101);
+		Node next3 = new StubNode(1001, content, 11, 101);
 		assertEquals(-1, stubNode.compareTo(next3));
-		Node nextSequence = new StubNode(1001, payLoad, 10, 101);
+		Node nextSequence = new StubNode(1001, content, 10, 101);
 		assertEquals(-1, stubNode.compareTo(nextSequence));
 	}
 	
 	public void testEqualsSuccess() {
-		Node other = new StubNode(1000, payLoad, 10, 100);
+		Node other = new StubNode(1000, content, 10, 100);
 		assertTrue(stubNode.equals(other));
 	}
 	
 	public void testEqualsFailurePayLoad() {
-		Node other = new StubNode(1000, new StubPayLoad(), 10, 100);
+		Node other = new StubNode(1000, new StubContent(), 10, 100);
 		assertFalse(stubNode.equals(other));
 	}
 	
 	public void testEqualsFailureLevel() {
-		AbstractNode<StubPayLoad> other = new StubNode(1000, payLoad, 11, 100);
+		AbstractNode<StubContent> other = new StubNode(1000, content, 11, 100);
 		assertFalse(stubNode.equals(other));
 	}
 	
 	@Override
 	public void setUp() {
-		payLoad = new StubPayLoad();
-		stubNode = new StubNode(1000, payLoad, 10, 100);
+		content = new StubContent();
+		stubNode = new StubNode(1000, content, 10, 100);
 	}
 
 }

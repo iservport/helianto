@@ -43,6 +43,11 @@ public interface Node extends Comparable<Node>, Serializable {
 	public String getCaption();
 	
 	/**
+	 * Content wrapped by the node.
+	 */
+	public Object getContent();
+	
+	/**
 	 * Level used to provide ordering and identation.
 	 */
 	public int getLevel();

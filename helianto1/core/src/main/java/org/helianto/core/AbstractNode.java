@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import org.helianto.core.Node;
 
 /**
  * Base class to the <code>Node</code> interface.
@@ -26,7 +25,7 @@ public abstract class AbstractNode<T> implements Node {
 
 	private static final long serialVersionUID = 1L;
 	private long id;
-	private T payLoad;
+	private T content;
 	private int level = 0;
 	private int sequence = 0;
 	private boolean expanded = false;
@@ -36,9 +35,9 @@ public abstract class AbstractNode<T> implements Node {
 	/**
 	 * Constructor.
 	 */
-	public AbstractNode(long id, T payLoad,  int level, int sequence, boolean editable) {
+	public AbstractNode(long id, T content,  int level, int sequence, boolean editable) {
 		this.id = id;
-		this.payLoad = payLoad;
+		this.content = content;
 		this.level = level;
 		this.sequence = sequence;
 		this.editable = editable;
@@ -59,10 +58,10 @@ public abstract class AbstractNode<T> implements Node {
 	}
 
 	/**
-	 * Exposed payLoad.
+	 * Exposed content.
 	 */
-	public T getPayLoad() {
-		return payLoad;
+	public T getContent() {
+		return content;
 	}
 
 	/**
@@ -126,12 +125,12 @@ public abstract class AbstractNode<T> implements Node {
 		AbstractNode<T> castOther = (AbstractNode) other;
 		
 		return (
-				((this.getPayLoad() == castOther.getPayLoad()) 
+				((this.getContent() == castOther.getContent()) 
 				|| 
 				(
-				 this.getPayLoad() != null
-				 && castOther.getPayLoad() != null 
-				 && this.getPayLoad().equals(castOther.getPayLoad())
+				 this.getContent() != null
+				 && castOther.getContent() != null 
+				 && this.getContent().equals(castOther.getContent())
 				))
 				&& (this.getLevel()==castOther.getLevel())
 			   );
@@ -144,7 +143,7 @@ public abstract class AbstractNode<T> implements Node {
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result
-				+ (getPayLoad() == null ? 0 : this.getPayLoad().hashCode());
+				+ (getContent() == null ? 0 : this.getContent().hashCode());
         result = 37 * result + this.getLevel();
 		return result;
 	}
