@@ -16,6 +16,7 @@
 package org.helianto.web.controller;
 
 import org.helianto.core.User;
+import org.helianto.core.service.OperatorMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.springframework.webflow.action.FormAction;
@@ -29,11 +30,6 @@ import org.springframework.webflow.execution.RequestContext;
  * @author Mauricio Fernandes de Castro
  */
 public class InstallFormAction extends FormAction {
-    
-    private ServerMgr serverMgr;
-    private UserMgr userMgr;
-    
-    
     
     public InstallFormAction() {
         setFormObjectName("userForm");
@@ -55,7 +51,7 @@ public class InstallFormAction extends FormAction {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
         }
-        if (serverMgr.findOperator().size()==0) {
+        if (operatorMgr.findOperator().size()==0) {
         	if (logger.isDebugEnabled()) {
         		logger.debug("No operator present: new installation!");
         	}
@@ -120,6 +116,15 @@ public class InstallFormAction extends FormAction {
 
     //~ collaborators
     
+    private OperatorMgr operatorMgr;
+    private ServerMgr serverMgr;
+    private UserMgr userMgr;
+
+    @javax.annotation.Resource
+    public void setOperatorMgr(OperatorMgr operatorMgr) {
+        this.operatorMgr = operatorMgr;
+    }
+
     @javax.annotation.Resource
     public void setServerMgr(ServerMgr serverMgr) {
         this.serverMgr = serverMgr;

@@ -30,9 +30,9 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
+import org.helianto.core.service.OperatorMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
-import org.helianto.web.controller.InstallFormAction;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
@@ -53,23 +53,23 @@ public class InstallFormActionTests extends TestCase {
     
     public void testIfNewYes() {
         List<Operator> operatorList = new ArrayList<Operator>();
-        expect(serverMgr.findOperator()).andReturn(operatorList);
-        replay(serverMgr);
+        expect(operatorMgr.findOperator()).andReturn(operatorList);
+        replay(operatorMgr);
         
         Event event = installFormAction.ifNew(new MockRequestContext());
         assertEquals(event.getId(), "yes");
-        verify(serverMgr);
+        verify(operatorMgr);
     }
 
     public void testIfNewNo() {
         List<Operator> operatorList = new ArrayList<Operator>();
         operatorList.add(new Operator());
-        expect(serverMgr.findOperator()).andReturn(operatorList);
-        replay(serverMgr);
+        expect(operatorMgr.findOperator()).andReturn(operatorList);
+        replay(operatorMgr);
         
         Event event = installFormAction.ifNew(new MockRequestContext());
         assertEquals(event.getId(), "no");
-        verify(serverMgr);
+        verify(operatorMgr);
     }
     
     
@@ -113,20 +113,24 @@ public class InstallFormActionTests extends TestCase {
     }
     
     // collabs
+    private OperatorMgr operatorMgr;
     private ServerMgr serverMgr;
     private UserMgr userMgr;
     
     @Override
     public void setUp() {
+    	operatorMgr = createMock(OperatorMgr.class);
         serverMgr = createMock(ServerMgr.class);
         userMgr = createMock(UserMgr.class);
         installFormAction = new InstallFormAction();
+        installFormAction.setOperatorMgr(operatorMgr);
         installFormAction.setServerMgr(serverMgr);
         installFormAction.setUserMgr(userMgr);
     }
     
     @Override
     public void tearDown() {
+        reset(operatorMgr);
         reset(serverMgr);
         reset(userMgr);
     }
