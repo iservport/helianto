@@ -38,7 +38,12 @@ public interface ProvinceDao extends CommonOrmDao {
     public Province mergeProvince(Province province);
     
     /**
-     * Remove <code>Province</code>.
+     * Remove <code>Province</code> from session.
+     */
+	public void evictProvince(Province province);
+	
+    /**
+     * Remove <code>Province</code> from data store.
      */
     public void removeProvince(Province province);
     
@@ -51,5 +56,10 @@ public interface ProvinceDao extends CommonOrmDao {
      * Find <code>Province</code> by  operator.
      */
     public List<Province> findProvinceByOperator(Operator operator);
+    
+    /**
+     * Find <code>Province</code>s by criteria.
+     */
+    public List<Province> findProvinces(String criteria);
     
 }

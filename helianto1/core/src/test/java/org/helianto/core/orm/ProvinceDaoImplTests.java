@@ -48,7 +48,7 @@ public class ProvinceDaoImplTests extends AbstractHibernateIntegrationTest {
         //write
         Province province = writeProvince();
         //read
-        assertEquals(province,  provinceDao.findProvinceByNaturalId(province.getOperator(), province.getCode()));
+        assertEquals(province,  provinceDao.findProvinceByNaturalId(province.getOperator(), province.getProvinceCode()));
     }
     
     private List<Province> writeProvinceList() {
@@ -67,7 +67,7 @@ public class ProvinceDaoImplTests extends AbstractHibernateIntegrationTest {
         List<Province> provinceList = writeProvinceList();
         // read
         Province province = provinceList.get((int) Math.random()*provinceList.size());
-        assertEquals(province,  provinceDao.findProvinceByNaturalId(province.getOperator(), province.getCode()));
+        assertEquals(province,  provinceDao.findProvinceByNaturalId(province.getOperator(), province.getProvinceCode()));
     }
 
     public void testProvinceErrors() {
@@ -86,7 +86,7 @@ public class ProvinceDaoImplTests extends AbstractHibernateIntegrationTest {
      */  
     public void testProvinceDuplicate() {
     	Province province = writeProvince();
-    	Province provinceCopy = ProvinceTestSupport.createProvince(province.getOperator(), province.getCode());
+    	Province provinceCopy = ProvinceTestSupport.createProvince(province.getOperator(), province.getProvinceCode());
 
         try {
         	provinceDao.mergeProvince(provinceCopy); fail();
