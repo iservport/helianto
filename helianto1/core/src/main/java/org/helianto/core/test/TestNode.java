@@ -35,7 +35,7 @@ public class TestNode extends AbstractNode<String> {
 	}
 
 	public String getCaption() {
-		return getPayLoad();
+		return getContent();
 	}
 
 	public List<Node> getChildList() {
