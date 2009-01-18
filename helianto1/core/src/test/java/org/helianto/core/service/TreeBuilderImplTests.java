@@ -40,12 +40,12 @@ public class TreeBuilderImplTests extends TestCase {
 
 		private static final long serialVersionUID = 1L;
 
-		public NodeStub(long id, Identity payLoad, int level, int sequence) {
-			super(id, payLoad, level, sequence);
+		public NodeStub(long id, Identity content, int level, int sequence) {
+			super(id, content, level, sequence);
 		}
 
 		public String getCaption() {
-			return getPayLoad().getPrincipal();
+			return getContent().getPrincipal();
 		}
 
 		public List<Node> getChildList() {
