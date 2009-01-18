@@ -23,6 +23,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -33,14 +34,14 @@ import javax.persistence.UniqueConstraint;
  */
 @javax.persistence.Entity
 @Table(name="core_province",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "code"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "provinceCode"})}
 )
 public class Province  implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
     private Operator operator;
-    private String code;
+    private String provinceCode;
     private String provinceName;
 
     /** default constructor */
@@ -66,11 +67,11 @@ public class Province  implements java.io.Serializable {
     }
     
     @Column(length=3)
-    public String getCode() {
-        return this.code;
+    public String getProvinceCode() {
+        return this.provinceCode;
     }
-    public void setCode(String code) {
-        this.code = code;
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
     }
     
     @Column(length=32)
@@ -80,6 +81,21 @@ public class Province  implements java.io.Serializable {
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName;
     }
+
+    /**
+     * <code>Province</code> query.
+     */
+    @Transient
+    public static StringBuilder getProvinceQueryStringBuilder() {
+        return new StringBuilder("select province from Province province ");
+    }   
+
+    /**
+     * @return
+     */
+    public static String getProvinceNaturalIdQueryString() {
+        return getProvinceQueryStringBuilder().append("where province.operator = ? and province.provinceCode = ? ").toString();
+    }   
 
     /**
      * Default <code>Province</code> creator.
@@ -92,7 +108,7 @@ public class Province  implements java.io.Serializable {
         Province province = new Province();
 
         province.setOperator(requiredOperator);
-        province.setCode(code);
+        province.setProvinceCode(code);
         province.setProvinceName(provinceName);
         return province;
     }
@@ -107,7 +123,7 @@ public class Province  implements java.io.Serializable {
 
       buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
       buffer.append("operator").append("='").append(getOperator()).append("' ");			
-      buffer.append("code").append("='").append(getCode()).append("' ");			
+      buffer.append("code").append("='").append(getProvinceCode()).append("' ");			
       buffer.append("]");
       
       return buffer.toString();
@@ -120,7 +136,7 @@ public class Province  implements java.io.Serializable {
 		 Province castOther = ( Province ) other; 
          
 		 return ( (this.getOperator()==castOther.getOperator()) || ( this.getOperator()!=null && castOther.getOperator()!=null && this.getOperator().equals(castOther.getOperator()) ) )
- && ( (this.getCode()==castOther.getCode()) || ( this.getCode()!=null && castOther.getCode()!=null && this.getCode().equals(castOther.getCode()) ) );
+ && ( (this.getProvinceCode()==castOther.getProvinceCode()) || ( this.getProvinceCode()!=null && castOther.getProvinceCode()!=null && this.getProvinceCode().equals(castOther.getProvinceCode()) ) );
    }
    
    public int hashCode() {
@@ -128,11 +144,10 @@ public class Province  implements java.io.Serializable {
          
          
          result = 37 * result + ( getOperator() == null ? 0 : this.getOperator().hashCode() );
-         result = 37 * result + ( getCode() == null ? 0 : this.getCode().hashCode() );
+         result = 37 * result + ( getProvinceCode() == null ? 0 : this.getProvinceCode().hashCode() );
          
          return result;
-   }   
-
+   }
 
 }
 

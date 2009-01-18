@@ -28,7 +28,7 @@ public class ProvinceTests extends TestCase {
 
         province.setOperator(new Operator());
 
-        province.setCode("");
+        province.setProvinceCode("");
 
         province.setProvinceName("");
     }
@@ -36,18 +36,18 @@ public class ProvinceTests extends TestCase {
     public void testProvinceEquals() {
         Province copy, province = new Province();
         province.setOperator(new Operator());
-        province.setCode("TEST");
+        province.setProvinceCode("TEST");
         copy = (Province) DomainTestSupport.minimalEqualsTest(province);
 
         copy.setOperator(province.getOperator());
         assertFalse(province.equals(copy));
 
         copy.setOperator(null);
-        copy.setCode("TEST");
+        copy.setProvinceCode("TEST");
         assertFalse(province.equals(copy));
 
         copy.setOperator(province.getOperator());
-        copy.setCode("TEST");
+        copy.setProvinceCode("TEST");
         assertTrue(province.equals(copy));
     }
 
