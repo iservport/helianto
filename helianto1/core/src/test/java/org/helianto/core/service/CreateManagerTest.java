@@ -29,6 +29,12 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
         this.serverMgr = serverMgr;
     }
     
+    private OperatorMgr operatorMgr;
+    
+    public void setOperatorMgr(OperatorMgr operatorMgr) {
+        this.operatorMgr = operatorMgr;
+    }
+    
     @Override
     protected String[] getConfigLocations() {
         return new String[] { 
@@ -50,7 +56,7 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
         String principal = "TEST";
         String optionalALias = "TEST";
 
-        Operator operator = serverMgr.findOperatorByName("DEFAULT");
+        Operator operator = operatorMgr.findOperatorByName("DEFAULT");
         if (operator==null) {
             operator = OperatorCreator.operatorFactory("DEFAULT", OperationMode.LOCAL, null);
         }

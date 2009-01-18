@@ -11,7 +11,7 @@
            http://www.springframework.org/schema/tx/spring-tx.xsd">
                
     <context:annotation-config/>
-	<context:component-scan base-package="org.helianto.core.orm,org.helianto.core.service"/>
+	<context:component-scan base-package="org.helianto.core.orm,org.helianto.core.service,org.helianto.core.validation"/>
 	    
 	<!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
@@ -29,20 +29,6 @@
  limitations under the License.
 		-->
 	<!--
-			selection strategies	
-	-->
-	<bean id="identitySelectionStrategy" 
-		class="org.helianto.core.hibernate.DefaultIdentitySelectionStrategy"/>
-	<bean id="userSelectionStrategy" 
-		class="org.helianto.core.orm.DefaultUserSelectionStrategy"/>
-	
-	<!--
-			principal generation strategy	
-	-->
-	<bean id="principalGenerationStrategy" 
-		class="org.helianto.core.service.DefaultPrincipalGenerationStrategy"/>
-	
-	<!--
 			User service bean	
 	-->
 	<bean id="userMgr" 
@@ -51,6 +37,18 @@
 		<property name="target">
 			<bean id="userTarget"
 				class="org.helianto.core.service.UserMgrImpl">
+			</bean>
+		</property>
+	</bean>
+	<!--
+			Operator service bean	
+	-->
+	<bean id="operatorMgr" 
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		parent="mgrTemplate">
+		<property name="target">
+			<bean id="operatorTarget"
+				class="org.helianto.core.service.OperatorMgrImpl">
 			</bean>
 		</property>
 	</bean>
@@ -112,16 +110,4 @@
 	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	
-	<bean id="identityPropertyEditor" 
-		class="org.helianto.core.validation.IdentityPropertyEditor"/>
-		
-	<bean id="entityPropertyEditor" 
-		class="org.helianto.core.validation.EntityPropertyEditor"/>
-
-	<bean id="categoryPropertyEditor" 
-		class="org.helianto.core.validation.CategoryPropertyEditor"/>
-
-	<bean id="unitPropertyEditor" 
-		class="org.helianto.core.validation.UnitPropertyEditor"/>
-
 </beans>
