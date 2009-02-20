@@ -12,21 +12,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.helianto.process.validation;
 
-package org.helianto.core.security;
+import org.helianto.core.validation.AbstractSessionPropertyEditor;
+import org.helianto.process.Setup;
+import org.springframework.stereotype.Component;
 
-/** 
- * Thrown by <code>PublicUserDetailsSwitcher</code> implementations.
+/**
+ * Default <code>SessionFactory</code> backed <code>Setup</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class AttemptToSwitchToUnauthenticatedUserException extends
-		RuntimeException {
-
-	private static final long serialVersionUID = 1L;
-
-	public AttemptToSwitchToUnauthenticatedUserException() {
-		super("User must share the same Identity with the previously authenticated one.");
-	}
+@Component("setupPropertyEditor")
+public class SetupPropertyEditor extends AbstractSessionPropertyEditor {
+    
+    @Override
+    public String getAsText() {
+    	Setup setup = (Setup) getValue();
+        return String.valueOf(setup.getId());
+    }
+    
+    @Override
+    public void setAsText(String id) throws IllegalArgumentException {
+        setAsText(id, Setup.class);
+    }
 
 }

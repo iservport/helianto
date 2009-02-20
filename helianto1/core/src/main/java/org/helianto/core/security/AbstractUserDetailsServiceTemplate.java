@@ -15,19 +15,27 @@
 
 package org.helianto.core.security;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
-import org.springframework.security.userdetails.UsernameNotFoundException;
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.service.SecurityMgr;
-import org.springframework.beans.factory.annotation.Required;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserLog;
+import org.helianto.core.UserRole;
+import org.helianto.core.service.UserMgr;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.UserDetailsService;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 
 /**
  * A basic template for the {@link org.acegisecurity.userdetails.UserDetailsService}
@@ -43,8 +51,6 @@ import org.springframework.dao.DataAccessException;
  */
 public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsService {
 
-    protected SecurityMgr securityMgr;
-    
     /**
      * Implements {@link org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)}
      * to provide {@link org.acegisecurity.userdetails.UserDetails} as an adapter.
@@ -52,99 +58,117 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
      * <p>It is a six step process: (1) load an <code>Identity<code>, (2) load a <code>Credential<code>,
      * (3) list a compatible <code>User</code>s, (4) select (or create) a <code>User</code> from the list, 
      * (5) create an adapter instance which both takes the selected <code>User</code> and satisfies 
-     * <code>UserDetails</code>, and, optionally, (6) log the <code>User</code> event.</p>
+     * <code>UserDetails</code>, and (6) create Authorities.</p>
      */
     public final UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         if (logger.isDebugEnabled()) {
             logger.debug("Attempting login with username "+username);
         }
+        // first, search identities having username as principal
         Identity identity = loadAndValidateIdentity(username);
         if (logger.isDebugEnabled()) {
             logger.debug("Step 1 successful: Identity principal is "+identity.getPrincipal());
         }
+        // then see if there is a credential for that identity
         Credential credential = loadAndValidateCredential(identity);
         if (logger.isDebugEnabled()) {
             logger.debug("Step 2 successful: Identity has a valid Credential");
         }
-        List<User> userList = loadUsers(identity);
+        // and users sharing that identity
+        List<UserGroup> userList = userMgr.findUsers(identity);
         if (logger.isDebugEnabled()) {
             logger.debug("Step 3 successful: User list is loaded with "+userList.size()+" item(s).");
         }
+        // what user will be selected? the last visitor
         User user = null;
-        if (!userList.isEmpty()) {
+        if (userList!=null && !userList.isEmpty()) {
             user = selectUser(userList);
             if (logger.isDebugEnabled()) {
                 logger.debug("Step 4 successful: User selected as "+user.getIdentity().getIdentityName());
             }
         }
-        else {
-            user = createUser(identity);
-            userList.add(user);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Step 4 successful: Created user as "+user.getIdentity().getIdentityName());
-            }
-        }
         if (user==null) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Step 4 unsuccessful: User not selected");
+            }
             throw new UsernameNotFoundException("Not a valid username: "+username);
         }
-        UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(userList, user, credential);
+        // log this visit, next login this user will be selected
+        UserLog managedUserLog = userMgr.storeUserLog(user, new Date());
+        User managedUser = managedUserLog.getUser();
+        // create the adapter
+        UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(managedUser, credential);
         if (logger.isDebugEnabled()) {
             logger.debug("Step 5 successful: User details instance is prepared: USER IS SUCCESSFULLY LOADED");
         }
-        logUser(user);
+        // load the roles and convert to authorities
+        Set<UserRole> roles = loadAndValidateRoles(user);
+        GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
+        int i = 0;
+        for (UserRole r : roles) {
+            String roleName = convertUserRoleToString(r);
+            authorities[i++] = new GrantedAuthorityImpl(roleName);
+        }
+        userDetailsAdapter.setAuthorities(authorities);
         if (logger.isDebugEnabled()) {
-            logger.debug("Step 6 successful: User log created: USER LOAD PROCESS FINISHED");
+            logger.debug("Step 6 successful: AUTHORITIES SUCCESSFULLY LOADED");
         }
         return userDetailsAdapter;
     }
     
     /**
-     * Load and validate an <code>Identity</code>
+     * Hook to load and validate an <code>Identity</code>
      * 
      * @param principal
      */
     public abstract Identity loadAndValidateIdentity(String principal);
 
     /**
-     * Load and validate a <code>Credential</code>
+     * Hook to load and validate a <code>Credential</code>
      * 
      * @param identity
      */
     public abstract Credential loadAndValidateCredential(Identity identity);
     
     /**
-     * Load <code>User</code>s sharing the same <code>Identity</code>
-     * 
-     * @param identity
-     */
-    public abstract List<User> loadUsers(Identity identity);
-    
-    /**
      * Select an <code>User</code> from the list
      * 
      * @param userList
      */
-    public abstract User selectUser(List<User> userList);
+    protected User selectUser(List<UserGroup> userList) {
+        for (UserGroup userGroup: userList) {
+        	if (userGroup instanceof User) {
+                return (User) userGroup;
+        	}
+        }
+        return null;
+    }
     
     /**
-     * Create a new <code>User</code>
+     * Hook to load and validate a <code>Role</code> set.
      * 
      * @param identity
      */
-    public abstract User createUser(Identity identity);
+    protected abstract Set<UserRole> loadAndValidateRoles(User user);
     
     /**
-     * Write a log on the <code>User</code> event
+     * Convert a role to a string.
      * 
-     * @param user
+     * @param userRole
      */
-    public abstract void logUser(User user);
-    
+    protected String convertUserRoleToString(UserRole userRole) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ROLE_").append(userRole.getService().getServiceName())
+                .append("_").append(userRole.getServiceExtension());
+        return sb.toString();
+    }
+
     //- collabs
     
-    @Required
-    public void setSecurityMgr(SecurityMgr securityMgr) {
-        this.securityMgr = securityMgr;
+    private UserMgr userMgr;
+    @Resource
+    public void setUserMgr(UserMgr userMgr) {
+        this.userMgr = userMgr;
     }
 
     private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);

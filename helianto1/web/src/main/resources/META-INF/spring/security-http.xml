@@ -100,24 +100,36 @@
 		<property name="defaultTargetUrl" value="/"/>
 		<property name="filterProcessesUrl"
 			value="/j_acegi_security_check"/>
-		  <property name="exceptionMappings">
-		    <props>
-				<prop key="org.springframework.security.AccountExpiredException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.AuthenticationCredentialsNotFoundException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.AuthenticationServiceException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.BadCredentialsException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.concurrent.ConcurrentLoginException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.CredentialsExpiredException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.DisabledException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.InsufficientAuthenticationException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.LockedException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.ui.digestauth.NonceExpiredException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.providers.ProviderNotFoundException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.providers.cas.ProxyUntrustedException">/admin.htm?login_error=1</prop>
-				<prop key="org.springframework.security.concurrent.SessionAlreadyUsedException">/admin.htm?login_error=1</prop>		    </props>
-		  </property>
+		<property name="rememberMeServices"
+			ref="rememberMeServices"/>
+		<property name="exceptionMappings">
+		<props>
+			<prop key="org.springframework.security.AccountExpiredException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.AuthenticationCredentialsNotFoundException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.AuthenticationServiceException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.BadCredentialsException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.concurrent.ConcurrentLoginException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.CredentialsExpiredException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.DisabledException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.InsufficientAuthenticationException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.LockedException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.ui.digestauth.NonceExpiredException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.providers.ProviderNotFoundException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.providers.cas.ProxyUntrustedException">/admin.htm?login_error=1</prop>
+			<prop key="org.springframework.security.concurrent.SessionAlreadyUsedException">/admin.htm?login_error=1</prop>
+		</props>
+		</property>
 	</bean>
 	
+	<!--
+			Not included in chain by default
+	-->
+	<bean id="rememberMeProcessingFilter"
+	    class="org.springframework.security.ui.rememberme.RememberMeProcessingFilter">
+	  <property name="rememberMeServices" ref="rememberMeServices"/>
+	  <property name="authenticationManager" ref="authenticationManager" />    
+	</bean>
+	        
 	<!--
 			Authentication processing filter entry point	
 	

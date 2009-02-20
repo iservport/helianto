@@ -18,11 +18,15 @@ package org.helianto.process;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Sequenceable;
+import org.helianto.partner.Partner;
 
 /**
  * <p>
@@ -35,9 +39,10 @@ import org.helianto.core.Sequenceable;
 public class Process extends DerivedProcessDocument implements Sequenceable {
 
     private static final long serialVersionUID = 1L;
-    protected long internalNumber;
+    private long internalNumber;
+    private Partner partner;
 
-    /** default constructor */
+	/** default constructor */
     public Process() {
     }
 
@@ -55,10 +60,22 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
 		return "PROC";
 	}
  
+    /**
+     * Partner, if exists.
+     */
+    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinColumn(name="partnerId", nullable=true)
+    public Partner getPartner() {
+		return partner;
+	}
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+
     @Transient
     public List<DocumentAssociation> getOperationAssociations() {
     	List<DocumentAssociation> childAssociationList = new ArrayList<DocumentAssociation>();
-    	for (DocumentAssociation documentAssociation: this.getChildAssociations()) {
+    	for (DocumentAssociation documentAssociation: this.getChildAssociationList()) {
     		if (documentAssociation.getChild() instanceof Operation) {
     			childAssociationList.add(documentAssociation);
     		}

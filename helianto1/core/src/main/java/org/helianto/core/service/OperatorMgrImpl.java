@@ -59,6 +59,13 @@ public class OperatorMgrImpl implements OperatorMgr {
     	return provinceList;
 	}
 
+	public Province prepareProvince(Province province) {
+		Province managedProvince = provinceDao.mergeProvince(province);
+		managedProvince.getOperator();
+		provinceDao.evictProvince(province);
+		return managedProvince;
+	}
+
 	public Province prepareNewProvince(Entity entity) {
 		Entity managedEntity = entityDao.mergeEntity(entity);
 		return Province.provinceFactory(managedEntity.getOperator(), "", "");

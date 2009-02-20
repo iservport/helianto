@@ -17,11 +17,8 @@ package org.helianto.core.service;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +27,14 @@ import javax.mail.MessagingException;
 
 import junit.framework.TestCase;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
+import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.ServerDao;
 import org.helianto.core.dao.ServiceDao;
-import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.mail.ConfigurableMailSender;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.DecoratedPreparator;
@@ -52,106 +47,6 @@ public class ServerMgrImplTests extends TestCase {
     // class under test
     private ServerMgrImpl serverMgr;
     
-	public void testFindOrCreateUserGroupNoName() {
-		Entity entity = new Entity();
-		
-
-		expect(identityDao.findIdentityByNaturalId("NAME")).andReturn(
-				null);
-		identityDao.persistIdentity(isA(Identity.class));
-		expectLastCall().anyTimes();
-		replay(identityDao);
-
-		expect(
-				userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
-						isA(Identity.class))).andReturn(null);
-		userGroupDao.persistUserGroup(isA(UserGroup.class));
-		replay(userGroupDao);
-
-		UserGroup userGroup = serverMgr.findOrCreateUserGroup(entity, "NAME");
-		verify(identityDao);
-
-		assertSame(entity, userGroup.getEntity());
-		assertEquals("name", userGroup.getIdentity().getPrincipal());
-		assertEquals("NAME", userGroup.getIdentity().getOptionalAlias());
-		assertEquals(IdentityType.GROUP.getValue(), userGroup.getIdentity()
-				.getIdentityType());
-	}
-
-	public void testFindOrCreateUserGroupOnlyName() {
-		Identity groupIdentity = new Identity();
-		Entity entity = new Entity();
-
-		expect(identityDao.findIdentityByNaturalId("NAME")).andReturn(
-				groupIdentity);
-		identityDao.persistIdentity(groupIdentity);
-		replay(identityDao);
-
-		expect(
-				userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
-						isA(Identity.class))).andReturn(null);
-		userGroupDao.persistUserGroup(isA(UserGroup.class));
-		replay(userGroupDao);
-
-		UserGroup userGroup = serverMgr.findOrCreateUserGroup(entity, "NAME");
-		verify(identityDao);
-
-		assertSame(entity, userGroup.getEntity());
-		assertSame(groupIdentity, userGroup.getIdentity());
-	}
-
-	public void testFindOrCreateUserGroup() {
-		Identity groupIdentity = new Identity();
-		Entity entity = new Entity();
-		UserGroup userGroup = new UserGroup();
-		userGroup.setEntity(entity);
-		userGroup.setIdentity(groupIdentity);
-
-		expect(identityDao.findIdentityByNaturalId("NAME")).andReturn(
-				groupIdentity);
-		identityDao.persistIdentity(groupIdentity);
-		replay(identityDao);
-
-		expect(userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
-						isA(Identity.class))).andReturn(userGroup);
-		replay(userGroupDao);
-
-		assertEquals(userGroup, serverMgr.findOrCreateUserGroup(entity, "NAME"));
-		verify(identityDao);
-
-	}
-
-	public void testFindOrCreateUserGroupWithOneExtension() {
-		Identity groupIdentity = new Identity();
-		Entity entity = new Entity();
-		Operator defaultOperator = new Operator();
-		entity.setOperator(defaultOperator);
-		UserGroup userGroup = new UserGroup();
-		userGroup.setEntity(entity);
-		userGroup.setIdentity(groupIdentity);
-
-		expect(identityDao.findIdentityByNaturalId("ADMIN")).andReturn(
-				groupIdentity);
-		identityDao.persistIdentity(groupIdentity);
-		replay(identityDao);
-
-		expect(
-				userGroupDao.findUserGroupByNaturalId(isA(Entity.class),
-						isA(Identity.class))).andReturn(userGroup);
-		replay(userGroupDao);
-
-		assertEquals(userGroup, serverMgr.findOrCreateUserGroup(entity, "ADMIN", new String[] {"MANAGER"}));
-		verify(identityDao);
-		
-//		assertEquals(1, userGroup.getRoles().size());
-//		UserRole admin = userGroup.getRoles().iterator().next();
-//		assertSame(userGroup, admin.getUserGroup());
-//		assertSame(defaultOperator, admin.getService().getOperator());
-//		assertEquals("ADMIN", admin.getService().getServiceName());
-//		assertEquals("MANAGER", admin.getServiceExtension());
-
-	}
-
     //TODO pending
     public void testsendPasswordConfirmation() throws MessagingException {
     	PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm();
@@ -180,17 +75,18 @@ public class ServerMgrImplTests extends TestCase {
     // collabs
     
 	private IdentityDao identityDao;
-	private UserGroupDao userGroupDao;
+	private FilterDao<UserGroup, UserFilter> userGroupDao;
     private ServerDao serverDao;
     private ServiceDao serviceDao;
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
     private ConfigurableMailSender sender;
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void setUp() {
 		identityDao = createMock(IdentityDao.class);
-		userGroupDao = createMock(UserGroupDao.class);
+		userGroupDao = createMock(FilterDao.class);
         serverDao = createMock(ServerDao.class);
         serviceDao = createMock(ServiceDao.class);
         configurableMailSenderFactory = createMock(ConfigurableMailSenderFactory.class);

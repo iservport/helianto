@@ -19,6 +19,7 @@ import org.helianto.core.User;
 import org.helianto.core.service.OperatorMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
+import org.springframework.stereotype.Component;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
 import org.springframework.webflow.execution.Event;
@@ -29,6 +30,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component("installAction")
 public class InstallFormAction extends FormAction {
     
     public InstallFormAction() {
@@ -85,7 +87,7 @@ public class InstallFormAction extends FormAction {
             logger.debug("!---- STARTED");
         }
         UserForm form = doGetForm(context);
-        userMgr.writeUser(form.getUser());
+        userMgr.storeUserGroup(form.getUser());
         return success();
     }
         

@@ -65,7 +65,8 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("OTHER_PREFIX", criteriaBuilder.getPrefix());
     }
     
-    public void testAppendEntityFromUserBackedFilter() {
+    @SuppressWarnings("deprecation")
+	public void testAppendEntityFromUserBackedFilter() {
         UserBackedFilter userBackedFilter = new UserBackedFilterStub();
         criteriaBuilder.appendEntityFromUserBackedFilter(userBackedFilter);
         assertEquals("PREFIX.entity.id = 9223372036854775807 ", criteriaBuilder.getCriteriaAsString());
@@ -168,8 +169,43 @@ public class CriteriaBuilderTests extends TestCase {
     
     public void testCloseParenthesisNotOpen() {
         criteriaBuilder.closeParenthesis();
-        System.out.println(criteriaBuilder.getCriteriaAsString());
         assertEquals("",criteriaBuilder.getCriteriaAsString());
+    }
+    
+    public void testAppendRangeNoDate() {
+    	DateRange filter = new UserBackedFilterStub();
+    	filter.setFromDate(null);
+    	filter.setToDate(null);
+        criteriaBuilder.appendDateRange("field", filter);
+        assertEquals("", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    public void testAppendRangeFromDate() {
+    	Date fromDate = new Date(0);
+    	DateRange filter = new UserBackedFilterStub();
+    	filter.setFromDate(fromDate);
+    	filter.setToDate(null);
+        criteriaBuilder.appendDateRange("field", filter);
+        assertEquals("(PREFIX.field >= '1969-12-31 21:00:00' ) ", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    public void testAppendRangeToDate() {
+    	Date toDate = new Date(0);
+    	DateRange filter = new UserBackedFilterStub();
+    	filter.setFromDate(null);
+    	filter.setToDate(toDate);
+        criteriaBuilder.appendDateRange("field", filter);
+        assertEquals("(PREFIX.field < '1969-12-31 21:00:00' ) ", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    public void testAppendRangeFromDateToDate() {
+    	Date fromDate = new Date(0);
+    	Date toDate = new Date(1000000);
+    	DateRange filter = new UserBackedFilterStub();
+    	filter.setFromDate(fromDate);
+    	filter.setToDate(toDate);
+        criteriaBuilder.appendDateRange("field", filter);
+        assertEquals("(PREFIX.field >= '1969-12-31 21:00:00' AND PREFIX.field < '1969-12-31 21:16:40' ) ", criteriaBuilder.getCriteriaAsString());
     }
     
     @Override
@@ -179,10 +215,10 @@ public class CriteriaBuilderTests extends TestCase {
     
     //- user backed filter stub
     
-    public class UserBackedFilterStub implements UserBackedFilter {
+    public class UserBackedFilterStub implements UserBackedFilter, DateRange {
 
         public User getUser() {
-            User user = SecurityTestSupport.createUserDetailsAdapter().getUser();
+            User user = (User) SecurityTestSupport.createUserDetailsAdapter().getUser();
             user.getEntity().setId(Long.MAX_VALUE);
             return user;
         }
@@ -190,6 +226,17 @@ public class CriteriaBuilderTests extends TestCase {
         public void setUser(User arg0) {}
         
         public void reset() {}
+        
+        private Date fromDate;
+        private Date toDate;
+
+		public Date getFromDate() { return this.fromDate; }
+
+		public Date getToDate() { return this.toDate; }
+
+		public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
+
+		public void setToDate(Date toDate) { this.toDate = toDate; }
         
     }
 

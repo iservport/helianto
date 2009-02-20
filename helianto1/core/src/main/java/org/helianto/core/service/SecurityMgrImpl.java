@@ -15,21 +15,23 @@
 
 package org.helianto.core.service;
 
-import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.UserLog;
+import org.helianto.core.UserFilter;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 import org.helianto.core.dao.CredentialDao;
-import org.helianto.core.dao.UserLogDao;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
-import org.springframework.util.Assert;
 
 /**
  * Default implementation for <code>SecurityMgr</code> interface.
@@ -38,10 +40,6 @@ import org.springframework.util.Assert;
  */
 public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
     
-    private UserLogDao userLogDao;
-    private CredentialDao credentialDao;
-    
-
 	public Credential findCredentialByIdentity(Identity identity) {
 		return credentialDao.findCredentialByNaturalId(identity);
 	}
@@ -59,50 +57,34 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
 		secureUser.setCredential(credential);
 	}
 
-	public UserLog findLastUserLog(List<User> users) {
-		return userLogDao.findLastUserLog(users);
-	}
-    
-    public void persistUserLog(User user, Date date) {
-        Assert.notNull(user.getIdentity());
-        if (date==null) {
-            date = new Date();
-        }
-        UserLog userLog = UserLog.userLogFactory(user, date);
-        userLogDao.persistUserLog(userLog);
-        identityDao.persistIdentity(user.getIdentity());
-    }
-    
-    public void writeUserLog(User user, Date date) {
-        Assert.notNull(user.getIdentity());
-        if (date==null) {
-            date = new Date();
-        }
-        UserLog userLog = UserLog.userLogFactory(user, date);
-        userLogDao.mergeUserLog(userLog);
-    }
-    
-    public boolean isAutoCreateEnabled() {
-        return false;
-    }
-    
-    public User autoCreateUser(Identity identity) {
-    	// TODO implement auto creation
-        return null;
-    }
-
     public PublicUserDetails findSecureUser() {
         return UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
     }
+    
+    public Set<UserRole> prepareAllUserRoles(User user) {
+		User managedUser = (User) userGroupDao.merge(user);
+		Set<UserRole> allRoles = managedUser.getAllRoles();
+		if (allRoles!=null && logger.isDebugEnabled()) {
+			logger.debug("Found "+allRoles.size()+" role(s)");
+		}
+		userGroupDao.evict(managedUser);
+		return allRoles;
+	}
 
-    @Resource
-    public void setUserLogDao(UserLogDao userLogDao) {
-        this.userLogDao = userLogDao;
-    }
+    // collabs
+
+    private CredentialDao credentialDao;
+    private FilterDao<UserGroup, UserFilter> userGroupDao;
     
     @Resource
     public void setCredentialDao(CredentialDao credentialDao) {
         this.credentialDao = credentialDao;
     }
 
+    @Resource(name="userGroupDao")
+    public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
+        this.userGroupDao = userGroupDao;
+    }
+
+    private final static Log logger = LogFactory.getLog(SecurityMgrImpl.class);
 }

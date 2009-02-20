@@ -65,6 +65,7 @@ public class ResourceGroup implements java.io.Serializable {
     private String resourceName;
     private char resourceType;
     private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
+    private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
 
     /** default constructor */
     public ResourceGroup() {
@@ -153,6 +154,24 @@ public class ResourceGroup implements java.io.Serializable {
     	childAssociationList.addAll(getChildAssociations());
     	return childAssociationList;
     }
+
+    /**
+     * Set of parent <code>ResourceAssociation</code>s.
+     */
+    @OneToMany(mappedBy="child", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<ResourceAssociation> getParentAssociations() {
+    	return this.parentAssociations;
+    }   
+    public void setParentAssociations(Set<ResourceAssociation> parentAssociations) {
+    	this.parentAssociations = parentAssociations;
+    }
+    @Transient
+    public List<ResourceAssociation> getParentAssociationList() {
+    	List<ResourceAssociation> parentAssociationList = new ArrayList<ResourceAssociation>();
+    	parentAssociationList.addAll(getParentAssociations());
+    	return parentAssociationList;
+    }
+
 
     /**
      * <code>ResourceGroup</code> factory.

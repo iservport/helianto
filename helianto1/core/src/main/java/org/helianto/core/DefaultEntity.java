@@ -33,7 +33,7 @@ import javax.persistence.UniqueConstraint;
  * to a single <code>Entity</code>.
  * </p>
  * <p>
- * Each <code>DefaultEntity</code> should have a corresponding {@link Partner}.
+ * Each <code>DefaultEntity</code> should have a corresponding partner.
  * </p>
  * @author Mauricio Fernandes de Castro
  */

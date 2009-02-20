@@ -15,17 +15,11 @@
 
 package org.helianto.process;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.helianto.partner.Partner;
@@ -46,7 +40,6 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     private Partner manufacturer;
     private Partner owner;
     private boolean keyResource;
-    private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
 
      // Constructors
 
@@ -126,24 +119,6 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
         this.keyResource = keyResource;
     }
     
-    /**
-     * Set of parent <code>ResourceAssociation</code>s.
-     */
-    @OneToMany(mappedBy="child", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    public Set<ResourceAssociation> getParentAssociations() {
-    	return this.parentAssociations;
-    }   
-    public void setParentAssociations(Set<ResourceAssociation> parentAssociations) {
-    	this.parentAssociations = parentAssociations;
-    }
-    @Transient
-    public List<ResourceAssociation> getParentAssociationList() {
-    	List<ResourceAssociation> parentAssociationList = new ArrayList<ResourceAssociation>();
-    	parentAssociationList.addAll(getParentAssociations());
-    	return parentAssociationList;
-    }
-
-
     /**
      * <code>Resource</code> query <code>StringBuilder</code>.
      */

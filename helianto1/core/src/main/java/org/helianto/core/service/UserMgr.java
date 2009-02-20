@@ -16,6 +16,7 @@
 package org.helianto.core.service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.Entity;
@@ -26,6 +27,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserLog;
 import org.helianto.core.filter.IdentityFilter;
 
 /**
@@ -67,13 +69,13 @@ public interface UserMgr extends CoreMgr {
     /**
      * <p>List <code>UserGroup</code> by string criteria.</p>
      */
-    public List<User> findUsers(String criteria);
+    public List<UserGroup> findUsers(UserFilter userFilter);
     
     /**
-     * <p>List <code>UserGroup</code> by string criteria.</p>
+     * Find users sharing the same identity.
      */
-    public List<User> findUsers(UserFilter userFilter);
-    
+    public List<UserGroup> findUsers(Identity identity);
+
     /**
      * <p>Store <code>UserGroup</code> and return a managed instance.</p>
      */
@@ -86,6 +88,15 @@ public interface UserMgr extends CoreMgr {
     public UserGroup storeUserGroup(UserAssociation parentAssociation);
     
     /**
+     * Write a new <code>UserLog<code> and update the <code>Identity</code>
+     * last log date.
+     * 
+     * @param user
+     * @param date
+     */
+	public UserLog storeUserLog(User user, Date date);
+	
+    /**
      * <p>Write <code>Identity</code> to datastore.</p>
      * @deprecated in favor of storeIdentity
      */
@@ -96,24 +107,6 @@ public interface UserMgr extends CoreMgr {
      */
     @Deprecated
     public void persistUser(User user);
-    
-    /**
-     * <p>Store <code>User</code> and return a managed instance.</p>
-     * @deprecated use storeUser(UserGroup userGroup)
-     */
-    public User storeUser(User user);
-    
-    /**
-     * <p>Write <code>User</code>.</p>
-     * @deprecated use storeUser
-     */
-    public void writeUser(User user);
-    
-    /**
-     * <p>Write <code>UserGroup</code>.</p>
-     * @deprecated use storeUser
-     */
-    public void writeUser(UserGroup userGroup);
     
     /**
      * Find a <code>Province</code> list by <code>Operator</code>.

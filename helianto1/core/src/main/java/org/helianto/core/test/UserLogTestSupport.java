@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 
 /**
@@ -82,7 +83,7 @@ public class UserLogTestSupport {
      */
     public static List<UserLog> createUserLogList(int userLogListSize, List<User> userList) {
         List<UserLog> userLogList = new ArrayList<UserLog>();
-        for (User user: userList) {
+        for (UserGroup user: userList) {
 	        for (int i=0;i<userLogListSize;i++) {
     	        userLogList.add(createUserLog(user));
         	}

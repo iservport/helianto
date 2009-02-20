@@ -27,7 +27,7 @@ import javax.persistence.MappedSuperclass;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public class AbstractVersion  implements java.io.Serializable {
+public class AbstractVersion implements java.io.Serializable {
 
  	private static final long serialVersionUID = 1L;
 	private int id;
@@ -39,6 +39,8 @@ public class AbstractVersion  implements java.io.Serializable {
 
     /** default constructor */
     public AbstractVersion() {
+    	setMajorNumber(0);
+    	setMinorNumber(0);
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -79,7 +81,7 @@ public class AbstractVersion  implements java.io.Serializable {
     public void setActivityCode(char activityCode) {
         this.activityCode = activityCode;
     }
-    
+
     public String getChangeSummary() {
         return this.changeSummary;
     }

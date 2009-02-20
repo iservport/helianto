@@ -21,6 +21,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.UserFilter;
 import org.helianto.core.dao.UserSelectionStrategy;
 import org.helianto.core.filter.CriteriaBuilder;
+import org.springframework.stereotype.Component;
 
 /**
  * Default implementation of <code>UserSelectionStrategy</code>
@@ -29,7 +30,9 @@ import org.helianto.core.filter.CriteriaBuilder;
  * <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated in favour of DefaultUserDao
  */
+@Component("userSelectionStrategy")
 public class DefaultUserSelectionStrategy  implements UserSelectionStrategy {
 
     public String createCriteriaAsString(UserFilter filter, String prefix) {

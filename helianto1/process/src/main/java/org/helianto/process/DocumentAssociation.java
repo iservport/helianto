@@ -99,6 +99,10 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
 	public void setAssociationRole(AssociationRole associationRole) {
 		this.associationRole = associationRole.getValue();
 	}
+	@Transient
+	public boolean isControlled() {
+		return (associationRole!=AssociationRole.NONE.getValue());
+	}
 
 	/**
      * Associated left limit.

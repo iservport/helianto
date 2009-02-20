@@ -37,13 +37,8 @@ public class SecurityTestSupport {
     public static UserDetailsAdapter createUserDetailsAdapter(User user) {
         List<User> users = new ArrayList<User>();
         users.add(user);
-        return createUserDetailsAdapter(users);
-    }
-
-    public static UserDetailsAdapter createUserDetailsAdapter(List<User> users) {
-    	User user = users.get(0);
         Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
-        return new UserDetailsAdapter(users, user, credential);
+        return new UserDetailsAdapter(user, credential);
     }
 
 }

@@ -11,6 +11,14 @@ package org.helianto.process;
 public enum ResourceType {
     
     /**
+     * The resource is a sector.
+     */
+    SECTOR('S'),
+    /**
+     * The resource is a workstation.
+     */
+    WORKSTATION('W'),
+    /**
      * The resource is a regular equipment.
      */
     EQUIPMENT('E'),

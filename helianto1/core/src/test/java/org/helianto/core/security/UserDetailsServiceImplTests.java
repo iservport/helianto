@@ -17,135 +17,122 @@ package org.helianto.core.security;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertSame;
 
-import java.util.Date;
-import java.util.List;
-
-import junit.framework.TestCase;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserRole;
 import org.helianto.core.service.SecurityMgr;
+import org.helianto.core.service.UserMgr;
 import org.helianto.core.test.CredentialTestSupport;
-import org.helianto.core.test.UserTestSupport;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class UserDetailsServiceImplTests extends TestCase {
+public class UserDetailsServiceImplTests {
     
     // class under test
     private UserDetailsServiceImpl userDetailsService;
     
-    public void testIdentityResolutionStrategy() {
+    @Test
+    public void testLoadAndValidateIdentity() {
     	String principal = "TEST";
     	Identity identity = new Identity();
     	
-		expect(identityResolutionStrategy.loadAndValidateIdentity(principal))
+		expect(securityMgr.findIdentityByPrincipal(principal))
 		    .andReturn(identity);
-		replay(identityResolutionStrategy);
+		replay(securityMgr);
     	
 		assertSame(identity, userDetailsService.loadAndValidateIdentity(principal));
-		verify(identityResolutionStrategy);
+		verify(securityMgr);
     }
     
+    @Test(expected=UsernameNotFoundException.class)
+    public void testLoadAndValidateIdentityNull() {
+        expect(securityMgr.findIdentityByPrincipal("PRINCIPAL"))
+            .andReturn(null);
+        replay(securityMgr);
+        
+        userDetailsService.loadAndValidateIdentity("PRINCIPAL");
+    }
+
+    @Test(expected=UsernameNotFoundException.class)
+    public void testLoadAndValidateIdentityError() {
+        expect(securityMgr.findIdentityByPrincipal("PRINCIPAL"))
+            .andThrow(new UsernameNotFoundException("Error"));
+        replay(securityMgr);
+        
+        userDetailsService.loadAndValidateIdentity("PRINCIPAL");
+    }
+    
+    @Test
     public void testLoadAndValidateCredential() {
         Credential credential = CredentialTestSupport.createCredential();
         
-        expect(identityResolutionStrategy.loadAndValidateCredential(credential.getIdentity()))
+        expect(securityMgr.findCredentialByIdentity(credential.getIdentity()))
             .andReturn(credential);
-        replay(identityResolutionStrategy);
-        
-        assertSame(credential, userDetailsService.loadAndValidateCredential(credential.getIdentity()));
-        verify(identityResolutionStrategy);
-    }
-
-    public void testLoadUsers() {
-    	Identity identity = new Identity();
-    	List<User> users = UserTestSupport.createUserList(3);
-    	
-		expect(userResolutionStrategy.loadUsers(identity))
-		    .andReturn(users);
-		replay(userResolutionStrategy);
-    	
-		assertSame(users, userDetailsService.loadUsers(identity));
-		verify(userResolutionStrategy);
-    }
-    
-    public void testSelectUser() {
-    	List<User> users = UserTestSupport.createUserList(3);
-    	
-        expect(userResolutionStrategy.selectUserFromPreviousLogin(users))
-            .andReturn(users.get(0));
-        replay(userResolutionStrategy);
-        
-        assertSame(users.get(0), userDetailsService.selectUser(users));
-        verify(userResolutionStrategy);
-    }
-
-    public void testSelectUserFirstLogin() {
-    	List<User> users = UserTestSupport.createUserList(3);
-    	
-        expect(userResolutionStrategy.selectUserFromPreviousLogin(users))
-            .andReturn(null);
-        expect(userResolutionStrategy.selectUserIfAny(users))
-        	.andReturn(users.get(0));
-        replay(userResolutionStrategy);
-        
-        assertSame(users.get(0), userDetailsService.selectUser(users));
-        verify(userResolutionStrategy);
-    }
-
-    
-    public void testCreateUser() {
-    	Identity identity = new Identity();
-    	User user = new User();
-    	
-        expect(userResolutionStrategy.createUser(identity))
-            .andReturn(user);
-        replay(userResolutionStrategy);
-        
-        assertSame(user, userDetailsService.createUser(identity));
-        verify(userResolutionStrategy);
-    }
-    
-    public void testLogUser() {
-    	securityMgr.writeUserLog(isA(User.class), isA(Date.class));
         replay(securityMgr);
         
-        userDetailsService.logUser(new User());
+        assertSame(credential, userDetailsService.loadAndValidateCredential(credential.getIdentity()));
         verify(securityMgr);
-    		
     }
+
+    @Test(expected=DataRetrievalFailureException.class)
+    public void testLoadAndValidateCredentialNull() {
+        Identity identity = new Identity();
+        
+        expect(securityMgr.findCredentialByIdentity(identity))
+        	.andReturn(null);
+        replay(securityMgr);
+
+        userDetailsService.loadAndValidateCredential(identity);
+    }
+    
+    public void testLoadAndValidateRoles() {
+    	Set<UserRole> userRoles = new HashSet<UserRole>();
+    	User user = new User();
+        
+        expect(securityMgr.prepareAllUserRoles(user))
+            .andReturn(userRoles);
+        replay(securityMgr);
+        
+        assertSame(userRoles, userDetailsService.loadAndValidateRoles(user));
+        verify(securityMgr);
+    }
+    
     
     // collaborators
+    private UserMgr userMgr;
     private SecurityMgr securityMgr;
-    private IdentityResolutionStrategy identityResolutionStrategy;
-    private UserResolutionStrategy userResolutionStrategy;
+
     // setup
     
-    @Override
+	@Before
     public void setUp() {
+        userMgr = createMock(UserMgr.class);
         securityMgr = createMock(SecurityMgr.class);
-        identityResolutionStrategy = createMock(IdentityResolutionStrategy.class);
-        userResolutionStrategy = createMock(UserResolutionStrategy.class);
         userDetailsService = new UserDetailsServiceImpl();
+        userDetailsService.setUserMgr(userMgr);
         userDetailsService.setSecurityMgr(securityMgr);
-        userDetailsService.setIdentityResolutionStrategy(identityResolutionStrategy);
-        userDetailsService.setUserResolutionStrategy(userResolutionStrategy);
     }
     
-    @Override
+    @After
     public void tearDown() {
+        reset(userMgr);
         reset(securityMgr);
-        reset(identityResolutionStrategy);
-        reset(userResolutionStrategy);
     }
     
 }

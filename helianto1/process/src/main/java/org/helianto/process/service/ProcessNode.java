@@ -46,7 +46,7 @@ public class ProcessNode extends AbstractNode<DocumentAssociation> {
 	 */
 	public ProcessNode(ProcessDocument root) {
 		this(new DocumentAssociation(), 0, 0, false);
-		getPayLoad().setChild(root);
+		getContent().setChild(root);
 	}
 
 	/**
@@ -84,17 +84,17 @@ public class ProcessNode extends AbstractNode<DocumentAssociation> {
 	}
 
 	public final String getCaption() {
-		return getPayLoad().getChild().getDocCode();
+		return getContent().getChild().getDocCode();
 	}
 
 	public final List<Node> getChildList() {
 		List<Node> childList = new ArrayList<Node>();
-		List<DocumentAssociation> associationList = getPayLoad().getChild().getChildAssociationList();
+		List<DocumentAssociation> associationList = getContent().getChild().getChildAssociationList();
     	if (logger.isDebugEnabled()) {
     		logger.debug("Found "+associationList.size()+" association(s) under sequence "+getSequence());
     	}
 		for (DocumentAssociation documentAssociation: associationList) {
-			if (documentAssociation.getParent().equals(getPayLoad().getChild())) {
+			if (documentAssociation.getParent().equals(getContent().getChild())) {
 				childList.add(childNodeFactory(documentAssociation, true));
 		    	if (logger.isDebugEnabled()) {
 		    		logger.debug("Added "+documentAssociation+" as editable node");

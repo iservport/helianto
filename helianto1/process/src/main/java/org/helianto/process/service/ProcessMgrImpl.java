@@ -15,6 +15,8 @@
 
 package org.helianto.process.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -33,25 +35,19 @@ import org.helianto.process.Operation;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentFilter;
-import org.helianto.process.Resource;
+import org.helianto.process.ResourceGroup;
 import org.helianto.process.Setup;
 import org.helianto.process.dao.DocumentAssociationDao;
 import org.helianto.process.dao.ProcessDocumentDao;
 import org.helianto.process.dao.SetupDao;
 
 /**
- * Default implementation of <code>ProcessMgr</code> interface.
+ * <code>ProcessMgr</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
-    private ProcessDocumentDao processDocumentDao;
-    private SetupDao setupDao;
-    private SelectionStrategy<ProcessDocumentFilter> processDocumentSelectionStrategy;
-    private DocumentAssociationDao documentAssociationDao;
-    private SequenceMgr sequenceMgr;
-    
     public List<Node> prepareTree(ProcessDocument processDocument) {
     	ProcessDocument managedProcessDocument = processDocumentDao.mergeProcessDocument(processDocument);
     	ProcessNode root = new ProcessNode(managedProcessDocument);
@@ -122,7 +118,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         // TODO Auto-generated method stub
         return null;
     }
-
+    
     public DocumentAssociation prepareAssociation(ProcessDocument parent, Object child) {
         if (logger.isDebugEnabled()) {
             logger.debug("Parent class is "+parent.getClass());
@@ -172,17 +168,34 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     	return operation.operationCharacteristicFactory("", 0, 0);
     }
     
-    public Setup createSetupFactory(Operation operation, Resource resource) {
-        // TODO Auto-generated method stub
-        return null;
+	public Setup prepareNewSetup(Operation operation, ResourceGroup resourceGroup) {
+		Operation managedOperation = (Operation) processDocumentDao.mergeProcessDocument(operation);
+		return managedOperation.operationSetupFactory(resourceGroup);
+	}
+
+    public Setup storeSetup(Setup setup) {
+    	return setupDao.mergeSetup(setup);
     }
 
-    public void persistSetup(Setup setup) {
-    	setupDao.persistSetup(setup);
-    }
-
+	public List<Setup> listSetups(Operation operation) {
+		Operation managedOperation = (Operation) processDocumentDao.mergeProcessDocument(operation);
+		List<Setup> listSetups = new ArrayList<Setup>(managedOperation.getSetups());
+	    if (logger.isDebugEnabled() && listSetups!=null) {
+	        logger.debug("Found "+listSetups.size()+" setup(s)");
+	    }
+	    processDocumentDao.evict(managedOperation);
+	    Collections.sort(listSetups);
+		return listSetups;
+	}
+	
     // collaborators 
 
+    private ProcessDocumentDao processDocumentDao;
+    private SetupDao setupDao;
+    private SelectionStrategy<ProcessDocumentFilter> processDocumentSelectionStrategy;
+    private DocumentAssociationDao documentAssociationDao;
+    private SequenceMgr sequenceMgr;
+    
     @javax.annotation.Resource
     public void setProcessDocumentDao(ProcessDocumentDao processDocumentDao) {
         this.processDocumentDao = processDocumentDao;

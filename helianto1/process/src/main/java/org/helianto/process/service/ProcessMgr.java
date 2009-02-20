@@ -26,7 +26,7 @@ import org.helianto.process.Operation;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentFilter;
-import org.helianto.process.Resource;
+import org.helianto.process.ResourceGroup;
 import org.helianto.process.Setup;
 
 /**
@@ -84,7 +84,12 @@ public interface ProcessMgr extends PartnerMgr {
     public List<DocumentAssociation> findOperations(User user, Process process);
     
     /**
-     * Association creation.
+     * List setups.
+     */
+    public List<Setup> listSetups(Operation operation);
+    
+    /**
+     * Prepare a new association to presentation layer.
      */
     public DocumentAssociation prepareAssociation(ProcessDocument parent, Object child);
     
@@ -108,14 +113,14 @@ public interface ProcessMgr extends PartnerMgr {
      */
     public DocumentAssociation storeDocumentAssociation(DocumentAssociation documentAssociation);
     
-    /**
-     * Setup factory method.
-     */
-    public Setup createSetupFactory(Operation operation, Resource resource);
+	/**
+	 * Create setup. 
+	 */
+	public Setup prepareNewSetup(Operation operation, ResourceGroup resourceGroup);
     
     /**
-     * Persist an <code>Setup</code>.
+     * Store setups.
      */
-    public void persistSetup(Setup setup);
-    
+	public Setup storeSetup(Setup setup);
+
 }

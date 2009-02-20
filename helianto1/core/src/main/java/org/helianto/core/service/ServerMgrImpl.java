@@ -32,16 +32,17 @@ import org.helianto.core.Server;
 import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
+import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.creation.OperatorCreator;
+import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.EntityDao;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.ServerDao;
 import org.helianto.core.dao.ServiceDao;
-import org.helianto.core.dao.UserAssociationDao;
 import org.helianto.core.dao.UserDao;
-import org.helianto.core.dao.UserGroupDao;
 import org.helianto.core.dao.UserRoleDao;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.MailMessageComposer;
@@ -81,11 +82,11 @@ public class ServerMgrImpl  implements ServerMgr {
     public UserGroup findOrCreateUserGroup(Entity entity, Identity groupIdentity) {
         UserGroup userGroup = null;
         if (entity.getId()!=0) {
-            userGroup = userGroupDao.findUserGroupByNaturalId(entity, groupIdentity);
+            userGroup = userGroupDao.findUnique(entity, groupIdentity);
         }
         if (userGroup==null) {
             userGroup = UserGroup.userGroupFactory(entity, groupIdentity);
-            userGroupDao.persistUserGroup(userGroup);
+            userGroupDao.persist(userGroup);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+userGroup);
             }
@@ -104,7 +105,7 @@ public class ServerMgrImpl  implements ServerMgr {
         }
         if (user==null) {
             user = User.userFactory(entity, identity);
-            userGroupDao.persistUserGroup(user);
+            userGroupDao.persist(user);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+user);
             }
@@ -165,7 +166,7 @@ public class ServerMgrImpl  implements ServerMgr {
         }
         UserGroup userGroup = null;
         if (entity.getId()!=0) {
-            userGroup = userGroupDao.findUserGroupByNaturalId(entity, groupIdentity);
+            userGroup = userGroupDao.findUnique(entity, groupIdentity);
         }
         if (userGroup==null) {
             userGroup = UserGroup.userGroupFactory(entity, groupIdentity);
@@ -213,7 +214,7 @@ public class ServerMgrImpl  implements ServerMgr {
                 logger.debug("Role granted: "+userRole);
             }
         }
-        userGroupDao.mergeUserGroup(userGroup);
+        userGroupDao.merge(userGroup);
         return userGroup;
     }
 
@@ -236,9 +237,9 @@ public class ServerMgrImpl  implements ServerMgr {
         }
         User manager = User.userFactory(entity, managerIdentity);
         UserAssociation adminAssociation = UserAssociation.userAssociationFactory(adminGroup, manager);
-        userAssociationDao.mergeUserAssociation(adminAssociation);
+        userAssociationDao.merge(adminAssociation);
         UserAssociation userAssociation = UserAssociation.userAssociationFactory(userGroup, manager);
-        userAssociationDao.mergeUserAssociation(userAssociation);
+        userAssociationDao.merge(userAssociation);
 //        userGroupDao.mergeUserGroup(manager);
         if (logger.isDebugEnabled()) {
             logger.debug("Manager (member of ADMIN, USER): "+manager);
@@ -253,9 +254,9 @@ public class ServerMgrImpl  implements ServerMgr {
     private UserRoleDao userRoleDao;
     private EntityDao entityDao;
     private IdentityDao identityDao;
-    private UserGroupDao userGroupDao;
+    private FilterDao<UserGroup, UserFilter> userGroupDao;
     private UserDao userDao;
-    private UserAssociationDao userAssociationDao;
+    private BasicDao<UserAssociation> userAssociationDao;
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
 
@@ -285,18 +286,18 @@ public class ServerMgrImpl  implements ServerMgr {
         this.identityDao = identityDao;
     }
 
-    @Resource
-    public void setUserGroupDao(UserGroupDao userGroupDao) {
-        this.userGroupDao = userGroupDao;
-    }
+    @Resource(name="userGroupDao")
+	public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
+		this.userGroupDao = userGroupDao;
+	}
 
-    @Resource
+    @Resource(name="userDao")
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
-    @Resource
-    public void setUserAssociationDao(UserAssociationDao userAssociationDao) {
+    @Resource(name="userAssociationDao")
+    public void setUserAssociationDao(BasicDao<UserAssociation> userAssociationDao) {
         this.userAssociationDao = userAssociationDao;
     }
     

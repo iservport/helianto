@@ -16,12 +16,14 @@
 package org.helianto.core.service;
 
 import org.helianto.core.Identity;
+import org.springframework.stereotype.Component;
 
 /**
  * Default implementation of <code>PrincipalGenerationStrategy</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component("principalGenerationStrategy")
 public class DefaultPrincipalGenerationStrategy implements PrincipalGenerationStrategy {
 
 	public void generatePrincipal(Identity identity, int attempt) {

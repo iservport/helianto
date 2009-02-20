@@ -45,7 +45,7 @@ public class ProcessNodeTests {
 		root.setDocCode("DOCCODE");
 		
 		ProcessNode processNode = new ProcessNode(root);
-		assertSame(root, processNode.getPayLoad().getChild());
+		assertSame(root, processNode.getContent().getChild());
 		assertEquals(0, processNode.getId());
 		assertEquals(0, processNode.getLevel());
 		assertEquals(0, processNode.getSequence());
@@ -56,7 +56,7 @@ public class ProcessNodeTests {
 	@Test
 	public void testLeafNode() {
 		ProcessNode processNode = new ProcessNode(payLoad, 10, 100);
-		assertSame(payLoad, processNode.getPayLoad());
+		assertSame(payLoad, processNode.getContent());
 		assertEquals(Integer.MAX_VALUE, processNode.getId());
 		assertEquals(10, processNode.getLevel());
 		assertEquals(100, processNode.getSequence());
@@ -67,7 +67,7 @@ public class ProcessNodeTests {
 	@Test
 	public void testLeafNodeNotEditable() {
 		ProcessNode processNode = new ProcessNode(payLoad, 10, 100, false);
-		assertSame(payLoad, processNode.getPayLoad());
+		assertSame(payLoad, processNode.getContent());
 		assertEquals(Integer.MAX_VALUE, processNode.getId());
 		assertEquals(10, processNode.getLevel());
 		assertEquals(100, processNode.getSequence());
@@ -85,7 +85,7 @@ public class ProcessNodeTests {
 		childAssociation.setSequence(1000);
 
 		ProcessNode childNode = (ProcessNode) processNode.childNodeFactory(childAssociation, true);
-		assertSame(childAssociation, childNode.getPayLoad());
+		assertSame(childAssociation, childNode.getContent());
 		assertEquals(Integer.MIN_VALUE, childNode.getId());
 		assertEquals(11, childNode.getLevel());
 		assertEquals(1000, childNode.getSequence());
@@ -109,12 +109,12 @@ public class ProcessNodeTests {
 
 		List<Node> nodeList = processNode.getChildList();
 		assertEquals(2, nodeList.size());
-		assertSame(childAssociation1, ((ProcessNode) nodeList.get(0)).getPayLoad());
+		assertSame(childAssociation1, ((ProcessNode) nodeList.get(0)).getContent());
 		assertEquals(101, nodeList.get(0).getId());
 		assertEquals(1001, nodeList.get(0).getSequence());
 		assertEquals(11, nodeList.get(0).getLevel());
 		assertEquals("GRANDCHILD1", nodeList.get(0).getCaption());
-		assertSame(childAssociation2, ((ProcessNode) nodeList.get(1)).getPayLoad());
+		assertSame(childAssociation2, ((ProcessNode) nodeList.get(1)).getContent());
 		assertEquals(102, nodeList.get(1).getId());
 		assertEquals(1002, nodeList.get(1).getSequence());
 		assertEquals(11, nodeList.get(1).getLevel());

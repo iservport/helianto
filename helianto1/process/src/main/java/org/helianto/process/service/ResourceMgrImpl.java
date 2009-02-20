@@ -20,8 +20,10 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
+import org.helianto.core.Node;
 import org.helianto.core.Unit;
 import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.core.service.SequenceMgr;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceAssociation;
 import org.helianto.process.ResourceGroup;
@@ -40,6 +42,22 @@ import org.helianto.process.dao.ResourceParameterValueDao;
  */
 public class ResourceMgrImpl implements ResourceMgr {
 	
+    public List<Node> prepareTree(ResourceGroupFilter resourceGroupFilter) {
+    	List<ResourceGroup> resourceGroupList = findResourceGroups(resourceGroupFilter);
+    	ResourceRootNode root = new ResourceRootNode(resourceGroupList);
+    	List<Node> resourceTree = sequenceMgr.prepareTree(root);
+    	return resourceTree;
+    }
+
+	public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter) {
+		String criteria = resourceGroupSelectionStrategy.createCriteriaAsString(resourceGroupFilter, "resourceGroup");
+		List<ResourceGroup> resourceGroupList = resourceGroupDao.findResourceGroups(criteria);
+		if (logger.isDebugEnabled() && resourceGroupList!=null) {
+			logger.debug("Found resource group list of size "+resourceGroupList.size());
+		}
+		return resourceGroupList;
+	}
+    
 	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
 		ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(entity, rootEquipentCode);
 		resourceGroup.setResourceType(ResourceType.EQUIPMENT);
@@ -64,15 +82,6 @@ public class ResourceMgrImpl implements ResourceMgr {
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup) {
     	return resourceGroupDao.mergeResourceGroup(resourceGroup);
     }
-    
-	public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter) {
-		String criteria = resourceGroupSelectionStrategy.createCriteriaAsString(resourceGroupFilter, "resourceGroup");
-		List<ResourceGroup> resourceGroupList = resourceGroupDao.findResourceGroups(criteria);
-		if (logger.isDebugEnabled() && resourceGroupList!=null) {
-			logger.debug("Found resource group list of size "+resourceGroupList.size());
-		}
-		return resourceGroupList;
-	}
     
 	public void removeResourceAssociation(ResourceAssociation resourceAssociation, boolean removeOrphan) {
 		// TODO remove resource association
@@ -130,7 +139,8 @@ public class ResourceMgrImpl implements ResourceMgr {
     private SelectionStrategy<ResourceGroupFilter> resourceGroupSelectionStrategy;
     private ResourceParameterDao resourceParameterDao;
     private ResourceParameterValueDao resourceParameterValueDao;
-
+    private SequenceMgr sequenceMgr;
+    
     @javax.annotation.Resource(name="resourceGroupSelectionStrategy")
     public void setResourceGroupSelectionStrategy(SelectionStrategy<ResourceGroupFilter> resourceGroupSelectionStrategy) {
         this.resourceGroupSelectionStrategy = resourceGroupSelectionStrategy;
@@ -149,6 +159,11 @@ public class ResourceMgrImpl implements ResourceMgr {
     @javax.annotation.Resource
     public void setResourceParameterValueDao(ResourceParameterValueDao resourceParameterValueDao) {
         this.resourceParameterValueDao = resourceParameterValueDao;
+    }
+
+    @javax.annotation.Resource
+    public void setSequenceMgr(SequenceMgr sequenceMgr) {
+        this.sequenceMgr = sequenceMgr;
     }
 
 	static final Log logger = LogFactory.getLog(ResourceMgrImpl.class);

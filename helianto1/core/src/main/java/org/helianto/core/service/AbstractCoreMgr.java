@@ -21,9 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
-import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
-import org.helianto.core.dao.UserGroupDao;
 
 /**
  * Core base class.
@@ -32,11 +30,6 @@ import org.helianto.core.dao.UserGroupDao;
  */
 public class AbstractCoreMgr {
 
-    protected IdentityDao identityDao;
-    
-    protected UserGroupDao userGroupDao;
-    protected InternalEnumeratorDao internalEnumeratorDao;
-    
     public long findNextInternalNumber(Entity entity, String typeName) {
         InternalEnumerator enumerator = internalEnumeratorDao.findInternalEnumeratorByNaturalId(entity, typeName);
         if (enumerator!=null) {
@@ -68,16 +61,8 @@ public class AbstractCoreMgr {
     
     //~ collaborators
 
-    @Resource
-    public void setIdentityDao(IdentityDao identityDao) {
-        this.identityDao = identityDao;
-    }
-
-    @Resource
-    public void setUserGroupDao(UserGroupDao userGroupDao) {
-        this.userGroupDao = userGroupDao;
-    }
-
+    private InternalEnumeratorDao internalEnumeratorDao;
+    
     @Resource
     public void setInternalEnumeratorDao(InternalEnumeratorDao internalEnumeratorDao) {
         this.internalEnumeratorDao = internalEnumeratorDao;

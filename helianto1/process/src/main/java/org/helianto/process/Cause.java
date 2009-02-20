@@ -51,6 +51,34 @@ import org.helianto.core.Entity;
 @DiscriminatorValue("C")
 public class Cause implements java.io.Serializable {
 
+    /**
+     * <code>Cause</code> factory.
+     * 
+     * @param entity
+     * @param internalNumber
+     */
+    public static Cause causeFactory(Entity entity, long internalNumber) {
+        return causeFactory(Cause.class, entity, internalNumber);
+    }
+
+    /**
+     * <code>Cause</code> factory.
+     * 
+     * @param entity
+     * @param internalNumber
+     */
+    public static <T extends Cause> T causeFactory(Class<T> clazz, Entity entity, long internalNumber) {
+        T cause = null;
+        try {
+            cause = clazz.newInstance();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unable to create cause of class "+clazz);
+        }
+        cause.setEntity(entity);
+        cause.setInternalNumber(internalNumber);
+        return cause;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -112,34 +140,6 @@ public class Cause implements java.io.Serializable {
     }
     public void setCauseDesc(String causeDesc) {
         this.causeDesc = causeDesc;
-    }
-
-    /**
-     * <code>Cause</code> factory.
-     * 
-     * @param entity
-     * @param internalNumber
-     */
-    public static Cause causeFactory(Entity entity, long internalNumber) {
-        return causeFactory(Cause.class, entity, internalNumber);
-    }
-
-    /**
-     * <code>Cause</code> factory.
-     * 
-     * @param entity
-     * @param internalNumber
-     */
-    public static <T extends Cause> T causeFactory(Class<T> clazz, Entity entity, long internalNumber) {
-        T cause = null;
-        try {
-            cause = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create cause of class "+clazz);
-        }
-        cause.setEntity(entity);
-        cause.setInternalNumber(internalNumber);
-        return cause;
     }
 
     /**

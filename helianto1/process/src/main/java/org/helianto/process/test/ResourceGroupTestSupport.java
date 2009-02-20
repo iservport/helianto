@@ -62,7 +62,10 @@ public class ResourceGroupTestSupport {
         List<ResourceGroup> resourceGroupList = new ArrayList<ResourceGroup>();
         for (Entity e: entityList) {
             for (int i=0;i<size;i++) {
-                resourceGroupList.add(createResourceGroup(e));
+            	ResourceGroup resourceGroup = createResourceGroup(e);
+            	resourceGroup.setId(i);
+            	resourceGroup.setResourceName("NAME_"+i);
+                resourceGroupList.add(resourceGroup);
             }
         }
         return resourceGroupList ;

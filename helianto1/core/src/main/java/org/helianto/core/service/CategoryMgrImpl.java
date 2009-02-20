@@ -31,7 +31,6 @@ import org.helianto.core.filter.SelectionStrategy;
  * 
  * @author Maurício Fernandes de Castro
  */
-@SuppressWarnings("restriction")
 public class CategoryMgrImpl implements CategoryMgr {
     
     private CategoryDao categoryDao;

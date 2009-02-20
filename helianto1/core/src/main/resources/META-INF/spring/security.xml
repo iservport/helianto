@@ -44,20 +44,19 @@
 	-->
 	<bean id="userDetailsService"
 		class="org.helianto.core.security.UserDetailsServiceImpl">
+		<property name="userMgr" ref="userMgr"/>
 		<property name="securityMgr" ref="securityMgr"/>
-		<property name="identityResolutionStrategy">
-			<bean id="identityResolutionStrategy"
-				class="org.helianto.core.security.SimpleIdentityResolver">
-				<property name="securityMgr" ref="securityMgr"/>
-			</bean>
-		</property>
-		<property name="userResolutionStrategy">
-			<bean id="userResolutionStrategy"
-				class="org.helianto.core.security.SimpleUserResolver">
-				<property name="securityMgr" ref="securityMgr"/>
-			</bean>
-		</property>
 	</bean>
+	<bean id="rememberMeServices" class="org.springframework.security.ui.rememberme.TokenBasedRememberMeServices">
+	  <property name="userDetailsService" ref="userDetailsService"/>
+	  <property name="key" value="iserv"/>
+	</bean>
+	        
+	<bean id="rememberMeAuthenticationProvider"
+	    class="org.springframework.security.providers.rememberme.RememberMeAuthenticationProvider">
+	  <property name="key" value="iserv"/>
+	</bean>
+	
 	<!--
 			Security test dao
 			WARNING: do not use in production environment!
@@ -78,6 +77,7 @@
 		<property name="providers">
 			<list>
 				<ref local="daoAuthenticationProvider"/>
+				<ref local="rememberMeAuthenticationProvider"/>
 				<ref local="anonymousAuthenticationProvider"/>
 			</list>
 		</property>

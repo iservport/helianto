@@ -46,6 +46,13 @@ public class DocumentAssociationDaoImpl extends GenericDaoImpl implements Docume
 		return (DocumentAssociation) merge(documentAssociation);
 	}
 
+    public void evictDocumentAssociation(DocumentAssociation documentAssociation) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Evicting "+documentAssociation);
+        }
+        evict(documentAssociation);
+    }
+    
     public void removeDocumentAssociation(DocumentAssociation documentAssociation) {
         if (logger.isDebugEnabled()) {
             logger.debug("Removing "+documentAssociation);

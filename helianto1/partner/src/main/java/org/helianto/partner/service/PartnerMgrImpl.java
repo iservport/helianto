@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.dao.ProvinceDao;
 import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.partner.Address;
 import org.helianto.partner.Partner;
@@ -43,21 +44,7 @@ import org.helianto.partner.dao.SupplierDao;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@SuppressWarnings("restriction")
 public class PartnerMgrImpl implements PartnerMgr {
-
-    private AddressDao addressDao;
-    private ContactDao contactDao;
-    private PartnerRegistryDao partnerRegistryDao;
-	private SelectionStrategy<PartnerRegistryFilter> partnerRegistrySelectionStrategy;
-    private PartnerDao partnerDao;
-	private SelectionStrategy<PartnerFilter> partnerSelectionStrategy;
-    private PartnerKeyDao partnerKeyDao;
-    private PhoneDao phoneDao;
-    private AccountDao accountDao;
-    private AgentDao agentDao;
-    private CustomerDao customerDao;
-    private SupplierDao supplierDao;
 
 	public List<PartnerRegistry> findPartnerRegistries(PartnerRegistryFilter partnerRegistryFilter) {
 		String criteria = partnerRegistrySelectionStrategy.createCriteriaAsString(partnerRegistryFilter, "partnerRegistry");
@@ -103,9 +90,32 @@ public class PartnerMgrImpl implements PartnerMgr {
 
     //- collaborators
     
+    private AddressDao addressDao;
+    
+    private ProvinceDao provinceDao;
+
+	private ContactDao contactDao;
+
+    private PartnerRegistryDao partnerRegistryDao;
+	private SelectionStrategy<PartnerRegistryFilter> partnerRegistrySelectionStrategy;
+
+	private PartnerDao partnerDao;
+	private SelectionStrategy<PartnerFilter> partnerSelectionStrategy;
+	
+    private PartnerKeyDao partnerKeyDao;
+    private PhoneDao phoneDao;
+    private AccountDao accountDao;
+    private AgentDao agentDao;
+    private CustomerDao customerDao;
+    private SupplierDao supplierDao;
+
     @Resource
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
+    }
+    @Resource
+    public void setProvinceDao(ProvinceDao provinceDao) {
+        this.provinceDao = provinceDao;
     }
     @Resource
     public void setAddressDao(AddressDao addressDao) {

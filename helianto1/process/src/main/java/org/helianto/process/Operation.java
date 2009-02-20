@@ -86,7 +86,7 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
     /**
      * Setups.
      */
-    @OneToMany(mappedBy="operation", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="operation", cascade = {CascadeType.ALL})
     public List<Setup> getSetups() {
         return this.setups;
     }

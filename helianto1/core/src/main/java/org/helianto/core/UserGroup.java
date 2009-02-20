@@ -15,6 +15,7 @@
 
 package org.helianto.core;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +24,6 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +33,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
@@ -64,13 +66,16 @@ public class UserGroup implements java.io.Serializable {
     private Entity entity;
     private String userKey;
     private Identity identity;
+    private Date lastEvent;
     private char userState;
+    private boolean accountNonExpired;
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
     private Set<UserRole> roles = new HashSet<UserRole>();
-
-    /** default constructor */
+    
+	/** default constructor */
     public UserGroup() {
+    	this.lastEvent = new Date();
     }
 
     // Property accessors
@@ -132,6 +137,17 @@ public class UserGroup implements java.io.Serializable {
         return this.identity.getIdentityName();
     }
 
+	/**
+     * Last event
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getLastEvent() {
+		return lastEvent;
+	}
+	public void setLastEvent(Date lastEvent) {
+		this.lastEvent = lastEvent;
+	}
+
     /**
      * UserState getter.
      */
@@ -146,9 +162,19 @@ public class UserGroup implements java.io.Serializable {
     }
 
     /**
+     * AccountNonExpired getter.
+     */
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    /**
      * ParentAssociations getter.
      */
-    @OneToMany(mappedBy="child", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="child")
     public Set<UserAssociation> getParentAssociations() {
         return this.parentAssociations;
     }
@@ -159,7 +185,7 @@ public class UserGroup implements java.io.Serializable {
     /**
      * ChildAssociations getter.
      */
-    @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<UserAssociation> getChildAssociations() {
         return this.childAssociations;
     }
@@ -168,12 +194,24 @@ public class UserGroup implements java.io.Serializable {
     }
 
     /**
-     * Roles getter.
+     * Roles for this group.
      */
-    @OneToMany(mappedBy="userGroup", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="userGroup", cascade=CascadeType.ALL)
     public Set<UserRole> getRoles() {
         return this.roles;
     }
+    /**
+     * Roles for this group and all ancestors.
+     */
+    @Transient
+    public Set<UserRole> getAllRoles() {
+    	Set<UserRole> allRoles = new HashSet<UserRole>();
+    	allRoles.addAll(getRoles());
+        for (UserAssociation association: getParentAssociations()) {
+        	allRoles.addAll(association.getParent().getAllRoles());
+        }
+		return allRoles;
+	}
     public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }

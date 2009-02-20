@@ -23,6 +23,7 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -38,12 +39,15 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserLog;
+import org.helianto.core.UserLogFilter;
+import org.helianto.core.dao.BasicDao;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.dao.ProvinceDao;
-import org.helianto.core.dao.UserGroupDao;
-import org.helianto.core.dao.UserSelectionStrategy;
+import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
@@ -142,17 +146,12 @@ public class UserMgrImplTests extends TestCase {
     
     public void testFindUsers() {
     	UserFilter userFilter = new UserFilter();
-    	List<User> userList = new ArrayList<User>();
-    	String criteria = "TEST";
+    	List<UserGroup> userList = new ArrayList<UserGroup>();
     	
-    	expect(userSelectionStrategy.createCriteriaAsString(userFilter, "user")).andReturn(criteria);
-    	replay(userSelectionStrategy);
-
-    	expect(userGroupDao.findUserByCriteria(criteria)).andReturn(userList);
+    	expect(userGroupDao.find(userFilter)).andReturn(userList);
     	replay(userGroupDao);
     	
     	assertSame(userList, userMgr.findUsers(userFilter));
-    	verify(userSelectionStrategy);
     	verify(userGroupDao);
     }
     
@@ -160,7 +159,7 @@ public class UserMgrImplTests extends TestCase {
     	UserGroup userGroup = new UserGroup();
     	UserGroup managedUserGroup = new UserGroup();
     	
-    	expect(userGroupDao.mergeUserGroup(userGroup)).andReturn(managedUserGroup);
+    	expect(userGroupDao.merge(userGroup)).andReturn(managedUserGroup);
     	replay(userGroupDao);
     	
     	userMgr.storeUserGroup(userGroup);
@@ -173,11 +172,11 @@ public class UserMgrImplTests extends TestCase {
     	UserAssociation managedUserAssociation = new UserAssociation();
     	managedUserAssociation.setChild(userGroup);
     	
-    	expect(userGroupDao.mergeUserAssociation(parentAssociation)).andReturn(managedUserAssociation);
-    	replay(userGroupDao);
+    	expect(userAssociationDao.merge(parentAssociation)).andReturn(managedUserAssociation);
+    	replay(userAssociationDao);
     	
     	assertSame(userGroup, userMgr.storeUserGroup(parentAssociation));
-    	verify(userGroupDao);
+    	verify(userAssociationDao);
     }
     
     public void testFindProvinceByOperator() {
@@ -192,32 +191,60 @@ public class UserMgrImplTests extends TestCase {
         verify(provinceDao);
     }
     
+    public void testPersistUserLogError() {
+        // user must have an Identity
+        try {
+        	userMgr.storeUserLog(new User(), new Date());
+        } catch (IllegalArgumentException e) {
+        } catch (Exception e) { fail(); }
+    }
+
+    public void testStoreUserLog() {
+        Date date = new Date();
+        Identity identity = new Identity();
+        User user = new User();
+        user.setIdentity(identity);
+        UserLog managedUserLog = new UserLog();
+        
+        expect(userLogDao.merge(isA(UserLog.class))).andReturn(managedUserLog);
+        replay(userLogDao);
+        
+        userMgr.storeUserLog(user,date);
+        verify(userLogDao);
+    }
+
+    // 
+    
     private IdentityDao identityDao;
     private InternalEnumeratorDao internalEnumeratorDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
-    private UserSelectionStrategy userSelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
-    private UserGroupDao userGroupDao;
+    private FilterDao<UserGroup, UserFilter> userGroupDao;
+    private BasicDao<UserAssociation> userAssociationDao;
     private ProvinceDao provinceDao;
+    private FilterDao<UserLog, UserLogFilter> userLogDao;
 
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void setUp() {
         userMgr = new UserMgrImpl();
         identityDao = createMock(IdentityDao.class);
         userMgr.setIdentityDao(identityDao);
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
-        userSelectionStrategy = createMock(UserSelectionStrategy.class);
-        userMgr.setUserSelectionStrategy(userSelectionStrategy);
         principalGenerationStrategy = createMock(PrincipalGenerationStrategy.class);
         userMgr.setPrincipalGenerationStrategy(principalGenerationStrategy);
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
         userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
-        userGroupDao = createMock(UserGroupDao.class);
+        userGroupDao = createMock(FilterDao.class);
         userMgr.setUserGroupDao(userGroupDao);
+        userAssociationDao = createMock(FilterDao.class);
+        userMgr.setUserAssociationDao(userAssociationDao);
         provinceDao = createMock(ProvinceDao.class);
         userMgr.setProvinceDao(provinceDao);
+        userLogDao = createMock(FilterDao.class);
+        userMgr.setUserLogDao(userLogDao);
     }
     
     @Override
@@ -225,10 +252,11 @@ public class UserMgrImplTests extends TestCase {
         reset(identityDao);
         reset(internalEnumeratorDao);
         reset(identitySelectionStrategy);
-        reset(userSelectionStrategy);
         reset(principalGenerationStrategy);
         reset(userGroupDao);
+        reset(userAssociationDao);
         reset(provinceDao);
+        reset(userLogDao);
     }
     
 }

@@ -15,7 +15,12 @@
 
 package org.helianto.core;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.OneToMany;
 /**
  * <p>
  * The user account.
@@ -37,10 +42,12 @@ public class User extends UserGroup implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private char userType;
     private char privacyLevel;
-    private boolean accountNonExpired;
+	private Set<UserLog> userLogs = new HashSet<UserLog>(0);
 
-    /** default constructor */
+	/** default constructor */
     public User() {
+    	setUserType(UserType.INTERNAL);
+    	setPrivacyLevel('0');
     }
 
     // Property accessors
@@ -58,7 +65,7 @@ public class User extends UserGroup implements java.io.Serializable {
     }
 
     /**
-     * PrivacyLevel getter.
+     * Privacy level
      */
     public char getPrivacyLevel() {
         return this.privacyLevel;
@@ -67,15 +74,16 @@ public class User extends UserGroup implements java.io.Serializable {
         this.privacyLevel = privacyLevel;
     }
 
-    /**
-     * AccountNonExpired getter.
+	/**
+     * User logs
      */
-    public boolean isAccountNonExpired() {
-        return this.accountNonExpired;
-    }
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
+    @OneToMany(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<UserLog> getUserLogs() {
+		return userLogs;
+	}
+	public void setUserLogs(Set<UserLog> userLogs) {
+		this.userLogs = userLogs;
+	}
 
     /**
      * <code>User</code> factory.

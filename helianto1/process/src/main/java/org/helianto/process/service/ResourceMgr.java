@@ -18,6 +18,7 @@ package org.helianto.process.service;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Node;
 import org.helianto.core.Unit;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceAssociation;
@@ -28,13 +29,27 @@ import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.dao.ResourceDao;
 
 /**
- * Base interface to deal with <code>Resource</code>s.
+ * <code>ResourceMgr</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
 public interface ResourceMgr {
     
+	/**
+	 * Create a managed resource tree.
+	 * 
+	 * @param resourceGroupFilter
+	 */
+	public List<Node> prepareTree(ResourceGroupFilter resourceGroupFilter);
+	
     /**
+     * Find <tt>ResourceGroup</tt>s using filter.
+     * 
+     * @param resourceGroupFilter
+     */
+    public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter);
+    
+	/**
      * <p>
      * Method required to create the equipment tree.
      * </p>
@@ -75,13 +90,6 @@ public interface ResourceMgr {
      * Load lazy collections, if any. 
      */
     public ResourceGroup prepareResourceGroup(ResourceGroup resourceGroup);
-    
-    /**
-     * Find <tt>ResourceGroup</tt>s using filter.
-     * 
-     * @param resourceGroupFilter
-     */
-    public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter);
     
     /**
      * Remove a <tt>ResourceAssociation</tt> from its <tt>ResourceGroup</tt>.

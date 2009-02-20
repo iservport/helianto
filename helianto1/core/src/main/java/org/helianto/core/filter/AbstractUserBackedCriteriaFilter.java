@@ -83,6 +83,7 @@ public abstract class AbstractUserBackedCriteriaFilter implements
     	try {
     		T userBackedFilter = clazz.newInstance();
     		userBackedFilter.setUser(user);
+    		userBackedFilter.reset();
     		return userBackedFilter;
     	}
     	catch (Exception e) {

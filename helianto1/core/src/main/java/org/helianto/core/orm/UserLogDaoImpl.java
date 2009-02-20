@@ -20,16 +20,16 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>UserLog</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated in favour of DefaultUserLogDao
  */
-@Repository("userLogDao")
 public class UserLogDaoImpl extends GenericDaoImpl implements UserLogDao {
      
     public void persistUserLog(UserLog userLog) {
@@ -109,7 +109,7 @@ public class UserLogDaoImpl extends GenericDaoImpl implements UserLogDao {
      */
     private String elements(List<User> users) {
     	StringBuilder sb = new StringBuilder("(");
-    	for (User user: users) {
+    	for (UserGroup user: users) {
     		sb.append(user.getId()).append(",");
     	}
     	sb.append("0) ");

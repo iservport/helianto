@@ -41,6 +41,11 @@ public interface OperatorMgr {
     public Operator findOperatorByName(String operatorName);
 
 	/**
+	 * Prepare a <code>Province</code> to the presentation layer.
+	 */
+	public Province prepareProvince(Province province);
+	
+	/**
 	 * Prepare a new <code>Province</code> to the presentation layer.
 	 */
 	public Province prepareNewProvince(Entity entity);

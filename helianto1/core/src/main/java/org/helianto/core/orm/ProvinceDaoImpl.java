@@ -32,31 +32,60 @@ import org.springframework.stereotype.Repository;
 @Repository("provinceDao")
 public class ProvinceDaoImpl extends GenericDaoImpl implements ProvinceDao {
     
-    public void persistProvince(Province province) {
+	public void persistProvince(Province province) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Persisting "+province);
+        }
         persist(province);
     }
     
-    public Province mergeProvince(Province province) {
+	public Province mergeProvince(Province province) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Merging "+province);
+        }
         return (Province) merge(province);
     }
     
-    public void removeProvince(Province province) {
+	public void evictProvince(Province province) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Evicting "+province);
+        }
+        evict(province);
+    }
+    
+	public void removeProvince(Province province) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Removing "+province);
+        }
         remove(province);
     }
     
-    public Province findProvinceByNaturalId(Operator operator, String code) {
-        return (Province) findUnique(PROVINCE_QRY, operator, code);
+	public Province findProvinceByNaturalId(Operator operator, String code) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding unique province with operator='"+operator+"' and provinceCode='"+code+"' ");
+        }
+        return (Province) findUnique(Province.getProvinceNaturalIdQueryString(), operator, code);
     }
     
-    static String PROVINCE_QRY = "from Province province "+
-        "where province.operator = ? and province.code = ? ";
-
-	@SuppressWarnings("unchecked")
 	public List<Province> findProvinceByOperator(Operator operator) {
-        return (ArrayList<Province>) find(PROVINCE_OPERATOR_QRY, operator);
+        return (ArrayList<Province>) findProvinces("province.operator.id = "+operator.getId());
 	}
     
-    static String PROVINCE_OPERATOR_QRY = "from Province province "+
-        "where province.operator = ? ";
-
+	@SuppressWarnings("unchecked")
+	public List<Province> findProvinces(String criteria) {
+        if (criteria!=null && !criteria.equals("")) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finding unit list with criteria='"+criteria+"' ");
+            }
+            return (ArrayList<Province>) find(Province.getProvinceQueryStringBuilder().append("where ").append(criteria));
+        }
+        else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finding full entity list");
+            }
+            return (ArrayList<Province>) find(Province.getProvinceQueryStringBuilder());
+        }
+	}
+    
+    
 }

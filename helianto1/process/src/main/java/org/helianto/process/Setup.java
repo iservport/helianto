@@ -39,7 +39,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="proc_setup",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operationId", "resourceId"})}
 )
-public class Setup  implements java.io.Serializable {
+public class Setup  implements java.io.Serializable, Comparable<Setup> {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -87,6 +87,20 @@ public class Setup  implements java.io.Serializable {
     public void setResource(ResourceGroup resource) {
         this.resource = resource;
     }
+    @Transient
+    public String getResourceCode() {
+    	if(getResource()!=null) {
+    		return getResource().getResourceCode();
+    	}
+    	return "";
+    }
+    @Transient
+    public boolean isGroup() {
+    	if(getResource()!=null && !(getResource() instanceof Resource)) {
+    		return true;
+    	}
+    	return false;
+    }
     
     /**
      * Priority.
@@ -118,6 +132,13 @@ public class Setup  implements java.io.Serializable {
         this.transportTime = transportTime;
     }
     
+    public int compareTo(Setup next) {
+    	if (this.priority==next.priority) {
+    		return (int) (this.setupTime - next.setupTime);
+    	}
+    	return this.priority - next.priority;
+    }   
+
     /**
      * Package factory method.
      * 
@@ -164,8 +185,7 @@ public class Setup  implements java.io.Serializable {
          result = 37 * result + ( getResource() == null ? 0 : this.getResource().hashCode() );
          result = 37 * result + this.getPriority();
          return result;
-   }   
-
+   }
 
 }
 

@@ -22,9 +22,9 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Operator;
-import org.helianto.core.security.AbstractUserDetails;
 import org.helianto.core.security.PublicUserDetails;
-import org.helianto.core.service.ServerMgr;
+import org.helianto.core.security.UserDetailsAdapter;
+import org.helianto.core.service.OperatorMgr;
 import org.springframework.webflow.action.MultiAction;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
@@ -36,13 +36,11 @@ import org.springframework.webflow.execution.RequestContext;
  */
 public class StartUpAction extends MultiAction {
 	
-	private ServerMgr serverMgr;
-	
 	/**
 	 * Check if there is at least one operator available.
 	 */
 	public Event startUp(RequestContext context) {
-		List<Operator> operatorList = serverMgr.findOperator();
+		List<Operator> operatorList = operatorMgr.findOperator();
 		if (logger.isDebugEnabled()) {
 			logger.debug("Operator list found: "+operatorList.size());
 		}
@@ -65,7 +63,7 @@ public class StartUpAction extends MultiAction {
 	 * 
 	 */
 	public Event postLogin(RequestContext context) {
-		PublicUserDetails secureUser = AbstractUserDetails.retrievePublicUserDetailsFromSecurityContext();
+		PublicUserDetails secureUser = UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
 		if (secureUser!=null) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("User in secure context: "+secureUser.getUser());
@@ -80,9 +78,11 @@ public class StartUpAction extends MultiAction {
 	
 	// collabs
 	
+	private OperatorMgr operatorMgr;
+	
 	@Resource
-	public void setServerMgr(ServerMgr serverMgr) {
-		this.serverMgr = serverMgr;
+	public void setOperatorMgr(OperatorMgr operatorMgr) {
+		this.operatorMgr = operatorMgr;
 	}
 	
 	public static Log logger = LogFactory.getLog(StartUpAction.class);

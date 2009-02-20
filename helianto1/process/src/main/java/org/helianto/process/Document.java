@@ -141,7 +141,7 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
         try {
             document = clazz.newInstance();
         } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create document of class "+clazz);
+            throw new IllegalArgumentException("Unable to create document of class "+clazz, e);
         }
         document.setEntity(entity);
         document.setDocCode(docCode);

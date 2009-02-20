@@ -15,29 +15,39 @@
 
 package org.helianto.core;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.helianto.core.filter.UserBackedFilter;
+import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 
 /**
  * Filter to <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserFilter implements Serializable , UserBackedFilter {
+public class UserFilter extends AbstractUserBackedCriteriaFilter {
 
     private static final long serialVersionUID = 1L;
-    private User user;
+    private Identity identity;
     private String identityPrincipal;
     private char userState;
-    private Collection<Identity> exclusions;
+    private boolean orderByLastEventDesc = false;
+	private Collection<Identity> exclusions;
     
     /**
      * Default constructor
      */
     public UserFilter() {
+    	reset();
+    }
+    
+    /**
+     * Identity constructor
+     */
+    public UserFilter(Identity identity, boolean orderByLastEventDesc) {
+    	super();
+    	setIdentity(identity);
+    	setOrderByLastEventDesc(orderByLastEventDesc);
     }
     
     /**
@@ -60,22 +70,22 @@ public class UserFilter implements Serializable , UserBackedFilter {
     }
     
     /**
-     * User tom meet <code>UserBackedFilter</code> interface requirements.
+     * Identity
      */
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
+    public Identity getIdentity() {
+		return identity;
+	}
+	public void setIdentity(Identity identity) {
+		this.identity = identity;
+	}
+
     /**
      * Identity principal criterion field
      */
     public String getIdentityPrincipal() {
         return identityPrincipal;
     }
-    public void setIdentityPrincipal(String identityPrincipal) {
+	public void setIdentityPrincipal(String identityPrincipal) {
         this.identityPrincipal = identityPrincipal;
     }
     
@@ -90,6 +100,16 @@ public class UserFilter implements Serializable , UserBackedFilter {
 	}
 
     /**
+     * True if order by last event is required.
+     */
+    public boolean isOrderByLastEventDesc() {
+		return orderByLastEventDesc;
+	}
+	public void setOrderByLastEventDesc(boolean orderByLastEventDesc) {
+		this.orderByLastEventDesc = orderByLastEventDesc;
+	}
+
+	/**
      * Collection of identities to exclude on result set.
      */
     public Collection<Identity> getExclusions() {
@@ -99,5 +119,14 @@ public class UserFilter implements Serializable , UserBackedFilter {
         this.exclusions = exclusions;
     }
 
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
 
+        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+        buffer.append("identity").append("='").append(getIdentity()).append("' ");
+        buffer.append("]");
+      
+        return buffer.toString();
+    }
 }

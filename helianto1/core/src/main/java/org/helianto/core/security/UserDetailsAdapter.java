@@ -16,17 +16,17 @@
 package org.helianto.core.security;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.User;
-import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
 /**
@@ -60,34 +60,128 @@ import org.springframework.util.Assert;
  * 
  * @author Mauricio Fernandes de Castro
  * @see org.acegisecurity.providers.dao.User
- *      org.acegisecurity.providers.dao.User
  */
-public final class UserDetailsAdapter extends AbstractUserDetails implements
-        Serializable, PublicUserDetailsSwitcher {
+public class UserDetailsAdapter implements
+        Serializable, UserDetails, PublicUserDetails, SecureUserDetails {
 
-    private static final long serialVersionUID = 4017521054529203449L;
+	private static final long serialVersionUID = 1L;
+    private User user;
+    private Credential credential;
+    private GrantedAuthority[] authorities;
 
-    private AuthorityResolutionStrategy authorityResolutionStrategy = 
-        new DefaultAuthorityResolutionStrategy();
-
+    /**
+     * Default constructor
+     */
+    UserDetailsAdapter() {}
+    
+    /**
+     * User constructor.
+     */
     public UserDetailsAdapter(User user, Credential credential) {
-        super(user, credential);
+    	if (credential==null) {
+    		throw new IllegalArgumentException("Invalid credential");
+    	}
+        this.user = user;
+        this.credential = credential;
     }
-
-    public UserDetailsAdapter(List<User> userList, User user, Credential credential) {
-        super(userList, user, credential);
-    }
-
-    public GrantedAuthority[] getAuthorities() {
-        Set<UserRole> roles = authorityResolutionStrategy.resolveUserRoles();
-        GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
-        int i = 0;
-        for (UserRole r : roles) {
-            String roleName = convertUserRoleToString(r);
-            authorities[i++] = new GrantedAuthorityImpl(roleName);
+    
+    /**
+     * Static method to retrieve the <code>UserAdapter</code>
+     * instance held in the <code>SecurityContext</code>.
+     */
+    public static PublicUserDetails retrievePublicUserDetailsFromSecurityContext() {
+    	Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	if (userDetails instanceof PublicUserDetails) {
+            PublicUserDetails pud = (PublicUserDetails) userDetails;  
+            if (logger.isDebugEnabled()) {
+                logger.debug("PublicUserDetails retrieved from security context");
+            }
+            return pud;
+    	}
+        if (logger.isDebugEnabled()) {
+            logger.debug("PublicUserDetails not found!");
         }
-        return authorities;
+    	return null;
     }
+    
+    public boolean isAccountNonExpired() {
+        // TODO calculate account (User) expiration
+        return user.isAccountNonExpired();
+    }
+
+    public boolean isAccountNonLocked() {
+        if (user.getUserState()==ActivityState.ACTIVE.getValue()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        //TODO implement control over expiration date
+        if (credential.getExpired()==null) {
+            return true;
+        } 
+        return true;
+    }
+
+    public boolean isEnabled() {
+        // TODO replace auto-enable
+        char state = credential.getCredentialState();
+        if (state==ActivityState.ACTIVE.getValue() || 
+                state==ActivityState.INITIAL.getValue()) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getPassword() {
+        return credential.getPassword();
+     }
+
+    public String getUsername() {
+        return user.getIdentity().getPrincipal();
+    }
+    
+    public Credential getCredential() {
+        return credential;
+    }
+    public void setCredential(Credential credential) {
+    	this.credential = credential;
+    }
+
+
+    public User getUser() {
+        return user;
+    }
+    
+    public final void setUser(User user) {
+        validateUserAndCredentialCompatibility(user);
+        this.user = user;
+        if (logger.isDebugEnabled()) {
+            logger.debug("User selected");
+        }
+    }
+    
+    protected final void validateUserAndCredentialCompatibility(UserGroup user) {
+        Assert.notNull(user, "Required to UserDetailsAdapter");
+        Assert.notNull(credential, "Required to UserDetailsAdapter");
+        if(!user.getIdentity().equals(credential.getIdentity())) {
+            throw new IllegalArgumentException("User and Credential must share the same Identity");
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("User and Credential share the same Identity");
+        }
+    }
+
+	/**
+	 * Authorities
+	 */
+    public GrantedAuthority[] getAuthorities() {
+        return this.authorities;
+    }
+	public void setAuthorities(GrantedAuthority[] authorities) {
+		this.authorities = authorities;
+	}
 
     public String convertUserRoleToString(UserRole userRole) {
         StringBuilder sb = new StringBuilder();
@@ -96,39 +190,6 @@ public final class UserDetailsAdapter extends AbstractUserDetails implements
         return sb.toString();
     }
 
-    /**
-     * Default implementation to the <code>AuthorityResolutionStrategy</code>.
-     * 
-     * @author Mauricio Fernandes de Castro
-     */
-    public class DefaultAuthorityResolutionStrategy implements
-            AuthorityResolutionStrategy, Serializable {
-
-        private static final long serialVersionUID = 1L;
-
-        public Set<UserRole> resolveUserRoles() {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Trying to resolve roles...");
-            }
-            Set<UserRole> roles = new HashSet<UserRole>();
-            recusrseUserRoles(getUser(), roles, 0);
-            Assert.notNull(roles);
-            return roles;
-        }
-        
-        public void recusrseUserRoles(UserGroup userGroup, Set<UserRole> roles, int level) {
-            // first, take the roles from this user group (or user)
-            roles.addAll(userGroup.getRoles());
-            if (logger.isDebugEnabled()) {
-                logger.debug("Adding roles level "+level+" from "+userGroup);
-            }
-            level++;
-            for (UserAssociation association: userGroup.getParentAssociations()) {
-                // then, for every association we must retrieve a parent
-                recusrseUserRoles(association.getParent(), roles, level);
-            }
-        }
-        
-    }
-
+    static final Log logger = LogFactory.getLog(UserDetailsAdapter.class);
+    
 }

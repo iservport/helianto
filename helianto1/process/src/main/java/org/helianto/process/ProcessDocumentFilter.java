@@ -20,6 +20,7 @@ import java.util.Collection;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.partner.Partner;
 
 /**
  * 
@@ -35,6 +36,7 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	private char inheritanceType = ' ';
 	private char priority = '0';
 	private Class<? extends ProcessDocument> clazz = ProcessDocument.class;
+	private Partner partner;
     private Collection<? extends ProcessDocument> exclusions;
 	
 	
@@ -174,6 +176,16 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	}
 	public void setPriority(char priority) {
 		this.priority = priority;
+	}
+
+	/**
+	 * Partner
+	 */
+	public Partner getPartner() {
+		return this.partner;
+	}
+	public void setPartner(Partner partner) {
+		this.partner = partner;
 	}
 
 	/**

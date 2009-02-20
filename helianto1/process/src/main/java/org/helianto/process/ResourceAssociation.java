@@ -42,7 +42,7 @@ import org.helianto.core.AbstractAssociation;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Resource> {
+public class ResourceAssociation extends AbstractAssociation<ResourceGroup, ResourceGroup> {
 
     private static final long serialVersionUID = 1L;
 
@@ -64,7 +64,7 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
      */
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="childId", nullable=true)
-    public Resource getChild() {
+    public ResourceGroup getChild() {
         return this.child;
     }
 
@@ -76,7 +76,7 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
      * @param child
      * @param sequence
      */
-    protected static ResourceAssociation resourceAssociationFactory(Class<? extends ResourceAssociation> clazz, ResourceGroup parent, Resource child, int sequence) {
+    protected static ResourceAssociation resourceAssociationFactory(Class<? extends ResourceAssociation> clazz, ResourceGroup parent, ResourceGroup child, int sequence) {
     	ResourceAssociation resourceAssociation;
 		try {
 			resourceAssociation = clazz.newInstance();

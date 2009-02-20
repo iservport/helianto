@@ -57,9 +57,22 @@ public class IdentityTestSupport {
      * @param identityListSize
      */
     public static List<Identity> createIdentityList(int identityListSize) {
+        return createIdentityList(identityListSize, false);
+    }
+
+    /**
+     * Test support method to create a <code>Identity</code> list.
+     *
+     * @param identityListSize
+     */
+    public static List<Identity> createIdentityList(int identityListSize, boolean createId) {
         List<Identity> identityList = new ArrayList<Identity>();
             for (int i=0;i<identityListSize;i++) {
-                identityList.add(createIdentity());
+            	Identity identity = createIdentity();
+            	if (createId) {
+                	identity.setId(i);
+            	}
+                identityList.add(identity);
             }
         return identityList;
     }

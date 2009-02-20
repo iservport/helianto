@@ -26,7 +26,7 @@ import java.util.Date;
  * 
  * <p><code>CriteriaBuilder</code> supports nesting, i.e., a
  * <code>CriteriaBuilder</code> instance can be built from 
- * one or more second-level instances.</p>
+ * one or more second-level instances. It is not thread-safe.</p>
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -122,11 +122,12 @@ public class CriteriaBuilder {
         if (!sqlFunction.equals("")) {
             criteria.append(sqlFunction).append("(");
         }
-        if (prefix.equals("")) {
+        if (prefix.length()==0) {
             criteria.append(fieldName);
         }
         else {
-            criteria.append(prefix).append(".")
+            criteria.append(prefix)
+            .append(".")
             .append(fieldName);
         }
         if (!sqlFunction.equals("")) {
@@ -195,10 +196,12 @@ public class CriteriaBuilder {
      * @param content
      */
     public CriteriaBuilder appendWithPrefix(String content) {
-        criteria.append(prefix)
-        .append(".")
-        .append(content)
-        .append(" ");
+    	if (prefix.length()>0) {
+            criteria.append(prefix)
+            .append(".");
+    	}
+    	criteria.append(content)
+            .append(" ");
         return this;
     }
 
@@ -278,6 +281,82 @@ public class CriteriaBuilder {
         criteria.append("'").append(formatter.format(content)).append("' ");
         return this;
     }
+    
+    /**
+     * Select appender.
+     * 
+     * @param fieldNames
+     * @return "select ${prefix}.${fieldName0}, ${prefix}.${fieldName1} "
+     */
+    public CriteriaBuilder appendSelect(String... fieldNames) {
+    	String separator = "";
+    	criteria.append("select");
+    	for (String fieldName: fieldNames) {
+    		append(separator).appendWithPrefix(fieldName);
+    		separator = ", ";
+    	}
+    	return this;
+    }
+
+    /**
+     * From class appender.
+     * 
+     * @param clazz
+     * @return "from ${clazz.simpleName} ${prefix} "
+     */
+    public CriteriaBuilder appendFrom(Class<?> clazz) {
+    	criteria.append("from ")
+    	.append(clazz.getSimpleName())
+        .append(" ")
+    	.append(prefix)
+    	.append(" ");
+    	return this;
+    }
+
+    /**
+     * Where appender.
+     * 
+     * @param fieldName
+     * @param sqlOperator
+     * @return "where ${prefix}.${field0}, ${prefix}.${field1} "
+     */
+    public CriteriaBuilder appendWhere(String fieldName, String sqlOperator) {
+    	criteria.append("where ");
+   		appendSegment(fieldName, sqlOperator);
+    	return this;
+    }
+
+    /**
+     * Group by appender.
+     * 
+     * @param fields
+     * @return "group by ${prefix}.${fieldName0}, ${prefix}.${fieldName1} "
+     */
+    public CriteriaBuilder appendGroupBy(String... fieldNames) {
+    	String separator = "";
+    	criteria.append("group by");
+    	for (String fieldName: fieldNames) {
+    		append(separator).appendWithPrefix(fieldName);
+    		separator = ", ";
+    	}
+    	return this;
+    }
+
+    /**
+     * Order by appender.
+     * 
+     * @param fields
+     * @return "order by ${prefix}.${fieldName0}, ${prefix}.${fieldName1} "
+     */
+    public CriteriaBuilder appendOrderBy(String... fieldNames) {
+    	String separator = "";
+    	criteria.append("order by");
+    	for (String fieldName: fieldNames) {
+    		append(separator).appendWithPrefix(fieldName);
+    		separator = ", ";
+    	}
+    	return this;
+    }
 
     /**
      * Sub criteria appender.
@@ -295,19 +374,21 @@ public class CriteriaBuilder {
     /**
      * Open parenthesis and increment a parenteheses counter.
      */
-    public void openParenthesis() {
+    public CriteriaBuilder openParenthesis() {
         criteria.append("(");
         openCount++;
+        return this;
     }
 
     /**
      * Open parenthesis and increment a parenteheses counter
      * if a condition is true.
      */
-    public void openParenthesis(boolean condition) {
+    public CriteriaBuilder openParenthesis(boolean condition) {
         if (condition) {
             openParenthesis();
         }
+        return this;
     }
 
     /**
@@ -319,6 +400,25 @@ public class CriteriaBuilder {
             criteria.append(") ");
             openCount--;
         }
+    } 
+    
+    /**
+     * Append a date range.
+     * 
+     * @param fieldName
+     * @param dateRange
+     */
+    public void appendDateRange(String fieldName, DateRange dateRange) {
+    	openParenthesis(dateRange.getFromDate()!=null | dateRange.getToDate()!=null);
+        if (dateRange.getFromDate()!=null) {
+        	appendSegment(fieldName, ">=").append(dateRange.getFromDate());
+        }
+        if (dateRange.getToDate()!=null) {
+        	appendAnd(dateRange.getFromDate()!=null)
+            .appendSegment(fieldName, "<")
+            .append(dateRange.getToDate());
+        }
+        closeParenthesis();
     }
     
     /**

@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.filter.AbstractSelectionStrategy;
 import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.orm.DefaultCategorySelectionStrategy;
+import org.helianto.process.InheritanceType;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentFilter;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,17 @@ public class DefaultProcessDocumentSelectionStrategy extends AbstractSelectionSt
 	            logger.debug("Document class is: '"+filter.getClazz()+"'");
 	        }
 			mainCriteriaBuilder.appendAnd().append(filter.getClazz());
+		}
+		if (filter.getPartner()!=null) {
+	        if (logger.isDebugEnabled()) {
+	            logger.debug("Restricted to final processes from: '"+filter.getPartner()+"'");
+	        }
+	        CriteriaBuilder partnerCriteria = new CriteriaBuilder(mainCriteriaBuilder.getPrefix());
+	        partnerCriteria.appendSegment("partner.id", "=")
+				.append(filter.getPartner().getId());
+	        partnerCriteria.appendOr().appendSegment("inheritanceType", "=")
+	        	.append(InheritanceType.CONCRETE.getValue());
+			mainCriteriaBuilder.appendAnd().append(partnerCriteria);
 		}
 	}
 

@@ -16,6 +16,7 @@
 package org.helianto.core.service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,10 +32,16 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserLog;
+import org.helianto.core.UserLogFilter;
+import org.helianto.core.UserState;
+import org.helianto.core.dao.BasicDao;
+import org.helianto.core.dao.FilterDao;
+import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.ProvinceDao;
-import org.helianto.core.dao.UserSelectionStrategy;
 import org.helianto.core.filter.IdentityFilter;
+import org.springframework.util.Assert;
 
 /**
  * Default <code>UserMgr</code> implementation.
@@ -43,11 +50,6 @@ import org.helianto.core.filter.IdentityFilter;
  */
 public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     
-    private IdentitySelectionStrategy identitySelectionStrategy;
-    private UserSelectionStrategy userSelectionStrategy;
-    private PrincipalGenerationStrategy principalGenerationStrategy;
-    private ProvinceDao provinceDao;
-	
     public Identity findIdentityByPrincipal(String principal) {
         return identityDao.findIdentityByNaturalId(principal);
     }
@@ -87,29 +89,47 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         Locale locale = user.getEntity().getOperator().getLocale();
         user.getIdentity().setPrincipal(
                 convertToLowerCase(locale, principal));
-        userGroupDao.persistUserGroup(user);
+        userGroupDao.persist(user);
     }
 
     public UserGroup storeUserGroup(UserGroup userGroup) {
-        return userGroupDao.mergeUserGroup(userGroup);
+        return userGroupDao.merge(userGroup);
     }
 
     public UserGroup storeUserGroup(UserAssociation parentAssociation) {
-    	UserAssociation managedUserAssociation = userGroupDao.mergeUserAssociation(parentAssociation);
+    	UserAssociation managedUserAssociation = userAssociationDao.merge(parentAssociation);
         return managedUserAssociation.getChild();
     }
 
-	public List<User> findUsers(UserFilter userFilter) {
-		String criteria = userSelectionStrategy.createCriteriaAsString(userFilter, "user");
-		List<User> userList = userGroupDao.findUserByCriteria(criteria);
+	public List<UserGroup> findUsers(UserFilter userFilter) {
+		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(userFilter);
     	if (logger.isDebugEnabled() && userList!=null) {
     		logger.debug("Found user list of size "+userList.size());
     	}
         return userList;
 	}
 
-    public List<User> findUsers(String criteria) {
-        return userGroupDao.findUserByCriteria(criteria);
+    public List<UserGroup> findUsers(Identity identity) {
+    	UserFilter userFilter = new UserFilter(identity, true);
+    	userFilter.setUserState(UserState.ACTIVE.getValue());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Filter users having state "+userFilter.getUserState());
+        }
+        try {
+    		return findUsers(userFilter);
+        } catch (Exception e) {
+        	logger.warn("Unable to find users ", e);
+        }
+        return null;
+    }
+
+    public UserLog storeUserLog(User user, Date date) {
+        Assert.notNull(user.getIdentity());
+        if (date==null) {
+            date = new Date();
+        }
+        UserLog userLog = UserLog.userLogFactory(user, date);
+        return userLogDao.merge(userLog);
     }
     
     /**
@@ -133,43 +153,45 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 		identityDao.mergeIdentity(identity);
 	}
 	
-    /**
-     * @deprecated in favor of storeUserGroup
-     */
-    public void writeUser(User user) {
-        userGroupDao.mergeUserGroup(user);
-    }
-
-    /**
-     * @deprecated in favor of storeUserGroup
-     */
-    public void writeUser(UserGroup userGroup) {
-        userGroupDao.mergeUserGroup(userGroup);
-    }
-
-    /**
-     * @deprecated in favor of storeUserGroup
-     */
-	public User storeUser(User user) {
-        return (User) userGroupDao.mergeUserGroup(user);
-	}
-
     public List<Province> findProvinceByOperator(Operator operator) {
         return provinceDao.findProvinceByOperator(operator);
     }
 
     //- collaborators
     
+    private IdentityDao identityDao;
+    private FilterDao<UserGroup, UserFilter> userGroupDao;
+    private BasicDao<UserAssociation> userAssociationDao;
+    private FilterDao<UserLog, UserLogFilter> userLogDao;
+    private IdentitySelectionStrategy identitySelectionStrategy;
+    private PrincipalGenerationStrategy principalGenerationStrategy;
+    private ProvinceDao provinceDao;
+	
+
+    @Resource
+    public void setIdentityDao(IdentityDao identityDao) {
+        this.identityDao = identityDao;
+    }
+
+    @Resource(name="userGroupDao")
+	public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
+		this.userGroupDao = userGroupDao;
+	}
+
+    @Resource(name="userAssociationDao")
+	public void setUserAssociationDao(BasicDao<UserAssociation> userAssociationDao) {
+		this.userAssociationDao = userAssociationDao;
+	}
+
+    @Resource(name="userLogDao")
+    public void setUserLogDao(FilterDao<UserLog, UserLogFilter> userLogDao) {
+        this.userLogDao = userLogDao;
+    }
+    
     @Resource
     public void setIdentitySelectionStrategy(
             IdentitySelectionStrategy identitySelectionStrategy) {
         this.identitySelectionStrategy = identitySelectionStrategy;
-    }
-
-    @Resource
-    public void setUserSelectionStrategy(
-    		UserSelectionStrategy userSelectionStrategy) {
-        this.userSelectionStrategy = userSelectionStrategy;
     }
 
     @Resource

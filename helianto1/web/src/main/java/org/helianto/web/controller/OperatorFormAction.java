@@ -19,32 +19,27 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
-import org.helianto.core.service.ServerMgr;
+import org.helianto.core.creation.OperatorCreator;
+import org.helianto.core.service.OperatorMgr;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
- * Follows the operator.xml flow.
+ * Presentation logic to store operator.
  * 
  * @author Mauricio Fernandes de Castro
  */
 public class OperatorFormAction extends FormAction {
 
-    private ServerMgr serverMgr;
-    
     public OperatorFormAction() {
         setFormObjectName("operatorForm");
         setFormObjectClass(OperatorForm.class);
-    }
-    
-    /**
-     * Assure required collaborators at runtime.
-     */
-    public void init() {
-        if (serverMgr==null) throw new IllegalArgumentException("Required serverMgr property is null");
     }
     
     /**
@@ -52,7 +47,9 @@ public class OperatorFormAction extends FormAction {
      * make it available to the form flow;
      */
     public Event createOperator(RequestContext context) {
-        Operator operator = serverMgr.createLocalDefaultOperator();
+        Operator operator = OperatorCreator.operatorFactory("DEFAULT",
+                OperationMode.LOCAL, Locale.getDefault());
+
         OperatorForm form = doGetForm(context);
         form.setOperator(operator);
         return success();
@@ -75,8 +72,9 @@ public class OperatorFormAction extends FormAction {
      * Persist the operator retrieved from the flow.
      */
     public Event persistOperator(RequestContext context) {
-        Operator operator = doGetForm(context).getOperator();
-        serverMgr.persistOperator(operator);
+        OperatorForm form = doGetForm(context);
+        Operator operator = form.getOperator();
+        form.setOperator(operatorMgr.storeOperator(operator));
         return success();
     }
     
@@ -84,7 +82,7 @@ public class OperatorFormAction extends FormAction {
      * List all operators in request scope.
      */
     public Event listOperatorInRequestScope(RequestContext context) {
-        context.getRequestScope().put("operatorList", serverMgr.findOperator());
+        context.getRequestScope().put("operatorList", operatorMgr.findOperator());
         return success();
     }
     
@@ -101,8 +99,12 @@ public class OperatorFormAction extends FormAction {
 
 
     //~ collaborators
-    public void setServerMgr(ServerMgr serverMgr) {
-        this.serverMgr = serverMgr;
+    
+    private OperatorMgr operatorMgr;
+    
+    @Resource
+    public void setOperatorMgr(OperatorMgr operatorMgr) {
+        this.operatorMgr = operatorMgr;
     }
 
 }

@@ -40,6 +40,21 @@ import javax.persistence.UniqueConstraint;
 )
 public class UserLog implements java.io.Serializable {
 
+    /**
+     * <code>UserLog</code> factory.
+     * 
+     * @param user
+     * @param lastEvent
+     */
+    public static UserLog userLogFactory(User user, Date lastEvent) {
+    	user.setLastEvent(lastEvent);
+        UserLog userLog = new UserLog();
+        userLog.setUser(user);
+        userLog.setLastEvent(lastEvent);
+        userLog.setEventType(EventType.LOGIN_ATTEMPT.getValue());
+        return userLog;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private User user;
@@ -61,59 +76,36 @@ public class UserLog implements java.io.Serializable {
     }
 
     /**
-     * User getter.
+     * User.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="userId", nullable=true)
     public User getUser() {
         return this.user;
     }
-    /**
-     * User setter.
-     */
     public void setUser(User user) {
         this.user = user;
     }
 
     /**
-     * LastEvent getter.
+     * Last event.
      */
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastEvent() {
         return this.lastEvent;
     }
-    /**
-     * LastEvent setter.
-     */
     public void setLastEvent(Date lastEvent) {
         this.lastEvent = lastEvent;
     }
 
     /**
-     * EventType getter.
+     * Event type.
      */
     public int getEventType() {
         return this.eventType;
     }
-    /**
-     * EventType setter.
-     */
     public void setEventType(int eventType) {
         this.eventType = eventType;
-    }
-
-    /**
-     * <code>UserLog</code> factory.
-     * 
-     * @param user
-     * @param lastEvent
-     */
-    public static UserLog userLogFactory(User user, Date lastEvent) {
-        UserLog userLog = new UserLog();
-        userLog.setUser(user);
-        userLog.setLastEvent(lastEvent);
-        userLog.setEventType(EventType.LOGIN_ATTEMPT.getValue());
-        return userLog;
     }
 
     /**

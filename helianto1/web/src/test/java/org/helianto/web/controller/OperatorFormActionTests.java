@@ -31,8 +31,7 @@ import java.util.Set;
 import junit.framework.TestCase;
 
 import org.helianto.core.Operator;
-import org.helianto.core.service.ServerMgr;
-import org.helianto.web.controller.OperatorFormAction;
+import org.helianto.core.service.OperatorMgr;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
@@ -53,8 +52,7 @@ public class OperatorFormActionTests extends TestCase {
     
     public void testCreateOperator() {
         Operator operator = new Operator();
-        expect(serverMgr.createLocalDefaultOperator()).andReturn(operator);
-        replay(serverMgr);
+        operator.setOperatorName("DEFAULT");
         
         RequestContext context = new MockRequestContext();
         OperatorForm form = new OperatorForm();
@@ -62,24 +60,23 @@ public class OperatorFormActionTests extends TestCase {
         
         Event event = operatorFormAction.createOperator(context);
         assertEquals(event.getId(), "success");
-        verify(serverMgr);
         
-        assertSame(operator, form.getOperator());
+        assertEquals(operator, form.getOperator());
     }
 
     public void testPersistOperator() {
-        Operator operator = new Operator();
+        Operator operator = new Operator(), managedOperator = new Operator();
         OperatorForm form = new OperatorForm();
         form.setOperator(operator);
         RequestContext context = new MockRequestContext();
         context.getFlowScope().put("operatorForm", form);
         
-        serverMgr.persistOperator(operator);
-        replay(serverMgr);
+        expect(operatorMgr.storeOperator(operator)).andReturn(managedOperator);
+        replay(operatorMgr);
         
         Event event = operatorFormAction.persistOperator(context);
         assertEquals(event.getId(), "success");
-        verify(serverMgr);
+        verify(operatorMgr);
     }
     
     @SuppressWarnings("unchecked")
@@ -103,28 +100,28 @@ public class OperatorFormActionTests extends TestCase {
         RequestContext context = new MockRequestContext();
         
         List<Operator> operatorList = new ArrayList<Operator>();
-        expect(serverMgr.findOperator()).andReturn(operatorList);
-        replay(serverMgr);
+        expect(operatorMgr.findOperator()).andReturn(operatorList);
+        replay(operatorMgr);
         
         operatorFormAction.listOperatorInRequestScope(context);
-        verify(serverMgr);
+        verify(operatorMgr);
         assertSame(operatorList, context.getRequestScope().get("operatorList"));
         
     }
 
     // collabs
-    private ServerMgr serverMgr;
+    private OperatorMgr operatorMgr;
     
     @Override
     public void setUp() {
-        serverMgr = createMock(ServerMgr.class);
+        operatorMgr = createMock(OperatorMgr.class);
         operatorFormAction = new OperatorFormAction();
-        operatorFormAction.setServerMgr(serverMgr);
+        operatorFormAction.setOperatorMgr(operatorMgr);
     }
     
     @Override
     public void tearDown() {
-        reset(serverMgr);
+        reset(operatorMgr);
     }
     
 }

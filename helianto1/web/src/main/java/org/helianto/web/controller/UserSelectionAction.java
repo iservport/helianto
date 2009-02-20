@@ -15,13 +15,15 @@
 
 package org.helianto.web.controller;
 
-import java.util.Date;
+import java.util.List;
 
 import org.helianto.core.User;
+import org.helianto.core.UserFilter;
+import org.helianto.core.UserGroup;
 import org.helianto.core.security.PublicUserDetails;
-import org.helianto.core.security.PublicUserDetailsSwitcher;
 import org.helianto.core.security.UserDetailsAdapter;
-import org.helianto.core.service.SecurityMgr;
+import org.helianto.core.service.UserMgr;
+import org.springframework.stereotype.Component;
 import org.springframework.webflow.action.MultiAction;
 import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.Event;
@@ -32,9 +34,8 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component("userSelectionAction")
 public class UserSelectionAction extends MultiAction {
-    
-    private SecurityMgr securityMgr;
     
     /** 
      * Action decision state to control if the selection is hidden or shown.
@@ -52,9 +53,10 @@ public class UserSelectionAction extends MultiAction {
             return result("doNothing");
         }
         PublicUserDetails secureUser = UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
+        List<UserGroup> candidates = userMgr.findUsers(secureUser.getUser().getIdentity());
         String userEntity = parameters.get("userEntity");
         if (secureUser.getUser().getEntity().getId()==Long.parseLong(userEntity)) {
-            if (((PublicUserDetailsSwitcher) secureUser).getUsers().size()==1) {
+            if (candidates.size()==1) {
                 // nothing to do, the user has no other associated entities
                 return result("doNothing");
             }
@@ -85,15 +87,17 @@ public class UserSelectionAction extends MultiAction {
     public Event selectUser(RequestContext context) {
         // TODO refactor to move rules to service layer
         ParameterMap parameters = context.getRequestParameters();
-        PublicUserDetailsSwitcher secureUser = (PublicUserDetailsSwitcher) UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
+        PublicUserDetails secureUser = UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
         long userEntity = parameters.getLong("userEntity");
-        for (User user: secureUser.getUsers()) {
-            if (user.getEntity().getId()==userEntity) {
-                secureUser.selectUser(user);
+        UserFilter userFilter = new UserFilter(secureUser.getUser().getIdentity(), true);
+        List<UserGroup> userList = userMgr.findUsers(userFilter);
+        for (UserGroup user: userList) {
+            if (user instanceof User && user.getEntity().getId()==userEntity) {
+                secureUser.setUser((User) user);
                 if (logger.isDebugEnabled()) {
                     logger.debug("New user is "+user);
                 }
-                securityMgr.writeUserLog((User) user, new Date());
+//                userMgr.storeUserLog((User) user, new Date());
                 break;
             }
         }
@@ -103,9 +107,11 @@ public class UserSelectionAction extends MultiAction {
     
     //- collaborators
 
+    private UserMgr userMgr;
+    
     @javax.annotation.Resource
-    public void setSecurityMgr(SecurityMgr securityMgr) {
-        this.securityMgr = securityMgr;
+    public void setUserMgr(UserMgr userMgr) {
+        this.userMgr = userMgr;
     }
 
 }

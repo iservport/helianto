@@ -21,7 +21,6 @@ import org.helianto.core.User;
  * An interface to reveal public user details.
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public interface PublicUserDetails {
     
@@ -30,6 +29,9 @@ public interface PublicUserDetails {
      */
     public User getUser();
     
-
+    /**
+     * Update the <code>User</code>.
+     */
+    public void setUser(User user);
     
 }

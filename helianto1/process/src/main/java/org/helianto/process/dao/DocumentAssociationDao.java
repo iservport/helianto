@@ -40,7 +40,12 @@ public interface DocumentAssociationDao extends CommonOrmDao {
     public DocumentAssociation mergeDocumentAssociation(DocumentAssociation documentAssociation);
     
     /**
-     * Remove <code>DocumentAssociation</code>.
+     * Remove <code>DocumentAssociation</code> from session.
+     */
+    public void evictDocumentAssociation(DocumentAssociation documentAssociation);
+    
+    /**
+     * Remove <code>DocumentAssociation</code> from data store.
      */
     public void removeDocumentAssociation(DocumentAssociation documentAssociation);
     

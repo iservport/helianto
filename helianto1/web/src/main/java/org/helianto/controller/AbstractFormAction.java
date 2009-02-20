@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.web.controller;
+package org.helianto.controller;
 
 import org.springframework.security.context.SecurityContextHolder;
 import org.apache.commons.logging.Log;

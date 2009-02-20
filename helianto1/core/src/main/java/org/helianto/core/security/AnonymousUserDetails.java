@@ -2,13 +2,13 @@ package org.helianto.core.security;
 
 import java.io.Serializable;
 
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserType;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
 
 /**
  * A class compatible to an anonymous <code>UserDetails</code> implementation.
@@ -16,7 +16,7 @@ import org.helianto.core.UserType;
  * @author Mauricio Fernandes de Castro
  *
  */
-public class AnonymousUserDetails extends AbstractUserDetails implements Serializable {
+public class AnonymousUserDetails extends UserDetailsAdapter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

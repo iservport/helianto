@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 
 /**

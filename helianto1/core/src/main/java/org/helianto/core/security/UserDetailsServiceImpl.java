@@ -15,13 +15,19 @@
 
 package org.helianto.core.security;
 
-import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserRole;
+import org.helianto.core.service.SecurityMgr;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.util.Assert;
 
 /**
  * Custom implementation for the {@link org.acegisecurity.userdetails.UserDetailsService}
@@ -31,56 +37,65 @@ import org.springframework.beans.factory.annotation.Required;
  */
 public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     
-    private IdentityResolutionStrategy identityResolutionStrategy;
-    private UserResolutionStrategy userResolutionStrategy;
-    
+    /**
+     * Load and validate an <code>Identity</code>
+     * 
+     * @param principal
+     */
     @Override
     public Identity loadAndValidateIdentity(String principal) {
-        return identityResolutionStrategy.loadAndValidateIdentity(principal);
-    }
-    
-    @Override
-    public Credential loadAndValidateCredential(Identity identity) {
-        return identityResolutionStrategy.loadAndValidateCredential(identity);
-    }
-    
-    @Override
-    public List<User> loadUsers(Identity identity) {
-        return userResolutionStrategy.loadUsers(identity);
-    }
-    
-    @Override
-    public User selectUser(List<User> userList) {
-        User user = userResolutionStrategy.selectUserFromPreviousLogin(userList);
-        if (user==null) {
-        	user = userResolutionStrategy.selectUserIfAny(userList);
+        Identity identity = null;
+        try {
+            identity = securityMgr.findIdentityByPrincipal(principal);
+            Assert.notNull(identity, "Null Identity");
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Username "+principal, e);
         }
-        return user;
+        return identity;
     }
     
-    @Override
-    public User createUser(Identity identity) {
-        return userResolutionStrategy.createUser(identity);
+    /**
+     * Load and validate a <code>Credential</code>
+     * 
+     * @param identity
+     */
+    public Credential loadAndValidateCredential(Identity identity) {
+        try {
+            //TODO find only active credential
+            Credential credential = securityMgr.findCredentialByIdentity(identity);
+            if (credential!=null) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("User credential loaded");
+                }
+                return credential;
+            } else {
+                throw new DataRetrievalFailureException("Bad credential");
+            }
+        } catch (Exception e) {
+            throw new DataRetrievalFailureException("General login failure", e);
+        }
     }
     
-    @Override
-    public void logUser(User user) {
-    	securityMgr.writeUserLog(user, new Date());
-    }
-    
-    //- collabs
+    /**
+     * Load and validate a <code>Role</code> set.
+     * 
+     * @param user
+     */
+	@Override
+	protected Set<UserRole> loadAndValidateRoles(User user) {
+		return securityMgr.prepareAllUserRoles(user);
+	}
+
+	//- collabs
+
+    private SecurityMgr securityMgr;
     
     @Required
-    public void setIdentityResolutionStrategy(
-            IdentityResolutionStrategy identityResolutionStrategy) {
-        this.identityResolutionStrategy = identityResolutionStrategy;
+    public void setSecurityMgr(SecurityMgr securityMgr) {
+        this.securityMgr = securityMgr;
     }
 
-    @Required
-    public void setUserResolutionStrategy(
-            UserResolutionStrategy userResolutionStrategy) {
-        this.userResolutionStrategy = userResolutionStrategy;
-    }
-
+    private static Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
+    
 }
 

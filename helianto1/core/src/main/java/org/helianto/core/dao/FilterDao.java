@@ -13,32 +13,20 @@
  * limitations under the License.
  */
 
-package org.helianto.core.security;
+package org.helianto.core.dao;
 
-import org.helianto.core.Credential;
-import org.helianto.core.Identity;
+import java.util.Collection;
 
 /**
- * A common interface for all <code>Identity</code> resolution strategies.
+ * A convenient sub-set of persistence operations.
  * 
- * @author Mauricio Fernandes de Castro
+ * @author Mauricio Fernandes de Castro.
  */
-public interface IdentityResolutionStrategy {
-    
-    /**
-     * Load and validate an <code>Identity</code>.
-     * 
-     * @param principal
-     * @return
-     */
-    public Identity loadAndValidateIdentity(String principal);
-    
-    /**
-     * Load and validate a <code>Credential</code>.
-     * 
-     * @param principal
-     * @return
-     */
-    public Credential loadAndValidateCredential(Identity identity);
+public interface FilterDao<T, F> extends BasicDao<T> {
 
+    /**
+     * Find by filter.
+     */
+    public Collection<T> find(F filter);
+    
 }
