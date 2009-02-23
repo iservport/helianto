@@ -27,8 +27,9 @@ import org.helianto.core.test.UserTestSupport;
  */
 public class DefaultUserSelectionStrategyTests extends TestCase {
     
-    public static String USER_CRITERIA = "user.entity.id = 0 AND user.userState = 'A' ";
-    public static String USER_PRINCIPAL_CRITERIA = "user.entity.id = 0 AND lower(user.identityPrincipal) like '%principalsearch%' AND user.userState = 'A' ";
+    public static String USER_CRITERIA = "user.entity.id = 0 ";
+    public static String USER_STATE_CRITERIA = "user.entity.id = 0 AND user.userState = 'A' ";
+    public static String USER_PRINCIPAL_CRITERIA = "user.entity.id = 0 AND lower(user.identityPrincipal) like '%principalsearch%' ";
 
     private UserSelectionStrategy userSelectionStrategy;
 

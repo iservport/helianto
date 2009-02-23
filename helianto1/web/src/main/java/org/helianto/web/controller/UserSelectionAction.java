@@ -33,6 +33,7 @@ import org.springframework.webflow.execution.RequestContext;
  * A controller to handle <code>User</code> selection requests.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @Component("userSelectionAction")
 public class UserSelectionAction extends MultiAction {

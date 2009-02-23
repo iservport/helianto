@@ -41,7 +41,7 @@ public class UserLogTests extends TestCase {
         user.setIdentity(identity);
         Date lastEvent = DomainTestSupport.DATE_TEST_VALUE;
         
-        UserLog userLog = UserLog.userLogFactory(user, lastEvent);
+        UserLog userLog = UserLog.userLogFactory(user, lastEvent, EventType.LOGIN_ATTEMPT);
         
         assertSame(user, userLog.getUser());
         assertEquals(lastEvent, userLog.getLastEvent());
@@ -58,7 +58,7 @@ public class UserLogTests extends TestCase {
         user.setIdentity(identity);
         Date lastEvent = DomainTestSupport.DATE_TEST_VALUE;
         
-        UserLog userLog = UserLog.userLogFactory(user, lastEvent);
+        UserLog userLog = UserLog.userLogFactory(user, lastEvent, EventType.LOGIN_ATTEMPT);
         UserLog copy = (UserLog) DomainTestSupport.minimalEqualsTest(userLog);
         
         copy.setUser(null);

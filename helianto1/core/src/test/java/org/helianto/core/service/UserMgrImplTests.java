@@ -42,12 +42,12 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserLogFilter;
 import org.helianto.core.dao.BasicDao;
+import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.dao.ProvinceDao;
-import org.helianto.core.dao.UserLogDao;
 import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
@@ -144,6 +144,41 @@ public class UserMgrImplTests extends TestCase {
         verify(internalEnumeratorDao);
     }
     
+    public void testCreateUserAssociationPrincipalExisting() {
+    	UserGroup userGroup = new UserGroup();
+    	Identity identity = new Identity();
+    	
+    	expect(identityDao.findIdentityByNaturalId("principal"))
+    		.andReturn(identity);
+    	replay(identityDao);
+    	
+    	UserAssociation userAssociation = userMgr.createUserAssociation(userGroup, "principal");
+    	verify(identityDao);
+    	
+    	assertSame(userGroup, userAssociation.getParent());
+    	assertSame(identity, userAssociation.getChild().getIdentity());
+    }
+    
+    public void testCreateUserAssociationPrincipalNotFound() {
+    	UserGroup userGroup = new UserGroup();
+    	Credential managedCredential = CredentialTestSupport.createCredential();
+    	managedCredential.getIdentity().setPrincipal("principal");
+    	
+    	expect(identityDao.findIdentityByNaturalId("principal"))
+			.andReturn(null);
+    	replay(identityDao);
+	
+//    	expect(credentialDao.mergeCredential(isA(Credential.class)))
+//    		.andReturn(managedCredential);
+//    	replay(credentialDao);
+
+    	UserAssociation userAssociation = userMgr.createUserAssociation(userGroup, "principal");
+    	verify(identityDao);
+    	
+    	assertSame(userGroup, userAssociation.getParent());
+    	assertEquals("principal", userAssociation.getChild().getUserPrincipal());
+    }
+    
     public void testFindUsers() {
     	UserFilter userFilter = new UserFilter();
     	List<UserGroup> userList = new ArrayList<UserGroup>();
@@ -176,6 +211,18 @@ public class UserMgrImplTests extends TestCase {
     	replay(userAssociationDao);
     	
     	assertSame(userGroup, userMgr.storeUserGroup(parentAssociation));
+    	verify(userAssociationDao);
+    }
+    
+    public void testStoreUserAssociation() {
+    	UserAssociation parentAssociation = new UserAssociation();
+    	UserAssociation managedUserAssociation = new UserAssociation();
+    	
+    	expect(userAssociationDao.merge(parentAssociation))
+    	    .andReturn(managedUserAssociation);
+    	replay(userAssociationDao);
+    	
+    	assertSame(managedUserAssociation, userMgr.storeUserAssociation(parentAssociation));
     	verify(userAssociationDao);
     }
     
@@ -216,6 +263,7 @@ public class UserMgrImplTests extends TestCase {
     // 
     
     private IdentityDao identityDao;
+    private CredentialDao credentialDao;
     private InternalEnumeratorDao internalEnumeratorDao;
     private IdentitySelectionStrategy identitySelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
@@ -231,6 +279,8 @@ public class UserMgrImplTests extends TestCase {
         userMgr = new UserMgrImpl();
         identityDao = createMock(IdentityDao.class);
         userMgr.setIdentityDao(identityDao);
+        credentialDao = createMock(CredentialDao.class);
+        userMgr.setCredentialDao(credentialDao);
         identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
         userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
         principalGenerationStrategy = createMock(PrincipalGenerationStrategy.class);
@@ -250,6 +300,7 @@ public class UserMgrImplTests extends TestCase {
     @Override
     public void tearDown() {
         reset(identityDao);
+        reset(credentialDao);
         reset(internalEnumeratorDao);
         reset(identitySelectionStrategy);
         reset(principalGenerationStrategy);

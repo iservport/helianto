@@ -40,6 +40,10 @@ public class StartUpAction extends MultiAction {
 	 * Check if there is at least one operator available.
 	 */
 	public Event startUp(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+            logger.debug("!---- preLogin\n");
+        }
 		List<Operator> operatorList = operatorMgr.findOperator();
 		if (logger.isDebugEnabled()) {
 			logger.debug("Operator list found: "+operatorList.size());
@@ -55,6 +59,10 @@ public class StartUpAction extends MultiAction {
 	 * 
 	 */
 	public Event preLogin(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+            logger.debug("!---- preLogin\n");
+        }
 		return success();
 	}
 	
@@ -63,10 +71,15 @@ public class StartUpAction extends MultiAction {
 	 * 
 	 */
 	public Event postLogin(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+            logger.debug("!---- postLogin\n");
+        }
 		PublicUserDetails secureUser = UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
 		if (secureUser!=null) {
+			context.getConversationScope().put("scureUser", secureUser);
 			if (logger.isDebugEnabled()) {
-				logger.debug("User in secure context: "+secureUser.getUser());
+				logger.debug("Secure user in conversation scope: "+secureUser.getUser());
 			}
 			return success();
 		}

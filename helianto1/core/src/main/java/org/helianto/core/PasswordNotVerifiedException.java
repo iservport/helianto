@@ -13,29 +13,24 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Service;
-import org.helianto.core.UserGroup;
+package org.helianto.core;
 
 /**
- * Strategy to move <code>UserRole</code> assingnment
- * away from the service facade.
+ * Unchecked exception launched if a <code>Credential</code> is not
+ * able to verify the password against a verification field.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface RoleDefinitionStrategy {
-	
+public class PasswordNotVerifiedException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
-	 * Create a <code>UserGroup</code> to the required
-	 * <code>Entity</code> and assign <code>UserRole</code>s
-	 * to it using the supplied <code>Service</code> and extensions.
-	 * 
-	 * @param entity
-	 * @param service
-	 * @param extensions
+	 * Default constructor
 	 */
-	public UserGroup grant(Entity entity, Service service, String[] extensions);
+	public PasswordNotVerifiedException() {
+		super();
+	}
 
 }

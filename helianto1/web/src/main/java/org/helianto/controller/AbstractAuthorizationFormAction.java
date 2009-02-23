@@ -89,12 +89,12 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
 	protected void registerPropertyEditors(PropertyEditorRegistry registry) {
 		super.registerPropertyEditors(registry);
 		
-    	Operator operator = getAuthorizedUser().getEntity().getOperator();
-
-        Locale locale = operator.getLocale();
+        Locale locale = getAuthorizedUser().getLocale();
         DateFormat dateFormat = null;
         try {
-        	dateFormat = new SimpleDateFormat(operator.getPreferredDateFormat()+" "+operator.getPreferredTimeFormat(), operator.getLocale());
+        	// TODO refator using preferences API
+//        	dateFormat = new SimpleDateFormat(operator.getPreferredDateFormat()+" "+operator.getPreferredTimeFormat(), operator.getLocale());
+        	dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
         } catch (Exception e) {
         	dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
         }

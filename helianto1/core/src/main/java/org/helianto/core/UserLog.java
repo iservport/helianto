@@ -45,13 +45,14 @@ public class UserLog implements java.io.Serializable {
      * 
      * @param user
      * @param lastEvent
+     * @param eventType
      */
-    public static UserLog userLogFactory(User user, Date lastEvent) {
+    public static UserLog userLogFactory(User user, Date lastEvent, EventType eventType) {
     	user.setLastEvent(lastEvent);
         UserLog userLog = new UserLog();
         userLog.setUser(user);
         userLog.setLastEvent(lastEvent);
-        userLog.setEventType(EventType.LOGIN_ATTEMPT.getValue());
+        userLog.setEventType(eventType.getValue());
         return userLog;
     }
 
@@ -59,7 +60,6 @@ public class UserLog implements java.io.Serializable {
     private int id;
     private User user;
     private Date lastEvent;
-
     private int eventType;
 
     /** default constructor */
@@ -106,6 +106,9 @@ public class UserLog implements java.io.Serializable {
     }
     public void setEventType(int eventType) {
         this.eventType = eventType;
+    }
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType.getValue();
     }
 
     /**

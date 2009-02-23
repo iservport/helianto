@@ -16,7 +16,6 @@
 package org.helianto.web.controller;
 
 import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
@@ -27,7 +26,6 @@ import javax.mail.MessagingException;
 import junit.framework.TestCase;
 
 import org.helianto.core.Credential;
-import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
@@ -105,7 +103,7 @@ public class IdentityFormActionTests extends TestCase {
     }
     
     public void testVerifySuccess() {
-        Credential credential = Credential.credentialFactory();
+        Credential credential = Credential.credentialFactory("");
         credential.setPassword("TEST");
         credential.setVerifyPassword("TEST");
         form.setCredential(credential);
@@ -116,7 +114,7 @@ public class IdentityFormActionTests extends TestCase {
     }
     
     public void testVerifyError() {
-        Credential credential = Credential.credentialFactory();
+        Credential credential = Credential.credentialFactory("");
         credential.setPassword("TEST1");
         credential.setVerifyPassword("TEST2");
         form.setCredential(credential);

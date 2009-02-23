@@ -31,6 +31,7 @@ import java.util.Set;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
+import org.helianto.core.EventType;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
@@ -54,7 +55,7 @@ public class UserDetailsServiceTemplateTests {
 
 	@Test
     public void testLoadUserByUsernameSuccess() {
-    	UserLog userLog = UserLog.userLogFactory(selectedUser, new Date());
+    	UserLog userLog = UserLog.userLogFactory(selectedUser, new Date(), EventType.LOGIN_ATTEMPT);
     	assertNotNull(userLog.getUser());
     	List<UserGroup> candidates = new ArrayList<UserGroup>();
     	candidates.add(selectedUser);

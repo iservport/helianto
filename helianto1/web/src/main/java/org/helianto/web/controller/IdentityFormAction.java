@@ -58,7 +58,7 @@ public class IdentityFormAction extends FormAction {
         }
         IdentityForm form = doGetForm(context);
         if (form.getCredential()==null) {
-            Credential credential = Credential.credentialFactory();
+            Credential credential = Credential.credentialFactory("");
             form.setCredential(credential);
             if (logger.isDebugEnabled()) {
                 logger.debug("New credential set to "+credential+" set to form " +form);
@@ -163,7 +163,7 @@ public class IdentityFormAction extends FormAction {
             logger.debug("!---- STARTED");
         }
         Credential credential = doGetForm(context).getCredential();
-        if (Credential.verifyPassword(credential)) {
+        if (credential.isPasswordVerified()) {
             return success();
         }
         return error();

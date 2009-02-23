@@ -24,7 +24,9 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.Credential;
 import org.helianto.core.Entity;
+import org.helianto.core.EventType;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
@@ -36,6 +38,7 @@ import org.helianto.core.UserLog;
 import org.helianto.core.UserLogFilter;
 import org.helianto.core.UserState;
 import org.helianto.core.dao.BasicDao;
+import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.IdentitySelectionStrategy;
@@ -101,6 +104,10 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         return managedUserAssociation.getChild();
     }
 
+    public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
+    	return userAssociationDao.merge(parentAssociation);
+    }
+
 	public List<UserGroup> findUsers(UserFilter userFilter) {
 		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(userFilter);
     	if (logger.isDebugEnabled() && userList!=null) {
@@ -123,12 +130,51 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         return null;
     }
 
+//	public UserAssociation createUserAssociation(UserGroup parent, String principal) {
+//		// does identity exist?
+//		Identity identity = identityDao.findIdentityByNaturalId(principal);
+//		if (identity==null) {
+//			// No! create one with a creential.
+//			Credential credential = Credential.credentialFactory(Identity.identityFactory(principal), "");
+//			Credential managedCredential = credentialDao.mergeCredential(credential);
+//			identity = managedCredential.getIdentity();
+//		}
+//		UserAssociation userAssociation = parent.childUserAssociationFactory(identity);
+//    	if (logger.isDebugEnabled()) {
+//    		logger.debug("Created user association ".concat(userAssociation.toString()));
+//    	}
+//    	UserLog userLog = ((User) userAssociation.getChild()).userLogFactory(EventType.CREATE);
+//    	if (logger.isDebugEnabled()) {
+//    		logger.debug("Created user log ".concat(userLog.toString()));
+//    	}
+//		return userAssociation;
+//	}
+//
+	public UserAssociation createUserAssociation(UserGroup parent, String principal) {
+		// does identity exist?
+		Identity identity = identityDao.findIdentityByNaturalId(principal);
+		if (identity==null) {
+			// No! create one with a creential.
+			Credential credential = Credential.credentialFactory(Identity.identityFactory(principal), "");
+			identity = credential.getIdentity();
+		}
+		UserAssociation userAssociation = parent.childUserAssociationFactory(identity);
+    	if (logger.isDebugEnabled()) {
+    		logger.debug("Created user association ".concat(userAssociation.toString()));
+    	}
+    	UserLog userLog = ((User) userAssociation.getChild()).userLogFactory(EventType.CREATE);
+    	if (logger.isDebugEnabled()) {
+    		logger.debug("Created user log ".concat(userLog.toString()));
+    	}
+		return userAssociation;
+	}
+
     public UserLog storeUserLog(User user, Date date) {
         Assert.notNull(user.getIdentity());
         if (date==null) {
             date = new Date();
         }
-        UserLog userLog = UserLog.userLogFactory(user, date);
+        UserLog userLog = UserLog.userLogFactory(user, date, EventType.LOGIN_ATTEMPT);
         return userLogDao.merge(userLog);
     }
     
@@ -160,6 +206,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     //- collaborators
     
     private IdentityDao identityDao;
+    private CredentialDao credentialDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private BasicDao<UserAssociation> userAssociationDao;
     private FilterDao<UserLog, UserLogFilter> userLogDao;
@@ -171,6 +218,11 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     @Resource
     public void setIdentityDao(IdentityDao identityDao) {
         this.identityDao = identityDao;
+    }
+
+    @Resource
+    public void setCredentialDao(CredentialDao credentialDao) {
+        this.credentialDao = credentialDao;
     }
 
     @Resource(name="userGroupDao")
@@ -206,5 +258,6 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     }
 
     private static final Log logger = LogFactory.getLog(UserMgrImpl.class);
+
 
 }

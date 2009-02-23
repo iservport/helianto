@@ -75,13 +75,26 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
 
 	@Override
 	protected final F createFormObject(RequestContext context) throws Exception {
-		F formObject = doCreateFilter();
+		F formObject = doCreateFilter(context);
         if (logger.isDebugEnabled()) {
             logger.debug("Created "+formObject);
         }
         return formObject;
 	}
 
+	/**
+	 * Optional filter creation requiring the context, default 
+	 * implementation simply delegates to {@link #doCreateFilter()}.
+	 * 
+	 * @param context
+	 */
+    public F doCreateFilter(RequestContext context) throws Exception {
+    	return doCreateFilter();
+    }
+    
+    /**
+     * Hook to filter creation.
+     */
     public abstract F doCreateFilter() throws Exception;
     
 	@SuppressWarnings("unchecked")
@@ -96,8 +109,7 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
 	}
 
 	/**
-     * Pre-process the selection and return yes if no other action is
-     * required.
+     * Pre-process the selection.
      */
     public final Event preProcess(RequestContext context) {
         if (logger.isDebugEnabled()) {
@@ -146,8 +158,33 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
             logger.debug("!---- STARTED");
             logger.debug("!---- resetFilter\n");
         }
-        getFilter(context).reset();
-        return success();
+        try {
+        	if (doResetFilter(getFilter(context), context)) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Filter reset");
+                }
+    	        return success();
+        	}
+        	else {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Filter reset interrupted");
+                }
+        		return error();
+        	}
+		} catch (Exception e) {
+			logger.warn("Unable to reset filter ", e);
+            return error();
+		}
+    }
+        
+    /**
+     * Subclasses may override to customize filter reset.
+     * 
+     * @throws Exception 
+     */
+    protected boolean doResetFilter(F filter, RequestContext context) throws Exception {
+    	filter.reset();
+    	return true;
     }
         
     /**

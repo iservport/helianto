@@ -49,12 +49,15 @@ public class Identity implements java.io.Serializable {
     private String optionalAlias;
     private PersonalData personalData;
     private Date created;
-//    private Date lastLogin;
     private char identityType;
     private char notification;
 
     /** default constructor */
     public Identity() {
+        setPersonalData(PersonalData.personalDataFactory("", ""));
+        setCreated(new Date());
+        setIdentityType(IdentityType.EMAIL.getValue());
+        setNotification(Notification.AUTOMATIC.getValue());
     }
 
     // Property accessors
@@ -174,10 +177,6 @@ public class Identity implements java.io.Serializable {
         
         identity.setPrincipal(principal);
         identity.setOptionalAlias(optionalAlias);
-        identity.setCreated(new Date());
-        identity.setIdentityType(IdentityType.EMAIL.getValue());
-        identity.setNotification(Notification.AUTOMATIC.getValue());
-        identity.setPersonalData(PersonalData.personalDataFactory("", ""));
         return identity;
     }
 

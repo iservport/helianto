@@ -15,6 +15,7 @@
 
 package org.helianto.core;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,6 +47,8 @@ public class User extends UserGroup implements java.io.Serializable {
 
 	/** default constructor */
     public User() {
+    	super();
+        setAccountNonExpired(false);
     	setUserType(UserType.INTERNAL);
     	setPrivacyLevel('0');
     }
@@ -102,8 +105,6 @@ public class User extends UserGroup implements java.io.Serializable {
      */
     public static User userFactory(Entity entity, Identity identity) {
         User user = internalUserGroupFactory(User.class, entity, identity);
-        user.setUserType(UserType.INTERNAL.getValue());
-        user.setAccountNonExpired(true);
         return user;
     }
 
@@ -127,6 +128,15 @@ public class User extends UserGroup implements java.io.Serializable {
         return user;
     }
 
+    /**
+     * <code>UserLog</code> factory mehod.
+     * 
+     * @param eventType
+     */
+    public UserLog userLogFactory(EventType eventType) {
+    	return UserLog.userLogFactory(this, new Date(), eventType);
+    }
+    
     /**
      * <code>User</code> natural id query.
      */

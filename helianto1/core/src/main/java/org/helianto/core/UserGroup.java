@@ -17,6 +17,7 @@ package org.helianto.core;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -61,6 +62,28 @@ import javax.persistence.UniqueConstraint;
 @DiscriminatorValue("G")
 public class UserGroup implements java.io.Serializable {
 
+    /**
+     * <code>UserGroup</code> factory.
+     * 
+     * @param entity
+     * @param identity
+     */
+    public static UserGroup userGroupFactory(Entity entity, Identity identity) {
+        return internalUserGroupFactory(UserGroup.class, entity, identity);
+    }
+
+    /**
+     * <code>UserGroup</code> factory.
+     * 
+     * @param parent
+     * @param identity
+     */
+    public static UserGroup userGroupFactory(UserGroup parent, Identity identity) {
+        UserGroup userGroup = userGroupFactory(parent.getEntity(), identity);
+        UserAssociation.userAssociationFactory(parent, userGroup);
+        return userGroup;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -96,6 +119,10 @@ public class UserGroup implements java.io.Serializable {
     public Entity getEntity() {
         return this.entity;
     }
+    @Transient
+    public Locale getLocale() {
+		return getEntity().getLocale();
+	}
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
@@ -123,14 +150,36 @@ public class UserGroup implements java.io.Serializable {
         this.identity = identity;
     }
     /**
-     * UserPrincipal getter.
+     * User principal.
      */
     @Transient
     public String getUserPrincipal() {
         return this.identity.getPrincipal();
     }
     /**
-     * UserName getter.
+     * User principal name.
+     */
+    @Transient
+    public String getUserPrincipalName() {
+    	int position = getUserPrincipal().indexOf("@");
+    	if (position>0) {
+    		return getUserPrincipal().substring(0, position);
+    	}
+        return getUserPrincipal();
+    }
+    /**
+     * User principal domain.
+     */
+    @Transient
+    public String getUserPrincipalDomain() {
+    	int position = getUserPrincipal().indexOf("@");
+    	if (position>0) {
+    		return getUserPrincipal().substring(position);
+    	}
+        return "";
+    }
+    /**
+     * UserName.
      */
     @Transient
     public String getUserName() {
@@ -217,6 +266,17 @@ public class UserGroup implements java.io.Serializable {
     }
 
     /**
+     * <code>UserAssociation</code> factory.
+     * 
+     * @param identity
+     */
+    public UserAssociation childUserAssociationFactory(Identity identity) {
+        User child = User.userFactory(this.getEntity(), identity);
+        UserAssociation userAssociation = UserAssociation.userAssociationFactory(this, child);
+        return userAssociation;
+    }
+
+    /**
      * Internal <code>UserGroup</code> factory.
      * 
      * @param clazz
@@ -238,73 +298,33 @@ public class UserGroup implements java.io.Serializable {
         }
     }
     
-    /**
-     * <code>UserGroup</code> factory.
-     * 
-     * @param entity
-     */
-    public static UserGroup userGroupFactory(Entity entity) {
-        return internalUserGroupFactory(UserGroup.class, entity, null);
-    }
-
-    /**
-     * <code>UserGroup</code> factory.
-     * 
-     * @param entity
-     */
-    public static UserGroup userGroupFactory(Entity entity, String userKey) {
-    	Identity identity = Identity.identityFactory(userKey, userKey);
-    	identity.setIdentityType(IdentityType.GROUP.getValue());
-    	UserGroup userGroup = internalUserGroupFactory(UserGroup.class, entity, identity);
-    	userGroup.setUserKey(userKey);
-        return userGroup;
-    }
-
-    /**
-     * <code>UserGroup</code> factory.
-     * 
-     * @param entity
-     * @param identity
-     */
-    public static UserGroup userGroupFactory(Entity entity, Identity identity) {
-        return internalUserGroupFactory(UserGroup.class, entity, identity);
-    }
-
-    /**
-     * <code>UserGroup</code> factory.
-     * 
-     * @param parent
-     */
-    public static UserGroup userGroupFactory(UserGroup parent) {
-        return userGroupFactory(parent, null);
-    }
-
-    /**
-     * <code>UserGroup</code> factory.
-     * 
-     * @param parent
-     * @param identity
-     */
-    public static UserGroup userGroupFactory(UserGroup parent, Identity identity) {
-        UserGroup userGroup = userGroupFactory(parent.getEntity(), identity);
-        UserAssociation.userAssociationFactory(parent, userGroup);
-        return userGroup;
-    }
-
-    /**
-     * <code>UserGroup</code> natural id query.
-     */
-    public static StringBuilder getUserGroupQueryStringBuilder() {
-        return new StringBuilder("select userGroup from UserGroup userGroup ");
-    }
-
-    /**
-     * <code>UserGroup</code> natural id query.
-     */
-    public static String getUserGroupNaturalIdQueryString() {
-        return getUserGroupQueryStringBuilder().append("where userGroup.entity = ? and userGroup.identity = ? ").toString();
-    }
-
+//    /**
+//     * <code>UserGroup</code> factory.
+//     * 
+//     * @param entity
+//     */
+//    public static UserGroup userGroupFactory(Entity entity, String userKey) {
+//    	Identity identity = Identity.identityFactory(userKey, userKey);
+//    	identity.setIdentityType(IdentityType.GROUP.getValue());
+//    	UserGroup userGroup = internalUserGroupFactory(UserGroup.class, entity, identity);
+//    	userGroup.setUserKey(userKey);
+//        return userGroup;
+//    }
+//
+//    /**
+//     * <code>UserGroup</code> natural id query.
+//     */
+//    public static StringBuilder getUserGroupQueryStringBuilder() {
+//        return new StringBuilder("select userGroup from UserGroup userGroup ");
+//    }
+//
+//    /**
+//     * <code>UserGroup</code> natural id query.
+//     */
+//    public static String getUserGroupNaturalIdQueryString() {
+//        return getUserGroupQueryStringBuilder().append("where userGroup.entity = ? and userGroup.identity = ? ").toString();
+//    }
+//
     /**
      * toString
      * @return String

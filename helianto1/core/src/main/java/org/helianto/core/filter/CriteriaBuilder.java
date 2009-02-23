@@ -206,15 +206,17 @@ public class CriteriaBuilder {
     }
 
     /**
-     * String appender.
+     * Class appender.
      * 
      * @param content
      */
     public CriteriaBuilder append(Class<?> clazz) {
-        criteria.append(prefix)
-        .append(".class=")
-        .append(clazz.getSimpleName())
-        .append(" ");
+    	if (clazz!=null) {
+            criteria.append(prefix)
+            .append(".class=")
+            .append(clazz.getSimpleName())
+            .append(" ");
+    	}
         return this;
     }
 
@@ -409,7 +411,10 @@ public class CriteriaBuilder {
      * @param dateRange
      */
     public void appendDateRange(String fieldName, DateRange dateRange) {
-    	openParenthesis(dateRange.getFromDate()!=null | dateRange.getToDate()!=null);
+    	if (dateRange.getFromDate()==null && dateRange.getToDate()==null) {
+    		return;
+    	}
+    	appendAnd().openParenthesis(true);
         if (dateRange.getFromDate()!=null) {
         	appendSegment(fieldName, ">=").append(dateRange.getFromDate());
         }

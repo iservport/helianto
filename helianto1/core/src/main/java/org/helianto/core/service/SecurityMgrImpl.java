@@ -23,6 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.User;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
@@ -48,8 +49,12 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
 		return credentialDao.findCredentialByPrincipal(princpal);
 	}
 
-	public Credential storeCredential(Credential credential) {
-        return credentialDao.mergeCredential(credential);
+	public Credential storeCredential(Credential credential) 
+	    throws PasswordNotVerifiedException {
+		if (credential.isPasswordVerified()) {
+	        return credentialDao.mergeCredential(credential);
+		}
+		throw new PasswordNotVerifiedException();
 	}
 
 	public void storeCredential(SecureUserDetails secureUser) {

@@ -15,6 +15,8 @@
 
 package org.helianto.core;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -30,10 +32,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
-
-
-
-import org.helianto.core.Identity;
 /**
  * <p>
  * Provides <code>Identity</code> with authentication information. 
@@ -56,7 +54,7 @@ public class Credential implements java.io.Serializable {
     private String password;
     private char credentialState;
     private Date lastModified;
-    private Date expired;
+    private Date expirationDate;
     private char encription;
     //transient fields
     private String verifyPassword;
@@ -65,6 +63,12 @@ public class Credential implements java.io.Serializable {
 
     /** default constructor */
     public Credential() {
+        setCredentialState(ActivityState.SUSPENDED);
+        setLastModified(new Date());
+        setExpirationDate(getLastModified());
+        setEncription(Encription.PLAIN_PASSWORD);
+        setVerifyPassword("");
+        setPasswordDirty(false);
     }
 
     // Property accessors
@@ -77,44 +81,35 @@ public class Credential implements java.io.Serializable {
     }
 
     /**
-     * Identity getter.
+     * Identity owning this credential.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="identityId", nullable=true)
     public Identity getIdentity() {
         return this.identity;
     }
-    /**
-     * Identity setter.
-     */
     public void setIdentity(Identity identity) {
         this.identity = identity;
     }
 
     /**
-     * Version getter.
+     * Version.
      */
     @Version
     public int getVersion() {
         return this.version;
     }
-    /**
-     * Version setter.
-     */
     public void setVersion(int version) {
         this.version = version;
     }
 
     /**
-     * Password getter.
+     * Plain text password.
      */
     @Column(length=20)
     public String getPassword() {
         return this.password;
     }
-    /**
-     * Password setter.
-     */
     public void setPassword(String password) {
         this.password = password;
     }
@@ -134,57 +129,91 @@ public class Credential implements java.io.Serializable {
     }
 
     /**
-     * CredentialState getter.
+     * Credential state.
      */
     public char getCredentialState() {
         return this.credentialState;
     }
-    /**
-     * CredentialState setter.
-     */
     public void setCredentialState(char credentialState) {
         this.credentialState = credentialState;
     }
+    public void setCredentialState(ActivityState credentialState) {
+        this.credentialState = credentialState.getValue();
+    }
 
     /**
-     * LastModified getter.
+     * Last modified.
      */
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastModified() {
         return this.lastModified;
     }
-    /**
-     * LastModified setter.
-     */
+    @Transient
+    public String getLastModifiedDateAsString() {
+    	if (getLastModified()==null) {
+    		return "";
+    	}
+    	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+        return formatter.format(getLastModified());
+    }
+    @Transient
+    public String getLastModifiedTimeAsString() {
+    	if (getLastModified()==null) {
+    		return "";
+    	}
+    	DateFormat formatter = SimpleDateFormat.getTimeInstance(DateFormat.SHORT);
+        return formatter.format(getLastModified());
+    }
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
 
     /**
-     * Expired getter.
+     * Expiration date.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    public Date getExpired() {
-        return this.expired;
+    public Date getExpirationDate() {
+        return this.expirationDate;
     }
-    /**
-     * Expired setter.
-     */
-    public void setExpired(Date expired) {
-        this.expired = expired;
+    @Transient
+    public boolean isExpired() {
+    	if (getExpirationDate()==null) {
+    		// null means never expires
+    		return false;
+    	}
+    	return getExpirationDate().before(new Date());
+    }
+    @Transient
+    public String getExpirationDateAsString() {
+    	if (getExpirationDate()==null) {
+    		return "";
+    	}
+    	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+        return formatter.format(getExpirationDate());
+    }
+    @Transient
+    public String getExpirationTimeAsString() {
+    	if (getExpirationDate()==null) {
+    		return "";
+    	}
+    	DateFormat formatter = SimpleDateFormat.getTimeInstance(DateFormat.SHORT);
+        return formatter.format(getExpirationDate());
+    }
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     /**
-     * Encription getter.
+     * Encription.
      */
     public char getEncription() {
         return this.encription;
     }
-    /**
-     * Encription setter.
-     */
     public void setEncription(char encription) {
         this.encription = encription;
+    }
+    public void setEncription(Encription encription) {
+        this.encription = encription.getValue();
     }
     
     /**
@@ -198,16 +227,6 @@ public class Credential implements java.io.Serializable {
             sb.append(ALLOWED_CHARS_IN_PASSWORD.charAt(index));
         }
         return sb.toString();
-    }
-
-    /**
-     * Empty <code>Identity</code> and password <code>Credential</code> factory.
-     * 
-     * @param identity
-     */
-    public static Credential credentialFactory() {
-        Identity identity = Identity.identityFactory("");
-        return credentialFactory(identity, passwordFactory());
     }
 
     /**
@@ -229,12 +248,6 @@ public class Credential implements java.io.Serializable {
         Credential credential = new Credential();
         credential.setIdentity(identity);
         credential.setPassword(password);
-        credential.setVerifyPassword("");
-        credential.setPasswordDirty(false);
-        credential.setLastModified(new Date());
-        credential.setExpired(null);
-        credential.setCredentialState(ActivityState.SUSPENDED.getValue());
-        credential.setEncription(Encription.PLAIN_PASSWORD.getValue());
         return credential;
     }
 
@@ -269,6 +282,7 @@ public class Credential implements java.io.Serializable {
 
     /**
      * Password verifier.
+     * @deprecated in favour of non static method
      */
     @Transient
     public static boolean verifyPassword(Credential credential) {
@@ -282,6 +296,26 @@ public class Credential implements java.io.Serializable {
         credential.setVerifyPassword("");
         credential.setPasswordDirty(false);
         credential.setCredentialState(ActivityState.ACTIVE.getValue());
+        return true;
+    }
+    
+    /**
+     * Verify password against transient <code>verifyPassword</code> field.
+     */
+    @Transient
+    public boolean isPasswordVerified() {
+    	if (getPassword()==null 
+    			|| getPassword().length()==0 
+    			|| getPassword().compareTo(getVerifyPassword())!=0) {
+            setPassword("");
+            setVerifyPassword("");
+            setPasswordDirty(true);
+            setCredentialState(ActivityState.SUSPENDED.getValue());
+            return false;
+        }
+        setVerifyPassword("");
+        setPasswordDirty(false);
+        setCredentialState(ActivityState.ACTIVE.getValue());
         return true;
     }
     

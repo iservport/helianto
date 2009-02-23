@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.helianto.core.EventType;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
@@ -50,7 +51,7 @@ public class UserLogTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             lastEvent = DomainTestSupport.getNonRepeatableDateValue(testKey++);
         }
-        UserLog userLog = UserLog.userLogFactory(user, lastEvent);
+        UserLog userLog = UserLog.userLogFactory(user, lastEvent, EventType.LOGIN_ATTEMPT);
         return userLog;
     }
 

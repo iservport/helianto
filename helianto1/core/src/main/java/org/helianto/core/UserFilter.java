@@ -19,18 +19,22 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.PolymorphicFilter;
 
 /**
  * Filter to <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserFilter extends AbstractUserBackedCriteriaFilter {
+public class UserFilter extends AbstractUserBackedCriteriaFilter implements PolymorphicFilter<UserGroup> {
 
     private static final long serialVersionUID = 1L;
+    private Class<? extends UserGroup> clazz;
     private Identity identity;
     private String identityPrincipal;
-    private char userState;
+    private String optionalAlias;
+	private String domain;
+    private char userState = ' ';
     private boolean orderByLastEventDesc = false;
 	private Collection<Identity> exclusions;
     
@@ -38,7 +42,6 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter {
      * Default constructor
      */
     public UserFilter() {
-    	reset();
     }
     
     /**
@@ -57,6 +60,17 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter {
     public static UserFilter userFilterFactory(User user) {
     	UserFilter userFilter = new UserFilter();
     	userFilter.setUser(user);
+    	userFilter.reset();
+    	return userFilter;
+    }
+    
+    /**
+     * Factory method.
+     * @param identity
+     */
+    public static UserFilter userFilterFactory(Identity identity) {
+    	UserFilter userFilter = new UserFilter(identity, true);
+    	userFilter.reset();
     	return userFilter;
     }
     
@@ -66,9 +80,43 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter {
     public void reset() {
     	setIdentityPrincipal("");
     	setExclusions(new HashSet<Identity>(0));
-    	setUserState(UserState.ACTIVE.getValue());
     }
-    
+
+    /**
+     * Class constraint to polimorphic filters.
+     */
+	public Class<? extends UserGroup> getClazz() {
+		return this.clazz;
+	}
+	public void setClazz(Class<? extends UserGroup> clazz) {
+		this.clazz = clazz;
+	}
+
+    /**
+     * Discriminator that maps to a class constraint.
+     */
+	public char getDiscriminator() {
+		if (clazz.equals(UserGroup.class)) {
+			return 'G'; 
+		}
+		if (clazz.equals(User.class)) {
+			return 'U'; 
+		}
+		return ' ';
+	}
+	public void setDiscriminator(char discriminator) {
+		if (discriminator=='G') {
+			clazz = UserGroup.class; 
+		}
+		else if (discriminator=='U') {
+			clazz = User.class; 
+		}
+		else {
+			clazz = null;
+		}
+	}
+
+	
     /**
      * Identity
      */
@@ -90,6 +138,26 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter {
     }
     
     /**
+     * Optional alias criterion field
+     */
+    public String getOptionalAlias() {
+		return optionalAlias;
+	}
+	public void setOptionalAlias(String optionalAlias) {
+		this.optionalAlias = optionalAlias;
+	}
+
+    /**
+     * User domain criterion field
+     */
+	public String getDomain() {
+		return domain;
+	}
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+
+    /**
      * User state criterion field
      */
 	public char getUserState() {
@@ -97,6 +165,9 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter {
 	}
 	public void setUserState(char userState) {
 		this.userState = userState;
+	}
+	public void setUserState(UserState userState) {
+		this.userState = userState.getValue();
 	}
 
     /**
@@ -129,4 +200,5 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter {
       
         return buffer.toString();
     }
+
 }

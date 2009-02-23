@@ -31,7 +31,6 @@ import org.springframework.webflow.execution.RequestContext;
 @Component("credentialAction")
 public class CredentialFormAction extends FormAction {
 
-    private UserMgr userMgr;
     private SecurityMgr securityMgr;
 
     /**
@@ -81,11 +80,6 @@ public class CredentialFormAction extends FormAction {
         return storeCredential(context);
     }
     
-    @javax.annotation.Resource
-    public void setUserMgr(UserMgr userMgr) {
-		this.userMgr = userMgr;
-	}
-
     @javax.annotation.Resource
 	public void setSecurityMgr(SecurityMgr securityMgr) {
 		this.securityMgr = securityMgr;

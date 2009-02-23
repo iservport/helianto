@@ -61,12 +61,7 @@ public class UserDetailsAdapterTests extends TestCase {
         assertEquals(userDetails.getPassword(), credential.getPassword());
         assertEquals(userDetails.getUsername(), user.getIdentity().getPrincipal());
         assertEquals(userDetails.isAccountNonExpired(), user.isAccountNonExpired());
-        assertTrue(userDetails.isAccountNonExpired());
-        if (credential.getExpired()==null) {
-            assertTrue(userDetails.isCredentialsNonExpired());
-        } else {
-            assertFalse(userDetails.isCredentialsNonExpired());
-        }
+        assertFalse(userDetails.isAccountNonExpired());
     }
     
     public void testUserDetailsLock() {

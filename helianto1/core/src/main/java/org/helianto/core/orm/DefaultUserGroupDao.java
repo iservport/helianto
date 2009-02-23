@@ -31,16 +31,6 @@ import org.springframework.stereotype.Repository;
 @Repository("userGroupDao")
 public class DefaultUserGroupDao extends AbstractFilterDao<UserGroup, UserFilter> {
 
-	@Override
-	public Class<? extends UserGroup> getClazz() {
-		return UserGroup.class;
-	}
-
-	@Override
-	protected String[] getParams() {
-		return new String[] { "entity", "identity" };
-	}
-
 	/**
 	 * Required to avoid exception when entity is not present.
 	 */
@@ -50,13 +40,16 @@ public class DefaultUserGroupDao extends AbstractFilterDao<UserGroup, UserFilter
 	}
 	
 	@Override
+	protected void preProcessFilter(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
+		if (filter.getClass()!=null) {
+			mainCriteriaBuilder.appendAnd().append(filter.getClazz());
+		}
+	}
+
+	@Override
 	protected void doFilter(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
 		if (filter.getIdentity()!=null) {
 			appendEqualFilter("identity.id", filter.getIdentity().getId(), mainCriteriaBuilder);
-		}
-		if (filter.getIdentityPrincipal()!=null && filter.getIdentityPrincipal().length() > 0) {
-			mainCriteriaBuilder.appendAnd().appendSegment("identityPrincipal", "like", "lower").appendLike(
-					filter.getIdentityPrincipal().toLowerCase());
 		}
 		appendEqualFilter("userState", filter.getUserState(), mainCriteriaBuilder);
         appendExclusionsFilter(filter, mainCriteriaBuilder);
@@ -92,11 +85,23 @@ public class DefaultUserGroupDao extends AbstractFilterDao<UserGroup, UserFilter
     
 	@Override
 	protected boolean isSelection(UserFilter filter) {
-		return false;
+		return filter.getIdentityPrincipal()!=null && filter.getIdentityPrincipal().length() > 0;
 	}
 
 	@Override
 	protected void doSelect(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.appendAnd().appendSegment("identity.principal", "like", "lower").appendLike(
+				filter.getIdentityPrincipal().toLowerCase());
+	}
+
+	@Override
+	public Class<? extends UserGroup> getClazz() {
+		return UserGroup.class;
+	}
+
+	@Override
+	protected String[] getParams() {
+		return new String[] { "entity", "identity" };
 	}
 
 }

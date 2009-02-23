@@ -105,7 +105,7 @@ public class AbstractDateRangeFilter extends AbstractUserBackedCriteriaFilter im
     		setFromDate(null);
     	}
     	else {
-    		setFromDate(getReferenceCalendar(new Date(), -daysIncluded).getTime());
+    		setFromDate(getReferenceCalendar(new Date(), daysIncluded).getTime());
     	}
     }
 
@@ -121,7 +121,7 @@ public class AbstractDateRangeFilter extends AbstractUserBackedCriteriaFilter im
     		setFromDate(null);
     	}
     	else {
-    		setFromDate(getReferenceCalendar(new Date(), daysIncluded).getTime());
+    		setFromDate(getReferenceCalendar(new Date(), daysToInclude).getTime());
     	}
     }
 
@@ -136,7 +136,7 @@ public class AbstractDateRangeFilter extends AbstractUserBackedCriteriaFilter im
     
     protected Calendar getReferenceCalendar(Date date, int days) {
     	Calendar reference = getReferenceCalendar(date);
-    	reference.add(Calendar.DATE, -days);
+    	reference.add(Calendar.DATE, days);
     	return reference;
     }
     

@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.User;
 import org.helianto.core.UserRole;
 import org.helianto.core.security.PublicUserDetails;
@@ -43,9 +44,12 @@ public interface SecurityMgr extends UserMgr {
 	
     /**
      * Store the given <code>Credential</code> and return a managed object.
+     * 
      * @param identity
+     * @exception PasswordNotVerifiedException
      */
-    public Credential storeCredential(Credential credential);
+    public Credential storeCredential(Credential credential) 
+        throws PasswordNotVerifiedException;
     
     /**
      * Store the given <code>Credential</code> and update the secure user.

@@ -69,16 +69,16 @@ public class PersonalData implements Serializable {
     }
 
     /**
-     * Gender getter.
+     * Gender.
      */
     public char getGender() {
         return this.gender;
     }
-    /**
-     * Gender setter.
-     */
     public void setGender(char gender) {
         this.gender = gender;
+    }
+    public void setGender(Gender gender) {
+        this.gender = gender.getValue();
     }
 
     /**
@@ -87,11 +87,11 @@ public class PersonalData implements Serializable {
     public int getAppellation() {
         return this.appellation;
     }
-    /**
-     * Appellation setter.
-     */
     public void setAppellation(int appellation) {
         this.appellation = appellation;
+    }
+    public void setAppellation(Appellation appellation) {
+        this.appellation = appellation.getValue();
     }
 
     /**

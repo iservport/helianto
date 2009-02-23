@@ -39,6 +39,21 @@ import javax.persistence.UniqueConstraint;
 )
 public class UserAssociation implements java.io.Serializable {
 
+    /**
+     * <code>UserAssociation</code> factory method.
+     * 
+     * @param parent
+     * @param child
+     */
+    public static UserAssociation userAssociationFactory(UserGroup parent, UserGroup child) {
+        UserAssociation userAssociation = new UserAssociation();
+        userAssociation.setParent(parent);
+        userAssociation.setChild(child);
+        parent.getChildAssociations().add(userAssociation);
+        child.getParentAssociations().add(userAssociation);
+        return userAssociation;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private UserGroup parent;
@@ -86,21 +101,6 @@ public class UserAssociation implements java.io.Serializable {
      */
     public void setChild(UserGroup child) {
         this.child = child;
-    }
-
-    /**
-     * <code>UserAssociation</code> factory.
-     * 
-     * @param parent
-     * @param child
-     */
-    public static UserAssociation userAssociationFactory(UserGroup parent, UserGroup child) {
-        UserAssociation userAssociation = new UserAssociation();
-        userAssociation.setParent(parent);
-        userAssociation.setChild(child);
-        parent.getChildAssociations().add(userAssociation);
-        child.getParentAssociations().add(userAssociation);
-        return userAssociation;
     }
 
     /**

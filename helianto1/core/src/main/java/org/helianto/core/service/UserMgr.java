@@ -88,6 +88,17 @@ public interface UserMgr extends CoreMgr {
     public UserGroup storeUserGroup(UserAssociation parentAssociation);
     
     /**
+     * <p><code>UserAssociation</code> creation that inherits privileges 
+     * and resolves identity.</p>
+     */
+    public UserAssociation createUserAssociation(UserGroup parent, String principal);
+    
+    /**
+     * <p>Store <code>UserAssociation</code> and return a managed instance.</p>
+     */
+    public UserAssociation storeUserAssociation(UserAssociation parentAssociation);
+    
+    /**
      * Write a new <code>UserLog<code> and update the <code>Identity</code>
      * last log date.
      * 

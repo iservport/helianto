@@ -50,7 +50,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
         if (requireEntity && filter.getEntity()==null) {
             throw new IllegalArgumentException("User or entity required!");
         }
-        else if (requireEntity && filter.getEntity()!=null){
+        else if (filter.getEntity()!=null){
             appendEntityFilter(filter.getEntity(), mainCriteriaBuilder);
         }
         preProcessFilter(filter, mainCriteriaBuilder);
@@ -86,6 +86,9 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
 	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendSegment("entity.id", "=")
         .append(entity.getId());
+		if (logger.isDebugEnabled()) {
+			logger.debug("Filter entity constraint set to "+entity.getAlias());
+		}
     }
     
 	/**

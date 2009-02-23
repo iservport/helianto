@@ -20,22 +20,30 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
-import junit.framework.TestCase;
+import static org.junit.Assert.assertSame;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.test.SecurityTestSupport;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.providers.TestingAuthenticationToken;
 
-public class SecurityMgrImplTests extends TestCase {
+/**
+ * @author Mauricio Fernandes de Castro
+ */
+public class SecurityMgrImplTests {
 
     // class under test
     private SecurityMgrImpl securityMgr;
 
+    @Test
     public void testFindCredentialByIdentity() {
         Identity identity = new Identity();
         Credential credential = new Credential();
@@ -48,6 +56,7 @@ public class SecurityMgrImplTests extends TestCase {
         verify(credentialDao);
     }
 
+    @Test
     public void testFindCredentialByPrincipal() {
         Credential credential = new Credential();
         
@@ -59,14 +68,24 @@ public class SecurityMgrImplTests extends TestCase {
         verify(credentialDao);
     }
 
+    @Test
     public void testFindSecureUser() {
         PublicUserDetails pud = SecurityTestSupport.createUserDetailsAdapter();
         SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(pud, null, null));
         assertSame(pud, securityMgr.findSecureUser());
     }
     
-    public void testStoreCredential() {
-        Credential managedCredential = null, credential = new Credential();
+    @Test(expected=PasswordNotVerifiedException.class)
+    public void testStoreCredentialNotVerified() {
+        Credential credential = Credential.credentialFactory("");
+        
+        securityMgr.storeCredential(credential);
+    }
+    
+    @Test
+    public void testStoreCredentialVerified() {
+        Credential managedCredential = null, credential = Credential.credentialFactory("PASSWORD");
+        credential.setVerifyPassword("PASSWORD");
         
         expect(credentialDao.mergeCredential(credential)).andReturn(managedCredential);
         replay(credentialDao);
@@ -82,7 +101,7 @@ public class SecurityMgrImplTests extends TestCase {
     
     //~ setup
     
-    @Override
+    @Before
     public void setUp() {
         securityMgr = new SecurityMgrImpl();
         identityDao = createMock(IdentityDao.class);
@@ -91,7 +110,7 @@ public class SecurityMgrImplTests extends TestCase {
         securityMgr.setCredentialDao(credentialDao);
     }
     
-    @Override
+    @After
     public void tearDown() {
         reset(identityDao);
         reset(credentialDao);

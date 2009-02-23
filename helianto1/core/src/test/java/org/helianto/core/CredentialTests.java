@@ -25,7 +25,7 @@ public class CredentialTests extends TestCase {
         assertSame("TEST", credential.getPassword());
         assertEquals("", credential.getVerifyPassword());
         assertFalse(credential.isPasswordDirty());
-        assertNull(credential.getExpired());
+        assertNotNull(credential.getExpirationDate());
         assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
         
@@ -41,26 +41,7 @@ public class CredentialTests extends TestCase {
         assertSame("TEST", credential.getPassword());
         assertEquals("", credential.getVerifyPassword());
         assertFalse(credential.isPasswordDirty());
-        assertNull(credential.getExpired());
-        assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
-        assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
-        
-    }
-    
-    /**
-     * Test <code>Credential</code> static factory method.
-     */
-    public void testCredentialFactoryNoIdentityNoPassword() {
-        Credential credential = Credential.credentialFactory();
-        
-        assertEquals("", credential.getIdentity().getPrincipal());
-        assertEquals(Credential.DEFAULT_PASSWORD_SIZE, credential.getPassword().length());
-        for (int i =0; i<Credential.DEFAULT_PASSWORD_SIZE;i++) {
-            assertTrue(Credential.ALLOWED_CHARS_IN_PASSWORD.indexOf(credential.getPassword().charAt(i))!=-1);
-        }
-        assertEquals("", credential.getVerifyPassword());
-        assertFalse(credential.isPasswordDirty());
-        assertNull(credential.getExpired());
+        assertNotNull(credential.getExpirationDate());
         assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
         
@@ -79,6 +60,33 @@ public class CredentialTests extends TestCase {
         
     }
     
+    public void testCredentialExpired() {
+    	Credential credential = Credential.credentialFactory("");
+    	assertNotNull(credential.getExpirationDate());
+    	for (int i=0; i<100000; i++) { /* consume some CPU */ }
+    	assertTrue(credential.isExpired());
+    }
+    
+    public void testCredentialNeverExpires() {
+    	Credential credential = Credential.credentialFactory("");
+    	credential.setExpirationDate(null);
+    	assertFalse(credential.isExpired());
+    }
+    
+    public void testCredentialExpiredLongTimeAgo() {
+    	Date expirationDate = new Date(1000);
+    	Credential credential = Credential.credentialFactory("");
+    	credential.setExpirationDate(expirationDate);
+    	assertTrue(credential.isExpired());
+    }
+    
+    public void testCredentialNotExpired() {
+    	Date expirationDate = new Date(Long.MAX_VALUE);
+    	Credential credential = Credential.credentialFactory("");
+    	credential.setExpirationDate(expirationDate);
+    	assertFalse(credential.isExpired());
+    }
+    
     /**
      * Test <code>Credential</code> password verification.
      */
@@ -88,7 +96,7 @@ public class CredentialTests extends TestCase {
         credential.setPassword(password);
         credential.setVerifyPassword(password);
         
-        assertTrue(Credential.verifyPassword(credential));
+        assertTrue(credential.isPasswordVerified());
         assertEquals(password, credential.getPassword());
         assertEquals("", credential.getVerifyPassword());
         assertEquals(ActivityState.ACTIVE.getValue(), credential.getCredentialState());
@@ -104,7 +112,7 @@ public class CredentialTests extends TestCase {
         credential.setPassword(password);
         credential.setVerifyPassword(password+"1");
         
-        assertFalse(Credential.verifyPassword(credential));
+        assertFalse(credential.isPasswordVerified());
         assertEquals("", credential.getPassword());
         assertEquals("", credential.getVerifyPassword());
         assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());

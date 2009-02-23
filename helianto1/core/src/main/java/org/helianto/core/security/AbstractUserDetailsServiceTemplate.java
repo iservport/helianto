@@ -84,7 +84,7 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         if (userList!=null && !userList.isEmpty()) {
             user = selectUser(userList);
             if (logger.isDebugEnabled()) {
-                logger.debug("Step 4 successful: User selected as "+user.getIdentity().getIdentityName());
+                logger.debug("Step 4 successful: User selected as '"+user.getIdentity().getIdentityName()+"' for entity '"+user.getEntity().getAlias()+"'");
             }
         }
         if (user==null) {

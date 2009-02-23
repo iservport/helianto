@@ -117,10 +117,7 @@ public class UserDetailsAdapter implements
     }
 
     public boolean isCredentialsNonExpired() {
-        //TODO implement control over expiration date
-        if (credential.getExpired()==null) {
-            return true;
-        } 
+    	// delegate to the application
         return true;
     }
 
@@ -162,7 +159,7 @@ public class UserDetailsAdapter implements
         }
     }
     
-    protected final void validateUserAndCredentialCompatibility(UserGroup user) {
+	protected final void validateUserAndCredentialCompatibility(UserGroup user) {
         Assert.notNull(user, "Required to UserDetailsAdapter");
         Assert.notNull(credential, "Required to UserDetailsAdapter");
         if(!user.getIdentity().equals(credential.getIdentity())) {

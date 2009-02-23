@@ -56,7 +56,7 @@ public class MailComposerImpl implements MailComposer {
             confirmationAddress,
             cred.getIdentity().getPrincipal(),
             cred.getPassword(),
-            cred.getExpired().toString()
+            cred.getExpirationDate().toString()
         };
         String body = getMessageSource().getMessage("registrationNotification.intro", 
                 params, null); 
