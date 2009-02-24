@@ -20,6 +20,8 @@
 		<mapping class="org.helianto.process.ControlPlan" />
 		<mapping class="org.helianto.process.MeasurementTechnique" />
 		<mapping class="org.helianto.process.ControlMethod" />
+		<mapping class="org.helianto.process.CardSet" />
+		<mapping class="org.helianto.process.Card" />
 	</session-factory>
 </hibernate-configuration>
 
