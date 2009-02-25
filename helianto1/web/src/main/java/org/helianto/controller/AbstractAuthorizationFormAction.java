@@ -17,12 +17,10 @@ package org.helianto.controller;
 
 import java.beans.PropertyEditor;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -77,13 +75,30 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
      * Resolve authorization.
      * @throws Exception 
      */
-    public Event resolveAuthorization(RequestContext context) throws Exception {
+    @SuppressWarnings("unchecked")
+	public Event resolveAuthorization(RequestContext context) throws Exception {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
             logger.debug("!---- resolveAuthorization\n");
         }
-        return success();
+        int localAuthorization = doResolveAuthorization(context, (T) get(context));
+        if (localAuthorization>0) {
+        	context.getFlashScope().put("localAuthorization", localAuthorization);
+        	return success();
+        }
+        return error();
     }
+    
+	/**
+	 * Subclasses may override to do any local authorization resolution.
+	 * 
+	 * @param context
+	 * @throws Exception
+	 */
+    protected int doResolveAuthorization(RequestContext context, T target) throws Exception {
+    	return 1;
+    }
+    
     
 	@Override
 	protected void registerPropertyEditors(PropertyEditorRegistry registry) {
