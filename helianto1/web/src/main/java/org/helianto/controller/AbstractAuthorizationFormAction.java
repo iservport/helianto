@@ -84,6 +84,9 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
         int localAuthorization = doResolveAuthorization(context, (T) get(context));
         if (localAuthorization>0) {
         	context.getFlashScope().put("localAuthorization", localAuthorization);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Local authorization is "+localAuthorization);
+            }
         	return success();
         }
         return error();
