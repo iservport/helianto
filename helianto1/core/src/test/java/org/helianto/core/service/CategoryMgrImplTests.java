@@ -28,8 +28,7 @@ import junit.framework.TestCase;
 
 import org.helianto.core.Category;
 import org.helianto.core.CategoryFilter;
-import org.helianto.core.dao.CategoryDao;
-import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.core.dao.FilterDao;
 
 public class CategoryMgrImplTests extends TestCase {
     
@@ -38,16 +37,11 @@ public class CategoryMgrImplTests extends TestCase {
     public void testFindCategories() {
     	CategoryFilter categoryFilter = new CategoryFilter();
     	List<Category> categoryList = new ArrayList<Category>();
-    	String criteria = "TEST";
     	
-    	expect(categorySelectionStrategy.createCriteriaAsString(categoryFilter, "category")).andReturn(criteria);
-    	replay(categorySelectionStrategy);
-
-    	expect(categoryDao.findCategories(criteria)).andReturn(categoryList);
+    	expect(categoryDao.find(categoryFilter)).andReturn(categoryList);
     	replay(categoryDao);
     	
     	assertSame(categoryList, categoryMgr.findCategories(categoryFilter));
-    	verify(categorySelectionStrategy);
     	verify(categoryDao);
     }
     
@@ -55,30 +49,26 @@ public class CategoryMgrImplTests extends TestCase {
     	Category category = new Category();
     	Category managedCategory = new Category();
     	
-    	expect(categoryDao.mergeCategory(category)).andReturn(managedCategory);
+    	expect(categoryDao.merge(category)).andReturn(managedCategory);
     	replay(categoryDao);
     	
     	assertSame(managedCategory, categoryMgr.storeCategory(category));
     	verify(categoryDao);
     }
     
-    private CategoryDao categoryDao;
-    private SelectionStrategy<CategoryFilter> categorySelectionStrategy;
+    private FilterDao<Category, CategoryFilter> categoryDao;
     
     @SuppressWarnings("unchecked")
 	@Override
     public void setUp() {
         categoryMgr = new CategoryMgrImpl();
-        categoryDao = createMock(CategoryDao.class);
+        categoryDao = createMock(FilterDao.class);
         categoryMgr.setCategoryDao(categoryDao);
-        categorySelectionStrategy = createMock(SelectionStrategy.class);
-        categoryMgr.setCategorySelectionStrategy(categorySelectionStrategy);
     }
     
     @Override
     public void tearDown() {
         reset(categoryDao);
-        reset(categorySelectionStrategy);
     }
     
 }

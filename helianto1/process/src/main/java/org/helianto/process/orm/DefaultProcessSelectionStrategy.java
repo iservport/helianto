@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.filter.AbstractSelectionStrategy;
 import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.orm.DefaultCategorySelectionStrategy;
 import org.helianto.process.ProcessFilter;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +40,6 @@ public class DefaultProcessSelectionStrategy extends AbstractSelectionStrategy<P
 		appendLikeFilter("docNameLike", filter.getDocNameLike(), mainCriteriaBuilder);
 	}
 
-	private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
+	private static Log logger = LogFactory.getLog(DefaultProcessSelectionStrategy.class);
 
 }

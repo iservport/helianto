@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.filter.AbstractSelectionStrategy;
 import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.orm.DefaultCategorySelectionStrategy;
 import org.helianto.partner.PartnerRegistryFilter;
 import org.springframework.stereotype.Repository;
 
@@ -36,7 +35,7 @@ public class DefaultPartnerRegistrySelectionStrategy extends AbstractSelectionSt
 		appendLikeFilter("partnerNameLike", filter.getPartnerNameLike(), mainCriteriaBuilder);
 	}
 
-    private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
+    private static Log logger = LogFactory.getLog(DefaultPartnerRegistrySelectionStrategy.class);
 
 
 }

@@ -18,7 +18,6 @@ package org.helianto.core.filter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
-import org.helianto.core.orm.DefaultCategorySelectionStrategy;
 
 /**
  * Base implementation for <code>SelectionStrategy</code>
@@ -178,6 +177,6 @@ public abstract class AbstractSelectionStrategy<T extends AbstractUserBackedCrit
         }
     }
     
-    protected static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
+    protected static Log logger = LogFactory.getLog(AbstractSelectionStrategy.class);
 
 }

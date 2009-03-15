@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.filter.AbstractSelectionStrategy;
 import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.orm.DefaultCategorySelectionStrategy;
 import org.helianto.process.InheritanceType;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentFilter;
@@ -60,6 +59,6 @@ public class DefaultProcessDocumentSelectionStrategy extends AbstractSelectionSt
 		appendEqualFilter("inheritanceType", filter.getInheritanceType(), mainCriteriaBuilder);
 	}
 
-	private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
+	private static Log logger = LogFactory.getLog(DefaultProcessDocumentSelectionStrategy.class);
 
 }

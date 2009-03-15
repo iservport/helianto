@@ -21,16 +21,14 @@ import java.util.List;
 import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.Entity;
-import org.helianto.core.dao.CategoryDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.springframework.stereotype.Repository;
 /**
  * Default implementation of <code>Category</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Repository("categoryDao")
-public class CategoryDaoImpl extends GenericDaoImpl implements CategoryDao {
+public class CategoryDaoImpl extends GenericDaoImpl  {
      
     public void persistCategory(Category category) {
         if (logger.isDebugEnabled()) {

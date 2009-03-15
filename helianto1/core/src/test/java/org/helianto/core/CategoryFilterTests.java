@@ -23,7 +23,7 @@ import org.helianto.core.filter.UserBackedFilter;
 
 /**
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class CategoryFilterTests extends TestCase {
 	
@@ -36,40 +36,28 @@ public class CategoryFilterTests extends TestCase {
 	public void testFactory() {
 		User user = new User();
 		CategoryGroup categoryGroup = CategoryGroup.NOT_DEFINED;
-		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(user, categoryGroup);
+		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(user);
 		assertSame(categoryFilter.getUser(), user);
 		assertSame(categoryFilter.getCategoryGroup(), categoryGroup);
 	}
 	
-	public void testFactoryError() {
-		try {
-			CategoryFilter.categoryFilterFactory(new User(), null);
-			fail();
-		}
-		catch (IllegalArgumentException e) {
-			assertEquals("Unable to create category filter, category group required", e.getMessage());
-		}
-	}
-	
 	public void testReset() {
-		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User(), CategoryGroup.NOT_DEFINED);
-		assertNull(categoryFilter.getCategoryCode());
-		assertNull(categoryFilter.getCategoryNameLike());
+		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User());
 		categoryFilter.reset();
 		assertEquals("", categoryFilter.getCategoryCode());
 		assertEquals("", categoryFilter.getCategoryNameLike());
 	}
 
 	public void testCategoryCode() {
+		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User());
 		String categoryCode = "CODE";
-		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User(), CategoryGroup.NOT_DEFINED);
 		categoryFilter.setCategoryCode(categoryCode);
 		assertSame(categoryFilter.getCategoryCode(), categoryCode);
 	}
 
 	public void testCategoryNameLike() {
 		String categoryNameLike = "NAME_LIKE";
-		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User(), CategoryGroup.NOT_DEFINED);
+		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User());
 		categoryFilter.setCategoryNameLike(categoryNameLike);
 		assertSame(categoryFilter.getCategoryNameLike(), categoryNameLike);
 	}

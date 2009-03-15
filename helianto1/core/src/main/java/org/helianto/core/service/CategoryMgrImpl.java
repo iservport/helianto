@@ -23,8 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Category;
 import org.helianto.core.CategoryFilter;
-import org.helianto.core.dao.CategoryDao;
-import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.core.dao.FilterDao;
 
 /**
  * Default implementation to category interface.
@@ -33,12 +32,8 @@ import org.helianto.core.filter.SelectionStrategy;
  */
 public class CategoryMgrImpl implements CategoryMgr {
     
-    private CategoryDao categoryDao;
-    private SelectionStrategy<CategoryFilter> categorySelectionStrategy;
-    
 	public List<Category> findCategories(CategoryFilter categoryFilter) {
-    	String criteria = categorySelectionStrategy.createCriteriaAsString(categoryFilter, "category");
-    	List<Category> categoryList = categoryDao.findCategories(criteria);
+    	List<Category> categoryList = (List<Category>) categoryDao.find(categoryFilter);
     	if (logger.isDebugEnabled() && categoryList!=null) {
     		logger.debug("Found category list of size "+categoryList.size());
     	}
@@ -46,7 +41,7 @@ public class CategoryMgrImpl implements CategoryMgr {
 	}
 
 	public Category storeCategory(Category category) {
-		Category managedCategory = categoryDao.mergeCategory(category);
+		Category managedCategory = categoryDao.merge(category);
     	if (logger.isDebugEnabled()) {
     		logger.debug("Stored category  "+managedCategory);
     	}
@@ -60,15 +55,12 @@ public class CategoryMgrImpl implements CategoryMgr {
 
 
     //- collabs
-    @Resource
-    public void setCategoryDao(CategoryDao categoryDao) {
+    private FilterDao<Category, CategoryFilter> categoryDao;
+    
+    @Resource(name="categoryDao")
+    public void setCategoryDao(FilterDao<Category, CategoryFilter> categoryDao) {
         this.categoryDao = categoryDao;
     }
-
-    @Resource
-	public void setCategorySelectionStrategy(SelectionStrategy<CategoryFilter> categorySelectionStrategy) {
-		this.categorySelectionStrategy = categorySelectionStrategy;
-	}
 
     private final Log logger = LogFactory.getLog(CategoryMgrImpl.class);
 

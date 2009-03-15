@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.filter.AbstractSelectionStrategy;
 import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.orm.DefaultCategorySelectionStrategy;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.springframework.stereotype.Repository;
@@ -51,7 +50,7 @@ public class DefaultPartnerSelectionStrategy extends AbstractSelectionStrategy<P
 		appendEqualFilter("priority", filter.getPriority(), mainCriteriaBuilder);
 	}
 
-    private static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
+    private static Log logger = LogFactory.getLog(DefaultPartnerSelectionStrategy.class);
 
 
 }

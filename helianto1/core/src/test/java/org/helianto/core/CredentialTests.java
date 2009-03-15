@@ -63,7 +63,8 @@ public class CredentialTests extends TestCase {
     public void testCredentialExpired() {
     	Credential credential = Credential.credentialFactory("");
     	assertNotNull(credential.getExpirationDate());
-    	for (int i=0; i<100000; i++) { /* consume some CPU */ }
+    	Date now = new Date();
+    	credential.setExpirationDate(new Date(now.getTime()-1));
     	assertTrue(credential.isExpired());
     }
     

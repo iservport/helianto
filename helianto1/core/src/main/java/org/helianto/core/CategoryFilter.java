@@ -24,25 +24,29 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
  */
 public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 
+	/**
+	 * Factory method.
+	 * 
+	 * @param user
+	 */
+	public static CategoryFilter categoryFilterFactory(User user) {
+		CategoryFilter categoryFilter = new CategoryFilter();
+		categoryFilter.setUser(user);
+		return categoryFilter;
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private CategoryGroup categoryGroup;
 	private String categoryCode;
 	private String categoryNameLike;
 	
 	/**
-	 * Factory method.
-	 * 
-	 * @param user
-	 * @param categoryGroup
+	 * Default constructor
 	 */
-	public static CategoryFilter categoryFilterFactory(User user, CategoryGroup categoryGroup) {
-		CategoryFilter categoryFilter = new CategoryFilter();
-		categoryFilter.setUser(user);
-		if (categoryGroup==null) {
-			throw new IllegalArgumentException("Unable to create category filter, category group required");
-		}
-		categoryFilter.setCategoryGroup(categoryGroup);
-		return categoryFilter;
+	public CategoryFilter() {
+		setCategoryGroup(CategoryGroup.NOT_DEFINED);
+		setCategoryCode("");
+		setCategoryNameLike("");
 	}
 	
 	public void reset() {
@@ -66,7 +70,7 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 	public CategoryGroup getCategoryGroup() {
 		return categoryGroup;
 	}
-	protected void setCategoryGroup(CategoryGroup categoryGroup) {
+	public void setCategoryGroup(CategoryGroup categoryGroup) {
 		this.categoryGroup = categoryGroup;
 	}
 	

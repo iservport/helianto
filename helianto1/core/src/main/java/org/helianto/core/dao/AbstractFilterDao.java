@@ -23,7 +23,6 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.orm.DefaultCategorySelectionStrategy;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -45,7 +44,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
 	/**
 	 * Delegate criteria creation to a chain of processors.
 	 */
-	protected final String createCriteriaAsString(F filter, boolean requireEntity) {
+	public final String createCriteriaAsString(F filter, boolean requireEntity) {
         CriteriaBuilder mainCriteriaBuilder = createCriteriaBuilder();
         if (requireEntity && filter.getEntity()==null) {
             throw new IllegalArgumentException("User or entity required!");
@@ -215,6 +214,6 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
         }
     }
     
-    protected static Log logger = LogFactory.getLog(DefaultCategorySelectionStrategy.class);
+    protected static Log logger = LogFactory.getLog(AbstractFilterDao.class);
 
 }
