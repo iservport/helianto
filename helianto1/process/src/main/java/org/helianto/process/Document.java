@@ -47,6 +47,7 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
 
     /** default constructor */
     public Document() {
+    	super();
     }
 
     // Property accessors

@@ -68,6 +68,7 @@ public abstract class ProcessDocument extends Document implements Comparator<Doc
 
     /** default constructor */
     public ProcessDocument() {
+    	super();
     }
 
     /**

@@ -201,9 +201,6 @@ public abstract class AbstractEditTargetFormAction<T> extends AbstractComplexMod
             logger.debug("!---- storeTarget\n");
         }
         try {
-            if (!bind(context).getId().equals("success")) {
-            	return error();
-            }
             AbstractTargetForm<T> formObject = getForm(context);
             T target = formObject.getTarget();
             preProcessStoreTarget(context, target);
