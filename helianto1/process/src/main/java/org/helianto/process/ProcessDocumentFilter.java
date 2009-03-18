@@ -20,6 +20,7 @@ import java.util.Collection;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.document.AbstractDocument;
 import org.helianto.partner.Partner;
 
 /**
@@ -31,7 +32,7 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
     private static final long serialVersionUID = 1L;
     private String docCode = "";
 	private long internalNumber;
-	private Document document;
+	private AbstractDocument document;
 	private String docNameLike = "";
 	private char inheritanceType = ' ';
 	private char priority = '0';
@@ -97,10 +98,10 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	/**
 	 * Subclass
 	 */
-	public Document getDocument() {
+	public AbstractDocument getDocument() {
 		return document;
 	}
-	public void setDocument(Document document) {
+	public void setDocument(AbstractDocument document) {
 		this.document = document;
 	}
 	

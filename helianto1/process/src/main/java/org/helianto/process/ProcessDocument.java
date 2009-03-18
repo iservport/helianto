@@ -32,6 +32,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.document.AbstractDocument;
 /**
  * Base class to a document hierarchy to be used in engineering structures.  
  * <p>
@@ -57,7 +58,7 @@ import org.helianto.core.Entity;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class ProcessDocument extends Document implements Comparator<DocumentAssociation> {
+public abstract class ProcessDocument extends AbstractDocument implements Comparator<DocumentAssociation> {
 
     private static final long serialVersionUID = 1L;
     private Set<DocumentAssociation> parentAssociations = new HashSet<DocumentAssociation>();
@@ -140,7 +141,7 @@ public abstract class ProcessDocument extends Document implements Comparator<Doc
      * @param docCode
      */
     public static ProcessDocument processDocumentFactory(Entity entity, String docCode) {
-        return Document.documentFactory(ProcessDocument.class, entity, docCode);
+        return AbstractDocument.documentFactory(ProcessDocument.class, entity, docCode);
     }
 
     //1.1

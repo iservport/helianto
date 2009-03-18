@@ -17,6 +17,7 @@
 	<modules>
 			<module>core</module>
 			<module>partner</module>
+			<module>document</module>
 			<module>process</module>
 			<module>web</module>
 		<!-- 

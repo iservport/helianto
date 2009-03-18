@@ -22,7 +22,7 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import junit.framework.TestCase;
 
-import org.helianto.process.ExternalDocument;
+import org.helianto.document.ExternalDocument;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.orm.hibernate3.HibernateOperations;

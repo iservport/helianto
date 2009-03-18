@@ -19,7 +19,7 @@ package org.helianto.process.service;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.process.ExternalDocument;
+import org.helianto.document.ExternalDocument;
 import org.helianto.process.Setup;
 
 /**

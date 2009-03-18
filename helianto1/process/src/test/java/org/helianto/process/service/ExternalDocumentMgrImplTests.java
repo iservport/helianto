@@ -27,7 +27,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.helianto.core.Entity;
-import org.helianto.process.ExternalDocument;
+import org.helianto.document.ExternalDocument;
 import org.helianto.process.dao.ProcessDao;
 
 public class ExternalDocumentMgrImplTests extends TestCase {

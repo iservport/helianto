@@ -21,6 +21,7 @@ import junit.framework.TestCase;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.document.AbstractDocument;
 
 /**
  * 
@@ -52,7 +53,7 @@ public class ProcessDocumentFilterTests extends TestCase {
 	}
 	
 	public void testDocument() {
-		Document document = new ProcessDocument() {
+		AbstractDocument document = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
 			public DocumentAssociation documentAssociationFactory(int sequence) {
 				return null;

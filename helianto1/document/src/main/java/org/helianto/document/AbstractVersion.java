@@ -13,12 +13,13 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.document;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
 
 /**
  * <p>

@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Sequenceable;
+import org.helianto.document.AbstractDocument;
 
 /**
  * <p>
@@ -29,7 +30,7 @@ import org.helianto.core.Sequenceable;
  */
 @javax.persistence.Entity
 @Table(name="proc_controlplan")
-public class ControlPlan extends Document implements Sequenceable {
+public class ControlPlan extends AbstractDocument implements Sequenceable {
 
 	private static final long serialVersionUID = 1L;
     protected long internalNumber;

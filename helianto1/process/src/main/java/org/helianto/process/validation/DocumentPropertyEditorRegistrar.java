@@ -20,8 +20,8 @@ import java.io.Serializable;
 
 import org.helianto.core.validation.AbstractHibernatePropertyEditor;
 import org.helianto.core.validation.AbstractPropertyEditorRegistrar;
+import org.helianto.document.ExternalDocument;
 import org.helianto.process.ProcessDocument;
-import org.helianto.process.ExternalDocument;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.orm.hibernate3.HibernateOperations;
 

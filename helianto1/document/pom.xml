@@ -8,25 +8,20 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
-	<artifactId>helianto-process</artifactId>
+	<artifactId>helianto-document</artifactId>
 	<version>0.2.1-SNAPSHOT</version>
-	<name>Process</name>
+	<name>Document</name>
 	
-	<description>Helianto project process module.</description>
+	<description>Helianto project document module.</description>
 	
 	<build>
-		<finalName>helianto-process</finalName>
+		<finalName>helianto-document</finalName>
 	</build>
 	
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>helianto-partner</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>helianto-document</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

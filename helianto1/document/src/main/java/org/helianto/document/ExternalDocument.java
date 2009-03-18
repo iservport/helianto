@@ -1,5 +1,5 @@
-package org.helianto.process;
-// Generated 08/03/2007 19:38:51 by Hibernate Tools 3.2.0.beta8
+package org.helianto.document;
+
 
 
 
@@ -12,7 +12,7 @@ package org.helianto.process;
  * 				
  * 		
  */
-public class ExternalDocument extends Document implements java.io.Serializable {
+public class ExternalDocument extends AbstractDocument implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String docUrl;

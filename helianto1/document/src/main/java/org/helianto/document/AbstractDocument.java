@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.document;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,7 +34,25 @@ import org.helianto.core.TopLevelCodedEntity;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public class Document implements java.io.Serializable, TopLevelCodedEntity {
+public class AbstractDocument implements java.io.Serializable, TopLevelCodedEntity {
+
+    /**
+     * <code>Document</code> generic factory.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public static <T extends AbstractDocument> T documentFactory(Class<T> clazz, Entity entity, String docCode) {
+        T document = null;
+        try {
+            document = clazz.newInstance();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unable to create document of class "+clazz, e);
+        }
+        document.setEntity(entity);
+        document.setDocCode(docCode);
+        return document;
+    }
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -46,7 +64,7 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
     private char priority;
 
     /** default constructor */
-    public Document() {
+    public AbstractDocument() {
     	super();
     }
 
@@ -60,7 +78,7 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
     }
 
     /**
-     * Entity getter.
+     * Entity.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="entityId", nullable=true)
@@ -72,7 +90,7 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
     }
 
     /**
-     * DocCode getter.
+     * Document code.
      */
     @Column(length=24)
     public String getDocCode() {
@@ -83,7 +101,7 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
     }
 
     /**
-     * Version getter.
+     * Version (database record version).
      */
     @Version
     public int getVersion() {
@@ -94,7 +112,7 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
     }
 
     /**
-     * DocName getter.
+     * Document name.
      */
     @Column(length=128)
     public String getDocName() {
@@ -105,7 +123,7 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
     }
 
     /**
-     * DocFile getter.
+     * Document file.
      */
     @Column(length=128)
     public String getDocFile() {
@@ -132,24 +150,6 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
     }
 
     /**
-     * <code>Document</code> general factory.
-     * 
-     * @param entity
-     * @param docCode
-     */
-    public static <T extends Document> T documentFactory(Class<T> clazz, Entity entity, String docCode) {
-        T document = null;
-        try {
-            document = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create document of class "+clazz, e);
-        }
-        document.setEntity(entity);
-        document.setDocCode(docCode);
-        return document;
-    }
-
-    /**
      * toString
      * @return String
      */
@@ -171,8 +171,8 @@ public class Document implements java.io.Serializable, TopLevelCodedEntity {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof Document) ) return false;
-         Document castOther = (Document) other; 
+         if ( !(other instanceof AbstractDocument) ) return false;
+         AbstractDocument castOther = (AbstractDocument) other; 
          
          return ( ( this.getEntity()==castOther.getEntity()) 
         		    || ( this.getEntity()!=null 

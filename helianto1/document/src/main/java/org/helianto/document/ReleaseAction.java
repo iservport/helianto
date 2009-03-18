@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.document;
 
 /**
  * Release action enum.
