@@ -44,7 +44,7 @@ import org.helianto.core.AbstractAssociation;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class DocumentAssociation extends AbstractAssociation<ProcessDocument, ProcessDocument> {
+public class ProcessDocumentAssociation extends AbstractAssociation<ProcessDocument, ProcessDocument> {
 
     private static final long serialVersionUID = 1L;
     private char associationType;
@@ -53,7 +53,7 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
 	private BigDecimal rightLimit = BigDecimal.ZERO;
 
 	/** default constructor */
-    public DocumentAssociation() {
+    public ProcessDocumentAssociation() {
     }
 
     /**
@@ -133,8 +133,8 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
      * @param child
      * @param associationType
      */
-    public static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, AssociationType associationType) {
-        return DocumentAssociation.documentAssociationFactory(parent, child, associationType, 0);
+    public static ProcessDocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, AssociationType associationType) {
+        return ProcessDocumentAssociation.documentAssociationFactory(parent, child, associationType, 0);
     }
 
     //1.2
@@ -146,8 +146,8 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
      * @param associationType
      * @param sequence
      */
-    protected static DocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, AssociationType associationType, int sequence) {
-        return documentAssociationFactory(DocumentAssociation.class, parent, child, associationType, sequence);
+    protected static ProcessDocumentAssociation documentAssociationFactory(ProcessDocument parent, ProcessDocument child, AssociationType associationType, int sequence) {
+        return documentAssociationFactory(ProcessDocumentAssociation.class, parent, child, associationType, sequence);
     }
 
     //1.3
@@ -160,8 +160,8 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
      * @param associationType
      * @param sequence
      */
-    protected static DocumentAssociation documentAssociationFactory(Class<? extends DocumentAssociation> clazz, ProcessDocument parent, ProcessDocument child, AssociationType associationType, int sequence) {
-        DocumentAssociation documentAssociation;
+    protected static ProcessDocumentAssociation documentAssociationFactory(Class<? extends ProcessDocumentAssociation> clazz, ProcessDocument parent, ProcessDocument child, AssociationType associationType, int sequence) {
+        ProcessDocumentAssociation documentAssociation;
 		try {
 			documentAssociation = clazz.newInstance();
 	        documentAssociation.setParent(parent);
@@ -193,27 +193,11 @@ public class DocumentAssociation extends AbstractAssociation<ProcessDocument, Pr
         return getDocumentAssociationQueryStringBuilder().append("where documentAssociation.parent = ? and documentAssociation.child = ? ").toString();
     }
     
-    /**
-     * toString
-     * @return String
-     */
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("sequence").append("='").append(getSequence()).append("' ");
-        buffer.append("child").append("='").append(getChild()).append("' ");
-        buffer.append("associationType").append("='").append(getAssociationType()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
-    }
-
    /**
     * equals
     */
    public boolean equals(Object other) {
-         if ( !(other instanceof DocumentAssociation) ) return false;
+         if ( !(other instanceof ProcessDocumentAssociation) ) return false;
          return super.equals(other);
    }
    

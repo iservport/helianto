@@ -118,8 +118,8 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
      * @param internalNumber
      * @param sequence
      */
-    public DocumentAssociation operationProcessFactory(String processCode, long internalNumber, int sequence) {
-    	DocumentAssociation documentAssociation = documentAssociationFactory(Process.class, processCode, sequence);
+    public ProcessDocumentAssociation operationProcessFactory(String processCode, long internalNumber, int sequence) {
+    	ProcessDocumentAssociation documentAssociation = documentAssociationFactory(Process.class, processCode, sequence);
         return documentAssociation;
     }
 
@@ -128,7 +128,7 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
      * Return an association with a new <tt>Characteristic</tt>.
      */
 	@Override
-	public DocumentAssociation documentAssociationFactory(int sequence) {
+	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 		String characteristicCode = new StringBuilder("CH").append(sequence).toString();
 		return operationCharacteristicFactory(characteristicCode, 0, sequence);
 	}
@@ -141,8 +141,8 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
      * @param internalNumber
      * @param sequence
      */
-    public DocumentAssociation operationCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
-    	DocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
+    public ProcessDocumentAssociation operationCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
+    	ProcessDocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
         return documentAssociation;
     }
 

@@ -32,7 +32,7 @@ import javax.persistence.Transient;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("M")
-public class Method extends DocumentAssociation {
+public class Method extends ProcessDocumentAssociation {
 	
 	private static final long serialVersionUID = 1L;
     private MeasurementTechnique measurementTechnique;

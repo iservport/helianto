@@ -73,9 +73,9 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
 	}
 
     @Transient
-    public List<DocumentAssociation> getOperationAssociations() {
-    	List<DocumentAssociation> childAssociationList = new ArrayList<DocumentAssociation>();
-    	for (DocumentAssociation documentAssociation: this.getChildAssociationList()) {
+    public List<ProcessDocumentAssociation> getOperationAssociations() {
+    	List<ProcessDocumentAssociation> childAssociationList = new ArrayList<ProcessDocumentAssociation>();
+    	for (ProcessDocumentAssociation documentAssociation: this.getChildAssociationList()) {
     		if (documentAssociation.getChild() instanceof Operation) {
     			childAssociationList.add(documentAssociation);
     		}
@@ -88,9 +88,9 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
      */
     @Transient
     public List<Operation> getOperations() {
-    	List<DocumentAssociation> operationAssociations = getOperationAssociations();
+    	List<ProcessDocumentAssociation> operationAssociations = getOperationAssociations();
     	List<Operation> operations = new ArrayList<Operation>();
-    	for (DocumentAssociation documentAssociation: operationAssociations) {
+    	for (ProcessDocumentAssociation documentAssociation: operationAssociations) {
     		operations.add((Operation) documentAssociation.getChild());
     	}
     	return operations;
@@ -115,7 +115,7 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
      * Return an association with a new <tt>Operation</tt>.
      */
 	@Override
-	public DocumentAssociation documentAssociationFactory(int sequence) {
+	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 		String operationCode = new StringBuilder("OP").append(sequence).toString();
 		return processOperationFactory(operationCode, 0, sequence);
 	}
@@ -128,8 +128,8 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
      * @param internalNumber
      * @param sequence
      */
-    public DocumentAssociation processOperationFactory(String operationCode, long internalNumber, int sequence) {
-    	DocumentAssociation documentAssociation = documentAssociationFactory(Operation.class, operationCode, sequence);
+    public ProcessDocumentAssociation processOperationFactory(String operationCode, long internalNumber, int sequence) {
+    	ProcessDocumentAssociation documentAssociation = documentAssociationFactory(Operation.class, operationCode, sequence);
         return documentAssociation;
     }
 
@@ -141,8 +141,8 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
      * @param internalNumber
      * @param sequence
      */
-    public DocumentAssociation processCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
-    	DocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
+    public ProcessDocumentAssociation processCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
+    	ProcessDocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
         return documentAssociation;
     }
 

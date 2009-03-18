@@ -23,7 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.AbstractNode;
 import org.helianto.core.Node;
-import org.helianto.process.DocumentAssociation;
+import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.ProcessDocument;
 
 /**
@@ -35,7 +35,7 @@ import org.helianto.process.ProcessDocument;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessNode extends AbstractNode<DocumentAssociation> {
+public class ProcessNode extends AbstractNode<ProcessDocumentAssociation> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class ProcessNode extends AbstractNode<DocumentAssociation> {
 	 * @param root
 	 */
 	public ProcessNode(ProcessDocument root) {
-		this(new DocumentAssociation(), 0, 0, false);
+		this(new ProcessDocumentAssociation(), 0, 0, false);
 		getContent().setChild(root);
 	}
 
@@ -56,7 +56,7 @@ public class ProcessNode extends AbstractNode<DocumentAssociation> {
 	 * @param level
 	 * @param sequence
 	 */
-	public ProcessNode(DocumentAssociation payLoad, int level, int sequence) {
+	public ProcessNode(ProcessDocumentAssociation payLoad, int level, int sequence) {
 		this(payLoad, level, sequence, true);
 	}
 
@@ -68,7 +68,7 @@ public class ProcessNode extends AbstractNode<DocumentAssociation> {
 	 * @param sequence
 	 * @param editable
 	 */
-	public ProcessNode(DocumentAssociation payLoad, int level, int sequence, boolean editable) {
+	public ProcessNode(ProcessDocumentAssociation payLoad, int level, int sequence, boolean editable) {
 		super(payLoad.getId(), payLoad, level, sequence, editable);
 	}
 
@@ -78,7 +78,7 @@ public class ProcessNode extends AbstractNode<DocumentAssociation> {
 	 * @param childAssociation
 	 * @param editable
 	 */
-	public final Node childNodeFactory(DocumentAssociation childAssociation, boolean editable) {
+	public final Node childNodeFactory(ProcessDocumentAssociation childAssociation, boolean editable) {
 		Node node = new ProcessNode(childAssociation, getLevel()+1, childAssociation.getSequence(), editable);
 		return node;
 	}
@@ -89,11 +89,11 @@ public class ProcessNode extends AbstractNode<DocumentAssociation> {
 
 	public final List<Node> getChildList() {
 		List<Node> childList = new ArrayList<Node>();
-		List<DocumentAssociation> associationList = getContent().getChild().getChildAssociationList();
+		List<ProcessDocumentAssociation> associationList = getContent().getChild().getChildAssociationList();
     	if (logger.isDebugEnabled()) {
     		logger.debug("Found "+associationList.size()+" association(s) under sequence "+getSequence());
     	}
-		for (DocumentAssociation documentAssociation: associationList) {
+		for (ProcessDocumentAssociation documentAssociation: associationList) {
 			if (documentAssociation.getParent().equals(getContent().getChild())) {
 				childList.add(childNodeFactory(documentAssociation, true));
 		    	if (logger.isDebugEnabled()) {

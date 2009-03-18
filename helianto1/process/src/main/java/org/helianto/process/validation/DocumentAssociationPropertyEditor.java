@@ -15,7 +15,7 @@
 package org.helianto.process.validation;
 
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
-import org.helianto.process.DocumentAssociation;
+import org.helianto.process.ProcessDocumentAssociation;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,13 +28,13 @@ public class DocumentAssociationPropertyEditor extends AbstractSessionPropertyEd
     
     @Override
     public String getAsText() {
-    	DocumentAssociation documentAssociation = (DocumentAssociation) getValue();
+    	ProcessDocumentAssociation documentAssociation = (ProcessDocumentAssociation) getValue();
         return String.valueOf(documentAssociation.getId());
     }
     
     @Override
     public void setAsText(String id) throws IllegalArgumentException {
-        setAsText(id, DocumentAssociation.class);
+        setAsText(id, ProcessDocumentAssociation.class);
     }
 
 }

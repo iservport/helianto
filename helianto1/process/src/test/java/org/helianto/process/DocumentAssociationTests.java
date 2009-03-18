@@ -25,7 +25,7 @@ public class DocumentAssociationTests extends TestCase {
         ProcessDocument parent = new Process();
         ProcessDocument child = new Process();
         
-        DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
+        ProcessDocumentAssociation documentAssociation = ProcessDocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
         
         assertSame(parent, documentAssociation.getParent());
         assertTrue(parent.getChildAssociations().contains(documentAssociation));
@@ -41,8 +41,8 @@ public class DocumentAssociationTests extends TestCase {
         ProcessDocument parent = new Process();
         ProcessDocument child = new Process();
         
-        DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
-        DocumentAssociation copy = (DocumentAssociation) DomainTestSupport.minimalEqualsTest(documentAssociation);
+        ProcessDocumentAssociation documentAssociation = ProcessDocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
+        ProcessDocumentAssociation copy = (ProcessDocumentAssociation) DomainTestSupport.minimalEqualsTest(documentAssociation);
         
         copy.setParent(null);
         copy.setChild(child);
@@ -60,13 +60,13 @@ public class DocumentAssociationTests extends TestCase {
 
 	public void testComparator() {
 		Process process = new Process();
-		DocumentAssociation first = new DocumentAssociation();
+		ProcessDocumentAssociation first = new ProcessDocumentAssociation();
 		first.setSequence(1);
-		DocumentAssociation middle = new DocumentAssociation();
+		ProcessDocumentAssociation middle = new ProcessDocumentAssociation();
 		middle.setSequence(5);
-		DocumentAssociation last = new DocumentAssociation();
+		ProcessDocumentAssociation last = new ProcessDocumentAssociation();
 		last.setSequence(10);
-		List<DocumentAssociation> documentAssociationList = new ArrayList<DocumentAssociation>();
+		List<ProcessDocumentAssociation> documentAssociationList = new ArrayList<ProcessDocumentAssociation>();
 		documentAssociationList.add(last);
 		documentAssociationList.add(first);
 		documentAssociationList.add(middle);
@@ -116,7 +116,7 @@ public class DocumentAssociationTests extends TestCase {
 	private void prepareProcess(Process process, int[] randomSequences) {
 		Entity entity = new Entity();
 		for (int i: randomSequences) {
-			DocumentAssociation documentAssociation = new DocumentAssociation();
+			ProcessDocumentAssociation documentAssociation = new ProcessDocumentAssociation();
 			documentAssociation.setParent(process);
 			documentAssociation.setSequence(i);
 			Operation child = new Operation();

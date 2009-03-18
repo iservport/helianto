@@ -63,18 +63,18 @@ public abstract class DerivedProcessDocument extends ProcessDocument {
      * List of child associations.
      */
     @Transient
-    public List<DocumentAssociation> getChildAssociationList() {
-    	List<DocumentAssociation> childAssociationList = new ArrayList<DocumentAssociation>(this.getChildAssociations());
+    public List<ProcessDocumentAssociation> getChildAssociationList() {
+    	List<ProcessDocumentAssociation> childAssociationList = new ArrayList<ProcessDocumentAssociation>(this.getChildAssociations());
     	if (getParent()!=null && parent.getChildAssociationList().size()>0) {
-    		Map<Integer, DocumentAssociation> documentAssociationMap = new HashMap<Integer, DocumentAssociation>();
-    		List<DocumentAssociation> parentAssociations = parent.getChildAssociationList();
+    		Map<Integer, ProcessDocumentAssociation> documentAssociationMap = new HashMap<Integer, ProcessDocumentAssociation>();
+    		List<ProcessDocumentAssociation> parentAssociations = parent.getChildAssociationList();
     		// copy in documentAssociationMap all associations from local process
-    		for(DocumentAssociation association: childAssociationList) {
+    		for(ProcessDocumentAssociation association: childAssociationList) {
         		documentAssociationMap.put(association.getSequence(), association);
     		}
     		// copy in documentAssociationMap only associations that ...
-    		for (DocumentAssociation parentAssociation: parentAssociations) {
-    			DocumentAssociation localAssociation = documentAssociationMap.get(parentAssociation.getSequence());
+    		for (ProcessDocumentAssociation parentAssociation: parentAssociations) {
+    			ProcessDocumentAssociation localAssociation = documentAssociationMap.get(parentAssociation.getSequence());
     			// do not exist as local,
     			if (localAssociation==null) {
         			documentAssociationMap.put(parentAssociation.getSequence(), parentAssociation);
@@ -95,7 +95,7 @@ public abstract class DerivedProcessDocument extends ProcessDocument {
     			}
     		}
     		// replace the previously computed list with the complete one
-    		childAssociationList = new ArrayList<DocumentAssociation>(documentAssociationMap.values());
+    		childAssociationList = new ArrayList<ProcessDocumentAssociation>(documentAssociationMap.values());
     	}
     	Collections.sort(childAssociationList, this);
 		return childAssociationList;

@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.helianto.core.Node;
 import org.helianto.process.AssociationType;
-import org.helianto.process.DocumentAssociation;
+import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Operation;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
@@ -80,7 +80,7 @@ public class ProcessNodeTests {
 		ProcessNode processNode = new ProcessNode(payLoad, 10, 100);
 		ProcessDocument grandChild = new Operation();
 		grandChild.setDocCode("GRANDCHILD");
-		DocumentAssociation childAssociation = DocumentAssociation.documentAssociationFactory(child, grandChild, AssociationType.GENERAL);
+		ProcessDocumentAssociation childAssociation = ProcessDocumentAssociation.documentAssociationFactory(child, grandChild, AssociationType.GENERAL);
 		childAssociation.setId(Integer.MIN_VALUE);
 		childAssociation.setSequence(1000);
 
@@ -100,10 +100,10 @@ public class ProcessNodeTests {
 		grandChild1.setDocCode("GRANDCHILD1");
 		ProcessDocument grandChild2 = new Operation();
 		grandChild2.setDocCode("GRANDCHILD2");
-		DocumentAssociation childAssociation1 = DocumentAssociation.documentAssociationFactory(child, grandChild1, AssociationType.GENERAL);
+		ProcessDocumentAssociation childAssociation1 = ProcessDocumentAssociation.documentAssociationFactory(child, grandChild1, AssociationType.GENERAL);
 		childAssociation1.setId(101);
 		childAssociation1.setSequence(1001);
-		DocumentAssociation childAssociation2 = DocumentAssociation.documentAssociationFactory(child, grandChild2, AssociationType.GENERAL);
+		ProcessDocumentAssociation childAssociation2 = ProcessDocumentAssociation.documentAssociationFactory(child, grandChild2, AssociationType.GENERAL);
 		childAssociation2.setId(102);
 		childAssociation2.setSequence(1002);
 
@@ -125,14 +125,14 @@ public class ProcessNodeTests {
 	
 	ProcessDocument parent;
 	ProcessDocument child;
-	DocumentAssociation payLoad;
+	ProcessDocumentAssociation payLoad;
 	
 	@Before
 	public void setUp() {
 		parent = new Process();
 		child = new Operation();
 		child.setDocCode("DOCCODE");
-		payLoad = DocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
+		payLoad = ProcessDocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
 		payLoad.setId(Integer.MAX_VALUE);
 	}
 

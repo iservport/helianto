@@ -14,31 +14,23 @@
  */
 
 
-package org.helianto.process;
+package org.helianto.document.orm;
 
-import javax.persistence.Table;
+import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.document.DocumentAssociation;
+import org.springframework.stereotype.Repository;
 
 /**
- * Materials or components to be consumed during production or service.
+ * Document association data access.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@javax.persistence.Entity
-@Table(name="proc_cons")
-public class Consumable extends DerivedProcessDocument {
+@Repository("documentAssociationDao")
+public class DefaultDocumentAssociationDao extends AbstractBasicDao<DocumentAssociation> {
 
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Default constructor
-	 */
-	public Consumable() {
-		super();
-	}
-	
 	@Override
-	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-		return null;
+	public Class<? extends DocumentAssociation> getClazz() {
+		return DocumentAssociation.class;
 	}
 
 }

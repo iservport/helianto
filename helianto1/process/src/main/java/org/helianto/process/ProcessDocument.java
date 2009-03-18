@@ -38,7 +38,7 @@ import org.helianto.document.AbstractDocument;
  * <p>
  * Concrete classes based on <code>ProcessDocument</code> are
  * allowed to participate in complex product and process structures just
- * adding appropriate parent and child associations. See {@link DocumentAssociation}
+ * adding appropriate parent and child associations. See {@link ProcessDocumentAssociation}
  * and {@link AssociationType} for restrictions on structure creation.
  * </p>
  * <p>
@@ -58,11 +58,11 @@ import org.helianto.document.AbstractDocument;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class ProcessDocument extends AbstractDocument implements Comparator<DocumentAssociation> {
+public abstract class ProcessDocument extends AbstractDocument implements Comparator<ProcessDocumentAssociation> {
 
     private static final long serialVersionUID = 1L;
-    private Set<DocumentAssociation> parentAssociations = new HashSet<DocumentAssociation>();
-    private Set<DocumentAssociation> childAssociations = new HashSet<DocumentAssociation>();
+    private Set<ProcessDocumentAssociation> parentAssociations = new HashSet<ProcessDocumentAssociation>();
+    private Set<ProcessDocumentAssociation> childAssociations = new HashSet<ProcessDocumentAssociation>();
     private char inheritanceType = org.helianto.process.InheritanceType.FINAL.getValue();
     private String processColor = "";
 
@@ -77,10 +77,10 @@ public abstract class ProcessDocument extends AbstractDocument implements Compar
      */
     @OneToMany(mappedBy="child", 
     		   cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    public Set<DocumentAssociation> getParentAssociations() {
+    public Set<ProcessDocumentAssociation> getParentAssociations() {
         return this.parentAssociations;
     }
-    public void setParentAssociations(Set<DocumentAssociation> parentAssociations) {
+    public void setParentAssociations(Set<ProcessDocumentAssociation> parentAssociations) {
         this.parentAssociations = parentAssociations;
     }
 
@@ -89,23 +89,23 @@ public abstract class ProcessDocument extends AbstractDocument implements Compar
      */
     @OneToMany(mappedBy="parent", 
     		   cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    public Set<DocumentAssociation> getChildAssociations() {
+    public Set<ProcessDocumentAssociation> getChildAssociations() {
         return this.childAssociations;
     }
-    public void setChildAssociations(Set<DocumentAssociation> childAssociations) {
+    public void setChildAssociations(Set<ProcessDocumentAssociation> childAssociations) {
         this.childAssociations = childAssociations;
     }
 	/**
      * List of child associations.
      */
     @Transient
-    public List<DocumentAssociation> getChildAssociationList() {
-    	List<DocumentAssociation> childAssociationList = new ArrayList<DocumentAssociation>(this.getChildAssociations());
+    public List<ProcessDocumentAssociation> getChildAssociationList() {
+    	List<ProcessDocumentAssociation> childAssociationList = new ArrayList<ProcessDocumentAssociation>(this.getChildAssociations());
     	Collections.sort(childAssociationList, this);
 		return childAssociationList;
 	}
 
-    public int compare(DocumentAssociation first, DocumentAssociation last) {
+    public int compare(ProcessDocumentAssociation first, ProcessDocumentAssociation last) {
     	return first.getSequence() - last.getSequence();
     }
        
@@ -150,7 +150,7 @@ public abstract class ProcessDocument extends AbstractDocument implements Compar
      * 
      * @param sequence
      */
-    public abstract DocumentAssociation documentAssociationFactory(int sequence);
+    public abstract ProcessDocumentAssociation documentAssociationFactory(int sequence);
 
     //1.2
     /**
@@ -159,8 +159,8 @@ public abstract class ProcessDocument extends AbstractDocument implements Compar
      * @param child
      * @param sequence
      */
-    public DocumentAssociation documentAssociationFactory(ProcessDocument child, int sequence) {
-        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(this, child, AssociationType.GENERAL, sequence);
+    public ProcessDocumentAssociation documentAssociationFactory(ProcessDocument child, int sequence) {
+        ProcessDocumentAssociation association = ProcessDocumentAssociation.documentAssociationFactory(this, child, AssociationType.GENERAL, sequence);
         return association;
     }
 
@@ -177,10 +177,10 @@ public abstract class ProcessDocument extends AbstractDocument implements Compar
      * @param docCode
      * @param sequence
      */
-    protected <T extends ProcessDocument> DocumentAssociation documentAssociationFactory(Class<T> childClazz, String childCode, int sequence) {
+    protected <T extends ProcessDocument> ProcessDocumentAssociation documentAssociationFactory(Class<T> childClazz, String childCode, int sequence) {
     	ProcessDocument document = ProcessDocument.documentFactory(childClazz, getEntity(), childCode);
     	AssociationType associationType = AssociationType.resolveAssociationType(getClass(), childClazz);
-        DocumentAssociation association = DocumentAssociation.documentAssociationFactory(this, document, associationType, sequence);
+        ProcessDocumentAssociation association = ProcessDocumentAssociation.documentAssociationFactory(this, document, associationType, sequence);
         return association;
     }
 

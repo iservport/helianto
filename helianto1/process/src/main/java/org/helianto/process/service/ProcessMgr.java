@@ -21,7 +21,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.User;
 import org.helianto.partner.service.PartnerMgr;
-import org.helianto.process.DocumentAssociation;
+import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Operation;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
@@ -81,7 +81,7 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Find associations having child operations for a process.
      */
-    public List<DocumentAssociation> findOperations(User user, Process process);
+    public List<ProcessDocumentAssociation> findOperations(User user, Process process);
     
     /**
      * List setups.
@@ -91,27 +91,27 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Prepare a new association to presentation layer.
      */
-    public DocumentAssociation prepareAssociation(ProcessDocument parent, Object child);
+    public ProcessDocumentAssociation prepareAssociation(ProcessDocument parent, Object child);
     
     /**
      * Association creation with defaults.
      */
-    public DocumentAssociation prepareAssociation(ProcessDocument parent, int sequence);
+    public ProcessDocumentAssociation prepareAssociation(ProcessDocument parent, int sequence);
     
     /**
      * Find characteristics.
      */
-    public List<DocumentAssociation> findCharacteristics(User user, Operation operation);
+    public List<ProcessDocumentAssociation> findCharacteristics(User user, Operation operation);
     
     /**
      * Associated characteristic creation.
      */
-    public DocumentAssociation prepareCharacteristic(Operation operation);
+    public ProcessDocumentAssociation prepareCharacteristic(Operation operation);
     
     /**
      * Store document associations.
      */
-    public DocumentAssociation storeDocumentAssociation(DocumentAssociation documentAssociation);
+    public ProcessDocumentAssociation storeDocumentAssociation(ProcessDocumentAssociation documentAssociation);
     
 	/**
 	 * Create setup. 

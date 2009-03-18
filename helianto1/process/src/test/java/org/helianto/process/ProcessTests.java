@@ -32,7 +32,7 @@ public class ProcessTests extends TestCase {
     	Process process = new Process(), copy = new Process();
     	ProcessDocument parent = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
-			public DocumentAssociation documentAssociationFactory(int sequence) {
+			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 				return null;
 			}
     	};

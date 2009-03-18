@@ -18,7 +18,7 @@ package org.helianto.process.validation;
 import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
-import org.helianto.process.DocumentAssociation;
+import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.ProcessDocument;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
@@ -33,7 +33,7 @@ public class ProcessDocumentPropertyEditorTests extends TestCase {
 	public void testGetAsText() {
 		ProcessDocument processDocument = new ProcessDocument(){
 			private static final long serialVersionUID = 1L;
-			public DocumentAssociation documentAssociationFactory(int sequence) {
+			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 				return null;
 			}
 		};
@@ -50,7 +50,7 @@ public class ProcessDocumentPropertyEditorTests extends TestCase {
 		Session session = EasyMock.createMock(Session.class);
 		ProcessDocument processDocument = new ProcessDocument(){
 			private static final long serialVersionUID = 1L;
-			public DocumentAssociation documentAssociationFactory(int sequence) {
+			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 				return null;
 			}
 		};

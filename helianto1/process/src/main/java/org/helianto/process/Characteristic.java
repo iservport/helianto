@@ -120,7 +120,7 @@ public class Characteristic extends DerivedProcessDocument {
      * @param sequence
      */
     public Method documentAssociationFactory(ControlMethod child, int sequence) {
-    	Method method = (Method) DocumentAssociation.documentAssociationFactory(Method.class, this, child, AssociationType.CHARACTERISTIC_METHOD, sequence);
+    	Method method = (Method) ProcessDocumentAssociation.documentAssociationFactory(Method.class, this, child, AssociationType.CHARACTERISTIC_METHOD, sequence);
     	method.setLeftLimitRequired(true);
     	method.setRightLimitRequired(true);
         return method;

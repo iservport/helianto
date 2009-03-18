@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.helianto.process.AssociationType;
 import org.helianto.process.ProcessDocument;
-import org.helianto.process.DocumentAssociation;
+import org.helianto.process.ProcessDocumentAssociation;
 
 
 /**
@@ -20,7 +20,7 @@ public class DocumentAssociationTestSupport {
      * @param parent optional Document 
      * @param child optional Document 
      */
-    public static DocumentAssociation createDocumentAssociation(Object... args) {
+    public static ProcessDocumentAssociation createDocumentAssociation(Object... args) {
         ProcessDocument parent;
         try {
             parent = (ProcessDocument) args[0];
@@ -33,7 +33,7 @@ public class DocumentAssociationTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             child = ProcessDocumentTestSupport.createDocument();
         }
-        DocumentAssociation documentAssociation = DocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
+        ProcessDocumentAssociation documentAssociation = ProcessDocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
         return documentAssociation;
     }
 
@@ -42,7 +42,7 @@ public class DocumentAssociationTestSupport {
      *
      * @param documentAssociationListSize
      */
-    public static List<DocumentAssociation> createDocumentAssociationList(int documentAssociationListSize) {
+    public static List<ProcessDocumentAssociation> createDocumentAssociationList(int documentAssociationListSize) {
         return createDocumentAssociationList(documentAssociationListSize, 1);
     }
 
@@ -52,7 +52,7 @@ public class DocumentAssociationTestSupport {
      * @param parentListSize
      * @param childListSize
      */
-    public static List<DocumentAssociation> createDocumentAssociationList(int parentListSize, int childListSize) {
+    public static List<ProcessDocumentAssociation> createDocumentAssociationList(int parentListSize, int childListSize) {
         List<ProcessDocument> parentList = ProcessDocumentTestSupport.createDocumentList(parentListSize);
         List<ProcessDocument> childList = ProcessDocumentTestSupport.createDocumentList(childListSize);
         return createDocumentAssociationList(parentList, childList);
@@ -65,8 +65,8 @@ public class DocumentAssociationTestSupport {
      * @param parentList
      * @param childList
      */
-    public static List<DocumentAssociation> createDocumentAssociationList(List<ProcessDocument> parentList, List<ProcessDocument> childList) {
-        List<DocumentAssociation> documentAssociationList = new ArrayList<DocumentAssociation>();
+    public static List<ProcessDocumentAssociation> createDocumentAssociationList(List<ProcessDocument> parentList, List<ProcessDocument> childList) {
+        List<ProcessDocumentAssociation> documentAssociationList = new ArrayList<ProcessDocumentAssociation>();
         for (ProcessDocument parent: parentList) {
             for (ProcessDocument child: childList) {
     	        documentAssociationList.add(createDocumentAssociation(parent, child));

@@ -55,7 +55,7 @@ public class ProcessDocumentFilterTests extends TestCase {
 	public void testDocument() {
 		AbstractDocument document = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
-			public DocumentAssociation documentAssociationFactory(int sequence) {
+			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 				return null;
 			}
 		};

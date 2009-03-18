@@ -15,13 +15,20 @@
 
 package org.helianto.document;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+
 
 /**
  * Concrete documents.
@@ -48,6 +55,11 @@ public class Document extends AbstractDocument implements java.io.Serializable {
     
     private static final long serialVersionUID = 1L;
     private char contentType;
+    private Set<DocumentAssociation> parents = new HashSet<DocumentAssociation>(0);
+    private Set<DocumentAssociation> children = new HashSet<DocumentAssociation>(0);
+    // transient
+    private List<DocumentAssociation> parentList;
+	private List<DocumentAssociation> childList;
 
 	/** 
 	 * Default constructor 
@@ -74,24 +86,50 @@ public class Document extends AbstractDocument implements java.io.Serializable {
     }
     
     /**
-     * <code>UserDocument</code> query <code>StringBuilder</code>.
-     * @deprecated
+     * Parent document associations.
+     */
+    @OneToMany(mappedBy="child", cascade={CascadeType.ALL})
+    public Set<DocumentAssociation> getParents() {
+        return this.parents;
+    }
+    public void setParents(Set<DocumentAssociation> parents) {
+        this.parents = parents;
+    }
+    
+    /**
+     * Parent document association list.
      */
     @Transient
-    public static StringBuilder getUserDocumentQueryStringBuilder() {
-        return new StringBuilder("select userDocument from UserDocument userDocument ");
-    }
+    public List<DocumentAssociation> getParentList() {
+		return parentList;
+	}
+	public void setParentList(List<DocumentAssociation> parentList) {
+		this.parentList = parentList;
+	}
 
     /**
-     * <code>UserDocument</code> natural id query.
-     * @deprecated
+     * Child document associations.
+     */
+    @OneToMany(mappedBy="parent", cascade={CascadeType.ALL})
+    public Set<DocumentAssociation> getChildren() {
+        return this.children;
+    }
+    public void setChildren(Set<DocumentAssociation> children) {
+        this.children = children;
+    }
+    
+    /**
+     * Child document association list.
      */
     @Transient
-    public static String getUserDocumentNaturalIdQueryString() {
-        return getUserDocumentQueryStringBuilder().append("where userDocument.entiy = ? and userDocument.docCode = ? ").toString();
-    }
+	public List<DocumentAssociation> getChildList() {
+		return childList;
+	}
+	public void setChildList(List<DocumentAssociation> childList) {
+		this.childList = childList;
+	}
 
-    @Override
+	@Override
     public boolean equals(Object other) {
 		 if ( !(other instanceof Document) ) return false;
 		 return super.equals(other);

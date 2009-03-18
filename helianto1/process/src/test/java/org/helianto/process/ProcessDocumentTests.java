@@ -22,7 +22,7 @@ public class ProcessDocumentTests extends TestCase {
 
     	ProcessDocument document = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
-			public DocumentAssociation documentAssociationFactory(int sequence) {
+			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 				return null;
 			}
     	};
@@ -42,7 +42,7 @@ public class ProcessDocumentTests extends TestCase {
         String docCode = DomainTestSupport.STRING_TEST_VALUE;
     	ProcessDocument parent = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
-			public DocumentAssociation documentAssociationFactory(int sequence) {
+			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 				return null;
 			}
     	};

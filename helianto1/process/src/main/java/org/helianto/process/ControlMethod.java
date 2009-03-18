@@ -48,7 +48,7 @@ public class ControlMethod extends ProcessDocument {
     }
     
 	@Override
-	public DocumentAssociation documentAssociationFactory(int sequence) {
+	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 		// TODO Auto-generated method stub
 		return null;
 	}
