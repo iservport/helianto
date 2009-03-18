@@ -16,10 +16,25 @@
 
 package org.helianto.document;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+
+import org.helianto.core.Entity;
+import org.helianto.core.test.EntityTestSupport;
+import org.junit.Test;
+
 
 /**
  * @author Mauricio Fernandes de Castro
  */
 public class DocumentTests {
-
+	
+	@Test
+	public void testFactory() {
+		Entity entity = EntityTestSupport.createEntity();
+		Document document = Document.documentFactory(entity, "DOCCODE");
+		assertSame(entity, document.getEntity());
+		assertEquals("DOCCODE", document.getDocCode());
+	}
+	
 }

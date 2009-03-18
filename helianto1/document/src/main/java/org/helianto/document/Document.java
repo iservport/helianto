@@ -41,9 +41,9 @@ public class Document extends AbstractDocument implements java.io.Serializable {
      * @param entity
      * @param docCode
      */
-    public static Document userDocumentFactory(Entity entity, String docCode) {
-        Document userDocument = AbstractDocument.documentFactory(Document.class, entity, docCode);
-        return userDocument;
+    public static Document documentFactory(Entity entity, String docCode) {
+        Document document = AbstractDocument.documentFactory(Document.class, entity, docCode);
+        return document;
     }
     
     private static final long serialVersionUID = 1L;
