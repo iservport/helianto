@@ -32,6 +32,10 @@ public enum InheritanceType {
      */
     CONCRETE('C', true), 
     /**
+     * Descendants are allowed, shown as group.
+     */
+    GROUP('G', true), 
+    /**
      * Descendants are not allowed.
      */
     FINAL('F', false);
