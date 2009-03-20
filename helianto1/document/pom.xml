@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>helianto</artifactId>
+		<groupId>org.helianto</groupId>
+		<version>0.2.1-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.helianto</groupId>
+	<artifactId>helianto-document</artifactId>
+	<version>0.2.1-SNAPSHOT</version>
+	<name>Document</name>
+	
+	<description>Helianto project document module.</description>
+	
+	<build>
+		<finalName>helianto-document</finalName>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>helianto-partner</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+</project>
