@@ -37,9 +37,8 @@ import org.helianto.core.TopLevelNumberedEntity;
  *  
  * @author Mauricio Fernandes de Castro
  */
-
 @javax.persistence.MappedSuperclass
-public abstract class AbstractControl extends AbstractRecord implements Serializable, Sequenceable, TopLevelNumberedEntity {
+public abstract class AbstractControl extends AbstractRecord implements Serializable, Sequenceable, Control, TopLevelNumberedEntity {
 
     /**
      * Factory method.
@@ -152,11 +151,9 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     }
     
     /**
-     * Tipo de frequência do indicador.
+     * Frequency type.
      * 
-     * <p>
-     * Acompanha as constantes definidas pela interface <code>Calendar</code>.
-     * </p>
+     * @see Calendar
      */
     public int getFrequencyType() {
         return this.frequencyType;

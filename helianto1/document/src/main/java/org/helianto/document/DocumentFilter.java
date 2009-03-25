@@ -31,10 +31,10 @@ public class DocumentFilter extends AbstractUserBackedCriteriaFilter {
 	 * 
 	 * @param user
 	 */
-	public static DocumentFilter userDocumentFilterFactory(User user) {
-		DocumentFilter userDocumentFilter = new DocumentFilter();
-		userDocumentFilter.setUser(user);
-		return userDocumentFilter;
+	public static DocumentFilter documentFilterFactory(User user) {
+		DocumentFilter documentFilter = new DocumentFilter();
+		documentFilter.setUser(user);
+		return documentFilter;
 	}
 	
 	private static final long serialVersionUID = 1L;
