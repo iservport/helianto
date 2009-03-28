@@ -24,9 +24,10 @@ import static org.easymock.EasyMock.verify;
 import junit.framework.TestCase;
 
 import org.helianto.core.Entity;
+import org.helianto.core.EntityFilter;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Sequenceable;
-import org.helianto.core.dao.EntityDao;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
 
 public class SequenceMgrImplTests extends TestCase {
@@ -39,7 +40,7 @@ public class SequenceMgrImplTests extends TestCase {
     	InternalEnumerator enumerator = new InternalEnumerator();
     	enumerator.setLastNumber(1000);
     	
-    	expect(entityDao.mergeEntity(entity)).andReturn(managedEntity);
+    	expect(entityDao.merge(entity)).andReturn(managedEntity);
     	replay(entityDao);
     	expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(managedEntity, "TEST")).andReturn(enumerator);
     	internalEnumeratorDao.persistInternalEnumerator(enumerator);
@@ -73,7 +74,7 @@ public class SequenceMgrImplTests extends TestCase {
     	Sequenceable sequenceable = new SequenceableStub();
     	InternalEnumerator enumerator = null, managedEnumerator = new InternalEnumerator();
     	
-    	expect(entityDao.mergeEntity(entity)).andReturn(managedEntity);
+    	expect(entityDao.merge(entity)).andReturn(managedEntity);
     	replay(entityDao);
     	expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(managedEntity, "TEST")).andReturn(enumerator);
     	expect(internalEnumeratorDao.mergeInternalEnumerator(isA(InternalEnumerator.class))).andReturn(managedEnumerator);
@@ -85,13 +86,14 @@ public class SequenceMgrImplTests extends TestCase {
     }
     
     private InternalEnumeratorDao internalEnumeratorDao;
-    private EntityDao entityDao;
+    private FilterDao<Entity, EntityFilter> entityDao;
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void setUp() {
         sequenceMgr = new SequenceMgrImpl();
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
-        entityDao = createMock(EntityDao.class);
+        entityDao = createMock(FilterDao.class);
         sequenceMgr.setInternalEnumeratorDao(internalEnumeratorDao);
         sequenceMgr.setEntityDao(entityDao);
     }

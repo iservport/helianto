@@ -24,6 +24,7 @@ import javax.mail.MessagingException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
+import org.helianto.core.EntityFilter;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
 import org.helianto.core.OperationMode;
@@ -35,9 +36,7 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.BasicDao;
-import org.helianto.core.dao.EntityDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.ServerDao;
@@ -220,7 +219,7 @@ public class ServerMgrImpl  implements ServerMgr {
 
     
     public User writeManager(Identity managerIdentity) {
-        Operator operator = OperatorCreator.operatorFactory("DEFAULT",
+        Operator operator = Operator.operatorFactory("DEFAULT",
                 OperationMode.LOCAL, Locale.getDefault());
         Entity entity = Entity.entityFactory(operator, "DEFAULT");
         if (logger.isDebugEnabled()) {
@@ -252,7 +251,7 @@ public class ServerMgrImpl  implements ServerMgr {
     private ServerDao serverDao;
     private ServiceDao serviceDao;
     private UserRoleDao userRoleDao;
-    private EntityDao entityDao;
+    private FilterDao<Entity, EntityFilter> entityDao;
     private IdentityDao identityDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private UserDao userDao;
@@ -276,8 +275,8 @@ public class ServerMgrImpl  implements ServerMgr {
         this.userRoleDao = userRoleDao;
     }
 
-    @Resource
-    public void setEntityDao(EntityDao entityDao) {
+    @Resource(name="entityDao")
+    public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
         this.entityDao = entityDao;
     }
 

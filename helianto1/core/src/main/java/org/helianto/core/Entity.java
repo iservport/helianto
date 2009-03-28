@@ -77,6 +77,19 @@ import javax.persistence.Version;
 @DiscriminatorValue("0")
 public class Entity implements java.io.Serializable {
 
+    /**
+     * <code>Entity</code> factory.
+     * 
+     * @param operator
+     * @param alias
+     */
+    public static Entity entityFactory(Operator operator, String alias) {
+        Entity entity = new Entity();
+        entity.setOperator(operator);
+        entity.setAlias(alias);
+        return entity;
+    }
+
     private static final long serialVersionUID = 1L;
     private long id;
     private int version;
@@ -87,7 +100,6 @@ public class Entity implements java.io.Serializable {
     public Entity() {
     }
 
-    // Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public long getId() {
         return this.id;
@@ -134,35 +146,6 @@ public class Entity implements java.io.Serializable {
     }
     public void setAlias(String alias) {
         this.alias = alias;
-    }
-
-    /**
-     * <code>Entity</code> factory.
-     * 
-     * @param operator
-     * @param alias
-     */
-    public static Entity entityFactory(Operator operator, String alias) {
-        Entity entity = new Entity();
-        entity.setOperator(operator);
-        entity.setAlias(alias);
-        return entity;
-    }
-
-    /**
-     * <code>Entity</code> query.
-     */
-    @Transient
-    public static StringBuilder getEntityQueryStringBuilder() {
-        return new StringBuilder("select entity from Entity entity ");
-    }
-
-    /**
-     * <code>Entity</code> natural id query.
-     */
-    @Transient
-    public static String getEntityNaturalIdQueryString() {
-        return getEntityQueryStringBuilder().append("where entity.operator = ? and entity.alias = ? ").toString();
     }
 
     /**

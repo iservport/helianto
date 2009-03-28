@@ -23,10 +23,11 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
+import org.helianto.core.EntityFilter;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
-import org.helianto.core.dao.EntityDao;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.OperatorDao;
 import org.helianto.core.dao.ProvinceDao;
 import org.helianto.core.filter.SelectionStrategy;
@@ -67,7 +68,7 @@ public class OperatorMgrImpl implements OperatorMgr {
 	}
 
 	public Province prepareNewProvince(Entity entity) {
-		Entity managedEntity = entityDao.mergeEntity(entity);
+		Entity managedEntity = entityDao.merge(entity);
 		return Province.provinceFactory(managedEntity.getOperator(), "", "");
 	}
 
@@ -78,11 +79,9 @@ public class OperatorMgrImpl implements OperatorMgr {
 	// collabs
 	
 	private OperatorDao operatorDao;
-
 	private ProvinceDao provinceDao;
 	private SelectionStrategy<ProvinceFilter> provinceSelectionStrategy;
-	
-	private EntityDao entityDao;
+	private FilterDao<Entity, EntityFilter> entityDao;
 	
 	@Resource
 	public void setOperatorDao(OperatorDao operatorDao) {
@@ -93,10 +92,12 @@ public class OperatorMgrImpl implements OperatorMgr {
 	public void setProvinceDao(ProvinceDao provinceDao) {
 		this.provinceDao = provinceDao;
 	}
-	@Resource
-	public void setEntityDao(EntityDao entityDao) {
-		this.entityDao = entityDao;
-	}
+	
+    @Resource(name="entityDao")
+    public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
+        this.entityDao = entityDao;
+    }
+    
 	@Resource
 	public void setProvinceSelectionStrategy(SelectionStrategy<ProvinceFilter> provinceSelectionStrategy) {
 		this.provinceSelectionStrategy = provinceSelectionStrategy;
