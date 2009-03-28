@@ -23,7 +23,6 @@ import javax.annotation.Resource;
 
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
-import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.service.OperatorMgr;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
@@ -47,7 +46,7 @@ public class OperatorFormAction extends FormAction {
      * make it available to the form flow;
      */
     public Event createOperator(RequestContext context) {
-        Operator operator = OperatorCreator.operatorFactory("DEFAULT",
+        Operator operator = Operator.operatorFactory("DEFAULT",
                 OperationMode.LOCAL, Locale.getDefault());
 
         OperatorForm form = doGetForm(context);

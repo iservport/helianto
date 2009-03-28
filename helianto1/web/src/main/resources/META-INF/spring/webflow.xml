@@ -34,23 +34,6 @@
         <flow:location path="classpath*:/flows/**/*.xml"/>
     </flow:registry>
     
-    <!--
-        Admin flow controller
-    -->
-    <bean name="/admin.htm"
-        class="org.springframework.webflow.executor.mvc.FlowController">
-        <property name="flowExecutor" ref="flowExecutor" />
-        <property name="defaultFlowId" value="login" />
-    </bean>
-	<!--
-		Home flow controller
-	-->
-	<bean name="/home.htm"
-		class="org.springframework.webflow.executor.mvc.FlowController">
-		<property name="flowExecutor" ref="flowExecutor" />
-		<property name="defaultFlowId" value="home" />
-	</bean>
-	
 	<bean name="startUpAction"
 		class="org.helianto.web.controller.StartUpAction" />
 

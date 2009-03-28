@@ -13,7 +13,6 @@
 		<config>core/src/main/resources/META-INF/spring/transaction.xml</config>
 		<config>process/src/main/resources/META-INF/spring/process-osgi-context.xml</config>
 		<config>web/src/main/resources/META-INF/spring/install.xml</config>
-		<config>web/src/main/resources/META-INF/spring/security-http.xml</config>
 		<config>web/src/main/resources/META-INF/spring/webflow.xml</config>
 	</configs>
 	<configSets>

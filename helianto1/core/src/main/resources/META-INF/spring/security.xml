@@ -1,17 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans 
-           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-           http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-2.5.xsd
-           http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx.xsd">
-               
-    
-	<!--
+  xmlns:security="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
+
+
+<!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -47,82 +41,7 @@
 		<property name="userMgr" ref="userMgr"/>
 		<property name="securityMgr" ref="securityMgr"/>
 	</bean>
-	<bean id="rememberMeServices" class="org.springframework.security.ui.rememberme.TokenBasedRememberMeServices">
-	  <property name="userDetailsService" ref="userDetailsService"/>
-	  <property name="key" value="iserv"/>
-	</bean>
-	        
-	<bean id="rememberMeAuthenticationProvider"
-	    class="org.springframework.security.providers.rememberme.RememberMeAuthenticationProvider">
-	  <property name="key" value="iserv"/>
-	</bean>
-	
-	<!--
-			Security test dao
-			WARNING: do not use in production environment!
-	
-	<bean id="inMemoryDaoImpl"
-		class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
-		<property name="userMap">
-			<value> test=test,ROLE_USER test1=xxxx,ROLE_USER
-			</value>
-		</property>
-	</bean>
-	-->
-	<!--
-			Security provider manager
-	-->
-	<bean id="authenticationManager"
-		class="org.springframework.security.providers.ProviderManager">
-		<property name="providers">
-			<list>
-				<ref local="daoAuthenticationProvider"/>
-				<ref local="rememberMeAuthenticationProvider"/>
-				<ref local="anonymousAuthenticationProvider"/>
-			</list>
-		</property>
-	</bean>
-	<!--
-			Authentication provider 	
-	-->
-	<bean id="daoAuthenticationProvider"
-		class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
-		<property name="userDetailsService" ref="userDetailsService"/>
-		<property name="userCache" ref="userCache"/>
-		<!--property name="passwordEncoder" ref="passwordEncoder"/-->
-	</bean>
-	
-	<!--
-			Anonymous authentication provider 	
-	-->
-	<bean id="anonymousAuthenticationProvider"
-		class="org.springframework.security.providers.anonymous.AnonymousAuthenticationProvider">
-		<property name="key" value="foobar"/>
-	</bean>
-	<!--
-			Password encoder 	
-	-->
-	<bean id="passwordEncoder"
-		class="org.springframework.security.providers.encoding.Md5PasswordEncoder"/>
-	<!--
-			User cache 	
-	-->
-	<bean id="userCache"
-		class="org.springframework.security.providers.dao.cache.EhCacheBasedUserCache">
-		<property name="cache">
-			<bean id="userCacheBackend"
-				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-				<property name="cacheManager">
-					<bean id="cacheManager"
-						class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
-				</property>
-				<property name="cacheName" value="userCache"/>
-			</bean>
-		</property>
-	</bean>	
-	<!--
-			Role voter 	
-	-->
-	<bean id="roleVoter" class="org.springframework.security.vote.RoleVoter"/>
-	
+
+    <security:authentication-provider user-service-ref="userDetailsService"/>
+
 </beans>
