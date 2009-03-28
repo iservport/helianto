@@ -63,6 +63,35 @@ import javax.persistence.UniqueConstraint;
 )
 public class Operator implements java.io.Serializable {
 
+    /**
+     * Default <code>Operator</code> creator.
+     *  
+     * @param operatorName
+     * @param operationMode if null, default is OperationMode.LOCAL
+     * @param locale if null, default is Locale.getDefault()
+     * 
+     * @see OperationMode
+     */
+    public static Operator operatorFactory(String operatorName, OperationMode operationMode, Locale locale) {
+        Operator operator = new Operator();
+        
+        operator.setOperatorName(operatorName);
+        if (operationMode==null) {
+            operator.setOperationMode(OperationMode.LOCAL.getValue());
+        } else {
+            operator.setOperationMode(operationMode.getValue());
+        }
+        if (locale==null) {
+            operator.setLocale(Locale.getDefault());
+        } else {
+            operator.setLocale(locale);
+        }
+        operator.setOperatorSourceMailAddress("operator@helianto.org");
+        operator.setDefaultEncoding("ISO-8859-1");
+        operator.setOperatorHostAddress("http://www.helianto.org");
+        return operator;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private String operatorName;

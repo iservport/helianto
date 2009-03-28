@@ -37,6 +37,19 @@ import javax.persistence.UniqueConstraint;
 )
 public class PrivateKey implements java.io.Serializable {
 
+    /**
+     * <code>PrivateKey</code> created with minumum requirements.
+     * 
+     * @param credential
+     * @param privateKeyValue
+     */
+    public static PrivateKey privateKeyFactory(Credential requiredCredential, String privateKeyValue) {
+        PrivateKey privateKey = new PrivateKey();
+        privateKey.setCredential(requiredCredential);
+        privateKey.setPrivateKey(privateKeyValue);
+        return privateKey;
+    }
+    
     private static final long serialVersionUID = 1L;
     private int id;
     private Credential credential;
