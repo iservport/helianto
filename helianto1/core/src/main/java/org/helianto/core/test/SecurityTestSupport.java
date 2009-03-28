@@ -21,11 +21,6 @@ import java.util.List;
 import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.security.UserDetailsAdapter;
-import org.springframework.security.Authentication;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.context.SecurityContextImpl;
-import org.springframework.security.providers.TestingAuthenticationToken;
 
 /**
  * Security related test support.

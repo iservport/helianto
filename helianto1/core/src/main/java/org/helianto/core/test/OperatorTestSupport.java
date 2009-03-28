@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
-import org.helianto.core.creation.OperatorCreator;
 import org.helianto.core.dao.OperatorDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
@@ -36,7 +35,7 @@ public class OperatorTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             operatorName = DomainTestSupport.getNonRepeatableStringValue(testKey++, 12);
         }
-        Operator operator = OperatorCreator.operatorFactory(operatorName, OperationMode.LOCAL, Locale.getDefault());
+        Operator operator = Operator.operatorFactory(operatorName, OperationMode.LOCAL, Locale.getDefault());
         return operator;
     }
 

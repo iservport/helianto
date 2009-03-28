@@ -20,23 +20,30 @@ public class EntityTestSupport {
     private static int testKey;
 
     /**
-     * Test support method to create a <code>Entity</code>.
-     * @param operator optional Operator 
-     * @param alias optional String 
+     * Test support method to create an <code>Entity</code>.
      */
-    public static Entity createEntity(Object... args) {
-        Operator operator;
-        try {
-            operator = (Operator) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            operator = OperatorTestSupport.createOperator();
-        }
-        String alias;
-        try {
-            alias = (String) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            alias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
-        }
+    public static Entity createEntity() {
+        Entity entity = EntityTestSupport.createEntity(OperatorTestSupport.createOperator());
+        return entity;
+    }
+
+    /**
+     * Test support method to create an <code>Entity</code>.
+     * 
+     * @param operator
+     */
+    public static Entity createEntity(Operator operator) {
+        Entity entity = EntityTestSupport.createEntity(operator, DomainTestSupport.getNonRepeatableStringValue(testKey++, 20));
+        return entity;
+    }
+
+    /**
+     * Test support method to create an <code>Entity</code>.
+     * 
+     * @param operator
+     * @param alias
+     */
+    public static Entity createEntity(Operator operator, String alias) {
         Entity entity = Entity.entityFactory(operator, alias);
         return entity;
     }
