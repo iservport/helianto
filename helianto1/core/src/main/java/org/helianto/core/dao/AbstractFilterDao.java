@@ -25,10 +25,19 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 
 /**
+ * Default implementation to <code>FilterDao</code> interface.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaFilter> extends AbstractBasicDao<T> implements FilterDao<T, F> {
 
+	/**
+	 * By default, selections are constrained using the entity.
+	 */
+	protected boolean requireEntity() {
+		return true;
+	}
+	
 	public Collection<T> find(F filter) {
 		String whereClause = createCriteriaAsString(filter);
 		return super.find(getSelectBuilder(), whereClause);
@@ -38,7 +47,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
 	 * Delegate criteria creation to a chain of processors.
 	 */
 	protected String createCriteriaAsString(F filter) {
-		return createCriteriaAsString(filter, true);
+		return createCriteriaAsString(filter, requireEntity());
 	}
 
 	/**
