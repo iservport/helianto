@@ -18,15 +18,18 @@ package org.helianto.core.dao;
 import java.util.Collection;
 
 /**
- * A convenient sub-set of persistence operations.
+ * Extends <code>BasicDao</code> to support filters.
  * 
  * @author Mauricio Fernandes de Castro.
  */
 public interface FilterDao<T, F> extends BasicDao<T> {
 
-    /**
-     * Find by filter.
-     */
+	/**
+	 * Create a selection clause from the filter and return 
+	 * the result set.
+	 * 
+	 * @param filter
+	 */
     public Collection<T> find(F filter);
     
 }
