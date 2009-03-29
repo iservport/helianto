@@ -37,6 +37,11 @@ public interface UserBackedFilter {
     public void setUser(User user);
     
     /**
+     * True when filter should return a unique result.
+     */
+    public boolean isSelection();
+
+    /**
      * Reset filter
      */
     public void reset();

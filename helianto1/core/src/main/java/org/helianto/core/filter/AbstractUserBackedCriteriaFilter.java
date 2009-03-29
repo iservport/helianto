@@ -15,10 +15,8 @@
 
 package org.helianto.core.filter;
 
-import java.io.Serializable;
 import java.lang.reflect.Constructor;
 
-import org.helianto.core.Entity;
 import org.helianto.core.User;
 
 /**
@@ -27,52 +25,9 @@ import org.helianto.core.User;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractUserBackedCriteriaFilter implements
-        UserBackedFilter, Serializable {
+public abstract class AbstractUserBackedCriteriaFilter extends AbstractEntityBackedFilter implements
+        UserBackedFilter {
 	
-	/**
-	 * Default constructor
-	 */
-	protected AbstractUserBackedCriteriaFilter() {}
-    
-	/**
-	 * Entity based constructor.
-	 */
-	protected AbstractUserBackedCriteriaFilter(Entity entity) {
-		setEntity(entity);
-	}
-    
-	/**
-	 * User based constructor.
-	 */
-	protected AbstractUserBackedCriteriaFilter(User user) {
-		setUser(user);
-	}
-    
-    private User user;
-    
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-        if (user==null) {
-            this.entity = null;
-        }
-        else {
-            this.entity = user.getEntity();
-        }
-    }
-    
-    private Entity entity;
-    
-    public Entity getEntity() {
-        return entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-    
     /**
      * Static factory method.
      * 
@@ -111,4 +66,38 @@ public abstract class AbstractUserBackedCriteriaFilter implements
     	}
     }
 
+	/**
+	 * Default constructor
+	 */
+	protected AbstractUserBackedCriteriaFilter() {
+		super();
+	}
+    
+	/**
+	 * User constructor.
+	 */
+	protected AbstractUserBackedCriteriaFilter(User user) {
+		this();
+		setUser(user);
+	}
+    
+    private User user;
+    
+    /**
+     * User providing the current entity.
+     */
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+        if (user==null) {
+            setEntity(null);
+        }
+        else {
+        	setEntity(user.getEntity());
+        }
+    }
+    
+    
 }
