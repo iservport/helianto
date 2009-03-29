@@ -27,22 +27,37 @@ import org.helianto.core.filter.CriteriaBuilder;
 /**
  * Default implementation to <code>FilterDao</code> interface.
  * 
+ * <p>
+ * This implementation recognizes filter states to be:
+ * </p>
+ * <ul>
+ * <li>selection: an unique result is expected, or </li>
+ * <li>filter: any result set constrained by the filter.</li>
+ * </ul> 
+ * 
  * @author Mauricio Fernandes de Castro
  */
 public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaFilter> extends AbstractBasicDao<T> implements FilterDao<T, F> {
 
-	/**
-	 * By default, selections are constrained using the entity.
-	 */
-	protected boolean requireEntity() {
-		return true;
-	}
-	
+	/* @see FilterDao interface */
 	public Collection<T> find(F filter) {
 		String whereClause = createCriteriaAsString(filter);
 		return super.find(getSelectBuilder(), whereClause);
 	}
 
+	/**
+	 * If true, raise exception when entity is null. 
+	 * 
+	 * <p>
+	 * Subclasses overriding this method can control how the the result set 
+	 * spans beyond the entity namespace boundaries. However, returning false
+	 * here is recommended only for a few top-level domain classes.
+	 * </p>
+	 */
+	protected boolean requireEntity() {
+		return true;
+	}
+	
 	/**
 	 * Delegate criteria creation to a chain of processors.
 	 */
@@ -79,7 +94,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
     }
 	
 	/**
-	 * Create the builder.
+	 * Create the the builder.
 	 */
 	protected CriteriaBuilder createCriteriaBuilder() {
         return new CriteriaBuilder(getObjectAlias());
@@ -100,7 +115,8 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
     }
     
 	/**
-	 * Filter pre-processor.
+	 * Subclasses overriding this method should create here query segments
+	 * to be included for both selection and filter operations.
 	 * 
 	 * @param filter
 	 * @param mainCriteriaBuilder
@@ -109,14 +125,16 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
 	}
 	
 	/**
-	 * A selection should create a criteria string from a unique key.
+	 * True when filter should return an unique result.
 	 * 
 	 * @param filter
 	 */
-	protected abstract boolean isSelection(F filter);
+	protected boolean isSelection(F filter) {
+		return filter.isSelection();
+	}
 	
 	/**
-	 * Selection processor.
+	 * Hook to the selection processor.
 	 * 
 	 * @param filter
 	 * @param mainCriteriaBuilder
@@ -124,7 +142,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
 	protected abstract void doSelect(F filter, CriteriaBuilder mainCriteriaBuilder);
 	
 	/**
-	 * Filter processor.
+	 * Hook to the filter processor.
 	 * 
 	 * @param filter
 	 * @param mainCriteriaBuilder
@@ -132,7 +150,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
 	protected abstract void doFilter(F filter, CriteriaBuilder mainCriteriaBuilder);
 	
 	/**
-	 * Filter post-processor.
+	 * Hook to the filter post-processor.
 	 * 
 	 * @param filter
 	 * @param mainCriteriaBuilder
