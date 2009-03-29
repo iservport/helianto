@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
 public class DefaultEntityDao extends AbstractFilterDao<Entity, EntityFilter> {
 
 	/**
-	 * Required to clear default restriction to a single entity. 
+	 * Do not raise exception when entity is null. 
 	 */
 	@Override
 	protected boolean requireEntity() {
