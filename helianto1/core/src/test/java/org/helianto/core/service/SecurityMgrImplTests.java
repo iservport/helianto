@@ -26,13 +26,11 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.dao.CredentialDao;
-import org.helianto.core.dao.IdentityDao;
-import org.helianto.core.security.PublicUserDetails;
-import org.helianto.core.test.SecurityTestSupport;
+import org.helianto.core.dao.FilterDao;
+import org.helianto.core.filter.IdentityFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.security.context.SecurityContextHolder;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -95,15 +93,16 @@ public class SecurityMgrImplTests {
     
     //~ collaborators
     
-    private IdentityDao identityDao;
+	private FilterDao<Identity, IdentityFilter> identityDao;
     private CredentialDao credentialDao;
     
     //~ setup
     
-    @Before
+    @SuppressWarnings("unchecked")
+	@Before
     public void setUp() {
         securityMgr = new SecurityMgrImpl();
-        identityDao = createMock(IdentityDao.class);
+        identityDao = createMock(FilterDao.class);
         securityMgr.setIdentityDao(identityDao);
         credentialDao = createMock(CredentialDao.class);
         securityMgr.setCredentialDao(credentialDao);

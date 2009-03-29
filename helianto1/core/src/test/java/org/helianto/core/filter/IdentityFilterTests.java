@@ -30,8 +30,8 @@ public class IdentityFilterTests extends TestCase {
     }
 
     public void testPrincipalSearch() {
-        filter.setPrincipalSearch("principalSearch");
-        assertEquals("principalSearch", filter.getPrincipalSearch());
+        filter.setPrincipal("principalSearch");
+        assertEquals("principalSearch", filter.getPrincipal());
     }
     
     private IdentityFilter filter;

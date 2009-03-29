@@ -237,6 +237,10 @@ public class CriteriaBuilderTests extends TestCase {
 		public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
 
 		public void setToDate(Date toDate) { this.toDate = toDate; }
+
+		public boolean isSelection() {
+			return false;
+		}
         
     }
 

@@ -44,8 +44,6 @@ import org.helianto.core.UserLogFilter;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.dao.IdentityDao;
-import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.dao.ProvinceDao;
 import org.helianto.core.filter.IdentityFilter;
@@ -65,7 +63,7 @@ public class UserMgrImplTests extends TestCase {
         principalGenerationStrategy.generatePrincipal(identity, 0);
         replay(principalGenerationStrategy);
         
-        expect(identityDao.mergeIdentity(identity)).andReturn(managedIdentity);
+        expect(identityDao.merge(identity)).andReturn(managedIdentity);
         replay(identityDao);
         
         assertSame(managedIdentity, userMgr.storeIdentity(identity));
@@ -77,7 +75,7 @@ public class UserMgrImplTests extends TestCase {
         String principal = "123";
         Identity identity = new Identity();
         
-        expect(identityDao.findIdentityByNaturalId(principal))
+        expect(identityDao.findUnique(principal))
             .andReturn(identity);
         replay(identityDao);
         
@@ -88,17 +86,12 @@ public class UserMgrImplTests extends TestCase {
     public void testSelectIdentities() {
         int size = 10;
         IdentityFilter filter = new IdentityFilter();
-        String criteria = "criteria";
         List<Identity> identityList = IdentityTestSupport.createIdentityList(size);
         List<Identity> exclusions = new ArrayList<Identity>();
         Identity excluded = identityList.get((int) (Math.random()*size));
         exclusions.add(excluded);
 
-        expect(identitySelectionStrategy.createCriteriaAsString(filter, "identity"))
-            .andReturn(criteria);
-        replay(identitySelectionStrategy);
-        
-        expect(identityDao.findIdentities(criteria))        
+        expect(identityDao.find(filter))        
             .andReturn(identityList);
         replay(identityDao);
 
@@ -148,7 +141,7 @@ public class UserMgrImplTests extends TestCase {
     	UserGroup userGroup = new UserGroup();
     	Identity identity = new Identity();
     	
-    	expect(identityDao.findIdentityByNaturalId("principal"))
+    	expect(identityDao.findUnique("principal"))
     		.andReturn(identity);
     	replay(identityDao);
     	
@@ -164,7 +157,7 @@ public class UserMgrImplTests extends TestCase {
     	Credential managedCredential = CredentialTestSupport.createCredential();
     	managedCredential.getIdentity().setPrincipal("principal");
     	
-    	expect(identityDao.findIdentityByNaturalId("principal"))
+    	expect(identityDao.findUnique("principal"))
 			.andReturn(null);
     	replay(identityDao);
 	
@@ -262,10 +255,9 @@ public class UserMgrImplTests extends TestCase {
 
     // 
     
-    private IdentityDao identityDao;
+    private FilterDao<Identity, IdentityFilter> identityDao;
     private CredentialDao credentialDao;
     private InternalEnumeratorDao internalEnumeratorDao;
-    private IdentitySelectionStrategy identitySelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private BasicDao<UserAssociation> userAssociationDao;
@@ -277,12 +269,10 @@ public class UserMgrImplTests extends TestCase {
 	@Override
     public void setUp() {
         userMgr = new UserMgrImpl();
-        identityDao = createMock(IdentityDao.class);
+        identityDao = createMock(FilterDao.class);
         userMgr.setIdentityDao(identityDao);
         credentialDao = createMock(CredentialDao.class);
         userMgr.setCredentialDao(credentialDao);
-        identitySelectionStrategy = createMock(IdentitySelectionStrategy.class);
-        userMgr.setIdentitySelectionStrategy(identitySelectionStrategy);
         principalGenerationStrategy = createMock(PrincipalGenerationStrategy.class);
         userMgr.setPrincipalGenerationStrategy(principalGenerationStrategy);
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
@@ -302,7 +292,6 @@ public class UserMgrImplTests extends TestCase {
         reset(identityDao);
         reset(credentialDao);
         reset(internalEnumeratorDao);
-        reset(identitySelectionStrategy);
         reset(principalGenerationStrategy);
         reset(userGroupDao);
         reset(userAssociationDao);

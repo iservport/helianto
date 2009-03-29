@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
  * <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated in favour of DefalultIdentityDao
  */
 @Component("identitySelectionStrategy")
 public class DefaultIdentitySelectionStrategy  implements IdentitySelectionStrategy {
@@ -67,9 +68,9 @@ public class DefaultIdentitySelectionStrategy  implements IdentitySelectionStrat
      * @param criteriaBuilder
      */
     protected void appendPrincipalSearchFilter(IdentityFilter filter, CriteriaBuilder criteriaBuilder) {
-        if (!filter.getPrincipalSearch().equals("")) {
+        if (!filter.getPrincipal().equals("")) {
             criteriaBuilder.appendAnd().appendSegment("principal", "like", "lower")
-            .appendLike(filter.getPrincipalSearch().toLowerCase());
+            .appendLike(filter.getPrincipal().toLowerCase());
        }
     }
     

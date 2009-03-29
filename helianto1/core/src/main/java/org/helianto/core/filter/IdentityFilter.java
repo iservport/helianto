@@ -15,6 +15,8 @@
 
 package org.helianto.core.filter;
 
+import org.helianto.core.User;
+
 
 
 /**
@@ -24,18 +26,32 @@ package org.helianto.core.filter;
  */
 public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
 
+	/**
+	 * Factory method.
+	 * 
+	 * @param user
+	 */
+	public static IdentityFilter identityFilterFactory(User user) {
+		return AbstractUserBackedCriteriaFilter.filterFactory(IdentityFilter.class, user);
+	}
+	
     private static final long serialVersionUID = 1L;
-    private String principalSearch = "";
+    private String principal = "";
     private String nameOrAliasSearch = "";
 
-    public String getPrincipalSearch() {
-        return principalSearch;
+    public String getPrincipal() {
+        return principal;
     }
-    public void setPrincipalSearch(String principalSearch) {
-        this.principalSearch = principalSearch;
+    public void setPrincipal(String principal) {
+        this.principal = principal;
     }
     
-    public String getNameOrAliasSearch() {
+    @Override
+	public boolean isSelection() {
+		return (getEntity()==null && getPrincipal().length()>0);
+	}
+    
+	public String getNameOrAliasSearch() {
         return nameOrAliasSearch;
     }
     public void setNameOrAliasSearch(String nameOrAliasSearch) {
@@ -43,7 +59,8 @@ public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
     }
 
     public void reset() {
-    	setPrincipalSearch("");
+    	setPrincipal("");
     	setNameOrAliasSearch("");
     }
+
 }

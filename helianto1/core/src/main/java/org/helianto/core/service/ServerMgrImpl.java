@@ -38,11 +38,11 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.dao.ServerDao;
 import org.helianto.core.dao.ServiceDao;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.dao.UserRoleDao;
+import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.MailMessageComposer;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
@@ -63,10 +63,10 @@ public class ServerMgrImpl  implements ServerMgr {
     }
     
     public Identity findOrCreateIdentity(String principal) {
-        Identity identity = identityDao.findIdentityByNaturalId(principal);
+        Identity identity = identityDao.findUnique(principal);
         if (identity==null) {
             identity = Identity.identityFactory(principal, principal);
-            identityDao.persistIdentity(identity);
+            identityDao.persist(identity);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+identity);
             }
@@ -151,10 +151,10 @@ public class ServerMgrImpl  implements ServerMgr {
 
     @Deprecated
     public UserGroup findOrCreateUserGroup(Entity entity, String groupName) {
-        Identity groupIdentity = identityDao.findIdentityByNaturalId(groupName);
+        Identity groupIdentity = identityDao.findUnique(groupName);
         if (groupIdentity==null) {
             groupIdentity = createGroupIdentity(groupName);
-            identityDao.persistIdentity(groupIdentity);
+            identityDao.persist(groupIdentity);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+groupIdentity);
             }
@@ -169,7 +169,7 @@ public class ServerMgrImpl  implements ServerMgr {
         }
         if (userGroup==null) {
             userGroup = UserGroup.userGroupFactory(entity, groupIdentity);
-            identityDao.persistIdentity(groupIdentity);
+            identityDao.persist(groupIdentity);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+userGroup);
             }
@@ -252,7 +252,7 @@ public class ServerMgrImpl  implements ServerMgr {
     private ServiceDao serviceDao;
     private UserRoleDao userRoleDao;
     private FilterDao<Entity, EntityFilter> entityDao;
-    private IdentityDao identityDao;
+    private FilterDao<Identity, IdentityFilter> identityDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private UserDao userDao;
     private BasicDao<UserAssociation> userAssociationDao;
@@ -280,8 +280,8 @@ public class ServerMgrImpl  implements ServerMgr {
         this.entityDao = entityDao;
     }
 
-    @Resource
-    public void setIdentityDao(IdentityDao identityDao) {
+    @Resource(name="identityDao")
+    public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
         this.identityDao = identityDao;
     }
 

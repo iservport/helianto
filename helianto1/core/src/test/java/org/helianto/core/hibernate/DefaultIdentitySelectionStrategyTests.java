@@ -56,7 +56,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
     public void testCreateCriteriaAsStringPrincipal() {
         filter.setUser(UserTestSupport.createUser());
         filter.setNameOrAliasSearch("");
-        filter.setPrincipalSearch("principalSearch");
+        filter.setPrincipal("principalSearch");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter, "identity");
         
@@ -67,7 +67,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
     public void pendingTestCreateCriteriaAsStringFull() {
         filter.setUser(UserTestSupport.createUser());
         filter.setNameOrAliasSearch("nameOrAliasSearch");
-        filter.setPrincipalSearch("principalSearch");
+        filter.setPrincipal("principalSearch");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter, "identity");
         String expect = "where (" +
@@ -83,7 +83,7 @@ public class DefaultIdentitySelectionStrategyTests extends TestCase {
     public void pendingTestCreateCriteriaAsStringNameOrAlias() {
         filter.setUser(UserTestSupport.createUser());
         filter.setNameOrAliasSearch("nameOrAliasSearch");
-        filter.setPrincipalSearch("");
+        filter.setPrincipal("");
         String criteria = 
             identitySelectionStrategy.createCriteriaAsString(filter, "identity");
         String expect = "where (" +

@@ -4,14 +4,14 @@
 	<classpathentry kind="src" output="core/target/test-classes" path="core/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="core/target/classes" path="core/src/main/resources"/>
 	<classpathentry excluding="**" kind="src" output="core/target/test-classes" path="core/src/test/resources"/>
-	<classpathentry kind="src" path="partner/src/main/java"/>
-	<classpathentry excluding="**" kind="src" output="partner/target/classes" path="partner/src/main/resources"/>
+	<classpathentry kind="src" output="partner/target/classes" path="partner/src/main/java"/>
 	<classpathentry kind="src" output="partner/target/test-classes" path="partner/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="partner/target/classes" path="partner/src/main/resources"/>
 	<classpathentry excluding="**" kind="src" output="partner/target/test-classes" path="partner/src/test/resources"/>
-	<classpathentry kind="src" path="document/src/main/java"/>
-	<classpathentry kind="src" path="document/src/main/resources"/>
-	<classpathentry kind="src" path="document/src/test/java"/>
-	<classpathentry kind="src" path="document/src/test/resources"/>
+	<classpathentry kind="src" output="document/target/classes" path="document/src/main/java"/>
+	<classpathentry kind="src" output="document/target/test-classes" path="document/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="document/target/classes" path="document/src/main/resources"/>
+	<classpathentry excluding="**" kind="src" output="document/target/test-classes" path="document/src/test/resources"/>
 	<classpathentry kind="src" output="process/target/classes" path="process/src/main/java"/>
 	<classpathentry kind="src" output="process/target/test-classes" path="process/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="process/target/classes" path="process/src/main/resources"/>

@@ -21,14 +21,13 @@ import java.util.List;
 import org.helianto.core.Identity;
 import org.helianto.core.dao.IdentityDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Identity</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated in favour of DefaultIdentityDao
  */
-@Repository("identityDao")
 public class IdentityDaoImpl extends GenericDaoImpl implements IdentityDao {
 
     public void persistIdentity(Identity identity) {

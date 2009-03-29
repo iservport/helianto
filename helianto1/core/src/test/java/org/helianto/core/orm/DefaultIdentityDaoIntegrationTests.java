@@ -16,31 +16,31 @@
 
 package org.helianto.core.orm;
 
-import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.dao.BasicDao;
-import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.test.IdentityTestSupport;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultEntityDaoIntegrationTests extends AbstractHibernateIntegrationTest {
+public class DefaultIdentityDaoIntegrationTests extends AbstractHibernateIntegrationTest {
 	
-	public DefaultEntityDaoIntegrationTests() {
+	public DefaultIdentityDaoIntegrationTests() {
 		setAutowireMode(AUTOWIRE_BY_NAME);
 	}
 	
 	public void testFindUnique() {
-		Entity entity = EntityTestSupport.createEntity();
-		entityDao.persist(entity);
-		assertEquals(entity, entityDao.findUnique(entity.getOperator(), entity.getAlias()));
+		Identity identity = IdentityTestSupport.createIdentity();
+		identityDao.persist(identity);
+		assertEquals(identity, identityDao.findUnique(identity.getPrincipal()));
 	}
 
     //- collabs
 
-    private BasicDao<Entity> entityDao;
+    private BasicDao<Identity> identityDao;
     
-    public void setEntityDao(BasicDao<Entity> entityDao) {
-        this.entityDao = entityDao;
+    public void setIdentityDao(BasicDao<Identity> identityDao) {
+        this.identityDao = identityDao;
     }
     
 }

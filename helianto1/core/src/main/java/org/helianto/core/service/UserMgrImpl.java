@@ -54,12 +54,11 @@ import org.springframework.util.Assert;
 public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     
     public Identity findIdentityByPrincipal(String principal) {
-        return identityDao.findIdentityByNaturalId(principal);
+        return (Identity) identityDao.findUnique(principal);
     }
 
     public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions) {
-        String criteria = identitySelectionStrategy.createCriteriaAsString(filter, "identity");
-        List<Identity> identityList = identityDao.findIdentities(criteria);
+        List<Identity> identityList = (List<Identity>) identityDao.find(filter);
         if (logger.isDebugEnabled()) {
             logger.debug("Found "+identityList.size()+" item(s)");
         }
@@ -73,7 +72,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 	public Identity storeIdentity(Identity identity) {
 		int attemptCount = 0;
 		principalGenerationStrategy.generatePrincipal(identity, attemptCount);
-		return identityDao.mergeIdentity(identity);
+		return identityDao.merge(identity);
 	}
 	
 	// user
@@ -152,7 +151,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 //
 	public UserAssociation createUserAssociation(UserGroup parent, String principal) {
 		// does identity exist?
-		Identity identity = identityDao.findIdentityByNaturalId(principal);
+		Identity identity = identityDao.findUnique(principal);
 		if (identity==null) {
 			// No! create one with a creential.
 			Credential credential = Credential.credentialFactory(Identity.identityFactory(principal), "");
@@ -196,7 +195,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 	public void writeIdentity(Identity identity) {
 		int attemptCount = 0;
 		principalGenerationStrategy.generatePrincipal(identity, attemptCount);
-		identityDao.mergeIdentity(identity);
+		identityDao.merge(identity);
 	}
 	
     public List<Province> findProvinceByOperator(Operator operator) {
@@ -205,18 +204,18 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
 
     //- collaborators
     
-    private IdentityDao identityDao;
+    private FilterDao<Identity, IdentityFilter> identityDao;
     private CredentialDao credentialDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private BasicDao<UserAssociation> userAssociationDao;
     private FilterDao<UserLog, UserLogFilter> userLogDao;
-    private IdentitySelectionStrategy identitySelectionStrategy;
+//    private IdentitySelectionStrategy identitySelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private ProvinceDao provinceDao;
 	
 
-    @Resource
-    public void setIdentityDao(IdentityDao identityDao) {
+    @Resource(name="identityDao")
+    public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
         this.identityDao = identityDao;
     }
 
@@ -240,11 +239,11 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         this.userLogDao = userLogDao;
     }
     
-    @Resource
-    public void setIdentitySelectionStrategy(
-            IdentitySelectionStrategy identitySelectionStrategy) {
-        this.identitySelectionStrategy = identitySelectionStrategy;
-    }
+//    @Resource
+//    public void setIdentitySelectionStrategy(
+//            IdentitySelectionStrategy identitySelectionStrategy) {
+//        this.identitySelectionStrategy = identitySelectionStrategy;
+//    }
 
     @Resource
 	public void setPrincipalGenerationStrategy(

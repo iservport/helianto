@@ -22,6 +22,7 @@ import org.helianto.core.filter.IdentityFilter;
  * <code>Identity</code> selection strategy. 
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated in favour of DefalultIdentityDao
  */
 public interface IdentitySelectionStrategy {
     
