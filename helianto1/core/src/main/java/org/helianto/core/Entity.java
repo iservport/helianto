@@ -156,7 +156,6 @@ public class Entity implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("operator").append("='").append(getOperator()).append("' ");
         buffer.append("alias").append("='").append(getAlias()).append("' ");
         buffer.append("]");
       
@@ -181,7 +180,6 @@ public class Entity implements java.io.Serializable {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getOperator() == null ? 0 : this.getOperator().hashCode() );
          result = 37 * result + ( getAlias() == null ? 0 : this.getAlias().hashCode() );
          return result;
    }   
