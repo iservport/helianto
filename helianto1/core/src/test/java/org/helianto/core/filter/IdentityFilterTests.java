@@ -16,6 +16,8 @@
 package org.helianto.core.filter;
 
 
+import org.helianto.core.IdentityFilter;
+
 import junit.framework.TestCase;
 
 /**

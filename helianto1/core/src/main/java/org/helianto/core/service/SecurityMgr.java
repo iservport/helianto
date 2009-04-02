@@ -40,7 +40,7 @@ public interface SecurityMgr extends UserMgr {
     /**
      * Find <core>Credential</core> by principal.
      */
-	public Credential findCredentialByPrincipal(String princpal);
+	public Credential findCredentialByPrincipal(String principal);
 	
     /**
      * Store the given <code>Credential</code> and return a managed object.

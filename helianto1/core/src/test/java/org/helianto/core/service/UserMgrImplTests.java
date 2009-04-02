@@ -32,6 +32,7 @@ import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityFilter;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
@@ -42,11 +43,9 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserLogFilter;
 import org.helianto.core.dao.BasicDao;
-import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.dao.ProvinceDao;
-import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
@@ -256,7 +255,6 @@ public class UserMgrImplTests extends TestCase {
     // 
     
     private FilterDao<Identity, IdentityFilter> identityDao;
-    private CredentialDao credentialDao;
     private InternalEnumeratorDao internalEnumeratorDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
@@ -271,8 +269,6 @@ public class UserMgrImplTests extends TestCase {
         userMgr = new UserMgrImpl();
         identityDao = createMock(FilterDao.class);
         userMgr.setIdentityDao(identityDao);
-        credentialDao = createMock(CredentialDao.class);
-        userMgr.setCredentialDao(credentialDao);
         principalGenerationStrategy = createMock(PrincipalGenerationStrategy.class);
         userMgr.setPrincipalGenerationStrategy(principalGenerationStrategy);
         internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
@@ -290,7 +286,6 @@ public class UserMgrImplTests extends TestCase {
     @Override
     public void tearDown() {
         reset(identityDao);
-        reset(credentialDao);
         reset(internalEnumeratorDao);
         reset(principalGenerationStrategy);
         reset(userGroupDao);

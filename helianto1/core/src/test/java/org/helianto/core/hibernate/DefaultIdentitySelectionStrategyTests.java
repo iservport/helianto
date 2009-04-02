@@ -15,8 +15,8 @@
 
 package org.helianto.core.hibernate;
 
+import org.helianto.core.IdentityFilter;
 import org.helianto.core.dao.IdentitySelectionStrategy;
-import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.orm.DefaultIdentitySelectionStrategy;
 import org.helianto.core.test.UserTestSupport;
 

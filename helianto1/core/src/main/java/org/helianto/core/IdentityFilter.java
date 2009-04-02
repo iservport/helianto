@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-package org.helianto.core.filter;
+package org.helianto.core;
 
-import org.helianto.core.User;
+import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 
 
 

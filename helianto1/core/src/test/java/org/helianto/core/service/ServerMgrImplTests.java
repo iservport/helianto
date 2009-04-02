@@ -28,6 +28,7 @@ import javax.mail.MessagingException;
 import junit.framework.TestCase;
 
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityFilter;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.UserFilter;
@@ -35,7 +36,6 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.ServerDao;
 import org.helianto.core.dao.ServiceDao;
-import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.mail.ConfigurableMailSender;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.DecoratedPreparator;

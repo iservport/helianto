@@ -28,9 +28,9 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityFilter;
 import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.filter.IdentityFilter;
 import org.helianto.core.test.UserTestSupport;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;

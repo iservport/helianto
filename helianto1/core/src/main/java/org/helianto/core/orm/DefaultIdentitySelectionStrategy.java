@@ -17,9 +17,9 @@ package org.helianto.core.orm;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.IdentityFilter;
 import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.filter.IdentityFilter;
 import org.springframework.stereotype.Component;
 
 /**

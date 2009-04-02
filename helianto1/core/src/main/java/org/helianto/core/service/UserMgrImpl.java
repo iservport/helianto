@@ -28,6 +28,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.EventType;
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityFilter;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.User;
@@ -38,12 +39,8 @@ import org.helianto.core.UserLog;
 import org.helianto.core.UserLogFilter;
 import org.helianto.core.UserState;
 import org.helianto.core.dao.BasicDao;
-import org.helianto.core.dao.CredentialDao;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.dao.IdentityDao;
-import org.helianto.core.dao.IdentitySelectionStrategy;
 import org.helianto.core.dao.ProvinceDao;
-import org.helianto.core.filter.IdentityFilter;
 import org.springframework.util.Assert;
 
 /**
@@ -205,7 +202,7 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     //- collaborators
     
     private FilterDao<Identity, IdentityFilter> identityDao;
-    private CredentialDao credentialDao;
+    private BasicDao<Credential> credentialDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private BasicDao<UserAssociation> userAssociationDao;
     private FilterDao<UserLog, UserLogFilter> userLogDao;
@@ -219,8 +216,8 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         this.identityDao = identityDao;
     }
 
-    @Resource
-    public void setCredentialDao(CredentialDao credentialDao) {
+    @Resource(name="credentialDao")
+    public void setCredentialDao(BasicDao<Credential> credentialDao) {
         this.credentialDao = credentialDao;
     }
 

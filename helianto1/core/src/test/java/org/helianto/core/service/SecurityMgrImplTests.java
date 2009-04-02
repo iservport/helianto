@@ -24,10 +24,10 @@ import static org.junit.Assert.assertSame;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityFilter;
 import org.helianto.core.PasswordNotVerifiedException;
-import org.helianto.core.dao.CredentialDao;
+import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.filter.IdentityFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +45,7 @@ public class SecurityMgrImplTests {
         Identity identity = new Identity();
         Credential credential = new Credential();
         
-        expect(credentialDao.findCredentialByNaturalId(identity))
+        expect(credentialDao.findUnique(identity))
             .andReturn(credential);
         replay(credentialDao);
         
@@ -56,12 +56,18 @@ public class SecurityMgrImplTests {
     @Test
     public void testFindCredentialByPrincipal() {
         Credential credential = new Credential();
+        Identity identity = new Identity();
         
-        expect(credentialDao.findCredentialByPrincipal("PRINCIPAL"))
-            .andReturn(credential);
+        expect(identityDao.findUnique("PRINCIPAL"))
+            .andReturn(identity);
+        replay(identityDao);
+        
+        expect(credentialDao.findUnique(identity))
+        	.andReturn(credential);
         replay(credentialDao);
-        
+    
         assertSame(credential, securityMgr.findCredentialByPrincipal("PRINCIPAL"));
+        verify(identityDao);
         verify(credentialDao);
     }
 
@@ -84,7 +90,7 @@ public class SecurityMgrImplTests {
         Credential managedCredential = null, credential = Credential.credentialFactory("PASSWORD");
         credential.setVerifyPassword("PASSWORD");
         
-        expect(credentialDao.mergeCredential(credential)).andReturn(managedCredential);
+        expect(credentialDao.merge(credential)).andReturn(managedCredential);
         replay(credentialDao);
         
         assertSame(managedCredential, securityMgr.storeCredential(credential));
@@ -94,7 +100,7 @@ public class SecurityMgrImplTests {
     //~ collaborators
     
 	private FilterDao<Identity, IdentityFilter> identityDao;
-    private CredentialDao credentialDao;
+	private BasicDao<Credential> credentialDao;
     
     //~ setup
     
@@ -104,7 +110,7 @@ public class SecurityMgrImplTests {
         securityMgr = new SecurityMgrImpl();
         identityDao = createMock(FilterDao.class);
         securityMgr.setIdentityDao(identityDao);
-        credentialDao = createMock(CredentialDao.class);
+        credentialDao = createMock(BasicDao.class);
         securityMgr.setCredentialDao(credentialDao);
     }
     

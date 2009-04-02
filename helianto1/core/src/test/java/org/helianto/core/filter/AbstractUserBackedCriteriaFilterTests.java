@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import junit.framework.TestCase;
 
+import org.helianto.core.IdentityFilter;
 import org.helianto.core.User;
 
 /**

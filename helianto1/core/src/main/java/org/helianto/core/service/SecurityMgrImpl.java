@@ -23,12 +23,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.helianto.core.IdentityFilter;
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.User;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.dao.CredentialDao;
+import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.SecureUserDetails;
@@ -42,23 +43,23 @@ import org.helianto.core.security.UserDetailsAdapter;
 public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
     
 	public Credential findCredentialByIdentity(Identity identity) {
-		return credentialDao.findCredentialByNaturalId(identity);
+		return credentialDao.findUnique(identity);
 	}
 
-	public Credential findCredentialByPrincipal(String princpal) {
-		return credentialDao.findCredentialByPrincipal(princpal);
+	public Credential findCredentialByPrincipal(String principal) {
+		Identity identity = identityDao.findUnique(principal);
+		return credentialDao.findUnique(identity);
 	}
 
-	public Credential storeCredential(Credential credential) 
-	    throws PasswordNotVerifiedException {
+	public Credential storeCredential(Credential credential) throws PasswordNotVerifiedException {
 		if (credential.isPasswordVerified()) {
-	        return credentialDao.mergeCredential(credential);
+	        return credentialDao.merge(credential);
 		}
 		throw new PasswordNotVerifiedException();
 	}
 
 	public void storeCredential(SecureUserDetails secureUser) {
-		Credential credential = credentialDao.mergeCredential(secureUser.getCredential());
+		Credential credential = credentialDao.merge(secureUser.getCredential());
 		secureUser.setCredential(credential);
 	}
 
@@ -78,12 +79,18 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
 
     // collabs
 
-    private CredentialDao credentialDao;
+    private BasicDao<Credential> credentialDao;
+    private FilterDao<Identity, IdentityFilter> identityDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     
-    @Resource
-    public void setCredentialDao(CredentialDao credentialDao) {
+    @Resource(name="credentialDao")
+    public void setCredentialDao(BasicDao<Credential> credentialDao) {
         this.credentialDao = credentialDao;
+    }
+
+    @Resource(name="identityDao")
+    public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
+        this.identityDao = identityDao;
     }
 
     @Resource(name="userGroupDao")

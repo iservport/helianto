@@ -15,7 +15,7 @@
 
 package org.helianto.core.dao;
 
-import org.helianto.core.filter.IdentityFilter;
+import org.helianto.core.IdentityFilter;
 
 
 /**
