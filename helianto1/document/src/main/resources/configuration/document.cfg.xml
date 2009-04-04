@@ -5,6 +5,7 @@
 <hibernate-configuration>
 	<session-factory>
 		<mapping class="org.helianto.document.Document" />
+		<mapping class="org.helianto.document.DocumentTag" />
 		<mapping class="org.helianto.document.DocumentAssociation" />
 	</session-factory>
 </hibernate-configuration>
