@@ -15,11 +15,8 @@
 
 package org.helianto.core.security;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,9 +24,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
-import org.helianto.core.service.UserMgr;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.GrantedAuthorityImpl;
@@ -75,7 +70,7 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
             logger.debug("Step 2 successful: Identity has a valid Credential");
         }
         // and users sharing that identity
-        List<UserGroup> userList = userMgr.findUsers(identity);
+        List<UserGroup> userList = listUsers(identity);
         if (logger.isDebugEnabled()) {
             logger.debug("Step 3 successful: User list is loaded with "+userList.size()+" item(s).");
         }
@@ -93,9 +88,8 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
             }
             throw new UsernameNotFoundException("Not a valid username: "+username);
         }
-        // log this visit, next login this user will be selected
-        UserLog managedUserLog = userMgr.storeUserLog(user, new Date());
-        User managedUser = managedUserLog.getUser();
+        // store user
+        User managedUser = storeUser(user);
         // create the adapter
         UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(managedUser, credential);
         if (logger.isDebugEnabled()) {
@@ -131,6 +125,20 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
     public abstract Credential loadAndValidateCredential(Identity identity);
     
     /**
+     * Hook to load a user list
+     * 
+     * @param identity
+     */
+    public abstract List<UserGroup> listUsers(Identity identity);
+    
+    /**
+     * Hook to store any change to the selected user
+     * 
+     * @param identity
+     */
+    public abstract User storeUser(User user);
+    
+    /**
      * Select an <code>User</code> from the list
      * 
      * @param userList
@@ -161,14 +169,6 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         sb.append("ROLE_").append(userRole.getService().getServiceName())
                 .append("_").append(userRole.getServiceExtension());
         return sb.toString();
-    }
-
-    //- collabs
-    
-    private UserMgr userMgr;
-    @Resource
-    public void setUserMgr(UserMgr userMgr) {
-        this.userMgr = userMgr;
     }
 
     private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);

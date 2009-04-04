@@ -15,26 +15,34 @@
 
 package org.helianto.core.security;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.service.SecurityMgr;
-import org.springframework.beans.factory.annotation.Required;
+import org.helianto.core.service.UserMgr;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 /**
- * Custom implementation for the {@link org.acegisecurity.userdetails.UserDetailsService}
+ * Custom implementation for the {@link org.springframework.security.userdetails.UserDetailsService}
  * interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Component("userDetailsService")
 public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     
     /**
@@ -46,7 +54,7 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     public Identity loadAndValidateIdentity(String principal) {
         Identity identity = null;
         try {
-            identity = securityMgr.findIdentityByPrincipal(principal);
+            identity = userMgr.findIdentityByPrincipal(principal);
             Assert.notNull(identity, "Null Identity");
         } catch (Exception e) {
             throw new UsernameNotFoundException("Username "+principal, e);
@@ -59,6 +67,7 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
      * 
      * @param identity
      */
+    @Override
     public Credential loadAndValidateCredential(Identity identity) {
         try {
             //TODO find only active credential
@@ -76,7 +85,21 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
         }
     }
     
+    @Override
+    public List<UserGroup> listUsers(Identity identity) {
+    	return userMgr.findUsers(identity);
+    }
+    
     /**
+     * Log this visit, next login this user will be selected
+     */
+    @Override
+	public User storeUser(User user) {
+        UserLog managedUserLog = userMgr.storeUserLog(user, new Date());
+        return managedUserLog.getUser();
+	}
+
+	/**
      * Load and validate a <code>Role</code> set.
      * 
      * @param user
@@ -89,10 +112,16 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
 	//- collabs
 
     private SecurityMgr securityMgr;
+    private UserMgr userMgr;
     
-    @Required
+    @Resource
     public void setSecurityMgr(SecurityMgr securityMgr) {
         this.securityMgr = securityMgr;
+    }
+
+    @Resource
+    public void setUserMgr(UserMgr userMgr) {
+        this.userMgr = userMgr;
     }
 
     private static Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);

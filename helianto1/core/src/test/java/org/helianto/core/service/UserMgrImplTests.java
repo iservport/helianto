@@ -36,6 +36,7 @@ import org.helianto.core.IdentityFilter;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.ProvinceFilter;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
@@ -45,7 +46,6 @@ import org.helianto.core.UserLogFilter;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.InternalEnumeratorDao;
-import org.helianto.core.dao.ProvinceDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
@@ -222,7 +222,7 @@ public class UserMgrImplTests extends TestCase {
         Operator operator = OperatorTestSupport.createOperator();
         List<Province> provinceList = new ArrayList<Province>();
         
-        expect(provinceDao.findProvinceByOperator(operator))
+        expect(provinceDao.find(isA(ProvinceFilter.class)))
             .andReturn(provinceList);
         replay(provinceDao);
         
@@ -259,7 +259,7 @@ public class UserMgrImplTests extends TestCase {
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private BasicDao<UserAssociation> userAssociationDao;
-    private ProvinceDao provinceDao;
+    private FilterDao<Province, ProvinceFilter> provinceDao;
     private FilterDao<UserLog, UserLogFilter> userLogDao;
 
     
@@ -277,7 +277,7 @@ public class UserMgrImplTests extends TestCase {
         userMgr.setUserGroupDao(userGroupDao);
         userAssociationDao = createMock(FilterDao.class);
         userMgr.setUserAssociationDao(userAssociationDao);
-        provinceDao = createMock(ProvinceDao.class);
+        provinceDao = createMock(FilterDao.class);
         userMgr.setProvinceDao(provinceDao);
         userLogDao = createMock(FilterDao.class);
         userMgr.setUserLogDao(userLogDao);

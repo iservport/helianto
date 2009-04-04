@@ -52,28 +52,28 @@ public class UserDetailsServiceImplTests {
     	String principal = "TEST";
     	Identity identity = new Identity();
     	
-		expect(securityMgr.findIdentityByPrincipal(principal))
+		expect(userMgr.findIdentityByPrincipal(principal))
 		    .andReturn(identity);
-		replay(securityMgr);
+		replay(userMgr);
     	
 		assertSame(identity, userDetailsService.loadAndValidateIdentity(principal));
-		verify(securityMgr);
+		verify(userMgr);
     }
     
     @Test(expected=UsernameNotFoundException.class)
     public void testLoadAndValidateIdentityNull() {
-        expect(securityMgr.findIdentityByPrincipal("PRINCIPAL"))
+        expect(userMgr.findIdentityByPrincipal("PRINCIPAL"))
             .andReturn(null);
-        replay(securityMgr);
+        replay(userMgr);
         
         userDetailsService.loadAndValidateIdentity("PRINCIPAL");
     }
 
     @Test(expected=UsernameNotFoundException.class)
     public void testLoadAndValidateIdentityError() {
-        expect(securityMgr.findIdentityByPrincipal("PRINCIPAL"))
+        expect(userMgr.findIdentityByPrincipal("PRINCIPAL"))
             .andThrow(new UsernameNotFoundException("Error"));
-        replay(securityMgr);
+        replay(userMgr);
         
         userDetailsService.loadAndValidateIdentity("PRINCIPAL");
     }

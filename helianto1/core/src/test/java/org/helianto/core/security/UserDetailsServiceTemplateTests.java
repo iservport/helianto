@@ -15,10 +15,6 @@
 
 package org.helianto.core.security;
 
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.isA;
-import static org.easymock.EasyMock.replay;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
@@ -37,8 +33,6 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
-import org.helianto.core.service.SecurityMgr;
-import org.helianto.core.service.UserMgr;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
@@ -60,10 +54,6 @@ public class UserDetailsServiceTemplateTests {
     	List<UserGroup> candidates = new ArrayList<UserGroup>();
     	candidates.add(selectedUser);
     	
-    	expect(userMgr.findUsers(isA(Identity.class))).andReturn(candidates);
-    	expect(userMgr.storeUserLog(isA(User.class), isA(Date.class))).andReturn(userLog);
-    	replay(userMgr);
-
     	UserDetails userDetails = userDetailsService.loadUserByUsername("TEST");
         assertSame(selectedUser, ((PublicUserDetails) userDetails).getUser());
         assertSame(loadedCredential, ((SecureUserDetails) userDetails).getCredential());
@@ -136,10 +126,6 @@ public class UserDetailsServiceTemplateTests {
     
     AbstractUserDetailsServiceTemplate userDetailsService;
     
-    // collaborators
-    private UserMgr userMgr;
-
-
 	@Before
     public void setUp() {
     	userDetailsService = new UserDetailsServiceStub();
@@ -152,9 +138,6 @@ public class UserDetailsServiceTemplateTests {
         createdUser = UserTestSupport.createUser();
         loadedCredential = CredentialTestSupport.createCredential(loadedIdentity);
         roles = new HashSet<UserRole>();
-
-        userMgr = createMock(SecurityMgr.class);
-        userDetailsService.setUserMgr(userMgr);
     }
     
     public class UserDetailsServiceStub extends AbstractUserDetailsServiceTemplate {
@@ -175,6 +158,16 @@ public class UserDetailsServiceTemplateTests {
 		protected Set<UserRole> loadAndValidateRoles(User user) {
 			assertSame(selectedUser, user);
 			return roles;
+		}
+
+		@Override
+		public List<UserGroup> listUsers(Identity identity) {
+			return loadedUsers;
+		}
+
+		@Override
+		public User storeUser(User user) {
+			return selectedUser;
 		}
         
     }
