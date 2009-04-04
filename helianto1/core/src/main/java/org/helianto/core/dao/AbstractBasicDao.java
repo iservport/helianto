@@ -16,7 +16,6 @@
 package org.helianto.core.dao;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import javax.annotation.Resource;
 
@@ -93,6 +92,9 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	}
 
 	public T findUnique(Object... keys) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding unique with "+keys.length+" parameter(s)");
+        }
 		Collection<T> uniqueList = find(getSelectBuilder(), getWhereClauseBuilder(getParams()).toString(), keys);
 		try {
 			if (uniqueList!=null && uniqueList.size()==0) {

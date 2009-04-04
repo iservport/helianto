@@ -31,6 +31,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.ProvinceFilter;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
@@ -40,7 +41,6 @@ import org.helianto.core.UserLogFilter;
 import org.helianto.core.UserState;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.dao.ProvinceDao;
 import org.springframework.util.Assert;
 
 /**
@@ -51,6 +51,9 @@ import org.springframework.util.Assert;
 public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     
     public Identity findIdentityByPrincipal(String principal) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Finding unique with principal "+principal);
+        }
         return (Identity) identityDao.findUnique(principal);
     }
 
@@ -81,14 +84,6 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
     
     public User createUser(Identity identity, Entity entity) {
         return User.userFactory(entity, identity);
-    }
-
-    public void persistUser(User user) {
-        String principal = user.getIdentity().getPrincipal();
-        Locale locale = user.getEntity().getOperator().getLocale();
-        user.getIdentity().setPrincipal(
-                convertToLowerCase(locale, principal));
-        userGroupDao.persist(user);
     }
 
     public UserGroup storeUserGroup(UserGroup userGroup) {
@@ -126,26 +121,6 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         return null;
     }
 
-//	public UserAssociation createUserAssociation(UserGroup parent, String principal) {
-//		// does identity exist?
-//		Identity identity = identityDao.findIdentityByNaturalId(principal);
-//		if (identity==null) {
-//			// No! create one with a creential.
-//			Credential credential = Credential.credentialFactory(Identity.identityFactory(principal), "");
-//			Credential managedCredential = credentialDao.mergeCredential(credential);
-//			identity = managedCredential.getIdentity();
-//		}
-//		UserAssociation userAssociation = parent.childUserAssociationFactory(identity);
-//    	if (logger.isDebugEnabled()) {
-//    		logger.debug("Created user association ".concat(userAssociation.toString()));
-//    	}
-//    	UserLog userLog = ((User) userAssociation.getChild()).userLogFactory(EventType.CREATE);
-//    	if (logger.isDebugEnabled()) {
-//    		logger.debug("Created user log ".concat(userLog.toString()));
-//    	}
-//		return userAssociation;
-//	}
-//
 	public UserAssociation createUserAssociation(UserGroup parent, String principal) {
 		// does identity exist?
 		Identity identity = identityDao.findUnique(principal);
@@ -184,41 +159,24 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         throw new RuntimeException("Principal should not be null or empty.");
     }
     
-    //deprecated methods
-
-    /**
-     * @deprecated in favor of storeIdentity
-     */
-	public void writeIdentity(Identity identity) {
-		int attemptCount = 0;
-		principalGenerationStrategy.generatePrincipal(identity, attemptCount);
-		identityDao.merge(identity);
-	}
-	
     public List<Province> findProvinceByOperator(Operator operator) {
-        return provinceDao.findProvinceByOperator(operator);
+    	ProvinceFilter filter = new ProvinceFilter(operator);
+        return (List<Province>) provinceDao.find(filter);
     }
 
     //- collaborators
     
     private FilterDao<Identity, IdentityFilter> identityDao;
-    private BasicDao<Credential> credentialDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private BasicDao<UserAssociation> userAssociationDao;
     private FilterDao<UserLog, UserLogFilter> userLogDao;
-//    private IdentitySelectionStrategy identitySelectionStrategy;
     private PrincipalGenerationStrategy principalGenerationStrategy;
-    private ProvinceDao provinceDao;
+    private FilterDao<Province, ProvinceFilter> provinceDao;
 	
 
     @Resource(name="identityDao")
     public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
         this.identityDao = identityDao;
-    }
-
-    @Resource(name="credentialDao")
-    public void setCredentialDao(BasicDao<Credential> credentialDao) {
-        this.credentialDao = credentialDao;
     }
 
     @Resource(name="userGroupDao")
@@ -236,20 +194,13 @@ public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
         this.userLogDao = userLogDao;
     }
     
-//    @Resource
-//    public void setIdentitySelectionStrategy(
-//            IdentitySelectionStrategy identitySelectionStrategy) {
-//        this.identitySelectionStrategy = identitySelectionStrategy;
-//    }
-
     @Resource
-	public void setPrincipalGenerationStrategy(
-			PrincipalGenerationStrategy principalGenerationStrategy) {
+	public void setPrincipalGenerationStrategy(PrincipalGenerationStrategy principalGenerationStrategy) {
 		this.principalGenerationStrategy = principalGenerationStrategy;
 	}
 
-    @Resource
-    public void setProvinceDao(ProvinceDao provinceDao) {
+    @Resource(name="provinceDao")
+    public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
         this.provinceDao = provinceDao;
     }
 

@@ -18,7 +18,7 @@ package org.helianto.core.orm;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.ProvinceFilter;
-import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,47 +27,39 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultProvinceSelectionStrategyTests  {
+public class DefaultProvinceFilterDaoTests  {
     
     public static String C1 = "province.operator.id = 0 ";
     public static String C2 = "AND province.provinceCode = 'CODE' ";
     public static String C3 = "AND province.provinceName like '%NAME_LIKE%' ";
 
-    private SelectionStrategy<ProvinceFilter> provinceSelectionStrategy;
-
-    @Test(expected=IllegalArgumentException.class)
-    public void testCreateCriteriaAsStringNoUser() {
-        filter.setUser(null);
-        	provinceSelectionStrategy.createCriteriaAsString(filter, "unit");
+    @Test
+    public void testEmpty() {
+        assertEquals(C1, provinceDao.createCriteriaAsString(filter, false));
     }
     
     @Test
-    public void testCreateCriteriaAsStringUser() {
-        assertEquals(C1, provinceSelectionStrategy.createCriteriaAsString(filter, "province"));
+    public void testSelect() {
+    	filter.setProvinceCode("CODE");
+    	filter.setOperator(OperatorTestSupport.createOperator());
+        assertEquals(C1+C2, provinceDao.createCriteriaAsString(filter, false));
     }
     
     @Test
-    public void testCreateCriteriaAsStringProvinceCode() {
-        filter.setProvinceCode("CODE");
-        assertEquals(C1+C2, provinceSelectionStrategy.createCriteriaAsString(filter, "province"));
-    }
-    
-    @Test
-    public void testCreateCriteriaAsStringProvinceNameLike() {
+    public void testFilter() {
         filter.setProvinceNameLike("NAME_LIKE");
-        assertEquals(C1+C3, provinceSelectionStrategy.createCriteriaAsString(filter, "province"));
+        assertEquals(C1+C3, provinceDao.createCriteriaAsString(filter, false));
     }
+    
+    // collabs
+    
+    private DefaultProvinceDao provinceDao;
+    private ProvinceFilter filter;
     
     @Before
     public void setUp() {
-    	provinceSelectionStrategy = 
-            new DefaultProvinceSelectionStrategy();
-        filter = ProvinceFilter.filterFactory(UserTestSupport.createUser());
-        filter.reset();
+    	filter = ProvinceFilter.filterFactory(UserTestSupport.createUser());
+    	provinceDao = new DefaultProvinceDao();
     }
-
-    // collabs
-    
-    private ProvinceFilter filter;
     
 }

@@ -1,6 +1,7 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.UserAssociation;
+import org.helianto.core.test.AbstractBasicDaoTest;
 /**
  * <code>UserAssociationDao</code> tests.
  *

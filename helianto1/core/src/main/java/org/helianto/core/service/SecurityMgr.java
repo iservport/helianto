@@ -30,7 +30,7 @@ import org.helianto.core.security.SecureUserDetails;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface SecurityMgr extends UserMgr {
+public interface SecurityMgr {
 	
     /**
      * Find <core>Credential</core> by <core>Identity</core>.

@@ -93,19 +93,6 @@ public class InstallFormActionTests extends TestCase {
         assertSame(user, ((UserForm) context.getFlowScope().get("userForm")).getUser());
     }
     
-    public void testPersistManager() {
-        UserForm form = new UserForm();
-        form.setUser(new User());
-        RequestContext context = simulateFormInContext(form);
-        
-        userMgr.persistUser(form.getUser());
-        replay(serverMgr);
-
-        Event event = installFormAction.writeManager(context);
-        assertEquals(event.getId(), "success");
-        verify(serverMgr);
-    }
-    
     private RequestContext simulateFormInContext(Object form) {
         RequestContext context = new MockRequestContext();
         context.getFlowScope().put("userForm", form);

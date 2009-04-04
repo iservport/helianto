@@ -1,6 +1,7 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.Category;
+import org.helianto.core.test.AbstractBasicDaoTest;
 /**
  * <code>CategoryDao</code> tests.
  *

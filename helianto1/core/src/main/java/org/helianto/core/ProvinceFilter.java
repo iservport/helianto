@@ -28,10 +28,11 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
  */
 public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
-	private String provinceCode = "";
-	private String provinceNameLike = "";
-	
+	/**
+	 * Factory method.
+	 * 
+	 * @param user
+	 */
 	public static ProvinceFilter filterFactory(User user) {
 		ProvinceFilter provinceFilter = new ProvinceFilter();
 		provinceFilter.setUser(user);
@@ -39,12 +40,49 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 		return provinceFilter;
 	}
 
+	private static final long serialVersionUID = 1L;
+	private Operator operator;
+	private String provinceCode;
+	private String provinceNameLike;
+	
+	/**
+	 * Default constructor.
+	 */
+	public ProvinceFilter() {
+		super();
+		reset();
+	}
+	
+	/**
+	 * Operator constructor.
+	 */
+	public ProvinceFilter(Operator operator) {
+		this();
+		setOperator(operator);
+	}
+	
 	/**
 	 * Filter reset.
 	 */
 	public void reset() {
 		setProvinceCode("");
 		setProvinceNameLike("");
+	}
+
+	@Override
+	public void setEntity(Entity entity) {
+		super.setEntity(entity);
+		setOperator(entity.getOperator());
+	}
+
+	/**
+	 * Operator filter.
+	 */
+	public Operator getOperator() {
+		return operator;
+	}
+	public void setOperator(Operator operator) {
+		this.operator = operator;
 	}
 
 	/**

@@ -108,18 +108,6 @@ public interface UserMgr extends CoreMgr {
 	public UserLog storeUserLog(User user, Date date);
 	
     /**
-     * <p>Write <code>Identity</code> to datastore.</p>
-     * @deprecated in favor of storeIdentity
-     */
-    public void writeIdentity(Identity identity);
-    
-    /**
-     * <p>Persist the <code>User</code>.</p>
-     */
-    @Deprecated
-    public void persistUser(User user);
-    
-    /**
      * Find a <code>Province</code> list by <code>Operator</code>.
      */
     public List<Province> findProvinceByOperator(Operator operator);

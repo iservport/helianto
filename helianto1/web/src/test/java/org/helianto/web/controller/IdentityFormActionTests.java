@@ -29,7 +29,6 @@ import org.helianto.core.Credential;
 import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
-import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.core.test.CredentialTestSupport;
@@ -198,7 +197,7 @@ public class IdentityFormActionTests extends TestCase {
         };
         context.getFlowScope().put(identityFormAction.getFormObjectName(), form);
         
-        userMgr = createMock(SecurityMgr.class);
+        userMgr = createMock(UserMgr.class);
         serverMgr = createMock(ServerMgr.class);
         identityFormAction.setUserMgr(userMgr);
         identityFormAction.setServerMgr(serverMgr);

@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.core.orm;
+package org.helianto.core.test;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;

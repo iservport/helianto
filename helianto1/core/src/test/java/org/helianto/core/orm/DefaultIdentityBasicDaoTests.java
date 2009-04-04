@@ -1,6 +1,7 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.Identity;
+import org.helianto.core.test.AbstractBasicDaoTest;
 
 /**
  * @author Mauricio Fernandes de Castro

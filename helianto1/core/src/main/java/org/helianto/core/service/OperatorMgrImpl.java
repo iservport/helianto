@@ -29,8 +29,6 @@ import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.OperatorDao;
-import org.helianto.core.dao.ProvinceDao;
-import org.helianto.core.filter.SelectionStrategy;
 
 /**
  * <code>OperatorMgr</code> default implementation.
@@ -51,9 +49,8 @@ public class OperatorMgrImpl implements OperatorMgr {
 		return operatorDao.mergeOperator(operator);
 	}
 
-	public List<Province> findProvinces(ProvinceFilter provinceFilter) {
-    	String criteria = provinceSelectionStrategy.createCriteriaAsString(provinceFilter, "province");
-    	List<Province> provinceList = provinceDao.findProvinces(criteria);
+	public List<Province> findProvinces(ProvinceFilter filter) {
+    	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
     	if (logger.isDebugEnabled() && provinceList!=null) {
     		logger.debug("Found province list of size "+provinceList.size());
     	}
@@ -61,9 +58,9 @@ public class OperatorMgrImpl implements OperatorMgr {
 	}
 
 	public Province prepareProvince(Province province) {
-		Province managedProvince = provinceDao.mergeProvince(province);
+		Province managedProvince = provinceDao.merge(province);
 		managedProvince.getOperator();
-		provinceDao.evictProvince(province);
+		provinceDao.evict(province);
 		return managedProvince;
 	}
 
@@ -73,14 +70,13 @@ public class OperatorMgrImpl implements OperatorMgr {
 	}
 
 	public Province storeProvince(Province province) {
-		return provinceDao.mergeProvince(province);
+		return provinceDao.merge(province);
 	}
 
 	// collabs
 	
 	private OperatorDao operatorDao;
-	private ProvinceDao provinceDao;
-	private SelectionStrategy<ProvinceFilter> provinceSelectionStrategy;
+	private FilterDao<Province, ProvinceFilter> provinceDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
 	
 	@Resource
@@ -88,21 +84,17 @@ public class OperatorMgrImpl implements OperatorMgr {
 		this.operatorDao = operatorDao;
 	}
 
-	@Resource
-	public void setProvinceDao(ProvinceDao provinceDao) {
-		this.provinceDao = provinceDao;
-	}
+    @Resource(name="provinceDao")
+    public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
+        this.provinceDao = provinceDao;
+    }
+
 	
     @Resource(name="entityDao")
     public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
         this.entityDao = entityDao;
     }
     
-	@Resource
-	public void setProvinceSelectionStrategy(SelectionStrategy<ProvinceFilter> provinceSelectionStrategy) {
-		this.provinceSelectionStrategy = provinceSelectionStrategy;
-	}
-
     private final Log logger = LogFactory.getLog(CategoryMgrImpl.class);
 
 }

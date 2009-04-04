@@ -40,7 +40,7 @@ import org.helianto.core.security.UserDetailsAdapter;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
+public class SecurityMgrImpl implements SecurityMgr {
     
 	public Credential findCredentialByIdentity(Identity identity) {
 		return credentialDao.findUnique(identity);
@@ -79,24 +79,25 @@ public class SecurityMgrImpl extends UserMgrImpl implements SecurityMgr {
 
     // collabs
 
-    private BasicDao<Credential> credentialDao;
     private FilterDao<Identity, IdentityFilter> identityDao;
+    private BasicDao<Credential> credentialDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
-    
-    @Resource(name="credentialDao")
-    public void setCredentialDao(BasicDao<Credential> credentialDao) {
-        this.credentialDao = credentialDao;
-    }
 
     @Resource(name="identityDao")
     public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
         this.identityDao = identityDao;
     }
 
-    @Resource(name="userGroupDao")
-    public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
-        this.userGroupDao = userGroupDao;
+    @Resource(name="credentialDao")
+    public void setCredentialDao(BasicDao<Credential> credentialDao) {
+        this.credentialDao = credentialDao;
     }
 
+    @Resource(name="userGroupDao")
+	public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
+		this.userGroupDao = userGroupDao;
+	}
+
     private final static Log logger = LogFactory.getLog(SecurityMgrImpl.class);
+    
 }

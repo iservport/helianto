@@ -58,7 +58,7 @@ public interface OperatorMgr {
     /**
      * Find <code>Province</code>s.
      */
-	public List<Province> findProvinces(ProvinceFilter provinceFilter);
+	public List<Province> findProvinces(ProvinceFilter filter);
 	
     /**
      * Store <code>Province</code> to the data store.

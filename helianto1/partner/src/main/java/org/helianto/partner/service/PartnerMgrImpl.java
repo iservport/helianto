@@ -21,7 +21,9 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.dao.ProvinceDao;
+import org.helianto.core.Province;
+import org.helianto.core.ProvinceFilter;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.partner.Address;
 import org.helianto.partner.Partner;
@@ -92,8 +94,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     
     private AddressDao addressDao;
     
-    private ProvinceDao provinceDao;
-
+    private FilterDao<Province, ProvinceFilter> provinceDao;
 	private ContactDao contactDao;
 
     private PartnerRegistryDao partnerRegistryDao;
@@ -113,8 +114,8 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
     }
-    @Resource
-    public void setProvinceDao(ProvinceDao provinceDao) {
+    @Resource(name="provinceDao")
+    public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
         this.provinceDao = provinceDao;
     }
     @Resource

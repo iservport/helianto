@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.core.dao.ProvinceDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class ProvinceTestSupport {
@@ -41,14 +40,6 @@ public class ProvinceTestSupport {
         	code = DomainTestSupport.getNonRepeatableStringValue(20, testKey++);
         }
         Province province = Province.provinceFactory(operator, code, DomainTestSupport.getNonRepeatableStringValue(20, testKey));
-        return province;
-    }
-
-    public static Province createAndPersistProvince(ProvinceDao provinceDao) {
-        Province province = createProvince();
-        if (provinceDao!=null) {
-            provinceDao.persistProvince(province);
-        }
         return province;
     }
 
