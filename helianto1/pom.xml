@@ -321,8 +321,8 @@
 	</reporting>
 	<distributionManagement>
 		<repository>
-			<id>localrepo</id>
-			<url>scp://localhost/home/desk/wrk3/localsite/</url>
+			<id>develrepo</id>
+			<url>file://localhost/var/lib/www/maven/</url>
 		</repository>
 		<site>
 			<id>website</id>
