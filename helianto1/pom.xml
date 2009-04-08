@@ -322,11 +322,11 @@
 	<distributionManagement>
 		<repository>
 			<id>develrepo</id>
-			<url>file://localhost/var/lib/www/maven/</url>
+			<url>file://localhost/var/www/maven/</url>
 		</repository>
 		<site>
 			<id>website</id>
-			<url>ftp://ftp.helianto.org</url>
+			<url>http://db.iservport.com/maven</url>
 		</site>
 	</distributionManagement>
 </project>
