@@ -24,11 +24,6 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
  */
 public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 	
-	private static final long serialVersionUID = 1L;
-	private Category category;
-	private String unitCode;
-	private String unitNameLike;
-	
 	/**
 	 * Factory method.
 	 * 
@@ -40,9 +35,50 @@ public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 		return unitFilter;
 	}
 	
+	/**
+	 * Factory method.
+	 * 
+	 * @param category
+	 */
+	public static UnitFilter unitFilterFactory(Category category) {
+		UnitFilter unitFilter = new UnitFilter();
+		unitFilter.setEntity(category.getEntity());
+		unitFilter.setCategory(category);
+		return unitFilter;
+	}
+	
+	private static final long serialVersionUID = 1L;
+	private CategoryGroup categoryGroup;
+	private Category category;
+	private String unitCode;
+	private String unitNameLike;
+	
+	/**
+	 * Default constructor.
+	 */
+	public UnitFilter() {
+		setUnitCode("");
+		setUnitNameLike("");
+	}
+	
 	public void reset() {
 		setUnitCode("");
 		setUnitNameLike("");
+	}
+
+	@Override
+	public boolean isSelection() {
+		return getUnitCode().length()>0;
+	}
+
+	/**
+	 * Category group.
+	 */
+	public CategoryGroup getCategoryGroup() {
+		return categoryGroup;
+	}
+	public void setCategoryGroup(CategoryGroup categoryGroup) {
+		this.categoryGroup = categoryGroup;
 	}
 
 	/**
