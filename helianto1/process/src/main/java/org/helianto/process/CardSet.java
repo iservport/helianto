@@ -100,9 +100,8 @@ public class CardSet implements java.io.Serializable, Sequenceable, TopLevelNumb
     }
     @Transient
 	public static long getInternalNumber(String cardSetLabel) {
-		String[] cardLabelTokens = cardSetLabel.split("-");
 		try {
-			return Long.parseLong(cardLabelTokens[1]);
+			return Long.parseLong(cardSetLabel.substring(1, 5));
 		}
 		catch (Exception e) {
 			throw new InvalidCardException(cardSetLabel, "unable to resolve card set");
