@@ -28,8 +28,7 @@ import junit.framework.TestCase;
 
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
-import org.helianto.core.dao.UnitDao;
-import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.core.dao.FilterDao;
 
 public class UnitMgrImplTests extends TestCase {
     
@@ -38,16 +37,11 @@ public class UnitMgrImplTests extends TestCase {
     public void testFindUnits() {
     	UnitFilter unitFilter = new UnitFilter();
     	List<Unit> unitList = new ArrayList<Unit>();
-    	String criteria = "TEST";
     	
-    	expect(unitSelectionStrategy.createCriteriaAsString(unitFilter, "unit")).andReturn(criteria);
-    	replay(unitSelectionStrategy);
-
-    	expect(unitDao.findUnits(criteria)).andReturn(unitList);
+    	expect(unitDao.find(unitFilter)).andReturn(unitList);
     	replay(unitDao);
     	
     	assertSame(unitList, unitMgr.findUnits(unitFilter));
-    	verify(unitSelectionStrategy);
     	verify(unitDao);
     }
     
@@ -55,30 +49,26 @@ public class UnitMgrImplTests extends TestCase {
     	Unit unit = new Unit();
     	Unit UnitCategory = new Unit();
     	
-    	expect(unitDao.mergeUnit(unit)).andReturn(UnitCategory);
+    	expect(unitDao.merge(unit)).andReturn(UnitCategory);
     	replay(unitDao);
     	
     	assertSame(UnitCategory, unitMgr.storeUnit(unit));
     	verify(unitDao);
     }
     
-    private UnitDao unitDao;
-    private SelectionStrategy<UnitFilter> unitSelectionStrategy;
+    private FilterDao<Unit, UnitFilter> unitDao;
     
     @SuppressWarnings("unchecked")
 	@Override
     public void setUp() {
         unitMgr = new UnitMgrImpl();
-        unitDao = createMock(UnitDao.class);
+        unitDao = createMock(FilterDao.class);
         unitMgr.setUnitDao(unitDao);
-        unitSelectionStrategy = createMock(SelectionStrategy.class);
-        unitMgr.setUnitSelectionStrategy(unitSelectionStrategy);
     }
     
     @Override
     public void tearDown() {
         reset(unitDao);
-        reset(unitSelectionStrategy);
     }
     
 }

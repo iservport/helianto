@@ -23,7 +23,7 @@ import org.helianto.core.filter.UserBackedFilter;
 
 /**
  * 
- * @author MaurÃ­cio Fernandes de Castro
+ * @author Maurício Fernandes de Castro
  */
 public class UnitFilterTests extends TestCase {
 	
@@ -41,8 +41,6 @@ public class UnitFilterTests extends TestCase {
 	
 	public void testReset() {
 		UnitFilter unitFilter = UnitFilter.unitFilterFactory(new User());
-		assertNull(unitFilter.getUnitCode());
-		assertNull(unitFilter.getUnitNameLike());
 		unitFilter.reset();
 		assertEquals("", unitFilter.getUnitCode());
 		assertEquals("", unitFilter.getUnitNameLike());

@@ -23,24 +23,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
-import org.helianto.core.dao.UnitDao;
-import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.core.dao.FilterDao;
 
 
 /**
- * Default implementation to unit interface.
+ * Default implementation to unit service interface.
  * 
  * @author Maurício Fernandes de Castro
  */
-@SuppressWarnings("restriction")
 public class UnitMgrImpl implements UnitMgr {
     
-    private UnitDao unitDao;
-    private SelectionStrategy<UnitFilter> unitSelectionStrategy;
-    
 	public List<Unit> findUnits(UnitFilter unitFilter) {
-    	String criteria = unitSelectionStrategy.createCriteriaAsString(unitFilter, "unit");
-    	List<Unit> unitList = unitDao.findUnits(criteria);
+    	List<Unit> unitList = (List<Unit>) unitDao.find(unitFilter);
     	if (logger.isDebugEnabled() && unitList!=null) {
     		logger.debug("Found unit list of size "+unitList.size());
     	}
@@ -48,7 +42,7 @@ public class UnitMgrImpl implements UnitMgr {
 	}
 
 	public Unit storeUnit(Unit unit) {
-		Unit managedUnit = unitDao.mergeUnit(unit);
+		Unit managedUnit = unitDao.merge(unit);
     	if (logger.isDebugEnabled()) {
     		logger.debug("Stored unit  "+managedUnit);
     	}
@@ -62,15 +56,13 @@ public class UnitMgrImpl implements UnitMgr {
 
 
     //- collabs
-    @Resource
-    public void setUnitDao(UnitDao unitDao) {
+
+    private FilterDao<Unit, UnitFilter> unitDao;
+    
+	@Resource(name="unitDao")
+    public void setUnitDao(FilterDao<Unit, UnitFilter> unitDao) {
         this.unitDao = unitDao;
     }
-
-    @Resource
-	public void setUnitSelectionStrategy(SelectionStrategy<UnitFilter> unitSelectionStrategy) {
-		this.unitSelectionStrategy = unitSelectionStrategy;
-	}
 
     private final Log logger = LogFactory.getLog(UnitMgrImpl.class);
 
