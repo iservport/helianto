@@ -23,6 +23,7 @@ package org.helianto.core;
  * implementation.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public interface QueryEnabled {
 
