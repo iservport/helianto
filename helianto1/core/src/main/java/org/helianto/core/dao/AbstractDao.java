@@ -30,6 +30,7 @@ import org.hibernate.SessionFactory;
  * Base implementation for <code>LightweightDao</code>.
  * 
  * @author Mauricio Fernandes de Castro.
+ * @deprecated
  */
 public abstract class AbstractDao<T extends QueryEnabled> implements LightweightDao<T> {
 
