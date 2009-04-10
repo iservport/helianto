@@ -80,6 +80,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
         
         if (isSelection(filter)) {
         	doSelect(filter, mainCriteriaBuilder);
+        	filter.reset();
         }
         else {
         	doFilter(filter, mainCriteriaBuilder);
