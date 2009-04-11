@@ -54,6 +54,9 @@ public class CardMgrImpl implements CardMgr {
 
 	public Card findCard(Entity entity, String cardLabel, boolean createIfNecessary) throws InvalidCardException {
 		long cardSetNumber = CardSet.getInternalNumber(cardLabel);
+    	if (logger.isDebugEnabled()) {
+    		logger.debug("Card set number "+cardSetNumber);
+    	}
     	CardSet cardSet = cardSetDao.findUnique(entity, cardSetNumber);
     	if (cardSet==null) {
 			throw new InvalidCardException(cardLabel, "card set not found");
