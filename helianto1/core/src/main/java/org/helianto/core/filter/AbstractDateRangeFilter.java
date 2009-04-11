@@ -94,7 +94,7 @@ public class AbstractDateRangeFilter extends AbstractUserBackedCriteriaFilter im
     }
     
     /**
-     * Calculate range from today minus <code>daysIncluded</code>
+     * Set up range start date.
      */
     public int getDaysIncluded() {
     	return daysIncluded;
@@ -110,18 +110,18 @@ public class AbstractDateRangeFilter extends AbstractUserBackedCriteriaFilter im
     }
 
     /**
-     * Calculate range from today pplus <code>daysToInclude</code>
+     * Set up range end date.
      */
     public int getDaysToInclude() {
     	return daysToInclude;
     }
     public void setDaysToInclude(int daysToInclude) {
     	this.daysToInclude = daysToInclude;
-    	if (daysIncluded==0) {
-    		setFromDate(null);
+    	if (daysToInclude==0) {
+    		setToDate(null);
     	}
     	else {
-    		setFromDate(getReferenceCalendar(new Date(), daysToInclude).getTime());
+    		setToDate(getReferenceCalendar(new Date(), daysToInclude).getTime());
     	}
     }
 
