@@ -27,6 +27,7 @@ public abstract class AbstractTargetForm<T> implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private TypeResolver typeResolver;
 	private T target;
+	private String searchField;
     
 	/**
 	 * Type resolver to this form.
@@ -54,4 +55,14 @@ public abstract class AbstractTargetForm<T> implements Serializable{
 		return ' ';
 	}
 	
+	/**
+	 * The exposed searchField.
+	 */
+	public String getSearchField() {
+		return searchField;
+	}
+	public void setSearchField(String searchField) {
+		this.searchField = searchField;
+	}
+
 }
