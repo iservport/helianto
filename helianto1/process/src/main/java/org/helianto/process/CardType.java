@@ -36,6 +36,10 @@ public enum CardType {
 	 */
 	DATA('D', false),
 	/**
+	 * Exception card.
+	 */
+	EXCEPTION('N', false),
+	/**
 	 * Dump records to a file.
 	 */
 	DUMP('P', true),
