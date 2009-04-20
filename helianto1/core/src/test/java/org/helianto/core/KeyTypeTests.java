@@ -14,7 +14,7 @@ import org.helianto.core.KeyType;
  * @author Mauricio Fernandes de Castro
  */
 public class KeyTypeTests extends TestCase {
-    
+     
     /**
      * Test <code>KeyType</code> static factory method.
      */
