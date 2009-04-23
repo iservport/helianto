@@ -32,6 +32,7 @@ import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
+import org.helianto.core.ServiceFilter;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
@@ -40,7 +41,6 @@ import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.ServerDao;
-import org.helianto.core.dao.ServiceDao;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.dao.UserRoleDao;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
@@ -117,11 +117,11 @@ public class ServerMgrImpl  implements ServerMgr {
     }
 
     public Service findOrCreateService(Entity entity, String serviceName) {
-        Service service = serviceDao.findServiceByNaturalId(entity.getOperator(), serviceName);
+        Service service = serviceDao.findUnique(entity.getOperator(), serviceName);
         if (service==null) {
             service = Service.serviceFactory(entity
                     .getOperator(), serviceName);
-            serviceDao.persistService(service);
+            serviceDao.persist(service);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+service);
             }
@@ -190,7 +190,7 @@ public class ServerMgrImpl  implements ServerMgr {
     @Deprecated
     public UserGroup findOrCreateUserGroup(Entity entity, String serviceName, String[] extensions) {
         UserGroup userGroup = findOrCreateUserGroup(entity, serviceName);
-        Service service = serviceDao.findServiceByNaturalId(entity.getOperator(), serviceName);
+        Service service = serviceDao.findUnique(entity.getOperator(), serviceName);
         if (service==null) {
             service = Service.serviceFactory(entity
                     .getOperator(), serviceName);
@@ -249,8 +249,8 @@ public class ServerMgrImpl  implements ServerMgr {
     //~ collaborators 
 
     private ServerDao serverDao;
-    private ServiceDao serviceDao;
     private UserRoleDao userRoleDao;
+    private FilterDao<Service, ServiceFilter> serviceDao;
     private FilterDao<Entity, EntityFilter> entityDao;
     private FilterDao<Identity, IdentityFilter> identityDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
@@ -266,13 +266,13 @@ public class ServerMgrImpl  implements ServerMgr {
     }
 
     @Resource
-    public void setServiceDao(ServiceDao serviceDao) {
-        this.serviceDao = serviceDao;
-    }
-
-    @Resource
     public void setUserRoleDao(UserRoleDao userRoleDao) {
         this.userRoleDao = userRoleDao;
+    }
+
+    @Resource(name="serviceDao")
+    public void setServiceDao(FilterDao<Service, ServiceFilter> serviceDao) {
+        this.serviceDao = serviceDao;
     }
 
     @Resource(name="entityDao")

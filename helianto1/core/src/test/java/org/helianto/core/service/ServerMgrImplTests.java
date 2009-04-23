@@ -31,11 +31,12 @@ import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
+import org.helianto.core.Service;
+import org.helianto.core.ServiceFilter;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.ServerDao;
-import org.helianto.core.dao.ServiceDao;
 import org.helianto.core.mail.ConfigurableMailSender;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.DecoratedPreparator;
@@ -75,10 +76,10 @@ public class ServerMgrImplTests extends TestCase {
 
     // collabs
     
+	private FilterDao<Service, ServiceFilter> serviceDao;
 	private FilterDao<Identity, IdentityFilter> identityDao;
 	private FilterDao<UserGroup, UserFilter> userGroupDao;
     private ServerDao serverDao;
-    private ServiceDao serviceDao;
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
     private ConfigurableMailSender sender;
@@ -89,7 +90,7 @@ public class ServerMgrImplTests extends TestCase {
 		identityDao = createMock(FilterDao.class);
 		userGroupDao = createMock(FilterDao.class);
         serverDao = createMock(ServerDao.class);
-        serviceDao = createMock(ServiceDao.class);
+        serviceDao = createMock(FilterDao.class);
         configurableMailSenderFactory = createMock(ConfigurableMailSenderFactory.class);
         mailMessageComposer = createMock(MailMessageComposer.class);
         

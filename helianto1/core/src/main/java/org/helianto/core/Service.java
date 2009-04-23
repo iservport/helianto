@@ -23,13 +23,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
- * <p>
- * Provide distinction among different services available to 
- * each <code>Entity</code>.
- * </p>
+ * A service made available in a name space (operator).
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -37,6 +34,19 @@ import javax.persistence.UniqueConstraint;
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "serviceName"})}
 )
 public class Service implements java.io.Serializable {
+
+    /**
+     * Factory method.
+     * 
+     * @param operator
+     * @param serviceName
+     */
+    public static Service serviceFactory(Operator operator, String serviceName) {
+        Service service = new Service();
+        service.setOperator(operator);
+        service.setServiceName(serviceName);
+        return service;
+    }
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -59,7 +69,7 @@ public class Service implements java.io.Serializable {
     }
 
     /**
-     * Operator getter.
+     * Operator.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="operatorId", nullable=true)
@@ -71,7 +81,7 @@ public class Service implements java.io.Serializable {
     }
 
     /**
-     * ServiceName getter.
+     * Service name.
      */
     @Column(length=12)
     public String getServiceName() {
@@ -79,27 +89,6 @@ public class Service implements java.io.Serializable {
     }
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
-    }
-
-    /**
-     * <code>Service</code> factory.
-     * 
-     * @param operator
-     * @param serviceName
-     */
-    public static Service serviceFactory(Operator operator, String serviceName) {
-        Service service = new Service();
-        service.setOperator(operator);
-        service.setServiceName(serviceName);
-        return service;
-    }
-
-    /**
-     * <code>Service</code> natural id query.
-     */
-    @Transient
-    public static String getServiceNaturalIdQueryString() {
-        return "select service from Service service where service.operator = ? and service.serviceName = ? ";
     }
 
     /**
