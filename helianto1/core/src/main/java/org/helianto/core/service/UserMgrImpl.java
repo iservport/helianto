@@ -48,7 +48,7 @@ import org.springframework.util.Assert;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserMgrImpl extends AbstractCoreMgr implements UserMgr {
+public class UserMgrImpl implements UserMgr {
     
     public Identity findIdentityByPrincipal(String principal) {
         if (logger.isDebugEnabled()) {

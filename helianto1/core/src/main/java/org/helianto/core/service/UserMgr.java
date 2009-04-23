@@ -35,7 +35,7 @@ import org.helianto.core.UserLog;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface UserMgr extends CoreMgr {
+public interface UserMgr {
 	
     /**
      * Find <core>Identity</core> by principal.

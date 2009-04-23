@@ -30,10 +30,8 @@ import junit.framework.TestCase;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
-import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
-import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
@@ -45,7 +43,6 @@ import org.helianto.core.UserLog;
 import org.helianto.core.UserLogFilter;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.dao.InternalEnumeratorDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
@@ -105,35 +102,6 @@ public class UserMgrImplTests extends TestCase {
         Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
         assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
-    }
-    
-    public void testFindNextInternalNumber() {
-        InternalEnumerator enumerator = new InternalEnumerator();
-        enumerator.setLastNumber(10);
-        Entity entity = new Entity();
-        
-        expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(entity, "TYPE_NAME"))
-            .andReturn(enumerator);
-        internalEnumeratorDao.persistInternalEnumerator(enumerator);
-        replay(internalEnumeratorDao);
-        
-        assertEquals(10, userMgr.findNextInternalNumber(entity, "TYPE_NAME"));
-        verify(internalEnumeratorDao);
-        assertEquals(11, enumerator.getLastNumber());
-    }
-    
-    public void testFindNextInternalNumberFirstCall() {
-        InternalEnumerator discarded = null, enumerator = null;
-        Entity entity = new Entity();
-        
-        expect(internalEnumeratorDao.findInternalEnumeratorByNaturalId(entity, "TYPE_NAME"))
-            .andReturn(enumerator);
-        expect(internalEnumeratorDao.mergeInternalEnumerator(isA(InternalEnumerator.class)))
-            .andReturn(discarded);
-        replay(internalEnumeratorDao);
-        
-        assertEquals(1, userMgr.findNextInternalNumber(entity, "TYPE_NAME"));
-        verify(internalEnumeratorDao);
     }
     
     public void testCreateUserAssociationPrincipalExisting() {
@@ -255,7 +223,6 @@ public class UserMgrImplTests extends TestCase {
     // 
     
     private FilterDao<Identity, IdentityFilter> identityDao;
-    private InternalEnumeratorDao internalEnumeratorDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private BasicDao<UserAssociation> userAssociationDao;
@@ -271,8 +238,6 @@ public class UserMgrImplTests extends TestCase {
         userMgr.setIdentityDao(identityDao);
         principalGenerationStrategy = createMock(PrincipalGenerationStrategy.class);
         userMgr.setPrincipalGenerationStrategy(principalGenerationStrategy);
-        internalEnumeratorDao = createMock(InternalEnumeratorDao.class);
-        userMgr.setInternalEnumeratorDao(internalEnumeratorDao);
         userGroupDao = createMock(FilterDao.class);
         userMgr.setUserGroupDao(userGroupDao);
         userAssociationDao = createMock(FilterDao.class);
@@ -286,7 +251,6 @@ public class UserMgrImplTests extends TestCase {
     @Override
     public void tearDown() {
         reset(identityDao);
-        reset(internalEnumeratorDao);
         reset(principalGenerationStrategy);
         reset(userGroupDao);
         reset(userAssociationDao);

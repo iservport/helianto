@@ -26,8 +26,8 @@ import org.helianto.core.EntityFilter;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
+import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.dao.InternalEnumeratorDao;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -55,11 +55,11 @@ public class SequenceMgrImpl implements SequenceMgr {
 	}
 
     public long findNextInternalNumber(Entity entity, String typeName) {
-        InternalEnumerator enumerator = internalEnumeratorDao.findInternalEnumeratorByNaturalId(entity, typeName);
+        InternalEnumerator enumerator = internalEnumeratorDao.findUnique(entity, typeName);
         if (enumerator!=null) {
             long lastNumber = enumerator.getLastNumber();
             enumerator.setLastNumber(lastNumber+1);
-            internalEnumeratorDao.persistInternalEnumerator(enumerator);
+            internalEnumeratorDao.persist(enumerator);
             if (logger.isDebugEnabled()) {
                 logger.debug("Incremented existing InternalEnumerator: "+enumerator);
             }
@@ -69,7 +69,7 @@ public class SequenceMgrImpl implements SequenceMgr {
             enumerator.setEntity(entity);
             enumerator.setTypeName(typeName);
             enumerator.setLastNumber(2);    
-            internalEnumeratorDao.mergeInternalEnumerator(enumerator);
+            internalEnumeratorDao.merge(enumerator);
             if (logger.isDebugEnabled()) {
                 logger.debug("Created InternalEnumerator: "+enumerator);
             }
@@ -84,15 +84,15 @@ public class SequenceMgrImpl implements SequenceMgr {
 
     // collabs 
     
-	private InternalEnumeratorDao internalEnumeratorDao;
+	private BasicDao<InternalEnumerator> internalEnumeratorDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
 	private TreeBuilder treeBuilder;
 
-	@Resource
-	public void setInternalEnumeratorDao(InternalEnumeratorDao internalEnumeratorDao) {
-		this.internalEnumeratorDao = internalEnumeratorDao;
-	}
-    
+    @Resource(name="internalEnumeratorDao")
+    public void setInternalEnumeratorDao(BasicDao<InternalEnumerator> internalEnumeratorDao) {
+        this.internalEnumeratorDao = internalEnumeratorDao;
+    }
+
     @Resource(name="entityDao")
     public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
         this.entityDao = entityDao;
