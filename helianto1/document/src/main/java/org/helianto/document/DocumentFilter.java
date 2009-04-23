@@ -38,13 +38,19 @@ public class DocumentFilter extends AbstractUserBackedCriteriaFilter {
 	}
 	
 	private static final long serialVersionUID = 1L;
-    private String docCode = "";
-    private String docNameLike = "";
+    private String docCode;
+    private String docNameLike;
     private char contentType;
+    
+    public DocumentFilter() {
+		setDocCode("");
+		setDocNameLike("");
+		setContentType(' ');
+    }
 
 	public void reset() {
 		setDocCode("");
-		setContentType('I');
+		setContentType(' ');
 	}
 
 	public String getDocCode() {
