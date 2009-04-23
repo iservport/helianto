@@ -47,7 +47,9 @@ public class Service implements java.io.Serializable {
     public Service() {
     }
 
-    // Property accessors
+    /**
+     * Primary key
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
