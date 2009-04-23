@@ -37,69 +37,6 @@ import javax.persistence.UniqueConstraint;
 )
 public class KeyType implements java.io.Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private int id;
-    private Operator operator;
-    private String keyCode;
-
-    private String purpose;
-
-    /** default constructor */
-    public KeyType() {
-    }
-
-    // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Operator getter.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="operatorId", nullable=true)
-    public Operator getOperator() {
-        return this.operator;
-    }
-    /**
-     * Operator setter.
-     */
-    public void setOperator(Operator operator) {
-        this.operator = operator;
-    }
-
-    /**
-     * KeyCode getter.
-     */
-    @Column(length=20)
-    public String getKeyCode() {
-        return this.keyCode;
-    }
-    /**
-     * KeyCode setter.
-     */
-    public void setKeyCode(String keyCode) {
-        this.keyCode = keyCode;
-    }
-
-    /**
-     * Purpose getter.
-     */
-    @Column(length=255)
-    public String getPurpose() {
-        return this.purpose;
-    }
-    /**
-     * Purpose setter.
-     */
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
-
     /**
      * <code>KeyType</code> factory.
      * 
@@ -111,6 +48,61 @@ public class KeyType implements java.io.Serializable {
         keyType.setOperator(operator);
         keyType.setKeyCode(keyCode);
         return keyType;
+    }
+
+    private static final long serialVersionUID = 1L;
+    private int id;
+    private Operator operator;
+    private String keyCode;
+    private String purpose;
+
+    /** default constructor */
+    public KeyType() {
+    }
+
+    /**
+     * Primary key.
+     */
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
+        return this.id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Operator.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="operatorId", nullable=true)
+    public Operator getOperator() {
+        return this.operator;
+    }
+    public void setOperator(Operator operator) {
+        this.operator = operator;
+    }
+
+    /**
+     * Key code.
+     */
+    @Column(length=20)
+    public String getKeyCode() {
+        return this.keyCode;
+    }
+    public void setKeyCode(String keyCode) {
+        this.keyCode = keyCode;
+    }
+
+    /**
+     * Purpose description.
+     */
+    @Column(length=255)
+    public String getPurpose() {
+        return this.purpose;
+    }
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 
     /**
