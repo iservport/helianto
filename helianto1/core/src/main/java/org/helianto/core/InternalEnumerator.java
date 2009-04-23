@@ -23,13 +23,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
-
-
-
-import org.helianto.core.Entity;
 /**
  * <p>
  * A class to hold last value for internal number lists.
@@ -41,84 +36,6 @@ import org.helianto.core.Entity;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "typeName"})}
 )
 public class InternalEnumerator implements java.io.Serializable {
-
-    private static final long serialVersionUID = 1L;
-    private int id;
-    private Entity entity;
-    private String typeName;
-
-    private int version;
-
-    private long lastNumber;
-
-    /** default constructor */
-    public InternalEnumerator() {
-    }
-
-    // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Entity getter.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    /**
-     * Entity setter.
-     */
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
-    /**
-     * TypeName getter.
-     */
-    @Column(length=12)
-    public String getTypeName() {
-        return this.typeName;
-    }
-    /**
-     * TypeName setter.
-     */
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    /**
-     * Version getter.
-     */
-    @Version
-    public int getVersion() {
-        return this.version;
-    }
-    /**
-     * Version setter.
-     */
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    /**
-     * LastNumber getter.
-     */
-    public long getLastNumber() {
-        return this.lastNumber;
-    }
-    /**
-     * LastNumber setter.
-     */
-    public void setLastNumber(long lastNumber) {
-        this.lastNumber = lastNumber;
-    }
 
     /**
      * <code>InternalEnumerator</code> factory.
@@ -133,12 +50,70 @@ public class InternalEnumerator implements java.io.Serializable {
         return internalEnumerator;
     }
 
+    private static final long serialVersionUID = 1L;
+    private int id;
+    private int version;
+    private Entity entity;
+    private String typeName;
+    private long lastNumber;
+
+    /** default constructor */
+    public InternalEnumerator() {
+    }
+
     /**
-     * <code>InternalEnumerator</code> natural id query.
+     * Primary key.
      */
-    @Transient
-    public static String getInternalEnumeratorNaturalIdQueryString() {
-        return "select internalEnumerator from InternalEnumerator internalEnumerator where internalEnumerator.entity = ? and internalEnumerator.typeName = ? ";
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
+        return this.id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Version.
+     */
+    @Version
+    public int getVersion() {
+        return this.version;
+    }
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    /**
+     * Entity.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="entityId", nullable=true)
+    public Entity getEntity() {
+        return this.entity;
+    }
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
+    /**
+     * Type name.
+     */
+    @Column(length=12)
+    public String getTypeName() {
+        return this.typeName;
+    }
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    /**
+     * Last number.
+     */
+    public long getLastNumber() {
+        return this.lastNumber;
+    }
+    public void setLastNumber(long lastNumber) {
+        this.lastNumber = lastNumber;
     }
 
     /**
