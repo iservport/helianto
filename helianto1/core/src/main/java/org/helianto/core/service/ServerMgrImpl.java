@@ -42,7 +42,6 @@ import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.dao.UserDao;
-import org.helianto.core.dao.UserRoleDao;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.MailMessageComposer;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
@@ -136,7 +135,7 @@ public class ServerMgrImpl  implements ServerMgr {
     }
 
     public UserRole findOrCreateUserRole(UserGroup userGroup, Service service, String extension) {
-        UserRole userRole = userRoleDao.findUserRoleByNaturalId(userGroup, service, extension);
+        UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
         if (userRole==null) {
             userRole = UserRole.userRoleFactory(
                     userGroup, service, extension);
@@ -251,7 +250,7 @@ public class ServerMgrImpl  implements ServerMgr {
     //~ collaborators 
 
     private FilterDao<Server, ServerFilter> serverDao;
-    private UserRoleDao userRoleDao;
+    private BasicDao<UserRole> userRoleDao;
     private FilterDao<Service, ServiceFilter> serviceDao;
     private FilterDao<Identity, IdentityFilter> identityDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
@@ -266,8 +265,8 @@ public class ServerMgrImpl  implements ServerMgr {
         this.serverDao = serverDao;
     }
 
-    @Resource
-    public void setUserRoleDao(UserRoleDao userRoleDao) {
+    @Resource(name="userRoleDao")
+    public void setUserRoleDao(BasicDao<UserRole> userRoleDao) {
         this.userRoleDao = userRoleDao;
     }
 

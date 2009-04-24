@@ -27,9 +27,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
- * <p>
- * Represent roles an <code>User</code> can play.
- * </p>
+ * Roles represent the authorization given to access a service.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -38,6 +37,22 @@ import javax.persistence.UniqueConstraint;
 )
 public class UserRole  implements java.io.Serializable {
 
+    /**
+     * Factory method.
+     * 
+     * @param user
+     * @param service
+     * @param serviceExtension
+     */
+    public static UserRole userRoleFactory(UserGroup user, Service service, String serviceExtension) {
+        UserRole userRole = new UserRole();
+        userRole.setUserGroup(user);
+        userRole.setService(service);
+        userRole.setServiceExtension(serviceExtension);
+        user.getRoles().add(userRole);
+        return userRole;
+    }
+    
     private static final long serialVersionUID = 1L;
     private long id;
     private UserGroup userGroup;
@@ -48,7 +63,9 @@ public class UserRole  implements java.io.Serializable {
     public UserRole() {
     }
    
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public long getId() {
         return this.id;
@@ -58,80 +75,46 @@ public class UserRole  implements java.io.Serializable {
     }
 
     /**
-     * UserGroup getter.
+     * User group.
      */
     @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="userId", nullable=true)
     public UserGroup getUserGroup() {
         return this.userGroup;
     }
-    /**
-     * UserGroup setter.
-     */
     public void setUserGroup(UserGroup userGroup) {
         this.userGroup = userGroup;
     }
 
     /**
-     * Service getter.
+     * Service.
      */
     @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="serviceId", nullable=true)
     public Service getService() {
         return this.service;
     }
-    /**
-     * Service setter.
-     */
     public void setService(Service service) {
         this.service = service;
     }
     
     /**
-     * ServiceExtension getter.
+     * Service extension.
      */
     @Column(length=8)
     public String getServiceExtension() {
         return this.serviceExtension;
     }
-    /**
-     * ServiceExtension setter.
-     */
     public void setServiceExtension(String serviceExtension) {
         this.serviceExtension = serviceExtension;
     }
     
     /**
-     * UserRoleName getter.
+     * UserRole name.
      */
     @Transient
     public String getUserRoleName() {
         return "ROLE_"+service.getServiceName().toUpperCase()+"_"+serviceExtension;
-    }
-
-    /**
-     * Default <code>UserRole</code> creator.
-     * 
-     * @param user
-     * @param service
-     * @param serviceExtension
-     */
-    public static UserRole userRoleFactory(UserGroup user, Service service, String serviceExtension) {
-        UserRole userRole = new UserRole();
-        
-        userRole.setUserGroup(user);
-        userRole.setService(service);
-        userRole.setServiceExtension(serviceExtension);
-        user.getRoles().add(userRole);
-        return userRole;
-    }
-    
-    /**
-     * <code>UserRole</code> natural id query.
-     */
-    @Transient
-    public static String getUserRoleNaturalIdQueryString() {
-        return "select userRole from UserRole userRole where userRole.userGroup = ? and userRole.service = ? and userRole.serviceExtension = ? ";
     }
 
     /**
