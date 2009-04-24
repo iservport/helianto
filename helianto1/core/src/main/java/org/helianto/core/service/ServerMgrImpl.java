@@ -23,14 +23,15 @@ import javax.mail.MessagingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
-import org.helianto.core.EntityFilter;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.IdentityType;
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
+import org.helianto.core.ServerFilter;
 import org.helianto.core.Service;
 import org.helianto.core.ServiceFilter;
 import org.helianto.core.User;
@@ -40,7 +41,6 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.dao.ServerDao;
 import org.helianto.core.dao.UserDao;
 import org.helianto.core.dao.UserRoleDao;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
@@ -57,7 +57,9 @@ public class ServerMgrImpl  implements ServerMgr {
 
     public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
             throws MessagingException {
-        List<Server> serverList = serverDao.findServerActive(mailForm.getOperator());
+    	ServerFilter filter = new ServerFilter(ActivityState.ACTIVE.getValue());
+    	filter.setOperator(mailForm.getOperator());
+        List<Server> serverList = (List<Server>) serverDao.find(filter);
         JavaMailSender sender = configurableMailSenderFactory.create(serverList);
         sender.send(mailMessageComposer.composeMessage("PASSWORD", mailForm));
     }
@@ -248,10 +250,9 @@ public class ServerMgrImpl  implements ServerMgr {
 
     //~ collaborators 
 
-    private ServerDao serverDao;
+    private FilterDao<Server, ServerFilter> serverDao;
     private UserRoleDao userRoleDao;
     private FilterDao<Service, ServiceFilter> serviceDao;
-    private FilterDao<Entity, EntityFilter> entityDao;
     private FilterDao<Identity, IdentityFilter> identityDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
     private UserDao userDao;
@@ -260,8 +261,8 @@ public class ServerMgrImpl  implements ServerMgr {
     private MailMessageComposer mailMessageComposer;
 
     
-    @Resource
-    public void setServerDao(ServerDao serverDao) {
+    @Resource(name="serverDao")
+    public void setServerDao(FilterDao<Server, ServerFilter> serverDao) {
         this.serverDao = serverDao;
     }
 
@@ -273,11 +274,6 @@ public class ServerMgrImpl  implements ServerMgr {
     @Resource(name="serviceDao")
     public void setServiceDao(FilterDao<Service, ServiceFilter> serviceDao) {
         this.serviceDao = serviceDao;
-    }
-
-    @Resource(name="entityDao")
-    public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
-        this.entityDao = entityDao;
     }
 
     @Resource(name="identityDao")

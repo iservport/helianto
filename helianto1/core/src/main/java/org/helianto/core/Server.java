@@ -42,6 +42,37 @@ import javax.persistence.UniqueConstraint;
 )
 public class Server  implements java.io.Serializable {
 
+    /**
+     * Default <code>Server</code> creator.
+     * 
+     * Set ServerState to ActivityState.ACTIVE and
+     * RequiredEncription to Encription.PLAIN_PASSWORD by default.
+     * 
+     * @param requiredOperator
+     * @param serverName
+     * @param serverType if null, default is ServerType.SMTP_SERVER
+     * @param credential if null, create one with serverName and empty password
+     * 
+     * @see ServerType
+     * @see ActivityState
+     * @see Encription
+     */
+    public static Server serverFactory(Operator requiredOperator, String serverName, ServerType serverType, Credential credential) {
+        Server server = new Server();
+        server.setOperator(requiredOperator);
+        server.setServerName(serverName);
+        if (serverType!=null) {
+            server.setServerType(serverType.getValue());
+        }
+        if (credential==null) {
+            Identity identity = Identity.identityFactory("", "");
+            credential = Credential.credentialFactory(identity, "");
+            credential.getIdentity().setPrincipal(serverName);
+        } 
+        server.setCredential(credential);
+        return server;
+    }
+
 	private static final long serialVersionUID = 1L;
 	private int id;
     private Operator operator;
@@ -59,9 +90,18 @@ public class Server  implements java.io.Serializable {
 
     /** default constructor */
     public Server() {
+    	setServerHostAddress("");
+    	setServerPort(-1);
+    	setServerDesc("");
+    	setServerType(ServerType.SMTP_SERVER.getValue());
+        setPriority((byte) 1);
+        setServerState(ActivityState.ACTIVE);
+        setRequiredEncription(Encription.PLAIN_PASSWORD);
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -154,6 +194,9 @@ public class Server  implements java.io.Serializable {
     public void setServerState(char serverState) {
         this.serverState = serverState;
     }
+    public void setServerState(ActivityState serverState) {
+        this.serverState = serverState.getValue();
+    }
     
     /**
      * Required encription.
@@ -163,6 +206,9 @@ public class Server  implements java.io.Serializable {
     }
     public void setRequiredEncription(char requiredEncription) {
         this.requiredEncription = requiredEncription;
+    }
+    public void setRequiredEncription(Encription requiredEncription) {
+        this.requiredEncription = requiredEncription.getValue();
     }
     
     /**
@@ -175,46 +221,6 @@ public class Server  implements java.io.Serializable {
     }
     public void setCredential(Credential credential) {
         this.credential = credential;
-    }
-
-    /**
-     * Default <code>Server</code> creator.
-     * 
-     * Set ServerState to ActivityState.ACTIVE and
-     * RequiredEncription to Encription.PLAIN_PASSWORD by default.
-     * 
-     * @param requiredOperator
-     * @param serverName
-     * @param serverType if null, default is ServerType.SMTP_SERVER
-     * @param credential if null, create one with serverName and empty password
-     * 
-     * @see ServerType
-     * @see ActivityState
-     * @see Encription
-     */
-    public static Server serverFactory(Operator requiredOperator, String serverName, ServerType serverType, Credential credential) {
-        Server server = new Server();
-
-        server.setOperator(requiredOperator);
-        server.setServerName(serverName);
-        server.setServerHostAddress("");
-        server.setServerPort(-1);
-        server.setServerDesc("");
-        if (serverType==null) {
-            server.setServerType(ServerType.SMTP_SERVER.getValue());
-        } else {
-            server.setServerType(serverType.getValue());
-        }
-        server.setPriority((byte) 1);
-        server.setServerState(ActivityState.ACTIVE.getValue());
-        server.setRequiredEncription(Encription.PLAIN_PASSWORD.getValue());
-        if (credential==null) {
-            Identity identity = Identity.identityFactory("", "");
-            credential = Credential.credentialFactory(identity, "");
-            credential.getIdentity().setPrincipal(serverName);
-        } 
-        server.setCredential(credential);
-        return server;
     }
 
     /**

@@ -21,17 +21,14 @@ import java.util.List;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
-import org.helianto.core.dao.ServerDao;
 import org.helianto.core.hibernate.GenericDaoImpl;
-import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Server</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Repository("serverDao")
-public class ServerDaoImpl extends GenericDaoImpl implements ServerDao {
+public class ServerDaoImpl extends GenericDaoImpl  {
     
     public void persistServer(Server server) {
         persist(server);
