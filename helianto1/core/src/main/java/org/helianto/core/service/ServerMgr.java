@@ -19,6 +19,8 @@ import javax.mail.MessagingException;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.Operator;
+import org.helianto.core.Server;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
@@ -29,6 +31,14 @@ import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
  * @author Mauricio Fernandes de Castro
  */
 public interface ServerMgr {
+	
+	/**
+	 * Find the nth active server or return null.
+	 * 
+	 * @param operator
+	 * @param n
+	 */
+	public Server findActiveServer(Operator operator, int n);
 
     /**
      * <p>Finds or creates <code>UserGroup</code> by <code>Entity</code> and name.</p>

@@ -53,6 +53,16 @@ import org.springframework.mail.javamail.JavaMailSender;
  * @author Mauricio Fernandes de Castro
  */
 public class ServerMgrImpl  implements ServerMgr {
+	
+	public Server findActiveServer(Operator operator, int n) {
+    	ServerFilter filter = new ServerFilter(ActivityState.ACTIVE.getValue());
+    	filter.setOperator(operator);
+        List<Server> serverList = (List<Server>) serverDao.find(filter);
+		if (serverList!=null && serverList.size()> n) {
+			return serverList.get(n);
+		}
+		return null;
+	}
 
     public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
             throws MessagingException {
