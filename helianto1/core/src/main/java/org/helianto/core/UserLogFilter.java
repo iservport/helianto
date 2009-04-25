@@ -17,6 +17,7 @@
 package org.helianto.core;
 
 import org.helianto.core.filter.AbstractDateRangeFilter;
+import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 
 /**
  * <code>UserLog</code> filter.
@@ -24,13 +25,35 @@ import org.helianto.core.filter.AbstractDateRangeFilter;
  * @author Mauricio Fernandes de Castro
  */
 public class UserLogFilter extends AbstractDateRangeFilter {
+	
+	/**
+	 * Método fábrica.
+	 * 
+	 * @param user
+	 */
+	public static UserLogFilter userLogFilterFactory(User user) {
+		return AbstractUserBackedCriteriaFilter.filterFactory(UserLogFilter.class, user);
+	}
 
 	private static final long serialVersionUID = 1L;
 	private Identity identity;
+	
+	/**
+	 * Default constructor.
+	 */
+	public UserLogFilter() {
+		super();
+	}
 
+	/**
+	 * Reset.
+	 */
 	public void reset() {
 	}
 
+	/**
+	 * Identity filter.
+	 */
 	public Identity getIdentity() {
 		return identity;
 	}

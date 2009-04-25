@@ -26,7 +26,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
  * Represent the memory of main user actions, as
@@ -66,7 +65,9 @@ public class UserLog implements java.io.Serializable {
     public UserLog() {
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -109,14 +110,6 @@ public class UserLog implements java.io.Serializable {
     }
     public void setEventType(EventType eventType) {
         this.eventType = eventType.getValue();
-    }
-
-    /**
-     * <code>UserLog</code> natural id query.
-     */
-    @Transient
-    public static String getUserLogNaturalIdQueryString() {
-        return "select userLog from UserLog userLog where userLog.user = ? and userLog.lastEvent = ? ";
     }
 
     /**

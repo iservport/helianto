@@ -32,7 +32,7 @@ public class DefaultUserLogDao extends AbstractFilterDao<UserLog, UserLogFilter>
 
 	@Override
 	protected void doFilter(UserLogFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		mainCriteriaBuilder.appendAnd().appendDateRange("lastEvent", filter);
+		mainCriteriaBuilder.appendDateRange("lastEvent", filter);
 		if (filter.getIdentity()!=null) {
 			appendEqualFilter("user.identity.id", filter.getIdentity().getId(), mainCriteriaBuilder);
 		}
@@ -50,6 +50,11 @@ public class DefaultUserLogDao extends AbstractFilterDao<UserLog, UserLogFilter>
 	@Override
 	public Class<? extends UserLog> getClazz() {
 		return UserLog.class;
+	}
+
+	@Override
+	protected String[] getParams() {
+		return new String[] { "user", "lastEvent" };
 	}
 
 }
