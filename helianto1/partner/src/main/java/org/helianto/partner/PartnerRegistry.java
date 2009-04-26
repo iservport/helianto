@@ -46,6 +46,19 @@ import org.helianto.core.Entity;
 )
 public class PartnerRegistry implements java.io.Serializable {
 
+    /**
+     * Factory method.
+     * 
+     * @param entity
+     * @param partnerAlias
+     */
+    public static PartnerRegistry partnerRegistryFactory(Entity entity, String partnerAlias) {
+        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        partnerRegistry.setEntity(entity);
+        partnerRegistry.setPartnerAlias(partnerAlias);
+        return partnerRegistry;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -58,7 +71,9 @@ public class PartnerRegistry implements java.io.Serializable {
     public PartnerRegistry() {
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -113,7 +128,7 @@ public class PartnerRegistry implements java.io.Serializable {
     }
 
     /**
-     * Partners getter.
+     * Partners.
      */
     @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
     public Set<Partner> getPartners() {
@@ -124,7 +139,7 @@ public class PartnerRegistry implements java.io.Serializable {
     }
 
     /**
-     * Addresses getter.
+     * Addresses.
      */
     @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
     public Set<Address> getAddresses() {
@@ -136,19 +151,6 @@ public class PartnerRegistry implements java.io.Serializable {
     @Transient
     public List<Address> getAddressList() {
     	return new ArrayList<Address>(getAddresses());
-    }
-
-    /**
-     * <code>PartnerAssociation</code> factory.
-     * 
-     * @param entity
-     * @param partnerAlias
-     */
-    public static PartnerRegistry partnerRegistryFactory(Entity entity, String partnerAlias) {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
-        partnerRegistry.setEntity(entity);
-        partnerRegistry.setPartnerAlias(partnerAlias);
-        return partnerRegistry;
     }
 
     /**

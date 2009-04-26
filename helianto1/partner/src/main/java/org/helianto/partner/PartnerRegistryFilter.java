@@ -27,22 +27,27 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
  */
 public class PartnerRegistryFilter extends AbstractUserBackedCriteriaFilter implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
-	private String partnerAlias;
-	private String partnerNameLike;
-
 	/**
 	 * Factory method.
 	 * 
 	 * @param user
 	 */
 	public static PartnerRegistryFilter partnerRegistryFilterFactory(User user) {
-		PartnerRegistryFilter partnerRegistryFilter = new PartnerRegistryFilter();
-		partnerRegistryFilter.setUser(user);
-		partnerRegistryFilter.reset();
-		return partnerRegistryFilter;
+		return AbstractUserBackedCriteriaFilter.filterFactory(PartnerRegistryFilter.class, user);
 	}
 	
+	private static final long serialVersionUID = 1L;
+	private String partnerAlias;
+	private String partnerNameLike;
+
+	/**
+	 * Default constructor.
+	 */
+	public PartnerRegistryFilter() {
+		setPartnerAlias("");
+		setPartnerNameLike("");
+	}
+
 	/**
 	 * Reset method.
 	 */
@@ -51,7 +56,12 @@ public class PartnerRegistryFilter extends AbstractUserBackedCriteriaFilter impl
 		setPartnerNameLike("");
 	}
 
-    /**
+    @Override
+	public boolean isSelection() {
+		return getPartnerAlias().length()>0;
+	}
+
+	/**
      * PartnerAlias.
      */
     public String getPartnerAlias() {

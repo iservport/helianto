@@ -37,7 +37,6 @@ import org.helianto.partner.dao.ContactDao;
 import org.helianto.partner.dao.CustomerDao;
 import org.helianto.partner.dao.PartnerDao;
 import org.helianto.partner.dao.PartnerKeyDao;
-import org.helianto.partner.dao.PartnerRegistryDao;
 import org.helianto.partner.dao.PhoneDao;
 import org.helianto.partner.dao.SupplierDao;
 
@@ -49,8 +48,7 @@ import org.helianto.partner.dao.SupplierDao;
 public class PartnerMgrImpl implements PartnerMgr {
 
 	public List<PartnerRegistry> findPartnerRegistries(PartnerRegistryFilter partnerRegistryFilter) {
-		String criteria = partnerRegistrySelectionStrategy.createCriteriaAsString(partnerRegistryFilter, "partnerRegistry");
-		List<PartnerRegistry> partnerRegistryList = partnerRegistryDao.findPartnerRegistries(criteria);
+		List<PartnerRegistry> partnerRegistryList = (List<PartnerRegistry>) partnerRegistryDao.find(partnerRegistryFilter);
     	if (logger.isDebugEnabled() && partnerRegistryList!=null) {
     		logger.debug("Found partner registry list of size "+partnerRegistryList.size());
     	}
@@ -58,11 +56,11 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 
 	public PartnerRegistry storePartnerRegistry(PartnerRegistry partnerRegistry) {
-		return partnerRegistryDao.mergePartnerRegistry(partnerRegistry);
+		return partnerRegistryDao.merge(partnerRegistry);
 	}
 	
     public void removePartnerRegistry(PartnerRegistry partnerRegistry) {
-    	partnerRegistryDao.removePartnerRegistry(partnerRegistry);
+    	partnerRegistryDao.remove(partnerRegistry);
     }
 
 	public List<? extends Partner> findPartners(PartnerFilter partnerFilter) {
@@ -96,10 +94,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     
     private FilterDao<Province, ProvinceFilter> provinceDao;
 	private ContactDao contactDao;
-
-    private PartnerRegistryDao partnerRegistryDao;
-	private SelectionStrategy<PartnerRegistryFilter> partnerRegistrySelectionStrategy;
-
+    private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
 	private PartnerDao partnerDao;
 	private SelectionStrategy<PartnerFilter> partnerSelectionStrategy;
 	
@@ -134,14 +129,12 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void setCustomerDao(CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
-    @Resource
-    public void setPartnerRegistryDao(PartnerRegistryDao partnerRegistryDao) {
+    
+    @Resource(name="partnerRegistryDao")
+    public void setPartnerRegistryDao(FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao) {
         this.partnerRegistryDao = partnerRegistryDao;
     }
-	@Resource
-	public void setPartnerRegistrySelectionStrategy(SelectionStrategy<PartnerRegistryFilter> partnerRegistrySelectionStrategy) {
-		this.partnerRegistrySelectionStrategy = partnerRegistrySelectionStrategy;
-	}
+
     @Resource
     public void setPartnerDao(PartnerDao partnerDao) {
         this.partnerDao = partnerDao;

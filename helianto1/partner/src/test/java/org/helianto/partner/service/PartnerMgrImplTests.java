@@ -17,6 +17,7 @@ package org.helianto.partner.service;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +25,9 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
-import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
-import org.helianto.partner.dao.PartnerRegistryDao;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -40,52 +40,47 @@ public class PartnerMgrImplTests extends TestCase {
     	PartnerRegistryFilter partnerRegistryFilter = new PartnerRegistryFilter();
     	List<PartnerRegistry> partnerRegistryList = new ArrayList<PartnerRegistry>();
     	
-    	String criteria = "CRITERIA";
-    	expect(partnerRegistrySelectionStrategy.createCriteriaAsString(partnerRegistryFilter, "partnerRegistry")).andReturn(criteria);
-    	replay(partnerRegistrySelectionStrategy);
-    	
-    	expect(partnerRegistryDao.findPartnerRegistries(criteria)).andReturn(partnerRegistryList);
+    	expect(partnerRegistryDao.find(partnerRegistryFilter)).andReturn(partnerRegistryList);
     	replay(partnerRegistryDao);
     	
     	assertSame(partnerRegistryList, partnerMgr.findPartnerRegistries(partnerRegistryFilter));
+    	verify(partnerRegistryDao);
     }
     
     public void testStorePartnerRegistry() {
     	PartnerRegistry partnerRegistry = new PartnerRegistry();
     	PartnerRegistry managedPartnerRegistry = new PartnerRegistry();
     	
-    	expect(partnerRegistryDao.mergePartnerRegistry(partnerRegistry)).andReturn(managedPartnerRegistry);
+    	expect(partnerRegistryDao.merge(partnerRegistry)).andReturn(managedPartnerRegistry);
     	replay(partnerRegistryDao);
 
     	assertSame(managedPartnerRegistry, partnerMgr.storePartnerRegistry(partnerRegistry));
+    	verify(partnerRegistryDao);
     }
     
     public void testRemovePartnerRegistry() {
     	PartnerRegistry partnerRegistry = new PartnerRegistry();
     	
-    	partnerRegistryDao.removePartnerRegistry(partnerRegistry);
+    	partnerRegistryDao.remove(partnerRegistry);
     	replay(partnerRegistryDao);
 
     	partnerMgr.removePartnerRegistry(partnerRegistry);
+    	verify(partnerRegistryDao);
     }
     
-    private PartnerRegistryDao partnerRegistryDao;
-	private SelectionStrategy<PartnerRegistryFilter> partnerRegistrySelectionStrategy;
+    private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
 
 	@SuppressWarnings("unchecked")
 	@Override
     public void setUp() {
         partnerMgr = new PartnerMgrImpl();
-        partnerRegistryDao = EasyMock.createMock(PartnerRegistryDao.class);
+        partnerRegistryDao = EasyMock.createMock(FilterDao.class);
         partnerMgr.setPartnerRegistryDao(partnerRegistryDao);
-        partnerRegistrySelectionStrategy = EasyMock.createMock(SelectionStrategy.class);
-        partnerMgr.setPartnerRegistrySelectionStrategy(partnerRegistrySelectionStrategy);
     }
     
     @Override
     public void tearDown() {
     	EasyMock.reset(partnerRegistryDao);
-    	EasyMock.reset(partnerRegistrySelectionStrategy);
     }
 
 }
