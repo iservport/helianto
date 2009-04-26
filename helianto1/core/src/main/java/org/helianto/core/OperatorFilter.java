@@ -25,28 +25,54 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
  */
 public class OperatorFilter extends AbstractUserBackedCriteriaFilter {
 
+	/**
+	 * Factory method.
+	 */
+	public static OperatorFilter filterFactory(User user) {
+		return AbstractUserBackedCriteriaFilter.filterFactory(OperatorFilter.class, user);
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private String operatorName;
+	private String operatorNameLike;
 	
-	public static OperatorFilter filterFactory(User user) {
-		OperatorFilter operatorFilter = new OperatorFilter();
-		operatorFilter.setUser(user);
-		operatorFilter.reset();
-		return operatorFilter;
+	/**
+	 * Default constructor.
+	 */
+	public OperatorFilter() {
+		setOperatorName("");
+		setOperatorNameLike("");
 	}
 
+	/**
+	 * Reset.
+	 */
 	public void reset() {
+	}
+
+	@Override
+	public boolean isSelection() {
+		return getOperatorName().length()>0;
+	}
+
+	/**
+	 * Property to select operatorName.
+	 */
+	public String getOperatorName() {
+		return operatorName;
+	}
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
 	}
 
 	/**
 	 * Property to filter operatorName.
 	 */
-	public String getOperatorName() {
-		return operatorName;
+	public String getOperatorNameLike() {
+		return operatorNameLike;
 	}
-
-	public void setOperatorName(String operatorName) {
-		this.operatorName = operatorName;
+	public void setOperatorNameLike(String operatorNameLike) {
+		this.operatorNameLike = operatorNameLike;
 	}
 
 }

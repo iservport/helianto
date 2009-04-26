@@ -25,10 +25,10 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
 import org.helianto.core.Operator;
+import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.dao.OperatorDao;
 
 /**
  * <code>OperatorMgr</code> default implementation.
@@ -38,15 +38,15 @@ import org.helianto.core.dao.OperatorDao;
 public class OperatorMgrImpl implements OperatorMgr {
 
 	public List<Operator> findOperator() {
-    	return operatorDao.findOperatorAll();
+    	return (List<Operator>) operatorDao.find(new OperatorFilter());
 	}
 
 	public Operator findOperatorByName(String operatorName) {
-		return operatorDao.findOperatorByNaturalId(operatorName);
+		return operatorDao.findUnique(operatorName);
 	}
 
 	public Operator storeOperator(Operator operator) {
-		return operatorDao.mergeOperator(operator);
+		return operatorDao.merge(operator);
 	}
 
 	public List<Province> findProvinces(ProvinceFilter filter) {
@@ -75,12 +75,12 @@ public class OperatorMgrImpl implements OperatorMgr {
 
 	// collabs
 	
-	private OperatorDao operatorDao;
+	private FilterDao<Operator, OperatorFilter> operatorDao;
 	private FilterDao<Province, ProvinceFilter> provinceDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
 	
-	@Resource
-	public void setOperatorDao(OperatorDao operatorDao) {
+	@Resource(name="operatorDao")
+	public void setOperatorDao(FilterDao<Operator, OperatorFilter> operatorDao) {
 		this.operatorDao = operatorDao;
 	}
 

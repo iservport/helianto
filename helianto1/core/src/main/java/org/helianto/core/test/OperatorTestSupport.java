@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
-import org.helianto.core.dao.OperatorDao;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class OperatorTestSupport {
@@ -36,14 +35,6 @@ public class OperatorTestSupport {
             operatorName = DomainTestSupport.getNonRepeatableStringValue(testKey++, 12);
         }
         Operator operator = Operator.operatorFactory(operatorName, OperationMode.LOCAL, Locale.getDefault());
-        return operator;
-    }
-
-    public static Operator createAndPersistOperator(OperatorDao operatorDao) {
-        Operator operator = createOperator();
-        if (operatorDao!=null) {
-            operatorDao.persistOperator(operator);
-        }
         return operator;
     }
 

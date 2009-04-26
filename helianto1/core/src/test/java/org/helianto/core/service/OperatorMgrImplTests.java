@@ -17,6 +17,7 @@ package org.helianto.core.service;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
@@ -27,7 +28,8 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.helianto.core.Operator;
-import org.helianto.core.dao.OperatorDao;
+import org.helianto.core.OperatorFilter;
+import org.helianto.core.dao.FilterDao;
 
 /**
  * 
@@ -39,7 +41,7 @@ public class OperatorMgrImplTests extends TestCase {
     
     public void testPersistOperator() {
         Operator operator = new Operator(), managedOperator = new Operator();
-        expect(operatorDao.mergeOperator(operator)).andReturn(managedOperator);
+        expect(operatorDao.merge(operator)).andReturn(managedOperator);
         replay(operatorDao);
         
         assertSame(managedOperator, operatorMgr.storeOperator(operator));
@@ -48,7 +50,7 @@ public class OperatorMgrImplTests extends TestCase {
     
     public void testFindOperatorAll() {
         List<Operator> operatorList = new ArrayList<Operator>();
-        expect(operatorDao.findOperatorAll()).andReturn(operatorList);
+        expect(operatorDao.find(isA(OperatorFilter.class))).andReturn(operatorList);
         replay(operatorDao);
         
         assertSame(operatorList, operatorMgr.findOperator());
@@ -58,7 +60,7 @@ public class OperatorMgrImplTests extends TestCase {
     public void testFindOperatorByName() {
         Operator operator = new Operator();
         
-        expect(operatorDao.findOperatorByNaturalId("TEST")).andReturn(operator);
+        expect(operatorDao.findUnique("TEST")).andReturn(operator);
         replay(operatorDao);
         
         assertSame(operator, operatorMgr.findOperatorByName("TEST"));
@@ -67,11 +69,12 @@ public class OperatorMgrImplTests extends TestCase {
 
     // collabs
     
-    private OperatorDao operatorDao;
+    private FilterDao<Operator, OperatorFilter> operatorDao;
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void setUp() {
-        operatorDao = createMock(OperatorDao.class);
+        operatorDao = createMock(FilterDao.class);
         operatorMgr = new OperatorMgrImpl();
         operatorMgr.setOperatorDao(operatorDao);
     }
