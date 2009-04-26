@@ -15,7 +15,7 @@ import org.junit.Test;
 public class DefaultEntityFilterDaoTests {
 
     public static String C1 = "entity.operator.id = 1 AND entity.alias = 'ALIAS' ";
-    public static String C2 = "entity.alias like '%ALIAS%' ";
+    public static String C2 = "lower(entity.alias) like '%alias%' ";
 
     @Test
     public void testEmpty() {

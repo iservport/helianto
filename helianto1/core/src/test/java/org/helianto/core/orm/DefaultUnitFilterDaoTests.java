@@ -20,7 +20,7 @@ public class DefaultUnitFilterDaoTests {
     public static String C2 = "AND unit.category.categoryGroup = 2 ";
     public static String C3 = "AND unit.unitCode = 'CODE' ";
     public static String C4 = "AND unit.category.id = 1 ";
-    public static String C5 = "AND unit.unitNameLike like '%NAME%' ";
+    public static String C5 = "AND lower(unit.unitNameLike) like '%name%' ";
 
     @Test
     public void testEmpty() {

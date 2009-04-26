@@ -16,7 +16,7 @@ public class DefaultCategoryFilterDaoTests {
 
     public static String C1 = "category.entity.id = 0 AND category.categoryGroup = 0 ";
     public static String C2 = "AND category.categoryCode = 'CODE' ";
-    public static String C3 = "AND category.categoryNameLike like '%NAME_LIKE%' ";
+    public static String C3 = "AND lower(category.categoryNameLike) like '%name_like%' ";
 
     @Test
     public void testSelect() {

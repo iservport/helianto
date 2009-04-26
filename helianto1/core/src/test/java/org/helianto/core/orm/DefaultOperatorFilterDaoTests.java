@@ -7,14 +7,12 @@ import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 /**
- * <code>EntityDao</code> tests.
- *
  * @author Mauricio Fernandes de Castro
  */
 public class DefaultOperatorFilterDaoTests {
 
     public static String C1 = "operator.operatorName = 'NAME' ";
-    public static String C2 = "operator.operatorName like '%NAME%' ";
+    public static String C2 = "lower(operator.operatorName) like '%name%' ";
 
     @Test
     public void testEmpty() {

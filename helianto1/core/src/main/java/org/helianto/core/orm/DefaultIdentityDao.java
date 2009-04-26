@@ -63,8 +63,7 @@ public class DefaultIdentityDao extends AbstractFilterDao<Identity, IdentityFilt
 
 	@Override
 	protected void doSelect(IdentityFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-        mainCriteriaBuilder.appendAnd().appendSegment("principal", "like", "lower")
-            .appendLike(filter.getPrincipal().toLowerCase());
+		appendLikeFilter("principal", filter.getPrincipal(), mainCriteriaBuilder);
 	}
 
 	@Override

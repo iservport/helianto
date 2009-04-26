@@ -31,7 +31,7 @@ public class DefaultProvinceFilterDaoTests  {
     
     public static String C1 = "province.operator.id = 0 ";
     public static String C2 = "AND province.provinceCode = 'CODE' ";
-    public static String C3 = "AND province.provinceName like '%NAME_LIKE%' ";
+    public static String C3 = "AND lower(province.provinceName) like '%name_like%' ";
 
     @Test
     public void testEmpty() {

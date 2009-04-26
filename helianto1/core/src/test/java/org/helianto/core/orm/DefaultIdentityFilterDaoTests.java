@@ -15,7 +15,7 @@ public class DefaultIdentityFilterDaoTests {
 
     public static String C1 = "identity.id in (select user.identity.id from User user where user.entity.id =  0 )  ";
     public static String C2 = "lower(identity.principal) like '%principal%' ";
-    public static String C3 = "AND identity.optionalAlias like '%ALIAS%' ";
+    public static String C3 = "AND lower(identity.optionalAlias) like '%alias%' ";
 
     @Test
     public void testEmpty() {

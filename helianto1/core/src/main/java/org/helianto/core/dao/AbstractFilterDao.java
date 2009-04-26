@@ -160,7 +160,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
 	}
 	
     /**
-     * Base String filter segment.
+     * Equal appender.
      * 
      * @param fieldName
      * @param fieldContent
@@ -174,7 +174,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
     }
     
     /**
-     * Base String filter segment.
+     * Equal appender.
      * 
      * @param fieldName
      * @param fieldContent
@@ -188,7 +188,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
     }
     
     /**
-     * Base String filter segment.
+     * Equal appender.
      * 
      * @param fieldName
      * @param fieldContent
@@ -202,7 +202,7 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
     }
     
     /**
-     * Base String filter segment.
+     * Equal appender.
      * 
      * @param fieldName
      * @param fieldContent
@@ -216,7 +216,21 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
     }
     
     /**
-     * Base String filter segment.
+     * Case sensitive like appender.
+     * 
+     * @param fieldName
+     * @param fieldContent
+     * @param criteriaBuilder
+     */
+    protected void appendLikeCaseFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+    	if (fieldContent!=null && fieldContent.length()>0) {
+    		criteriaBuilder.appendAnd().appendSegment(fieldName, "like")
+            .appendLike(fieldContent);
+        }
+    }
+    
+    /**
+     * Case unsensitive like appender.
      * 
      * @param fieldName
      * @param fieldContent
@@ -224,8 +238,8 @@ public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaF
      */
     protected void appendLikeFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
     	if (fieldContent!=null && fieldContent.length()>0) {
-    		criteriaBuilder.appendAnd().appendSegment(fieldName, "like")
-            .appendLike(fieldContent);
+    		criteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
+            .appendLike(fieldContent.toLowerCase());
         }
     }
     

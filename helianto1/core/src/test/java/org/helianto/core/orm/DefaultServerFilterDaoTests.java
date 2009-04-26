@@ -10,15 +10,13 @@ import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 /**
- * <code>EntityDao</code> tests.
- *
  * @author Mauricio Fernandes de Castro
  */
 public class DefaultServerFilterDaoTests {
 
     public static String C0 = "order by server.priority ";
     public static String C1 = "server.operator.id = 1 AND server.serverName = 'NAME' ";
-    public static String C2 = "server.serverName like '%NAME%' ";
+    public static String C2 = "lower(server.serverName) like '%name%' ";
     public static String C3 = "server.serverType = 'H' ";
     public static String C4 = "server.priority = 1 ";
     public static String C5 = "server.serverState = 'A' ";

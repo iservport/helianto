@@ -8,14 +8,12 @@ import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 /**
- * <code>ServiceDao</code> tests.
- *
  * @author Mauricio Fernandes de Castro
  */
 public class DefaultServiceFilterDaoTests {
 
     public static String C1 = "service.operator.id = 1 AND service.serviceName = 'SERVICE' ";
-    public static String C2 = "service.serviceName like '%SERVICE%' ";
+    public static String C2 = "lower(service.serviceName) like '%service%' ";
 
     @Test
     public void testEmpty() {
