@@ -41,7 +41,6 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.dao.UserDao;
 import org.helianto.core.mail.ConfigurableMailSenderFactory;
 import org.helianto.core.mail.compose.MailMessageComposer;
 import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
@@ -111,7 +110,7 @@ public class ServerMgrImpl  implements ServerMgr {
     public User findOrCreateUser(Entity entity, Identity identity) {
         User user = null;
         if (entity.getId()!=0) {
-            user = userDao.findUserByNaturalId(entity, identity);
+            user = (User) userGroupDao.findUnique(entity, identity);
         }
         if (user==null) {
             user = User.userFactory(entity, identity);
@@ -264,7 +263,6 @@ public class ServerMgrImpl  implements ServerMgr {
     private FilterDao<Service, ServiceFilter> serviceDao;
     private FilterDao<Identity, IdentityFilter> identityDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
-    private UserDao userDao;
     private BasicDao<UserAssociation> userAssociationDao;
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
@@ -294,11 +292,6 @@ public class ServerMgrImpl  implements ServerMgr {
 	public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
 		this.userGroupDao = userGroupDao;
 	}
-
-    @Resource(name="userDao")
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
     @Resource(name="userAssociationDao")
     public void setUserAssociationDao(BasicDao<UserAssociation> userAssociationDao) {
