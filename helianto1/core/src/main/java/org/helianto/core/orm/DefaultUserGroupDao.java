@@ -41,20 +41,31 @@ public class DefaultUserGroupDao extends AbstractFilterDao<UserGroup, UserFilter
 	
 	@Override
 	protected void preProcessFilter(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		if (filter.getClass()!=null) {
+		if (filter.getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(filter.getClazz());
 		}
 	}
 
 	@Override
-	protected void doFilter(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
 		if (filter.getIdentity()!=null) {
 			appendEqualFilter("identity.id", filter.getIdentity().getId(), mainCriteriaBuilder);
 		}
+		else if (filter.getIdentityPrincipal().length()>0) {
+			appendEqualFilter("identity.principal", filter.getIdentityPrincipal(), mainCriteriaBuilder);
+		}
+	}
+
+	@Override
+	protected void doFilter(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("userState", filter.getUserState(), mainCriteriaBuilder);
+		appendLikeFilter("identity.principal", filter.getIdentityPrincipalLike(), mainCriteriaBuilder);
         appendExclusionsFilter(filter, mainCriteriaBuilder);
 		if (filter.isOrderByLastEventDesc()) {
 			appendOrderBy("lastEvent DESC", mainCriteriaBuilder);
+		}
+		else {
+			appendOrderBy("identity.principal", mainCriteriaBuilder);
 		}
 	}
 
@@ -83,17 +94,6 @@ public class DefaultUserGroupDao extends AbstractFilterDao<UserGroup, UserFilter
        }
     }
     
-	@Override
-	protected boolean isSelection(UserFilter filter) {
-		return filter.getIdentityPrincipal()!=null && filter.getIdentityPrincipal().length() > 0;
-	}
-
-	@Override
-	protected void doSelect(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		mainCriteriaBuilder.appendAnd().appendSegment("identity.principal", "like", "lower").appendLike(
-				filter.getIdentityPrincipal().toLowerCase());
-	}
-
 	@Override
 	public Class<? extends UserGroup> getClazz() {
 		return UserGroup.class;

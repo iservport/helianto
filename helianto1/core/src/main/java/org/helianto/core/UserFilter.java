@@ -28,10 +28,27 @@ import org.helianto.core.filter.PolymorphicFilter;
  */
 public class UserFilter extends AbstractUserBackedCriteriaFilter implements PolymorphicFilter<UserGroup> {
 
+    /**
+     * Factory method.
+     * @param user
+     */
+    public static UserFilter userFilterFactory(User user) {
+    	return AbstractUserBackedCriteriaFilter.filterFactory(UserFilter.class, user);
+    }
+    
+    /**
+     * Factory method.
+     * @param identity
+     */
+    public static UserFilter userFilterFactory(Identity identity) {
+    	return new UserFilter(identity, true);
+    }
+    
     private static final long serialVersionUID = 1L;
     private Class<? extends UserGroup> clazz;
     private Identity identity;
     private String identityPrincipal;
+    private String identityPrincipalLike;
     private String optionalAlias;
 	private String domain;
     private char userState = ' ';
@@ -42,36 +59,19 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
      * Default constructor
      */
     public UserFilter() {
+    	super();
+    	setIdentityPrincipal("");
+    	setIdentityPrincipalLike("");
+    	setExclusions(new HashSet<Identity>(0));
     }
     
     /**
      * Identity constructor
      */
     public UserFilter(Identity identity, boolean orderByLastEventDesc) {
-    	super();
+    	this();
     	setIdentity(identity);
     	setOrderByLastEventDesc(orderByLastEventDesc);
-    }
-    
-    /**
-     * Factory method.
-     * @param user
-     */
-    public static UserFilter userFilterFactory(User user) {
-    	UserFilter userFilter = new UserFilter();
-    	userFilter.setUser(user);
-    	userFilter.reset();
-    	return userFilter;
-    }
-    
-    /**
-     * Factory method.
-     * @param identity
-     */
-    public static UserFilter userFilterFactory(Identity identity) {
-    	UserFilter userFilter = new UserFilter(identity, true);
-    	userFilter.reset();
-    	return userFilter;
     }
     
     /**
@@ -81,6 +81,12 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     	setIdentityPrincipal("");
     	setExclusions(new HashSet<Identity>(0));
     }
+
+	@Override
+	public boolean isSelection() {
+		return (getIdentity()!=null 
+				|| getIdentityPrincipal()!=null && getIdentityPrincipal().length() > 0);
+	}
 
     /**
      * Class constraint to polimorphic filters.
@@ -118,7 +124,7 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 
 	
     /**
-     * Identity
+     * Identity filter.
      */
     public Identity getIdentity() {
 		return identity;
@@ -128,13 +134,23 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 	}
 
     /**
-     * Identity principal criterion field
+     * Identity principal filter.
      */
     public String getIdentityPrincipal() {
         return identityPrincipal;
     }
 	public void setIdentityPrincipal(String identityPrincipal) {
         this.identityPrincipal = identityPrincipal;
+    }
+    
+    /**
+     * Identity principal like filter.
+     */
+    public String getIdentityPrincipalLike() {
+        return identityPrincipalLike;
+    }
+	public void setIdentityPrincipalLike(String identityPrincipalLike) {
+        this.identityPrincipalLike = identityPrincipalLike;
     }
     
     /**
