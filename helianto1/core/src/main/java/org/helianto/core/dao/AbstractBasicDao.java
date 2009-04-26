@@ -185,6 +185,6 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 		this.sessionFactory = sessionFactory;
 	}
     
-    private static final Log logger = LogFactory.getLog(AbstractDao.class);
+    private static final Log logger = LogFactory.getLog(AbstractBasicDao.class);
 
 }
