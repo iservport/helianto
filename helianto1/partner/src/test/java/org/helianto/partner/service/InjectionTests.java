@@ -3,23 +3,28 @@ package org.helianto.partner.service;
 import org.helianto.partner.orm.AbstractPartnerDaoImplConfig;
 
 /**
- * <code>PartnerMgrImpl</code> injection tests.
+ * Injection tests.
  *
  * @author Mauricio Fernandes de Castro
  */
-public class PartnerMgrInjectionTests extends AbstractPartnerDaoImplConfig {
-    
-    private PartnerMgr partnerMgr;
+public class InjectionTests extends AbstractPartnerDaoImplConfig {
     
     public void testInit() {
         partnerMgr.getClass();
-        // the container invokes init
+        accountMgr.getClass();
     }
     
-    //- setters
+    //- collabs
 
+    private PartnerMgr partnerMgr;
+    private AccountMgr accountMgr;
+    
     public void setPartnerMgr(PartnerMgr partnerMgr) {
         this.partnerMgr = partnerMgr;
+    }
+    
+    public void setAccountMgr(AccountMgr accountMgr) {
+        this.accountMgr = accountMgr;
     }
     
 }

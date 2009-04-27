@@ -11,7 +11,7 @@
            http://www.springframework.org/schema/tx/spring-tx.xsd">
                
     <context:annotation-config/>
-	<context:component-scan base-package="org.helianto.partner.orm,org.helianto.partner.validation"/>
+	<context:component-scan base-package="org.helianto.partner.orm,org.helianto.partner.service,org.helianto.partner.validation"/>
     
 	<!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
@@ -31,7 +31,7 @@
 
 	<!--
 			Service bean	
-	-->
+	
 	<bean id="partnerMgr" 
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
 		parent="mgrTemplate">
@@ -40,6 +40,6 @@
 				class="org.helianto.partner.service.PartnerMgrImpl">
 			</bean>
 		</property>
-	</bean>
+	</bean> -->
 
 </beans>

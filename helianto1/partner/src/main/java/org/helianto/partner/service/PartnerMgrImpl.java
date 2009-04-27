@@ -30,18 +30,22 @@ import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
-import org.helianto.partner.dao.AccountDao;
 import org.helianto.partner.dao.ContactDao;
 import org.helianto.partner.dao.PartnerKeyDao;
 import org.helianto.partner.dao.PhoneDao;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>PartnerMgr</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Service("partnerMgr")
 public class PartnerMgrImpl implements PartnerMgr {
 
+	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	public List<PartnerRegistry> findPartnerRegistries(PartnerRegistryFilter partnerRegistryFilter) {
 		List<PartnerRegistry> partnerRegistryList = (List<PartnerRegistry>) partnerRegistryDao.find(partnerRegistryFilter);
     	if (logger.isDebugEnabled() && partnerRegistryList!=null) {
@@ -50,14 +54,17 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerRegistryList;
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerRegistry storePartnerRegistry(PartnerRegistry partnerRegistry) {
 		return partnerRegistryDao.merge(partnerRegistry);
 	}
 	
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public void removePartnerRegistry(PartnerRegistry partnerRegistry) {
     	partnerRegistryDao.remove(partnerRegistry);
     }
 
+	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	public List<? extends Partner> findPartners(PartnerFilter partnerFilter) {
 		List<Partner> partnerList = (List<Partner>) partnerDao.find(partnerFilter);
     	if (logger.isDebugEnabled() && partnerList!=null) {
@@ -66,14 +73,17 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerList;
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Partner storePartner(Partner partner) {
 		return partnerDao.merge(partner);
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void removePartner(Partner partner) {
 		partnerDao.remove(partner);
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Address storeAddress(Address address) {
 		return addressDao.merge(address);
 	}
