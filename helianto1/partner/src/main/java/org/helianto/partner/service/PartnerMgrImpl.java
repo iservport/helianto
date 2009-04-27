@@ -92,12 +92,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	private ContactDao contactDao;
     private PartnerKeyDao partnerKeyDao;
     private PhoneDao phoneDao;
-    private AccountDao accountDao;
 
-    @Resource
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
-    }
     @Resource(name="provinceDao")
     public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
         this.provinceDao = provinceDao;

@@ -23,7 +23,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
@@ -39,6 +38,19 @@ import org.helianto.core.Entity;
 )
 public class Account implements java.io.Serializable {
 
+    /**
+     * Factory method.
+     * 
+     * @param entity
+     * @param accountCode
+     */
+    public static Account accountFactory(Entity entity, String accountCode) {
+        Account account = new Account();
+        account.setEntity(entity);
+        account.setAccountCode(accountCode);
+        return account;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -48,9 +60,12 @@ public class Account implements java.io.Serializable {
 
     /** default constructor */
     public Account() {
+        setAccountType(AccountType.ASSET.getValue());
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -68,73 +83,45 @@ public class Account implements java.io.Serializable {
         return this.entity;
     }
     /**
-     * Entity setter.
+     * Entity.
      */
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
 
     /**
-     * AccountCode getter.
+     * Account code.
      */
     @Column(length=20)
     public String getAccountCode() {
         return this.accountCode;
     }
-    /**
-     * AccountCode setter.
-     */
     public void setAccountCode(String accountCode) {
         this.accountCode = accountCode;
     }
 
     /**
-     * AccountName getter.
+     * Account name.
      */
     @Column(length=32)
     public String getAccountName() {
         return this.accountName;
     }
-    /**
-     * AccountName setter.
-     */
     public void setAccountName(String accountName) {
         this.accountName = accountName;
     }
 
     /**
-     * AccountType getter.
+     * Account type.
      */
     public char getAccountType() {
         return this.accountType;
     }
-    /**
-     * AccountType setter.
-     */
     public void setAccountType(char accountType) {
         this.accountType = accountType;
     }
-
-    /**
-     * <code>Account</code> factory. Default as AccountType.ASSET.
-     * 
-     * @param entity
-     * @param accountCode
-     */
-    public static Account accountFactory(Entity entity, String accountCode) {
-        Account account = new Account();
-        account.setEntity(entity);
-        account.setAccountCode(accountCode);
-        account.setAccountType(AccountType.ASSET.getValue());
-        return account;
-    }
-
-    /**
-     * <code>Account</code> natural id query.
-     */
-    @Transient
-    public static String getAccountNaturalIdQueryString() {
-        return "select account from Account account where account.entity = ? and account.accountCode = ? ";
+    public void setAccountType(AccountType accountType) {
+        this.accountType = AccountType.ASSET.getValue();
     }
 
     /**
