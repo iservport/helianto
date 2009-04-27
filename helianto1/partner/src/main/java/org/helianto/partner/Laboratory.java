@@ -16,7 +16,6 @@
 package org.helianto.partner;
 
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Transient;
 
 
 /**
@@ -29,13 +28,8 @@ import javax.persistence.Transient;
 @DiscriminatorValue("L")
 public class Laboratory extends Partner implements java.io.Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    public Laboratory() {
-    }
-
     /**
-     * <code>Laboratory</code> factory.
+     * Factory method.
      * 
      * @param partnerRegistry
      */
@@ -43,20 +37,13 @@ public class Laboratory extends Partner implements java.io.Serializable {
         return internalPartnerFactory(Laboratory.class, partnerRegistry);
     }
 
-    /**
-     * <code>Laboratory</code> query.
-     */
-    @Transient
-    public static StringBuilder getLaboratoryQueryStringBuilder() {
-    	return new StringBuilder("select laboratory from Laboratory laboratory ");
-    }   
+    private static final long serialVersionUID = 1L;
 
     /**
-     * <code>Laboratory</code> natural id query.
+     * Default constructor.
      */
-    @Transient
-    public static String getLaboratoryNaturalIdQueryString() {
-    	return getLaboratoryQueryStringBuilder().append("where laboratory.partnerRegistry = ? and laboratory.class = 'L' ").toString();
+    public Laboratory() {
+    	super();
     }
 
    /**

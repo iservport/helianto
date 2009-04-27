@@ -24,7 +24,6 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.FilterDao;
-import org.helianto.core.filter.SelectionStrategy;
 import org.helianto.partner.Address;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
@@ -32,13 +31,9 @@ import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 import org.helianto.partner.dao.AccountDao;
 import org.helianto.partner.dao.AddressDao;
-import org.helianto.partner.dao.AgentDao;
 import org.helianto.partner.dao.ContactDao;
-import org.helianto.partner.dao.CustomerDao;
-import org.helianto.partner.dao.PartnerDao;
 import org.helianto.partner.dao.PartnerKeyDao;
 import org.helianto.partner.dao.PhoneDao;
-import org.helianto.partner.dao.SupplierDao;
 
 /**
  * Default implementation for <code>PartnerMgr</code> interface.
@@ -64,8 +59,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     }
 
 	public List<? extends Partner> findPartners(PartnerFilter partnerFilter) {
-		String criteria = partnerSelectionStrategy.createCriteriaAsString(partnerFilter, "partner");
-		List<Partner> partnerList = partnerDao.findPartners(criteria);
+		List<Partner> partnerList = (List<Partner>) partnerDao.find(partnerFilter);
     	if (logger.isDebugEnabled() && partnerList!=null) {
     		logger.debug("Found partner list of size "+partnerList.size());
     	}
@@ -73,11 +67,11 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 
 	public Partner storePartner(Partner partner) {
-		return partnerDao.mergePartner(partner);
+		return partnerDao.merge(partner);
 	}
 
 	public void removePartner(Partner partner) {
-		partnerDao.removePartner(partner);
+		partnerDao.remove(partner);
 	}
 
 	public Address storeAddress(Address address) {
@@ -93,17 +87,13 @@ public class PartnerMgrImpl implements PartnerMgr {
     private AddressDao addressDao;
     
     private FilterDao<Province, ProvinceFilter> provinceDao;
-	private ContactDao contactDao;
     private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
-	private PartnerDao partnerDao;
-	private SelectionStrategy<PartnerFilter> partnerSelectionStrategy;
+    private FilterDao<Partner, PartnerFilter> partnerDao;
 	
+	private ContactDao contactDao;
     private PartnerKeyDao partnerKeyDao;
     private PhoneDao phoneDao;
     private AccountDao accountDao;
-    private AgentDao agentDao;
-    private CustomerDao customerDao;
-    private SupplierDao supplierDao;
 
     @Resource
     public void setAccountDao(AccountDao accountDao) {
@@ -117,17 +107,10 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void setAddressDao(AddressDao addressDao) {
         this.addressDao = addressDao;
     }
-    @Resource
-    public void setAgentDao(AgentDao agentDao) {
-        this.agentDao = agentDao;
-    }
+
     @Resource
     public void setContactDao(ContactDao contactDao) {
         this.contactDao = contactDao;
-    }
-    @Resource
-    public void setCustomerDao(CustomerDao customerDao) {
-        this.customerDao = customerDao;
     }
     
     @Resource(name="partnerRegistryDao")
@@ -135,14 +118,11 @@ public class PartnerMgrImpl implements PartnerMgr {
         this.partnerRegistryDao = partnerRegistryDao;
     }
 
-    @Resource
-    public void setPartnerDao(PartnerDao partnerDao) {
+    @Resource(name="partnerDao")
+    public void setPartnerDao(FilterDao<Partner, PartnerFilter> partnerDao) {
         this.partnerDao = partnerDao;
     }
-	@Resource
-	public void setPartnerSelectionStrategy(SelectionStrategy<PartnerFilter> partnerSelectionStrategy) {
-		this.partnerSelectionStrategy = partnerSelectionStrategy;
-	}
+
     @Resource
     public void setPartnerKeyDao(PartnerKeyDao partnerKeyDao) {
         this.partnerKeyDao = partnerKeyDao;
@@ -150,10 +130,6 @@ public class PartnerMgrImpl implements PartnerMgr {
     @Resource
     public void setPhoneDao(PhoneDao phoneDao) {
         this.phoneDao = phoneDao;
-    }
-    @Resource
-    public void setSupplierDao(SupplierDao supplierDao) {
-        this.supplierDao = supplierDao;
     }
     
     private Log logger = LogFactory.getLog(PartnerMgrImpl.class);

@@ -6,7 +6,6 @@ package org.helianto.partner;
  * a <code>Division</code>. 
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public enum DivisionType {
     

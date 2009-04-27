@@ -28,23 +28,13 @@ import org.helianto.core.filter.PolymorphicFilter;
  */
 public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements Serializable, PolymorphicFilter<Partner> {
 	
-	private static final long serialVersionUID = 1L;
-	private String partnerAlias = "";
-	private String partnerNameLike = "";
-	private char partnerState;
-	private char priority = '0';
-	private Class<? extends Partner> clazz = Partner.class;
-
 	/**
 	 * Factory method.
 	 * 
 	 * @param user
 	 */
 	public static PartnerFilter partnerFilterFactory(User user) {
-		PartnerFilter partnerFilter = new PartnerFilter();
-		partnerFilter.setUser(user);
-		partnerFilter.reset();
-		return partnerFilter;
+		return AbstractUserBackedCriteriaFilter.filterFactory(PartnerFilter.class, user);
 	}
 	
 	/**
@@ -54,18 +44,38 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	 * @param clazz
 	 */
 	public static PartnerFilter partnerFilterFactory(User user, Class<? extends Partner> clazz) {
-		PartnerFilter partnerFilter = new PartnerFilter();
-		partnerFilter.setUser(user);
+		PartnerFilter partnerFilter = AbstractUserBackedCriteriaFilter.filterFactory(PartnerFilter.class, user);
 		partnerFilter.setClazz(clazz);
-		partnerFilter.reset();
 		return partnerFilter;
 	}
 	
+	private static final long serialVersionUID = 1L;
+	private String partnerAlias;
+	private String partnerNameLike;
+	private char partnerState;
+	private char priority = '0';
+	private Class<? extends Partner> clazz = Partner.class;
+	
+	/**
+	 * Default constructor.
+	 */
+	public PartnerFilter() {
+		super();
+		setPartnerAlias("");
+		setPartnerNameLike("");
+		setPartnerState(' ');
+	}
+
 	/**
 	 * Reset method.
 	 */
 	public void reset() {
 		setPartnerNameLike("");
+	}
+
+	@Override
+	public boolean isSelection() {
+		return getPartnerAlias().length()>0;
 	}
 
 	/**
@@ -79,14 +89,14 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	}
 	
 	public char getDiscriminator() {
+		if (clazz.equals(Agent.class)) {
+			return 'A'; 
+		}
 		if (clazz.equals(Customer.class)) {
 			return 'C'; 
 		}
-		if (clazz.equals(Supplier.class)) {
-			return 'S'; 
-		}
-		if (clazz.equals(Agent.class)) {
-			return 'A'; 
+		if (clazz.equals(Division.class)) {
+			return 'D'; 
 		}
 		if (clazz.equals(Manufacturer.class)) {
 			return 'M'; 
@@ -94,24 +104,30 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 		if (clazz.equals(Laboratory.class)) {
 			return 'L'; 
 		}
+		if (clazz.equals(Supplier.class)) {
+			return 'S'; 
+		}
 		return ' ';
 	}
 
 	public void setDiscriminator(char discriminator) {
+		if (discriminator=='A') {
+			clazz = Agent.class; 
+		}
 		if (discriminator=='C') {
 			clazz = Customer.class; 
 		}
-		if (discriminator=='S') {
-			clazz = Supplier.class; 
-		}
-		if (discriminator=='A') {
-			clazz = Agent.class; 
+		if (discriminator=='D') {
+			clazz = Division.class; 
 		}
 		if (discriminator=='M') {
 			clazz = Manufacturer.class; 
 		}
 		if (discriminator=='L') {
 			clazz = Laboratory.class; 
+		}
+		if (discriminator=='S') {
+			clazz = Supplier.class; 
 		}
 	}
 

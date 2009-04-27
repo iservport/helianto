@@ -16,7 +16,6 @@
 package org.helianto.partner;
 
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Transient;
 
 
 /**
@@ -29,28 +28,8 @@ import javax.persistence.Transient;
 @DiscriminatorValue("A")
 public class Agent extends Partner implements java.io.Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private float agentComission;
-
-    public Agent() {
-    }
-
     /**
-     * AgentComission getter.
-     */
-    public float getAgentComission() {
-        return agentComission;
-    }
-
-    /**
-     * AgentComission setter.
-     */
-    public void setAgentComission(float agentComission) {
-        this.agentComission = agentComission;
-    }
-
-    /**
-     * <code>Agent</code> factory.
+     * Factory method.
      * 
      * @param partnerRegistry
      */
@@ -58,20 +37,21 @@ public class Agent extends Partner implements java.io.Serializable {
         return internalPartnerFactory(Agent.class, partnerRegistry);
     }
 
-    /**
-     * <code>Agent</code> query.
-     */
-    @Transient
-    public static StringBuilder getAgentQueryStringBuilder() {
-    	return new StringBuilder("select agent from Agent agent ");
-    }   
+    private static final long serialVersionUID = 1L;
+    private float agentComission;
+
+    public Agent() {
+    	super();
+    }
 
     /**
-     * <code>Agent</code> natural id query.
+     * Agent comission.
      */
-    @Transient
-    public static String getAgentNaturalIdQueryString() {
-    	return getAgentQueryStringBuilder().append("where agent.partnerRegistry = ? and agent.class = 'A' ").toString();
+    public float getAgentComission() {
+        return agentComission;
+    }
+    public void setAgentComission(float agentComission) {
+        this.agentComission = agentComission;
     }
 
    /**

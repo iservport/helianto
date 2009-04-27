@@ -22,16 +22,13 @@ import org.helianto.core.hibernate.GenericDaoImpl;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.SimplePartnerRegistry;
-import org.helianto.partner.dao.PartnerDao;
-import org.springframework.stereotype.Repository;
 
 /**
  * Default implementation of <code>Partner</code> data access interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Repository("partnerDao")
-public class PartnerDaoImpl extends GenericDaoImpl implements PartnerDao {
+public class PartnerDaoImpl extends GenericDaoImpl  {
      
     public void persistPartner(Partner partner) {
         if (logger.isDebugEnabled()) {

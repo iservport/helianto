@@ -19,38 +19,51 @@ import javax.persistence.DiscriminatorValue;
 
 
 /**
- * <p>
- * Represents a relationship to a Customer. 
- * </p>
+ * Represents a division inside a organization. 
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@DiscriminatorValue("C")
-public class Customer extends Partner implements java.io.Serializable {
+@DiscriminatorValue("D")
+public class Division extends Partner implements java.io.Serializable {
 
     /**
      * Factory method.
      * 
      * @param customer
      */
-    public static Customer customerFactory(PartnerRegistry partnerRegistry) {
-        return internalPartnerFactory(Customer.class, partnerRegistry);
+    public static Division divisionFactory(PartnerRegistry partnerRegistry) {
+        return internalPartnerFactory(Division.class, partnerRegistry);
     }
 
     private static final long serialVersionUID = 1L;
+    private char divisionType;
 
-    /**
+	/**
      * Default constructor.
      */
-    public Customer() {
+    public Division() {
     	super();
     }
+
+	/**
+     * Division type.
+     */
+    public char getDivisionType() {
+		return divisionType;
+	}
+	public void setDivisionType(char divisionType) {
+		this.divisionType = divisionType;
+	}
+	public void setDivisionType(DivisionType divisionType) {
+		this.divisionType = divisionType.getValue();
+	}
 
    /**
     * equals
     */
    public boolean equals(Object other) {
-         if ( !(other instanceof Customer) ) return false;
+         if ( !(other instanceof Division) ) return false;
          return super.equals(other);
    }
    
