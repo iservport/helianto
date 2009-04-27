@@ -23,6 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
+import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.partner.Address;
 import org.helianto.partner.Partner;
@@ -30,7 +31,6 @@ import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 import org.helianto.partner.dao.AccountDao;
-import org.helianto.partner.dao.AddressDao;
 import org.helianto.partner.dao.ContactDao;
 import org.helianto.partner.dao.PartnerKeyDao;
 import org.helianto.partner.dao.PhoneDao;
@@ -75,7 +75,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 
 	public Address storeAddress(Address address) {
-		return addressDao.mergeAddress(address);
+		return addressDao.merge(address);
 	}
 
 	public PartnerRegistry removeAddress(Address address) {
@@ -84,8 +84,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 
     //- collaborators
     
-    private AddressDao addressDao;
-    
+    private BasicDao<Address> addressDao;
     private FilterDao<Province, ProvinceFilter> provinceDao;
     private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
     private FilterDao<Partner, PartnerFilter> partnerDao;
@@ -103,8 +102,8 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
         this.provinceDao = provinceDao;
     }
-    @Resource
-    public void setAddressDao(AddressDao addressDao) {
+    @Resource(name="addressDao")
+    public void setAddressDao(BasicDao<Address> addressDao) {
         this.addressDao = addressDao;
     }
 
