@@ -31,8 +31,8 @@ import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
+import org.helianto.partner.Phone;
 import org.helianto.partner.dao.ContactDao;
-import org.helianto.partner.dao.PhoneDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,9 +110,8 @@ public class PartnerMgrImpl implements PartnerMgr {
     private FilterDao<Partner, PartnerFilter> partnerDao;
     private BasicDao<Address> addressDao;
     private BasicDao<PartnerKey> partnerKeyDao;
-	
+    private BasicDao<Phone> phoneDao;
 	private ContactDao contactDao;
-    private PhoneDao phoneDao;
 
     @Resource(name="provinceDao")
     public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
@@ -143,8 +142,8 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void setPartnerKeyDao(BasicDao<PartnerKey> partnerKeyDao) {
         this.partnerKeyDao = partnerKeyDao;
     }
-    @Resource
-    public void setPhoneDao(PhoneDao phoneDao) {
+    @Resource(name="phoneDao")
+    public void setPhoneDao(BasicDao<Phone> phoneDao) {
         this.phoneDao = phoneDao;
     }
     

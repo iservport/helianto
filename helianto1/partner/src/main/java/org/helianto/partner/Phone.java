@@ -37,6 +37,20 @@ import javax.persistence.UniqueConstraint;
 )
 public class Phone implements java.io.Serializable {
 
+    /**
+     * Factory method.
+     * 
+     * @param address
+     * @param sequence
+     */
+    public static Phone phoneFactory(Address address, int sequence) {
+        Phone phone = new Phone();
+        phone.setAddress(address);
+        phone.setSequence(sequence);
+        address.getPhones().add(phone);
+        return phone;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private Address address;
@@ -51,7 +65,9 @@ public class Phone implements java.io.Serializable {
     public Phone() {
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -61,121 +77,78 @@ public class Phone implements java.io.Serializable {
     }
 
     /**
-     * Address getter.
+     * Address.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="addressId", nullable=true)
     public Address getAddress() {
         return this.address;
     }
-    /**
-     * Address setter.
-     */
     public void setAddress(Address address) {
         this.address = address;
     }
 
     /**
-     * Sequence getter.
+     * Sequence.
      */
     public int getSequence() {
         return this.sequence;
     }
-    /**
-     * Sequence setter.
-     */
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
 
     /**
-     * PhoneNumber getter.
+     * Phone number.
      */
     @Column(length=20)
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
-    /**
-     * PhoneNumber setter.
-     */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
     /**
-     * AreaCode getter.
+     * Area code.
      */
     @Column(length=2)
     public String getAreaCode() {
         return this.areaCode;
     }
-    /**
-     * AreaCode setter.
-     */
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
     }
 
     /**
-     * PhoneType getter.
+     * Phone type.
      */
     public int getPhoneType() {
         return this.phoneType;
     }
-    /**
-     * PhoneType setter.
-     */
     public void setPhoneType(int phoneType) {
         this.phoneType = phoneType;
     }
 
     /**
-     * Comment getter.
+     * Comment.
      */
     @Column(length=20)
     public String getComment() {
         return this.comment;
     }
-    /**
-     * Comment setter.
-     */
     public void setComment(String comment) {
         this.comment = comment;
     }
 
     /**
-     * PrivacyLevel getter.
+     * Privacy level.
      */
     public char getPrivacyLevel() {
         return this.privacyLevel;
     }
-    /**
-     * PrivacyLevel setter.
-     */
     public void setPrivacyLevel(char privacyLevel) {
         this.privacyLevel = privacyLevel;
-    }
-
-    /**
-     * <code>Phone</code> factory.
-     * 
-     * @param address
-     * @param sequence
-     */
-    public static Phone phoneFactory(Address address, int sequence) {
-        Phone phone = new Phone();
-        phone.setAddress(address);
-        phone.setSequence(sequence);
-        address.getPhones().add(phone);
-        return phone;
-    }
-
-    /**
-     * <code>Phone</code> natural id query.
-     */
-    @Transient
-    public static String getPhoneNaturalIdQueryString() {
-        return "select phone from Phone phone where phone.address = ? and phone.sequence = ? ";
     }
 
     /**
