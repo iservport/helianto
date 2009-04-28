@@ -23,7 +23,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.KeyType;
@@ -39,71 +38,8 @@ import org.helianto.core.KeyType;
 )
 public class PartnerKey implements java.io.Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private int id;
-    private PartnerRegistry partnerRegistry;
-    private KeyType keyType;
-    private String keyValue;
-
-    /** default constructor */
-    public PartnerKey() {
-    }
-
-    // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     /**
-     * PartnerRegistry getter.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PartnerRegistry getPartnerRegistry() {
-        return this.partnerRegistry;
-    }
-    /**
-     * PartnerRegistry setter.
-     */
-    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
-        this.partnerRegistry = partnerRegistry;
-    }
-
-    /**
-     * KeyType getter.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="keyTypeId", nullable=true)
-    public KeyType getKeyType() {
-        return this.keyType;
-    }
-    /**
-     * KeyType setter.
-     */
-    public void setKeyType(KeyType keyType) {
-        this.keyType = keyType;
-    }
-
-    /**
-     * KeyValue getter.
-     */
-    @Column(length=20)
-    public String getKeyValue() {
-        return this.keyValue;
-    }
-    /**
-     * KeyValue setter.
-     */
-    public void setKeyValue(String keyValue) {
-        this.keyValue = keyValue;
-    }
-
-    /**
-     * <code>PartnerKey</code> factory.
+     * Factory method.
      * 
      * @param partnerRegistry
      * @param keyType
@@ -115,12 +51,60 @@ public class PartnerKey implements java.io.Serializable {
         return partnerKey;
     }
 
+    private static final long serialVersionUID = 1L;
+    private int id;
+    private PartnerRegistry partnerRegistry;
+    private KeyType keyType;
+    private String keyValue;
+
+    /** default constructor */
+    public PartnerKey() {
+    }
+
     /**
-     * <code>PartnerKey</code> natural id query.
+     * Primary key.
      */
-    @Transient
-    public static String getPartnerKeyNaturalIdQueryString() {
-        return "select partnerKey from PartnerKey partnerKey where partnerKey.partnerRegistry = ? and partnerKey.keyType = ? ";
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
+        return this.id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Partner registry.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="partnerRegistryId", nullable=true)
+    public PartnerRegistry getPartnerRegistry() {
+        return this.partnerRegistry;
+    }
+    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
+        this.partnerRegistry = partnerRegistry;
+    }
+
+    /**
+     * Key type.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="keyTypeId", nullable=true)
+    public KeyType getKeyType() {
+        return this.keyType;
+    }
+    public void setKeyType(KeyType keyType) {
+        this.keyType = keyType;
+    }
+
+    /**
+     * Key value.
+     */
+    @Column(length=20)
+    public String getKeyValue() {
+        return this.keyValue;
+    }
+    public void setKeyValue(String keyValue) {
+        this.keyValue = keyValue;
     }
 
     /**

@@ -28,10 +28,10 @@ import org.helianto.core.dao.FilterDao;
 import org.helianto.partner.Address;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
+import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 import org.helianto.partner.dao.ContactDao;
-import org.helianto.partner.dao.PartnerKeyDao;
 import org.helianto.partner.dao.PhoneDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -88,28 +88,35 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return addressDao.merge(address);
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerRegistry removeAddress(Address address) {
+		throw new IllegalArgumentException("Not yet implemented");
+	}
+
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public PartnerKey storePartnerKey(PartnerKey partnerKey) {
+		return partnerKeyDao.merge(partnerKey);
+	}
+
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public PartnerRegistry removePartnerKey(PartnerKey partnerKey) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
     //- collaborators
     
-    private BasicDao<Address> addressDao;
     private FilterDao<Province, ProvinceFilter> provinceDao;
     private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
     private FilterDao<Partner, PartnerFilter> partnerDao;
+    private BasicDao<Address> addressDao;
+    private BasicDao<PartnerKey> partnerKeyDao;
 	
 	private ContactDao contactDao;
-    private PartnerKeyDao partnerKeyDao;
     private PhoneDao phoneDao;
 
     @Resource(name="provinceDao")
     public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
         this.provinceDao = provinceDao;
-    }
-    @Resource(name="addressDao")
-    public void setAddressDao(BasicDao<Address> addressDao) {
-        this.addressDao = addressDao;
     }
 
     @Resource
@@ -127,8 +134,13 @@ public class PartnerMgrImpl implements PartnerMgr {
         this.partnerDao = partnerDao;
     }
 
-    @Resource
-    public void setPartnerKeyDao(PartnerKeyDao partnerKeyDao) {
+    @Resource(name="addressDao")
+    public void setAddressDao(BasicDao<Address> addressDao) {
+        this.addressDao = addressDao;
+    }
+
+    @Resource(name="partnerKeyDao")
+    public void setPartnerKeyDao(BasicDao<PartnerKey> partnerKeyDao) {
         this.partnerKeyDao = partnerKeyDao;
     }
     @Resource

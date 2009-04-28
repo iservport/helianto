@@ -20,6 +20,7 @@ import java.util.List;
 import org.helianto.partner.Address;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
+import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 
@@ -66,8 +67,18 @@ public interface PartnerMgr {
 	public Address storeAddress(Address address);
 
     /**
-     * REmove <code>Address</code> from the datastore.
+     * Remove <code>Address</code> from the datastore.
      */
 	public PartnerRegistry removeAddress(Address address);
+	
+    /**
+     * Write <code>PartnerKey</code> to the datastore.
+     */
+	public PartnerKey storePartnerKey(PartnerKey partnerKey);
+	
+    /**
+     * Remove <code>PartnerKey</code> from the datastore.
+     */
+	public PartnerRegistry removePartnerKey(PartnerKey partnerKey);
 
 }
