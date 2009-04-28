@@ -21,8 +21,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Province;
-import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.partner.Address;
@@ -32,7 +30,6 @@ import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 import org.helianto.partner.Phone;
-import org.helianto.partner.dao.ContactDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,26 +100,24 @@ public class PartnerMgrImpl implements PartnerMgr {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public Phone storePhone(Phone phone) {
+		return phoneDao.merge(phone);
+	}
+
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public PartnerRegistry removePhone(Phone phone) {
+		throw new IllegalArgumentException("Not yet implemented");
+	}
+
     //- collaborators
     
-    private FilterDao<Province, ProvinceFilter> provinceDao;
     private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
     private FilterDao<Partner, PartnerFilter> partnerDao;
     private BasicDao<Address> addressDao;
     private BasicDao<PartnerKey> partnerKeyDao;
     private BasicDao<Phone> phoneDao;
-	private ContactDao contactDao;
 
-    @Resource(name="provinceDao")
-    public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
-        this.provinceDao = provinceDao;
-    }
-
-    @Resource
-    public void setContactDao(ContactDao contactDao) {
-        this.contactDao = contactDao;
-    }
-    
     @Resource(name="partnerRegistryDao")
     public void setPartnerRegistryDao(FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao) {
         this.partnerRegistryDao = partnerRegistryDao;

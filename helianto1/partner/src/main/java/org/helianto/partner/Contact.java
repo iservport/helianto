@@ -20,18 +20,33 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 import org.helianto.core.Identity;
+
 /**
- * <p>
- * Represents the relationship between the organization and other entities.  
- * </p>
- * @author Vlademir Teixeira 
+ * Contact
+ * 
+ * @author Mauricio Fernandes de Castro 
  */
 @javax.persistence.Entity
 @DiscriminatorValue("C")
 public class Contact extends Address {
+
+    /**
+     * Factory method.
+     * 
+     * @param partnerRegistry
+     * @param sequence
+     * @param identity
+     */
+    public static Contact contactFactory(PartnerRegistry partnerRegistry, int sequence, Identity identity) {
+        Contact contact = new Contact();
+        contact.setPartnerRegistry(partnerRegistry);
+        contact.setSequence(sequence);
+        contact.setIdentity(identity);
+        partnerRegistry.getAddresses().add(contact);
+        return contact;
+    }
 
 	private static final long serialVersionUID = 1L;
 	private Identity identity;
@@ -41,9 +56,13 @@ public class Contact extends Address {
 
     /** default constructor */
     public Contact() {
+    	super();
+        setAddressType(AddressType.PERSONAL.getValue());
+        setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
+        setDepartament("");
+        setJobReference("");
     }
 
-    // Property accessors
     /**
      * Identity getter.
      */
@@ -52,76 +71,48 @@ public class Contact extends Address {
     public Identity getIdentity() {
         return this.identity;
     }
-    /**
-     * Identity setter.
-     */
     public void setIdentity(Identity identity) {
         this.identity = identity;
     }
 
     /**
-     * Departament getter.
+     * Departament.
      */
     @Column(length=20)
     public String getDepartament() {
         return this.departament;
     }
-    /**
-     * Departament setter.
-     */
     public void setDepartament(String departament) {
         this.departament = departament;
     }
 
     /**
-     * JobReference getter.
+     * Job reference.
      */
     @Column(length=64)
     public String getJobReference() {
         return this.jobReference;
     }
-    /**
-     * JobReference setter.
-     */
     public void setJobReference(String jobReference) {
         this.jobReference = jobReference;
     }
 
     /**
-     * Priority getter.
+     * Priority.
      */
     public int getPriority() {
         return this.priority;
     }
-    /**
-     * Priority setter.
-     */
     public void setPriority(int priority) {
         this.priority = priority;
     }
 
     /**
-     * <code>Contact</code> factory.
-     * 
-     * @param identity
+     * equals
      */
-    public static Contact contactFactory(PartnerRegistry partnerRegistry, int sequence, Identity identity) {
-        Contact contact = new Contact();
-        contact.setPartnerRegistry(partnerRegistry);
-        contact.setSequence(sequence);
-        contact.setAddressType(AddressType.PERSONAL.getValue());
-        contact.setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
-        contact.setIdentity(identity);
-        partnerRegistry.getAddresses().add(contact);
-        return contact;
-    }
-
-    /**
-     * <code>Contact</code> natural id query.
-     */
-    @Transient
-    public static String getContactNaturalIdQueryString() {
-        return "select contact from Contact contact where contact.partnerRegistry = ? and contact.sequence = ? ";
+    public boolean equals(Object other) {
+          if ( !(other instanceof Address) ) return false;
+          return super.equals(other);
     }
 
 }

@@ -37,10 +37,10 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Province;
+
 /**
- * <p>
- * Represents the relationship between the organization and other entities.  
- * </p>
+ * Address.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -54,6 +54,20 @@ import org.helianto.core.Province;
 )
 @DiscriminatorValue("A")
 public class Address implements java.io.Serializable, Comparable<Address> {
+
+    /**
+     * Factory method.
+     * 
+     * @param partnerRegistry
+     * @param sequence
+     */
+    public static Address addressFactory(PartnerRegistry partnerRegistry, int sequence) {
+        Address address = new Address();
+        address.setPartnerRegistry(partnerRegistry);
+        address.setSequence(sequence);
+        partnerRegistry.getAddresses().add(address);
+        return address;
+    }
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -72,9 +86,19 @@ public class Address implements java.io.Serializable, Comparable<Address> {
 
     /** default constructor */
     public Address() {
+        setAddressType(AddressType.MAIN.getValue());
+        setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
+        setAddress1("");
+        setAddress2("");
+        setAddress3("");
+        setCityName("");
+        setPostalCode("");
+        setPostOfficeBox("");
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -84,7 +108,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * PartnerRegistry getter.
+     * Partner registry.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="partnerRegistryId", nullable=true)
@@ -106,7 +130,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * Sequence getter.
+     * Sequence.
      */
     public int getSequence() {
         return this.sequence;
@@ -116,7 +140,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * AddressType getter.
+     * Address type.
      */
     public char getAddressType() {
         return this.addressType;
@@ -129,7 +153,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * Address1 getter.
+     * Address1.
      */
     @Column(length=64)
     public String getAddress1() {
@@ -140,7 +164,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * Address2 getter.
+     * Address2.
      */
     @Column(length=32)
     public String getAddress2() {
@@ -151,7 +175,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * Address3 getter.
+     * Address3.
      */
     @Column(length=32)
     public String getAddress3() {
@@ -162,7 +186,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * CityName getter.
+     * City name.
      */
     @Column(length=32)
     public String getCityName() {
@@ -173,7 +197,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * PostalCode getter.
+     * Postal code.
      */
     @Column(length=10)
     public String getPostalCode() {
@@ -184,7 +208,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * PostOfficeBox getter.
+     * Post office box.
      */
     @Column(length=10)
     public String getPostOfficeBox() {
@@ -195,7 +219,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * PrivacyLevel getter.
+     * Privacy level.
      */
     public char getPrivacyLevel() {
         return this.privacyLevel;
@@ -205,7 +229,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * Province getter.
+     * Province.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="provinceId", nullable=true)
@@ -217,7 +241,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * Phones getter.
+     * Phones.
      */
     @OneToMany(mappedBy="address", fetch=FetchType.EAGER)
     public Set<Phone> getPhones() {
@@ -228,29 +252,8 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
-     * <code>Address</code> factory.
-     * 
-     * @param partnerRegistry
-     * @param sequence
+     * Compare by sequence.
      */
-    public static Address addressFactory(PartnerRegistry partnerRegistry, int sequence) {
-        Address address = new Address();
-        address.setPartnerRegistry(partnerRegistry);
-        address.setSequence(sequence);
-        address.setAddressType(AddressType.MAIN.getValue());
-        address.setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
-        partnerRegistry.getAddresses().add(address);
-        return address;
-    }
-
-    /**
-     * <code>Address</code> natural id query.
-     */
-    @Transient
-    public static String getAddressNaturalIdQueryString() {
-        return "select address from Address address where address.partnerRegistry = ? and address.sequence = ? ";
-    }
-
     public int compareTo(Address next) {
     	return this.sequence - next.sequence;
     }   
