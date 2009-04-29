@@ -33,6 +33,20 @@ import org.springframework.stereotype.Repository;
 public class DefaultCardSetDao extends AbstractFilterDao<CardSet, CardSetFilter> {
 
 	@Override
+	protected void doSelect(CardSetFilter filter, CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("internalNumber", filter.getInternalNumber(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doFilter(CardSetFilter filter, CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("cardType", filter.getCardType(), mainCriteriaBuilder);
+		if (filter.getProcess()!=null) {
+			appendEqualFilter("processDocument.id", filter.getProcess().getId(), mainCriteriaBuilder);
+		}
+		appendOrderBy("internalNumber", mainCriteriaBuilder);
+	}
+
+	@Override
 	public Class<? extends CardSet> getClazz() {
 		return CardSet.class;
 	}
@@ -43,17 +57,4 @@ public class DefaultCardSetDao extends AbstractFilterDao<CardSet, CardSetFilter>
         .append(entity.getId());
     }
     
-	@Override
-	protected void doFilter(CardSetFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-	}
-
-	@Override
-	protected void doSelect(CardSetFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-	}
-
-	@Override
-	protected boolean isSelection(CardSetFilter filter) {
-		return filter.getInternalNumber()!=0;
-	}
-
 }

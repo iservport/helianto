@@ -42,7 +42,7 @@ public class Characteristic extends DerivedProcessDocument {
 	private int classification;
 
     /** default package constructor */
-    Characteristic() {
+    public Characteristic() {
 		setCharacteristicType(CharacteristicType.PROCESS);
 		setInheritanceType(InheritanceType.FINAL);
     }
@@ -124,22 +124,6 @@ public class Characteristic extends DerivedProcessDocument {
     	method.setLeftLimitRequired(true);
     	method.setRightLimitRequired(true);
         return method;
-    }
-
-    /**
-     * <code>Characteristic</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getCharacteristicQueryStringBuilder() {
-        return new StringBuilder("select characteristic from Characteristic characteristic ");
-    }
-
-    /**
-     * <code>Characteristic</code> natural id query.
-     */
-    @Transient
-    public static String getCharacteristicNaturalIdQueryString() {
-        return getCharacteristicQueryStringBuilder().append("where characteristic.document = ? and characteristic.sequence = ? ").toString();
     }
 
    /**

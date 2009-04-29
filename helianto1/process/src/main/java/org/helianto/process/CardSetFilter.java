@@ -12,22 +12,38 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
  */
 public class CardSetFilter extends AbstractUserBackedCriteriaFilter {
 	
+	/**
+	 * Factory method.
+	 * 
+	 * @param user
+	 */
+	public static CardSetFilter cardSetFilterFactory(User user) {
+		return AbstractUserBackedCriteriaFilter.filterFactory(CardSetFilter.class, user);
+	}
+
 	private static final long serialVersionUID = 1L;
     private long internalNumber;
 	private Process process;
-    private char cardType = ' ';
-
-	public static CardSetFilter cardSetFilterFactory(User user) {
-		CardSetFilter cardSetFilter = new CardSetFilter();
-		cardSetFilter.setUser(user);
-		return cardSetFilter;
-	}
+    private char cardType;
+    
+    /**
+     * Default constructor.
+     */
+    public CardSetFilter() {
+    	super();
+    	setCardType(' ');
+    }
 
 	public void reset() {
 		setCardType(' ');
 	}
+	
+    @Override
+	public boolean isSelection() {
+		return getInternalNumber()>0;
+	}
 
-    /**
+	/**
 	 * Internal number filter
 	 */
 	public long getInternalNumber() {

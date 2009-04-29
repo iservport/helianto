@@ -23,7 +23,7 @@ import org.helianto.process.test.CardTestSupport;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class CardDaoTests extends AbstractProcessTest {
+public class CardDaoTests extends AbstractProcessIntegrationTest {
 	
 	public CardDaoTests() {
 		super();

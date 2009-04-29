@@ -33,7 +33,7 @@ public class CardTestSupport {
 	static int testKey = 1;
 
 	public static Card createSample() {
-		CardSet cardSet = CardSetTestSupport.createSample();
+		CardSet cardSet = CardSetTestSupport.createCardSet();
 		cardSet.setCardRange(Integer.MAX_VALUE);
 		return createSample(cardSet);
 	}
@@ -43,7 +43,7 @@ public class CardTestSupport {
 	}
 
 	public static List<Card> createCardList(int cardListSize) {
-		CardSet cardSet = CardSetTestSupport.createSample();
+		CardSet cardSet = CardSetTestSupport.createCardSet();
 		return createCardList(cardListSize, cardSet);
 	}
 

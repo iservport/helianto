@@ -35,9 +35,9 @@ public class CardSetTestSupport {
 	/**
 	 * Create sample.
 	 */
-	public static CardSet createSample() {
+	public static CardSet createCardSet() {
 		Entity entity = EntityTestSupport.createEntity();
-		return CardSetTestSupport.createSample(entity);
+		return CardSetTestSupport.createCardSet(entity);
 	}
 
 	/**
@@ -45,9 +45,9 @@ public class CardSetTestSupport {
 	 * 
 	 * @param entity
 	 */
-	public static CardSet createSample(Entity entity) {
+	public static CardSet createCardSet(Entity entity) {
 		ProcessDocument process = ProcessTestSupport.createProcess(entity);
-		return CardSetTestSupport.createSample(entity, process);
+		return CardSetTestSupport.createCardSet(entity, process);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class CardSetTestSupport {
 	 * @param entity
 	 * @param process
 	 */
-	public static CardSet createSample(Entity entity, ProcessDocument process) {
+	public static CardSet createCardSet(Entity entity, ProcessDocument process) {
 		CardSet sample =  CardSet.cardSetFactory(entity, CardType.DATA, testKey++);
 		sample.setProcess(process);
 		return sample;

@@ -23,29 +23,17 @@ import org.helianto.process.test.CardSetTestSupport;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class CardSetDaoTests extends AbstractProcessTest {
+public class DefaultCardSetDaoIntegrationTests extends AbstractProcessIntegrationTest {
 	
-	public CardSetDaoTests() {
-		super();
+	public DefaultCardSetDaoIntegrationTests() {
 		setAutowireMode(AUTOWIRE_BY_NAME);
 	}
-
-    /**
-     * Find by natural id.
-     */  
-    public void testFindOneResult() {
-    	CardSet cardSet = CardSetTestSupport.createSample();
-    	CardSet managedCardSet = cardSetDao.merge(cardSet);
-
-    	cardSetDao.flush();
-    	cardSetDao.clear();
-        
-        String criteria = "entity.id=0 AND internalNumber=0 ";
-        
-        assertEquals(cardSet, managedCardSet);
-        assertNotNull(cardSetDao.find(criteria));
-    }
-    
+	
+	public void testFindUnique() {
+		CardSet cardSet = CardSetTestSupport.createCardSet();
+		cardSetDao.persist(cardSet);
+		assertEquals(cardSet, cardSetDao.findUnique(cardSet.getEntity(), cardSet.getInternalNumber()));
+	}
 
     //- collabs
 
