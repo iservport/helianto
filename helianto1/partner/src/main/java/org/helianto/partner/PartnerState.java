@@ -6,7 +6,6 @@ package org.helianto.partner;
  * a <code>Partner</code>. 
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
  */
 public enum PartnerState {
     
