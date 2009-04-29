@@ -3,6 +3,7 @@ package org.helianto.partner.orm;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.test.UserTestSupport;
+import org.helianto.partner.Customer;
 import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerState;
 import org.junit.Before;
@@ -15,6 +16,7 @@ public class DefaultPartnerFilterDaoTests {
     public static String OB = "order by partner.partnerRegistry.partnerAlias ";
     public static String C1 = "partner.partnerRegistry.entity.id = 1 ";
     public static String C2 = "AND partner.class=Partner ";
+    public static String C7 = "AND partner.class=Customer ";
     public static String C3 = "AND partner.priority = '0' ";
     public static String C4 = "AND partner.partnerRegistry.partnerAlias = 'ALIAS' ";
     public static String C5 = "AND lower(partner.partnerRegistry.partnerName) like '%name%' ";
@@ -29,6 +31,12 @@ public class DefaultPartnerFilterDaoTests {
     public void testSelect() {
     	filter.setPartnerAlias("ALIAS");
         assertEquals(C1+C2+C4, partnerDao.createCriteriaAsString(filter, false));
+    }
+    
+    @Test
+    public void testFilterClazz() {
+        filter.setClazz(Customer.class);
+        assertEquals(C1+C7+C3+OB, partnerDao.createCriteriaAsString(filter, false));
     }
     
     @Test
