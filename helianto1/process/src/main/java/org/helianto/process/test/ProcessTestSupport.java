@@ -35,26 +35,32 @@ public class ProcessTestSupport {
 
     /**
      * Test support method to create a <code>Process</code>.
-     * @param entity optional Entity 
-     * @param docCode optional String 
+     * 
      */
-    public static Process createProcess(Object... args) {
-        Entity entity;
-        try {
-            entity = (Entity) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            entity = EntityTestSupport.createEntity();
-        }
-        String docCode;
-        try {
-            docCode = (String) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            docCode = DomainTestSupport.getNonRepeatableStringValue(testKey, 24);
-        }
-        Process process = Process.processFactory(entity, docCode, testKey);
-        process.setId(testKey++);
-        return process;
-    }
+	public static Process createProcess() {
+		Entity entity = EntityTestSupport.createEntity();
+        return createProcess(entity);
+	}
+
+    /**
+     * Test support method to create a <code>Process</code>.
+     * 
+     * @param entity 
+     */
+	public static Process createProcess(Entity entity) {
+		String docCode = DomainTestSupport.getNonRepeatableStringValue(testKey, 24);
+        return createProcess(entity, docCode);
+	}
+
+    /**
+     * Test support method to create a <code>Process</code>.
+     * 
+     * @param entity 
+     * @param docCode
+     */
+	public static Process createProcess(Entity entity, String docCode) {
+        return Process.documentFactory(Process.class, entity, docCode);
+	}
 
     /**
      * Test support method to create a <code>Process</code> list.

@@ -45,6 +45,7 @@ public abstract class DerivedProcessDocument extends ProcessDocument {
 
     /** default constructor */
     public DerivedProcessDocument() {
+    	super();
     }
 
     /**

@@ -27,7 +27,7 @@ import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
 import org.helianto.core.User;
 import org.helianto.core.dao.BasicDao;
-import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.service.PartnerMgrImpl;
 import org.helianto.process.AssociationType;
@@ -38,7 +38,6 @@ import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.ProcessDocumentFilter;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.Setup;
-import org.helianto.process.dao.ProcessDocumentDao;
 import org.helianto.process.dao.SetupDao;
 
 /**
@@ -49,15 +48,14 @@ import org.helianto.process.dao.SetupDao;
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     public List<Node> prepareTree(ProcessDocument processDocument) {
-    	ProcessDocument managedProcessDocument = processDocumentDao.mergeProcessDocument(processDocument);
+    	ProcessDocument managedProcessDocument = processDocumentDao.merge(processDocument);
     	ProcessNode root = new ProcessNode(managedProcessDocument);
     	List<Node> processTree = sequenceMgr.prepareTree(root);
     	return processTree;
     }
 
     public List<ProcessDocument> findProcessDocuments(ProcessDocumentFilter filter) {
-		String criteria = processDocumentSelectionStrategy.createCriteriaAsString(filter, "processDocument");
-        List<ProcessDocument> processDocumentList = processDocumentDao.findProcessDocuments(criteria);
+        List<ProcessDocument> processDocumentList = (List<ProcessDocument>) processDocumentDao.find(filter);
         if (logger.isDebugEnabled() && processDocumentList.size()>0) {
             logger.debug("Found "+processDocumentList.size()+" item(s)");
         }
@@ -72,7 +70,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
   	public ProcessDocument storeProcessDocument(ProcessDocument processDocument) {
   		ProcessDocument managedProcessDocument = 
-  			(ProcessDocument) processDocumentDao.mergeProcessDocument(processDocument);
+  			(ProcessDocument) processDocumentDao.merge(processDocument);
   		if (managedProcessDocument instanceof Sequenceable) {
   			sequenceMgr.validateInternalNumber((Sequenceable) managedProcessDocument);
   		}
@@ -140,7 +138,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         if (logger.isDebugEnabled()) {
             logger.debug("Parent class is "+parent.getClass());
         }
-        ProcessDocument managedParent = processDocumentDao.mergeProcessDocument(parent);
+        ProcessDocument managedParent = processDocumentDao.merge(parent);
         ProcessDocumentAssociation documentAssociation = managedParent.documentAssociationFactory(sequence);
         processDocumentDao.evict(managedParent);
     	return documentAssociation;
@@ -169,7 +167,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
     
 	public Setup prepareNewSetup(Operation operation, ResourceGroup resourceGroup) {
-		Operation managedOperation = (Operation) processDocumentDao.mergeProcessDocument(operation);
+		Operation managedOperation = (Operation) processDocumentDao.merge(operation);
 		return managedOperation.operationSetupFactory(resourceGroup);
 	}
 
@@ -178,7 +176,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
 
 	public List<Setup> listSetups(Operation operation) {
-		Operation managedOperation = (Operation) processDocumentDao.mergeProcessDocument(operation);
+		Operation managedOperation = (Operation) processDocumentDao.merge(operation);
 		List<Setup> listSetups = new ArrayList<Setup>(managedOperation.getSetups());
 	    if (logger.isDebugEnabled() && listSetups!=null) {
 	        logger.debug("Found "+listSetups.size()+" setup(s)");
@@ -190,25 +188,19 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	
     // collaborators 
 
-    private ProcessDocumentDao processDocumentDao;
+    private FilterDao<ProcessDocument, ProcessDocumentFilter> processDocumentDao;
     private SetupDao setupDao;
-    private SelectionStrategy<ProcessDocumentFilter> processDocumentSelectionStrategy;
     private BasicDao<ProcessDocumentAssociation> processDocumentAssociationDao;
     private SequenceMgr sequenceMgr;
     
-    @javax.annotation.Resource
-    public void setProcessDocumentDao(ProcessDocumentDao processDocumentDao) {
+    @javax.annotation.Resource(name="processDocumentDao")
+    public void setProcessDocumentDao(FilterDao<ProcessDocument, ProcessDocumentFilter> processDocumentDao) {
         this.processDocumentDao = processDocumentDao;
     }
 
     @javax.annotation.Resource
     public void setSetupDao(SetupDao setupDao) {
         this.setupDao = setupDao;
-    }
-
-    @javax.annotation.Resource(name="processDocumentSelectionStrategy")
-    public void setProcessDocumentSelectionStrategy(SelectionStrategy<ProcessDocumentFilter> processDocumentSelectionStrategy) {
-        this.processDocumentSelectionStrategy = processDocumentSelectionStrategy;
     }
 
     @javax.annotation.Resource(name="processDocumentAssociationDao")

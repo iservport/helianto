@@ -38,12 +38,26 @@ import org.helianto.partner.Partner;
 @Table(name="proc_process")
 public class Process extends DerivedProcessDocument implements Sequenceable {
 
+    /**
+     * Factory method.
+     * 
+     * @param entity
+     * @param processCode
+     * @param internalNumber
+     */
+    public static Process processFactory(Entity entity, String processCode, long internalNumber) {
+    	Process process = documentFactory(Process.class, entity, processCode);
+    	process.setInternalNumber(internalNumber);
+    	return process;
+    }
+
     private static final long serialVersionUID = 1L;
     private long internalNumber;
     private Partner partner;
 
 	/** default constructor */
     public Process() {
+    	super();
     }
 
     /**
@@ -96,20 +110,6 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
     	return operations;
     }
     
-    //1.0
-    /**
-     * <code>Process</code> factory.
-     * 
-     * @param entity
-     * @param processCode
-     * @param internalNumber
-     */
-    public static Process processFactory(Entity entity, String processCode, long internalNumber) {
-    	Process process = documentFactory(Process.class, entity, processCode);
-    	process.setInternalNumber(internalNumber);
-    	return process;
-    }
-
 	//1.1
     /**
      * Return an association with a new <tt>Operation</tt>.
@@ -146,22 +146,6 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
         return documentAssociation;
     }
 
-    /**
-     * <code>Process</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getProcessQueryStringBuilder() {
-        return new StringBuilder("select process from Process process ");
-    }
-
-    /**
-     * <code>Process</code> natural id query.
-     */
-    @Transient
-    public static String getProcessNaturalIdQueryString() {
-        return getProcessQueryStringBuilder().append("where process.entity = ? and process.internalNumber = ? ").toString();
-    }
-    
     public boolean equals(Object other) {
 		 if ( !(other instanceof Process) ) return false;
 		 return super.equals(other);

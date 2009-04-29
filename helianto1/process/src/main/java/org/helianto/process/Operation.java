@@ -44,6 +44,8 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
 
     /** default constructor */
     public Operation() {
+    	super();
+    	setOperationType(OperationType.OPERATION);
     }
 
     /**
@@ -94,22 +96,6 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
         this.setups = setups;
     }
 
-    /**
-     * <code>Operation</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getOperationQueryStringBuilder() {
-        return new StringBuilder("select operation from Operation operation ");
-    }
-
-    /**
-     * <code>Operation</code> natural id query.
-     */
-    @Transient
-    public static String getOperationNaturalIdQueryString() {
-        return getOperationQueryStringBuilder().append("where process.entity = ? and operation.internalNumber = ? ").toString();
-    }
-    
     //1.0
     /**
      * <code>Operation</code> subprocess factory.

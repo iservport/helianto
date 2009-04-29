@@ -16,36 +16,24 @@
 
 package org.helianto.process;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.PolymorphicFilter;
 import org.helianto.document.AbstractDocument;
 import org.helianto.partner.Partner;
 
 /**
+ * Process document filter.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
+public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter implements Serializable, PolymorphicFilter<ProcessDocument> {
 
-    private static final long serialVersionUID = 1L;
-    private String docCode = "";
-	private long internalNumber;
-	private AbstractDocument document;
-	private String docNameLike = "";
-	private char inheritanceType = ' ';
-	private char priority = '0';
-	private Class<? extends ProcessDocument> clazz = ProcessDocument.class;
-	private Partner partner;
-    private Collection<? extends ProcessDocument> exclusions;
-	
-	
-	public ProcessDocumentFilter() {
-	}
-	
 	/**
-	 * Create the filter for a given type.
+	 * Factory method.
 	 * 
 	 * @param user
 	 * @param clazz
@@ -58,7 +46,7 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	/**
-	 * Create the filter for a hierarchy.
+	 * Factory method.
 	 * 
 	 * @param user
 	 * @param root
@@ -69,9 +57,44 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 		return processDocumentFilter;
 	}
 
+    private static final long serialVersionUID = 1L;
+	private Class<? extends ProcessDocument> clazz;
+    private String docCode;
+	private String docNameLike;
+	private char inheritanceType;
+	private char priority;
+	private AbstractDocument document;
+	private Partner partner;
+    private Collection<? extends ProcessDocument> exclusions;
+	
+	
+	public ProcessDocumentFilter() {
+		super();
+		setClazz(ProcessDocument.class);
+		setDocCode("");
+		setDocNameLike("");
+		setInheritanceType(' ');
+		setPriority(' ');
+	}
+	
 	public void reset() {
 		setDocCode("");
 		setDocNameLike("");
+	}
+	
+	@Override
+	public boolean isSelection() {
+		return getDocCode().length()>0;
+	}
+
+	/**
+	 * Subclass
+	 */
+	public Class<? extends ProcessDocument> getClazz() {
+		return clazz;
+	}
+	public void setClazz(Class<? extends ProcessDocument> clazz) {
+		this.clazz = clazz;
 	}
 
 	/**
@@ -83,36 +106,6 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 	public ProcessDocumentFilter setDocCode(String docCode) {
 		this.docCode = docCode;
 		return this;
-	}
-
-	/**
-	 * Process internal number.
-	 */
-	public long getInternalNumber() {
-		return internalNumber;
-	}
-	public void setInternalNumber(long internalNumber) {
-		this.internalNumber = internalNumber;
-	}
-	
-	/**
-	 * Subclass
-	 */
-	public AbstractDocument getDocument() {
-		return document;
-	}
-	public void setDocument(AbstractDocument document) {
-		this.document = document;
-	}
-	
-	/**
-	 * Subclass
-	 */
-	public Class<? extends ProcessDocument> getClazz() {
-		return clazz;
-	}
-	public void setClazz(Class<? extends ProcessDocument> clazz) {
-		this.clazz = clazz;
 	}
 
 	/**
@@ -179,6 +172,16 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter {
 		this.priority = priority;
 	}
 
+	/**
+	 * Subclass
+	 */
+	public AbstractDocument getDocument() {
+		return document;
+	}
+	public void setDocument(AbstractDocument document) {
+		this.document = document;
+	}
+	
 	/**
 	 * Partner
 	 */

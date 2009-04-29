@@ -26,7 +26,7 @@ import org.helianto.process.Process;
 
 
 /**
- * Class to support <code>DocumentDao</code> tests.
+ * Class to support <code>ProcessDocument</code> tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -35,23 +35,29 @@ public class ProcessDocumentTestSupport {
     private static int testKey;
 
     /**
-     * Test support method to create a <code>Document</code>.
-     * @param entity optional Entity or docCode
-     * @param docCode optional String 
+     * Test support method to create a <code>ProcessDocument</code>.
+     * 
      */
-    public static ProcessDocument createDocument(Object... args) {
-        Entity entity;
-        try {
-            entity = (Entity) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            entity = EntityTestSupport.createEntity();
-        }
-        String docCode;
-        try {
-            docCode = (String) args[1];
-        } catch(ArrayIndexOutOfBoundsException e1) {
-            docCode = DomainTestSupport.getNonRepeatableStringValue(testKey++, 24);
-        }
+    public static ProcessDocument createProcessDocument() {
+        return ProcessDocumentTestSupport.createProcessDocument(EntityTestSupport.createEntity());
+    }
+
+    /**
+     * Test support method to create a <code>ProcessDocument</code>.
+     * 
+     * @param entity
+     */
+    public static ProcessDocument createProcessDocument(Entity entity) {
+        return ProcessDocumentTestSupport.createProcessDocument(entity, DomainTestSupport.getNonRepeatableStringValue(testKey++, 24));
+    }
+
+    /**
+     * Test support method to create a <code>ProcessDocument</code>.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public static ProcessDocument createProcessDocument(Entity entity, String docCode) {
         ProcessDocument document = new Process();
         document.setKey(entity, docCode);
         return document;
@@ -88,7 +94,7 @@ public class ProcessDocumentTestSupport {
         List<ProcessDocument> documentList = new ArrayList<ProcessDocument>();
         for (Entity entity: entityList) {
             for (int i=0;i<documentListSize;i++) {
-                documentList.add(createDocument(entity));
+                documentList.add(createProcessDocument(entity));
             }
         }
         return documentList;

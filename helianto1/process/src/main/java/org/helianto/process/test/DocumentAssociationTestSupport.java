@@ -25,13 +25,13 @@ public class DocumentAssociationTestSupport {
         try {
             parent = (ProcessDocument) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            parent = ProcessDocumentTestSupport.createDocument();
+            parent = ProcessDocumentTestSupport.createProcessDocument();
         }
         ProcessDocument child;
         try {
             child = (ProcessDocument) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            child = ProcessDocumentTestSupport.createDocument();
+            child = ProcessDocumentTestSupport.createProcessDocument();
         }
         ProcessDocumentAssociation documentAssociation = ProcessDocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
         return documentAssociation;

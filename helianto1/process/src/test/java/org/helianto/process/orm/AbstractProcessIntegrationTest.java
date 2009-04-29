@@ -17,7 +17,7 @@ package org.helianto.process.orm;
 
 import org.helianto.core.test.AbstractIntegrationTest;
 
-public class AbstractProcessTest extends AbstractIntegrationTest {
+public class AbstractProcessIntegrationTest extends AbstractIntegrationTest {
 
     @Override
     protected String[] getConfigLocations() {
