@@ -293,9 +293,16 @@ public class CriteriaBuilder {
     public CriteriaBuilder appendSelect(String... fieldNames) {
     	String separator = "";
     	criteria.append("select");
-    	for (String fieldName: fieldNames) {
-    		append(separator).appendWithPrefix(fieldName);
-    		separator = ", ";
+    	if (fieldNames.length>0) {
+        	for (String fieldName: fieldNames) {
+        		append(separator).appendWithPrefix(fieldName);
+        		separator = ", ";
+        	}
+    	}
+    	else {
+    		criteria.append(" ")
+        	.append(prefix)
+        	.append(" ");
     	}
     	return this;
     }
