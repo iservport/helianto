@@ -13,29 +13,33 @@
  * limitations under the License.
  */
 
-package org.helianto.process.dao;
-
-import java.util.List;
+package org.helianto.process.test;
 
 import org.helianto.core.Entity;
+import org.helianto.core.test.DomainTestSupport;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.Resource;
 
 /**
- * <code>Resource</code> data access interface.
+ * Test suport methods.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface ResourceDao {
-    
-    /**
-     * Find <code>Resource</code>s by naturall id.
-     */
-    public Resource findResourceByNaturalId(Entity entity, String resourceCode);
+public class ResourceTestSupport {
+	
+	static int testKey = 1;
 
-    /**
-     * Find <code>Resource</code>s by string criteria.
-     */
-    public List<Resource> findResources(String criteria);
+    public static Resource createResource() {
+        return ResourceTestSupport.createResource(EntityTestSupport.createEntity());
+    }
 
+    public static Resource createResource(Entity entity) {
+        return ResourceTestSupport.createResource(entity, DomainTestSupport.getNonRepeatableStringValue(20, testKey++));
+    }
+
+    public static Resource createResource(Entity entity, String resourceCode) {
+        Resource resourceGroup = Resource.resourceFactory(entity, resourceCode);
+        return resourceGroup;
+    }
 
 }

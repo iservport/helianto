@@ -22,7 +22,8 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.Unit;
-import org.helianto.core.filter.SelectionStrategy;
+import org.helianto.core.dao.BasicDao;
+import org.helianto.core.dao.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceAssociation;
@@ -31,7 +32,6 @@ import org.helianto.process.ResourceGroupFilter;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.ResourceType;
-import org.helianto.process.dao.ResourceGroupDao;
 import org.helianto.process.dao.ResourceParameterDao;
 import org.helianto.process.dao.ResourceParameterValueDao;
 
@@ -50,8 +50,7 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
 
 	public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter) {
-		String criteria = resourceGroupSelectionStrategy.createCriteriaAsString(resourceGroupFilter, "resourceGroup");
-		List<ResourceGroup> resourceGroupList = resourceGroupDao.findResourceGroups(criteria);
+		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(resourceGroupFilter);
 		if (logger.isDebugEnabled() && resourceGroupList!=null) {
 			logger.debug("Found resource group list of size "+resourceGroupList.size());
 		}
@@ -73,14 +72,14 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
     
 	public ResourceGroup prepareResourceGroup(ResourceGroup resourceGroup) {
-		ResourceGroup managedResourceGroup = resourceGroupDao.mergeResourceGroup(resourceGroup);
+		ResourceGroup managedResourceGroup = resourceGroupDao.merge(resourceGroup);
 		managedResourceGroup.getChildAssociations();
-		resourceGroupDao.evictResourceGroup(resourceGroup);
+		resourceGroupDao.evict(resourceGroup);
 		return managedResourceGroup;
 	}
 
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup) {
-    	return resourceGroupDao.mergeResourceGroup(resourceGroup);
+    	return resourceGroupDao.merge(resourceGroup);
     }
     
 	public void removeResourceAssociation(ResourceAssociation resourceAssociation, boolean removeOrphan) {
@@ -94,7 +93,7 @@ public class ResourceMgrImpl implements ResourceMgr {
     //
 
 	public ResourceAssociation storeResourceAssociation(ResourceAssociation resourceAssociation) {
-		return resourceGroupDao.mergeResourceAssociation(resourceAssociation);
+		return resourceAssociationDao.merge(resourceAssociation);
 	}
 	
 	//
@@ -135,20 +134,20 @@ public class ResourceMgrImpl implements ResourceMgr {
     
     // collaborators
 
-    private ResourceGroupDao resourceGroupDao;
-    private SelectionStrategy<ResourceGroupFilter> resourceGroupSelectionStrategy;
+    private FilterDao<ResourceGroup, ResourceGroupFilter> resourceGroupDao;
+    private BasicDao<ResourceAssociation> resourceAssociationDao;
     private ResourceParameterDao resourceParameterDao;
     private ResourceParameterValueDao resourceParameterValueDao;
     private SequenceMgr sequenceMgr;
     
-    @javax.annotation.Resource(name="resourceGroupSelectionStrategy")
-    public void setResourceGroupSelectionStrategy(SelectionStrategy<ResourceGroupFilter> resourceGroupSelectionStrategy) {
-        this.resourceGroupSelectionStrategy = resourceGroupSelectionStrategy;
+    @javax.annotation.Resource(name="resourceGroupDao")
+    public void setResourceGroupDao(FilterDao<ResourceGroup, ResourceGroupFilter> resourceGroupDao) {
+        this.resourceGroupDao = resourceGroupDao;
     }
 
-    @javax.annotation.Resource
-    public void setResourceGroupDao(ResourceGroupDao resourceGroupDao) {
-        this.resourceGroupDao = resourceGroupDao;
+    @javax.annotation.Resource(name="resourceAssociationDao")
+    public void setResourceAssociationDao(BasicDao<ResourceAssociation> resourceAssociationDao) {
+        this.resourceAssociationDao = resourceAssociationDao;
     }
 
     @javax.annotation.Resource

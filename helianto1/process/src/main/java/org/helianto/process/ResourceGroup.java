@@ -57,6 +57,29 @@ import org.helianto.core.Entity;
 @DiscriminatorValue("G")
 public class ResourceGroup implements java.io.Serializable {
 
+    /**
+     * Factory method.
+     * 
+     * @param entity
+     * @param resourceCode
+     */
+    public static ResourceGroup resourceGroupFactory(Entity entity, String resourceCode) {
+        return resourceGroupFactory(ResourceGroup.class, entity, resourceCode);
+    }
+
+    /**
+     * Factory method.
+     * 
+     * @param parent
+     * @param resourceCode
+     */
+    public static ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode) {
+    	ResourceGroup resourceGroup =  resourceGroupFactory(parent.getEntity(), resourceCode);
+    	resourceGroup.setParent(parent);
+    	resourceGroup.setResourceType(parent.getResourceType());
+    	return resourceGroup;
+    }
+    
 	private static final long serialVersionUID = 1L;
 	private int id;
     private Entity entity;
@@ -69,6 +92,7 @@ public class ResourceGroup implements java.io.Serializable {
 
     /** default constructor */
     public ResourceGroup() {
+    	setResourceType(ResourceType.EQUIPMENT);
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -189,33 +213,9 @@ public class ResourceGroup implements java.io.Serializable {
         }
         resourceGroup.setEntity(entity);
         resourceGroup.setResourceCode(resourceCode);
-        resourceGroup.setResourceType(ResourceType.EQUIPMENT);
         return resourceGroup;
     }
 
-    /**
-     * <code>ResourceGroup</code> factory.
-     * 
-     * @param entity
-     * @param resourceCode
-     */
-    public static ResourceGroup resourceGroupFactory(Entity entity, String resourceCode) {
-        return resourceGroupFactory(ResourceGroup.class, entity, resourceCode);
-    }
-
-    /**
-     * <code>ResourceGroup</code> factory.
-     * 
-     * @param parent
-     * @param resourceCode
-     */
-    public static ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode) {
-    	ResourceGroup resourceGroup =  resourceGroupFactory(ResourceGroup.class, parent.getEntity(), resourceCode);
-    	resourceGroup.setParent(parent);
-    	resourceGroup.setResourceType(parent.getResourceType());
-    	return resourceGroup;
-    }
-    
     /**
      * Preferred method to create a <code>Resource</code>.
      * 
@@ -229,22 +229,6 @@ public class ResourceGroup implements java.io.Serializable {
     	return resourceAssociation;
     }
 
-    /**
-     * <code>ResourceGroup</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getResourceGroupQueryStringBuilder() {
-        return new StringBuilder("select resourceGroup from ResourceGroup resourceGroup ");
-    }
-
-    /**
-     * <code>ResourceGroup</code> natural id query.
-     */
-    @Transient
-    public static String getResourceGroupNaturalIdQueryString() {
-        return getResourceGroupQueryStringBuilder().append("where resourceGroup.entity = ? and resourceGroup.resourceCode = ? ").toString();
-    }
-    
     /**
      * toString
      * @return String

@@ -26,7 +26,6 @@ import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceGroupFilter;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterValue;
-import org.helianto.process.dao.ResourceDao;
 
 /**
  * <code>ResourceMgr</code> interface.

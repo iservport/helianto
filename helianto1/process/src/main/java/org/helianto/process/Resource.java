@@ -22,18 +22,41 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import org.helianto.core.Entity;
 import org.helianto.partner.Partner;
 
 /**			
- * <p>
- * A class to represent a process resource.
- * </p>
+ * A process resource.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
 @DiscriminatorValue("R")
 public class Resource extends ResourceGroup implements java.io.Serializable {
 
+    /**
+     * Factory method.
+     * 
+     * @param entity
+     * @param resourceCode
+     */
+    public static Resource resourceFactory(Entity entity, String resourceCode) {
+        return resourceGroupFactory(Resource.class, entity, resourceCode);
+    }
+
+    /**
+     * Factory method.
+     * 
+     * @param parent
+     * @param resourceCode
+     */
+    public static Resource resourceFactory(ResourceGroup parent, String resourceCode) {
+    	Resource resource =  resourceFactory(parent.getEntity(), resourceCode);
+    	resource.setParent(parent);
+    	resource.setResourceType(parent.getResourceType());
+    	return resource;
+    }
+    
     private static final long serialVersionUID = 1L;
     private String serialNumber;
     private char resourceState;
@@ -41,10 +64,9 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     private Partner owner;
     private boolean keyResource;
 
-     // Constructors
-
     /** default constructor */
     protected Resource() {
+    	super();
     }
 
     /**
@@ -117,22 +139,6 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     }
     public void setKeyResource(boolean keyResource) {
         this.keyResource = keyResource;
-    }
-    
-    /**
-     * <code>Resource</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getResourceQueryStringBuilder() {
-        return new StringBuilder("select resource from Resource resource ");
-    }
-
-    /**
-     * <code>Resource</code> natural id query.
-     */
-    @Transient
-    public static String getResourceNaturalIdQueryString() {
-        return getResourceQueryStringBuilder().append("where resource.entity = ? and resource.resourceCode = ? ").toString();
     }
     
     public boolean equals(Object other) {

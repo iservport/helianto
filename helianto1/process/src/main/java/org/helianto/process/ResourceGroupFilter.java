@@ -18,33 +18,22 @@ package org.helianto.process;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.PolymorphicFilter;
 
 /**
+ * Resource group polimorphic filter.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter {
+public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter implements PolymorphicFilter<ResourceGroup>{
 
-    private static final long serialVersionUID = 1L;
-    private String resourceCode = "";
-	private String resourceNameLike = "";
-	private char resourceType = ' ';
-	private Class<? extends ResourceGroup> clazz = ResourceGroup.class;
-	
-	
-	public ResourceGroupFilter() {
-	}
-	
 	/**
 	 * Create the filter for a given type.
 	 * 
 	 * @param user
 	 */
 	public static ResourceGroupFilter resourceGroupFilterFactory(User user) {
-		ResourceGroupFilter filter = new ResourceGroupFilter();
-		filter.setUser(user);
-		filter.reset();
-		return filter;
+		return AbstractUserBackedCriteriaFilter.filterFactory(ResourceGroupFilter.class, user);
 	}
 
 	/**
@@ -70,9 +59,32 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter {
 		return resourceGroupFilter;
 	}
 
+    private static final long serialVersionUID = 1L;
+    private String resourceCode;
+	private String resourceNameLike;
+	private char resourceType;
+	private Class<? extends ResourceGroup> clazz = ResourceGroup.class;
+	
+	/**
+	 * Default constructor.
+	 */
+	public ResourceGroupFilter() {
+		setResourceCode("");
+		setResourceNameLike("");
+		setResourceType(' ');
+	}
+	
+	/**
+	 * Reset.
+	 */
 	public void reset() {
 		setResourceCode("");
 		setResourceNameLike("");
+	}
+
+	@Override
+	public boolean isSelection() {
+		return getResourceCode().length()>0;
 	}
 
 	/**
@@ -93,6 +105,27 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter {
 	}
 	public void setClazz(Class<? extends ResourceGroup> clazz) {
 		this.clazz = clazz;
+	}
+
+	/**
+	 * Discriminator
+	 */
+	public char getDiscriminator() {
+		if (clazz.equals(ResourceGroup.class)) {
+			return 'G'; 
+		}
+		if (clazz.equals(Resource.class)) {
+			return 'R'; 
+		}
+		return ' ';
+	}
+	public void setDiscriminator(char discriminator) {
+		if (discriminator=='G') {
+			clazz = ResourceGroup.class; 
+		}
+		if (discriminator=='R') {
+			clazz = Resource.class; 
+		}
 	}
 
 	/**

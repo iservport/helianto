@@ -32,19 +32,15 @@ public class ResourceGroupTestSupport {
 	
 	static int testKey = 1;
 
-    public static ResourceGroup createResourceGroup(Object... args) {
-        Entity entity;
-        try {
-            entity = (Entity) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            entity = EntityTestSupport.createEntity();
-        }
-        String resourceCode;
-        try {
-        	resourceCode = (String) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-        	resourceCode = DomainTestSupport.getNonRepeatableStringValue(20, testKey++);
-        }
+    public static ResourceGroup createResourceGroup() {
+        return ResourceGroupTestSupport.createResourceGroup(EntityTestSupport.createEntity());
+    }
+
+    public static ResourceGroup createResourceGroup(Entity entity) {
+        return ResourceGroupTestSupport.createResourceGroup(entity, DomainTestSupport.getNonRepeatableStringValue(20, testKey++));
+    }
+
+    public static ResourceGroup createResourceGroup(Entity entity, String resourceCode) {
         ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(entity, resourceCode);
         return resourceGroup;
     }
