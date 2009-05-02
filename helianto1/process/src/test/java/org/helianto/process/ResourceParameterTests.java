@@ -3,7 +3,6 @@ package org.helianto.process;
 import junit.framework.TestCase;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Unit;
 import org.helianto.core.test.DomainTestSupport;
 
 
@@ -25,23 +24,6 @@ public class ResourceParameterTests extends TestCase {
         assertTrue(resourceParameter instanceof ResourceParameter);
 		assertSame(entity, resourceParameter.getEntity());
         assertEquals("CODE", resourceParameter.getParameterCode());
-        
-    }
-    
-    /**
-     * Test <code>ResourceParameter</code> static factory method.
-     */
-    public void testResourceParameterFactoryUnit() {
-        Entity entity = new Entity();
-        Unit unit = new Unit();
-        unit.setEntity(entity);
-
-		ResourceParameter resourceParameter = ResourceParameter.resourceParameterFactory(unit, "CODE");
-
-        assertTrue(resourceParameter instanceof ResourceParameter);
-		assertSame(entity, resourceParameter.getEntity());
-        assertEquals("CODE", resourceParameter.getParameterCode());
-        assertSame(unit, resourceParameter.getUnit());
         
     }
     

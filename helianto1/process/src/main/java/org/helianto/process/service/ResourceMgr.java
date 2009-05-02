@@ -107,13 +107,6 @@ public interface ResourceMgr {
     
     /**
      * <p>
-     * Create a <code>ResourceParameter</code> with a given <code>Unit</code>.
-     * </p>  
-     */
-    public ResourceParameter createResourceParameter(Entity entity, String parameterCode, Unit unit);
-
-    /**
-     * <p>
      * Create a <code>ResourceParameter</code>.
      * </p>  
      */

@@ -21,7 +21,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
-import org.helianto.core.Unit;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.service.SequenceMgr;
@@ -30,9 +29,9 @@ import org.helianto.process.ResourceAssociation;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceGroupFilter;
 import org.helianto.process.ResourceParameter;
+import org.helianto.process.ResourceParameterFilter;
 import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.ResourceType;
-import org.helianto.process.dao.ResourceParameterDao;
 import org.helianto.process.dao.ResourceParameterValueDao;
 
 /**
@@ -102,10 +101,6 @@ public class ResourceMgrImpl implements ResourceMgr {
         return ResourceParameter.resourceParameterFactory(entity, "");
     }
 
-    public ResourceParameter createResourceParameter(Entity entity, String parameterCode, Unit unit) {
-        return ResourceParameter.resourceParameterFactory(unit, parameterCode);
-    }
-
     public ResourceParameter createResourceParameter(Entity entity, String parameterCode) {
         return ResourceParameter.resourceParameterFactory(entity, parameterCode);
     }
@@ -115,7 +110,7 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
     
     public ResourceParameter storeResourceParameter(ResourceParameter resourceParameter) {
-    	return resourceParameterDao.mergeResourceParameter(resourceParameter);
+    	return resourceParameterDao.merge(resourceParameter);
     }
     
     //
@@ -136,7 +131,7 @@ public class ResourceMgrImpl implements ResourceMgr {
 
     private FilterDao<ResourceGroup, ResourceGroupFilter> resourceGroupDao;
     private BasicDao<ResourceAssociation> resourceAssociationDao;
-    private ResourceParameterDao resourceParameterDao;
+    private FilterDao<ResourceParameter, ResourceParameterFilter> resourceParameterDao;
     private ResourceParameterValueDao resourceParameterValueDao;
     private SequenceMgr sequenceMgr;
     
@@ -150,8 +145,8 @@ public class ResourceMgrImpl implements ResourceMgr {
         this.resourceAssociationDao = resourceAssociationDao;
     }
 
-    @javax.annotation.Resource
-    public void setResourceParameterDao(ResourceParameterDao resourceParameterDao) {
+    @javax.annotation.Resource(name="resourceParameterDao")
+    public void setResourceParameterDao(FilterDao<ResourceParameter, ResourceParameterFilter> resourceParameterDao) {
         this.resourceParameterDao = resourceParameterDao;
     }
 
