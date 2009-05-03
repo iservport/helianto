@@ -4,7 +4,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.1</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -23,10 +23,6 @@
 			<module>archetype1</module>
 		-->
 	</modules>
-	<issueManagement>
-		<system>jira</system>
-		<url>http://jira.helianto.org/jira/browse/HEL</url>
-	</issueManagement>
 	<inceptionYear>2005</inceptionYear>
 	<developers>
 		<developer>
