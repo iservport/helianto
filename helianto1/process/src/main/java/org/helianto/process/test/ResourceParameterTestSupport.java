@@ -32,19 +32,15 @@ public class ResourceParameterTestSupport {
 	
 	static int testKey = 1;
 
-    public static ResourceParameter createResourceParameter(Object... args) {
-        Entity entity;
-        try {
-            entity = (Entity) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            entity = EntityTestSupport.createEntity();
-        }
-        String resourceParameterCode;
-        try {
-        	resourceParameterCode = (String) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-        	resourceParameterCode = DomainTestSupport.getNonRepeatableStringValue(20, testKey++);
-        }
+    public static ResourceParameter createResourceParameter() {
+        return ResourceParameterTestSupport.createResourceParameter(EntityTestSupport.createEntity());
+    }
+
+    public static ResourceParameter createResourceParameter(Entity entity) {
+        return ResourceParameterTestSupport.createResourceParameter(entity, DomainTestSupport.getNonRepeatableStringValue(20, testKey++));
+    }
+
+    public static ResourceParameter createResourceParameter(Entity entity, String resourceParameterCode) {
         ResourceParameter resourceParameter = ResourceParameter.resourceParameterFactory(
                 entity, resourceParameterCode);
         return resourceParameter;

@@ -32,7 +32,6 @@ import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterFilter;
 import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.ResourceType;
-import org.helianto.process.dao.ResourceParameterValueDao;
 
 /**
  * Default implementation for <code>ResourceMgr</code> interface.
@@ -123,8 +122,8 @@ public class ResourceMgrImpl implements ResourceMgr {
         return ResourceParameterValue.resourceParameterValueFactory(resourceGroup, resourceParameter);
     }
 
-    public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue) {
-    	resourceParameterValueDao.persistResourceParameterValue(resourceParameterValue);
+    public ResourceParameterValue storeResourceParameterValue(ResourceParameterValue resourceParameterValue) {
+    	return resourceParameterValueDao.merge(resourceParameterValue);
     }
     
     // collaborators
@@ -132,7 +131,7 @@ public class ResourceMgrImpl implements ResourceMgr {
     private FilterDao<ResourceGroup, ResourceGroupFilter> resourceGroupDao;
     private BasicDao<ResourceAssociation> resourceAssociationDao;
     private FilterDao<ResourceParameter, ResourceParameterFilter> resourceParameterDao;
-    private ResourceParameterValueDao resourceParameterValueDao;
+    private BasicDao<ResourceParameterValue> resourceParameterValueDao;
     private SequenceMgr sequenceMgr;
     
     @javax.annotation.Resource(name="resourceGroupDao")
@@ -150,8 +149,8 @@ public class ResourceMgrImpl implements ResourceMgr {
         this.resourceParameterDao = resourceParameterDao;
     }
 
-    @javax.annotation.Resource
-    public void setResourceParameterValueDao(ResourceParameterValueDao resourceParameterValueDao) {
+    @javax.annotation.Resource(name="resourceParameterValueDao")
+    public void setResourceParameterValueDao(BasicDao<ResourceParameterValue> resourceParameterValueDao) {
         this.resourceParameterValueDao = resourceParameterValueDao;
     }
 

@@ -24,7 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -39,6 +38,19 @@ import javax.persistence.UniqueConstraint;
 )
 public class ResourceParameterValue  implements java.io.Serializable {
 
+	/**
+	 * Fatory method.
+	 * 
+	 * @param resourceGroup
+	 * @param resourceParameter
+	 */
+    public static ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
+        ResourceParameterValue resourceParameterValue = new ResourceParameterValue();
+		resourceParameterValue.setResource(resourceGroup);
+		resourceParameterValue.setParameter(resourceParameter);
+    	return resourceParameterValue;
+    }
+
 	private static final long serialVersionUID = 1L;
 	private int id;
     private ResourceGroup resource;
@@ -47,12 +59,13 @@ public class ResourceParameterValue  implements java.io.Serializable {
     private String parameterTextValue;
     private boolean suppressed;
 
-     // Constructors
-
     /** default constructor */
     public ResourceParameterValue() {
     }
 
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -106,29 +119,6 @@ public class ResourceParameterValue  implements java.io.Serializable {
         this.suppressed = suppressed;
     }
 
-    public static ResourceParameterValue resourceParameterValueFactory(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
-        ResourceParameterValue resourceParameterValue = new ResourceParameterValue();
-		resourceParameterValue.setResource(resourceGroup);
-		resourceParameterValue.setParameter(resourceParameter);
-    	return resourceParameterValue;
-    }
-
-    /**
-     * <code>ResourceParameterValue</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getResourceParameterValueQueryStringBuilder() {
-        return new StringBuilder("select resourceParameterValue from ResourceParameterValue resourceParameterValue ");
-    }
-
-    /**
-     * <code>ResourceParameterValue</code> natural id query.
-     */
-    @Transient
-    public static String getResourceParameterValueNaturalIdQueryString() {
-        return getResourceParameterValueQueryStringBuilder().append("where resourceParameterValue.resourceGroup = ? and resourceParameterValue.resourceParameter = ? ").toString();
-    }
-    
     /**
      * toString
      * @return String
@@ -156,13 +146,8 @@ public class ResourceParameterValue  implements java.io.Serializable {
    
    public int hashCode() {
          int result = 17;
-         
-         
          result = 37 * result + ( getResource() == null ? 0 : this.getResource().hashCode() );
          result = 37 * result + ( getParameter() == null ? 0 : this.getParameter().hashCode() );
-         
-         
-         
          return result;
    }   
 

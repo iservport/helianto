@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
-import org.helianto.core.Unit;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceAssociation;
 import org.helianto.process.ResourceGroup;
@@ -149,10 +148,8 @@ public interface ResourceMgr {
     public ResourceParameterValue createSuppressedParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter);
 
     /**
-     * <p>
-     * Delegates to {@link ResourceDao#persistResourceParameterValue(ResourceParameterValue)}.
-     * </p>  
+     * Store a parameter value. 
      */
-    public void persistResourceParameterValue(ResourceParameterValue resourceParameterValue);
+    public ResourceParameterValue storeResourceParameterValue(ResourceParameterValue resourceParameterValue);
     
 }
