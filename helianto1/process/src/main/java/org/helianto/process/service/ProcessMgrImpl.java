@@ -38,7 +38,6 @@ import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.ProcessDocumentFilter;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.Setup;
-import org.helianto.process.dao.SetupDao;
 
 /**
  * <code>ProcessMgr</code> interface.
@@ -172,7 +171,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	}
 
     public Setup storeSetup(Setup setup) {
-    	return setupDao.mergeSetup(setup);
+    	return setupDao.merge(setup);
     }
 
 	public List<Setup> listSetups(Operation operation) {
@@ -189,7 +188,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     // collaborators 
 
     private FilterDao<ProcessDocument, ProcessDocumentFilter> processDocumentDao;
-    private SetupDao setupDao;
+    private BasicDao<Setup> setupDao;
     private BasicDao<ProcessDocumentAssociation> processDocumentAssociationDao;
     private SequenceMgr sequenceMgr;
     
@@ -198,8 +197,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         this.processDocumentDao = processDocumentDao;
     }
 
-    @javax.annotation.Resource
-    public void setSetupDao(SetupDao setupDao) {
+    @javax.annotation.Resource(name="setupDao")
+    public void setSetupDao(BasicDao<Setup> setupDao) {
         this.setupDao = setupDao;
     }
 

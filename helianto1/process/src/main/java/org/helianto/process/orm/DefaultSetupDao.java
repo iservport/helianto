@@ -14,30 +14,31 @@
  */
 
 
-package org.helianto.process.test;
+package org.helianto.process.orm;
 
-import org.helianto.process.Operation;
-import org.helianto.process.ResourceGroup;
+import org.helianto.core.dao.AbstractBasicDao;
 import org.helianto.process.Setup;
+import org.springframework.stereotype.Repository;
 
 /**
- * Class to support <code>Setup</code> tests.
+ * Setup data access.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class SetupTestSupport {
-	
-	public static Setup createSetup() {
-		return SetupTestSupport.createSetup(OperationTestSupport.createOperation());
+@Repository("setupDao")
+public class DefaultSetupDao extends AbstractBasicDao<Setup> {
+
+	@Override
+	public Class<? extends Setup> getClazz() {
+		return Setup.class;
 	}
 
-	public static Setup createSetup(Operation operation) {
-		ResourceGroup resourceGroup = ResourceGroupTestSupport.createResourceGroup();
-		return operation.operationSetupFactory(resourceGroup);
+	/**
+	 * Default keys are operation.id and resource.id
+	 */
+	@Override
+	protected String[] getParams() {
+		return new String[] { "operation", "resource" };
 	}
 
-	public static Setup createSetup(Operation operation, ResourceGroup resourceGroup) {
-		return operation.operationSetupFactory(resourceGroup);
-	}
-	
 }

@@ -41,6 +41,20 @@ import javax.persistence.UniqueConstraint;
 )
 public class Setup  implements java.io.Serializable, Comparable<Setup> {
 
+    /**
+     * Factory method.
+     * 
+     * @param operation
+     * @param resourceGroup
+     */
+    public static Setup setupFactory(Operation operation, ResourceGroup resourceGroup) {
+    	Setup setup = new Setup();
+    	setup.setOperation(operation);
+    	operation.getSetups().add(setup);
+    	setup.setResource(resourceGroup);
+    	return setup;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private Operation operation;
@@ -52,7 +66,7 @@ public class Setup  implements java.io.Serializable, Comparable<Setup> {
      // Constructors
 
     /** default package constructor */
-    Setup() {
+    public Setup() {
     	setPriority(0);
     }
 
@@ -138,37 +152,6 @@ public class Setup  implements java.io.Serializable, Comparable<Setup> {
     	}
     	return this.priority - next.priority;
     }   
-
-    /**
-     * Package factory method.
-     * 
-     * @param operation
-     * @param resourceGroup
-     */
-    static Setup setupFactory(Operation operation, ResourceGroup resourceGroup) {
-    	Setup setup = new Setup();
-    	setup.setOperation(operation);
-    	operation.getSetups().add(setup);
-    	setup.setResource(resourceGroup);
-    	return setup;
-    }
-
-
-    /**
-     * <code>Setup</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getSetupQueryStringBuilder() {
-        return new StringBuilder("select setup from Setup setup ");
-    }
-
-    /**
-     * <code>Setup</code> natural id query.
-     */
-    @Transient
-    public static String getSetupNaturalIdQueryString() {
-        return getSetupQueryStringBuilder().append("where setup.operation = ? and setup.resource = ? ").toString();
-    }
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;

@@ -14,30 +14,33 @@
  */
 
 
-package org.helianto.process.test;
+package org.helianto.process.orm;
 
-import org.helianto.process.Operation;
-import org.helianto.process.ResourceGroup;
+import org.helianto.core.dao.BasicDao;
 import org.helianto.process.Setup;
+import org.helianto.process.test.SetupTestSupport;
 
 /**
- * Class to support <code>Setup</code> tests.
- * 
  * @author Mauricio Fernandes de Castro
  */
-public class SetupTestSupport {
+public class DefaultSetupDaoIntegrationTests extends AbstractProcessIntegrationTest {
 	
-	public static Setup createSetup() {
-		return SetupTestSupport.createSetup(OperationTestSupport.createOperation());
-	}
-
-	public static Setup createSetup(Operation operation) {
-		ResourceGroup resourceGroup = ResourceGroupTestSupport.createResourceGroup();
-		return operation.operationSetupFactory(resourceGroup);
-	}
-
-	public static Setup createSetup(Operation operation, ResourceGroup resourceGroup) {
-		return operation.operationSetupFactory(resourceGroup);
+	public DefaultSetupDaoIntegrationTests() {
+		setAutowireMode(AUTOWIRE_BY_NAME);
 	}
 	
+	public void testFindUnique() {
+		Setup setup = SetupTestSupport.createSetup();
+		setupDao.persist(setup);
+		assertEquals(setup, setupDao.findUnique(setup.getOperation(), setup.getResource()));
+	}
+
+    //- collabs
+
+    private BasicDao<Setup> setupDao;
+    
+    public void setSetupDao(BasicDao<Setup> setupDao) {
+        this.setupDao = setupDao;
+    }
+    
 }
