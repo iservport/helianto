@@ -38,7 +38,7 @@ import org.helianto.core.Entity;
 @Table(name="core_category",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "categoryGroup", "categoryCode"})}
 )
-public class Category implements java.io.Serializable, QueryEnabled {
+public class Category implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
