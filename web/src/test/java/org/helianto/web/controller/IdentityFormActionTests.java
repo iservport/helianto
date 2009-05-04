@@ -28,11 +28,11 @@ import junit.framework.TestCase;
 import org.helianto.core.Credential;
 import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
-import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.ServerMgr;
-import org.helianto.core.service.UserMgr;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
+import org.helianto.message.mail.compose.PasswordConfirmationMailForm;
+import org.helianto.message.service.MessageMgr;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
@@ -148,41 +148,41 @@ public class IdentityFormActionTests extends TestCase {
     public void testSendSuccess() throws MessagingException {
         mailForm = new PasswordConfirmationMailForm();
         
-        serverMgr.sendPasswordConfirmation(mailForm);
-        replay(serverMgr);
+        messageMgr.sendPasswordConfirmation(mailForm);
+        replay(messageMgr);
         
         Event event = identityFormAction.send(context);
         assertEquals(event.getId(), "success");
-        verify(serverMgr);
+        verify(messageMgr);
     }
     
     public void testSendError() throws MessagingException {
         mailForm = null;
         
-        replay(serverMgr);
+        replay(messageMgr);
 
         Event event = identityFormAction.send(context);
         assertEquals(event.getId(), "error");
-        verify(serverMgr);
+        verify(messageMgr);
     }
     
     public void testSendFailure() throws MessagingException {
         mailForm = new PasswordConfirmationMailForm();
         
-        serverMgr.sendPasswordConfirmation(mailForm);
+        messageMgr.sendPasswordConfirmation(mailForm);
         expectLastCall().andThrow(new MessagingException());
-        replay(serverMgr);
+        replay(messageMgr);
 
         Event event = identityFormAction.send(context);
         assertEquals(event.getId(), "error");
-        verify(serverMgr);
+        verify(messageMgr);
     }
     
     // collabs
     private RequestContext context;
     private IdentityForm form;
-    private UserMgr userMgr;
     private ServerMgr serverMgr;
+    private MessageMgr messageMgr;
     private PasswordConfirmationMailForm mailForm;
     
     @Override
@@ -197,15 +197,15 @@ public class IdentityFormActionTests extends TestCase {
         };
         context.getFlowScope().put(identityFormAction.getFormObjectName(), form);
         
-        userMgr = createMock(UserMgr.class);
         serverMgr = createMock(ServerMgr.class);
-        identityFormAction.setUserMgr(userMgr);
+        messageMgr = createMock(MessageMgr.class);
         identityFormAction.setServerMgr(serverMgr);
+        identityFormAction.setMessageMgr(messageMgr);
     }
     
     @Override
     public void tearDown() {
-        reset(userMgr);
+        reset(messageMgr);
         reset(serverMgr);
     }
     

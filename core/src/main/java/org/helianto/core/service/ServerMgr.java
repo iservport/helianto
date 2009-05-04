@@ -15,15 +15,12 @@
 
 package org.helianto.core.service;
 
-import javax.mail.MessagingException;
-
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 
 /**
  * Default base service layer interface for the core package.
@@ -67,11 +64,4 @@ public interface ServerMgr {
      */
     public User writeManager(Entity entity, Identity managerIdentity);
     
-    /**
-     * Send a <code>Credential</code> confirmation mail using 
-     * a <code>PasswordConfirmationMailForm</code>.
-     */
-    public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
-            throws MessagingException;
-
 }

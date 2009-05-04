@@ -4,6 +4,9 @@
 	<classpathentry kind="src" output="core/target/test-classes" path="core/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="core/target/classes" path="core/src/main/resources"/>
 	<classpathentry excluding="**" kind="src" output="core/target/test-classes" path="core/src/test/resources"/>
+	<classpathentry kind="src" path="message/src/main/java"/>
+	<classpathentry kind="src" path="message/src/main/resources"/>
+	<classpathentry kind="src" path="message/src/test/java"/>
 	<classpathentry kind="src" output="partner/target/classes" path="partner/src/main/java"/>
 	<classpathentry kind="src" output="partner/target/test-classes" path="partner/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="partner/target/classes" path="partner/src/main/resources"/>

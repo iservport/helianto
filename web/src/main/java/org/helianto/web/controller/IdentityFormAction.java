@@ -20,10 +20,10 @@ import javax.mail.MessagingException;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Operator;
-import org.helianto.core.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.ServerMgr;
-import org.helianto.core.service.UserMgr;
+import org.helianto.message.mail.compose.PasswordConfirmationMailForm;
+import org.helianto.message.service.MessageMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.webflow.action.FormAction;
@@ -38,10 +38,6 @@ import org.springframework.webflow.execution.RequestContext;
  */
 @Component("identityAction")
 public class IdentityFormAction extends FormAction {
-    
-    private UserMgr userMgr;
-    private SecurityMgr securityMgr;
-    private ServerMgr serverMgr;
     
     public IdentityFormAction() {
         setFormObjectName("identityForm");
@@ -143,7 +139,7 @@ public class IdentityFormAction extends FormAction {
         PasswordConfirmationMailForm mailForm = createMailForm(context);
         if (mailForm!=null) {
             try {
-                serverMgr.sendPasswordConfirmation(mailForm);
+            	messageMgr.sendPasswordConfirmation(mailForm);
                 if (logger.isDebugEnabled()) {
                     logger.debug("Sent mailForm "+mailForm);
                 }
@@ -216,9 +212,13 @@ public class IdentityFormAction extends FormAction {
     
     //~ collaborators 
 
+    private MessageMgr messageMgr;
+    private SecurityMgr securityMgr;
+    private ServerMgr serverMgr;
+    
     @javax.annotation.Resource
-    public void setUserMgr(UserMgr userMgr) {
-        this.userMgr =  userMgr;
+    public void setMessageMgr(MessageMgr messageMgr) {
+        this.messageMgr =  messageMgr;
     }
 
     @javax.annotation.Resource

@@ -22,11 +22,6 @@
         Exception translation bean post processor 
     -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>	
-    <!-- 
-		Enable @AspectJ Support
-	-
-	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
-	-->
 	<!-- 
 		Messages
 	-->
@@ -39,23 +34,5 @@
 				<value>messages</value>
 			</list>
 		</property>
-	</bean>
-	<!--
-		configurable mail sender factory	
-	-->
-	<bean id="configurableMailSenderFactory"
-		class="org.helianto.core.mail.ConfigurableMailSenderFactoryImpl"/>
-	<!--
-		Basic Mail Message composer
-	-->
-	<bean id="basicMailMessageComposer"
-		class="org.helianto.core.mail.compose.BasicMailMessageComposer"/>
-	<!--
-		Message composer
-		@deprecated ...
-	-->
-	<bean id="mailComposer"
-		class="org.helianto.core.mail.MailComposerImpl">
-		<property name="messageSource" ref="messageSource" />
 	</bean>
 </beans>

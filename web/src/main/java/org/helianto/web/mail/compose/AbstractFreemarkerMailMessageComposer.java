@@ -15,8 +15,8 @@
 
 package org.helianto.web.mail.compose;
 
-import org.helianto.core.mail.compose.AbstractMailMessageComposer;
-import org.helianto.core.mail.compose.MailForm;
+import org.helianto.message.mail.compose.AbstractMailMessageComposer;
+import org.helianto.message.mail.compose.MailForm;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
 import freemarker.template.Configuration;
