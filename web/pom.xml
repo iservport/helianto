@@ -36,7 +36,7 @@
       <version>2.3</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId>
+      <groupId>org.springframework.webflow</groupId>
       <artifactId>spring-webflow</artifactId>
       <version>1.0.5</version>
     </dependency>
