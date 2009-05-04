@@ -1,9 +1,0 @@
-Welcome to The Helianto Project Partner Module
-
-  Helianto project is designed to provide easy "construction blocks" to an Hibernate+Spring+Acegi based application.
-
-* Overview
-
-  Usual business partners are customers, suppliers, banks, agents, etc.
-  The partner module groups all of them and provides for address and contact
-  information.
