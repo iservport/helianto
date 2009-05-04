@@ -40,15 +40,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>
-			scm:https://helianto.svn.sourceforge.net/svnroot/helianto
-		</connection>
-		<developerConnection>
-			scm:https://helianto.svn.sourceforge.net/svnroot/helianto
-		</developerConnection>
-		<url>
-			http://helianto.svn.sourceforge.net/svnroot/helianto
-		</url>
+		<connection>scm:svn:https://helianto.svn.sourceforge.net/svnroot/helianto</connection>
+		<developerConnection>scm:svn:https://helianto.svn.sourceforge.net/svnroot/helianto</developerConnection>
+		<url>http://helianto.svn.sourceforge.net/svnroot/helianto</url>
 	</scm>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -311,6 +305,14 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
 					<source>1.5</source>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<configuration>
+					<type>range</type>
+					<range>180</range>
 				</configuration>
 			</plugin>
 		</plugins>
