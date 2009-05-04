@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flow PUBLIC "-//SPRING//DTD WEBFLOW 1.0//EN"  
+    "http://www.springframework.org/dtd/spring-webflow-1.0.dtd">
+
+<flow start-state="authorize.subflow">
+
+    <subflow-state id="authorize.subflow" flow="authorize">
+		<attribute-mapper>
+			<output-mapper>
+                <mapping source="secure" 
+                         target="conversationScope.secure"/>
+            </output-mapper>
+		</attribute-mapper>
+		<transition on="success" to="hello.view"/>
+    </subflow-state>
+
+    <view-state id="hello.view" view="hello">
+		<transition on="end" to="end"/>
+    </view-state>
+    
+    <end-state id="end"/>
+    
+</flow>

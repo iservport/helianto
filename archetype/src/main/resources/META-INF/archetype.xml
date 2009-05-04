@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<archetype>
+	<id>helianto-new-project</id>
+	<allowPartial>true</allowPartial>
+	<sources>
+		<source>src/main/java/sample/DomainSample.java</source>
+	</sources>
+	<resources>
+		<!-- remove the next two lines if you don't use eclipse -->
+		<resource>.project</resource>
+		<resource>.classpath</resource>
+		<resource>src/main/resources/deploy/sample-app.xml</resource>
+		<resource>src/main/resources/hibernate.properties</resource>
+		<resource>src/main/resources/mappings/domain.hbm.xml</resource>
+		<resource>src/main/resources/log4j.xml</resource>
+		<resource>src/main/webapps/WEB-INF/web.xml</resource>
+		<resource>src/main/webapps/WEB-INF/flows/sample.xml</resource>
+		<resource>src/main/webapps/WEB-INF/freemarker/hello.ftl</resource>
+	</resources>
+	<testSources>
+		<source>src/test/java/sample/DomainSampleTests.java</source>
+	</testSources>
+	<testResources>
+		<resource>src/test/resources/log4j.xml</resource>
+	</testResources>
+</archetype>
