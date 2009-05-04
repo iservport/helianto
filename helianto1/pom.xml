@@ -40,8 +40,8 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:https://helianto.svn.sourceforge.net/svnroot/helianto</connection>
-		<developerConnection>scm:svn:https://helianto.svn.sourceforge.net/svnroot/helianto</developerConnection>
+		<connection>scm:svn:https://helianto.svn.sourceforge.net/svnroot/helianto/trunk/helianto1/</connection>
+		<developerConnection>scm:svn:https://helianto.svn.sourceforge.net/svnroot/helianto/trunk/helianto1/</developerConnection>
 		<url>http://helianto.svn.sourceforge.net/svnroot/helianto</url>
 	</scm>
 	<build>
