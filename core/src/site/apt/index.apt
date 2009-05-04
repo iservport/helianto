@@ -1,0 +1,9 @@
+Welcome to The Helianto Project Core Module
+
+  Helianto project is designed to provide easy "construction blocks" to an Hibernate+Spring+Acegi based application.
+
+* Overview
+
+  Helianto core module, in contrast with other modules, exposes both basic domain and service classes.
+  It is also the base for conventions that affect the other modules as well.
+  
