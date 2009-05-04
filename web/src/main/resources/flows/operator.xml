@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
+
+	<start-actions>
+		<!-- create the backing form object and initialize a empty errors collection -->
+		<action bean="operatorAction" method="setupForm" />
+	</start-actions>
+
+	<start-state idref="createOperator" />
+
+    <action-state id="createOperator">
+    	<action bean="operatorAction"/>
+		<transition on="success" to="form.view"/>
+    </action-state>
+
+    <view-state id="form.view" view="operator/form">
+    	<entry-actions>
+    		<action bean="operatorAction" 
+    		    method="loadAvailableLocalesInRequestScope"/>
+    	</entry-actions>
+		<transition on="enter" to="bind"/>
+    </view-state>
+
+    <action-state id="bind">
+    	<action bean="installAction"/>
+		<transition on="success" to="persistOperator"/>
+    </action-state>
+
+    <action-state id="persistOperator">
+    	<action bean="operatorAction"/>
+		<transition on="success" to="listOperatorInRequestScope"/>
+    </action-state>
+
+    <action-state id="listOperatorInRequestScope">
+    	<action bean="operatorAction"/>
+		<transition on="success" to="list.view"/>
+    </action-state>
+
+    <view-state id="list.view" view="operator/list">
+    	<entry-actions>
+    		<action bean="operatorAction" 
+    		    method="loadAvailableLocalesInRequestScope"/>
+    	</entry-actions>
+		<transition on="enter" to="end"/>
+    </view-state>
+
+	<end-state id="end" />
+	
+</flow>

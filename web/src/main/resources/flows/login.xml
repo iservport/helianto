@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
+
+	<start-state idref="startUp" />
+
+	<!-- 
+     ! Login
+     ! VIEW
+     ! -->
+    <view-state id="login.view" view="login">
+		<transition on="changePassword" to="changePassword.subflow"/>
+		<transition on="enter" to="postLogin"/>
+    </view-state>
+
+	<action-state id="startUp">
+		<action bean="startUpAction" />
+		<transition on="login" to="preLogin" />
+		<transition on="install" to="configuration.subflow"/>
+	</action-state>
+
+	<action-state id="preLogin">
+		<action bean="startUpAction" />
+		<transition on="success" to="login.view" />
+	</action-state>
+
+	<action-state id="postLogin">
+		<action bean="startUpAction" />
+		<transition on="success" to="end" />
+		<transition on="error" to="login.view" />
+	</action-state>
+
+    <subflow-state id="configuration.subflow" flow="configuration">
+		<transition on="end" to="preLogin"/>
+    </subflow-state>
+    
+    <subflow-state id="changePassword.subflow" flow="changePassword">
+		<transition on="end" to="preLogin"/>
+    </subflow-state>
+    
+	<end-state id="end" />
+	
+</flow>
+

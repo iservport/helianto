@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
+
+	<start-actions>
+		<!-- create the backing form object and initialize a empty errors collection -->
+		<action bean="identityAction" method="setupForm" />
+	</start-actions>
+
+	<start-state idref="createIfNecessary" />
+
+    <action-state id="createIfNecessary">
+    	<action bean="identityAction"/>
+		<transition on="success" to="identity.principal.view"/>
+    </action-state>
+    
+    <!--
+     ! Following three views are part of the
+     ! identification phase required by the registration
+     ! process. The client may choose to supply the principal:
+     ! (1) as e-mail,
+     ! (2) as a plain token, or
+     ! (3) let the system generate it.
+    // -->
+
+	<!-- 01 -->
+    <view-state id="identity.principal.view" view="identity/principal">
+		<transition on="personalData" to="identity.personal.view">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="skipPersonalData" to="storeSuspendedCredential">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="generated" to="identity.generated.view"/>
+		<transition on="plain" to="identity.plain.view"/>
+		<transition on="privacy" to="identity.privacy.view"/>
+    </view-state>
+
+	<!-- 02 -->
+    <view-state id="identity.generated.view" view="identity/generated">
+		<transition on="personalData" to="identity.personal.view">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="plain" to="identity.plain.view"/>
+		<transition on="principal" to="identity.principal.view"/>
+    </view-state>
+
+	<!-- 03 -->
+    <view-state id="identity.plain.view" view="identity/plain">
+		<transition on="personalData" to="identity.personal.view">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="skipPersonalData" to="storeSuspendedCredential">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="principal" to="identity.principal.view"/>
+		<transition on="generated" to="identity.generated.view"/>
+		<transition on="privacy" to="identity.privacy.view"/>
+    </view-state>
+
+    <!--
+     ! If there are concerns on privacy, they should be 
+     ! addressed here.
+    // -->
+
+	<!-- 04 -->
+    <view-state id="identity.privacy.view" view="identity/privacy">
+		<transition on="principal" to="identity.principal.view"/>
+		<transition on="plain" to="identity.plain.view"/>
+		<transition on="generated" to="identity.generated.view"/>
+    </view-state>
+
+    <!--
+     ! Personal Data view.
+    // -->
+
+	<!-- 05 -->
+    <view-state id="identity.personal.view" view="identity/personal">
+		<transition on="storeSuspendedCredential" to="storeSuspendedCredential">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="principal" to="identity.principal.view"/>
+		<transition on="generated" to="identity.generated.view"/>
+		<transition on="plain" to="identity.plain.view"/>
+    </view-state>
+    
+	<!-- 06 -->
+    <action-state id="storeSuspendedCredential">
+    	<action bean="identityAction"/>
+		<transition on="success" to="identity.credential.view"/>
+		<transition on="error" to="identity.principal.view"/>
+    </action-state>
+    
+    <!-- 07 -->
+    <view-state id="identity.credential.view" view="identity/credential">
+		<transition on="send" to="ifNewPassword"/>
+		<transition on="next" to="identity.confirm.view">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+		<transition on="previous" to="identity.details.view"/>
+    </view-state>
+    
+    <decision-state id="ifNewPassword">
+    	<if test="${flowScope.identityForm.sendOption == 'N'}" 
+    	    then="generatePassword" 
+    	    else="send" />
+    </decision-state>
+
+    <action-state id="generatePassword">
+    	<action bean="identityAction"/>
+		<transition on="success" to="send"/>
+		<transition on="error" to="identity.credential.view"/>
+    </action-state>
+    
+    <action-state id="send">
+    	<entry-actions>
+	    	<action bean="identityAction" method="bind"/>
+    	</entry-actions>
+    	<action bean="identityAction"/>
+		<transition on="success" to="identity.confirm.view"/>
+		<transition on="error" to="identity.credential.view"/>
+    </action-state>
+    
+    <view-state id="identity.password.view" view="identity/password">
+		<transition on="next" to="verify">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+    </view-state>
+    
+    <action-state id="verify">
+    	<action bean="identityAction"/>
+		<transition on="success" to="identity.confirm.view"/>
+		<transition on="error" to="ifNotAddressable"/>
+    </action-state>
+    
+    <view-state id="identity.confirm.view" view="identity/confirm">
+		<transition on="change" to="ifPersonal"/>
+		<transition on="confirm" to="storeActiveCredential">
+	    	<action bean="identityAction" method="bind"/>
+		</transition>
+    </view-state>
+    
+    <action-state id="storeActiveCredential">
+    	<action bean="identityAction"/>
+		<transition on="success" to="end"/>
+        <transition on-exception="org.springframework.dao.DataIntegrityViolationException" 
+        	to="nonUnique"/>
+    </action-state>
+    
+    <end-state id="end">
+    	<output-mapper>
+			<output-attribute name="identityForm" scope="flow" />
+    	</output-mapper>
+    </end-state>
+    
+    <end-state id="abort" view="abort"/>
+    
+	<global-transitions>
+        <transition on="error" to="error"/>
+		<transition on="cancel" to="abort"/>
+    </global-transitions>
+
+</flow>
