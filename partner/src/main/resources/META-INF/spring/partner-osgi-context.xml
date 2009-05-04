@@ -7,6 +7,6 @@
         http://www.springframework.org/schema/beans   
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <service id="partnerMgr" ref="partnerMgr" interface="org.helianto.partner.PartnerMgr" />
+    <service id="partnerMgr" ref="partnerMgr" interface="org.helianto.partner.service.PartnerMgr" />
 
 </beans:beans>

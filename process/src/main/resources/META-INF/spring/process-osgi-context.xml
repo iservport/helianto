@@ -6,4 +6,8 @@
         http://www.springframework.org/schema/beans   
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <service id="cardMgr"     ref="cardMgr"     interface="org.helianto.process.service.CardMgr" />
+    <service id="processMgr"  ref="processMgr"  interface="org.helianto.process.service.ProcessMgr" />
+    <service id="resourceMgr" ref="resourceMgr" interface="org.helianto.process.service.ResourceMgr" />
+
 </beans:beans>
