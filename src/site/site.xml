@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Helianto">
+	<bannerLeft>
+		<name>Helianto</name>
+		<src>images/helianto-t.gif</src>
+		<href>http://www.helianto.org/</href>
+	</bannerLeft>
+	<bannerRight>
+		<name>Hosted by SourceForge</name>
+		<src>http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=4</src>
+		<href>http://www.sourceforge.net</href>
+	</bannerRight>
+
+	<!-- poweredBy>
+    		<logo name="Build with Maven 2" href="http://maven.apache.org" img="images/logos/maven-feather.png" />
+    </poweredBy-->
+    
+    <body>
+		<links>
+			<item name="Spring Framework"
+				href="http://www.springframework.org/" />
+			<item name="Hibernate" href="http://www.hibernate.org/" />
+		</links>
+
+		<menu name="The Helianto Project">
+			<item name="Introduction" href="index.html" />
+			<item name="Downloads" href="downloads.html" />
+		</menu>
+
+		<menu name="Documentation">
+			<item name="Reference guide (html)"
+				href="docbook/helianto.html" />
+			<item name="Reference guide (pdf)"
+				href="docbook/helianto.pdf" />
+			<item name="Helianto core Javadocs"
+				href="helianto-core/apidocs/index.html" />
+			<!--item name="Helianto process Javadocs" href="helianto-process/apidocs/index.html"/-->
+		</menu>
+
+		<menu name="Development">
+			<item name="Road map"
+				href="http://jira.helianto.org/jira/browse/HEL?report=com.atlassian.jira.plugin.system.project:roadmap-panel"
+				target="_blank" />
+		</menu>
+
+		<menu ref="modules"/>
+
+		<menu ref="reports"/>
+		
+	</body>
+    <skin>
+        <groupId>org.helianto</groupId>
+        <artifactId>helianto-maven-skin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </skin>
+
+</project>
