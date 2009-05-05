@@ -21,9 +21,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
-import org.helianto.core.service.OperatorMgr;
+import org.helianto.core.service.NamespaceMgr;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.AttributeMap;
 import org.springframework.webflow.execution.Event;
@@ -46,8 +45,7 @@ public class OperatorFormAction extends FormAction {
      * make it available to the form flow;
      */
     public Event createOperator(RequestContext context) {
-        Operator operator = Operator.operatorFactory("DEFAULT",
-                OperationMode.LOCAL, Locale.getDefault());
+        Operator operator = Operator.operatorFactory("DEFAULT", Locale.getDefault());
 
         OperatorForm form = doGetForm(context);
         form.setOperator(operator);
@@ -99,10 +97,10 @@ public class OperatorFormAction extends FormAction {
 
     //~ collaborators
     
-    private OperatorMgr operatorMgr;
+    private NamespaceMgr operatorMgr;
     
     @Resource
-    public void setOperatorMgr(OperatorMgr operatorMgr) {
+    public void setOperatorMgr(NamespaceMgr operatorMgr) {
         this.operatorMgr = operatorMgr;
     }
 

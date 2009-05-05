@@ -25,26 +25,27 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
  * The <code>Operator</code> domain class represents a mandatory
  * parent entity to any Helianto based installation. Every domain
  * object is traceable to one (or a chain of) <code>Operator</code>.
- *
+ * 
+ * <p>
  * As business <code>Entit</code>ies have a direct association to one
  * <code>Operator</code> they
  * may be taken as controllers of a set of <code>Entit</code>ies. The
  * <code>Operator</code> is the connection between <code>Entit</code>ies
  * and objects that implement common business services, like <code>Server</code>s
- * (pop, smtp, etc) or <code>Service</code>s.
- *
+ * (pop, smtp, etc) or <code>Service</code>s. This is referred as a namespace.
+ * </p>
+ * <p>
  * Where Helianto based installations are used locally, there should be only
  * one <code>Operator</code> instance, created transparently after the first
  * run. This is the minimum requirement and is appropriate for most cases.
- * The <code>operationMode</code> field may be assigned to <code>OperationMode.LOCAL</code>.
- *
+ * </p>
+ * <p>
  * If the installation is accessed in a larger network, a greater number of business
  * <code>Entit</code>ies may be expected. The <code>operationMode</code> field may be 
  * assigned to <code>OperationMode.ENTERPRISE</code>. Enterprise <code>Operator</code>s
@@ -54,7 +55,8 @@ import javax.persistence.UniqueConstraint;
  * For example, <code>Operator</code>s may be also useful to represent a geographical
  * limit, bound to a java <code>Locale</code>, or according to any territory
  * arrangement.
- *
+ * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -64,31 +66,21 @@ import javax.persistence.UniqueConstraint;
 public class Operator implements java.io.Serializable {
 
     /**
-     * Default <code>Operator</code> creator.
+     * Factory method.
      *  
      * @param operatorName
-     * @param operationMode if null, default is OperationMode.LOCAL
      * @param locale if null, default is Locale.getDefault()
      * 
      * @see OperationMode
      */
-    public static Operator operatorFactory(String operatorName, OperationMode operationMode, Locale locale) {
+    public static Operator operatorFactory(String operatorName, Locale locale) {
         Operator operator = new Operator();
-        
         operator.setOperatorName(operatorName);
-        if (operationMode==null) {
-            operator.setOperationMode(OperationMode.LOCAL.getValue());
-        } else {
-            operator.setOperationMode(operationMode.getValue());
-        }
         if (locale==null) {
             operator.setLocale(Locale.getDefault());
         } else {
             operator.setLocale(locale);
         }
-        operator.setOperatorSourceMailAddress("operator@helianto.org");
-        operator.setDefaultEncoding("ISO-8859-1");
-        operator.setOperatorHostAddress("http://www.helianto.org");
         return operator;
     }
 
@@ -107,9 +99,15 @@ public class Operator implements java.io.Serializable {
 
     /** default constructor */
     public Operator() {
+    	setOperationMode(OperationMode.LOCAL);
+        setOperatorSourceMailAddress("operator@helianto.org");
+        setDefaultEncoding("ISO-8859-1");
+        setOperatorHostAddress("http://www.helianto.org");
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -119,161 +117,115 @@ public class Operator implements java.io.Serializable {
     }
 
     /**
-     * OperatorName getter.
+     * Operator name.
      */
     @Column(length=20)
     public String getOperatorName() {
         return this.operatorName;
     }
-    /**
-     * OperatorName setter.
-     */
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
     }
 
     /**
-     * Parent getter.
+     * Parent operator, if any.
      */
     @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="parentId", nullable=true)
     public Operator getParent() {
         return this.parent;
     }
-    /**
-     * Parent setter.
-     */
     public void setParent(Operator parent) {
         this.parent = parent;
     }
 
     /**
-     * Locale getter.
+     * Locale.
      */
     public Locale getLocale() {
         return this.locale;
     }
-    /**
-     * Locale setter.
-     */
     public void setLocale(Locale locale) {
         this.locale = locale;
     }
 
     /**
-     * OperationMode getter.
+     * Operation mode.
      */
     public char getOperationMode() {
         return this.operationMode;
     }
-    /**
-     * OperationMode setter.
-     */
     public void setOperationMode(char operationMode) {
         this.operationMode = operationMode;
     }
+    public void setOperationMode(OperationMode operationMode) {
+        this.operationMode = operationMode.getValue();
+    }
 
     /**
-     * OperatorHostAddress getter.
+     * Operator host address.
      */
     @Column(length=64)
     public String getOperatorHostAddress() {
         return this.operatorHostAddress;
     }
-    /**
-     * OperatorHostAddress setter.
-     */
     public void setOperatorHostAddress(String operatorHostAddress) {
         this.operatorHostAddress = operatorHostAddress;
     }
 
     /**
-     * OperatorSourceMailAddress getter.
+     * Operator source mail address.
      */
     @Column(length=64)
     public String getOperatorSourceMailAddress() {
         return this.operatorSourceMailAddress;
     }
-    /**
-     * OperatorSourceMailAddress setter.
-     */
     public void setOperatorSourceMailAddress(String operatorSourceMailAddress) {
         this.operatorSourceMailAddress = operatorSourceMailAddress;
     }
 
     /**
-     * DefaultEncoding getter.
+     * Default encoding.
      */
     @Column(length=20)
     public String getDefaultEncoding() {
         return this.defaultEncoding;
     }
-    /**
-     * DefaultEncoding setter.
-     */
     public void setDefaultEncoding(String defaultEncoding) {
         this.defaultEncoding = defaultEncoding;
     }
 
     /**
-     * PreferredDateFormat getter.
+     * Preferred date format.
      */
     @Column(length=12)
     public String getPreferredDateFormat() {
         return this.preferredDateFormat;
     }
-    /**
-     * PreferredDateFormat setter.
-     */
     public void setPreferredDateFormat(String preferredDateFormat) {
         this.preferredDateFormat = preferredDateFormat;
     }
 
     /**
-     * PreferredTimeFormat getter.
+     * Preferred time format.
      */
     @Column(length=12)
     public String getPreferredTimeFormat() {
         return this.preferredTimeFormat;
     }
-    /**
-     * PreferredTimeFormat setter.
-     */
     public void setPreferredTimeFormat(String preferredTimeFormat) {
         this.preferredTimeFormat = preferredTimeFormat;
     }
 
     /**
-     * Rfc822TimeZone getter.
+     * Rfc822 time zone.
      */
     @Column(length=5)
     public String getRfc822TimeZone() {
         return this.rfc822TimeZone;
     }
-    /**
-     * Rfc822TimeZone setter.
-     */
     public void setRfc822TimeZone(String rfc822TimeZone) {
         this.rfc822TimeZone = rfc822TimeZone;
-    }
-
-    /**
-     * <code>Operator</code> factory.
-     * 
-     * @param operatorName
-     */
-    public static Operator operatorFactory(String operatorName) {
-        Operator operator = new Operator();
-        operator.setOperatorName(operatorName);
-        return operator;
-    }
-
-    /**
-     * <code>Operator</code> natural id query.
-     */
-    @Transient
-    public static String getOperatorNaturalIdQueryString() {
-        return "select operator from Operator where operator.operatorName = :operatorName ";
     }
 
     /**

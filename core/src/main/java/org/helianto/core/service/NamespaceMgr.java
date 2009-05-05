@@ -19,16 +19,30 @@ package org.helianto.core.service;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.EntityFilter;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 
 /**
- * Operator management interface.
+ * Namespace management interface.
+ * 
+ * <p>
+ * Namespaces group entites into a logical unit of management and are controlled by
+ * an operator. Classes share instances between two or more entities of a namespace 
+ * if are related to the operator. Such classes are provinces, services and key types, 
+ * to say a few. Data from one namespace are not accessible from an external
+ * namespace.
+ * </p>
+ * 
+ * <p>
+ * The datastore must have at least one namespace, i.e. one operator. If no one
+ * exists, a default is created.
+ * </p>
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface OperatorMgr {
+public interface NamespaceMgr {
 
     /**
      * <p>Find <code>Operator</code> list.</p>
@@ -64,5 +78,15 @@ public interface OperatorMgr {
      * Store <code>Province</code> to the data store.
      */
 	public Province storeProvince(Province province);
+	
+    /**
+     * Find <code>Entity</code>(ies).
+     */
+	public List<Entity> findEntities(EntityFilter filter);
 
+    /**
+     * Store <code>Entity</code> to the data store.
+     */
+	public Entity storeEntity(Entity entity);
+	
 }

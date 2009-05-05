@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Operator;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
-import org.helianto.core.service.OperatorMgr;
+import org.helianto.core.service.NamespaceMgr;
 import org.springframework.webflow.action.MultiAction;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
@@ -91,10 +91,10 @@ public class StartUpAction extends MultiAction {
 	
 	// collabs
 	
-	private OperatorMgr operatorMgr;
+	private NamespaceMgr operatorMgr;
 	
 	@Resource
-	public void setOperatorMgr(OperatorMgr operatorMgr) {
+	public void setOperatorMgr(NamespaceMgr operatorMgr) {
 		this.operatorMgr = operatorMgr;
 	}
 	

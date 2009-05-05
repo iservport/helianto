@@ -17,7 +17,6 @@ package org.helianto.core.service;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 
@@ -28,9 +27,9 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
         this.serverMgr = serverMgr;
     }
     
-    private OperatorMgr operatorMgr;
+    private NamespaceMgr operatorMgr;
     
-    public void setOperatorMgr(OperatorMgr operatorMgr) {
+    public void setOperatorMgr(NamespaceMgr operatorMgr) {
         this.operatorMgr = operatorMgr;
     }
     
@@ -57,7 +56,7 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
 
         Operator operator = operatorMgr.findOperatorByName("DEFAULT");
         if (operator==null) {
-            operator = Operator.operatorFactory("DEFAULT", OperationMode.LOCAL, null);
+            operator = Operator.operatorFactory("DEFAULT", null);
         }
         Entity entity = Entity.entityFactory(operator, entityName );
         

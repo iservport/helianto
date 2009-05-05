@@ -16,7 +16,7 @@
 package org.helianto.web.controller;
 
 import org.helianto.core.User;
-import org.helianto.core.service.OperatorMgr;
+import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
@@ -118,12 +118,12 @@ public class InstallFormAction extends FormAction {
 
     //~ collaborators
     
-    private OperatorMgr operatorMgr;
+    private NamespaceMgr operatorMgr;
     private ServerMgr serverMgr;
     private UserMgr userMgr;
 
     @javax.annotation.Resource
-    public void setOperatorMgr(OperatorMgr operatorMgr) {
+    public void setOperatorMgr(NamespaceMgr operatorMgr) {
         this.operatorMgr = operatorMgr;
     }
 

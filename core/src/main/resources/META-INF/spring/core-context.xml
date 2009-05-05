@@ -41,18 +41,6 @@
 		</property>
 	</bean>
 	<!--
-			Operator service bean	
-	-->
-	<bean id="operatorMgr" 
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
-		parent="mgrTemplate">
-		<property name="target">
-			<bean id="operatorTarget"
-				class="org.helianto.core.service.OperatorMgrImpl">
-			</bean>
-		</property>
-	</bean>
-	<!--
 			Server service bean	
 	-->
 	<bean id="serverMgr" 

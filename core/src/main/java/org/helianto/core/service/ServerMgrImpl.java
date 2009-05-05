@@ -27,7 +27,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.IdentityType;
-import org.helianto.core.OperationMode;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.ServerFilter;
@@ -215,8 +214,7 @@ public class ServerMgrImpl  implements ServerMgr {
 
     
     public User writeManager(Identity managerIdentity) {
-        Operator operator = Operator.operatorFactory("DEFAULT",
-                OperationMode.LOCAL, Locale.getDefault());
+        Operator operator = Operator.operatorFactory("DEFAULT", Locale.getDefault());
         Entity entity = Entity.entityFactory(operator, "DEFAULT");
         if (logger.isDebugEnabled()) {
             logger.debug("Entity created with defaults: "+entity);

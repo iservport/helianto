@@ -30,7 +30,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
-import org.helianto.core.service.OperatorMgr;
+import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.service.ServerMgr;
 import org.helianto.core.service.UserMgr;
 import org.springframework.webflow.execution.Event;
@@ -100,13 +100,13 @@ public class InstallFormActionTests extends TestCase {
     }
     
     // collabs
-    private OperatorMgr operatorMgr;
+    private NamespaceMgr operatorMgr;
     private ServerMgr serverMgr;
     private UserMgr userMgr;
     
     @Override
     public void setUp() {
-    	operatorMgr = createMock(OperatorMgr.class);
+    	operatorMgr = createMock(NamespaceMgr.class);
         serverMgr = createMock(ServerMgr.class);
         userMgr = createMock(UserMgr.class);
         installFormAction = new InstallFormAction();

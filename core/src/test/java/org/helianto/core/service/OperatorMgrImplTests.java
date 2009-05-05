@@ -37,7 +37,7 @@ import org.helianto.core.dao.FilterDao;
  */
 public class OperatorMgrImplTests extends TestCase {
     
-    private OperatorMgrImpl operatorMgr;
+    private NamespaceMgrImpl operatorMgr;
     
     public void testPersistOperator() {
         Operator operator = new Operator(), managedOperator = new Operator();
@@ -50,7 +50,10 @@ public class OperatorMgrImplTests extends TestCase {
     
     public void testFindOperatorAll() {
         List<Operator> operatorList = new ArrayList<Operator>();
+        Operator operator = new Operator();
+        
         expect(operatorDao.find(isA(OperatorFilter.class))).andReturn(operatorList);
+        expect(operatorDao.merge(isA(Operator.class))).andReturn(operator);
         replay(operatorDao);
         
         assertSame(operatorList, operatorMgr.findOperator());
@@ -75,7 +78,7 @@ public class OperatorMgrImplTests extends TestCase {
 	@Override
     public void setUp() {
         operatorDao = createMock(FilterDao.class);
-        operatorMgr = new OperatorMgrImpl();
+        operatorMgr = new NamespaceMgrImpl();
         operatorMgr.setOperatorDao(operatorDao);
     }
     

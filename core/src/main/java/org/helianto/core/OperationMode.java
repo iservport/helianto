@@ -35,8 +35,7 @@ public enum OperationMode {
     LOCAL('L'),
     /**
      * Use in systems where different operators control different
-     * territories. Collaboration among entities should happen
-     * only within enterprise operators.
+     * namespaces.
      */
     ENTERPRISE('E');
     

@@ -31,14 +31,30 @@ import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.FilterDao;
 
 /**
- * <code>OperatorMgr</code> default implementation.
+ * <code>NamespaceMgr</code> default implementation.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class OperatorMgrImpl implements OperatorMgr {
+public class NamespaceMgrImpl implements NamespaceMgr {
 
 	public List<Operator> findOperator() {
-    	return (List<Operator>) operatorDao.find(new OperatorFilter());
+		List<Operator> operatorList = (List<Operator>) operatorDao.find(new OperatorFilter());
+		if (operatorList!=null && operatorList.size()>0) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("Found "+operatorList.size()+" namespace operator(s)");
+			}
+		}
+		else {
+			if (logger.isDebugEnabled()) {
+				logger.debug("Likely a first time install, creating a default operator...");
+			}
+			Operator operator = Operator.operatorFactory("DEFAULT", null);
+			operatorList.add(operatorDao.merge(operator));
+			if (logger.isDebugEnabled()) {
+				logger.debug("New default operator added to the list.");
+			}
+		}
+    	return operatorList;
 	}
 
 	public Operator findOperatorByName(String operatorName) {
@@ -71,6 +87,18 @@ public class OperatorMgrImpl implements OperatorMgr {
 
 	public Province storeProvince(Province province) {
 		return provinceDao.merge(province);
+	}
+	
+	public List<Entity> findEntities(EntityFilter filter) {
+		List<Entity> entityList = (List<Entity>) entityDao.find(filter);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Found "+entityList.size()+" entity(ies).");
+		}
+		return entityList;
+	}
+	
+	public Entity storeEntity(Entity entity) {
+		return entityDao.merge(entity);
 	}
 
 	// collabs

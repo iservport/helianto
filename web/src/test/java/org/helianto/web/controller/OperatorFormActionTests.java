@@ -31,7 +31,7 @@ import java.util.Set;
 import junit.framework.TestCase;
 
 import org.helianto.core.Operator;
-import org.helianto.core.service.OperatorMgr;
+import org.helianto.core.service.NamespaceMgr;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
@@ -110,11 +110,11 @@ public class OperatorFormActionTests extends TestCase {
     }
 
     // collabs
-    private OperatorMgr operatorMgr;
+    private NamespaceMgr operatorMgr;
     
     @Override
     public void setUp() {
-        operatorMgr = createMock(OperatorMgr.class);
+        operatorMgr = createMock(NamespaceMgr.class);
         operatorFormAction = new OperatorFormAction();
         operatorFormAction.setOperatorMgr(operatorMgr);
     }

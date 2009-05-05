@@ -21,6 +21,11 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 /**
  * <code>Operator</code> filter.
  * 
+ * <p>
+ * NOTE: Operator filters are not required to have a root entity or user
+ * like most user backed criteria filters usually do.
+ * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 public class OperatorFilter extends AbstractUserBackedCriteriaFilter {

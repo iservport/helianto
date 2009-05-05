@@ -336,7 +336,8 @@ public abstract class AbstractEditTargetFormAction<T> extends AbstractComplexMod
 		}
 	}
 	
-    public abstract void setTargetPropertyEditor(PropertyEditor targetPropertyEditor);
+    public void setTargetPropertyEditor(PropertyEditor targetPropertyEditor) {    	
+    }
     
     protected final PropertyEditor getTargetPropertyEditor() {
     	return this.targetPropertyEditor;
