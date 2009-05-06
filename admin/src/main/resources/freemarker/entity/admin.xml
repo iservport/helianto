@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
+
+	<start-state idref="preProcess" />
+	
+	<action-state id="preProcess">
+		<action bean="operatorFilterAction" method="applyFilter"/>
+		<transition to="entitySelection.view"/>
+	</action-state>
+	
+	<!-- 
+	 ! entity 
+	 ! SELECTION VIEW
+	 !-->
+	<view-state id="entitySelection.view" view="frame">
+		<!-- 
+		 ! before selection
+		 -->
+        <render-actions>
+            <action bean="entityFilterAction" method="applyFilter"/>
+			<set attribute="forward"   value="'entity/selection_fwd'"     scope="flash"/>
+			<set attribute="sidenav"   value="'entity/selection_nav'"     scope="flash"/>
+			<set attribute="sidebar"   value="'entity/selection_filter'"  scope="flash"/>
+			<set attribute="template"  value="'entity/selection'"         scope="flash"/>
+			<set attribute="info"      value="'entity/info'"              scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! forward transitions
+		 -->
+		<transition on="toProvince"  to="province.subflow"/>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="createTarget"  to="entityBrowse.view">
+			<action bean="entityAction"            method="createTarget" />
+		</transition>
+		<transition on="selectTarget"  to="entityBrowse.view">
+			<action bean="entityAction"            method="selectTarget" />
+		</transition>
+	</view-state>
+
+	<!-- 
+	 ! entity  
+	 ! BROWSE VIEW
+	 !-->
+	<view-state id="entityBrowse.view" view="frame">
+		<!-- 
+		 ! antes de apresentar
+		 -->
+        <render-actions>
+            <action bean="actionRequestAction2" method="prepareTarget"/>
+            <action bean="actionRequestAction2" method="resolveAuthorization"/>
+			<set attribute="sidenav"   value="'actionRequest2/actionRequest_nav'"  scope="flash"/>
+			<set attribute="sidebar"   value="'actionRequest2/actionRequest_bar'"  scope="flash"/>
+			<set attribute="template"  value="'actionRequest2/actionRequest'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! transições locais: edit
+		 -->
+		<transition on="editTarget"     to="actionRequestEdit.view"/>
+		<transition on="addReporter"    to="addReporter.subflow"/>
+		<transition on="editReview"     to="actionReviewEdit.view"/>
+		<!-- 
+		 ! transições de retorno
+		 -->
+		<transition on="toSelection"   to="actionRequestSelection.view"/>
+	</view-state>
+	
+	<!-- 
+	 ! province
+	 ! SUBFLOW
+	 !-->
+	<subflow-state id="province.subflow" flow="userSelection2">
+		<transition on="backToHome" to="backToHome"/>
+		<transition on="backToParent" to="actionRequestBrowse.view"/>
+	</subflow-state>
+
+	<!--
+	 ! End states 
+	// -->
+
+	<end-state id="backToHome" />
+	<end-state id="backToParent" />
+	<end-state id="returnTarget" >
+		<output-mapper>
+			<mapping source="flowScope.actionRequest" target="returnTarget"/>
+		</output-mapper>
+	</end-state>
+	<end-state id="selectReport" >
+		<output-mapper>
+			<mapping source="flowScope.actionRequest.report" target="report"/>
+		</output-mapper>
+	</end-state>
+	
+	<!--
+	 ! Globals 
+	// -->
+
+	<global-transitions>
+		<transition on="backToHome"   to="backToHome"/>
+		<transition on="backToParent" to="backToParent"/>
+		<transition on="cancelForm"   to="actionRequestBrowse.view"/>
+	</global-transitions>
+	
+</flow>
