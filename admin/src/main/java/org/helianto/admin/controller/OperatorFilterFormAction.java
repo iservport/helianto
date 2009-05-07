@@ -37,13 +37,11 @@ import org.springframework.webflow.execution.RequestContext;
 public class OperatorFilterFormAction extends AbstractFilterOnlyFormAction<OperatorFilter, Operator> {
 
 	/**
-	 * Return null because a full operator list will be required.
+	 * Return empty filter because a full operator list will be required.
 	 */
 	@Override
 	public OperatorFilter doCreateFilter() throws Exception {
-		// special case: a filter is not required here because a full list 
-		// must be displayed.
-		return null;
+		return OperatorFilter.filterFactory(null);
 	}
 
 	/**
@@ -69,6 +67,18 @@ public class OperatorFilterFormAction extends AbstractFilterOnlyFormAction<Opera
 	@Override
 	public String getTargetAttributeName() {
 		return "operator";
+	}
+
+	/**
+     * Target list attribute name.
+     * 
+     * <p>This is not usually overriden. Here, it is
+     * required because we need to avoid a name clash with another 
+     * list (the entity list) on the same flow.</p>
+     */
+	@Override
+	public String getTargetListAttributeName() {
+		return "operatorList";
 	}
 
 	// collabs

@@ -8,8 +8,9 @@
 <tbody>
 <#list targetList?if_exists as target>
 <tr>
-	<td>${target.id}</td>
-	<td>${target.alias}</td>
+    <#-- check the macros supplied with frame.ftl to see how they work -->
+	<@select "${target_index}">${target.id}</@select>
+	<td>${target.alias?if_exists}</td>
 </tr>
 </#list>
 </tbody>

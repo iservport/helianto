@@ -46,3 +46,28 @@
 </div>
 </html>
 
+<#--
+ # This frame have a couple of macros to help manage Spring Web Flow 
+ # conversation state.
+ #
+ # @author Mauricio Fernandes de Castro
+-->
+<#macro flowKey>
+<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+</#macro>
+
+<#macro submit2 event="storeTarget", caption="Store" >
+<input type="submit" name="_eventId_${event}" value="${caption}" class="btn" />
+</#macro>
+
+<#macro anchor event="createTarget", param="", title="">
+<a <#if title!="" >title="${title}"</#if> 
+href="?_eventId=${event}${param}&_flowExecutionKey=${flowExecutionKey}"><#nested/></a>
+</#macro>
+
+<#macro select targetIndex="0", event="selectTarget", param="", title="">
+<td>
+<a <#if title!="" >title="${title}"</#if> 
+href="?_eventId=${event}&target_index=${targetIndex}${param}&_flowExecutionKey=${flowExecutionKey}"><#nested/></a>
+</td>
+</#macro>

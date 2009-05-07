@@ -4,16 +4,6 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans 
       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">  
                
-	
-	<!--
-		Home flow controller
-	-->
-	<bean name="/admin.htm"
-		class="org.springframework.webflow.executor.mvc.FlowController">
-		<property name="flowExecutor" ref="flowExecutor" />
-		<property name="defaultFlowId" value="admin" />
-	</bean>
-
 	<!-- 
 		View resolver
 	-->
@@ -24,6 +14,15 @@
 		<property name="prefix" value="" />
 		<property name="suffix" value=".ftl" />
         <property name="contentType" value="text/html;charset=ISO-8859-1" />
+	</bean>
+
+	<!--
+		Home flow controller
+	-->
+	<bean name="/home.htm"
+		class="org.springframework.webflow.executor.mvc.FlowController">
+		<property name="flowExecutor" ref="flowExecutor" />
+		<property name="defaultFlowId" value="admin" />
 	</bean>
 
 </beans>

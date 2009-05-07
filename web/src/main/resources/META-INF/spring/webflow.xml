@@ -35,7 +35,4 @@
         <flow:location path="classpath*:/freemarker/**/*.xml"/>
     </flow:registry>
     
-	<bean name="startUpAction"
-		class="org.helianto.web.controller.StartUpAction" />
-
 </beans>

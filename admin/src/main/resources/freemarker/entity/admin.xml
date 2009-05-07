@@ -25,6 +25,7 @@
 			<set attribute="forward"   value="'entity/selection_fwd'"     scope="flash"/>
 			<set attribute="sidenav"   value="'entity/selection_nav'"     scope="flash"/>
 			<set attribute="sidebar"   value="'entity/selection_filter'"  scope="flash"/>
+			<set attribute="headline"  value="'entity/headline'"          scope="flash"/>
 			<set attribute="template"  value="'entity/selection'"         scope="flash"/>
 			<set attribute="info"      value="'entity/info'"              scope="flash"/>
         </render-actions>
@@ -49,21 +50,19 @@
 	 !-->
 	<view-state id="entityBrowse.view" view="frame">
 		<!-- 
-		 ! antes de apresentar
+		 ! before browse
 		 -->
         <render-actions>
-            <action bean="actionRequestAction2" method="prepareTarget"/>
-            <action bean="actionRequestAction2" method="resolveAuthorization"/>
-			<set attribute="sidenav"   value="'actionRequest2/actionRequest_nav'"  scope="flash"/>
-			<set attribute="sidebar"   value="'actionRequest2/actionRequest_bar'"  scope="flash"/>
-			<set attribute="template"  value="'actionRequest2/actionRequest'"      scope="flash"/>
+            <action bean="entityAction" method="prepareTarget"/>
+            <action bean="entityAction" method="resolveAuthorization"/>
+			<set attribute="sidenav"   value="'entity/entity_nav'"  scope="flash"/>
+			<set attribute="sidebar"   value="'entity/entity_bar'"  scope="flash"/>
+			<set attribute="template"  value="'entity/entity'"      scope="flash"/>
         </render-actions>
 		<!-- 
 		 ! transições locais: edit
 		 -->
-		<transition on="editTarget"     to="actionRequestEdit.view"/>
-		<transition on="addReporter"    to="addReporter.subflow"/>
-		<transition on="editReview"     to="actionReviewEdit.view"/>
+		<transition on="editTarget"     to="entityBrowse.view"/>
 		<!-- 
 		 ! transições de retorno
 		 -->
@@ -74,7 +73,7 @@
 	 ! province
 	 ! SUBFLOW
 	 !-->
-	<subflow-state id="province.subflow" flow="userSelection2">
+	<subflow-state id="province.subflow" flow="province">
 		<transition on="backToHome" to="backToHome"/>
 		<transition on="backToParent" to="actionRequestBrowse.view"/>
 	</subflow-state>
@@ -87,12 +86,7 @@
 	<end-state id="backToParent" />
 	<end-state id="returnTarget" >
 		<output-mapper>
-			<mapping source="flowScope.actionRequest" target="returnTarget"/>
-		</output-mapper>
-	</end-state>
-	<end-state id="selectReport" >
-		<output-mapper>
-			<mapping source="flowScope.actionRequest.report" target="report"/>
+			<mapping source="flowScope.entity" target="returnTarget"/>
 		</output-mapper>
 	</end-state>
 	
@@ -103,7 +97,7 @@
 	<global-transitions>
 		<transition on="backToHome"   to="backToHome"/>
 		<transition on="backToParent" to="backToParent"/>
-		<transition on="cancelForm"   to="actionRequestBrowse.view"/>
+		<transition on="cancelForm"   to="entityBrowse.view"/>
 	</global-transitions>
 	
 </flow>

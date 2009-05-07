@@ -11,9 +11,9 @@
   <packaging>war</packaging>
   <name>Admin</name>
   <version>0.2.2-SNAPSHOT</version>
-  <description>Helianto project adminb module.</description>
+  <description>Helianto project admin module.</description>
   <build>
-    <finalName>helianto-admin</finalName>
+    <finalName>helianto</finalName>
     <pluginManagement>
       <plugins>
         <plugin>

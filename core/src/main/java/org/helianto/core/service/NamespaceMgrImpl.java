@@ -29,14 +29,19 @@ import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.FilterDao;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <code>NamespaceMgr</code> default implementation.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Service("namespaceMgr")
 public class NamespaceMgrImpl implements NamespaceMgr {
 
+	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	public List<Operator> findOperator() {
 		List<Operator> operatorList = (List<Operator>) operatorDao.find(new OperatorFilter());
 		if (operatorList!=null && operatorList.size()>0) {
@@ -45,26 +50,34 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 			}
 		}
 		else {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Likely a first time install, creating a default operator...");
-			}
-			Operator operator = Operator.operatorFactory("DEFAULT", null);
-			operatorList.add(operatorDao.merge(operator));
+			Operator operator = firstTimeInstall();
+			operatorList.add(operator);
 			if (logger.isDebugEnabled()) {
 				logger.debug("New default operator added to the list.");
 			}
 		}
     	return operatorList;
 	}
+	
+	public Operator firstTimeInstall() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Likely a first time install, creating a default operator...");
+		}
+		Operator operator = Operator.operatorFactory("DEFAULT", null);
+		return operatorDao.merge(operator);
+	}
 
+	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	public Operator findOperatorByName(String operatorName) {
 		return operatorDao.findUnique(operatorName);
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Operator storeOperator(Operator operator) {
 		return operatorDao.merge(operator);
 	}
 
+	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	public List<Province> findProvinces(ProvinceFilter filter) {
     	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
     	if (logger.isDebugEnabled() && provinceList!=null) {
@@ -73,6 +86,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     	return provinceList;
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Province prepareProvince(Province province) {
 		Province managedProvince = provinceDao.merge(province);
 		managedProvince.getOperator();
@@ -80,15 +94,18 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedProvince;
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Province prepareNewProvince(Entity entity) {
 		Entity managedEntity = entityDao.merge(entity);
 		return Province.provinceFactory(managedEntity.getOperator(), "", "");
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Province storeProvince(Province province) {
 		return provinceDao.merge(province);
 	}
 	
+	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	public List<Entity> findEntities(EntityFilter filter) {
 		List<Entity> entityList = (List<Entity>) entityDao.find(filter);
 		if (logger.isDebugEnabled()) {
@@ -97,6 +114,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return entityList;
 	}
 	
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Entity storeEntity(Entity entity) {
 		return entityDao.merge(entity);
 	}
