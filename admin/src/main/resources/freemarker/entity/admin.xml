@@ -36,11 +36,11 @@
 		<!-- 
 		 ! local transitions
 		 -->
+		<transition on="selectTarget"  to="entityBrowse.view">
+			<action bean="entityFilterAction"      method="selectTarget" />
+		</transition>
 		<transition on="createTarget"  to="entityBrowse.view">
 			<action bean="entityAction"            method="createTarget" />
-		</transition>
-		<transition on="selectTarget"  to="entityBrowse.view">
-			<action bean="entityAction"            method="selectTarget" />
 		</transition>
 	</view-state>
 

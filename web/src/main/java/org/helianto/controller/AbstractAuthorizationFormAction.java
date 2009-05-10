@@ -40,6 +40,7 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
      * Default constructor.
      */
     public AbstractAuthorizationFormAction() {
+    	super();
     }
     
     /**

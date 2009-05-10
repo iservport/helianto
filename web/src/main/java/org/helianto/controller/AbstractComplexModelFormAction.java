@@ -30,6 +30,13 @@ import org.springframework.webflow.execution.RequestContext;
  * @author Mauricio Fernandes de Castro
  */
 public abstract class AbstractComplexModelFormAction<T> extends AbstractAuthorizationFormAction<T> {
+	
+	/**
+	 * Default constructor.
+	 */
+	public AbstractComplexModelFormAction() {
+		super();
+	}
 
     /**
      * Create Tree.

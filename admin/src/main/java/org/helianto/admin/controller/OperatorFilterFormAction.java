@@ -37,6 +37,18 @@ import org.springframework.webflow.execution.RequestContext;
 public class OperatorFilterFormAction extends AbstractFilterOnlyFormAction<OperatorFilter, Operator> {
 
 	/**
+     * Form object name.
+     * 
+     * <p>The default form object name is overriden here
+     * because we need to avoid a name clash with another 
+     * filter (the entity filter) on the same flow.</p>
+     */
+	@Override
+	public String getFormObjectName() {
+		return "parentFilter";
+	}
+
+	/**
 	 * Return empty filter because a full operator list will be required.
 	 */
 	@Override

@@ -32,6 +32,13 @@ import org.springframework.webflow.execution.RequestContext;
 public abstract class AbstractModelFormAction<T> extends FormAction {
 	
 	/**
+	 * Default constructor.
+	 */
+	public AbstractModelFormAction() {
+		super();
+	}
+
+	/**
 	 * Subclasses must override to use a specific name.
 	 */
 	public abstract String getTargetAttributeName();

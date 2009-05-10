@@ -35,6 +35,7 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
      * Default constructor.
      */
     public AbstractFilterOnlyFormAction() {
+    	super();
     }
     
 	@Override
