@@ -90,13 +90,18 @@ public class UserDetailsAdapter implements
      * instance held in the <code>SecurityContext</code>.
      */
     public static PublicUserDetails retrievePublicUserDetailsFromSecurityContext() {
-    	Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	if (userDetails instanceof PublicUserDetails) {
-            PublicUserDetails pud = (PublicUserDetails) userDetails;  
-            if (logger.isDebugEnabled()) {
-                logger.debug("PublicUserDetails retrieved from security context");
-            }
-            return pud;
+    	try {
+        	Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        	if (userDetails instanceof PublicUserDetails) {
+                PublicUserDetails pud = (PublicUserDetails) userDetails;  
+                if (logger.isDebugEnabled()) {
+                    logger.debug("PublicUserDetails retrieved from security context");
+                }
+                return pud;
+        	}
+    	} 
+    	catch (Exception e) {
+    		logger.warn("Error in security context ", e);
     	}
         if (logger.isDebugEnabled()) {
             logger.debug("PublicUserDetails not found!");

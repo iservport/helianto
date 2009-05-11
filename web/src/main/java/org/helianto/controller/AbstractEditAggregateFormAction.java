@@ -29,7 +29,16 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
 
     public abstract String getParentAttributeName();
     
-    protected abstract List<T> getAggregateList(RequestContext context, P parent);
+    /**
+     * Subclasses may override if the parent can produce a convenient
+     * target list.
+     * 
+     * @param context
+     * @param parent
+     */
+    protected List<T> getAggregateList(RequestContext context, P parent) {
+    	return null;
+    }
     
 	/**
 	 * Override simple target creation and delegate to a member requiring a parent.

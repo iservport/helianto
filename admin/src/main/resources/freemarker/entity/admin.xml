@@ -9,7 +9,9 @@
 	
 	<action-state id="preProcess">
 		<action bean="operatorFilterAction" method="applyFilter"/>
-		<transition to="entitySelection.view"/>
+		<transition to="entitySelection.view">
+			<set attribute="assign"    value="'entity/assign'"      scope="flow"/>
+		</transition>
 	</action-state>
 	
 	<!-- 
@@ -39,7 +41,7 @@
 		<transition on="selectTarget"  to="entityBrowse.view">
 			<action bean="entityFilterAction"      method="selectTarget" />
 		</transition>
-		<transition on="createTarget"  to="entityBrowse.view">
+		<transition on="createTarget"  to="entityEdit.view">
 			<action bean="entityAction"            method="createTarget" />
 		</transition>
 	</view-state>
@@ -60,14 +62,41 @@
 			<set attribute="template"  value="'entity/entity'"      scope="flash"/>
         </render-actions>
 		<!-- 
-		 ! transições locais: edit
+		 ! local transitions
 		 -->
-		<transition on="editTarget"     to="entityBrowse.view"/>
+		<transition on="editTarget"     to="entityEdit.view"/>
 		<!-- 
-		 ! transições de retorno
+		 ! backward transitions
 		 -->
-		<transition on="toSelection"   to="actionRequestSelection.view"/>
+		<transition on="toSelection"   to="entitySelection.view"/>
 	</view-state>
+	
+	<!-- 
+	 ! entity  
+	 ! EDIT VIEW
+	 !-->
+	<view-state id="entityEdit.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="entityAction" method="editTarget"/>
+			<set attribute="sidenav"   value="'entity/edit_nav'"    scope="flash"/>
+			<set attribute="sidebar"   value="'entity/entity_bar'"  scope="flash"/>
+			<set attribute="template"  value="'entity/entity_form'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="storeTarget"   to="storeTarget">
+			<action bean="entityAction"            method="bind" />
+		</transition>
+	</view-state>
+	<action-state id="storeTarget">
+		<action bean="entityAction"                method="storeTarget"/>
+		<transition on="success" to="entityBrowse.view"/>
+		<transition on="error"   to="entityEdit.view"/>
+	</action-state>
 	
 	<!-- 
 	 ! province

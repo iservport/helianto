@@ -48,6 +48,9 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
      */
 	public User getAuthorizedUser() {
         PublicUserDetails secureUser = UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
+        if (secureUser==null) {
+        	return null;
+        }
         return secureUser.getUser();
 	}
 
@@ -55,6 +58,9 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
      * Authorized entity set in security context.
      */
 	public Entity getAuthorizedEntity() {
+		if (getAuthorizedUser()==null) {
+			return null;
+		}
         return getAuthorizedUser().getEntity();
 	}
 
@@ -108,14 +114,14 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
 	protected void registerPropertyEditors(PropertyEditorRegistry registry) {
 		super.registerPropertyEditors(registry);
 		
-        Locale locale = getAuthorizedUser().getLocale();
         DateFormat dateFormat = null;
         try {
+            Locale locale = getAuthorizedUser().getLocale();
         	// TODO refator using preferences API
 //        	dateFormat = new SimpleDateFormat(operator.getPreferredDateFormat()+" "+operator.getPreferredTimeFormat(), operator.getLocale());
         	dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
         } catch (Exception e) {
-        	dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
+        	dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
         }
         PropertyEditor customDateEditor = new CustomDateEditor(dateFormat, false);
         
