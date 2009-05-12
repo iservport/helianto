@@ -57,14 +57,17 @@
         <render-actions>
             <action bean="entityAction" method="prepareTarget"/>
             <action bean="entityAction" method="resolveAuthorization"/>
-			<set attribute="sidenav"   value="'entity/entity_nav'"  scope="flash"/>
-			<set attribute="sidebar"   value="'entity/entity_bar'"  scope="flash"/>
-			<set attribute="template"  value="'entity/entity'"      scope="flash"/>
+			<set attribute="sidenav"    value="'entity/entity_nav'"  scope="flash"/>
+			<set attribute="sidebar"    value="'entity/entity_bar'"  scope="flash"/>
+			<set attribute="template"   value="'entity/entity'"      scope="flash"/>
         </render-actions>
 		<!-- 
 		 ! local transitions
 		 -->
 		<transition on="editTarget"     to="entityEdit.view"/>
+		<transition on="createUser"     to="user.subflow">
+			<action bean="userAction"   method="createUser"/>
+		</transition>
 		<!-- 
 		 ! backward transitions
 		 -->
@@ -103,6 +106,15 @@
 	 ! SUBFLOW
 	 !-->
 	<subflow-state id="province.subflow" flow="province">
+		<transition on="backToHome" to="backToHome"/>
+		<transition on="backToParent" to="actionRequestBrowse.view"/>
+	</subflow-state>
+
+	<!-- 
+	 ! user
+	 ! SUBFLOW
+	 !-->
+	<subflow-state id="user.subflow" flow="user">
 		<transition on="backToHome" to="backToHome"/>
 		<transition on="backToParent" to="actionRequestBrowse.view"/>
 	</subflow-state>

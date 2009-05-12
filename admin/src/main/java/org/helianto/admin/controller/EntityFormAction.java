@@ -18,6 +18,8 @@ package org.helianto.admin.controller;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
@@ -45,7 +47,11 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 
 	@Override
 	protected Entity doCreateTarget(RequestContext context, Operator parent) throws Exception {
-		return Entity.entityFactory(parent, "");
+		Entity target = Entity.entityFactory(parent, "");
+		if (logger.isDebugEnabled()) {
+			logger.debug("New entity is "+target);
+		}
+		return target;
 	}
 
 	@Override
@@ -71,5 +77,7 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 	public void setNamespaceMgr(NamespaceMgr namespaceMgr) {
 		this.namespaceMgr = namespaceMgr;
 	}
+	
+	private static Log logger = LogFactory.getLog(EntityFormAction.class);
 
 }

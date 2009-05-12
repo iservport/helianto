@@ -30,12 +30,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
- * Presentation logic to store users.
+ * Presentation logic to store user associations.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("userAction2")
-public class UserFormAction2 extends AbstractEditAggregateFormAction<UserAssociation, UserGroup> {
+@Component("userAssociationAction")
+public class UserAssociationFormAction extends AbstractEditAggregateFormAction<UserAssociation, UserGroup> {
 
 	@Override
 	protected UserAssociation doStoreTarget(UserAssociation detachedTarget) throws Exception {

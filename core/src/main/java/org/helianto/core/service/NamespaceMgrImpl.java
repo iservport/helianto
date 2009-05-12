@@ -114,8 +114,10 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return entityList;
 	}
 	
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 	public Entity storeEntity(Entity entity) {
+		Operator managedOperator = operatorDao.merge(entity.getOperator());
+		entity.setOperator(managedOperator);
 		return entityDao.merge(entity);
 	}
 

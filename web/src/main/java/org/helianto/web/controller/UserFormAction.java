@@ -1,4 +1,3 @@
-package org.helianto.web.controller;
 /* Copyright 2005 I Serv Consultoria Empresarial Ltda.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,55 +13,69 @@ package org.helianto.web.controller;
  * limitations under the License.
  */
 
+
+package org.helianto.web.controller;
+
+import java.beans.PropertyEditor;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.controller.AbstractFilterOnlyFormAction;
-import org.helianto.core.UserFilter;
+import org.helianto.controller.AbstractEditAggregateFormAction;
+import org.helianto.core.Entity;
 import org.helianto.core.UserGroup;
 import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
-
 /**
- * Presentation logic to select users.
+ * Presentation logic to store users (or groups).
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("userFilterAction2")
-public class UserFilterFormAction2 extends AbstractFilterOnlyFormAction<UserFilter, UserGroup> {
-	
+@Component("userAction")
+public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, Entity> {
+
 	@Override
-	protected boolean doPreProcess(UserFilter filter, RequestContext context) throws Exception {
-		filter.setDiscriminator('U');
-		return true;
+	protected UserGroup doStoreTarget(UserGroup detachedTarget) throws Exception {
+		return userMgr.storeUserGroup(detachedTarget);
 	}
 
 	@Override
-	public UserFilter doCreateFilter() throws Exception {
-		return UserFilter.userFilterFactory(getAuthorizedUser());
+	protected UserGroup doCreateTarget(RequestContext context, Entity parent) throws Exception {
+		return UserGroup.userGroupFactory(parent, null);
 	}
 
 	@Override
-	protected boolean doResetFilter(UserFilter filter, RequestContext context) throws Exception {
-		String principal = filter.getOptionalAlias().concat("@").concat(filter.getDomain());
-		context.getRequestScope().put("principal", principal);
-		filter.setDomain("");
-		return true;
+	protected UserGroup doPrepareTarget(RequestContext context, UserGroup target) throws Exception {
+		return target;
 	}
 
 	@Override
-	protected List<UserGroup> doApplyFilter(UserFilter filter) {
-		return userMgr.findUsers(filter);
+	protected Entity getManagedParent(UserGroup managedTarget) {
+		return managedTarget.getEntity();
+	}
+
+	@Override
+	public void setTargetPropertyEditor(PropertyEditor targetPropertyEditor) {
+		internalTargetPropertyEditorSetter(targetPropertyEditor, UserGroup.class);
+	}
+
+	@Override
+	protected List<UserGroup> getAggregateList(RequestContext context, Entity parent) {
+		return null;
 	}
 
 	@Override
 	public String getTargetAttributeName() {
 		return "user";
 	}
-	
+
+	@Override
+	public String getParentAttributeName() {
+		return "entity";
+	}
+
 	// collabs
 	
 	private UserMgr userMgr;

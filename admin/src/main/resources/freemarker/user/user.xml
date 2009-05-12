@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
+
+	<start-state idref="preProcess" />
+	
+	<action-state id="preProcess">
+		<action bean="userFilterAction" method="applyFilter"/>
+		<transition to="userSelection.view">
+			<set attribute="assign"    value="'user/assign'"      scope="flow"/>
+		</transition>
+	</action-state>
+	
+	<!-- 
+	 ! user 
+	 ! SELECTION VIEW
+	 !-->
+	<view-state id="userSelection.view" view="frame">
+		<!-- 
+		 ! before selection
+		 -->
+        <render-actions>
+            <action bean="userFilterAction" method="applyFilter"/>
+			<set attribute="forward"   value="'user/selection_fwd'"     scope="flash"/>
+			<set attribute="sidenav"   value="'user/selection_nav'"     scope="flash"/>
+			<set attribute="sidebar"   value="'user/selection_filter'"  scope="flash"/>
+			<set attribute="template"  value="'user/selection'"         scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="selectTarget"  to="userBrowse.view">
+			<action bean="userFilterAction"      method="selectTarget" />
+		</transition>
+		<transition on="createTarget"  to="userEdit.view">
+			<action bean="userAction"            method="createTarget" />
+		</transition>
+	</view-state>
+
+	<!-- 
+	 ! user  
+	 ! BROWSE VIEW
+	 !-->
+	<view-state id="userBrowse.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="userAction" method="prepareTarget"/>
+            <action bean="userAction" method="resolveAuthorization"/>
+			<set attribute="sidenav"    value="'user/user_nav'"  scope="flash"/>
+			<set attribute="sidebar"    value="'user/user_bar'"  scope="flash"/>
+			<set attribute="template"   value="'user/user'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="editTarget"     to="userEdit.view"/>
+		<transition on="createUser"     to="user.subflow">
+			<action bean="userAction"   method="createUser"/>
+		</transition>
+		<!-- 
+		 ! backward transitions
+		 -->
+		<transition on="toSelection"   to="userSelection.view"/>
+	</view-state>
+	
+	<!-- 
+	 ! user  
+	 ! EDIT VIEW
+	 !-->
+	<view-state id="userEdit.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="userAction" method="editTarget"/>
+			<set attribute="sidenav"   value="'user/edit_nav'"    scope="flash"/>
+			<set attribute="sidebar"   value="'user/user_bar'"  scope="flash"/>
+			<set attribute="template"  value="'user/user_form'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="storeTarget"   to="storeTarget">
+			<action bean="userAction"            method="bind" />
+		</transition>
+	</view-state>
+	<action-state id="storeTarget">
+		<action bean="userAction"                method="storeTarget"/>
+		<transition on="success" to="userBrowse.view"/>
+		<transition on="error"   to="userEdit.view"/>
+	</action-state>
+	
+	<!--
+	 ! End states 
+	// -->
+
+	<end-state id="backToHome" />
+	<end-state id="backToParent" />
+	<end-state id="returnTarget" >
+		<output-mapper>
+			<mapping source="flowScope.user" target="returnTarget"/>
+		</output-mapper>
+	</end-state>
+	
+	<!--
+	 ! Globals 
+	// -->
+
+	<global-transitions>
+		<transition on="backToHome"   to="backToHome"/>
+		<transition on="backToParent" to="backToParent"/>
+		<transition on="cancelForm"   to="userBrowse.view"/>
+	</global-transitions>
+	
+</flow>
