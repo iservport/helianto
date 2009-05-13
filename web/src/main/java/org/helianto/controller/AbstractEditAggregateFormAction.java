@@ -64,7 +64,7 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
 	 * @return a new target
 	 * @throws Exception
 	 */
-    protected abstract T doCreateTarget(RequestContext context, P parent) throws Exception;
+    public abstract T doCreateTarget(RequestContext context, P parent) throws Exception;
     
 	@SuppressWarnings("unchecked")
 	protected final T doSelectTarget(RequestContext context) {

@@ -68,6 +68,9 @@
 		<transition on="createUser"     to="userEdit.view">
 			<action bean="userAction"   method="createTarget"/>
 		</transition>
+		<transition on="selectUser"     to="userEdit.view">
+			<action bean="userAction"   method="selectTarget"/>
+		</transition>
 		<!-- 
 		 ! backward transitions
 		 -->

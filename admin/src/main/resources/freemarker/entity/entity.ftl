@@ -12,7 +12,9 @@
 <tbody>
 <#list entity.userList?if_exists as target >
 <tr>
-  <@select "${target_index}">${target.id?c}</@select>
+  <#-- this macro, embedded in frame.ftl, is appropriate 
+       to generate the select transition -->
+  <@select "${target_index}", "selectUser" >${target.id?c}</@select>
   <td >
       ${target.userName}<br />
       ${target.userPrincipal}

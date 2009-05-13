@@ -46,7 +46,7 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 	}
 
 	@Override
-	protected Entity doCreateTarget(RequestContext context, Operator parent) throws Exception {
+	public Entity doCreateTarget(RequestContext context, Operator parent) throws Exception {
 		Entity target = Entity.entityFactory(parent, "");
 		if (logger.isDebugEnabled()) {
 			logger.debug("New entity is "+target);

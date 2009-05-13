@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.Operator;
@@ -57,14 +56,9 @@ public interface UserMgr {
     public Identity storeIdentity(Identity identity);
     
     /**
-     * <p>A simple <code>User</code> creation given an <code>Endity</code>.</p>
+     * Prepare <code>UserGroup</code> in session.
      */
-    public User createUser(Entity entity);
-    
-    /**
-     * <p>Full <code>User</code> creation.</p>
-     */
-    public User createUser(Identity identity, Entity entity);
+    public UserGroup prepareUserGroup(UserGroup userGroup);
     
     /**
      * <p>List <code>UserGroup</code> by string criteria.</p>

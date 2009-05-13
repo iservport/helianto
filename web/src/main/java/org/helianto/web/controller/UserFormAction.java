@@ -42,13 +42,13 @@ public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, E
 	}
 
 	@Override
-	protected UserGroup doCreateTarget(RequestContext context, Entity parent) throws Exception {
+	public UserGroup doCreateTarget(RequestContext context, Entity parent) throws Exception {
 		return UserGroup.userGroupFactory(parent, null);
 	}
 
 	@Override
 	protected UserGroup doPrepareTarget(RequestContext context, UserGroup target) throws Exception {
-		return target;
+		return userMgr.prepareUserGroup(target);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, E
 
 	@Override
 	protected List<UserGroup> getAggregateList(RequestContext context, Entity parent) {
-		return null;
+		return parent.getUserList();
 	}
 
 	@Override

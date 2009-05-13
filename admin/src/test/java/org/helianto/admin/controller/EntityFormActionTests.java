@@ -16,94 +16,77 @@
 
 package org.helianto.admin.controller;
 
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.core.test.OperatorTestSupport;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.helianto.web.test.AbstractEditAggregateFormActionTests;
 import org.springframework.webflow.execution.RequestContext;
-import org.springframework.webflow.test.MockRequestContext;
 
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class EntityFormActionTests {
+public class EntityFormActionTests extends AbstractEditAggregateFormActionTests<Entity, Operator, EntityFormAction, NamespaceMgr>{
 	
-	@Test
-	public void testDoPrepareTarget() throws Exception {
-		Entity target = EntityTestSupport.createEntity();
-		Entity managedTarget = EntityTestSupport.createEntity();
-		
-		expect(namespaceMgr.prepareEntity(target)).andReturn(managedTarget);
-		replay(namespaceMgr);
-		
-		assertSame(managedTarget, formAction.doPrepareTarget(context, target));
-		verify(namespaceMgr);
+	@Override
+	protected Entity createTestInstance() {
+		return EntityTestSupport.createEntity();
 	}
 	
-	@Test
-	public void testGetManagedParent() {
-		Entity target = EntityTestSupport.createEntity();
-		assertSame(target.getOperator(), formAction.getManagedParent(target));
+	@Override
+	protected Entity doPrepareTarget(NamespaceMgr testMgr, Entity target) {
+		return testMgr.prepareEntity(target);
 	}
 	
-	@Test
-	public void testDoCreateTarget() throws Exception {
-		Operator parent = OperatorTestSupport.createOperator();
-		Entity target = formAction.doCreateTarget(context, parent);
-		assertSame(parent, target.getOperator());
-		assertEquals("", target.getAlias());
+	@Override
+	protected Entity getPreparedTarget(EntityFormAction formAction, RequestContext context, Entity target) throws Exception {
+		return formAction.doPrepareTarget(context, target);
 	}
 	
-	@Test
-	public void testDoStoreTarget() throws Exception {
-		Entity detachedTarget = EntityTestSupport.createEntity();
-		Entity managedTarget = EntityTestSupport.createEntity();
-		
-		expect(namespaceMgr.storeEntity(detachedTarget)).andReturn(managedTarget);
-		replay(namespaceMgr);
-		
-		assertSame(managedTarget, formAction.doStoreTarget(detachedTarget));
-		verify(namespaceMgr);
+	@Override
+	protected Operator getParent(Entity target) {
+		return target.getOperator();
 	}
 	
-	@Test
-	public void testGetTargetAttributeName() {
-		assertEquals("entity", formAction.getTargetAttributeName());
+	@Override
+	protected Operator getManagedParent(EntityFormAction formAction, Entity target) throws Exception {
+		return formAction.getManagedParent(target);
 	}
 	
-	@Test
-	public void testGetParentAttributeName() {
-		assertEquals("operator", formAction.getParentAttributeName());
+	@Override
+	protected Entity doStoreTarget(NamespaceMgr testMgr, Entity detachedTarget) {
+		return testMgr.storeEntity(detachedTarget);
 	}
 	
-	private RequestContext context;
-	private EntityFormAction formAction;
-	private NamespaceMgr namespaceMgr;
-	
-	@Before
-	public void setUp() {
-		context = new MockRequestContext();
-		formAction = new EntityFormAction();
-		namespaceMgr = createMock(NamespaceMgr.class);
-		formAction.setNamespaceMgr(namespaceMgr);
+	@Override
+	protected Entity getStoredTarget(EntityFormAction formAction, Entity detachedTarget) throws Exception {
+		return formAction.doStoreTarget(detachedTarget);
 	}
 	
-	@After
-	public void tearDown() {
-		reset(namespaceMgr);
+	@Override
+	protected EntityFormAction createFormActionInstance() {
+		return new EntityFormAction();
+	}
+
+	@Override
+	protected String getParentAttributeName() {
+		return "operator";
+	}
+
+	@Override
+	protected String getTargetAttributeName() {
+		return "entity";
+	}
+
+	@Override
+	protected Class<NamespaceMgr> getTestMgrClass() {
+		return NamespaceMgr.class;
+	}
+
+	@Override
+	protected void injectTestMgr(EntityFormAction formAction, NamespaceMgr testMgr) {
+		formAction.setNamespaceMgr(testMgr);
 	}
 
 }

@@ -25,7 +25,6 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
-import org.helianto.core.Entity;
 import org.helianto.core.EventType;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
@@ -77,13 +76,10 @@ public class UserMgrImpl implements UserMgr {
 	
 	// user
 
-	public User createUser(Entity entity) {
-        Identity identity = Identity.identityFactory("");
-        return createUser(identity, entity);
-    }
-    
-    public User createUser(Identity identity, Entity entity) {
-        return User.userFactory(entity, identity);
+    public UserGroup prepareUserGroup(UserGroup userGroup) {
+    	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
+    	userGroupDao.evict(managedUserGroup);
+    	return managedUserGroup;
     }
 
     public UserGroup storeUserGroup(UserGroup userGroup) {

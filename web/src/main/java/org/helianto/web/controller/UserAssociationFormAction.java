@@ -43,7 +43,7 @@ public class UserAssociationFormAction extends AbstractEditAggregateFormAction<U
 	}
 
 	@Override
-	protected UserAssociation doCreateTarget(RequestContext context, UserGroup parent) throws Exception {
+	public UserAssociation doCreateTarget(RequestContext context, UserGroup parent) throws Exception {
 		PublicUserDetails secureUser = (PublicUserDetails) context.getConversationScope().get("secureUser");
 		// Create a new user having the same privileges as the current user
 		// TODO allow privileges to be narrowed
