@@ -34,6 +34,8 @@ import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
+import org.helianto.core.UserFilter;
+import org.helianto.core.UserGroup;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
@@ -142,6 +144,56 @@ public class NamespaceMgrTests {
 		
 		assertSame(managedProvince , namespaceMgr.storeProvince(province));
 		verify(provinceDao);
+	}
+	
+	@Test
+	public void testFindEntities() {
+		List<Entity> entityList = EntityTestSupport.createEntityList(1);
+		EntityFilter filter = new EntityFilter();
+		
+		expect(entityDao.find(filter)).andReturn(entityList);
+		replay(entityDao);
+		
+		assertSame(entityList , namespaceMgr.findEntities(filter));
+		verify(entityDao);
+	}
+	
+	@Test
+	public void testPrepareEntity() {
+		Entity entity = EntityTestSupport.createEntity();
+		Entity managedEntity = EntityTestSupport.createEntity();
+		
+		expect(entityDao.merge(entity)).andReturn(managedEntity);
+		entityDao.evict(managedEntity);
+		replay(entityDao);
+		
+		assertSame(managedEntity , namespaceMgr.prepareEntity(entity));
+		verify(entityDao);
+	}
+	
+	@Test
+	public void testLoadUserList() {
+		Entity entity = new Entity();
+		List<UserGroup> userList = new ArrayList<UserGroup>();
+		
+		expect(userMgr.findUsers(isA(UserFilter.class))).andReturn(userList);
+		replay(userMgr);
+		
+		namespaceMgr.loadUserList(entity);
+		assertSame(userList, entity.getUserList());
+		verify(userMgr);
+	}
+
+	@Test
+	public void testStoreEntity() {
+		Entity entity = EntityTestSupport.createEntity();
+		Entity managedEntity = EntityTestSupport.createEntity();
+		
+		expect(entityDao.merge(entity)).andReturn(managedEntity);
+		replay(entityDao);
+		
+		assertSame(managedEntity , namespaceMgr.storeEntity(entity));
+		verify(entityDao);
 	}
 	
 	private NamespaceMgrImpl namespaceMgr;
