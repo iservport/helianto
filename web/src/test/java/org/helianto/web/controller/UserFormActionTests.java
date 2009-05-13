@@ -56,7 +56,7 @@ public class UserFormActionTests extends AbstractEditAggregateFormActionTests<Us
 	
 	@Override
 	protected UserGroup doStoreTarget(UserMgr testMgr, UserGroup detachedTarget) {
-		return testMgr.storeUserGroup(detachedTarget);
+		return testMgr.storeUserGroup(detachedTarget, false);
 	}
 	
 	@Override

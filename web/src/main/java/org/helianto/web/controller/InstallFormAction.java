@@ -87,7 +87,7 @@ public class InstallFormAction extends FormAction {
             logger.debug("!---- STARTED");
         }
         UserForm form = doGetForm(context);
-        userMgr.storeUserGroup(form.getUser());
+        userMgr.storeUserGroup(form.getUser(), false);
         return success();
     }
         

@@ -82,8 +82,71 @@ public class UserMgrImpl implements UserMgr {
     	return managedUserGroup;
     }
 
-    public UserGroup storeUserGroup(UserGroup userGroup) {
+    public UserGroup storeUserGroup(UserGroup userGroup, boolean createIdentity) {
+    	if (!validateIdentity(userGroup, createIdentity)) {
+    		throw new IllegalArgumentException("Invalid identity");
+    	}
         return userGroupDao.merge(userGroup);
+    }
+    
+    /**
+     * Assure each user (or group) have an identity.
+     * 
+     * <p>Validation is ready to detect:</p>
+     * <ul>
+     * <li>null identity,</li>
+     * <li>absence of a principal candidate, or</li>
+     * <li>empty identity after a candidate search.</li>
+     * </ul>
+     * <p>If the create flag is set, a candidate principal may be used
+     * to create a new identity.</p>
+     * 
+     * @param userGroup
+     * @param createIdentity
+     */
+    protected boolean validateIdentity(UserGroup userGroup, boolean createIdentity) {
+    	if (userGroup.getIdentity()==null) {
+    		if (logger.isDebugEnabled()) {
+    			logger.debug("Null identity");
+    		}
+    		return false;
+    	}
+    	if (userGroup.getIdentity().getId()==0) {
+    		if (logger.isDebugEnabled()) {
+    			logger.debug("Looking for a candidate identity");
+    		}
+    		if (userGroup.getIdentity().getPrincipal().length()==0) {
+    			if (logger.isDebugEnabled()) {
+    				logger.debug("Unable to validate identity, empty candidate");
+    			}
+    			return false;    			
+    		}
+    		String principal = userGroup.getIdentity().getPrincipal();
+    		if (logger.isDebugEnabled()) {
+    			logger.debug("Using principal "+principal);
+    		}
+    		Identity identity = identityDao.findUnique(principal);
+    		if (identity!=null) {
+    			userGroup.setIdentity(identity);
+    		}
+    		else if (createIdentity) {
+        		if (logger.isDebugEnabled()) {
+        			logger.debug("Identity not found, creating one");
+        		}
+        		identity = identityDao.merge(Identity.identityFactory(principal));
+    			userGroup.setIdentity(identity);
+    		}
+    		else {
+    			if (logger.isDebugEnabled()) {
+    				logger.debug("Unable to validate identity, identity not found and not created.");
+    			}
+    			return false;    			
+    		}
+    	}
+		if (logger.isDebugEnabled()) {
+			logger.debug("User (or group) identified with "+userGroup.getIdentity());
+		}
+		return true;
     }
 
     public UserGroup storeUserGroup(UserAssociation parentAssociation) {

@@ -34,7 +34,7 @@ public class PersonalData implements Serializable {
     private String firstName;
     private String lastName;
     private char gender;
-    private int appellation;
+    private char appellation;
 
     /** default constructor */
     public PersonalData() {
@@ -84,10 +84,10 @@ public class PersonalData implements Serializable {
     /**
      * Appellation getter.
      */
-    public int getAppellation() {
+    public char getAppellation() {
         return this.appellation;
     }
-    public void setAppellation(int appellation) {
+    public void setAppellation(char appellation) {
         this.appellation = appellation;
     }
     public void setAppellation(Appellation appellation) {

@@ -73,7 +73,7 @@ public interface UserMgr {
     /**
      * <p>Store <code>UserGroup</code> and return a managed instance.</p>
      */
-    public UserGroup storeUserGroup(UserGroup userGroup);
+    public UserGroup storeUserGroup(UserGroup userGroup, boolean createIdentity);
     
     /**
      * <p>Store <code>UserGroup</code> and return a managed instance.</p>

@@ -21,12 +21,14 @@ import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
@@ -46,12 +48,18 @@ import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
+import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.core.test.UserTestSupport;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class UserMgrImplTests extends TestCase {
+/**
+ * @author Mauricio Fernandes de Castro
+ */
+public class UserMgrImplTests {
     
-    private UserMgrImpl userMgr;
-    
+	@Test
     public void testStoreIdentity() {
         Identity managedIdentity = null, identity = new Identity();
         identity.setPrincipal("principal");
@@ -67,6 +75,7 @@ public class UserMgrImplTests extends TestCase {
         verify(principalGenerationStrategy);
     }
     
+	@Test
     public void testFindIdentityByPrincipal() {
         String principal = "123";
         Identity identity = new Identity();
@@ -79,6 +88,7 @@ public class UserMgrImplTests extends TestCase {
         verify(identityDao);
     }
 
+	@Test
     public void testSelectIdentities() {
         int size = 10;
         IdentityFilter filter = new IdentityFilter();
@@ -97,6 +107,7 @@ public class UserMgrImplTests extends TestCase {
         assertFalse(identityList.contains(excluded));
     }
     
+	@Test
     public void testUserState() {
         User user = UserTestSupport.createUser();
         Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
@@ -104,6 +115,7 @@ public class UserMgrImplTests extends TestCase {
         assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
     }
     
+	@Test
     public void testCreateUserAssociationPrincipalExisting() {
     	UserGroup userGroup = new UserGroup();
     	Identity identity = new Identity();
@@ -119,6 +131,7 @@ public class UserMgrImplTests extends TestCase {
     	assertSame(identity, userAssociation.getChild().getIdentity());
     }
     
+	@Test
     public void testCreateUserAssociationPrincipalNotFound() {
     	UserGroup userGroup = new UserGroup();
     	Credential managedCredential = CredentialTestSupport.createCredential();
@@ -139,6 +152,7 @@ public class UserMgrImplTests extends TestCase {
     	assertEquals("principal", userAssociation.getChild().getUserPrincipal());
     }
     
+	@Test
     public void testFindUsers() {
     	UserFilter userFilter = new UserFilter();
     	List<UserGroup> userList = new ArrayList<UserGroup>();
@@ -150,17 +164,79 @@ public class UserMgrImplTests extends TestCase {
     	verify(userGroupDao);
     }
     
+	@Test
     public void testStoreUserGroup() {
-    	UserGroup userGroup = new UserGroup();
+    	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+    	userGroup.getIdentity().setId(1);
     	UserGroup managedUserGroup = new UserGroup();
     	
     	expect(userGroupDao.merge(userGroup)).andReturn(managedUserGroup);
     	replay(userGroupDao);
     	
-    	userMgr.storeUserGroup(userGroup);
+    	userMgr.storeUserGroup(userGroup, false);
     	verify(userGroupDao);
     }
     
+	@Test
+    public void testValidateIdentityNull() {
+		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+		userGroup.setIdentity(null);
+		assertFalse(userMgr.validateIdentity(userGroup, false));
+    }
+    
+	@Test
+    public void testValidateEmptyCandidate() {
+		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+    	userGroup.getIdentity().setId(0);
+		userGroup.getIdentity().setPrincipal("");
+		assertFalse(userMgr.validateIdentity(userGroup, false));
+    }
+    
+	@Test
+    public void testValidateCandidateNotLoaded() {
+		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+    	userGroup.getIdentity().setId(0);
+		userGroup.getIdentity().setPrincipal("TEST");
+		
+		expect(identityDao.findUnique("test")).andReturn(null);
+		replay(identityDao);
+		
+		assertFalse(userMgr.validateIdentity(userGroup, false));
+		verify(identityDao);
+    }
+    
+	@Test
+    public void testValidateCandidateLoaded() {
+		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+    	userGroup.getIdentity().setId(0);
+		userGroup.getIdentity().setPrincipal("TEST");
+		Identity identity = new Identity();
+		
+		expect(identityDao.findUnique("test")).andReturn(identity);
+		replay(identityDao);
+		
+		assertTrue(userMgr.validateIdentity(userGroup, false));
+		assertSame(identity, userGroup.getIdentity());
+		verify(identityDao);
+    }
+    
+	@Test
+    public void testValidateCandidateCreated() {
+		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+    	userGroup.getIdentity().setId(0);
+		userGroup.getIdentity().setPrincipal("TEST");
+		Identity identity = new Identity();
+		
+		expect(identityDao.findUnique("test")).andReturn(null);
+		expect(identityDao.merge(isA(Identity.class))).andReturn(identity);
+		replay(identityDao);
+		
+		assertTrue(userMgr.validateIdentity(userGroup, true));
+		assertSame(identity, userGroup.getIdentity());
+		verify(identityDao);
+    }
+    
+	@Test
     public void testStoreUserGroupAssociation() {
     	UserGroup userGroup = new UserGroup();
     	UserAssociation parentAssociation = new UserAssociation();
@@ -174,6 +250,7 @@ public class UserMgrImplTests extends TestCase {
     	verify(userAssociationDao);
     }
     
+	@Test
     public void testStoreUserAssociation() {
     	UserAssociation parentAssociation = new UserAssociation();
     	UserAssociation managedUserAssociation = new UserAssociation();
@@ -186,6 +263,7 @@ public class UserMgrImplTests extends TestCase {
     	verify(userAssociationDao);
     }
     
+	@Test
     public void testFindProvinceByOperator() {
         Operator operator = OperatorTestSupport.createOperator();
         List<Province> provinceList = new ArrayList<Province>();
@@ -198,14 +276,13 @@ public class UserMgrImplTests extends TestCase {
         verify(provinceDao);
     }
     
+	@Test(expected=IllegalArgumentException.class)
     public void testPersistUserLogError() {
         // user must have an Identity
-        try {
-        	userMgr.storeUserLog(new User(), new Date());
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) { fail(); }
+        userMgr.storeUserLog(new User(), new Date());
     }
 
+	@Test
     public void testStoreUserLog() {
         Date date = new Date();
         Identity identity = new Identity();
@@ -222,6 +299,8 @@ public class UserMgrImplTests extends TestCase {
 
     // 
     
+    private UserMgrImpl userMgr;
+    
     private FilterDao<Identity, IdentityFilter> identityDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
@@ -231,7 +310,7 @@ public class UserMgrImplTests extends TestCase {
 
     
     @SuppressWarnings("unchecked")
-	@Override
+	@Before
     public void setUp() {
         userMgr = new UserMgrImpl();
         identityDao = createMock(FilterDao.class);
@@ -248,7 +327,7 @@ public class UserMgrImplTests extends TestCase {
         userMgr.setUserLogDao(userLogDao);
     }
     
-    @Override
+    @After
     public void tearDown() {
         reset(identityDao);
         reset(principalGenerationStrategy);

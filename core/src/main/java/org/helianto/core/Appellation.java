@@ -12,28 +12,28 @@ public enum Appellation {
     /**
      * Not supplied.
      */
-    NOT_SUPPLIED(0),
+    NOT_SUPPLIED('0'),
     /**
      * Miss.
      */
-    MISS(1),
+    MISS('1'),
     /**
      * Mister or Mistress. Further distinction depends on 
      * the gender.
      */
-    MR_OR_MRS(2),
+    MR_OR_MRS('2'),
     /**
      * Miss or Mistress
      */
-    MS(3);
+    MS('3');
     
-    private int value;
+    private char value;
     
-    private Appellation(int value) {
+    private Appellation(char value) {
         this.value = value;
     }
     
-    public int getValue() {
+    public char getValue() {
         return value;
     }
 
