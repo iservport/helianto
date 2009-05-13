@@ -17,6 +17,7 @@ package org.helianto.core.filter;
 
 import java.lang.reflect.Constructor;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 
 /**
@@ -79,6 +80,14 @@ public abstract class AbstractUserBackedCriteriaFilter extends AbstractEntityBac
 	protected AbstractUserBackedCriteriaFilter(User user) {
 		this();
 		setUser(user);
+	}
+    
+	/**
+	 * Entity constructor.
+	 */
+	protected AbstractUserBackedCriteriaFilter(Entity entity) {
+		this();
+		setEntity(entity);
 	}
     
     private User user;

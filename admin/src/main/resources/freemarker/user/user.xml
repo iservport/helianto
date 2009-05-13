@@ -24,7 +24,6 @@
 		 -->
         <render-actions>
             <action bean="userFilterAction" method="applyFilter"/>
-			<set attribute="forward"   value="'user/selection_fwd'"     scope="flash"/>
 			<set attribute="sidenav"   value="'user/selection_nav'"     scope="flash"/>
 			<set attribute="sidebar"   value="'user/selection_filter'"  scope="flash"/>
 			<set attribute="template"  value="'user/selection'"         scope="flash"/>

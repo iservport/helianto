@@ -75,6 +75,14 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     }
     
     /**
+     * Entity constructor
+     */
+    public UserFilter(Entity entity) {
+    	this();
+    	setEntity(entity);
+    }
+    
+    /**
      * Force filter to standards.
      */
     public void reset() {

@@ -37,7 +37,7 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 
 	@Override
 	protected Entity doPrepareTarget(RequestContext context, Entity target) throws Exception {
-		return target;
+		return namespaceMgr.prepareEntity(target);
 	}
 
 	@Override

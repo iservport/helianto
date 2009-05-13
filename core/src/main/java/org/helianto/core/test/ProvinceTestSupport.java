@@ -43,6 +43,10 @@ public class ProvinceTestSupport {
         return province;
     }
 
+    public static List<Province> createProvinceList(int size) {
+        return createProvinceList(size, 1);
+    }
+
     public static List<Province> createProvinceList(int size, int operatorListSize) {
         List<Operator> operatorList = OperatorTestSupport.createOperatorList(operatorListSize);
         return createProvinceList(size, operatorList);

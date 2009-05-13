@@ -85,6 +85,11 @@ public interface NamespaceMgr {
 	public List<Entity> findEntities(EntityFilter filter);
 
     /**
+     * Prepare <code>Entity</code> in session.
+     */
+	public Entity prepareEntity(Entity entity);
+
+    /**
      * Store <code>Entity</code> to the data store.
      */
 	public Entity storeEntity(Entity entity);

@@ -15,6 +15,7 @@
 
 package org.helianto.core;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.persistence.CascadeType;
@@ -95,6 +96,7 @@ public class Entity implements java.io.Serializable {
     private int version;
     private Operator operator;
     private String alias;
+    private List<UserGroup> userList;
 
     /** default constructor */
     public Entity() {
@@ -149,6 +151,17 @@ public class Entity implements java.io.Serializable {
     }
 
     /**
+     * <<Transient>> User list.
+     */
+    @Transient
+    public List<UserGroup> getUserList() {
+		return userList;
+	}
+	public void setUserList(List<UserGroup> userList) {
+		this.userList = userList;
+	}
+
+	/**
      * toString
      * @return String
      */

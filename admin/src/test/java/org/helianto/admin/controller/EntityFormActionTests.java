@@ -44,7 +44,13 @@ public class EntityFormActionTests {
 	@Test
 	public void testDoPrepareTarget() throws Exception {
 		Entity target = EntityTestSupport.createEntity();
-		assertSame(target, formAction.doPrepareTarget(context, target));
+		Entity managedTarget = EntityTestSupport.createEntity();
+		
+		expect(namespaceMgr.prepareEntity(target)).andReturn(managedTarget);
+		replay(namespaceMgr);
+		
+		assertSame(managedTarget, formAction.doPrepareTarget(context, target));
+		verify(namespaceMgr);
 	}
 	
 	@Test
