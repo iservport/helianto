@@ -24,6 +24,10 @@
 -->
        	    	
 	<!--
+		Translate exceptions
+	-->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	<!--
 		Flow executor
 	-->
 	<flow:executor id="flowExecutor" registry-ref="flowRegistry" repository-type="continuation"/>

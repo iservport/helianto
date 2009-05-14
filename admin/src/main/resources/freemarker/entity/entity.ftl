@@ -1,9 +1,8 @@
 <div id="panel">
-<h2>Entity</h2>
-<h3>Alias: <b>${entity.alias}</b></h3>
-
+<h2>Entity alias: <b>${entity.alias}</b></h2>
+<p>Users sharing this entity:</p>
 <table>
-<thead>
+<thead style="background: #cccccc;">
 <tr>
   <td colspan="2">User name</td>
   <td >Status</td>

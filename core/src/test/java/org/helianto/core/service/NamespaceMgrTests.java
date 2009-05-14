@@ -185,9 +185,23 @@ public class NamespaceMgrTests {
 	}
 
 	@Test
+	public void testStoreNewEntity() {
+		Entity entity = EntityTestSupport.createEntity();
+		Entity managedEntity = EntityTestSupport.createEntity();
+		
+		expect(entityDao.merge(entity)).andReturn(managedEntity);
+		entityDao.flush();
+		replay(entityDao);
+		
+		assertSame(managedEntity , namespaceMgr.storeEntity(entity));
+		verify(entityDao);
+	}
+	
+	@Test
 	public void testStoreEntity() {
 		Entity entity = EntityTestSupport.createEntity();
 		Entity managedEntity = EntityTestSupport.createEntity();
+		managedEntity.setId(1);
 		
 		expect(entityDao.merge(entity)).andReturn(managedEntity);
 		replay(entityDao);

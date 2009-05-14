@@ -92,13 +92,17 @@ public class UserGroup implements java.io.Serializable {
     private Date lastEvent;
     private char userState;
     private boolean accountNonExpired;
+    private char createIdentity;
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
     private Set<UserRole> roles = new HashSet<UserRole>();
     
 	/** default constructor */
     public UserGroup() {
-    	this.lastEvent = new Date();
+    	setLastEvent(new Date());
+    	setUserState(UserState.ACTIVE);
+    	setAccountNonExpired(true);
+    	setCreateIdentity(CreateIdentity.REJECT);
     }
 
     // Property accessors
@@ -220,7 +224,22 @@ public class UserGroup implements java.io.Serializable {
         this.accountNonExpired = accountNonExpired;
     }
 
-    /**
+	/**
+     * <<Transient>> May be used by the presentation layer to
+     * signal automatic identity creation"
+     */
+    @Transient
+    public char getCreateIdentity() {
+		return createIdentity;
+	}
+	public void setCreateIdentity(char createIdentity) {
+		this.createIdentity = createIdentity;
+	}
+	public void setCreateIdentity(CreateIdentity createIdentity) {
+		this.createIdentity = createIdentity.getValue();
+	}
+
+	/**
      * ParentAssociations getter.
      */
     @OneToMany(mappedBy="child")

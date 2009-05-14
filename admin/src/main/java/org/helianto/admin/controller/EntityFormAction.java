@@ -69,6 +69,13 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 		return "operator";
 	}
 
+	/**
+	 * Overriden to customize key field shown in a 
+	 * standard integrity violation message.
+	 */
+	protected String getKeyField() {
+		return "alias";
+	}
 	// collabs
 	
 	private NamespaceMgr namespaceMgr;

@@ -2,34 +2,33 @@
 <table>
 	<form action="home.htm" method="POST">
 	
+	<tr style="background: #cccccc;">
+		<td colspan="2">User data</td>
+	</tr>
+	
 	<#if formObject.target.id == 0 >
 	
 	<tr>
-		<td>Alias</td>
-		<td><@spring.formInput "formObject.target.identity.optionalAlias", "size='20'"/></td>
+		<td>Identity principal</td>
+		<td><@spring.formInput "formObject.target.identity.principal", "size='32'"/></td>
 	</tr>
+
 	<tr>
-		<td>First name</td>
-		<td><@spring.formInput "formObject.target.identity.personalData.firstName", "size='20'"/></td>
+		<td>Create identity if does not exist</td>
+		<td><input type="checkBox" name="createIdentity" value="1" /></td>
 	</tr>
+
+	<#else>
+
 	<tr>
-		<td>Last name</td>
-		<td><@spring.formInput "formObject.target.identity.personalData.lastName", "size='20'"/></td>
-	</tr>
-	<tr>
-		<td>Gender</td>
-		<td><@spring.formSingleSelect "formObject.target.identity.personalData.gender", gender, "size='3'"/></td>
-	</tr>
-	<tr>
-		<td>Appellation</td>
-		<td><@spring.formSingleSelect "formObject.target.identity.personalData.appellation", appellation, "size='2'"/></td>
+		<td>Identity [${formObject.target.identity.id}]</td>
+		<td>${formObject.target.identity.principal}</td>
 	</tr>
 
 	</#if>
-	
 	<tr>
 		<td>Status</td>
-		<td><@spring.formSingleSelect "formObject.target.userState", userState, "size='2'"/></td>
+		<td><@spring.formRadioButtons "formObject.target.userState", userState, " ", "size='2'"/></td>
 	</tr>
 	
 	<tr>

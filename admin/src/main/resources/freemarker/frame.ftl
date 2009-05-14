@@ -72,3 +72,10 @@ href="?_eventId=${event}${param}&_flowExecutionKey=${flowExecutionKey}"><#nested
 href="?_eventId=${event}&target_index=${targetIndex}${param}&_flowExecutionKey=${flowExecutionKey}"><#nested/></a>
 </td>
 </#macro>
+
+<#macro perr classOrStyle="">
+	<#if spring?exists && spring.status.errorMessages?has_content >
+		<p><@spring.showErrors " " /></p>
+    </#if>
+</#macro>	
+

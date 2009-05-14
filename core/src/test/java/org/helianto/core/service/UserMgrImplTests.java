@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.ActivityState;
+import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
@@ -173,7 +174,7 @@ public class UserMgrImplTests {
     	expect(userGroupDao.merge(userGroup)).andReturn(managedUserGroup);
     	replay(userGroupDao);
     	
-    	userMgr.storeUserGroup(userGroup, false);
+    	userMgr.storeUserGroup(userGroup);
     	verify(userGroupDao);
     }
     
@@ -181,7 +182,7 @@ public class UserMgrImplTests {
     public void testValidateIdentityNull() {
 		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
 		userGroup.setIdentity(null);
-		assertFalse(userMgr.validateIdentity(userGroup, false));
+		assertFalse(userMgr.validateIdentity(userGroup));
     }
     
 	@Test
@@ -189,7 +190,7 @@ public class UserMgrImplTests {
 		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	userGroup.getIdentity().setId(0);
 		userGroup.getIdentity().setPrincipal("");
-		assertFalse(userMgr.validateIdentity(userGroup, false));
+		assertFalse(userMgr.validateIdentity(userGroup));
     }
     
 	@Test
@@ -201,7 +202,7 @@ public class UserMgrImplTests {
 		expect(identityDao.findUnique("test")).andReturn(null);
 		replay(identityDao);
 		
-		assertFalse(userMgr.validateIdentity(userGroup, false));
+		assertFalse(userMgr.validateIdentity(userGroup));
 		verify(identityDao);
     }
     
@@ -215,7 +216,7 @@ public class UserMgrImplTests {
 		expect(identityDao.findUnique("test")).andReturn(identity);
 		replay(identityDao);
 		
-		assertTrue(userMgr.validateIdentity(userGroup, false));
+		assertTrue(userMgr.validateIdentity(userGroup));
 		assertSame(identity, userGroup.getIdentity());
 		verify(identityDao);
     }
@@ -225,13 +226,14 @@ public class UserMgrImplTests {
 		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	userGroup.getIdentity().setId(0);
 		userGroup.getIdentity().setPrincipal("TEST");
+		userGroup.setCreateIdentity(CreateIdentity.AUTO);
 		Identity identity = new Identity();
 		
 		expect(identityDao.findUnique("test")).andReturn(null);
 		expect(identityDao.merge(isA(Identity.class))).andReturn(identity);
 		replay(identityDao);
 		
-		assertTrue(userMgr.validateIdentity(userGroup, true));
+		assertTrue(userMgr.validateIdentity(userGroup));
 		assertSame(identity, userGroup.getIdentity());
 		verify(identityDao);
     }

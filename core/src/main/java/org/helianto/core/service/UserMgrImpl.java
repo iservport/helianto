@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
 import org.helianto.core.EventType;
 import org.helianto.core.Identity;
@@ -82,8 +83,8 @@ public class UserMgrImpl implements UserMgr {
     	return managedUserGroup;
     }
 
-    public UserGroup storeUserGroup(UserGroup userGroup, boolean createIdentity) {
-    	if (!validateIdentity(userGroup, createIdentity)) {
+    public UserGroup storeUserGroup(UserGroup userGroup) {
+    	if (!validateIdentity(userGroup)) {
     		throw new IllegalArgumentException("Invalid identity");
     	}
         return userGroupDao.merge(userGroup);
@@ -104,7 +105,7 @@ public class UserMgrImpl implements UserMgr {
      * @param userGroup
      * @param createIdentity
      */
-    protected boolean validateIdentity(UserGroup userGroup, boolean createIdentity) {
+    protected boolean validateIdentity(UserGroup userGroup) {
     	if (userGroup.getIdentity()==null) {
     		if (logger.isDebugEnabled()) {
     			logger.debug("Null identity");
@@ -129,7 +130,7 @@ public class UserMgrImpl implements UserMgr {
     		if (identity!=null) {
     			userGroup.setIdentity(identity);
     		}
-    		else if (createIdentity) {
+    		else if (userGroup.getCreateIdentity()==CreateIdentity.AUTO.getValue()) {
         		if (logger.isDebugEnabled()) {
         			logger.debug("Identity not found, creating one");
         		}

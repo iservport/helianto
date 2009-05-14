@@ -38,7 +38,7 @@ public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, E
 
 	@Override
 	protected UserGroup doStoreTarget(UserGroup detachedTarget) throws Exception {
-		return userMgr.storeUserGroup(detachedTarget, false);
+		return userMgr.storeUserGroup(detachedTarget);
 	}
 
 	@Override
