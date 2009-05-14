@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.Entity;
+import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
@@ -43,6 +44,10 @@ public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, E
 
 	@Override
 	public UserGroup doCreateTarget(RequestContext context, Entity parent) throws Exception {
+		String createOption = context.getRequestScope().getRequiredString("createOption");
+		if (createOption.equals("user")) {
+			return User.userFactory(parent);
+		}
 		return UserGroup.userGroupFactory(parent, null);
 	}
 

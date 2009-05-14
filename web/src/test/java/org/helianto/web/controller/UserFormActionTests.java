@@ -16,11 +16,17 @@
 
 package org.helianto.web.controller;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.helianto.core.Entity;
+import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.service.UserMgr;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.web.test.AbstractEditAggregateFormActionTests;
+import org.junit.Test;
 import org.springframework.webflow.execution.RequestContext;
 
 
@@ -52,6 +58,30 @@ public class UserFormActionTests extends AbstractEditAggregateFormActionTests<Us
 	@Override
 	protected Entity getManagedParent(UserFormAction formAction, UserGroup target) throws Exception {
 		return formAction.getManagedParent(target);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testDoCreateTarget() throws Exception {
+		Entity parent = getParent(createTestInstance());
+		getFormAction().doCreateTarget(getContext(), parent);
+	}
+	
+	@Test
+	public void testDoCreateTargetUserGroup() throws Exception {
+		Entity parent = getParent(createTestInstance());
+		getContext().getRequestScope().put("createOption", "userGroup");
+		UserGroup target = getFormAction().doCreateTarget(getContext(), parent);
+		assertFalse(target instanceof User);
+		assertSame(parent, getParent(target));
+	}
+	
+	@Test
+	public void testDoCreateTargetUser() throws Exception {
+		Entity parent = getParent(createTestInstance());
+		getContext().getRequestScope().put("createOption", "user");
+		UserGroup target = getFormAction().doCreateTarget(getContext(), parent);
+		assertTrue(target instanceof User);
+		assertSame(parent, getParent(target));
 	}
 	
 	@Override

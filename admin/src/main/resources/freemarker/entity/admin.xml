@@ -55,26 +55,31 @@
 		 ! before browse
 		 -->
         <render-actions>
-            <action bean="entityAction" method="prepareTarget"/>
-            <action bean="entityAction" method="resolveAuthorization"/>
-			<set attribute="sidenav"    value="'entity/entity_nav'"  scope="flash"/>
-			<set attribute="sidebar"    value="'entity/entity_bar'"  scope="flash"/>
-			<set attribute="template"   value="'entity/entity'"      scope="flash"/>
+            <action bean="entityAction"  method="prepareTarget"/>
+            <action bean="entityAction"  method="resolveAuthorization"/>
+			<set attribute="sidenav"     value="'entity/entity_nav'"  scope="flash"/>
+			<set attribute="sidebar"     value="'entity/entity_bar'"  scope="flash"/>
+			<set attribute="template"    value="'entity/entity'"      scope="flash"/>
         </render-actions>
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="editTarget"     to="entityEdit.view"/>
-		<transition on="createUser"     to="userEdit.view">
-			<action bean="userAction"   method="createTarget"/>
+		<transition on="editTarget"      to="entityEdit.view"/>
+		<transition on="createUser"      to="userEdit.view">
+			<set attribute="createOption" value="'user'" />
+			<action bean="userAction"    method="createTarget"/>
 		</transition>
-		<transition on="selectUser"     to="userEdit.view">
-			<action bean="userAction"   method="selectTarget"/>
+		<transition on="createUserGroup" to="userEdit.view" >
+			<set attribute="createOption" value="'userGroup'" />
+			<action bean="userAction"    method="createTarget" />
+		</transition>
+		<transition on="selectUser"      to="userEdit.view">
+			<action bean="userAction"    method="selectTarget"/>
 		</transition>
 		<!-- 
 		 ! backward transitions
 		 -->
-		<transition on="toSelection"   to="entitySelection.view"/>
+		<transition on="toSelection"     to="entitySelection.view"/>
 	</view-state>
 	
 	<!-- 
@@ -94,8 +99,9 @@
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="storeTarget"   to="storeEntity">
-			<action bean="entityAction"            method="bind" />
+		<transition on="storeTarget"   to="entityBrowse.view">
+			<action bean="entityAction"            method="bindAndValidate" />
+			<action bean="entityAction"            method="storeTarget" />
 		</transition>
 	</view-state>
 	<action-state id="storeEntity">

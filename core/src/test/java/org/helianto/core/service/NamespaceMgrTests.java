@@ -197,19 +197,6 @@ public class NamespaceMgrTests {
 		verify(entityDao);
 	}
 	
-	@Test
-	public void testStoreEntity() {
-		Entity entity = EntityTestSupport.createEntity();
-		Entity managedEntity = EntityTestSupport.createEntity();
-		managedEntity.setId(1);
-		
-		expect(entityDao.merge(entity)).andReturn(managedEntity);
-		replay(entityDao);
-		
-		assertSame(managedEntity , namespaceMgr.storeEntity(entity));
-		verify(entityDao);
-	}
-	
 	private NamespaceMgrImpl namespaceMgr;
 	private FilterDao<Operator, OperatorFilter> operatorDao;
 	private FilterDao<Province, ProvinceFilter> provinceDao;

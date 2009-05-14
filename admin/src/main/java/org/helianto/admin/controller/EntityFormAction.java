@@ -25,6 +25,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.service.NamespaceMgr;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.Validator;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
@@ -76,6 +77,13 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 	protected String getKeyField() {
 		return "alias";
 	}
+	
+	@Resource(name="entityFormValidator")
+	@Override
+	public void setValidator(Validator validator) {
+		super.setValidator(validator);
+	}
+
 	// collabs
 	
 	private NamespaceMgr namespaceMgr;

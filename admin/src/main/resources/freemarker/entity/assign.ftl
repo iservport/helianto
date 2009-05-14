@@ -19,3 +19,8 @@
      '0' : "Any"
    , '2' : "Formal"
 } />
+<#assign type={
+     'class org.helianto.core.UserGroup' : "Group"
+   , 'class org.helianto.core.User'      : "User"
+} />
+

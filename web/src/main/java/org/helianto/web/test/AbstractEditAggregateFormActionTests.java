@@ -116,6 +116,10 @@ public abstract class AbstractEditAggregateFormActionTests<T, P, F extends Abstr
 	private F formAction;
 	private M testMgr;
 	
+	protected RequestContext getContext() {
+		return context;
+	}
+	
 	protected F getFormAction() {
 		return formAction;
 	}

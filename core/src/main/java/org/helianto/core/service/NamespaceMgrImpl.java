@@ -137,9 +137,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		Operator managedOperator = operatorDao.merge(entity.getOperator());
 		entity.setOperator(managedOperator);
 		Entity managedEntity =  entityDao.merge(entity);
-    	if (managedEntity.getId()==0) {
-    		entityDao.flush();
-    	}
+		entityDao.flush();
 		return managedEntity;
 	}
 

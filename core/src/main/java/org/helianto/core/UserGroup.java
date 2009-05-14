@@ -187,7 +187,10 @@ public class UserGroup implements java.io.Serializable {
      */
     @Transient
     public String getUserName() {
-        return this.identity.getIdentityName();
+    	if (this instanceof User) {
+            return this.identity.getIdentityName();
+    	}
+        return "";
     }
 
 	/**

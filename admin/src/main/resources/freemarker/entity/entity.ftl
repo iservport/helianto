@@ -4,8 +4,10 @@
 <table>
 <thead style="background: #cccccc;">
 <tr>
-  <td colspan="2">User name</td>
+  <td colspan="2">User principal</td>
   <td >Status</td>
+  <td >Type</td>
+  <td >Personal data</td>
 </tr>
 </thead>
 <tbody>
@@ -14,11 +16,10 @@
   <#-- this macro, embedded in frame.ftl, is appropriate 
        to generate the select transition -->
   <@select "${target_index}", "selectUser" >${target.id?c}</@select>
-  <td >
-      ${target.userName}<br />
-      ${target.userPrincipal}
-  </td>
-  <td >${target.userState?if_exists}</td>
+  <td >${target.userPrincipal}</td>
+  <td >${userState[target.userState]}</td>
+  <td >${type[target.class]}</td>
+  <td >${target.userName}</td>
 </tr>
 </#list>
 </tbody>
