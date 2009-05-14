@@ -312,7 +312,7 @@
 		</repository>
 		<site>
 			<id>website</id>
-			<url>http://db.iservport.com/maven</url>
+			<url>file://localhost/var/www/helianto-site/</url>
 		</site>
 	</distributionManagement>
 </project>
