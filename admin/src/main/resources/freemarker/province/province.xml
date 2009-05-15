@@ -8,64 +8,83 @@
 	<start-state idref="preProcess" />
 	
 	<action-state id="preProcess">
-		<action bean="operatorFilterAction" method="applyFilter"/>
-		<transition to="entitySelection.view"/>
+		<action bean="provinceFilterAction" method="preProcess"/>
+		<transition to="provinceSelection.view">
+			<set attribute="assign"    value="'province/assign'"      scope="flow"/>
+		</transition>
 	</action-state>
 	
 	<!-- 
-	 ! entity 
+	 ! province 
 	 ! SELECTION VIEW
 	 !-->
-	<view-state id="entitySelection.view" view="frame">
+	<view-state id="provinceSelection.view" view="frame">
 		<!-- 
 		 ! before selection
 		 -->
         <render-actions>
-            <action bean="entityFilterAction" method="applyFilter"/>
-			<set attribute="forward"   value="'entity/selection_fwd'"     scope="flash"/>
-			<set attribute="sidenav"   value="'entity/selection_nav'"     scope="flash"/>
-			<set attribute="sidebar"   value="'entity/selection_filter'"  scope="flash"/>
-			<set attribute="template"  value="'entity/selection'"         scope="flash"/>
-			<set attribute="info"      value="'entity/info'"              scope="flash"/>
+            <action bean="provinceFilterAction" method="applyFilter"/>
+			<set attribute="sidenav"   value="'province/selection_nav'"     scope="flash"/>
+			<set attribute="sidebar"   value="'province/selection_filter'"  scope="flash"/>
+			<set attribute="template"  value="'province/selection'"         scope="flash"/>
         </render-actions>
-		<!-- 
-		 ! forward transitions
-		 -->
-		<transition on="toProvince"  to="province.subflow"/>
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="createTarget"  to="entityBrowse.view">
-			<action bean="entityAction"            method="createTarget" />
+		<transition on="createTarget"  to="provinceEdit.view">
+			<action bean="provinceAction"            method="createTarget" />
 		</transition>
-		<transition on="selectTarget"  to="entityBrowse.view">
-			<action bean="entityAction"            method="selectTarget" />
+		<transition on="selectTarget"  to="provinceBrowse.view">
+			<action bean="provinceAction"            method="selectTarget" />
 		</transition>
 	</view-state>
 
 	<!-- 
-	 ! entity  
+	 ! province  
 	 ! BROWSE VIEW
 	 !-->
-	<view-state id="entityBrowse.view" view="frame">
+	<view-state id="provinceBrowse.view" view="frame">
 		<!-- 
 		 ! before browse
 		 -->
         <render-actions>
-            <action bean="entityAction" method="prepareTarget"/>
-            <action bean="entityAction" method="resolveAuthorization"/>
-			<set attribute="sidenav"   value="'entity/entity_nav'"  scope="flash"/>
-			<set attribute="sidebar"   value="'entity/entity_bar'"  scope="flash"/>
-			<set attribute="template"  value="'entity/entity'"      scope="flash"/>
+            <action bean="provinceAction" method="prepareTarget"/>
+            <action bean="provinceAction" method="resolveAuthorization"/>
+			<set attribute="sidenav"   value="'province/province_nav'"  scope="flash"/>
+			<set attribute="sidebar"   value="'province/province_bar'"  scope="flash"/>
+			<set attribute="template"  value="'province/province'"      scope="flash"/>
         </render-actions>
 		<!-- 
-		 ! transições locais: edit
+		 ! local transitions
 		 -->
-		<transition on="editTarget"     to="entityBrowse.view"/>
+		<transition on="editTarget"     to="provinceEdit.view"/>
 		<!-- 
-		 ! transições de retorno
+		 ! backward transitions
 		 -->
-		<transition on="toSelection"   to="actionRequestSelection.view"/>
+		<transition on="toSelection"   to="provinceSelection.view"/>
+	</view-state>
+	
+	<!-- 
+	 ! province  
+	 ! EDIT VIEW
+	 !-->
+	<view-state id="provinceEdit.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="provinceAction" method="editTarget"/>
+			<set attribute="sidenav"   value="'province/edit_nav'"    scope="flash"/>
+			<set attribute="sidebar"   value="'province/province_bar'"  scope="flash"/>
+			<set attribute="template"  value="'province/province_form'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="storeTarget"   to="provinceBrowse.view">
+			<action bean="provinceAction"            method="bindAndValidate" />
+			<action bean="provinceAction"            method="storeTarget" />
+		</transition>
 	</view-state>
 	
 	<!--
@@ -76,7 +95,7 @@
 	<end-state id="backToParent" />
 	<end-state id="returnTarget" >
 		<output-mapper>
-			<mapping source="flowScope.entity" target="returnTarget"/>
+			<mapping source="flowScope.province" target="returnTarget"/>
 		</output-mapper>
 	</end-state>
 	
@@ -87,7 +106,7 @@
 	<global-transitions>
 		<transition on="backToHome"   to="backToHome"/>
 		<transition on="backToParent" to="backToParent"/>
-		<transition on="cancelForm"   to="entityBrowse.view"/>
+		<transition on="cancelForm"   to="provinceBrowse.view"/>
 	</global-transitions>
 	
 </flow>
