@@ -26,20 +26,18 @@ public class ProvinceTestSupport {
 
     private static int testKey = 1;
 
-    public static Province createProvince(Object... args) {
-        Operator operator;
-        try {
-            operator = (Operator) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            operator = OperatorTestSupport.createOperator();
-        }
-        String code;
-        try {
-        	code = (String) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-        	code = DomainTestSupport.getNonRepeatableStringValue(20, testKey++);
-        }
-        Province province = Province.provinceFactory(operator, code, DomainTestSupport.getNonRepeatableStringValue(20, testKey));
+    public static Province createProvince() {
+        return ProvinceTestSupport.createProvince(OperatorTestSupport.createOperator());
+    }
+
+    public static Province createProvince(Operator operator) {
+        return ProvinceTestSupport.createProvince(operator, DomainTestSupport.getNonRepeatableStringValue(3, testKey++));
+    }
+
+    public static Province createProvince(Operator operator, String code) {
+        Province province = Province.provinceFactory(operator);
+        province.setProvinceCode(code);
+        province.setProvinceName(DomainTestSupport.getNonRepeatableStringValue(20, testKey));
         return province;
     }
 

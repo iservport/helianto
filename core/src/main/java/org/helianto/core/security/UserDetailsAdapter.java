@@ -24,7 +24,9 @@ import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.springframework.security.Authentication;
 import org.springframework.security.GrantedAuthority;
+import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.util.Assert;
@@ -91,7 +93,17 @@ public class UserDetailsAdapter implements
      */
     public static PublicUserDetails retrievePublicUserDetailsFromSecurityContext() {
     	try {
-        	Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    		SecurityContext context = SecurityContextHolder.getContext();
+    		if (context==null) {
+        		logger.warn("Security context not available.");
+    			return null;
+    		}
+    		Authentication authentication = context.getAuthentication();
+    		if (authentication==null) {
+        		logger.warn("Authentication not available.");
+    			return null;
+    		}
+        	Object userDetails = authentication.getPrincipal();
         	if (userDetails instanceof PublicUserDetails) {
                 PublicUserDetails pud = (PublicUserDetails) userDetails;  
                 if (logger.isDebugEnabled()) {

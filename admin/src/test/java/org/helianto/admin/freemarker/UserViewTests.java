@@ -18,8 +18,11 @@ package org.helianto.admin.freemarker;
 
 import java.util.List;
 
+import org.helianto.core.Operator;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.web.test.AbstractViewTest;
 
@@ -48,6 +51,12 @@ public class UserViewTests extends AbstractViewTest<UserFilter, UserGroup> {
 		return UserGroupTestSupport.createUserGroupList(5);
 	}
 
+	protected void addToModel() {
+		Operator operator = OperatorTestSupport.createOperator("DEFAULT");
+		model.put("operator", operator);
+		model.put("entity", EntityTestSupport.createEntity(operator, "ENTITY"));
+	}
+	
 	@Override
 	protected boolean visualTest() {
 		return false;

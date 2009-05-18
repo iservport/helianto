@@ -5,6 +5,10 @@
               http://www.springframework.org/schema/webflow
               http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
 
+	<input-mapper>
+		<input-attribute name="operator" scope="flow"/>
+	</input-mapper>
+	
 	<start-state idref="preProcess" />
 	
 	<action-state id="preProcess">
@@ -91,8 +95,8 @@
 	 ! End states 
 	// -->
 
-	<end-state id="backToHome" />
-	<end-state id="backToParent" />
+	<end-state id="toHome" />
+	<end-state id="toParent" />
 	<end-state id="returnTarget" >
 		<output-mapper>
 			<mapping source="flowScope.province" target="returnTarget"/>
@@ -104,8 +108,8 @@
 	// -->
 
 	<global-transitions>
-		<transition on="backToHome"   to="backToHome"/>
-		<transition on="backToParent" to="backToParent"/>
+		<transition on="toHome"   to="toHome"/>
+		<transition on="toParent" to="toParent"/>
 		<transition on="cancelForm"   to="provinceBrowse.view"/>
 	</global-transitions>
 	

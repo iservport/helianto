@@ -170,8 +170,12 @@
 	 ! SUBFLOW
 	 !-->
 	<subflow-state id="province.subflow" flow="province">
-		<transition on="backToHome" to="backToHome"/>
-		<transition on="backToParent" to="actionRequestBrowse.view"/>
+		<attribute-mapper>
+			<input-mapper>
+				<mapping source="flowScope.operator" target="operator"/>
+			</input-mapper>
+		</attribute-mapper>
+		<transition on="toHome" to="toHome"/>
 	</subflow-state>
 
 	<!-- 
@@ -179,29 +183,21 @@
 	 ! SUBFLOW
 	 !-->
 	<subflow-state id="user.subflow" flow="user">
-		<transition on="backToHome" to="backToHome"/>
-		<transition on="backToParent" to="actionRequestBrowse.view"/>
+		<transition on="toHome" to="toHome"/>
 	</subflow-state>
 
 	<!--
 	 ! End states 
 	// -->
 
-	<end-state id="backToHome" />
-	<end-state id="backToParent" />
-	<end-state id="returnTarget" >
-		<output-mapper>
-			<mapping source="flowScope.entity" target="returnTarget"/>
-		</output-mapper>
-	</end-state>
+	<end-state id="toHome" />
 	
 	<!--
 	 ! Globals 
 	// -->
 
 	<global-transitions>
-		<transition on="backToHome"   to="backToHome"/>
-		<transition on="backToParent" to="backToParent"/>
+		<transition on="toHome"       to="toHome"/>
 		<transition on="cancelForm"   to="entityBrowse.view"/>
 	</global-transitions>
 	

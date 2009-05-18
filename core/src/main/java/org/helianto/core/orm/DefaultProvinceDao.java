@@ -21,6 +21,7 @@ import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.core.filter.CriteriaBuilder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Province data access.
@@ -28,7 +29,16 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("provinceDao")
+@Transactional
 public class DefaultProvinceDao extends AbstractFilterDao<Province, ProvinceFilter> {
+
+	/**
+	 * Do not raise exception when entity is null. 
+	 */
+	@Override
+	protected boolean requireEntity() {
+		return false;
+	}
 
 	/**
 	 * Filter provinces using same operator as the current entity.

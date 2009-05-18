@@ -140,6 +140,7 @@ public class NamespaceMgrTests {
 		Province managedProvince = ProvinceTestSupport.createProvince();
 		
 		expect(provinceDao.merge(province)).andReturn(managedProvince);
+		provinceDao.flush();
 		replay(provinceDao);
 		
 		assertSame(managedProvince , namespaceMgr.storeProvince(province));

@@ -116,7 +116,10 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
 		
         DateFormat dateFormat = null;
         try {
-            Locale locale = getAuthorizedUser().getLocale();
+        	Locale locale = Locale.getDefault();
+        	if (getAuthorizedUser()!=null) {
+                locale = getAuthorizedUser().getLocale();
+        	}
         	// TODO refator using preferences API
 //        	dateFormat = new SimpleDateFormat(operator.getPreferredDateFormat()+" "+operator.getPreferredTimeFormat(), operator.getLocale());
         	dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);

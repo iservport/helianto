@@ -21,6 +21,7 @@ import org.helianto.core.EntityFilter;
 import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.core.filter.CriteriaBuilder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Entity data acess.
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("entityDao")
+@Transactional
 public class DefaultEntityDao extends AbstractFilterDao<Entity, EntityFilter> {
 
 	/**

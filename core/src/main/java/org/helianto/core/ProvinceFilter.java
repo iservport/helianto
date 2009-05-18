@@ -72,7 +72,9 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	@Override
 	public void setEntity(Entity entity) {
 		super.setEntity(entity);
-		setOperator(entity.getOperator());
+		if (entity!=null) {
+			setOperator(entity.getOperator());
+		}
 	}
 
 	/**

@@ -22,6 +22,7 @@ import org.helianto.core.OperatorFilter;
 import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.core.filter.CriteriaBuilder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Operator data access.
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("operatorDao")
+@Transactional
 public class DefaultOperatorDao extends AbstractFilterDao<Operator, OperatorFilter> {
 
 	/**
