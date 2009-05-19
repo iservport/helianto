@@ -41,6 +41,8 @@ import org.helianto.core.UserLogFilter;
 import org.helianto.core.UserState;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 /**
@@ -48,6 +50,8 @@ import org.springframework.util.Assert;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Service("userMgr")
+@Transactional
 public class UserMgrImpl implements UserMgr {
     
     public Identity findIdentityByPrincipal(String principal) {

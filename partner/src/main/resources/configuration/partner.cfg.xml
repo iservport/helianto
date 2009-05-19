@@ -8,7 +8,6 @@
 		<mapping class="org.helianto.partner.Contact" />
 		<mapping class="org.helianto.partner.PartnerRegistry" />
 		<mapping class="org.helianto.partner.Partner" />
-		<mapping class="org.helianto.partner.SimplePartnerRegistry" />
 		<mapping class="org.helianto.partner.Agent" />
 		<mapping class="org.helianto.partner.Customer" />
 		<mapping class="org.helianto.partner.Division" />

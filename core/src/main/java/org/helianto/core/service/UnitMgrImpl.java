@@ -24,13 +24,17 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
 import org.helianto.core.dao.FilterDao;
+import org.springframework.transaction.annotation.Transactional;
+
 
 
 /**
  * Default implementation to unit service interface.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
+@org.springframework.stereotype.Service("unitMgr")
+@Transactional
 public class UnitMgrImpl implements UnitMgr {
     
 	public List<Unit> findUnits(UnitFilter unitFilter) {

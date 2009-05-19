@@ -44,6 +44,36 @@ import javax.persistence.UniqueConstraint;
 @DiscriminatorValue("P")
 public class Partner implements java.io.Serializable {
 
+    /**
+     * <code>Partner</code> factory.
+     * 
+     * @param partnerRegistry
+     * @param sequence
+     */
+    protected static <T extends Partner> T internalPartnerFactory(Class<T> clazz, PartnerRegistry partnerRegistry) {
+        T partner = null;
+        try {
+        	partner = clazz.newInstance();
+        } 
+        catch (Exception e) {
+        	throw new RuntimeException("Unable to instantiate partner or descendant.");
+        }
+        partner.setPartnerRegistry(partnerRegistry);
+        partnerRegistry.getPartners().add(partner);
+        partner.setPartnerState(PartnerState.IDLE.getValue());
+        partner.setPriority('0');
+        return partner;
+    }
+
+    /**
+     * <code>Partner</code> factory.
+     * 
+     * @param partnerRegistry
+     */
+    public static Partner partnerFactory(PartnerRegistry partnerRegistry) {
+        return internalPartnerFactory(Partner.class, partnerRegistry);
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private PartnerRegistry partnerRegistry;
@@ -55,7 +85,9 @@ public class Partner implements java.io.Serializable {
     public Partner() {
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -117,52 +149,6 @@ public class Partner implements java.io.Serializable {
     }
     public void setPartnerState(PartnerState partnerState) {
         this.partnerState = partnerState.getValue();
-    }
-
-    /**
-     * <code>Partner</code> factory.
-     * 
-     * @param partnerRegistry
-     * @param sequence
-     */
-    protected static <T extends Partner> T internalPartnerFactory(Class<T> clazz, PartnerRegistry partnerRegistry) {
-        T partner = null;
-        try {
-        	partner = clazz.newInstance();
-        } 
-        catch (Exception e) {
-        	throw new RuntimeException("Unable to instantiate partner or descendant.");
-        }
-        partner.setPartnerRegistry(partnerRegistry);
-        partnerRegistry.getPartners().add(partner);
-        partner.setPartnerState(PartnerState.IDLE.getValue());
-        partner.setPriority('0');
-        return partner;
-    }
-
-    /**
-     * <code>Partner</code> factory.
-     * 
-     * @param partnerRegistry
-     */
-    public static Partner partnerFactory(PartnerRegistry partnerRegistry) {
-        return internalPartnerFactory(Partner.class, partnerRegistry);
-    }
-
-    /**
-     * <code>Partner</code> query.
-     */
-    @Transient
-    public static StringBuilder getPartnerQueryStringBuilder() {
-    	return new StringBuilder("select partner from Partner partner ");
-    }   
-
-    /**
-     * <code>Partner</code> natural id query.
-     */
-    @Transient
-    public static String getPartnerNaturalIdQueryString() {
-    	return getPartnerQueryStringBuilder().append("where partner.partnerRegistry = ? and partner.class = 'P' ").toString();
     }
 
     /**

@@ -29,17 +29,4 @@
  limitations under the License.
 		-->
 
-	<!--
-			Service bean	
-	
-	<bean id="partnerMgr" 
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
-		parent="mgrTemplate">
-		<property name="target">
-			<bean id="partnerTarget"
-				class="org.helianto.partner.service.PartnerMgrImpl">
-			</bean>
-		</property>
-	</bean> -->
-
 </beans>

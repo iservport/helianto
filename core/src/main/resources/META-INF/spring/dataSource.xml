@@ -25,7 +25,7 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:/hibernate.properties</value>
+				<value>classpath:/META-INF/hibernate.properties</value>
 			</list>
 		</property>
 	</bean>

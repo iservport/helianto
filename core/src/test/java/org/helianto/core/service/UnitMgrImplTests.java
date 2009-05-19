@@ -30,6 +30,7 @@ import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
 import org.helianto.core.dao.FilterDao;
 
+
 public class UnitMgrImplTests extends TestCase {
     
     private UnitMgrImpl unitMgr;

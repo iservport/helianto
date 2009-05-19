@@ -28,6 +28,7 @@ import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -35,6 +36,8 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Service("sequenceMgr")
+@Transactional
 public class SequenceMgrImpl implements SequenceMgr {
 	
 	@Transactional(readOnly=false)

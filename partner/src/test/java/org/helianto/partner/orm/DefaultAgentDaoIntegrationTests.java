@@ -32,6 +32,7 @@ public class DefaultAgentDaoIntegrationTests extends AbstractPartnerDaoImplConfi
 	
 	public void testFindUnique() {
 		Agent agent = AgentTestSupport.createAgent();
+		System.out.println(">>>"+agent.getId());
 		partnerDao.persist(agent);
 		assertEquals(agent, partnerDao.findUnique(agent.getPartnerRegistry(), 'A'));
 	}
