@@ -1,8 +1,9 @@
 The Helianto Project
 
-Helianto project is designed to provide easy "construction blocks" to an Hibernate+Spring+Acegi based application.
+Helianto project is about productivity in Java development using Spring+JPA. 
 
-For additional information, please, see http://www.helianto.org.
+For additional information, please, visit the project info at http://www.helianto.org. There 
+is also a documentation wiki at http://db.iservport.com/helianto.
 
 -------------------------------------------------------------------------------
 
