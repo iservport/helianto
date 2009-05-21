@@ -24,89 +24,35 @@
 		<section name="Welcome to the Helianto Project">
 
 			<p>
-				Helianto project is designed to provide an easy path to
-				build a secure ORM/dependency injection server side
-				application. Helianto strongly relies on the Spring
-				Framework, Acegi Security and Hibernate to achieve this.
+				Helianto project is about productivity in Java development. 
+				It is conceived to provide a shorter development time per interaction
+				accross the cycle of web application creation.
+				Here is a list of possible impacts organized by application layer:
 			</p>
-
-			<subsection name="Project Goals">
-				<p>Project goals are:</p>
-				<ul>
-					<li>
-						encourage the use of dependency injection and
-						object relational mapping,
-					</li>
-					<li>
-						shorten development time necessary to wire up
-						usual persistence and service beans, like data
-						sources, daos, transaction management,
-						internationalization,
-					</li>
-					<li>
-						provide common extensible domain structure and
-						services to meet the requirements of
-						applications that may share user authentication
-						and authorization across different
-						organizations, as well as customer and supplier
-						relationship management, production process
-						structure and more,
-					</li>
-					<li>make integration tests easier, and</li>
-					<li>
-						provide a minimal web application template with
-						secure access presentation layer included.
-					</li>
-				</ul>
-
-				<p>
-					Goals are consistent with the mission statement (see
-					the reference guide).
-				</p>
-
-			</subsection>
-
-			<subsection
-				name="Creating New Projects Based on Helianto">
-
-				<p>Projects extending Helianto may:</p>
-				<ol>
-					<li>
-						include Helianto dependencies in a new
-						Maven project pom,
-					</li>
-					<li>
-						extend (or create) domain, dao or service beans to
-						implement the desired functionality,
-					</li>
-					<li>
-						update dependency injection context
-						definition required by the new dao or service
-						beans,
-					</li>
-					<li>run unit and integration tests,</li>
-					<li>
-						write the presentation layer using a MVC
-						framework of choice, as Struts, JSF, Spring or
-						Spring Web Flow,
-					</li>
-					<li>
-						if using Spring Web Flow, add provided
-						credential and access flows as plugins,
-					</li>
-					<li>run additional tests, and</li>
-					<li>
-						deploy the application to a servlet container.
-					</li>
-				</ol>
-
-				<p>
-					Although Helianto imposes no restriction to the
-					presentation layer, use of Freemarker and Sitemesh
-					is encouraged.
-				</p>
-
-			</subsection>
+			<ol>
+			<li>Persistence layer: <b>dramatically reduced demand for sql coding</b> as almost 
+			any query is transparently created by ORM. Please, check the documentation to see
+			how special classes called filters work with ORM-persitent classes to constraint selection from the
+			database. 
+			</li>
+			<li>Service layer: <b>common service interfaces</b> provided, including
+			transaction management features, <b>made easy to extend</b> mostly because of Spring framework 
+			dependency injection wide adoption. For example, developers may choose either to call ready to use security management
+			methods (closely related to org.springframework.security approaches) or to implement their own. This is also
+			valid for customers, documents, processes and much more.
+			</li>
+			<li>Presentation layer: although it is not part of the project goals, a couple of abstract classes may help to
+			build a solid presentation logic based on org.springframework.webflow.
+			</li>
+			<li>Domain abstraction: <b>common domain abstraction</b> is designed to provide flexibility to fit a variety
+			of business models, <b>made easy to extend</b> mostly because of JPA annotations. There is no need to issue 
+			sql dml code.
+			</li>
+			</ol>
+			<p>
+				Goals are consistent with the mission statement (see
+				the reference guide).
+			</p>
 
 			<subsection name="Project Status">
 

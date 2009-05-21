@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="Helianto">
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+
 	<bannerLeft>
 		<name>Helianto</name>
 		<src>images/helianto-t.gif</src>
@@ -10,10 +13,11 @@
 		<src>http://sflogo.sourceforge.net/sflogo.php?group_id=161555&amp;type=4</src>
 		<href>http://www.sourceforge.net</href>
 	</bannerRight>
+	
+  <poweredBy>
+    <logo img="" name="spring" href="" />
+  </poweredBy>
 
-	<!-- poweredBy>
-    		<logo name="Build with Maven 2" href="http://maven.apache.org" img="images/logos/maven-feather.png" />
-    </poweredBy-->
     
     <body>
 		<links>
@@ -28,10 +32,8 @@
 		</menu>
 
 		<menu name="Documentation">
-			<item name="Reference guide (html)"
-				href="docbook/helianto.html" />
-			<item name="Reference guide (pdf)"
-				href="docbook/helianto.pdf" />
+			<item name="Reference guide (wiki)"
+				href="http://db.iservport.com/helianto" />
 			<item name="Helianto core Javadocs"
 				href="helianto-core/apidocs/index.html" />
 			<!--item name="Helianto process Javadocs" href="helianto-process/apidocs/index.html"/-->
@@ -40,7 +42,7 @@
 		<menu name="Development">
 			<item name="Road map"
 				href="http://jira.helianto.org/jira/browse/HEL?report=com.atlassian.jira.plugin.system.project:roadmap-panel"
-				target="_blank" />
+				/>
 		</menu>
 
 		<menu ref="modules"/>

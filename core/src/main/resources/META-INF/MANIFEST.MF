@@ -9,17 +9,3 @@ Import-Bundle: com.springsource.org.apache.commons.dbcp;version="[1.2.2.osgi,1.2
  com.springsource.org.apache.commons.logging;version="[1.1.1,2.0.0)",
  com.springsource.javax.mail,
  org.springframework.security;version="[2.0.2.A,3.0.0)"
-Provide-Package: org.helianto.core,
- org.helianto.core.creation,
- org.helianto.core.dao,
- org.helianto.core.filter,
- org.helianto.core.hibernate,
- org.helianto.core.mail,
- org.helianto.core.mail.compose,
- org.helianto.core.orm,
- org.helianto.core.security,
- org.helianto.core.service,
- org.helianto.core.test,
- org.helianto.core.transform,
- org.helianto.core.transform.mail,
- org.helianto.core.validation
