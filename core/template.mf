@@ -1,7 +1,7 @@
 Bundle-SymbolicName: org.helianto.core.shared_services
 Bundle-Name: Helianto core module
 Import-Template: 
- org.springframework.*;version="[2.5.6.SEC01, 3.0.0)";resolution:=optional,
- org.springframework.security.*;version="[2.0.4, 2.0.4]";resolution:=optional,
+ org.springframework.*;version="[2.5.6.SEC01, 3.0.0)",
+ org.springframework.security.*;version="[2.0.4.A, 2.0.4.A]",
  org.apache.commons.dbcp.*;version="[1.2.2.osgi, 1.2.2.osgi]",
  javax.sql;version="0"

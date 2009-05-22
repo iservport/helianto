@@ -179,11 +179,30 @@ Application-TraceLevels: ${application.traceLevels}
 		<!-- hibernate bundles -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>org.hibernate.ejb-library</artifactId>
-			<type>libd</type>
-			<version>3.3.2.GA</version>
+			<artifactId>com.springsource.org.hibernate</artifactId>
+			<version>3.3.1.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate.ejb</artifactId>
+			<version>3.3.1.ga</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate.annotations</artifactId>
+			<version>3.3.1.ga</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
+			<version>3.3.0.ga</version>
 		</dependency>
 		<!-- javax bundles -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>com.springsource.javax.persistence</artifactId>
+			<version>1.99.0</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>com.springsource.javax.transaction</artifactId>
@@ -209,6 +228,17 @@ Application-TraceLevels: ${application.traceLevels}
 			<groupId>org.apache.commons</groupId>
 			<artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
 			<version>1.2.2.osgi</version>
+		</dependency>
+		<!-- logging bundles -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>com.springsource.slf4j.api</artifactId>
+			<version>1.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>com.springsource.slf4j.jcl</artifactId>
+			<version>1.5.6</version>
 		</dependency>
 		<!-- test bundles -->
 		<dependency>

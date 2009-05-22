@@ -12,6 +12,5 @@
     <service id="categoryMgr" ref="categoryMgr" interface="org.helianto.core.service.CategoryMgr" />
     <service id="securityMgr" ref="securityMgr" interface="org.helianto.core.service.SecurityMgr" />
     <service id="unitMgr"     ref="unitMgr"     interface="org.helianto.core.service.UnitMgr" />
-    <reference id="dataSource" interface="javax.sql.DataSource"/>
 
 </beans:beans>
