@@ -27,7 +27,7 @@
 		<property name="mappingLocations" 
 			value="classpath*:/mappings/*.hbm.xml"/>		
 		<property name="configLocations" 
-			value="classpath:/configuration/*.cfg.xml"/>		
+			value="classpath*:/configuration/*.cfg.xml"/>		
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
