@@ -78,19 +78,22 @@ Export-Package: freemarker.configuration;version="0.0.0",freemarker.co
  ersion="0.0.0";uses:="junit.framework,org.helianto.core.validation,or
  g.helianto.document,org.helianto.process,org.springframework.beans,or
  g.springframework.orm.hibernate3,org.springframework.stereotype",org.
- helianto.web.controller;version="0.0.0";uses:="javax.annotation,javax
- .mail,junit.framework,org.helianto.controller,org.helianto.core,org.h
- elianto.core.security,org.helianto.core.service,org.helianto.message.
- mail.compose,org.helianto.message.service,org.helianto.web.test,org.j
- unit,org.springframework.stereotype,org.springframework.validation,or
- g.springframework.webflow.action,org.springframework.webflow.executio
- n",org.helianto.web.mail.compose;version="0.0.0";uses:="org.helianto.
- message.mail.compose,org.springframework.mail.javamail",org.helianto.
- web.test;version="0.0.0";uses:="freemarker.template,junit.framework,o
- rg.helianto.core.security,org.junit,org.springframework.mock.web,org.
- springframework.web.servlet.view.freemarker,org.springframework.webfl
- ow.execution",org.helianto.web.view;version="0.0.0";uses:="freemarker
- .template,junit.framework,org.helianto.web.test,org.junit"
+ helianto.web.controller;version="0.0.0";uses:="javax.annotation,junit
+ .framework,org.helianto.controller,org.helianto.core,org.helianto.cor
+ e.security,org.helianto.core.service,org.helianto.web.test,org.junit,
+ org.springframework.stereotype,org.springframework.validation,org.spr
+ ingframework.webflow.execution",org.helianto.web.controller.legacy;ve
+ rsion="0.0.0";uses:="javax.annotation,javax.mail,junit.framework,org.
+ helianto.core,org.helianto.core.service,org.helianto.message.mail.com
+ pose,org.helianto.message.service,org.springframework.stereotype,org.
+ springframework.webflow.action,org.springframework.webflow.execution"
+ ,org.helianto.web.mail.compose;version="0.0.0";uses:="org.helianto.me
+ ssage.mail.compose,org.springframework.mail.javamail",org.helianto.we
+ b.test;version="0.0.0";uses:="freemarker.template,junit.framework,org
+ .helianto.core.security,org.junit,org.springframework.mock.web,org.sp
+ ringframework.web.servlet.view.freemarker,org.springframework.webflow
+ .execution",org.helianto.web.view;version="0.0.0";uses:="freemarker.t
+ emplate,junit.framework,org.helianto.web.test,org.junit"
 Bundle-Vendor: i-Serv Consultoria Empresarial
 Bundle-Classpath: .
 Bundle-Version: 0.2.2
@@ -101,24 +104,24 @@ Import-Package: freemarker.template,javax.annotation,javax.mail,javax.
  mail.internet,javax.persistence,javax.servlet,javax.servlet.http,juni
  t.framework,org.apache.commons.dbcp,org.apache.commons.logging,org.ea
  symock,org.easymock.classextension,org.helianto.document.validation,o
- rg.helianto.message.mail.composer,org.hibernate,org.hibernate.classic
- ,org.junit,org.springframework.beans,org.springframework.beans.factor
- y.config,org.springframework.beans.factory.support,org.springframewor
- k.beans.propertyeditors,org.springframework.context,org.springframewo
- rk.context.annotation,org.springframework.context.support,org.springf
- ramework.dao,org.springframework.dao.annotation,org.springframework.m
- ail,org.springframework.mail.javamail,org.springframework.mock.web,or
- g.springframework.orm.hibernate3,org.springframework.orm.hibernate3.a
- nnotation,org.springframework.orm.hibernate3.support,org.springframew
- ork.security,org.springframework.security.context,org.springframework
- .security.userdetails,org.springframework.stereotype,org.springframew
- ork.test,org.springframework.transaction.annotation,org.springframewo
- rk.transaction.interceptor,org.springframework.ui.freemarker,org.spri
- ngframework.util,org.springframework.validation,org.springframework.w
- eb.context.support,org.springframework.web.servlet,org.springframewor
- k.web.servlet.i18n,org.springframework.web.servlet.theme,org.springfr
- amework.web.servlet.view,org.springframework.web.servlet.view.freemar
- ker,org.springframework.webflow.action,org.springframework.webflow.co
- re.collection,org.springframework.webflow.execution,org.springframewo
- rk.webflow.test
+ rg.helianto.message.mail.composer,org.helianto.web.controller,org.hib
+ ernate,org.hibernate.classic,org.junit,org.springframework.beans,org.
+ springframework.beans.factory.config,org.springframework.beans.factor
+ y.support,org.springframework.beans.propertyeditors,org.springframewo
+ rk.context,org.springframework.context.annotation,org.springframework
+ .context.support,org.springframework.dao,org.springframework.dao.anno
+ tation,org.springframework.mail,org.springframework.mail.javamail,org
+ .springframework.mock.web,org.springframework.orm.hibernate3,org.spri
+ ngframework.orm.hibernate3.annotation,org.springframework.orm.hiberna
+ te3.support,org.springframework.security,org.springframework.security
+ .context,org.springframework.security.userdetails,org.springframework
+ .stereotype,org.springframework.test,org.springframework.transaction.
+ annotation,org.springframework.transaction.interceptor,org.springfram
+ ework.ui.freemarker,org.springframework.util,org.springframework.vali
+ dation,org.springframework.web.context.support,org.springframework.we
+ b.servlet,org.springframework.web.servlet.i18n,org.springframework.we
+ b.servlet.theme,org.springframework.web.servlet.view,org.springframew
+ ork.web.servlet.view.freemarker,org.springframework.webflow.action,or
+ g.springframework.webflow.core.collection,org.springframework.webflow
+ .execution,org.springframework.webflow.test
 
