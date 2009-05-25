@@ -21,7 +21,5 @@
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
            http://www.springframework.org/schema/osgi 
            http://www.springframework.org/schema/osgi/spring-osgi.xsd">
-
-    <service ref="partnerMgr" interface="org.helianto.partner.service.PartnerMgr" />
-
+           
 </beans:beans>
