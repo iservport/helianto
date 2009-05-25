@@ -20,10 +20,9 @@
 	<classpathentry kind="src" output="process/target/test-classes" path="process/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="process/target/test-classes" path="process/src/test/resources"/>
 	<classpathentry kind="src" output="web/target/classes" path="web/src/main/java"/>
-	<classpathentry excluding="**" kind="src" output="web/target/classes" path="web/src/main/resources"/>
+	<classpathentry kind="src" output="web/target/classes" path="web/src/main/resources"/>
 	<classpathentry kind="src" output="web/target/test-classes" path="web/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="web/target/test-classes" path="web/src/test/resources"/>
-	<classpathentry kind="src" path="admin/src/main/java"/>
 	<classpathentry kind="src" path="admin/src/main/resources"/>
 	<classpathentry kind="src" path="admin/src/test/java"/>
 	<classpathentry kind="src" path="admin-dm/src/main/resources"/>

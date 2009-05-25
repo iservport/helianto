@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.web.controller;
+package org.helianto.web.controller.legacy;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
