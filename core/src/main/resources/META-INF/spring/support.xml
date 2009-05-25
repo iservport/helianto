@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans 
-           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
 
@@ -18,10 +14,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 		-->
-    <!-- 
-        Exception translation bean post processor 
-    -->
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>	
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<!-- 
 		Messages
 	-->

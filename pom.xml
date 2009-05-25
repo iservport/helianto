@@ -176,6 +176,23 @@ Application-TraceLevels: ${application.traceLevels}
 			<artifactId>org.springframework.security</artifactId>
 			<version>2.0.4.A</version>
 		</dependency>
+		<!-- aspectJ bundles -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>org.aspectj-library</artifactId>
+			<type>libd</type>
+			<version>1.6.2.RELEASE</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>org.springframework.instrument</artifactId>
+			<version>2.5.6.SEC01</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>org.springframework.aspects</artifactId>
+			<version>2.5.6.SEC01</version>
+		</dependency>
 		<!-- hibernate bundles -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

@@ -38,12 +38,16 @@ import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.ProcessDocumentFilter;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.Setup;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <code>ProcessMgr</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Service("processMgr")
+@Transactional
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     public List<Node> prepareTree(ProcessDocument processDocument) {

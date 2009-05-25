@@ -32,12 +32,16 @@ import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterFilter;
 import org.helianto.process.ResourceParameterValue;
 import org.helianto.process.ResourceType;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>ResourceMgr</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Service("resourceMgr")
+@Transactional
 public class ResourceMgrImpl implements ResourceMgr {
 	
     public List<Node> prepareTree(ResourceGroupFilter resourceGroupFilter) {

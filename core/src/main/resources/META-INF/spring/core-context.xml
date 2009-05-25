@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans 
-           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-           http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-2.5.xsd
-           http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx.xsd">
-               
-    <context:annotation-config/>
-	<context:component-scan base-package="org.helianto.core.orm,org.helianto.core.service,org.helianto.core.validation"/>
-	    
 	<!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
 
@@ -28,5 +14,46 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 		-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+               
+	<!--
+		Activates various annotations to be detected in bean classes: Spring's
+		@Required and @Autowired, as well as JSR 250's @PostConstruct,
+		@PreDestroy and @Resource (if available) and JPA's @PersistenceContext
+		and @PersistenceUnit (if available).
+	-->
+    <context:annotation-config/>
+    
+	<context:component-scan base-package="org.helianto.core.orm,org.helianto.core.service,org.helianto.core.validation"/>
+	    
+	<!--
+		Post-processor to perform exception translation on @Repository classes (from native
+		exceptions such as JPA PersistenceExceptions to Spring's DataAccessException hierarchy).
+	-->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+	<!--
+		Instruct Spring to perform declarative transaction management
+		automatically on annotated classes.
+	-->
+	<tx:annotation-driven mode="aspectj"/>
+	
+	<!--
+			Hibernate transaction manager	
+	-->
+	<bean id="transactionManager" 
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
 
 </beans>

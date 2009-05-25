@@ -24,7 +24,7 @@ import org.helianto.core.CategoryFilter;
 /**
  * Service interface to categories.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public interface CategoryMgr {
 
