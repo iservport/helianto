@@ -19,7 +19,7 @@ import java.io.IOException;
 
 import org.helianto.core.IdentityType;
 import org.helianto.core.test.CredentialTestSupport;
-import org.helianto.web.controller.IdentityForm;
+import org.helianto.web.controller.legacy.IdentityForm;
 import org.helianto.web.test.FreeMarkerViewTestSupport;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
