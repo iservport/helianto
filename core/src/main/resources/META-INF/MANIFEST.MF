@@ -83,17 +83,17 @@ Export-Package: freemarker.configuration;version="0.0.0",freemarker.co
  e.security,org.helianto.core.service,org.helianto.web.test,org.junit,
  org.springframework.stereotype,org.springframework.validation,org.spr
  ingframework.webflow.execution",org.helianto.web.controller.legacy;ve
- rsion="0.0.0";uses:="javax.annotation,javax.mail,junit.framework,org.
- helianto.core,org.helianto.core.service,org.helianto.message.mail.com
- pose,org.helianto.message.service,org.springframework.stereotype,org.
- springframework.webflow.action,org.springframework.webflow.execution"
- ,org.helianto.web.mail.compose;version="0.0.0";uses:="org.helianto.me
- ssage.mail.compose,org.springframework.mail.javamail",org.helianto.we
- b.test;version="0.0.0";uses:="freemarker.template,junit.framework,org
- .helianto.core.security,org.junit,org.springframework.mock.web,org.sp
- ringframework.web.servlet.view.freemarker,org.springframework.webflow
- .execution",org.helianto.web.view;version="0.0.0";uses:="freemarker.t
- emplate,junit.framework,org.helianto.web.test,org.junit"
+ rsion="0.0.0";uses:="javax.annotation,junit.framework,org.helianto.co
+ re,org.helianto.core.service,org.helianto.message.mail.compose,org.he
+ lianto.message.service,org.springframework.stereotype,org.springframe
+ work.webflow.action,org.springframework.webflow.execution",org.helian
+ to.web.mail.compose;version="0.0.0";uses:="org.helianto.message.mail.
+ compose,org.springframework.mail.javamail",org.helianto.web.test;vers
+ ion="0.0.0";uses:="freemarker.template,junit.framework,org.helianto.c
+ ore.security,org.junit,org.springframework.mock.web,org.springframewo
+ rk.web.servlet.view.freemarker,org.springframework.webflow.execution"
+ ,org.helianto.web.view;version="0.0.0";uses:="freemarker.template,jun
+ it.framework,org.helianto.web.test,org.junit"
 Bundle-Vendor: i-Serv Consultoria Empresarial
 Bundle-Classpath: .
 Bundle-Version: 0.2.2
