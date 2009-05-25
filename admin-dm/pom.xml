@@ -8,7 +8,6 @@
   </parent>
   <groupId>org.helianto</groupId>
   <artifactId>helianto-admin-dm</artifactId>
-  <packaging>osgi-bundle</packaging>
   <name>Admin dm</name>
   <version>0.2.2-SNAPSHOT</version>
   <description>Helianto project admin module for Spring dm server.</description>
