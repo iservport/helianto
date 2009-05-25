@@ -13,11 +13,9 @@
  * limitations under the License.
  */
 
-package org.helianto.web.controller;
+package org.helianto.web.controller.legacy;
 
-import org.helianto.core.Credential;
 import org.helianto.core.service.SecurityMgr;
-import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.execution.Event;
@@ -56,7 +54,7 @@ public class CredentialFormAction extends FormAction {
             logger.debug("!---- STARTED");
         }
         CredentialForm form = doGetTaskForm(context);
-        Credential credential = securityMgr.findCredentialByPrincipal(form.getCredential().getIdentity().getPrincipal());
+        securityMgr.findCredentialByPrincipal(form.getCredential().getIdentity().getPrincipal());
         
         return success();
     }

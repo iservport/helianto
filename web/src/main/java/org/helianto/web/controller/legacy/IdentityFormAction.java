@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.web.controller;
+package org.helianto.web.controller.legacy;
 
 import javax.mail.MessagingException;
 
@@ -21,7 +21,6 @@ import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Operator;
 import org.helianto.core.service.SecurityMgr;
-import org.helianto.core.service.ServerMgr;
 import org.helianto.message.mail.compose.PasswordConfirmationMailForm;
 import org.helianto.message.service.MessageMgr;
 import org.springframework.stereotype.Component;
@@ -214,7 +213,6 @@ public class IdentityFormAction extends FormAction {
 
     private MessageMgr messageMgr;
     private SecurityMgr securityMgr;
-    private ServerMgr serverMgr;
     
     @javax.annotation.Resource
     public void setMessageMgr(MessageMgr messageMgr) {
@@ -224,11 +222,6 @@ public class IdentityFormAction extends FormAction {
     @javax.annotation.Resource
     public void setSecurityMgr(SecurityMgr securityMgr) {
         this.securityMgr =  securityMgr;
-    }
-
-    @javax.annotation.Resource
-    public void setServerMgr(ServerMgr serverMgr) {
-        this.serverMgr = serverMgr;
     }
 
 }
