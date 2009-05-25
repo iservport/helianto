@@ -1,7 +1,7 @@
 Bundle-Version: 0.2.2
 Bundle-SymbolicName: org.helianto.core.shared_services
 Bundle-Name: Helianto core module
-Import-Package: org.springframework.aop, org.springframework.aop.framework, org.aopalliance.aop
+Import-Package: org.springframework.aop, org.springframework.aop.framework, org.springframework.transaction.aspectj, org.aopalliance.aop
 Import-Template: 
  org.springframework.*;version="[2.5.6.SEC01, 3.0.0)",
  org.springframework.aop;version="[2.5.6.SEC01, 3.0.0)",
