@@ -26,12 +26,12 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.dao.AbstractBasicDao;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
+import javax.persistence.Query;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -52,17 +52,16 @@ public class AbstractBasicDaoTests {
 		
 		Query result = createMock(Query.class);
 		
-		expect(session.createQuery("select user from User user where user.entity = ? AND user.internalNumber = ? ")).andReturn(result);
-		replay(session);
+		expect(em.createQuery("select user from User user where user.entity = ? AND user.internalNumber = ? ")).andReturn(result);
+		replay(em);
 		
 		expect(result.setParameter(0, entity)).andReturn(result);
 		expect(result.setParameter(1, internalNumber)).andReturn(result);
-		expect(result.list()).andReturn(resultList);
+		expect(result.getResultList()).andReturn(resultList);
 		replay(result);
 		
 		assertSame(resultUser, sampleDao.findUnique(entity, internalNumber));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 		verify(result);
 	}
 	
@@ -75,7 +74,7 @@ public class AbstractBasicDaoTests {
 				return new String[] { "KEY1", "KEY2" };
 			}
 		};
-		sampleDao.setSessionFactory(sessionFactory);
+		sampleDao.setEntityManager(em);
 
 		List<User> resultList = new ArrayList<User>();
 		User resultUser = new User();
@@ -83,17 +82,16 @@ public class AbstractBasicDaoTests {
 		
 		Query result = createMock(Query.class);
 		
-		expect(session.createQuery("select user from User user where user.KEY1 = ? AND user.KEY2 = ? ")).andReturn(result);
-		replay(session);
+		expect(em.createQuery("select user from User user where user.KEY1 = ? AND user.KEY2 = ? ")).andReturn(result);
+		replay(em);
 		
 		expect(result.setParameter(0, "VALUE1")).andReturn(result);
 		expect(result.setParameter(1, "VALUE2")).andReturn(result);
-		expect(result.list()).andReturn(resultList);
+		expect(result.getResultList()).andReturn(resultList);
 		replay(result);
 		
 		assertSame(resultUser, sampleDao.findUnique("VALUE1", "VALUE2"));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 		verify(result);
 	}
 	
@@ -103,15 +101,14 @@ public class AbstractBasicDaoTests {
 		
 		Query result = createMock(Query.class);
 		
-		expect(session.createQuery("select user from User user where CLAUSE")).andReturn(result);
-		replay(session);
+		expect(em.createQuery("select user from User user where CLAUSE")).andReturn(result);
+		replay(em);
 		
-		expect(result.list()).andReturn(resultList);
+		expect(result.getResultList()).andReturn(resultList);
 		replay(result);
 		
 		assertSame(resultList, sampleDao.find("CLAUSE"));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 		verify(result);
 	}
 	
@@ -121,15 +118,14 @@ public class AbstractBasicDaoTests {
 		
 		Query result = createMock(Query.class);
 		
-		expect(session.createQuery("select user from User user ")).andReturn(result);
-		replay(session);
+		expect(em.createQuery("select user from User user ")).andReturn(result);
+		replay(em);
 		
-		expect(result.list()).andReturn(resultList);
+		expect(result.getResultList()).andReturn(resultList);
 		replay(result);
 		
 		assertSame(resultList, sampleDao.find(""));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 		verify(result);
 	}
 	
@@ -137,68 +133,62 @@ public class AbstractBasicDaoTests {
 	public void testMerge() {
 		User user = new User(), managedUser = new User();
 		
-		expect(session.merge(user)).andReturn(managedUser);
-		replay(session);
+		expect(em.merge(user)).andReturn(managedUser);
+		replay(em);
 		
 		assertSame(managedUser, sampleDao.merge(user));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
 	@Test
 	public void testPersist() {
 		User user = new User();
 		
-		session.persist(user);
-		replay(session);
+		em.persist(user);
+		replay(em);
 		
 		sampleDao.persist(user);
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
-	@Test
-	public void testEvict() {
-		User user = new User();
-		
-		session.evict(user);
-		replay(session);
-		
-		sampleDao.evict(user);
-		verify(session);
-		verify(sessionFactory);
-	}
+//	@Test
+//	public void testEvict() {
+//		User user = new User();
+//		
+//		session.evict(user);
+//		replay(em);
+//		
+//		sampleDao.evict(user);
+//		verify(em);
+//	}
 	
 	@Test
 	public void testRemove() {
 		User user = new User();
 		
-		session.delete(user);
-		replay(session);
+		em.remove(user);
+		replay(em);
 		
 		sampleDao.remove(user);
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
 	@Test
 	public void testFlush() {
-		session.flush();
-		replay(session);
+		em.flush();
+		replay(em);
 		
 		sampleDao.flush();
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
 	@Test
 	public void testClear() {
-		session.clear();
-		replay(session);
+		em.clear();
+		replay(em);
 		
 		sampleDao.clear();
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
 	class SampleDao extends AbstractBasicDao<User> {
@@ -209,23 +199,18 @@ public class AbstractBasicDaoTests {
 		}
 	}
 	
-	Session session;
 	SampleDao sampleDao;
-	SessionFactory sessionFactory;
+	EntityManager em;
 	
 	@Before
 	public void setUp() {
-		session = createMock(Session.class);
-		sessionFactory = createMock(SessionFactory.class);
+		em = createMock(EntityManager.class);
 		sampleDao = new SampleDao();
-		sampleDao.setSessionFactory(sessionFactory);
-		expect(sessionFactory.getCurrentSession()).andReturn(session);
-		replay(sessionFactory);
+		sampleDao.setEntityManager(em);
 	}
 	
 	public void tearDown() {
-		reset(session);
-		reset(sessionFactory);
+		reset(em);
 	}
 
 }

@@ -16,19 +16,29 @@
 
 package org.helianto.core.orm;
 
+import static org.junit.Assert.assertEquals;
+
+import javax.annotation.Resource;
+
 import org.helianto.core.Identity;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.test.IdentityTestSupport;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.BlockJUnit4ClassRunner;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultIdentityDaoIntegrationTests extends AbstractHibernateIntegrationTest {
+@RunWith(BlockJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath*:/META-INF/spring/dataSource.xml", "classpath*:/META-INF/spring/data.xml", "classpath*:/META-INF/spring/core-context.xml" })
+@TestExecutionListeners(value = TransactionalTestExecutionListener.class)
+public class DefaultIdentityDaoIntegrationTests {
 	
-	public DefaultIdentityDaoIntegrationTests() {
-		setAutowireMode(AUTOWIRE_BY_NAME);
-	}
-	
+	@Test
 	public void testFindUnique() {
 		Identity identity = IdentityTestSupport.createIdentity();
 		identityDao.persist(identity);
@@ -39,6 +49,7 @@ public class DefaultIdentityDaoIntegrationTests extends AbstractHibernateIntegra
 
     private BasicDao<Identity> identityDao;
     
+	@Resource(name="identityDao")
     public void setIdentityDao(BasicDao<Identity> identityDao) {
         this.identityDao = identityDao;
     }

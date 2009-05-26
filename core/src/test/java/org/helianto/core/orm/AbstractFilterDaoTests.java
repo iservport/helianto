@@ -26,15 +26,15 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.test.UserTestSupport;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,17 +50,16 @@ public class AbstractFilterDaoTests {
 		
 		Query result = createMock(Query.class);
 		
-		expect(session.createQuery("select identity from Identity identity " +
+		expect(em.createQuery("select identity from Identity identity " +
 				"where identity.field1 = V1 " +
 				"AND identity.field2 = V2 ")).andReturn(result);
-		replay(session);
+		replay(em);
 		
-		expect(result.list()).andReturn(resultList);
+		expect(result.getResultList()).andReturn(resultList);
 		replay(result);
 		
 		assertSame(resultList, sampleDao.find(filter));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 		verify(result);
 	}
 	
@@ -71,17 +70,16 @@ public class AbstractFilterDaoTests {
 		
 		Query result = createMock(Query.class);
 		
-		expect(session.createQuery("select identity from Identity identity " +
+		expect(em.createQuery("select identity from Identity identity " +
 				"where identity.field1 = V1 " +
 				"AND identity.field3 = V3 ")).andReturn(result);
-		replay(session);
+		replay(em);
 		
-		expect(result.list()).andReturn(resultList);
+		expect(result.getResultList()).andReturn(resultList);
 		replay(result);
 		
 		assertSame(resultList, sampleDao.find(filter));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 		verify(result);
 	}
 	
@@ -115,24 +113,19 @@ public class AbstractFilterDaoTests {
 
 	}
 	
-	Session session;
 	SampleDao sampleDao;
-	SessionFactory sessionFactory;
 	IdentityFilter filter = IdentityFilter.filterFactory(IdentityFilter.class, UserTestSupport.createUser());
+	EntityManager em;
 	
 	@Before
 	public void setUp() {
-		session = createMock(Session.class);
-		sessionFactory = createMock(SessionFactory.class);
+		em = createMock(EntityManager.class);
 		sampleDao = new SampleDao();
-		sampleDao.setSessionFactory(sessionFactory);
-		expect(sessionFactory.getCurrentSession()).andReturn(session);
-		replay(sessionFactory);
+		sampleDao.setEntityManager(em);
 	}
 	
 	public void tearDown() {
-		reset(session);
-		reset(sessionFactory);
+		reset(em);
 	}
 
 }

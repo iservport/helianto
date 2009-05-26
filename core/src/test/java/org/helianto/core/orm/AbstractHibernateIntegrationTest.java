@@ -15,8 +15,10 @@
 
 package org.helianto.core.orm;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.helianto.core.test.AbstractIntegrationTest;
-import org.hibernate.SessionFactory;
 
 
 /**
@@ -30,17 +32,17 @@ public class AbstractHibernateIntegrationTest extends AbstractIntegrationTest {
     protected String[] getConfigLocations() {
         return new String[] { 
                 "META-INF/spring/dataSource.xml",
-                "META-INF/spring/sessionFactory.xml",
-                "META-INF/spring/transaction.xml",
+                "META-INF/spring/data.xml",
                 "META-INF/spring/support.xml",
                 "META-INF/spring/core-context.xml",
                 };
     }
     
-    protected SessionFactory sessionFactory;
+    protected EntityManager em;
     
-    public void setSessionFactory(SessionFactory sessionFactory) {
-    	this.sessionFactory = sessionFactory;
+    @PersistenceContext
+    public void setEntityManager(EntityManager em) {
+    	this.em = em;
     }
     
 }
