@@ -16,19 +16,32 @@
 
 package org.helianto.core.orm;
 
+import static org.junit.Assert.assertEquals;
+
+import javax.annotation.Resource;
+
 import org.helianto.core.Service;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.test.ServiceTestSupport;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultServiceDaoIntegrationTests extends AbstractHibernateIntegrationTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:/META-INF/spring/dataSource.xml", "classpath:/META-INF/spring/data.xml", "classpath:/META-INF/spring/core-context.xml"})
+@TestExecutionListeners(value = {TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class})
+public class DefaultServiceDaoIntegrationTests {
 	
-	public DefaultServiceDaoIntegrationTests() {
-		setAutowireMode(AUTOWIRE_BY_NAME);
-	}
-	
+	@Test
+	@Transactional
 	public void testFindUnique() {
 		Service service = ServiceTestSupport.createService();
 		serviceDao.persist(service);
@@ -39,6 +52,7 @@ public class DefaultServiceDaoIntegrationTests extends AbstractHibernateIntegrat
 
     private BasicDao<Service> serviceDao;
     
+    @Resource(name="serviceDao")
     public void setServiceDao(BasicDao<Service> serviceDao) {
         this.serviceDao = serviceDao;
     }

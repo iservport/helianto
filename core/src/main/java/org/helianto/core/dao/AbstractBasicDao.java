@@ -80,7 +80,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
         /*
          * Remember that ordinal parameters are 1-based!
          */
-        int i = 0;
+        int i = 1;
         for (Object value: values) {
             result.setParameter(i++, value);
         }

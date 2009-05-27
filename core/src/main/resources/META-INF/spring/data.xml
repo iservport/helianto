@@ -27,14 +27,27 @@
 	    JPA EntityManagerFactory 
 	-->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" 
-	    p:dataSource-ref="dataSource">
+	    p:persistenceUnitManager-ref="persistenceUnitManager">
 		<property name="jpaVendorAdapter">
-			<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+			<bean id="jpaVendorAdapter" 
+			        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
 					p:databasePlatform="org.hibernate.dialect.HSQLDialect"
 					p:generateDdl="true"
 					p:showSql="true"/>
 		</property>
 	</bean>
+
+	<!-- 
+	    JPA PersistenceUnitManager 
+	-->
+    <bean id="persistenceUnitManager" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager"
+        p:defaultDataSource-ref="dataSource" >
+        <property name="persistenceXmlLocations">
+            <list>
+                <value>classpath:META-INF/persistence.xml</value>
+            </list>
+        </property>
+    </bean>
 
 	<!-- 
 	    Transaction manager for a single JPA EntityManagerFactory 

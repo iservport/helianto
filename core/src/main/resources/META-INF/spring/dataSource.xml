@@ -25,30 +25,46 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:/META-INF/hibernate.properties</value>
-				<value>classpath*:/META-INF/hibernate.properties</value>
+				<value>classpath:/META-INF/jdbc.properties</value>
+				<value>classpath*:/META-INF/jdbc.properties</value>
 			</list>
 		</property>
 	</bean>
 	<!--
 			Connection pool data source
-	-->
+	-
 	<bean id="dataSource" 
 		class="org.apache.commons.dbcp.BasicDataSource" 
 		destroy-method="close">
 		<property name="driverClassName" 
-			value="${hibernate.connection.driver_class}"/>
+			value="${jdbc.connection.driver_class}"/>
 		<property name="url"
-			value="${hibernate.connection.url}"/>
+			value="${jdbc.connection.url}"/>
 		<property name="defaultAutoCommit"
 			value="false"/>
 		<property name="username"
-            value="${hibernate.connection.username}"/>
+            value="${jdbc.connection.username}"/>
 		<property name="password"
-            value="${hibernate.connection.password}"/> <!-- 
-<property name="hibernate.transaction.auto_close_session" value="true"/>
-<property name="hibernate.transaction.flush_before_completion" value="true"/>
-             -->
-	</bean>
+	</bean> -->
+	
+	<!--
+			Connection pool data source
+	-->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close">
+        <property name="driverClass" value="${jdbc.connection.driver_class}"/>
+        <property name="jdbcUrl" value="${jdbc.connection.url}"/>
+        <property name="properties">
+            <props>
+                <prop key="c3p0.acquire_increment">5</prop>
+                <prop key="c3p0.idle_test_period">100</prop>
+                <prop key="c3p0.max_size">100</prop>
+                <prop key="c3p0.max_statements">0</prop>
+                <prop key="c3p0.min_size">10</prop>
+                <prop key="user">${jdbc.connection.username}</prop>
+                <prop key="password">${jdbc.connection.password}</prop>
+            </props>
+        </property>
+    </bean>
 	
 </beans>

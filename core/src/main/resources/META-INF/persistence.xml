@@ -4,6 +4,7 @@
 		version="1.0">
 
 	<persistence-unit name="HeliantoCore" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>org.helianto.core.Identity</class>
 		<class>org.helianto.core.Credential</class>
 		<class>org.helianto.core.PrivateKey</class>

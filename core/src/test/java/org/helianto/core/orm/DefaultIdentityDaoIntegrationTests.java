@@ -25,20 +25,23 @@ import org.helianto.core.dao.BasicDao;
 import org.helianto.core.test.IdentityTestSupport;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-@RunWith(BlockJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:/META-INF/spring/dataSource.xml", "classpath*:/META-INF/spring/data.xml", "classpath*:/META-INF/spring/core-context.xml" })
-@TestExecutionListeners(value = TransactionalTestExecutionListener.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:/META-INF/spring/dataSource.xml", "classpath:/META-INF/spring/data.xml", "classpath:/META-INF/spring/core-context.xml"})
+@TestExecutionListeners(value = {TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class})
 public class DefaultIdentityDaoIntegrationTests {
 	
 	@Test
+	@Transactional
 	public void testFindUnique() {
 		Identity identity = IdentityTestSupport.createIdentity();
 		identityDao.persist(identity);

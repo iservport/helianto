@@ -16,19 +16,32 @@
 
 package org.helianto.core.orm;
 
+import static org.junit.Assert.assertEquals;
+
+import javax.annotation.Resource;
+
 import org.helianto.core.Operator;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.test.OperatorTestSupport;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultOperatorDaoIntegrationTests extends AbstractHibernateIntegrationTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:/META-INF/spring/dataSource.xml", "classpath:/META-INF/spring/data.xml", "classpath:/META-INF/spring/core-context.xml"})
+@TestExecutionListeners(value = {TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class})
+public class DefaultOperatorDaoIntegrationTests {
 	
-	public DefaultOperatorDaoIntegrationTests() {
-		setAutowireMode(AUTOWIRE_BY_NAME);
-	}
-	
+	@Test
+	@Transactional
 	public void testFindUnique() {
 		Operator operator = OperatorTestSupport.createOperator();
 		operatorDao.persist(operator);
@@ -39,6 +52,7 @@ public class DefaultOperatorDaoIntegrationTests extends AbstractHibernateIntegra
 
     private BasicDao<Operator> operatorDao;
     
+    @Resource(name="operatorDao")
     public void setOperatorDao(BasicDao<Operator> operatorDao) {
         this.operatorDao = operatorDao;
     }
