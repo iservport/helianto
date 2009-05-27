@@ -26,10 +26,10 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.helianto.core.dao.AbstractBasicDao;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
+import javax.persistence.Query;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,15 +62,14 @@ public abstract class AbstractBasicDaoTest<T, D extends AbstractBasicDao<T>> {
 		
 		Query resultQuery = createMock(Query.class);
 		
-		expect(session.createQuery(getSelectQueryString()+"where CLAUSE")).andReturn(resultQuery);
-		replay(session);
+		expect(em.createQuery(getSelectQueryString()+"where CLAUSE")).andReturn(resultQuery);
+		replay(em);
 		
-		expect(resultQuery.list()).andReturn(resultList);
+		expect(resultQuery.getResultList()).andReturn(resultList);
 		replay(resultQuery);
 		
 		assertSame(resultList, sampleDao.find("CLAUSE"));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 		verify(resultQuery);
 	}
 	
@@ -80,15 +79,14 @@ public abstract class AbstractBasicDaoTest<T, D extends AbstractBasicDao<T>> {
 		
 		Query result = createMock(Query.class);
 		
-		expect(session.createQuery(getSelectQueryString())).andReturn(result);
-		replay(session);
+		expect(em.createQuery(getSelectQueryString())).andReturn(result);
+		replay(em);
 		
-		expect(result.list()).andReturn(resultList);
+		expect(result.getResultList()).andReturn(resultList);
 		replay(result);
 		
 		assertSame(resultList, sampleDao.find(""));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 		verify(result);
 	}
 	
@@ -96,87 +94,77 @@ public abstract class AbstractBasicDaoTest<T, D extends AbstractBasicDao<T>> {
 	public void testMerge() {
 		T target = doCreateTarget(), managedTarget = doCreateTarget();
 		
-		expect(session.merge(target)).andReturn(managedTarget);
-		replay(session);
+		expect(em.merge(target)).andReturn(managedTarget);
+		replay(em);
 		
 		assertSame(managedTarget, sampleDao.merge(target));
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
 	@Test
 	public void testPersist() {
 		T target = doCreateTarget();
 		
-		session.persist(target);
-		replay(session);
+		em.persist(target);
+		replay(em);
 		
 		sampleDao.persist(target);
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
-	@Test
-	public void testEvict() {
-		T target = doCreateTarget();
-		
-		session.evict(target);
-		replay(session);
-		
-		sampleDao.evict(target);
-		verify(session);
-		verify(sessionFactory);
-	}
-	
+//	@Test
+//	public void testEvict() {
+//		T target = doCreateTarget();
+//		
+//		session.evict(target);
+//		replay(session);
+//		
+//		sampleDao.evict(target);
+//		verify(session);
+//		verify(sessionFactory);
+//	}
+//	
 	@Test
 	public void testRemove() {
 		T target = doCreateTarget();
 		
-		session.delete(target);
-		replay(session);
+		em.remove(target);
+		replay(em);
 		
 		sampleDao.remove(target);
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
 	@Test
 	public void testFlush() {
-		session.flush();
-		replay(session);
+		em.flush();
+		replay(em);
 		
 		sampleDao.flush();
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
 	@Test
 	public void testClear() {
-		session.clear();
-		replay(session);
+		em.clear();
+		replay(em);
 		
 		sampleDao.clear();
-		verify(session);
-		verify(sessionFactory);
+		verify(em);
 	}
 	
-	Session session;
-	SessionFactory sessionFactory;
 	AbstractBasicDao<T> sampleDao;
+	EntityManager em;
 	
 	@Before
 	public void setUp() {
-		session = createMock(Session.class);
-		sessionFactory = createMock(SessionFactory.class);
+		em = createMock(EntityManager.class);
 		sampleDao = doCreateDao();
-		sampleDao.setSessionFactory(sessionFactory);
-		expect(sessionFactory.getCurrentSession()).andReturn(session);
-		replay(sessionFactory);
+		sampleDao.setEntityManager(em);
 	}
 	
 	public void tearDown() {
-		reset(session);
-		reset(sessionFactory);
+		reset(em);
 	}
 
 }

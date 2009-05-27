@@ -51,6 +51,7 @@ public class ProvinceFormAction extends
 
 	@Override
 	protected Province doStoreTarget(Province detachedTarget) throws Exception {
+		logger.info("About to store: "+detachedTarget);
 		return namespaceMgr.storeProvince(detachedTarget);
 	}
 

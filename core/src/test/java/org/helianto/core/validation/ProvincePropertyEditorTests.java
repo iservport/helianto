@@ -15,66 +15,22 @@
 
 package org.helianto.core.validation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-
-import org.easymock.EasyMock;
 import org.helianto.core.Province;
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.helianto.core.test.AbstractJpaPropertyEditorTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class ProvincePropertyEditorTests {
+public class ProvincePropertyEditorTests extends AbstractJpaPropertyEditorTest<Province, ProvincePropertyEditor> {
 	
-	@Test
-	public void testGetAsText() {
-		Province province = new Province();
-		province.setProvinceCode("CODE");
-		provincePropertyEditor.setValue(province);
-		
-		EasyMock.replay(sessionFactory);
-		
-		assertEquals("CODE", provincePropertyEditor.getAsText());
-		EasyMock.verify(sessionFactory);
+	@Override
+	protected Class<Province> getTargetClazz() {
+		return Province.class;
 	}
-	
-	@Test
-	public void testSetAsTextString() {
-		Session session = EasyMock.createMock(Session.class);
-		Province province = new Province();
-		
-		EasyMock.expect(sessionFactory.getCurrentSession()).andReturn(session);
-		EasyMock.replay(sessionFactory);
-		
-		EasyMock.expect(session.load(Province.class, 1)).andReturn(province);
-		EasyMock.replay(session);
-		
-		provincePropertyEditor.setAsText("1");
-		assertSame(province, provincePropertyEditor.getValue());
-		EasyMock.verify(sessionFactory);
-		
-		EasyMock.reset(session);
-	}
-	
-	private ProvincePropertyEditor provincePropertyEditor;
-	private SessionFactory sessionFactory;
-	
-	@Before
-	public void setUp() {
-		provincePropertyEditor = new ProvincePropertyEditor();
-		sessionFactory = EasyMock.createMock(SessionFactory.class);
-		provincePropertyEditor.setSessionFactory(sessionFactory);
-		
-	}
-	
-	@After
-	public void tearDown() {
-		EasyMock.reset(sessionFactory);
+
+	@Override
+	protected Class<ProvincePropertyEditor> getPropertyEditorClazz() {
+		return ProvincePropertyEditor.class;
 	}
 
 }

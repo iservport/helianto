@@ -17,12 +17,12 @@ package org.helianto.core.dao;
 
 import java.util.Collection;
 
-import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
+import javax.persistence.Query;
 
 /**
  * Base implementation for <code>BasicDao</code>.
@@ -76,7 +76,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
         if (!whereClause.equals("")) {
         	selectClause.append("where ").append(whereClause);
         }
-        Query result = this.sessionFactory.getCurrentSession().createQuery(selectClause.toString());
+        Query result = this.em.createQuery(selectClause.toString());
         /*
          * Remember that ordinal parameters are 1-based!
          */
@@ -84,7 +84,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
         for (Object value: values) {
             result.setParameter(i++, value);
         }
-        Collection<T> resultList = result.list();
+        Collection<T> resultList = result.getResultList();
         if (logger.isDebugEnabled()) {
             logger.debug("Found "+resultList.size()+" item(s)");
         }
@@ -133,58 +133,60 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 		return new String[] { "entity", "internalNumber" };
 	}
 
-	@SuppressWarnings("unchecked")
 	public T merge(T object) {
         if (logger.isDebugEnabled()) {
             logger.debug("Merging "+object);
         }
-		return (T) this.sessionFactory.getCurrentSession().merge(object);
+		return (T) this.em.merge(object);
 	}
 
 	public void persist(T managedObject) {
         if (logger.isDebugEnabled()) {
             logger.debug("Persisting "+managedObject);
         }
-        this.sessionFactory.getCurrentSession().persist(managedObject);
+        this.em.persist(managedObject);
 	}
 
 	public void remove(T object) {
         if (logger.isDebugEnabled()) {
             logger.debug("Removing "+object);
         }
-		this.sessionFactory.getCurrentSession().delete(object);
+		this.em.remove(object);
 	}
 
 	public void evict(T object) {
         if (logger.isDebugEnabled()) {
             logger.debug("Evicting "+object);
         }
-		this.sessionFactory.getCurrentSession().evict(object);
+//		this.em.   evict   (object);
 	}
 	
 	public void flush() {
         if (logger.isDebugEnabled()) {
             logger.debug("Flushing session");
         }
-		this.sessionFactory.getCurrentSession().flush();
+		this.em.flush();
 	}
 	
 	public void clear() {
         if (logger.isDebugEnabled()) {
             logger.debug("Clearing session");
         }
-		this.sessionFactory.getCurrentSession().clear();
+		this.em.clear();
 	}
 	
 	// collabs
-
-	protected SessionFactory sessionFactory;
-
-    @Resource
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
     
+    private EntityManager em;
+    
+    /**
+     * Spring will inject a managed JPA {@link EntityManager} into this field.
+     */
+    @PersistenceContext
+	public void setEntityManager(EntityManager em) {
+		this.em = em;
+	}
+
     private static final Log logger = LogFactory.getLog(AbstractBasicDao.class);
 
 }

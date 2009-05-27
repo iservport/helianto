@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("namespaceMgr")
-@Transactional(readOnly=true)
+@Transactional
 public class NamespaceMgrImpl implements NamespaceMgr {
 
 	public List<Operator> findOperator() {
@@ -68,15 +68,16 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return operatorDao.merge(operator);
 	}
 
+	@Transactional(readOnly=true)
 	public Operator findOperatorByName(String operatorName) {
 		return operatorDao.findUnique(operatorName);
 	}
 
-	@Transactional(readOnly=false)
 	public Operator storeOperator(Operator operator) {
 		return operatorDao.merge(operator);
 	}
 
+	@Transactional(readOnly=true)
 	public List<Province> findProvinces(ProvinceFilter filter) {
     	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
     	if (logger.isDebugEnabled() && provinceList!=null) {
@@ -85,6 +86,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     	return provinceList;
 	}
 
+	@Transactional(readOnly=true)
 	public Province prepareProvince(Province province) {
 		Province managedProvince = provinceDao.merge(province);
 		managedProvince.getOperator();
@@ -92,6 +94,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedProvince;
 	}
 
+	@Transactional(readOnly=true)
 	public Province prepareNewProvince(Entity entity) {
 		Entity managedEntity = entityDao.merge(entity);
 		return Province.provinceFactory(managedEntity.getOperator());
@@ -100,10 +103,10 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	@Transactional(readOnly=false)
 	public Province storeProvince(Province province) {
 		Province managedProvince =  provinceDao.merge(province);
-		provinceDao.flush();
 		return managedProvince;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<Entity> findEntities(EntityFilter filter) {
 		List<Entity> entityList = (List<Entity>) entityDao.find(filter);
 		if (logger.isDebugEnabled()) {
@@ -112,6 +115,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return entityList;
 	}
 	
+	@Transactional(readOnly=true)
 	public Entity prepareEntity(Entity entity) {
 		Entity managedEntity = entityDao.merge(entity);
 		loadUserList(managedEntity);
@@ -119,6 +123,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedEntity;
 	}
 	
+	@Transactional(readOnly=true)
 	protected void loadUserList(Entity entity) {
 		UserFilter userFilter = new UserFilter(entity);
 		List<UserGroup> userList = userMgr.findUsers(userFilter);
@@ -128,12 +133,10 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     	}
 	}
 
-	@Transactional(readOnly=false)
 	public Entity storeEntity(Entity entity) {
 		Operator managedOperator = operatorDao.merge(entity.getOperator());
 		entity.setOperator(managedOperator);
 		Entity managedEntity =  entityDao.merge(entity);
-		entityDao.flush();
 		return managedEntity;
 	}
 
@@ -154,7 +157,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
         this.provinceDao = provinceDao;
     }
 
-	
     @Resource(name="entityDao")
     public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
         this.entityDao = entityDao;

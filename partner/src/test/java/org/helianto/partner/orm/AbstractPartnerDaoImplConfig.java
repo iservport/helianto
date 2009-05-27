@@ -29,8 +29,7 @@ public abstract class AbstractPartnerDaoImplConfig extends
     protected String[] getConfigLocations() {
         return new String[] { 
                 "META-INF/spring/dataSource.xml",
-                "META-INF/spring/sessionFactory.xml",
-                "META-INF/spring/transaction.xml",
+                "META-INF/spring/data.xml",
                 "META-INF/spring/support.xml",
                 "META-INF/spring/core-context.xml",
                 "META-INF/spring/partner-context.xml"

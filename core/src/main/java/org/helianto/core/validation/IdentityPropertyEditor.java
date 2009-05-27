@@ -20,17 +20,17 @@ import org.helianto.core.Identity;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>SessionFactory</code> backed <code>Identity</code> property editor.
+ * Default <code>EntityManager</code> backed <code>Identity</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class IdentityPropertyEditor extends AbstractSessionPropertyEditor {
+public class IdentityPropertyEditor extends AbstractJpaPropertyEditor {
     
     @Override
     public String getAsText() {
     	Identity identity = (Identity) getValue();
-        return String.valueOf(identity.getId());
+        return identity.getPrincipal();
     }
     
     @Override

@@ -12,29 +12,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractJpaPropertyEditor;
-import org.helianto.partner.Phone;
-import org.springframework.stereotype.Component;
+package org.helianto.core.validation;
+
+import org.helianto.core.InternalEnumerator;
+import org.helianto.core.test.AbstractJpaPropertyEditorTest;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>Phone</code> property
- * editor.
- * 
  * @author Mauricio Fernandes de Castro
  */
-@Component
-public class PhonePropertyEditor extends AbstractJpaPropertyEditor {
-
+public class InternalEnumeratorPropertyEditorTests extends AbstractJpaPropertyEditorTest<InternalEnumerator, InternalEnumeratorPropertyEditor> {
+	
 	@Override
-	public String getAsText() {
-		return String.valueOf(((Phone) getValue()).getPhoneNumber());
+	protected Class<InternalEnumerator> getTargetClazz() {
+		return InternalEnumerator.class;
 	}
 
 	@Override
-	public void setAsText(String id) throws IllegalArgumentException {
-		setAsText(id, Phone.class);
+	protected Class<InternalEnumeratorPropertyEditor> getPropertyEditorClazz() {
+		return InternalEnumeratorPropertyEditor.class;
 	}
 
 }

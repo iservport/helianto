@@ -14,21 +14,16 @@
  */
 package org.helianto.core.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
-
 import org.helianto.core.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>PropertyLoader</code> backed <code>Service</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ServicePropertyEditor extends AbstractLoaderPropertyEditor {
-    
-    public ServicePropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
+@Component
+public class ServicePropertyEditor extends AbstractJpaPropertyEditor {
     
     @Override
     public String getAsText() {

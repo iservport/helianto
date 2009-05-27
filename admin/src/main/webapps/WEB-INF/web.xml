@@ -17,8 +17,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:/META-INF/spring/dataSource.xml
-            classpath:/META-INF/spring/sessionFactory.xml
-            classpath:/META-INF/spring/transaction.xml
+            classpath:/META-INF/spring/data.xml
             classpath:/META-INF/spring/support.xml
             classpath:/META-INF/spring/core-context.xml
             classpath:/META-INF/spring/message-context.xml
@@ -54,8 +53,8 @@
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
 	<!--
-			Open session in view filter
-	-->
+			Conversation filter
+	-
 	<filter>
 	    <filter-name>hibernateFilter</filter-name>               
 	<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
@@ -63,8 +62,18 @@
     <filter-mapping>
       <filter-name>hibernateFilter</filter-name>
       <url-pattern>*.htm</url-pattern>
-    </filter-mapping>
-	<!--
+    </filter-mapping> -->
+	<filter>
+		<filter-name>entityManagerFilter</filter-name>
+		<filter-class>
+			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>entityManagerFilter</filter-name>
+		<url-pattern>*.htm</url-pattern>
+	</filter-mapping>	
+    <!--
 			Spring security filter
 	- please, uncomment to enable security management
 	<filter>

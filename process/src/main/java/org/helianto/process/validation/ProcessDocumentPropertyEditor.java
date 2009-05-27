@@ -14,17 +14,17 @@
  */
 package org.helianto.process.validation;
 
-import org.helianto.core.validation.AbstractSessionPropertyEditor;
+import org.helianto.core.validation.AbstractJpaPropertyEditor;
 import org.helianto.process.ProcessDocument;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>SessionFactory</code> backed <code>Process</code> property editor.
+ * Default <code>EntityManager</code> backed <code>Process</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component("processDocumentPropertyEditor")
-public class ProcessDocumentPropertyEditor extends AbstractSessionPropertyEditor {
+public class ProcessDocumentPropertyEditor extends AbstractJpaPropertyEditor {
     
     @Override
     public String getAsText() {

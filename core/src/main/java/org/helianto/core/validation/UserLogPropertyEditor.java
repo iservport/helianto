@@ -14,21 +14,16 @@
  */
 package org.helianto.core.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
-
 import org.helianto.core.UserLog;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>PropertyLoader</code> backed <code>UserLog</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserLogPropertyEditor extends AbstractLoaderPropertyEditor {
-    
-    public UserLogPropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
+@Component
+public class UserLogPropertyEditor extends AbstractJpaPropertyEditor {
     
     @Override
     public String getAsText() {
@@ -42,15 +37,4 @@ public class UserLogPropertyEditor extends AbstractLoaderPropertyEditor {
     }
 
 }
-
-
-   
-/* registry snippet
-
-        PropertyEditor UserLogPropertyEditor = new UserLogPropertyEditor(getPropertyLoader());
-    if (logger.isDebugEnabled()) {
-        logger.debug("Registering custom editor "+UserLogPropertyEditor);
-    }
-    registry.registerCustomEditor(UserLog.class, UserLogPropertyEditor);
-*/
 

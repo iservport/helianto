@@ -34,12 +34,16 @@ import org.helianto.core.dao.FilterDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>SecurityMgr</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Service("securityMgr")
+@Transactional
 public class SecurityMgrImpl implements SecurityMgr {
     
 	public Credential findCredentialByIdentity(Identity identity) {

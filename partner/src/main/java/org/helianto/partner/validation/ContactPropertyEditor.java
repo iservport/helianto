@@ -14,9 +14,9 @@
  */
 package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
+import org.helianto.core.validation.AbstractJpaPropertyEditor;
 import org.helianto.partner.Contact;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>PropertyLoader</code> backed <code>Contact</code> property
@@ -24,11 +24,8 @@ import org.helianto.partner.Contact;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ContactPropertyEditor extends AbstractLoaderPropertyEditor {
-
-	public ContactPropertyEditor(PropertyLoader propertyLoader) {
-		super(propertyLoader);
-	}
+@Component
+public class ContactPropertyEditor extends AbstractJpaPropertyEditor {
 
 	@Override
 	public String getAsText() {

@@ -16,17 +16,15 @@ package org.helianto.core.validation;
 
 
 import org.helianto.core.KeyType;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>PropertyLoader</code> backed <code>KeyType</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class KeyTypePropertyEditor extends AbstractLoaderPropertyEditor {
-    
-    public KeyTypePropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
+@Component
+public class KeyTypePropertyEditor extends AbstractJpaPropertyEditor {
     
     @Override
     public String getAsText() {

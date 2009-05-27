@@ -14,21 +14,16 @@
  */
 package org.helianto.core.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
-
 import org.helianto.core.InternalEnumerator;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>PropertyLoader</code> backed <code>InternalEnumerator</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class InternalEnumeratorPropertyEditor extends AbstractLoaderPropertyEditor {
-    
-    public InternalEnumeratorPropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
+@Component
+public class InternalEnumeratorPropertyEditor extends AbstractJpaPropertyEditor {
     
     @Override
     public String getAsText() {
@@ -42,15 +37,3 @@ public class InternalEnumeratorPropertyEditor extends AbstractLoaderPropertyEdit
     }
 
 }
-
-
-   
-/* registry snippet
-
-        PropertyEditor InternalEnumeratorPropertyEditor = new InternalEnumeratorPropertyEditor(getPropertyLoader());
-    if (logger.isDebugEnabled()) {
-        logger.debug("Registering custom editor "+InternalEnumeratorPropertyEditor);
-    }
-    registry.registerCustomEditor(InternalEnumerator.class, InternalEnumeratorPropertyEditor);
-*/
-

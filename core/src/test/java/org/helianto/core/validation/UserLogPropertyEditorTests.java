@@ -15,23 +15,22 @@
 
 package org.helianto.core.validation;
 
-import java.io.Serializable;
+import org.helianto.core.UserLog;
+import org.helianto.core.test.AbstractJpaPropertyEditorTest;
 
 /**
- * Interface to be implemented by service facades that will
- * delegate the load operation to a <code>PropertyEditor</code>
- * inside a transaction.
- * 
  * @author Mauricio Fernandes de Castro
  */
-public interface PropertyLoader {
+public class UserLogPropertyEditorTests extends AbstractJpaPropertyEditorTest<UserLog, UserLogPropertyEditor> {
+	
+	@Override
+	protected Class<UserLog> getTargetClazz() {
+		return UserLog.class;
+	}
 
-    /**
-     * Loads an object.
-     * 
-     * @param clazz
-     * @param key
-     */
-    public Object load(Class clazz, Serializable key);
-    
+	@Override
+	protected Class<UserLogPropertyEditor> getPropertyEditorClazz() {
+		return UserLogPropertyEditor.class;
+	}
+
 }

@@ -14,21 +14,16 @@
  */
 package org.helianto.core.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
-
 import org.helianto.core.UserAssociation;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>PropertyLoader</code> backed <code>UserAssociation</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserAssociationPropertyEditor extends AbstractLoaderPropertyEditor {
-    
-    public UserAssociationPropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
+@Component
+public class UserAssociationPropertyEditor extends AbstractJpaPropertyEditor {
     
     @Override
     public String getAsText() {

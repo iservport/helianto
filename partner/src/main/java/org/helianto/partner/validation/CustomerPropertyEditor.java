@@ -14,18 +14,18 @@
  */
 package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractSessionPropertyEditor;
+import org.helianto.core.validation.AbstractJpaPropertyEditor;
 import org.helianto.partner.Customer;
 import org.springframework.stereotype.Component;
 
 
 /**
- * Default <code>Session</code> backed <code>Customer</code> property editor.
+ * Default <code>EntityManager</code> backed <code>Customer</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component("customerPropertyEditor")
-public class CustomerPropertyEditor extends AbstractSessionPropertyEditor {
+public class CustomerPropertyEditor extends AbstractJpaPropertyEditor {
     
     @Override
     public String getAsText() {

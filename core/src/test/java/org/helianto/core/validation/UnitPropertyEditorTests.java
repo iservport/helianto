@@ -15,66 +15,22 @@
 
 package org.helianto.core.validation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-
-import org.easymock.EasyMock;
 import org.helianto.core.Unit;
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.helianto.core.test.AbstractJpaPropertyEditorTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class UnitPropertyEditorTests {
+public class UnitPropertyEditorTests extends AbstractJpaPropertyEditorTest<Unit, UnitPropertyEditor> {
 	
-	@Test
-	public void testGetAsText() {
-		Unit unit = new Unit();
-		unit.setUnitCode("CODE");
-		unitPropertyEditor.setValue(unit);
-		
-		EasyMock.replay(sessionFactory);
-		
-		assertEquals("CODE", unitPropertyEditor.getAsText());
-		EasyMock.verify(sessionFactory);
+	@Override
+	protected Class<Unit> getTargetClazz() {
+		return Unit.class;
 	}
-	
-	@Test
-	public void testSetAsTextString() {
-		Session session = EasyMock.createMock(Session.class);
-		Unit unit = new Unit();
-		
-		EasyMock.expect(sessionFactory.getCurrentSession()).andReturn(session);
-		EasyMock.replay(sessionFactory);
-		
-		EasyMock.expect(session.load(Unit.class, 1)).andReturn(unit);
-		EasyMock.replay(session);
-		
-		unitPropertyEditor.setAsText("1");
-		assertSame(unit, unitPropertyEditor.getValue());
-		EasyMock.verify(sessionFactory);
-		
-		EasyMock.reset(session);
-	}
-	
-	private UnitPropertyEditor unitPropertyEditor;
-	private SessionFactory sessionFactory;
-	
-	@Before
-	public void setUp() {
-		unitPropertyEditor = new UnitPropertyEditor();
-		sessionFactory = EasyMock.createMock(SessionFactory.class);
-		unitPropertyEditor.setSessionFactory(sessionFactory);
-		
-	}
-	
-	@After
-	public void tearDown() {
-		EasyMock.reset(sessionFactory);
+
+	@Override
+	protected Class<UnitPropertyEditor> getPropertyEditorClazz() {
+		return UnitPropertyEditor.class;
 	}
 
 }

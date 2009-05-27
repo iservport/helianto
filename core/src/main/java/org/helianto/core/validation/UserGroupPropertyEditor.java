@@ -14,21 +14,16 @@
  */
 package org.helianto.core.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
-
 import org.helianto.core.UserGroup;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>PropertyLoader</code> backed <code>UserGroup</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserGroupPropertyEditor extends AbstractLoaderPropertyEditor {
-    
-    public UserGroupPropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
+@Component
+public class UserGroupPropertyEditor extends AbstractJpaPropertyEditor {
     
     @Override
     public String getAsText() {

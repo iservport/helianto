@@ -28,6 +28,7 @@ import org.hibernate.SessionFactory;
  * Abstract base class to <code>SessionFactory</code> backed property editors.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated in favour to AbstractJpaPropertyEditor
  */
 public abstract class AbstractSessionPropertyEditor extends
         PropertyEditorSupport {

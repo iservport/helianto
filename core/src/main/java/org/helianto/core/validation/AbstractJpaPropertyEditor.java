@@ -18,45 +18,41 @@ package org.helianto.core.validation;
 import java.beans.PropertyEditorSupport;
 import java.io.Serializable;
 
-import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.orm.hibernate3.HibernateOperations;
 
 /**
- * A base class to <code>HibernateTemplate</code> backed property editors.
+ * Abstract base class to <code>EntityManager</code> backed property editors.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated in favour of <code>AbstractLoaderPropertyEditor</code>
  */
-public abstract class AbstractHibernatePropertyEditor extends
-        PropertyEditorSupport {
+public abstract class AbstractJpaPropertyEditor extends PropertyEditorSupport {
 
-    private HibernateOperations hibernateTemplate;
-    
-    protected AbstractHibernatePropertyEditor(HibernateOperations hibernateTemplate) {
-        setHibernateTemplate(hibernateTemplate);
-    }
-    
-    private AbstractHibernatePropertyEditor() {}
+    /**
+     * Default constructor.
+     */
+	public AbstractJpaPropertyEditor() {
+		super();
+	}
 
-    protected HibernateOperations getHibernateTemplate() {
-        return hibernateTemplate;
-    }
-
-    @Resource
-    private final void setHibernateTemplate(HibernateOperations hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
-    }
-    
-    protected void setAsText(String id, Class clazz) {
+    /**
+     * Loads the object having the supplied key (id) and
+     * sets it as the <code>PropertyEditor</code> value.
+     * 
+     * @param id
+     * @param clazz
+     */
+    @SuppressWarnings("unchecked")
+	protected void setAsText(String id, Class clazz) {
         if (logger.isDebugEnabled()) {
             logger.debug("Loaded "+clazz.getName()+" property editor");
         }
         try {
             Serializable key = resolveId(id);
-            Object value = getHibernateTemplate().load(clazz, key);
+            Object value = this.em.getReference(clazz, key);
             super.setValue(value);
             if (logger.isDebugEnabled()) {
                 logger.debug("Loaded property: " + getValue()+" set from id="+id);
@@ -69,14 +65,29 @@ public abstract class AbstractHibernatePropertyEditor extends
         }
     }
     
+    /**
+     * Method to be overriden if the object key is not
+     * an integer.
+     * 
+     * @param id
+     */
     protected Serializable resolveId(String id) {
         int value = Integer.parseInt(id);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Resolved value: " + value);
-        }
         return value;
     }
     
-    static protected final Log logger = LogFactory.getLog(AbstractHibernatePropertyEditor.class);
+    // collabs 
+    
+	private EntityManager em;
+    
+    /**
+     * Spring will inject a managed JPA {@link EntityManager} into this field.
+     */
+    @PersistenceContext
+	public void setEntityManager(EntityManager em) {
+		this.em = em;
+	}
+    
+    static protected final Log logger = LogFactory.getLog(AbstractJpaPropertyEditor.class);
 
 }

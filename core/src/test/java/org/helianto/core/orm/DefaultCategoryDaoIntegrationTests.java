@@ -16,19 +16,26 @@
 
 package org.helianto.core.orm;
 
+import static org.junit.Assert.assertEquals;
+
+import javax.annotation.Resource;
+
 import org.helianto.core.Category;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.test.CategoryTestSupport;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.BlockJUnit4ClassRunner;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultCategoryDaoIntegrationTests extends AbstractHibernateIntegrationTest {
+@RunWith(BlockJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:/META-INF/spring/dataSource.xml", "classpath:/META-INF/spring/data.xml", "classpath:/META-INF/spring/core-context.xml"})
+public class DefaultCategoryDaoIntegrationTests  {
 	
-	public DefaultCategoryDaoIntegrationTests() {
-		setAutowireMode(AUTOWIRE_BY_NAME);
-	}
-	
+	@Test
 	public void testFindUnique() {
 		Category category = CategoryTestSupport.createCategory();
 		categoryDao.persist(category);
@@ -39,6 +46,7 @@ public class DefaultCategoryDaoIntegrationTests extends AbstractHibernateIntegra
 
     private BasicDao<Category> categoryDao;
     
+    @Resource(name="categoryDao")
     public void setCategoryDao(BasicDao<Category> categoryDao) {
         this.categoryDao = categoryDao;
     }

@@ -45,7 +45,10 @@
 		<property name="username"
             value="${hibernate.connection.username}"/>
 		<property name="password"
-            value="${hibernate.connection.password}"/>
+            value="${hibernate.connection.password}"/> <!-- 
+<property name="hibernate.transaction.auto_close_session" value="true"/>
+<property name="hibernate.transaction.flush_before_completion" value="true"/>
+             -->
 	</bean>
 	
 </beans>

@@ -14,20 +14,18 @@
  */
 package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractLoaderPropertyEditor;
-import org.helianto.core.validation.PropertyLoader;
+import org.helianto.core.validation.AbstractJpaPropertyEditor;
 import org.helianto.partner.PartnerKey;
+import org.springframework.stereotype.Component;
 
 /**
  * Default <code>PropertyLoader</code> backed <code>PartnerKey</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class PartnerKeyPropertyEditor extends AbstractLoaderPropertyEditor {
+@Component
+public class PartnerKeyPropertyEditor extends AbstractJpaPropertyEditor {
     
-    public PartnerKeyPropertyEditor(PropertyLoader propertyLoader) {
-        super(propertyLoader);
-    }
     @Override
     public String getAsText() {
         return String.valueOf(((PartnerKey) getValue()).getKeyValue());

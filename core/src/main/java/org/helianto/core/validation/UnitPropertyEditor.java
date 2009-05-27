@@ -4,12 +4,12 @@ import org.helianto.core.Unit;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>SessionFactory</code> backed <code>Unit</code> property editor.
+ * Default <code>EntityManager</code> backed <code>Unit</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class UnitPropertyEditor extends AbstractSessionPropertyEditor {
+public class UnitPropertyEditor extends AbstractJpaPropertyEditor {
 
     @Override
     public String getAsText() {

@@ -15,8 +15,8 @@
 
 package org.helianto.core.orm;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.helianto.core.test.AbstractIntegrationTest;
 
@@ -40,7 +40,7 @@ public class AbstractHibernateIntegrationTest extends AbstractIntegrationTest {
     
     protected EntityManager em;
     
-    @PersistenceContext
+    @Resource
     public void setEntityManager(EntityManager em) {
     	this.em = em;
     }

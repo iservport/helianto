@@ -4,12 +4,12 @@ import org.helianto.core.Province;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>SessionFactory</code> backed <code>Province</code> property editor.
+ * Default <code>EntityManager</code> backed <code>Province</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class ProvincePropertyEditor extends AbstractSessionPropertyEditor {
+public class ProvincePropertyEditor extends AbstractJpaPropertyEditor {
 
     @Override
     public String getAsText() {
