@@ -1,0 +1,23 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+		version="1.0">
+
+	<persistence-unit name="HeliantoPartner" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>org.helianto.partner.Address</class>
+		<class>org.helianto.partner.Contact</class>
+		<class>org.helianto.partner.PartnerRegistry</class>
+		<class>org.helianto.partner.Partner</class>
+		<class>org.helianto.partner.Agent</class>
+		<class>org.helianto.partner.Customer</class>
+		<class>org.helianto.partner.Division</class>
+		<class>org.helianto.partner.Supplier</class>
+		<class>org.helianto.partner.Manufacturer</class>
+		<class>org.helianto.partner.Laboratory</class>
+		<class>org.helianto.partner.PartnerKey</class>
+		<class>org.helianto.partner.Phone</class>
+		<class>org.helianto.partner.Account</class>
+	</persistence-unit>
+
+</persistence>
