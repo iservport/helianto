@@ -16,19 +16,32 @@
 
 package org.helianto.partner.orm;
 
+import static org.junit.Assert.assertEquals;
+
+import javax.annotation.Resource;
+
 import org.helianto.core.dao.BasicDao;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.test.PartnerRegistryTestSupport;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultPartnerRegistryDaoIntegrationTests extends AbstractPartnerDaoImplConfig {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:/META-INF/spring/dataSource.xml", "classpath:/META-INF/spring/data.xml", "classpath:/META-INF/spring/core-context.xml", "classpath:/META-INF/spring/partner-context.xml"})
+@TestExecutionListeners(value = {TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class})
+public class DefaultPartnerRegistryDaoIntegrationTests {
 	
-	public DefaultPartnerRegistryDaoIntegrationTests() {
-		setAutowireMode(AUTOWIRE_BY_NAME);
-	}
-	
+	@Test
+	@Transactional
 	public void testFindUnique() {
 		PartnerRegistry partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
 		partnerRegistryDao.persist(partnerRegistry);
@@ -39,6 +52,7 @@ public class DefaultPartnerRegistryDaoIntegrationTests extends AbstractPartnerDa
 
     private BasicDao<PartnerRegistry> partnerRegistryDao;
     
+    @Resource(name="partnerRegistryDao")
     public void setPartnerRegistryDao(BasicDao<PartnerRegistry> partnerRegistryDao) {
         this.partnerRegistryDao = partnerRegistryDao;
     }

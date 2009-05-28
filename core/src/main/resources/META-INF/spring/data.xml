@@ -35,20 +35,26 @@
 					p:generateDdl="true"
 					p:showSql="true"/>
 		</property>
+		
 	</bean>
 
 	<!-- 
 	    JPA PersistenceUnitManager 
 	-->
     <bean id="persistenceUnitManager" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager"
-        p:defaultDataSource-ref="dataSource" >
+        p:defaultDataSource-ref="dataSource" 
+        p:persistenceUnitPostProcessors-ref="persitenceUnitPostProcessor">
         <property name="persistenceXmlLocations">
             <list>
-                <value>classpath:META-INF/persistence.xml</value>
                 <value>classpath*:META-INF/persistence.xml</value>
             </list>
         </property>
-    </bean>
+    </bean> 
+
+	<!-- 
+	    PersistenceUnitPostProcessor 
+	-->
+    <bean id="persitenceUnitPostProcessor" class="org.helianto.core.orm.DefaultPersitenceUnitPostProcessor"/>
 
 	<!-- 
 	    Transaction manager for a single JPA EntityManagerFactory 

@@ -16,11 +16,21 @@
 
 package org.helianto.partner.orm;
 
+import static org.junit.Assert.assertEquals;
+
 import javax.annotation.Resource;
 
 import org.helianto.core.dao.BasicDao;
 import org.helianto.partner.Account;
 import org.helianto.partner.test.AccountTestSupport;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -35,7 +45,7 @@ public class DefaultAccountDaoIntegrationTests {
 	public void testFindUnique() {
 		Account account = AccountTestSupport.createAccount();
 		accountDao.persist(account);
-//		assertEquals(account, accountDao.findUnique(account.getEntity(), account.getAccountCode()));
+		assertEquals(account, accountDao.findUnique(account.getEntity(), account.getAccountCode()));
 	}
 
     //- collabs
