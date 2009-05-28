@@ -16,19 +16,32 @@
 
 package org.helianto.process.orm;
 
+import static org.junit.Assert.assertEquals;
+
+import javax.annotation.Resource;
+
 import org.helianto.core.dao.BasicDao;
 import org.helianto.process.Operation;
 import org.helianto.process.test.OperationTestSupport;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultOperationDaoIntegrationTests extends AbstractProcessIntegrationTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:/META-INF/spring/dataSource.xml", "classpath:/META-INF/spring/data.xml", "classpath:/META-INF/spring/core-context.xml", "classpath:/META-INF/spring/partner-context.xml", "classpath:/META-INF/spring/document-context.xml", "classpath:/META-INF/spring/process-context.xml"})
+@TestExecutionListeners(value = {TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class})
+public class DefaultOperationDaoIntegrationTests {
 	
-	public DefaultOperationDaoIntegrationTests() {
-		setAutowireMode(AUTOWIRE_BY_NAME);
-	}
-	
+	@Test
+	@Transactional
 	public void testFindUnique() {
 		Operation operation = OperationTestSupport.createOperation();
 		processDocumentDao.persist(operation);
@@ -39,6 +52,7 @@ public class DefaultOperationDaoIntegrationTests extends AbstractProcessIntegrat
 
     private BasicDao<Operation> processDocumentDao;
     
+    @Resource(name="processDocumentDao")
     public void setProcessDocumentDao(BasicDao<Operation> processDocumentDao) {
         this.processDocumentDao = processDocumentDao;
     }

@@ -1,0 +1,31 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+		version="1.0">
+
+	<persistence-unit name="HeliantoCore" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>org.helianto.process.Release</class>
+		<class>org.helianto.process.ProcessDocument</class>
+		<class>org.helianto.process.ProcessDocumentAssociation</class>
+		<class>org.helianto.process.Method</class>
+		<class>org.helianto.process.Process</class>
+		<class>org.helianto.process.Setup</class>
+		<class>org.helianto.process.Operation</class>
+		<class>org.helianto.process.Consumable</class>
+		<class>org.helianto.process.Cause</class>
+		<class>org.helianto.process.ResourceGroup</class>
+		<class>org.helianto.process.Resource</class>
+		<class>org.helianto.process.ResourceAssociation</class>
+		<class>org.helianto.process.ResourceParameter</class>
+		<class>org.helianto.process.ResourceParameterValue</class>
+		<class>org.helianto.process.Characteristic</class>
+		<class>org.helianto.process.ControlPlan</class>
+		<class>org.helianto.process.MeasurementTechnique</class>
+		<class>org.helianto.process.ControlMethod</class>
+		<class>org.helianto.process.CardSet</class>
+		<class>org.helianto.process.Card</class>
+	</persistence-unit>
+	
+</persistence>
+

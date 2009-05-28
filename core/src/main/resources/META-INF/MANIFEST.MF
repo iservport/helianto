@@ -44,23 +44,24 @@ Export-Package: freemarker.configuration;version="0.0.0",freemarker.co
  tion;version="0.0.0";uses:="org.helianto.core.validation",org.heliant
  o.process;version="0.0.0";uses:="javax.persistence,org.helianto.core,
  org.helianto.core.filter,org.helianto.document,org.helianto.partner",
- org.helianto.process.orm;version="0.0.0";uses:="org.helianto.core,org
- .helianto.core.dao,org.helianto.core.filter,org.helianto.core.test,or
- g.helianto.process",org.helianto.process.service;version="0.0.0";uses
- :="javax.annotation,org.helianto.core,org.helianto.core.dao,org.helia
- nto.core.service,org.helianto.partner.service,org.helianto.process",o
- rg.helianto.process.test;version="0.0.0";uses:="org.helianto.core,org
- .helianto.process",org.helianto.process.validation;version="0.0.0";us
- es:="org.helianto.core.validation",org.helianto.web.controller;versio
- n="0.0.0";uses:="javax.annotation,org.helianto.controller,org.heliant
- o.core,org.helianto.core.security,org.helianto.core.service,org.helia
- nto.web.test",org.helianto.web.controller.legacy;version="0.0.0";uses
- :="javax.annotation,org.helianto.core,org.helianto.core.service,org.h
- elianto.message.mail.compose,org.helianto.message.service",org.helian
- to.web.mail.compose;version="0.0.0";uses:="org.helianto.message.mail.
- compose",org.helianto.web.test;version="0.0.0";uses:="org.helianto.co
- re.security",org.helianto.web.view;version="0.0.0";uses:="org.heliant
- o.web.test"
+ org.helianto.process.orm;version="0.0.0";uses:="javax.annotation,org.
+ helianto.core,org.helianto.core.dao,org.helianto.core.filter,org.heli
+ anto.core.test,org.helianto.process,org.junit,org.junit.runner,org.sp
+ ringframework.test.context,org.springframework.transaction.annotation
+ ",org.helianto.process.service;version="0.0.0";uses:="javax.annotatio
+ n,org.helianto.core,org.helianto.core.dao,org.helianto.core.service,o
+ rg.helianto.partner.service,org.helianto.process",org.helianto.proces
+ s.test;version="0.0.0";uses:="org.helianto.core,org.helianto.process"
+ ,org.helianto.process.validation;version="0.0.0";uses:="org.helianto.
+ core.validation",org.helianto.web.controller;version="0.0.0";uses:="j
+ avax.annotation,org.helianto.controller,org.helianto.core,org.heliant
+ o.core.security,org.helianto.core.service,org.helianto.web.test",org.
+ helianto.web.controller.legacy;version="0.0.0";uses:="javax.annotatio
+ n,org.helianto.core,org.helianto.core.service,org.helianto.message.ma
+ il.compose,org.helianto.message.service",org.helianto.web.mail.compos
+ e;version="0.0.0";uses:="org.helianto.message.mail.compose",org.helia
+ nto.web.test;version="0.0.0";uses:="org.helianto.core.security",org.h
+ elianto.web.view;version="0.0.0";uses:="org.helianto.web.test"
 Bundle-Vendor: i-Serv Consultoria Empresarial
 Bundle-Classpath: .
 Bundle-Version: 0.2.2
