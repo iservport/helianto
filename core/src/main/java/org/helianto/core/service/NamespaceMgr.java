@@ -24,6 +24,7 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
+import org.helianto.core.Service;
 
 /**
  * Namespace management interface.
@@ -104,5 +105,15 @@ public interface NamespaceMgr {
      * Store <code>KeyType</code> to the data store.
      */
 	public KeyType storeKeyType(KeyType keyType);
+
+    /**
+     * Load <code>Service</code>(s).
+     */
+	public List<Service> loadServices(Operator operator);
+
+    /**
+     * Store <code>Service</code> to the data store.
+     */
+	public Service storeService(Service service);
 
 }

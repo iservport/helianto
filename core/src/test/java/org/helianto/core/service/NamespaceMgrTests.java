@@ -20,8 +20,8 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
 import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
@@ -30,16 +30,21 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
+import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
+import org.helianto.core.Service;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.ProvinceTestSupport;
+import org.helianto.core.test.ServiceTestSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -196,10 +201,66 @@ public class NamespaceMgrTests {
 		verify(entityDao);
 	}
 	
+	@Test
+	public void testLoadKeyTypes() {
+		Operator operator = new Operator();
+		Operator managedOperator = new Operator();
+		KeyType keyType = new KeyType();
+		managedOperator.getKeyTypes().add(keyType);
+		
+		expect(operatorDao.merge(operator)).andReturn(managedOperator);
+		replay(operatorDao);
+		
+		List<KeyType> keyTypeList = namespaceMgr.loadKeyTypes(operator);
+		assertSame(keyType, keyTypeList.get(0));
+		verify(operatorDao);
+	}
+
+	@Test
+	public void testStoreKeyType() {
+		KeyType keyType = KeyTypeTestSupport.createKeyType();
+		KeyType managedKeyType = KeyTypeTestSupport.createKeyType();
+		
+		expect(keyTypeDao.merge(keyType)).andReturn(managedKeyType);
+		replay(keyTypeDao);
+		
+		assertSame(managedKeyType , namespaceMgr.storeKeyType(keyType));
+		verify(keyTypeDao);
+	}
+	
+	@Test
+	public void testLoadServices() {
+		Operator operator = new Operator();
+		Operator managedOperator = new Operator();
+		Service service = new Service();
+		managedOperator.getServices().add(service);
+		
+		expect(operatorDao.merge(operator)).andReturn(managedOperator);
+		replay(operatorDao);
+		
+		List<Service> serviceList = namespaceMgr.loadServices(operator);
+		assertSame(service, serviceList.get(0));
+		verify(operatorDao);
+	}
+
+	@Test
+	public void testStoreService() {
+		Service service = ServiceTestSupport.createService();
+		Service managedService = ServiceTestSupport.createService();
+		
+		expect(serviceDao.merge(service)).andReturn(managedService);
+		replay(serviceDao);
+		
+		assertSame(managedService , namespaceMgr.storeService(service));
+		verify(serviceDao);
+	}
+	
 	private NamespaceMgrImpl namespaceMgr;
 	private FilterDao<Operator, OperatorFilter> operatorDao;
 	private FilterDao<Province, ProvinceFilter> provinceDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
+	private BasicDao<KeyType> keyTypeDao;
+	private BasicDao<Service> serviceDao;
 	private UserMgr userMgr;
 	
 	@SuppressWarnings("unchecked")
@@ -212,6 +273,10 @@ public class NamespaceMgrTests {
 		namespaceMgr.setProvinceDao(provinceDao);
 		entityDao = createMock(FilterDao.class);
 		namespaceMgr.setEntityDao(entityDao);
+		keyTypeDao = createMock(BasicDao.class);
+		namespaceMgr.setKeyTypeDao(keyTypeDao);
+		serviceDao = createMock(BasicDao.class);
+		namespaceMgr.setServiceDao(serviceDao);
 		userMgr = createMock(UserMgr.class);
 		namespaceMgr.setUserMgr(userMgr);
 	}
@@ -221,6 +286,8 @@ public class NamespaceMgrTests {
 		reset(operatorDao);
 		reset(provinceDao);
 		reset(entityDao);
+		reset(keyTypeDao);
+		reset(serviceDao);
 		reset(userMgr);
 	}
 

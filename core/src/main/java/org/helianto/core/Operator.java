@@ -101,6 +101,7 @@ public class Operator implements java.io.Serializable {
     private String preferredTimeFormat;
     private String rfc822TimeZone;
     private Set<KeyType> keyTypes = new HashSet<KeyType>();
+    private Set<Service> services = new HashSet<Service>();
 
     /** default constructor */
     public Operator() {
@@ -242,6 +243,17 @@ public class Operator implements java.io.Serializable {
 	}
 	public void setKeyTypes(Set<KeyType> keyTypes) {
 		this.keyTypes = keyTypes;
+	}
+
+    /**
+     * Service set.
+     */
+    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
+    public Set<Service> getServices() {
+		return services;
+	}
+	public void setServices(Set<Service> services) {
+		this.services = services;
 	}
 
     /**

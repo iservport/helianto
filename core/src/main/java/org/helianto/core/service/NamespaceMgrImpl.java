@@ -30,11 +30,11 @@ import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
+import org.helianto.core.Service;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Service("namespaceMgr")
+@org.springframework.stereotype.Service("namespaceMgr")
 @Transactional
 public class NamespaceMgrImpl implements NamespaceMgr {
 
@@ -143,6 +143,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedEntity;
 	}
 
+	@Transactional(readOnly=false)
 	public List<KeyType> loadKeyTypes(Operator operator) {
 		Operator managedOperator = operatorDao.merge(operator);
 		List<KeyType> keyTypeList = new ArrayList<KeyType>(managedOperator.getKeyTypes());
@@ -159,12 +160,30 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedKeyType;
 	}
 
+	@Transactional(readOnly=false)
+	public List<Service> loadServices(Operator operator) {
+		Operator managedOperator = operatorDao.merge(operator);
+		List<Service> serviceList = new ArrayList<Service>(managedOperator.getServices());
+    	if (logger.isDebugEnabled() && serviceList!=null) {
+    		logger.debug("Loaded user list of size "+serviceList.size());
+    	}
+		return serviceList;
+	}
+
+	public Service storeService(Service service) {
+		Operator managedOperator = operatorDao.merge(service.getOperator());
+		service.setOperator(managedOperator);
+		Service managedService =  serviceDao.merge(service);
+		return managedService;
+	}
+
 	// collabs
 	
 	private FilterDao<Operator, OperatorFilter> operatorDao;
 	private FilterDao<Province, ProvinceFilter> provinceDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
 	private BasicDao<KeyType> keyTypeDao;
+	private BasicDao<Service> serviceDao;
 	private UserMgr userMgr;
 	
 	@Resource(name="operatorDao")
@@ -185,6 +204,11 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     @Resource(name="keyTypeDao")
     public void setKeyTypeDao(BasicDao<KeyType> keyTypeDao) {
         this.keyTypeDao = keyTypeDao;
+    }
+    
+    @Resource(name="serviceDao")
+    public void setServiceDao(BasicDao<Service> serviceDao) {
+        this.serviceDao = serviceDao;
     }
     
     @Resource
