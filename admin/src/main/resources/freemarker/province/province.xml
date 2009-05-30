@@ -35,11 +35,11 @@
 		<!-- 
 		 ! local transitions
 		 -->
+		<transition on="selectTarget"  to="provinceBrowse.view">
+			<action bean="provinceFilterAction"      method="selectTarget" />
+		</transition>
 		<transition on="createTarget"  to="provinceEdit.view">
 			<action bean="provinceAction"            method="createTarget" />
-		</transition>
-		<transition on="selectTarget"  to="provinceBrowse.view">
-			<action bean="provinceAction"            method="selectTarget" />
 		</transition>
 	</view-state>
 

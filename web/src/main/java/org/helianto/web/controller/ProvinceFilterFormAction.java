@@ -32,8 +32,7 @@ import org.springframework.stereotype.Component;
  * @author Mauricio Fernandes de Castro
  */
 @Component("provinceFilterAction")
-public class ProvinceFilterFormAction extends
-		AbstractFilterOnlyFormAction<ProvinceFilter, Province> {
+public class ProvinceFilterFormAction extends AbstractFilterOnlyFormAction<ProvinceFilter, Province> {
 
 	@Override
 	public ProvinceFilter doCreateFilter() throws Exception {

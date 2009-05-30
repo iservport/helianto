@@ -15,15 +15,19 @@
 
 package org.helianto.core;
 
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -96,6 +100,7 @@ public class Operator implements java.io.Serializable {
     private String preferredDateFormat;
     private String preferredTimeFormat;
     private String rfc822TimeZone;
+    private Set<KeyType> keyTypes = new HashSet<KeyType>();
 
     /** default constructor */
     public Operator() {
@@ -227,6 +232,17 @@ public class Operator implements java.io.Serializable {
     public void setRfc822TimeZone(String rfc822TimeZone) {
         this.rfc822TimeZone = rfc822TimeZone;
     }
+
+    /**
+     * Key type set.
+     */
+    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
+    public Set<KeyType> getKeyTypes() {
+		return keyTypes;
+	}
+	public void setKeyTypes(Set<KeyType> keyTypes) {
+		this.keyTypes = keyTypes;
+	}
 
     /**
      * toString

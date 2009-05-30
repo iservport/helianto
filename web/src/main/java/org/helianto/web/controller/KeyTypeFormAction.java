@@ -19,49 +19,48 @@ package org.helianto.web.controller;
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractEditAggregateFormAction;
+import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
-import org.helianto.core.Province;
 import org.helianto.core.service.NamespaceMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
- * Presentation logic to store provinces.
+ * Presentation logic to select KeyTypes.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("provinceAction")
-public class ProvinceFormAction extends
-		AbstractEditAggregateFormAction<Province, Operator> {
+@Component("keyTypeAction")
+public class KeyTypeFormAction extends AbstractEditAggregateFormAction<KeyType, Operator> {
 
 	@Override
-	public Province doCreateTarget(RequestContext context, Operator parent) throws Exception {
-		return Province.provinceFactory(parent);
+	public KeyType doCreateTarget(RequestContext context, Operator parent) throws Exception {
+		return KeyType.keyTypeFactory(parent, "");
 	}
 
 	@Override
-	protected Province doPrepareTarget(RequestContext context, Province target) throws Exception {
+	protected KeyType doPrepareTarget(RequestContext context, KeyType target) throws Exception {
 		return target;
 	}
 
 	@Override
-	protected Operator getManagedParent(Province managedTarget) {
+	protected Operator getManagedParent(KeyType managedTarget) {
 		return managedTarget.getOperator();
 	}
 
 	@Override
-	protected Province doStoreTarget(Province detachedTarget) throws Exception {
-		return namespaceMgr.storeProvince(detachedTarget);
+	protected KeyType doStoreTarget(KeyType detachedTarget) throws Exception {
+		return namespaceMgr.storeKeyType(detachedTarget);
 	}
 
 	@Override
 	protected String getKeyField() {
-		return "provinceCode";
+		return "keyCode";
 	}
 
 	@Override
 	public String getTargetAttributeName() {
-		return "province";
+		return "keyType";
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class ProvinceFormAction extends
 	public void setNamespaceMgr(NamespaceMgr namespaceMgr) {
 		this.namespaceMgr = namespaceMgr;
 	}
-	
-//	private static Log logger = LogFactory.getLog(ProvinceFormAction.class);
+
+//	private static Log logger = LogFactory.getLog(KeyTypeFilterFormAction.class);
 
 }

@@ -16,6 +16,7 @@
 
 package org.helianto.core.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,12 +25,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
+import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -140,11 +143,28 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedEntity;
 	}
 
+	public List<KeyType> loadKeyTypes(Operator operator) {
+		Operator managedOperator = operatorDao.merge(operator);
+		List<KeyType> keyTypeList = new ArrayList<KeyType>(managedOperator.getKeyTypes());
+    	if (logger.isDebugEnabled() && keyTypeList!=null) {
+    		logger.debug("Loaded user list of size "+keyTypeList.size());
+    	}
+		return keyTypeList;
+	}
+
+	public KeyType storeKeyType(KeyType keyType) {
+		Operator managedOperator = operatorDao.merge(keyType.getOperator());
+		keyType.setOperator(managedOperator);
+		KeyType managedKeyType =  keyTypeDao.merge(keyType);
+		return managedKeyType;
+	}
+
 	// collabs
 	
 	private FilterDao<Operator, OperatorFilter> operatorDao;
 	private FilterDao<Province, ProvinceFilter> provinceDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
+	private BasicDao<KeyType> keyTypeDao;
 	private UserMgr userMgr;
 	
 	@Resource(name="operatorDao")
@@ -160,6 +180,11 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     @Resource(name="entityDao")
     public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
         this.entityDao = entityDao;
+    }
+    
+    @Resource(name="keyTypeDao")
+    public void setKeyTypeDao(BasicDao<KeyType> keyTypeDao) {
+        this.keyTypeDao = keyTypeDao;
     }
     
     @Resource

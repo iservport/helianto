@@ -39,7 +39,8 @@ public class CredentialValidator implements Validator {
     
     private final Log logger = LogFactory.getLog(getClass());
 
-    public boolean supports(Class clazz) {
+    @SuppressWarnings("unchecked")
+	public boolean supports(Class clazz) {
         return Credential.class.equals(clazz);
     }
 

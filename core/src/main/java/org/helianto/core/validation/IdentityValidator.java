@@ -39,7 +39,8 @@ public class IdentityValidator implements Validator {
     
     private final Log logger = LogFactory.getLog(getClass());
 
-    public boolean supports(Class clazz) {
+    @SuppressWarnings("unchecked")
+	public boolean supports(Class clazz) {
         return Identity.class.equals(clazz);
     }
 

@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
+import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
@@ -93,5 +94,15 @@ public interface NamespaceMgr {
      * Store <code>Entity</code> to the data store.
      */
 	public Entity storeEntity(Entity entity);
-	
+
+    /**
+     * Load <code>KeyType</code>(s).
+     */
+	public List<KeyType> loadKeyTypes(Operator operator);
+
+    /**
+     * Store <code>KeyType</code> to the data store.
+     */
+	public KeyType storeKeyType(KeyType keyType);
+
 }

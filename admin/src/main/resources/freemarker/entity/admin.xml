@@ -35,6 +35,7 @@
 		 ! forward transitions
 		 -->
 		<transition on="toProvince"  to="province.subflow"/>
+		<transition on="toKeyType"  to="keyType.subflow"/>
 		<!-- 
 		 ! local transitions
 		 -->
@@ -175,7 +176,20 @@
 				<mapping source="flowScope.operator" target="operator"/>
 			</input-mapper>
 		</attribute-mapper>
-		<transition on="toHome" to="toHome"/>
+		<transition on="toParent" to="entitySelection.view"/>
+	</subflow-state>
+
+	<!-- 
+	 ! keyType
+	 ! SUBFLOW
+	 !-->
+	<subflow-state id="keyType.subflow" flow="keyType">
+		<attribute-mapper>
+			<input-mapper>
+				<mapping source="flowScope.operator" target="operator"/>
+			</input-mapper>
+		</attribute-mapper>
+		<transition on="toParent" to="entitySelection.view"/>
 	</subflow-state>
 
 	<!-- 

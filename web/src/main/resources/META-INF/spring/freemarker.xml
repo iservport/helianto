@@ -26,6 +26,7 @@
 		<property name="preferFileSystemAccess" value="false"/>
 		<property name="templateLoaderPaths">
 			<list>
+				<value>classpath*:freemarker/</value>
 				<value>classpath:freemarker/</value>
 				<value>/WEB-INF/classes/freemarker/</value>
 				<value>/WEB-INF/freemarker/</value>

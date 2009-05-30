@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
+
+	<input-mapper>
+		<input-attribute name="operator" scope="flow"/>
+	</input-mapper>
+	
+	<start-state idref="preProcess" />
+	
+	<action-state id="preProcess">
+		<action bean="keyTypeLoadAction" method="preProcess"/>
+		<transition to="keyTypeSelection.view">
+			<set attribute="assign"    value="'keyType/assign'"      scope="flow"/>
+		</transition>
+	</action-state>
+	
+	<!-- 
+	 ! keyType 
+	 ! SELECTION VIEW
+	 !-->
+	<view-state id="keyTypeSelection.view" view="frame">
+		<!-- 
+		 ! before selection
+		 -->
+        <render-actions>
+            <action bean="keyTypeLoadAction" method="load"/>
+			<set attribute="sidenav"   value="'keyType/selection_nav'"     scope="flash"/>
+			<set attribute="sidebar"   value="'keyType/selection_filter'"  scope="flash"/>
+			<set attribute="template"  value="'keyType/selection'"         scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="selectTarget"  to="keyTypeBrowse.view">
+			<action bean="keyTypeLoadAction"      method="selectTarget" />
+		</transition>
+		<transition on="createTarget"  to="keyTypeEdit.view">
+			<action bean="keyTypeAction"            method="createTarget" />
+		</transition>
+	</view-state>
+
+	<!-- 
+	 ! keyType  
+	 ! BROWSE VIEW
+	 !-->
+	<view-state id="keyTypeBrowse.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="keyTypeAction" method="prepareTarget"/>
+            <action bean="keyTypeAction" method="resolveAuthorization"/>
+			<set attribute="sidenav"   value="'keyType/keyType_nav'"  scope="flash"/>
+			<set attribute="sidebar"   value="'keyType/keyType_bar'"  scope="flash"/>
+			<set attribute="template"  value="'keyType/keyType'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="editTarget"     to="keyTypeEdit.view"/>
+		<!-- 
+		 ! backward transitions
+		 -->
+		<transition on="toSelection"   to="keyTypeSelection.view"/>
+	</view-state>
+	
+	<!-- 
+	 ! keyType  
+	 ! EDIT VIEW
+	 !-->
+	<view-state id="keyTypeEdit.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="keyTypeAction" method="editTarget"/>
+			<set attribute="sidenav"   value="'keyType/edit_nav'"    scope="flash"/>
+			<set attribute="sidebar"   value="'keyType/keyType_bar'"  scope="flash"/>
+			<set attribute="template"  value="'keyType/keyType_form'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="storeTarget"   to="keyTypeBrowse.view">
+			<action bean="keyTypeAction"            method="bindAndValidate" />
+			<action bean="keyTypeAction"            method="storeTarget" />
+		</transition>
+	</view-state>
+	
+	<!--
+	 ! End states 
+	// -->
+
+	<end-state id="toHome" />
+	<end-state id="toParent" />
+	<end-state id="returnTarget" >
+		<output-mapper>
+			<mapping source="flowScope.keyType" target="returnTarget"/>
+		</output-mapper>
+	</end-state>
+	
+	<!--
+	 ! Globals 
+	// -->
+
+	<global-transitions>
+		<transition on="toHome"   to="toHome"/>
+		<transition on="toParent" to="toParent"/>
+		<transition on="cancelForm"   to="keyTypeBrowse.view"/>
+	</global-transitions>
+	
+</flow>

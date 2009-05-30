@@ -23,7 +23,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
  * <p>
@@ -54,6 +53,7 @@ public class KeyType implements java.io.Serializable {
     private int id;
     private Operator operator;
     private String keyCode;
+    private String keyName;
     private String purpose;
 
     /** default constructor */
@@ -95,6 +95,17 @@ public class KeyType implements java.io.Serializable {
     }
 
     /**
+     * Key name.
+     */
+    @Column(length=32)
+    public String getKeyName() {
+        return this.keyName;
+    }
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
+    }
+
+    /**
      * Purpose description.
      */
     @Column(length=255)
@@ -103,14 +114,6 @@ public class KeyType implements java.io.Serializable {
     }
     public void setPurpose(String purpose) {
         this.purpose = purpose;
-    }
-
-    /**
-     * <code>KeyType</code> natural id query.
-     */
-    @Transient
-    public static String getKeyTypeNaturalIdQueryString() {
-        return "select keyType from KeyType keyType where keyType.operator = ? and keyType.keyCode = ? ";
     }
 
     /**
