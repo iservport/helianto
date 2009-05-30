@@ -5,27 +5,27 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractLoadFormAction;
-import org.helianto.core.KeyType;
+import org.helianto.core.Service;
 import org.helianto.core.Operator;
 import org.helianto.core.service.NamespaceMgr;
 import org.springframework.stereotype.Component;
 
 /**
- * Presentation logic to load key types.
+ * Presentation logic to load services.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("keyTypeLoadAction")
-public class KeyTypeLoadFormAction extends AbstractLoadFormAction<KeyType, Operator> {
+@Component("serviceLoadAction")
+public class ServiceLoadFormAction extends AbstractLoadFormAction<Service, Operator> {
 
 	@Override
-	protected List<KeyType> doLoad(Operator operator) {
-		return namespaceMgr.loadKeyTypes(operator);
+	protected List<Service> doLoad(Operator operator) {
+		return namespaceMgr.loadServices(operator);
 	}
 
 	@Override
 	public String getTargetAttributeName() {
-		return "keyType";
+		return "service";
 	}
 
 	@Override
@@ -42,6 +42,6 @@ public class KeyTypeLoadFormAction extends AbstractLoadFormAction<KeyType, Opera
 		this.namespaceMgr = namespaceMgr;
 	}
 
-//	private static Log logger = LogFactory.getLog(KeyTypeLoadFormAction.class);
+//	private static Log logger = LogFactory.getLog(ServiceFormAction.class);
 
 }

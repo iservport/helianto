@@ -19,48 +19,48 @@ package org.helianto.web.controller;
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractEditAggregateFormAction;
-import org.helianto.core.KeyType;
+import org.helianto.core.Service;
 import org.helianto.core.Operator;
 import org.helianto.core.service.NamespaceMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
- * Presentation logic to select key types.
+ * Presentation logic to select Services.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("keyTypeAction")
-public class KeyTypeFormAction extends AbstractEditAggregateFormAction<KeyType, Operator> {
+@Component("serviceAction")
+public class ServiceFormAction extends AbstractEditAggregateFormAction<Service, Operator> {
 
 	@Override
-	public KeyType doCreateTarget(RequestContext context, Operator parent) throws Exception {
-		return KeyType.keyTypeFactory(parent, "");
+	public Service doCreateTarget(RequestContext context, Operator parent) throws Exception {
+		return Service.serviceFactory(parent, "");
 	}
 
 	@Override
-	protected KeyType doPrepareTarget(RequestContext context, KeyType target) throws Exception {
+	protected Service doPrepareTarget(RequestContext context, Service target) throws Exception {
 		return target;
 	}
 
 	@Override
-	protected Operator getManagedParent(KeyType managedTarget) {
+	protected Operator getManagedParent(Service managedTarget) {
 		return managedTarget.getOperator();
 	}
 
 	@Override
-	protected KeyType doStoreTarget(KeyType detachedTarget) throws Exception {
-		return namespaceMgr.storeKeyType(detachedTarget);
+	protected Service doStoreTarget(Service detachedTarget) throws Exception {
+		return namespaceMgr.storeService(detachedTarget);
 	}
 
 	@Override
 	protected String getKeyField() {
-		return "keyCode";
+		return "serviceName";
 	}
 
 	@Override
 	public String getTargetAttributeName() {
-		return "keyType";
+		return "service";
 	}
 
 	@Override
@@ -77,6 +77,6 @@ public class KeyTypeFormAction extends AbstractEditAggregateFormAction<KeyType, 
 		this.namespaceMgr = namespaceMgr;
 	}
 
-//	private static Log logger = LogFactory.getLog(KeyTypeFormAction.class);
+//	private static Log logger = LogFactory.getLog(ServiceFormAction.class);
 
 }

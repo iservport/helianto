@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
+
+	<input-mapper>
+		<input-attribute name="operator" scope="flow"/>
+	</input-mapper>
+	
+	<start-state idref="preProcess" />
+	
+	<action-state id="preProcess">
+		<action bean="serviceLoadAction" method="preProcess"/>
+		<transition to="serviceSelection.view">
+			<set attribute="assign"    value="'service/assign'"      scope="flow"/>
+		</transition>
+	</action-state>
+	
+	<!-- 
+	 ! service 
+	 ! SELECTION VIEW
+	 !-->
+	<view-state id="serviceSelection.view" view="frame">
+		<!-- 
+		 ! before selection
+		 -->
+        <render-actions>
+            <action bean="serviceLoadAction" method="load"/>
+			<set attribute="sidenav"   value="'service/selection_nav'"     scope="flash"/>
+			<set attribute="sidebar"   value="'service/selection_filter'"  scope="flash"/>
+			<set attribute="template"  value="'service/selection'"         scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="selectTarget"  to="serviceBrowse.view">
+			<action bean="serviceLoadAction"      method="selectTarget" />
+		</transition>
+		<transition on="createTarget"  to="serviceEdit.view">
+			<action bean="serviceAction"            method="createTarget" />
+		</transition>
+	</view-state>
+
+	<!-- 
+	 ! service  
+	 ! BROWSE VIEW
+	 !-->
+	<view-state id="serviceBrowse.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="serviceAction" method="prepareTarget"/>
+            <action bean="serviceAction" method="resolveAuthorization"/>
+			<set attribute="sidenav"   value="'service/service_nav'"  scope="flash"/>
+			<set attribute="sidebar"   value="'service/service_bar'"  scope="flash"/>
+			<set attribute="template"  value="'service/service'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="editTarget"     to="serviceEdit.view"/>
+		<!-- 
+		 ! backward transitions
+		 -->
+		<transition on="toSelection"   to="serviceSelection.view"/>
+	</view-state>
+	
+	<!-- 
+	 ! service  
+	 ! EDIT VIEW
+	 !-->
+	<view-state id="serviceEdit.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="serviceAction" method="editTarget"/>
+			<set attribute="sidenav"   value="'service/edit_nav'"    scope="flash"/>
+			<set attribute="sidebar"   value="'service/service_bar'"  scope="flash"/>
+			<set attribute="template"  value="'service/service_form'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="storeTarget"   to="serviceBrowse.view">
+			<action bean="serviceAction"            method="bindAndValidate" />
+			<action bean="serviceAction"            method="storeTarget" />
+		</transition>
+	</view-state>
+	
+	<!--
+	 ! End states 
+	// -->
+
+	<end-state id="toHome" />
+	<end-state id="toParent" />
+	<end-state id="returnTarget" >
+		<output-mapper>
+			<mapping source="flowScope.service" target="returnTarget"/>
+		</output-mapper>
+	</end-state>
+	
+	<!--
+	 ! Globals 
+	// -->
+
+	<global-transitions>
+		<transition on="toHome"   to="toHome"/>
+		<transition on="toParent" to="toParent"/>
+		<transition on="cancelForm"   to="serviceBrowse.view"/>
+	</global-transitions>
+	
+</flow>
