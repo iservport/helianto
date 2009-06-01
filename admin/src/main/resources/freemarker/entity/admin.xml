@@ -75,7 +75,10 @@
 			<set attribute="createOption" value="'userGroup'" />
 			<action bean="userAction"    method="createTarget" />
 		</transition>
-		<transition on="selectUser"      to="userEdit.view">
+		<transition on="selectUser"      to="userBrowse.view">
+			<action bean="userAction"    method="selectTarget"/>
+		</transition>
+		<transition on="editUser"        to="userEdit.view">
 			<action bean="userAction"    method="selectTarget"/>
 		</transition>
 		<!-- 
@@ -131,13 +134,14 @@
 		 ! local transitions
 		 -->
 		<transition on="editTarget"     to="userEdit.view"/>
+		<transition on="editIdentity"   to="identityEdit.view"/>
 		<transition on="createUser"     to="user.subflow">
 			<action bean="userAction"   method="createUser"/>
 		</transition>
 		<!-- 
 		 ! backward transitions
 		 -->
-		<transition on="toSelection"   to="userSelection.view"/>
+		<transition on="toSelection"   to="entityBrowse.view"/>
 	</view-state>
 	
 	<!-- 
@@ -165,6 +169,33 @@
 		<action bean="userAction"                method="storeTarget"/>
 		<transition on="success" to="userBrowse.view"/>
 		<transition on="error"   to="userEdit.view"/>
+	</action-state>
+	
+	<!-- 
+	 ! identity  
+	 ! EDIT VIEW
+	 !-->
+	<view-state id="identityEdit.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="userAction" method="editTarget"/>
+			<set attribute="sidenav"   value="'user/edit_nav'"      scope="flash"/>
+			<set attribute="sidebar"   value="'user/identity_bar'"  scope="flash"/>
+			<set attribute="template"  value="'user/identity_form'" scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="storeTarget"   to="storeIdentity">
+			<action bean="userAction"            method="bind" />
+		</transition>
+	</view-state>
+	<action-state id="storeIdentity">
+		<action bean="userAction"                method="storeTarget"/>
+		<transition on="success" to="userBrowse.view"/>
+		<transition on="error"   to="identityEdit.view"/>
 	</action-state>
 	
 	<!-- 

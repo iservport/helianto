@@ -17,7 +17,7 @@
        to generate the select transition -->
   <@select "${target_index}", "selectUser" >${target.id?c}</@select>
   <td >${target.userPrincipal}</td>
-  <td >${userState[target.userState]}</td>
+  <@select "${target_index}", "editUser" >${userState[target.userState]}</@select>
   <td >${type[target.class]}</td>
   <td >${target.userName}</td>
 </tr>

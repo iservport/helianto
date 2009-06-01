@@ -39,6 +39,11 @@ import org.springframework.webflow.execution.RequestContext;
 @Component("userAction")
 public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, Entity> {
 
+	@Override
+	protected UserGroup doPrepareTarget(RequestContext context, UserGroup target) throws Exception {
+		return userMgr.prepareUserGroup(target);
+	}
+
 	/**
 	 * Associate an identity to the user before storing.
 	 */
@@ -62,11 +67,6 @@ public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, E
 			return User.userFactory(parent);
 		}
 		return UserGroup.userGroupFactory(parent, null);
-	}
-
-	@Override
-	protected UserGroup doPrepareTarget(RequestContext context, UserGroup target) throws Exception {
-		return userMgr.prepareUserGroup(target);
 	}
 
 	@Override

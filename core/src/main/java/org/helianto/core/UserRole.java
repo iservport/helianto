@@ -99,6 +99,17 @@ public class UserRole  implements java.io.Serializable {
     }
     
     /**
+     * <<Transient>> Service name.
+     */
+    @Transient
+    public String getServiceName() {
+    	if (getService()==null) {
+    		return "";
+    	}
+        return getService().getServiceName();
+    }
+    
+    /**
      * Service extension.
      */
     @Column(length=8)

@@ -83,6 +83,7 @@ public class UserMgrImpl implements UserMgr {
 
     public UserGroup prepareUserGroup(UserGroup userGroup) {
     	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
+    	managedUserGroup.getAllRoles();
     	userGroupDao.evict(managedUserGroup);
     	return managedUserGroup;
     }

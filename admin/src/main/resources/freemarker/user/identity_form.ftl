@@ -2,13 +2,8 @@
 <table>
 	<form action="home.htm" method="POST">
 	
-	<#if formObject.target.id == 0 >
-	
-	<tr style="background: #cccccc;">
-		<td colspan="2">User data</td>
-	</tr>
 	<tr>
-		<td>Alias</td>
+		<td>Optional alias</td>
 		<td><@spring.formInput "formObject.target.identity.optionalAlias", "size='20'"/></td>
 	</tr>
 	<tr>
@@ -27,13 +22,19 @@
 		<td>Appellation</td>
 		<td><@spring.formRadioButtons "formObject.target.identity.personalData.appellation", appellation, " ", "size='2'"/></td>
 	</tr>
-
-	</#if>
+	
+	<#if formObject.target.class=='class org.helianto.core.User'>
 	
 	<tr>
-		<td>Status</td>
-		<td><@spring.formRadioButtons "formObject.target.userState", userState, " ", "size='2'"/></td>
+		<td>Identity type</td>
+		<td><@spring.formRadioButtons "formObject.target.identity.identityType", identityType, " ", "size='2'"/></td>
 	</tr>
+	<tr>
+		<td>Notification</td>
+		<td><@spring.formRadioButtons "formObject.target.identity.notification", notification, " ", "size='2'"/></td>
+	</tr>
+	
+	</#if>
 	
 	<tr>
 		<td colspan="2"><@submit2 /></td>
