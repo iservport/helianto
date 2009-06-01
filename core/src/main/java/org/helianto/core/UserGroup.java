@@ -158,7 +158,10 @@ public class UserGroup implements java.io.Serializable {
      */
     @Transient
     public String getUserPrincipal() {
-        return this.identity.getPrincipal();
+    	if (getIdentity()==null) {
+    		return "";
+    	}
+        return getIdentity().getPrincipal();
     }
     /**
      * User principal name.

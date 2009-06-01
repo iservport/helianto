@@ -86,6 +86,7 @@
 		 -->
 		<transition on="storeTarget"   to="storeTarget">
 			<action bean="userAction"            method="bind" />
+			<action bean="identityAction"        method="createTarget" />
 		</transition>
 	</view-state>
 	<action-state id="storeTarget">

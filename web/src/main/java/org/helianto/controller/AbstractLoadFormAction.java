@@ -17,7 +17,6 @@ package org.helianto.controller;
 
 import java.util.List;
 
-import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -26,7 +25,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractLoadFormAction<T, P> extends AbstractComplexModelFormAction<T> {
+public abstract class AbstractLoadFormAction<T, P> extends AbstractListFormAction<T> {
 
 	/**
      * Default constructor.
@@ -40,20 +39,6 @@ public abstract class AbstractLoadFormAction<T, P> extends AbstractComplexModelF
 	 */
 	public abstract String getParentAttributeName();
 	
-	/**
-     * Target list attribute name.
-     */
-    public String getTargetListAttributeName() {
-		return "targetList";
-	}
-
-	/**
-     * Target list attribute name.
-     */
-    public String getTargetListSizeAttributeName() {
-		return "targetListSize";
-	}
-
 	/**
      * Pre-process the selection.
      */
@@ -90,22 +75,6 @@ public abstract class AbstractLoadFormAction<T, P> extends AbstractComplexModelF
     	return true;
     }
         
-	@Override
-	protected T doPrepareTarget(RequestContext context, T target) throws Exception {
-		throw new IllegalArgumentException("Likely programming error, method not implemented!");
-	}
-
-	@Override
-	public final Event setupForm(RequestContext context) throws Exception {
-		return super.setupForm(context);
-	}
-
-    @Override
-	protected T doCreateTarget(RequestContext context) throws Exception {
-		// optional
-		return null;
-	}
-
     /**
      * List.
      */
@@ -178,62 +147,6 @@ public abstract class AbstractLoadFormAction<T, P> extends AbstractComplexModelF
      * 
      */
     protected boolean afterList(RequestContext context, List<T> targetList) {
-    	return true;
-    }
-    
-    @SuppressWarnings("unchecked")
-	protected final T doSelectTarget(RequestContext context) {
-    	ParameterMap parameters = context.getRequestParameters();
-    	if (parameters.contains("target_index")) {
-    		int index = parameters.getInteger("target_index");
-    		List<T> targetList = (List<T>) context.getFlowScope().get(getTargetListAttributeName());
-    		T target = targetList.get(index);
-    		if (target!=null) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Index "+index+" of "+getTargetListAttributeName()+" selected target "+target);
-                }
-        		return target;
-    		}
-    		else {
-    			logger.warn("Null target selected by index "+index);
-    		}
-            return null;
-    	}
-		logger.warn("No selection parameter found");
-        return null;
-    }
-        
-    /**
-     * Post-process the selection .
-     */
-    @SuppressWarnings("unchecked")
-	public final Event postProcess(RequestContext context) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("!---- STARTED");
-            logger.debug("!---- postProcess\n");
-        }
-        try {
-        	Object returnTarget =  get(context);
-            if (doPostProcess(context, (T) get(context), returnTarget)) {
-            	return success();
-            }
-        	else {
-                logger.warn("Unable to post-process association selection subflow ");
-                return error();
-        	}
-		} catch (Exception e) {
-			logger.warn("Unable to pre-process the selection ", e);
-            return error();
-		}
-    }
-        
-	/**
-     * Hook to do any post-processing.
-     * 
-     * 
-     * @throws Exception 
-     */
-    protected boolean doPostProcess(RequestContext context, T target, Object returnTarget) throws Exception {
     	return true;
     }
     

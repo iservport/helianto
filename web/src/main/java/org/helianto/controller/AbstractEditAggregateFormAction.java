@@ -98,7 +98,12 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
     	}
     }
     
-    protected abstract P getManagedParent(T managedTarget);
-
-    
+	/**
+	 * Hook to retrieve the managed parent.
+	 * 
+	 * @param managedTarget
+	 * @throws Exception
+	 */
+    protected abstract P getManagedParent(T managedTarget) throws Exception;
+ 
 }

@@ -22,11 +22,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractEditAggregateFormAction;
+import org.helianto.core.CreateIdentity;
 import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
+import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
@@ -36,6 +38,17 @@ import org.springframework.webflow.execution.RequestContext;
  */
 @Component("userAction")
 public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, Entity> {
+
+	/**
+	 * Associate an identity to the user before storing.
+	 */
+	@Override
+	protected void preProcessStoreTarget(RequestContext context, UserGroup detachedTarget) throws Exception {
+		ParameterMap parameters = context.getRequestParameters();
+		if (detachedTarget.getUserPrincipal().length()>0 && parameters.contains("createIdentity")) {
+			detachedTarget.setCreateIdentity(CreateIdentity.AUTO);
+		}
+	}
 
 	@Override
 	protected UserGroup doStoreTarget(UserGroup detachedTarget) throws Exception {

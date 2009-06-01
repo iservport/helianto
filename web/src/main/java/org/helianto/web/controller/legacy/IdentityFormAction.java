@@ -35,7 +35,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("identityAction")
+@Component("identityFormAction")
 public class IdentityFormAction extends FormAction {
     
     public IdentityFormAction() {

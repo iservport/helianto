@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.helianto.core.Node;
 import org.helianto.core.filter.UserBackedFilter;
-import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -29,7 +28,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T> extends AbstractComplexModelFormAction<T> {
+public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T> extends AbstractListFormAction<T> {
 
 	/**
      * Default constructor.
@@ -41,30 +40,6 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
 	@Override
 	public String getFormObjectName() {
 		return "filter";
-	}
-
-	/**
-     * Target list attribute name.
-     */
-    public String getTargetListAttributeName() {
-		return "targetList";
-	}
-
-	/**
-     * Target list attribute name.
-     */
-    public String getTargetListSizeAttributeName() {
-		return "targetListSize";
-	}
-
-	@Override
-	protected T doPrepareTarget(RequestContext context, T target) throws Exception {
-		throw new IllegalArgumentException("Likely programming error, method not implemented!");
-	}
-
-	@Override
-	public final Event setupForm(RequestContext context) throws Exception {
-		return super.setupForm(context);
 	}
 
 	/**
@@ -266,62 +241,5 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
     protected List<Node> doCreateTree(F filter) throws Exception {
     	return new ArrayList<Node>();
     }
-	
-    
-    @SuppressWarnings("unchecked")
-	protected final T doSelectTarget(RequestContext context) {
-    	ParameterMap parameters = context.getRequestParameters();
-    	if (parameters.contains("target_index")) {
-    		int index = parameters.getInteger("target_index");
-    		List<T> targetList = (List<T>) context.getFlowScope().get(getTargetListAttributeName());
-    		T target = targetList.get(index);
-    		if (target!=null) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Index "+index+" of "+getTargetListAttributeName()+" selected target "+target);
-                }
-        		return target;
-    		}
-    		else {
-    			logger.warn("Null target selected by index "+index);
-    		}
-            return null;
-    	}
-		logger.warn("No selection parameter found");
-        return null;
-    }
-        
-    /**
-     * Post-process the selection .
-     */
-    @SuppressWarnings("unchecked")
-	public final Event postProcess(RequestContext context) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("!---- STARTED");
-            logger.debug("!---- postProcess\n");
-        }
-        try {
-        	Object returnTarget =  get(context);
-            if (doPostProcess(context, (T) get(context), returnTarget)) {
-            	return success();
-            }
-        	else {
-                logger.warn("Unable to post-process association selection subflow ");
-                return error();
-        	}
-		} catch (Exception e) {
-			logger.warn("Unable to pre-process the selection ", e);
-            return error();
-		}
-    }
-        
-	/**
-     * Hook to do any post-processing.
-     * 
-     * 
-     * @throws Exception 
-     */
-    protected boolean doPostProcess(RequestContext context, T target, Object returnTarget) throws Exception {
-    	return true;
-    }
-    
+	   
 }
