@@ -17,6 +17,7 @@
 package org.helianto.core.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
@@ -25,6 +26,7 @@ import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.Service;
+import org.helianto.core.UserRole;
 
 /**
  * Namespace management interface.
@@ -115,5 +117,15 @@ public interface NamespaceMgr {
      * Store <code>Service</code> to the data store.
      */
 	public Service storeService(Service service);
+
+    /**
+     * Store <code>UserRole</code> to the data store.
+     */
+	public UserRole storeUserRole(UserRole userRole);
+
+	/**
+	 * Load a service name map.
+	 */
+	public Map<String, String> loadServiceNameMap(Operator operator);
 
 }

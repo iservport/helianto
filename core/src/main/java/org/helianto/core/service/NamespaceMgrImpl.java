@@ -17,7 +17,10 @@
 package org.helianto.core.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -33,6 +36,7 @@ import org.helianto.core.ProvinceFilter;
 import org.helianto.core.Service;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.springframework.transaction.annotation.Transactional;
@@ -177,6 +181,24 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedService;
 	}
 
+	public UserRole storeUserRole(UserRole userRole) {
+		UserRole managedUserRole =  userRoleDao.merge(userRole);
+		return managedUserRole;
+	}
+
+	public Map<String, String> loadServiceNameMap(Operator operator) {
+		Operator managedOperator = operatorDao.merge(operator);
+		Map<String, String> serviceNameMap = new HashMap<String, String>();
+		Set<Service> services = managedOperator.getServices();
+		for (Service service: services) {
+			serviceNameMap.put(String.valueOf(service.getId()), service.getServiceName());
+		}
+    	if (logger.isDebugEnabled() && services!=null) {
+    		logger.debug("Loaded service map "+serviceNameMap);
+    	}
+		return serviceNameMap;
+	}
+
 	// collabs
 	
 	private FilterDao<Operator, OperatorFilter> operatorDao;
@@ -184,6 +206,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	private FilterDao<Entity, EntityFilter> entityDao;
 	private BasicDao<KeyType> keyTypeDao;
 	private BasicDao<Service> serviceDao;
+	private BasicDao<UserRole> userRoleDao;
 	private UserMgr userMgr;
 	
 	@Resource(name="operatorDao")
@@ -209,6 +232,11 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     @Resource(name="serviceDao")
     public void setServiceDao(BasicDao<Service> serviceDao) {
         this.serviceDao = serviceDao;
+    }
+    
+    @Resource(name="userRoleDao")
+    public void setUserRoleDao(BasicDao<UserRole> userRoleDao) {
+        this.userRoleDao = userRoleDao;
     }
     
     @Resource

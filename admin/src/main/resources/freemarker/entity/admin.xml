@@ -133,15 +133,18 @@
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="editTarget"     to="userEdit.view"/>
-		<transition on="editIdentity"   to="identityEdit.view"/>
-		<transition on="createUser"     to="user.subflow">
-			<action bean="userAction"   method="createUser"/>
+		<transition on="editTarget"       to="userEdit.view"/>
+		<transition on="editIdentity"     to="identityEdit.view"/>
+		<transition on="createUserRole"   to="userRoleEdit.view">
+			<action bean="userRoleAction" method="createTarget"/>
+		</transition>
+		<transition on="editUserRole"     to="userRoleEdit.view">
+			<action bean="userRoleAction" method="selectTarget"/>
 		</transition>
 		<!-- 
 		 ! backward transitions
 		 -->
-		<transition on="toSelection"   to="entityBrowse.view"/>
+		<transition on="toSelection"      to="entityBrowse.view"/>
 	</view-state>
 	
 	<!-- 
@@ -196,6 +199,33 @@
 		<action bean="userAction"                method="storeTarget"/>
 		<transition on="success" to="userBrowse.view"/>
 		<transition on="error"   to="identityEdit.view"/>
+	</action-state>
+	
+	<!-- 
+	 ! userRole  
+	 ! EDIT VIEW
+	 !-->
+	<view-state id="userRoleEdit.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="userRoleAction" method="editTarget"/>
+			<set attribute="sidenav"   value="'user/edit_nav'"      scope="flash"/>
+			<set attribute="sidebar"   value="'user/identity_bar'"  scope="flash"/>
+			<set attribute="template"  value="'user/userRole_form'" scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="storeTarget"   to="storeUserRole">
+			<action bean="userRoleAction"            method="bind" />
+		</transition>
+	</view-state>
+	<action-state id="storeUserRole">
+		<action bean="userRoleAction"                method="storeTarget"/>
+		<transition on="success" to="userBrowse.view"/>
+		<transition on="error"   to="userRoleEdit.view"/>
 	</action-state>
 	
 	<!-- 

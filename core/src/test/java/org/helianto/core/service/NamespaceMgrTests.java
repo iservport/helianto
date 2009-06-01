@@ -27,6 +27,7 @@ import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
@@ -38,6 +39,7 @@ import org.helianto.core.ProvinceFilter;
 import org.helianto.core.Service;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
@@ -45,6 +47,7 @@ import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.ProvinceTestSupport;
 import org.helianto.core.test.ServiceTestSupport;
+import org.helianto.core.test.UserRoleTestSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -255,12 +258,41 @@ public class NamespaceMgrTests {
 		verify(serviceDao);
 	}
 	
+	@Test
+	public void testStoreUserRole() {
+		UserRole userRole = UserRoleTestSupport.createUserRole();
+		UserRole managedUserRole = UserRoleTestSupport.createUserRole();
+		
+		expect(userRoleDao.merge(userRole)).andReturn(managedUserRole);
+		replay(userRoleDao);
+		
+		assertSame(managedUserRole , namespaceMgr.storeUserRole(userRole));
+		verify(userRoleDao);
+	}
+	
+	@Test
+	public void testLoadServiceNameMap() {
+		Operator operator = new Operator();
+		Operator managedOperator = new Operator();
+		Service service = ServiceTestSupport.createService();
+		service.setId(Integer.MAX_VALUE);
+		managedOperator.getServices().add(service);
+		
+		expect(operatorDao.merge(operator)).andReturn(managedOperator);
+		replay(operatorDao);
+		
+		Map<String, String> serviceNameMap = namespaceMgr.loadServiceNameMap(operator);
+		assertSame(service.getServiceName() , serviceNameMap.get("2147483647"));
+		verify(operatorDao);
+	}
+	
 	private NamespaceMgrImpl namespaceMgr;
 	private FilterDao<Operator, OperatorFilter> operatorDao;
 	private FilterDao<Province, ProvinceFilter> provinceDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
 	private BasicDao<KeyType> keyTypeDao;
 	private BasicDao<Service> serviceDao;
+	private BasicDao<UserRole> userRoleDao;
 	private UserMgr userMgr;
 	
 	@SuppressWarnings("unchecked")
@@ -277,6 +309,8 @@ public class NamespaceMgrTests {
 		namespaceMgr.setKeyTypeDao(keyTypeDao);
 		serviceDao = createMock(BasicDao.class);
 		namespaceMgr.setServiceDao(serviceDao);
+		userRoleDao = createMock(BasicDao.class);
+		namespaceMgr.setUserRoleDao(userRoleDao);
 		userMgr = createMock(UserMgr.class);
 		namespaceMgr.setUserMgr(userMgr);
 	}

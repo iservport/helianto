@@ -81,19 +81,19 @@ Export-Package: freemarker.configuration;version="0.0.0",freemarker.co
  elianto.web.controller;version="0.0.0";uses:="javax.annotation,junit.
  framework,org.helianto.controller,org.helianto.core,org.helianto.core
  .security,org.helianto.core.service,org.helianto.web.test,org.junit,o
- rg.springframework.stereotype,org.springframework.validation,org.spri
- ngframework.webflow.execution",org.helianto.web.controller.legacy;ver
- sion="0.0.0";uses:="javax.annotation,javax.mail,junit.framework,org.h
- elianto.core,org.helianto.core.service,org.helianto.message.mail.comp
- ose,org.helianto.message.service,org.springframework.stereotype,org.s
- pringframework.webflow.action,org.springframework.webflow.execution",
- org.helianto.web.mail.compose;version="0.0.0";uses:="org.helianto.mes
- sage.mail.compose,org.springframework.mail.javamail",org.helianto.web
- .test;version="0.0.0";uses:="freemarker.template,junit.framework,org.
- helianto.core.security,org.junit,org.springframework.mock.web,org.spr
- ingframework.web.servlet.view.freemarker,org.springframework.webflow.
- execution",org.helianto.web.view;version="0.0.0";uses:="org.helianto.
- web.test,org.junit"
+ rg.springframework.beans,org.springframework.stereotype,org.springfra
+ mework.validation,org.springframework.webflow.execution",org.helianto
+ .web.controller.legacy;version="0.0.0";uses:="javax.annotation,javax.
+ mail,junit.framework,org.helianto.core,org.helianto.core.service,org.
+ helianto.message.mail.compose,org.helianto.message.service,org.spring
+ framework.stereotype,org.springframework.webflow.action,org.springfra
+ mework.webflow.execution",org.helianto.web.mail.compose;version="0.0.
+ 0";uses:="org.helianto.message.mail.compose,org.springframework.mail.
+ javamail",org.helianto.web.test;version="0.0.0";uses:="freemarker.tem
+ plate,junit.framework,org.helianto.core.security,org.junit,org.spring
+ framework.mock.web,org.springframework.web.servlet.view.freemarker,or
+ g.springframework.webflow.execution",org.helianto.web.view;version="0
+ .0.0";uses:="org.helianto.web.test,org.junit"
 Bundle-Vendor: i-Serv Consultoria Empresarial
 Bundle-Classpath: .
 Bundle-Version: 0.2.2

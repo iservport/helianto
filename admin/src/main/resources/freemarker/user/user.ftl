@@ -16,7 +16,7 @@
 <tr>
   <#-- this macro, embedded in frame.ftl, is appropriate 
        to generate the select transition -->
-  <@select "${target_index}", "selectRole" >${target.id?c}</@select>
+  <@select "${target_index}", "editUserRole" >${target.id?c}</@select>
   <td >${target.serviceName}</td>
   <td >${target.serviceExtension}</td>
   <td >${target.userGroup.userPrincipal}</td>

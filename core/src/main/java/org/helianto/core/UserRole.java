@@ -41,12 +41,22 @@ public class UserRole  implements java.io.Serializable {
      * Factory method.
      * 
      * @param user
+     */
+    public static UserRole userRoleFactory(UserGroup user) {
+        UserRole userRole = new UserRole();
+        userRole.setUserGroup(user);
+        return userRole;
+    }
+    
+    /**
+     * Factory method.
+     * 
+     * @param user
      * @param service
      * @param serviceExtension
      */
     public static UserRole userRoleFactory(UserGroup user, Service service, String serviceExtension) {
-        UserRole userRole = new UserRole();
-        userRole.setUserGroup(user);
+        UserRole userRole = UserRole.userRoleFactory(user);
         userRole.setService(service);
         userRole.setServiceExtension(serviceExtension);
         user.getRoles().add(userRole);
