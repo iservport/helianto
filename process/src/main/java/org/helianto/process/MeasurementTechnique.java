@@ -44,6 +44,28 @@ import org.helianto.core.Unit;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class MeasurementTechnique implements java.io.Serializable {
 
+    /**
+     * <code>MeasurementTechnique</code> factory.
+     * 
+     * @param entity
+     * @param measurementTechniqueCode
+     */
+    public static MeasurementTechnique measurementTechniqueFactory(Entity entity, String measurementTechniqueCode) {
+        return measurementTechniqueFactory(MeasurementTechnique.class, entity, measurementTechniqueCode);
+    }
+
+    /**
+     * <code>MeasurementTechnique</code> factory.
+     * 
+     * @param unit
+     * @param measurementTechniqueCode
+     */
+    public static MeasurementTechnique measurementTechniqueFactory(Unit unit, String measurementTechniqueCode) {
+    	MeasurementTechnique measurementTechnique = measurementTechniqueFactory(MeasurementTechnique.class, unit.getEntity(), measurementTechniqueCode);
+    	measurementTechnique.setUnit(unit);
+    	return measurementTechnique;
+    }
+
 	private static final long serialVersionUID = 1L;
 	private int id;
     private Entity entity;
@@ -136,44 +158,6 @@ public class MeasurementTechnique implements java.io.Serializable {
         return measurementTechnique;
     }
 
-    /**
-     * <code>MeasurementTechnique</code> factory.
-     * 
-     * @param entity
-     * @param measurementTechniqueCode
-     */
-    public static MeasurementTechnique measurementTechniqueFactory(Entity entity, String measurementTechniqueCode) {
-        return measurementTechniqueFactory(MeasurementTechnique.class, entity, measurementTechniqueCode);
-    }
-
-    /**
-     * <code>MeasurementTechnique</code> factory.
-     * 
-     * @param unit
-     * @param measurementTechniqueCode
-     */
-    public static MeasurementTechnique measurementTechniqueFactory(Unit unit, String measurementTechniqueCode) {
-    	MeasurementTechnique measurementTechnique = measurementTechniqueFactory(MeasurementTechnique.class, unit.getEntity(), measurementTechniqueCode);
-    	measurementTechnique.setUnit(unit);
-    	return measurementTechnique;
-    }
-
-    /**
-     * <code>MeasurementTechnique</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getMeasurementTechniqueQueryStringBuilder() {
-        return new StringBuilder("select measurementTechnique from MeasurementTechnique measurementTechnique ");
-    }
-
-    /**
-     * <code>MeasurementTechnique</code> natural id query.
-     */
-    @Transient
-    public static String getMeasurementTechniqueNaturalIdQueryString() {
-        return getMeasurementTechniqueQueryStringBuilder().append("where measurementTechnique.entity = ? and measurementTechnique.measurementTechniqueCode = ? ").toString();
-    }
-    
     /**
      * toString
      * @return String
