@@ -64,6 +64,7 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     /** default constructor */
     public AbstractControl() {
     	super();
+    	setNextCheckDate(new Date());
         setTrackingMode(TrackingMode.END_ONLY);
     	setFrequency(0);
     	setFrequencyType(Calendar.DATE);

@@ -33,17 +33,28 @@ public class AbstractControlFilter extends AbstractDateRangeFilter implements Da
     private int priority = 0;
     private char resolution = ' ';
 
-     // Constructors
-
-	/** default constructor */
+	/** 
+     * Default constructor.
+     */
     public AbstractControlFilter() {
     	super();
     }
     
+	/** 
+     * Reset. 
+     */
     public void reset() {
     	super.reset();
     }
     
+	@Override
+	public boolean isSelection() {
+		return getInternalNumber()>0;
+	}
+
+	/** 
+     * Primary key. 
+     */
     public int getId() {
         return this.id;
     }

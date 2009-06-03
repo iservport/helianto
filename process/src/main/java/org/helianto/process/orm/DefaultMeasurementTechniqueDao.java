@@ -32,6 +32,13 @@ import org.springframework.stereotype.Repository;
 public class DefaultMeasurementTechniqueDao extends AbstractFilterDao<MeasurementTechnique, MeasurementTechniqueFilter> {
 
 	@Override
+	protected void preProcessFilter(MeasurementTechniqueFilter filter, CriteriaBuilder mainCriteriaBuilder) {
+		if (filter.getUnit()!=null) {
+			appendEqualFilter("unit.id", filter.getUnit().getId(), mainCriteriaBuilder);
+		}
+	}
+
+	@Override
 	protected void doSelect(MeasurementTechniqueFilter filter, CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("measurementTechniqueCode", filter.getMeasurementTechniqueCode(), mainCriteriaBuilder);
 	}

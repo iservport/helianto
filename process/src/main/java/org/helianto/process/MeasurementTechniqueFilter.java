@@ -15,6 +15,7 @@
 
 package org.helianto.process;
 
+import org.helianto.core.Unit;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 
@@ -37,6 +38,7 @@ public class MeasurementTechniqueFilter extends AbstractUserBackedCriteriaFilter
 	private static final long serialVersionUID = 1L;
 	private String measurementTechniqueCode;
 	private String measurementTechniqueName;
+    private Unit unit;
 	
 	/**
 	 * Default constructor.
@@ -79,4 +81,14 @@ public class MeasurementTechniqueFilter extends AbstractUserBackedCriteriaFilter
 		this.measurementTechniqueName = measurementTechniqueName;
 	}
 
+	/**
+	 * Unit filter.
+	 */
+	public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+	
 }
