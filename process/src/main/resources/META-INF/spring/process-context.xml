@@ -23,7 +23,7 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-2.5.xsd">
                
-	<context:component-scan base-package="org.helianto.process.orm,org.helianto.process.validation"/>
+	<context:component-scan base-package="org.helianto.process.orm,org.helianto.process.service,org.helianto.process.validation"/>
     
 	<!--
 		Resource property editor registrar
