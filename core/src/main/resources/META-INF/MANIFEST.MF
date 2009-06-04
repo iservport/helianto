@@ -113,19 +113,18 @@ Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  text.support,org.springframework.dao,org.springframework.dao.annotati
  on,org.springframework.mail,org.springframework.mail.javamail,org.spr
  ingframework.mock.web,org.springframework.orm.hibernate3,org.springfr
- amework.orm.hibernate3.annotation,org.springframework.orm.hibernate3.
- support,org.springframework.orm.jpa,org.springframework.orm.jpa.persi
- stenceunit,org.springframework.orm.jpa.vendor,org.springframework.sec
- urity,org.springframework.security.context,org.springframework.securi
- ty.userdetails,org.springframework.stereotype,org.springframework.tes
- t,org.springframework.test.context,org.springframework.test.context.j
- unit4,org.springframework.test.context.support,org.springframework.te
- st.context.transaction,org.springframework.transaction.annotation,org
- .springframework.ui.freemarker,org.springframework.util,org.springfra
- mework.validation,org.springframework.web.context.support,org.springf
- ramework.web.servlet,org.springframework.web.servlet.i18n,org.springf
- ramework.web.servlet.theme,org.springframework.web.servlet.view,org.s
- pringframework.web.servlet.view.freemarker,org.springframework.webflo
- w.action,org.springframework.webflow.core.collection,org.springframew
- ork.webflow.execution,org.springframework.webflow.test
+ amework.orm.jpa,org.springframework.orm.jpa.persistenceunit,org.sprin
+ gframework.orm.jpa.vendor,org.springframework.security,org.springfram
+ ework.security.context,org.springframework.security.userdetails,org.s
+ pringframework.stereotype,org.springframework.test,org.springframewor
+ k.test.context,org.springframework.test.context.junit4,org.springfram
+ ework.test.context.support,org.springframework.test.context.transacti
+ on,org.springframework.transaction.annotation,org.springframework.ui.
+ freemarker,org.springframework.util,org.springframework.validation,or
+ g.springframework.web.context.support,org.springframework.web.servlet
+ ,org.springframework.web.servlet.i18n,org.springframework.web.servlet
+ .theme,org.springframework.web.servlet.view,org.springframework.web.s
+ ervlet.view.freemarker,org.springframework.webflow.action,org.springf
+ ramework.webflow.core.collection,org.springframework.webflow.executio
+ n,org.springframework.webflow.test
 

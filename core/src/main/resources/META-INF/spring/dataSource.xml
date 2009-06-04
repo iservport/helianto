@@ -19,41 +19,25 @@
  limitations under the License.
 		-->
 	<!--
-			Property configurer to provide ${} like variables
+			Property configurer 
 	-->
 	<bean id="propertyConfigurer" 
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
 		<property name="locations">
 			<list>
 				<value>classpath:/META-INF/jdbc.properties</value>
-				<value>classpath*:/META-INF/jdbc.properties</value>
 			</list>
 		</property>
 	</bean>
-	<!--
-			Connection pool data source
-	-
-	<bean id="dataSource" 
-		class="org.apache.commons.dbcp.BasicDataSource" 
-		destroy-method="close">
-		<property name="driverClassName" 
-			value="${jdbc.connection.driver_class}"/>
-		<property name="url"
-			value="${jdbc.connection.url}"/>
-		<property name="defaultAutoCommit"
-			value="false"/>
-		<property name="username"
-            value="${jdbc.connection.username}"/>
-		<property name="password"
-	</bean> -->
 	
 	<!--
 			Connection pool data source
 	-->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
         destroy-method="close">
-        <property name="driverClass" value="${jdbc.connection.driver_class}"/>
-        <property name="jdbcUrl" value="${jdbc.connection.url}"/>
+        <property name="driverClass" value="org.hsqldb.jdbcDriver"/>
+        <property name="jdbcUrl" value="jdbc:hsqldb:file:target/testdb/db2;shutdown=true"/>
         <property name="properties">
             <props>
                 <prop key="c3p0.acquire_increment">5</prop>
@@ -61,8 +45,8 @@
                 <prop key="c3p0.max_size">100</prop>
                 <prop key="c3p0.max_statements">0</prop>
                 <prop key="c3p0.min_size">10</prop>
-                <prop key="user">${jdbc.connection.username}</prop>
-                <prop key="password">${jdbc.connection.password}</prop>
+                <prop key="user">sa</prop>
+                <prop key="password"></prop>
             </props>
         </property>
     </bean>

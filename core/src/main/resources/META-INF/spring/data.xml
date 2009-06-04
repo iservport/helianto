@@ -27,17 +27,18 @@
 	    JPA EntityManagerFactory 
 	-->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" 
-	    p:persistenceUnitManager-ref="persistenceUnitManager">
-		<property name="jpaVendorAdapter">
-			<bean id="jpaVendorAdapter" 
-			        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-					p:databasePlatform="org.hibernate.dialect.HSQLDialect"
-					p:generateDdl="true"
-					p:showSql="true"/>
-		</property>
-		
-	</bean>
+	    p:persistenceUnitManager-ref="persistenceUnitManager"
+		p:jpaVendorAdapter-ref="jpaVendorAdapter" />
 
+	<!-- 
+	    JPA VendorAdapter 
+	-->
+	<bean id="jpaVendorAdapter" 
+	    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+		p:databasePlatform="org.hibernate.dialect.HSQLDialect"
+		p:generateDdl="true"
+		p:showSql="true"/>
+		
 	<!-- 
 	    JPA PersistenceUnitManager 
 	-->
