@@ -17,7 +17,6 @@
 package org.helianto.web.controller;
 
 import java.beans.PropertyEditor;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -71,7 +70,7 @@ public class UserRoleFormAction extends AbstractEditAggregateFormAction<UserRole
 
 	@Override
 	protected List<UserRole> getAggregateList(RequestContext context, UserGroup parent) {
-		return new ArrayList<UserRole>(parent.getRoles());
+		return parent.getRoleList();
 	}
 
 	@Override

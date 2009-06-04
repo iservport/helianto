@@ -12,7 +12,7 @@
 </tr>
 </thead>
 <tbody>
-<#list user.allRoles?if_exists as target >
+<#list user.roleList?if_exists as target >
 <tr>
   <#-- this macro, embedded in frame.ftl, is appropriate 
        to generate the select transition -->

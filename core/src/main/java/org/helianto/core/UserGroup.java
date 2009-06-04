@@ -15,8 +15,10 @@
 
 package org.helianto.core;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -96,6 +98,7 @@ public class UserGroup implements java.io.Serializable {
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
     private Set<UserRole> roles = new HashSet<UserRole>();
+    private List<UserRole> roleList = new ArrayList<UserRole>();
     
 	/** default constructor */
     public UserGroup() {
@@ -289,6 +292,17 @@ public class UserGroup implements java.io.Serializable {
     public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
+
+    /**
+     * <<Transient>> User role list.
+     */
+    @Transient
+	public List<UserRole> getRoleList() {
+		return roleList;
+	}
+	public void setRoleList(List<UserRole> roleList) {
+		this.roleList = roleList;
+	}
 
     /**
      * <code>UserAssociation</code> factory.

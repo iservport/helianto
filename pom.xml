@@ -112,7 +112,7 @@
 			<!-- plugin>
 				<groupId>com.springsource.bundlor</groupId>
 				<artifactId>com.springsource.bundlor.maven</artifactId>
-				<version>1.0.0.M4</version>
+				<version>1.0.0.BUILD-20090604.084525-64</version>
 				<configuration>
 					<manifestHeaders>
 <![CDATA[
@@ -133,7 +133,7 @@ Application-TraceLevels: ${application.traceLevels}
 						<phase>package</phase>
 					</execution>
 				</executions>
-			</plugin -->
+			</plugin-->
 		</plugins>
 	</build> 
 	<repositories>

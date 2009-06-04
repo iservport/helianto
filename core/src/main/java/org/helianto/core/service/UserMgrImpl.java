@@ -15,10 +15,13 @@
 
 package org.helianto.core.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -38,6 +41,7 @@ import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserLogFilter;
+import org.helianto.core.UserRole;
 import org.helianto.core.UserState;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
@@ -84,11 +88,28 @@ public class UserMgrImpl implements UserMgr {
     public UserGroup prepareUserGroup(UserGroup userGroup) {
     	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
     	managedUserGroup.getAllRoles();
+		List<UserRole> roleList = new ArrayList<UserRole>(recurseUserRoles(managedUserGroup.getRoles(), managedUserGroup.getParentAssociations()));
+		managedUserGroup.setRoleList(roleList );
     	userGroupDao.evict(managedUserGroup);
     	return managedUserGroup;
     }
 
-    public UserGroup storeUserGroup(UserGroup userGroup) {
+    /**
+	 * Recurse into parent user groups to create a complete userRole List.
+	 */
+	protected Set<UserRole> recurseUserRoles(Set<UserRole> roles, Set<UserAssociation> parentAssociations) {
+		Set<UserRole> localRoles = new HashSet<UserRole>(roles);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Found "+localRoles.size()+" local role(s).");
+		}
+		for (UserAssociation parentAssociation: parentAssociations) {
+			UserGroup parent = parentAssociation.getParent();
+			localRoles.addAll(recurseUserRoles(parent.getRoles(), parent.getParentAssociations()));
+		}
+		return localRoles;
+	}
+
+	public UserGroup storeUserGroup(UserGroup userGroup) {
     	if (!validateIdentity(userGroup)) {
     		throw new IllegalArgumentException("Invalid identity");
     	}
