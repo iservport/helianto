@@ -109,7 +109,7 @@
 					<outputDirectory>dist</outputDirectory>
 				</configuration>
 			</plugin>
-			<!-- plugin>
+			<plugin>
 				<groupId>com.springsource.bundlor</groupId>
 				<artifactId>com.springsource.bundlor.maven</artifactId>
 				<version>1.0.0.BUILD-20090604.084525-64</version>
@@ -133,7 +133,7 @@ Application-TraceLevels: ${application.traceLevels}
 						<phase>package</phase>
 					</execution>
 				</executions>
-			</plugin-->
+			</plugin>
 		</plugins>
 	</build> 
 	<repositories>
@@ -329,6 +329,11 @@ Application-TraceLevels: ${application.traceLevels}
 			<id>com.springsource.repository.bundles.milestone</id>
 			<name>SpringSource Enterprise Bundle Repository</name>
 			<url>http://repository.springsource.com/maven/bundles/milestone</url>
+		</pluginRepository>
+		<pluginRepository>
+		    <id>com.springsource.repository.bundles.snapshot</id>
+		    <name>SpringSource Enterprise Bundle Repository</name>
+		    <url>http://repository.springsource.com/maven/bundles/snapshot</url>
 		</pluginRepository>
 	</pluginRepositories>
 </project>
