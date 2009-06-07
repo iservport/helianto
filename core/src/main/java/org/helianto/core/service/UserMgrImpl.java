@@ -110,58 +110,45 @@ public class UserMgrImpl implements UserMgr {
 	}
 
 	public UserGroup storeUserGroup(UserGroup userGroup) {
-    	if (!validateIdentity(userGroup)) {
-    		throw new IllegalArgumentException("Invalid identity");
+		if (userGroup.getUserKey()==null || userGroup.getUserKey().length()==0) {
+			throw new IllegalArgumentException("Unable to create user or group, null or empty user key.");
+		}
+    	if (userGroup instanceof User && !validateIdentity((User) userGroup)) {
+    		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     	}
         return userGroupDao.merge(userGroup);
     }
     
     /**
-     * Assure each user (or group) have an identity.
+     * Assure each user have a valid identity.
      * 
-     * <p>Validation is ready to detect:</p>
-     * <ul>
-     * <li>null identity,</li>
-     * <li>absence of a principal candidate, or</li>
-     * <li>empty identity after a candidate search.</li>
-     * </ul>
+     * <p>Validation is ready to detect identity (with principal 
+     * equals user key) not found.</p>
      * <p>If the create flag is set, a candidate principal may be used
      * to create a new identity.</p>
      * 
-     * @param userGroup
+     * @param user
      * @param createIdentity
      */
-    protected boolean validateIdentity(UserGroup userGroup) {
-    	if (userGroup.getIdentity()==null) {
-    		if (logger.isDebugEnabled()) {
-    			logger.debug("Null identity");
-    		}
-    		return false;
-    	}
-    	if (userGroup.getIdentity().getId()==0) {
+    protected boolean validateIdentity(User user) {
+    	if (user.getIdentity().getId()==0) {
     		if (logger.isDebugEnabled()) {
     			logger.debug("Looking for a candidate identity");
     		}
-    		if (userGroup.getIdentity().getPrincipal().length()==0) {
-    			if (logger.isDebugEnabled()) {
-    				logger.debug("Unable to validate identity, empty candidate");
-    			}
-    			return false;    			
-    		}
-    		String principal = userGroup.getIdentity().getPrincipal();
+    		String principal = user.getUserKey();
     		if (logger.isDebugEnabled()) {
     			logger.debug("Using principal "+principal);
     		}
     		Identity identity = identityDao.findUnique(principal);
     		if (identity!=null) {
-    			userGroup.setIdentity(identity);
+    			user.setIdentity(identity);
     		}
-    		else if (userGroup.getCreateIdentity()==CreateIdentity.AUTO.getValue()) {
+    		else if (user.getCreateIdentity()==CreateIdentity.AUTO.getValue()) {
         		if (logger.isDebugEnabled()) {
         			logger.debug("Identity not found, creating one");
         		}
         		identity = identityDao.merge(Identity.identityFactory(principal));
-    			userGroup.setIdentity(identity);
+    			user.setIdentity(identity);
     		}
     		else {
     			if (logger.isDebugEnabled()) {
@@ -171,14 +158,9 @@ public class UserMgrImpl implements UserMgr {
     		}
     	}
 		if (logger.isDebugEnabled()) {
-			logger.debug("User (or group) identified with "+userGroup.getIdentity());
+			logger.debug("User identified with "+user.getIdentity());
 		}
 		return true;
-    }
-
-    public UserGroup storeUserGroup(UserAssociation parentAssociation) {
-    	UserAssociation managedUserAssociation = userAssociationDao.merge(parentAssociation);
-        return managedUserAssociation.getChild();
     }
 
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
@@ -211,7 +193,7 @@ public class UserMgrImpl implements UserMgr {
 		// does identity exist?
 		Identity identity = identityDao.findUnique(principal);
 		if (identity==null) {
-			// No! create one with a creential.
+			// No! create one with a credential.
 			Credential credential = Credential.credentialFactory(Identity.identityFactory(principal), "");
 			identity = credential.getIdentity();
 		}

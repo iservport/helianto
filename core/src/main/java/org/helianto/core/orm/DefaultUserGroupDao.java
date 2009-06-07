@@ -101,7 +101,7 @@ public class DefaultUserGroupDao extends AbstractFilterDao<UserGroup, UserFilter
 
 	@Override
 	protected String[] getParams() {
-		return new String[] { "entity", "identity" };
+		return new String[] { "entity", "userKey" };
 	}
 
 }

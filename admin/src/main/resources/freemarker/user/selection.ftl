@@ -11,8 +11,8 @@
 <tr>
   <@select "${target_index}">${target.id?c}</@select>
   <td >
-      ${target.userName}<br />
-      ${target.userPrincipal}
+      ${target.userKey}<br />
+      ${target.userPrincipal?if_exists}
   </td>
   <td >${target.userState?if_exists}</td>
 </tr>

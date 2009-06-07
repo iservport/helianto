@@ -3,13 +3,7 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import org.helianto.core.Entity;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.core.Identity;
-import org.helianto.core.test.IdentityTestSupport;
-
 import org.helianto.core.UserGroup;
 
 /**
@@ -18,27 +12,32 @@ import org.helianto.core.UserGroup;
  * @author Mauricio Fernandes de Castro
  */
 public class UserGroupTestSupport {
+	
+	static int testKey = 0;
 
     /**
      * Test support method to create a <code>UserGroup</code>.
-     * @param entity optional Entity 
-     * @param identity optional Identity 
      */
-    public static UserGroup createUserGroup(Object... args) {
-        Entity entity;
-        try {
-            entity = (Entity) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            entity = EntityTestSupport.createEntity();
-        }
-        Identity identity;
-        try {
-            identity = (Identity) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            identity = IdentityTestSupport.createIdentity();
-        }
-        UserGroup userGroup = UserGroup.userGroupFactory(entity, identity);
-        return userGroup;
+    public static UserGroup createUserGroup() {
+        return UserGroupTestSupport.createUserGroup(EntityTestSupport.createEntity());
+    }
+
+    /**
+     * Test support method to create a <code>UserGroup</code>.
+     * @param entity 
+     */
+    public static UserGroup createUserGroup(Entity entity) {
+        return UserGroupTestSupport.createUserGroup(entity, DomainTestSupport.getNonRepeatableStringValue(testKey++, 40));
+    }
+
+    /**
+     * Test support method to create a <code>UserGroup</code>.
+     * @param entity 
+     * @param userKey
+     */
+    public static UserGroup createUserGroup(Entity entity, String userKey) {
+        UserGroup userGroup = UserGroup.userGroupFactory(entity, userKey);
+    	return userGroup;
     }
 
     /**
@@ -54,25 +53,24 @@ public class UserGroupTestSupport {
      * Test support method to create a <code>UserGroup</code> list.
      *
      * @param entityListSize
-     * @param identityListSize
+     * @param userGroupListSize
      */
-    public static List<UserGroup> createUserGroupList(int entityListSize, int identityListSize) {
+    public static List<UserGroup> createUserGroupList(int entityListSize, int userGroupListSize) {
         List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
-        List<Identity> identityList = IdentityTestSupport.createIdentityList(identityListSize);
-        return createUserGroupList(entityList, identityList);
+        return createUserGroupList(entityList, userGroupListSize);
     }
 
     /**
      * Test support method to create a <code>UserGroup</code> list.
      *
      * @param entityList
-     * @param identityList
+     * @param userGroupListSize
      */
-    public static List<UserGroup> createUserGroupList(List<Entity> entityList, List<Identity> identityList) {
+    public static List<UserGroup> createUserGroupList(List<Entity> entityList, int userGroupListSize) {
         List<UserGroup> userGroupList = new ArrayList<UserGroup>();
         for (Entity entity: entityList) {
-        	for (Identity identity: identityList) {
-    	        userGroupList.add(createUserGroup(entity, identity));
+        	for (int i=0;i<userGroupListSize;i++) {
+    	        userGroupList.add(createUserGroup(entity));
         	}
         }
         return userGroupList;

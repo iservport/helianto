@@ -35,7 +35,6 @@ import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
-import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.User;
@@ -48,7 +47,6 @@ import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
-import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.After;
@@ -121,15 +119,15 @@ public class UserMgrImplTests {
     	UserGroup userGroup = new UserGroup();
     	Identity identity = new Identity();
     	
-    	expect(identityDao.findUnique("principal"))
-    		.andReturn(identity);
+    	expect(identityDao.findUnique("principal")).andReturn(identity);
     	replay(identityDao);
     	
     	UserAssociation userAssociation = userMgr.createUserAssociation(userGroup, "principal");
     	verify(identityDao);
     	
     	assertSame(userGroup, userAssociation.getParent());
-    	assertSame(identity, userAssociation.getChild().getIdentity());
+    	assertTrue(userAssociation.getChild() instanceof User);
+    	assertSame(identity, ((User)userAssociation.getChild()).getIdentity());
     }
     
 	@Test
@@ -150,7 +148,7 @@ public class UserMgrImplTests {
     	verify(identityDao);
     	
     	assertSame(userGroup, userAssociation.getParent());
-    	assertEquals("principal", userAssociation.getChild().getUserPrincipal());
+    	assertEquals("principal", userAssociation.getChild().getUserKey());
     }
     
 	@Test
@@ -165,91 +163,72 @@ public class UserMgrImplTests {
     	verify(userGroupDao);
     }
     
+	@Test(expected=IllegalArgumentException.class)
+    public void testStoreUserGroupNullKey() {
+		UserGroup userGroup = new UserGroup();
+		userGroup.setUserKey(null);
+		
+		userMgr.storeUserGroup(userGroup);
+    }
+    
+	@Test(expected=IllegalArgumentException.class)
+    public void testStoreUserGroupEmptyKey() {
+		UserGroup userGroup = new UserGroup();
+		userGroup.setUserKey("");
+		
+		userMgr.storeUserGroup(userGroup);
+    }
+    
 	@Test
     public void testStoreUserGroup() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-    	userGroup.getIdentity().setId(1);
     	UserGroup managedUserGroup = new UserGroup();
     	
     	expect(userGroupDao.merge(userGroup)).andReturn(managedUserGroup);
     	replay(userGroupDao);
     	
-    	userMgr.storeUserGroup(userGroup);
+    	assertSame(managedUserGroup, userMgr.storeUserGroup(userGroup));
     	verify(userGroupDao);
     }
     
 	@Test
-    public void testValidateIdentityNull() {
-		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-		userGroup.setIdentity(null);
-		assertFalse(userMgr.validateIdentity(userGroup));
-    }
-    
-	@Test
     public void testValidateEmptyCandidate() {
-		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-    	userGroup.getIdentity().setId(0);
-		userGroup.getIdentity().setPrincipal("");
-		assertFalse(userMgr.validateIdentity(userGroup));
-    }
-    
-	@Test
-    public void testValidateCandidateNotLoaded() {
-		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-    	userGroup.getIdentity().setId(0);
-		userGroup.getIdentity().setPrincipal("TEST");
-		
-		expect(identityDao.findUnique("test")).andReturn(null);
-		replay(identityDao);
-		
-		assertFalse(userMgr.validateIdentity(userGroup));
-		verify(identityDao);
+		User user = UserTestSupport.createUser();
+		user.getIdentity().setId(0);
+		user.getIdentity().setPrincipal("");
+		assertFalse(userMgr.validateIdentity(user));
     }
     
 	@Test
     public void testValidateCandidateLoaded() {
-		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-    	userGroup.getIdentity().setId(0);
-		userGroup.getIdentity().setPrincipal("TEST");
+		User user = UserTestSupport.createUser();
+		user.getIdentity().setId(0);
+		user.setUserKey("test");
 		Identity identity = new Identity();
 		
 		expect(identityDao.findUnique("test")).andReturn(identity);
 		replay(identityDao);
 		
-		assertTrue(userMgr.validateIdentity(userGroup));
-		assertSame(identity, userGroup.getIdentity());
+		assertTrue(userMgr.validateIdentity(user));
+		assertSame(identity, user.getIdentity());
 		verify(identityDao);
     }
     
 	@Test
     public void testValidateCandidateCreated() {
-		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-    	userGroup.getIdentity().setId(0);
-		userGroup.getIdentity().setPrincipal("TEST");
-		userGroup.setCreateIdentity(CreateIdentity.AUTO);
+		User user = UserTestSupport.createUser();
+		user.getIdentity().setId(0);
+		user.setUserKey("test");
+		user.setCreateIdentity(CreateIdentity.AUTO);
 		Identity identity = new Identity();
 		
 		expect(identityDao.findUnique("test")).andReturn(null);
 		expect(identityDao.merge(isA(Identity.class))).andReturn(identity);
 		replay(identityDao);
 		
-		assertTrue(userMgr.validateIdentity(userGroup));
-		assertSame(identity, userGroup.getIdentity());
+		assertTrue(userMgr.validateIdentity(user));
+		assertSame(identity, user.getIdentity());
 		verify(identityDao);
-    }
-    
-	@Test
-    public void testStoreUserGroupAssociation() {
-    	UserGroup userGroup = new UserGroup();
-    	UserAssociation parentAssociation = new UserAssociation();
-    	UserAssociation managedUserAssociation = new UserAssociation();
-    	managedUserAssociation.setChild(userGroup);
-    	
-    	expect(userAssociationDao.merge(parentAssociation)).andReturn(managedUserAssociation);
-    	replay(userAssociationDao);
-    	
-    	assertSame(userGroup, userMgr.storeUserGroup(parentAssociation));
-    	verify(userAssociationDao);
     }
     
 	@Test
@@ -263,19 +242,6 @@ public class UserMgrImplTests {
     	
     	assertSame(managedUserAssociation, userMgr.storeUserAssociation(parentAssociation));
     	verify(userAssociationDao);
-    }
-    
-	@Test
-    public void testFindProvinceByOperator() {
-        Operator operator = OperatorTestSupport.createOperator();
-        List<Province> provinceList = new ArrayList<Province>();
-        
-        expect(provinceDao.find(isA(ProvinceFilter.class)))
-            .andReturn(provinceList);
-        replay(provinceDao);
-        
-        assertSame(provinceList, userMgr.findProvinceByOperator(operator));
-        verify(provinceDao);
     }
     
 	@Test(expected=IllegalArgumentException.class)

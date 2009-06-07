@@ -20,7 +20,6 @@ import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 
 /**
  * Default base service layer interface for the core package.
@@ -38,22 +37,12 @@ public interface ServerMgr {
 	public Server findActiveServer(Operator operator, int n);
 
     /**
-     * <p>Finds or creates <code>UserGroup</code> by <code>Entity</code> and name.</p>
-     */
-    public UserGroup findOrCreateUserGroup(Entity entity, String groupName);
-    
-    /**
-     * <p>Finds or creates <code>UserGroup</code> by <code>Entity</code> and name.</p>
-     */
-    public UserGroup findOrCreateUserGroup(Entity entity, String serviceName, String[] extensions);
-    
-    /**
      * A manager is an <code>User</code> associated to both, an <code>ADMIN</code>
      * group and an <code>USER</code> group.
      * 
      * @param managerIdentity
      */
-    public User writeManager(Identity managerIdentity);
+    public User storeManager(Identity managerIdentity);
     
     /**
      * A manager is an <code>User</code> associated to both, an <code>ADMIN</code>
@@ -62,6 +51,6 @@ public interface ServerMgr {
      * @param entity
      * @param managerIdentity
      */
-    public User writeManager(Entity entity, Identity managerIdentity);
+    public User storeManager(Entity entity, Identity managerIdentity);
     
 }

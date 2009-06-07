@@ -186,12 +186,21 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedUserRole;
 	}
 
-	public Map<String, String> loadServiceNameMap(Operator operator) {
+	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole) {
 		Operator managedOperator = operatorDao.merge(operator);
 		Map<String, String> serviceNameMap = new HashMap<String, String>();
 		Set<Service> services = managedOperator.getServices();
-		for (Service service: services) {
-			serviceNameMap.put(String.valueOf(service.getId()), service.getServiceName());
+		if (services!=null && services.size()>0) {
+			for (Service service: services) {
+				if (userRole.getService()==null) {
+					// the first one as default, if empty
+					userRole.setService(service);
+				}
+				serviceNameMap.put(String.valueOf(service.getId()), service.getServiceName());
+			}
+		}
+		else {
+			throw new IllegalArgumentException("Unable to map from empty services list.");
 		}
     	if (logger.isDebugEnabled() && services!=null) {
     		logger.debug("Loaded service map "+serviceNameMap);

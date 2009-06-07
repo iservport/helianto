@@ -42,19 +42,13 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
  * 			
- * <p>
- * The user group.
- * </p>
- * <p>
- * An user account represents the association between an <code>Identity</code>
- * and an <code>Entity</code>. If authorization fails at user level, the authorization 
- * service will look-up the user hierarchy roles as well.
- * </p>
+ * An user account (or group) represents a set of roles within an <code>Entity</code>. 
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
 @Table(name="core_user",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "identityId"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "userKey"})}
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
@@ -68,29 +62,16 @@ public class UserGroup implements java.io.Serializable {
      * <code>UserGroup</code> factory.
      * 
      * @param entity
-     * @param identity
+     * @param userKey
      */
-    public static UserGroup userGroupFactory(Entity entity, Identity identity) {
-        return internalUserGroupFactory(UserGroup.class, entity, identity);
-    }
-
-    /**
-     * <code>UserGroup</code> factory.
-     * 
-     * @param parent
-     * @param identity
-     */
-    public static UserGroup userGroupFactory(UserGroup parent, Identity identity) {
-        UserGroup userGroup = userGroupFactory(parent.getEntity(), identity);
-        UserAssociation.userAssociationFactory(parent, userGroup);
-        return userGroup;
+    public static UserGroup userGroupFactory(Entity entity, String userKey) {
+        return UserGroup.internalUserGroupFactory(UserGroup.class, entity, userKey);
     }
 
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
     private String userKey;
-    private Identity identity;
     private Date lastEvent;
     private char userState;
     private boolean accountNonExpired;
@@ -135,68 +116,14 @@ public class UserGroup implements java.io.Serializable {
     }
 
     /**
-     * UserKey getter.
+     * User key.
      */
-    @Column(length=32)
+    @Column(length=40)
     public String getUserKey() {
         return this.userKey;
     }
     public void setUserKey(String userKey) {
         this.userKey = userKey;
-    }
-
-    /**
-     * Identity getter.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="identityId", nullable=true)
-    public Identity getIdentity() {
-        return this.identity;
-    }
-    public void setIdentity(Identity identity) {
-        this.identity = identity;
-    }
-    /**
-     * User principal.
-     */
-    @Transient
-    public String getUserPrincipal() {
-    	if (getIdentity()==null) {
-    		return "";
-    	}
-        return getIdentity().getPrincipal();
-    }
-    /**
-     * User principal name.
-     */
-    @Transient
-    public String getUserPrincipalName() {
-    	int position = getUserPrincipal().indexOf("@");
-    	if (position>0) {
-    		return getUserPrincipal().substring(0, position);
-    	}
-        return getUserPrincipal();
-    }
-    /**
-     * User principal domain.
-     */
-    @Transient
-    public String getUserPrincipalDomain() {
-    	int position = getUserPrincipal().indexOf("@");
-    	if (position>0) {
-    		return getUserPrincipal().substring(position);
-    	}
-        return "";
-    }
-    /**
-     * UserName.
-     */
-    @Transient
-    public String getUserName() {
-    	if (this instanceof User) {
-            return this.identity.getIdentityName();
-    	}
-        return "";
     }
 
 	/**
@@ -320,16 +247,13 @@ public class UserGroup implements java.io.Serializable {
      * 
      * @param clazz
      * @param entity
-     * @param identity
+     * @param userKey
      */
-    protected static <T extends UserGroup> T internalUserGroupFactory(Class<T> clazz, Entity entity, Identity identity) {
+    protected static <T extends UserGroup> T internalUserGroupFactory(Class<T> clazz, Entity entity, String userKey) {
         try {
             T userGroup = clazz.newInstance();
             userGroup.setEntity(entity);
-            if (identity==null) {
-                identity = Identity.identityFactory("", "");
-            }
-            userGroup.setIdentity(identity);
+            userGroup.setUserKey(userKey);
             userGroup.setUserState(ActivityState.ACTIVE.getValue());
             return userGroup;
         } catch (Exception e) {
@@ -337,33 +261,6 @@ public class UserGroup implements java.io.Serializable {
         }
     }
     
-//    /**
-//     * <code>UserGroup</code> factory.
-//     * 
-//     * @param entity
-//     */
-//    public static UserGroup userGroupFactory(Entity entity, String userKey) {
-//    	Identity identity = Identity.identityFactory(userKey, userKey);
-//    	identity.setIdentityType(IdentityType.GROUP.getValue());
-//    	UserGroup userGroup = internalUserGroupFactory(UserGroup.class, entity, identity);
-//    	userGroup.setUserKey(userKey);
-//        return userGroup;
-//    }
-//
-//    /**
-//     * <code>UserGroup</code> natural id query.
-//     */
-//    public static StringBuilder getUserGroupQueryStringBuilder() {
-//        return new StringBuilder("select userGroup from UserGroup userGroup ");
-//    }
-//
-//    /**
-//     * <code>UserGroup</code> natural id query.
-//     */
-//    public static String getUserGroupNaturalIdQueryString() {
-//        return getUserGroupQueryStringBuilder().append("where userGroup.entity = ? and userGroup.identity = ? ").toString();
-//    }
-//
     /**
      * toString
      * @return String
@@ -373,7 +270,7 @@ public class UserGroup implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("identity").append("='").append(getIdentity()).append("' ");
+        buffer.append("identity").append("='").append(getUserKey()).append("' ");
         buffer.append("]");
       
         return buffer.toString();
@@ -390,7 +287,7 @@ public class UserGroup implements java.io.Serializable {
          UserGroup castOther = (UserGroup) other; 
          
          return ((this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ))
-             && ((this.getIdentity()==castOther.getIdentity()) || ( this.getIdentity()!=null && castOther.getIdentity()!=null && this.getIdentity().equals(castOther.getIdentity()) ));
+             && ((this.getUserKey()==castOther.getUserKey()) || ( this.getUserKey()!=null && castOther.getUserKey()!=null && this.getUserKey().equals(castOther.getUserKey()) ));
    }
    
    /**
@@ -399,7 +296,7 @@ public class UserGroup implements java.io.Serializable {
     @Override
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getIdentity() == null ? 0 : this.getIdentity().hashCode() );
+         result = 37 * result + ( getUserKey() == null ? 0 : this.getUserKey().hashCode() );
          return result;
    }   
 

@@ -277,12 +277,14 @@ public class NamespaceMgrTests {
 		Service service = ServiceTestSupport.createService();
 		service.setId(Integer.MAX_VALUE);
 		managedOperator.getServices().add(service);
+		UserRole userRole = new UserRole();
 		
 		expect(operatorDao.merge(operator)).andReturn(managedOperator);
 		replay(operatorDao);
 		
-		Map<String, String> serviceNameMap = namespaceMgr.loadServiceNameMap(operator);
+		Map<String, String> serviceNameMap = namespaceMgr.loadServiceNameMap(operator, userRole);
 		assertSame(service.getServiceName() , serviceNameMap.get("2147483647"));
+		assertSame(service, userRole.getService());
 		verify(operatorDao);
 	}
 	

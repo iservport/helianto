@@ -73,7 +73,7 @@ public class InstallFormAction extends FormAction {
         if (logger.isDebugEnabled()) {
             logger.debug("Retrieved "+identityForm);
         }
-        User user = serverMgr.writeManager(identityForm.getCredential().getIdentity());
+        User user = serverMgr.storeManager(identityForm.getCredential().getIdentity());
         UserForm form = doGetForm(context);
         form.setUser(user);
         return success();

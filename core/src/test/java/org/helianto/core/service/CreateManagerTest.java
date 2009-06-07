@@ -61,7 +61,7 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
         Entity entity = Entity.entityFactory(operator, entityName );
         
         Identity identity = Identity.identityFactory(principal, optionalALias);
-        serverMgr.writeManager(entity, identity);
+        serverMgr.storeManager(entity, identity);
 
     }
 

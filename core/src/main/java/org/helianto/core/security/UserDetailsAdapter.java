@@ -179,8 +179,8 @@ public class UserDetailsAdapter implements
 	protected final void validateUserAndCredentialCompatibility(UserGroup user) {
         Assert.notNull(user, "Required to UserDetailsAdapter");
         Assert.notNull(credential, "Required to UserDetailsAdapter");
-        if(!user.getIdentity().equals(credential.getIdentity())) {
-            throw new IllegalArgumentException("User and Credential must share the same Identity");
+        if(!user.getUserKey().equals(credential.getIdentity().getPrincipal())) {
+            throw new IllegalArgumentException("User and Credential must have the same principal");
         }
         if (logger.isDebugEnabled()) {
             logger.debug("User and Credential share the same Identity");

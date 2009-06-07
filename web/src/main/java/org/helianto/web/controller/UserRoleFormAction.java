@@ -58,7 +58,7 @@ public class UserRoleFormAction extends AbstractEditAggregateFormAction<UserRole
 	@Override
 	protected void referenceData(RequestContext context, UserRole target) throws Exception {
 		Operator operator = (Operator) context.getFlowScope().get("operator");
-		context.getFlowScope().put("serviceNameMap", namespaceMgr.loadServiceNameMap(operator));
+		context.getFlowScope().put("serviceNameMap", namespaceMgr.loadServiceNameMap(operator, target));
 	}
 
 	/* any item selected from maps in reference data must have a corresponding property editor */

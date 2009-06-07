@@ -36,6 +36,7 @@ public class UserTests extends TestCase {
     public void testUserEquals() {
         Entity entity = new Entity();
         Identity identity = new Identity();
+        identity.setPrincipal("principal");
         
         User user = User.userFactory(entity, identity);
         User copy = (User) DomainTestSupport.minimalEqualsTest(user);

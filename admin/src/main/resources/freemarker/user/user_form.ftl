@@ -9,8 +9,8 @@
 	<#if formObject.target.id == 0 >
 	
 	<tr>
-		<td>Identity principal</td>
-		<td><@spring.formInput "formObject.target.identity.principal", "size='32'"/></td>
+		<td>User key</td>
+		<td><@spring.formInput "formObject.target.userKey", 'size="32" maxlength="40"'/></td>
 	</tr>
 
 	<tr>

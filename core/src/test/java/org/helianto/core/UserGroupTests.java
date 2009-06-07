@@ -19,12 +19,11 @@ public class UserGroupTests extends TestCase {
      */
     public void testUserGroupFactory() {
         Entity entity = new Entity();
-        Identity identity = new Identity();
         
-        UserGroup userGroup = UserGroup.userGroupFactory(entity, identity);
+        UserGroup userGroup = UserGroup.userGroupFactory(entity, "userKey");
         
         assertSame(entity, userGroup.getEntity());
-        assertSame(identity, userGroup.getIdentity());
+        assertEquals("userKey", userGroup.getUserKey());
         
     }
     
@@ -33,21 +32,20 @@ public class UserGroupTests extends TestCase {
      */
     public void testUserGroupEquals() {
         Entity entity = new Entity();
-        Identity identity = new Identity();
         
-        UserGroup userGroup = UserGroup.userGroupFactory(entity, identity);
+        UserGroup userGroup = UserGroup.userGroupFactory(entity, "userKey");
         UserGroup copy = (UserGroup) DomainTestSupport.minimalEqualsTest(userGroup);
         
         copy.setEntity(null);
-        copy.setIdentity(identity);
+        copy.setUserKey("userKey");
         assertFalse(userGroup.equals(copy));
 
         copy.setEntity(entity);
-        copy.setIdentity(null);
+        copy.setUserKey("");
         assertFalse(userGroup.equals(copy));
 
         copy.setEntity(entity);
-        copy.setIdentity(identity);
+        copy.setUserKey("userKey");
 
         assertTrue(userGroup.equals(copy));
     }

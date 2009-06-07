@@ -76,13 +76,13 @@ public class ServerMgrImpl  implements ServerMgr {
         return identity;
     }
 
-    public UserGroup findOrCreateUserGroup(Entity entity, Identity groupIdentity) {
+    public UserGroup findOrCreateUserGroup(Entity entity, String userKey) {
         UserGroup userGroup = null;
         if (entity.getId()!=0) {
-            userGroup = userGroupDao.findUnique(entity, groupIdentity);
+            userGroup = userGroupDao.findUnique(entity, userKey);
         }
         if (userGroup==null) {
-            userGroup = UserGroup.userGroupFactory(entity, groupIdentity);
+            userGroup = UserGroup.userGroupFactory(entity, userKey);
             userGroupDao.persist(userGroup);
             if (logger.isDebugEnabled()) {
                 logger.debug("Persisted "+userGroup);
@@ -147,63 +147,14 @@ public class ServerMgrImpl  implements ServerMgr {
         return userRole;
     }
 
-    @Deprecated
-    public UserGroup findOrCreateUserGroup(Entity entity, String groupName) {
-        Identity groupIdentity = identityDao.findUnique(groupName);
-        if (groupIdentity==null) {
-            groupIdentity = createGroupIdentity(groupName);
-            identityDao.persist(groupIdentity);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+groupIdentity);
-            }
-        } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Retrieved "+groupIdentity);
-            }
-        }
-        UserGroup userGroup = null;
-        if (entity.getId()!=0) {
-            userGroup = userGroupDao.findUnique(entity, groupIdentity);
-        }
-        if (userGroup==null) {
-            userGroup = UserGroup.userGroupFactory(entity, groupIdentity);
-            identityDao.persist(groupIdentity);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+userGroup);
-            }
-        } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Retrieved "+userGroup);
-            }
-        }
-        return userGroup;
-    }
-    
     protected Identity createGroupIdentity(String groupName) {
     	Identity groupIdentity = Identity.identityFactory(groupName, groupName);
         groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
     	return groupIdentity;
     }
     
-    @Deprecated
-    public UserGroup findOrCreateUserGroup(Entity entity, String serviceName, String[] extensions) {
-        UserGroup userGroup = findOrCreateUserGroup(entity, serviceName);
-        Service service = serviceDao.findUnique(entity.getOperator(), serviceName);
-        if (service==null) {
-            service = Service.serviceFactory(entity
-                    .getOperator(), serviceName);
-        }
-        for (String extension: extensions) {
-            UserRole.userRoleFactory(
-                    userGroup, service, extension);
-        }
-        return userGroup;
-    }
-    
     protected UserGroup grant(Entity entity, String serviceName, String[] extensions) {
-        Identity groupIdentity = findOrCreateIdentity(serviceName);
-        groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
-        UserGroup userGroup = findOrCreateUserGroup(entity, groupIdentity);
+        UserGroup userGroup = findOrCreateUserGroup(entity, serviceName);
         Service service = findOrCreateService(entity, serviceName);
         for (String extension: extensions) {
             UserRole userRole = findOrCreateUserRole(userGroup, service, extension);
@@ -216,16 +167,16 @@ public class ServerMgrImpl  implements ServerMgr {
     }
 
     
-    public User writeManager(Identity managerIdentity) {
+    public User storeManager(Identity managerIdentity) {
         Operator operator = Operator.operatorFactory("DEFAULT", Locale.getDefault());
         Entity entity = Entity.entityFactory(operator, "DEFAULT");
         if (logger.isDebugEnabled()) {
             logger.debug("Entity created with defaults: "+entity);
         }
-        return writeManager(entity, managerIdentity);
+        return storeManager(entity, managerIdentity);
     }
 
-    public User writeManager(Entity entity, Identity managerIdentity) {
+    public User storeManager(Entity entity, Identity managerIdentity) {
         UserGroup adminGroup = grant(entity, "ADMIN", new String[] {"MANAGER"});
         UserGroup userGroup = grant(entity, "USER", new String[] {"ALL", "DEL"});
         if (logger.isDebugEnabled()) {

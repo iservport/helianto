@@ -21,7 +21,10 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 /**
  * <p>
  * The user account.
@@ -40,7 +43,31 @@ import javax.persistence.OneToMany;
 @DiscriminatorValue("U")
 public class User extends UserGroup implements java.io.Serializable {
 
+    /**
+     * Factory method.
+     * 
+     * @param entity
+     */
+    public static User userFactory(Entity entity) {
+    	User user = UserGroup.internalUserGroupFactory(User.class, entity, "");
+    	user.setIdentity(Identity.identityFactory(""));
+    	return user;
+    }
+
+    /**
+     * Factory method.
+     * 
+     * @param entity
+     * @param identity
+     */
+    public static User userFactory(Entity entity, Identity identity) {
+        User user = UserGroup.internalUserGroupFactory(User.class, entity, identity.getPrincipal());
+        user.setIdentity(identity);
+        return user;
+    }
+
     private static final long serialVersionUID = 1L;
+    private Identity identity;
     private char userType;
     private char privacyLevel;
 	private Set<UserLog> userLogs = new HashSet<UserLog>(0);
@@ -53,7 +80,66 @@ public class User extends UserGroup implements java.io.Serializable {
     	setPrivacyLevel('0');
     }
 
-    // Property accessors
+    /**
+     * Identity.
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="identityId", nullable=true)
+    public Identity getIdentity() {
+        return this.identity;
+    }
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
+        if (identity!=null) {
+            setUserKey(identity.getPrincipal());
+        }
+        else {
+        	setUserKey("");
+        }
+    }
+    /**
+     * User principal.
+     */
+    @Transient
+    public String getUserPrincipal() {
+    	if (getIdentity()==null) {
+    		return "";
+    	}
+        return getIdentity().getPrincipal();
+    }
+    /**
+     * User principal name.
+     */
+    @Transient
+    public String getUserPrincipalName() {
+    	int position = getUserPrincipal().indexOf("@");
+    	if (position>0) {
+    		return getUserPrincipal().substring(0, position);
+    	}
+        return getUserPrincipal();
+    }
+    /**
+     * User principal domain.
+     */
+    @Transient
+    public String getUserPrincipalDomain() {
+    	int position = getUserPrincipal().indexOf("@");
+    	if (position>0) {
+    		return getUserPrincipal().substring(position);
+    	}
+        return "";
+    }
+    /**
+     * UserName.
+     */
+    @Transient
+    public String getUserName() {
+    	if (this instanceof User) {
+            return this.identity.getIdentityName();
+    	}
+        return "";
+    }
+
     /**
      * UserType getter.
      */
@@ -89,46 +175,6 @@ public class User extends UserGroup implements java.io.Serializable {
 	}
 
     /**
-     * <code>User</code> factory.
-     * 
-     * @param entity
-     */
-    public static User userFactory(Entity entity) {
-        return userFactory(entity, null);
-    }
-
-    /**
-     * <code>User</code> factory.
-     * 
-     * @param entity
-     * @param identity
-     */
-    public static User userFactory(Entity entity, Identity identity) {
-        User user = internalUserGroupFactory(User.class, entity, identity);
-        return user;
-    }
-
-    /**
-     * <code>User</code> factory.
-     * 
-     * @param entity
-     */
-    public static User userFactory(UserGroup parent) {
-        return userFactory(parent, null);
-    }
-
-    /**
-     * <code>User</code> factory.
-     * 
-     * @param entity
-     */
-    public static User userFactory(UserGroup parent, Identity identity) {
-        User user = userFactory(parent.getEntity(), identity);
-        UserAssociation.userAssociationFactory(parent, user);
-        return user;
-    }
-
-    /**
      * <code>UserLog</code> factory mehod.
      * 
      * @param eventType
@@ -137,18 +183,4 @@ public class User extends UserGroup implements java.io.Serializable {
     	return UserLog.userLogFactory(this, new Date(), eventType);
     }
     
-    /**
-     * <code>User</code> natural id query.
-     */
-    public static StringBuilder getUserQueryStringBuilder() {
-        return new StringBuilder("select user from User user ");
-    }
-
-    /**
-     * <code>User</code> natural id query.
-     */
-    public static String getUserNaturalIdQueryString() {
-        return getUserQueryStringBuilder().append("where user.entity = ? and user.identity = ? ").toString();
-    }
-
 }

@@ -28,7 +28,7 @@ public class ServicePropertyEditor extends AbstractJpaPropertyEditor {
     @Override
     public String getAsText() {
         Service service = (Service) getValue();
-        return String.valueOf(service.getServiceName());
+        return String.valueOf(service.getId());
     }
     
     @Override

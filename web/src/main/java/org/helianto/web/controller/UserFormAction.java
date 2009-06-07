@@ -50,7 +50,7 @@ public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, E
 	@Override
 	protected void preProcessStoreTarget(RequestContext context, UserGroup detachedTarget) throws Exception {
 		ParameterMap parameters = context.getRequestParameters();
-		if (detachedTarget.getUserPrincipal().length()>0 && parameters.contains("createIdentity")) {
+		if (detachedTarget.getUserKey().length()>0 && parameters.contains("createIdentity")) {
 			detachedTarget.setCreateIdentity(CreateIdentity.AUTO);
 		}
 	}

@@ -60,7 +60,9 @@ public class Identity implements java.io.Serializable {
         setNotification(Notification.AUTOMATIC.getValue());
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public long getId() {
         return this.id;
@@ -72,7 +74,7 @@ public class Identity implements java.io.Serializable {
     /**
      * Principal getter.
      */
-    @Column(length=64)
+    @Column(length=40)
     public String getPrincipal() {
         return this.principal;
     }

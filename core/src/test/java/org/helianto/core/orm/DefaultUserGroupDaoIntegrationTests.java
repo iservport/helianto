@@ -45,7 +45,7 @@ public class DefaultUserGroupDaoIntegrationTests {
 	public void testFindUnique() {
 		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
 		userGroupDao.persist(userGroup);
-		assertEquals(userGroup, userGroupDao.findUnique(userGroup.getEntity(), userGroup.getIdentity()));
+		assertEquals(userGroup, userGroupDao.findUnique(userGroup.getEntity(), userGroup.getUserKey()));
 	}
 
     //- collabs

@@ -126,6 +126,6 @@ public interface NamespaceMgr {
 	/**
 	 * Load a service name map.
 	 */
-	public Map<String, String> loadServiceNameMap(Operator operator);
+	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole);
 
 }

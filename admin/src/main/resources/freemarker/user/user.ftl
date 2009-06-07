@@ -1,10 +1,13 @@
 <div id="panel">
-<h2>User <b>${user.id}</b></h2>
-<p>Principal: <b>${user.userPrincipal}</b></p>
+<h2>User <b>${user.userKey}</b> <small>[${user.id}]</small></h2>
+<#if user.userName?exists>
 <p>Personal data: <b>${user.userName}</b></p>
-<p>Assigned roles:</p>
+</#if>
 <table>
 <thead style="background: #cccccc;">
+<tr>
+  <td colspan="4" style="text-align: center;"><b>Assigned roles</b></td>
+</tr>
 <tr>
   <td colspan="2">Service</td>
   <td >Role</td>
@@ -19,7 +22,7 @@
   <@select "${target_index}", "editUserRole" >${target.id?c}</@select>
   <td >${target.serviceName}</td>
   <td >${target.serviceExtension}</td>
-  <td >${target.userGroup.userPrincipal}</td>
+  <td >${target.userGroup.userKey}</td>
 </tr>
 </#list>
 </tbody>

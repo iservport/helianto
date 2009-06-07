@@ -21,8 +21,6 @@ import java.util.List;
 
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
@@ -76,12 +74,6 @@ public interface UserMgr {
     public UserGroup storeUserGroup(UserGroup userGroup);
     
     /**
-     * <p>Store <code>UserGroup</code> and return a managed instance.</p>
-     * <p>Convenient to store a recently created user or group.</p>
-     */
-    public UserGroup storeUserGroup(UserAssociation parentAssociation);
-    
-    /**
      * <p><code>UserAssociation</code> creation that inherits privileges 
      * and resolves identity.</p>
      */
@@ -93,17 +85,11 @@ public interface UserMgr {
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation);
     
     /**
-     * Write a new <code>UserLog<code> and update the <code>Identity</code>
-     * last log date.
+     * Store <code>UserLog<code>.
      * 
      * @param user
      * @param date
      */
 	public UserLog storeUserLog(User user, Date date);
 	
-    /**
-     * Find a <code>Province</code> list by <code>Operator</code>.
-     */
-    public List<Province> findProvinceByOperator(Operator operator);
-
 }
