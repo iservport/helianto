@@ -13,42 +13,39 @@
  * limitations under the License.
  */
 
-
 package org.helianto.web.controller;
 
 import java.beans.PropertyEditor;
-import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.CreateIdentity;
-import org.helianto.core.Entity;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
- * Presentation logic to store users (or groups).
+ * Presentation logic to store users.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component("userAction")
-public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, Entity> {
+public class UserFormAction extends AbstractEditAggregateFormAction<User, UserAssociation> {
 
 	@Override
-	protected UserGroup doPrepareTarget(RequestContext context, UserGroup target) throws Exception {
-		return userMgr.prepareUserGroup(target);
+	protected User doPrepareTarget(RequestContext context, User target) throws Exception {
+		return (User) userMgr.prepareUserGroup(target);
 	}
 
 	/**
 	 * Associate an identity to the user before storing.
 	 */
 	@Override
-	protected void preProcessStoreTarget(RequestContext context, UserGroup detachedTarget) throws Exception {
+	protected void preProcessStoreTarget(RequestContext context, User detachedTarget) throws Exception {
 		ParameterMap parameters = context.getRequestParameters();
 		if (detachedTarget.getUserKey().length()>0 && parameters.contains("createIdentity")) {
 			detachedTarget.setCreateIdentity(CreateIdentity.AUTO);
@@ -56,34 +53,30 @@ public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, E
 	}
 
 	@Override
-	protected UserGroup doStoreTarget(UserGroup detachedTarget) throws Exception {
-		return userMgr.storeUserGroup(detachedTarget);
+	protected User doStoreTarget(User detachedTarget) throws Exception {
+		return (User) userMgr.storeUserGroup(detachedTarget);
 	}
 
 	@Override
-	public UserGroup doCreateTarget(RequestContext context, Entity parent) throws Exception {
-		String createOption = context.getRequestScope().getRequiredString("createOption");
-		if (createOption.equals("user")) {
-			return User.userFactory(parent);
-		}
-		return UserGroup.userGroupFactory(parent, null);
+	public User doCreateTarget(RequestContext context, UserAssociation parent) throws Exception {
+		return User.userFactory(parent.getParent().getEntity());
 	}
 
 	@Override
-	protected Entity getManagedParent(UserGroup managedTarget) {
-		return managedTarget.getEntity();
+	protected UserAssociation getManagedParent(User managedTarget) {
+		return managedTarget.getParentAssociations().iterator().next();
 	}
 
 	@Override
 	public void setTargetPropertyEditor(PropertyEditor targetPropertyEditor) {
-		internalTargetPropertyEditorSetter(targetPropertyEditor, UserGroup.class);
+		internalTargetPropertyEditorSetter(targetPropertyEditor, User.class);
 	}
 
-	@Override
-	protected List<UserGroup> getAggregateList(RequestContext context, Entity parent) {
-		return parent.getUserList();
-	}
-
+//	@Override
+//	protected List<User> getAggregateList(RequestContext context, Entity parent) {
+//		return parent.getUserList();
+//	}
+//
 	@Override
 	public String getTargetAttributeName() {
 		return "user";
@@ -91,7 +84,7 @@ public class UserFormAction extends AbstractEditAggregateFormAction<UserGroup, E
 
 	@Override
 	public String getParentAttributeName() {
-		return "entity";
+		return "userAssociation";
 	}
 
 	// collabs

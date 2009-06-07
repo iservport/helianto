@@ -18,7 +18,6 @@ package org.helianto.web.controller;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
@@ -33,7 +32,7 @@ import org.springframework.webflow.execution.RequestContext;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class UserFormActionTests extends AbstractEditAggregateFormActionTests<UserGroup, Entity, UserFormAction, UserMgr>{
+public class UserGroupFormActionTests extends AbstractEditAggregateFormActionTests<UserGroup, Entity, UserGroupFormAction, UserMgr>{
 	
 	@Override
 	protected UserGroup createTestInstance() {
@@ -46,7 +45,7 @@ public class UserFormActionTests extends AbstractEditAggregateFormActionTests<Us
 	}
 	
 	@Override
-	protected UserGroup getPreparedTarget(UserFormAction formAction, RequestContext context, UserGroup target) throws Exception {
+	protected UserGroup getPreparedTarget(UserGroupFormAction formAction, RequestContext context, UserGroup target) throws Exception {
 		return formAction.doPrepareTarget(context, target);
 	}
 	
@@ -56,31 +55,15 @@ public class UserFormActionTests extends AbstractEditAggregateFormActionTests<Us
 	}
 	
 	@Override
-	protected Entity getManagedParent(UserFormAction formAction, UserGroup target) throws Exception {
+	protected Entity getManagedParent(UserGroupFormAction formAction, UserGroup target) throws Exception {
 		return formAction.getManagedParent(target);
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testDoCreateTarget() throws Exception {
-		Entity parent = getParent(createTestInstance());
-		getFormAction().doCreateTarget(getContext(), parent);
 	}
 	
 	@Test
 	public void testDoCreateTargetUserGroup() throws Exception {
 		Entity parent = getParent(createTestInstance());
-		getContext().getRequestScope().put("createOption", "userGroup");
 		UserGroup target = getFormAction().doCreateTarget(getContext(), parent);
 		assertFalse(target instanceof User);
-		assertSame(parent, getParent(target));
-	}
-	
-	@Test
-	public void testDoCreateTargetUser() throws Exception {
-		Entity parent = getParent(createTestInstance());
-		getContext().getRequestScope().put("createOption", "user");
-		UserGroup target = getFormAction().doCreateTarget(getContext(), parent);
-		assertTrue(target instanceof User);
 		assertSame(parent, getParent(target));
 	}
 	
@@ -90,13 +73,13 @@ public class UserFormActionTests extends AbstractEditAggregateFormActionTests<Us
 	}
 	
 	@Override
-	protected UserGroup getStoredTarget(UserFormAction formAction, UserGroup detachedTarget) throws Exception {
+	protected UserGroup getStoredTarget(UserGroupFormAction formAction, UserGroup detachedTarget) throws Exception {
 		return formAction.doStoreTarget(detachedTarget);
 	}
 	
 	@Override
-	protected UserFormAction createFormActionInstance() {
-		return new UserFormAction();
+	protected UserGroupFormAction createFormActionInstance() {
+		return new UserGroupFormAction();
 	}
 
 	@Override
@@ -115,7 +98,7 @@ public class UserFormActionTests extends AbstractEditAggregateFormActionTests<Us
 	}
 
 	@Override
-	protected void injectTestMgr(UserFormAction formAction, UserMgr testMgr) {
+	protected void injectTestMgr(UserGroupFormAction formAction, UserMgr testMgr) {
 		formAction.setUserMgr(testMgr);
 	}
 
