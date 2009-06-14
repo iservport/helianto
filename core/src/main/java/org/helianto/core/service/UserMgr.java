@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.User;
@@ -52,6 +53,11 @@ public interface UserMgr {
      * @param identity
      */
     public Identity storeIdentity(Identity identity);
+    
+    /**
+     * Create and prepare <code>UserGroup</code> in session.
+     */
+    public UserGroup prepareNewUserGroup(Entity entity);
     
     /**
      * Prepare <code>UserGroup</code> in session.

@@ -39,6 +39,19 @@ import org.helianto.core.Entity;
 )
 public class Unit implements java.io.Serializable {
 
+    /**
+     * Factory method.
+     * 
+     * @param entity
+     * @param unitCode
+     */
+    public static Unit unitFactory(Entity entity, String unitCode) {
+        Unit unit = new Unit();
+        unit.setEntity(entity);
+        unit.setUnitCode(unitCode);
+        return unit;
+    }
+
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -49,6 +62,9 @@ public class Unit implements java.io.Serializable {
 
     /** default constructor */
     public Unit() {
+    	setUnitCode("");
+    	setUnitName("");
+        setPriority('1');
     }
 
     // Property accessors
@@ -120,50 +136,6 @@ public class Unit implements java.io.Serializable {
 	public void setPriority(char priority) {
 		this.priority = priority;
 	}
-
-    /**
-     * <code>Unit</code> factory.
-     * 
-     * @param entity
-     * @param unitCode
-     */
-    public static Unit unitFactory(Entity entity, String unitCode) {
-        Unit unit = new Unit();
-        unit.setEntity(entity);
-        unit.setUnitCode(unitCode);
-        unit.setPriority('1');
-        return unit;
-    }
-
-    /**
-     * <code>Unit</code> factory.
-     * 
-     * @param entity
-     * @param unitCode
-     */
-    public static Unit unitFactory(Category category, String unitCode) {
-        Unit unit = new Unit();
-        unit.setEntity(category.getEntity());
-        unit.setCategory(category);
-        unit.setUnitCode(unitCode);
-        return unit;
-    }
-
-    /**
-     * <code>Unit</code> query.
-     */
-    @Transient
-    public static StringBuilder getUnitQueryStringBuilder() {
-        return new StringBuilder("select unit from Unit unit ");
-    }   
-
-    /**
-     * <code>Unit</code> natural id query.
-     */
-    @Transient
-    public static String getUnitNaturalIdQueryString() {
-        return getUnitQueryStringBuilder().append("where unit.entity = ? and unit.unitCode = ? ").toString();
-    }
 
     /**
      * toString

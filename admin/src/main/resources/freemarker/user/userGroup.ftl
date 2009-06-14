@@ -1,8 +1,5 @@
 <div id="panel">
-<h2>User <b>${user.userKey}</b> <small>[${user.id}]</small></h2>
-<#if user.userName?exists>
-<p>Personal data: <b>${user.userName}</b></p>
-</#if>
+<h2>User <b>${userGroup.userKey}</b> <small>[${userGroup.id}]</small></h2>
 <table>
 <thead style="background: #cccccc;">
 <tr>
@@ -15,7 +12,7 @@
 </tr>
 </thead>
 <tbody>
-<#list user.roleList?if_exists as target >
+<#list userGroup.roleList?if_exists as target >
 <tr>
   <#-- this macro, embedded in frame.ftl, is appropriate 
        to generate the select transition -->

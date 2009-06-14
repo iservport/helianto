@@ -37,8 +37,7 @@ import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.Service;
-import org.helianto.core.UserFilter;
-import org.helianto.core.UserGroup;
+import org.helianto.core.User;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
@@ -170,28 +169,18 @@ public class NamespaceMgrTests {
 	public void testPrepareEntity() {
 		Entity entity = EntityTestSupport.createEntity();
 		Entity managedEntity = EntityTestSupport.createEntity();
+		User user = new User();
+		managedEntity.getUsers().add(user);
 		
 		expect(entityDao.merge(entity)).andReturn(managedEntity);
 		entityDao.evict(managedEntity);
 		replay(entityDao);
 		
 		assertSame(managedEntity , namespaceMgr.prepareEntity(entity));
+		assertSame(user , managedEntity.getUserList().get(0));
 		verify(entityDao);
 	}
 	
-	@Test
-	public void testLoadUserList() {
-		Entity entity = new Entity();
-		List<UserGroup> userList = new ArrayList<UserGroup>();
-		
-		expect(userMgr.findUsers(isA(UserFilter.class))).andReturn(userList);
-		replay(userMgr);
-		
-		namespaceMgr.loadUserList(entity);
-		assertSame(userList, entity.getUserList());
-		verify(userMgr);
-	}
-
 	@Test
 	public void testStoreNewEntity() {
 		Entity entity = EntityTestSupport.createEntity();
@@ -295,7 +284,6 @@ public class NamespaceMgrTests {
 	private BasicDao<KeyType> keyTypeDao;
 	private BasicDao<Service> serviceDao;
 	private BasicDao<UserRole> userRoleDao;
-	private UserMgr userMgr;
 	
 	@SuppressWarnings("unchecked")
 	@Before
@@ -313,8 +301,6 @@ public class NamespaceMgrTests {
 		namespaceMgr.setServiceDao(serviceDao);
 		userRoleDao = createMock(BasicDao.class);
 		namespaceMgr.setUserRoleDao(userRoleDao);
-		userMgr = createMock(UserMgr.class);
-		namespaceMgr.setUserMgr(userMgr);
 	}
 	
 	@After
@@ -324,7 +310,6 @@ public class NamespaceMgrTests {
 		reset(entityDao);
 		reset(keyTypeDao);
 		reset(serviceDao);
-		reset(userMgr);
 	}
 
 }

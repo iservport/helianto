@@ -15,11 +15,15 @@
 <tr>
   <#-- this macro, embedded in frame.ftl, is appropriate 
        to generate the select transition -->
-  <@select "${target_index}", "selectUser" >${target.id?c}</@select>
-  <td >${target.userPrincipal}</td>
+  <#if target.class=='class org.helianto.core.UserGroup' >
+  	<@select "${target_index}", "selectUserGroup" >${target.id?c}</@select>
+  <#else>
+  	<@select "${target_index}", "selectUser" >${target.id?c}</@select>
+  </#if>
+  <td >${target.userKey}</td>
   <@select "${target_index}", "editUser" >${userState[target.userState]}</@select>
   <td >${type[target.class]}</td>
-  <td >${target.userName}</td>
+  <td >${target.userName?if_exists}</td>
 </tr>
 </#list>
 </tbody>

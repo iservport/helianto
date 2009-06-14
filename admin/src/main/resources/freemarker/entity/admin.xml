@@ -14,7 +14,7 @@
 		</transition>
 	</action-state>
 	
-	<!-- 
+	<!-- 001
 	 ! entity 
 	 ! SELECTION VIEW
 	 !-->
@@ -48,7 +48,7 @@
 		</transition>
 	</view-state>
 
-	<!-- 
+	<!-- 002
 	 ! entity  
 	 ! BROWSE VIEW
 	 !-->
@@ -57,27 +57,25 @@
 		 ! before browse
 		 -->
         <render-actions>
-            <action bean="entityAction"  method="prepareTarget"/>
-            <action bean="entityAction"  method="resolveAuthorization"/>
-			<set attribute="sidenav"     value="'entity/entity_nav'"  scope="flash"/>
-			<set attribute="sidebar"     value="'entity/entity_bar'"  scope="flash"/>
-			<set attribute="template"    value="'entity/entity'"      scope="flash"/>
+            <action bean="entityAction"    method="prepareTarget"/>
+            <action bean="entityAction"    method="resolveAuthorization"/>
+			<set attribute="sidenav"       value="'entity/entity_nav'"  scope="flash"/>
+			<set attribute="sidebar"       value="'entity/entity_bar'"  scope="flash"/>
+			<set attribute="template"      value="'entity/entity'"      scope="flash"/>
         </render-actions>
+		<!-- 
+		 ! forward transitions
+		 -->
+		<transition on="toUser"            to="user.subflow"/>
 		<!-- 
 		 ! local transitions
 		 -->
 		<transition on="editTarget"        to="entityEdit.view"/>
-		<transition on="createUser"        to="userEdit.view">
-			<action bean="userAction"      method="createTarget"/>
+		<transition on="selectUserGroup"   to="userGroup.subflow">
+			<action bean="userGroupAction" method="selectTarget"/>
 		</transition>
-		<transition on="createUserGroup"   to="userGroupEdit.view" >
-			<action bean="userGroupAction" method="createTarget" />
-		</transition>
-		<transition on="selectUser"        to="userBrowse.view">
-			<action bean="userAction"      method="selectTarget"/>
-		</transition>
-		<transition on="editUser"          to="userEdit.view">
-			<action bean="userAction"      method="selectTarget"/>
+		<transition on="createUserGroup"   to="userGroup.subflow">
+			<action bean="userGroupAction" method="createTarget"/>
 		</transition>
 		<!-- 
 		 ! backward transitions
@@ -85,7 +83,7 @@
 		<transition on="toSelection"       to="entitySelection.view"/>
 	</view-state>
 	
-	<!-- 
+	<!-- 003
 	 ! entity  
 	 ! EDIT VIEW
 	 !-->
@@ -107,11 +105,6 @@
 			<action bean="entityAction"            method="storeTarget" />
 		</transition>
 	</view-state>
-	<action-state id="storeEntity">
-		<action bean="entityAction"                method="storeTarget"/>
-		<transition on="success" to="entityBrowse.view"/>
-		<transition on="error"   to="entityEdit.view"/>
-	</action-state>
 	
 	<!-- 
 	 ! province
@@ -159,16 +152,29 @@
 	<subflow-state id="user.subflow" flow="user">
 		<attribute-mapper>
 			<input-mapper>
-				<mapping source="'returnOption'" target="filterOption"/>
+				<mapping source="flowScope.entity" target="entity"/>
+			</input-mapper>
+		</attribute-mapper>
+		<transition on="toParent" to="entityBrowse.view"/>
+	</subflow-state>
+
+	<!-- 
+	 ! userGroup
+	 ! SUBFLOW
+	 !-->
+	<subflow-state id="userGroup.subflow" flow="userGroup">
+		<attribute-mapper>
+			<input-mapper>
+				<mapping source="${flowScope.operator}"  target="operator"/>
+				<mapping source="${flowScope.entity}"    target="entity"/>
+				<mapping source="${flowScope.userGroup}" target="userGroup"/>
 			</input-mapper>
 			<output-mapper>
-				<output-attribute name="returnTarget" scope="request" />
+				<output-attribute name="entity" scope="flow" />
 			</output-mapper>
 		</attribute-mapper>
-		<transition on="returnTarget" to="storeUser">
-			<action bean="userGroupAction" method="processReturnTarget"/>
-		</transition>
-		<transition on="toHome" to="toHome"/>
+		<transition on="toSelection" to="entityBrowse.view"/>
+		<transition on="toHome"      to="toHome"/>
 	</subflow-state>
 
 	<!--

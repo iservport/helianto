@@ -48,7 +48,7 @@ public class UserGroupFormAction extends AbstractEditAggregateFormAction<UserGro
 
 	@Override
 	public UserGroup doCreateTarget(RequestContext context, Entity parent) throws Exception {
-		return UserGroup.userGroupFactory(parent, null);
+		return userMgr.prepareNewUserGroup(parent);
 	}
 
 	@Override
@@ -67,8 +67,13 @@ public class UserGroupFormAction extends AbstractEditAggregateFormAction<UserGro
 	}
 
 	@Override
+	protected String getKeyField() {
+		return "userKey";
+	}
+
+	@Override
 	public String getTargetAttributeName() {
-		return "user";
+		return "userGroup";
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
+import org.helianto.core.Entity;
 import org.helianto.core.EventType;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
@@ -83,8 +84,13 @@ public class UserMgrImpl implements UserMgr {
 		return identityDao.merge(identity);
 	}
 	
-	// user
-
+    public UserGroup prepareNewUserGroup(Entity entity) {
+    	UserGroup userGroup = UserGroup.userGroupFactory(entity, "");
+    	entity.getUsers().add(userGroup);
+    	return userGroup;
+	}
+	
+	@Transactional(readOnly=true)
     public UserGroup prepareUserGroup(UserGroup userGroup) {
     	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
     	managedUserGroup.getAllRoles();

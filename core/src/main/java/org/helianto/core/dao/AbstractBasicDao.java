@@ -19,10 +19,11 @@ import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import javax.persistence.Query;
+import org.hibernate.ejb.HibernateEntityManager;
 
 /**
  * Base implementation for <code>BasicDao</code>.
@@ -158,7 +159,15 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
         if (logger.isDebugEnabled()) {
             logger.debug("Evicting "+object);
         }
-//		this.em.   evict   (object);
+        if (em instanceof HibernateEntityManager) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Using hibernate entity manager");
+            }
+            ((HibernateEntityManager) (this.em)).getSession().evict(object); 
+        }
+        else {
+        	logger.warn("Evict contract planned to jpa 2.0 not yet available");
+        }
 	}
 	
 	public void flush() {

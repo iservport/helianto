@@ -17,6 +17,7 @@
 package org.helianto.core.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,6 @@ import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.Service;
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
@@ -125,21 +125,16 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	@Transactional(readOnly=true)
 	public Entity prepareEntity(Entity entity) {
 		Entity managedEntity = entityDao.merge(entity);
-		loadUserList(managedEntity);
+		List<UserGroup> userList = new ArrayList<UserGroup>(managedEntity.getUsers());
+		Collections.sort(userList);
+		managedEntity.setUserList(userList);
+    	if (logger.isDebugEnabled() && userList!=null) {
+    		logger.debug("Loaded user list of size "+userList.size());
+    	}
 		entityDao.evict(managedEntity);
 		return managedEntity;
 	}
 	
-	@Transactional(readOnly=true)
-	protected void loadUserList(Entity entity) {
-		UserFilter userFilter = new UserFilter(entity);
-		List<UserGroup> userList = userMgr.findUsers(userFilter);
-    	entity.setUserList(userList);
-    	if (logger.isDebugEnabled() && userList!=null) {
-    		logger.debug("Loaded user list of size "+userList.size());
-    	}
-	}
-
 	public Entity storeEntity(Entity entity) {
 		Operator managedOperator = operatorDao.merge(entity.getOperator());
 		entity.setOperator(managedOperator);
@@ -216,7 +211,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	private BasicDao<KeyType> keyTypeDao;
 	private BasicDao<Service> serviceDao;
 	private BasicDao<UserRole> userRoleDao;
-	private UserMgr userMgr;
 	
 	@Resource(name="operatorDao")
 	public void setOperatorDao(FilterDao<Operator, OperatorFilter> operatorDao) {
@@ -248,11 +242,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
         this.userRoleDao = userRoleDao;
     }
     
-    @Resource
-	public void setUserMgr(UserMgr userMgr) {
-		this.userMgr = userMgr;
-	}
-
     private final Log logger = LogFactory.getLog(CategoryMgrImpl.class);
 
 }

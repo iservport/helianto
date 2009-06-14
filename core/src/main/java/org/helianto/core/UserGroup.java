@@ -56,7 +56,7 @@ import javax.persistence.UniqueConstraint;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("G")
-public class UserGroup implements java.io.Serializable {
+public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
 
     /**
      * <code>UserGroup</code> factory.
@@ -83,6 +83,7 @@ public class UserGroup implements java.io.Serializable {
     
 	/** default constructor */
     public UserGroup() {
+    	setUserKey("");
     	setLastEvent(new Date());
     	setUserState(UserState.ACTIVE);
     	setAccountNonExpired(true);
@@ -124,6 +125,10 @@ public class UserGroup implements java.io.Serializable {
     }
     public void setUserKey(String userKey) {
         this.userKey = userKey;
+    }
+    @Transient
+    public boolean isUserKeyEmpty() {
+    	return getUserKey().length()==0;
     }
 
 	/**
@@ -231,6 +236,10 @@ public class UserGroup implements java.io.Serializable {
 		this.roleList = roleList;
 	}
 
+	public int compareTo(UserGroup other) {
+		return getUserKey().compareTo(other.getUserKey());
+	}   
+
     /**
      * <code>UserAssociation</code> factory.
      * 
@@ -270,7 +279,7 @@ public class UserGroup implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("identity").append("='").append(getUserKey()).append("' ");
+        buffer.append("userKey").append("='").append(getUserKey()).append("' ");
         buffer.append("]");
       
         return buffer.toString();
@@ -298,6 +307,6 @@ public class UserGroup implements java.io.Serializable {
          int result = 17;
          result = 37 * result + ( getUserKey() == null ? 0 : this.getUserKey().hashCode() );
          return result;
-   }   
+   }
 
 }

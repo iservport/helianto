@@ -15,8 +15,10 @@
 
 package org.helianto.core;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,6 +33,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -96,6 +99,7 @@ public class Entity implements java.io.Serializable {
     private int version;
     private Operator operator;
     private String alias;
+    private Set<UserGroup> users = new HashSet<UserGroup>(0);
     private List<UserGroup> userList;
 
     /** default constructor */
@@ -150,6 +154,16 @@ public class Entity implements java.io.Serializable {
         this.alias = alias;
     }
 
+    /**
+     * User group set.
+     */
+    @OneToMany(mappedBy="entity", cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<UserGroup> getUsers() {
+		return users;
+	}
+	public void setUsers(Set<UserGroup> users) {
+		this.users = users;
+	}
     /**
      * <<Transient>> User list.
      */

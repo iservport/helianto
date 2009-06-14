@@ -16,6 +16,9 @@
 
 package org.helianto.web.controller;
 
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 
@@ -59,9 +62,16 @@ public class UserGroupFormActionTests extends AbstractEditAggregateFormActionTes
 		return formAction.getManagedParent(target);
 	}
 	
+	@Override
 	@Test
-	public void testDoCreateTargetUserGroup() throws Exception {
-		Entity parent = getParent(createTestInstance());
+	public void testDoCreateTarget() throws Exception {
+		UserGroup managedTarget = createTestInstance();
+		Entity parent = getParent(managedTarget);
+
+		expect(getTestMgr().prepareNewUserGroup(parent));
+		expectLastCall().andReturn(managedTarget);
+		replay(getTestMgr());
+
 		UserGroup target = getFormAction().doCreateTarget(getContext(), parent);
 		assertFalse(target instanceof User);
 		assertSame(parent, getParent(target));
@@ -89,7 +99,7 @@ public class UserGroupFormActionTests extends AbstractEditAggregateFormActionTes
 
 	@Override
 	protected String getTargetAttributeName() {
-		return "user";
+		return "userGroup";
 	}
 
 	@Override
