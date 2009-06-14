@@ -80,6 +80,11 @@ public class User extends UserGroup implements java.io.Serializable {
     	setPrivacyLevel('0');
     }
 
+    @Transient
+    protected String resolveUserKey() {
+    	return getUserPrincipal();
+    }
+    
     /**
      * Identity.
      */
@@ -90,12 +95,6 @@ public class User extends UserGroup implements java.io.Serializable {
     }
     public void setIdentity(Identity identity) {
         this.identity = identity;
-        if (identity!=null) {
-            setUserKey(identity.getPrincipal());
-        }
-        else {
-        	setUserKey("");
-        }
     }
     /**
      * User principal.
@@ -134,8 +133,8 @@ public class User extends UserGroup implements java.io.Serializable {
      */
     @Transient
     public String getUserName() {
-    	if (this instanceof User) {
-            return this.identity.getIdentityName();
+    	if (getIdentity()!=null) {
+            return getIdentity().getIdentityName();
     	}
         return "";
     }

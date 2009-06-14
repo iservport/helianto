@@ -177,7 +177,7 @@ public class UserMgrImplTests {
     public void testValidateCandidateLoaded() {
 		User user = UserTestSupport.createUser();
 		user.getIdentity().setId(0);
-		user.setUserKey("test");
+		user.getIdentity().setPrincipal("test");
 		Identity identity = new Identity();
 		
 		expect(identityDao.findUnique("test")).andReturn(identity);
@@ -192,7 +192,7 @@ public class UserMgrImplTests {
     public void testValidateCandidateCreated() {
 		User user = UserTestSupport.createUser();
 		user.getIdentity().setId(0);
-		user.setUserKey("test");
+		user.getIdentity().setPrincipal("test");
 		user.setCreateIdentity(CreateIdentity.AUTO);
 		Identity identity = new Identity();
 		

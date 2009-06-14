@@ -121,7 +121,11 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
      */
     @Column(length=40)
     public String getUserKey() {
-        return this.userKey;
+        return resolveUserKey();
+    }
+    @Transient
+    protected String resolveUserKey() {
+    	return this.userKey;
     }
     public void setUserKey(String userKey) {
         this.userKey = userKey;
@@ -237,7 +241,10 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
 	}
 
 	public int compareTo(UserGroup other) {
-		return getUserKey().compareTo(other.getUserKey());
+		if (getUserKey()!=null && other!=null && other.getUserKey()!=null) {
+			return getUserKey().compareTo(other.getUserKey());
+		}
+		return 1;
 	}   
 
     /**
