@@ -15,9 +15,9 @@
 
 package org.helianto.core.security;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -99,14 +99,9 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
         return managedUserLog.getUser();
 	}
 
-	/**
-     * Load and validate a <code>Role</code> set.
-     * 
-     * @param user
-     */
 	@Override
-	protected Set<UserRole> loadAndValidateRoles(User user) {
-		return securityMgr.prepareAllUserRoles(user);
+	protected Collection<UserRole> loadAndValidateRoles(User user) {
+		return userMgr.prepareUserGroup(user).getRoleList();
 	}
 
 	//- collabs

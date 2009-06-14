@@ -102,4 +102,19 @@ public class UserRoleTestSupport {
         return userRoleList;
     }
 
+    public static UserRole[] createUserRoles(UserGroup user, String... extensions) {
+        UserRole[] roles = new UserRole[extensions.length];
+        for (int i = 0;i<extensions.length;i++) {
+            UserRole role = new UserRole();
+            Service service = new Service();
+            role.setUserGroup(user);
+            user.getRoles().add(role);
+            role.setService(service);
+            role.setServiceExtension(extensions[i]);
+            System.out.println(role);
+            roles[i] = role;
+        }
+        return roles;
+    }
+    
 }

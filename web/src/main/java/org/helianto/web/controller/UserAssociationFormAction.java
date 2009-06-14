@@ -13,76 +13,38 @@
  * limitations under the License.
  */
 
-
 package org.helianto.web.controller;
-
-import java.beans.PropertyEditor;
-import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.controller.AbstractEditAggregateFormAction;
+import org.helianto.controller.AbstractAssociationFormAction;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
-import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
- * Presentation logic to store user associations.
+ * Presentation logic to create user association.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component("userAssociationAction")
-public class UserAssociationFormAction extends AbstractEditAggregateFormAction<UserAssociation, UserGroup> {
+public class UserAssociationFormAction extends
+		AbstractAssociationFormAction<UserAssociation, UserGroup, UserGroup> {
 
 	@Override
-	protected UserAssociation doStoreTarget(UserAssociation detachedTarget) throws Exception {
-		return userMgr.storeUserAssociation(detachedTarget);
-	}
-
-	@Override
-	public UserAssociation doCreateTarget(RequestContext context, UserGroup parent) throws Exception {
-		PublicUserDetails secureUser = (PublicUserDetails) context.getConversationScope().get("secureUser");
-		// Create a new user having the same privileges as the current user
-		// TODO allow privileges to be narrowed
-		String principal = (String) context.getRequestScope().get("principal");
-		if (logger.isDebugEnabled()) {
-			logger.debug("Ready to create user with principal ".concat(principal));
-		}
-		return userMgr.createUserAssociation(secureUser.getUser(), principal);
-	}
-
-	@Override
-	protected UserAssociation doPrepareTarget(RequestContext context, UserAssociation target) throws Exception {
-		return target;
-	}
-
-	@Override
-	protected UserGroup getManagedParent(UserAssociation managedTarget) {
-		return managedTarget.getParent();
-	}
-
-	@Override
-	public void setTargetPropertyEditor(PropertyEditor targetPropertyEditor) {
-		internalTargetPropertyEditorSetter(targetPropertyEditor, UserAssociation.class);
-	}
-
-	@Override
-	protected List<UserAssociation> getAggregateList(RequestContext context,
-			UserGroup parent) {
-		return null;
-	}
-
-	@Override
-	public String getParentAttributeName() {
-		return "user";
+	protected UserAssociation doCreateTarget(RequestContext context, UserGroup parent) throws Exception {
+		return userMgr.prepareNewUserAssociation(parent);
 	}
 
 	@Override
 	public String getTargetAttributeName() {
 		return "userAssociation";
+	}
+
+	public String getParentAttributeName() {
+		return "userGroup";
 	}
 
 	// collabs

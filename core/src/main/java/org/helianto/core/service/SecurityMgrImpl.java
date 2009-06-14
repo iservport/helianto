@@ -15,20 +15,12 @@
 
 package org.helianto.core.service;
 
-import java.util.Set;
-
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.PasswordNotVerifiedException;
-import org.helianto.core.User;
-import org.helianto.core.UserFilter;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.security.PublicUserDetails;
@@ -71,21 +63,10 @@ public class SecurityMgrImpl implements SecurityMgr {
         return UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
     }
     
-    public Set<UserRole> prepareAllUserRoles(User user) {
-		User managedUser = (User) userGroupDao.merge(user);
-		Set<UserRole> allRoles = managedUser.getAllRoles();
-		if (allRoles!=null && logger.isDebugEnabled()) {
-			logger.debug("Found "+allRoles.size()+" role(s)");
-		}
-		userGroupDao.evict(managedUser);
-		return allRoles;
-	}
-
     // collabs
 
     private FilterDao<Identity, IdentityFilter> identityDao;
     private BasicDao<Credential> credentialDao;
-    private FilterDao<UserGroup, UserFilter> userGroupDao;
 
     @Resource(name="identityDao")
     public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
@@ -97,11 +78,6 @@ public class SecurityMgrImpl implements SecurityMgr {
         this.credentialDao = credentialDao;
     }
 
-    @Resource(name="userGroupDao")
-	public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
-		this.userGroupDao = userGroupDao;
-	}
-
-    private final static Log logger = LogFactory.getLog(SecurityMgrImpl.class);
+//    private final static Log logger = LogFactory.getLog(SecurityMgrImpl.class);
     
 }

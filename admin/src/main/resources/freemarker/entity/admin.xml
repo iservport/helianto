@@ -74,6 +74,9 @@
 		<transition on="selectUserGroup"   to="userGroup.subflow">
 			<action bean="userGroupAction" method="selectTarget"/>
 		</transition>
+		<transition on="selectUser"        to="user.subflow">
+			<action bean="userAction"      method="selectTarget"/>
+		</transition>
 		<transition on="createUserGroup"   to="userGroup.subflow">
 			<action bean="userGroupAction" method="createTarget"/>
 		</transition>
@@ -152,10 +155,17 @@
 	<subflow-state id="user.subflow" flow="user">
 		<attribute-mapper>
 			<input-mapper>
-				<mapping source="flowScope.entity" target="entity"/>
+				<mapping source="${flowScope.operator}"  target="operator"/>
+				<mapping source="${flowScope.entity}"    target="entity"/>
+				<mapping source="${flowScope.userGroup}" target="userGroup"/>
+				<mapping source="${flowScope.user}"      target="user"/>
 			</input-mapper>
+			<output-mapper>
+				<output-attribute name="entity" scope="flow" />
+			</output-mapper>
 		</attribute-mapper>
-		<transition on="toParent" to="entityBrowse.view"/>
+		<transition on="toSelection" to="entityBrowse.view"/>
+		<transition on="toHome"      to="toHome"/>
 	</subflow-state>
 
 	<!-- 

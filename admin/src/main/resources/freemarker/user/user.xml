@@ -5,14 +5,24 @@
               http://www.springframework.org/schema/webflow
               http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
 
-	<start-state idref="preProcess" />
+	<input-mapper>
+		<input-attribute name="operator"  scope="flow" required="true"/>
+		<input-attribute name="entity"    scope="flow" required="true"/>
+		<input-attribute name="userGroup" scope="flow" required="true"/>
+		<input-attribute name="user"      scope="flow" required="true"/>
+	</input-mapper>
 	
-	<action-state id="preProcess">
-		<action bean="userFilterAction" method="applyFilter"/>
-		<transition to="userSelection.view">
-			<set attribute="assign"    value="'user/assign'"      scope="flow"/>
-		</transition>
-	</action-state>
+	<start-actions>
+		<set attribute="assign"    value="'user/assign'"      scope="flow"/>
+	</start-actions>
+	
+	<start-state idref="isNew" />
+	
+	<decision-state id="isNew" >
+		<if test="flowScope.user.userKeyEmpty" 
+		    then="userGroupEdit.view" 
+		    else="userBrowse.view"/>
+	</decision-state>
 	
 	<!-- 
 	 ! user  

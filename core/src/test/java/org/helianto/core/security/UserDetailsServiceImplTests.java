@@ -22,13 +22,8 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
-import org.helianto.core.User;
-import org.helianto.core.UserRole;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.core.test.CredentialTestSupport;
@@ -100,19 +95,6 @@ public class UserDetailsServiceImplTests {
 
         userDetailsService.loadAndValidateCredential(identity);
     }
-    
-    public void testLoadAndValidateRoles() {
-    	Set<UserRole> userRoles = new HashSet<UserRole>();
-    	User user = new User();
-        
-        expect(securityMgr.prepareAllUserRoles(user))
-            .andReturn(userRoles);
-        replay(securityMgr);
-        
-        assertSame(userRoles, userDetailsService.loadAndValidateRoles(user));
-        verify(securityMgr);
-    }
-    
     
     // collaborators
     private UserMgr userMgr;

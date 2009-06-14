@@ -15,8 +15,8 @@
 
 package org.helianto.core.security;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -96,7 +96,7 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
             logger.debug("Step 5 successful: User details instance is prepared: USER IS SUCCESSFULLY LOADED");
         }
         // load the roles and convert to authorities
-        Set<UserRole> roles = loadAndValidateRoles(user);
+        Collection<UserRole> roles = loadAndValidateRoles(user);
         GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
         int i = 0;
         for (UserRole r : roles) {
@@ -153,11 +153,11 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
     }
     
     /**
-     * Hook to load and validate a <code>Role</code> set.
+     * Hook to load and validate a <code>Role</code> collection.
      * 
      * @param identity
      */
-    protected abstract Set<UserRole> loadAndValidateRoles(User user);
+    protected abstract Collection<UserRole> loadAndValidateRoles(User user);
     
     /**
      * Convert a role to a string.

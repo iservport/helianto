@@ -15,13 +15,9 @@
 
 package org.helianto.core.service;
 
-import java.util.Set;
-
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.PasswordNotVerifiedException;
-import org.helianto.core.User;
-import org.helianto.core.UserRole;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.SecureUserDetails;
 
@@ -62,9 +58,4 @@ public interface SecurityMgr {
      */
     public PublicUserDetails findSecureUser();
     
-	/**
-	 * Prepare all user roles to be processed.
-	 */
-	public Set<UserRole> prepareAllUserRoles(User user);
-
 }

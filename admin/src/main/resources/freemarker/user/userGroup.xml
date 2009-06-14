@@ -32,27 +32,31 @@
 		 ! before browse
 		 -->
         <render-actions>
-            <action bean="userGroupAction" method="prepareTarget"/>
-            <action bean="userGroupAction" method="resolveAuthorization"/>
-			<set attribute="sidenav"       value="'user/userGroup_nav'"  scope="flash"/>
-			<set attribute="sidebar"       value="'user/userGroup_bar'"  scope="flash"/>
-			<set attribute="template"      value="'user/userGroup'"      scope="flash"/>
+            <action bean="userGroupAction"       method="prepareTarget"/>
+            <action bean="userGroupAction"       method="resolveAuthorization"/>
+			<set attribute="sidenav"             value="'user/userGroup_nav'"  scope="flash"/>
+			<set attribute="sidebar"             value="'user/userGroup_bar'"  scope="flash"/>
+			<set attribute="template"            value="'user/userGroup'"      scope="flash"/>
         </render-actions>
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="editTarget"       to="userGroupEdit.view"/>
-		<transition on="editIdentity"     to="identityEdit.view"/>
-		<transition on="createUserRole"   to="userRoleEdit.view">
-			<action bean="userRoleAction" method="createTarget"/>
+		<transition on="editTarget"              to="userGroupEdit.view"/>
+		<transition on="editIdentity"            to="identityEdit.view"/>
+		<transition on="createUser"              to="user.subflow">
+			<action bean="userAssociationAction" method="createTarget"/>
+			<action bean="userAction"            method="createTarget"/>
 		</transition>
-		<transition on="editUserRole"     to="userRoleEdit.view">
-			<action bean="userRoleAction" method="selectTarget"/>
+		<transition on="createUserRole"          to="userRoleEdit.view">
+			<action bean="userRoleAction"        method="createTarget"/>
+		</transition>
+		<transition on="editUserRole"            to="userRoleEdit.view">
+			<action bean="userRoleAction"        method="selectTarget"/>
 		</transition>
 		<!-- 
 		 ! backward transitions
 		 -->
-		<transition on="toSelection"      to="toSelection"/>
+		<transition on="toSelection"             to="toSelection"/>
 	</view-state>
 	
 	<!-- 002
@@ -132,6 +136,25 @@
 		<transition on="error"   to="userRoleEdit.view"/>
 	</action-state>
 	
+	<!-- 
+	 ! user
+	 ! SUBFLOW
+	 !-->
+	<subflow-state id="user.subflow" flow="user">
+		<attribute-mapper>
+			<input-mapper>
+				<mapping source="${flowScope.operator}"  target="operator"/>
+				<mapping source="${flowScope.entity}"    target="entity"/>
+				<mapping source="${flowScope.userGroup}" target="userGroup"/>
+				<mapping source="${flowScope.user}"      target="user"/>
+			</input-mapper>
+			<output-mapper>
+				<output-attribute name="entity" scope="flow" />
+			</output-mapper>
+		</attribute-mapper>
+		<transition on="toSelection" to="entityBrowse.view"/>
+		<transition on="toHome"      to="toHome"/>
+	</subflow-state>
 
 	<!--
 	 ! End states 

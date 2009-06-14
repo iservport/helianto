@@ -21,7 +21,7 @@
   	<@select "${target_index}", "selectUser" >${target.id?c}</@select>
   </#if>
   <td >${target.userKey}</td>
-  <@select "${target_index}", "editUser" >${userState[target.userState]}</@select>
+  <td >${userState[target.userState]}</td>
   <td >${type[target.class]}</td>
   <td >${target.userName?if_exists}</td>
 </tr>

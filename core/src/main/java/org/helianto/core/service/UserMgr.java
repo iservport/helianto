@@ -80,10 +80,9 @@ public interface UserMgr {
     public UserGroup storeUserGroup(UserGroup userGroup);
     
     /**
-     * <p><code>UserAssociation</code> creation that inherits privileges 
-     * and resolves identity.</p>
+     * <p>Create <code>UserAssociation</code>.</p>
      */
-    public UserAssociation createUserAssociation(UserGroup parent, String principal);
+    public UserAssociation prepareNewUserAssociation(UserGroup parent);
     
     /**
      * <p>Store <code>UserAssociation</code> and return a managed instance.</p>

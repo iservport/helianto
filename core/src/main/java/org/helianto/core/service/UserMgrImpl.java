@@ -28,7 +28,6 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.CreateIdentity;
-import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.EventType;
 import org.helianto.core.Identity;
@@ -93,7 +92,6 @@ public class UserMgrImpl implements UserMgr {
 	@Transactional(readOnly=true)
     public UserGroup prepareUserGroup(UserGroup userGroup) {
     	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
-    	managedUserGroup.getAllRoles();
 		List<UserRole> roleList = new ArrayList<UserRole>(recurseUserRoles(managedUserGroup.getRoles(), managedUserGroup.getParentAssociations()));
 		managedUserGroup.setRoleList(roleList );
     	userGroupDao.evict(managedUserGroup);
@@ -195,21 +193,10 @@ public class UserMgrImpl implements UserMgr {
         return null;
     }
 
-	public UserAssociation createUserAssociation(UserGroup parent, String principal) {
-		// does identity exist?
-		Identity identity = identityDao.findUnique(principal);
-		if (identity==null) {
-			// No! create one with a credential.
-			Credential credential = Credential.credentialFactory(Identity.identityFactory(principal), "");
-			identity = credential.getIdentity();
-		}
-		UserAssociation userAssociation = parent.childUserAssociationFactory(identity);
+	public UserAssociation prepareNewUserAssociation(UserGroup parent) {
+		UserAssociation userAssociation = UserAssociation.userAssociationFactory(parent);
     	if (logger.isDebugEnabled()) {
     		logger.debug("Created user association ".concat(userAssociation.toString()));
-    	}
-    	UserLog userLog = ((User) userAssociation.getChild()).userLogFactory(EventType.CREATE);
-    	if (logger.isDebugEnabled()) {
-    		logger.debug("Created user log ".concat(userLog.toString()));
     	}
 		return userAssociation;
 	}

@@ -241,17 +241,6 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
 	}   
 
     /**
-     * <code>UserAssociation</code> factory.
-     * 
-     * @param identity
-     */
-    public UserAssociation childUserAssociationFactory(Identity identity) {
-        User child = User.userFactory(this.getEntity(), identity);
-        UserAssociation userAssociation = UserAssociation.userAssociationFactory(this, child);
-        return userAssociation;
-    }
-
-    /**
      * Internal <code>UserGroup</code> factory.
      * 
      * @param clazz
