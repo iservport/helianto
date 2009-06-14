@@ -6,7 +6,7 @@
 		<td colspan="2">User data</td>
 	</tr>
 	
-	<#if formObject.target.id == 0 >
+	<#if formObject.target.userKeyEmpty >
 	
 	<tr>
 		<td>User key</td>

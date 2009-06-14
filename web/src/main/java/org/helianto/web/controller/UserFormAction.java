@@ -78,6 +78,11 @@ public class UserFormAction extends AbstractEditAggregateFormAction<User, UserAs
 //	}
 //
 	@Override
+	protected String getKeyField() {
+		return "userKey";
+	}
+
+	@Override
 	public String getTargetAttributeName() {
 		return "user";
 	}

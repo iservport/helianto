@@ -19,17 +19,17 @@ package org.helianto.admin.freemarker;
 import java.util.List;
 
 import org.helianto.core.Operator;
+import org.helianto.core.User;
 import org.helianto.core.UserFilter;
-import org.helianto.core.UserGroup;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.core.test.UserGroupTestSupport;
+import org.helianto.core.test.UserTestSupport;
 import org.helianto.web.test.AbstractViewTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class UserViewTests extends AbstractViewTest<UserFilter, UserGroup> {
+public class UserViewTests extends AbstractViewTest<UserFilter, User> {
 
 	@Override
 	protected UserFilter createFilter() {
@@ -37,8 +37,8 @@ public class UserViewTests extends AbstractViewTest<UserFilter, UserGroup> {
 	}
 
 	@Override
-	protected UserGroup createTarget() {
-		return UserGroupTestSupport.createUserGroup();
+	protected User createTarget() {
+		return UserTestSupport.createUser();
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class UserViewTests extends AbstractViewTest<UserFilter, UserGroup> {
 	}
 
 	@Override
-	protected List<UserGroup> getList() {
-		return UserGroupTestSupport.createUserGroupList(5);
+	protected List<User> getList() {
+		return UserTestSupport.createUserList(5);
 	}
 
 	protected void addToModel() {
