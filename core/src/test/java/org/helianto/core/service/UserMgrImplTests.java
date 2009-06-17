@@ -205,11 +205,31 @@ public class UserMgrImplTests {
 		verify(identityDao);
     }
     
+	@Test(expected=IllegalArgumentException.class)
+    public void testStoreUserAssociationNullKey() {
+    	UserAssociation parentAssociation = new UserAssociation();
+    	
+    	userMgr.storeUserAssociation(parentAssociation);
+    }
+    
+	@Test(expected=IllegalArgumentException.class)
+    public void testStoreUserAssociationEmptyKey() {
+    	UserAssociation parentAssociation = new UserAssociation();
+    	parentAssociation.setChild(new User());
+    	
+    	userMgr.storeUserAssociation(parentAssociation);
+    }
+    
 	@Test
     public void testStoreUserAssociation() {
     	UserAssociation parentAssociation = new UserAssociation();
+    	parentAssociation.setChild(UserTestSupport.createUser());
     	UserAssociation managedUserAssociation = new UserAssociation();
+		Identity identity = new Identity();
     	
+		expect(identityDao.findUnique(parentAssociation.getChild().getUserKey())).andReturn(identity);
+		replay(identityDao);
+		
     	expect(userAssociationDao.merge(parentAssociation))
     	    .andReturn(managedUserAssociation);
     	replay(userAssociationDao);

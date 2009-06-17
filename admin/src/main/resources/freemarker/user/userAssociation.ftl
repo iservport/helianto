@@ -1,6 +1,6 @@
 <div id="panel">
 <h2>User <b>${userAssociation.child.userKey}</b> <small>[${userAssociation.child.id}]</small></h2>
-<#if user.userName?exists>
+<#if userAssociation.child.userName?exists>
 <p>Personal data: <b>${userAssociation.child.userName}</b></p>
 </#if>
 <table>

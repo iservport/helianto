@@ -37,14 +37,14 @@
 </tr>
 </thead>
 <tbody>
-<#list userGroup.childList?if_exists as target >
+<#list userGroup.childAssociationList?if_exists as target >
 <tr>
   <#-- this macro, embedded in frame.ftl, is appropriate 
        to generate the select transition -->
-  <@select "${target_index}", "selectUser" >${target.id?c}</@select>
-  <td >${target.userKey}</td>
-  <td >${userState[target.userState]}</td>
-  <td >${target.userName?if_exists}</td>
+  <@select "${target_index}", "selectUser" >${target.child.id?c}</@select>
+  <td >${target.child.userKey}</td>
+  <td >${userState[target.child.userState]}</td>
+  <td >${target.child.userName?if_exists}</td>
 </tr>
 </#list>
 </tbody>

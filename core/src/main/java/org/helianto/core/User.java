@@ -61,6 +61,7 @@ public class User extends UserGroup implements java.io.Serializable {
      */
     public static User userFactory(UserAssociation userAssociation) {
     	User user = UserGroup.internalUserGroupFactory(User.class, userAssociation.getParent().getEntity(), "");
+    	userAssociation.setChild(user);
     	user.getParentAssociations().add(userAssociation);
     	user.setIdentity(Identity.identityFactory(""));
     	return user;

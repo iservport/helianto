@@ -16,6 +16,7 @@
 package org.helianto.core;
 
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -67,9 +68,9 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
     }
 
     /**
-     * Parent user group.
+     * Parent user group (lazy loaded).
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="parentId", nullable=true)
     public UserGroup getParent() {
         return this.parent;

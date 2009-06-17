@@ -18,10 +18,13 @@ package org.helianto.web.controller;
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractAssociationFormAction;
+import org.helianto.core.CreateIdentity;
+import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
+import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
@@ -36,6 +39,27 @@ public class UserAssociationFormAction extends
 	@Override
 	protected UserAssociation doCreateTarget(RequestContext context, UserGroup parent) throws Exception {
 		return userMgr.prepareNewUserAssociation(parent);
+	}
+
+	/**
+	 * Associate an identity to the user before storing.
+	 */
+	@Override
+	protected void preProcessStoreTarget(RequestContext context, UserAssociation detachedTarget) throws Exception {
+		ParameterMap parameters = context.getRequestParameters();
+		if (!detachedTarget.isKeyEmpty() && parameters.contains("createIdentity")) {
+			detachedTarget.getChild().setCreateIdentity(CreateIdentity.AUTO);
+		}
+	}
+
+	@Override
+	protected UserAssociation doStoreTarget(UserAssociation detachedTarget) throws Exception {
+		return userMgr.storeUserAssociation(detachedTarget);
+	}
+
+	@Override
+	protected String getKeyField() {
+		return "child.userKey";
 	}
 
 	@Override

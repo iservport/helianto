@@ -23,7 +23,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractAssociationFormAction<A extends AbstractAssociation<P, C>, P, C> extends AbstractComplexModelFormAction<A> {
+public abstract class AbstractAssociationFormAction<A extends AbstractAssociation<P, C>, P, C> extends AbstractEditTargetFormAction<A> {
 
 	@SuppressWarnings("unchecked")
 	@Override

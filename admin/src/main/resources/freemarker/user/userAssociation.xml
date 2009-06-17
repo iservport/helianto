@@ -17,7 +17,7 @@
 	<start-state idref="isNew" />
 	
 	<decision-state id="isNew" >
-		<if test="flowScope.userAssociation.child.userKeyEmpty" 
+		<if test="flowScope.userAssociation.keyEmpty" 
 		    then="userAssociationEdit.view" 
 		    else="userAssociationBrowse.view"/>
 	</decision-state>
@@ -75,6 +75,7 @@
 			<action bean="userAssociationAction"            method="bind" />
 			<action bean="userAssociationAction"            method="storeTarget" />
 		</transition>
+		<transition on="cancelForm"   to="userAssociationBrowse.view"/>
 	</view-state>
 	
 	<!-- 
@@ -150,7 +151,6 @@
 	<global-transitions>
 		<transition on="backToHome"   to="backToHome"/>
 		<transition on="backToParent" to="backToParent"/>
-		<transition on="cancelForm"   to="userBrowse.view"/>
 	</global-transitions>
 	
 </flow>

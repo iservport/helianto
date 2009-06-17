@@ -6,7 +6,6 @@
               http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
 
 	<input-mapper>
-		<input-attribute name="operator" scope="flow" required="true"/>
 		<input-attribute name="entity"   scope="flow" required="true"/>
 		<input-attribute name="user"     scope="flow" required="true"/>
 	</input-mapper>
@@ -18,7 +17,7 @@
 	<start-state idref="isNew" />
 	
 	<decision-state id="isNew" >
-		<if test="flowScope.user.userKeyEmpty" 
+		<if test="flowScope.user.keyEmpty" 
 		    then="userEdit.view" 
 		    else="userBrowse.view"/>
 	</decision-state>

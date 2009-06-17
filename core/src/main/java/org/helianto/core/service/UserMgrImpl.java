@@ -94,7 +94,17 @@ public class UserMgrImpl implements UserMgr {
     public UserGroup prepareUserGroup(UserGroup userGroup) {
     	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
     	// child list
-		List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>(managedUserGroup.getChildAssociations());
+		if (logger.isDebugEnabled()) {
+			logger.debug("About to load child association(s).");
+		}
+    	Set<UserAssociation> childAssociations = managedUserGroup.getChildAssociations();
+		if (logger.isDebugEnabled() && childAssociations!=null) {
+			logger.debug("Loaded "+childAssociations.size()+" child association(s).");
+		}
+		List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>(childAssociations);
+		if (logger.isDebugEnabled() && childAssociationList!=null) {
+			logger.debug("Listed "+childAssociationList.size()+" child association(s).");
+		}
 		Collections.sort(childAssociationList);
 		managedUserGroup.setChildAssociationList(childAssociationList);
     	// role list
@@ -120,10 +130,7 @@ public class UserMgrImpl implements UserMgr {
 	}
 
 	public UserGroup storeUserGroup(UserGroup userGroup) {
-		if (userGroup.getUserKey()==null || userGroup.getUserKey().length()==0) {
-			throw new IllegalArgumentException("Unable to create user or group, null or empty user key.");
-		}
-    	if (userGroup instanceof User && !validateIdentity((User) userGroup)) {
+    	if (userGroup.isKeyEmpty() || userGroup instanceof User && !validateIdentity((User) userGroup)) {
     		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     	}
         return userGroupDao.merge(userGroup);
@@ -174,6 +181,9 @@ public class UserMgrImpl implements UserMgr {
     }
 
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
+    	if (parentAssociation.isKeyEmpty() || parentAssociation.getChild() instanceof User && !validateIdentity((User) parentAssociation.getChild())) {
+    		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
+    	}
     	return userAssociationDao.merge(parentAssociation);
     }
 
