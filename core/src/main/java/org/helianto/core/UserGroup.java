@@ -56,7 +56,7 @@ import javax.persistence.UniqueConstraint;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("G")
-public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
+public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, NaturalKeyInfo {
 
     /**
      * <code>UserGroup</code> factory.
@@ -78,7 +78,8 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
     private char createIdentity;
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
-    private Set<UserRole> roles = new HashSet<UserRole>();
+    private List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>();
+	private Set<UserRole> roles = new HashSet<UserRole>();
     private List<UserRole> roleList = new ArrayList<UserRole>();
     
 	/** default constructor */
@@ -121,11 +122,11 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
      */
     @Column(length=40)
     public String getUserKey() {
-        return resolveUserKey();
+        return resolveUserKey(this.userKey);
     }
     @Transient
-    protected String resolveUserKey() {
-    	return this.userKey;
+    protected String resolveUserKey(String userKey) {
+    	return userKey;
     }
     public void setUserKey(String userKey) {
         this.userKey = userKey;
@@ -185,7 +186,7 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
 	}
 
 	/**
-     * ParentAssociations getter.
+     * Parent associations.
      */
     @OneToMany(mappedBy="child")
     public Set<UserAssociation> getParentAssociations() {
@@ -196,7 +197,7 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
     }
 
     /**
-     * ChildAssociations getter.
+     * Child associations.
      */
     @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<UserAssociation> getChildAssociations() {
@@ -207,24 +208,23 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
     }
 
     /**
+     * <<Transient>> Child association list.
+     */
+    @Transient
+    public List<UserAssociation> getChildAssociationList() {
+		return childAssociationList;
+	}
+	public void setChildAssociationList(List<UserAssociation> childAssociationList) {
+		this.childAssociationList = childAssociationList;
+	}
+
+    /**
      * Roles for this group.
      */
     @OneToMany(mappedBy="userGroup", cascade=CascadeType.ALL)
     public Set<UserRole> getRoles() {
         return this.roles;
     }
-    /**
-     * Roles for this group and all ancestors.
-     */
-    @Transient
-    public Set<UserRole> getAllRoles() {
-    	Set<UserRole> allRoles = new HashSet<UserRole>();
-    	allRoles.addAll(getRoles());
-        for (UserAssociation association: getParentAssociations()) {
-        	allRoles.addAll(association.getParent().getAllRoles());
-        }
-		return allRoles;
-	}
     public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
@@ -266,6 +266,17 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup> {
         }
     }
     
+    /**
+     * Natural key info.
+     */
+    @Transient
+    public boolean isKeyEmpty() {
+    	if (this.getUserKey()!=null) {
+    		return getUserKey().length()==0;
+    	}
+    	throw new IllegalArgumentException("Natural key must not be null");
+    }
+
     /**
      * toString
      * @return String

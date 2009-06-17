@@ -6,9 +6,8 @@
               http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
 
 	<input-mapper>
-		<input-attribute name="operator" scope="flow" required="true"/>
-		<input-attribute name="entity"   scope="flow" required="true"/>
-		<input-attribute name="user"     scope="flow" required="true"/>
+		<input-attribute name="entity"          scope="flow" required="true"/>
+		<input-attribute name="userAssociation" scope="flow" required="true"/>
 	</input-mapper>
 	
 	<start-actions>
@@ -18,30 +17,30 @@
 	<start-state idref="isNew" />
 	
 	<decision-state id="isNew" >
-		<if test="flowScope.user.userKeyEmpty" 
-		    then="userEdit.view" 
-		    else="userBrowse.view"/>
+		<if test="flowScope.userAssociation.child.userKeyEmpty" 
+		    then="userAssociationEdit.view" 
+		    else="userAssociationBrowse.view"/>
 	</decision-state>
 	
 	<!-- 
-	 ! user  
+	 ! userAssociation  
 	 ! BROWSE VIEW
 	 !-->
-	<view-state id="userBrowse.view" view="frame">
+	<view-state id="userAssociationBrowse.view" view="frame">
 		<!-- 
 		 ! before browse
 		 -->
         <render-actions>
-            <action bean="userAction" method="prepareTarget"/>
-            <action bean="userAction" method="resolveAuthorization"/>
-			<set attribute="sidenav"    value="'user/user_nav'"  scope="flash"/>
-			<set attribute="sidebar"    value="'user/user_bar'"  scope="flash"/>
-			<set attribute="template"   value="'user/user'"      scope="flash"/>
+            <action bean="userAssociationAction" method="prepareTarget"/>
+            <action bean="userAssociationAction" method="resolveAuthorization"/>
+			<set attribute="sidenav"    value="'user/user_nav'"        scope="flash"/>
+			<set attribute="sidebar"    value="'user/user_bar'"        scope="flash"/>
+			<set attribute="template"   value="'user/userAssociation'" scope="flash"/>
         </render-actions>
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="editTarget"       to="userEdit.view"/>
+		<transition on="editTarget"       to="userAssociationEdit.view"/>
 		<transition on="editIdentity"     to="identityEdit.view"/>
 		<transition on="createUserRole"   to="userRoleEdit.view">
 			<action bean="userRoleAction" method="createTarget"/>
@@ -56,25 +55,25 @@
 	</view-state>
 	
 	<!-- 
-	 ! user  
+	 ! userAssociation  
 	 ! EDIT VIEW
 	 !-->
-	<view-state id="userEdit.view" view="frame">
+	<view-state id="userAssociationEdit.view" view="frame">
 		<!-- 
 		 ! before browse
 		 -->
         <render-actions>
-            <action bean="userAction" method="editTarget"/>
-			<set attribute="sidenav"   value="'user/edit_nav'"   scope="flash"/>
-			<set attribute="sidebar"   value="'user/user_bar'"   scope="flash"/>
-			<set attribute="template"  value="'user/user_form'"  scope="flash"/>
+            <action bean="userAssociationAction" method="editTarget"/>
+			<set attribute="sidenav"   value="'user/edit_nav'"              scope="flash"/>
+			<set attribute="sidebar"   value="'user/user_bar'"              scope="flash"/>
+			<set attribute="template"  value="'user/userAssociation_form'"  scope="flash"/>
         </render-actions>
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="storeTarget"   to="userBrowse.view">
-			<action bean="userAction"            method="bind" />
-			<action bean="userAction"            method="storeTarget" />
+		<transition on="storeTarget"   to="userAssociationBrowse.view">
+			<action bean="userAssociationAction"            method="bind" />
+			<action bean="userAssociationAction"            method="storeTarget" />
 		</transition>
 	</view-state>
 	
@@ -140,7 +139,7 @@
 	<end-state id="backToParent" />
 	<end-state id="toSelection" >
 		<output-mapper>
-			<mapping source="flowScope.user.entity" target="entity"/>
+			<mapping source="flowScope.userAssociation.parent" target="userGroup"/>
 		</output-mapper>
 	</end-state>
 	

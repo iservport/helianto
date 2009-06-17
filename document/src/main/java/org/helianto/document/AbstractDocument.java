@@ -23,6 +23,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.helianto.core.Entity;
@@ -147,6 +148,17 @@ public class AbstractDocument implements java.io.Serializable, TopLevelCodedEnti
     }
     public void setPriority(char priority) {
         this.priority = priority;
+    }
+
+    /**
+     * Natural key info.
+     */
+    @Transient
+    public boolean isKeyEmpty() {
+    	if (this.getDocCode()!=null) {
+    		return getDocCode().length()==0;
+    	}
+    	throw new IllegalArgumentException("Natural key must not be null");
     }
 
     /**

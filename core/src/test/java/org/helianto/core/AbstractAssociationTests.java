@@ -49,6 +49,10 @@ public class AbstractAssociationTests {
 			return this.parent;
 		}
 
+		public boolean isKeyEmpty() {
+			return false;
+		}
+
 	}
 
 	@Test

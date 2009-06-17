@@ -17,6 +17,7 @@ package org.helianto.core.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -92,8 +93,13 @@ public class UserMgrImpl implements UserMgr {
 	@Transactional(readOnly=true)
     public UserGroup prepareUserGroup(UserGroup userGroup) {
     	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
+    	// child list
+		List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>(managedUserGroup.getChildAssociations());
+		Collections.sort(childAssociationList);
+		managedUserGroup.setChildAssociationList(childAssociationList);
+    	// role list
 		List<UserRole> roleList = new ArrayList<UserRole>(recurseUserRoles(managedUserGroup.getRoles(), managedUserGroup.getParentAssociations()));
-		managedUserGroup.setRoleList(roleList );
+		managedUserGroup.setRoleList(roleList);
     	userGroupDao.evict(managedUserGroup);
     	return managedUserGroup;
     }

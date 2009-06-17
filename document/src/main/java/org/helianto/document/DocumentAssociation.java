@@ -19,6 +19,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.AbstractAssociation;
@@ -69,5 +70,16 @@ public class DocumentAssociation extends AbstractAssociation<Document, Document>
 	public Document getChild() {
 		return child;
 	}
+
+    /**
+     * Natural key info.
+     */
+    @Transient
+    public boolean isKeyEmpty() {
+    	if (this.getChild()!=null) {
+    		return this.getChild().isKeyEmpty();
+    	}
+    	throw new IllegalArgumentException("Natural key must not be null");
+    }
 
 }

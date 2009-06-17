@@ -19,6 +19,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
  * 				
@@ -32,7 +33,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_userassoc",
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
-public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> implements java.io.Serializable {
+public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> implements java.io.Serializable, Comparable<UserAssociation> {
 
     /**
      * <code>UserAssociation</code> factory method.
@@ -83,6 +84,27 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
         return this.child;
     }
 
+    /**
+     * Comparable.
+     */
+    public int compareTo(UserAssociation other) {
+    	if (this.getChild()!=null && other.getChild()!=null) {
+    		return this.getChild().compareTo(other.getChild());
+    	}
+    	return 0;
+    }
+       
+    /**
+     * Natural key info.
+     */
+    @Transient
+    public boolean isKeyEmpty() {
+    	if (this.getChild()!=null) {
+    		return this.getChild().isKeyEmpty();
+    	}
+    	throw new IllegalArgumentException("Natural key must not be null");
+    }
+
    /**
     * equals
     */
@@ -91,5 +113,5 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
          if ( !(other instanceof UserAssociation) ) return false;
          return super.equals(other);
    }
-   
+
 }

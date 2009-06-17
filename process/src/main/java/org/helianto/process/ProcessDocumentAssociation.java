@@ -178,21 +178,16 @@ public class ProcessDocumentAssociation extends AbstractAssociation<ProcessDocum
     }
 
     /**
-     * <code>Process</code> query <code>StringBuilder</code>.
+     * Natural key info.
      */
     @Transient
-    public static StringBuilder getDocumentAssociationQueryStringBuilder() {
-        return new StringBuilder("select documentAssociation from DocumentAssociation documentAssociation ");
+    public boolean isKeyEmpty() {
+    	if (this.getChild()!=null) {
+    		return this.getChild().isKeyEmpty();
+    	}
+    	throw new IllegalArgumentException("Natural key must not be null");
     }
 
-    /**
-     * <code>DocumentAssociation</code> natural id query.
-     */
-    @Transient
-    public static String getDocumentAssociationNaturalIdQueryString() {
-        return getDocumentAssociationQueryStringBuilder().append("where documentAssociation.parent = ? and documentAssociation.child = ? ").toString();
-    }
-    
    /**
     * equals
     */

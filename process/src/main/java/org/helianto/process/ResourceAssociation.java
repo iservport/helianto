@@ -92,34 +92,14 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
     }
 
     /**
-     * <code>Process</code> query <code>StringBuilder</code>.
+     * Natural key info.
      */
     @Transient
-    public static StringBuilder getDocumentAssociationQueryStringBuilder() {
-        return new StringBuilder("select documentAssociation from DocumentAssociation documentAssociation ");
-    }
-
-    /**
-     * <code>DocumentAssociation</code> natural id query.
-     */
-    @Transient
-    public static String getDocumentAssociationNaturalIdQueryString() {
-        return getDocumentAssociationQueryStringBuilder().append("where documentAssociation.parent = ? and documentAssociation.child = ? ").toString();
-    }
-    
-    /**
-     * toString
-     * @return String
-     */
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("sequence").append("='").append(getSequence()).append("' ");
-        buffer.append("child").append("='").append(getChild()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
+    public boolean isKeyEmpty() {
+    	if (this.getChild()!=null) {
+    		return this.getChild().isKeyEmpty();
+    	}
+    	throw new IllegalArgumentException("Natural key must not be null");
     }
 
    /**

@@ -18,7 +18,7 @@
 	<start-state idref="isNew" />
 	
 	<decision-state id="isNew" >
-		<if test="flowScope.userGroup.userKeyEmpty" 
+		<if test="flowScope.userGroup.keyEmpty" 
 		    then="userGroupEdit.view" 
 		    else="userGroupBrowse.view"/>
 	</decision-state>
@@ -43,15 +43,18 @@
 		 -->
 		<transition on="editTarget"              to="userGroupEdit.view"/>
 		<transition on="editIdentity"            to="identityEdit.view"/>
-		<transition on="createUser"              to="user.subflow">
-			<action bean="userAssociationAction" method="createTarget"/>
-			<action bean="userAction"            method="createTarget"/>
-		</transition>
 		<transition on="createUserRole"          to="userRoleEdit.view">
 			<action bean="userRoleAction"        method="createTarget"/>
 		</transition>
 		<transition on="editUserRole"            to="userRoleEdit.view">
 			<action bean="userRoleAction"        method="selectTarget"/>
+		</transition>
+		<transition on="createUser"              to="userAssociation.subflow">
+			<action bean="userAssociationAction" method="createTarget"/>
+			<action bean="userAction"            method="createTarget"/>
+		</transition>
+		<transition on="selectUser"              to="user.subflow">
+			<action bean="userAssociationAction" method="selectTarget"/>
 		</transition>
 		<!-- 
 		 ! backward transitions
@@ -69,16 +72,16 @@
 		 -->
         <render-actions>
             <action bean="userGroupAction" method="editTarget"/>
-			<set attribute="sidenav"   value="'user/edit_nav'"       scope="flash"/>
-			<set attribute="sidebar"   value="'user/userGroup_bar'"  scope="flash"/>
-			<set attribute="template"  value="'user/userGroup_form'" scope="flash"/>
+			<set attribute="sidenav"       value="'user/edit_nav'"       scope="flash"/>
+			<set attribute="sidebar"       value="'user/userGroup_bar'"  scope="flash"/>
+			<set attribute="template"      value="'user/userGroup_form'" scope="flash"/>
         </render-actions>
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="storeTarget"   to="userGroupBrowse.view">
-			<action bean="userGroupAction"            method="bind" />
-			<action bean="userGroupAction"            method="storeTarget" />
+		<transition on="storeTarget"       to="userGroupBrowse.view">
+			<action bean="userGroupAction" method="bind" />
+			<action bean="userGroupAction" method="storeTarget" />
 		</transition>
 	</view-state>
 
@@ -143,16 +146,32 @@
 	<subflow-state id="user.subflow" flow="user">
 		<attribute-mapper>
 			<input-mapper>
-				<mapping source="${flowScope.operator}"  target="operator"/>
-				<mapping source="${flowScope.entity}"    target="entity"/>
-				<mapping source="${flowScope.userGroup}" target="userGroup"/>
-				<mapping source="${flowScope.user}"      target="user"/>
+				<mapping source="${flowScope.entity}"          target="entity"/>
+				<mapping source="${flowScope.user}"            target="user"/>
 			</input-mapper>
 			<output-mapper>
-				<output-attribute name="entity" scope="flow" />
+				<output-attribute name="userGroup" scope="flow" />
 			</output-mapper>
 		</attribute-mapper>
-		<transition on="toSelection" to="entityBrowse.view"/>
+		<transition on="toSelection" to="toSelection"/>
+		<transition on="toHome"      to="toHome"/>
+	</subflow-state>
+
+	<!-- 
+	 ! userAssociation
+	 ! SUBFLOW
+	 !-->
+	<subflow-state id="userAssociation.subflow" flow="userAssociation">
+		<attribute-mapper>
+			<input-mapper>
+				<mapping source="${flowScope.entity}"          target="entity"/>
+				<mapping source="${flowScope.userAssociation}" target="userAssociation"/>
+			</input-mapper>
+			<output-mapper>
+				<output-attribute name="userGroup" scope="flow" />
+			</output-mapper>
+		</attribute-mapper>
+		<transition on="toSelection" to="userGroupBrowse.view"/>
 		<transition on="toHome"      to="toHome"/>
 	</subflow-state>
 

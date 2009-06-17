@@ -57,6 +57,18 @@ public class User extends UserGroup implements java.io.Serializable {
     /**
      * Factory method.
      * 
+     * @param userAssociation
+     */
+    public static User userFactory(UserAssociation userAssociation) {
+    	User user = UserGroup.internalUserGroupFactory(User.class, userAssociation.getParent().getEntity(), "");
+    	user.getParentAssociations().add(userAssociation);
+    	user.setIdentity(Identity.identityFactory(""));
+    	return user;
+    }
+
+    /**
+     * Factory method.
+     * 
      * @param entity
      * @param identity
      */
@@ -81,8 +93,11 @@ public class User extends UserGroup implements java.io.Serializable {
     }
 
     @Transient
-    protected String resolveUserKey() {
-    	return getUserPrincipal();
+    protected String resolveUserKey(String userKey) {
+    	if (getIdentity()!=null && getIdentity().getPrincipal()!=null && getIdentity().getPrincipal().length()>0) {
+    		return getIdentity().getPrincipal();
+    	}
+        return userKey;
     }
     
     /**

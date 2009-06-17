@@ -59,7 +59,7 @@ public class UserFormAction extends AbstractEditAggregateFormAction<User, UserAs
 
 	@Override
 	public User doCreateTarget(RequestContext context, UserAssociation parent) throws Exception {
-		return User.userFactory(parent.getParent().getEntity());
+		return User.userFactory(parent);
 	}
 
 	@Override

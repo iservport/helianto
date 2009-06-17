@@ -30,7 +30,7 @@ import javax.persistence.Version;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractAssociation<P, C> implements Association<P, C>, Serializable {
+public abstract class AbstractAssociation<P, C> implements Association<P, C>, Serializable, NaturalKeyInfo {
 	
     /**
      * Internal factory method.

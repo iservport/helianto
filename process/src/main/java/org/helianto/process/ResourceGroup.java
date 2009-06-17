@@ -15,6 +15,7 @@
 
 package org.helianto.process;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +39,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.core.NaturalKeyInfo;
 
 /**
  * <p>
@@ -55,7 +57,7 @@ import org.helianto.core.Entity;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("G")
-public class ResourceGroup implements java.io.Serializable {
+public class ResourceGroup implements Serializable, NaturalKeyInfo {
 
     /**
      * Factory method.
@@ -227,6 +229,17 @@ public class ResourceGroup implements java.io.Serializable {
     	resource.setResourceType(getResourceType());
     	ResourceAssociation resourceAssociation = ResourceAssociation.resourceAssociationFactory(ResourceAssociation.class, this, resource, sequence);
     	return resourceAssociation;
+    }
+
+    /**
+     * Natural key info.
+     */
+    @Transient
+    public boolean isKeyEmpty() {
+    	if (this.getResourceCode()!=null) {
+    		return getResourceCode().length()==0;
+    	}
+    	throw new IllegalArgumentException("Natural key must not be null");
     }
 
     /**
