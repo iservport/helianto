@@ -33,7 +33,8 @@ import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.security.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 /**
@@ -42,7 +43,8 @@ import org.springframework.util.Assert;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("userDetailsService")
+@Service("userDetailsService")
+@Transactional
 public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     
     /**
