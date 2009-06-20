@@ -21,7 +21,7 @@
 	<!--
 			Property configurer 
 	-->
-	<bean id="propertyConfigurer" 
+	<bean id="propertyOverrideConfigurer" 
 		class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="locations">
