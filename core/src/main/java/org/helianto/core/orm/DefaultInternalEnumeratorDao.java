@@ -17,7 +17,7 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.InternalEnumerator;
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractHibernateBasicDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("internalEnumeratorDao")
-public class DefaultInternalEnumeratorDao extends AbstractBasicDao<InternalEnumerator> {
+public class DefaultInternalEnumeratorDao extends AbstractHibernateBasicDao<InternalEnumerator> {
 
 	@Override
 	public Class<? extends InternalEnumerator> getClazz() {

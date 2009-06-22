@@ -16,8 +16,11 @@
 
 package org.helianto.process;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.PolymorphicFilter;
 
 /**
@@ -87,6 +90,33 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter implem
 		return getResourceCode().length()>0;
 	}
 
+	@Override
+	public String getObjectAlias() {
+		return "resourcegroup";
+	}
+
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (!getClazz().equals(ResourceGroup.class)) {
+	        if (logger.isDebugEnabled()) {
+	            logger.debug("Resource group class is: '"+getClazz()+"'");
+	        }
+			mainCriteriaBuilder.appendAnd().append(getClazz());
+		}
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("resourceCode", getResourceCode(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("resourceName", getResourceNameLike(), mainCriteriaBuilder);
+		appendEqualFilter("resourceType", getResourceType(), mainCriteriaBuilder);
+		appendOrderBy("resourceCode", mainCriteriaBuilder);
+	}
+
 	/**
 	 * Resource code.
 	 */
@@ -148,4 +178,6 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter implem
 		this.resourceType = resourceType;
 	}
 
+	private static Log logger = LogFactory.getLog(ResourceGroup.class);
+	
 }

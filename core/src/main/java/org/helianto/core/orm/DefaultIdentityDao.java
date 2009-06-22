@@ -16,11 +16,9 @@
 
 package org.helianto.core.orm;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -29,46 +27,14 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("identityDao")
-public class DefaultIdentityDao extends AbstractFilterDao<Identity, IdentityFilter> {
+public class DefaultIdentityDao extends AbstractHibernateFilterDao<Identity, IdentityFilter> {
 
 	/**
-	 * Do not raise exception when entity is null. 
-	 */
-	@Override
-	protected boolean requireEntity() {
-		return false;
-	}
-
-	/**
-	 * When entity is not null, restrict selection to identities already 
-	 * associated to it.
-	 */
-	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-		if (entity!=null) {
-			mainCriteriaBuilder.appendAnd().appendSegment("id", "in")
-		        .append("(select user.identity.id from User user where user.entity.id = ")
-		        .append(entity.getId())
-		        .append(") ");
-		}
-	}
-
-	/**
-	 * Default key is principalr
+	 * Default key is principal
 	 */
 	@Override
 	protected String[] getParams() {
 		return new String[] { "principal" };
-	}
-
-	@Override
-	protected void doSelect(IdentityFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("principal", filter.getPrincipal(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(IdentityFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("optionalAlias", filter.getNameOrAliasSearch(), mainCriteriaBuilder);
 	}
 
 	@Override

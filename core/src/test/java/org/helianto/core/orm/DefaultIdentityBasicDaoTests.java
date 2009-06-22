@@ -1,12 +1,12 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.Identity;
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultIdentityBasicDaoTests extends AbstractBasicDaoTest<Identity, DefaultIdentityDao> {
+public class DefaultIdentityBasicDaoTests extends AbstractHibernateBasicDaoTest<Identity, DefaultIdentityDao> {
 
 
 	@Override

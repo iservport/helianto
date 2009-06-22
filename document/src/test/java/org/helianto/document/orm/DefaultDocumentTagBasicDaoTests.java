@@ -16,14 +16,14 @@
 
 package org.helianto.document.orm;
 
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.document.DocumentTag;
 
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultDocumentTagBasicDaoTests extends AbstractBasicDaoTest<DocumentTag, DefaultDocumentTagDao> {
+public class DefaultDocumentTagBasicDaoTests extends AbstractHibernateBasicDaoTest<DocumentTag, DefaultDocumentTagDao> {
 
 
 	@Override

@@ -16,7 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractHibernateBasicDao;
 import org.helianto.process.ResourceParameterValue;
 import org.springframework.stereotype.Repository;
 
@@ -27,8 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("resourceParameterValueDao")
-public class DefaultResourceParameterValueDao extends
-		AbstractBasicDao<ResourceParameterValue> {
+public class DefaultResourceParameterValueDao extends AbstractHibernateBasicDao<ResourceParameterValue> {
 
 	@Override
 	public Class<? extends ResourceParameterValue> getClazz() {

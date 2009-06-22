@@ -25,7 +25,7 @@ import org.helianto.core.filter.DateRange;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class AbstractControlFilter extends AbstractDateRangeFilter implements DateRange {
+public abstract class AbstractControlFilter extends AbstractDateRangeFilter implements DateRange {
 
 	private static final long serialVersionUID = 1L;
 	private int id;

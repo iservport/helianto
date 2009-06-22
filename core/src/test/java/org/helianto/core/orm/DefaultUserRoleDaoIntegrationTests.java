@@ -22,26 +22,15 @@ import javax.annotation.Resource;
 
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
+import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.UserRoleTestSupport;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:/META-INF/spring/dataSource.xml", "classpath:/META-INF/spring/data.xml", "classpath:/META-INF/spring/core-context.xml"})
-@TestExecutionListeners(value = {TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class})
-public class DefaultUserRoleDaoIntegrationTests {
+public class DefaultUserRoleDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
-	@Test
-	@Transactional
+	@Override
 	public void testFindUnique() {
 		UserRole userRole = UserRoleTestSupport.createUserRole();
 		userRoleDao.persist(userRole);

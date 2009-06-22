@@ -35,9 +35,10 @@ import org.helianto.core.filter.CriteriaBuilder;
  * <li>filter: any result set constrained by the filter.</li>
  * </ul> 
  * 
+ * @deprecated use AbstractJpaFilterDao or AbstractHibernateFilterDao
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaFilter> extends AbstractBasicDao<T> implements FilterDao<T, F> {
+public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaFilter> extends AbstractJpaBasicDao<T> implements FilterDao<T, F> {
 
 	/* @see FilterDao interface */
 	public Collection<T> find(F filter) {

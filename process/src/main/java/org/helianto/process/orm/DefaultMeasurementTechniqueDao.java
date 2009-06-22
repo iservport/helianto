@@ -16,8 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.process.MeasurementTechnique;
 import org.helianto.process.MeasurementTechniqueFilter;
 import org.springframework.stereotype.Repository;
@@ -29,25 +28,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("measurementTechniqueDao")
-public class DefaultMeasurementTechniqueDao extends AbstractFilterDao<MeasurementTechnique, MeasurementTechniqueFilter> {
-
-	@Override
-	protected void preProcessFilter(MeasurementTechniqueFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		if (filter.getUnit()!=null) {
-			appendEqualFilter("unit.id", filter.getUnit().getId(), mainCriteriaBuilder);
-		}
-	}
-
-	@Override
-	protected void doSelect(MeasurementTechniqueFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("measurementTechniqueCode", filter.getMeasurementTechniqueCode(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(MeasurementTechniqueFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("measurementTechniqueName", filter.getMeasurementTechniqueName(), mainCriteriaBuilder);
-		appendOrderBy("measurementTechniqueCode", mainCriteriaBuilder);
-	}
+public class DefaultMeasurementTechniqueDao extends AbstractHibernateFilterDao<MeasurementTechnique, MeasurementTechniqueFilter> {
 
 	@Override
 	protected String[] getParams() {

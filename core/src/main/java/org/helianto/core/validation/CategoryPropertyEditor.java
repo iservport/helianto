@@ -18,12 +18,12 @@ import org.helianto.core.Category;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>EntityManager</code> backed <code>Category</code> property editor.
+ * Default <code>Category</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class CategoryPropertyEditor extends AbstractJpaPropertyEditor {
+public class CategoryPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

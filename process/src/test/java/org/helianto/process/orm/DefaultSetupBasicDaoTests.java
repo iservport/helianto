@@ -1,12 +1,12 @@
 package org.helianto.process.orm;
 
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.process.Setup;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultSetupBasicDaoTests extends AbstractBasicDaoTest<Setup, DefaultSetupDao> {
+public class DefaultSetupBasicDaoTests extends AbstractHibernateBasicDaoTest<Setup, DefaultSetupDao> {
 
 
 	@Override

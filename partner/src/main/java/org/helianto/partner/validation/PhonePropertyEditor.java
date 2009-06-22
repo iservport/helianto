@@ -14,18 +14,18 @@
  */
 package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractJpaPropertyEditor;
+import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.partner.Phone;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>Phone</code> property
+ * Default <code>Phone</code> property
  * editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class PhonePropertyEditor extends AbstractJpaPropertyEditor {
+public class PhonePropertyEditor extends AbstractSessionPropertyEditor {
 
 	@Override
 	public String getAsText() {

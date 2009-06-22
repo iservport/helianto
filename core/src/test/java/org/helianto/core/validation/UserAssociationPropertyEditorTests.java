@@ -16,12 +16,13 @@
 package org.helianto.core.validation;
 
 import org.helianto.core.UserAssociation;
+import org.helianto.core.test.AbstractHibernatePropertyEditorTest;
 import org.helianto.core.test.AbstractJpaPropertyEditorTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class UserAssociationPropertyEditorTests extends AbstractJpaPropertyEditorTest<UserAssociation, UserAssociationPropertyEditor> {
+public class UserAssociationPropertyEditorTests extends AbstractHibernatePropertyEditorTest<UserAssociation, UserAssociationPropertyEditor> {
 	
 	@Override
 	protected Class<UserAssociation> getTargetClazz() {

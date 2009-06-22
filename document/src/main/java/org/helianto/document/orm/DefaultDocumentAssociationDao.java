@@ -16,7 +16,7 @@
 
 package org.helianto.document.orm;
 
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractJpaBasicDao;
 import org.helianto.document.DocumentAssociation;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("documentAssociationDao")
-public class DefaultDocumentAssociationDao extends AbstractBasicDao<DocumentAssociation> {
+public class DefaultDocumentAssociationDao extends AbstractJpaBasicDao<DocumentAssociation> {
 
 	@Override
 	public Class<? extends DocumentAssociation> getClazz() {

@@ -16,12 +16,12 @@
 package org.helianto.core.validation;
 
 import org.helianto.core.Category;
-import org.helianto.core.test.AbstractJpaPropertyEditorTest;
+import org.helianto.core.test.AbstractHibernatePropertyEditorTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class CategoryPropertyEditorTests extends AbstractJpaPropertyEditorTest<Category, CategoryPropertyEditor> {
+public class CategoryPropertyEditorTests extends AbstractHibernatePropertyEditorTest<Category, CategoryPropertyEditor> {
 	
 	@Override
 	protected Class<Category> getTargetClazz() {

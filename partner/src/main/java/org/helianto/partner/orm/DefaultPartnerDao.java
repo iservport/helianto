@@ -16,9 +16,7 @@
 
 package org.helianto.partner.orm;
 
-import org.helianto.core.Entity;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.springframework.stereotype.Repository;
@@ -29,35 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("partnerDao")
-public class DefaultPartnerDao extends AbstractFilterDao<Partner, PartnerFilter> {
-
-	/**
-	 * Read entity from the associated partner registry.
-	 */
-	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("partnerRegistry.entity.id", entity.getId(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void preProcessFilter(PartnerFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		if (filter.getClazz()!=null) {
-			mainCriteriaBuilder.appendAnd().append(filter.getClazz());
-		}
-	}
-
-	@Override
-	protected void doSelect(PartnerFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("partnerRegistry.partnerAlias", filter.getPartnerAlias(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(PartnerFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("partnerRegistry.partnerName", filter.getPartnerNameLike(), mainCriteriaBuilder);
-		appendEqualFilter("partnerState", filter.getPartnerState(), mainCriteriaBuilder);
-		appendEqualFilter("priority", filter.getPriority(), mainCriteriaBuilder);
-		appendOrderBy("partnerRegistry.partnerAlias", mainCriteriaBuilder);
-	}
+public class DefaultPartnerDao extends AbstractHibernateFilterDao<Partner, PartnerFilter> {
 
 	@Override
 	public Class<? extends Partner> getClazz() {

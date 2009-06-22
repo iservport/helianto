@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Province filter.
@@ -67,6 +68,46 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	public void reset() {
 		setProvinceCode("");
 		setProvinceNameLike("");
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "province";
+	}
+
+	/**
+	 * Do not raise exception when entity is null. 
+	 */
+	@Override
+	protected boolean requireEntity() {
+		return false;
+	}
+
+	/**
+	 * Filter provinces using same operator as the current entity.
+	 */
+	@Override
+	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.appendSegment("operator.id", "=")
+			.append(entity.getOperator().getId());
+	}
+
+	/**
+	 * Selection criterion.
+	 */
+	@Override
+	public boolean isSelection() {
+		return getProvinceCode().length()>0;
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("provinceCode", getProvinceCode(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("provinceName", getProvinceNameLike(), mainCriteriaBuilder);
 	}
 
 	@Override

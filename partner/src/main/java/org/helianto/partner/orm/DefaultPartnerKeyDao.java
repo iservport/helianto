@@ -16,7 +16,7 @@
 
 package org.helianto.partner.orm;
 
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractHibernateBasicDao;
 import org.helianto.partner.PartnerKey;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("partnerKeyDao")
-public class DefaultPartnerKeyDao extends AbstractBasicDao<PartnerKey> {
+public class DefaultPartnerKeyDao extends AbstractHibernateBasicDao<PartnerKey> {
 
 	@Override
 	public Class<? extends PartnerKey> getClazz() {

@@ -18,6 +18,7 @@ package org.helianto.process;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Resource parameter filter.
@@ -58,6 +59,22 @@ public class ResourceParameterFilter extends AbstractUserBackedCriteriaFilter {
 	@Override
 	public boolean isSelection() {
 		return getParameterCode().length()>0;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "resourceparameter";
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("parameterCode", getParameterCode(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("parameterName", getParameterNameLike(), mainCriteriaBuilder);
+		appendOrderBy("parameterCode", mainCriteriaBuilder);
 	}
 
 	/**

@@ -16,12 +16,12 @@
 package org.helianto.core.validation;
 
 import org.helianto.core.Identity;
-import org.helianto.core.test.AbstractJpaPropertyEditorTest;
+import org.helianto.core.test.AbstractHibernatePropertyEditorTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityPropertyEditorTests extends AbstractJpaPropertyEditorTest<Identity, IdentityPropertyEditor> {
+public class IdentityPropertyEditorTests extends AbstractHibernatePropertyEditorTest<Identity, IdentityPropertyEditor> {
 	
 	@Override
 	protected Class<Identity> getTargetClazz() {

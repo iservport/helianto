@@ -13,27 +13,18 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.orm;
+package org.helianto.partner.test;
 
-import org.helianto.core.test.AbstractIntegrationTest;
+import org.helianto.core.test.AbstractDaoIntegrationTest;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
- * Common config attributes.
+ * Base class to partner integration tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractPartnerDaoImplConfig extends
-        AbstractIntegrationTest {
+@ContextConfiguration(locations={
+		"classpath:/META-INF/spring/partner-context.xml"})
+public abstract class AbstractPartnerDaoIntegrationTest extends AbstractDaoIntegrationTest {
 
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { 
-                "META-INF/spring/dataSource.xml",
-                "META-INF/spring/data.xml",
-                "META-INF/spring/support.xml",
-                "META-INF/spring/core-context.xml",
-                "META-INF/spring/partner-context.xml"
-                };
-    }
-    
 }

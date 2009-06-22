@@ -16,7 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractHibernateBasicDao;
 import org.helianto.process.ProcessDocumentAssociation;
 import org.springframework.stereotype.Repository;
 
@@ -26,11 +26,16 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("processDocumentAssociationDao")
-public class DefaultProcessDocumentAssociationDao extends AbstractBasicDao<ProcessDocumentAssociation> {
+public class DefaultProcessDocumentAssociationDao extends AbstractHibernateBasicDao<ProcessDocumentAssociation> {
 
 	@Override
 	public Class<? extends ProcessDocumentAssociation> getClazz() {
 		return ProcessDocumentAssociation.class;
+	}
+
+	@Override
+	protected String[] getParams() {
+		return new String[] { "parent", "child" };
 	}
 
 }

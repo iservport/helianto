@@ -16,8 +16,7 @@
 
 package org.helianto.partner.orm;
 
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 import org.springframework.stereotype.Repository;
@@ -28,17 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("partnerRegistryDao")
-public class DefaultPartnerRegistryDao extends AbstractFilterDao<PartnerRegistry, PartnerRegistryFilter> {
-
-	@Override
-	protected void doFilter(PartnerRegistryFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("partnerName", filter.getPartnerNameLike(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doSelect(PartnerRegistryFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("partnerAlias", filter.getPartnerAlias(), mainCriteriaBuilder);
-	}
+public class DefaultPartnerRegistryDao extends AbstractHibernateFilterDao<PartnerRegistry, PartnerRegistryFilter> {
 
 	@Override
 	public Class<? extends PartnerRegistry> getClazz() {

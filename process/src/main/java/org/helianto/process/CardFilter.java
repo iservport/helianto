@@ -4,6 +4,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 public class CardFilter extends AbstractUserBackedCriteriaFilter {
 	
@@ -19,6 +20,24 @@ public class CardFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	public void reset() {
+	}
+
+	@Override
+	public boolean isSelection() {
+		return false;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "card";
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
 	}
 
     /**

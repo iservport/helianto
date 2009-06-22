@@ -19,6 +19,7 @@ import java.io.Serializable;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Partner registry filter.
@@ -59,6 +60,21 @@ public class PartnerRegistryFilter extends AbstractUserBackedCriteriaFilter impl
     @Override
 	public boolean isSelection() {
 		return getPartnerAlias().length()>0;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "partnerregistry";
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("partnerName", getPartnerNameLike(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("partnerAlias", getPartnerAlias(), mainCriteriaBuilder);
 	}
 
 	/**

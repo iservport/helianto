@@ -18,12 +18,12 @@ import org.helianto.core.InternalEnumerator;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>InternalEnumerator</code> property editor.
+ * Default <code>InternalEnumerator</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class InternalEnumeratorPropertyEditor extends AbstractJpaPropertyEditor {
+public class InternalEnumeratorPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

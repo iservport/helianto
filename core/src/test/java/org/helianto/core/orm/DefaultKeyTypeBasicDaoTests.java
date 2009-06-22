@@ -1,12 +1,12 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.KeyType;
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultKeyTypeBasicDaoTests extends AbstractBasicDaoTest<KeyType, DefaultKeyTypeDao> {
+public class DefaultKeyTypeBasicDaoTests extends AbstractHibernateBasicDaoTest<KeyType, DefaultKeyTypeDao> {
 
 
 	@Override

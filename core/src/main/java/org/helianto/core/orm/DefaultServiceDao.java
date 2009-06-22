@@ -16,11 +16,9 @@
 
 package org.helianto.core.orm;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Service;
 import org.helianto.core.ServiceFilter;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -29,43 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("serviceDao")
-public class DefaultServiceDao extends AbstractFilterDao<Service, ServiceFilter> {
-
-	/**
-	 * Do not raise exception when entity is null. 
-	 */
-	@Override
-	protected boolean requireEntity() {
-		return false;
-	}
-
-	/**
-	 * Restrict entity selection to a given operator, if any. 
-	 */
-	@Override
-	protected void preProcessFilter(ServiceFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		if (filter.getOperator()!=null) {
-			appendEqualFilter("operator.id", filter.getOperator().getId(), mainCriteriaBuilder);
-		}
-	}
-
-	/**
-	 * Overriden because default implementation does not allow other 
-	 * entities to be selected.
-	 */
-	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-	}
-
-	@Override
-	protected void doFilter(ServiceFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("serviceName", filter.getServiceName(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doSelect(ServiceFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("serviceName", filter.getServiceName(), mainCriteriaBuilder);
-	}
+public class DefaultServiceDao extends AbstractHibernateFilterDao<Service, ServiceFilter> {
 
 	/**
 	 * Keys are operator.id and serviceName

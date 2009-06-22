@@ -18,8 +18,7 @@ package org.helianto.core.orm;
 
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -28,27 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("unitDao")
-public class DefaultUnitDao extends AbstractFilterDao<Unit, UnitFilter> {
-
-	@Override
-	protected void preProcessFilter(UnitFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-    	if (filter.getCategoryGroup()!=null) {
-        	appendEqualFilter("category.categoryGroup", filter.getCategoryGroup().getValue(), mainCriteriaBuilder);
-    	}
-	}
-
-	@Override
-	protected void doFilter(UnitFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-    	if (filter.getCategory()!=null) {
-        	appendEqualFilter("category.id", filter.getCategory().getId(), mainCriteriaBuilder);
-    	}
-    	appendLikeFilter("unitNameLike", filter.getUnitNameLike(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doSelect(UnitFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-    	appendEqualFilter("unitCode", filter.getUnitCode(), mainCriteriaBuilder);
-	}
+public class DefaultUnitDao extends AbstractHibernateFilterDao<Unit, UnitFilter> {
 
 	@Override
 	protected String[] getParams() {

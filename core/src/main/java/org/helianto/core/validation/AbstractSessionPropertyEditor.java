@@ -25,13 +25,11 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
 
 /**
- * Abstract base class to <code>SessionFactory</code> backed property editors.
+ * Abstract base class to <code>Session</code> backed property editors.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated in favour to AbstractJpaPropertyEditor
  */
-public abstract class AbstractSessionPropertyEditor extends
-        PropertyEditorSupport {
+public abstract class AbstractSessionPropertyEditor extends PropertyEditorSupport {
 
 	private SessionFactory sessionFactory;
     

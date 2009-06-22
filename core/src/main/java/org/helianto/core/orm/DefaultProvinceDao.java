@@ -15,11 +15,9 @@
 
 package org.helianto.core.orm;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,42 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("provinceDao")
 @Transactional
-public class DefaultProvinceDao extends AbstractFilterDao<Province, ProvinceFilter> {
-
-	/**
-	 * Do not raise exception when entity is null. 
-	 */
-	@Override
-	protected boolean requireEntity() {
-		return false;
-	}
-
-	/**
-	 * Filter provinces using same operator as the current entity.
-	 */
-	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-		mainCriteriaBuilder.appendSegment("operator.id", "=")
-			.append(entity.getOperator().getId());
-	}
-
-	/**
-	 * Selection criterion.
-	 */
-	@Override
-	protected boolean isSelection(ProvinceFilter filter) {
-		return filter.getProvinceCode().length()>0;
-	}
-
-	@Override
-	protected void doSelect(ProvinceFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("provinceCode", filter.getProvinceCode(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(ProvinceFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("provinceName", filter.getProvinceNameLike(), mainCriteriaBuilder);
-	}
+public class DefaultProvinceDao extends AbstractHibernateFilterDao<Province, ProvinceFilter> {
 
 	@Override
 	protected String[] getParams() {

@@ -1,12 +1,12 @@
 package org.helianto.process.orm;
 
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.process.CardSet;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultCardSetBasicDaoTests extends AbstractBasicDaoTest<CardSet, DefaultCardSetDao> {
+public class DefaultCardSetBasicDaoTests extends AbstractHibernateBasicDaoTest<CardSet, DefaultCardSetDao> {
 
 
 	@Override

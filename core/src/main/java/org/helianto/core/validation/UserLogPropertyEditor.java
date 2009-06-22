@@ -18,12 +18,12 @@ import org.helianto.core.UserLog;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>UserLog</code> property editor.
+ * Default <code>UserLog</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class UserLogPropertyEditor extends AbstractJpaPropertyEditor {
+public class UserLogPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

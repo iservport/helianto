@@ -1,12 +1,12 @@
 package org.helianto.process.orm;
 
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.process.ResourceGroup;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultResourceGroupBasicDaoTests extends AbstractBasicDaoTest<ResourceGroup, DefaultResourceGroupDao> {
+public class DefaultResourceGroupBasicDaoTests extends AbstractHibernateBasicDaoTest<ResourceGroup, DefaultResourceGroupDao> {
 
 
 	@Override

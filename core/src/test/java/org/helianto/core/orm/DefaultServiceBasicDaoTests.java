@@ -1,12 +1,12 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.Service;
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultServiceBasicDaoTests extends AbstractBasicDaoTest<Service, DefaultServiceDao> {
+public class DefaultServiceBasicDaoTests extends AbstractHibernateBasicDaoTest<Service, DefaultServiceDao> {
 
 
 	@Override

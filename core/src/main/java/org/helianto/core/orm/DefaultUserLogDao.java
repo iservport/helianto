@@ -18,8 +18,7 @@ package org.helianto.core.orm;
 
 import org.helianto.core.UserLog;
 import org.helianto.core.UserLogFilter;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -28,24 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("userLogDao")
-public class DefaultUserLogDao extends AbstractFilterDao<UserLog, UserLogFilter> {
-
-	@Override
-	protected void doFilter(UserLogFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		mainCriteriaBuilder.appendDateRange("lastEvent", filter);
-		if (filter.getIdentity()!=null) {
-			appendEqualFilter("user.identity.id", filter.getIdentity().getId(), mainCriteriaBuilder);
-		}
-	}
-
-	@Override
-	protected void doSelect(UserLogFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-	}
-
-	@Override
-	protected boolean isSelection(UserLogFilter filter) {
-		return false;
-	}
+public class DefaultUserLogDao extends AbstractHibernateFilterDao<UserLog, UserLogFilter> {
 
 	@Override
 	public Class<? extends UserLog> getClazz() {

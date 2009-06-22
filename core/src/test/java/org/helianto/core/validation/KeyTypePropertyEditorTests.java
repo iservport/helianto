@@ -16,12 +16,13 @@
 package org.helianto.core.validation;
 
 import org.helianto.core.KeyType;
+import org.helianto.core.test.AbstractHibernatePropertyEditorTest;
 import org.helianto.core.test.AbstractJpaPropertyEditorTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class KeyTypePropertyEditorTests extends AbstractJpaPropertyEditorTest<KeyType, KeyTypePropertyEditor> {
+public class KeyTypePropertyEditorTests extends AbstractHibernatePropertyEditorTest<KeyType, KeyTypePropertyEditor> {
 	
 	@Override
 	protected Class<KeyType> getTargetClazz() {

@@ -17,13 +17,8 @@ package org.helianto.core.dao;
 
 import java.util.Collection;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.ejb.HibernateEntityManager;
 
 /**
  * Base implementation for <code>BasicDao</code>.
@@ -72,25 +67,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
         return find(selectClause, whereClause, new Object[0]);
 	}
 
-	@SuppressWarnings("unchecked")
-	protected Collection<T> find(StringBuilder selectClause, String whereClause, Object... values) {
-        if (!whereClause.equals("")) {
-        	selectClause.append("where ").append(whereClause);
-        }
-        Query result = this.em.createQuery(selectClause.toString());
-        /*
-         * Remember that ordinal parameters are 1-based!
-         */
-        int i = 1;
-        for (Object value: values) {
-            result.setParameter(i++, value);
-        }
-        Collection<T> resultList = result.getResultList();
-        if (logger.isDebugEnabled()) {
-            logger.debug("Found "+resultList.size()+" item(s)");
-        }
-        return resultList;
-	}
+	protected abstract Collection<T> find(StringBuilder selectClause, String whereClause, Object... values);
 
 	public T findUnique(Object... keys) {
         if (logger.isDebugEnabled()) {
@@ -133,69 +110,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	protected String[] getParams() {
 		return new String[] { "entity", "internalNumber" };
 	}
-
-	public T merge(T object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Merging "+object);
-        }
-		return (T) this.em.merge(object);
-	}
-
-	public void persist(T managedObject) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Persisting "+managedObject);
-        }
-        this.em.persist(managedObject);
-	}
-
-	public void remove(T object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Removing "+object);
-        }
-		this.em.remove(object);
-	}
-
-	public void evict(T object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Evicting "+object);
-        }
-        if (em instanceof HibernateEntityManager) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Using hibernate entity manager");
-            }
-            ((HibernateEntityManager) (this.em)).getSession().evict(object); 
-        }
-        else {
-        	logger.warn("Evict contract planned to jpa 2.0 not yet available");
-        }
-	}
 	
-	public void flush() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Flushing session");
-        }
-		this.em.flush();
-	}
-	
-	public void clear() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Clearing session");
-        }
-		this.em.clear();
-	}
-	
-	// collabs
-    
-    private EntityManager em;
-    
-    /**
-     * Spring will inject a managed JPA {@link EntityManager} into this field.
-     */
-    @PersistenceContext
-	public void setEntityManager(EntityManager em) {
-		this.em = em;
-	}
-
     private static final Log logger = LogFactory.getLog(AbstractBasicDao.class);
 
 }

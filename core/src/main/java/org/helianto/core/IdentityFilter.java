@@ -16,6 +16,7 @@
 package org.helianto.core;
 
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * <code>Identity</code> filter.
@@ -63,6 +64,43 @@ public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
     	setPrincipal("");
     	setNameOrAliasSearch("");
     }
+
+	/**
+	 * Do not raise exception when entity is null. 
+	 */
+	@Override
+	protected boolean requireEntity() {
+		return false;
+	}
+
+	/**
+	 * When entity is not null, restrict selection to identities already 
+	 * associated to it.
+	 */
+	@Override
+	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+		if (entity!=null) {
+			mainCriteriaBuilder.appendAnd().appendSegment("id", "in")
+		        .append("(select user.identity.id from User user where user.entity.id = ")
+		        .append(entity.getId())
+		        .append(") ");
+		}
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("optionalAlias", getNameOrAliasSearch(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("principal", getPrincipal(), mainCriteriaBuilder);
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "identity";
+	}
 
     /**
      * Principal filter.

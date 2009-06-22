@@ -27,7 +27,7 @@ import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
  * @author Mauricio Fernandes de Castro
  * @deprecated use ProcessDocumentFilter
  */
-public class ProcessFilter extends AbstractUserBackedCriteriaFilter {
+public abstract class ProcessFilter extends AbstractUserBackedCriteriaFilter {
 
     private static final long serialVersionUID = 1L;
     private long internalNumber;
@@ -41,16 +41,6 @@ public class ProcessFilter extends AbstractUserBackedCriteriaFilter {
     }
     
     /**
-     * Factory method.
-     * @param user
-     */
-    public static ProcessFilter processFilterFactory(User user) {
-    	ProcessFilter process = new ProcessFilter();
-    	process.setUser(user);
-    	return process;
-    }
-    
-    /**
      * Force filter to standards.
      */
     public void reset() {
@@ -59,6 +49,11 @@ public class ProcessFilter extends AbstractUserBackedCriteriaFilter {
     	setExclusions(new HashSet<Process>(0));
     }
     
+	@Override
+	public String getObjectAlias() {
+		return "process";
+	}
+
     /**
      * Internal number criterion field.
      */

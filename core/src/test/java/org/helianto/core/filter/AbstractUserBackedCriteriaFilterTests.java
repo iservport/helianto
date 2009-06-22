@@ -37,6 +37,18 @@ public class AbstractUserBackedCriteriaFilterTests extends TestCase {
 		public void reset() {
 			resetTest++;
 		}
+
+		@Override
+		protected void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+
+		@Override
+		protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+
+		@Override
+		public String getObjectAlias() { return ""; }
+
+		@Override
+		public boolean isSelection() { return false; }
 		
 	}
 	

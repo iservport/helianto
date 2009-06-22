@@ -18,6 +18,7 @@ package org.helianto.document;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Document filter.
@@ -53,6 +54,28 @@ public class DocumentFilter extends AbstractUserBackedCriteriaFilter {
 		setContentType(' ');
 	}
 
+	@Override
+	public boolean isSelection() {
+		return getDocCode().length()>0;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "document";
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public String getDocCode() {
 		return docCode;
 	}
@@ -73,4 +96,5 @@ public class DocumentFilter extends AbstractUserBackedCriteriaFilter {
 	public void setContentType(char contentType) {
 		this.contentType = contentType;
 	}
+
 }

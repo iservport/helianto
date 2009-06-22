@@ -16,8 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.process.ResourceParameter;
 import org.helianto.process.ResourceParameterFilter;
 import org.springframework.stereotype.Repository;
@@ -28,18 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("resourceParameterDao")
-public class DefaultResourceParameterDao extends AbstractFilterDao<ResourceParameter, ResourceParameterFilter> {
-
-	@Override
-	protected void doSelect(ResourceParameterFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("parameterCode", filter.getParameterCode(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(ResourceParameterFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("parameterName", filter.getParameterNameLike(), mainCriteriaBuilder);
-		appendOrderBy("parameterCode", mainCriteriaBuilder);
-	}
+public class DefaultResourceParameterDao extends AbstractHibernateFilterDao<ResourceParameter, ResourceParameterFilter> {
 
 	@Override
 	public Class<? extends ResourceParameter> getClazz() {

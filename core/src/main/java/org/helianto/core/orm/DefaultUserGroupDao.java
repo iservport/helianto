@@ -16,11 +16,9 @@
 
 package org.helianto.core.orm;
 
-import org.helianto.core.Identity;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -29,71 +27,8 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("userGroupDao")
-public class DefaultUserGroupDao extends AbstractFilterDao<UserGroup, UserFilter> {
+public class DefaultUserGroupDao extends AbstractHibernateFilterDao<UserGroup, UserFilter> {
 
-	/**
-	 * Required to avoid exception when entity is not present.
-	 */
-	@Override
-	protected String createCriteriaAsString(UserFilter filter) {
-		return createCriteriaAsString(filter, false);
-	}
-	
-	@Override
-	protected void preProcessFilter(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		if (filter.getClazz()!=null) {
-			mainCriteriaBuilder.appendAnd().append(filter.getClazz());
-		}
-	}
-
-	@Override
-	protected void doSelect(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		if (filter.getIdentity()!=null) {
-			appendEqualFilter("identity.id", filter.getIdentity().getId(), mainCriteriaBuilder);
-		}
-		else if (filter.getIdentityPrincipal().length()>0) {
-			appendEqualFilter("identity.principal", filter.getIdentityPrincipal(), mainCriteriaBuilder);
-		}
-	}
-
-	@Override
-	protected void doFilter(UserFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("userState", filter.getUserState(), mainCriteriaBuilder);
-		appendLikeFilter("identity.principal", filter.getIdentityPrincipalLike(), mainCriteriaBuilder);
-        appendExclusionsFilter(filter, mainCriteriaBuilder);
-		if (filter.isOrderByLastEventDesc()) {
-			appendOrderBy("lastEvent DESC", mainCriteriaBuilder);
-		}
-		else {
-			appendOrderBy("identity.principal", mainCriteriaBuilder);
-		}
-	}
-
-    /**
-     * <code>exclusions</code> filter segment
-     * @param filter
-     * @param criteriaBuilder
-     */
-    protected void appendExclusionsFilter(UserFilter filter, CriteriaBuilder criteriaBuilder) {
-        if (filter.getExclusions()!=null && filter.getExclusions().size() > 0) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Found "+filter.getExclusions().size()+" exclusion(s).");
-            }
-            criteriaBuilder.appendAnd().appendSegment("identity.id", "not in")
-            .append("(");
-            String separator = "";
-            for (Identity identity: filter.getExclusions()) {
-            	if (identity!=null) {
-                    criteriaBuilder.append(separator).append(identity.getId());
-                    if (separator.equals("")) {
-                        separator = ", ";
-                    }
-            	}
-            }
-            criteriaBuilder.append(")");
-       }
-    }
-    
 	@Override
 	public Class<? extends UserGroup> getClazz() {
 		return UserGroup.class;

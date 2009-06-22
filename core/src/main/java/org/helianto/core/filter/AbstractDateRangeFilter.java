@@ -26,7 +26,7 @@ import java.util.GregorianCalendar;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class AbstractDateRangeFilter extends AbstractUserBackedCriteriaFilter implements DateRange {
+public abstract class AbstractDateRangeFilter extends AbstractUserBackedCriteriaFilter implements DateRange {
 
 	private static final long serialVersionUID = 1L;
     private Date fromDate;

@@ -18,12 +18,12 @@ import org.helianto.core.UserGroup;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>UserGroup</code> property editor.
+ * Default <code>UserGroup</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class UserGroupPropertyEditor extends AbstractJpaPropertyEditor {
+public class UserGroupPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

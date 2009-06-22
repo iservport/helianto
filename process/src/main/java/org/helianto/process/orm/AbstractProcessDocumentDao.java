@@ -16,8 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentFilter;
 
@@ -26,12 +25,7 @@ import org.helianto.process.ProcessDocumentFilter;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractProcessDocumentDao extends AbstractFilterDao<ProcessDocument, ProcessDocumentFilter> {
-
-	@Override
-	protected void doSelect(ProcessDocumentFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("docCode", filter.getDocCode(), mainCriteriaBuilder);
-	}
+public abstract class AbstractProcessDocumentDao extends AbstractHibernateFilterDao<ProcessDocument, ProcessDocumentFilter> {
 
 	@Override
 	public Class<? extends ProcessDocument> getClazz() {

@@ -14,15 +14,15 @@
  */
 package org.helianto.partner.validation;
 
-import org.helianto.core.validation.AbstractJpaPropertyEditor;
+import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.partner.Account;
 
 /**
- * Default <code>EntityManager</code> backed <code>Account</code> property editor.
+ * Default <code>Account</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class AccountPropertyEditor extends AbstractJpaPropertyEditor {
+public class AccountPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

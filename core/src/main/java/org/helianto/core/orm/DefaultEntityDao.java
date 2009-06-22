@@ -18,8 +18,7 @@ package org.helianto.core.orm;
 
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,48 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("entityDao")
 @Transactional
-public class DefaultEntityDao extends AbstractFilterDao<Entity, EntityFilter> {
-
-	/**
-	 * Do not raise exception when entity is null. 
-	 */
-	@Override
-	protected boolean requireEntity() {
-		return false;
-	}
-
-	/**
-	 * Restrict entity selection to a given operator, if any. 
-	 */
-	@Override
-	protected void preProcessFilter(EntityFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		if (filter.getOperator()!=null) {
-			appendEqualFilter("operator.id", filter.getOperator().getId(), mainCriteriaBuilder);
-		}
-	}
-
-	/**
-	 * Overriden because default implementation does not allow other 
-	 * entities to be selected.
-	 */
-	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-	}
-
-	@Override
-	protected boolean isSelection(EntityFilter filter) {
-		return (filter.getOperator()!=null && filter.getEntityAlias().length()>0);
-	}
-
-	@Override
-	protected void doSelect(EntityFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("alias", filter.getEntityAlias(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(EntityFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("alias", filter.getEntityAliasLike(), mainCriteriaBuilder);
-	}
+public class DefaultEntityDao extends AbstractHibernateFilterDao<Entity, EntityFilter> {
 
 	/**
 	 * Keys are operator.id and alias

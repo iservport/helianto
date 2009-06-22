@@ -1,12 +1,12 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.Operator;
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultOperatorBasicDaoTests extends AbstractBasicDaoTest<Operator, DefaultOperatorDao> {
+public class DefaultOperatorBasicDaoTests extends AbstractHibernateBasicDaoTest<Operator, DefaultOperatorDao> {
 
 
 	@Override

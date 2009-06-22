@@ -23,26 +23,15 @@ import javax.annotation.Resource;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.partner.Agent;
 import org.helianto.partner.Partner;
+import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
 import org.helianto.partner.test.AgentTestSupport;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:/META-INF/spring/dataSource.xml", "classpath:/META-INF/spring/data.xml", "classpath:/META-INF/spring/core-context.xml", "classpath:/META-INF/spring/partner-context.xml"})
-@TestExecutionListeners(value = {TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class})
-public class DefaultAgentDaoIntegrationTests  {
+public class DefaultAgentDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
-	@Test
-	@Transactional
+	@Override
 	public void testFindUnique() {
 		Agent agent = AgentTestSupport.createAgent();
 		System.out.println(">>>"+agent.getId());

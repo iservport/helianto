@@ -16,11 +16,9 @@
 
 package org.helianto.core.orm;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,33 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("operatorDao")
 @Transactional
-public class DefaultOperatorDao extends AbstractFilterDao<Operator, OperatorFilter> {
-
-	/**
-	 * Do not raise exception when entity is null. 
-	 */
-	@Override
-	protected boolean requireEntity() {
-		return false;
-	}
-
-	/**
-	 * Overriden because default implementation does not allow other 
-	 * entities to be selected.
-	 */
-	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-	}
-
-	@Override
-	protected void doFilter(OperatorFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("operatorName", filter.getOperatorNameLike(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doSelect(OperatorFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("operatorName", filter.getOperatorName(), mainCriteriaBuilder);
-	}
+public class DefaultOperatorDao extends AbstractHibernateFilterDao<Operator, OperatorFilter> {
 
 	@Override
 	public Class<? extends Operator> getClazz() {

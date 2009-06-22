@@ -1,12 +1,12 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.Province;
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultProvinceBasicDaoTests extends AbstractBasicDaoTest<Province, DefaultProvinceDao> {
+public class DefaultProvinceBasicDaoTests extends AbstractHibernateBasicDaoTest<Province, DefaultProvinceDao> {
 
 
 	@Override

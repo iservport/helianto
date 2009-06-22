@@ -18,6 +18,7 @@ package org.helianto.process;
 import org.helianto.core.Unit;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Measurement technique filter.
@@ -59,6 +60,29 @@ public class MeasurementTechniqueFilter extends AbstractUserBackedCriteriaFilter
 	@Override
 	public boolean isSelection() {
 		return getMeasurementTechniqueCode().length()>0;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "measurementtechnique";
+	}
+
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (getUnit()!=null) {
+			appendEqualFilter("unit.id", getUnit().getId(), mainCriteriaBuilder);
+		}
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("measurementTechniqueCode", getMeasurementTechniqueCode(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("measurementTechniqueName", getMeasurementTechniqueName(), mainCriteriaBuilder);
+		appendOrderBy("measurementTechniqueCode", mainCriteriaBuilder);
 	}
 
 	/**

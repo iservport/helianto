@@ -17,6 +17,7 @@
 package org.helianto.core;
 
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * <code>Operator</code> filter.
@@ -53,11 +54,43 @@ public class OperatorFilter extends AbstractUserBackedCriteriaFilter {
 	 * Reset.
 	 */
 	public void reset() {
+		setOperatorNameLike("");
 	}
 
 	@Override
 	public boolean isSelection() {
 		return getOperatorName().length()>0;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "operator";
+	}
+
+	/**
+	 * Do not raise exception when entity is null. 
+	 */
+	@Override
+	protected boolean requireEntity() {
+		return false;
+	}
+
+	/**
+	 * Overriden because default implementation does not allow other 
+	 * entities to be selected.
+	 */
+	@Override
+	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("operatorName", getOperatorNameLike(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("operatorName", getOperatorName(), mainCriteriaBuilder);
 	}
 
 	/**

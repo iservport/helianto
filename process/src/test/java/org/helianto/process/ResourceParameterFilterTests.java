@@ -1,7 +1,8 @@
-package org.helianto.process.orm;
+package org.helianto.process;
 
 import static org.junit.Assert.assertEquals;
 
+import org.helianto.core.User;
 import org.helianto.core.test.UserTestSupport;
 import org.helianto.process.ResourceParameterFilter;
 import org.junit.Before;
@@ -9,7 +10,7 @@ import org.junit.Test;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultResourceParameterFilterDaoTests {
+public class ResourceParameterFilterTests {
 
     public static String OB = "order by resourceparameter.parameterCode ";
     public static String C0 = "resourceparameter.entity.id = 0 ";
@@ -18,28 +19,28 @@ public class DefaultResourceParameterFilterDaoTests {
 
     @Test
     public void testEmpty() {
-        assertEquals(C0+OB, resourceParameterDao.createCriteriaAsString(filter, false));
+        assertEquals(C0+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testSelect() {
     	filter.setParameterCode("CODE");
-        assertEquals(C0+C2, resourceParameterDao.createCriteriaAsString(filter, false));
+        assertEquals(C0+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testFilterName() {
         filter.setParameterNameLike("NAME");
-        assertEquals(C0+C3+OB, resourceParameterDao.createCriteriaAsString(filter, false));
+        assertEquals(C0+C3+OB, filter.createCriteriaAsString(false));
     }
     
-    private DefaultResourceParameterDao resourceParameterDao;
     private ResourceParameterFilter filter;
+    private User user;
     
     @Before
     public void setUp() {
-    	filter = ResourceParameterFilter.resourceParameterFilterFactory(UserTestSupport.createUser());
-    	resourceParameterDao = new DefaultResourceParameterDao();
+    	user = UserTestSupport.createUser();
+    	filter = ResourceParameterFilter.resourceParameterFilterFactory(user);
     }
 }
 

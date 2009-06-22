@@ -1,7 +1,8 @@
-package org.helianto.process.orm;
+package org.helianto.process;
 
 import static org.junit.Assert.assertEquals;
 
+import org.helianto.core.User;
 import org.helianto.core.test.UserTestSupport;
 import org.helianto.process.Resource;
 import org.helianto.process.ResourceGroupFilter;
@@ -11,7 +12,7 @@ import org.junit.Test;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultResourceGroupFilterDaoTests {
+public class ResourceGroupFilterTests {
 
     public static String OB = "order by resourcegroup.resourceCode ";
     public static String C0 = "resourcegroup.entity.id = 0 ";
@@ -22,40 +23,40 @@ public class DefaultResourceGroupFilterDaoTests {
 
     @Test
     public void testEmpty() {
-        assertEquals(C0+OB, resourceGroupDao.createCriteriaAsString(filter, false));
+        assertEquals(C0+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testFilterClazz() {
         filter.setClazz(Resource.class);
-        assertEquals(C0+C1+OB, resourceGroupDao.createCriteriaAsString(filter, false));
+        assertEquals(C0+C1+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testSelect() {
     	filter.setResourceCode("CODE");
-        assertEquals(C0+C2, resourceGroupDao.createCriteriaAsString(filter, false));
+        assertEquals(C0+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testFilterName() {
         filter.setResourceNameLike("NAME");
-        assertEquals(C0+C3+OB, resourceGroupDao.createCriteriaAsString(filter, false));
+        assertEquals(C0+C3+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testFilterInheritance() {
         filter.setResourceType(ResourceType.FIXTURE.getValue());
-        assertEquals(C0+C4+OB, resourceGroupDao.createCriteriaAsString(filter, false));
+        assertEquals(C0+C4+OB, filter.createCriteriaAsString(false));
     }
     
-    private DefaultResourceGroupDao resourceGroupDao;
     private ResourceGroupFilter filter;
+    private User user;
     
     @Before
     public void setUp() {
-    	filter = ResourceGroupFilter.resourceGroupFilterFactory(UserTestSupport.createUser());
-    	resourceGroupDao = new DefaultResourceGroupDao();
+    	user = UserTestSupport.createUser();
+    	filter = ResourceGroupFilter.resourceGroupFilterFactory(user);
     }
 }
 

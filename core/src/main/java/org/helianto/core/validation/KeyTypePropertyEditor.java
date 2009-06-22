@@ -19,12 +19,12 @@ import org.helianto.core.KeyType;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>KeyType</code> property editor.
+ * Default <code>KeyType</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class KeyTypePropertyEditor extends AbstractJpaPropertyEditor {
+public class KeyTypePropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

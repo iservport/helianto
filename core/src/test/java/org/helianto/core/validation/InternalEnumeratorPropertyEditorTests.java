@@ -16,12 +16,13 @@
 package org.helianto.core.validation;
 
 import org.helianto.core.InternalEnumerator;
+import org.helianto.core.test.AbstractHibernatePropertyEditorTest;
 import org.helianto.core.test.AbstractJpaPropertyEditorTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class InternalEnumeratorPropertyEditorTests extends AbstractJpaPropertyEditorTest<InternalEnumerator, InternalEnumeratorPropertyEditor> {
+public class InternalEnumeratorPropertyEditorTests extends AbstractHibernatePropertyEditorTest<InternalEnumerator, InternalEnumeratorPropertyEditor> {
 	
 	@Override
 	protected Class<InternalEnumerator> getTargetClazz() {

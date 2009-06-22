@@ -17,6 +17,7 @@
 package org.helianto.core;
 
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Entity filter.
@@ -43,11 +44,54 @@ public class EntityFilter extends AbstractUserBackedCriteriaFilter {
 	 * Default constructor.
 	 */
 	public EntityFilter() {
-		this.entityAlias = "";
-		this.entityAliasLike = "";
+		setEntityAlias("");
+		setEntityAliasLike("");
 	}
 
+	/**
+	 * Reset.
+	 */
 	public void reset() {
+		setEntityAliasLike("");
+	}
+
+	@Override
+	public boolean isSelection() {
+		return getEntityAlias().length()>0;
+	}
+
+	@Override
+	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	}
+
+	@Override
+	protected boolean requireEntity() {
+		return false;
+	}
+
+	/**
+	 * Restrict entity selection to a given operator, if any. 
+	 */
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (getOperator()!=null) {
+			appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
+		}
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("alias", getEntityAliasLike(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("alias", getEntityAlias(), mainCriteriaBuilder);
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "entity";
 	}
 
 	/**

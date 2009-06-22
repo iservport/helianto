@@ -16,12 +16,13 @@
 package org.helianto.core.validation;
 
 import org.helianto.core.Province;
+import org.helianto.core.test.AbstractHibernatePropertyEditorTest;
 import org.helianto.core.test.AbstractJpaPropertyEditorTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class ProvincePropertyEditorTests extends AbstractJpaPropertyEditorTest<Province, ProvincePropertyEditor> {
+public class ProvincePropertyEditorTests extends AbstractHibernatePropertyEditorTest<Province, ProvincePropertyEditor> {
 	
 	@Override
 	protected Class<Province> getTargetClazz() {

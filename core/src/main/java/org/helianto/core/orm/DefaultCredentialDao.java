@@ -17,7 +17,7 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.Credential;
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractHibernateBasicDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("credentialDao")
-public class DefaultCredentialDao extends AbstractBasicDao<Credential> {
+public class DefaultCredentialDao extends AbstractHibernateBasicDao<Credential> {
 
 	@Override
 	protected String[] getParams() {

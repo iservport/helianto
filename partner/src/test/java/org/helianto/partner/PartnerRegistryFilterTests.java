@@ -15,31 +15,39 @@
 
 package org.helianto.partner;
 
-import java.io.Serializable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import java.io.Serializable;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.test.UserTestSupport;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PartnerRegistryFilterTests extends TestCase {
+public class PartnerRegistryFilterTests {
 	
+    @Test
 	public void testConstructor() {
 		PartnerRegistryFilter partnerRegistryFilter = new PartnerRegistryFilter();
 		assertTrue(partnerRegistryFilter instanceof Serializable);
 		assertTrue(partnerRegistryFilter instanceof AbstractUserBackedCriteriaFilter);
 	}
 	
+    @Test
 	public void testFactory() {
 		User user = new User();
 		PartnerRegistryFilter partnerRegistryFilter = PartnerRegistryFilter.partnerRegistryFilterFactory(user);
 		assertSame(partnerRegistryFilter.getUser(), user);
 	}
 	
+    @Test
 	public void testReset() {
 		PartnerRegistryFilter partnerRegistryFilter = PartnerRegistryFilter.partnerRegistryFilterFactory(new User());
 		partnerRegistryFilter.setPartnerNameLike(null);
@@ -47,11 +55,32 @@ public class PartnerRegistryFilterTests extends TestCase {
 		assertEquals("", partnerRegistryFilter.getPartnerNameLike());
 	}
 
-	public void testPartnerNameLike() {
-		String partnerNameLike = "NAME_LIKE";
-		PartnerRegistryFilter partnerRegistryFilter = PartnerRegistryFilter.partnerRegistryFilterFactory(new User());
-		partnerRegistryFilter.setPartnerNameLike(partnerNameLike);
-		assertSame(partnerRegistryFilter.getPartnerNameLike(), partnerNameLike);
-	}
+    public static String C1 = "partnerregistry.entity.id = 0 ";
+    public static String C2 = "AND partnerregistry.partnerAlias = 'ALIAS' ";
+    public static String C3 = "AND lower(partnerregistry.partnerName) like '%name%' ";
+
+    @Test
+    public void testEmpty() {
+        assertEquals(C1, filter.createCriteriaAsString(false));
+    }
+    
+    @Test
+    public void testSelect() {
+    	filter.setPartnerAlias("ALIAS");
+        assertEquals(C1+C2, filter.createCriteriaAsString(false));
+    }
+    
+    @Test
+    public void testFilter() {
+        filter.setPartnerNameLike("NAME");
+        assertEquals(C1+C3, filter.createCriteriaAsString(false));
+    }
+    
+    private PartnerRegistryFilter filter;
+    
+    @Before
+    public void setUp() {
+    	filter = PartnerRegistryFilter.partnerRegistryFilterFactory(UserTestSupport.createUser());
+    }
 	
 }

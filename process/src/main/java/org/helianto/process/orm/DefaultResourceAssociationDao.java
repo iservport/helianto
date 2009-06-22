@@ -16,7 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractHibernateBasicDao;
 import org.helianto.process.ResourceAssociation;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("resourceAssociationDao")
-public class DefaultResourceAssociationDao extends AbstractBasicDao<ResourceAssociation> {
+public class DefaultResourceAssociationDao extends AbstractHibernateBasicDao<ResourceAssociation> {
 
 	@Override
 	public Class<? extends ResourceAssociation> getClazz() {

@@ -1,12 +1,12 @@
 package org.helianto.process.orm;
 
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.process.MeasurementTechnique;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultMeasurementTechniqueBasicDaoTests extends AbstractBasicDaoTest<MeasurementTechnique, DefaultMeasurementTechniqueDao> {
+public class DefaultMeasurementTechniqueBasicDaoTests extends AbstractHibernateBasicDaoTest<MeasurementTechnique, DefaultMeasurementTechniqueDao> {
 
 
 	@Override

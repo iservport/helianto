@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.partner.Partner;
 import org.helianto.partner.Supplier;
+import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
 import org.helianto.partner.test.SupplierTestSupport;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,13 +37,9 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * @author Mauricio Fernandes de Castro
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:/META-INF/spring/dataSource.xml", "classpath:/META-INF/spring/data.xml", "classpath:/META-INF/spring/core-context.xml", "classpath:/META-INF/spring/partner-context.xml"})
-@TestExecutionListeners(value = {TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class})
-public class DefaultSupplierDaoIntegrationTests {
+public class DefaultSupplierDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
-	@Test
-	@Transactional
+	@Override
 	public void testFindUnique() {
 		Supplier supplier = SupplierTestSupport.createSupplier();
 		partnerDao.persist(supplier);

@@ -16,9 +16,6 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.process.ProcessDocument;
-import org.helianto.process.ProcessDocumentFilter;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -28,23 +25,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("processDocumentDao")
 public class DefaultProcessDocumentDao extends AbstractProcessDocumentDao {
-
-	@Override
-	protected void preProcessFilter(ProcessDocumentFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		if (!filter.getClazz().equals(ProcessDocument.class)) {
-	        if (logger.isDebugEnabled()) {
-	            logger.debug("Document class is: '"+filter.getClazz()+"'");
-	        }
-			mainCriteriaBuilder.appendAnd().append(filter.getClazz());
-		}
-	}
-
-	@Override
-	protected void doFilter(ProcessDocumentFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("docName", filter.getDocNameLike(), mainCriteriaBuilder);
-		appendEqualFilter("inheritanceType", filter.getInheritanceType(), mainCriteriaBuilder);
-		appendEqualFilter("priority", filter.getPriority(), mainCriteriaBuilder);
-		appendOrderBy("docCode", mainCriteriaBuilder);
-	}
 
 }

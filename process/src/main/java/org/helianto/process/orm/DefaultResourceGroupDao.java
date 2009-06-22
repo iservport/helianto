@@ -16,8 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.process.ResourceGroup;
 import org.helianto.process.ResourceGroupFilter;
 import org.springframework.stereotype.Repository;
@@ -28,29 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("resourceGroupDao")
-public class DefaultResourceGroupDao extends AbstractFilterDao<ResourceGroup, ResourceGroupFilter> {
-
-	@Override
-	protected void preProcessFilter(ResourceGroupFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		if (!filter.getClazz().equals(ResourceGroup.class)) {
-	        if (logger.isDebugEnabled()) {
-	            logger.debug("Resource group class is: '"+filter.getClazz()+"'");
-	        }
-			mainCriteriaBuilder.appendAnd().append(filter.getClazz());
-		}
-	}
-
-	@Override
-	protected void doSelect(ResourceGroupFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("resourceCode", filter.getResourceCode(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(ResourceGroupFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("resourceName", filter.getResourceNameLike(), mainCriteriaBuilder);
-		appendEqualFilter("resourceType", filter.getResourceType(), mainCriteriaBuilder);
-		appendOrderBy("resourceCode", mainCriteriaBuilder);
-	}
+public class DefaultResourceGroupDao extends AbstractHibernateFilterDao<ResourceGroup, ResourceGroupFilter> {
 
 	@Override
 	public Class<? extends ResourceGroup> getClazz() {

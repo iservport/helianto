@@ -1,70 +1,86 @@
-/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.helianto.core;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import junit.framework.TestCase;
-
+import org.helianto.core.Category;
+import org.helianto.core.CategoryGroup;
+import org.helianto.core.UnitFilter;
 import org.helianto.core.filter.UserBackedFilter;
-
+import org.helianto.core.test.CategoryTestSupport;
+import org.helianto.core.test.UserTestSupport;
+import org.junit.Before;
+import org.junit.Test;
 /**
- * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
-public class UnitFilterTests extends TestCase {
-	
+public class UnitFilterTests {
+
+    @Test
 	public void testConstructor() {
-		UnitFilter unitFilter = new UnitFilter();
-		assertTrue(unitFilter instanceof Serializable);
-		assertTrue(unitFilter instanceof UserBackedFilter);
+		assertTrue(filter instanceof Serializable);
+		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
+    @Test
 	public void testFactory() {
-		User user = new User();
-		UnitFilter unitFilter = UnitFilter.unitFilterFactory(user);
-		assertSame(unitFilter.getUser(), user);
+		assertSame(filter.getUser(), user);
 	}
 	
+    @Test
 	public void testReset() {
-		UnitFilter unitFilter = UnitFilter.unitFilterFactory(new User());
-		unitFilter.reset();
-		assertEquals("", unitFilter.getUnitCode());
-		assertEquals("", unitFilter.getUnitNameLike());
+    	filter.reset();
+		assertEquals("", filter.getUnitCode());
+		assertEquals("", filter.getUnitNameLike());
 	}
 
-	public void testCategory() {
-		Category category = new Category();
-		UnitFilter unitFilter = UnitFilter.unitFilterFactory(new User());
-		unitFilter.setCategory(category);
-		assertSame(unitFilter.getCategory(), category);
-	}
+    public static String C1 = "unit.entity.id = 0 ";
+    public static String C2 = "AND unit.category.categoryGroup = 2 ";
+    public static String C3 = "AND unit.unitCode = 'CODE' ";
+    public static String C4 = "AND unit.category.id = 1 ";
+    public static String C5 = "AND lower(unit.unitNameLike) like '%name%' ";
 
-	public void testUnitCode() {
-		String unitCode = "CODE";
-		UnitFilter unitFilter = UnitFilter.unitFilterFactory(new User());
-		unitFilter.setUnitCode(unitCode);
-		assertSame(unitFilter.getUnitCode(), unitCode);
-	}
-
-	public void testUnitNameLike() {
-		String unitNameLike = "NAME_LIKE";
-		UnitFilter unitFilter = UnitFilter.unitFilterFactory(new User());
-		unitFilter.setUnitNameLike(unitNameLike);
-		assertSame(unitFilter.getUnitNameLike(), unitNameLike);
-	}
-	
+    @Test
+    public void testEmpty() {
+        assertEquals(C1, filter.createCriteriaAsString(false));
+    }
+    
+    @Test
+    public void testPreProcess() {
+    	filter.setCategoryGroup(CategoryGroup.STOCK);
+        assertEquals(C1+C2, filter.createCriteriaAsString(false));
+    }
+    
+    @Test
+    public void testSelect() {
+    	filter.setUnitCode("CODE");
+        assertEquals(C1+C3, filter.createCriteriaAsString(false));
+    }
+    
+    @Test
+    public void testFilterCategory() {
+    	Category category = CategoryTestSupport.createCategory();
+    	category.setId(1);
+        filter.setCategory(category);
+        assertEquals(C1+C4, filter.createCriteriaAsString(false));
+    }
+    
+    @Test
+    public void testFilterUnitName() {
+        filter.setUnitNameLike("NAME");
+        assertEquals(C1+C5, filter.createCriteriaAsString(false));
+    }
+    
+    private UnitFilter filter;
+    private User user;
+    
+    @Before
+    public void setUp() {
+    	user = UserTestSupport.createUser();
+    	filter = UnitFilter.unitFilterFactory(user);
+    }
 }
+

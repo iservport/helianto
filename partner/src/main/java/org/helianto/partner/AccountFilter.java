@@ -18,6 +18,7 @@ package org.helianto.partner;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Account filter.
@@ -60,6 +61,23 @@ public class AccountFilter extends AbstractUserBackedCriteriaFilter {
     @Override
 	public boolean isSelection() {
 		return getAccountCode().length()>0;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "account";
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("accountCode", getAccountCode(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("accountNameLike", getAccountNameLike(), mainCriteriaBuilder);
+		appendEqualFilter("accountType", getAccountType(), mainCriteriaBuilder);
+		appendOrderBy("accountCode", mainCriteriaBuilder);
 	}
 
 	/**

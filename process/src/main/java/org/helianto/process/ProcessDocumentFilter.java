@@ -19,8 +19,11 @@ package org.helianto.process;
 import java.io.Serializable;
 import java.util.Collection;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.PolymorphicFilter;
 import org.helianto.document.AbstractDocument;
 import org.helianto.partner.Partner;
@@ -85,6 +88,34 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
 	@Override
 	public boolean isSelection() {
 		return getDocCode().length()>0;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "processdocument";
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("docCode", getDocCode(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (!getClazz().equals(ProcessDocument.class)) {
+	        if (logger.isDebugEnabled()) {
+	            logger.debug("Document class is: '"+getClazz()+"'");
+	        }
+			mainCriteriaBuilder.appendAnd().append(getClazz());
+		}
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("docName", getDocNameLike(), mainCriteriaBuilder);
+		appendEqualFilter("inheritanceType", getInheritanceType(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);
+		appendOrderBy("docCode", mainCriteriaBuilder);
 	}
 
 	/**
@@ -214,5 +245,7 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
         builder.append("]");
         return builder.toString();
     }
+	
+	private static Log logger = LogFactory.getLog(ProcessDocument.class);
 
 }

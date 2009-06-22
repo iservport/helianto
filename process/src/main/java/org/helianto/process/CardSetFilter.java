@@ -2,8 +2,10 @@ package org.helianto.process;
 
 import javax.persistence.Transient;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Card set filter.
@@ -43,6 +45,31 @@ public class CardSetFilter extends AbstractUserBackedCriteriaFilter {
 		return getInternalNumber()>0;
 	}
 
+	@Override
+	public String getObjectAlias() {
+		return "cardset";
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("cardType", getCardType(), mainCriteriaBuilder);
+		if (getProcess()!=null) {
+			appendEqualFilter("processDocument.id", getProcess().getId(), mainCriteriaBuilder);
+		}
+		appendOrderBy("internalNumber", mainCriteriaBuilder);
+	}
+
+	@Override
+	protected final void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.appendSegment("entity.id", "=")
+        .append(entity.getId());
+    }
+    
 	/**
 	 * Internal number filter
 	 */

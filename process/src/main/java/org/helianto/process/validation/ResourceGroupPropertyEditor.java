@@ -14,17 +14,17 @@
  */
 package org.helianto.process.validation;
 
-import org.helianto.core.validation.AbstractJpaPropertyEditor;
+import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.helianto.process.ResourceGroup;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>EntityManager</code> backed <code>ResourceGroup</code> property editor.
+ * Default <code>ResourceGroup</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component("resourceGroupPropertyEditor")
-public class ResourceGroupPropertyEditor extends AbstractJpaPropertyEditor {
+public class ResourceGroupPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

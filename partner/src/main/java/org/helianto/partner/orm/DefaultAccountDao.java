@@ -16,8 +16,7 @@
 
 package org.helianto.partner.orm;
 
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.partner.Account;
 import org.helianto.partner.AccountFilter;
 import org.springframework.stereotype.Repository;
@@ -28,19 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("accountDao")
-public class DefaultAccountDao extends AbstractFilterDao<Account, AccountFilter> {
-
-	@Override
-	protected void doSelect(AccountFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("accountCode", filter.getAccountCode(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(AccountFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("accountNameLike", filter.getAccountNameLike(), mainCriteriaBuilder);
-		appendEqualFilter("accountType", filter.getAccountType(), mainCriteriaBuilder);
-		appendOrderBy("accountCode", mainCriteriaBuilder);
-	}
+public class DefaultAccountDao extends AbstractHibernateFilterDao<Account, AccountFilter> {
 
 	@Override
 	public Class<? extends Account> getClazz() {

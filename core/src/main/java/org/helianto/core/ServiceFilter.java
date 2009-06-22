@@ -17,6 +17,7 @@
 package org.helianto.core;
 
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Service filter.
@@ -54,6 +55,47 @@ public class ServiceFilter extends AbstractUserBackedCriteriaFilter {
 	 * Reset
 	 */
 	public void reset() {
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "service";
+	}
+
+	/**
+	 * Do not raise exception when entity is null. 
+	 */
+	@Override
+	protected boolean requireEntity() {
+		return false;
+	}
+
+	/**
+	 * Restrict entity selection to a given operator, if any. 
+	 */
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (getOperator()!=null) {
+			appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
+		}
+	}
+
+	/**
+	 * Overriden because default implementation does not allow other 
+	 * entities to be selected.
+	 */
+	@Override
+	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("serviceName", getServiceName(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("serviceName", getServiceName(), mainCriteriaBuilder);
 	}
 
     /**

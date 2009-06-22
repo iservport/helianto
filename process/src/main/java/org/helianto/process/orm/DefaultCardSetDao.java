@@ -16,9 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.Entity;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.process.CardSet;
 import org.helianto.process.CardSetFilter;
 import org.springframework.stereotype.Repository;
@@ -30,31 +28,11 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("cardSetDao")
-public class DefaultCardSetDao extends AbstractFilterDao<CardSet, CardSetFilter> {
-
-	@Override
-	protected void doSelect(CardSetFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("internalNumber", filter.getInternalNumber(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(CardSetFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("cardType", filter.getCardType(), mainCriteriaBuilder);
-		if (filter.getProcess()!=null) {
-			appendEqualFilter("processDocument.id", filter.getProcess().getId(), mainCriteriaBuilder);
-		}
-		appendOrderBy("internalNumber", mainCriteriaBuilder);
-	}
+public class DefaultCardSetDao extends AbstractHibernateFilterDao<CardSet, CardSetFilter> {
 
 	@Override
 	public Class<? extends CardSet> getClazz() {
 		return CardSet.class;
 	}
 
-	@Override
-	protected final void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-		mainCriteriaBuilder.appendSegment("entity.id", "=")
-        .append(entity.getId());
-    }
-    
 }

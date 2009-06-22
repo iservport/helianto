@@ -1,12 +1,12 @@
 package org.helianto.partner.orm;
 
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.partner.Address;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultAddressBasicDaoTests extends AbstractBasicDaoTest<Address, DefaultAddressDao> {
+public class DefaultAddressBasicDaoTests extends AbstractHibernateBasicDaoTest<Address, DefaultAddressDao> {
 
 
 	@Override

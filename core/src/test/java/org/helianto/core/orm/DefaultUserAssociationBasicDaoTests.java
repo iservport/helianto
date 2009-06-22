@@ -1,13 +1,11 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.UserAssociation;
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 /**
- * <code>UserAssociationDao</code> tests.
- *
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultUserAssociationDaoTests extends AbstractBasicDaoTest<UserAssociation, DefaultUserAssociationDao> {
+public class DefaultUserAssociationBasicDaoTests extends AbstractHibernateBasicDaoTest<UserAssociation, DefaultUserAssociationDao> {
 
 
 	@Override

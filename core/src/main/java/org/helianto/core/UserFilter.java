@@ -18,7 +18,10 @@ package org.helianto.core;
 import java.util.Collection;
 import java.util.HashSet;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.PolymorphicFilter;
 
 /**
@@ -96,6 +99,74 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 				|| getIdentityPrincipal()!=null && getIdentityPrincipal().length() > 0);
 	}
 
+	@Override
+	public String getObjectAlias() {
+		return "usergroup";
+	}
+
+//	/**
+//	 * Required to avoid exception when entity is not present.
+//	 */
+//	@Override
+//	protected String createCriteriaAsString() {
+//		return createCriteriaAsString(false);
+//	}
+//	
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (getClazz()!=null) {
+			mainCriteriaBuilder.appendAnd().append(getClazz());
+		}
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		if (getIdentity()!=null) {
+			appendEqualFilter("identity.id", getIdentity().getId(), mainCriteriaBuilder);
+		}
+		else if (getIdentityPrincipal().length()>0) {
+			appendEqualFilter("identity.principal", getIdentityPrincipal(), mainCriteriaBuilder);
+		}
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("userState", getUserState(), mainCriteriaBuilder);
+		appendLikeFilter("identity.principal", getIdentityPrincipalLike(), mainCriteriaBuilder);
+        appendExclusionsFilter( mainCriteriaBuilder);
+		if (isOrderByLastEventDesc()) {
+			appendOrderBy("lastEvent DESC", mainCriteriaBuilder);
+		}
+		else {
+			appendOrderBy("identity.principal", mainCriteriaBuilder);
+		}
+	}
+
+    /**
+     * <code>exclusions</code> filter segment
+     * @param filter
+     * @param criteriaBuilder
+     */
+    protected void appendExclusionsFilter(CriteriaBuilder criteriaBuilder) {
+        if (getExclusions()!=null && getExclusions().size() > 0) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Found "+getExclusions().size()+" exclusion(s).");
+            }
+            criteriaBuilder.appendAnd().appendSegment("identity.id", "not in")
+            .append("(");
+            String separator = "";
+            for (Identity identity: getExclusions()) {
+            	if (identity!=null) {
+                    criteriaBuilder.append(separator).append(identity.getId());
+                    if (separator.equals("")) {
+                        separator = ", ";
+                    }
+            	}
+            }
+            criteriaBuilder.append(")");
+       }
+    }
+    
     /**
      * Class constraint to polimorphic filters.
      */
@@ -224,5 +295,7 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
       
         return buffer.toString();
     }
+    
+    private static Log logger = LogFactory.getLog(UserFilter.class);
 
 }

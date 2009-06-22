@@ -18,12 +18,12 @@ import org.helianto.core.Service;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>Service</code> property editor.
+ * Default <code>Service</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class ServicePropertyEditor extends AbstractJpaPropertyEditor {
+public class ServicePropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

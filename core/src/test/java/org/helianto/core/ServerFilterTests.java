@@ -1,10 +1,15 @@
-package org.helianto.core.orm;
+package org.helianto.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import java.io.Serializable;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.ServerFilter;
 import org.helianto.core.ServerType;
+import org.helianto.core.filter.UserBackedFilter;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
@@ -12,7 +17,30 @@ import org.junit.Test;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultServerFilterDaoTests {
+public class ServerFilterTests {
+
+    @Test
+    public void testConstructor() {
+		assertTrue(filter instanceof Serializable);
+		assertTrue(filter instanceof UserBackedFilter);
+	}
+	
+    @Test
+	public void testFactory() {
+		assertSame(filter.getUser(), user);
+		assertEquals("", filter.getServerName());
+		assertEquals(' ', filter.getServerType());
+		assertEquals((byte) 0, filter.getPriority());
+		assertEquals(' ', filter.getServerState());
+	}
+	
+    @Test
+	public void testReset() {
+		filter.reset();
+		assertEquals(' ', filter.getServerType());
+		assertEquals((byte) 0, filter.getPriority());
+		assertEquals(' ', filter.getServerState());
+	}
 
     public static String C0 = "order by server.priority ";
     public static String C1 = "server.operator.id = 1 AND server.serverName = 'NAME' ";
@@ -23,7 +51,7 @@ public class DefaultServerFilterDaoTests {
 
     @Test
     public void testEmpty() {
-        assertEquals(C0, serverDao.createCriteriaAsString(filter, false));
+        assertEquals(C0, filter.createCriteriaAsString(false));
     }
     
     @Test
@@ -31,40 +59,40 @@ public class DefaultServerFilterDaoTests {
     	filter.setOperator(OperatorTestSupport.createOperator());
     	filter.getOperator().setId(1);
     	filter.setServerName("NAME");
-        assertEquals(C1, serverDao.createCriteriaAsString(filter, false));
+        assertEquals(C1, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testFilterLikeName() {
         filter.setServerName("NAME");
-        assertEquals(C2+C0, serverDao.createCriteriaAsString(filter, false));
+        assertEquals(C2+C0, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testFilterType() {
         filter.setServerType(ServerType.HTTP_SERVER.getValue());
-        assertEquals(C3+C0, serverDao.createCriteriaAsString(filter, false));
+        assertEquals(C3+C0, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testFilterPriority() {
         filter.setPriority((byte) 1);
-        assertEquals(C4+C0, serverDao.createCriteriaAsString(filter, false));
+        assertEquals(C4+C0, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testFilterServerState() {
         filter.setServerState(ActivityState.ACTIVE.getValue());
-        assertEquals(C5+C0, serverDao.createCriteriaAsString(filter, false));
+        assertEquals(C5+C0, filter.createCriteriaAsString(false));
     }
     
-    private DefaultServerDao serverDao;
     private ServerFilter filter;
+    private User user;
     
     @Before
     public void setUp() {
-    	filter = ServerFilter.serverFilterFactory(UserTestSupport.createUser());
-    	serverDao = new DefaultServerDao();
+    	user = UserTestSupport.createUser();
+    	filter = ServerFilter.serverFilterFactory(user);
     }
 }
 

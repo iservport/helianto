@@ -15,24 +15,31 @@
 
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.io.Serializable;
 
-import junit.framework.TestCase;
-
 import org.helianto.core.filter.UserBackedFilter;
+import org.helianto.core.test.UserTestSupport;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class CategoryFilterTests extends TestCase {
+public class CategoryFilterTests {
 	
-	public void testConstructor() {
+    @Test
+    public void testConstructor() {
 		CategoryFilter categoryFilter = new CategoryFilter();
 		assertTrue(categoryFilter instanceof Serializable);
 		assertTrue(categoryFilter instanceof UserBackedFilter);
 	}
 	
+    @Test
 	public void testFactory() {
 		User user = new User();
 		CategoryGroup categoryGroup = CategoryGroup.NOT_DEFINED;
@@ -41,6 +48,7 @@ public class CategoryFilterTests extends TestCase {
 		assertSame(categoryFilter.getCategoryGroup(), categoryGroup);
 	}
 	
+    @Test
 	public void testReset() {
 		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User());
 		categoryFilter.reset();
@@ -48,18 +56,33 @@ public class CategoryFilterTests extends TestCase {
 		assertEquals("", categoryFilter.getCategoryNameLike());
 	}
 
-	public void testCategoryCode() {
-		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User());
-		String categoryCode = "CODE";
-		categoryFilter.setCategoryCode(categoryCode);
-		assertSame(categoryFilter.getCategoryCode(), categoryCode);
-	}
+    public static String C1 = "category.entity.id = 0 AND category.categoryGroup = 0 ";
+    public static String C2 = "AND category.categoryCode = 'CODE' ";
+    public static String C3 = "AND lower(category.categoryNameLike) like '%name_like%' ";
 
-	public void testCategoryNameLike() {
-		String categoryNameLike = "NAME_LIKE";
-		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User());
-		categoryFilter.setCategoryNameLike(categoryNameLike);
-		assertSame(categoryFilter.getCategoryNameLike(), categoryNameLike);
-	}
-	
+    @Test
+    public void testSelect() {
+        assertEquals(C1, filter.createCriteriaAsString(false));
+    }
+    
+    @Test
+    public void testCreateCriteriaAsStringCategoryCode() {
+        filter.setCategoryCode("CODE");
+        assertEquals(C1+C2, filter.createCriteriaAsString(false));
+    }
+    
+    @Test
+    public void testCreateCriteriaAsStringCategoryNameLike() {
+        filter.setCategoryNameLike("NAME_LIKE");
+        assertEquals(C1+C3, filter.createCriteriaAsString(false));
+    }
+    
+    private CategoryFilter filter;
+    
+    @Before
+    public void setUp() {
+    	filter = CategoryFilter.categoryFilterFactory(UserTestSupport.createUser());
+    	filter.setCategoryGroup(CategoryGroup.UNIT);
+    }
+
 }

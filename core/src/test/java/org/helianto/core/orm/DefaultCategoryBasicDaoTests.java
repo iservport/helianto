@@ -1,13 +1,13 @@
 package org.helianto.core.orm;
 
 import org.helianto.core.Category;
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 /**
  * <code>CategoryDao</code> tests.
  *
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultCategoryBasicDaoTests extends AbstractBasicDaoTest<Category, DefaultCategoryDao> {
+public class DefaultCategoryBasicDaoTests extends AbstractHibernateBasicDaoTest<Category, DefaultCategoryDao> {
 
 
 	@Override

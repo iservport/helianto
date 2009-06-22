@@ -1,12 +1,12 @@
 package org.helianto.partner.orm;
 
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.partner.PartnerRegistry;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultPartnerRegistryBasicDaoTests extends AbstractBasicDaoTest<PartnerRegistry, DefaultPartnerRegistryDao> {
+public class DefaultPartnerRegistryBasicDaoTests extends AbstractHibernateBasicDaoTest<PartnerRegistry, DefaultPartnerRegistryDao> {
 
 
 	@Override

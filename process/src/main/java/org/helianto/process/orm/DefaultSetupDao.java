@@ -16,7 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractHibernateBasicDao;
 import org.helianto.process.Setup;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("setupDao")
-public class DefaultSetupDao extends AbstractBasicDao<Setup> {
+public class DefaultSetupDao extends AbstractHibernateBasicDao<Setup> {
 
 	@Override
 	public Class<? extends Setup> getClazz() {

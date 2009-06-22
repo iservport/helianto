@@ -18,12 +18,12 @@ import org.helianto.core.UserAssociation;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>UserAssociation</code> property editor.
+ * Default <code>UserAssociation</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class UserAssociationPropertyEditor extends AbstractJpaPropertyEditor {
+public class UserAssociationPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {

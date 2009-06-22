@@ -17,6 +17,7 @@
 package org.helianto.core;
 
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Server filter.
@@ -68,6 +69,51 @@ public class ServerFilter extends AbstractUserBackedCriteriaFilter {
 		return this.operator!=null && serverName.length()>0;
 	}
 
+	@Override
+	public String getObjectAlias() {
+		return "server";
+	}
+    
+	/**
+	 * Do not raise exception when entity is null. 
+	 */
+	@Override
+	protected boolean requireEntity() {
+		return false;
+	}
+
+	/**
+	 * Restrict entity selection to a given operator, if any. 
+	 */
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (getOperator()!=null) {
+			appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
+		}
+	}
+
+	/**
+	 * Overriden because default implementation does not allow other 
+	 * entities to be selected.
+	 */
+	@Override
+	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("serverName", getServerName(), mainCriteriaBuilder);
+		appendEqualFilter("serverType", getServerType(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);
+		appendEqualFilter("serverState", getServerState(), mainCriteriaBuilder);
+		appendOrderBy("priority", mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("serverName", getServerName(), mainCriteriaBuilder);
+	}
+
 	/**
      * Operator filter.
      */
@@ -99,7 +145,7 @@ public class ServerFilter extends AbstractUserBackedCriteriaFilter {
     }
     
     /**
-     * Priority fiilter.
+     * Priority filter.
      */
     public byte getPriority() {
         return this.priority;
@@ -117,5 +163,5 @@ public class ServerFilter extends AbstractUserBackedCriteriaFilter {
     public void setServerState(char serverState) {
         this.serverState = serverState;
     }
-    
+
 }

@@ -1,13 +1,13 @@
 package org.helianto.process.orm;
 
-import org.helianto.core.test.AbstractBasicDaoTest;
+import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultProcessDocumentBasicDaoTests extends AbstractBasicDaoTest<ProcessDocument, DefaultProcessDocumentDao> {
+public class DefaultProcessDocumentBasicDaoTests extends AbstractHibernateBasicDaoTest<ProcessDocument, DefaultProcessDocumentDao> {
 
 
 	@SuppressWarnings("serial")

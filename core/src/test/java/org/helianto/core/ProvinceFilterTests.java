@@ -13,11 +13,16 @@
  * limitations under the License.
  */
 
-package org.helianto.core.orm;
+package org.helianto.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import java.io.Serializable;
 
 import org.helianto.core.ProvinceFilter;
+import org.helianto.core.filter.UserBackedFilter;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
@@ -27,39 +32,59 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultProvinceFilterDaoTests  {
+public class ProvinceFilterTests  {
     
+    @Test
+    public void testConstructor() {
+		assertTrue(filter instanceof Serializable);
+		assertTrue(filter instanceof UserBackedFilter);
+	}
+	
+    @Test
+	public void testFactory() {
+		assertSame(filter.getUser(), user);
+		assertEquals("", filter.getProvinceCode());
+		assertEquals("", filter.getProvinceNameLike());
+	}
+	
+    @Test
+	public void testReset() {
+		filter.reset();
+		assertEquals("", filter.getProvinceCode());
+		assertEquals("", filter.getProvinceNameLike());
+	}
+
     public static String C1 = "province.operator.id = 0 ";
     public static String C2 = "AND province.provinceCode = 'CODE' ";
     public static String C3 = "AND lower(province.provinceName) like '%name_like%' ";
 
     @Test
     public void testEmpty() {
-        assertEquals(C1, provinceDao.createCriteriaAsString(filter, false));
+        assertEquals(C1, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testSelect() {
     	filter.setProvinceCode("CODE");
     	filter.setOperator(OperatorTestSupport.createOperator());
-        assertEquals(C1+C2, provinceDao.createCriteriaAsString(filter, false));
+        assertEquals(C1+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
     public void testFilter() {
         filter.setProvinceNameLike("NAME_LIKE");
-        assertEquals(C1+C3, provinceDao.createCriteriaAsString(filter, false));
+        assertEquals(C1+C3, filter.createCriteriaAsString(false));
     }
     
     // collabs
     
-    private DefaultProvinceDao provinceDao;
     private ProvinceFilter filter;
+    private User user;
     
     @Before
     public void setUp() {
-    	filter = ProvinceFilter.filterFactory(UserTestSupport.createUser());
-    	provinceDao = new DefaultProvinceDao();
+    	user = UserTestSupport.createUser();
+    	filter = ProvinceFilter.filterFactory(user);
     }
     
 }

@@ -30,7 +30,7 @@ import javax.persistence.EntityManager;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractJpaBasicDao;
 import javax.persistence.Query;
 import org.junit.Before;
 import org.junit.Test;
@@ -191,7 +191,7 @@ public class AbstractBasicDaoTests {
 		verify(em);
 	}
 	
-	class SampleDao extends AbstractBasicDao<User> {
+	class SampleDao extends AbstractJpaBasicDao<User> {
 
 		@Override
 		public Class<? extends User> getClazz() {

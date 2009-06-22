@@ -17,8 +17,10 @@ package org.helianto.partner;
 
 import java.io.Serializable;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.PolymorphicFilter;
 
 /**
@@ -76,6 +78,39 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	@Override
 	public boolean isSelection() {
 		return getPartnerAlias().length()>0;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "partner";
+	}
+
+	/**AbstractHibernateFilterDao
+	 * Read entity from the associated partner registry.
+	 */
+	@Override
+	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("partnerRegistry.entity.id", entity.getId(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (getClazz()!=null) {
+			mainCriteriaBuilder.appendAnd().append(getClazz());
+		}
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("partnerRegistry.partnerAlias", getPartnerAlias(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("partnerRegistry.partnerName", getPartnerNameLike(), mainCriteriaBuilder);
+		appendEqualFilter("partnerState", getPartnerState(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);
+		appendOrderBy("partnerRegistry.partnerAlias", mainCriteriaBuilder);
 	}
 
 	/**

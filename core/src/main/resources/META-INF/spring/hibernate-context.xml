@@ -41,7 +41,7 @@
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" 
 	    p:dataSource-ref="dataSource" >
 		<property name="configLocations" 
-			value="classpath:/META-INF/*.cfg.xml"/>		
+			value="classpath*:/META-INF/*.cfg.xml"/>		
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>

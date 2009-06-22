@@ -15,7 +15,10 @@
 
 package org.helianto.core;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Category filter.
@@ -54,6 +57,40 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 		setCategoryNameLike("");
 	}
 	
+	@Override
+	public boolean isSelection() {
+		return (getCategoryCode().length()>0);
+	}
+
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+        // force to filter by group
+        if (logger.isDebugEnabled()) {
+            logger.debug("CategoryGroup is: '"+getCategoryGroup()+"'");
+        }
+        mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
+        .append(getCategoryGroup().getValue());
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("CategoryCode is: '"+getCategoryCode()+"'");
+        }
+    	appendEqualFilter("categoryCode", getCategoryCode(), mainCriteriaBuilder);
+    	reset();
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("categoryNameLike", getCategoryNameLike(), mainCriteriaBuilder);
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "category";
+	}
+
 	/**
 	 * Category code.
 	 */
@@ -97,5 +134,7 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
       
         return sb.toString();
 	}
+
+    private static Log logger = LogFactory.getLog(CategoryFilter.class);
 
 }

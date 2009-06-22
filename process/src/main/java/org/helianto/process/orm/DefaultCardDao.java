@@ -16,7 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractHibernateBasicDao;
 import org.helianto.process.Card;
 import org.springframework.stereotype.Repository;
 
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("cardDao")
-public class DefaultCardDao extends AbstractBasicDao<Card> {
+public class DefaultCardDao extends AbstractHibernateBasicDao<Card> {
 
 	@Override
 	public Class<? extends Card> getClazz() {

@@ -16,6 +16,7 @@
 package org.helianto.core;
 
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Unit filter.
@@ -69,6 +70,31 @@ public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 	@Override
 	public boolean isSelection() {
 		return getUnitCode().length()>0;
+	}
+
+	@Override
+	public String getObjectAlias() {
+		return "unit";
+	}
+
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+    	if (getCategoryGroup()!=null) {
+        	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), mainCriteriaBuilder);
+    	}
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+    	if (getCategory()!=null) {
+        	appendEqualFilter("category.id", getCategory().getId(), mainCriteriaBuilder);
+    	}
+    	appendLikeFilter("unitNameLike", getUnitNameLike(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+    	appendEqualFilter("unitCode", getUnitCode(), mainCriteriaBuilder);
 	}
 
 	/**

@@ -18,12 +18,12 @@ import org.helianto.core.User;
 import org.springframework.stereotype.Component;
 
 /**
- * Default <code>PropertyLoader</code> backed <code>User</code> property editor.
+ * Default <code>User</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @Component
-public class UserPropertyEditor extends AbstractJpaPropertyEditor {
+public class UserPropertyEditor extends AbstractSessionPropertyEditor {
     
     @Override
     public String getAsText() {
