@@ -104,7 +104,7 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
     /**
      * Entity getter.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;

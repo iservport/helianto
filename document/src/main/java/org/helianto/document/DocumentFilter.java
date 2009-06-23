@@ -66,14 +66,12 @@ public class DocumentFilter extends AbstractUserBackedCriteriaFilter {
 
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		// TODO Auto-generated method stub
-		
+		appendEqualFilter("contentType", getContentType(), mainCriteriaBuilder);
 	}
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		// TODO Auto-generated method stub
-		
+		appendEqualFilter("docCode", getDocCode(), mainCriteriaBuilder);
 	}
 
 	public String getDocCode() {

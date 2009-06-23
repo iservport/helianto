@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Entity;
 import org.helianto.core.UserLog;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
@@ -33,6 +34,7 @@ public class DefaultUserLogDaoIntegrationTests extends AbstractDaoIntegrationTes
 	@Override
 	public void testFindUnique() {
 		UserLog userLog = UserLogTestSupport.createUserLog();
+		entityDao.persist(userLog.getUser().getEntity());
 		userLogDao.persist(userLog);
 		assertEquals(userLog, userLogDao.findUnique(userLog.getUser(), userLog.getLastEvent()));
 	}
@@ -40,10 +42,16 @@ public class DefaultUserLogDaoIntegrationTests extends AbstractDaoIntegrationTes
     //- collabs
 
     private BasicDao<UserLog> userLogDao;
+    private BasicDao<Entity> entityDao;
     
     @Resource(name="userLogDao")
     public void setUserLogDao(BasicDao<UserLog> userLogDao) {
         this.userLogDao = userLogDao;
+    }
+    
+    @Resource(name="entityDao")
+    public void setEntityDao(BasicDao<Entity> entityDao) {
+        this.entityDao = entityDao;
     }
     
 }

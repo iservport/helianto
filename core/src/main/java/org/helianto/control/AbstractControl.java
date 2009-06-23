@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -74,7 +73,7 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
      * <<NaturalKey>> Entity owning the control.
      * @see {@link Entity}
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;

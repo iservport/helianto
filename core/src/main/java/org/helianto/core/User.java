@@ -178,17 +178,17 @@ public class User extends UserGroup implements java.io.Serializable {
         this.privacyLevel = privacyLevel;
     }
 
-	/**
-     * User logs
-     */
-    @OneToMany(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.MERGE})
-    public Set<UserLog> getUserLogs() {
-		return userLogs;
-	}
-	public void setUserLogs(Set<UserLog> userLogs) {
-		this.userLogs = userLogs;
-	}
-
+//	/**
+//     * User logs
+//     */
+//    @OneToMany(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.MERGE})
+//    public Set<UserLog> getUserLogs() {
+//		return userLogs;
+//	}
+//	public void setUserLogs(Set<UserLog> userLogs) {
+//		this.userLogs = userLogs;
+//	}
+//
     /**
      * <code>UserLog</code> factory mehod.
      * 

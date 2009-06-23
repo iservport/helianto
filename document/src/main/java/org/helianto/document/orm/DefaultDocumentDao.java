@@ -16,12 +16,10 @@
 
 package org.helianto.document.orm;
 
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
-import org.springframework.stereotype.Repository;
-
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentFilter;
+import org.springframework.stereotype.Repository;
 
 /**
  * Document data access.
@@ -29,23 +27,8 @@ import org.helianto.document.DocumentFilter;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("documentDao")
-public class DefaultDocumentDao extends AbstractFilterDao<Document, DocumentFilter> {
+public class DefaultDocumentDao extends AbstractHibernateFilterDao<Document, DocumentFilter> {
 
-	@Override
-	protected boolean isSelection(DocumentFilter filter) {
-		return filter.getDocCode().length()>0;
-	}
-
-	@Override
-	protected void doSelect(DocumentFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("docCode", filter.getDocCode(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doFilter(DocumentFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("contentType", filter.getContentType(), mainCriteriaBuilder);
-	}
-	
 	@Override
 	protected String[] getParams() {
 		return new String[] { "entity", "docCode" };

@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Entity;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
@@ -33,6 +34,7 @@ public class DefaultUserGroupDaoIntegrationTests extends AbstractDaoIntegrationT
 	@Override
 	public void testFindUnique() {
 		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+		entityDao.persist(userGroup.getEntity());
 		userGroupDao.persist(userGroup);
 		assertEquals(userGroup, userGroupDao.findUnique(userGroup.getEntity(), userGroup.getUserKey()));
 	}
@@ -40,10 +42,16 @@ public class DefaultUserGroupDaoIntegrationTests extends AbstractDaoIntegrationT
     //- collabs
 
     private BasicDao<UserGroup> userGroupDao;
+    private BasicDao<Entity> entityDao;
     
     @Resource(name="userGroupDao")
     public void setUserGroupDao(BasicDao<UserGroup> userGroupDao) {
         this.userGroupDao = userGroupDao;
+    }
+    
+    @Resource(name="entityDao")
+    public void setEntityDao(BasicDao<Entity> entityDao) {
+        this.entityDao = entityDao;
     }
     
 }

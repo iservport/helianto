@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Entity;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.dao.BasicDao;
@@ -34,6 +35,7 @@ public class DefaultUserAssociationDaoIntegrationTests extends AbstractDaoIntegr
 	@Override
 	public void testFindUnique() {
 		UserAssociation userAssociation = UserAssociationTestSupport.createUserAssociation();
+		entityDao.persist(userAssociation.getParent().getEntity());
 		userGroupDao.persist(userAssociation.getParent());
 		userAssociationDao.persist(userAssociation);
 		assertEquals(userAssociation, userAssociationDao.findUnique(userAssociation.getParent(), userAssociation.getChild()));
@@ -43,6 +45,7 @@ public class DefaultUserAssociationDaoIntegrationTests extends AbstractDaoIntegr
 
     private BasicDao<UserAssociation> userAssociationDao;
     private BasicDao<UserGroup> userGroupDao;
+    private BasicDao<Entity> entityDao;
     
     @Resource(name="userAssociationDao")
     public void setUserAssociationDao(BasicDao<UserAssociation> userAssociationDao) {
@@ -52,6 +55,11 @@ public class DefaultUserAssociationDaoIntegrationTests extends AbstractDaoIntegr
     @Resource(name="userGroupDao")
     public void setUserGroupDao(BasicDao<UserGroup> userGroupDao) {
         this.userGroupDao = userGroupDao;
+    }
+    
+    @Resource(name="entityDao")
+    public void setEntityDao(BasicDao<Entity> entityDao) {
+        this.entityDao = entityDao;
     }
     
 }

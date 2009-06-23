@@ -3,6 +3,7 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.Entity;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 
@@ -19,17 +20,18 @@ public class UserAssociationTestSupport {
      * @param child optional UserGroup 
      */
     public static UserAssociation createUserAssociation(Object... args) {
+    	Entity entity = EntityTestSupport.createEntity();
         UserGroup parent;
         try {
             parent = (UserGroup) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            parent = UserGroupTestSupport.createUserGroup();
+            parent = UserGroupTestSupport.createUserGroup(entity);
         }
         UserGroup child;
         try {
             child = (UserGroup) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            child = UserGroupTestSupport.createUserGroup();
+            child = UserGroupTestSupport.createUserGroup(entity);
         }
         UserAssociation userAssociation = UserAssociation.userAssociationFactory(parent, child);
         return userAssociation;

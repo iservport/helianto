@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Entity;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
@@ -33,6 +34,7 @@ public class DefaultUserRoleDaoIntegrationTests extends AbstractDaoIntegrationTe
 	@Override
 	public void testFindUnique() {
 		UserRole userRole = UserRoleTestSupport.createUserRole();
+		entityDao.persist(userRole.getUserGroup().getEntity());
 		userRoleDao.persist(userRole);
 		assertEquals(userRole, userRoleDao.findUnique(userRole.getUserGroup(), userRole.getService(), userRole.getServiceExtension()));
 	}
@@ -40,10 +42,16 @@ public class DefaultUserRoleDaoIntegrationTests extends AbstractDaoIntegrationTe
     //- collabs
 
     private BasicDao<UserRole> userRoleDao;
+    private BasicDao<Entity> entityDao;
     
     @Resource(name="userRoleDao")
     public void setUserRoleDao(BasicDao<UserRole> userRoleDao) {
         this.userRoleDao = userRoleDao;
+    }
+    
+    @Resource(name="entityDao")
+    public void setEntityDao(BasicDao<Entity> entityDao) {
+        this.entityDao = entityDao;
     }
     
 }

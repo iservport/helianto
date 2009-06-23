@@ -104,14 +104,18 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 		return "usergroup";
 	}
 
-//	/**
-//	 * Required to avoid exception when entity is not present.
-//	 */
-//	@Override
-//	protected String createCriteriaAsString() {
-//		return createCriteriaAsString(false);
-//	}
-//	
+	/**
+	 * Required to avoid exception when entity is not present.
+	 */
+	@Override
+	protected boolean requireEntity() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Entity not required; although current is "+getEntity());
+		}
+		return false;
+	}
+	
+	
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getClazz()!=null) {
