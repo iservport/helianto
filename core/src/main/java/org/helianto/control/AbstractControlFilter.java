@@ -18,6 +18,7 @@ package org.helianto.control;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractDateRangeFilter;
+import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.DateRange;
 
 /**
@@ -50,6 +51,11 @@ public abstract class AbstractControlFilter extends AbstractDateRangeFilter impl
 	@Override
 	public boolean isSelection() {
 		return getInternalNumber()>0;
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
 	}
 
 	/** 
