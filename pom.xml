@@ -176,6 +176,11 @@ Application-TraceLevels: ${application.traceLevels}
 			<artifactId>org.springframework.security</artifactId>
 			<version>2.0.4.A</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>org.springframework.security.annotation</artifactId>
+			<version>2.0.4.A</version>
+		</dependency>
         <!-- aspectJ bundles -->
 		<dependency>
 		    <groupId>org.aspectj</groupId>

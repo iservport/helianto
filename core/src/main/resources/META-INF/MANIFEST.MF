@@ -79,15 +79,15 @@ Export-Package: freemarker.entity;version="0.0.0",freemarker.keyType;v
  ,org.springframework.stereotype",org.helianto.web.controller;version=
  "0.0.0";uses:="javax.annotation,org.helianto.controller,org.helianto.
  core,org.helianto.core.security,org.helianto.core.service,org.heliant
- o.web.test,org.junit,org.springframework.beans,org.springframework.st
- ereotype,org.springframework.validation,org.springframework.webflow.e
- xecution",org.helianto.web.mail.compose;version="0.0.0";uses:="org.he
- lianto.message.mail.compose,org.springframework.mail.javamail",org.he
- lianto.web.test;version="0.0.0";uses:="freemarker.template,junit.fram
- ework,org.helianto.core.security,org.junit,org.springframework.mock.w
- eb,org.springframework.web.servlet.view.freemarker,org.springframewor
- k.webflow.execution",org.helianto.web.view;version="0.0.0";uses:="org
- .helianto.web.test,org.junit"
+ o.web.test,org.junit,org.springframework.beans,org.springframework.se
+ curity.annotation,org.springframework.stereotype,org.springframework.
+ validation,org.springframework.webflow.execution",org.helianto.web.ma
+ il.compose;version="0.0.0";uses:="org.helianto.message.mail.compose,o
+ rg.springframework.mail.javamail",org.helianto.web.test;version="0.0.
+ 0";uses:="freemarker.template,junit.framework,org.helianto.core.secur
+ ity,org.junit,org.springframework.mock.web,org.springframework.web.se
+ rvlet.view.freemarker,org.springframework.webflow.execution",org.heli
+ anto.web.view;version="0.0.0";uses:="org.helianto.web.test,org.junit"
 Bundle-Vendor: i-Serv Consultoria Empresarial
 Bundle-Classpath: .
 Bundle-Version: 0.2.2
@@ -109,16 +109,17 @@ Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  ingframework.mock.web,org.springframework.orm.hibernate3,org.springfr
  amework.orm.hibernate3.annotation,org.springframework.orm.hibernate3.
  support,org.springframework.orm.jpa.persistenceunit,org.springframewo
- rk.security,org.springframework.security.context,org.springframework.
- security.userdetails,org.springframework.stereotype,org.springframewo
- rk.test,org.springframework.test.context,org.springframework.test.con
- text.junit4,org.springframework.test.context.support,org.springframew
- ork.test.context.transaction,org.springframework.transaction.annotati
- on,org.springframework.ui.freemarker,org.springframework.util,org.spr
- ingframework.validation,org.springframework.web.context.support,org.s
- pringframework.web.servlet,org.springframework.web.servlet.i18n,org.s
- pringframework.web.servlet.theme,org.springframework.web.servlet.view
- ,org.springframework.web.servlet.view.freemarker,org.springframework.
- webflow.action,org.springframework.webflow.core.collection,org.spring
- framework.webflow.execution,org.springframework.webflow.test
+ rk.security,org.springframework.security.annotation,org.springframewo
+ rk.security.context,org.springframework.security.userdetails,org.spri
+ ngframework.stereotype,org.springframework.test,org.springframework.t
+ est.context,org.springframework.test.context.junit4,org.springframewo
+ rk.test.context.support,org.springframework.test.context.transaction,
+ org.springframework.transaction.annotation,org.springframework.ui.fre
+ emarker,org.springframework.util,org.springframework.validation,org.s
+ pringframework.web.context.support,org.springframework.web.servlet,or
+ g.springframework.web.servlet.i18n,org.springframework.web.servlet.th
+ eme,org.springframework.web.servlet.view,org.springframework.web.serv
+ let.view.freemarker,org.springframework.webflow.action,org.springfram
+ ework.webflow.core.collection,org.springframework.webflow.execution,o
+ rg.springframework.webflow.test
 
