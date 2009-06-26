@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.helianto.core.Node;
 import org.helianto.core.filter.UserBackedFilter;
+import org.springframework.security.AccessDeniedException;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -185,6 +186,10 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
                 context.getFlowScope().put(getTargetListSizeAttributeName(), targetList.size());
             	return success();
             }
+        }
+        catch (AccessDeniedException e) {
+            logger.warn("Access denied ", e);
+            return result("forbidden");
         }
         catch (Exception e) {
             logger.warn("Unable to apply filter ", e);

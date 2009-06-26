@@ -39,6 +39,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
+import org.springframework.security.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -50,6 +51,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class NamespaceMgrImpl implements NamespaceMgr {
 
+	@Secured("ROLE_ADMIN_MANAGER")
 	public List<Operator> findOperator() {
 		List<Operator> operatorList = (List<Operator>) operatorDao.find(new OperatorFilter());
 		if (operatorList!=null && operatorList.size()>0) {

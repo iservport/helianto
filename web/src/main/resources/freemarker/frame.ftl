@@ -79,3 +79,7 @@ href="?_eventId=${event}&target_index=${targetIndex}${param}&_flowExecutionKey=$
     </#if>
 </#macro>	
 
+<#macro secure role="ROLE_USER_ALL">
+	<#if secureUser?exists && secureUser.authorities?seq_contains(role) ><#nested/></#if>
+</#macro>
+

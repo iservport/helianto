@@ -9,7 +9,7 @@
 	
 	<action-state id="preProcess">
 		<action bean="operatorFilterAction" method="applyFilter"/>
-		<transition to="entitySelection.view">
+		<transition on="success" to="entitySelection.view">
 			<set attribute="assign"    value="'entity/assign'"      scope="flow"/>
 		</transition>
 	</action-state>
@@ -200,6 +200,7 @@
 	<global-transitions>
 		<transition on="toHome"       to="toHome"/>
 		<transition on="cancelForm"   to="entityBrowse.view"/>
+		<transition on="forbidden"    to="toHome" />
 	</global-transitions>
 	
 </flow>

@@ -24,7 +24,6 @@ import org.helianto.controller.AbstractFilterOnlyFormAction;
 import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
 import org.helianto.core.service.NamespaceMgr;
-import org.springframework.security.annotation.Secured;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -61,7 +60,6 @@ public class OperatorFilterFormAction extends AbstractFilterOnlyFormAction<Opera
 	 * Display a full list of operators.
 	 */
 	@Override
-	@Secured("ROLE_ADMIN_MANAGER")
 	protected List<Operator> doApplyFilter(OperatorFilter filter) {
 		return namespaceMgr.findOperator();
 	}
