@@ -51,9 +51,9 @@ public class OperatorMgrImplTests extends TestCase {
     public void testFindOperatorAll() {
         List<Operator> operatorList = new ArrayList<Operator>();
         Operator operator = new Operator();
+        operatorList.add(operator);
         
         expect(operatorDao.find(isA(OperatorFilter.class))).andReturn(operatorList);
-        expect(operatorDao.merge(isA(Operator.class))).andReturn(operator);
         replay(operatorDao);
         
         assertSame(operatorList, operatorMgr.findOperator());

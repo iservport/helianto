@@ -5,13 +5,15 @@
               http://www.springframework.org/schema/webflow
               http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
 
+	<start-actions>
+		<set attribute="assign"    value="'entity/assign'"      scope="flow"/>
+	</start-actions>
+	
 	<start-state idref="preProcess" />
 	
 	<action-state id="preProcess">
 		<action bean="operatorFilterAction" method="applyFilter"/>
-		<transition on="success" to="entitySelection.view">
-			<set attribute="assign"    value="'entity/assign'"      scope="flow"/>
-		</transition>
+		<transition on="success" to="entitySelection.view" />
 	</action-state>
 	
 	<!-- 001

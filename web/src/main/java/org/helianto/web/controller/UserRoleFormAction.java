@@ -90,7 +90,7 @@ public class UserRoleFormAction extends AbstractEditAggregateFormAction<UserRole
 
 	@Override
 	public String getParentAttributeName() {
-		return "user";
+		return "userGroup";
 	}
 
 	// collabs

@@ -16,12 +16,18 @@
 
 package org.helianto.web.controller;
 
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertSame;
+
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.web.controller.EntityFormAction;
 import org.helianto.web.test.AbstractEditAggregateFormActionTests;
+import org.junit.Test;
 import org.springframework.webflow.execution.RequestContext;
 
 
@@ -33,6 +39,36 @@ public class EntityFormActionTests extends AbstractEditAggregateFormActionTests<
 	@Override
 	protected Entity createTestInstance() {
 		return EntityTestSupport.createEntity();
+	}
+	
+	@Test
+	public void testDoStoreTargetNew() throws Exception {
+		Entity detachedTarget = createTestInstance();
+		Operator parent = getParent(createTestInstance());
+		detachedTarget.setOperator(parent);
+		detachedTarget.setAlias("user");
+		Entity managedTarget = createTestInstance();
+		
+		getTestMgr().createAndPersistEntity(parent, "user");
+		expectLastCall().andReturn(managedTarget);
+		replay(getTestMgr());
+		
+		assertSame(managedTarget, getStoredTarget(getFormAction(), detachedTarget));
+		verify(getTestMgr());
+	}
+	
+	@Test
+	public void testDoStoreTarget() throws Exception {
+		Entity detachedTarget = createTestInstance();
+		detachedTarget.setId(1);
+		Entity managedTarget = createTestInstance();
+		
+		expect(doStoreTarget(getTestMgr(), detachedTarget));
+		expectLastCall().andReturn(managedTarget);
+		replay(getTestMgr());
+		
+		assertSame(managedTarget, getStoredTarget(getFormAction(), detachedTarget));
+		verify(getTestMgr());
 	}
 	
 	@Override

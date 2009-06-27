@@ -18,8 +18,6 @@ package org.helianto.web.controller;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
@@ -48,15 +46,18 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 
 	@Override
 	public Entity doCreateTarget(RequestContext context, Operator parent) throws Exception {
-		Entity target = Entity.entityFactory(parent, "");
-		if (logger.isDebugEnabled()) {
-			logger.debug("New entity is "+target);
-		}
-		return target;
+		return Entity.entityFactory(parent, "");
 	}
 
+	/**
+	 * If it is a first time store, re-create the entity to assure for default
+	 * user group creation.
+	 */
 	@Override
 	protected Entity doStoreTarget(Entity detachedTarget) throws Exception {
+		if (detachedTarget.getId()==0) {
+			return namespaceMgr.createAndPersistEntity(detachedTarget.getOperator(), detachedTarget.getAlias());
+		} 
 		return namespaceMgr.storeEntity(detachedTarget);
 	}
 
@@ -93,6 +94,6 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 		this.namespaceMgr = namespaceMgr;
 	}
 	
-	private static Log logger = LogFactory.getLog(EntityFormAction.class);
+//	private static Log logger = LogFactory.getLog(EntityFormAction.class);
 
 }

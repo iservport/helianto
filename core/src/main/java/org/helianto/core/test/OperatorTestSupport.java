@@ -20,20 +20,20 @@ import java.util.List;
 import java.util.Locale;
 
 import org.helianto.core.Operator;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.helianto.core.Service;
 
 public class OperatorTestSupport {
 
     private static int testKey = 1;
 
-    public static Operator createOperator(Object... args) {
-        String operatorName;
-        try {
-            operatorName = (String) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            operatorName = DomainTestSupport.getNonRepeatableStringValue(testKey++, 12);
-        }
+    public static Operator createOperator() {
+        return OperatorTestSupport.createOperator(DomainTestSupport.getNonRepeatableStringValue(testKey++, 12));
+    }
+
+    public static Operator createOperator(String operatorName) {
         Operator operator = Operator.operatorFactory(operatorName, Locale.getDefault());
+        operator.getServiceMap().put("ADMIN", Service.serviceFactory(operator, "ADMIN"));
+        operator.getServiceMap().put("USER", Service.serviceFactory(operator, "USER"));
         return operator;
     }
 
@@ -45,12 +45,4 @@ public class OperatorTestSupport {
         return operatorList;
     }
 
-    public static List<Operator> createAndPersistOperatorList(HibernateTemplate hibernateTemplate, int i) {
-        List<Operator> operatorList = createOperatorList(i);
-        hibernateTemplate.saveOrUpdateAll(operatorList);
-        hibernateTemplate.flush();
-        hibernateTemplate.clear();
-        return operatorList;
-    }
-    
 }

@@ -123,21 +123,17 @@
         <render-actions>
             <action bean="userRoleAction" method="editTarget"/>
 			<set attribute="sidenav"   value="'user/edit_nav'"      scope="flash"/>
-			<set attribute="sidebar"   value="'user/identity_bar'"  scope="flash"/>
+			<set attribute="sidebar"   value="'user/userGroup_bar'" scope="flash"/>
 			<set attribute="template"  value="'user/userRole_form'" scope="flash"/>
         </render-actions>
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="storeTarget"   to="storeUserRole">
+		<transition on="storeTarget"   to="userGroupBrowse.view">
 			<action bean="userRoleAction"            method="bind" />
+			<action bean="userRoleAction"            method="storeTarget"/>
 		</transition>
 	</view-state>
-	<action-state id="storeUserRole">
-		<action bean="userRoleAction"                method="storeTarget"/>
-		<transition on="success" to="userBrowse.view"/>
-		<transition on="error"   to="userRoleEdit.view"/>
-	</action-state>
 	
 	<!-- 
 	 ! user

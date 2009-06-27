@@ -15,8 +15,10 @@
 
 package org.helianto.core;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -27,6 +29,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -101,7 +104,7 @@ public class Operator implements java.io.Serializable {
     private String preferredTimeFormat;
     private String rfc822TimeZone;
     private Set<KeyType> keyTypes = new HashSet<KeyType>();
-    private Set<Service> services = new HashSet<Service>();
+    private Map<String, Service> serviceMap = new HashMap<String, Service>();
 
     /** default constructor */
     public Operator() {
@@ -245,15 +248,17 @@ public class Operator implements java.io.Serializable {
 		this.keyTypes = keyTypes;
 	}
 
-    /**
-     * Service set.
-     */
-    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
-    public Set<Service> getServices() {
-		return services;
+	/**
+	 * Service map, eagerly loaded.
+	 */
+	@OneToMany(mappedBy="operator", cascade={ CascadeType.PERSIST, CascadeType.MERGE },
+		fetch=FetchType.EAGER)
+	@MapKey(name="serviceName")
+    public Map<String, Service> getServiceMap() {
+		return serviceMap;
 	}
-	public void setServices(Set<Service> services) {
-		this.services = services;
+	public void setServiceMap(Map<String, Service> serviceMap) {
+		this.serviceMap = serviceMap;
 	}
 
     /**

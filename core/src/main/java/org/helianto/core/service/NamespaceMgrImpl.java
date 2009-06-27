@@ -17,11 +17,11 @@
 package org.helianto.core.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -39,7 +39,6 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
-import org.springframework.security.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -51,7 +50,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class NamespaceMgrImpl implements NamespaceMgr {
 
-	@Secured("ROLE_ADMIN_MANAGER")
 	public List<Operator> findOperator() {
 		List<Operator> operatorList = (List<Operator>) operatorDao.find(new OperatorFilter());
 		if (operatorList!=null && operatorList.size()>0) {
@@ -60,8 +58,18 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 			}
 		}
 		else {
-			Operator operator = firstTimeInstall();
-			operatorList.add(operator);
+			if (logger.isInfoEnabled()) {
+				logger.info("Likely a first time install, creating defaults ...");
+			}
+			Operator operator = createOperator("DEFAULT");
+			if (logger.isInfoEnabled()) {
+				logger.info("About to create default entity to the default operator.");
+			}			
+			Entity entity = createAndPersistEntity(operator, operator.getOperatorName());
+			if (logger.isDebugEnabled()) {
+				logger.debug("New default entity added to the operator.");
+			}
+			operatorList.add(entity.getOperator());
 			if (logger.isDebugEnabled()) {
 				logger.debug("New default operator added to the list.");
 			}
@@ -69,12 +77,74 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     	return operatorList;
 	}
 	
-	public Operator firstTimeInstall() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Likely a first time install, creating a default operator...");
+	/**
+	 * Create the operator and automatically associate two basic services:
+	 * (1) admin, (2) user.
+	 * 
+	 * @param operatorName
+	 */
+	public Operator createOperator(String operatorName) {
+		Operator operator = Operator.operatorFactory(operatorName, null);
+		if (logger.isInfoEnabled()) {
+			logger.info("Operator created as "+operator);
 		}
-		Operator operator = Operator.operatorFactory("DEFAULT", null);
-		return operatorDao.merge(operator);
+
+		Service adminService = Service.serviceFactory(operator, "ADMIN");
+		if (logger.isInfoEnabled()) {
+			logger.info("Admin service created as "+adminService);
+		}
+		operator.getServiceMap().put(adminService.getServiceName(), adminService);
+		
+		Service userService = Service.serviceFactory(operator, "USER");
+		if (logger.isInfoEnabled()) {
+			logger.info("User service created as "+userService);
+		}
+		operator.getServiceMap().put(userService.getServiceName(), userService);
+		
+		return operator;
+	}
+	
+	public Entity createAndPersistEntity(Operator operator, String alias) {
+		Operator managedOperator = operatorDao.merge(operator);
+		Entity entity = Entity.entityFactory(managedOperator, alias);
+		if (logger.isInfoEnabled()) {
+			logger.info("Entity created as "+entity);
+		}
+		entityDao.persist(entity);
+		
+		UserGroup manager = UserGroup.userGroupFactory(entity, "ADMIN");
+		if (logger.isInfoEnabled()) {
+			logger.info("Management user group created as "+manager);
+		}
+		userGroupDao.persist(manager);
+		
+		UserGroup defaultUser = UserGroup.userGroupFactory(entity, "USER");
+		if (logger.isInfoEnabled()) {
+			logger.info("Default user group created as "+defaultUser);
+		}
+		userGroupDao.persist(defaultUser);
+		
+		Service userService = managedOperator.getServiceMap().get("USER"); 
+		if (userService==null) {
+			throw new IllegalStateException("Unable to create entity, user service not found.");
+		}
+		UserRole managerRole = UserRole.userRoleFactory(manager, userService, "ALL");
+		if (logger.isInfoEnabled()) {
+			logger.info("Binding manager user group to admin service with "+managerRole);
+		}
+		userRoleDao.persist(managerRole);
+		
+		Service adminService = managedOperator.getServiceMap().get("ADMIN"); 
+		if (adminService==null) {
+			throw new IllegalStateException("Unable to create entity, admin service not found.");
+		}
+		UserRole userRole = UserRole.userRoleFactory(defaultUser, adminService, "MANAGER");
+		if (logger.isInfoEnabled()) {
+			logger.info("Binding default user group to user service with "+userRole);
+		}
+		userRoleDao.persist(userRole);
+		
+		return entity;
 	}
 
 	@Transactional(readOnly=true)
@@ -164,7 +234,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	@Transactional(readOnly=false)
 	public List<Service> loadServices(Operator operator) {
 		Operator managedOperator = operatorDao.merge(operator);
-		List<Service> serviceList = new ArrayList<Service>(managedOperator.getServices());
+		List<Service> serviceList = new ArrayList<Service>(managedOperator.getServiceMap().values());
     	if (logger.isDebugEnabled() && serviceList!=null) {
     		logger.debug("Loaded user list of size "+serviceList.size());
     	}
@@ -186,7 +256,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole) {
 		Operator managedOperator = operatorDao.merge(operator);
 		Map<String, String> serviceNameMap = new HashMap<String, String>();
-		Set<Service> services = managedOperator.getServices();
+		Collection<Service> services = managedOperator.getServiceMap().values();
 		if (services!=null && services.size()>0) {
 			for (Service service: services) {
 				if (userRole.getService()==null) {
@@ -210,6 +280,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	private FilterDao<Operator, OperatorFilter> operatorDao;
 	private FilterDao<Province, ProvinceFilter> provinceDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
+	private BasicDao<UserGroup> userGroupDao;
 	private BasicDao<KeyType> keyTypeDao;
 	private BasicDao<Service> serviceDao;
 	private BasicDao<UserRole> userRoleDao;
@@ -232,6 +303,11 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     @Resource(name="keyTypeDao")
     public void setKeyTypeDao(BasicDao<KeyType> keyTypeDao) {
         this.keyTypeDao = keyTypeDao;
+    }
+    
+    @Resource(name="userGroupDao")
+    public void setUserGroupDao(BasicDao<UserGroup> userGroupDao) {
+        this.userGroupDao = userGroupDao;
     }
     
     @Resource(name="serviceDao")

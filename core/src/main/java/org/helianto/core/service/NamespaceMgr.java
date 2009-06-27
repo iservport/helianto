@@ -41,7 +41,9 @@ import org.helianto.core.UserRole;
  * 
  * <p>
  * The datastore must have at least one namespace, i.e. one operator. If no one
- * exists, a default is created.
+ * exists, a default is created. The creation of a namespace implies in the creation of
+ * basic namespace defaults, namely, two default services, two default user groups and
+ * the corresponding roles to bind each of the services above to its user groups.
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
@@ -53,6 +55,16 @@ public interface NamespaceMgr {
      */
     public List<Operator> findOperator();
 
+    /**
+     * <p>Persist a new <code>Entity</code>.</p>
+     * 
+     * <p>Two user groups are automatically created and associated to the new 
+     * entity: (1) the admin user, reserved to hold privileges to manage other groups
+     * and users, (2) the default user group, to grant access to the application entry 
+     * point. </p>
+     */
+    public Entity createAndPersistEntity(Operator operator, String alias);
+    
     /**
      * <p>Find <code>Operator</code> by name.</p>
      */
