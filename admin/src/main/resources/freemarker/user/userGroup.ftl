@@ -1,5 +1,7 @@
 <div id="panel">
-<h2>User group <b>${userGroup.userKey}</b> <small>[${userGroup.id}]</small></h2>
+<h2>User group <b>${userGroup.userKey}</b> <small>[${userGroup.id}]</small>
+<#if userGroup.userState=='I'><span style="color: red;">INATIVO</span></#if>
+</h2>
 <table>
 <thead style="background: #cccccc;">
 <tr>

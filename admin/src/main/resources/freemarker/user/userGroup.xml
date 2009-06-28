@@ -49,11 +49,11 @@
 		<transition on="editUserRole"            to="userRoleEdit.view">
 			<action bean="userRoleAction"        method="selectTarget"/>
 		</transition>
-		<transition on="createUser"              to="userAssociation.subflow">
+		<transition on="createUser"              to="userAssociationEdit.view">
 			<action bean="userAssociationAction" method="createTarget"/>
 			<action bean="userAction"            method="createTarget"/>
 		</transition>
-		<transition on="selectUser"              to="user.subflow">
+		<transition on="selectUser"              to="userAssociation.subflow">
 			<action bean="userAssociationAction" method="selectTarget"/>
 		</transition>
 		<!-- 
@@ -83,6 +83,7 @@
 			<action bean="userGroupAction" method="bind" />
 			<action bean="userGroupAction" method="storeTarget" />
 		</transition>
+		<transition on="cancelForm"   to="userGroupBrowse.view"/>
 	</view-state>
 
 	<!-- 
@@ -133,6 +134,7 @@
 			<action bean="userRoleAction"            method="bind" />
 			<action bean="userRoleAction"            method="storeTarget"/>
 		</transition>
+		<transition on="cancelForm"   to="userGroupBrowse.view"/>
 	</view-state>
 	
 	<!-- 
@@ -153,6 +155,30 @@
 		<transition on="toHome"      to="toHome"/>
 	</subflow-state>
 
+	<!-- 
+	 ! userAssociation - convenience  
+	 ! EDIT VIEW
+	 !-->
+	<view-state id="userAssociationEdit.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="userAssociationAction" method="editTarget"/>
+			<set attribute="sidenav"   value="'user/edit_nav'"              scope="flash"/>
+			<set attribute="sidebar"   value="'user/user_bar'"              scope="flash"/>
+			<set attribute="template"  value="'user/userAssociation_form'"  scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="storeTarget"   to="userAssociation.subflow">
+			<action bean="userAssociationAction"            method="bind" />
+			<action bean="userAssociationAction"            method="storeTarget" />
+		</transition>
+		<transition on="cancelForm"   to="userGroupBrowse.view"/>
+	</view-state>
+	
 	<!-- 
 	 ! userAssociation
 	 ! SUBFLOW
@@ -188,7 +214,6 @@
 
 	<global-transitions>
 		<transition on="toHome"       to="toHome"/>
-		<transition on="cancelForm"   to="entityBrowse.view"/>
 	</global-transitions>
 	
 </flow>

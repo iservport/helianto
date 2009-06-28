@@ -53,6 +53,13 @@ public class UserAssociationFormAction extends
 	}
 
 	@Override
+	protected UserAssociation doSelectTarget(RequestContext context)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return super.doSelectTarget(context);
+	}
+
+	@Override
 	protected UserAssociation doStoreTarget(UserAssociation detachedTarget) throws Exception {
 		return userMgr.storeUserAssociation(detachedTarget);
 	}
