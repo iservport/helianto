@@ -39,10 +39,24 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
 	}
 
 	/**
-	 * Subclasses must override to use a specific name.
+	 * Hook to provide a target specific name.
 	 */
 	public abstract String getTargetAttributeName();
 	
+	/**
+     * Target list attribute name.
+     */
+    public String getTargetListAttributeName() {
+		return "targetList";
+	}
+
+	/**
+     * Target list attribute name.
+     */
+    public String getTargetListSizeAttributeName() {
+		return "targetListSize";
+	}
+
     /**
      * Create the target and put in flow scope following {@link #getTargetAttributeName()}.
      */
@@ -176,9 +190,63 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
         return error();
     }
     
-    protected abstract T doSelectTarget(RequestContext context) throws Exception;
-    
+    @SuppressWarnings("unchecked")
+	protected T doSelectTarget(RequestContext context) throws Exception {
+    	ParameterMap parameters = context.getRequestParameters();
+    	if (parameters.contains("target_index")) {
+    		int index = parameters.getInteger("target_index");
+    		List<T> targetList = (List<T>) context.getFlowScope().get(getTargetListAttributeName());
+    		T target = targetList.get(index);
+    		if (target!=null) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Index "+index+" of "+getTargetListAttributeName()+" selected target "+target);
+                }
+        		return target;
+    		}
+    		else {
+    			logger.warn("Null target selected by index "+index);
+    		}
+            return null;
+    	}
+		logger.warn("No selection parameter found");
+        return null;
+    }
+        
     protected boolean postProcessSelectTarget(RequestContext context, T target) throws Exception {
+    	return true;
+    }
+    
+    /**
+     * Post-process the selection .
+     */
+    @SuppressWarnings("unchecked")
+	public final Event postProcess(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+            logger.debug("!---- postProcess\n");
+        }
+        try {
+        	Object returnTarget =  get(context);
+            if (doPostProcess(context, (T) get(context), returnTarget)) {
+            	return success();
+            }
+        	else {
+                logger.warn("Unable to post-process association selection subflow ");
+                return error();
+        	}
+		} catch (Exception e) {
+			logger.warn("Unable to pre-process the selection ", e);
+            return error();
+		}
+    }
+        
+	/**
+     * Hook to do any post-processing.
+     * 
+     * 
+     * @throws Exception 
+     */
+    protected boolean doPostProcess(RequestContext context, T target, Object returnTarget) throws Exception {
     	return true;
     }
     

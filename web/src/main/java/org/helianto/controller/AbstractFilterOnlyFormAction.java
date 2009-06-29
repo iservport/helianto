@@ -29,7 +29,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T> extends AbstractListFormAction<T> {
+public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T> extends AbstractComplexModelFormAction<T> {
 
 	/**
      * Default constructor.
@@ -247,4 +247,9 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
     	return new ArrayList<Node>();
     }
 	   
+	@Override
+	protected T doPrepareTarget(RequestContext context, T target) throws Exception {
+		return target;
+	}
+
 }

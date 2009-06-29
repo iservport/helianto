@@ -17,6 +17,7 @@ package org.helianto.controller;
 
 import java.util.List;
 
+import org.helianto.core.KeyType;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -25,7 +26,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractLoadFormAction<T, P> extends AbstractListFormAction<T> {
+public abstract class AbstractLoadFormAction<T, P> extends AbstractComplexModelFormAction<T> {
 
 	/**
      * Default constructor.
@@ -150,4 +151,14 @@ public abstract class AbstractLoadFormAction<T, P> extends AbstractListFormActio
     	return true;
     }
     
+	@Override
+	protected T doCreateTarget(RequestContext context) throws Exception {
+		return null;
+	}
+
+	@Override
+	protected T doPrepareTarget(RequestContext context, T target) throws Exception {
+		return target;
+	}
+
 }

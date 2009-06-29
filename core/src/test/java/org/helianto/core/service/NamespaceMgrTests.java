@@ -177,8 +177,19 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
+	public void testPrepareEntityNoId() {
+		Entity entity = EntityTestSupport.createEntity();
+		
+		replay(entityDao);
+
+		assertSame(entity , namespaceMgr.prepareEntity(entity));
+		verify(entityDao);
+	}
+	
+	@Test
 	public void testPrepareEntity() {
 		Entity entity = EntityTestSupport.createEntity();
+		entity.setId(1);
 		Entity managedEntity = EntityTestSupport.createEntity();
 		User user = new User();
 		managedEntity.getUsers().add(user);

@@ -15,11 +15,12 @@
 
 package org.helianto.web.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractAssociationFormAction;
 import org.helianto.core.CreateIdentity;
-import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.service.UserMgr;
@@ -33,11 +34,10 @@ import org.springframework.webflow.execution.RequestContext;
  * @author Mauricio Fernandes de Castro
  */
 @Component("userAssociationAction")
-public class UserAssociationFormAction extends
-		AbstractAssociationFormAction<UserAssociation, UserGroup, UserGroup> {
+public class UserAssociationFormAction extends AbstractAssociationFormAction<UserAssociation, UserGroup, UserGroup> {
 
 	@Override
-	protected UserAssociation doCreateTarget(RequestContext context, UserGroup parent) throws Exception {
+	public UserAssociation doCreateTarget(RequestContext context, UserGroup parent) throws Exception {
 		return userMgr.prepareNewUserAssociation(parent);
 	}
 
@@ -53,10 +53,8 @@ public class UserAssociationFormAction extends
 	}
 
 	@Override
-	protected UserAssociation doSelectTarget(RequestContext context)
-			throws Exception {
-		// TODO Auto-generated method stub
-		return super.doSelectTarget(context);
+	protected List<UserAssociation> getAggregateList(RequestContext context, UserGroup parent) {
+		return parent.getChildAssociationList();
 	}
 
 	@Override
@@ -76,6 +74,11 @@ public class UserAssociationFormAction extends
 
 	public String getParentAttributeName() {
 		return "userGroup";
+	}
+
+	@Override
+	public String getChildAttributeName() {
+		return "user";
 	}
 
 	// collabs

@@ -196,6 +196,9 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	
 	@Transactional(readOnly=true)
 	public Entity prepareEntity(Entity entity) {
+		if (entity!=null && entity.getId()==0) {
+			return entity;
+		}
 		Entity managedEntity = entityDao.merge(entity);
 		List<UserGroup> userList = new ArrayList<UserGroup>(managedEntity.getUsers());
 		Collections.sort(userList);

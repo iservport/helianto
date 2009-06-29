@@ -23,30 +23,44 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractAssociationFormAction<A extends AbstractAssociation<P, C>, P, C> extends AbstractEditTargetFormAction<A> {
+public abstract class AbstractAssociationFormAction<A extends AbstractAssociation<P, C>, P, C> extends AbstractEditAggregateFormAction<A, P> {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected final A doCreateTarget(RequestContext context) throws Exception {
-    	P parent = (P) context.getModel().getRequired(getParentAttributeName());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Parent is "+parent);
-        }
-        return doCreateTarget(context, parent);
-	}
-	
-	protected abstract A doCreateTarget(RequestContext context, P parent) throws Exception;
-	
 	@Override
 	protected A doPrepareTarget(RequestContext context, A target) throws Exception {
 		return target;
 	}
 
-	@Override
-	protected A doSelectTarget(RequestContext context) throws Exception {
-		return null;
-	}
-
-	public abstract String getParentAttributeName();
-	
+    public abstract String getChildAttributeName();
+    
+	/**
+	 * Retrieve the managed parent.
+	 * 
+	 * @param managedAssociation
+	 * @throws Exception
+	 */
+    protected P getManagedParent(A managedAssociation) throws Exception {
+    	return managedAssociation.getParent();
+    }
+ 
+	/**
+	 * Retrieve the managed child.
+	 * 
+	 * @param managedAssociation
+	 * @throws Exception
+	 */
+    protected C getManagedChild(A managedAssociation) throws Exception {
+    	return managedAssociation.getChild();
+    }
+ 
+	protected void postProcessStoreTarget(RequestContext context, A managedAssociation) throws Exception {
+		super.postProcessStoreTarget(context, managedAssociation);
+    	C managedChild = getManagedChild(managedAssociation);
+    	if (managedChild!=null) {
+        	context.getFlowScope().put(getChildAttributeName(), managedChild);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Managed child updated");
+            }
+    	}
+    }
+    
 }

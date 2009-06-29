@@ -6,7 +6,8 @@
               http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
 
 	<start-actions>
-		<set attribute="assign"    value="'entity/assign'"      scope="flow"/>
+		<set attribute="assign"      value="'entity/assign'"      scope="flow"/>
+		<set attribute="entityStyle" value="'white.css'"      scope="conversation"/>
 	</start-actions>
 	
 	<start-state idref="preProcess" />
@@ -29,7 +30,7 @@
 			<set attribute="forward"   value="'entity/selection_fwd'"     scope="flash"/>
 			<set attribute="sidenav"   value="'entity/selection_nav'"     scope="flash"/>
 			<set attribute="sidebar"   value="'entity/selection_filter'"  scope="flash"/>
-			<set attribute="headline"  value="'entity/headline'"          scope="flash"/>
+			<set attribute="mainbar"   value="'entity/mainbar'"           scope="flash"/>
 			<set attribute="template"  value="'entity/selection'"         scope="flash"/>
 			<set attribute="info"      value="'entity/info'"              scope="flash"/>
         </render-actions>
@@ -63,6 +64,7 @@
             <action bean="entityAction"    method="resolveAuthorization"/>
 			<set attribute="sidenav"       value="'entity/entity_nav'"  scope="flash"/>
 			<set attribute="sidebar"       value="'entity/entity_bar'"  scope="flash"/>
+			<set attribute="mainnav"       value="'main_nav'"           scope="flash"/>
 			<set attribute="template"      value="'entity/entity'"      scope="flash"/>
         </render-actions>
 		<!-- 

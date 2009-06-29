@@ -31,7 +31,7 @@ just for demostration purposes.</p>
 <h3>Helianto is open source (Apache v2.0 license).</h3>
 <p>Download the source code from <a href="http://sourceforge.net/projects/helianto/">sourceforge</a>.</p>
 <a target="_new" href="http://www.sourceforge.net">
-<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=161555&type=4" alt="" />
+<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=161555&type=11" alt="" />
 </a>
 <hr/>
 <h3>Since its first publication (2006), Helianto is built on Spring Framework, Hibernate (JPA) and other Java artifacts.</h3>

@@ -67,7 +67,7 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
     public abstract T doCreateTarget(RequestContext context, P parent) throws Exception;
     
 	@SuppressWarnings("unchecked")
-	protected final T doSelectTarget(RequestContext context) {
+	protected T doSelectTarget(RequestContext context) throws Exception {
     	ParameterMap parameters = context.getRequestParameters();
     	if (parameters.contains("target_index")) {
     		int index = parameters.getInteger("target_index");
@@ -88,7 +88,7 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
         return null;
     }
         
-	protected final void postProcessStoreTarget(RequestContext context, T managedTarget) throws Exception {
+	protected void postProcessStoreTarget(RequestContext context, T managedTarget) throws Exception {
     	P managedParent = getManagedParent(managedTarget);
     	if (managedParent!=null) {
         	context.getFlowScope().put(getParentAttributeName(), managedParent);

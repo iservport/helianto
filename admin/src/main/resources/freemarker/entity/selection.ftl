@@ -1,3 +1,4 @@
+<div id="panel">
 <table bgcolor="#cccccc">
 <thead>
 <tr>
@@ -15,3 +16,4 @@
 </#list>
 </tbody>
 </table>
+</div>

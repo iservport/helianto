@@ -1,14 +1,8 @@
 body {
-	margin:0; padding: 2em;
+	margin: 0; 
+	padding: 0;
 	font: 75%/1.33 Verdana, sans-serif;
 	text-align:left;
-}
-form, fieldset, h2, h3, h4, h5 {
-  margin: 0;
-  padding: 0;
-}
-fieldset {
-  margin-top: 1ex;
 }
 table {
   border-collapse: collapse;
@@ -17,30 +11,103 @@ table {
 tr td {
   vertical-align: top; 
 }
-.me {
-  font-weight: bold;
-}
 #layout {
   width: 94%;
   margin: auto;
 }
-/* Entityline 
- */
-#entityline {
-  
+#entityLine {
+  padding-top: 0.5em;
+  padding-left: 1em;
+}	
+#navigationLine {
+  padding-left: 1em;
 }	
 #search {
   float: right;
 }	
-/* Headline 
- */
-#headline {
+#headLine {
   height: 120px;
-  background: white;
-}	
-#headline tr {
+}
+#content {
+  padding-top: 0;
+}
+#sidebar {
+  width: 24%;
+  padding: 2ex;
+  height: 600px;
+  min-height: 600px;
+}
+#sidebar h3 {
+  padding: 6px;
+}
+#sidebar h4, #selection h4 {
+  padding: 6px;
+}
+#sidebar ul {
+  list-style-type:none;
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 6px;
+  font-size: small;
+}
+#sidebar ul li a {
+  width: 100%;
+}
+#sidebar ul li {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+#sidebar select {
+  width: 192px;
+  max-width: 192px;
+}
+#main h2 {
+  font-size: 200%;
+  margin-top: 0;
+  margin-left: 0;
+  padding-top: 0;
+  padding-left: 0;
+}
+#main h3 {
+  margin-left: 0.75em;
+  font-size: 150%;
+}
+#main ul {
+  margin-left: 0.5ex;
   padding: 0;
-}	
+}
+#main td, #main h4, #main h5 {
+  padding: 0.5em;
+}
+#main ul {
+  width:100%;
+  margin-bottom: 0.5em;
+  margin-top: 0;
+  list-style-type:none;
+}
+#main ul li {
+  display: inline
+}
+#main ul li a, table.optionLine tr td a, #nav, #nav li a
+{
+  text-decoration:none;
+  margin-left: 0;
+  padding: 0.3em 0.1em;
+}
+#mainbar { 
+	padding: 0.5em;
+}
+#mainLine { 
+	padding: 0.5em;
+}
+#panel { 
+	padding: 0.5em;
+}
+#panel div table {
+  padding-top: 0em;
+  padding-bottom: 1em;
+  padding-right: 0.5em;
+}
 #post {
 	float: right;
 	clear: both;
@@ -55,93 +122,15 @@ tr td {
 #post p {
 	padding: 1ex;
 }
-#headline table tr td {
-	padding: 0.5ex 1ex;
-}
 #leftnav p {
   margin-top: 6px;
   margin-bottom: 6px;
-}
-/* Sidebar 
- */
-#sidebar2 {
-  width: 24%;
-  padding: 2ex;
-  height: 600px;
-  min-height: 600px;
-}
-#sidebar2 h4, #selection h4 {
-  padding: 6px;
-}
-#sidebar2 ul {
-  list-style-type:none;
-  width: 100%;
-  padding-top: 0;
-  padding-bottom: 6px;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: small;
-}
-#sidebar2 ul li a {
-  width: 100%;
-}
-#sidebar2 ul li {
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-#sidebar2 select {
-  width: 192px;
-  max-width: 192px;
 }
 #sidebox {
 	margin-bottom: 1ex;
 }
 #sidebox p {
 	padding: 0 1ex 0 1ex;
-}
-/* Browse 
- */
-#panel { 
-	padding: 0.5em;
-}
-#panel div table thead tr td { 
-}
-#panel div table {
-  padding-top: 0em;
-  padding-bottom: 1em;
-  padding-right: 0.5em;
-}
-#browse h2 {
-  font-size: 200%;
-  margin-left: 0;
-  padding: 0.5ex;
-}
-#browse ul {
-  margin-left: 0.5ex;
-  padding: 0;
-}
-
-#browse td, #browse h4, #browse h5 {
-  padding: 0.5em;
-}
-
-#browse h3 {
-  margin-left: 0.75em;
-  font-size: 150%;
-}
-#browse ul {
-  width:100%;
-  margin-bottom: 0.5em;
-  margin-top: 0;
-  list-style-type:none;
-}
-#browse ul li {
-  display: inline
-}
-#browse ul li a, table.optionLine tr td a, #nav, #nav li a
-{
-  text-decoration:none;
-  margin-left: 0;
-  padding: 0.3em 0.1em;
 }
 #nav, #nav li, #nav li a
 {
@@ -193,7 +182,7 @@ table.help {
 .treeLevel5 { margin-left: 3em; }
 
 /**
- * cartões
+ * cards
  */
 .cardSetTable {
 	height: 260mm; 
@@ -237,7 +226,7 @@ table.help {
 
 
 /**
- * calendário
+ * calendar
  */
 .calendar {
 	margin-top: 1ex;
@@ -254,13 +243,6 @@ table.help {
 	padding: 0.5ex;
 }
 
-
-a:link, a:visited {
-  color: #555555;
-}
-a:hover {
-  color: #999999;
-}
 
 .ident0 {
 	color: red;
@@ -285,61 +267,3 @@ a:hover {
   padding-left: 72px;
 }
 
-/**
- * @deprecated
- */
-#header {
-  width: 100%;
-  height: 15%;
-  top: 0;
-  right: 0;
-  bottom: auto;
-  left: 0;
-}
-#wide {
-  width: 100%;
-  height: auto;
-  padding: 1em;
-}
-#main {
-  position: static;
-  width: auto;
-  height: auto;
-  margin-left: 21em;
-  padding: 1em;
-}
-#detail {
-  width: 20em;
-}
-#narrow_detail {
-  width: 12em;
-}
-#wide_detail {
-  width: 30em; 
-  clear: right;
-  margin-top: 1em;
-  padding: 1em 0;
-}
-#footer {
-  width: 100%;
-  height: auto;
-}
-#navigator {
-  float: right;
-  margin-top: -1em;
-  padding: 1px;
-}
-#sidebar {
-  float: left;
-  width: 20em;
-  height: 100%;
-  margin-top: 1em;
-}
-#east,#west {
-  vertical-align: top;
-  padding: 0px 0px 0px 0px;
-}
-#east {
-  width: 240px;
-  background: #dddddd;
-}

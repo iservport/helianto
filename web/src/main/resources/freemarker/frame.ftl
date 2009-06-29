@@ -12,30 +12,33 @@
 <#include "${head!\"/head\"}.ftl"/>
 <div id="layout">
 <body>
-<table name="bodyTable">
 <#-- a top navigation line -->
-<tr id="entityline">
-<td colspan="3" >
+<div id="entityLine">
+<p>
         <#include "${search!\"/empty\"}.ftl"/>
         <#include "${home!\"/empty\"}.ftl"/>
         <#include "${navigate!\"/empty\"}.ftl"/>
     	<b>${title!"Selection"}</b>
-</td>
-</tr>
-<#-- a head line -->
-<tr id="headline">
-<td colspan="3" >
+</p>
+</div>
+<div id="navigationLine">
+<p>
 		<#include "${forward!\"/empty\"}.ftl"/>
-</td>
-</tr>
+</p>
+</div>
+<div id="headLine">
+		<#include "${announcement!\"/empty\"}.ftl"/>
+</div>
+<table name="bodyTable">
 <#-- actual content starts here -->
 <tr id="content">
-<td id="sidebar2">
+<td id="sidebar">
         <#include "${sidenav!\"/empty\"}.ftl"/>
         <#include "${sidebar!\"/empty\"}.ftl"/>
 </td>
-<td id="browse">
-		<#include "${headline!\"/empty\"}.ftl"/>
+<td id="main">
+		<#include "${mainnav!\"/empty\"}.ftl"/>
+		<#include "${mainbar!\"/empty\"}.ftl"/>
 		<#include "${template!\"/empty\"}.ftl"/>
 </td>
 <td id="info">
@@ -80,6 +83,10 @@ href="?_eventId=${event}&target_index=${targetIndex}${param}&_flowExecutionKey=$
 </#macro>	
 
 <#macro secure role="ROLE_USER_ALL">
-	<#if secureUser?exists && secureUser.authorities?seq_contains(role) ><#nested/></#if>
+	<#if !secureUser?exists>
+		<#nested/>
+	<#elseif secureUser.authorities?seq_contains(role) >
+		<#nested/>
+	</#if>
 </#macro>
 

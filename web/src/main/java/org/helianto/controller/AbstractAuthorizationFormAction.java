@@ -120,7 +120,7 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
         	if (getAuthorizedUser()!=null) {
                 locale = getAuthorizedUser().getLocale();
         	}
-        	// TODO refator using preferences API
+        	// TODO refactor using preferences API
 //        	dateFormat = new SimpleDateFormat(operator.getPreferredDateFormat()+" "+operator.getPreferredTimeFormat(), operator.getLocale());
         	dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
         } catch (Exception e) {
