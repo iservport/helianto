@@ -9,13 +9,15 @@
 		<input-attribute name="operator" scope="flow"/>
 	</input-mapper>
 	
+	<start-actions>
+		<set attribute="assign"    value="'service/assign'"      scope="flow"/>
+	</start-actions>
+
 	<start-state idref="preProcess" />
 	
 	<action-state id="preProcess">
 		<action bean="serviceLoadAction" method="preProcess"/>
-		<transition to="serviceSelection.view">
-			<set attribute="assign"    value="'service/assign'"      scope="flow"/>
-		</transition>
+		<transition to="serviceSelection.view" />
 	</action-state>
 	
 	<!-- 
@@ -28,6 +30,7 @@
 		 -->
         <render-actions>
             <action bean="serviceLoadAction" method="load"/>
+			<set attribute="forward"   value="'toSelection'"               scope="flash"/>
 			<set attribute="sidenav"   value="'service/selection_nav'"     scope="flash"/>
 			<set attribute="sidebar"   value="'service/selection_filter'"  scope="flash"/>
 			<set attribute="template"  value="'service/selection'"         scope="flash"/>
@@ -41,6 +44,7 @@
 		<transition on="createTarget"  to="serviceEdit.view">
 			<action bean="serviceAction"            method="createTarget" />
 		</transition>
+		<transition on="toSelection"   to="toParent"/>
 	</view-state>
 
 	<!-- 
@@ -54,8 +58,9 @@
         <render-actions>
             <action bean="serviceAction" method="prepareTarget"/>
             <action bean="serviceAction" method="resolveAuthorization"/>
-			<set attribute="sidenav"   value="'service/service_nav'"  scope="flash"/>
+			<set attribute="forward"   value="'toSelection'"          scope="flash"/>
 			<set attribute="sidebar"   value="'service/service_bar'"  scope="flash"/>
+			<set attribute="mainnav"   value="'main_nav'"             scope="flash"/>
 			<set attribute="template"  value="'service/service'"      scope="flash"/>
         </render-actions>
 		<!-- 
@@ -89,6 +94,7 @@
 			<action bean="serviceAction"            method="bindAndValidate" />
 			<action bean="serviceAction"            method="storeTarget" />
 		</transition>
+		<transition on="cancelForm"   to="serviceBrowse.view"/>
 	</view-state>
 	
 	<!--
@@ -102,15 +108,5 @@
 			<mapping source="flowScope.service" target="returnTarget"/>
 		</output-mapper>
 	</end-state>
-	
-	<!--
-	 ! Globals 
-	// -->
-
-	<global-transitions>
-		<transition on="toHome"   to="toHome"/>
-		<transition on="toParent" to="toParent"/>
-		<transition on="cancelForm"   to="serviceBrowse.view"/>
-	</global-transitions>
 	
 </flow>

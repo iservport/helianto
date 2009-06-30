@@ -124,21 +124,22 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		}
 		userGroupDao.persist(defaultUser);
 		
+		Service adminService = managedOperator.getServiceMap().get("ADMIN"); 
 		Service userService = managedOperator.getServiceMap().get("USER"); 
+		
 		if (userService==null) {
 			throw new IllegalStateException("Unable to create entity, user service not found.");
 		}
-		UserRole managerRole = UserRole.userRoleFactory(manager, userService, "ALL");
+		UserRole managerRole = UserRole.userRoleFactory(manager, adminService, "MANAGER");
 		if (logger.isInfoEnabled()) {
 			logger.info("Binding manager user group to admin service with "+managerRole);
 		}
 		userRoleDao.persist(managerRole);
 		
-		Service adminService = managedOperator.getServiceMap().get("ADMIN"); 
 		if (adminService==null) {
 			throw new IllegalStateException("Unable to create entity, admin service not found.");
 		}
-		UserRole userRole = UserRole.userRoleFactory(defaultUser, adminService, "MANAGER");
+		UserRole userRole = UserRole.userRoleFactory(defaultUser, userService, "ALL");
 		if (logger.isInfoEnabled()) {
 			logger.info("Binding default user group to user service with "+userRole);
 		}

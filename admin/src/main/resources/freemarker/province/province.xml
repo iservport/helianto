@@ -9,13 +9,15 @@
 		<input-attribute name="operator" scope="flow"/>
 	</input-mapper>
 	
+	<start-actions>
+		<set attribute="assign"    value="'province/assign'"      scope="flow"/>
+	</start-actions>
+
 	<start-state idref="preProcess" />
 	
 	<action-state id="preProcess">
 		<action bean="provinceFilterAction" method="preProcess"/>
-		<transition to="provinceSelection.view">
-			<set attribute="assign"    value="'province/assign'"      scope="flow"/>
-		</transition>
+		<transition to="provinceSelection.view" />
 	</action-state>
 	
 	<!-- 
@@ -28,6 +30,7 @@
 		 -->
         <render-actions>
             <action bean="provinceFilterAction" method="applyFilter"/>
+			<set attribute="forward"   value="'toSelection'"                scope="flash"/>
 			<set attribute="sidenav"   value="'province/selection_nav'"     scope="flash"/>
 			<set attribute="sidebar"   value="'province/selection_filter'"  scope="flash"/>
 			<set attribute="template"  value="'province/selection'"         scope="flash"/>
@@ -41,6 +44,7 @@
 		<transition on="createTarget"  to="provinceEdit.view">
 			<action bean="provinceAction"            method="createTarget" />
 		</transition>
+		<transition on="toSelection"   to="toParent"/>
 	</view-state>
 
 	<!-- 
@@ -54,8 +58,9 @@
         <render-actions>
             <action bean="provinceAction" method="prepareTarget"/>
             <action bean="provinceAction" method="resolveAuthorization"/>
-			<set attribute="sidenav"   value="'province/province_nav'"  scope="flash"/>
+			<set attribute="forward"   value="'toSelection'"            scope="flash"/>
 			<set attribute="sidebar"   value="'province/province_bar'"  scope="flash"/>
+			<set attribute="mainnav"   value="'main_nav'"               scope="flash"/>
 			<set attribute="template"  value="'province/province'"      scope="flash"/>
         </render-actions>
 		<!-- 
@@ -89,6 +94,7 @@
 			<action bean="provinceAction"            method="bindAndValidate" />
 			<action bean="provinceAction"            method="storeTarget" />
 		</transition>
+		<transition on="cancelForm"   to="provinceBrowse.view"/>
 	</view-state>
 	
 	<!--
@@ -102,15 +108,5 @@
 			<mapping source="flowScope.province" target="returnTarget"/>
 		</output-mapper>
 	</end-state>
-	
-	<!--
-	 ! Globals 
-	// -->
-
-	<global-transitions>
-		<transition on="toHome"   to="toHome"/>
-		<transition on="toParent" to="toParent"/>
-		<transition on="cancelForm"   to="provinceBrowse.view"/>
-	</global-transitions>
 	
 </flow>

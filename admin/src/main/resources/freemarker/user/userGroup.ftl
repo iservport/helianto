@@ -8,7 +8,7 @@
 <tr>
   <td colspan="2">Service</td>
   <td >Role</td>
-  <td >Source</td>
+  <td >Inherited from</td>
 </tr>
 </thead>
 <tbody>
@@ -40,25 +40,6 @@
   <td >${target.child.userKey}</td>
   <td >${userState[target.child.userState]}</td>
   <td >${target.child.userName?if_exists}</td>
-</tr>
-</#list>
-</tbody>
-</table>
-<#else>
-<h3>Member of groups</h3>
-<table>
-<thead>
-<tr>
-  <td colspan="2">User key</td>
-  <td >Status</td>
-</tr>
-</thead>
-<tbody>
-<#list userGroup.parentAssociationList?if_exists as target >
-<tr class="row${target_index%2}">
-  <@select "${target_index}", "selectUserGroup" >${target.parent.id?c}</@select>
-  <td >${target.parent.userKey}</td>
-  <td >${userState[target.parent.userState]}</td>
 </tr>
 </#list>
 </tbody>

@@ -1,5 +1,6 @@
-<table bgcolor="#cccccc">
+<div id="panel">
 <p>Found ${targetListSize?if_exists} service(s) under this namespace.</p>
+<table>
 <thead>
 <tr>
 	<td>Id</td>
@@ -15,3 +16,4 @@
 </#list>
 </tbody>
 </table>
+</div>

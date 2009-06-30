@@ -1,4 +1,4 @@
-<h2>Welcome</h2>
+<h2 style="text-align: center;">Welcome</h2>
 <h3>to the Helianto admin application.</h3>
 <div id="mainbar">
 <p>Here is a list of entities controlled by this operator. You may either:</p>

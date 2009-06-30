@@ -1,5 +1,6 @@
-<table>
+<div id="panel">
 <p>Found ${targetListSize?if_exists} province(s) under this namespace.</p>
+<table>
 <thead>
 <tr>
 	<td>Id</td>
@@ -17,3 +18,4 @@
 </#list>
 </tbody>
 </table>
+</div>

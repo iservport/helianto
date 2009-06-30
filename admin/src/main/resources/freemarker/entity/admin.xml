@@ -62,6 +62,7 @@
         <render-actions>
             <action bean="entityAction"    method="prepareTarget"/>
             <action bean="entityAction"    method="resolveAuthorization"/>
+			<set attribute="forward"       value="'toSelection'"        scope="flash"/>
 			<set attribute="sidenav"       value="'entity/entity_nav'"  scope="flash"/>
 			<set attribute="sidebar"       value="'entity/entity_bar'"  scope="flash"/>
 			<set attribute="mainnav"       value="'main_nav'"           scope="flash"/>
@@ -111,6 +112,7 @@
 			<action bean="entityAction"            method="bindAndValidate" />
 			<action bean="entityAction"            method="storeTarget" />
 		</transition>
+		<transition on="cancelForm"   to="entityBrowse.view"/>
 	</view-state>
 	
 	<!-- 
@@ -183,6 +185,7 @@
         <render-actions>
             <action bean="userGroupAction"       method="prepareTarget"/>
             <action bean="userGroupAction"       method="resolveAuthorization"/>
+			<set attribute="forward"             value="'toSelection'"         scope="flash"/>
 			<set attribute="sidebar"             value="'user/userGroup_bar'"  scope="flash"/>
 			<set attribute="template"            value="'user/userGroup'"      scope="flash"/>
         </render-actions>
@@ -196,7 +199,7 @@
 		<!-- 
 		 ! backward transitions
 		 -->
-		<transition on="toSelection"             to="toSelection"/>
+		<transition on="toSelection"             to="entityBrowse.view"/>
 	</view-state>
 	
 	<!-- 
@@ -230,7 +233,6 @@
 
 	<global-transitions>
 		<transition on="toHome"       to="toHome"/>
-		<transition on="cancelForm"   to="entityBrowse.view"/>
 		<transition on="forbidden"    to="toHome" />
 	</global-transitions>
 	
