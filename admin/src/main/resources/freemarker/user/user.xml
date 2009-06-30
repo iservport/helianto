@@ -31,10 +31,11 @@
 		 ! before browse
 		 -->
         <render-actions>
-            <action bean="userAction" method="prepareTarget"/>
-            <action bean="userAction" method="resolveAuthorization"/>
+            <action bean="userAction"   method="prepareTarget"/>
+            <action bean="userAction"   method="resolveAuthorization"/>
 			<set attribute="sidenav"    value="'user/user_nav'"  scope="flash"/>
 			<set attribute="sidebar"    value="'user/user_bar'"  scope="flash"/>
+			<set attribute="mainnav"    value="'main_nav'"       scope="flash"/>
 			<set attribute="template"   value="'user/user'"      scope="flash"/>
         </render-actions>
 		<!-- 

@@ -3,11 +3,9 @@
 <#if user.userName?exists>
 <p>Personal data: <b>${user.userName}</b></p>
 </#if>
+<h3>Assigned roles</h3>
 <table>
-<thead style="background: #cccccc;">
-<tr>
-  <td colspan="4" style="text-align: center;"><b>Assigned roles</b></td>
-</tr>
+<thead>
 <tr>
   <td colspan="2">Service</td>
   <td >Role</td>
@@ -16,9 +14,7 @@
 </thead>
 <tbody>
 <#list user.roleList?if_exists as target >
-<tr>
-  <#-- this macro, embedded in frame.ftl, is appropriate 
-       to generate the select transition -->
+<tr class="row${target_index%2}">
   <@select "${target_index}", "editUserRole" >${target.id?c}</@select>
   <td >${target.serviceName}</td>
   <td >${target.serviceExtension}</td>

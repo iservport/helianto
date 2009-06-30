@@ -1,8 +1,8 @@
 <div id="panel">
 <h2>Entity alias: <b>${entity.alias}</b></h2>
-<p>Users sharing this entity:</p>
+<h3>Users and groups</h3>
 <table>
-<thead style="background: #cccccc;">
+<thead>
 <tr>
   <td colspan="2">User principal</td>
   <td >Status</td>
@@ -12,7 +12,7 @@
 </thead>
 <tbody>
 <#list entity.userList?if_exists as target >
-<tr>
+<tr class="row${target_index%2}">
   <#-- this macro, embedded in frame.ftl, is appropriate 
        to generate the select transition -->
   <#if target.class=='class org.helianto.core.UserGroup' >

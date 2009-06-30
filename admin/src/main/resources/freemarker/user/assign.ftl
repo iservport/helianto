@@ -1,5 +1,5 @@
 <#assign base="user" />
-<#assign title="users" />
+<#assign title="Users" />
 
 <#assign userStateFilter={
      ' ' : "All"

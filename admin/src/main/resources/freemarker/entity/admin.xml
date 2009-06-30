@@ -75,14 +75,14 @@
 		 ! local transitions
 		 -->
 		<transition on="editTarget"        to="entityEdit.view"/>
+		<transition on="createUserGroup"   to="userGroup.subflow">
+			<action bean="userGroupAction" method="createTarget"/>
+		</transition>
 		<transition on="selectUserGroup"   to="userGroup.subflow">
 			<action bean="userGroupAction" method="selectTarget"/>
 		</transition>
-		<transition on="selectUser"        to="user.subflow">
-			<action bean="userAction"      method="selectTarget"/>
-		</transition>
-		<transition on="createUserGroup"   to="userGroup.subflow">
-			<action bean="userGroupAction" method="createTarget"/>
+		<transition on="selectUser"        to="userBrowse.view">
+			<action bean="userGroupAction" method="selectTarget"/>
 		</transition>
 		<!-- 
 		 ! backward transitions
@@ -172,6 +172,33 @@
 		<transition on="toHome"      to="toHome"/>
 	</subflow-state>
 
+	<!-- 
+	 ! user
+	 ! BROWSE VIEW
+	 !-->
+	<view-state id="userBrowse.view" view="frame">
+		<!-- 
+		 ! before browse
+		 -->
+        <render-actions>
+            <action bean="userGroupAction"       method="prepareTarget"/>
+            <action bean="userGroupAction"       method="resolveAuthorization"/>
+			<set attribute="sidebar"             value="'user/userGroup_bar'"  scope="flash"/>
+			<set attribute="template"            value="'user/userGroup'"      scope="flash"/>
+        </render-actions>
+		<!-- 
+		 ! local transitions
+		 -->
+		<transition on="editUserRole"            to="userBrowse.view" />
+		<transition on="selectUser"              to="userAssociation.subflow">
+			<action bean="userAssociationAction" method="selectTarget"/>
+		</transition>
+		<!-- 
+		 ! backward transitions
+		 -->
+		<transition on="toSelection"             to="toSelection"/>
+	</view-state>
+	
 	<!-- 
 	 ! userGroup
 	 ! SUBFLOW

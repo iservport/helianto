@@ -36,6 +36,7 @@
             <action bean="userGroupAction"       method="resolveAuthorization"/>
 			<set attribute="sidenav"             value="'user/userGroup_nav'"  scope="flash"/>
 			<set attribute="sidebar"             value="'user/userGroup_bar'"  scope="flash"/>
+			<set attribute="mainnav"             value="'main_nav'"           scope="flash"/>
 			<set attribute="template"            value="'user/userGroup'"      scope="flash"/>
         </render-actions>
 		<!-- 

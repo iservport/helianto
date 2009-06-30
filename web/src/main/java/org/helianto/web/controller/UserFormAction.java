@@ -16,13 +16,15 @@
 package org.helianto.web.controller;
 
 import java.beans.PropertyEditor;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.CreateIdentity;
-import org.helianto.core.UserAssociation;
+import org.helianto.core.Entity;
 import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.ParameterMap;
@@ -72,11 +74,12 @@ public class UserFormAction extends AbstractEditAggregateFormAction<User, UserAs
 		internalTargetPropertyEditorSetter(targetPropertyEditor, User.class);
 	}
 
-//	@Override
-//	protected List<User> getAggregateList(RequestContext context, Entity parent) {
-//		return parent.getUserList();
-//	}
-//
+	@Override
+	protected List<User> getAggregateList(RequestContext context, UserAssociation parent) {
+//		return parent.get
+		return null;
+	}
+
 	@Override
 	protected String getKeyField() {
 		return "userKey";

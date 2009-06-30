@@ -1,12 +1,10 @@
 <div id="panel">
-<h2>User group <b>${userGroup.userKey}</b> <small>[${userGroup.id}]</small>
+<h2>User <#if !userGroup.identity?exists>group </#if><b>${userGroup.userKey}</b> <small>[${userGroup.id}]</small>
 <#if userGroup.userState=='I'><span style="color: red;">INATIVO</span></#if>
 </h2>
+<h3>Assigned roles</h3>
 <table>
-<thead style="background: #cccccc;">
-<tr>
-  <td colspan="4" style="text-align: center;"><b>Assigned roles</b></td>
-</tr>
+<thead>
 <tr>
   <td colspan="2">Service</td>
   <td >Role</td>
@@ -15,9 +13,7 @@
 </thead>
 <tbody>
 <#list userGroup.roleList?if_exists as target >
-<tr>
-  <#-- this macro, embedded in frame.ftl, is appropriate 
-       to generate the select transition -->
+<tr class="row${target_index%2}">
   <@select "${target_index}", "editUserRole" >${target.id?c}</@select>
   <td >${target.serviceName}</td>
   <td >${target.serviceExtension}</td>
@@ -27,22 +23,19 @@
 </tbody>
 </table>
 <p>&nbsp;</p>
+<#if !userGroup.identity?exists>
+<h3>Assigned users</h3>
 <table>
-<thead style="background: #cccccc;">
+<thead>
 <tr>
-  <td colspan="4" style="text-align: center;"><b>Assigned users</b></td>
-</tr>
-<tr>
-  <td colspan="2">User principal</td>
+  <td colspan="2">User key</td>
   <td >Status</td>
   <td >Personal data</td>
 </tr>
 </thead>
 <tbody>
 <#list userGroup.childAssociationList?if_exists as target >
-<tr>
-  <#-- this macro, embedded in frame.ftl, is appropriate 
-       to generate the select transition -->
+<tr class="row${target_index%2}">
   <@select "${target_index}", "selectUser" >${target.child.id?c}</@select>
   <td >${target.child.userKey}</td>
   <td >${userState[target.child.userState]}</td>
@@ -51,5 +44,25 @@
 </#list>
 </tbody>
 </table>
+<#else>
+<h3>Member of groups</h3>
+<table>
+<thead>
+<tr>
+  <td colspan="2">User key</td>
+  <td >Status</td>
+</tr>
+</thead>
+<tbody>
+<#list userGroup.parentAssociationList?if_exists as target >
+<tr class="row${target_index%2}">
+  <@select "${target_index}", "selectUserGroup" >${target.parent.id?c}</@select>
+  <td >${target.parent.userKey}</td>
+  <td >${userState[target.parent.userState]}</td>
+</tr>
+</#list>
+</tbody>
+</table>
+</#if>
 
 </div>

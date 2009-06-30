@@ -1,4 +1,4 @@
-<table bgcolor="#cccccc">
+<table>
 <p>Found ${targetListSize?if_exists} province(s) under this namespace.</p>
 <thead>
 <tr>
@@ -9,8 +9,7 @@
 </thead>
 <tbody>
 <#list targetList?if_exists as target>
-<tr>
-    <#-- check the macros supplied with frame.ftl to see how they work -->
+<tr class="row${target_index%2}">
 	<@select "${target_index}">${target.id}</@select>
 	<td>${target.provinceCode?if_exists}</td>
 	<td>${target.provinceName?if_exists}</td>

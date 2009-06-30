@@ -31,7 +31,9 @@
 	}
 }
 
-a:link, a:visited {
+a, 
+a:link, 
+a:visited {
   color: #4d647d;
 }
 a:hover {
@@ -109,6 +111,9 @@ h3 {
 	  text-decoration: underline;
 	  font-weight: bold;
 }
+#sidebar select {
+  color: #4d647d;
+}
 #selection {
 	color: #4d647d;
 	background: #f7f7f7;
@@ -126,15 +131,15 @@ h3 {
 #sidebox p {
 	color: #800000;
 }
+#panel table {
+	background: #dddddd;
+}
 #panel h4 {
 	color: white;
-	background: #dd7d1b;/*#8f4d09;#A57039*/
+	background: #dd7d1b;
 }
 #panel h5 {
 	background: #dddddd;
-}
-#sidebar select {
-  color: #4d647d;
 }
 #amount input {
 	border: 1px solid #157089;
@@ -154,11 +159,9 @@ h3 {
 	background: #dddddd;
 	border: 1pt solid gray;
 }
-
-
-/**
- * Alerta
- */
+.row1 {
+	background: #eeeeee;
+}
 .alert_Y
 {
 	color: red;

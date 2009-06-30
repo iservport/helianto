@@ -35,6 +35,7 @@
             <action bean="userAssociationAction" method="resolveAuthorization"/>
 			<set attribute="sidenav"    value="'user/user_nav'"        scope="flash"/>
 			<set attribute="sidebar"    value="'user/user_bar'"        scope="flash"/>
+			<set attribute="mainnav"    value="'main_nav'"             scope="flash"/>
 			<set attribute="template"   value="'user/userAssociation'" scope="flash"/>
         </render-actions>
 		<!-- 
