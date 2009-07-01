@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.helianto</groupId>
     <artifactId>helianto</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.3-SNAPSHOT</version>
   </parent>
   <groupId>org.helianto</groupId>
   <artifactId>helianto-admin</artifactId>
   <packaging>war</packaging>
   <name>Admin</name>
-  <version>0.2.2</version>
+  <version>0.2.3-SNAPSHOT</version>
   <description>Helianto project admin module.</description>
   <build>
     <finalName>helianto</finalName>
