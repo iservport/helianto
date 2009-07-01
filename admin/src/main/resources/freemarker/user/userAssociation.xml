@@ -33,6 +33,7 @@
         <render-actions>
             <action bean="userAssociationAction" method="prepareTarget"/>
             <action bean="userAssociationAction" method="resolveAuthorization"/>
+			<set attribute="forward"    value="'toSelection'"          scope="flash"/>
 			<set attribute="sidenav"    value="'user/user_nav'"        scope="flash"/>
 			<set attribute="sidebar"    value="'user/user_bar'"        scope="flash"/>
 			<set attribute="mainnav"    value="'main_nav'"             scope="flash"/>
@@ -43,12 +44,16 @@
 		 -->
 		<transition on="editTarget"       to="userAssociationEdit.view"/>
 		<transition on="editIdentity"     to="identityEdit.view"/>
+		<!--  
+		  see http://jira.helianto.org/jira/browse/HEL-22
+		  
 		<transition on="createUserRole"   to="userRoleEdit.view">
 			<action bean="userRoleAction" method="createTarget"/>
 		</transition>
 		<transition on="editUserRole"     to="userRoleEdit.view">
 			<action bean="userRoleAction" method="selectTarget"/>
 		</transition>
+		-->
 		<!-- 
 		 ! backward transitions
 		 -->
@@ -88,7 +93,7 @@
 		 ! before browse
 		 -->
         <render-actions>
-            <action bean="userAction" method="editTarget"/>
+            <action bean="userAssociationAction" method="editTarget"/>
 			<set attribute="sidenav"   value="'user/edit_nav'"      scope="flash"/>
 			<set attribute="sidebar"   value="'user/identity_bar'"  scope="flash"/>
 			<set attribute="template"  value="'user/identity_form'" scope="flash"/>
@@ -96,15 +101,12 @@
 		<!-- 
 		 ! local transitions
 		 -->
-		<transition on="storeTarget"   to="storeIdentity">
-			<action bean="userAction"            method="bind" />
+		<transition on="storeTarget"   to="userAssociationBrowse.view">
+			<action bean="userAssociationAction"  method="bind" />
+			<action bean="userAssociationAction"  method="storeTarget"/>
 		</transition>
+		<transition on="cancelForm"   to="userAssociationBrowse.view"/>
 	</view-state>
-	<action-state id="storeIdentity">
-		<action bean="userAction"                method="storeTarget"/>
-		<transition on="success" to="userBrowse.view"/>
-		<transition on="error"   to="identityEdit.view"/>
-	</action-state>
 	
 	<!-- 
 	 ! userRole  
@@ -144,14 +146,5 @@
 			<mapping source="flowScope.userAssociation.parent" target="userGroup"/>
 		</output-mapper>
 	</end-state>
-	
-	<!--
-	 ! Globals 
-	// -->
-
-	<global-transitions>
-		<transition on="backToHome"   to="backToHome"/>
-		<transition on="backToParent" to="backToParent"/>
-	</global-transitions>
 	
 </flow>
