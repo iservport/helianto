@@ -26,8 +26,8 @@ import org.helianto.process.Operation;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentFilter;
-import org.helianto.process.ResourceGroup;
 import org.helianto.process.Setup;
+import org.helianto.resource.ResourceGroup;
 
 /**
  * <code>ProcessMgr</code> interface.

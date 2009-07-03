@@ -22,8 +22,8 @@
            http://www.springframework.org/schema/osgi 
            http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <service ref="cardMgr"     interface="org.helianto.process.service.CardMgr" />
-    <service ref="processMgr"  interface="org.helianto.process.service.ProcessMgr" />
-    <service ref="resourceMgr" interface="org.helianto.process.service.ResourceMgr" />
+    <reference id="resourceMgr" interface="org.helianto.resource.service.ResourceMgr" />
+    <service ref="cardMgr"      interface="org.helianto.process.service.CardMgr" />
+    <service ref="processMgr"   interface="org.helianto.process.service.ProcessMgr" />
 
 </beans:beans>

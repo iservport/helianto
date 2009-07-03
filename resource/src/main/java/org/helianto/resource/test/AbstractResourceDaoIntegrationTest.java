@@ -13,18 +13,18 @@
  * limitations under the License.
  */
 
-package org.helianto.process.test;
+package org.helianto.resource.test;
 
-import org.helianto.resource.test.AbstractResourceDaoIntegrationTest;
+import org.helianto.document.test.AbstractDocumentDaoIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
- * Base class to process integration tests.
+ * Base class to resource integration tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @ContextConfiguration(locations={
-		"classpath:/META-INF/spring/process-context.xml"})
-public abstract class AbstractProcessDaoIntegrationTest extends AbstractResourceDaoIntegrationTest {
+		"classpath:/META-INF/spring/helianto-resource-context.xml"})
+public abstract class AbstractResourceDaoIntegrationTest extends AbstractDocumentDaoIntegrationTest {
 
 }

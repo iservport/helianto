@@ -14,11 +14,6 @@
 		<class>org.helianto.process.Operation</class>
 		<class>org.helianto.process.Consumable</class>
 		<class>org.helianto.process.Cause</class>
-		<class>org.helianto.process.ResourceGroup</class>
-		<class>org.helianto.process.Resource</class>
-		<class>org.helianto.process.ResourceAssociation</class>
-		<class>org.helianto.process.ResourceParameter</class>
-		<class>org.helianto.process.ResourceParameterValue</class>
 		<class>org.helianto.process.Characteristic</class>
 		<class>org.helianto.process.ControlPlan</class>
 		<class>org.helianto.process.MeasurementTechnique</class>

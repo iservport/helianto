@@ -25,19 +25,4 @@
                
 	<context:component-scan base-package="org.helianto.process.orm,org.helianto.process.service,org.helianto.process.validation"/>
     
-	<!--
-		Resource property editor registrar
-	
-	<bean id="resourcePropertyEditorRegistrar" 
-	    class="org.helianto.process.validation.ResourcePropertyEditorRegistrar">
-	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean> -->
-	<!--
-		Document property editor registrar
-	
-	<bean id="documentPropertyEditorRegistrar" 
-	    class="org.helianto.process.validation.DocumentPropertyEditorRegistrar">
-	    <property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean> -->
-
 </beans>

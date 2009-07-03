@@ -15,6 +15,9 @@
 	<classpathentry excluding="**" kind="src" output="document/target/classes" path="document/src/main/resources"/>
 	<classpathentry kind="src" output="document/target/test-classes" path="document/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="document/target/test-classes" path="document/src/test/resources"/>
+	<classpathentry kind="src" path="resource/src/main/java"/>
+	<classpathentry kind="src" path="resource/src/main/resources"/>
+	<classpathentry kind="src" path="resource/src/test/java"/>
 	<classpathentry kind="src" output="process/target/classes" path="process/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="process/target/classes" path="process/src/main/resources"/>
 	<classpathentry kind="src" output="process/target/test-classes" path="process/src/test/java"/>

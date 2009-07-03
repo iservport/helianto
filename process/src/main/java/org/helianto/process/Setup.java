@@ -25,6 +25,9 @@ import javax.persistence.Transient;
 
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.resource.Resource;
+import org.helianto.resource.ResourceGroup;
+
 /**
  * Represents a <code>Setup</code>.  
  * <p>

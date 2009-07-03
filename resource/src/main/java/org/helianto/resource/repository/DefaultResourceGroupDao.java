@@ -14,31 +14,32 @@
  */
 
 
-package org.helianto.process.test;
+package org.helianto.resource.repository;
 
-import org.helianto.process.Operation;
-import org.helianto.process.Setup;
+import org.helianto.core.dao.AbstractHibernateFilterDao;
 import org.helianto.resource.ResourceGroup;
-import org.helianto.resource.test.ResourceGroupTestSupport;
+import org.helianto.resource.ResourceGroupFilter;
+import org.springframework.stereotype.Repository;
 
 /**
- * Class to support <code>Setup</code> tests.
+ * Resource group data access.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class SetupTestSupport {
-	
-	public static Setup createSetup() {
-		return SetupTestSupport.createSetup(OperationTestSupport.createOperation());
+@Repository("resourceGroupDao")
+public class DefaultResourceGroupDao extends AbstractHibernateFilterDao<ResourceGroup, ResourceGroupFilter> {
+
+	@Override
+	public Class<? extends ResourceGroup> getClazz() {
+		return ResourceGroup.class;
 	}
 
-	public static Setup createSetup(Operation operation) {
-		ResourceGroup resourceGroup = ResourceGroupTestSupport.createResourceGroup();
-		return operation.operationSetupFactory(resourceGroup);
+	/**
+	 * Default keys are entity.id and resourceCode
+	 */
+	@Override
+	protected String[] getParams() {
+		return new String[] { "entity", "resourceCode" };
 	}
 
-	public static Setup createSetup(Operation operation, ResourceGroup resourceGroup) {
-		return operation.operationSetupFactory(resourceGroup);
-	}
-	
 }

@@ -36,8 +36,8 @@ import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.ProcessDocumentFilter;
-import org.helianto.process.ResourceGroup;
 import org.helianto.process.Setup;
+import org.helianto.resource.ResourceGroup;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

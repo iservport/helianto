@@ -23,6 +23,7 @@
 			<module>message</module>
 			<module>partner</module>
 			<module>document</module>
+			<module>resource</module>
 			<module>process</module>
 			<module>web</module>
 			<module>admin</module>

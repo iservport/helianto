@@ -14,31 +14,36 @@
  */
 
 
-package org.helianto.process.test;
+package org.helianto.resource.repository;
 
-import org.helianto.process.Operation;
-import org.helianto.process.Setup;
+import static org.junit.Assert.assertEquals;
+
+import javax.annotation.Resource;
+
+import org.helianto.core.dao.BasicDao;
 import org.helianto.resource.ResourceGroup;
+import org.helianto.resource.test.AbstractResourceDaoIntegrationTest;
 import org.helianto.resource.test.ResourceGroupTestSupport;
 
 /**
- * Class to support <code>Setup</code> tests.
- * 
  * @author Mauricio Fernandes de Castro
  */
-public class SetupTestSupport {
+public class DefaultResourceGroupDaoIntegrationTests extends AbstractResourceDaoIntegrationTest {
 	
-	public static Setup createSetup() {
-		return SetupTestSupport.createSetup(OperationTestSupport.createOperation());
-	}
-
-	public static Setup createSetup(Operation operation) {
+	@Override
+	public void testFindUnique() {
 		ResourceGroup resourceGroup = ResourceGroupTestSupport.createResourceGroup();
-		return operation.operationSetupFactory(resourceGroup);
+		resourceGroupDao.persist(resourceGroup);
+		assertEquals(resourceGroup, resourceGroupDao.findUnique(resourceGroup.getEntity(), resourceGroup.getResourceCode()));
 	}
 
-	public static Setup createSetup(Operation operation, ResourceGroup resourceGroup) {
-		return operation.operationSetupFactory(resourceGroup);
-	}
-	
+    //- collabs
+
+    private BasicDao<ResourceGroup> resourceGroupDao;
+    
+    @Resource(name="resourceGroupDao")
+    public void setResourceGroupDao(BasicDao<ResourceGroup> resourceGroupDao) {
+        this.resourceGroupDao = resourceGroupDao;
+    }
+    
 }
