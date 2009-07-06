@@ -37,7 +37,7 @@ import org.helianto.core.TopLevelNumberedEntity;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractControl extends AbstractRecord implements Serializable, Sequenceable, Control, TopLevelNumberedEntity {
+public abstract class AbstractControl extends AbstractRecord implements Serializable, Sequenceable, Control, Trackable, TopLevelNumberedEntity {
 
     /**
      * Factory method.

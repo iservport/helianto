@@ -183,6 +183,9 @@ Application-TraceLevels: ${application.traceLevels}
 			<artifactId>org.springframework.security.annotation</artifactId>
 			<version>2.0.4.A</version>
 		</dependency>
+<!-- dependency>  <groupId>org.springframework.webflow</groupId>  <artifactId>org.springframework.webflow-library</artifactId>  <type>libd</type>  <version>2.0.7.RELEASE</version> </dependency>
+<dependency>  <groupId>org.springframework.ws</groupId>  <artifactId>org.springframework.oxm.java5</artifactId>  <version>1.5.7.A</version> </dependency>
+<dependency>  <groupId>org.springframework.ws</groupId>  <artifactId>org.springframework.xml</artifactId>  <version>1.5.7.A</version> </dependency -->
         <!-- aspectJ bundles -->
 		<dependency>
 		    <groupId>org.aspectj</groupId>

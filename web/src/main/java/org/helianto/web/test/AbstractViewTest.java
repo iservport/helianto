@@ -53,6 +53,10 @@ public abstract class AbstractViewTest<F extends UserBackedFilter, T> extends Ab
 	protected abstract T createTarget();
 	protected abstract String getBase();
 	
+	protected String getEntityStyle() {
+		return "white.css";
+	}
+	
 	protected String getFolder() {
 		return getBase();
 	}
@@ -154,6 +158,7 @@ public abstract class AbstractViewTest<F extends UserBackedFilter, T> extends Ab
 		targetForm = new DefaultTargetForm<T>();
 		target = createTarget();
 		targetForm.setTarget(target);
+		model.put("entityStyle", getEntityStyle());
 		model.put("secureUser", getAuthorizedUser());
 		model.put(getTargetName(),  target);
 		if (isForwarRequired()) {

@@ -13,31 +13,34 @@
  * limitations under the License.
  */
 
-
 package org.helianto.control;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
- * Control interface.
+ * Provide tracking information, like frequency value and type.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Control {
+public interface Trackable {
 
     /**
-     * Date to be controlled.
+     * Tracking mode.
+     * 
+     * @see {@link TrackingMode}
      */
-    public Date getNextCheckDate();
+    public char getTrackingMode();
     
     /**
-     * True if check date is past.
+     * Frequency.
      */
-    public boolean isCheckDatePast();
+    public int getFrequency();
     
     /**
-     * 'Y' or 'N' if checkDate is past.
+     * Frequency type.
+     * 
+     * @see Calendar
      */
-    public char getCheckDatePastAsChar();
+    public int getFrequencyType();
 
 }
