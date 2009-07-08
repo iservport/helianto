@@ -24,9 +24,10 @@
 		<section name="Welcome to the Helianto Project">
 
 			<p>
-				Helianto project is about productivity in Java development. 
+				Helianto project is about productivity in Java development, specially for 
+				very small teams (3-4 individuals). 
 				It is conceived to provide a shorter development time per interaction
-				accross the cycle of web application creation.
+				accross the cycle of any agile web application creation.
 				Here is a list of possible impacts organized by application layer:
 			</p>
 			<ol>
@@ -41,8 +42,11 @@
 			methods (closely related to org.springframework.security approaches) or to implement their own. This is also
 			valid for customers, documents, processes and much more.
 			</li>
-			<li>Presentation layer: although it is not part of the project goals, a couple of abstract classes may help to
+			<li>Application layer: provides a set of abstract classes to
 			build a solid presentation logic based on org.springframework.webflow.
+			</li>
+			<li>Presentation layer: although it is not part of the project goals, a couple views based
+			on freemarker is available.
 			</li>
 			<li>Domain abstraction: <b>common domain abstraction</b> is designed to provide flexibility to fit a variety
 			of business models, <b>made easy to extend</b> mostly because of JPA annotations. There is no need to issue 
@@ -51,7 +55,11 @@
 			</ol>
 			<p>
 				Goals are consistent with the mission statement (see
-				the reference guide).
+				the <a href="http://200.175.198.24/helianto/">reference guide</a>).
+			</p>
+			<p>
+				Please, check this <a href="http://sourceforge.net/apps/wordpress/helianto/">blog</a>
+				 to see the motivations behind the project development.
 			</p>
 
 			<subsection name="Project Status">
