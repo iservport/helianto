@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
-		"classpath:/META-INF/spring/dataSource.xml", 
 		"classpath:/META-INF/spring/hibernate-context.xml", 
 		"classpath:/META-INF/spring/core-context.xml"})
 public abstract class AbstractDaoIntegrationTest {
