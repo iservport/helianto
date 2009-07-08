@@ -84,24 +84,24 @@ Export-Package: freemarker.entity;version="0.0.0",freemarker.keyType;v
  ="0.0.0";uses:="javax.annotation,org.helianto.core.dao,org.helianto.c
  ore.test,org.helianto.resource,org.helianto.resource.test,org.springf
  ramework.stereotype",org.helianto.resource.service;version="0.0.0";us
- es:="javax.annotation,junit.framework,org.helianto.core,org.helianto.
- core.dao,org.helianto.core.service,org.helianto.resource,org.springfr
- amework.stereotype,org.springframework.transaction.annotation",org.he
- lianto.resource.test;version="0.0.0";uses:="org.helianto.core,org.hel
- ianto.document.test,org.helianto.resource,org.springframework.test.co
- ntext",org.helianto.resource.validation;version="0.0.0";uses:="org.he
- lianto.core.validation,org.springframework.stereotype",org.helianto.w
- eb.controller;version="0.0.0";uses:="javax.annotation,org.helianto.co
- ntroller,org.helianto.core,org.helianto.core.security,org.helianto.co
- re.service,org.helianto.web.test,org.junit,org.springframework.beans,
- org.springframework.stereotype,org.springframework.validation,org.spr
- ingframework.webflow.execution",org.helianto.web.mail.compose;version
- ="0.0.0";uses:="org.helianto.message.mail.compose,org.springframework
- .mail.javamail",org.helianto.web.test;version="0.0.0";uses:="freemark
- er.template,junit.framework,org.helianto.core.security,org.junit,org.
- springframework.mock.web,org.springframework.web.servlet.view.freemar
- ker,org.springframework.webflow.execution",org.helianto.web.view;vers
- ion="0.0.0";uses:="org.helianto.web.test,org.junit"
+ es:="javax.annotation,org.helianto.core,org.helianto.core.dao,org.hel
+ ianto.core.service,org.helianto.resource,org.junit,org.springframewor
+ k.stereotype,org.springframework.transaction.annotation",org.helianto
+ .resource.test;version="0.0.0";uses:="org.helianto.core,org.helianto.
+ document.test,org.helianto.resource,org.springframework.test.context"
+ ,org.helianto.resource.validation;version="0.0.0";uses:="org.helianto
+ .core.validation,org.springframework.stereotype",org.helianto.web.con
+ troller;version="0.0.0";uses:="javax.annotation,org.helianto.controll
+ er,org.helianto.core,org.helianto.core.security,org.helianto.core.ser
+ vice,org.helianto.web.test,org.junit,org.springframework.beans,org.sp
+ ringframework.stereotype,org.springframework.validation,org.springfra
+ mework.webflow.execution",org.helianto.web.mail.compose;version="0.0.
+ 0";uses:="org.helianto.message.mail.compose,org.springframework.mail.
+ javamail",org.helianto.web.test;version="0.0.0";uses:="freemarker.tem
+ plate,junit.framework,org.helianto.core.security,org.junit,org.spring
+ framework.mock.web,org.springframework.web.servlet.view.freemarker,or
+ g.springframework.webflow.execution",org.helianto.web.view;version="0
+ .0.0";uses:="org.helianto.web.test,org.junit"
 Bundle-Vendor: i-Serv Consultoria Empresarial
 Bundle-Classpath: .
 Bundle-Version: 0.2.2
