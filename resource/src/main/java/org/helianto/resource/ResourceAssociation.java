@@ -34,7 +34,7 @@ import org.helianto.core.AbstractAssociation;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="proc_resourceAssoc",
+@Table(name="rsrc_resourceAssoc",
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
 @DiscriminatorColumn(
