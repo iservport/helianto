@@ -33,7 +33,7 @@ import javax.persistence.UniqueConstraint;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="proc_resparamvalue",
+@Table(name="rsrc_resparamvalue",
     uniqueConstraints = {@UniqueConstraint(columnNames={"resourceId", "parameterId"})}
 )
 public class ResourceParameterValue  implements java.io.Serializable {

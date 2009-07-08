@@ -35,7 +35,7 @@ import org.helianto.core.Unit;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="proc_params",
+@Table(name="rsrc_params",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "parameterCode"})}
 )
 public class ResourceParameter implements java.io.Serializable {

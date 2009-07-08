@@ -65,14 +65,6 @@ public class ResourceMgrImpl implements ResourceMgr {
 		return resourceGroup;
     }
     
-    public ResourceGroup createSubGroup(ResourceGroup parentGroup) {
-        return ResourceGroup.resourceGroupFactory(parentGroup, "");
-    }
-    
-    public ResourceGroup createSubGroup(ResourceGroup parentGroup, String resourceCode) {
-        return ResourceGroup.resourceGroupFactory(parentGroup, resourceCode);
-    }
-    
 	public ResourceGroup prepareResourceGroup(ResourceGroup resourceGroup) {
 		ResourceGroup managedResourceGroup = resourceGroupDao.merge(resourceGroup);
 		managedResourceGroup.getChildAssociations();

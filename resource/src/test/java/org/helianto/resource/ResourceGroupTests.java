@@ -29,23 +29,6 @@ public class ResourceGroupTests extends TestCase {
     }
     
     /**
-     * Test <code>ResourceGroup</code> static factory method.
-     */
-    public void testResourceGroupFactoryParent() {
-        Entity entity = new Entity();
-    	ResourceGroup parent = new ResourceGroup();
-    	parent.setEntity(entity);
-
-		ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(parent, "CODE");
-
-        assertTrue(resourceGroup instanceof ResourceGroup);
-		assertSame(entity, resourceGroup.getEntity());
-        assertEquals("CODE", resourceGroup.getResourceCode());
-        assertSame(parent, resourceGroup.getParent());
-        
-    }
-    
-    /**
      * Test <code>ResourceGroup</code> equals() method.
      */
     public void testResourceGroupEquals() {

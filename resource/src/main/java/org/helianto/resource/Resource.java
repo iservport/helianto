@@ -44,19 +44,6 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
         return resourceGroupFactory(Resource.class, entity, resourceCode);
     }
 
-    /**
-     * Factory method.
-     * 
-     * @param parent
-     * @param resourceCode
-     */
-    public static Resource resourceFactory(ResourceGroup parent, String resourceCode) {
-    	Resource resource =  resourceFactory(parent.getEntity(), resourceCode);
-    	resource.setParent(parent);
-    	resource.setResourceType(parent.getResourceType());
-    	return resource;
-    }
-    
     private static final long serialVersionUID = 1L;
     private String serialNumber;
     private char resourceState;

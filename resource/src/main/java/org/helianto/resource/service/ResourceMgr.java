@@ -59,21 +59,6 @@ public interface ResourceMgr {
     
     /**
      * <p>
-     * Delegates to {@link ResourceCreator#resourceGroupFactory(ResourceGroup, String)} with
-     * an empty resource code (to be filled at the presentation layer).
-     * </p>  
-     */
-    public ResourceGroup createSubGroup(ResourceGroup parentGroup);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceCreator#resourceGroupFactory(ResourceGroup, String)}.
-     * </p>  
-     */
-    public ResourceGroup createSubGroup(ResourceGroup parentGroup, String resourceCode);
-    
-    /**
-     * <p>
      * Delegates to {@link ResourceDao#persistResourceGroup(ResourceGroup)}.
      * </p>  
      */

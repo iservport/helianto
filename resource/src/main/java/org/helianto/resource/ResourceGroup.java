@@ -48,7 +48,7 @@ import org.helianto.core.NaturalKeyInfo;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="proc_resources",
+@Table(name="rsrc_resources",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "resourceCode"})}
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -69,24 +69,10 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo {
         return resourceGroupFactory(ResourceGroup.class, entity, resourceCode);
     }
 
-    /**
-     * Factory method.
-     * 
-     * @param parent
-     * @param resourceCode
-     */
-    public static ResourceGroup resourceGroupFactory(ResourceGroup parent, String resourceCode) {
-    	ResourceGroup resourceGroup =  resourceGroupFactory(parent.getEntity(), resourceCode);
-    	resourceGroup.setParent(parent);
-    	resourceGroup.setResourceType(parent.getResourceType());
-    	return resourceGroup;
-    }
-    
 	private static final long serialVersionUID = 1L;
 	private int id;
     private Entity entity;
     private String resourceCode;
-    private ResourceGroup parent;
     private String resourceName;
     private char resourceType;
     private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
@@ -126,18 +112,6 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo {
     }
     public void setResourceCode(String resourceCode) {
         this.resourceCode = resourceCode;
-    }
-    
-    /**
-     * Parent.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="parentId", nullable=true)
-    public ResourceGroup getParent() {
-        return this.parent;
-    }
-    public void setParent(ResourceGroup parent) {
-        this.parent = parent;
     }
     
     /**

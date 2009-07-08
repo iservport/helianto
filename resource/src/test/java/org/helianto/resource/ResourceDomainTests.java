@@ -58,8 +58,6 @@ public class ResourceDomainTests extends TestCase {
         entity = new Entity();
         resourceGroup.setEntity(entity);
         resourceGroup.setResourceCode("");
-        resourceGroup.setParent(null);
-        resourceGroup.setParent(new ResourceGroup());
         resourceGroup.setResourceName("");
         resourceGroup.setResourceType(ResourceType.EQUIPMENT.getValue());
         resourceGroup.setResourceType(ResourceType.FIXTURE.getValue());
