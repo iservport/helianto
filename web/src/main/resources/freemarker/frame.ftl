@@ -16,7 +16,7 @@
 <div id="entityLine">
 <p>
         <#include "${search!\"/empty\"}.ftl"/>
-        <#include "${home!\"/empty\"}.ftl"/>
+        <#include "${home!\"/home\"}.ftl"/>
         <#include "${navigate!\"/empty\"}.ftl"/>
     	<b>${title!"Selection"}</b>
 </p>
@@ -27,7 +27,7 @@
 </p>
 </div>
 <div id="headLine">
-		<#include "${announcement!\"/empty\"}.ftl"/>
+		<#include "${announcement!\"/announcement\"}.ftl"/>
 </div>
 <table name="bodyTable">
 <#-- actual content starts here -->
@@ -37,8 +37,8 @@
         <#include "${sidebar!\"/empty\"}.ftl"/>
 </td>
 <td id="main">
-		<#include "${mainnav!\"/empty\"}.ftl"/>
-		<#include "${mainbar!\"/empty\"}.ftl"/>
+		<div id="mainnav"><#include "${mainnav!\"/empty\"}.ftl"/></div>
+		<div id="mainbar"><#include "${mainbar!\"/empty\"}.ftl"/></div>
 		<#include "${template!\"/empty\"}.ftl"/>
 </td>
 <td id="info">
