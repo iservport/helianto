@@ -23,6 +23,10 @@ public enum ResourceType {
      */
     EQUIPMENT('E'),
     /**
+     * The resource is a vehicle.
+     */
+    VEHICLE('V'),
+    /**
      * The resource is a fixture.
      */
     FIXTURE('F'),
