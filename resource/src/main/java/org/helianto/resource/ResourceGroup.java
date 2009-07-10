@@ -115,6 +115,14 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo {
     }
     
     /**
+     * <<Transient>> Make discriminator value available.
+     */
+    @Transient
+    public char getDiscriminatorValue() {
+    	return 'G';
+    }
+    
+    /**
      * Resource name.
      */
     @Column(length=128)

@@ -100,8 +100,6 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
         try {
             T preparedTarget = doPrepareTarget(context, (T) get(context));
             put(context, preparedTarget);
-        	char discriminatorValue = getDiscriminatorValue(preparedTarget);
-        	context.getFlowScope().put("targetDiscriminatorValue", discriminatorValue);
             return success();
         }
         catch (Exception e) {
@@ -110,16 +108,6 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
         }
     }
 	
-	/**
-	 * Subclassess may override to provide a discriminator value other than ' '
-	 * under the flow scope attribute named 'targetDiscriminatorValue'.
-	 * 
-	 * @param target
-	 */
-	protected char getDiscriminatorValue(T target) {
-		return ' ';
-	}
-    
 	/**
 	 * Hook to the actual target preparation.
 	 * 

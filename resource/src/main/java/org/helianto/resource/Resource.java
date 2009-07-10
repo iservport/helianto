@@ -57,6 +57,14 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     }
 
     /**
+     * <<Transient>> Make discriminator value available.
+     */
+    @Transient
+    @Override
+    public char getDiscriminatorValue() {
+    	return 'R';
+    }
+    /**
      * Resource serial number.
      */
     @Column(length=20)
