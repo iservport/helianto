@@ -15,6 +15,8 @@
 
 package org.helianto.resource.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -67,9 +69,30 @@ public class ResourceMgrImpl implements ResourceMgr {
     
 	public ResourceGroup prepareResourceGroup(ResourceGroup resourceGroup) {
 		ResourceGroup managedResourceGroup = resourceGroupDao.merge(resourceGroup);
-		managedResourceGroup.getChildAssociations();
+		managedResourceGroup.setChildAssociationList(loadChildAssociationList(managedResourceGroup));
+		managedResourceGroup.setParentAssociationList(loadParentAssociationList(managedResourceGroup));
 		resourceGroupDao.evict(resourceGroup);
 		return managedResourceGroup;
+	}
+	
+	protected final List<ResourceAssociation> loadChildAssociationList(ResourceGroup resourceGroup) {
+    	List<ResourceAssociation> childAssociationList = new ArrayList<ResourceAssociation>();
+    	childAssociationList.addAll(resourceGroup.getChildAssociations());
+    	Collections.sort(childAssociationList);
+    	if (logger.isDebugEnabled()) {
+    		logger.debug("Loaded "+childAssociationList.size()+" child association(s).");
+    	}
+    	return childAssociationList;
+	}
+
+	protected final List<ResourceAssociation> loadParentAssociationList(ResourceGroup resourceGroup) {
+    	List<ResourceAssociation> parentAssociationList = new ArrayList<ResourceAssociation>();
+    	parentAssociationList.addAll(resourceGroup.getParentAssociations());
+    	Collections.sort(parentAssociationList);
+    	if (logger.isDebugEnabled()) {
+    		logger.debug("Loaded "+parentAssociationList.size()+" parent association(s).");
+    	}
+    	return parentAssociationList;
 	}
 
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup) {

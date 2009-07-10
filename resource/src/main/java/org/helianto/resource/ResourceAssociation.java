@@ -42,7 +42,7 @@ import org.helianto.core.AbstractAssociation;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class ResourceAssociation extends AbstractAssociation<ResourceGroup, ResourceGroup> {
+public class ResourceAssociation extends AbstractAssociation<ResourceGroup, ResourceGroup> implements Comparable<ResourceAssociation> {
 
     private static final long serialVersionUID = 1L;
 
@@ -91,6 +91,16 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
 		}
     }
 
+    public int compareTo(ResourceAssociation other) {
+    	if (getChild()!=null && other.getChild()!=null) {
+    		if (getChild().equals(other.getChild()) && getParent()!=null && other.getParent()!=null) {
+    			return getParent().compareTo(other.getParent());
+    		}
+    		return getChild().compareTo(other.getChild());
+    	}
+    	return 0;
+    }
+       
     /**
      * Natural key info.
      */
@@ -109,5 +119,5 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
          if ( !(other instanceof ResourceAssociation) ) return false;
          return super.equals(other);
    }
-   
+
 }

@@ -16,7 +16,6 @@
 package org.helianto.resource;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,7 +56,7 @@ import org.helianto.core.NaturalKeyInfo;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("G")
-public class ResourceGroup implements Serializable, NaturalKeyInfo {
+public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<ResourceGroup> {
 
     /**
      * Factory method.
@@ -77,6 +76,9 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo {
     private char resourceType;
     private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
     private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
+    //transient
+    private List<ResourceAssociation> childAssociationList;
+    private List<ResourceAssociation> parentAssociationList;
 
     /** default constructor */
     public ResourceGroup() {
@@ -158,9 +160,10 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo {
     }
     @Transient
     public List<ResourceAssociation> getChildAssociationList() {
-    	List<ResourceAssociation> childAssociationList = new ArrayList<ResourceAssociation>();
-    	childAssociationList.addAll(getChildAssociations());
-    	return childAssociationList;
+    	return this.childAssociationList;
+    }
+    public void setChildAssociationList(List<ResourceAssociation> childAssociationList) {
+    	this.childAssociationList = childAssociationList;
     }
 
     /**
@@ -175,9 +178,10 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo {
     }
     @Transient
     public List<ResourceAssociation> getParentAssociationList() {
-    	List<ResourceAssociation> parentAssociationList = new ArrayList<ResourceAssociation>();
-    	parentAssociationList.addAll(getParentAssociations());
-    	return parentAssociationList;
+    	return this.parentAssociationList;
+    }
+    public void setParentAssociationList(List<ResourceAssociation> parentAssociationList) {
+    	this.parentAssociationList = parentAssociationList;
     }
 
 
@@ -211,6 +215,13 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo {
     	resource.setResourceType(getResourceType());
     	ResourceAssociation resourceAssociation = ResourceAssociation.resourceAssociationFactory(ResourceAssociation.class, this, resource, sequence);
     	return resourceAssociation;
+    }
+
+    public int compareTo(ResourceGroup other) {
+    	if (getResourceCode()!=null && other.getResourceCode()!=null) {
+    		return getResourceCode().compareTo(other.getResourceCode());
+    	}
+    	return 0;
     }
 
     /**
