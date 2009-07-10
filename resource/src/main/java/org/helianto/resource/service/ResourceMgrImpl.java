@@ -87,7 +87,13 @@ public class ResourceMgrImpl implements ResourceMgr {
 
 	protected final List<ResourceAssociation> loadParentAssociationList(ResourceGroup resourceGroup) {
     	List<ResourceAssociation> parentAssociationList = new ArrayList<ResourceAssociation>();
-    	parentAssociationList.addAll(resourceGroup.getParentAssociations());
+    	for (ResourceAssociation parentAssociation: resourceGroup.getParentAssociations()) {
+    		ResourceGroup parent = parentAssociation.getParent();
+        	if (logger.isDebugEnabled() && parent!=null) {
+        		logger.debug("Loading parent "+parent.getResourceCode()+" from "+resourceGroup.getResourceCode());
+        	}
+        	parentAssociationList.add(parentAssociation);
+    	}
     	Collections.sort(parentAssociationList);
     	if (logger.isDebugEnabled()) {
     		logger.debug("Loaded "+parentAssociationList.size()+" parent association(s).");

@@ -5,10 +5,10 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -41,10 +41,18 @@ public class ResourceMgrImplTests {
 	@Test
 	public void testPrepareResourceGroup() {
 		ResourceGroup resourceGroup = new ResourceGroup();
+		final Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>();
+		ResourceAssociation child = new ResourceAssociation();
+		childAssociations.add(child);
+		final Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>();
+		ResourceAssociation parent = new ResourceAssociation();
+		parentAssociations.add(parent);
 		ResourceGroup managedResourceGroup = new ResourceGroup() {
 			@Override public Set<ResourceAssociation> getChildAssociations() {
-				setId(1);
-				return null;
+				return childAssociations;
+			}
+			@Override public Set<ResourceAssociation> getParentAssociations() {
+				return parentAssociations;
 			}
 		};
 		
@@ -53,7 +61,8 @@ public class ResourceMgrImplTests {
 		replay(resourceGroupDao);
 		
 		assertSame(managedResourceGroup, resourceMgr.prepareResourceGroup(resourceGroup));
-		assertEquals(1, managedResourceGroup.getId());
+		assertSame(child, managedResourceGroup.getChildAssociationList().get(0));
+		assertSame(parent, managedResourceGroup.getParentAssociationList().get(0));
 		verify(resourceGroupDao);
 	}
 	

@@ -33,7 +33,11 @@ public enum ResourceType {
     /**
      * The resource is a tool.
      */
-    TOOL('T');
+    TOOL('T'),
+    /**
+     * The resource type is irrelevant.
+     */
+    ANY('A');
     
     private char value;
     
