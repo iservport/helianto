@@ -34,7 +34,7 @@
 	-->
     <context:annotation-config/>
     
-	<context:component-scan base-package="org.helianto.core.orm,org.helianto.core.service,org.helianto.core.validation"/>
+	<context:component-scan base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.core.validation"/>
 	    
 	<!--
 		Post-processor to perform exception translation on @Repository classes (from native
