@@ -35,6 +35,7 @@
 <td id="sidebar">
         <#include "${sidenav!\"/empty\"}.ftl"/>
         <#include "${sidebar!\"/empty\"}.ftl"/>
+        <#include "${siderel!\"/empty\"}.ftl"/>
 </td>
 <td id="main">
 		<div id="mainnav"><#include "${mainnav!\"/empty\"}.ftl"/></div>
@@ -90,3 +91,24 @@ href="?_eventId=${event}&target_index=${targetIndex}${param}&_flowExecutionKey=$
 	</#if>
 </#macro>
 
+<#macro remove caption="Remove", target="target", action="home.htm">
+	<table id="remove">
+	<thead>
+	<tr>
+		<td>${caption}</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			<form action="${action}" method="POST">
+				<input type="checkbox" name="${target}RemovalConfirmation" value="R"/>
+				<input type="hidden" name="task" value="${formObject.target.id?c}"/>
+				<input type="submit" name="_eventId_removeTarget" value="${caption}" class="btn" />
+				<@fl.flowKey/>
+			</form>
+		</td>
+	</tr>
+	</tbody>
+	</table>
+</#macro>
