@@ -47,13 +47,15 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private String serialNumber;
     private char resourceState;
+    private char resourceClassification;
     private Partner manufacturer;
     private Partner owner;
-    private boolean keyResource;
 
     /** default constructor */
     protected Resource() {
     	super();
+    	setResourceState(ResourceState.ACTIVE);
+    	setResourceClassification(ResourceClassification.ANY);
     }
 
     /**
@@ -88,6 +90,19 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
         this.resourceState = resourceState.getValue();
     }
 
+    /**
+     * Resource classification.
+     */
+    public char getResourceClassification() {
+        return this.resourceClassification;
+    }
+    public void setResourceClassification(char keyResource) {
+        this.resourceClassification = keyResource;
+    }
+    public void setResourceClassification(ResourceClassification resourceClassification) {
+        this.resourceClassification = resourceClassification.getValue();
+    }
+    
     /**
      * Resource manufacturer.
      */
@@ -124,16 +139,6 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     }
     public void setOwner(Partner owner) {
         this.owner = owner;
-    }
-    
-    /**
-     * Resource classified as key resource.
-     */
-    public boolean isKeyResource() {
-        return this.keyResource;
-    }
-    public void setKeyResource(boolean keyResource) {
-        this.keyResource = keyResource;
     }
     
     public boolean equals(Object other) {
