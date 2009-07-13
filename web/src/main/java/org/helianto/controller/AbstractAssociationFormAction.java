@@ -16,6 +16,7 @@
 package org.helianto.controller;
 
 import org.helianto.core.AbstractAssociation;
+import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
@@ -24,7 +25,111 @@ import org.springframework.webflow.execution.RequestContext;
  * @author Mauricio Fernandes de Castro
  */
 public abstract class AbstractAssociationFormAction<A extends AbstractAssociation<P, C>, P, C> extends AbstractEditAggregateFormAction<A, P> {
+	
+	private AbstractAssociationStack<P, C> stack;
+	
+	/**
+	 * Default constructor.
+	 */
+	public AbstractAssociationFormAction() {
+		super();
+		stack = new AbstractAssociationStack<P, C>() {
+			private static final long serialVersionUID = 1L;
+		};
+	}
 
+    /**
+     * Push the target into the stack.
+     */
+	public final Event pushTarget(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+            logger.debug("!---- pushTarget\n");
+        }
+        try {
+    		A target = (A) get(context);
+            if (target!=null) {
+            	if (stack.isEmpty()) {
+                	P parent = target.getParent();
+                	stack.setRootInstance(parent);
+            	}
+            	stack.push(target);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Pushed target is "+target);
+                }
+            	context.getFlowScope().put(getParentAttributeName(), target.getParent());
+            	context.getFlowScope().put(getChildAttributeName(), target.getChild());
+            	put(context, target);
+            }
+            else {
+                logger.warn("Target not pushed: null");
+            }
+            return success();
+        }
+        catch (Exception e) {
+            logger.warn("Unable to push target ", e);
+            return error();
+        }
+    }
+    
+    /**
+     * Pop the target from the stack.
+     */
+	@SuppressWarnings("unchecked")
+	public final Event popTarget(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+            logger.debug("!---- popTarget\n");
+        }
+        try {
+            if (stack.isEmpty()) {
+            	A target = get(context);
+            	P parent = target.getParent();
+            	stack.setRootInstance(parent);
+            	context.getFlowScope().put(getParentAttributeName(), parent);
+            	context.getFlowScope().put(getChildAttributeName(), null);
+            	put(context, null);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Parent updated");
+                }
+            }
+            else {
+        		A lastTarget = (A) stack.pop();
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Popped target was "+lastTarget);
+                }
+                if (stack.isEmpty()) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Stack is empty");
+                    }
+                	context.getFlowScope().put(getParentAttributeName(), stack.getRootInstance());
+                	context.getFlowScope().put(getChildAttributeName(), null);
+                	put(context, null);
+                   if (logger.isDebugEnabled()) {
+                        logger.debug("Target pushed in stack");
+                    }
+                }
+                else {
+            		A target = (A) stack.peek();
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Peeked target is "+target);
+                    }
+                	context.getFlowScope().put(getParentAttributeName(), target.getParent());
+                	context.getFlowScope().put(getChildAttributeName(), target.getChild());
+                	put(context, target);
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Target pushed in stack");
+                    }
+                }
+            }
+            return success();
+        }
+        catch (Exception e) {
+            logger.warn("Unable to push target ", e);
+            return error();
+        }
+    }
+    
 	@Override
 	protected A doPrepareTarget(RequestContext context, A target) throws Exception {
 		return target;

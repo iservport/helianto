@@ -68,7 +68,6 @@ public abstract class AbstractComplexModelFormAction<T> extends AbstractAuthoriz
     /**
      * Select a node.
      */
-	@SuppressWarnings("unchecked")
 	public Event selectNode(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");

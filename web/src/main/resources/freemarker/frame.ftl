@@ -40,6 +40,7 @@
 <td id="main">
 		<div id="mainnav"><#include "${mainnav!\"/empty\"}.ftl"/></div>
 		<div id="mainbar"><#include "${mainbar!\"/empty\"}.ftl"/></div>
+		<div id="tempnav"><#include "${tempnav!\"/empty\"}.ftl"/></div>
 		<#include "${template!\"/empty\"}.ftl"/>
 </td>
 <td id="info">

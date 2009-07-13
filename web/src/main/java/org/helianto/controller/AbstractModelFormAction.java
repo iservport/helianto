@@ -91,7 +91,6 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
     /**
      * Prepare the target.
      */
-	@SuppressWarnings("unchecked")
 	public final Event prepareTarget(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
@@ -124,7 +123,7 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
 	 * @param context
 	 */
 	@SuppressWarnings("unchecked")
-	public Object get(RequestContext context) {
+	public T get(RequestContext context) {
 		T target = (T) context.getFlowScope().get(getTargetAttributeName());
 		if (logger.isDebugEnabled()) {
 			logger.debug("Get model object '"+getTargetAttributeName()+"'="+target);
@@ -219,7 +218,6 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
     /**
      * Post-process the selection .
      */
-    @SuppressWarnings("unchecked")
 	public final Event postProcess(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
