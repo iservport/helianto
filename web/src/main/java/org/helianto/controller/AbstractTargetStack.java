@@ -50,14 +50,14 @@ public abstract class AbstractTargetStack<T> implements Serializable {
 	}
 
 	/**
-	 * Get the current list.
+	 * Get the current target.
 	 */
 	public T peek() {
 		return internalStack.getFirst();
 	}
 
 	/**
-	 * Remove the current list.
+	 * Remove the current target.
 	 */
 	public T pop() {
 		return internalStack.removeFirst();

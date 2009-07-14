@@ -22,7 +22,6 @@ import static org.junit.Assert.assertSame;
 import org.helianto.core.AbstractAssociation;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.test.MockRequestContext;
 
@@ -40,21 +39,19 @@ public class AssociationFormActionTests {
 
 		assertEquals("success", associationFormAction.pushTarget(context).getId());
 
-		assertSame(target, context.getFlowScope().get("target"));
-		assertEquals("P", context.getFlowScope().get("parent"));
-		assertEquals("C", context.getFlowScope().get("child"));
+		assertSame(target, associationFormAction.getInternalStack().peek());
 	}
 	
 	@Test
-	public void testPopTargetEmpty() {
-		StubAssociation target = new StubAssociation("P", "C");
-		context.getFlowScope().put("target", target);
+	public void testPushNullTarget() {
+		context.getFlowScope().put("target", null);
 
-		assertEquals("success", associationFormAction.popTarget(context).getId());
-		
-		assertNull(context.getFlowScope().get("target"));
-		assertEquals("P", context.getFlowScope().get("parent"));
-		assertNull(context.getFlowScope().get("child"));
+		assertEquals("success", associationFormAction.pushTarget(context).getId());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testPopTargetEmpty() {
+		associationFormAction.popTarget(context);
 	}
 	
 	@Test
@@ -63,9 +60,6 @@ public class AssociationFormActionTests {
 		context.getFlowScope().put("target", target);
 		
 		assertEquals("success", associationFormAction.pushTarget(context).getId());
-		assertEquals(target, context.getFlowScope().get("target"));
-		assertEquals("P", context.getFlowScope().get("parent"));
-		assertEquals("C", context.getFlowScope().get("child"));
 
 		assertEquals("success", associationFormAction.popTarget(context).getId());
 		assertNull(context.getFlowScope().get("target"));
@@ -73,28 +67,39 @@ public class AssociationFormActionTests {
 		assertNull(context.getFlowScope().get("child"));
 	}
 	
+	/**
+	 * Simulate a navigation on 3 pages
+	 */
 	@Test
 	public void testPopTargetTwice() {
-		StubAssociation target = new StubAssociation("P", "C");
+		// start state: page 1
+		// A is the current target for the "edit" presentation logic
+		
+		// user selects a sub-item from A: the AB association
+		// AB becomes the current target for the "association" presentation logic 
+		// B will replace A as current target for the "edit" presentation logic
+		StubAssociation target = new StubAssociation("A", "B");
 		context.getFlowScope().put("target", target);
-		
 		assertEquals("success", associationFormAction.pushTarget(context).getId());
-		assertEquals(target, context.getFlowScope().get("target"));
-		assertEquals("P", context.getFlowScope().get("parent"));
-		assertEquals("C", context.getFlowScope().get("child"));
+		// success = page 2 displayed with B, AB is in scope and stack is AB
 
-		StubAssociation target1 = new StubAssociation("P1", "C1");
+		// user selects a sub-item from B: the BC association
+		// BC becomes the current target for the "association" presentation logic 
+		// C will replace B as current target for the "edit" presentation logic
+		StubAssociation target1 = new StubAssociation("B", "C");
 		context.getFlowScope().put("target", target1);
-		
 		assertEquals("success", associationFormAction.pushTarget(context).getId());
-		assertEquals(target1, context.getFlowScope().get("target"));
-		assertEquals("P1", context.getFlowScope().get("parent"));
-		assertEquals("C1", context.getFlowScope().get("child"));
-
+		// success = page 3 displayed with C, BC is in scope and stack is BC+AB
+		
+		// user returns to page 2
 		assertEquals("success", associationFormAction.popTarget(context).getId());
+		assertEquals("B", context.getFlowScope().get("parent"));
 		assertSame(target, context.getFlowScope().get("target"));
-		assertEquals("P", context.getFlowScope().get("parent"));
-		assertEquals("C", context.getFlowScope().get("child"));
+		
+		// user returns to page 1
+		assertEquals("success", associationFormAction.popTarget(context).getId());
+		assertEquals("A", context.getFlowScope().get("parent"));
+//		assertSame("A", context.getFlowScope().get("target"));
 	}
 	
 	private AbstractAssociationFormAction<StubAssociation, String, String> associationFormAction;

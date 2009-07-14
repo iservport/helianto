@@ -26,16 +26,23 @@ import org.springframework.webflow.execution.RequestContext;
  */
 public abstract class AbstractAssociationFormAction<A extends AbstractAssociation<P, C>, P, C> extends AbstractEditAggregateFormAction<A, P> {
 	
-	private AbstractAssociationStack<P, C> stack;
+	private AbstractAssociationStack<P, C> internalStack;
 	
 	/**
 	 * Default constructor.
 	 */
 	public AbstractAssociationFormAction() {
 		super();
-		stack = new AbstractAssociationStack<P, C>() {
+		internalStack = new AbstractAssociationStack<P, C>() {
 			private static final long serialVersionUID = 1L;
 		};
+	}
+
+	/**
+	 * Internal stack.
+	 */
+	public AbstractAssociationStack<P, C> getInternalStack() {
+		return internalStack;
 	}
 
     /**
@@ -49,17 +56,13 @@ public abstract class AbstractAssociationFormAction<A extends AbstractAssociatio
         try {
     		A target = (A) get(context);
             if (target!=null) {
-            	if (stack.isEmpty()) {
-                	P parent = target.getParent();
-                	stack.setRootInstance(parent);
+            	if (internalStack.isEmpty()) {
+            		internalStack.setRootInstance(target.getParent());
             	}
-            	stack.push(target);
+            	internalStack.push(target);
                 if (logger.isDebugEnabled()) {
                     logger.debug("Pushed target is "+target);
                 }
-            	context.getFlowScope().put(getParentAttributeName(), target.getParent());
-            	context.getFlowScope().put(getChildAttributeName(), target.getChild());
-            	put(context, target);
             }
             else {
                 logger.warn("Target not pushed: null");
@@ -72,7 +75,37 @@ public abstract class AbstractAssociationFormAction<A extends AbstractAssociatio
         }
     }
     
+	/**
+	 * On every selection of any association, prepare to replace the current parent
+	 * target with the association child.
+	 */
+    @Override
+    protected final boolean postProcessSelectTarget(RequestContext context, A target) throws Exception {
+    	if (target.getChild()==null) {
+            logger.warn("Association child is null after selection, parent target not replaced.");
+            return postProcessParentTargetReplacement(context, target, false);
+    	}
+    	context.getFlowScope().put(getParentAttributeName(), target.getChild());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Parent replaced by "+target.getChild());
+        }
+		return postProcessParentTargetReplacement(context, target, true);
+	}
+    
     /**
+     * Subclasses may override to post process after association selection
+     * parent target replacement.
+     *  
+     * @param context
+     * @param target
+     * @param isReplacement
+     * @return true if accepted
+     */
+    protected boolean postProcessParentTargetReplacement(RequestContext context, A target, boolean isReplacement) {
+    	return true;
+    }
+
+	/**
      * Pop the target from the stack.
      */
 	@SuppressWarnings("unchecked")
@@ -81,45 +114,33 @@ public abstract class AbstractAssociationFormAction<A extends AbstractAssociatio
             logger.debug("!---- STARTED");
             logger.debug("!---- popTarget\n");
         }
+        if (internalStack.isEmpty()) {
+        	throw new IllegalArgumentException("Unable to pop from an empty stack.");
+        }
         try {
-            if (stack.isEmpty()) {
-            	A target = get(context);
-            	P parent = target.getParent();
-            	stack.setRootInstance(parent);
-            	context.getFlowScope().put(getParentAttributeName(), parent);
-            	context.getFlowScope().put(getChildAttributeName(), null);
+    		A lastTarget = (A) internalStack.pop();
+            if (logger.isDebugEnabled()) {
+                logger.debug("Popped target was "+lastTarget);
+            }
+            if (internalStack.isEmpty()) {
             	put(context, null);
                 if (logger.isDebugEnabled()) {
-                    logger.debug("Parent updated");
+                    logger.debug("Stack is empty");
+                }
+                context.getFlowScope().put(getParentAttributeName(), internalStack.getRootInstance());
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Parent replaced by "+lastTarget.getParent());
                 }
             }
             else {
-        		A lastTarget = (A) stack.pop();
+        		A target = (A) internalStack.peek();
+            	put(context, target);
                 if (logger.isDebugEnabled()) {
-                    logger.debug("Popped target was "+lastTarget);
+                    logger.debug("Peeked target is "+target);
                 }
-                if (stack.isEmpty()) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Stack is empty");
-                    }
-                	context.getFlowScope().put(getParentAttributeName(), stack.getRootInstance());
-                	context.getFlowScope().put(getChildAttributeName(), null);
-                	put(context, null);
-                   if (logger.isDebugEnabled()) {
-                        logger.debug("Target pushed in stack");
-                    }
-                }
-                else {
-            		A target = (A) stack.peek();
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Peeked target is "+target);
-                    }
-                	context.getFlowScope().put(getParentAttributeName(), target.getParent());
-                	context.getFlowScope().put(getChildAttributeName(), target.getChild());
-                	put(context, target);
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Target pushed in stack");
-                    }
+                context.getFlowScope().put(getParentAttributeName(), lastTarget.getParent());
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Parent replaced by "+lastTarget.getParent());
                 }
             }
             return success();
