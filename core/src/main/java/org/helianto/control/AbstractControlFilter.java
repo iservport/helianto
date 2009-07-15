@@ -17,8 +17,6 @@ package org.helianto.control;
 
 
 import org.helianto.core.User;
-import org.helianto.core.filter.AbstractDateRangeFilter;
-import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.DateRange;
 
 /**
@@ -26,13 +24,11 @@ import org.helianto.core.filter.DateRange;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractControlFilter extends AbstractDateRangeFilter implements DateRange {
+public abstract class AbstractControlFilter extends AbstractRecordFilter implements DateRange {
 
 	private static final long serialVersionUID = 1L;
-	private int id;
-    private long internalNumber;
+	private char trackingMode;
     private int priority = 0;
-    private char resolution = ' ';
 
 	/** 
      * Default constructor.
@@ -41,43 +37,16 @@ public abstract class AbstractControlFilter extends AbstractDateRangeFilter impl
     	super();
     }
     
-	/** 
-     * Reset. 
-     */
-    public void reset() {
-    	super.reset();
-    }
-    
-	@Override
-	public boolean isSelection() {
-		return getInternalNumber()>0;
-	}
-
-	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
-	}
-
-	/** 
-     * Primary key. 
-     */
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    
     /**
-     * Internal number.
+     * Tracking mode filter.
      */
-    public long getInternalNumber() {
-        return this.internalNumber;
+    public char getTrackingMode() {
+    	return this.trackingMode;
     }
-    public void setInternalNumber(long internalNumber) {
-        this.internalNumber = internalNumber;
+    public void setTrackingMode(char trackingMode) {
+    	this.trackingMode = trackingMode;
     }
-
+    
     /**
      * Priority.
      */
@@ -86,16 +55,6 @@ public abstract class AbstractControlFilter extends AbstractDateRangeFilter impl
     }
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-    
-    /**
-     * Resolution.
-     */
-    public char getResolution() {
-        return this.resolution;
-    }
-    public void setResolution(char resolution) {
-        this.resolution = resolution;
     }
     
 	/**
@@ -113,28 +72,6 @@ public abstract class AbstractControlFilter extends AbstractDateRangeFilter impl
         taskFilter.setUser(user);
         return taskFilter;
 	}
-
-    /**
-     * toString
-     * @return String
-     */
-     public String toString() {
-	  StringBuffer buffer = new StringBuffer();
-
-      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-      buffer.append("user").append("='").append(getUser()).append("' ");			
-      buffer.append("internalNumber").append("='").append(getInternalNumber()).append("' ");			
-      buffer.append("]");
-      
-      return buffer.toString();
-     }
-
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getUser() == null ? 0 : this.getUser().hashCode() );
-         result = 37 * result + (int) this.getInternalNumber();
-         return result;
-   }
 
 }
 
