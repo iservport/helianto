@@ -54,6 +54,7 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     /** default constructor */
     protected Resource() {
     	super();
+    	setResourceType(' '); // delegate to service layer
     	setResourceState(ResourceState.ACTIVE);
     	setResourceClassification(ResourceClassification.ANY);
     }

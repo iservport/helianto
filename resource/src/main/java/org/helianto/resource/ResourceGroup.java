@@ -212,7 +212,9 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
     public ResourceAssociation associatedResourceFactory(Class<? extends ResourceGroup> clazz, int sequence) {
     	String resourceCode = new StringBuilder(getResourceCode()).append("-").append(sequence).toString();
     	ResourceGroup resource = resourceGroupFactory(clazz, this.getEntity(), resourceCode);
-    	resource.setResourceType(getResourceType());
+    	if (resource.getResourceType()==' ') {
+        	resource.setResourceType(getResourceType());
+    	}
     	ResourceAssociation resourceAssociation = ResourceAssociation.resourceAssociationFactory(ResourceAssociation.class, this, resource, sequence);
     	return resourceAssociation;
     }
