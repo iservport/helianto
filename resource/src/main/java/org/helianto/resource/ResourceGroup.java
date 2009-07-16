@@ -37,6 +37,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.control.Control;
 import org.helianto.core.Entity;
 import org.helianto.core.NaturalKeyInfo;
 
@@ -77,7 +78,8 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
     private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
     private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
     //transient
-    private List<ResourceAssociation> childAssociationList;
+    private Control controlReference;
+	private List<ResourceAssociation> childAssociationList;
     private List<ResourceAssociation> parentAssociationList;
 
     /** default constructor */
@@ -184,6 +186,16 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
     	this.parentAssociationList = parentAssociationList;
     }
 
+    /**
+     * <<Transient>> Control reference.
+     */
+    @Transient
+    public Control getControlReference() {
+		return controlReference;
+	}
+	public void setControlReference(Control controlReference) {
+		this.controlReference = controlReference;
+	}
 
     /**
      * <code>ResourceGroup</code> factory.
