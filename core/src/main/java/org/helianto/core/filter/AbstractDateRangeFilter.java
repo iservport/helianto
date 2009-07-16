@@ -35,16 +35,13 @@ public abstract class AbstractDateRangeFilter extends AbstractUserBackedCriteria
 	private int daysIncluded = -7;
     private int daysToInclude = 7;
 
-     // Constructors
-
 	/** default constructor */
     public AbstractDateRangeFilter() {
+    	super();
     }
     
-    // methods
-    
     /**
-     * Estabelece um intervalo para o filtro.
+     * Set the default date range.
      */
     public void selectDateRange() {
         if (toDate==null) {

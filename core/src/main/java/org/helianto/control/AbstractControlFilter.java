@@ -17,14 +17,14 @@ package org.helianto.control;
 
 
 import org.helianto.core.User;
-import org.helianto.core.filter.DateRange;
+import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Base class to control filters.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractControlFilter extends AbstractRecordFilter implements DateRange {
+public abstract class AbstractControlFilter extends AbstractRecordFilter {
 
 	private static final long serialVersionUID = 1L;
 	private char trackingMode;
@@ -35,6 +35,7 @@ public abstract class AbstractControlFilter extends AbstractRecordFilter impleme
      */
     public AbstractControlFilter() {
     	super();
+    	setTrackingMode(' ');
     }
     
     /**
@@ -57,6 +58,13 @@ public abstract class AbstractControlFilter extends AbstractRecordFilter impleme
         this.priority = priority;
     }
     
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		super.doFilter(mainCriteriaBuilder);
+		appendEqualFilter("trackingMode", getTrackingMode(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);
+	}
+
 	/**
 	 * Generic factory method.
 	 * 

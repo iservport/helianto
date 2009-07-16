@@ -17,6 +17,7 @@ package org.helianto.core.filter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -84,22 +85,6 @@ public class CriteriaBuilder {
         criteria = new StringBuilder();
     }
 
-    /**
-     * Append an <code>Entity</code> filter if a <code>User</code> is present, or throws 
-     * <code>IllegalArgumentException</code>.
-     * 
-     * @param filter
-     * @deprecated
-     */
-    public CriteriaBuilder appendEntityFromUserBackedFilter(UserBackedFilter filter) {
-        if (filter.getUser()==null) {
-            throw new IllegalArgumentException("User required!");
-        }
-        appendSegment("entity.id", "=")
-        .append(filter.getUser().getEntity().getId());
-        return this;
-    }
-    
     /**
      * Filed name appender that can suppress the initial connector.
      * 
@@ -254,6 +239,19 @@ public class CriteriaBuilder {
     }
 
     /**
+     * Integer array appender.
+     * 
+     * @param content
+     */
+    public CriteriaBuilder append(int[] content) {
+    	if (content.length>0) {
+            criteria.append(Arrays.toString(content).replace("[", "(").replace("]", ")"))
+            .append(" ");
+    	}
+        return this;
+    }
+
+    /**
      * Long appender.
      * 
      * @param content
@@ -261,6 +259,19 @@ public class CriteriaBuilder {
     public CriteriaBuilder append(long content) {
         criteria.append(content)
         .append(" ");
+        return this;
+    }
+
+    /**
+     * Long array appender.
+     * 
+     * @param content
+     */
+    public CriteriaBuilder append(long[] content) {
+    	if (content.length>0) {
+            criteria.append(Arrays.toString(content).replace("[", "(").replace("]", ")"))
+            .append(" ");
+    	}
         return this;
     }
 

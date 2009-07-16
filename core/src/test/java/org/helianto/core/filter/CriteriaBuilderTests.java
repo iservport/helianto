@@ -18,10 +18,10 @@ package org.helianto.core.filter;
 import java.text.DateFormat;
 import java.util.Date;
 
+import junit.framework.TestCase;
+
 import org.helianto.core.User;
 import org.helianto.core.test.SecurityTestSupport;
-
-import junit.framework.TestCase;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -63,13 +63,6 @@ public class CriteriaBuilderTests extends TestCase {
     public void testCreateCriteria() {
         criteriaBuilder.createCriteria("OTHER_PREFIX");
         assertEquals("OTHER_PREFIX", criteriaBuilder.getPrefix());
-    }
-    
-    @SuppressWarnings("deprecation")
-	public void testAppendEntityFromUserBackedFilter() {
-        UserBackedFilter userBackedFilter = new UserBackedFilterStub();
-        criteriaBuilder.appendEntityFromUserBackedFilter(userBackedFilter);
-        assertEquals("PREFIX.entity.id = 9223372036854775807 ", criteriaBuilder.getCriteriaAsString());
     }
     
     public void testSegmentAppender() {
@@ -128,9 +121,45 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("2147483647 ",criteriaBuilder.getCriteriaAsString());
     }
     
+    public void testIntegerArrayAppender() {
+    	int[] keys = new int[] { 1, 2, 3 };
+        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertEquals("(1, 2, 3) ", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    public void testIntegerArrayAppenderSingle() {
+    	int[] keys = new int[] { 1 };
+        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertEquals("(1) ", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    public void testIntegerArrayAppenderEmpty() {
+    	int[] keys = new int[0];
+        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertEquals("", criteriaBuilder.getCriteriaAsString());
+    }
+    
     public void testLongAppender() {
         assertTrue(criteriaBuilder.append(Long.MAX_VALUE) instanceof CriteriaBuilder);
         assertEquals("9223372036854775807 ",criteriaBuilder.getCriteriaAsString());
+    }
+    
+    public void testLongArrayAppender() {
+    	long[] keys = new long[] { 1, 2, 3 };
+        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertEquals("(1, 2, 3) ", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    public void testLongArrayAppenderSingle() {
+    	long[] keys = new long[] { 1 };
+        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertEquals("(1) ", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    public void testLongArrayAppenderEmpty() {
+    	long[] keys = new long[0];
+        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
     public void testCharAppender() {
@@ -147,7 +176,6 @@ public class CriteriaBuilderTests extends TestCase {
         CriteriaBuilder subCriteriaBuilder = new CriteriaBuilder("PREFIX");
         subCriteriaBuilder.append("TEST");
         assertTrue(criteriaBuilder.append(subCriteriaBuilder) instanceof CriteriaBuilder);
-        System.out.println(criteriaBuilder.getCriteriaAsString());
         assertEquals("(TEST ) ",criteriaBuilder.getCriteriaAsString());
     }
     

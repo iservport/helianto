@@ -80,29 +80,29 @@ Export-Package: freemarker.entity;version="0.0.0",freemarker.keyType;v
  test.context",org.helianto.process.validation;version="0.0.0";uses:="
  org.helianto.core.validation,org.springframework.stereotype",org.heli
  anto.resource;version="0.0.0";uses:="javax.persistence,junit.framewor
- k,org.helianto.core,org.helianto.core.filter,org.helianto.partner,org
- .junit",org.helianto.resource.repository;version="0.0.0";uses:="javax
- .annotation,org.helianto.core.dao,org.helianto.core.test,org.helianto
- .resource,org.helianto.resource.test,org.springframework.stereotype",
- org.helianto.resource.service;version="0.0.0";uses:="javax.annotation
- ,org.helianto.core,org.helianto.core.dao,org.helianto.core.service,or
- g.helianto.resource,org.junit,org.springframework.stereotype,org.spri
- ngframework.transaction.annotation",org.helianto.resource.test;versio
- n="0.0.0";uses:="org.helianto.core,org.helianto.document.test,org.hel
- ianto.resource,org.springframework.test.context",org.helianto.resourc
- e.validation;version="0.0.0";uses:="org.helianto.core.validation,org.
- springframework.stereotype",org.helianto.web.controller;version="0.0.
- 0";uses:="javax.annotation,org.helianto.controller,org.helianto.core,
- org.helianto.core.security,org.helianto.core.service,org.helianto.web
- .test,org.junit,org.springframework.beans,org.springframework.stereot
- ype,org.springframework.validation,org.springframework.webflow.execut
- ion",org.helianto.web.mail.compose;version="0.0.0";uses:="org.heliant
- o.message.mail.compose,org.springframework.mail.javamail",org.heliant
- o.web.test;version="0.0.0";uses:="freemarker.template,junit.framework
- ,org.helianto.core.security,org.junit,org.springframework.mock.web,or
- g.springframework.web.servlet.view.freemarker,org.springframework.web
- flow.execution",org.helianto.web.view;version="0.0.0";uses:="org.heli
- anto.web.test,org.junit"
+ k,org.helianto.control,org.helianto.core,org.helianto.core.filter,org
+ .helianto.partner,org.junit",org.helianto.resource.repository;version
+ ="0.0.0";uses:="javax.annotation,org.helianto.core.dao,org.helianto.c
+ ore.test,org.helianto.resource,org.helianto.resource.test,org.springf
+ ramework.stereotype",org.helianto.resource.service;version="0.0.0";us
+ es:="javax.annotation,org.helianto.core,org.helianto.core.dao,org.hel
+ ianto.core.service,org.helianto.resource,org.junit,org.springframewor
+ k.stereotype,org.springframework.transaction.annotation",org.helianto
+ .resource.test;version="0.0.0";uses:="org.helianto.core,org.helianto.
+ document.test,org.helianto.resource,org.springframework.test.context"
+ ,org.helianto.resource.validation;version="0.0.0";uses:="org.helianto
+ .core.validation,org.springframework.stereotype",org.helianto.web.con
+ troller;version="0.0.0";uses:="javax.annotation,org.helianto.controll
+ er,org.helianto.core,org.helianto.core.security,org.helianto.core.ser
+ vice,org.helianto.web.test,org.junit,org.springframework.beans,org.sp
+ ringframework.stereotype,org.springframework.validation,org.springfra
+ mework.webflow.execution",org.helianto.web.mail.compose;version="0.0.
+ 0";uses:="org.helianto.message.mail.compose,org.springframework.mail.
+ javamail",org.helianto.web.test;version="0.0.0";uses:="freemarker.tem
+ plate,junit.framework,org.helianto.core.security,org.junit,org.spring
+ framework.mock.web,org.springframework.web.servlet.view.freemarker,or
+ g.springframework.webflow.execution",org.helianto.web.view;version="0
+ .0.0";uses:="org.helianto.web.test,org.junit"
 Bundle-Vendor: i-Serv Consultoria Empresarial
 Bundle-Classpath: .
 Bundle-Version: 0.2.2
