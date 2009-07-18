@@ -93,7 +93,7 @@ public abstract class AbstractAssociationFormAction<A extends AbstractAssociatio
 	}
     
     /**
-     * Subclasses may override to post process after association selection
+     * Subclasses may override to post process association selection
      * parent target replacement.
      *  
      * @param context
@@ -107,6 +107,10 @@ public abstract class AbstractAssociationFormAction<A extends AbstractAssociatio
 
 	/**
      * Pop the target from the stack.
+     * 
+     * <p>Pop removes the top of the stack and sets the next object in
+     * the row as target. Useful when editing an hierarchy and a backward step 
+     * is requested.</p>
      */
 	@SuppressWarnings("unchecked")
 	public final Event popTarget(RequestContext context) {
@@ -123,22 +127,24 @@ public abstract class AbstractAssociationFormAction<A extends AbstractAssociatio
                 logger.debug("Popped target was "+lastTarget);
             }
             if (internalStack.isEmpty()) {
-            	put(context, null);
+                // there is nothing left in the stack
                 if (logger.isDebugEnabled()) {
                     logger.debug("Stack is empty");
                 }
-                context.getFlowScope().put(getParentAttributeName(), internalStack.getRootInstance());
+                // take the root as target
+                put(context, internalStack.getRootInstance(), getParentAttributeName());
                 if (logger.isDebugEnabled()) {
                     logger.debug("Parent replaced by "+lastTarget.getParent());
                 }
             }
             else {
+                // otherwise, remember the last pushed target
         		A target = (A) internalStack.peek();
             	put(context, target);
                 if (logger.isDebugEnabled()) {
                     logger.debug("Peeked target is "+target);
                 }
-                context.getFlowScope().put(getParentAttributeName(), lastTarget.getParent());
+                put(context, lastTarget.getParent(), getParentAttributeName());
                 if (logger.isDebugEnabled()) {
                     logger.debug("Parent replaced by "+lastTarget.getParent());
                 }
