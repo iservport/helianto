@@ -105,10 +105,17 @@ public abstract class AbstractRecord extends AbstractEvent {
      * Percentual to indicate how much of the record is complete.
      */
     public int getComplete() {
-    	return this.complete;
+    	return validateCompleteness();
     }
     public void setComplete(int complete) {
         this.complete = complete;
+    }
+    
+    /**
+     * Give subclasses a chance to validate completeness.
+     */
+    protected int validateCompleteness() {
+    	return this.complete;
     }
     
 }

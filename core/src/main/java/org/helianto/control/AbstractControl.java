@@ -30,7 +30,6 @@ import org.helianto.core.Sequenceable;
 import org.helianto.core.TopLevelNumberedEntity;
 
 
-
 /**
  * Base class to entity records that control a date.
  *  
@@ -162,6 +161,26 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
         this.frequencyType = frequencyType;
     }
 
+    /**
+     * Evaluate the control state.
+     */
+    @Transient
+    public char getControlState() {
+    	Date now = new Date();
+    	if (getResolution()==Resolution.DONE.getValue()) {
+    		return ControlState.FINISHED.getValue();
+    	}
+		if (getResolution()==Resolution.CANCELLED.getValue()
+				| getResolution()==Resolution.WAIT.getValue()) {
+			return ControlState.UNFINISHED.getValue();
+		}
+    	if (getNextCheckDate()==null) return ' ';
+    	if (getNextCheckDate().after(now)) {
+    		return ControlState.RUNNING.getValue();
+    	}
+    	return ControlState.LATE.getValue();
+    }
+    
 	public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {
         this.setEntity(entity);
         this.setInternalNumber(internalNumber);
