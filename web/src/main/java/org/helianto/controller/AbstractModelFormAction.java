@@ -57,6 +57,45 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
 		return "targetListSize";
 	}
 
+	/**
+	 * Put the target in same scope as the form.
+	 * 
+	 * @param context
+	 * @param target
+	 */
+	public void put(RequestContext context, T target) {
+		put(context, target, getTargetAttributeName());
+	}
+	
+	/**
+	 * Put the target in same scope as the form.
+	 * 
+	 * @param <O>
+	 * @param context
+	 * @param object
+	 * @param attributeName
+	 */
+	public <O> void put(RequestContext context, O object, String attributeName) {
+		getFormObjectScope().getScope(context).put(attributeName, object);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Put model object '"+attributeName+"'="+object);
+		}
+	}
+	
+	/**
+	 * Return the target from flow scope.
+	 * 
+	 * @param context
+	 */
+	@SuppressWarnings("unchecked")
+	public T get(RequestContext context) {
+		T target = (T) context.getModel().get(getTargetAttributeName());
+		if (logger.isDebugEnabled()) {
+			logger.debug("Get model object '"+getTargetAttributeName()+"'="+target);
+		}
+		return target;
+	}
+	
     /**
      * Create the target and put in flow scope following {@link #getTargetAttributeName()}.
      */
@@ -118,33 +157,6 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
 	protected abstract T doPrepareTarget(RequestContext context, T target) throws Exception;
     
 	/**
-	 * Return the target from flow scope.
-	 * 
-	 * @param context
-	 */
-	@SuppressWarnings("unchecked")
-	public T get(RequestContext context) {
-		T target = (T) context.getFlowScope().get(getTargetAttributeName());
-		if (logger.isDebugEnabled()) {
-			logger.debug("Get model object '"+getTargetAttributeName()+"'="+target);
-		}
-		return target;
-	}
-	
-	/**
-	 * Put the target in flow scope.
-	 * 
-	 * @param context
-	 * @param target
-	 */
-	public void put(RequestContext context, T target) {
-		context.getFlowScope().put(getTargetAttributeName(), target);
-		if (logger.isDebugEnabled()) {
-			logger.debug("Put model object '"+getTargetAttributeName()+"'="+target);
-		}
-	}
-	
-	/**
 	 * Extract from a list.
 	 * 
 	 * @param context
@@ -154,9 +166,9 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
 	protected void list(RequestContext context, String name, List<?> reference) {
 		String listName = new StringBuilder(name).append("List").toString();
 		if (reference!=null) {
-			context.getFlowScope().put(listName, reference);
+			put(context, reference, listName);
 			if (logger.isDebugEnabled()) {
-				logger.debug("List '"+listName+"' of size "+reference.size()+" set in flow scope.");
+				logger.debug("List '"+listName+"' of size "+reference.size()+" set in "+getFormObjectScope()+" scope.");
 			}
 		}
 		else {
@@ -194,7 +206,7 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
     	ParameterMap parameters = context.getRequestParameters();
     	if (parameters.contains("target_index")) {
     		int index = parameters.getInteger("target_index");
-    		List<T> targetList = (List<T>) context.getFlowScope().get(getTargetListAttributeName());
+    		List<T> targetList = (List<T>) context.getModel().get(getTargetListAttributeName());
     		T target = targetList.get(index);
     		if (target!=null) {
                 if (logger.isDebugEnabled()) {
@@ -215,39 +227,39 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
     	return true;
     }
     
-    /**
-     * Post-process the selection .
-     */
-	public final Event postProcess(RequestContext context) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("!---- STARTED");
-            logger.debug("!---- postProcess\n");
-        }
-        try {
-        	Object returnTarget =  get(context);
-            if (doPostProcess(context, (T) get(context), returnTarget)) {
-            	return success();
-            }
-        	else {
-                logger.warn("Unable to post-process association selection subflow ");
-                return error();
-        	}
-		} catch (Exception e) {
-			logger.warn("Unable to pre-process the selection ", e);
-            return error();
-		}
-    }
-        
-	/**
-     * Hook to do any post-processing.
-     * 
-     * 
-     * @throws Exception 
-     */
-    protected boolean doPostProcess(RequestContext context, T target, Object returnTarget) throws Exception {
-    	return true;
-    }
-    
+//    /**
+//     * Post-process the selection .
+//     */
+//	public final Event postProcess(RequestContext context) {
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("!---- STARTED");
+//            logger.debug("!---- postProcess\n");
+//        }
+//        try {
+//        	Object returnTarget =  get(context);
+//            if (doPostProcess(context, (T) get(context), returnTarget)) {
+//            	return success();
+//            }
+//        	else {
+//                logger.warn("Unable to post-process association selection subflow ");
+//                return error();
+//        	}
+//		} catch (Exception e) {
+//			logger.warn("Unable to pre-process the selection ", e);
+//            return error();
+//		}
+//    }
+//        
+//	/**
+//     * Hook to do any post-processing.
+//     * 
+//     * 
+//     * @throws Exception 
+//     */
+//    protected boolean doPostProcess(RequestContext context, T target, Object returnTarget) throws Exception {
+//    	return true;
+//    }
+//    
     /**
      * Clear the target.
      */
@@ -257,18 +269,32 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
             logger.debug("!---- clearTarget\n");
         }
         try {
-            put(context, null);
-            return success();
+        	if (doClearTarget(context)) {
+        		return success();
+        	}
         } catch (Exception e) {
             logger.warn("Unable to clear target ", e);
-            return error();
         }
+        return error();
+    }
+    
+	/**
+     * Subclasses may override to actually clear the target.
+     * 
+     * @throws Exception 
+     */
+    protected boolean doClearTarget(RequestContext context) throws Exception {
+    	Object object = getFormObjectScope().getScope(context).remove(getTargetAttributeName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Object "+object+" removed from "+getFormObjectScope());
+        }
+    	return true;
     }
     
     @SuppressWarnings("unchecked")
 	protected <P> P getFromList(RequestContext context, String listPrefix) {
     	String listName = new StringBuilder(listPrefix).append("List").toString();
-        final List<P> itemList = (ArrayList<P>) context.getFlowScope().get(listName);
+        final List<P> itemList = (ArrayList<P>) context.getModel().get(listName);
         return getFromList(context, listPrefix, itemList);
     }
     
