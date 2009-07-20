@@ -40,14 +40,13 @@ public abstract class AbstractEditTargetFormAction<T> extends AbstractComplexMod
 	private Class<T> clazz;
     
     /**
-     * Make default scope FLASH.
+     * Make default scope FLOW.
      */
 	public AbstractEditTargetFormAction() {
     	super();
-		setFormObjectScope(ScopeType.FLASH);
+		setFormObjectScope(ScopeType.FLOW);
 	}
     
-	@SuppressWarnings("unchecked")
 	protected T doSelectTarget(RequestContext context) throws Exception {
 		return (T) get(context);
 	}
@@ -55,7 +54,6 @@ public abstract class AbstractEditTargetFormAction<T> extends AbstractComplexMod
     /**
      * Create a form object.
      */
-	@SuppressWarnings("unchecked")
 	@Override
 	protected AbstractTargetForm<T> createFormObject(RequestContext context) throws Exception {
         try {
@@ -93,7 +91,6 @@ public abstract class AbstractEditTargetFormAction<T> extends AbstractComplexMod
     /**
      * Delegate to {@link #doCreateTree(UserBackedFilter)}
      */
-    @SuppressWarnings("unchecked")
 	@Override
     protected final List<Node> doCreateTree(RequestContext context) throws Exception {
     	T target = (T) get(context);
@@ -113,7 +110,6 @@ public abstract class AbstractEditTargetFormAction<T> extends AbstractComplexMod
     /**
      * Put the target in form to be edited.
      */
-	@SuppressWarnings("unchecked")
 	public final Event editTarget(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
@@ -150,7 +146,6 @@ public abstract class AbstractEditTargetFormAction<T> extends AbstractComplexMod
     /**
      * Put the target in form to be edited.
      */
-	@SuppressWarnings("unchecked")
 	public final Event processReturnTarget(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
@@ -177,7 +172,7 @@ public abstract class AbstractEditTargetFormAction<T> extends AbstractComplexMod
     }
     
     /**
-     * Geet a return target passed in request scope.
+     * Get a return target passed in request scope.
      * @param context
      */
     protected final Object getReturnTarget(RequestContext context) {

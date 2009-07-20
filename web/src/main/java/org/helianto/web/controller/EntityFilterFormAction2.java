@@ -78,7 +78,7 @@ public class EntityFilterFormAction2 extends AbstractFilterOnlyFormAction<UserFi
 	@Override
 	protected boolean postProcessSelectTarget(RequestContext context, UserGroup target) throws Exception {
 		getPublicUserDetails().setUser((User) target);
-		context.getFlowScope().put(getTargetListAttributeName(), null);
+		getFormObjectScope().getScope(context).put(getTargetListAttributeName(), null);
 		return true;
 	}
 

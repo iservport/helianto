@@ -82,7 +82,6 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
      * Resolve authorization.
      * @throws Exception 
      */
-    @SuppressWarnings("unchecked")
 	public Event resolveAuthorization(RequestContext context) throws Exception {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");

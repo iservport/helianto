@@ -48,7 +48,7 @@ public class UserFilterFormAction extends AbstractFilterOnlyFormAction<UserFilte
 	@Override
 	protected boolean doResetFilter(UserFilter filter, RequestContext context) throws Exception {
 		String principal = filter.getOptionalAlias().concat("@").concat(filter.getDomain());
-		context.getRequestScope().put("principal", principal);
+		getFormObjectScope().getScope(context).put("principal", principal);
 		filter.setDomain("");
 		return true;
 	}

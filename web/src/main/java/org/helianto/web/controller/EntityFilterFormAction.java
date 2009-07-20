@@ -47,7 +47,7 @@ public class EntityFilterFormAction extends AbstractFilterOnlyFormAction<EntityF
 	 */
 	@Override
 	protected boolean beforeApplyFilter(RequestContext context, EntityFilter filter) {
-		Object operator = context.getFlowScope().getRequired("operator");
+		Object operator = getFormObjectScope().getScope(context).getRequired("operator");
 		filter.setOperator((Operator) operator);
 		return true;
 	}

@@ -182,8 +182,8 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
                 logger.debug("Target list found: "+targetList.size());
             }
             if (afterApplyFilter(context, filter, targetList)) {
-                context.getFlowScope().put(getTargetListAttributeName(), targetList);
-                context.getFlowScope().put(getTargetListSizeAttributeName(), targetList.size());
+            	getFormObjectScope().getScope(context).put(getTargetListAttributeName(), targetList);
+            	getFormObjectScope().getScope(context).put(getTargetListSizeAttributeName(), targetList.size());
             	return success();
             }
         }

@@ -65,7 +65,6 @@ public abstract class AbstractTargetFormAction<T> extends AbstractEditTargetForm
      * Post-process the association selection subflow; if the target is null,
      * invoke target creation hook.
      */
-	@SuppressWarnings("unchecked")
 	public final Event postProcessSubflow(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");

@@ -85,7 +85,7 @@ public abstract class AbstractAssociationFormAction<A extends AbstractAssociatio
             logger.warn("Association child is null after selection, parent target not replaced.");
             return postProcessParentTargetReplacement(context, target, false);
     	}
-    	context.getFlowScope().put(getParentAttributeName(), target.getChild());
+    	getFormObjectScope().getScope(context).put(getParentAttributeName(), target.getChild());
         if (logger.isDebugEnabled()) {
             logger.debug("Parent replaced by "+target.getChild());
         }
@@ -188,7 +188,7 @@ public abstract class AbstractAssociationFormAction<A extends AbstractAssociatio
 		super.postProcessStoreTarget(context, managedAssociation);
     	C managedChild = getManagedChild(managedAssociation);
     	if (managedChild!=null) {
-        	context.getFlowScope().put(getChildAttributeName(), managedChild);
+    		getFormObjectScope().getScope(context).put(getChildAttributeName(), managedChild);
             if (logger.isDebugEnabled()) {
                 logger.debug("Managed child updated");
             }

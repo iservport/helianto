@@ -52,7 +52,7 @@ public abstract class AbstractComplexModelFormAction<T> extends AbstractAuthoriz
             if (logger.isDebugEnabled() && tree!=null) {
                 logger.debug("Created tree of size: "+tree.size());
             }
-            context.getFlowScope().put("tree", tree);
+            getFormObjectScope().getScope(context).put("tree", tree);
             return success();
         }
         catch (Exception e) {
@@ -92,7 +92,7 @@ public abstract class AbstractComplexModelFormAction<T> extends AbstractAuthoriz
         	}
         	if (content!=null) {
         		postProcessContent(context, content);
-        		context.getFlowScope().put(nodeName, content);
+        		getFormObjectScope().getScope(context).put(nodeName, content);
                 if (logger.isDebugEnabled()) {
                     logger.debug("Node content from '"+nodeName+"' "+content+" set in flow scope.");
                 }
@@ -115,7 +115,7 @@ public abstract class AbstractComplexModelFormAction<T> extends AbstractAuthoriz
      */
 	@SuppressWarnings("unchecked")
 	protected Node doSelectNode(RequestContext context, String nodeName, int index) {
-    	List<Node> tree = (List<Node>) context.getFlowScope().get("tree");
+    	List<Node> tree = (List<Node>) getFormObjectScope().getScope(context).get("tree");
     	Node node = tree.get(index);
         if (logger.isDebugEnabled()) {
             logger.debug("Selected node '"+nodeName+"'="+node);
@@ -139,7 +139,6 @@ public abstract class AbstractComplexModelFormAction<T> extends AbstractAuthoriz
     /**
      * Select a detail, either from a detail list or from the target.
      */
-	@SuppressWarnings("unchecked")
 	public Event prepareNode(RequestContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("!---- STARTED");
@@ -163,7 +162,7 @@ public abstract class AbstractComplexModelFormAction<T> extends AbstractAuthoriz
 				node = doSelectNode(context, nodeName, (T) get(context));
         	}
         	if (node!=null) {
-        		context.getFlowScope().put(nodeName, node);
+        		getFormObjectScope().getScope(context).put(nodeName, node);
                 if (logger.isDebugEnabled()) {
                     logger.debug("Detail '"+nodeName+"'="+node+" set in flow scope.");
                 }

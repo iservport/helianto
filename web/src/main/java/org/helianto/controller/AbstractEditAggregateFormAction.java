@@ -40,6 +40,15 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
     	return null;
     }
     
+    @SuppressWarnings("unchecked")
+	protected P getParent(RequestContext context) {
+    	P parent = (P) context.getModel().get(getParentAttributeName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Parent "+parent+" retrieved from "+getFormObjectScope());
+        }
+        return parent;
+    }
+    
 	/**
 	 * Override simple target creation and delegate to a member requiring a parent.
 	 * 
@@ -47,9 +56,8 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
 	 * @return a new target
 	 * @throws Exception
 	 */
-    @SuppressWarnings("unchecked")
 	protected final T doCreateTarget(RequestContext context) throws Exception {
-    	P parent = (P) context.getFlowScope().get(getParentAttributeName());
+    	P parent = getParent(context);
         if (logger.isDebugEnabled()) {
             logger.debug("Ready to create aggregate for parent "+parent);
         }
@@ -66,13 +74,18 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
 	 */
     public abstract T doCreateTarget(RequestContext context, P parent) throws Exception;
     
-	@SuppressWarnings("unchecked")
 	protected T doSelectTarget(RequestContext context) throws Exception {
     	ParameterMap parameters = context.getRequestParameters();
     	if (parameters.contains("target_index")) {
     		int index = parameters.getInteger("target_index");
-        	P parent = (P) context.getFlowScope().get(getParentAttributeName());
-    		T target = getAggregateList(context, parent).get(index);
+    		P parent = getParent(context);
+        	List<T> aggregateList = getAggregateList(context, parent);
+        	if (aggregateList==null) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Attempt to get aggregate list from parent failed");
+                }
+        	}
+    		T target = aggregateList.get(index);
     		if (target!=null) {
                 if (logger.isDebugEnabled()) {
                     logger.debug("Index "+index+" of "+getTargetAttributeName()+" list selected target "+target);
@@ -91,7 +104,7 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
 	protected void postProcessStoreTarget(RequestContext context, T managedTarget) throws Exception {
     	P managedParent = getManagedParent(managedTarget);
     	if (managedParent!=null) {
-        	context.getFlowScope().put(getParentAttributeName(), managedParent);
+    		getFormObjectScope().getScope(context).put(getParentAttributeName(), managedParent);
             if (logger.isDebugEnabled()) {
                 logger.debug("Managed parent updated");
             }

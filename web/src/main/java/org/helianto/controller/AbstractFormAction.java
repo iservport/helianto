@@ -37,7 +37,7 @@ public abstract class AbstractFormAction extends FormAction {
      */
     @SuppressWarnings("unchecked")
     public <T> T doGetObjectForm(RequestContext context) {
-        T objectForm = (T) context.getFlowScope().get(getFormObjectName());
+        T objectForm = (T) getFormObjectScope().getScope(context).get(getFormObjectName());
         if (logger.isDebugEnabled()) {
             logger.debug("Getting form "+objectForm);
         }

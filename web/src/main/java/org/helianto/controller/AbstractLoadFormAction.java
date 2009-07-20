@@ -17,7 +17,6 @@ package org.helianto.controller;
 
 import java.util.List;
 
-import org.helianto.core.KeyType;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -95,8 +94,8 @@ public abstract class AbstractLoadFormAction<T, P> extends AbstractComplexModelF
                 logger.debug("Target list found: "+targetList.size());
             }
             if (afterList(context, targetList)) {
-                context.getFlowScope().put(getTargetListAttributeName(), targetList);
-                context.getFlowScope().put(getTargetListSizeAttributeName(), targetList.size());
+            	getFormObjectScope().getScope(context).put(getTargetListAttributeName(), targetList);
+            	getFormObjectScope().getScope(context).put(getTargetListSizeAttributeName(), targetList.size());
             	return success();
             }
         }
@@ -112,7 +111,7 @@ public abstract class AbstractLoadFormAction<T, P> extends AbstractComplexModelF
 	 */
 	@SuppressWarnings("unchecked")
 	protected P getParent(RequestContext context) {
-		P parent = (P) context.getFlowScope().get(getParentAttributeName());
+		P parent = (P) getFormObjectScope().getScope(context).get(getParentAttributeName());
         if (logger.isDebugEnabled()) {
             logger.debug("Parent is "+parent);
         }

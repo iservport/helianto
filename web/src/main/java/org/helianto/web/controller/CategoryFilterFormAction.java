@@ -43,7 +43,7 @@ public class CategoryFilterFormAction extends AbstractFilterOnlyFormAction<Categ
 
 	@Override
 	protected boolean doPreProcess(CategoryFilter filter, RequestContext context) throws Exception {
-    	String categoryGroup = context.getFlowScope().getRequiredString("categoryGroup");
+    	String categoryGroup = getFormObjectScope().getScope(context).getRequiredString("categoryGroup");
 		filter.setCategoryGroup(CategoryGroup.valueOf(categoryGroup));
         if (logger.isDebugEnabled()) {
             logger.debug("CategoryGroup set in filter is "+filter.getCategoryGroup());
