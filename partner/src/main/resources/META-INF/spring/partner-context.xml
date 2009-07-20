@@ -22,7 +22,7 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-2.5.xsd">
                
-	<context:component-scan base-package="org.helianto.partner.orm,org.helianto.partner.service,org.helianto.partner.validation"/>
+	<context:component-scan base-package="org.helianto.partner.repository,org.helianto.partner.service,org.helianto.partner.validation"/>
     
 
 </beans>
