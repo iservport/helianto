@@ -62,8 +62,7 @@ public class AssociationFormActionTests {
 		assertEquals("success", associationFormAction.pushTarget(context).getId());
 
 		assertEquals("success", associationFormAction.popTarget(context).getId());
-		assertNull(context.getFlowScope().get("target"));
-		assertEquals("p", context.getFlowScope().get("parent"));
+		assertEquals("P", context.getFlowScope().get("parent"));
 		assertNull(context.getFlowScope().get("child"));
 	}
 	
