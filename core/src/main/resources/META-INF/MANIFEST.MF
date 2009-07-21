@@ -104,8 +104,9 @@ Export-Package: freemarker.entity;version="0.0.0",freemarker.keyType;v
  org.helianto.web.test;version="0.0.0";uses:="freemarker.template,juni
  t.framework,org.helianto.core.security,org.junit,org.springframework.
  mock.web,org.springframework.web.servlet.view.freemarker,org.springfr
- amework.webflow.execution",org.helianto.web.view;version="0.0.0";uses
- :="org.helianto.web.test,org.junit"
+ amework.webflow.execution",org.helianto.web.util;version="0.0.0";uses
+ :="org.junit",org.helianto.web.view;version="0.0.0";uses:="org.helian
+ to.web.test,org.junit"
 Bundle-Vendor: i-Serv Consultoria Empresarial
 Bundle-Classpath: .
 Bundle-Version: 0.2.2
