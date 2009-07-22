@@ -1,11 +1,7 @@
 package org.helianto.web.util;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 /**
  * Apply adapter pattern to a Calendar instance to produce a user GUI
@@ -16,188 +12,128 @@ import java.util.Locale;
 public class CalendarAdapter implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private Locale locale;
-	private Calendar calendar;
+	private Date date;
+	private String dayOfMonthAsString = "01";
+	private String weekOfYearAsString = "01";
+	private String monthAsString = "01";
+	private String monthAsBit = "0";
+	private String yearAsString = "00";
+	private String shortDateTimeAsString = "01/01/00 00:00:00";
+	private String shortDateAsString = "01/01/00";
+	private String shortTimeAsString = "00:00:00";
 
 	/**
 	 * Default constructor.
 	 */
 	public CalendarAdapter() {
-		this.locale = Locale.getDefault();
-		this.calendar = GregorianCalendar.getInstance();
-	}
-	
-	/**
-	 * Locale constructor.
-	 * 
-	 * @param locale
-	 */
-	public CalendarAdapter(Locale locale) {
-		this.locale = locale;
-		this.calendar = GregorianCalendar.getInstance(getLocale());
+		this(new Date());
 	}
 	
 	/**
 	 * Date constructor.
-	 * 
-	 * @param locale
-	 * @param date
 	 */
-	public CalendarAdapter(Locale locale, Date date) {
-		this(locale);
-		getCalendar().setTime(date);
+	public CalendarAdapter(Date date) {
+		this.date = date;
 	}
 	
 	/**
-	 * The internal calendar instance.
+	 * Internal date.
 	 */
-	public Calendar getCalendar() {
-		return this.calendar;
+	public Date getDate() {
+		return date;
 	}
-	
-	/**
-	 * The internal locale instance.
-	 */
-	public Locale getLocale() {
-		return this.locale;
-	}
-	
-	/**
-	 * Reset a given calendar to 00:00:00 000
-	 * 
-	 * @param calendar
-	 */
-	protected void resetDay(Calendar calendar) {
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-	}
-	
-	/**
-	 * Reset internal calendar to 00:00:00 000.
-	 */
-	public CalendarAdapter resetDay() {
-		resetDay(getCalendar());
-		return this;
-	}
-	
-	/**
-	 * Reset internal calendar to Sunday at 00:00:00 000.
-	 */
-	public CalendarAdapter resetWeek() {
-		resetDay(getCalendar());
-		int dayOfWeek = ((GregorianCalendar) getCalendar()).get(Calendar.DAY_OF_WEEK);
-		if (dayOfWeek!=Calendar.SUNDAY) {
-			getCalendar().add(Calendar.DATE, 1 - dayOfWeek);
-		}
-		return this;
-	}
-	
-	/**
-	 * Reset internal calendar to first day of month at 00:00:00 000.
-	 */
-	public CalendarAdapter resetMonth() {
-		resetDay(getCalendar());
-		int dayOfMonth = ((GregorianCalendar) getCalendar()).get(Calendar.DAY_OF_MONTH);
-		if (dayOfMonth!=1) {
-			getCalendar().add(Calendar.DATE, 1 - dayOfMonth);
-		}
-		return this;
-	}
-	
-	/**
-	 * Reset internal calendar to first day of year at 00:00:00 000.
-	 */
-	public CalendarAdapter resetYear() {
-		resetDay(getCalendar());
-		int dayOfYear = ((GregorianCalendar) getCalendar()).get(Calendar.DAY_OF_YEAR);
-		if (dayOfYear!=1) {
-			getCalendar().add(Calendar.DATE, 1 - dayOfYear);
-		}
-		return this;
-	}
-	
-	/**
-	 * Reset internal calendar to first day of year at 00:00:00 000.
-	 * 
-	 * @param days
-	 */
-	public CalendarAdapter advance(int days) {
-		getCalendar().add(Calendar.DATE, days);
-		return this;
-	}
-	
+
 	/**
 	 * Display date.
 	 */
 	public String getDayOfMonthAsString() {
-		return String.format("%1$td", getCalendar());
+		return this.dayOfMonthAsString;
+	}
+	public void setDayOfMonthAsString(String dayOfMonthAsString) {
+		this.dayOfMonthAsString = dayOfMonthAsString;
 	}
 	
 	/**
 	 * Display week.
 	 */
 	public String getWeekOfYearAsString() {
-		return String.format("%02d", this.getCalendar().get(Calendar.WEEK_OF_YEAR));
+		return this.weekOfYearAsString;
 	}
-	
+	public void setWeekOfYearAsString(String weekOfYearAsString) {
+		this.weekOfYearAsString = weekOfYearAsString;
+	}
+
 	/**
 	 * Display month.
 	 */
 	public String getMonthAsString() {
-		return String.format("%1$tm", getCalendar());
+		return this.monthAsString;
 	}
-	
+	public void setMonthAsString(String monthAsString) {
+		this.monthAsString = monthAsString;
+	}
+
 	/**
 	 * Display "0" or "1" for even or odd months.
 	 */
 	public String getMonthAsBit() {
-		return String.valueOf(this.getCalendar().get(Calendar.MONTH)%2);
+		return this.monthAsBit;
 	}
-	
+	public void setMonthAsBit(String monthAsBit) {
+		this.monthAsBit = monthAsBit;
+	}
+
 	/**
 	 * Display year.
 	 */
 	public String getYearAsString() {
-		return String.format("%1$ty", getCalendar());
+		return this.yearAsString;
 	}
-	
+	public void setYearAsString(String yearAsString) {
+		this.yearAsString = yearAsString;
+	}
+
 	/**
 	 * Display short date and time.
 	 */
 	public String getShortDateTimeAsString() {
-		return DateFormat
-		    .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, getLocale())
-		    .format(getCalendar().getTime());
+		return this.shortDateTimeAsString;
 	}
-	
+	public void setShortDateTimeAsString(String shortDateTimeAsString) {
+		this.shortDateTimeAsString = shortDateTimeAsString;
+	}
+
 	/**
 	 * Display short date.
 	 */
 	public String getShortDateAsString() {
-		return DateFormat
-		    .getDateInstance(DateFormat.SHORT, getLocale())
-		    .format(getCalendar().getTime());
+		return this.shortDateAsString;
 	}
-	
+	public void setShortDateAsString(String shortDateAsString) {
+		this.shortDateAsString = shortDateAsString;
+	}
+
 	/**
 	 * Display short time.
 	 */
 	public String getShortTimeAsString() {
-		return DateFormat
-	        .getTimeInstance(DateFormat.SHORT, getLocale())
-	        .format(getCalendar().getTime());
+		return this.shortTimeAsString;
+	}	
+	public void setShortTimeAsString(String shortTimeAsString) {
+		this.shortTimeAsString = shortTimeAsString;
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
-		return this.getCalendar().equals(((CalendarAdapter) other).getCalendar());
+		if (other!=null && other instanceof CalendarAdapter) {
+			return this.getDate().equals(((CalendarAdapter) other).getDate());
+		}
+		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return getCalendar().hashCode();
+		return getDate().hashCode();
 	}
 	
 
