@@ -16,6 +16,7 @@ public class CalendarAdapter implements Serializable {
 	private String dayOfMonthAsString = "01";
 	private String weekOfYearAsString = "01";
 	private String monthAsString = "01";
+	private String monthAsShortName = "Jan";
 	private String monthAsBit = "0";
 	private String yearAsString = "00";
 	private String shortDateTimeAsString = "01/01/00 00:00:00";
@@ -71,6 +72,16 @@ public class CalendarAdapter implements Serializable {
 	}
 	public void setMonthAsString(String monthAsString) {
 		this.monthAsString = monthAsString;
+	}
+
+	/**
+	 * Display month short name.
+	 */
+	public String getMonthAsShortName() {
+		return this.monthAsShortName;
+	}
+	public void setMonthAsShortName(String monthAsShortName) {
+		this.monthAsShortName = monthAsShortName;
 	}
 
 	/**

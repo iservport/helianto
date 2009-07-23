@@ -74,6 +74,7 @@ public class CalendarFactoryTests {
 		assertEquals("09", adapter.getDayOfMonthAsString());
 		assertEquals("07", adapter.getWeekOfYearAsString());
 		assertEquals("02", adapter.getMonthAsString());
+		assertEquals("Feb", adapter.getMonthAsShortName());
 		assertEquals("1", adapter.getMonthAsBit());
 		assertEquals("70", adapter.getYearAsString());
 		assertEquals("2/9/70", adapter.getShortDateAsString());
@@ -84,7 +85,8 @@ public class CalendarFactoryTests {
 	@Test
 	public void testCalendarList() {
 		Date date = new Date(1000L);
-		List<CalendarAdapter> calendarList = calendarFactory.calendarAdapterListFactory(date, 2);
+		List<CalendarAdapter> calendarList = calendarFactory
+		    .calendarAdapterListFactory(date, 2);
 		assertEquals(14, calendarList.size());
 		assertEquals(-334800000L, calendarList.get(0).getDate().getTime());
 		assertEquals(788400000L, calendarList.get(13).getDate().getTime());
@@ -93,7 +95,9 @@ public class CalendarFactoryTests {
 	@Test
 	public void testCalendarListMonth() {
 		Date date = new Date(1000L);
-		List<CalendarAdapter> calendarList = calendarFactory.calendarAdapterListFactory(date, 2, CalendarFactory.START_OF_MONTH);
+		List<CalendarAdapter> calendarList = calendarFactory
+		    .setStart(CalendarFactory.START_OF_MONTH)
+		    .calendarAdapterListFactory(date, 2);
 		assertEquals(14, calendarList.size());
 		assertEquals(-2754000000L, calendarList.get(0).getDate().getTime());
 		assertEquals(-1630800000L, calendarList.get(13).getDate().getTime());
@@ -102,10 +106,25 @@ public class CalendarFactoryTests {
 	@Test
 	public void testCalendarListYear() {
 		Date date = new Date(1000L);
-		List<CalendarAdapter> calendarList = calendarFactory.calendarAdapterListFactory(date, 2, CalendarFactory.START_OF_YEAR);
+		List<CalendarAdapter> calendarList = calendarFactory
+		    .setStart(CalendarFactory.START_OF_YEAR)
+		    .calendarAdapterListFactory(date, 2);
 		assertEquals(14, calendarList.size());
 		assertEquals(-31784400000L, calendarList.get(0).getDate().getTime());
 		assertEquals(-30661200000L, calendarList.get(13).getDate().getTime());
+	}
+	
+	@Test
+	public void testCalendarListSemester() {
+		Date date = new Date(1000L);
+		List<CalendarAdapter> calendarList = calendarFactory
+		    .setStart(CalendarFactory.START_OF_YEAR)
+		    .setResetWeekBeforeStart(false)
+		    .setGroupSize(CalendarFactory.MONTH_GROUP_SIZE)
+		    .calendarAdapterListFactory(date, 1);
+		assertEquals(6, calendarList.size());
+		assertEquals(-31525200000L, calendarList.get(0).getDate().getTime());
+		assertEquals(-18478800000L, calendarList.get(5).getDate().getTime());
 	}
 	
 	private CalendarFactory calendarFactory;

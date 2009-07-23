@@ -53,12 +53,17 @@ public abstract class AbstractCalendarAdapterFactory {
 	
 	/**
 	 * Calendar adapter factory method.
+	 * 
+	 * @param date
 	 */
 	public abstract CalendarAdapter calendarAdapterFactory(Date date);
 	
 	/**
 	 * Calendar adapter list factory method.
+	 * 
+	 * @param date
+	 * @param maxGroups
 	 */
-	public abstract List<CalendarAdapter> calendarAdapterListFactory(Date date, int weeks);
+	public abstract List<CalendarAdapter> calendarAdapterListFactory(Date date, int maxGroups);
 	
 }
