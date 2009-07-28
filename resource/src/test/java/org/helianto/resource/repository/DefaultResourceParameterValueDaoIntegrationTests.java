@@ -31,7 +31,7 @@ import org.helianto.resource.test.ResourceParameterValueTestSupport;
 public class DefaultResourceParameterValueDaoIntegrationTests extends AbstractResourceDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		ResourceParameterValue resourceParameterValue = ResourceParameterValueTestSupport.createResourceParameterValue();
 		resourceParameterValueDao.persist(resourceParameterValue);
 		assertEquals(resourceParameterValue, resourceParameterValueDao.findUnique(resourceParameterValue.getResource(), resourceParameterValue.getParameter()));

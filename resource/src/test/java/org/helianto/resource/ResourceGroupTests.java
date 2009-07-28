@@ -1,10 +1,12 @@
 package org.helianto.resource;
 
+import static org.junit.Assert.*;
 import junit.framework.TestCase;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.resource.ResourceGroup;
+import org.junit.Test;
 
 
 /**
@@ -12,12 +14,13 @@ import org.helianto.resource.ResourceGroup;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ResourceGroupTests extends TestCase {
+public class ResourceGroupTests {
     
     /**
      * Test <code>ResourceGroup</code> static factory method.
      */
-    public void testResourceGroupFactoryClass() {
+	@Test
+    public void resourceGroupFactoryClass() {
         Entity entity = new Entity();
 
 		ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(entity, "CODE");
@@ -31,7 +34,8 @@ public class ResourceGroupTests extends TestCase {
     /**
      * Test <code>ResourceGroup</code> equals() method.
      */
-    public void testResourceGroupEquals() {
+	@Test
+    public void resourceGroupEquals() {
         Entity entity = new Entity();
         
 		ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(entity, "CODE");

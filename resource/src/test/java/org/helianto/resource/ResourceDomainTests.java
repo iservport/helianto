@@ -1,17 +1,14 @@
 package org.helianto.resource;
 
+import static org.junit.Assert.*;
+
 import java.math.BigDecimal;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
-import org.helianto.resource.ResourceGroup;
-import org.helianto.resource.ResourceParameter;
-import org.helianto.resource.ResourceParameterValue;
-import org.helianto.resource.ResourceType;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ResourceDomainTests extends TestCase {
+public class ResourceDomainTests {
 	
 	private ResourceGroup resourceGroup;
 	private ResourceParameter resourceParameter;
@@ -20,7 +17,8 @@ public class ResourceDomainTests extends TestCase {
 	
 	private Entity entity;
 	
-	public void testUnit() {
+	@Test
+	public void constructor() {
 		unit = new Unit();
 		unit.setEntity(new Entity());
 		unit.setId(Integer.MAX_VALUE);
@@ -29,7 +27,8 @@ public class ResourceDomainTests extends TestCase {
 		unit.setUnitName("");
 	}
 	
-	public void testUnitEquals() {
+	@Test
+	public void unitEquals() {
 		Entity e = new Entity();
 		e.setAlias("E");
 		unit = new Unit();
@@ -52,7 +51,8 @@ public class ResourceDomainTests extends TestCase {
         assertTrue(unit.equals(copy));
     }
 	
-   public void tesResourceGroupt() {
+	@Test
+   public void resourceGroup() {
         // ResourceGroup
         resourceGroup = new ResourceGroup();
         entity = new Entity();
@@ -80,7 +80,8 @@ public class ResourceDomainTests extends TestCase {
 
     }
 
-	public void testResourceParameter() {
+	@Test
+	public void resourceParameter() {
 		resourceParameter = new ResourceParameter();
 		resourceParameter.setEntity(entity);
 		resourceParameter.setId(Integer.MAX_VALUE);
@@ -94,7 +95,8 @@ public class ResourceDomainTests extends TestCase {
 		resourceParameter.setUnit(new Unit());
 	}
 
-	public void testResourceParameterEquals() {
+	@Test
+	public void resourceParameterEquals() {
 		resourceParameter = new ResourceParameter();
 		resourceParameter.setEntity(entity);
 		resourceParameter.setParameterCode("123");
@@ -115,7 +117,8 @@ public class ResourceDomainTests extends TestCase {
         assertTrue(resourceParameter.equals(copy));
     }
 	
-	public void testResourceParamValue() {
+	@Test
+	public void resourceParamValue() {
 		resourceParameterValue = new ResourceParameterValue();
 		resourceParameterValue.setId(Integer.MAX_VALUE);
 		resourceParameterValue.setId(Integer.MIN_VALUE);
@@ -127,7 +130,8 @@ public class ResourceDomainTests extends TestCase {
 		resourceParameterValue.setSuppressed(true);
 	}
 
-	public void testResourceParameterValueEquals() {
+	@Test
+	public void resourceParameterValueEquals() {
 		ResourceGroup rg = new ResourceGroup();
 		rg.setEntity(new Entity());
 		ResourceParameter rp = new ResourceParameter();

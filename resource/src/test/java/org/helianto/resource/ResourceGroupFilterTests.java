@@ -22,30 +22,30 @@ public class ResourceGroupFilterTests {
     public static String C4 = "AND resourcegroup.resourceType = 'F' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C0+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterClazz() {
+    public void filterClazz() {
         filter.setClazz(Resource.class);
         assertEquals(C0+C1+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setResourceCode("CODE");
         assertEquals(C0+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterName() {
+    public void filterName() {
         filter.setResourceNameLike("NAME");
         assertEquals(C0+C3+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterInheritance() {
+    public void filterInheritance() {
         filter.setResourceType(ResourceType.FIXTURE.getValue());
         assertEquals(C0+C4+OB, filter.createCriteriaAsString(false));
     }

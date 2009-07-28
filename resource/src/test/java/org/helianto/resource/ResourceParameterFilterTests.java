@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.User;
 import org.helianto.core.test.UserTestSupport;
-import org.helianto.resource.ResourceParameterFilter;
 import org.junit.Before;
 import org.junit.Test;
 /**
@@ -18,18 +17,18 @@ public class ResourceParameterFilterTests {
     public static String C3 = "AND lower(resourceparameter.parameterName) like '%name%' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C0+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setParameterCode("CODE");
         assertEquals(C0+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterName() {
+    public void filterName() {
         filter.setParameterNameLike("NAME");
         assertEquals(C0+C3+OB, filter.createCriteriaAsString(false));
     }

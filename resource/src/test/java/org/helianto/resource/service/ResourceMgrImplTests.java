@@ -26,7 +26,7 @@ import org.junit.Test;
 public class ResourceMgrImplTests {
 	
 	@Test
-	public void testFindResourceGroups() {
+	public void findResourceGroups() {
 		List<ResourceGroup> resourceGroupList = new ArrayList<ResourceGroup>();
 		ResourceGroupFilter filter = new ResourceGroupFilter();
 		
@@ -39,7 +39,7 @@ public class ResourceMgrImplTests {
 	
 	@SuppressWarnings("serial")
 	@Test
-	public void testPrepareResourceGroup() {
+	public void prepareResourceGroup() {
 		ResourceGroup resourceGroup = new ResourceGroup();
 		final Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>();
 		ResourceAssociation child = new ResourceAssociation();
@@ -67,7 +67,7 @@ public class ResourceMgrImplTests {
 	}
 	
 	@Test
-	public void testStoreResourceGroup() {
+	public void storeResourceGroup() {
 		ResourceGroup resourceGroup = new ResourceGroup();
 		ResourceGroup managedResourceGroup = new ResourceGroup();
 		

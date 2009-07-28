@@ -1,11 +1,11 @@
 package org.helianto.resource;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.resource.ResourceGroup;
-import org.helianto.resource.ResourceParameter;
-import org.helianto.resource.ResourceParameterValue;
+import org.junit.Test;
 
 
 /**
@@ -13,12 +13,13 @@ import org.helianto.resource.ResourceParameterValue;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ResourceParameterValueTests extends TestCase {
+public class ResourceParameterValueTests {
     
     /**
      * Test <code>ResourceParameterValue</code> static factory method.
      */
-    public void testResourceParameterValueFactoryClass() {
+	@Test
+    public void resourceParameterValueFactoryClass() {
     	ResourceGroup resourceGroup = new ResourceGroup();
     	ResourceParameter resourceParameter = new ResourceParameter();
 
@@ -33,7 +34,8 @@ public class ResourceParameterValueTests extends TestCase {
     /**
      * Test <code>ResourceParameterValue</code> equals() method.
      */
-    public void testResourceParameterValueEquals() {
+	@Test
+    public void resourceParameterValueEquals() {
     	ResourceGroup resourceGroup = new ResourceGroup();
     	ResourceParameter resourceParameter = new ResourceParameter();
 

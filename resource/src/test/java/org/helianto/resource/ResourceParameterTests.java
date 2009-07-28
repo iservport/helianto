@@ -1,10 +1,13 @@
 package org.helianto.resource;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.resource.ResourceParameter;
+import org.junit.Test;
 
 
 /**
@@ -12,12 +15,13 @@ import org.helianto.resource.ResourceParameter;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ResourceParameterTests extends TestCase {
+public class ResourceParameterTests {
     
     /**
      * Test <code>ResourceParameter</code> static factory method.
      */
-    public void testResourceParameterFactoryClass() {
+	@Test
+    public void resourceParameterFactoryClass() {
         Entity entity = new Entity();
 
 		ResourceParameter resourceParameter = ResourceParameter.resourceParameterFactory(entity, "CODE");
@@ -31,7 +35,8 @@ public class ResourceParameterTests extends TestCase {
     /**
      * Test <code>ResourceParameter</code> static factory method.
      */
-    public void testResourceParameterFactoryParent() {
+	@Test
+    public void resourceParameterFactoryParent() {
         Entity entity = new Entity();
     	ResourceParameter parent = new ResourceParameter();
     	parent.setEntity(entity);
@@ -48,7 +53,8 @@ public class ResourceParameterTests extends TestCase {
     /**
      * Test <code>ResourceParameter</code> equals() method.
      */
-    public void testResourceParameterEquals() {
+	@Test
+    public void resourceParameterEquals() {
         Entity entity = new Entity();
         
 		ResourceParameter resourceParameter = ResourceParameter.resourceParameterFactory(entity, "CODE");

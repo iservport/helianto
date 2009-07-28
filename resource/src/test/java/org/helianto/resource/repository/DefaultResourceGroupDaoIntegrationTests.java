@@ -31,7 +31,7 @@ import org.helianto.resource.test.ResourceGroupTestSupport;
 public class DefaultResourceGroupDaoIntegrationTests extends AbstractResourceDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		ResourceGroup resourceGroup = ResourceGroupTestSupport.createResourceGroup();
 		resourceGroupDao.persist(resourceGroup);
 		assertEquals(resourceGroup, resourceGroupDao.findUnique(resourceGroup.getEntity(), resourceGroup.getResourceCode()));
