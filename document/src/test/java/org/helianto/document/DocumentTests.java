@@ -30,7 +30,7 @@ import org.junit.Test;
 public class DocumentTests {
 	
 	@Test
-	public void testFactory() {
+	public void factory() {
 		Entity entity = EntityTestSupport.createEntity();
 		Document document = Document.documentFactory(entity, "DOCCODE");
 		assertSame(entity, document.getEntity());
