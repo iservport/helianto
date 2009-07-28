@@ -15,22 +15,22 @@
 
 package org.helianto.message.transform;
 
-import static org.easymock.classextension.EasyMock.createMock;
-import static org.easymock.classextension.EasyMock.expect;
+import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.isA;
+import static org.easymock.classextension.EasyMock.createMock;
 import static org.easymock.classextension.EasyMock.replay;
 import static org.easymock.classextension.EasyMock.reset;
 import static org.easymock.classextension.EasyMock.verify;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.helianto.core.Identity;
-import org.helianto.message.transform.MessageProcessor;
-import org.helianto.message.transform.Model;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -39,9 +39,10 @@ import freemarker.template.TemplateException;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class MessageProcessorTests extends TestCase {
+public class MessageProcessorTests {
     
-    public void testMessageConstructor() throws IOException, TemplateException {
+    @Test
+    public void messageConstructor() throws IOException, TemplateException {
         Model model = new Model(new Identity());
         model.setTemplateName("TEST");
         MessageProcessor messageProcessor = new MessageProcessor(configuration, model);
@@ -63,13 +64,13 @@ public class MessageProcessorTests extends TestCase {
     private Configuration configuration;
     Template template;
     
-    @Override
+    @Before
     public void setUp() {
         configuration = createMock(Configuration.class);
         template = createMock(Template.class);
     }
     
-    @Override
+    @After
     public void tearDown() {
         reset(configuration);
         reset(template);

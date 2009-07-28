@@ -15,25 +15,25 @@
 
 package org.helianto.message.mail;
 
-import java.util.List;
+import static org.junit.Assert.*;
 
-import junit.framework.TestCase;
+import java.util.List;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Encription;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
 import org.helianto.core.test.ServerTestSupport;
-import org.helianto.message.mail.ConfigurableMailSenderFactoryImpl;
-import org.helianto.message.mail.ConfigurableMailSenderImpl;
+import org.junit.Test;
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ConfigurableMailSenderFactoryImplTests extends TestCase {
+public class ConfigurableMailSenderFactoryImplTests {
     
-    public void testCreate() {
+	@Test
+    public void create() {
         List<Server> serverList = createServerList();
         ConfigurableMailSenderFactoryImpl configurableMailSenderFactory = new ConfigurableMailSenderFactoryImpl();
         ConfigurableMailSenderImpl configurableMailSender = (ConfigurableMailSenderImpl) configurableMailSenderFactory.create(serverList);

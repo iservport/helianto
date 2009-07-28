@@ -15,33 +15,37 @@
 
 package org.helianto.message.transform;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.helianto.core.Identity;
-import org.helianto.message.transform.Model;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class ModelTests extends TestCase {
+public class ModelTests {
     
-    public void testModelConstructor() {
+    @Test
+    public void modelConstructor() {
         Identity identity = new Identity();
         Model model = new Model(identity);
         assertSame(identity, model.getRequiredModel().get(identity.getClass().getSimpleName()));
     }
 
-    public void testModelTemplateName() {
+    @Test
+    public void modelTemplateName() {
         Identity identity = new Identity();
         Model model = new Model(identity);
         model.setTemplateName("TEST");
         assertEquals("TEST", model.getTemplateName());
     }
 
-    public void testModelMap() {
+    @Test
+    public void modelMap() {
         Identity identity = new Identity();
         Model model = new Model(identity);
         Map<String, Object> map = new HashMap<String, Object>();

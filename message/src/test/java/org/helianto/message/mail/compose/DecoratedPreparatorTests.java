@@ -15,6 +15,10 @@
 
 package org.helianto.message.mail.compose;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 
 import javax.mail.Address;
@@ -23,23 +27,24 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import junit.framework.TestCase;
-
 import org.helianto.message.mail.MockJavaMailSender;
-import org.helianto.message.mail.compose.DecoratedPreparator;
-import org.helianto.message.mail.compose.MailForm;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class DecoratedPreparatorTests extends TestCase {
+public class DecoratedPreparatorTests {
 
     private DecoratedPreparator decoratedPreparator;
     
-    public void testInitialState() {
+    @Test
+    public void initialState() {
         assertSame(mailForm, decoratedPreparator.mailForm);
         assertTrue(decoratedPreparator.getBody() instanceof StringBuilder);
         assertEquals("", decoratedPreparator.getBody().toString());
     }
     
-    public void testPrepare() throws MessagingException, IOException {
+    @Test
+    public void prepare() throws MessagingException, IOException {
         MockJavaMailSender mockSender = new MockJavaMailSender();
         MimeMessage mimeMessage = mockSender.createMimeMessage();
         mailForm.setSubject("SUBJECT");
@@ -70,13 +75,13 @@ public class DecoratedPreparatorTests extends TestCase {
     
     private MailForm mailForm;
     
-    @Override
+    @Before
     protected void setUp() throws Exception {
         mailForm = MailFormTests.createMailForm();
         decoratedPreparator = new DecoratedPreparator(mailForm);
     }
 
-    @Override
+    @After
     protected void tearDown() throws Exception {
     }
 

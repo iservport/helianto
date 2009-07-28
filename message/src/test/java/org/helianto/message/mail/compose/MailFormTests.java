@@ -15,25 +15,27 @@
 
 package org.helianto.message.mail.compose;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.mail.MessagingException;
 
-import junit.framework.TestCase;
-
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.message.mail.compose.DefaultMailForm;
-import org.helianto.message.mail.compose.MailForm;
+import org.junit.Test;
 
-public class MailFormTests extends TestCase {
+public class MailFormTests {
     
-    public void testMailForm() {
+    @Test
+    public void mailForm() {
         Operator operator = OperatorTestSupport.createOperator();
         Identity identity = IdentityTestSupport.createIdentity();
         identity.setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
@@ -44,14 +46,16 @@ public class MailFormTests extends TestCase {
 
     }
     
-    public void testMailFormOperatorConstructor() {
+    @Test
+    public void mailFormOperatorConstructor() {
         Operator operator = OperatorTestSupport.createOperator();
         MailForm mailForm = new DefaultMailForm(operator);
         assertSame(operator, mailForm.getOperator());
 
     }
     
-    public void testValidate() throws MessagingException, IOException {
+    @Test
+    public void validate() throws MessagingException, IOException {
         //create with organizational email
         MailForm mailForm = createMailForm();
         

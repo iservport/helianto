@@ -15,20 +15,20 @@
 
 package org.helianto.message.transform.mail;
 
+import static org.junit.Assert.assertSame;
+
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.message.transform.Model;
-import org.helianto.message.transform.mail.ModelMailForm;
-import org.helianto.message.transform.mail.ModelMailFormImpl;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class ModelMailFormTests extends TestCase {
+public class ModelMailFormTests {
     
-    public void testModelMailForm() {
+    @Test
+    public void modelMailForm() {
         Operator operator = new Operator();
         ModelMailForm modelMailForm = new ModelMailFormImpl(operator);
         Model model = new Model(new Identity());

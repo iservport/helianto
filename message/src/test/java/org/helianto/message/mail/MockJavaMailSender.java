@@ -52,7 +52,8 @@ public class MockJavaMailSender extends JavaMailSenderImpl {
         private String connectedUsername = null;
         private String connectedPassword = null;
         private boolean closeCalled = false;
-        private List sentMessages = new ArrayList();
+        @SuppressWarnings("unchecked")
+		private List sentMessages = new ArrayList();
 
         public MockTransport(Session session, URLName urlName) {
             super(session, urlName);
@@ -78,7 +79,8 @@ public class MockJavaMailSender extends JavaMailSenderImpl {
             return closeCalled;
         }
 
-        public List getSentMessages() {
+        @SuppressWarnings("unchecked")
+		public List getSentMessages() {
             return sentMessages;
         }
 
@@ -100,7 +102,7 @@ public class MockJavaMailSender extends JavaMailSenderImpl {
             this.closeCalled = true;
         }
         
-        @SuppressWarnings({ "deprecation", "unchecked" })
+        @SuppressWarnings("unchecked")
         public void sendMessage(Message message, Address[] addresses) throws MessagingException {
             if ("fail".equals(message.getSubject())) {
                 throw new MessagingException("failed");

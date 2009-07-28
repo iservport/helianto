@@ -15,19 +15,22 @@
 
 package org.helianto.message.mail;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Encription;
 import org.helianto.core.Server;
 import org.helianto.core.test.ServerTestSupport;
-import org.helianto.message.mail.ConfigurableMailSenderImpl;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ConfigurableMailSenderImplTests extends TestCase {
+public class ConfigurableMailSenderImplTests {
     
     private ConfigurableMailSenderImpl configurableMailSenderImpl;
     
@@ -39,7 +42,8 @@ public class ConfigurableMailSenderImplTests extends TestCase {
         return server;
     }
 
-    public void testSetTransportServer() {
+	@Test
+    public void setTransportServer() {
         //success
         Server transportServer = createValidServer();
         configurableMailSenderImpl.setTransportServer(transportServer);
@@ -55,7 +59,8 @@ public class ConfigurableMailSenderImplTests extends TestCase {
         doTestInvalidServer(null);
     }
     
-    public void testSetAccessServer() {
+	@Test
+    public void setAccessServer() {
         //tolerate null access
         configurableMailSenderImpl.setAccessServer(null);
         Server accessServer = createValidServer();
@@ -76,7 +81,8 @@ public class ConfigurableMailSenderImplTests extends TestCase {
         }
     }
 
-    public void testInit() {
+	@Test
+    public void init() {
         Server transportServer = createValidServer();
 
         transportServer.setServerHostAddress("HOST_ADDRESS");
@@ -94,7 +100,7 @@ public class ConfigurableMailSenderImplTests extends TestCase {
         assertEquals("ENCODING", configurableMailSenderImpl.getDefaultEncoding());
     }
 
-    @Override
+    @Before
     public void setUp() {
         configurableMailSenderImpl = new ConfigurableMailSenderImpl();
     }

@@ -15,10 +15,11 @@
 
 package org.helianto.message.mail.compose;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import junit.framework.TestCase;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
@@ -26,33 +27,24 @@ import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.message.mail.compose.BasicMailMessageComposer;
-import org.helianto.message.mail.compose.DefaultMailForm;
-import org.helianto.message.mail.compose.PasswordConfirmationMailForm;
-import org.helianto.message.mail.compose.PasswordConfirmationMailMessageDecorator;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class BasicMailMessageComposerTests extends TestCase {
+public class BasicMailMessageComposerTests {
     
     BasicMailMessageComposer mailMessageComposer;
 
-    public void testComposeMessageUnsupportedKey() {
-        try {
-            mailMessageComposer.composeMessage("UNSUPPORTED_KEY", new DefaultMailForm());
-            fail();
-        }
-        catch (IllegalArgumentException e) {
-            assertEquals("Unsupported key: UNSUPPORTED_KEY", e.getMessage());
-        }
-        catch (Exception e) {
-            fail();
-        }
+	@Test(expected=IllegalArgumentException.class)
+    public void composeMessageUnsupportedKey() {
+        mailMessageComposer.composeMessage("UNSUPPORTED_KEY", new DefaultMailForm());
     }
     
-    public void testComposePasswordMessage() {
+	@Test
+    public void composePasswordMessage() {
         PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm();
         Operator operator = OperatorTestSupport.createOperator();
         mailForm.setOperator(operator);
@@ -98,7 +90,7 @@ public class BasicMailMessageComposerTests extends TestCase {
 //        }
 //    }
     
-    @Override
+    @Before
     public void setUp() {
         mailMessageComposer = new BasicMailMessageComposer();
     }

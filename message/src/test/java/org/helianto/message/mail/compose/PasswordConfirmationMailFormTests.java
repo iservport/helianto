@@ -15,17 +15,18 @@
 
 package org.helianto.message.mail.compose;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertSame;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Operator;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.message.mail.compose.PasswordConfirmationMailForm;
+import org.junit.Test;
 
-public class PasswordConfirmationMailFormTests extends TestCase {
+public class PasswordConfirmationMailFormTests {
 
-    public void testMailForm() {
+    @Test
+    public void mailForm() {
         Credential credential = CredentialTestSupport.createCredential();
         PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm();
         mailForm.setCredential(credential);
@@ -33,7 +34,8 @@ public class PasswordConfirmationMailFormTests extends TestCase {
 
     }
     
-    public void testMailFormOperatorConstructor() {
+    @Test
+    public void mailFormOperatorConstructor() {
         Operator operator = OperatorTestSupport.createOperator();
         PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm(operator);
         assertSame(operator, mailForm.getOperator());
