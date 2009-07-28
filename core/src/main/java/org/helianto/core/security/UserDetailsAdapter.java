@@ -16,6 +16,7 @@
 package org.helianto.core.security;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,11 +25,11 @@ import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.springframework.security.Authentication;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
 /**
@@ -69,7 +70,7 @@ public class UserDetailsAdapter implements
 	private static final long serialVersionUID = 1L;
     private User user;
     private Credential credential;
-    private GrantedAuthority[] authorities;
+    private List<GrantedAuthority> authorities;
 
     /**
      * Default constructor
@@ -190,10 +191,10 @@ public class UserDetailsAdapter implements
 	/**
 	 * Authorities
 	 */
-    public GrantedAuthority[] getAuthorities() {
+    public List<GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
-	public void setAuthorities(GrantedAuthority[] authorities) {
+	public void setAuthorities(List<GrantedAuthority> authorities) {
 		this.authorities = authorities;
 	}
 

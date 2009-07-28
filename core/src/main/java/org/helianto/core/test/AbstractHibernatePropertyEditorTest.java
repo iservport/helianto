@@ -27,6 +27,7 @@ import org.easymock.EasyMock;
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,7 +57,7 @@ public abstract class AbstractHibernatePropertyEditorTest<T, P extends AbstractS
 	}
 	
 	@Test
-	public void testSetAsTextString() throws InstantiationException, IllegalAccessException {
+	public void setAsTextString() throws InstantiationException, IllegalAccessException {
 		T target = getTargetClazz().newInstance();
 		
 		EasyMock.expect(session.load(getTargetClazz(), getId())).andReturn(target);
@@ -81,6 +82,7 @@ public abstract class AbstractHibernatePropertyEditorTest<T, P extends AbstractS
 		propertyEditor.setSessionFactory(sessionFactory);
 	}
 	
+	@After
 	public void tearDown() {
 		reset(session);
 		reset(sessionFactory);

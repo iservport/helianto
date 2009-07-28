@@ -15,6 +15,7 @@
 
 package org.helianto.core.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,11 +27,11 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
-import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * A basic template for the {@link org.acegisecurity.userdetails.UserDetailsService}
@@ -97,11 +98,10 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         }
         // load the roles and convert to authorities
         Collection<UserRole> roles = loadAndValidateRoles(user);
-        GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
-        int i = 0;
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for (UserRole r : roles) {
             String roleName = convertUserRoleToString(r);
-            authorities[i++] = new GrantedAuthorityImpl(roleName);
+            authorities.add(new GrantedAuthorityImpl(roleName));
         }
         userDetailsAdapter.setAuthorities(authorities);
         if (logger.isDebugEnabled()) {

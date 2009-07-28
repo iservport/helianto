@@ -57,7 +57,7 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHiberna
 	protected abstract D doCreateDao();
 	
 	@Test
-	public void testFindWithClause() {
+	public void findWithClause() {
 		List<T> resultList = new ArrayList<T>();
 		
 		Query resultQuery = createMock(Query.class);
@@ -75,7 +75,7 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHiberna
 	}
 	
 	@Test
-	public void testFindWithoutClause() {
+	public void findWithoutClause() {
 		List<T> resultList = new ArrayList<T>();
 		
 		Query result = createMock(Query.class);
@@ -93,7 +93,7 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHiberna
 	}
 	
 	@Test
-	public void testMerge() {
+	public void merge() {
 		T target = doCreateTarget(), managedTarget = doCreateTarget();
 		
 		expect(session.merge(target)).andReturn(managedTarget);
@@ -105,7 +105,7 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHiberna
 	}
 	
 	@Test
-	public void testPersist() {
+	public void persist() {
 		T target = doCreateTarget();
 		
 		session.persist(target);
@@ -117,7 +117,7 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHiberna
 	}
 	
 	@Test
-	public void testEvict() {
+	public void evict() {
 		T target = doCreateTarget();
 		
 		session.evict(target);
@@ -129,7 +129,7 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHiberna
 	}
 	
 	@Test
-	public void testRemove() {
+	public void remove() {
 		T target = doCreateTarget();
 		
 		session.delete(target);
@@ -141,7 +141,7 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHiberna
 	}
 	
 	@Test
-	public void testFlush() {
+	public void flush() {
 		session.flush();
 		replay(session);
 		
@@ -151,7 +151,7 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHiberna
 	}
 	
 	@Test
-	public void testClear() {
+	public void clear() {
 		session.clear();
 		replay(session);
 		
