@@ -32,7 +32,7 @@ import org.helianto.partner.test.AgentTestSupport;
 public class DefaultAgentDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Agent agent = AgentTestSupport.createAgent();
 		System.out.println(">>>"+agent.getId());
 		partnerDao.persist(agent);

@@ -19,13 +19,13 @@ import org.junit.Test;
 public class AccountFilterTests {
 
     @Test
-    public void testConstructor() {
+    public void constructor() {
 		assertTrue(filter instanceof Serializable);
 		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		assertSame(filter.getUser(), user);
 		assertEquals("", filter.getAccountCode());
 		assertEquals("", filter.getAccountNameLike());
@@ -33,7 +33,7 @@ public class AccountFilterTests {
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		filter.reset();
 		assertEquals("", filter.getAccountNameLike());
 		assertEquals(' ', filter.getAccountType());
@@ -46,24 +46,24 @@ public class AccountFilterTests {
     public static String C4 = "AND account.accountType = 'A' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C1+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setAccountCode("CODE");
         assertEquals(C1+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterName() {
+    public void filterName() {
         filter.setAccountNameLike("NAME");
         assertEquals(C1+C3+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterType() {
+    public void filterType() {
         filter.setAccountType(AccountType.ASSET.getValue());
         assertEquals(C1+C4+OB, filter.createCriteriaAsString(false));
     }

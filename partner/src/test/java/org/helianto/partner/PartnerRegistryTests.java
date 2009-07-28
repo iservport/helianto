@@ -1,23 +1,25 @@
 package org.helianto.partner;
 
-import org.helianto.core.test.DomainTestSupport;
-
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
-
-import org.helianto.partner.PartnerRegistry;
+import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 /**
  * <code>PartnerRegistry</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class PartnerRegistryTests extends TestCase {
+public class PartnerRegistryTests {
     
     /**
      * Test <code>PartnerRegistry</code> static factory method.
      */
+	@Test
     public void testPartnerRegistryFactory() {
         Entity entity = new Entity();
         String partnerAlias = DomainTestSupport.STRING_TEST_VALUE;
@@ -32,6 +34,7 @@ public class PartnerRegistryTests extends TestCase {
     /**
      * Test <code>PartnerRegistry</code> equals() method.
      */
+	@Test
     public void testPartnerRegistryEquals() {
         Entity entity = new Entity();
         String partnerAlias = DomainTestSupport.STRING_TEST_VALUE;

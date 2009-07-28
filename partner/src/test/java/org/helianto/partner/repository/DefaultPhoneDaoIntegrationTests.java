@@ -31,7 +31,7 @@ import org.helianto.partner.test.PhoneTestSupport;
 public class DefaultPhoneDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Phone phone = PhoneTestSupport.createPhone();
 		phoneDao.persist(phone);
 		assertEquals(phone, phoneDao.findUnique(phone.getAddress(), phone.getSequence()));

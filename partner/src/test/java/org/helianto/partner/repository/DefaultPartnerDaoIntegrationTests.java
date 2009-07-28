@@ -31,7 +31,7 @@ import org.helianto.partner.test.PartnerTestSupport;
 public class DefaultPartnerDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Partner partner = PartnerTestSupport.createPartner();
 		partnerDao.persist(partner);
 		assertEquals(partner, partnerDao.findUnique(partner.getPartnerRegistry(), 'P'));

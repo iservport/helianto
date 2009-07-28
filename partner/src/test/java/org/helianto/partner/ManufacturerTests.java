@@ -1,19 +1,23 @@
 package org.helianto.partner;
 
-import org.helianto.core.test.DomainTestSupport;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 /**
  * <code>Manufacturer</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ManufacturerTests extends TestCase {
+public class ManufacturerTests  {
     
     /**
      * Test <code>Manufacturer</code> static factory method.
      */
+	@Test
     public void testManufacturerFactory() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         
@@ -27,6 +31,7 @@ public class ManufacturerTests extends TestCase {
     /**
      * Test <code>Manufacturer</code> equals() method.
      */
+	@Test
     public void testManufacturerEquals() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         

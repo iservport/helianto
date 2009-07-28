@@ -34,21 +34,21 @@ import org.junit.Test;
 public class PartnerFilterTests {
 	
     @Test
-	public void testConstructor() {
+	public void constructor() {
 		PartnerFilter partnerFilter = new PartnerFilter();
 		assertTrue(partnerFilter instanceof Serializable);
 		assertTrue(partnerFilter instanceof AbstractUserBackedCriteriaFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		User user = new User();
 		PartnerFilter partnerFilter = PartnerFilter.partnerFilterFactory(user);
 		assertSame(partnerFilter.getUser(), user);
 	}
 	
     @Test
-	public void testFactoryCustomer() {
+	public void factoryCustomer() {
 		User user = new User();
 		PartnerFilter partnerFilter = PartnerFilter.partnerFilterFactory(user, Customer.class);
 		assertSame(partnerFilter.getUser(), user);
@@ -56,7 +56,7 @@ public class PartnerFilterTests {
 	}
 	
     @Test
-	public void testFactorySupplier() {
+	public void factorySupplier() {
 		User user = new User();
 		PartnerFilter partnerFilter = PartnerFilter.partnerFilterFactory(user, Supplier.class);
 		assertSame(partnerFilter.getUser(), user);
@@ -64,7 +64,7 @@ public class PartnerFilterTests {
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		PartnerFilter partnerFilter = PartnerFilter.partnerFilterFactory(new User());
 		partnerFilter.setPartnerNameLike("TEST");
 		partnerFilter.reset();
@@ -81,30 +81,30 @@ public class PartnerFilterTests {
     public static String C6 = "AND partner.partnerState = 'A' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C1+C2+C3+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setPartnerAlias("ALIAS");
         assertEquals(C1+C2+C4, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterClazz() {
+    public void filterClazz() {
         filter.setClazz(Customer.class);
         assertEquals(C1+C7+C3+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterName() {
+    public void filterName() {
         filter.setPartnerNameLike("NAME");
         assertEquals(C1+C2+C5+C3+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterState() {
+    public void filterState() {
         filter.setPartnerState(PartnerState.ACTIVE.getValue());
         assertEquals(C1+C2+C6+C3+OB, filter.createCriteriaAsString(false));
     }

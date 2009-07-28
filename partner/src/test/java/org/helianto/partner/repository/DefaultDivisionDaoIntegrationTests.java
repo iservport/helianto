@@ -32,7 +32,7 @@ import org.helianto.partner.test.DivisionTestSupport;
 public class DefaultDivisionDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Division division = DivisionTestSupport.createDivision();
 		partnerDao.persist(division);
 		assertEquals(division, partnerDao.findUnique(division.getPartnerRegistry(), 'D'));

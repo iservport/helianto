@@ -32,7 +32,7 @@ import org.helianto.partner.test.ManufacturerTestSupport;
 public class DefaultManufacturerDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Manufacturer manufacturer = ManufacturerTestSupport.createManufacturer();
 		partnerDao.persist(manufacturer);
 		assertEquals(manufacturer, partnerDao.findUnique(manufacturer.getPartnerRegistry(), 'M'));

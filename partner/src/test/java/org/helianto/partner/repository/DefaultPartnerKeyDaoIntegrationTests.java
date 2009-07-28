@@ -31,7 +31,7 @@ import org.helianto.partner.test.PartnerKeyTestSupport;
 public class DefaultPartnerKeyDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		PartnerKey partnerKey = PartnerKeyTestSupport.createPartnerKey();
 		partnerKeyDao.persist(partnerKey);
 		assertEquals(partnerKey, partnerKeyDao.findUnique(partnerKey.getPartnerRegistry(), partnerKey.getKeyType()));

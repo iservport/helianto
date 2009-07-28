@@ -1,24 +1,25 @@
 package org.helianto.partner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.helianto.core.test.DomainTestSupport;
-
-import junit.framework.TestCase;
-
-
-import org.helianto.partner.Address;
-import org.helianto.partner.PartnerRegistry;
+import org.junit.Test;
 
 /**
  * <code>Address</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class AddressTests extends TestCase {
+public class AddressTests {
     
     /**
      * Test <code>Address</code> static factory method.
      */
-    public void testAddressFactory() {
+	@Test
+    public void addressFactory() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
@@ -35,7 +36,8 @@ public class AddressTests extends TestCase {
     /**
      * Test <code>Address</code> equals() method.
      */
-    public void testAddressEquals() {
+	@Test
+    public void addressEquals() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         

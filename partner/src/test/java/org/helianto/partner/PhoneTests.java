@@ -1,23 +1,24 @@
 package org.helianto.partner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.helianto.core.test.DomainTestSupport;
-
-import junit.framework.TestCase;
-
-
-import org.helianto.partner.Address;
-import org.helianto.partner.Phone;
+import org.junit.Test;
 
 /**
  * <code>Phone</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class PhoneTests extends TestCase {
+public class PhoneTests {
     
     /**
      * Test <code>Phone</code> static factory method.
      */
+	@Test
     public void testPhoneFactory() {
         Address address = new Address();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
@@ -32,6 +33,7 @@ public class PhoneTests extends TestCase {
     /**
      * Test <code>Phone</code> equals() method.
      */
+	@Test
     public void testPhoneEquals() {
         Address address = new Address();
         int sequence = DomainTestSupport.INT_TEST_VALUE;

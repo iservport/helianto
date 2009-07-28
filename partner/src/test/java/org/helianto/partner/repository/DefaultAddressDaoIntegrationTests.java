@@ -31,7 +31,7 @@ import org.helianto.partner.test.AddressTestSupport;
 public class DefaultAddressDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Address address = AddressTestSupport.createAddress();
 		addressDao.persist(address);
 		assertEquals(address, addressDao.findUnique(address.getPartnerRegistry(), address.getSequence()));

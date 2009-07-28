@@ -18,25 +18,28 @@ package org.helianto.partner.service;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class PartnerMgrImplTests extends TestCase {
+public class PartnerMgrImplTests {
     
     private PartnerMgrImpl partnerMgr;
     
-    public void testFindPartnerRegistries() {
+	@Test
+    public void findPartnerRegistries() {
     	PartnerRegistryFilter partnerRegistryFilter = new PartnerRegistryFilter();
     	List<PartnerRegistry> partnerRegistryList = new ArrayList<PartnerRegistry>();
     	
@@ -47,7 +50,8 @@ public class PartnerMgrImplTests extends TestCase {
     	verify(partnerRegistryDao);
     }
     
-    public void testStorePartnerRegistry() {
+	@Test
+    public void storePartnerRegistry() {
     	PartnerRegistry partnerRegistry = new PartnerRegistry();
     	PartnerRegistry managedPartnerRegistry = new PartnerRegistry();
     	
@@ -58,7 +62,8 @@ public class PartnerMgrImplTests extends TestCase {
     	verify(partnerRegistryDao);
     }
     
-    public void testRemovePartnerRegistry() {
+	@Test
+    public void removePartnerRegistry() {
     	PartnerRegistry partnerRegistry = new PartnerRegistry();
     	
     	partnerRegistryDao.remove(partnerRegistry);
@@ -71,14 +76,14 @@ public class PartnerMgrImplTests extends TestCase {
     private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
 
 	@SuppressWarnings("unchecked")
-	@Override
+	@Before
     public void setUp() {
         partnerMgr = new PartnerMgrImpl();
         partnerRegistryDao = EasyMock.createMock(FilterDao.class);
         partnerMgr.setPartnerRegistryDao(partnerRegistryDao);
     }
     
-    @Override
+    @After
     public void tearDown() {
     	EasyMock.reset(partnerRegistryDao);
     }

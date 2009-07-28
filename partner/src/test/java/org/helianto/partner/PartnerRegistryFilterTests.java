@@ -34,21 +34,21 @@ import org.junit.Test;
 public class PartnerRegistryFilterTests {
 	
     @Test
-	public void testConstructor() {
+	public void constructor() {
 		PartnerRegistryFilter partnerRegistryFilter = new PartnerRegistryFilter();
 		assertTrue(partnerRegistryFilter instanceof Serializable);
 		assertTrue(partnerRegistryFilter instanceof AbstractUserBackedCriteriaFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		User user = new User();
 		PartnerRegistryFilter partnerRegistryFilter = PartnerRegistryFilter.partnerRegistryFilterFactory(user);
 		assertSame(partnerRegistryFilter.getUser(), user);
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		PartnerRegistryFilter partnerRegistryFilter = PartnerRegistryFilter.partnerRegistryFilterFactory(new User());
 		partnerRegistryFilter.setPartnerNameLike(null);
 		partnerRegistryFilter.reset();
@@ -60,18 +60,18 @@ public class PartnerRegistryFilterTests {
     public static String C3 = "AND lower(partnerregistry.partnerName) like '%name%' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C1, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setPartnerAlias("ALIAS");
         assertEquals(C1+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilter() {
+    public void filter() {
         filter.setPartnerNameLike("NAME");
         assertEquals(C1+C3, filter.createCriteriaAsString(false));
     }

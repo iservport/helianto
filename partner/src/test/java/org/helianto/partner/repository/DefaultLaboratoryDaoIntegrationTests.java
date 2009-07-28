@@ -32,7 +32,7 @@ import org.helianto.partner.test.LaboratoryTestSupport;
 public class DefaultLaboratoryDaoIntegrationTests  extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Laboratory laboratory = LaboratoryTestSupport.createLaboratory();
 		partnerDao.persist(laboratory);
 		assertEquals(laboratory, partnerDao.findUnique(laboratory.getPartnerRegistry(), 'L'));

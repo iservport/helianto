@@ -31,7 +31,7 @@ import org.helianto.partner.test.AccountTestSupport;
 public class DefaultAccountDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Account account = AccountTestSupport.createAccount();
 		accountDao.persist(account);
 		assertEquals(account, accountDao.findUnique(account.getEntity(), account.getAccountCode()));

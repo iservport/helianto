@@ -1,19 +1,21 @@
 package org.helianto.partner;
 
-import org.helianto.core.test.DomainTestSupport;
+import static org.junit.Assert.*;
 
-import junit.framework.TestCase;
+import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 /**
  * <code>Supplier</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class SupplierTests extends TestCase {
+public class SupplierTests {
     
     /**
      * Test <code>Supplier</code> static factory method.
      */
+	@Test
     public void testSupplierFactory() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         
@@ -27,6 +29,7 @@ public class SupplierTests extends TestCase {
     /**
      * Test <code>Supplier</code> equals() method.
      */
+	@Test
     public void testSupplierEquals() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         

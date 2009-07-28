@@ -32,7 +32,7 @@ import org.helianto.partner.test.CustomerTestSupport;
 public class DefaultCustomerDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Customer customer = CustomerTestSupport.createCustomer();
 		partnerDao.persist(customer);
 		assertEquals(customer, partnerDao.findUnique(customer.getPartnerRegistry(), 'C'));

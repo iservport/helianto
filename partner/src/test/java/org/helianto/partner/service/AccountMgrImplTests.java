@@ -37,7 +37,7 @@ import org.junit.Test;
 public class AccountMgrImplTests {
     
 	@Test
-    public void testFindAccounts() {
+    public void findAccounts() {
     	AccountFilter accountFilter = new AccountFilter();
     	List<Account> accountList = new ArrayList<Account>();
     	
@@ -49,7 +49,7 @@ public class AccountMgrImplTests {
     }
     
 	@Test
-    public void testStoreAccount() {
+    public void storeAccount() {
     	Account account = new Account();
     	Account managedAccount = new Account();
     	
@@ -61,7 +61,7 @@ public class AccountMgrImplTests {
     }
     
 	@Test
-    public void testRemoveAccount() {
+    public void removeAccount() {
     	Account account = new Account();
     	
     	accountDao.remove(account);
