@@ -18,18 +18,18 @@ public class MeasurementTechniqueFilterTests {
     public static String C2 = "AND measurementtechnique.measurementTechniqueName = 'NAME' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C0+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setMeasurementTechniqueCode("CODE");
         assertEquals(C0+C1, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterName() {
+    public void filterName() {
         filter.setMeasurementTechniqueName("NAME");
         assertEquals(C0+C2+OB, filter.createCriteriaAsString(false));
     }

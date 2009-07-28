@@ -1,27 +1,32 @@
 package org.helianto.process;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 /**
  * <code>DocumentAssociation</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DocumentAssociationTests extends TestCase {
+public class DocumentAssociationTests {
     
     /**
      * Test <code>DocumentAssociation</code> static factory method.
      */
-    public void testDocumentAssociationFactory() {
+	@Test
+    public void documentAssociationFactory() {
         ProcessDocument parent = new Process();
         ProcessDocument child = new Process();
         
@@ -37,7 +42,8 @@ public class DocumentAssociationTests extends TestCase {
     /**
      * Test <code>DocumentAssociation</code> equals() method.
      */
-    public void testDocumentAssociationEquals() {
+	@Test
+    public void documentAssociationEquals() {
         ProcessDocument parent = new Process();
         ProcessDocument child = new Process();
         
@@ -58,7 +64,8 @@ public class DocumentAssociationTests extends TestCase {
         assertTrue(documentAssociation.equals(copy));
     }
 
-	public void testComparator() {
+	@Test
+	public void comparator() {
 		Process process = new Process();
 		ProcessDocumentAssociation first = new ProcessDocumentAssociation();
 		first.setSequence(1);
@@ -79,14 +86,16 @@ public class DocumentAssociationTests extends TestCase {
 		assertEquals(10, documentAssociationList.get(2).getSequence());
 	}
 	
-	public void testGetOperationAssociationsNoParent() {
+	@Test
+	public void operationAssociationsNoParent() {
 		Process process = new Process();
 		prepareProcess(process, new int[] {5, 3, 2, 10 });
 		assertEquals(4, process.getChildAssociationList().size());
 		assertEquals(2, process.getChildAssociationList().get(0).getSequence());
 	}
 	
-	public void testGetOperationAssociationsParent1() {
+	@Test
+	public void operationAssociationsParent1() {
 		Process process = new Process(), parent = new Process();
 		prepareProcess(parent, new int[] {1,2,3});
 		prepareProcess(process, new int[] {5,7});
@@ -99,7 +108,8 @@ public class DocumentAssociationTests extends TestCase {
 		assertEquals(7, process.getChildAssociationList().get(4).getSequence());
 	}
 	
-	public void testGetOperationAssociationsParent2() {
+	@Test
+	public void operationAssociationsParent2() {
 		Process process = new Process(), parent = new Process();
 		prepareProcess(parent, new int[] {1,2,3,4});
 		prepareProcess(process, new int[] {3,4,5,7});

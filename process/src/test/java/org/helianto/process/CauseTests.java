@@ -1,9 +1,13 @@
 package org.helianto.process;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 
 /**
@@ -11,12 +15,13 @@ import org.helianto.core.test.DomainTestSupport;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class CauseTests extends TestCase {
+public class CauseTests {
     
     /**
      * Test <code>Cause</code> static factory method.
      */
-    public void testCauseFactoryClass() {
+	@Test
+    public void causeFactoryClass() {
         Entity entity = new Entity();
 
 		Cause cause = Cause.causeFactory(entity, Long.MAX_VALUE);
@@ -30,7 +35,8 @@ public class CauseTests extends TestCase {
     /**
      * Test <code>Cause</code> equals() method.
      */
-    public void testCauseEquals() {
+	@Test
+    public void causeEquals() {
         Entity entity = new Entity();
         
 		Cause cause = Cause.causeFactory(entity, Long.MAX_VALUE);

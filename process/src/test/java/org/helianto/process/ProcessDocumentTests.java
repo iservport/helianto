@@ -1,9 +1,12 @@
 package org.helianto.process;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 
 /**
@@ -11,12 +14,13 @@ import org.helianto.core.test.DomainTestSupport;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessDocumentTests extends TestCase {
+public class ProcessDocumentTests {
     
     /**
      * Test <code>Document</code> static factory method.
      */
-    public void testDocumentFactoryClass() {
+	@Test
+    public void documentFactoryClass() {
         Entity entity = new Entity();
         String docCode = DomainTestSupport.STRING_TEST_VALUE;
 

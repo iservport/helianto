@@ -21,24 +21,24 @@ public class CardSetFilterTests {
     public static String C3 = "AND cardset.processDocument.id = 1 ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C0+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setInternalNumber(Long.MAX_VALUE);
         assertEquals(C0+C1, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterType() {
+    public void filterType() {
         filter.setCardType(CardType.DATA.getPrefix());
         assertEquals(C0+C2+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterProcess() {
+    public void filterProcess() {
         filter.setProcess(ProcessTestSupport.createProcess());
         filter.getProcess().setId(1);
         assertEquals(C0+C3+OB, filter.createCriteriaAsString(false));

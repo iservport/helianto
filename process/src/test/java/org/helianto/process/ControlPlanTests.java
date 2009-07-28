@@ -1,9 +1,13 @@
 package org.helianto.process;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 
 /**
@@ -11,12 +15,13 @@ import org.helianto.core.test.DomainTestSupport;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ControlPlanTests extends TestCase {
+public class ControlPlanTests {
     
     /**
      * Test <code>ControlPlan</code> static factory method.
      */
-    public void testControlPlanFactoryClass() {
+	@Test
+    public void controlPlanFactoryClass() {
     	Entity entity = new Entity();
 
         ControlPlan controlPlan = ControlPlan.controlPlanFactory(entity, Integer.MAX_VALUE);
@@ -30,7 +35,8 @@ public class ControlPlanTests extends TestCase {
     /**
      * Test <code>ControlPlan</code> equals() method.
      */
-    public void testControlPlanEquals() {
+	@Test
+    public void controlPlanEquals() {
     	Entity entity = new Entity();
 
         ControlPlan controlPlan = ControlPlan.controlPlanFactory(entity, Integer.MAX_VALUE);

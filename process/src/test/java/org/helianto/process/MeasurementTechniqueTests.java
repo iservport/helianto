@@ -1,9 +1,13 @@
 package org.helianto.process;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Unit;
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 
 /**
@@ -11,12 +15,13 @@ import org.helianto.core.test.DomainTestSupport;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class MeasurementTechniqueTests extends TestCase {
+public class MeasurementTechniqueTests {
     
     /**
      * Test <code>MeasurementTechnique</code> static factory method.
      */
-    public void testMeasurementTechniqueFactoryClass() {
+	@Test
+    public void measurementTechniqueFactoryClass() {
     	Unit unit = new Unit();
 
     	MeasurementTechnique measurementTechnique = MeasurementTechnique.measurementTechniqueFactory(unit, "CODE");
@@ -30,7 +35,8 @@ public class MeasurementTechniqueTests extends TestCase {
     /**
      * Test <code>MeasurementTechnique</code> equals() method.
      */
-    public void testMeasurementTechniqueEquals() {
+	@Test
+    public void measurementTechniqueEquals() {
     	Unit unit = new Unit();
 
     	MeasurementTechnique measurementTechnique = MeasurementTechnique.measurementTechniqueFactory(unit, "CODE");

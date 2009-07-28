@@ -29,7 +29,7 @@ import org.junit.Test;
 public class CardTests {
 
 	@Test
-    public void testEquals() {
+    public void carTestEquals() {
 		Card copy, card = new Card();
 		CardSet cardSet = new CardSet();
         card.setKey(cardSet, "LABEL");

@@ -15,9 +15,11 @@
 
 package org.helianto.process;
 
-import java.io.Serializable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import java.io.Serializable;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
@@ -30,15 +32,17 @@ import org.junit.Test;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class ProcessDocumentFilterTests extends TestCase {
+public class ProcessDocumentFilterTests {
 	
-	public void testConstructor() {
+	@Test
+	public void constructor() {
 		ProcessDocumentFilter processDocumentFilter = new ProcessDocumentFilter();
 		assertTrue(processDocumentFilter instanceof Serializable);
 		assertTrue(processDocumentFilter instanceof AbstractUserBackedCriteriaFilter);
 	}
 	
-	public void testFactoryUser() {
+	@Test
+	public void factoryUser() {
 		User user = new User();
 		Class<? extends ProcessDocument> clazz = Process.class;
 		ProcessDocumentFilter processDocumentFilter = ProcessDocumentFilter.processDocumentFilterFactory(user, clazz);
@@ -46,7 +50,8 @@ public class ProcessDocumentFilterTests extends TestCase {
 		assertEquals(processDocumentFilter.getClazz(), Process.class);
 	}
 	
-	public void testFactoryHierarchy() {
+	@Test
+	public void factoryHierarchy() {
 		User user = new User();
 		ProcessDocument document = new Process();
 		ProcessDocumentFilter processDocumentFilter = ProcessDocumentFilter.processDocumentFilterFactory(user, document);
@@ -55,7 +60,8 @@ public class ProcessDocumentFilterTests extends TestCase {
 		assertEquals(processDocumentFilter.getDocument(), document);
 	}
 	
-	public void testDocument() {
+	@Test
+	public void document() {
 		AbstractDocument document = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
 			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
@@ -68,7 +74,8 @@ public class ProcessDocumentFilterTests extends TestCase {
 		assertSame(processDocumentFilter.getDocument(), document);
 	}
 	
-	public void testClass() {
+	@Test
+	public void clazz() {
 		Class<? extends ProcessDocument> clazz = Process.class;
 		ProcessDocumentFilter processDocumentFilter = 
 			ProcessDocumentFilter.processDocumentFilterFactory(new User(), Process.class);
@@ -84,30 +91,30 @@ public class ProcessDocumentFilterTests extends TestCase {
     public static String C4 = "AND processdocument.inheritanceType = 'C' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C0+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterClazz() {
+    public void filterClazz() {
         filter.setClazz(Operation.class);
         assertEquals(C0+C1+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setDocCode("DOCCODE");
         assertEquals(C0+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterName() {
+    public void filterName() {
         filter.setDocNameLike("NAME");
         assertEquals(C0+C3+OB, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterInheritance() {
+    public void filterInheritance() {
         filter.setInheritanceType(InheritanceType.CONCRETE.getValue());
         assertEquals(C0+C4+OB, filter.createCriteriaAsString(false));
     }

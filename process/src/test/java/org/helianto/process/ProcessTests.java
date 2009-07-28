@@ -16,17 +16,22 @@
 
 package org.helianto.process;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessTests extends TestCase {
+public class ProcessTests {
 	
-    public void testEquals() {
+	@Test
+    public void equals() {
     	Entity entity = new Entity();
 
     	Process process = new Process(), copy = new Process();
@@ -50,7 +55,8 @@ public class ProcessTests extends TestCase {
 
     }
     
-	public void testProcessFactory() {
+	@Test
+	public void processFactory() {
 		Entity entity = EntityTestSupport.createEntity();
 		String processCode = "PROCESSCODE";
 		long internalNumber = Long.MAX_VALUE;

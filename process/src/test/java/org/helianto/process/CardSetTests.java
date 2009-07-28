@@ -30,7 +30,7 @@ import org.junit.Test;
 public class CardSetTests {
 
 	@Test
-    public void testEquals() {
+    public void cardSetEquals() {
 		CardSet copy, cardSet = new CardSet();
 		Entity entity = new Entity();
         cardSet.setKey(entity, Long.MAX_VALUE);

@@ -31,7 +31,7 @@ import org.helianto.process.test.ProcessDocumentTestSupport;
 public class DefaultProcessDocumentDaoIntegrationTests extends AbstractProcessDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		ProcessDocument processDocument = ProcessDocumentTestSupport.createProcessDocument();
 		processDocumentDao.persist(processDocument);
 		assertEquals(processDocument, processDocumentDao.findUnique(processDocument.getEntity(), processDocument.getDocCode()));

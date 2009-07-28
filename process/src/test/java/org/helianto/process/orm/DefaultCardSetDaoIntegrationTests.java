@@ -31,7 +31,7 @@ import org.helianto.process.test.CardSetTestSupport;
 public class DefaultCardSetDaoIntegrationTests extends AbstractProcessDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		CardSet cardSet = CardSetTestSupport.createCardSet();
 		cardSetDao.persist(cardSet);
 		assertEquals(cardSet, cardSetDao.findUnique(cardSet.getEntity(), cardSet.getInternalNumber()));

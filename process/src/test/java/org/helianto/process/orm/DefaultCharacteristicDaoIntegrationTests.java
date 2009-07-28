@@ -31,7 +31,7 @@ import org.helianto.process.test.CharacteristicTestSupport;
 public class DefaultCharacteristicDaoIntegrationTests extends AbstractProcessDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Characteristic characteristic = CharacteristicTestSupport.createCharacteristic();
 		processDocumentDao.persist(characteristic);
 		assertEquals(characteristic, processDocumentDao.findUnique(characteristic.getEntity(), characteristic.getDocCode()));

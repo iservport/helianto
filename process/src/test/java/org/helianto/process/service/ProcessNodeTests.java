@@ -39,7 +39,7 @@ import org.junit.Test;
 public class ProcessNodeTests {
 	
 	@Test
-	public void testRootNode() {
+	public void rootNode() {
 		ProcessDocument root = new Process();
 		root.setId(Integer.MAX_VALUE);
 		root.setDocCode("DOCCODE");
@@ -54,7 +54,7 @@ public class ProcessNodeTests {
 	}
 
 	@Test
-	public void testLeafNode() {
+	public void leafNode() {
 		ProcessNode processNode = new ProcessNode(payLoad, 10, 100);
 		assertSame(payLoad, processNode.getContent());
 		assertEquals(Integer.MAX_VALUE, processNode.getId());
@@ -65,7 +65,7 @@ public class ProcessNodeTests {
 	}
 
 	@Test
-	public void testLeafNodeNotEditable() {
+	public void leafNodeNotEditable() {
 		ProcessNode processNode = new ProcessNode(payLoad, 10, 100, false);
 		assertSame(payLoad, processNode.getContent());
 		assertEquals(Integer.MAX_VALUE, processNode.getId());
@@ -76,7 +76,7 @@ public class ProcessNodeTests {
 	}
 
 	@Test
-	public void testChildAssociationFactory() {
+	public void childAssociationFactory() {
 		ProcessNode processNode = new ProcessNode(payLoad, 10, 100);
 		ProcessDocument grandChild = new Operation();
 		grandChild.setDocCode("GRANDCHILD");
@@ -94,7 +94,7 @@ public class ProcessNodeTests {
 	}
 	
 	@Test
-	public void testGetChildList() {
+	public void childList() {
 		ProcessNode processNode = new ProcessNode(payLoad, 10, 100);
 		ProcessDocument grandChild1 = new Operation();
 		grandChild1.setDocCode("GRANDCHILD1");

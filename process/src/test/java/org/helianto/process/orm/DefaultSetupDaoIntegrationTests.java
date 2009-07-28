@@ -31,7 +31,7 @@ import org.helianto.process.test.SetupTestSupport;
 public class DefaultSetupDaoIntegrationTests extends AbstractProcessDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Setup setup = SetupTestSupport.createSetup();
 		setupDao.persist(setup);
 		assertEquals(setup, setupDao.findUnique(setup.getOperation(), setup.getResource()));

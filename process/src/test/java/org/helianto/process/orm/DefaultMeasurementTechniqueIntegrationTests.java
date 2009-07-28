@@ -31,7 +31,7 @@ import org.helianto.process.test.MeasurementTechniqueTestSupport;
 public class DefaultMeasurementTechniqueIntegrationTests extends AbstractProcessDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		MeasurementTechnique measurementTechnique = MeasurementTechniqueTestSupport.createMeasurementTechnique();
 		measurementTechniqueDao.persist(measurementTechnique);
 		assertEquals(measurementTechnique, measurementTechniqueDao.findUnique(measurementTechnique.getEntity(), measurementTechnique.getMeasurementTechniqueCode()));
