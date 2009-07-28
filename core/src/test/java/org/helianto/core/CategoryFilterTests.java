@@ -33,14 +33,14 @@ import org.junit.Test;
 public class CategoryFilterTests {
 	
     @Test
-    public void testConstructor() {
+    public void constructor() {
 		CategoryFilter categoryFilter = new CategoryFilter();
 		assertTrue(categoryFilter instanceof Serializable);
 		assertTrue(categoryFilter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		User user = new User();
 		CategoryGroup categoryGroup = CategoryGroup.NOT_DEFINED;
 		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(user);
@@ -49,7 +49,7 @@ public class CategoryFilterTests {
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		CategoryFilter categoryFilter = CategoryFilter.categoryFilterFactory(new User());
 		categoryFilter.reset();
 		assertEquals("", categoryFilter.getCategoryCode());
@@ -61,18 +61,18 @@ public class CategoryFilterTests {
     public static String C3 = "AND lower(category.categoryNameLike) like '%name_like%' ";
 
     @Test
-    public void testSelect() {
+    public void select() {
         assertEquals(C1, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testCreateCriteriaAsStringCategoryCode() {
+    public void createCriteriaAsStringCategoryCode() {
         filter.setCategoryCode("CODE");
         assertEquals(C1+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testCreateCriteriaAsStringCategoryNameLike() {
+    public void createCriteriaAsStringCategoryNameLike() {
         filter.setCategoryNameLike("NAME_LIKE");
         assertEquals(C1+C3, filter.createCriteriaAsString(false));
     }

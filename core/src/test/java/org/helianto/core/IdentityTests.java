@@ -1,22 +1,27 @@
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Date;
 
-import junit.framework.TestCase;
-
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 /**
  * <code>Identity</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityTests extends TestCase {
+public class IdentityTests {
     
     /**
      * Test <code>Identity</code> static factory method.
      */
-    public void testIdentityFactory() {
+	@Test
+    public void identityFactory() {
         String principal = DomainTestSupport.STRING_TEST_VALUE;
         
         Identity identity = Identity.identityFactory(principal);
@@ -28,7 +33,8 @@ public class IdentityTests extends TestCase {
     /**
      * Test <code>Identity</code> static factory method.
      */
-    public void testIdentityFactoryFull() {
+	@Test
+    public void identityFactoryFull() {
         Identity identity = Identity.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
         
         assertEquals("PRINCIPAL".toLowerCase(), identity.getPrincipal());
@@ -46,7 +52,8 @@ public class IdentityTests extends TestCase {
     /**
      * Test <code>Identity</code> equals() method.
      */
-    public void testIdentityEquals() {
+	@Test
+    public void identityEquals() {
         String principal = DomainTestSupport.STRING_TEST_VALUE;
         
         Identity identity = Identity.identityFactory(principal);

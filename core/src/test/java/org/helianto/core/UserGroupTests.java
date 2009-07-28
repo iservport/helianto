@@ -1,23 +1,25 @@
 package org.helianto.core;
 
-import java.util.Set;
-
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.core.test.UserGroupTestSupport;
+import org.junit.Test;
 
 /**
  * <code>UserGroup</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserGroupTests extends TestCase {
+public class UserGroupTests {
     
     /**
      * Test <code>UserGroup</code> static factory method.
      */
-    public void testUserGroupFactory() {
+	@Test
+    public void userGroupFactory() {
         Entity entity = new Entity();
         
         UserGroup userGroup = UserGroup.userGroupFactory(entity, "userKey");
@@ -30,7 +32,8 @@ public class UserGroupTests extends TestCase {
     /**
      * Test <code>UserGroup</code> equals() method.
      */
-    public void testUserGroupEquals() {
+	@Test
+    public void userGroupEquals() {
         Entity entity = new Entity();
         
         UserGroup userGroup = UserGroup.userGroupFactory(entity, "userKey");

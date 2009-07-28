@@ -32,7 +32,7 @@ import org.helianto.core.test.UserGroupTestSupport;
 public class DefaultUserGroupDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
 		entityDao.persist(userGroup.getEntity());
 		userGroupDao.persist(userGroup);

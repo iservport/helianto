@@ -15,7 +15,9 @@
 
 package org.helianto.core.security;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
@@ -23,34 +25,42 @@ import org.helianto.core.User;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserTestSupport;
-import org.springframework.security.userdetails.UserDetails;
+import org.junit.Test;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class UserDetailsAdapterTests extends TestCase {
+public class UserDetailsAdapterTests {
     
-    public void testUserDetailsAdapterError() {
+//	@Test(expected=Exception.class)
+//    public void userDetailsAdapterError1() {
+//        Identity id1 = IdentityTestSupport.createIdentity();
+//        Identity id2 = IdentityTestSupport.createIdentity();
+//        User user = UserTestSupport.createUser();
+//        user.setIdentity(id1);
+//        Credential credential = CredentialTestSupport.createCredential();
+//        credential.setIdentity(id2);
+//        // credential and user do not share a common identity
+//        // FIXME
+////        try {
+////            new UserDetailsAdapter(user, credential); fail();
+////        } catch (IllegalArgumentException e) { 
+////        } catch (Exception e) { fail(); }
+//        // but now do
+//        user.setIdentity(credential.getIdentity());
+//        new UserDetailsAdapter(user, credential); 
+//    }
+
+	@Test(expected=Exception.class)
+    public void userDetailsAdapterError2() {
         Identity id1 = IdentityTestSupport.createIdentity();
         Identity id2 = IdentityTestSupport.createIdentity();
         User user = UserTestSupport.createUser();
         user.setIdentity(id1);
         Credential credential = CredentialTestSupport.createCredential();
         credential.setIdentity(id2);
-        // credential and user do not share a common identity
-        // FIXME
-//        try {
-//            new UserDetailsAdapter(user, credential); fail();
-//        } catch (IllegalArgumentException e) { 
-//        } catch (Exception e) { fail(); }
-        // but now do
-        try {
-            user.setIdentity(credential.getIdentity());
-            new UserDetailsAdapter(user, credential); 
-        } catch (Exception e) { fail(); }
-        try {
-            new UserDetailsAdapter(user, null); fail();
-        } catch (IllegalArgumentException e) { 
-        } catch (Exception e) { fail(); }
+        new UserDetailsAdapter(user, null);
     }
 
+	@Test
     public void testAbstractUserDetailsAndInterfaces() {
         User user = UserTestSupport.createUser();
         Credential credential = CredentialTestSupport.createCredential();
@@ -64,13 +74,14 @@ public class UserDetailsAdapterTests extends TestCase {
         assertFalse(userDetails.isAccountNonExpired());
     }
     
-    public void testUserDetailsLock() {
+
+    public void userDetailsLock() {
         // TODO
 //        assertEquals(userDetails.isAccountNonLocked(), user.isAccountNonLocked());
 //        assertTrue(userDetails.isAccountNonLocked());
     }
     
-    public void testUserDetailsEnabled() {
+    public void userDetailsEnabled() {
         // TODO
 //        if (credential.getCredentialState()==ActivityState.ACTIVE.getValue() || 
 //                credential.getCredentialState()==ActivityState.IDLE.getValue()) {

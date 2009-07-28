@@ -31,7 +31,7 @@ import org.helianto.core.test.ServerTestSupport;
 public class DefaultServerDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Server server = ServerTestSupport.createServer();
 		serverDao.persist(server);
 		assertEquals(server, serverDao.findUnique(server.getOperator(), server.getServerName()));

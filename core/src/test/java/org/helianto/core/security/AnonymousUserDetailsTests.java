@@ -1,10 +1,13 @@
 package org.helianto.core.security;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
-public class AnonymousUserDetailsTests extends TestCase {
+import org.junit.Test;
+
+public class AnonymousUserDetailsTests {
 	
-	public void testAnonymous() {
+	@Test
+	public void anonymous() {
 		PublicUserDetails pud = new AnonymousUserDetails();
 		assertEquals("ANONYMOUS".toLowerCase(), pud.getUser().getIdentity().getPrincipal());
 	}

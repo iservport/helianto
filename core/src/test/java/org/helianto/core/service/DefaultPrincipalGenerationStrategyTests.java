@@ -1,15 +1,18 @@
 package org.helianto.core.service;
 
+import static org.junit.Assert.assertEquals;
+
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalData;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class DefaultPrincipalGenerationStrategyTests extends TestCase {
+public class DefaultPrincipalGenerationStrategyTests {
 	
 	private PrincipalGenerationStrategy principalGenerationStrategy;
 	
-	public void testPrincipalGeneration() {
+    @Test
+	public void principalGeneration() {
 		Identity identity = new Identity();
 		identity.setPrincipal("");
 		identity.setOptionalAlias("alias");
@@ -21,7 +24,7 @@ public class DefaultPrincipalGenerationStrategyTests extends TestCase {
 		assertEquals("flastname", identity.getPrincipal());
 	}
 	
-	@Override
+	@Before
 	public void setUp() {
 		principalGenerationStrategy = new DefaultPrincipalGenerationStrategy();
 	}

@@ -1,25 +1,22 @@
 package org.helianto.core;
 
+import static org.junit.Assert.*;
+
 import org.helianto.core.test.DomainTestSupport;
-
-import junit.framework.TestCase;
-
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-
-import org.helianto.core.User;
+import org.junit.Test;
 
 /**
  * <code>User</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserTests extends TestCase {
+public class UserTests {
     
     /**
      * Test <code>User</code> static factory method.
      */
-    public void testUserFactory() {
+	@Test
+    public void userFactory() {
         Entity entity = new Entity();
         Identity identity = new Identity();
         
@@ -33,7 +30,8 @@ public class UserTests extends TestCase {
     /**
      * Test <code>User</code> equals() method.
      */
-    public void testUserEquals() {
+	@Test
+    public void userEquals() {
         Entity entity = new Entity();
         Identity identity = new Identity();
         identity.setPrincipal("principal");

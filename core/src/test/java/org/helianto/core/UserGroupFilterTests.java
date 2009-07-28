@@ -20,13 +20,13 @@ import org.junit.Test;
 public class UserGroupFilterTests {
 
     @Test
-    public void testConstructor() {
+    public void constructor() {
 		assertTrue(filter instanceof Serializable);
 		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		assertSame(filter.getUser(), user);
 		assertEquals("", filter.getIdentityPrincipal());
 		assertEquals("", filter.getIdentityPrincipalLike());
@@ -34,7 +34,7 @@ public class UserGroupFilterTests {
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		filter.reset();
 		assertEquals("", filter.getIdentityPrincipal());
 		assertEquals(0, filter.getExclusions().size());
@@ -50,25 +50,25 @@ public class UserGroupFilterTests {
     public static String C8 = "order by usergroup.lastEvent DESC ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C1+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelectIndentity() {
+    public void selectIndentity() {
     	filter.setIdentity(IdentityTestSupport.createIdentity());
     	filter.getIdentity().setId(1);
         assertEquals(C1+C3, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelectIndentityPrincipal() {
+    public void selectIndentityPrincipal() {
     	filter.setIdentityPrincipal("principal");
         assertEquals(C1+C5, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testClazz() {
+    public void clazz() {
     	filter.setIdentity(IdentityTestSupport.createIdentity());
     	filter.getIdentity().setId(1);
     	filter.setClazz(User.class);
@@ -76,26 +76,26 @@ public class UserGroupFilterTests {
     }
     
     @Test
-    public void testFilterUserState() {
+    public void filterUserState() {
         filter.setUserState(UserState.ACTIVE);
         assertEquals(C1+C6+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterIdentityPrincipal() {
+    public void filterIdentityPrincipal() {
         filter.setIdentityPrincipalLike("PRINCIPAL");
         assertEquals(C1+C7+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterAll() {
+    public void filterAll() {
         filter.setUserState(UserState.ACTIVE);
         filter.setIdentityPrincipalLike("PRINCIPAL");
         assertEquals(C1+C6+C7+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterOrderByLastEvent() {
+    public void filterOrderByLastEvent() {
         filter.setUserState(UserState.ACTIVE);
         filter.setOrderByLastEventDesc(true);
         assertEquals(C1+C6+C8, filter.createCriteriaAsString(false));

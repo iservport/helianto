@@ -15,17 +15,19 @@
 
 package org.helianto.core.validation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Identity;
-import org.helianto.core.validation.IdentityValidator;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
-public class IdentityValidatorTests extends TestCase {
+public class IdentityValidatorTests {
     
     // fields 
     
@@ -37,6 +39,7 @@ public class IdentityValidatorTests extends TestCase {
     
     // setup
     
+    @Before
     public void setUp() {
         identity = new Identity();
         identity.setPrincipal("ABC");
@@ -46,34 +49,40 @@ public class IdentityValidatorTests extends TestCase {
     
     // tests
     
-    public void testValidateSupports() {
+    @Test
+    public void validateSupports() {
         assertTrue(identityValidator.supports(Identity.class));
     }
     
-    public void testValidateNullCredential() {
+    @Test
+    public void validateNullCredential() {
         identityValidator.validate(null, errors);
         checkRequiredErrors(errors,"identity.error.nullpointer");
     }
 
-    public void testValidateEmptyPrincipal() {
+    @Test
+    public void validateEmptyPrincipal() {
         identity.setPrincipal("");
         identityValidator.validate(identity, errors);
         checkRequiredErrors(errors,"identity.error.empty");
     }
 
-    public void testValidateNullPrincipal() {
+    @Test
+    public void validateNullPrincipal() {
         identity.setPrincipal(null);
         identityValidator.validate(identity, errors);
         checkRequiredErrors(errors,"identity.error.empty");
     }
 
-    public void testValidatePrincipalWhiteSpace() {
+    @Test
+    public void validatePrincipalWhiteSpace() {
         identity.setPrincipal(" \n\t");
         identityValidator.validate(identity, errors);
         checkRequiredErrors(errors,"identity.error.whitespace");
     }
 
-    public void testValidatePrincipalInvalidChar() {
+    @Test
+    public void validatePrincipalInvalidChar() {
         String invalidChar = "!#$%&*()-=+§£¢¬?{}[]°`'|,;/<>:~^°*?\"\'\\";
         for (char c : invalidChar.toCharArray()) {
             errors = new BindException(identity, "identity");
@@ -83,7 +92,8 @@ public class IdentityValidatorTests extends TestCase {
         }
     }
     
-    public void testValidatePrincipalValidChar() {
+    @Test
+    public void validatePrincipalValidChar() {
         String validChar = "@._1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         for (char c : validChar.toCharArray()) {
             errors = new BindException(identity, "identity");
@@ -93,13 +103,15 @@ public class IdentityValidatorTests extends TestCase {
         }
     }
     
-    public void testPrincipalNotTooLong() {
+    @Test
+    public void principalNotTooLong() {
         identity.setPrincipal(sixteen+sixteen+sixteen+sixteen);
         identityValidator.validate(identity, errors);
         assertEquals(0, errors.getAllErrors().size());
     }
     
-    public void testPrincipalTooLong() {
+    @Test
+    public void principalTooLong() {
         identity.setPrincipal(sixteen+sixteen+sixteen+sixteen+"1");
         identityValidator.validate(identity, errors);
         checkRequiredErrors(errors,"identity.error.principaltoolong");

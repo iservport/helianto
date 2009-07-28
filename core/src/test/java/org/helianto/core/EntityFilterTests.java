@@ -19,20 +19,20 @@ import org.junit.Test;
 public class EntityFilterTests {
 
     @Test
-    public void testConstructor() {
+    public void constructor() {
 		assertTrue(filter instanceof Serializable);
 		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		assertSame(filter.getUser(), user);
 		assertEquals("", filter.getEntityAlias());
 		assertEquals("", filter.getEntityAliasLike());
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		filter.reset();
 		assertEquals("", filter.getEntityAliasLike());
 	}
@@ -41,12 +41,12 @@ public class EntityFilterTests {
     public static String C2 = "lower(entity.alias) like '%alias%' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals("", filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setOperator(OperatorTestSupport.createOperator());
     	filter.getOperator().setId(1);
     	filter.setEntityAlias("ALIAS");
@@ -54,7 +54,7 @@ public class EntityFilterTests {
     }
     
     @Test
-    public void testFilter() {
+    public void filter() {
         filter.setEntityAliasLike("ALIAS");
         assertEquals(C2, filter.createCriteriaAsString(false));
     }

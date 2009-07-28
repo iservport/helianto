@@ -31,17 +31,17 @@ import org.junit.Test;
 public class RecordFilterTests {
 
 	@Test
-	public void testConstructor() {
+	public void constructor() {
 		assertTrue(recordFilter instanceof AbstractEventFilter);
 	}
 	
 	@Test
-	public void testEmptyFilter() {
+	public void emptyFilter() {
 		assertEquals("", recordFilter.createCriteriaAsString(false));
 	}
 	
 	@Test
-	public void testResolutionFilter() {
+	public void resolutionFilter() {
 		recordFilter.setResolution('A');
 		assertEquals("alias.resolution = 'A' ", recordFilter.createCriteriaAsString(false));
 	}

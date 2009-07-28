@@ -16,28 +16,33 @@
 package org.helianto.core.filter;
 
 
-import org.helianto.core.IdentityFilter;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
+import org.helianto.core.IdentityFilter;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class IdentityFilterTests extends TestCase {
+public class IdentityFilterTests {
 
-    public void testNameOrAliasSearch() {
+    @Test
+    public void nameOrAliasSearch() {
         filter.setNameOrAliasSearch("nameOrAliasSearch");
         assertEquals("nameOrAliasSearch", filter.getNameOrAliasSearch());
     }
 
-    public void testPrincipalSearch() {
+    @Test
+    public void principalSearch() {
         filter.setPrincipal("principalSearch");
         assertEquals("principalSearch", filter.getPrincipal());
     }
     
     private IdentityFilter filter;
     
+    @Before
     public void setUp() {
         filter = new IdentityFilter();
     }

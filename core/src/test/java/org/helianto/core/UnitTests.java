@@ -1,11 +1,12 @@
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.helianto.core.test.DomainTestSupport;
-
-import junit.framework.TestCase;
-
-import org.helianto.core.Entity;
-import org.helianto.core.Unit;
+import org.junit.Test;
 
 
 /**
@@ -13,12 +14,13 @@ import org.helianto.core.Unit;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UnitTests extends TestCase {
+public class UnitTests {
     
     /**
      * Test <code>Unit</code> static factory method.
      */
-    public void testUnitFactory() {
+	@Test
+    public void unitFactory() {
         Entity entity = new Entity();
         String unitCode = DomainTestSupport.STRING_TEST_VALUE;
         
@@ -33,7 +35,8 @@ public class UnitTests extends TestCase {
     /**
      * Test <code>Unit</code> equals() method.
      */
-    public void testUnitEquals() {
+	@Test
+    public void unitEquals() {
         Entity entity = new Entity();
         String unitCode = DomainTestSupport.STRING_TEST_VALUE;
         

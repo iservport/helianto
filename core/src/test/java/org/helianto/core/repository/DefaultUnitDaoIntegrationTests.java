@@ -31,7 +31,7 @@ import org.helianto.core.test.UnitTestSupport;
 public class DefaultUnitDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Unit unit = UnitTestSupport.createUnit();
 		unitDao.persist(unit);
 		assertEquals(unit, unitDao.findUnique(unit.getEntity(), unit.getUnitCode()));

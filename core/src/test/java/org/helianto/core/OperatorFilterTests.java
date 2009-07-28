@@ -16,20 +16,20 @@ import org.junit.Test;
 public class OperatorFilterTests {
 
     @Test
-    public void testConstructor() {
+    public void constructor() {
 		assertTrue(filter instanceof Serializable);
 		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		assertSame(filter.getUser(), user);
 		assertEquals("", filter.getOperatorName());
 		assertEquals("", filter.getOperatorNameLike());
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		filter.reset();
 		assertEquals("", filter.getOperatorNameLike());
 	}
@@ -38,18 +38,18 @@ public class OperatorFilterTests {
     public static String C2 = "lower(operator.operatorName) like '%name%' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals("", filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setOperatorName("NAME");
         assertEquals(C1, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilter() {
+    public void filter() {
         filter.setOperatorNameLike("NAME");
         assertEquals(C2, filter.createCriteriaAsString(false));
     }

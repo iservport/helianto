@@ -15,19 +15,22 @@
 
 package org.helianto.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * <code>PersonalData</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class PersonalDataTests extends TestCase {
+public class PersonalDataTests {
 
     /**
      * Test <code>PersonalData</code> static factory method.
      */
-    public void testPersonalDataFactory() {
+	@Test
+    public void personalDataFactory() {
         PersonalData personalData = 
             PersonalData.personalDataFactory("", "");
         

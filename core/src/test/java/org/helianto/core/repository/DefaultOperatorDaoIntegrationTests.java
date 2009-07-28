@@ -31,7 +31,7 @@ import org.helianto.core.test.OperatorTestSupport;
 public class DefaultOperatorDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Operator operator = OperatorTestSupport.createOperator();
 		operatorDao.persist(operator);
 		assertEquals(operator, operatorDao.findUnique(operator.getOperatorName()));

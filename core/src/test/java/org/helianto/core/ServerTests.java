@@ -1,17 +1,22 @@
 package org.helianto.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 /**
  * <code>Category</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ServerTests extends TestCase {
+public class ServerTests  {
     
-    public void testServerFactory() {
+	@Test
+    public void serverFactory() {
         Operator operator = new Operator();
         Credential credential = new Credential();
         Server server = Server.serverFactory(operator, "NAME", ServerType.HTTP_SERVER, credential);
@@ -29,7 +34,8 @@ public class ServerTests extends TestCase {
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), server.getRequiredEncription());
     }
 
-    public void testServerFactoryDefaults() {
+	@Test
+    public void serverFactoryDefaults() {
         Operator operator = new Operator();
         Server server = Server.serverFactory(operator, "NAME", null, null);
         
@@ -41,7 +47,8 @@ public class ServerTests extends TestCase {
     /**
      * Test <code>Category</code> equals() method.
      */
-    public void testCategoryEquals() {
+	@Test
+    public void categoryEquals() {
         Operator operator = new Operator();
         Credential credential = new Credential();
         Server server = Server.serverFactory(operator, "NAME", ServerType.HTTP_SERVER, credential);

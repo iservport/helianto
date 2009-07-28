@@ -40,7 +40,7 @@ import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -48,7 +48,7 @@ import org.springframework.security.userdetails.UserDetails;
 public class UserDetailsServiceTemplateTests {
 
 	@Test
-    public void testLoadUserByUsernameSuccess() {
+    public void loadUserByUsernameSuccess() {
     	UserLog userLog = UserLog.userLogFactory(selectedUser, new Date(), EventType.LOGIN_ATTEMPT);
     	assertNotNull(userLog.getUser());
     	List<UserGroup> candidates = new ArrayList<UserGroup>();
@@ -59,7 +59,7 @@ public class UserDetailsServiceTemplateTests {
         assertSame(loadedCredential, ((SecureUserDetails) userDetails).getCredential());
     }
 	
-	public void testConvertUserRoleToString() {
+	public void convertUserRoleToString() {
 		UserRole userRole = UserRoleTestSupport.createUserRole(selectedUser);
 		String roleName = userDetailsService.convertUserRoleToString(userRole);
 		assertEquals(roleName, "ROLE_"+userRole.getService().getServiceName()+"_"+userRole.getServiceExtension());

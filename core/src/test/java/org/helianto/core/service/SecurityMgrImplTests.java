@@ -41,7 +41,7 @@ public class SecurityMgrImplTests {
     private SecurityMgrImpl securityMgr;
 
     @Test
-    public void testFindCredentialByIdentity() {
+    public void findCredentialByIdentity() {
         Identity identity = new Identity();
         Credential credential = new Credential();
         
@@ -54,7 +54,7 @@ public class SecurityMgrImplTests {
     }
 
     @Test
-    public void testFindCredentialByPrincipal() {
+    public void findCredentialByPrincipal() {
         Credential credential = new Credential();
         Identity identity = new Identity();
         
@@ -79,14 +79,14 @@ public class SecurityMgrImplTests {
 //    }
     
     @Test(expected=PasswordNotVerifiedException.class)
-    public void testStoreCredentialNotVerified() {
+    public void storeCredentialNotVerified() {
         Credential credential = Credential.credentialFactory("");
         
         securityMgr.storeCredential(credential);
     }
     
     @Test
-    public void testStoreCredentialVerified() {
+    public void storeCredentialVerified() {
         Credential managedCredential = null, credential = Credential.credentialFactory("PASSWORD");
         credential.setVerifyPassword("PASSWORD");
         

@@ -20,21 +20,24 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.helianto.core.Category;
 import org.helianto.core.CategoryFilter;
 import org.helianto.core.dao.FilterDao;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class CategoryMgrImplTests extends TestCase {
+public class CategoryMgrImplTests {
     
     private CategoryMgrImpl categoryMgr;
     
-    public void testFindCategories() {
+    @Test
+    public void findCategories() {
     	CategoryFilter categoryFilter = new CategoryFilter();
     	List<Category> categoryList = new ArrayList<Category>();
     	
@@ -45,7 +48,8 @@ public class CategoryMgrImplTests extends TestCase {
     	verify(categoryDao);
     }
     
-    public void testStoreCategory() {
+    @Test
+    public void storeCategory() {
     	Category category = new Category();
     	Category managedCategory = new Category();
     	
@@ -59,14 +63,14 @@ public class CategoryMgrImplTests extends TestCase {
     private FilterDao<Category, CategoryFilter> categoryDao;
     
     @SuppressWarnings("unchecked")
-	@Override
+	@Before
     public void setUp() {
         categoryMgr = new CategoryMgrImpl();
         categoryDao = createMock(FilterDao.class);
         categoryMgr.setCategoryDao(categoryDao);
     }
     
-    @Override
+    @After
     public void tearDown() {
         reset(categoryDao);
     }

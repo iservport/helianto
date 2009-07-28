@@ -1,20 +1,23 @@
 package org.helianto.core;
 
+import static org.junit.Assert.*;
 import junit.framework.TestCase;
 
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 /**
  * <code>UserAssociation</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserAssociationTests extends TestCase {
+public class UserAssociationTests {
     
     /**
      * Test <code>UserAssociation</code> static factory method.
      */
-    public void testUserAssociationFactory() {
+	@Test
+    public void userAssociationFactory() {
         UserGroup parent = new UserGroup();
         UserGroup child = new UserGroup();
         
@@ -30,7 +33,8 @@ public class UserAssociationTests extends TestCase {
     /**
      * Test <code>UserAssociation</code> equals() method.
      */
-    public void testUserAssociationEquals() {
+	@Test
+    public void userAssociationEquals() {
         UserGroup parent = new UserGroup();
         UserGroup child = new UserGroup();
         

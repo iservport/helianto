@@ -17,7 +17,6 @@ package org.helianto.core.validation;
 
 import org.helianto.core.UserLog;
 import org.helianto.core.test.AbstractHibernatePropertyEditorTest;
-import org.helianto.core.test.AbstractJpaPropertyEditorTest;
 
 /**
  * @author Mauricio Fernandes de Castro

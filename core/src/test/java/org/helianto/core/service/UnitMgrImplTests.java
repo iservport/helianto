@@ -20,22 +20,25 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
 import org.helianto.core.dao.FilterDao;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 
-public class UnitMgrImplTests extends TestCase {
+public class UnitMgrImplTests {
     
     private UnitMgrImpl unitMgr;
     
-    public void testFindUnits() {
+    @Test
+    public void findUnits() {
     	UnitFilter unitFilter = new UnitFilter();
     	List<Unit> unitList = new ArrayList<Unit>();
     	
@@ -46,7 +49,8 @@ public class UnitMgrImplTests extends TestCase {
     	verify(unitDao);
     }
     
-    public void testStoreCategory() {
+    @Test
+    public void storeCategory() {
     	Unit unit = new Unit();
     	Unit UnitCategory = new Unit();
     	
@@ -60,14 +64,14 @@ public class UnitMgrImplTests extends TestCase {
     private FilterDao<Unit, UnitFilter> unitDao;
     
     @SuppressWarnings("unchecked")
-	@Override
+	@Before
     public void setUp() {
         unitMgr = new UnitMgrImpl();
         unitDao = createMock(FilterDao.class);
         unitMgr.setUnitDao(unitDao);
     }
     
-    @Override
+    @After
     public void tearDown() {
         reset(unitDao);
     }

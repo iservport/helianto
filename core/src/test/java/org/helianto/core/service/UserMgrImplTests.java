@@ -61,7 +61,7 @@ import org.junit.Test;
 public class UserMgrImplTests {
     
 	@Test
-    public void testStoreIdentity() {
+    public void storeIdentity() {
         Identity managedIdentity = null, identity = new Identity();
         identity.setPrincipal("principal");
         
@@ -77,7 +77,7 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void testFindIdentityByPrincipal() {
+    public void findIdentityByPrincipal() {
         String principal = "123";
         Identity identity = new Identity();
         
@@ -90,7 +90,7 @@ public class UserMgrImplTests {
     }
 
 	@Test
-    public void testSelectIdentities() {
+    public void selectIdentities() {
         int size = 10;
         IdentityFilter filter = new IdentityFilter();
         List<Identity> identityList = IdentityTestSupport.createIdentityList(size);
@@ -109,7 +109,7 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void testUserState() {
+    public void userState() {
         User user = UserTestSupport.createUser();
         Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
@@ -117,7 +117,7 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void testPrepareNewUserAssociation() {
+    public void prepareNewUserAssociation() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	
     	UserAssociation userAssociation = userMgr.prepareNewUserAssociation(userGroup);
@@ -126,7 +126,7 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void testFindUsers() {
+    public void findUsers() {
     	UserFilter userFilter = new UserFilter();
     	List<UserGroup> userList = new ArrayList<UserGroup>();
     	
@@ -138,7 +138,7 @@ public class UserMgrImplTests {
     }
     
 	@Test(expected=IllegalArgumentException.class)
-    public void testStoreUserGroupNullKey() {
+    public void storeUserGroupNullKey() {
 		UserGroup userGroup = new UserGroup();
 		userGroup.setUserKey(null);
 		
@@ -146,7 +146,7 @@ public class UserMgrImplTests {
     }
     
 	@Test(expected=IllegalArgumentException.class)
-    public void testStoreUserGroupEmptyKey() {
+    public void storeUserGroupEmptyKey() {
 		UserGroup userGroup = new UserGroup();
 		userGroup.setUserKey("");
 		
@@ -154,7 +154,7 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void testStoreUserGroup() {
+    public void storeUserGroup() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	UserGroup managedUserGroup = new UserGroup();
     	
@@ -166,7 +166,7 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void testValidateEmptyCandidate() {
+    public void validateEmptyCandidate() {
 		User user = UserTestSupport.createUser();
 		user.getIdentity().setId(0);
 		user.getIdentity().setPrincipal("");
@@ -174,7 +174,7 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void testValidateCandidateLoaded() {
+    public void validateCandidateLoaded() {
 		User user = UserTestSupport.createUser();
 		user.getIdentity().setId(0);
 		user.getIdentity().setPrincipal("test");
@@ -189,7 +189,7 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void testValidateCandidateCreated() {
+    public void validateCandidateCreated() {
 		User user = UserTestSupport.createUser();
 		user.getIdentity().setId(0);
 		user.getIdentity().setPrincipal("test");
@@ -206,14 +206,14 @@ public class UserMgrImplTests {
     }
     
 	@Test(expected=IllegalArgumentException.class)
-    public void testStoreUserAssociationNullKey() {
+    public void storeUserAssociationNullKey() {
     	UserAssociation parentAssociation = new UserAssociation();
     	
     	userMgr.storeUserAssociation(parentAssociation);
     }
     
 	@Test(expected=IllegalArgumentException.class)
-    public void testStoreUserAssociationEmptyKey() {
+    public void storeUserAssociationEmptyKey() {
     	UserAssociation parentAssociation = new UserAssociation();
     	parentAssociation.setChild(new User());
     	
@@ -221,7 +221,7 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void testStoreUserAssociation() {
+    public void storeUserAssociation() {
     	UserAssociation parentAssociation = new UserAssociation();
     	parentAssociation.setChild(UserTestSupport.createUser());
     	UserAssociation managedUserAssociation = new UserAssociation();
@@ -239,13 +239,13 @@ public class UserMgrImplTests {
     }
     
 	@Test(expected=IllegalArgumentException.class)
-    public void testPersistUserLogError() {
+    public void persistUserLogError() {
         // user must have an Identity
         userMgr.storeUserLog(new User(), new Date());
     }
 
 	@Test
-    public void testStoreUserLog() {
+    public void storeUserLog() {
         Date date = new Date();
         Identity identity = new Identity();
         User user = new User();
@@ -263,7 +263,7 @@ public class UserMgrImplTests {
      * All roles come from the user.
      */
 	@Test
-    public void testPrepareUserGroupLocal() {
+    public void prepareUserGroupLocal() {
         UserGroup user =  new UserGroup();
         UserGroup managedUser =  UserGroupTestSupport.createUserGroup();
         UserRole[] roles = UserRoleTestSupport.createUserRoles(managedUser, "E1", "E2");
@@ -284,7 +284,7 @@ public class UserMgrImplTests {
      * Some roles come from the ancestor.
      */
 	@Test
-    public void testPrepareUserGroupFromAncestor() {
+    public void prepareUserGroupFromAncestor() {
         UserGroup user =  new UserGroup();
         UserGroup managedUser =  UserGroupTestSupport.createUserGroup();
         UserGroup parent = UserGroupTestSupport.createUserGroup();

@@ -44,8 +44,9 @@ import org.junit.Test;
  */
 public class AbstractFilterDaoTests {
 	
+	@SuppressWarnings("deprecation")
 	@Test
-	public void testFilter() {
+	public void filter() {
 		List<Identity> resultList = new ArrayList<Identity>();
 		
 		Query result = createMock(Query.class);
@@ -64,7 +65,7 @@ public class AbstractFilterDaoTests {
 	}
 	
 	@Test
-	public void testFilterSelection() {
+	public void filterSelection() {
 		selection = true;
 		List<Identity> resultList = new ArrayList<Identity>();
 		

@@ -31,17 +31,17 @@ import org.junit.Test;
 public class EventFilterTests {
 	
 	@Test
-	public void testConstructor() {
+	public void constructor() {
 		assertTrue(eventFilter instanceof AbstractDateRangeFilter);
 	}
 	
 	@Test
-	public void testNoSelection() {
+	public void noSelection() {
 		assertFalse(eventFilter.isSelection());
 	}
 	
 	@Test
-	public void testSelection() {
+	public void selection() {
 		eventFilter.setInternalNumber(1);
 		assertTrue(eventFilter.isSelection());
 		assertEquals("alias.internalNumber = 1 ", eventFilter.createCriteriaAsString(false));

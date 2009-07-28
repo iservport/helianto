@@ -34,7 +34,7 @@ public class DefaultEntityDaoIntegrationTests extends AbstractDaoIntegrationTest
 	
 	@Test
 	@Transactional
-	public void testFindUnique() {
+	public void findUnique() {
 		Entity entity = EntityTestSupport.createEntity();
 		entityDao.persist(entity);
 		assertEquals(entity, entityDao.findUnique(entity.getOperator(), entity.getAlias()));

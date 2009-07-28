@@ -16,20 +16,23 @@
 
 package org.helianto.core.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 import org.helianto.core.AbstractNode;
 import org.helianto.core.Identity;
 import org.helianto.core.Node;
 import org.helianto.core.test.IdentityTestSupport;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class TreeBuilderImplTests extends TestCase {
+public class TreeBuilderImplTests {
 	
 	private TreeBuilder treeBuilder;
 	private List<Node> expandeNodeList = new ArrayList<Node>();
@@ -57,7 +60,8 @@ public class TreeBuilderImplTests extends TestCase {
 		
 	}
 	
-	public void testNodeConstructor() {
+	@Test
+	public void nodeConstructor() {
 		Identity identity = IdentityTestSupport.createIdentity();
 		Node node = new NodeStub(10, identity, 100, 1000);
 		assertEquals(10, node.getId());
@@ -68,7 +72,8 @@ public class TreeBuilderImplTests extends TestCase {
 		assertEquals(false, node.isExpanded());
 	}
 	
-	public void testAddNodeCollapsed() {
+	@Test
+	public void addNodeCollapsed() {
 		Identity identity = IdentityTestSupport.createIdentity();
 		Node node = new NodeStub(10, identity, 100, 1000);
 		((TreeBuilderImpl) treeBuilder).addNode(node);
@@ -77,7 +82,8 @@ public class TreeBuilderImplTests extends TestCase {
 		assertSame(node, tree.get(0));
 	}
 	
-	public void testAddNodeExpanded() {
+	@Test
+	public void addNodeExpanded() {
 		Identity identity = IdentityTestSupport.createIdentity();
 		Node node = new NodeStub(10, identity, 100, 1000);
 		((TreeBuilderImpl) treeBuilder).addNode(node);
@@ -86,7 +92,7 @@ public class TreeBuilderImplTests extends TestCase {
 		assertSame(node, tree.get(0));
 	}
 	
-	@Override
+	@Before
 	public void setUp() {
 		treeBuilder = new TreeBuilderImpl();
 		((TreeBuilderImpl) treeBuilder).reset();

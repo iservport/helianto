@@ -15,13 +15,16 @@
 
 package org.helianto.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
-public class ProvinceTests extends TestCase {
+public class ProvinceTests {
 
-    public void testProvince() {
+	@Test
+    public void province() {
         Province province = new Province();
         province.setId(Integer.MAX_VALUE);
         province.setId(Integer.MIN_VALUE);
@@ -33,7 +36,8 @@ public class ProvinceTests extends TestCase {
         province.setProvinceName("");
     }
 
-    public void testProvinceEquals() {
+	@Test
+    public void provinceEquals() {
         Province copy, province = new Province();
         province.setOperator(new Operator());
         province.setProvinceCode("TEST");

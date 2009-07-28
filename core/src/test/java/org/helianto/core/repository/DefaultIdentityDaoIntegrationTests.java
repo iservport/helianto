@@ -31,7 +31,7 @@ import org.helianto.core.test.IdentityTestSupport;
 public class DefaultIdentityDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Identity identity = IdentityTestSupport.createIdentity();
 		identityDao.persist(identity);
 		assertEquals(identity, identityDao.findUnique(identity.getPrincipal()));

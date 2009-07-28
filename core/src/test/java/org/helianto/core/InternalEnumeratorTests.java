@@ -1,24 +1,25 @@
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.helianto.core.test.DomainTestSupport;
-
-import junit.framework.TestCase;
-
-import org.helianto.core.Entity;
-
-import org.helianto.core.InternalEnumerator;
+import org.junit.Test;
 
 /**
  * <code>InternalEnumerator</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class InternalEnumeratorTests extends TestCase {
+public class InternalEnumeratorTests {
     
     /**
      * Test <code>InternalEnumerator</code> static factory method.
      */
-    public void testInternalEnumeratorFactory() {
+	@Test
+    public void internalEnumeratorFactory() {
         Entity entity = new Entity();
         String typeName = DomainTestSupport.STRING_TEST_VALUE;
         
@@ -32,7 +33,8 @@ public class InternalEnumeratorTests extends TestCase {
     /**
      * Test <code>InternalEnumerator</code> equals() method.
      */
-    public void testInternalEnumeratorEquals() {
+	@Test
+    public void internalEnumeratorEquals() {
         Entity entity = new Entity();
         String typeName = DomainTestSupport.STRING_TEST_VALUE;
         

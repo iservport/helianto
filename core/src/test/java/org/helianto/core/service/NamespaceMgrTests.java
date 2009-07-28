@@ -59,7 +59,7 @@ import org.junit.Test;
 public class NamespaceMgrTests {
 	
 	@Test
-	public void testFindOperatorExisting() {
+	public void findOperatorExisting() {
 		List<Operator> operatorList = OperatorTestSupport.createOperatorList(1);
 		
 		expect(operatorDao.find(isA(OperatorFilter.class))).andReturn(operatorList);
@@ -70,7 +70,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testFindOperatorFirstTime() {
+	public void findOperatorFirstTime() {
 		List<Operator> operatorList = new ArrayList<Operator>();
 		Operator managedOperator = OperatorTestSupport.createOperator();
 		
@@ -93,7 +93,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testFindOperatorByName() {
+	public void findOperatorByName() {
 		Operator operator = OperatorTestSupport.createOperator();
 		
 		expect(operatorDao.findUnique("NAME")).andReturn(operator);
@@ -104,7 +104,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testStoreOperator() {
+	public void storeOperator() {
 		Operator operator = OperatorTestSupport.createOperator();
 		Operator managedOperator = OperatorTestSupport.createOperator();
 		
@@ -116,7 +116,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testFindProvinces() {
+	public void findProvinces() {
 		List<Province> provinceList = ProvinceTestSupport.createProvinceList(1);
 		ProvinceFilter filter = new ProvinceFilter();
 		
@@ -128,7 +128,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testPrepareProvince() {
+	public void prepareProvince() {
 		Province province = ProvinceTestSupport.createProvince();
 		Province managedProvince = ProvinceTestSupport.createProvince();
 		
@@ -141,7 +141,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testPrepareNewProvince() {
+	public void prepareNewProvince() {
 		Entity entity = EntityTestSupport.createEntity();
 		Entity managedEntity = EntityTestSupport.createEntity();
 		
@@ -153,7 +153,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testStoreProvince() {
+	public void storeProvince() {
 		Province province = ProvinceTestSupport.createProvince();
 		Province managedProvince = ProvinceTestSupport.createProvince();
 		
@@ -165,7 +165,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testFindEntities() {
+	public void findEntities() {
 		List<Entity> entityList = EntityTestSupport.createEntityList(1);
 		EntityFilter filter = new EntityFilter();
 		
@@ -177,7 +177,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testPrepareEntityNoId() {
+	public void prepareEntityNoId() {
 		Entity entity = EntityTestSupport.createEntity();
 		
 		replay(entityDao);
@@ -187,7 +187,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testPrepareEntity() {
+	public void prepareEntity() {
 		Entity entity = EntityTestSupport.createEntity();
 		entity.setId(1);
 		Entity managedEntity = EntityTestSupport.createEntity();
@@ -204,7 +204,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testStoreNewEntity() {
+	public void storeNewEntity() {
 		Entity entity = EntityTestSupport.createEntity();
 		Entity managedEntity = EntityTestSupport.createEntity();
 		
@@ -216,7 +216,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testLoadKeyTypes() {
+	public void loadKeyTypes() {
 		Operator operator = new Operator();
 		Operator managedOperator = new Operator();
 		KeyType keyType = new KeyType();
@@ -231,7 +231,7 @@ public class NamespaceMgrTests {
 	}
 
 	@Test
-	public void testStoreKeyType() {
+	public void storeKeyType() {
 		KeyType keyType = KeyTypeTestSupport.createKeyType();
 		KeyType managedKeyType = KeyTypeTestSupport.createKeyType();
 		
@@ -243,7 +243,7 @@ public class NamespaceMgrTests {
 	}
 	
 //	@Test
-//	public void testLoadServices() {
+//	public void loadServices() {
 //		Operator operator = new Operator();
 //		Operator managedOperator = new Operator();
 //		Service service = new Service();
@@ -258,7 +258,7 @@ public class NamespaceMgrTests {
 //	}
 //
 	@Test
-	public void testStoreService() {
+	public void storeService() {
 		Service service = ServiceTestSupport.createService();
 		Service managedService = ServiceTestSupport.createService();
 		
@@ -270,7 +270,7 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void testStoreUserRole() {
+	public void storeUserRole() {
 		UserRole userRole = UserRoleTestSupport.createUserRole();
 		UserRole managedUserRole = UserRoleTestSupport.createUserRole();
 		
@@ -282,7 +282,7 @@ public class NamespaceMgrTests {
 	}
 	
 //	@Test
-//	public void testLoadServiceNameMap() {
+//	public void loadServiceNameMap() {
 //		Operator operator = new Operator();
 //		Operator managedOperator = new Operator();
 //		Service service = ServiceTestSupport.createService();

@@ -24,6 +24,7 @@ import org.helianto.core.Category;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -31,7 +32,8 @@ import org.helianto.core.test.CategoryTestSupport;
 public class DefaultCategoryDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	@Test
+	public void findUnique() {
 		Category category = CategoryTestSupport.createCategory();
 		Category managed = categoryDao.merge(category);
 		assertEquals(managed, categoryDao.findUnique(managed.getEntity(), managed.getCategoryGroup()));

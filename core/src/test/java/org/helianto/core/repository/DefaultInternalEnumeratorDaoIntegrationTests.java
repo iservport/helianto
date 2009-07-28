@@ -31,7 +31,7 @@ import org.helianto.core.test.InternalEnumeratorTestSupport;
 public class DefaultInternalEnumeratorDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		InternalEnumerator internalEnumerator = InternalEnumeratorTestSupport.createInternalEnumerator();
 		internalEnumeratorDao.persist(internalEnumerator);
 		assertEquals(internalEnumerator, internalEnumeratorDao.findUnique(internalEnumerator.getEntity(), internalEnumerator.getTypeName()));

@@ -20,13 +20,13 @@ import org.junit.Test;
 public class ServerFilterTests {
 
     @Test
-    public void testConstructor() {
+    public void constructor() {
 		assertTrue(filter instanceof Serializable);
 		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		assertSame(filter.getUser(), user);
 		assertEquals("", filter.getServerName());
 		assertEquals(' ', filter.getServerType());
@@ -35,7 +35,7 @@ public class ServerFilterTests {
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		filter.reset();
 		assertEquals(' ', filter.getServerType());
 		assertEquals((byte) 0, filter.getPriority());
@@ -50,12 +50,12 @@ public class ServerFilterTests {
     public static String C5 = "server.serverState = 'A' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C0, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setOperator(OperatorTestSupport.createOperator());
     	filter.getOperator().setId(1);
     	filter.setServerName("NAME");
@@ -63,25 +63,25 @@ public class ServerFilterTests {
     }
     
     @Test
-    public void testFilterLikeName() {
+    public void filterLikeName() {
         filter.setServerName("NAME");
         assertEquals(C2+C0, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterType() {
+    public void filterType() {
         filter.setServerType(ServerType.HTTP_SERVER.getValue());
         assertEquals(C3+C0, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterPriority() {
+    public void filterPriority() {
         filter.setPriority((byte) 1);
         assertEquals(C4+C0, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterServerState() {
+    public void filterServerState() {
         filter.setServerState(ActivityState.ACTIVE.getValue());
         assertEquals(C5+C0, filter.createCriteriaAsString(false));
     }

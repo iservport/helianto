@@ -41,7 +41,7 @@ import org.junit.Test;
 public class ServerMgrImplTests {
     
 	@Test
-    public void testFindActiveServerNull() {
+    public void findActiveServerNull() {
     	Operator operator = new Operator();
     	List<Server> serverList = new ArrayList<Server>();
     	
@@ -53,7 +53,7 @@ public class ServerMgrImplTests {
     }
     
 	@Test
-    public void testFindActiveServer() {
+    public void findActiveServer() {
     	Operator operator = new Operator();
     	List<Server> serverList = new ArrayList<Server>();
     	Server server = new Server();

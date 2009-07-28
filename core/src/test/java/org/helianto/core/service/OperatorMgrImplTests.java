@@ -21,25 +21,28 @@ import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
 import org.helianto.core.dao.FilterDao;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class OperatorMgrImplTests extends TestCase {
+public class OperatorMgrImplTests {
     
     private NamespaceMgrImpl operatorMgr;
     
-    public void testPersistOperator() {
+    @Test
+    public void persistOperator() {
         Operator operator = new Operator(), managedOperator = new Operator();
         expect(operatorDao.merge(operator)).andReturn(managedOperator);
         replay(operatorDao);
@@ -48,7 +51,8 @@ public class OperatorMgrImplTests extends TestCase {
         verify(operatorDao);
     }
     
-    public void testFindOperatorAll() {
+    @Test
+    public void findOperatorAll() {
         List<Operator> operatorList = new ArrayList<Operator>();
         Operator operator = new Operator();
         operatorList.add(operator);
@@ -60,7 +64,8 @@ public class OperatorMgrImplTests extends TestCase {
         verify(operatorDao);
     }
 
-    public void testFindOperatorByName() {
+    @Test
+    public void findOperatorByName() {
         Operator operator = new Operator();
         
         expect(operatorDao.findUnique("TEST")).andReturn(operator);
@@ -75,14 +80,14 @@ public class OperatorMgrImplTests extends TestCase {
     private FilterDao<Operator, OperatorFilter> operatorDao;
     
     @SuppressWarnings("unchecked")
-	@Override
+	@Before
     public void setUp() {
         operatorDao = createMock(FilterDao.class);
         operatorMgr = new NamespaceMgrImpl();
         operatorMgr.setOperatorDao(operatorDao);
     }
     
-    @Override
+    @After
     public void tearDown() {
         reset(operatorDao);
     }

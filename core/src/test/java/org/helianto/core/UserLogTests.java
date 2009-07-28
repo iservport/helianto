@@ -15,6 +15,8 @@
 
 package org.helianto.core;
 
+import static org.junit.Assert.*;
+
 import java.util.Date;
 
 import org.helianto.core.test.DomainTestSupport;
@@ -24,18 +26,20 @@ import junit.framework.TestCase;
 import org.helianto.core.User;
 
 import org.helianto.core.UserLog;
+import org.junit.Test;
 
 /**
  * <code>UserLog</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserLogTests extends TestCase {
+public class UserLogTests {
     
     /**
      * Test <code>UserLog</code> static factory method.
      */
-    public void testUserLogFactory() {
+	@Test
+    public void userLogFactory() {
         User user = new User();
         Identity identity = new Identity();
         user.setIdentity(identity);
@@ -52,7 +56,8 @@ public class UserLogTests extends TestCase {
     /**
      * Test <code>UserLog</code> equals() method.
      */
-    public void testUserLogEquals() {
+	@Test
+    public void userLogEquals() {
         User user = new User();
         Identity identity = new Identity();
         user.setIdentity(identity);

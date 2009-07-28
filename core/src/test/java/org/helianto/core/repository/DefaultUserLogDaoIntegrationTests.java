@@ -32,7 +32,7 @@ import org.helianto.core.test.UserLogTestSupport;
 public class DefaultUserLogDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		UserLog userLog = UserLogTestSupport.createUserLog();
 		entityDao.persist(userLog.getUser().getEntity());
 		userLogDao.persist(userLog);

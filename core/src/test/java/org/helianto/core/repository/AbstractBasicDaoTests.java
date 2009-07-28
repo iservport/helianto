@@ -42,7 +42,7 @@ import org.junit.Test;
 public class AbstractBasicDaoTests {
 	
 	@Test
-	public void testFindUnique() {
+	public void findUnique() {
 		List<User> resultList = new ArrayList<User>();
 		User resultUser = new User();
 		resultList.add(resultUser);
@@ -66,7 +66,7 @@ public class AbstractBasicDaoTests {
 	}
 	
 	@Test
-	public void testFindUniqueWithParams() {
+	public void findUniqueWithParams() {
 		
 		sampleDao = new SampleDao() {
 			@Override
@@ -96,7 +96,7 @@ public class AbstractBasicDaoTests {
 	}
 	
 	@Test
-	public void testFindWithClause() {
+	public void findWithClause() {
 		List<User> resultList = new ArrayList<User>();
 		
 		Query result = createMock(Query.class);
@@ -113,7 +113,7 @@ public class AbstractBasicDaoTests {
 	}
 	
 	@Test
-	public void testFindWithoutClause() {
+	public void findWithoutClause() {
 		List<User> resultList = new ArrayList<User>();
 		
 		Query result = createMock(Query.class);
@@ -130,7 +130,7 @@ public class AbstractBasicDaoTests {
 	}
 	
 	@Test
-	public void testMerge() {
+	public void merge() {
 		User user = new User(), managedUser = new User();
 		
 		expect(em.merge(user)).andReturn(managedUser);
@@ -141,7 +141,7 @@ public class AbstractBasicDaoTests {
 	}
 	
 	@Test
-	public void testPersist() {
+	public void persist() {
 		User user = new User();
 		
 		em.persist(user);
@@ -163,7 +163,7 @@ public class AbstractBasicDaoTests {
 //	}
 	
 	@Test
-	public void testRemove() {
+	public void remove() {
 		User user = new User();
 		
 		em.remove(user);
@@ -174,7 +174,7 @@ public class AbstractBasicDaoTests {
 	}
 	
 	@Test
-	public void testFlush() {
+	public void flush() {
 		em.flush();
 		replay(em);
 		
@@ -183,7 +183,7 @@ public class AbstractBasicDaoTests {
 	}
 	
 	@Test
-	public void testClear() {
+	public void clear() {
 		em.clear();
 		replay(em);
 		

@@ -16,15 +16,21 @@
 
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class AbstractNodeTests extends TestCase {
+public class AbstractNodeTests {
 	
 	private AbstractNode<StubContent> stubNode;
 	private StubContent content;
@@ -56,7 +62,8 @@ public class AbstractNodeTests extends TestCase {
 
 	}
 	
-	public void testConstructor() {
+	@Test
+	public void constructor() {
 		assertEquals(1000, stubNode.getId());
 		assertSame(content, stubNode.getContent());
 		assertEquals(10, stubNode.getLevel());
@@ -64,7 +71,8 @@ public class AbstractNodeTests extends TestCase {
 		assertTrue(stubNode.isEditable());
 	}
 	
-	public void testConstructorNotEditable() {
+	@Test
+	public void constructorNotEditable() {
 		stubNode = new StubNode(1000, content, 10, 100, false);
 		assertEquals(1000, stubNode.getId());
 		assertSame(content, stubNode.getContent());
@@ -73,25 +81,30 @@ public class AbstractNodeTests extends TestCase {
 		assertFalse(stubNode.isEditable());
 	}
 	
-	public void testContent() {
+	@Test
+	public void content() {
 		assertSame(content, stubNode.getContent());
 	}
 	
-	public void testCaption() {
+	@Test
+	public void caption() {
 		assertEquals("CAPTION", stubNode.getCaption());
 	}
 	
-	public void testSequence() {
+	@Test
+	public void sequence() {
 		stubNode.setSequence(Integer.MAX_VALUE);
 		assertEquals(Integer.MAX_VALUE, stubNode.getSequence());
 	}
 	
-	public void testIcon() {
+	@Test
+	public void icon() {
 		stubNode.setIcon("ICON");
 		assertEquals("ICON", stubNode.getIcon());
 	}
 	
-	public void testCompareToPrevious() {
+	@Test
+	public void compareToPrevious() {
 		Node previous = new StubNode(1001, content, 9, 100);
 		assertEquals(1, stubNode.compareTo(previous));
 		Node previous2 = new StubNode(1001, content, 9, 99);
@@ -102,7 +115,8 @@ public class AbstractNodeTests extends TestCase {
 		assertEquals(1, stubNode.compareTo(previousSequence));
 	}
 	
-	public void testCompareToNext() {
+	@Test
+	public void compareToNext() {
 		Node next = new StubNode(1001, content, 11, 100);
 		assertEquals(-1, stubNode.compareTo(next));
 		Node next2 = new StubNode(1001, content, 11, 99);
@@ -113,22 +127,25 @@ public class AbstractNodeTests extends TestCase {
 		assertEquals(-1, stubNode.compareTo(nextSequence));
 	}
 	
-	public void testEqualsSuccess() {
+	@Test
+	public void equalsSuccess() {
 		Node other = new StubNode(1000, content, 10, 100);
 		assertTrue(stubNode.equals(other));
 	}
 	
-	public void testEqualsFailurePayLoad() {
+	@Test
+	public void equalsFailurePayLoad() {
 		Node other = new StubNode(1000, new StubContent(), 10, 100);
 		assertFalse(stubNode.equals(other));
 	}
 	
-	public void testEqualsFailureLevel() {
+	@Test
+	public void equalsFailureLevel() {
 		AbstractNode<StubContent> other = new StubNode(1000, content, 11, 100);
 		assertFalse(stubNode.equals(other));
 	}
 	
-	@Override
+	@Before
 	public void setUp() {
 		content = new StubContent();
 		stubNode = new StubNode(1000, content, 10, 100);

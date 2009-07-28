@@ -31,7 +31,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
 /**
@@ -43,7 +43,7 @@ public class UserDetailsServiceImplTests {
     private UserDetailsServiceImpl userDetailsService;
     
     @Test
-    public void testLoadAndValidateIdentity() {
+    public void loadAndValidateIdentity() {
     	String principal = "TEST";
     	Identity identity = new Identity();
     	
@@ -56,7 +56,7 @@ public class UserDetailsServiceImplTests {
     }
     
     @Test(expected=UsernameNotFoundException.class)
-    public void testLoadAndValidateIdentityNull() {
+    public void loadAndValidateIdentityNull() {
         expect(userMgr.findIdentityByPrincipal("PRINCIPAL"))
             .andReturn(null);
         replay(userMgr);
@@ -65,7 +65,7 @@ public class UserDetailsServiceImplTests {
     }
 
     @Test(expected=UsernameNotFoundException.class)
-    public void testLoadAndValidateIdentityError() {
+    public void loadAndValidateIdentityError() {
         expect(userMgr.findIdentityByPrincipal("PRINCIPAL"))
             .andThrow(new UsernameNotFoundException("Error"));
         replay(userMgr);
@@ -74,7 +74,7 @@ public class UserDetailsServiceImplTests {
     }
     
     @Test
-    public void testLoadAndValidateCredential() {
+    public void loadAndValidateCredential() {
         Credential credential = CredentialTestSupport.createCredential();
         
         expect(securityMgr.findCredentialByIdentity(credential.getIdentity()))
@@ -86,7 +86,7 @@ public class UserDetailsServiceImplTests {
     }
 
     @Test(expected=DataRetrievalFailureException.class)
-    public void testLoadAndValidateCredentialNull() {
+    public void loadAndValidateCredentialNull() {
         Identity identity = new Identity();
         
         expect(securityMgr.findCredentialByIdentity(identity))

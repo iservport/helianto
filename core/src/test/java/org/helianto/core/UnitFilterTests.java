@@ -20,18 +20,18 @@ import org.junit.Test;
 public class UnitFilterTests {
 
     @Test
-	public void testConstructor() {
+	public void constructor() {
 		assertTrue(filter instanceof Serializable);
 		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		assertSame(filter.getUser(), user);
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
     	filter.reset();
 		assertEquals("", filter.getUnitCode());
 		assertEquals("", filter.getUnitNameLike());
@@ -44,24 +44,24 @@ public class UnitFilterTests {
     public static String C5 = "AND lower(unit.unitNameLike) like '%name%' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C1, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testPreProcess() {
+    public void preProcess() {
     	filter.setCategoryGroup(CategoryGroup.STOCK);
         assertEquals(C1+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setUnitCode("CODE");
         assertEquals(C1+C3, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilterCategory() {
+    public void filterCategory() {
     	Category category = CategoryTestSupport.createCategory();
     	category.setId(1);
         filter.setCategory(category);
@@ -69,7 +69,7 @@ public class UnitFilterTests {
     }
     
     @Test
-    public void testFilterUnitName() {
+    public void filterUnitName() {
         filter.setUnitNameLike("NAME");
         assertEquals(C1+C5, filter.createCriteriaAsString(false));
     }

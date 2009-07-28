@@ -1,45 +1,53 @@
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.io.Serializable;
 import java.util.Collection;
-
-import junit.framework.TestCase;
 
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.UserBackedFilter;
 import org.helianto.core.test.IdentityTestSupport;
+import org.junit.Test;
 
 /**
  * @author Maurício Fernandes de Castro
  */
-public class UserFilterTests extends TestCase {
+public class UserFilterTests {
 	
-	public void testInheritance() {
+	@Test
+	public void inheritance() {
 		assertTrue(userFilter instanceof Serializable);
 		assertTrue(userFilter instanceof UserBackedFilter);
 		assertTrue(userFilter instanceof AbstractUserBackedCriteriaFilter);
 	}
 	
-	public void testUserFilterFactory() {
+	@Test
+	public void userFilterFactory() {
 		User user = new User();
 		userFilter = UserFilter.userFilterFactory(user);
 		assertSame(user, userFilter.getUser());
 	}
 	
-	public void testIdentityConstructor() {
+	@Test
+	public void identityConstructor() {
 		Identity identity = IdentityTestSupport.createIdentity();
 		userFilter = new UserFilter(identity, true);
 		assertSame(identity, userFilter.getIdentity());
 		assertTrue(userFilter.isOrderByLastEventDesc());
 	}
 	
-	public void testIdentity() {
+	@Test
+	public void identity() {
 		Identity identity = IdentityTestSupport.createIdentity();
 		userFilter.setIdentity(identity);
 		assertSame(identity, userFilter.getIdentity());
 	}
 	
-    public void testReset() {
+	@Test
+    public void reset() {
     	Collection<Identity> exclusions = IdentityTestSupport.createIdentityList(3);
     	userFilter.setIdentityPrincipal("TEST");
     	userFilter.setExclusions(exclusions);

@@ -1,25 +1,25 @@
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.helianto.core.test.DomainTestSupport;
-
-import junit.framework.TestCase;
-
-import org.helianto.core.UserGroup;
-import org.helianto.core.Service;
-
-import org.helianto.core.UserRole;
+import org.junit.Test;
 
 /**
  * <code>UserRole</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserRoleTests extends TestCase {
+public class UserRoleTests  {
     
     /**
      * Test <code>UserRole</code> static factory method.
      */
-    public void testUserRoleFactory() {
+	@Test
+    public void userRoleFactory() {
         UserGroup userGroup = new UserGroup();
         Service service = new Service();
         String serviceExtension = DomainTestSupport.STRING_TEST_VALUE;
@@ -35,7 +35,8 @@ public class UserRoleTests extends TestCase {
     /**
      * Test <code>UserRole</code> equals() method.
      */
-    public void testUserRoleEquals() {
+	@Test
+    public void userRoleEquals() {
         UserRole copy, userRole = new UserRole();
         userRole.setUserGroup(new UserGroup());
         userRole.setService(new Service());

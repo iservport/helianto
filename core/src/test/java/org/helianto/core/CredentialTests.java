@@ -1,22 +1,28 @@
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Date;
 
-import junit.framework.TestCase;
-
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 /**
  * <code>Credential</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class CredentialTests extends TestCase {
+public class CredentialTests {
     
     /**
      * Test <code>Credential</code> static factory method.
      */
-    public void testCredentialFactory() {
+	@Test
+    public void credentialFactory() {
         Identity identity = new Identity();
         
         Credential credential = Credential.credentialFactory(identity, "TEST");
@@ -34,7 +40,8 @@ public class CredentialTests extends TestCase {
     /**
      * Test <code>Credential</code> static factory method.
      */
-    public void testCredentialFactoryNoIdentity() {
+	@Test
+    public void credentialFactoryNoIdentity() {
         Credential credential = Credential.credentialFactory("TEST");
         
         assertEquals("", credential.getIdentity().getPrincipal());
@@ -50,7 +57,8 @@ public class CredentialTests extends TestCase {
     /**
      * Test <code>Credential</code> static factory method.
      */
-    public void testPasswordFactory() {
+	@Test
+    public void passwordFactory() {
         String password = Credential.passwordFactory();
         
         assertEquals(Credential.DEFAULT_PASSWORD_SIZE, password.length());
@@ -60,7 +68,8 @@ public class CredentialTests extends TestCase {
         
     }
     
-    public void testCredentialExpired() {
+	@Test
+    public void credentialExpired() {
     	Credential credential = Credential.credentialFactory("");
     	assertNotNull(credential.getExpirationDate());
     	Date now = new Date();
@@ -68,20 +77,23 @@ public class CredentialTests extends TestCase {
     	assertTrue(credential.isExpired());
     }
     
-    public void testCredentialNeverExpires() {
+	@Test
+    public void credentialNeverExpires() {
     	Credential credential = Credential.credentialFactory("");
     	credential.setExpirationDate(null);
     	assertFalse(credential.isExpired());
     }
     
-    public void testCredentialExpiredLongTimeAgo() {
+	@Test
+    public void credentialExpiredLongTimeAgo() {
     	Date expirationDate = new Date(1000);
     	Credential credential = Credential.credentialFactory("");
     	credential.setExpirationDate(expirationDate);
     	assertTrue(credential.isExpired());
     }
     
-    public void testCredentialNotExpired() {
+	@Test
+    public void credentialNotExpired() {
     	Date expirationDate = new Date(Long.MAX_VALUE);
     	Credential credential = Credential.credentialFactory("");
     	credential.setExpirationDate(expirationDate);
@@ -91,7 +103,8 @@ public class CredentialTests extends TestCase {
     /**
      * Test <code>Credential</code> password verification.
      */
-    public void testVerifyPasswordSuccess() {
+	@Test
+    public void verifyPasswordSuccess() {
         Credential credential = new Credential();
         String password = String.valueOf(new Date().getTime());
         credential.setPassword(password);
@@ -107,7 +120,8 @@ public class CredentialTests extends TestCase {
     /**
      * Test <code>Credential</code> password verification.
      */
-    public void testVerifyPasswordError() {
+	@Test
+    public void verifyPasswordError() {
         Credential credential = new Credential();
         String password = String.valueOf(new Date().getTime());
         credential.setPassword(password);
@@ -123,7 +137,8 @@ public class CredentialTests extends TestCase {
     /**
      * Test <code>Credential</code> equals() method.
      */
-    public void testCredentialEquals() {
+	@Test
+    public void credentialEquals() {
         Identity identity = new Identity();
         
         Credential credential = Credential.credentialFactory(identity, "");

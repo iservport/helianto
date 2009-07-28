@@ -16,20 +16,20 @@ import org.junit.Test;
 public class IdentityFilterTests {
 
     @Test
-    public void testConstructor() {
+    public void constructor() {
 		assertTrue(filter instanceof Serializable);
 		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		assertSame(filter.getUser(), user);
 		assertEquals("", filter.getPrincipal());
 		assertEquals("", filter.getNameOrAliasSearch());
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		filter.reset();
 		assertEquals("", filter.getPrincipal());
 		assertEquals("", filter.getNameOrAliasSearch());
@@ -40,19 +40,19 @@ public class IdentityFilterTests {
     public static String C3 = "AND lower(identity.optionalAlias) like '%alias%' ";
 
     @Test
-    public void testEmpty() {
+    public void rmpty() {
         assertEquals(C1, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void relect() {
     	filter.setPrincipal("PRINCIPAL");
     	filter.setEntity(null);
         assertEquals(C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilter() {
+    public void rilter() {
         filter.setNameOrAliasSearch("ALIAS");
         assertEquals(C1+C3, filter.createCriteriaAsString(false));
     }

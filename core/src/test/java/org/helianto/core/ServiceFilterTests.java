@@ -17,13 +17,13 @@ import org.junit.Test;
 public class ServiceFilterTests {
 
     @Test
-    public void testConstructor() {
+    public void constructor() {
 		assertTrue(filter instanceof Serializable);
 		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		assertSame(filter.getUser(), user);
 		assertEquals("", filter.getServiceName());
 	}
@@ -32,12 +32,12 @@ public class ServiceFilterTests {
     public static String C2 = "lower(service.serviceName) like '%service%' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals("", filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setOperator(OperatorTestSupport.createOperator());
     	filter.getOperator().setId(1);
     	filter.setServiceName("SERVICE");
@@ -45,7 +45,7 @@ public class ServiceFilterTests {
     }
     
     @Test
-    public void testFilter() {
+    public void filter() {
         filter.setServiceName("SERVICE");
         assertEquals(C2, filter.createCriteriaAsString(false));
     }

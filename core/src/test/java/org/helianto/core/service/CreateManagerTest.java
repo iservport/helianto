@@ -49,7 +49,7 @@ public class CreateManagerTest extends AbstractTransactionalSpringContextTests {
      * 
      */
     
-    public void testCreateManager() {
+    public void createManager() {
         String entityName = "TEST";
         String principal = "TEST";
         String optionalALias = "TEST";

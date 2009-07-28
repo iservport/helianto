@@ -32,7 +32,7 @@ import org.helianto.core.test.UserRoleTestSupport;
 public class DefaultUserRoleDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		UserRole userRole = UserRoleTestSupport.createUserRole();
 		entityDao.persist(userRole.getUserGroup().getEntity());
 		userRoleDao.persist(userRole);

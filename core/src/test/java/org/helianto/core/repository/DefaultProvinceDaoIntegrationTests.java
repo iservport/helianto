@@ -31,7 +31,7 @@ import org.helianto.core.test.ProvinceTestSupport;
 public class DefaultProvinceDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Province province = ProvinceTestSupport.createProvince();
 		provinceDao.persist(province);
 		assertEquals(province, provinceDao.findUnique(province.getOperator(), province.getProvinceCode()));

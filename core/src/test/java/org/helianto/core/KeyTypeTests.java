@@ -1,24 +1,25 @@
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.helianto.core.test.DomainTestSupport;
-
-import junit.framework.TestCase;
-
-import org.helianto.core.Operator;
-
-import org.helianto.core.KeyType;
+import org.junit.Test;
 
 /**
  * <code>KeyType</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class KeyTypeTests extends TestCase {
+public class KeyTypeTests {
      
     /**
      * Test <code>KeyType</code> static factory method.
      */
-    public void testKeyTypeFactory() {
+	@Test
+    public void keyTypeFactory() {
         Operator operator = new Operator();
         String keyCode = DomainTestSupport.STRING_TEST_VALUE;
         
@@ -32,7 +33,8 @@ public class KeyTypeTests extends TestCase {
     /**
      * Test <code>KeyType</code> equals() method.
      */
-    public void testKeyTypeEquals() {
+	@Test
+    public void keyTypeEquals() {
         Operator operator = new Operator();
         String keyCode = DomainTestSupport.STRING_TEST_VALUE;
         

@@ -15,22 +15,26 @@
 
 package org.helianto.core.filter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.text.DateFormat;
 import java.util.Date;
 
-import junit.framework.TestCase;
-
 import org.helianto.core.User;
 import org.helianto.core.test.SecurityTestSupport;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class CriteriaBuilderTests extends TestCase {
+public class CriteriaBuilderTests  {
     
     private CriteriaBuilder criteriaBuilder;
     
-    public void testDefaultConstructor() {
+    @Test
+    public void defaultConstructor() {
     	criteriaBuilder = new CriteriaBuilder();
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
@@ -38,14 +42,16 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("", criteriaBuilder.getPrefix());
     }
     
-    public void testPrefixConstructor() {
+    @Test
+    public void prefixConstructor() {
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
         assertEquals("1969-12-31 21:00:00", formatter.format(date));
         assertEquals("PREFIX", criteriaBuilder.getPrefix());
     }
     
-    public void testDateFormatConstructor() {
+    @Test
+    public void dateFormatConstructor() {
         criteriaBuilder = new CriteriaBuilder("OTHER_PREFIX", "ddMMyyyy HHmmss");
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
@@ -53,154 +59,182 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("OTHER_PREFIX", criteriaBuilder.getPrefix());
     }
     
-    public void testDateFormatSetter() {
+    @Test
+    public void dateFormatSetter() {
         criteriaBuilder.setDateFormat("ddMMyyyy HHmmss");
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
         assertEquals("31121969 210000", formatter.format(date));
     }
     
-    public void testCreateCriteria() {
+    @Test
+    public void createCriteria() {
         criteriaBuilder.createCriteria("OTHER_PREFIX");
         assertEquals("OTHER_PREFIX", criteriaBuilder.getPrefix());
     }
     
-    public void testSegmentAppender() {
+    @Test
+    public void segmentAppender() {
         assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR") instanceof CriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR ", criteriaBuilder.getCriteriaAsString());
         assertEquals(1, criteriaBuilder.getSegmentCount());
     }
     
-    public void testAppendAndFirstSegment() {
+    @Test
+    public void appendAndFirstSegment() {
         assertTrue(criteriaBuilder.appendAnd() instanceof CriteriaBuilder);
         assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testAppendAnd() {
+    @Test
+    public void appendAnd() {
         assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendAnd() instanceof CriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR AND ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testAppendAndFalse() {
+    @Test
+    public void appendAndFalse() {
         assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendAnd(false) instanceof CriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testAppendOrFirstSegment() {
+    @Test
+    public void appendOrFirstSegment() {
         assertTrue(criteriaBuilder.appendOr() instanceof CriteriaBuilder);
         assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testAppendOr() {
+    @Test
+    public void appendOr() {
         assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendOr() instanceof CriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR OR ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testAppendOrFalse() {
+    @Test
+    public void appendOrFalse() {
         assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendOr(false) instanceof CriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testStringAppender() {
+    @Test
+    public void stringAppender() {
         assertTrue(criteriaBuilder.append("STRING") instanceof CriteriaBuilder);
         assertEquals("STRING ",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testStringWithPrefixAppender() {
+    @Test
+    public void stringWithPrefixAppender() {
         assertTrue(criteriaBuilder.appendWithPrefix("STRING") instanceof CriteriaBuilder);
         assertEquals("PREFIX.STRING ",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testStringLikeAppender() {
+    @Test
+    public void stringLikeAppender() {
         assertTrue(criteriaBuilder.appendLike("STRING") instanceof CriteriaBuilder);
         assertEquals("'%STRING%' ",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testIntegerAppender() {
+    @Test
+    public void integerAppender() {
         assertTrue(criteriaBuilder.append(Integer.MAX_VALUE) instanceof CriteriaBuilder);
         assertEquals("2147483647 ",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testIntegerArrayAppender() {
+    @Test
+    public void integerArrayAppender() {
     	int[] keys = new int[] { 1, 2, 3 };
         assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
         assertEquals("(1, 2, 3) ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testIntegerArrayAppenderSingle() {
+    @Test
+    public void integerArrayAppenderSingle() {
     	int[] keys = new int[] { 1 };
         assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
         assertEquals("(1) ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testIntegerArrayAppenderEmpty() {
+    @Test
+    public void integerArrayAppenderEmpty() {
     	int[] keys = new int[0];
         assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
         assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testLongAppender() {
+    @Test
+    public void longAppender() {
         assertTrue(criteriaBuilder.append(Long.MAX_VALUE) instanceof CriteriaBuilder);
         assertEquals("9223372036854775807 ",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testLongArrayAppender() {
+    @Test
+    public void longArrayAppender() {
     	long[] keys = new long[] { 1, 2, 3 };
         assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
         assertEquals("(1, 2, 3) ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testLongArrayAppenderSingle() {
+    @Test
+    public void longArrayAppenderSingle() {
     	long[] keys = new long[] { 1 };
         assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
         assertEquals("(1) ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testLongArrayAppenderEmpty() {
+    @Test
+    public void longArrayAppenderEmpty() {
     	long[] keys = new long[0];
         assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
         assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testCharAppender() {
+    @Test
+    public void charAppender() {
         assertTrue(criteriaBuilder.append('A') instanceof CriteriaBuilder);
         assertEquals("'A' ",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testDateAppender() {
+    @Test
+    public void dateAppender() {
         assertTrue(criteriaBuilder.append(new Date(0)) instanceof CriteriaBuilder);
         assertEquals("'1969-12-31 21:00:00' ",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testSubCriteriaAppender() {
+    @Test
+    public void subCriteriaAppender() {
         CriteriaBuilder subCriteriaBuilder = new CriteriaBuilder("PREFIX");
         subCriteriaBuilder.append("TEST");
         assertTrue(criteriaBuilder.append(subCriteriaBuilder) instanceof CriteriaBuilder);
         assertEquals("(TEST ) ",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testOpenParenthesis() {
+    @Test
+    public void openParenthesis() {
         criteriaBuilder.openParenthesis();
         assertEquals("(",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testOpenParenthesisFalse() {
+    @Test
+    public void openParenthesisFalse() {
         criteriaBuilder.openParenthesis(false);
         assertEquals("",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testCloseParenthesis() {
+    @Test
+    public void closeParenthesis() {
         criteriaBuilder.openParenthesis();
         criteriaBuilder.closeParenthesis();
         assertEquals("() ",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testCloseParenthesisNotOpen() {
+    @Test
+    public void closeParenthesisNotOpen() {
         criteriaBuilder.closeParenthesis();
         assertEquals("",criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testAppendRangeNoDate() {
+    @Test
+    public void appendRangeNoDate() {
     	DateRange filter = new UserBackedFilterStub();
     	filter.setFromDate(null);
     	filter.setToDate(null);
@@ -208,7 +242,8 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testAppendRangeFromDate() {
+    @Test
+    public void appendRangeFromDate() {
     	Date fromDate = new Date(0);
     	DateRange filter = new UserBackedFilterStub();
     	filter.setFromDate(fromDate);
@@ -217,7 +252,8 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("(PREFIX.field >= '1969-12-31 21:00:00' ) ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testAppendRangeToDate() {
+    @Test
+    public void appendRangeToDate() {
     	Date toDate = new Date(0);
     	DateRange filter = new UserBackedFilterStub();
     	filter.setFromDate(null);
@@ -226,7 +262,8 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("(PREFIX.field < '1969-12-31 21:00:00' ) ", criteriaBuilder.getCriteriaAsString());
     }
     
-    public void testAppendRangeFromDateToDate() {
+    @Test
+    public void appendRangeFromDateToDate() {
     	Date fromDate = new Date(0);
     	Date toDate = new Date(1000000);
     	DateRange filter = new UserBackedFilterStub();
@@ -236,7 +273,7 @@ public class CriteriaBuilderTests extends TestCase {
         assertEquals("(PREFIX.field >= '1969-12-31 21:00:00' AND PREFIX.field < '1969-12-31 21:16:40' ) ", criteriaBuilder.getCriteriaAsString());
     }
     
-    @Override
+    @Before
     public void setUp() {
         criteriaBuilder = new CriteriaBuilder("PREFIX");
     }
@@ -245,30 +282,21 @@ public class CriteriaBuilderTests extends TestCase {
     
     public class UserBackedFilterStub implements UserBackedFilter, DateRange {
 
+        private Date fromDate;
+        private Date toDate;
+
         public User getUser() {
             User user = (User) SecurityTestSupport.createUserDetailsAdapter().getUser();
             user.getEntity().setId(Long.MAX_VALUE);
             return user;
         }
-
         public void setUser(User arg0) {}
-        
         public void reset() {}
-        
-        private Date fromDate;
-        private Date toDate;
-
 		public Date getFromDate() { return this.fromDate; }
-
 		public Date getToDate() { return this.toDate; }
-
 		public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
-
 		public void setToDate(Date toDate) { this.toDate = toDate; }
-
-		public boolean isSelection() {
-			return false;
-		}
+		public boolean isSelection() { return false; }
         
     }
 

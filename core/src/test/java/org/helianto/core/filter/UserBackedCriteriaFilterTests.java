@@ -16,17 +16,20 @@
 
 package org.helianto.core.filter;
 
-import java.io.Serializable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import java.io.Serializable;
 
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.User;
+import org.junit.Test;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class AbstractUserBackedCriteriaFilterTests extends TestCase {
+public class UserBackedCriteriaFilterTests {
 	
 	private int resetTest = 0;
 	
@@ -52,20 +55,23 @@ public class AbstractUserBackedCriteriaFilterTests extends TestCase {
 		
 	}
 	
-	public void testConstructor() {
+	@Test
+	public void constructor() {
 		UserBackedFilter userBackedCriteriaFilter = new UserBackedCriteriaFilterStub();
 		assertTrue(userBackedCriteriaFilter instanceof UserBackedFilter);
 		assertTrue(userBackedCriteriaFilter instanceof Serializable);
 	}
 	
-	public void testUser() {
+	@Test
+	public void user() {
 		UserBackedFilter userBackedCriteriaFilter = new UserBackedCriteriaFilterStub();
 		User user = new User();
 		userBackedCriteriaFilter.setUser(user);
 		assertSame(user, userBackedCriteriaFilter.getUser());
 	}
 	
-	public void testFactoryMethodInternal() {
+	@Test
+	public void factoryMethodInternal() {
 		User user = new User();
 		UserBackedFilter userBackedCriteriaFilter = 
 			AbstractUserBackedCriteriaFilter.filterFactory(this, UserBackedCriteriaFilterStub.class, user);
@@ -73,7 +79,8 @@ public class AbstractUserBackedCriteriaFilterTests extends TestCase {
 		assertSame(user, userBackedCriteriaFilter.getUser());
 	}
 
-	public void testFactoryMethodExternal() {
+	@Test
+	public void factoryMethodExternal() {
 		User user = new User();
 		UserBackedFilter userBackedCriteriaFilter = 
 			IdentityFilter.filterFactory(IdentityFilter.class, user);
@@ -81,7 +88,8 @@ public class AbstractUserBackedCriteriaFilterTests extends TestCase {
 		assertSame(user, userBackedCriteriaFilter.getUser());
 	}
 	
-	public void testReset() {
+	@Test
+	public void reset() {
 		UserBackedFilter userBackedCriteriaFilter = new UserBackedCriteriaFilterStub();
 		int beforeTest = resetTest;
 		userBackedCriteriaFilter.reset();

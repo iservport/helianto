@@ -35,20 +35,20 @@ import org.junit.Test;
 public class ProvinceFilterTests  {
     
     @Test
-    public void testConstructor() {
+    public void constructor() {
 		assertTrue(filter instanceof Serializable);
 		assertTrue(filter instanceof UserBackedFilter);
 	}
 	
     @Test
-	public void testFactory() {
+	public void factory() {
 		assertSame(filter.getUser(), user);
 		assertEquals("", filter.getProvinceCode());
 		assertEquals("", filter.getProvinceNameLike());
 	}
 	
     @Test
-	public void testReset() {
+	public void reset() {
 		filter.reset();
 		assertEquals("", filter.getProvinceCode());
 		assertEquals("", filter.getProvinceNameLike());
@@ -59,19 +59,19 @@ public class ProvinceFilterTests  {
     public static String C3 = "AND lower(province.provinceName) like '%name_like%' ";
 
     @Test
-    public void testEmpty() {
+    public void empty() {
         assertEquals(C1, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testSelect() {
+    public void select() {
     	filter.setProvinceCode("CODE");
     	filter.setOperator(OperatorTestSupport.createOperator());
         assertEquals(C1+C2, filter.createCriteriaAsString(false));
     }
     
     @Test
-    public void testFilter() {
+    public void filter() {
         filter.setProvinceNameLike("NAME_LIKE");
         assertEquals(C1+C3, filter.createCriteriaAsString(false));
     }

@@ -21,7 +21,7 @@ import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
@@ -29,13 +29,17 @@ import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Sequenceable;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class SequenceMgrImplTests extends TestCase {
+public class SequenceMgrImplTests {
     
     private SequenceMgrImpl sequenceMgr;
     private Entity entity = new Entity(), managedEntity = new Entity();
-    
-    public void testValidateInternalNumberZeroNotNull() {
+
+    @Test
+    public void validateInternalNumberZeroNotNull() {
     	Sequenceable sequenceable = new SequenceableStub();
     	InternalEnumerator enumerator = new InternalEnumerator();
     	enumerator.setLastNumber(1000);
@@ -56,7 +60,8 @@ public class SequenceMgrImplTests extends TestCase {
     /**
      * Sequenceable internalNumber not zero means the internal number should not change.
      */
-    public void testValidateInternalNumberNotZero() {
+    @Test
+    public void validateInternalNumberNotZero() {
     	Sequenceable sequenceable = new SequenceableStub();
     	sequenceable.setInternalNumber(2000);
 
@@ -70,7 +75,8 @@ public class SequenceMgrImplTests extends TestCase {
     /**
      * Create a new Enumerator instance.
      */
-    public void testValidateInternalNumberNull() {
+    @Test
+    public void validateInternalNumberNull() {
     	Sequenceable sequenceable = new SequenceableStub();
     	InternalEnumerator enumerator = null, managedEnumerator = new InternalEnumerator();
     	
@@ -89,7 +95,7 @@ public class SequenceMgrImplTests extends TestCase {
     private FilterDao<Entity, EntityFilter> entityDao;
     
     @SuppressWarnings("unchecked")
-	@Override
+	@Before
     public void setUp() {
         sequenceMgr = new SequenceMgrImpl();
         internalEnumeratorDao = createMock(BasicDao.class);
@@ -98,7 +104,7 @@ public class SequenceMgrImplTests extends TestCase {
         sequenceMgr.setEntityDao(entityDao);
     }
     
-    @Override
+    @After
     public void tearDown() {
         reset(internalEnumeratorDao);
         reset(entityDao);

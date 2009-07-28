@@ -31,7 +31,7 @@ import org.helianto.core.test.ServiceTestSupport;
 public class DefaultServiceDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		Service service = ServiceTestSupport.createService();
 		serviceDao.persist(service);
 		assertEquals(service, serviceDao.findUnique(service.getOperator(), service.getServiceName()));

@@ -1,20 +1,25 @@
 package org.helianto.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
+import org.junit.Test;
 
 /**
  * <code>Service</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ServiceTests extends TestCase {
+public class ServiceTests {
     
     /**
      * Test <code>Service</code> static factory method.
      */
-    public void testServiceFactory() {
+	@Test
+    public void serviceFactory() {
         Operator operator = new Operator();
         String serviceName = DomainTestSupport.STRING_TEST_VALUE;
         
@@ -28,7 +33,8 @@ public class ServiceTests extends TestCase {
     /**
      * Test <code>Service</code> equals() method.
      */
-    public void testServiceEquals() {
+	@Test
+    public void serviceEquals() {
         Operator operator = new Operator();
         String serviceName = DomainTestSupport.STRING_TEST_VALUE;
         

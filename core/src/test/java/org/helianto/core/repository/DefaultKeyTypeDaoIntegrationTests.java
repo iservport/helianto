@@ -31,7 +31,7 @@ import org.helianto.core.test.KeyTypeTestSupport;
 public class DefaultKeyTypeDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		KeyType keyType = KeyTypeTestSupport.createKeyType();
 		keyTypeDao.persist(keyType);
 		assertEquals(keyType, keyTypeDao.findUnique(keyType.getOperator(), keyType.getKeyCode()));

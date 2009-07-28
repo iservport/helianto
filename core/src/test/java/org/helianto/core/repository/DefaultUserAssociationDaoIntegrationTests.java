@@ -33,7 +33,7 @@ import org.helianto.core.test.UserAssociationTestSupport;
 public class DefaultUserAssociationDaoIntegrationTests extends AbstractDaoIntegrationTest {
 	
 	@Override
-	public void testFindUnique() {
+	public void findUnique() {
 		UserAssociation userAssociation = UserAssociationTestSupport.createUserAssociation();
 		entityDao.persist(userAssociation.getParent().getEntity());
 		userGroupDao.persist(userAssociation.getParent());
