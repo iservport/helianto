@@ -34,14 +34,14 @@ import org.junit.Test;
 public class CalendarAdapterTests {
 	
 	@Test
-	public void testConstructor() {
+	public void constructor() {
 		adapter = new  CalendarAdapter();
 		assertTrue(adapter instanceof Serializable);
 		assertTrue(adapter.getDate() instanceof Date);
 	}
 	
 	@Test
-	public void testConstructorDate() {
+	public void constructorDate() {
 		adapter = new  CalendarAdapter(calendar.getTime());
 		assertEquals(3459661001L, adapter.getDate().getTime());
 	}

@@ -37,7 +37,7 @@ import org.springframework.webflow.test.MockRequestContext;
 public class ModelFormActionTests {
 	
 	@Test
-	public void testConstructor() {
+	public void constructor() {
 		assertTrue(modelFormAction instanceof FormAction);
 		assertEquals("formObject", modelFormAction.getFormObjectName());
 		assertEquals(ScopeType.FLOW, modelFormAction.getFormObjectScope());
@@ -47,45 +47,45 @@ public class ModelFormActionTests {
 	}
 	
 	@Test
-	public void testPut() {
+	public void put() {
 		modelFormAction.put(context, "X");
 		assertEquals("X", context.getModel().get("target"));
 	}
 
 	@Test
-	public void testPutName() {
+	public void putName() {
 		modelFormAction.put(context, "Y", "arbitraryName");
 		assertEquals("Y", context.getModel().get("arbitraryName"));
 	}
 
 	@Test
-	public void testCreateAndGet() {
+	public void createAndGet() {
 		assertEquals("success", modelFormAction.createTarget(context).getId());
 		assertEquals("t", modelFormAction.get(context));
 	}
 
 	@Test
-	public void testCreateAndGetScope() {
+	public void createAndGetScope() {
 		modelFormAction.setFormObjectScope(ScopeType.CONVERSATION);
 		assertEquals("success", modelFormAction.createTarget(context).getId());
 		assertEquals("t", modelFormAction.get(context));
 	}
 
 	@Test
-	public void testPrepare() {
+	public void prepare() {
 		assertEquals("success", modelFormAction.prepareTarget(context).getId());
 		assertEquals("T", modelFormAction.get(context));
 	}
 
 	@Test
-	public void testList() {
+	public void list() {
 		List<String> testList = new ArrayList<String>();
 		modelFormAction.list(context, "test", testList);
 		assertSame(testList, context.getModel().get("testList"));
 	}
 
 	@Test
-	public void testSelectTarget1() {
+	public void selectTarget1() {
 		List<String> testList = new ArrayList<String>();
 		testList.add("1");
 		testList.add("2");
@@ -96,7 +96,7 @@ public class ModelFormActionTests {
 	}
 
 	@Test
-	public void testSelectTarget2() {
+	public void selectTarget2() {
 		List<String> testList = new ArrayList<String>();
 		testList.add("1");
 		testList.add("2");

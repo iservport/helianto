@@ -37,7 +37,7 @@ public class AbstractFreeMarkerViewTestSupportTests {
 	}
 	
 	@Test
-	public void testSearch() {
+	public void search() {
 		FreeMarkerViewTestSupportStub stub = new FreeMarkerViewTestSupportStub();
 		String testString = "_eventId=123\"abc\n_even\n_eventId=ss\"";
 		List<String> transitionList = stub.testSearchTransition(testString);

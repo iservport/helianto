@@ -41,7 +41,7 @@ import org.springframework.webflow.test.MockRequestContext;
 public class EntityFilterFormActionTests {
 	
 	@Test
-	public void testPreProcessExpiredCredential() throws Exception {
+	public void preProcessExpiredCredential() throws Exception {
 		publicUserDetails.getCredential().setExpirationDate(new Date(Long.MIN_VALUE));
 		assertFalse(entityFilterFormAction2.doPreProcess(filter, context));
 		SecureUserDetails secureUser = (SecureUserDetails) context.getConversationScope().get("secureUser");
@@ -51,7 +51,7 @@ public class EntityFilterFormActionTests {
 	}
 	
 	@Test
-	public void testPreProcessNotExpired() throws Exception {
+	public void preProcessNotExpired() throws Exception {
 		publicUserDetails.getCredential().setExpirationDate(new Date(Long.MAX_VALUE));
 		assertTrue(entityFilterFormAction2.doPreProcess(filter, context));
 		SecureUserDetails currentSecureUser = (SecureUserDetails) context.getConversationScope().get("secureUser");

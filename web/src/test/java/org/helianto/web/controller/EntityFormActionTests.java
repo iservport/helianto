@@ -42,7 +42,7 @@ public class EntityFormActionTests extends AbstractEditAggregateFormActionTests<
 	}
 	
 	@Test
-	public void testDoStoreTargetNew() throws Exception {
+	public void doStoreTargetNew() throws Exception {
 		Entity detachedTarget = createTestInstance();
 		Operator parent = getParent(createTestInstance());
 		detachedTarget.setOperator(parent);
@@ -58,7 +58,7 @@ public class EntityFormActionTests extends AbstractEditAggregateFormActionTests<
 	}
 	
 	@Test
-	public void testDoStoreTarget() throws Exception {
+	public void doStoreTarget() throws Exception {
 		Entity detachedTarget = createTestInstance();
 		detachedTarget.setId(1);
 		Entity managedTarget = createTestInstance();

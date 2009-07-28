@@ -130,19 +130,19 @@ public abstract class AbstractViewTest<F extends UserBackedFilter, T> extends Ab
 	}
 	
 	@Test
-	public void testSelection() throws Exception {
+	public void doSelection() throws Exception {
 		if (getList()!=null) {
 			process(selection());
 		}
 	}
 	
 	@Test
-	public void testBrowse() throws Exception {
+	public void doBrowse() throws Exception {
 		process(browse());
 	}
 	
 	@Test
-	public void testEdit() throws Exception {
+	public void doEdit() throws Exception {
 		process(edit());
 	}
 	

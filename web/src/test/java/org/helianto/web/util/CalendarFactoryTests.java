@@ -35,13 +35,13 @@ import org.junit.Test;
 public class CalendarFactoryTests {
 	
 	@Test
-	public void testResetDay() {
+	public void resetDay() {
 		calendarFactory.resetDay(calendar);
 		assertEquals(3380400000L, calendar.getTimeInMillis());
 	}
 	
 	@Test
-	public void testResetWeek() {
+	public void resetWeek() {
 		calendarFactory.resetWeek(calendar);
 		assertEquals(3294000000L, calendar.getTimeInMillis());
 		// must not change if called twice
@@ -50,7 +50,7 @@ public class CalendarFactoryTests {
 	}
 	
 	@Test
-	public void testResetMonth() {
+	public void resetMonth() {
 		calendarFactory.resetMonth(calendar);
 		assertEquals(2689200000L, calendar.getTimeInMillis());
 		// must not change if called twice
@@ -59,7 +59,7 @@ public class CalendarFactoryTests {
 	}
 	
 	@Test
-	public void testResetYear() {
+	public void resetYear() {
 		calendarFactory.resetYear(calendar);
 		assertEquals(10800000L, calendar.getTimeInMillis());
 		// must not change if called twice
@@ -68,7 +68,7 @@ public class CalendarFactoryTests {
 	}
 	
 	@Test
-	public void testDisplay() {
+	public void display() {
 		CalendarAdapter adapter = calendarFactory.calendarAdapterFactory(calendar);
 		assertEquals(calendar.getTime(), adapter.getDate());
 		assertEquals("09", adapter.getDayOfMonthAsString());
@@ -83,7 +83,7 @@ public class CalendarFactoryTests {
 	}
 
 	@Test
-	public void testCalendarList() {
+	public void calendarList() {
 		Date date = new Date(1000L);
 		List<CalendarAdapter> calendarList = calendarFactory
 		    .calendarAdapterListFactory(date, 2);
@@ -93,7 +93,7 @@ public class CalendarFactoryTests {
 	}
 	
 	@Test
-	public void testCalendarListMonth() {
+	public void calendarListMonth() {
 		Date date = new Date(1000L);
 		List<CalendarAdapter> calendarList = calendarFactory
 		    .setStart(CalendarFactory.START_OF_MONTH)
@@ -104,7 +104,7 @@ public class CalendarFactoryTests {
 	}
 	
 	@Test
-	public void testCalendarListYear() {
+	public void calendarListYear() {
 		Date date = new Date(1000L);
 		List<CalendarAdapter> calendarList = calendarFactory
 		    .setStart(CalendarFactory.START_OF_YEAR)
@@ -115,7 +115,7 @@ public class CalendarFactoryTests {
 	}
 	
 	@Test
-	public void testCalendarListSemester() {
+	public void calendarListSemester() {
 		Date date = new Date(1000L);
 		List<CalendarAdapter> calendarList = calendarFactory
 		    .setStart(CalendarFactory.START_OF_YEAR)

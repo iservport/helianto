@@ -31,13 +31,13 @@ import org.junit.Test;
 public class AssociationStackTests {
 	
 	@Test
-	public void testRootInstance() {
+	public void rootInstance() {
 		associationStack.setRootInstance("P");
 		assertEquals("P", associationStack.getRootInstance());
 	}
 	
 	@Test
-	public void testPush() {
+	public void push() {
 		AbstractAssociation<String, String> association = new AbstractAssociation<String, String>() {
 			private static final long serialVersionUID = 1L;
 			public String getChild() { return "C"; }

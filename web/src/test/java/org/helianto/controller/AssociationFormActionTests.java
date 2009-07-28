@@ -33,7 +33,7 @@ import org.springframework.webflow.test.MockRequestContext;
 public class AssociationFormActionTests {
 	
 	@Test
-	public void testPushTarget() {
+	public void pushTarget() {
 		StubAssociation target = new StubAssociation("P", "C");
 		context.getFlowScope().put("target", target);
 
@@ -43,19 +43,19 @@ public class AssociationFormActionTests {
 	}
 	
 	@Test
-	public void testPushNullTarget() {
+	public void pushNullTarget() {
 		context.getFlowScope().put("target", null);
 
 		assertEquals("success", associationFormAction.pushTarget(context).getId());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testPopTargetEmpty() {
+	public void popTargetEmpty() {
 		associationFormAction.popTarget(context);
 	}
 	
 	@Test
-	public void testPopTargetOnce() {
+	public void popTargetOnce() {
 		formAction.createTarget(context);
 		associationFormAction.createTarget(context);
 		
@@ -70,7 +70,7 @@ public class AssociationFormActionTests {
 	 * Simulate a navigation on 3 pages
 	 */
 	@Test
-	public void testPopTargetTwice() {
+	public void popTargetTwice() {
 		// start state: page 1
 		// A is the current target for the "edit" presentation logic
 		

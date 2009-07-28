@@ -64,7 +64,7 @@ public class UserGroupFormActionTests extends AbstractEditAggregateFormActionTes
 	
 	@Override
 	@Test
-	public void testDoCreateTarget() throws Exception {
+	public void doCreateTarget() throws Exception {
 		UserGroup managedTarget = createTestInstance();
 		Entity parent = getParent(managedTarget);
 

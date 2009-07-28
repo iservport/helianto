@@ -52,7 +52,7 @@ public abstract class AbstractEditAggregateFormActionTests<T, P, F extends Abstr
 	protected abstract T getPreparedTarget(F formAction, RequestContext context, T target) throws Exception;
 	
 	@Test
-	public void testDoPrepareTarget() throws Exception {
+	public void doPrepareTarget() throws Exception {
 		T target = createTestInstance();
 		T managedTarget = createTestInstance();
 		
@@ -69,13 +69,13 @@ public abstract class AbstractEditAggregateFormActionTests<T, P, F extends Abstr
 	protected abstract P getManagedParent(F formAction, T target) throws Exception;
 	
 	@Test
-	public void testGetManagedParent() throws Exception {
+	public void managedParent() throws Exception {
 		T target = createTestInstance();
 		assertSame(getParent(target), getManagedParent(formAction, target));
 	}
 	
 	@Test
-	public void testDoCreateTarget() throws Exception {
+	public void doCreateTarget() throws Exception {
 		P parent = getParent(createTestInstance());
 		T target = formAction.doCreateTarget(context, parent);
 		assertSame(parent, getParent(target));
@@ -86,7 +86,7 @@ public abstract class AbstractEditAggregateFormActionTests<T, P, F extends Abstr
 	protected abstract T getStoredTarget(F formAction, T detachedTarget) throws Exception;
 	
 	@Test
-	public void testDoStoreTarget() throws Exception {
+	public void doStoreTarget() throws Exception {
 		T detachedTarget = createTestInstance();
 		T managedTarget = createTestInstance();
 		
@@ -101,14 +101,14 @@ public abstract class AbstractEditAggregateFormActionTests<T, P, F extends Abstr
 	protected abstract String getTargetAttributeName();
 	
 	@Test
-	public void testGetTargetAttributeName() {
+	public void targetAttributeName() {
 		assertEquals(getTargetAttributeName(), formAction.getTargetAttributeName());
 	}
 	
 	protected abstract String getParentAttributeName();
 	
 	@Test
-	public void testGetParentAttributeName() {
+	public void parentAttributeName() {
 		assertEquals(getParentAttributeName(), formAction.getParentAttributeName());
 	}
 	

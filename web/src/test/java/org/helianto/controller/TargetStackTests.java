@@ -33,32 +33,32 @@ import org.junit.Test;
 public class TargetStackTests {
 	
 	@Test
-	public void testConstructor() {
+	public void constructor() {
 		assertTrue(targetStack.getInternalStack()!=null);
 		assertTrue(targetStack.getInternalStack() instanceof LinkedList);
 	}
 	
 	@Test
-	public void testEmpty() {
+	public void empty() {
 		assertTrue(targetStack.getInternalStack().isEmpty());
 	}
 	
 	@Test
-	public void testPush() {
+	public void push() {
 		targetStack.push("1");
 		assertFalse(targetStack.getInternalStack().isEmpty());
 		assertEquals("1", targetStack.peek());
 	}
 	
 	@Test
-	public void testPeek() {
+	public void peek() {
 		targetStack.push("1");
 		targetStack.push("2");
 		assertEquals("2", targetStack.peek());
 	}
 	
 	@Test
-	public void testPop() {
+	public void pop() {
 		targetStack.push("1");
 		targetStack.push("2");
 		assertEquals("2", targetStack.pop());
