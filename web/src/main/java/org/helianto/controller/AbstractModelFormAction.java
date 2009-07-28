@@ -89,7 +89,7 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
 	 */
 	@SuppressWarnings("unchecked")
 	public T get(RequestContext context) {
-		T target = (T) context.getModel().get(getTargetAttributeName());
+		T target = (T) getFormObjectScope().getScope(context).get(getTargetAttributeName());
 		if (logger.isDebugEnabled()) {
 			logger.debug("Get model object '"+getTargetAttributeName()+"'="+target);
 		}
@@ -206,7 +206,7 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
     	ParameterMap parameters = context.getRequestParameters();
     	if (parameters.contains("target_index")) {
     		int index = parameters.getInteger("target_index");
-    		List<T> targetList = (List<T>) context.getModel().get(getTargetListAttributeName());
+    		List<T> targetList = (List<T>) getFormObjectScope().getScope(context).get(getTargetListAttributeName());
     		T target = targetList.get(index);
     		if (target!=null) {
                 if (logger.isDebugEnabled()) {
@@ -294,7 +294,7 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
     @SuppressWarnings("unchecked")
 	protected <P> P getFromList(RequestContext context, String listPrefix) {
     	String listName = new StringBuilder(listPrefix).append("List").toString();
-        final List<P> itemList = (ArrayList<P>) context.getModel().get(listName);
+        final List<P> itemList = (ArrayList<P>) getFormObjectScope().getScope(context).get(listName);
         return getFromList(context, listPrefix, itemList);
     }
     

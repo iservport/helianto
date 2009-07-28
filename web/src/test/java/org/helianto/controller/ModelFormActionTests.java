@@ -49,13 +49,13 @@ public class ModelFormActionTests {
 	@Test
 	public void put() {
 		modelFormAction.put(context, "X");
-		assertEquals("X", context.getModel().get("target"));
+		assertEquals("X", modelFormAction.getFormObjectScope().getScope(context).get("target"));
 	}
 
 	@Test
 	public void putName() {
 		modelFormAction.put(context, "Y", "arbitraryName");
-		assertEquals("Y", context.getModel().get("arbitraryName"));
+		assertEquals("Y", modelFormAction.getFormObjectScope().getScope(context).get("arbitraryName"));
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class ModelFormActionTests {
 	public void list() {
 		List<String> testList = new ArrayList<String>();
 		modelFormAction.list(context, "test", testList);
-		assertSame(testList, context.getModel().get("testList"));
+		assertSame(testList, modelFormAction.getFormObjectScope().getScope(context).get("testList"));
 	}
 
 	@Test

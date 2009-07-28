@@ -42,7 +42,7 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
     
     @SuppressWarnings("unchecked")
 	protected P getParent(RequestContext context) {
-    	P parent = (P) context.getModel().get(getParentAttributeName());
+    	P parent = (P) getFormObjectScope().getScope(context).get(getParentAttributeName());
         if (logger.isDebugEnabled()) {
             logger.debug("Parent "+parent+" retrieved from "+getFormObjectScope());
         }

@@ -38,7 +38,7 @@
     </listener>
 	<listener>
 	  <listener-class>
-	  org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
+	  org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
 	<!--
 			Dispatcher Servlet
@@ -50,7 +50,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>helianto</servlet-name>
-		<url-pattern>*.htm</url-pattern>
+		<url-pattern>/sample/*</url-pattern>
 	</servlet-mapping>
 	<!--
 			Conversation filter

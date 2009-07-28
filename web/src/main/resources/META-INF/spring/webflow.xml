@@ -14,18 +14,14 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 -->
-       	    	
+
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:flow="http://www.springframework.org/schema/webflow-config"
-       xsi:schemaLocation="
-           http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-           http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.0.xsd
-           http://www.springframework.org/schema/webflow-config
-           http://www.springframework.org/schema/webflow-config/spring-webflow-config-1.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:flow="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
            
 	<context:component-scan base-package="org.helianto.web.controller"/>
 	
@@ -36,13 +32,13 @@
 	<!--
 		Flow executor
 	-->
-	<flow:executor id="flowExecutor" registry-ref="flowRegistry" repository-type="continuation"/>
+	<flow:flow-executor id="flowExecutor" flow-registry="flowRegistry" />
 	<!--
 		Flow registry
 	-->
-    <flow:registry id="flowRegistry">
-        <flow:location path="classpath*:/flows/**/*.xml"/>
-        <flow:location path="classpath*:/freemarker/**/*.xml"/>
-    </flow:registry>
+    <flow:flow-registry id="flowRegistry">
+    	<flow:flow-location-pattern value="classpath*:/flows/**/*.xml"/>
+    	<flow:flow-location-pattern value="classpath*:/freemarker/**/*.xml"/>
+    </flow:flow-registry>
     
 </beans>

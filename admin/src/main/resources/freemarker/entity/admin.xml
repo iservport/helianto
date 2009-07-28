@@ -1,239 +1,207 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
-              http://www.springframework.org/schema/webflow
-              http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="preProcess">
 
-	<start-actions>
-		<set attribute="assign"      value="'entity/assign'"      scope="flow"/>
-		<set attribute="entityStyle" value="'white.css'"      scope="conversation"/>
-	</start-actions>
-	
-	<start-state idref="preProcess" />
-	
-	<action-state id="preProcess">
-		<action bean="operatorFilterAction" method="applyFilter"/>
-		<transition on="success" to="entitySelection.view" />
-	</action-state>
-	
-	<!-- 001
+   <on-start>
+      <set name="flowScope.assign" value="'entity/assign'"/>
+      <set name="conversationScope.entityStyle" value="'white.css'"/>
+   </on-start>
+
+   <action-state id="preProcess">
+      <evaluate expression="operatorFilterAction.applyFilter"/>
+      <transition on="success" to="entitySelection.view"/>
+   </action-state>
+
+<!-- 001
 	 ! entity 
 	 ! SELECTION VIEW
 	 !-->
-	<view-state id="entitySelection.view" view="frame">
-		<!-- 
+   <view-state id="entitySelection.view" view="frame">
+<!-- 
 		 ! before selection
 		 -->
-        <render-actions>
-            <action bean="entityFilterAction" method="applyFilter"/>
-			<set attribute="forward"   value="'entity/selection_fwd'"     scope="flash"/>
-			<set attribute="sidenav"   value="'entity/selection_nav'"     scope="flash"/>
-			<set attribute="sidebar"   value="'entity/selection_filter'"  scope="flash"/>
-			<set attribute="mainbar"   value="'entity/mainbar'"           scope="flash"/>
-			<set attribute="template"  value="'entity/selection'"         scope="flash"/>
-			<set attribute="info"      value="'entity/info'"              scope="flash"/>
-        </render-actions>
-		<!-- 
+      <on-render>
+         <evaluate expression="entityFilterAction.applyFilter"/>
+         <set name="flashScope.forward" value="'entity/selection_fwd'"/>
+         <set name="flashScope.sidenav" value="'entity/selection_nav'"/>
+         <set name="flashScope.sidebar" value="'entity/selection_filter'"/>
+         <set name="flashScope.mainbar" value="'entity/mainbar'"/>
+         <set name="flashScope.template" value="'entity/selection'"/>
+         <set name="flashScope.info" value="'entity/info'"/>
+      </on-render>
+<!-- 
 		 ! forward transitions
 		 -->
-		<transition on="toProvince"  to="province.subflow"/>
-		<transition on="toKeyType"  to="keyType.subflow"/>
-		<transition on="toService"  to="service.subflow"/>
-		<!-- 
+      <transition on="toProvince" to="province.subflow"/>
+      <transition on="toKeyType" to="keyType.subflow"/>
+      <transition on="toService" to="service.subflow"/>
+<!-- 
 		 ! local transitions
 		 -->
-		<transition on="selectTarget"  to="entityBrowse.view">
-			<action bean="entityFilterAction"      method="selectTarget" />
-		</transition>
-		<transition on="createTarget"  to="entityEdit.view">
-			<action bean="entityAction"            method="createTarget" />
-		</transition>
-	</view-state>
+      <transition on="selectTarget" to="entityBrowse.view">
+         <evaluate expression="entityFilterAction.selectTarget"/>
+      </transition>
+      <transition on="createTarget" to="entityEdit.view">
+         <evaluate expression="entityAction.createTarget"/>
+      </transition>
+   </view-state>
 
-	<!-- 002
+<!-- 002
 	 ! entity  
 	 ! BROWSE VIEW
 	 !-->
-	<view-state id="entityBrowse.view" view="frame">
-		<!-- 
+   <view-state id="entityBrowse.view" view="frame">
+<!-- 
 		 ! before browse
 		 -->
-        <render-actions>
-            <action bean="entityAction"    method="prepareTarget"/>
-            <action bean="entityAction"    method="resolveAuthorization"/>
-			<set attribute="forward"       value="'toSelection'"        scope="flash"/>
-			<set attribute="sidenav"       value="'entity/entity_nav'"  scope="flash"/>
-			<set attribute="sidebar"       value="'entity/entity_bar'"  scope="flash"/>
-			<set attribute="mainnav"       value="'main_nav'"           scope="flash"/>
-			<set attribute="template"      value="'entity/entity'"      scope="flash"/>
-        </render-actions>
-		<!-- 
+      <on-render>
+         <evaluate expression="entityAction.prepareTarget"/>
+         <evaluate expression="entityAction.resolveAuthorization"/>
+         <set name="flashScope.forward" value="'toSelection'"/>
+         <set name="flashScope.sidenav" value="'entity/entity_nav'"/>
+         <set name="flashScope.sidebar" value="'entity/entity_bar'"/>
+         <set name="flashScope.mainnav" value="'main_nav'"/>
+         <set name="flashScope.template" value="'entity/entity'"/>
+      </on-render>
+<!-- 
 		 ! forward transitions
 		 -->
-		<transition on="toUser"            to="user.subflow"/>
-		<!-- 
+      <transition on="toUser" to="user.subflow"/>
+<!-- 
 		 ! local transitions
 		 -->
-		<transition on="editTarget"        to="entityEdit.view"/>
-		<transition on="createUserGroup"   to="userGroup.subflow">
-			<action bean="userGroupAction" method="createTarget"/>
-		</transition>
-		<transition on="selectUserGroup"   to="userGroup.subflow">
-			<action bean="userGroupAction" method="selectTarget"/>
-		</transition>
-		<transition on="selectUser"        to="userBrowse.view">
-			<action bean="userGroupAction" method="selectTarget"/>
-		</transition>
-		<!-- 
+      <transition on="editTarget" to="entityEdit.view"/>
+      <transition on="createUserGroup" to="userGroup.subflow">
+         <evaluate expression="userGroupAction.createTarget"/>
+      </transition>
+      <transition on="selectUserGroup" to="userGroup.subflow">
+         <evaluate expression="userGroupAction.selectTarget"/>
+      </transition>
+      <transition on="selectUser" to="userBrowse.view">
+         <evaluate expression="userGroupAction.selectTarget"/>
+      </transition>
+<!-- 
 		 ! backward transitions
 		 -->
-		<transition on="toSelection"       to="entitySelection.view"/>
-	</view-state>
-	
-	<!-- 003
+      <transition on="toSelection" to="entitySelection.view"/>
+   </view-state>
+
+<!-- 003
 	 ! entity  
 	 ! EDIT VIEW
 	 !-->
-	<view-state id="entityEdit.view" view="frame">
-		<!-- 
+   <view-state id="entityEdit.view" view="frame">
+<!-- 
 		 ! before browse
 		 -->
-        <render-actions>
-            <action bean="entityAction" method="editTarget"/>
-			<set attribute="sidenav"   value="'entity/edit_nav'"    scope="flash"/>
-			<set attribute="sidebar"   value="'entity/entity_bar'"  scope="flash"/>
-			<set attribute="template"  value="'entity/entity_form'"      scope="flash"/>
-        </render-actions>
-		<!-- 
+      <on-render>
+         <evaluate expression="entityAction.editTarget"/>
+         <set name="flashScope.sidenav" value="'entity/edit_nav'"/>
+         <set name="flashScope.sidebar" value="'entity/entity_bar'"/>
+         <set name="flashScope.template" value="'entity/entity_form'"/>
+      </on-render>
+<!-- 
 		 ! local transitions
 		 -->
-		<transition on="storeTarget"   to="entityBrowse.view">
-			<action bean="entityAction"            method="bindAndValidate" />
-			<action bean="entityAction"            method="storeTarget" />
-		</transition>
-		<transition on="cancelForm"   to="entityBrowse.view"/>
-	</view-state>
-	
-	<!-- 
+      <transition on="storeTarget" to="entityBrowse.view">
+         <evaluate expression="entityAction.bindAndValidate"/>
+         <evaluate expression="entityAction.storeTarget"/>
+      </transition>
+      <transition on="cancelForm" to="entityBrowse.view"/>
+   </view-state>
+
+<!-- 
 	 ! province
 	 ! SUBFLOW
 	 !-->
-	<subflow-state id="province.subflow" flow="province">
-		<attribute-mapper>
-			<input-mapper>
-				<mapping source="flowScope.operator" target="operator"/>
-			</input-mapper>
-		</attribute-mapper>
-		<transition on="toParent" to="entitySelection.view"/>
-	</subflow-state>
+   <subflow-state id="province.subflow" subflow="province">
+      <input name="operator" value="flowScope.operator"/>
+      <transition on="toParent" to="entitySelection.view"/>
+   </subflow-state>
 
-	<!-- 
+<!-- 
 	 ! keyType
 	 ! SUBFLOW
 	 !-->
-	<subflow-state id="keyType.subflow" flow="keyType">
-		<attribute-mapper>
-			<input-mapper>
-				<mapping source="flowScope.operator" target="operator"/>
-			</input-mapper>
-		</attribute-mapper>
-		<transition on="toParent" to="entitySelection.view"/>
-	</subflow-state>
+   <subflow-state id="keyType.subflow" subflow="keyType">
+      <input name="operator" value="flowScope.operator"/>
+      <transition on="toParent" to="entitySelection.view"/>
+   </subflow-state>
 
-	<!-- 
+<!-- 
 	 ! service
 	 ! SUBFLOW
 	 !-->
-	<subflow-state id="service.subflow" flow="service">
-		<attribute-mapper>
-			<input-mapper>
-				<mapping source="flowScope.operator" target="operator"/>
-			</input-mapper>
-		</attribute-mapper>
-		<transition on="toParent" to="entitySelection.view"/>
-	</subflow-state>
+   <subflow-state id="service.subflow" subflow="service">
+      <input name="operator" value="flowScope.operator"/>
+      <transition on="toParent" to="entitySelection.view"/>
+   </subflow-state>
 
-	<!-- 
+<!-- 
 	 ! user
 	 ! SUBFLOW
 	 !-->
-	<subflow-state id="user.subflow" flow="user">
-		<attribute-mapper>
-			<input-mapper>
-				<mapping source="${flowScope.operator}"  target="operator"/>
-				<mapping source="${flowScope.entity}"    target="entity"/>
-				<mapping source="${flowScope.userGroup}" target="userGroup"/>
-				<mapping source="${flowScope.user}"      target="user"/>
-			</input-mapper>
-			<output-mapper>
-				<output-attribute name="entity" scope="flow" />
-			</output-mapper>
-		</attribute-mapper>
-		<transition on="toSelection" to="entityBrowse.view"/>
-		<transition on="toHome"      to="toHome"/>
-	</subflow-state>
+   <subflow-state id="user.subflow" subflow="user">
+      <input name="operator" value="flowScope.operator"/>
+      <input name="entity" value="flowScope.entity"/>
+      <input name="userGroup" value="flowScope.userGroup"/>
+      <input name="user" value="flowScope.user"/>
+      <output name="entity" value="flowScope.entity"/>
+      <transition on="toSelection" to="entityBrowse.view"/>
+      <transition on="toHome" to="toHome"/>
+   </subflow-state>
 
-	<!-- 
+<!-- 
 	 ! user
 	 ! BROWSE VIEW
 	 !-->
-	<view-state id="userBrowse.view" view="frame">
-		<!-- 
+   <view-state id="userBrowse.view" view="frame">
+<!-- 
 		 ! before browse
 		 -->
-        <render-actions>
-            <action bean="userGroupAction"       method="prepareTarget"/>
-            <action bean="userGroupAction"       method="resolveAuthorization"/>
-			<set attribute="forward"             value="'toSelection'"         scope="flash"/>
-			<set attribute="sidebar"             value="'user/userGroup_bar'"  scope="flash"/>
-			<set attribute="template"            value="'user/userGroup'"      scope="flash"/>
-        </render-actions>
-		<!-- 
+      <on-render>
+         <evaluate expression="userGroupAction.prepareTarget"/>
+         <evaluate expression="userGroupAction.resolveAuthorization"/>
+         <set name="flashScope.forward" value="'toSelection'"/>
+         <set name="flashScope.sidebar" value="'user/userGroup_bar'"/>
+         <set name="flashScope.template" value="'user/userGroup'"/>
+      </on-render>
+<!-- 
 		 ! local transitions
 		 -->
-		<transition on="editUserRole"            to="userBrowse.view" />
-		<transition on="selectUser"              to="userAssociation.subflow">
-			<action bean="userAssociationAction" method="selectTarget"/>
-		</transition>
-		<!-- 
+      <transition on="editUserRole" to="userBrowse.view"/>
+      <transition on="selectUser" to="userAssociation.subflow">
+         <evaluate expression="userAssociationAction.selectTarget"/>
+      </transition>
+<!-- 
 		 ! backward transitions
 		 -->
-		<transition on="toSelection"             to="entityBrowse.view"/>
-	</view-state>
-	
-	<!-- 
+      <transition on="toSelection" to="entityBrowse.view"/>
+   </view-state>
+
+<!-- 
 	 ! userGroup
 	 ! SUBFLOW
 	 !-->
-	<subflow-state id="userGroup.subflow" flow="userGroup">
-		<attribute-mapper>
-			<input-mapper>
-				<mapping source="${flowScope.operator}"  target="operator"/>
-				<mapping source="${flowScope.entity}"    target="entity"/>
-				<mapping source="${flowScope.userGroup}" target="userGroup"/>
-			</input-mapper>
-			<output-mapper>
-				<output-attribute name="entity" scope="flow" />
-			</output-mapper>
-		</attribute-mapper>
-		<transition on="toSelection" to="entityBrowse.view"/>
-		<transition on="toHome"      to="toHome"/>
-	</subflow-state>
+   <subflow-state id="userGroup.subflow" subflow="userGroup">
+      <input name="operator" value="flowScope.operator"/>
+      <input name="entity" value="flowScope.entity"/>
+      <input name="userGroup" value="flowScope.userGroup"/>
+      <output name="entity" value="flowScope.entity"/>
+      <transition on="toSelection" to="entityBrowse.view"/>
+      <transition on="toHome" to="toHome"/>
+   </subflow-state>
 
-	<!--
+<!--
 	 ! End states 
 	// -->
+   <end-state id="toHome"/>
 
-	<end-state id="toHome" />
-	
-	<!--
+<!--
 	 ! Globals 
 	// -->
+   <global-transitions>
+      <transition on="toHome" to="toHome"/>
+      <transition on="forbidden" to="toHome"/>
+   </global-transitions>
 
-	<global-transitions>
-		<transition on="toHome"       to="toHome"/>
-		<transition on="forbidden"    to="toHome" />
-	</global-transitions>
-	
 </flow>

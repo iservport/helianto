@@ -1,4 +1,4 @@
-<form action="home.htm" method="post" >
+<form action="admin.htm" method="post" >
 	<p>Entity alias:</p>
 	<p><@spring.formInput "formObject.target.alias", 'size="20" maxlength="20"'/></p>
 	<@perr/>
