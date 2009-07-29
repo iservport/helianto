@@ -12,12 +12,12 @@
       <if test="flowScope.user.keyEmpty" then="userEdit.view" else="userBrowse.view"/>
    </decision-state>
 
-<!-- 
+	<!-- 
 	 ! user  
 	 ! BROWSE VIEW
 	 !-->
-   <view-state id="userBrowse.view" view="frame">
-<!-- 
+   <view-state id="userBrowse.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -28,7 +28,7 @@
          <set name="flashScope.mainnav" value="'main_nav'"/>
          <set name="flashScope.template" value="'user/user'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="editTarget" to="userEdit.view"/>
@@ -39,18 +39,18 @@
       <transition on="editUserRole" to="userRoleEdit.view">
          <evaluate expression="userRoleAction.selectTarget"/>
       </transition>
-<!-- 
+		<!-- 
 		 ! backward transitions
 		 -->
       <transition on="toSelection" to="toSelection"/>
    </view-state>
 
-<!-- 
+	<!-- 
 	 ! user  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="userEdit.view" view="frame">
-<!-- 
+   <view-state id="userEdit.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -59,7 +59,7 @@
          <set name="flashScope.sidebar" value="'user/user_bar'"/>
          <set name="flashScope.template" value="'user/user_form'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="storeTarget" to="userBrowse.view">
@@ -68,12 +68,12 @@
       </transition>
    </view-state>
 
-<!-- 
+	<!-- 
 	 ! identity  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="identityEdit.view" view="frame">
-<!-- 
+   <view-state id="identityEdit.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -82,7 +82,7 @@
          <set name="flashScope.sidebar" value="'user/identity_bar'"/>
          <set name="flashScope.template" value="'user/identity_form'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="storeTarget" to="storeIdentity">
@@ -96,12 +96,12 @@
       <transition on="error" to="identityEdit.view"/>
    </action-state>
 
-<!-- 
+	<!-- 
 	 ! userRole  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="userRoleEdit.view" view="frame">
-<!-- 
+   <view-state id="userRoleEdit.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -110,7 +110,7 @@
          <set name="flashScope.sidebar" value="'user/identity_bar'"/>
          <set name="flashScope.template" value="'user/userRole_form'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="storeTarget" to="storeUserRole">
@@ -124,18 +124,16 @@
       <transition on="error" to="userRoleEdit.view"/>
    </action-state>
 
-<!--
+	<!--
 	 ! End states 
 	// -->
    <end-state id="backToHome"/>
-
    <end-state id="backToParent"/>
-
    <end-state id="toSelection">
       <output name="entity" value="flowScope.user.entity"/>
    </end-state>
 
-<!--
+	<!--
 	 ! Globals 
 	// -->
    <global-transitions>

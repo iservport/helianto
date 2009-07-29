@@ -13,12 +13,12 @@
       <if test="flowScope.userGroup.keyEmpty" then="userGroupEdit.view" else="userGroupBrowse.view"/>
    </decision-state>
 
-<!-- 001
+	<!-- 001
 	 ! userGroup
 	 ! BROWSE VIEW
 	 !-->
    <view-state id="userGroupBrowse.view" view="frame">
-<!-- 
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -30,7 +30,7 @@
          <set name="flashScope.mainnav" value="'main_nav'"/>
          <set name="flashScope.template" value="'user/userGroup'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="editTarget" to="userGroupEdit.view"/>
@@ -48,18 +48,18 @@
       <transition on="selectUser" to="userAssociation.subflow">
          <evaluate expression="userAssociationAction.selectTarget"/>
       </transition>
-<!-- 
+		<!-- 
 		 ! backward transitions
 		 -->
       <transition on="toSelection" to="toSelection"/>
    </view-state>
 
-<!-- 002
+	<!-- 002
 	 ! userGroup
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="userGroupEdit.view" view="frame">
-<!-- 
+   <view-state id="userGroupEdit.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -68,7 +68,7 @@
          <set name="flashScope.sidebar" value="'user/userGroup_bar'"/>
          <set name="flashScope.template" value="'user/userGroup_form'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="storeTarget" to="userGroupBrowse.view">
@@ -78,12 +78,12 @@
       <transition on="cancelForm" to="userGroupBrowse.view"/>
    </view-state>
 
-<!-- 
+	<!-- 
 	 ! identity  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="identityEdit.view" view="frame">
-<!-- 
+   <view-state id="identityEdit.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -92,7 +92,7 @@
          <set name="flashScope.sidebar" value="'user/identity_bar'"/>
          <set name="flashScope.template" value="'user/identity_form'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="storeTarget" to="storeIdentity">
@@ -106,12 +106,12 @@
       <transition on="error" to="identityEdit.view"/>
    </action-state>
 
-<!-- 
+	<!-- 
 	 ! userRole  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="userRoleEdit.view" view="frame">
-<!-- 
+   <view-state id="userRoleEdit.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -120,7 +120,7 @@
          <set name="flashScope.sidebar" value="'user/userGroup_bar'"/>
          <set name="flashScope.template" value="'user/userRole_form'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="storeTarget" to="userGroupBrowse.view">
@@ -130,7 +130,7 @@
       <transition on="cancelForm" to="userGroupBrowse.view"/>
    </view-state>
 
-<!-- 
+	<!-- 
 	 ! user
 	 ! SUBFLOW
 	 !-->
@@ -142,12 +142,12 @@
       <transition on="toHome" to="toHome"/>
    </subflow-state>
 
-<!-- 
+	<!-- 
 	 ! userAssociation - convenience  
 	 ! EDIT VIEW
 	 !-->
    <view-state id="userAssociationEdit.view" view="frame">
-<!-- 
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -156,7 +156,7 @@
          <set name="flashScope.sidebar" value="'user/user_bar'"/>
          <set name="flashScope.template" value="'user/userAssociation_form'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="storeTarget" to="userAssociation.subflow">
@@ -166,7 +166,7 @@
       <transition on="cancelForm" to="userGroupBrowse.view"/>
    </view-state>
 
-<!-- 
+	<!-- 
 	 ! userAssociation
 	 ! SUBFLOW
 	 !-->
@@ -178,16 +178,15 @@
       <transition on="toHome" to="toHome"/>
    </subflow-state>
 
-<!--
+	<!--
 	 ! End states 
 	// -->
    <end-state id="toSelection">
       <output name="entity" value="flowScope.entity"/>
    </end-state>
-
    <end-state id="toHome"/>
 
-<!--
+	<!--
 	 ! Globals 
 	// -->
    <global-transitions>

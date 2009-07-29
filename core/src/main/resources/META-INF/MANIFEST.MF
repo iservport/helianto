@@ -134,5 +134,6 @@ Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  gframework.web.servlet.theme,org.springframework.web.servlet.view,org
  .springframework.web.servlet.view.freemarker,org.springframework.webf
  low.action,org.springframework.webflow.core.collection,org.springfram
- ework.webflow.execution,org.springframework.webflow.test
+ ework.webflow.execution,org.springframework.webflow.mvc.builder,org.s
+ pringframework.webflow.test
 

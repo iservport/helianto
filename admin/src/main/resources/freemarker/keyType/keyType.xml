@@ -12,12 +12,12 @@
       <transition to="keyTypeSelection.view"/>
    </action-state>
 
-<!-- 
+	<!-- 
 	 ! keyType 
 	 ! SELECTION VIEW
 	 !-->
-   <view-state id="keyTypeSelection.view" view="frame">
-<!-- 
+   <view-state id="keyTypeSelection.view" view="/frame">
+		<!-- 
 		 ! before selection
 		 -->
       <on-render>
@@ -27,7 +27,7 @@
          <set name="flashScope.sidebar" value="'keyType/selection_filter'"/>
          <set name="flashScope.template" value="'keyType/selection'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="selectTarget" to="keyTypeBrowse.view">
@@ -39,12 +39,12 @@
       <transition on="toSelection" to="toParent"/>
    </view-state>
 
-<!-- 
+	<!-- 
 	 ! keyType  
 	 ! BROWSE VIEW
 	 !-->
-   <view-state id="keyTypeBrowse.view" view="frame">
-<!-- 
+   <view-state id="keyTypeBrowse.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -55,22 +55,22 @@
          <set name="flashScope.mainnav" value="'main_nav'"/>
          <set name="flashScope.template" value="'keyType/keyType'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="editTarget" to="keyTypeEdit.view"/>
-<!-- 
+		<!-- 
 		 ! backward transitions
 		 -->
       <transition on="toSelection" to="keyTypeSelection.view"/>
    </view-state>
 
-<!-- 
+	<!-- 
 	 ! keyType  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="keyTypeEdit.view" view="frame">
-<!-- 
+   <view-state id="keyTypeEdit.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -79,7 +79,7 @@
          <set name="flashScope.sidebar" value="'keyType/keyType_bar'"/>
          <set name="flashScope.template" value="'keyType/keyType_form'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="storeTarget" to="keyTypeBrowse.view">
@@ -89,13 +89,11 @@
       <transition on="cancelForm" to="keyTypeBrowse.view"/>
    </view-state>
 
-<!--
+	<!--
 	 ! End states 
 	// -->
    <end-state id="toHome"/>
-
    <end-state id="toParent"/>
-
    <end-state id="returnTarget">
       <output name="returnTarget" value="flowScope.keyType"/>
    </end-state>

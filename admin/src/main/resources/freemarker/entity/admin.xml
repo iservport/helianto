@@ -11,12 +11,12 @@
       <transition on="success" to="entitySelection.view"/>
    </action-state>
 
-<!-- 001
+	<!-- 001
 	 ! entity 
 	 ! SELECTION VIEW
 	 !-->
-   <view-state id="entitySelection.view" view="frame">
-<!-- 
+   <view-state id="entitySelection.view" view="/frame">
+		<!-- 
 		 ! before selection
 		 -->
       <on-render>
@@ -28,13 +28,13 @@
          <set name="flashScope.template" value="'entity/selection'"/>
          <set name="flashScope.info" value="'entity/info'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! forward transitions
 		 -->
       <transition on="toProvince" to="province.subflow"/>
       <transition on="toKeyType" to="keyType.subflow"/>
       <transition on="toService" to="service.subflow"/>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="selectTarget" to="entityBrowse.view">
@@ -45,12 +45,12 @@
       </transition>
    </view-state>
 
-<!-- 002
+	<!-- 002
 	 ! entity  
 	 ! BROWSE VIEW
 	 !-->
-   <view-state id="entityBrowse.view" view="frame">
-<!-- 
+   <view-state id="entityBrowse.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -62,11 +62,11 @@
          <set name="flashScope.mainnav" value="'main_nav'"/>
          <set name="flashScope.template" value="'entity/entity'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! forward transitions
 		 -->
       <transition on="toUser" to="user.subflow"/>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="editTarget" to="entityEdit.view"/>
@@ -79,18 +79,18 @@
       <transition on="selectUser" to="userBrowse.view">
          <evaluate expression="userGroupAction.selectTarget"/>
       </transition>
-<!-- 
+		<!-- 
 		 ! backward transitions
 		 -->
       <transition on="toSelection" to="entitySelection.view"/>
    </view-state>
 
-<!-- 003
+	<!-- 003
 	 ! entity  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="entityEdit.view" view="frame">
-<!-- 
+   <view-state id="entityEdit.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -99,7 +99,7 @@
          <set name="flashScope.sidebar" value="'entity/entity_bar'"/>
          <set name="flashScope.template" value="'entity/entity_form'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="storeTarget" to="entityBrowse.view">
@@ -109,7 +109,7 @@
       <transition on="cancelForm" to="entityBrowse.view"/>
    </view-state>
 
-<!-- 
+	<!-- 
 	 ! province
 	 ! SUBFLOW
 	 !-->
@@ -118,7 +118,7 @@
       <transition on="toParent" to="entitySelection.view"/>
    </subflow-state>
 
-<!-- 
+	<!-- 
 	 ! keyType
 	 ! SUBFLOW
 	 !-->
@@ -127,7 +127,7 @@
       <transition on="toParent" to="entitySelection.view"/>
    </subflow-state>
 
-<!-- 
+	<!-- 
 	 ! service
 	 ! SUBFLOW
 	 !-->
@@ -136,7 +136,7 @@
       <transition on="toParent" to="entitySelection.view"/>
    </subflow-state>
 
-<!-- 
+	<!-- 
 	 ! user
 	 ! SUBFLOW
 	 !-->
@@ -150,12 +150,12 @@
       <transition on="toHome" to="toHome"/>
    </subflow-state>
 
-<!-- 
+	<!-- 
 	 ! user
 	 ! BROWSE VIEW
 	 !-->
-   <view-state id="userBrowse.view" view="frame">
-<!-- 
+   <view-state id="userBrowse.view" view="/frame">
+		<!-- 
 		 ! before browse
 		 -->
       <on-render>
@@ -165,20 +165,20 @@
          <set name="flashScope.sidebar" value="'user/userGroup_bar'"/>
          <set name="flashScope.template" value="'user/userGroup'"/>
       </on-render>
-<!-- 
+		<!-- 
 		 ! local transitions
 		 -->
       <transition on="editUserRole" to="userBrowse.view"/>
       <transition on="selectUser" to="userAssociation.subflow">
          <evaluate expression="userAssociationAction.selectTarget"/>
       </transition>
-<!-- 
+		<!-- 
 		 ! backward transitions
 		 -->
       <transition on="toSelection" to="entityBrowse.view"/>
    </view-state>
 
-<!-- 
+	<!-- 
 	 ! userGroup
 	 ! SUBFLOW
 	 !-->
@@ -191,12 +191,12 @@
       <transition on="toHome" to="toHome"/>
    </subflow-state>
 
-<!--
+	<!--
 	 ! End states 
 	// -->
    <end-state id="toHome"/>
 
-<!--
+	<!--
 	 ! Globals 
 	// -->
    <global-transitions>
