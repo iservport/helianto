@@ -27,8 +27,29 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	
-	public abstract Class<? extends T> getClazz();
+	private Class<? extends T> clazz;
+	private String[] params;
+	
+	/**
+	 * The class of objects to be persisted.
+	 */
+	public Class<? extends T> getClazz() {
+		return this.clazz;
+	}
+	public void setClazz(Class<? extends T> clazz) {
+		this.clazz = clazz;
+	}
 
+	/**
+	 * Default keys are entity.id and internalNumber
+	 */
+	protected String[] getParams() {
+		return this.params;
+	}
+	public void setParams(String... params) {
+		this.params =  params;
+	}
+	
 	public Collection<T> find(String whereClause) {
         return find(getSelectBuilder(), whereClause);
 	}
@@ -104,13 +125,6 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 		return whereClauseBuilder;
 	}
 
-	/**
-	 * Default keys are entity.id and internalNumber
-	 */
-	protected String[] getParams() {
-		return new String[] { "entity", "internalNumber" };
-	}
-	
     private static final Log logger = LogFactory.getLog(AbstractBasicDao.class);
 
 }
