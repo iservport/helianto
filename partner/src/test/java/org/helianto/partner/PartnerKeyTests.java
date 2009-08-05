@@ -20,12 +20,12 @@ public class PartnerKeyTests {
      */
 	@Test
     public void testPartnerKeyFactory() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        Partner partner = new Partner();
         KeyType keyType = new KeyType();
         
-        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partnerRegistry, keyType);
+        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partner, keyType);
         
-        assertSame(partnerRegistry, partnerKey.getPartnerRegistry());
+        assertSame(partner, partnerKey.getPartner());
         assertSame(keyType, partnerKey.getKeyType());
         
     }
@@ -35,21 +35,21 @@ public class PartnerKeyTests {
      */
 	@Test
     public void testPartnerKeyEquals() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        Partner partner = new Partner();
         KeyType keyType = new KeyType();
         
-        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partnerRegistry, keyType);
+        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partner, keyType);
         PartnerKey copy = (PartnerKey) DomainTestSupport.minimalEqualsTest(partnerKey);
         
-        copy.setPartnerRegistry(null);
+        copy.setPartner(null);
         copy.setKeyType(keyType);
         assertFalse(partnerKey.equals(copy));
 
-        copy.setPartnerRegistry(partnerRegistry);
+        copy.setPartner(partner);
         copy.setKeyType(null);
         assertFalse(partnerKey.equals(copy));
 
-        copy.setPartnerRegistry(partnerRegistry);
+        copy.setPartner(partner);
         copy.setKeyType(keyType);
 
         assertTrue(partnerKey.equals(copy));

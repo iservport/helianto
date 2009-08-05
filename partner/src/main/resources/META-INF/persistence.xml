@@ -15,6 +15,7 @@
 		<class>org.helianto.partner.Supplier</class>
 		<class>org.helianto.partner.Manufacturer</class>
 		<class>org.helianto.partner.Laboratory</class>
+		<class>org.helianto.partner.PartnerRegistryKey</class>
 		<class>org.helianto.partner.PartnerKey</class>
 		<class>org.helianto.partner.Phone</class>
 		<class>org.helianto.partner.Account</class>

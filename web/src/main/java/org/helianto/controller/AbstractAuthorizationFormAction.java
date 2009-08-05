@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -62,6 +63,16 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
 			return null;
 		}
         return getAuthorizedUser().getEntity();
+	}
+
+    /**
+     * Operator set in security context.
+     */
+	public Operator getOperator() {
+		if (getAuthorizedUser()==null) {
+			return null;
+		}
+        return getAuthorizedUser().getEntity().getOperator();
 	}
 
     /**

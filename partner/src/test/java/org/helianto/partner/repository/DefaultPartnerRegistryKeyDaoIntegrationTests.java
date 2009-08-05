@@ -21,29 +21,29 @@ import static org.junit.Assert.assertEquals;
 import javax.annotation.Resource;
 
 import org.helianto.core.dao.BasicDao;
-import org.helianto.partner.PartnerKey;
+import org.helianto.partner.PartnerRegistryKey;
 import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
-import org.helianto.partner.test.PartnerKeyTestSupport;
+import org.helianto.partner.test.PartnerRegistryKeyTestSupport;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class DefaultPartnerKeyDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
+public class DefaultPartnerRegistryKeyDaoIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Override
 	public void findUnique() {
-		PartnerKey partnerKey = PartnerKeyTestSupport.createPartnerKey();
-		partnerKeyDao.persist(partnerKey);
-		assertEquals(partnerKey, partnerKeyDao.findUnique(partnerKey.getPartner(), partnerKey.getKeyType()));
+		PartnerRegistryKey partnerRegistryKey = PartnerRegistryKeyTestSupport.createPartnerRegistryKey();
+		partnerRegistryKeyDao.persist(partnerRegistryKey);
+		assertEquals(partnerRegistryKey, partnerRegistryKeyDao.findUnique(partnerRegistryKey.getPartnerRegistry(), partnerRegistryKey.getKeyType()));
 	}
 
     //- collabs
 
-    private BasicDao<PartnerKey> partnerKeyDao;
+    private BasicDao<PartnerRegistryKey> partnerRegistryKeyDao;
     
-    @Resource(name="partnerKeyDao")
-    public void setPartnerKeyDao(BasicDao<PartnerKey> partnerKeyDao) {
-        this.partnerKeyDao = partnerKeyDao;
+    @Resource(name="partnerRegistryKeyDao")
+    public void setPartnerRegistryKeyDao(BasicDao<PartnerRegistryKey> partnerRegistryKeyDao) {
+        this.partnerRegistryKeyDao = partnerRegistryKeyDao;
     }
     
 }

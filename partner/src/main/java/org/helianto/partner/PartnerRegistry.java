@@ -66,6 +66,7 @@ public class PartnerRegistry implements java.io.Serializable {
     private String partnerName;
     private Set<Partner> partners = new HashSet<Partner>(0);
     private Set<Address> addresses = new HashSet<Address>(0);
+    private Set<PartnerRegistryKey> partnerRegistryKeys = new HashSet<PartnerRegistryKey>(0);
 
     /** default constructor */
     public PartnerRegistry() {
@@ -154,20 +155,15 @@ public class PartnerRegistry implements java.io.Serializable {
     }
 
     /**
-     * <code>PartnerRegistry</code> query.
+     * Partner registry keys.
      */
-    @Transient
-    public static StringBuilder getPartnerRegistryQueryStringBuilder() {
-    	return new StringBuilder("select partnerRegistry from PartnerRegistry partnerRegistry ");
-    }   
-
-    /**
-     * <code>PartnerRegistry</code> natural id query.
-     */
-    @Transient
-    public static String getPartnerRegistryNaturalIdQueryString() {
-    	return getPartnerRegistryQueryStringBuilder().append("where partnerRegistry.entity = ? and partnerRegistry.partnerAlias = ? ").toString();
-    }
+    @OneToMany(mappedBy="partnerRegistry")
+    public Set<PartnerRegistryKey> getPartnerRegistryKeys() {
+		return partnerRegistryKeys;
+	}
+	public void setPartnerRegistryKeys(Set<PartnerRegistryKey> partnerRegistryKeys) {
+		this.partnerRegistryKeys = partnerRegistryKeys;
+	}
 
     /**
      * toString

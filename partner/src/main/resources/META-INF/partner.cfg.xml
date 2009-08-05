@@ -14,6 +14,7 @@
 		<mapping class="org.helianto.partner.Supplier" />
 		<mapping class="org.helianto.partner.Manufacturer" />
 		<mapping class="org.helianto.partner.Laboratory" />
+		<mapping class="org.helianto.partner.PartnerRegistryKey" />
 		<mapping class="org.helianto.partner.PartnerKey" />
 		<mapping class="org.helianto.partner.Phone" />
 		<mapping class="org.helianto.partner.Account" />

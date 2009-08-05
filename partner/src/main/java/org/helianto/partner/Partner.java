@@ -15,6 +15,9 @@
 
 package org.helianto.partner;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -26,6 +29,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -80,8 +84,9 @@ public class Partner implements java.io.Serializable {
     private Account account;
     private char priority;
     private char partnerState;
+    private Set<PartnerKey> partnerKeys = new HashSet<PartnerKey>(0);
 
-    /** default constructor */
+	/** default constructor */
     public Partner() {
     }
 
@@ -150,6 +155,17 @@ public class Partner implements java.io.Serializable {
     public void setPartnerState(PartnerState partnerState) {
         this.partnerState = partnerState.getValue();
     }
+
+    /**
+     * Partner keys.
+     */
+    @OneToMany(mappedBy="partner")
+    public Set<PartnerKey> getPartnerKeys() {
+		return partnerKeys;
+	}
+	public void setPartnerKeys(Set<PartnerKey> partnerKeys) {
+		this.partnerKeys = partnerKeys;
+	}
 
     /**
      * toString

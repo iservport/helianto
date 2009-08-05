@@ -17,25 +17,25 @@
 package org.helianto.partner.repository;
 
 import org.helianto.core.dao.AbstractHibernateBasicDao;
-import org.helianto.partner.PartnerKey;
+import org.helianto.partner.PartnerRegistryKey;
 import org.springframework.stereotype.Repository;
 
 /**
- * Partner key data access.
+ * Partner registry key data access.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Repository("partnerKeyDao")
-public class DefaultPartnerKeyDao extends AbstractHibernateBasicDao<PartnerKey> {
+@Repository("partnerRegistryKeyDao")
+public class DefaultPartnerRegistryKeyDao extends AbstractHibernateBasicDao<PartnerRegistryKey> {
 
 	@Override
-	public Class<? extends PartnerKey> getClazz() {
-		return PartnerKey.class;
+	public Class<? extends PartnerRegistryKey> getClazz() {
+		return PartnerRegistryKey.class;
 	}
 
 	@Override
 	protected String[] getParams() {
-		return new String[] { "partner", "keyType" };
+		return new String[] { "partnerRegistry", "keyType" };
 	}
 
 }
