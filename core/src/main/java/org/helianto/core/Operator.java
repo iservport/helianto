@@ -104,7 +104,8 @@ public class Operator implements java.io.Serializable {
     private String preferredTimeFormat;
     private String rfc822TimeZone;
     private Set<KeyType> keyTypes = new HashSet<KeyType>();
-    private Map<String, Service> serviceMap = new HashMap<String, Service>();
+    private Set<Province> provinces = new HashSet<Province>();
+	private Map<String, Service> serviceMap = new HashMap<String, Service>();
 
     /** default constructor */
     public Operator() {
@@ -246,6 +247,17 @@ public class Operator implements java.io.Serializable {
 	}
 	public void setKeyTypes(Set<KeyType> keyTypes) {
 		this.keyTypes = keyTypes;
+	}
+
+    /**
+     * Province set.
+     */
+    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
+    public Set<Province> getProvinces() {
+		return provinces;
+	}
+	public void setProvinces(Set<Province> provinces) {
+		this.provinces = provinces;
 	}
 
 	/**

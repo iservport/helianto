@@ -33,6 +33,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
+import org.helianto.core.KeyType;
 /**
  * <p>
  * Represents the relationship between the organization and other entities.  
@@ -165,6 +167,20 @@ public class Partner implements java.io.Serializable {
 	}
 	public void setPartnerKeys(Set<PartnerKey> partnerKeys) {
 		this.partnerKeys = partnerKeys;
+	}
+
+	/**
+	 * Convenience to add a key type-value pair to the partner.
+	 * 
+	 * @param keyType
+	 * @param keyValue
+	 * @return true if added
+	 */
+	@Transient
+	public boolean addKeyValuePair(KeyType keyType, String keyValue) {
+		PartnerKey partnerKey = PartnerKey.partnerKeyFactory(this, keyType);
+		partnerKey.setKeyValue(keyValue);
+		return getPartnerKeys().add(partnerKey);
 	}
 
     /**

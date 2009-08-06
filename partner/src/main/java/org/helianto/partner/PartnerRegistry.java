@@ -15,7 +15,6 @@
 
 package org.helianto.partner;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +33,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.core.KeyType;
 /**
  * <p>
  * Represents the relationship between the organization and other entities.  
@@ -67,6 +67,10 @@ public class PartnerRegistry implements java.io.Serializable {
     private Set<Partner> partners = new HashSet<Partner>(0);
     private Set<Address> addresses = new HashSet<Address>(0);
     private Set<PartnerRegistryKey> partnerRegistryKeys = new HashSet<PartnerRegistryKey>(0);
+    private @Transient List<Partner> partnerList;
+    private @Transient List<Address> addressList;
+    private @Transient Address mainAddress;
+    private @Transient List<PartnerRegistryKey> partnerRegistryKeyList;
 
     /** default constructor */
     public PartnerRegistry() {
@@ -140,6 +144,16 @@ public class PartnerRegistry implements java.io.Serializable {
     }
 
     /**
+     * <<Transient>> Convenience to hold ordered partner list.
+     */
+    public List<Partner> getPartnerList() {
+    	return this.partnerList;
+    }
+    public void setPartnerList(List<Partner> partnerList) {
+        this.partnerList = partnerList;
+    }
+    
+    /**
      * Addresses.
      */
     @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
@@ -149,9 +163,25 @@ public class PartnerRegistry implements java.io.Serializable {
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
     }
-    @Transient
+    
+    /**
+     * <<Transient>> Convenience to hold ordered address list.
+     */
     public List<Address> getAddressList() {
-    	return new ArrayList<Address>(getAddresses());
+    	return this.addressList;
+    }
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
+    }
+    
+    /**
+     * <<Transient>> Convenience hold the main address.
+     */
+    public Address getMainAddress() {
+    	return mainAddress;
+    }
+    public void setMainAddress(Address mainAddress) {
+        this.mainAddress = mainAddress;
     }
 
     /**
@@ -164,7 +194,31 @@ public class PartnerRegistry implements java.io.Serializable {
 	public void setPartnerRegistryKeys(Set<PartnerRegistryKey> partnerRegistryKeys) {
 		this.partnerRegistryKeys = partnerRegistryKeys;
 	}
+	
+	/**
+	 * Convenience to add a key type-value pair to the registry.
+	 * 
+	 * @param keyType
+	 * @param keyValue
+	 * @return true if added
+	 */
+	@Transient
+	public boolean addKeyValuePair(KeyType keyType, String keyValue) {
+		PartnerRegistryKey partnerRegistryKey = PartnerRegistryKey.partnerRegistryKeyFactory(this, keyType);
+		partnerRegistryKey.setKeyValue(keyValue);
+		return getPartnerRegistryKeys().add(partnerRegistryKey);
+	}
 
+    /**
+     * <<Transient>> Convenience to hold ordered partner key list.
+     */
+    public List<PartnerRegistryKey> getPartnerRegistryKeyList() {
+    	return this.partnerRegistryKeyList;
+    }
+    public void setPartnerRegistryKeyList(List<PartnerRegistryKey> partnerRegistryKeyList) {
+        this.partnerRegistryKeyList = partnerRegistryKeyList;
+    }
+    
     /**
      * toString
      * @return String

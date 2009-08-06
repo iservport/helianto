@@ -15,6 +15,7 @@
 
 package org.helianto.partner.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,11 +25,13 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.partner.Address;
+import org.helianto.partner.AddressType;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
+import org.helianto.partner.PartnerRegistryKey;
 import org.helianto.partner.Phone;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -51,6 +54,32 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerRegistryList;
 	}
 
+    /**
+     * Prepare <code>PartnerRegistry</code> to the application layer.
+     * 
+     * <p>Update the following transient fields:</p>
+     * <ol>
+     * <li>partnerList,</li>
+     * <li>addressList,</li>
+     * <li>mainAddress,</li>
+     * <li>partnerRegistryKeyList.</li>
+     * </ol>
+     */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public PartnerRegistry preparePartnerRegistry(PartnerRegistry partnerRegistry) {
+		PartnerRegistry managedPartnerRegistry = partnerRegistryDao.merge(partnerRegistry);
+		managedPartnerRegistry.setPartnerList(new ArrayList<Partner>(managedPartnerRegistry.getPartners()));
+		managedPartnerRegistry.setAddressList(new ArrayList<Address>(managedPartnerRegistry.getAddresses()));
+    	for (Address address: managedPartnerRegistry.getAddresses()) {
+    		if (address.getAddressType()==AddressType.MAIN.getValue()) {
+    			managedPartnerRegistry.setMainAddress(address);
+    		}
+    	}
+		managedPartnerRegistry.setPartnerRegistryKeyList(new ArrayList<PartnerRegistryKey>(managedPartnerRegistry.getPartnerRegistryKeys()));
+		partnerRegistryDao.evict(managedPartnerRegistry);
+		return managedPartnerRegistry;
+	}
+	
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerRegistry storePartnerRegistry(PartnerRegistry partnerRegistry) {
 		return partnerRegistryDao.merge(partnerRegistry);

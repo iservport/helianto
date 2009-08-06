@@ -37,6 +37,11 @@ public interface PartnerMgr {
 	public List<PartnerRegistry> findPartnerRegistries(PartnerRegistryFilter partnerRegistryFilter);
 	
     /**
+     * Prepare <code>PartnerRegistry</code> to the application layer.
+     */
+    public PartnerRegistry preparePartnerRegistry(PartnerRegistry partnerRegistry);
+
+    /**
      * Write <code>PartnerRegistry</code> to the datastore.
      */
     public PartnerRegistry storePartnerRegistry(PartnerRegistry partnerRegistry);
