@@ -146,6 +146,7 @@ public class PartnerRegistry implements java.io.Serializable {
     /**
      * <<Transient>> Convenience to hold ordered partner list.
      */
+	@Transient
     public List<Partner> getPartnerList() {
     	return this.partnerList;
     }
@@ -167,6 +168,7 @@ public class PartnerRegistry implements java.io.Serializable {
     /**
      * <<Transient>> Convenience to hold ordered address list.
      */
+	@Transient
     public List<Address> getAddressList() {
     	return this.addressList;
     }
@@ -177,6 +179,7 @@ public class PartnerRegistry implements java.io.Serializable {
     /**
      * <<Transient>> Convenience hold the main address.
      */
+	@Transient
     public Address getMainAddress() {
     	return mainAddress;
     }
@@ -212,6 +215,7 @@ public class PartnerRegistry implements java.io.Serializable {
     /**
      * <<Transient>> Convenience to hold ordered partner key list.
      */
+	@Transient
     public List<PartnerRegistryKey> getPartnerRegistryKeyList() {
     	return this.partnerRegistryKeyList;
     }

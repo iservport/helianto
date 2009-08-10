@@ -114,6 +114,9 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	 */
 	protected StringBuilder getWhereClauseBuilder(String[] fields) {
 		StringBuilder whereClauseBuilder = new StringBuilder();
+		if (fields==null) {
+			return whereClauseBuilder;
+		}
 		for (int i = 0;i<fields.length;i++) {
 			if (i>0) {
 				whereClauseBuilder.append(" AND ");

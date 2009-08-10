@@ -17,24 +17,38 @@ package org.helianto.core;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * <p>
  * Provinces.
+ * 
+ * <p>
+ * Province may be extended to represent also a city.
  * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
 @Table(name="core_province",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "provinceCode"})}
 )
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name="type",
+    discriminatorType=DiscriminatorType.CHAR
+)
+@DiscriminatorValue("P")
 public class Province  implements java.io.Serializable {
 
     /**
@@ -87,7 +101,7 @@ public class Province  implements java.io.Serializable {
     /**
      * Province code.
      */
-    @Column(length=3)
+    @Column(length=7)
     public String getProvinceCode() {
         return this.provinceCode;
     }
