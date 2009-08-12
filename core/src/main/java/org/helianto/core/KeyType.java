@@ -97,7 +97,7 @@ public class KeyType implements java.io.Serializable {
     /**
      * Key name.
      */
-    @Column(length=32)
+    @Column(length=48)
     public String getKeyName() {
         return this.keyName;
     }

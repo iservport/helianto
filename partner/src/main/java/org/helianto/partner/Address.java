@@ -75,6 +75,8 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     private int sequence;
     private char addressType;
     private String address1;
+    private String addressNumber;
+	private String addressDetail;
     private String address2;
     private String address3;
     private String cityName;
@@ -162,6 +164,28 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     public void setAddress1(String address1) {
         this.address1 = address1;
     }
+
+    /**
+     * Optional address number.
+     */
+    @Column(length=8)
+    public String getAddressNumber() {
+		return addressNumber;
+	}
+	public void setAddressNumber(String addressNumber) {
+		this.addressNumber = addressNumber;
+	}
+
+    /**
+     * Optional address detail.
+     */
+    @Column(length=12)
+	public String getAddressDetail() {
+		return addressDetail;
+	}
+	public void setAddressDetail(String addressDetail) {
+		this.addressDetail = addressDetail;
+	}
 
     /**
      * Address2.

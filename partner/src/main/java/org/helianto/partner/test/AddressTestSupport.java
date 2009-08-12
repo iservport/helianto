@@ -37,6 +37,16 @@ public class AddressTestSupport {
         Address address = Address.addressFactory(partnerAssociation, sequence);
         return address;
     }
+    
+    public static void populateAddress(Address address) {
+    	address.setAddress1("Address1_"+testKey);
+    	address.setAddressNumber("#_"+testKey);
+    	address.setAddressNumber("##_"+testKey);
+    	address.setAddress2("Address2_"+testKey);
+    	address.setAddress3("Address3_"+testKey);
+    	address.setCityName("cityName"+testKey);
+    	address.setPostalCode("ZIP"+testKey);
+    }
 
     /**
      * Test support method to create a <code>Address</code> list.

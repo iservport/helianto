@@ -71,7 +71,12 @@ public class Province  implements java.io.Serializable {
 
     /** default constructor */
     public Province() {
-        setProvinceCode("");
+        this("");
+    }
+
+    /** Code constructor */
+    public Province(String provinceCode) {
+        setProvinceCode(provinceCode);
         setProvinceName("");
     }
 

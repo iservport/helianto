@@ -241,7 +241,8 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type set.
      */
-    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="operator", cascade={ CascadeType.PERSIST, CascadeType.MERGE },
+    		fetch=FetchType.LAZY)
     public Set<KeyType> getKeyTypes() {
 		return keyTypes;
 	}
@@ -252,7 +253,8 @@ public class Operator implements java.io.Serializable {
     /**
      * Province set.
      */
-    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="operator", cascade={ CascadeType.PERSIST, CascadeType.MERGE },
+    		fetch=FetchType.LAZY)
     public Set<Province> getProvinces() {
 		return provinces;
 	}
