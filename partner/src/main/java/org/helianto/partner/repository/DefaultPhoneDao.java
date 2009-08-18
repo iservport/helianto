@@ -16,7 +16,7 @@
 
 package org.helianto.partner.repository;
 
-import org.helianto.core.dao.AbstractHibernateBasicDao;
+import org.helianto.core.dao.AbstractBasicDao;
 import org.helianto.partner.Phone;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("phoneDao")
-public class DefaultPhoneDao extends AbstractHibernateBasicDao<Phone> {
+public class DefaultPhoneDao extends AbstractBasicDao<Phone> {
 
 	@Override
 	public Class<? extends Phone> getClazz() {

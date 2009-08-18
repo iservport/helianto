@@ -70,7 +70,6 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 		setProvinceNameLike("");
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "province";
 	}
@@ -95,7 +94,6 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	/**
 	 * Selection criterion.
 	 */
-	@Override
 	public boolean isSelection() {
 		return getProvinceCode().length()>0;
 	}

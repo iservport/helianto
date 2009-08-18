@@ -47,10 +47,8 @@ public class UserBackedCriteriaFilterTests {
 		@Override
 		protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
 
-		@Override
 		public String getObjectAlias() { return ""; }
 
-		@Override
 		public boolean isSelection() { return false; }
 		
 	}

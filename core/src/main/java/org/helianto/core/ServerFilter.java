@@ -64,12 +64,10 @@ public class ServerFilter extends AbstractUserBackedCriteriaFilter {
     	setServerState(' ');
 	}
 
-	@Override
 	public boolean isSelection() {
 		return this.operator!=null && serverName.length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "server";
 	}

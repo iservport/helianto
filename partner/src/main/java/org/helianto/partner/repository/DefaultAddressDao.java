@@ -16,7 +16,7 @@
 
 package org.helianto.partner.repository;
 
-import org.helianto.core.dao.AbstractHibernateBasicDao;
+import org.helianto.core.dao.AbstractBasicDao;
 import org.helianto.partner.Address;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("addressDao")
-public class DefaultAddressDao extends AbstractHibernateBasicDao<Address> {
+public class DefaultAddressDao extends AbstractBasicDao<Address> {
 
 	@Override
 	public Class<? extends Address> getClazz() {

@@ -2,7 +2,6 @@ package org.helianto.partner.repository;
 
 import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.partner.Phone;
-import org.helianto.partner.repository.DefaultPhoneDao;
 
 /**
  * @author Mauricio Fernandes de Castro

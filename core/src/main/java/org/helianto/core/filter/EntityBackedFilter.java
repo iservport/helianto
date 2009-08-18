@@ -13,30 +13,29 @@
  * limitations under the License.
  */
 
+package org.helianto.core.filter;
 
-package org.helianto.core.repository;
-
-import org.helianto.core.UserFilter;
-import org.helianto.core.UserGroup;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.springframework.stereotype.Repository;
+import org.helianto.core.Entity;
 
 /**
- * <code>UserGroup</code> data access.
- * 
+ * Extends the <code>Filter</code> interface to enforce the use
+ * of <code>Entity</code> to build criteria.
+ *  
  * @author Mauricio Fernandes de Castro
  */
-@Repository("userGroupDao")
-public class DefaultUserGroupDao extends AbstractFilterDao<UserGroup, UserFilter> {
-
-	@Override
-	public Class<? extends UserGroup> getClazz() {
-		return UserGroup.class;
-	}
-
-	@Override
-	protected String[] getParams() {
-		return new String[] { "entity", "userKey" };
-	}
-
+public interface EntityBackedFilter extends Filter {
+	
+	/**
+	 * Create criteria.
+	 * 
+	 * @param requireEntity raise unchecked exception if true and 
+	 *        entity is not defined.
+	 */
+	public String createCriteriaAsString(boolean requireEntity);
+	
+	/**
+	 * Entity filter property.
+	 */
+	public Entity getEntity();
+	
 }

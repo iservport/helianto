@@ -18,7 +18,7 @@ package org.helianto.core.repository;
 
 import org.helianto.core.Service;
 import org.helianto.core.ServiceFilter;
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("serviceDao")
-public class DefaultServiceDao extends AbstractHibernateFilterDao<Service, ServiceFilter> {
+public class DefaultServiceDao extends AbstractFilterDao<Service, ServiceFilter> {
 
 	/**
 	 * Keys are operator.id and serviceName

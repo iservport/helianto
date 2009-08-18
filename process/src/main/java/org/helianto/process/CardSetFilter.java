@@ -40,12 +40,10 @@ public class CardSetFilter extends AbstractUserBackedCriteriaFilter {
 		setCardType(' ');
 	}
 	
-    @Override
 	public boolean isSelection() {
 		return getInternalNumber()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "cardset";
 	}

@@ -20,243 +20,42 @@ import java.util.Collection;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.Entity;
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.filter.Filter;
 
 /**
- * Default implementation to <code>FilterDao</code> interface.
+ * Base implementation to <code>FilterDao</code> interface.
  * 
- * <p>
- * This implementation recognizes filter states to be:
- * </p>
- * <ul>
- * <li>selection: an unique result is expected, or </li>
- * <li>filter: any result set constrained by the filter.</li>
- * </ul> 
- * 
- * @deprecated use AbstractJpaFilterDao or AbstractHibernateFilterDao
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractFilterDao<T, F extends AbstractUserBackedCriteriaFilter> extends AbstractJpaBasicDao<T> implements FilterDao<T, F> {
+public abstract class AbstractFilterDao<T, F extends Filter> 
+    extends AbstractBasicDao<T> implements FilterDao<T, F> 
+{
 
-	/* @see FilterDao interface */
+	/**
+	 * Default constructor.
+	 */
+	public AbstractFilterDao() {
+		super();
+	}
+	
+	/**
+	 * Class constructor.
+	 * 
+	 * @param clazz
+	 */
+	public AbstractFilterDao(Class<? extends T> clazz) {
+		super(clazz);
+	}
+	
+	/**
+	 * Use the filter to create a where clause and delegate to
+	 * the superclass.
+	 */
 	public Collection<T> find(F filter) {
-		String whereClause = createCriteriaAsString(filter);
+		String whereClause = filter.createCriteriaAsString();
 		return super.find(getSelectBuilder(), whereClause);
 	}
 
-	/**
-	 * If true, raise exception when entity is null. 
-	 * 
-	 * <p>
-	 * Subclasses overriding this method can control how the the result set 
-	 * spans beyond the entity namespace boundaries. However, returning false
-	 * here is recommended only for a few top-level domain classes.
-	 * </p>
-	 */
-	protected boolean requireEntity() {
-		return true;
-	}
-	
-	/**
-	 * Delegate criteria creation to a chain of processors.
-	 */
-	protected String createCriteriaAsString(F filter) {
-		return createCriteriaAsString(filter, requireEntity());
-	}
-
-	/**
-	 * Delegate criteria creation to a chain of processors.
-	 */
-	public final String createCriteriaAsString(F filter, boolean requireEntity) {
-        CriteriaBuilder mainCriteriaBuilder = createCriteriaBuilder();
-        if (requireEntity && filter.getEntity()==null) {
-            throw new IllegalArgumentException("User or entity required!");
-        }
-        else if (filter.getEntity()!=null){
-            appendEntityFilter(filter.getEntity(), mainCriteriaBuilder);
-        }
-        preProcessFilter(filter, mainCriteriaBuilder);
-        
-        if (isSelection(filter)) {
-        	doSelect(filter, mainCriteriaBuilder);
-        	filter.reset();
-        }
-        else {
-        	doFilter(filter, mainCriteriaBuilder);
-        }
-        
-        postProcessFilter(filter, mainCriteriaBuilder);
-        
-        if (logger.isDebugEnabled()) {
-            logger.debug("Filter query: "+mainCriteriaBuilder.getCriteriaAsString());
-        }
-        return mainCriteriaBuilder.getCriteriaAsString();
-    }
-	
-	/**
-	 * Create the the builder.
-	 */
-	protected CriteriaBuilder createCriteriaBuilder() {
-        return new CriteriaBuilder(getObjectAlias());
-	}
-	
-    /**
-     * Append an <code>Entity</code> filter.
-     * 
-     * @param entity
-	 * @param mainCriteriaBuilder
-     */
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-		mainCriteriaBuilder.appendSegment("entity.id", "=")
-        .append(entity.getId());
-		if (logger.isDebugEnabled()) {
-			logger.debug("Filter entity constraint set to "+entity.getAlias());
-		}
-    }
-    
-	/**
-	 * Subclasses overriding this method should create here query segments
-	 * to be included for both selection and filter operations.
-	 * 
-	 * @param filter
-	 * @param mainCriteriaBuilder
-	 */
-	protected void preProcessFilter(F filter, CriteriaBuilder mainCriteriaBuilder) {
-	}
-	
-	/**
-	 * True when filter should return an unique result.
-	 * 
-	 * @param filter
-	 */
-	protected boolean isSelection(F filter) {
-		return filter.isSelection();
-	}
-	
-	/**
-	 * Hook to the selection processor.
-	 * 
-	 * @param filter
-	 * @param mainCriteriaBuilder
-	 */
-	protected abstract void doSelect(F filter, CriteriaBuilder mainCriteriaBuilder);
-	
-	/**
-	 * Hook to the filter processor.
-	 * 
-	 * @param filter
-	 * @param mainCriteriaBuilder
-	 */
-	protected abstract void doFilter(F filter, CriteriaBuilder mainCriteriaBuilder);
-	
-	/**
-	 * Hook to the filter post-processor.
-	 * 
-	 * @param filter
-	 * @param mainCriteriaBuilder
-	 */
-	protected void postProcessFilter(F filter, CriteriaBuilder mainCriteriaBuilder) {
-	}
-	
-    /**
-     * Equal appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendEqualFilter(String fieldName, char fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent!=' ') {
-            criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
-            .append(fieldContent);
-        }
-    }
-    
-    /**
-     * Equal appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendEqualFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent!=null && fieldContent.length()>0) {
-            criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
-            .appendString(fieldContent);
-        }
-    }
-    
-    /**
-     * Equal appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendEqualFilter(String fieldName, int fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent>0) {
-            criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
-            .append(fieldContent);
-        }
-    }
-    
-    /**
-     * Equal appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendEqualFilter(String fieldName, long fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent>0) {
-            criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
-            .append(fieldContent);
-        }
-    }
-    
-    /**
-     * Case sensitive like appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendLikeCaseFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent!=null && fieldContent.length()>0) {
-    		criteriaBuilder.appendAnd().appendSegment(fieldName, "like")
-            .appendLike(fieldContent);
-        }
-    }
-    
-    /**
-     * Case unsensitive like appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendLikeFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent!=null && fieldContent.length()>0) {
-    		criteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
-            .appendLike(fieldContent.toLowerCase());
-        }
-    }
-    
-    /**
-     * Base order by segment.
-     * 
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendOrderBy(String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	String[] fieldNames = fieldContent.split(",");
-    	if (fieldNames.length>0) {
-    		criteriaBuilder.appendOrderBy(fieldNames);
-        }
-    }
-    
     protected static Log logger = LogFactory.getLog(AbstractFilterDao.class);
 
 }

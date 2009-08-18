@@ -49,7 +49,6 @@ public abstract class ProcessFilter extends AbstractUserBackedCriteriaFilter {
     	setExclusions(new HashSet<Process>(0));
     }
     
-	@Override
 	public String getObjectAlias() {
 		return "process";
 	}

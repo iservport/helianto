@@ -18,7 +18,7 @@ package org.helianto.core.repository;
 
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("unitDao")
-public class DefaultUnitDao extends AbstractHibernateFilterDao<Unit, UnitFilter> {
+public class DefaultUnitDao extends AbstractFilterDao<Unit, UnitFilter> {
 
 	@Override
 	protected String[] getParams() {

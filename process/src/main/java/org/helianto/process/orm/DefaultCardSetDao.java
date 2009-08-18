@@ -16,7 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.process.CardSet;
 import org.helianto.process.CardSetFilter;
 import org.springframework.stereotype.Repository;
@@ -28,11 +28,16 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("cardSetDao")
-public class DefaultCardSetDao extends AbstractHibernateFilterDao<CardSet, CardSetFilter> {
+public class DefaultCardSetDao extends AbstractFilterDao<CardSet, CardSetFilter> {
 
 	@Override
 	public Class<? extends CardSet> getClazz() {
 		return CardSet.class;
+	}
+
+	@Override
+	protected String[] getParams() {
+		return new String[] { "entity", "internalNumber" };
 	}
 
 }

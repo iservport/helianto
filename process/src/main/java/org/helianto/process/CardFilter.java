@@ -22,12 +22,10 @@ public class CardFilter extends AbstractUserBackedCriteriaFilter {
 	public void reset() {
 	}
 
-	@Override
 	public boolean isSelection() {
 		return false;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "card";
 	}

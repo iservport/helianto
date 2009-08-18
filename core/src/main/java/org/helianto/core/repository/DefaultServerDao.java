@@ -18,7 +18,7 @@ package org.helianto.core.repository;
 
 import org.helianto.core.Server;
 import org.helianto.core.ServerFilter;
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("serverDao")
-public class DefaultServerDao extends AbstractHibernateFilterDao<Server, ServerFilter> {
+public class DefaultServerDao extends AbstractFilterDao<Server, ServerFilter> {
 
 	@Override
 	public Class<? extends Server> getClazz() {

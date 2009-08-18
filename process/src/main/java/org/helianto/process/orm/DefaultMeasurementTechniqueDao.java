@@ -16,7 +16,7 @@
 
 package org.helianto.process.orm;
 
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.process.MeasurementTechnique;
 import org.helianto.process.MeasurementTechniqueFilter;
 import org.springframework.stereotype.Repository;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("measurementTechniqueDao")
-public class DefaultMeasurementTechniqueDao extends AbstractHibernateFilterDao<MeasurementTechnique, MeasurementTechniqueFilter> {
+public class DefaultMeasurementTechniqueDao extends AbstractFilterDao<MeasurementTechnique, MeasurementTechniqueFilter> {
 
 	@Override
 	protected String[] getParams() {

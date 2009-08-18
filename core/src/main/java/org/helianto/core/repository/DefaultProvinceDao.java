@@ -17,7 +17,7 @@ package org.helianto.core.repository;
 
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("provinceDao")
 @Transactional
-public class DefaultProvinceDao extends AbstractHibernateFilterDao<Province, ProvinceFilter> {
+public class DefaultProvinceDao extends AbstractFilterDao<Province, ProvinceFilter> {
 
 	@Override
 	protected String[] getParams() {

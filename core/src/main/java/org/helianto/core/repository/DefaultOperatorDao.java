@@ -18,7 +18,7 @@ package org.helianto.core.repository;
 
 import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("operatorDao")
 @Transactional
-public class DefaultOperatorDao extends AbstractHibernateFilterDao<Operator, OperatorFilter> {
+public class DefaultOperatorDao extends AbstractFilterDao<Operator, OperatorFilter> {
 
 	@Override
 	public Class<? extends Operator> getClazz() {

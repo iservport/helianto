@@ -75,12 +75,10 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 		setPartnerNameLike("");
 	}
 
-	@Override
 	public boolean isSelection() {
 		return getPartnerAlias().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "partner";
 	}

@@ -26,8 +26,8 @@ import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
-import org.helianto.core.dao.AbstractHibernateBasicDao;
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -37,18 +37,16 @@ import org.springframework.context.annotation.Configuration;
  * @author Mauricio Fernandes de Castro
  */
 @Configuration
+@SuppressWarnings("unchecked")
 public class CoreHibernateRepository {
 	
 	/**
 	 * Category data access
 	 */
 	@Bean
-	public AbstractHibernateFilterDao<Category, CategoryFilter> categoryDao() {
-		AbstractHibernateFilterDao<Category, CategoryFilter> filterDao =  
-			new AbstractHibernateFilterDao<Category, CategoryFilter>() { };
-		filterDao.setClazz(Category.class);
-		filterDao.setParams("entity", "categoryGroup");
-		filterDao.setSessionFactory(sessionFactory);
+	public AbstractFilterDao<Category, CategoryFilter> categoryDao() {
+		AbstractFilterDao<Category, CategoryFilter> filterDao =  
+			repositoryFactory.filterDaoFactory(Category.class, CategoryFilter.class, "entity", "categoryGroup");
 		logger.info("Created categoryDao");
 		return filterDao;
 	}
@@ -57,12 +55,9 @@ public class CoreHibernateRepository {
 	 * Credential data access
 	 */
 	@Bean
-	public AbstractHibernateBasicDao<Credential> credentialDao() {
-		AbstractHibernateBasicDao<Credential> basicDao =  
-			new AbstractHibernateBasicDao<Credential>() { };
-		basicDao.setClazz(Credential.class);
-		basicDao.setParams("identity");
-		basicDao.setSessionFactory(sessionFactory);
+	public AbstractBasicDao<Credential> credentialDao() {
+		AbstractBasicDao<Credential> basicDao =  
+			repositoryFactory.basicDaoFactory(Credential.class, "identity");
 		logger.info("Created credentialDao");
 		return basicDao;
 	}
@@ -71,12 +66,9 @@ public class CoreHibernateRepository {
 	 * Entity data access
 	 */
 	@Bean
-	public AbstractHibernateFilterDao<Entity, EntityFilter> entityDao() {
-		AbstractHibernateFilterDao<Entity, EntityFilter> filterDao =  
-			new AbstractHibernateFilterDao<Entity, EntityFilter>() { };
-		filterDao.setClazz(Entity.class);
-		filterDao.setParams("operator", "alias");
-		filterDao.setSessionFactory(sessionFactory);
+	public AbstractFilterDao<Entity, EntityFilter> entityDao() {
+		AbstractFilterDao<Entity, EntityFilter> filterDao =  
+			repositoryFactory.filterDaoFactory(Entity.class, EntityFilter.class, "operator", "alias");
 		logger.info("Created entityDao");
 		return filterDao;
 	}
@@ -85,28 +77,22 @@ public class CoreHibernateRepository {
 	 * Identity data access
 	 */
 	@Bean
-	public AbstractHibernateFilterDao<Identity, IdentityFilter> identityDao() {
-		AbstractHibernateFilterDao<Identity, IdentityFilter> filterDao =  
-			new AbstractHibernateFilterDao<Identity, IdentityFilter>() { };
-		filterDao.setClazz(Identity.class);
-		filterDao.setParams("principal");
-		filterDao.setSessionFactory(sessionFactory);
+	public AbstractFilterDao<Identity, IdentityFilter> identityDao() {
+		AbstractFilterDao<Identity, IdentityFilter> filterDao =  
+			repositoryFactory.filterDaoFactory(Identity.class, IdentityFilter.class, "principal");
 		logger.info("Created identityDao");
 		return filterDao;
 	}
 
 	// collabs
     
-    private org.hibernate.SessionFactory sessionFactory;
+    private RepositoryFactory repositoryFactory;
     
-    /**
-     * Spring will inject a managed Hibernate Session into this field.
-     */
-    @Resource(name="sessionFactory")
-	public void setSessionFactory(org.hibernate.SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+    @Resource
+	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
+		this.repositoryFactory = repositoryFactory;
 	}
 
-    private static final Log logger = LogFactory.getLog(AbstractHibernateBasicDao.class);
+    private static final Log logger = LogFactory.getLog(CoreHibernateRepository.class);
 
 }

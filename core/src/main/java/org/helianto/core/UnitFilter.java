@@ -67,12 +67,10 @@ public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 		setUnitNameLike("");
 	}
 
-	@Override
 	public boolean isSelection() {
 		return getUnitCode().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "unit";
 	}

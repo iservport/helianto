@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 import java.text.DateFormat;
 import java.util.Date;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.test.SecurityTestSupport;
 import org.junit.Before;
@@ -297,6 +298,18 @@ public class CriteriaBuilderTests  {
 		public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
 		public void setToDate(Date toDate) { this.toDate = toDate; }
 		public boolean isSelection() { return false; }
+		public String createCriteriaAsString(boolean requireEntity) {
+			return null;
+		}
+		public Entity getEntity() {
+			return null;
+		}
+		public String createCriteriaAsString() {
+			return null;
+		}
+		public String getObjectAlias() {
+			return null;
+		}
         
     }
 

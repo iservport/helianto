@@ -16,7 +16,7 @@
 
 package org.helianto.resource.repository;
 
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.resource.ResourceGroup;
 import org.helianto.resource.ResourceGroupFilter;
 import org.springframework.stereotype.Repository;
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("resourceGroupDao")
-public class DefaultResourceGroupDao extends AbstractHibernateFilterDao<ResourceGroup, ResourceGroupFilter> {
+public class DefaultResourceGroupDao extends AbstractFilterDao<ResourceGroup, ResourceGroupFilter> {
 
 	@Override
 	public Class<? extends ResourceGroup> getClazz() {

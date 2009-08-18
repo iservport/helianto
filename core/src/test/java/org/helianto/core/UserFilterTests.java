@@ -10,6 +10,7 @@ import java.util.Collection;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.UserBackedFilter;
 import org.helianto.core.test.IdentityTestSupport;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -60,6 +61,7 @@ public class UserFilterTests {
     
     UserFilter userFilter;
     
+    @Before
     public void setUp() {
     	userFilter = new UserFilter();
     }

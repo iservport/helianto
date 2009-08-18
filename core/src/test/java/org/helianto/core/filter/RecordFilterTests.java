@@ -52,7 +52,7 @@ public class RecordFilterTests {
 	public void setUp() {
 		recordFilter = new AbstractRecordFilter() {
 			private static final long serialVersionUID = 1L;
-			@Override public String getObjectAlias() { return "alias"; }
+			public String getObjectAlias() { return "alias"; }
 		};
 	}
 

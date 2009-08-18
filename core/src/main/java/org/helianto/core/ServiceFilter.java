@@ -46,20 +46,18 @@ public class ServiceFilter extends AbstractUserBackedCriteriaFilter {
     	setServiceName("");
     }
 
-	@Override
 	public boolean isSelection() {
 		return this.operator!=null && serviceName.length()>0;
+	}
+
+	public String getObjectAlias() {
+		return "service";
 	}
 
 	/**
 	 * Reset
 	 */
 	public void reset() {
-	}
-
-	@Override
-	public String getObjectAlias() {
-		return "service";
 	}
 
 	/**

@@ -22,7 +22,7 @@ import java.util.Collection;
  * 
  * @author Mauricio Fernandes de Castro.
  */
-public interface BasicDao<T> {
+public interface BasicDao<T> extends PersistenceStrategy<T> {
 	
 	/**
 	 * The persistent class.
@@ -30,29 +30,9 @@ public interface BasicDao<T> {
 	public Class<? extends T> getClazz();
 
     /**
-     * Persist a managed object.
+     * Find by criteria.
      */
-    public void persist(T managedObject);
-    
-    /**
-     * Merge an object into a persisted managed object.
-     */
-    public T merge(T object);
-    
-    /**
-     * Remove an object.
-     */
-    public void remove(T object);
-    
-    /**
-     * Evict an object.
-     */
-    public void evict(T object);
-    
-    /**
-     * Find unique.
-     */
-    public T findUnique(Object... args);
+    public Collection<T> find(StringBuilder selectClause, String whereClause);
     
     /**
      * Find by criteria.
@@ -60,17 +40,8 @@ public interface BasicDao<T> {
     public Collection<T> find(String whereClause);
     
     /**
-     * Find by criteria.
+     * Find unique.
      */
-    public Collection<T> find(StringBuilder selectClause, String whereClause);
+    public T findUnique(Object... args);
     
-    /**
-     * Flush the session.
-     */
-	public void flush();
-	
-    /**
-     * Clear the session.
-     */
-	public void clear();
 }

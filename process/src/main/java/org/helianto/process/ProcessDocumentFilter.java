@@ -85,12 +85,10 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
 		setDocNameLike("");
 	}
 	
-	@Override
 	public boolean isSelection() {
 		return getDocCode().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "processdocument";
 	}

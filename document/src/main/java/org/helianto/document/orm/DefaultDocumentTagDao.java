@@ -16,7 +16,7 @@
 
 package org.helianto.document.orm;
 
-import org.helianto.core.dao.AbstractHibernateBasicDao;
+import org.helianto.core.dao.AbstractBasicDao;
 import org.helianto.document.DocumentTag;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("documentTagDao")
-public class DefaultDocumentTagDao extends AbstractHibernateBasicDao<DocumentTag> {
+public class DefaultDocumentTagDao extends AbstractBasicDao<DocumentTag> {
 
 	@Override
 	public Class<? extends DocumentTag> getClazz() {

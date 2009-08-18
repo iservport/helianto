@@ -2,7 +2,6 @@ package org.helianto.resource.repository;
 
 import org.helianto.core.test.AbstractHibernateBasicDaoTest;
 import org.helianto.resource.ResourceParameterValue;
-import org.helianto.resource.repository.DefaultResourceParameterValueDao;
 
 /**
  * @author Mauricio Fernandes de Castro

@@ -13,30 +13,38 @@
  * limitations under the License.
  */
 
-
-package org.helianto.core.repository;
-
-import org.helianto.core.UserFilter;
-import org.helianto.core.UserGroup;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.springframework.stereotype.Repository;
+package org.helianto.core.filter;
 
 /**
- * <code>UserGroup</code> data access.
- * 
+ * Filters implementing this interface are enabled to create 
+ * string criteria to be forwarded to the persistence strategy.
+ *  
  * @author Mauricio Fernandes de Castro
  */
-@Repository("userGroupDao")
-public class DefaultUserGroupDao extends AbstractFilterDao<UserGroup, UserFilter> {
+public interface Filter {
+	
+	/**
+	 * Create criteria.
+	 */
+	public String createCriteriaAsString();
 
-	@Override
-	public Class<? extends UserGroup> getClazz() {
-		return UserGroup.class;
-	}
+	/**
+	 * Reset filter.
+	 */
+    public void reset();
+	
+    /**
+     * If true, a unique result is expected, otherwise, a collection.
+     * 
+     * <p>
+     * Convenient when filter properties correspond to the natural key.
+     * </p>
+     */
+    public boolean isSelection();
 
-	@Override
-	protected String[] getParams() {
-		return new String[] { "entity", "userKey" };
-	}
+	/**
+	 * Object alias to be used in query expressions.
+	 */
+	public String getObjectAlias();
 
 }

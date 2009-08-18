@@ -54,12 +54,10 @@ public class DocumentFilter extends AbstractUserBackedCriteriaFilter {
 		setContentType(' ');
 	}
 
-	@Override
 	public boolean isSelection() {
 		return getDocCode().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "document";
 	}

@@ -16,7 +16,7 @@
 
 package org.helianto.document.orm;
 
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentFilter;
 import org.springframework.stereotype.Repository;
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("documentDao")
-public class DefaultDocumentDao extends AbstractHibernateFilterDao<Document, DocumentFilter> {
+public class DefaultDocumentDao extends AbstractFilterDao<Document, DocumentFilter> {
 
 	@Override
 	protected String[] getParams() {

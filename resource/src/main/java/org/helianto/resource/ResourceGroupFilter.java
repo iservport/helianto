@@ -85,12 +85,10 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter implem
 		setResourceNameLike("");
 	}
 
-	@Override
 	public boolean isSelection() {
 		return getResourceCode().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "resourcegroup";
 	}

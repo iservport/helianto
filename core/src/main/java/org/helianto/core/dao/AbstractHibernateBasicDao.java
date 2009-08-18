@@ -15,84 +15,39 @@
 
 package org.helianto.core.dao;
 
-import java.util.Collection;
-
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Query;
+import org.springframework.beans.factory.InitializingBean;
 
 /**
  * Base implementation using Hibernate Session for <code>BasicDao</code>.
  * 
+ * <p>
+ * This class will be removed in the next release. The current approach is 
+ * implemented through JavaConfig and the appropriate dependencies are 
+ * wired togheter.
+ * </p>
+ * 
+ * @deprecated
  * @author Mauricio Fernandes de Castro.
  */
-public abstract class AbstractHibernateBasicDao<T> extends AbstractBasicDao<T> {
+public abstract class AbstractHibernateBasicDao<T> extends AbstractBasicDao<T> implements InitializingBean {
 	
-	@SuppressWarnings("unchecked")
-	protected Collection<T> find(StringBuilder selectClause, String whereClause, Object... values) {
-        if (!whereClause.equals("")) {
-        	selectClause.append("where ").append(whereClause);
-        }
-        Query result = this.sessionFactory.getCurrentSession().createQuery(selectClause.toString());
-        int i = 0;
-        for (Object value: values) {
-            result.setParameter(i++, value);
-        }
-        Collection<T> resultList = result.list();
-        if (logger.isDebugEnabled()) {
-            logger.debug("Found "+resultList.size()+" item(s)");
-        }
-        return resultList;
-	}
-
-	@SuppressWarnings("unchecked")
-	public T merge(T object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Merging "+object);
-        }
-		return (T) this.sessionFactory.getCurrentSession().merge(object);
-	}
-
-	public void persist(T managedObject) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Persisting "+managedObject);
-        }
-        this.sessionFactory.getCurrentSession().persist(managedObject);
-	}
-
-	public void remove(T object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Removing "+object);
-        }
-		this.sessionFactory.getCurrentSession().delete(object);
-	}
-
-	public void evict(T object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Evicting "+object);
-        }
-		this.sessionFactory.getCurrentSession().evict(object);
+	@Override
+    protected PersistenceStrategy getPersistenceStrategy() {
+		return this.persistenceStrategy;
 	}
 	
-	public void flush() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Flushing session");
-        }
-		this.sessionFactory.getCurrentSession().flush();
-	}
-	
-	public void clear() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Clearing session");
-        }
-		this.sessionFactory.getCurrentSession().clear();
+    public void afterPropertiesSet() throws Exception {
+		this.persistenceStrategy = new HibernatePersistenceStrategy(sessionFactory);
 	}
 
 	// collabs
     
-    private org.hibernate.SessionFactory sessionFactory;
+	private org.hibernate.SessionFactory sessionFactory;
+    private PersistenceStrategy persistenceStrategy;
     
     /**
      * Spring will inject a managed Hibernate Session into this field.

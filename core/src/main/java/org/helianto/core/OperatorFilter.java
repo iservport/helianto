@@ -57,12 +57,10 @@ public class OperatorFilter extends AbstractUserBackedCriteriaFilter {
 		setOperatorNameLike("");
 	}
 
-	@Override
 	public boolean isSelection() {
 		return getOperatorName().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "operator";
 	}

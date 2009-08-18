@@ -97,7 +97,6 @@ public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
 		appendLikeFilter("principal", getPrincipal(), mainCriteriaBuilder);
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "identity";
 	}
@@ -112,7 +111,6 @@ public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
         this.principal = principal;
     }
     
-    @Override
 	public boolean isSelection() {
 		return (getEntity()==null && getPrincipal().length()>0);
 	}

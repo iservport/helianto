@@ -52,7 +52,10 @@ public class UserLogFilter extends AbstractDateRangeFilter {
 	public void reset() {
 	}
 
-	@Override
+	public boolean isSelection() {
+		return false;
+	}
+
 	public String getObjectAlias() {
 		return "userlog";
 	}
@@ -67,11 +70,6 @@ public class UserLogFilter extends AbstractDateRangeFilter {
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-	}
-
-	@Override
-	public boolean isSelection() {
-		return false;
 	}
 
 	/**

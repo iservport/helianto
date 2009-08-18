@@ -17,7 +17,7 @@
 package org.helianto.core.repository;
 
 import org.helianto.core.UserAssociation;
-import org.helianto.core.dao.AbstractHibernateBasicDao;
+import org.helianto.core.dao.AbstractBasicDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("userAssociationDao")
-public class DefaultUserAssociationDao extends AbstractHibernateBasicDao<UserAssociation> {
+public class DefaultUserAssociationDao extends AbstractBasicDao<UserAssociation> {
 
 	@Override
 	public Class<? extends UserAssociation> getClazz() {

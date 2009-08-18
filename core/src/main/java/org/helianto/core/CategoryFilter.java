@@ -57,7 +57,6 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 		setCategoryNameLike("");
 	}
 	
-	@Override
 	public boolean isSelection() {
 		return (getCategoryCode().length()>0);
 	}
@@ -86,7 +85,6 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 		appendLikeFilter("categoryNameLike", getCategoryNameLike(), mainCriteriaBuilder);
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "category";
 	}

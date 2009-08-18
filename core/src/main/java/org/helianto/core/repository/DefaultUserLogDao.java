@@ -18,7 +18,7 @@ package org.helianto.core.repository;
 
 import org.helianto.core.UserLog;
 import org.helianto.core.UserLogFilter;
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("userLogDao")
-public class DefaultUserLogDao extends AbstractHibernateFilterDao<UserLog, UserLogFilter> {
+public class DefaultUserLogDao extends AbstractFilterDao<UserLog, UserLogFilter> {
 
 	@Override
 	public Class<? extends UserLog> getClazz() {

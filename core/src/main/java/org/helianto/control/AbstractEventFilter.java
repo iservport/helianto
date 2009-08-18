@@ -50,7 +50,6 @@ public abstract class AbstractEventFilter extends AbstractDateRangeFilter {
 		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
 	}
 
-	@Override
 	public boolean isSelection() {
 		return getInternalNumber()>0;
 	}

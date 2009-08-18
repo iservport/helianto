@@ -26,10 +26,8 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.dao.AbstractHibernateBasicDao;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
+import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.PersistenceStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,7 +37,8 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHibernateBasicDao<T>> {
+@SuppressWarnings("unchecked")
+public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractBasicDao<T>> {
 	
 	/**
 	 * Hook to create a test target;
@@ -60,123 +59,98 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractHiberna
 	public void findWithClause() {
 		List<T> resultList = new ArrayList<T>();
 		
-		Query resultQuery = createMock(Query.class);
-		
-		expect(session.createQuery(getSelectQueryString()+"where CLAUSE")).andReturn(resultQuery);
-		replay(session);
-		
-		expect(resultQuery.list()).andReturn(resultList);
-		replay(resultQuery);
+		expect(persistenceStrategy.find(getSelectQueryString()+"where CLAUSE")).andReturn(resultList);
+		replay(persistenceStrategy);
 		
 		assertSame(resultList, sampleDao.find("CLAUSE"));
-		verify(session);
-		verify(sessionFactory);
-		verify(resultQuery);
+		verify(persistenceStrategy);
 	}
 	
 	@Test
 	public void findWithoutClause() {
 		List<T> resultList = new ArrayList<T>();
 		
-		Query result = createMock(Query.class);
-		
-		expect(session.createQuery(getSelectQueryString())).andReturn(result);
-		replay(session);
-		
-		expect(result.list()).andReturn(resultList);
-		replay(result);
+		expect(persistenceStrategy.find(getSelectQueryString())).andReturn(resultList);
+		replay(persistenceStrategy);
 		
 		assertSame(resultList, sampleDao.find(""));
-		verify(session);
-		verify(sessionFactory);
-		verify(result);
+		verify(persistenceStrategy);
 	}
 	
 	@Test
 	public void merge() {
 		T target = doCreateTarget(), managedTarget = doCreateTarget();
 		
-		expect(session.merge(target)).andReturn(managedTarget);
-		replay(session);
+		expect(persistenceStrategy.merge(target)).andReturn(managedTarget);
+		replay(persistenceStrategy);
 		
 		assertSame(managedTarget, sampleDao.merge(target));
-		verify(session);
-		verify(sessionFactory);
+		verify(persistenceStrategy);
 	}
 	
 	@Test
 	public void persist() {
 		T target = doCreateTarget();
 		
-		session.persist(target);
-		replay(session);
+		persistenceStrategy.persist(target);
+		replay(persistenceStrategy);
 		
 		sampleDao.persist(target);
-		verify(session);
-		verify(sessionFactory);
+		verify(persistenceStrategy);
 	}
 	
 	@Test
 	public void evict() {
 		T target = doCreateTarget();
 		
-		session.evict(target);
-		replay(session);
+		persistenceStrategy.evict(target);
+		replay(persistenceStrategy);
 		
 		sampleDao.evict(target);
-		verify(session);
-		verify(sessionFactory);
+		verify(persistenceStrategy);
 	}
 	
 	@Test
 	public void remove() {
 		T target = doCreateTarget();
 		
-		session.delete(target);
-		replay(session);
+		persistenceStrategy.remove(target);
+		replay(persistenceStrategy);
 		
 		sampleDao.remove(target);
-		verify(session);
-		verify(sessionFactory);
+		verify(persistenceStrategy);
 	}
 	
 	@Test
 	public void flush() {
-		session.flush();
-		replay(session);
+		persistenceStrategy.flush();
+		replay(persistenceStrategy);
 		
 		sampleDao.flush();
-		verify(session);
-		verify(sessionFactory);
+		verify(persistenceStrategy);
 	}
 	
 	@Test
 	public void clear() {
-		session.clear();
-		replay(session);
+		persistenceStrategy.clear();
+		replay(persistenceStrategy);
 		
 		sampleDao.clear();
-		verify(session);
-		verify(sessionFactory);
+		verify(persistenceStrategy);
 	}
 	
-	Session session;
-	SessionFactory sessionFactory;
-	AbstractHibernateBasicDao<T> sampleDao;
+	PersistenceStrategy persistenceStrategy;
+	AbstractBasicDao<T> sampleDao;
 	
 	@Before
 	public void setUp() {
-		session = createMock(Session.class);
-		sessionFactory = createMock(SessionFactory.class);
+		persistenceStrategy = createMock(PersistenceStrategy.class);
 		sampleDao = doCreateDao();
-		sampleDao.setSessionFactory(sessionFactory);
-		expect(sessionFactory.getCurrentSession()).andReturn(session);
-		replay(sessionFactory);
+		sampleDao.setPersistenceStrategy(persistenceStrategy);
 	}
 	
 	public void tearDown() {
-		reset(session);
-		reset(sessionFactory);
+		reset(persistenceStrategy);
 	}
 
 }

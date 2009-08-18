@@ -59,6 +59,8 @@
 			</map>
 		</property>
 	</bean>	
+	
+	<bean id="persistenceStrategy" class="org.helianto.core.dao.HibernatePersistenceStrategy" />
 
 	<!-- 
 	    Transaction manager for Hibernate 

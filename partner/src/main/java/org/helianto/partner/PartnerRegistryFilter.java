@@ -57,12 +57,10 @@ public class PartnerRegistryFilter extends AbstractUserBackedCriteriaFilter impl
 		setPartnerNameLike("");
 	}
 
-    @Override
 	public boolean isSelection() {
 		return getPartnerAlias().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "partnerregistry";
 	}

@@ -16,7 +16,7 @@
 package org.helianto.core.repository;
 
 import org.helianto.core.UserRole;
-import org.helianto.core.dao.AbstractHibernateBasicDao;
+import org.helianto.core.dao.AbstractBasicDao;
 import org.springframework.stereotype.Repository;
 /**
  * UserRole data access.
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("userRoleDao")
-public class DefaultUserRoleDao extends AbstractHibernateBasicDao<UserRole> {
+public class DefaultUserRoleDao extends AbstractBasicDao<UserRole> {
 
 	@Override
 	public Class<? extends UserRole> getClazz() {

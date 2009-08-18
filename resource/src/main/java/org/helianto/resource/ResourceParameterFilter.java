@@ -56,12 +56,10 @@ public class ResourceParameterFilter extends AbstractUserBackedCriteriaFilter {
 		setParameterNameLike("");
 	}
 
-	@Override
 	public boolean isSelection() {
 		return getParameterCode().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "resourceparameter";
 	}

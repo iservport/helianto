@@ -55,7 +55,6 @@ public class EntityFilter extends AbstractUserBackedCriteriaFilter {
 		setEntityAliasLike("");
 	}
 
-	@Override
 	public boolean isSelection() {
 		return getEntityAlias().length()>0;
 	}
@@ -89,7 +88,6 @@ public class EntityFilter extends AbstractUserBackedCriteriaFilter {
 		appendEqualFilter("alias", getEntityAlias(), mainCriteriaBuilder);
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "entity";
 	}

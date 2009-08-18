@@ -16,7 +16,7 @@
 
 package org.helianto.partner.repository;
 
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.springframework.stereotype.Repository;
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("partnerDao")
-public class DefaultPartnerDao extends AbstractHibernateFilterDao<Partner, PartnerFilter> {
+public class DefaultPartnerDao extends AbstractFilterDao<Partner, PartnerFilter> {
 
 	@Override
 	public Class<? extends Partner> getClazz() {

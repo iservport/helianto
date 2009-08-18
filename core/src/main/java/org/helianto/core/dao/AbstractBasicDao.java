@@ -17,6 +17,8 @@ package org.helianto.core.dao;
 
 import java.util.Collection;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -25,10 +27,25 @@ import org.apache.commons.logging.LogFactory;
  * 
  * @author Mauricio Fernandes de Castro.
  */
+@SuppressWarnings("unchecked")
 public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	
 	private Class<? extends T> clazz;
 	private String[] params;
+	
+	/**
+	 * Default constructor.
+	 */
+	public AbstractBasicDao() { }
+	
+	/**
+	 * Class constructor.
+	 * 
+	 * @param clazz
+	 */
+	public AbstractBasicDao(Class<? extends T> clazz) {
+		setClazz(clazz);
+	}
 	
 	/**
 	 * The class of objects to be persisted.
@@ -88,8 +105,6 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
         return find(selectClause, whereClause, new Object[0]);
 	}
 
-	protected abstract Collection<T> find(StringBuilder selectClause, String whereClause, Object... values);
-
 	public T findUnique(Object... keys) {
         if (logger.isDebugEnabled()) {
             logger.debug("Finding unique with "+keys.length+" parameter(s)");
@@ -126,6 +141,60 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 		}
 		whereClauseBuilder.append(" ");
 		return whereClauseBuilder;
+	}
+	
+	public Collection<T> find(StringBuilder selectClause, String whereClause, Object... values) {
+        if (!whereClause.equals("")) {
+        	selectClause.append("where ").append(whereClause);
+        }
+        String query = selectClause.toString();
+        if (logger.isDebugEnabled()) {
+            logger.debug("Query "+query);
+        }
+		return (Collection<T>) getPersistenceStrategy().find(query, values);
+	}
+
+	// persistence strategy implementation
+
+	public Collection<T> find(String query, Object... values) {
+		return (Collection<T>) getPersistenceStrategy().find(query, values);
+	}
+
+	public T merge(T object) {
+		return (T) getPersistenceStrategy().merge(object);
+	}
+
+	public void persist(T managedObject) {
+        getPersistenceStrategy().persist(managedObject);
+	}
+
+	public void remove(T object) {
+        getPersistenceStrategy().remove(object);
+	}
+
+	public void evict(T object) {
+        getPersistenceStrategy().evict(object);
+	}
+	
+	public void flush() {
+        getPersistenceStrategy().flush();
+	}
+	
+	public void clear() {
+        getPersistenceStrategy().clear();
+	}
+
+	// collabs
+    
+    private PersistenceStrategy persistenceStrategy;
+    
+    protected PersistenceStrategy getPersistenceStrategy() {
+		return this.persistenceStrategy;
+	}
+
+    @Resource
+	public void setPersistenceStrategy(PersistenceStrategy persistenceStrategy) {
+		this.persistenceStrategy = persistenceStrategy;
 	}
 
     private static final Log logger = LogFactory.getLog(AbstractBasicDao.class);

@@ -15,38 +15,20 @@
 
 package org.helianto.core.validation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
 public class CredentialValidatorTests {
-    
-    // fields 
-    
-    private final Log logger = LogFactory.getLog(getClass());
-    
-    private Validator credentialValidator;
-    private BindException errors;
-    private Credential credential;
-    
-    // setup
-    
-    public void setUp() {
-        Identity identity = new Identity();
-        identity.setPrincipal("ABC");
-        credential = Credential.credentialFactory(identity, "empty");
-        credentialValidator = new CredentialValidator();
-        errors = new BindException(credential, "credential");
-    }
-    
-    // tests
     
     @Test
     public void validateSupports() {
@@ -174,4 +156,21 @@ public class CredentialValidatorTests {
     
     static String sixteen = "abcdefghijklmnop";
 
+    // collabs 
+    
+    private Validator credentialValidator;
+    private BindException errors;
+    private Credential credential;
+    
+    @Before
+    public void setUp() {
+        Identity identity = new Identity();
+        identity.setPrincipal("ABC");
+        credential = Credential.credentialFactory(identity, "empty");
+        credentialValidator = new CredentialValidator();
+        errors = new BindException(credential, "credential");
+    }
+    
+    private static final Log logger = LogFactory.getLog(CredentialValidatorTests.class);
+    
 }

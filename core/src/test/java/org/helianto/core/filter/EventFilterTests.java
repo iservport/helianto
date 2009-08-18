@@ -54,7 +54,7 @@ public class EventFilterTests {
 		eventFilter = new AbstractEventFilter() {
 			private static final long serialVersionUID = 1L;
 			@Override protected void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
-			@Override public String getObjectAlias() { return "alias"; }
+			public String getObjectAlias() { return "alias"; }
 		};
 	}
 

@@ -58,12 +58,10 @@ public class AccountFilter extends AbstractUserBackedCriteriaFilter {
     	setAccountType(' ');
 	}
 	
-    @Override
 	public boolean isSelection() {
 		return getAccountCode().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "account";
 	}

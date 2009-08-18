@@ -93,13 +93,11 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     	setExclusions(new HashSet<Identity>(0));
     }
 
-	@Override
 	public boolean isSelection() {
 		return (getIdentity()!=null 
 				|| getIdentityPrincipal()!=null && getIdentityPrincipal().length() > 0);
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "usergroup";
 	}

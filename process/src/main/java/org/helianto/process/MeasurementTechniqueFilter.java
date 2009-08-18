@@ -57,12 +57,10 @@ public class MeasurementTechniqueFilter extends AbstractUserBackedCriteriaFilter
 		setMeasurementTechniqueName("");
 	}
 	
-	@Override
 	public boolean isSelection() {
 		return getMeasurementTechniqueCode().length()>0;
 	}
 
-	@Override
 	public String getObjectAlias() {
 		return "measurementtechnique";
 	}

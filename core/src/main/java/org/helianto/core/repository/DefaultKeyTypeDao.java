@@ -17,7 +17,7 @@
 package org.helianto.core.repository;
 
 import org.helianto.core.KeyType;
-import org.helianto.core.dao.AbstractHibernateBasicDao;
+import org.helianto.core.dao.AbstractBasicDao;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("keyTypeDao")
-public class DefaultKeyTypeDao extends AbstractHibernateBasicDao<KeyType> {
+public class DefaultKeyTypeDao extends AbstractBasicDao<KeyType> {
 
 	@Override
 	public Class<? extends KeyType> getClazz() {

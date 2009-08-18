@@ -24,17 +24,12 @@ import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
-import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.IdentityFilter;
 import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.test.UserTestSupport;
+import org.helianto.core.dao.PersistenceStrategy;
+import org.helianto.core.filter.UserBackedFilter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,89 +39,49 @@ import org.junit.Test;
  */
 public class AbstractFilterDaoTests {
 	
-	@SuppressWarnings("deprecation")
+	/**
+	 * Check the call to filter
+	 * Check the call to persistenceStrategy
+	 * Check the result
+	 */
 	@Test
-	public void filter() {
-		List<Identity> resultList = new ArrayList<Identity>();
+	public void find() {
+		Collection<Identity> resultList = new ArrayList<Identity>();
+
+		expect(mockFilter.createCriteriaAsString()).andReturn("WHERECLAUSE");
+		replay(mockFilter);
 		
-		Query result = createMock(Query.class);
+		expect(mockPersistenceStrategy.find("SELECTCLAUSE where WHERECLAUSE")).andReturn(resultList);
+		replay(mockPersistenceStrategy);
 		
-		expect(em.createQuery("select identity from Identity identity " +
-				"where identity.field1 = V1 " +
-				"AND identity.field2 = V2 ")).andReturn(result);
-		replay(em);
-		
-		expect(result.getResultList()).andReturn(resultList);
-		replay(result);
-		
-		assertSame(resultList, sampleDao.find(filter));
-		verify(em);
-		verify(result);
+		assertSame(resultList, stubDao.find(mockFilter));
+		verify(mockPersistenceStrategy);
+		verify(mockFilter);
 	}
 	
-	@Test
-	public void filterSelection() {
-		selection = true;
-		List<Identity> resultList = new ArrayList<Identity>();
-		
-		Query result = createMock(Query.class);
-		
-		expect(em.createQuery("select identity from Identity identity " +
-				"where identity.field1 = V1 " +
-				"AND identity.field3 = V3 ")).andReturn(result);
-		replay(em);
-		
-		expect(result.getResultList()).andReturn(resultList);
-		replay(result);
-		
-		assertSame(resultList, sampleDao.find(filter));
-		verify(em);
-		verify(result);
-	}
+	AbstractFilterDao<Identity, UserBackedFilter> stubDao;
+	UserBackedFilter mockFilter;
+	StringBuilder selectBuilder = new StringBuilder("SELECTCLAUSE ");
+	PersistenceStrategy<Identity> mockPersistenceStrategy;
 	
-	boolean selection = false;
-
-	class SampleDao extends AbstractFilterDao<Identity, IdentityFilter> {
-
-		public Class<? extends Identity> getClazz() {
-			return Identity.class;
-		}
-
-		@Override
-		protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-			mainCriteriaBuilder.appendSegment("field1", "=").append("V1");
-		}
-
-		@Override
-		protected boolean isSelection(IdentityFilter filter) {
-			return selection;
-		}
-
-		@Override
-		protected void doFilter(IdentityFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-			mainCriteriaBuilder.appendAnd().appendSegment("field2", "=").append("V2");
-		}
-
-		@Override
-		protected void doSelect(IdentityFilter filter, CriteriaBuilder mainCriteriaBuilder) {
-			mainCriteriaBuilder.appendAnd().appendSegment("field3", "=").append("V3");
-		}
-
-	}
-	
-	SampleDao sampleDao;
-	IdentityFilter filter = IdentityFilter.filterFactory(IdentityFilter.class, UserTestSupport.createUser());
-	EntityManager em;
-	
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
-		em = createMock(EntityManager.class);
-		sampleDao = new SampleDao();
-		sampleDao.setEntityManager(em);
+		mockFilter = createMock(UserBackedFilter.class);
+		mockPersistenceStrategy = createMock(PersistenceStrategy.class);
+		stubDao = new AbstractFilterDao(Identity.class) {
+			@Override protected PersistenceStrategy getPersistenceStrategy() {
+				return mockPersistenceStrategy;
+			}
+			@Override protected StringBuilder getSelectBuilder() {
+				return selectBuilder;
+			}
+		};
 	}
 	
 	public void tearDown() {
-		reset(em);
+		reset(mockPersistenceStrategy);
+		reset(mockFilter);
 	}
 
 }

@@ -16,7 +16,7 @@
 
 package org.helianto.partner.repository;
 
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.partner.Account;
 import org.helianto.partner.AccountFilter;
 import org.springframework.stereotype.Repository;
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("accountDao")
-public class DefaultAccountDao extends AbstractHibernateFilterDao<Account, AccountFilter> {
+public class DefaultAccountDao extends AbstractFilterDao<Account, AccountFilter> {
 
 	@Override
 	public Class<? extends Account> getClazz() {

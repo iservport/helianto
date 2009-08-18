@@ -17,6 +17,7 @@
 package org.helianto.core.repository;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import javax.annotation.Resource;
 
@@ -36,6 +37,7 @@ public class DefaultCategoryDaoIntegrationTests extends AbstractDaoIntegrationTe
 	public void findUnique() {
 		Category category = CategoryTestSupport.createCategory();
 		Category managed = categoryDao.merge(category);
+		assertNotNull(categoryDao);
 		assertEquals(managed, categoryDao.findUnique(managed.getEntity(), managed.getCategoryGroup()));
 	}
 

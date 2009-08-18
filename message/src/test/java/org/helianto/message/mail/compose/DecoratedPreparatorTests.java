@@ -76,13 +76,13 @@ public class DecoratedPreparatorTests {
     private MailForm mailForm;
     
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         mailForm = MailFormTests.createMailForm();
         decoratedPreparator = new DecoratedPreparator(mailForm);
     }
 
     @After
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
     }
 
 }

@@ -16,7 +16,7 @@
 
 package org.helianto.resource.repository;
 
-import org.helianto.core.dao.AbstractHibernateFilterDao;
+import org.helianto.core.dao.AbstractFilterDao;
 import org.helianto.resource.ResourceParameter;
 import org.helianto.resource.ResourceParameterFilter;
 import org.springframework.stereotype.Repository;
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author Mauricio Fernandes de Castro
  */
 @Repository("resourceParameterDao")
-public class DefaultResourceParameterDao extends AbstractHibernateFilterDao<ResourceParameter, ResourceParameterFilter> {
+public class DefaultResourceParameterDao extends AbstractFilterDao<ResourceParameter, ResourceParameterFilter> {
 
 	@Override
 	public Class<? extends ResourceParameter> getClazz() {
