@@ -26,8 +26,11 @@ import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
+import org.helianto.core.InternalEnumerator;
 import org.helianto.core.dao.AbstractBasicDao;
 import org.helianto.core.dao.AbstractFilterDao;
+import org.helianto.core.dao.BasicDao;
+import org.helianto.core.dao.FilterDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,47 +44,58 @@ import org.springframework.context.annotation.Configuration;
 public class CoreHibernateRepository {
 	
 	/**
-	 * Category data access
+	 * Category data access.
 	 */
 	@Bean
-	public AbstractFilterDao<Category, CategoryFilter> categoryDao() {
-		AbstractFilterDao<Category, CategoryFilter> filterDao =  
-			repositoryFactory.filterDaoFactory(Category.class, CategoryFilter.class, "entity", "categoryGroup");
+	public FilterDao<Category, CategoryFilter> categoryDao() {
+		FilterDao<Category, CategoryFilter> dao =  
+			repositoryFactory.filterDaoFactory(Category.class, CategoryFilter.class, "entity", "categoryGroup", "categoryCode");
 		logger.info("Created categoryDao");
-		return filterDao;
+		return dao;
 	}
 
 	/**
-	 * Credential data access
+	 * Credential data access.
 	 */
 	@Bean
-	public AbstractBasicDao<Credential> credentialDao() {
-		AbstractBasicDao<Credential> basicDao =  
+	public BasicDao<Credential> credentialDao() {
+		BasicDao<Credential> dao =  
 			repositoryFactory.basicDaoFactory(Credential.class, "identity");
 		logger.info("Created credentialDao");
-		return basicDao;
+		return dao;
 	}
 
 	/**
-	 * Entity data access
+	 * Entity data access.
 	 */
 	@Bean
-	public AbstractFilterDao<Entity, EntityFilter> entityDao() {
-		AbstractFilterDao<Entity, EntityFilter> filterDao =  
+	public FilterDao<Entity, EntityFilter> entityDao() {
+		FilterDao<Entity, EntityFilter> dao =  
 			repositoryFactory.filterDaoFactory(Entity.class, EntityFilter.class, "operator", "alias");
 		logger.info("Created entityDao");
-		return filterDao;
+		return dao;
 	}
 
 	/**
-	 * Identity data access
+	 * Identity data access.
 	 */
 	@Bean
-	public AbstractFilterDao<Identity, IdentityFilter> identityDao() {
-		AbstractFilterDao<Identity, IdentityFilter> filterDao =  
+	public FilterDao<Identity, IdentityFilter> identityDao() {
+		FilterDao<Identity, IdentityFilter> dao =  
 			repositoryFactory.filterDaoFactory(Identity.class, IdentityFilter.class, "principal");
 		logger.info("Created identityDao");
-		return filterDao;
+		return dao;
+	}
+
+	/**
+	 * Internal enumerator data access.
+	 */
+	@Bean
+	public BasicDao<InternalEnumerator> internalEnumeratorDao() {
+		BasicDao<InternalEnumerator> dao =  
+			repositoryFactory.basicDaoFactory(InternalEnumerator.class, "entity", "typeName");
+		logger.info("Created internalEnumeratorDao");
+		return dao;
 	}
 
 	// collabs

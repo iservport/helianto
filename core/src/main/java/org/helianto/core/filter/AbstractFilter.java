@@ -54,6 +54,13 @@ public abstract class AbstractFilter implements Serializable, Filter {
         return mainCriteriaBuilder.getCriteriaAsString();
     }
 	
+	/**
+	 * By default, filters do not return an unique result.
+	 */
+	public boolean isSelection() {
+		return false;
+	}
+	
 	// processors
 	
 	/**

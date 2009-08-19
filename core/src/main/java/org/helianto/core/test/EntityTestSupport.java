@@ -17,7 +17,8 @@ import org.helianto.core.Entity;
  */
 public class EntityTestSupport {
 
-    private static int testKey;
+    public static Entity entity = createEntity();
+    public static int testKey;
 
     /**
      * Test support method to create an <code>Entity</code>.
