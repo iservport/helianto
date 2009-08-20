@@ -276,6 +276,19 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     }
 
     /**
+     * Convenient to get first phone of type {@link PhoneType}.MAIN.
+     */
+    @Transient
+    public String getMainPhone() {
+    	for (Phone mainPhone: getPhones()) {
+    		if (mainPhone.getPhoneType()==PhoneType.MAIN.getValue()) {
+    			return mainPhone.toString();
+    		}
+    	}
+    	return "";
+    }
+    
+    /**
      * Compare by sequence.
      */
     public int compareTo(Address next) {

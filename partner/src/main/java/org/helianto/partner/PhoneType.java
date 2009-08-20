@@ -21,20 +21,27 @@ package org.helianto.partner;
  * @author Mauricio Fernandes de Castro
  */
 public enum PhoneType {
-    BRANCH('B'),
-    FAX('F'),
-    MAIN('1'),
-    MOBILE('M'),
-    PERSONAL('P');
+	
+    BRANCH('B', true),
+    FAX('F', false),
+    MAIN('1', true),
+    MOBILE('M', true),
+    PERSONAL('P', true);
     
     private char value;
+    private boolean voice;
 
-    private PhoneType(char value) {
+    private PhoneType(char value, boolean voice) {
         this.value= value;
+        this.voice= voice;
     }
 
     public char getValue() {
         return value;
+    }
+    
+    public boolean isVoice() {
+        return voice;
     }
     
 

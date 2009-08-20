@@ -23,12 +23,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
- * <p>
- * Represents the relationship between the organization and other entities.  
- * </p>
+ * Phones are always related to an address.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -57,7 +55,7 @@ public class Phone implements java.io.Serializable {
     private int sequence;
     private String phoneNumber;
     private String areaCode;
-    private int phoneType;
+    private char phoneType;
     private String comment;
     private char privacyLevel;
 
@@ -123,11 +121,14 @@ public class Phone implements java.io.Serializable {
     /**
      * Phone type.
      */
-    public int getPhoneType() {
+    public char getPhoneType() {
         return this.phoneType;
     }
-    public void setPhoneType(int phoneType) {
+    public void setPhoneType(char phoneType) {
         this.phoneType = phoneType;
+    }
+    public void setPhoneType(PhoneType phoneType) {
+        this.phoneType = phoneType.getValue();
     }
 
     /**
@@ -158,11 +159,12 @@ public class Phone implements java.io.Serializable {
     public String toString() {
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("address").append("='").append(getAddress()).append("' ");
-        buffer.append("sequence").append("='").append(getSequence()).append("' ");
-        buffer.append("]");
-      
+        buffer
+        .append("(")
+        .append(getAreaCode())
+        .append(") ")
+        .append(getPhoneNumber());
+
         return buffer.toString();
     }
 
