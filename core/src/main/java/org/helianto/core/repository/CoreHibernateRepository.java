@@ -21,14 +21,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.Category;
 import org.helianto.core.CategoryFilter;
+import org.helianto.core.Country;
+import org.helianto.core.CountryFilter;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.InternalEnumerator;
-import org.helianto.core.dao.AbstractBasicDao;
-import org.helianto.core.dao.AbstractFilterDao;
+import org.helianto.core.Province;
+import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.springframework.context.annotation.Bean;
@@ -51,6 +53,17 @@ public class CoreHibernateRepository {
 		FilterDao<Category, CategoryFilter> dao =  
 			repositoryFactory.filterDaoFactory(Category.class, CategoryFilter.class, "entity", "categoryGroup", "categoryCode");
 		logger.info("Created categoryDao");
+		return dao;
+	}
+
+	/**
+	 * Country data access.
+	 */
+	@Bean
+	public FilterDao<Country, CountryFilter> countryDao() {
+		FilterDao<Country, CountryFilter> dao =  
+			repositoryFactory.filterDaoFactory(Country.class, CountryFilter.class, "operator", "countryCode");
+		logger.info("Created countryDao");
 		return dao;
 	}
 
@@ -95,6 +108,17 @@ public class CoreHibernateRepository {
 		BasicDao<InternalEnumerator> dao =  
 			repositoryFactory.basicDaoFactory(InternalEnumerator.class, "entity", "typeName");
 		logger.info("Created internalEnumeratorDao");
+		return dao;
+	}
+
+	/**
+	 * Province data access.
+	 */
+	@Bean
+	public FilterDao<Province, ProvinceFilter> provinceDao() {
+		FilterDao<Province, ProvinceFilter> dao =  
+			repositoryFactory.filterDaoFactory(Province.class, ProvinceFilter.class, "operator", "provinceCode");
+		logger.info("Created provinceDao");
 		return dao;
 	}
 

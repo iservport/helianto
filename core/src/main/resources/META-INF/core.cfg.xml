@@ -18,6 +18,7 @@
 		<mapping class="org.helianto.core.UserLog" />
 		<mapping class="org.helianto.core.UserRole" />
 		<mapping class="org.helianto.core.Operator" />
+		<mapping class="org.helianto.core.Country" />
 		<mapping class="org.helianto.core.Province" />
 		<mapping class="org.helianto.core.Category" />
 		<mapping class="org.helianto.core.Unit" />

@@ -17,68 +17,52 @@ package org.helianto.core;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * Provinces.
- * 
- * <p>
- * Province may be extended to represent also a city.
- * </p>
+ * Countries.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="core_province",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "provinceCode"})}
+@Table(name="core_country",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "countryCode"})}
 )
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-    name="type",
-    discriminatorType=DiscriminatorType.CHAR
-)
-@DiscriminatorValue("P")
-public class Province  implements java.io.Serializable {
+public class Country implements java.io.Serializable {
 
     /**
      * Factory method.
      * 
      * @param requiredOperator
      */
-    public static Province provinceFactory(Operator requiredOperator) {
-        Province province = new Province();
-        province.setOperator(requiredOperator);
-        return province;
+    public static Country countryFactory(Operator requiredOperator) {
+    	Country country = new Country();
+        country.setOperator(requiredOperator);
+        return country;
     }
 
 
     private static final long serialVersionUID = 1L;
     private int id;
     private Operator operator;
-    private String provinceCode;
-    private String provinceName;
-    private Country country;
+    private String countryCode;
+    private String countryName;
 
-	/** default constructor */
-    public Province() {
+    /** default constructor */
+    public Country() {
         this("");
     }
 
     /** Code constructor */
-    public Province(String provinceCode) {
-        setProvinceCode(provinceCode);
-        setProvinceName("");
+    public Country(String countryCode) {
+        setCountryCode(countryCode);
+        setCountryName("");
     }
 
     /**
@@ -105,38 +89,26 @@ public class Province  implements java.io.Serializable {
     }
     
     /**
-     * Province code.
+     * Country code.
      */
     @Column(length=7)
-    public String getProvinceCode() {
-        return this.provinceCode;
+    public String getCountryCode() {
+        return this.countryCode;
     }
-    public void setProvinceCode(String provinceCode) {
-        this.provinceCode = provinceCode;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
     
     /**
-     * Province name.
+     * Country name.
      */
     @Column(length=32)
-    public String getProvinceName() {
-        return this.provinceName;
+    public String getCountryName() {
+        return this.countryName;
     }
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
-
-    /**
-     * Country.
-     */
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="countryId")
-    public Country getCountry() {
-		return country;
-	}
-	public void setCountry(Country country) {
-		this.country = country;
-	}
 
     /**
      * toString
@@ -146,7 +118,7 @@ public class Province  implements java.io.Serializable {
 	  StringBuffer buffer = new StringBuffer();
 
       buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-      buffer.append("code").append("='").append(getProvinceCode()).append("' ");			
+      buffer.append("code").append("='").append(getCountryCode()).append("' ");			
       buffer.append("]");
       return buffer.toString();
      }
@@ -154,19 +126,19 @@ public class Province  implements java.io.Serializable {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
 		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof Province) ) return false;
-		 Province castOther = ( Province ) other; 
+		 if ( !(other instanceof Country) ) return false;
+		 Country castOther = ( Country ) other; 
 		 return ( (this.getOperator()==castOther.getOperator()) || ( this.getOperator()!=null && castOther.getOperator()!=null && this.getOperator().equals(castOther.getOperator()) ) )
-		 && ( (this.getProvinceCode()==castOther.getProvinceCode()) || ( this.getProvinceCode()!=null && castOther.getProvinceCode()!=null && this.getProvinceCode().equals(castOther.getProvinceCode()) ) );
+		 && ( (this.getCountryCode()==castOther.getCountryCode()) || ( this.getCountryCode()!=null && castOther.getCountryCode()!=null && this.getCountryCode().equals(castOther.getCountryCode()) ) );
    }
    
    public int hashCode() {
          int result = 17;
          result = 37 * result + ( getOperator() == null ? 0 : this.getOperator().hashCode() );
-         result = 37 * result + ( getProvinceCode() == null ? 0 : this.getProvinceCode().hashCode() );
+         result = 37 * result + ( getCountryCode() == null ? 0 : this.getCountryCode().hashCode() );
          return result;
    }
 
+
+
 }
-
-

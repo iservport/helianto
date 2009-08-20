@@ -17,6 +17,7 @@
 		<class>org.helianto.core.User</class>
 		<class>org.helianto.core.UserLog</class>
 		<class>org.helianto.core.UserRole</class>
+		<class>org.helianto.core.Country</class>
 		<class>org.helianto.core.Operator</class>
 		<class>org.helianto.core.Province</class>
 		<class>org.helianto.core.Category</class>

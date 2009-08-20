@@ -21,17 +21,23 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Category;
 import org.helianto.core.CategoryFilter;
+import org.helianto.core.Country;
+import org.helianto.core.CountryFilter;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.InternalEnumerator;
+import org.helianto.core.Province;
+import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
+import org.helianto.core.test.CountryTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.InternalEnumeratorTestSupport;
+import org.helianto.core.test.ProvinceTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +53,13 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	public void category() {
 		Category target = CategoryTestSupport.createCategory();
 		assertEquals(categoryDao.merge(target), categoryDao.findUnique(target.getEntity(), target.getCategoryGroup(), target.getCategoryCode()));
+	}
+	
+	@Resource FilterDao<Country, CountryFilter> countryDao;
+	@Test
+	public void country() {
+		Country target = CountryTestSupport.createCountry();
+		assertEquals(countryDao.merge(target), countryDao.findUnique(target.getOperator(), target.getCountryCode()));
 	}
 	
 	@Resource BasicDao<Credential> credentialDao;
@@ -70,4 +83,11 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 		assertEquals(internalEnumeratorDao.merge(target), internalEnumeratorDao.findUnique(target.getEntity(), target.getTypeName()));
 	}
 
+	@Resource FilterDao<Province, ProvinceFilter> provinceDao;
+	@Test
+	public void province() {
+		Province target = ProvinceTestSupport.createProvince();
+		assertEquals(provinceDao.merge(target), provinceDao.findUnique(target.getOperator(), target.getProvinceCode()));
+	}
+	
 }

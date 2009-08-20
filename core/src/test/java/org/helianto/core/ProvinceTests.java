@@ -30,10 +30,9 @@ public class ProvinceTests {
         province.setId(Integer.MIN_VALUE);
 
         province.setOperator(new Operator());
-
         province.setProvinceCode("");
-
         province.setProvinceName("");
+        province.setCountry(new Country());
     }
 
 	@Test
