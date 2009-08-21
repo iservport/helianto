@@ -124,6 +124,16 @@ public class Partner implements java.io.Serializable {
     }
 
     /**
+     * <<Transient>> Convenience to add address.
+     * 
+     * @param address
+     */
+	@Transient
+    public boolean addAddress(Address address) {
+    	return getPartnerRegistry().getAddresses().add(address);
+    }
+	
+    /**
      * Account.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

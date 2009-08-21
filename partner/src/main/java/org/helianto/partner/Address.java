@@ -91,11 +91,68 @@ public class Address implements java.io.Serializable, Comparable<Address> {
         setAddressType(AddressType.MAIN.getValue());
         setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
         setAddress1("");
+        setAddressNumber("");
+        setAddressDetail("");
         setAddress2("");
         setAddress3("");
         setCityName("");
         setPostalCode("");
         setPostOfficeBox("");
+    }
+    
+    /**
+     * Convenience to chain a street address.
+     * 
+     * @param address1
+     * @param addressNumber
+     */
+    public Address appendStreet(String address1, String addressNumber) {
+        setAddress1(address1);
+        setAddressNumber(addressNumber);
+        return this;
+    }
+
+    /**
+     * Convenience to chain a street address.
+     * 
+     * @param address1
+     * @param addressNumber
+     * @param addressDetail
+     */
+    public Address appendStreet(String address1, String addressNumber, String addressDetail) {
+        setAddress1(address1);
+        setAddressNumber(addressNumber);
+        setAddressDetail(addressDetail);
+        return this;
+    }
+
+    /**
+     * Convenience to chain a street address.
+     * 
+     * @param address1
+     * @param addressNumber
+     * @param addressDetail
+     * @param county
+     */
+    public Address appendStreet(String address1, String addressNumber, String addressDetail, String county) {
+        setAddress1(address1);
+        setAddressNumber(addressNumber);
+        setAddressDetail(addressDetail);
+        setAddress2(county);
+        return this;
+    }
+
+    /**
+     * Convenience to chain a city or province.
+     * 
+     * @param address1
+     * @param addressNumber
+     * @param addressDetail
+     */
+    public Address appendCity(Province province, String postalCode) {
+        setProvince(province);
+        setPostalCode(postalCode);
+        return this;
     }
 
     /**

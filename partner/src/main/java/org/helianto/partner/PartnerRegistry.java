@@ -166,6 +166,16 @@ public class PartnerRegistry implements java.io.Serializable {
     }
     
     /**
+     * <<Transient>> Convenience to add address.
+     * 
+     * @param address
+     */
+	@Transient
+    public boolean addAddress(Address address) {
+    	return getAddresses().add(address);
+    }
+	
+    /**
      * <<Transient>> Convenience to hold ordered address list.
      */
 	@Transient
