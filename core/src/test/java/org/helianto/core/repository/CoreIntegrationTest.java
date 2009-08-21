@@ -27,6 +27,9 @@ import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.InternalEnumerator;
+import org.helianto.core.KeyType;
+import org.helianto.core.Operator;
+import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.BasicDao;
@@ -37,6 +40,8 @@ import org.helianto.core.test.CountryTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.InternalEnumeratorTestSupport;
+import org.helianto.core.test.KeyTypeTestSupport;
+import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.ProvinceTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,6 +88,20 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 		assertEquals(internalEnumeratorDao.merge(target), internalEnumeratorDao.findUnique(target.getEntity(), target.getTypeName()));
 	}
 
+	@Resource BasicDao<KeyType> keyTypeDao;
+	@Test
+	public void keyTypeDao() {
+		KeyType target = KeyTypeTestSupport.createKeyType();
+		assertEquals(keyTypeDao.merge(target), keyTypeDao.findUnique(target.getOperator(), target.getKeyCode()));
+	}
+
+	@Resource FilterDao<Operator, OperatorFilter> operatorDao;
+	@Test
+	public void operator() {
+		Operator target = OperatorTestSupport.createOperator();
+		assertEquals(operatorDao.merge(target), operatorDao.findUnique(target.getOperatorName()));
+	}
+	
 	@Resource FilterDao<Province, ProvinceFilter> provinceDao;
 	@Test
 	public void province() {

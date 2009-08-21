@@ -29,6 +29,9 @@ import org.helianto.core.EntityFilter;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.InternalEnumerator;
+import org.helianto.core.KeyType;
+import org.helianto.core.Operator;
+import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.dao.BasicDao;
@@ -108,6 +111,28 @@ public class CoreHibernateRepository {
 		BasicDao<InternalEnumerator> dao =  
 			repositoryFactory.basicDaoFactory(InternalEnumerator.class, "entity", "typeName");
 		logger.info("Created internalEnumeratorDao");
+		return dao;
+	}
+
+	/**
+	 * Key type data access.
+	 */
+	@Bean
+	public BasicDao<KeyType> keyTypeDao() {
+		BasicDao<KeyType> dao =  
+			repositoryFactory.basicDaoFactory(KeyType.class, "operator", "keyCode");
+		logger.info("Created keyTypeDao");
+		return dao;
+	}
+
+	/**
+	 * Operator data access.
+	 */
+	@Bean
+	public FilterDao<Operator, OperatorFilter> operatorDao() {
+		FilterDao<Operator, OperatorFilter> dao =  
+			repositoryFactory.filterDaoFactory(Operator.class, OperatorFilter.class, "operatorName");
+		logger.info("Created operatorDao");
 		return dao;
 	}
 
