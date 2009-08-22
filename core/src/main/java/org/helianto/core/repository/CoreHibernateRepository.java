@@ -34,6 +34,10 @@ import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
+import org.helianto.core.Server;
+import org.helianto.core.ServerFilter;
+import org.helianto.core.Service;
+import org.helianto.core.ServiceFilter;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.springframework.context.annotation.Bean;
@@ -144,6 +148,28 @@ public class CoreHibernateRepository {
 		FilterDao<Province, ProvinceFilter> dao =  
 			repositoryFactory.filterDaoFactory(Province.class, ProvinceFilter.class, "operator", "provinceCode");
 		logger.info("Created provinceDao");
+		return dao;
+	}
+
+	/**
+	 * Server data access.
+	 */
+	@Bean
+	public FilterDao<Server, ServerFilter> serverDao() {
+		FilterDao<Server, ServerFilter> dao =  
+			repositoryFactory.filterDaoFactory(Server.class, ServerFilter.class, "operator", "serverName");
+		logger.info("Created serverDao");
+		return dao;
+	}
+
+	/**
+	 * Service data access.
+	 */
+	@Bean
+	public FilterDao<Service, ServiceFilter> serviceDao() {
+		FilterDao<Service, ServiceFilter> dao =  
+			repositoryFactory.filterDaoFactory(Service.class, ServiceFilter.class, "operator", "serviceName");
+		logger.info("Created serviceDao");
 		return dao;
 	}
 

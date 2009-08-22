@@ -32,6 +32,10 @@ import org.helianto.core.Operator;
 import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
+import org.helianto.core.Server;
+import org.helianto.core.ServerFilter;
+import org.helianto.core.Service;
+import org.helianto.core.ServiceFilter;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
@@ -43,6 +47,8 @@ import org.helianto.core.test.InternalEnumeratorTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.ProvinceTestSupport;
+import org.helianto.core.test.ServerTestSupport;
+import org.helianto.core.test.ServiceTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -107,6 +113,20 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	public void province() {
 		Province target = ProvinceTestSupport.createProvince();
 		assertEquals(provinceDao.merge(target), provinceDao.findUnique(target.getOperator(), target.getProvinceCode()));
+	}
+	
+	@Resource FilterDao<Server, ServerFilter> serverDao;
+	@Test
+	public void server() {
+		Server target = ServerTestSupport.createServer();
+		assertEquals(serverDao.merge(target), serverDao.findUnique(target.getOperator(), target.getServerName()));
+	}
+	
+	@Resource FilterDao<Service, ServiceFilter> serviceDao;
+	@Test
+	public void service() {
+		Service target = ServiceTestSupport.createService();
+		assertEquals(serviceDao.merge(target), serviceDao.findUnique(target.getOperator(), target.getServiceName()));
 	}
 	
 }
