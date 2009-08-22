@@ -1,4 +1,4 @@
-<form action="home.htm" method="post" >
+<form method="post" >
 	<p>Province code:</p>
 	<p><@spring.formInput "formObject.target.provinceCode", 'size="3" maxlength="3"'/></p>
 	<@perr/>

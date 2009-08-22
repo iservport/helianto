@@ -1,6 +1,6 @@
 <div id="panel">
 <table>
-	<form action="home.htm" method="POST">
+	<form method="POST">
 	
 	<tr>
 		<td>Optional alias</td>

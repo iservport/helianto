@@ -1,6 +1,6 @@
 <div id="panel">
 <table>
-	<form action="home.htm" method="POST">
+	<form method="POST">
 	
 	<tr style="background: #cccccc;">
 		<td colspan="2">User data</td>

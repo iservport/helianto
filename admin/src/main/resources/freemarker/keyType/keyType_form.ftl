@@ -1,4 +1,4 @@
-<form action="home.htm" method="post" >
+<form method="post" >
 	<p>Key code:</p>
 	<p><@spring.formInput "formObject.target.keyCode", 'size="20" maxlength="20"'/></p>
 	<@perr/>
