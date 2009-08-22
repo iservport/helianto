@@ -38,6 +38,11 @@ import org.helianto.core.Server;
 import org.helianto.core.ServerFilter;
 import org.helianto.core.Service;
 import org.helianto.core.ServiceFilter;
+import org.helianto.core.Unit;
+import org.helianto.core.UnitFilter;
+import org.helianto.core.UserAssociation;
+import org.helianto.core.UserFilter;
+import org.helianto.core.UserGroup;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.springframework.context.annotation.Bean;
@@ -170,6 +175,39 @@ public class CoreHibernateRepository {
 		FilterDao<Service, ServiceFilter> dao =  
 			repositoryFactory.filterDaoFactory(Service.class, ServiceFilter.class, "operator", "serviceName");
 		logger.info("Created serviceDao");
+		return dao;
+	}
+
+	/**
+	 * Unit data access.
+	 */
+	@Bean
+	public FilterDao<Unit, UnitFilter> unitDao() {
+		FilterDao<Unit, UnitFilter> dao =  
+			repositoryFactory.filterDaoFactory(Unit.class, UnitFilter.class, "entity", "unitCode");
+		logger.info("Created unitDao");
+		return dao;
+	}
+
+	/**
+	 * User association data access.
+	 */
+	@Bean
+	public BasicDao<UserAssociation> userAssociationDao() {
+		BasicDao<UserAssociation> dao =  
+			repositoryFactory.basicDaoFactory(UserAssociation.class, "parent", "child");
+		logger.info("Created userAssociationDao");
+		return dao;
+	}
+
+	/**
+	 * User group data access.
+	 */
+	@Bean
+	public FilterDao<UserGroup, UserFilter> userGroupDao() {
+		FilterDao<UserGroup, UserFilter> dao =  
+			repositoryFactory.filterDaoFactory(UserGroup.class, UserFilter.class, "entity", "userKey");
+		logger.info("Created userGroupDao");
 		return dao;
 	}
 

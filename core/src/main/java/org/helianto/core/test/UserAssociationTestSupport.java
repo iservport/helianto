@@ -31,7 +31,7 @@ public class UserAssociationTestSupport {
         try {
             child = (UserGroup) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            child = UserGroupTestSupport.createUserGroup(entity);
+            child = UserGroupTestSupport.createUserGroup(parent.getEntity());
         }
         UserAssociation userAssociation = UserAssociation.userAssociationFactory(parent, child);
         return userAssociation;

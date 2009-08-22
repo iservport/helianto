@@ -24,6 +24,7 @@ import org.helianto.core.CategoryFilter;
 import org.helianto.core.Country;
 import org.helianto.core.CountryFilter;
 import org.helianto.core.Credential;
+import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.InternalEnumerator;
@@ -36,12 +37,18 @@ import org.helianto.core.Server;
 import org.helianto.core.ServerFilter;
 import org.helianto.core.Service;
 import org.helianto.core.ServiceFilter;
+import org.helianto.core.Unit;
+import org.helianto.core.UnitFilter;
+import org.helianto.core.UserAssociation;
+import org.helianto.core.UserFilter;
+import org.helianto.core.UserGroup;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
 import org.helianto.core.test.CountryTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.InternalEnumeratorTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;
@@ -49,6 +56,9 @@ import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.ProvinceTestSupport;
 import org.helianto.core.test.ServerTestSupport;
 import org.helianto.core.test.ServiceTestSupport;
+import org.helianto.core.test.UnitTestSupport;
+import org.helianto.core.test.UserAssociationTestSupport;
+import org.helianto.core.test.UserGroupTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -127,6 +137,30 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	public void service() {
 		Service target = ServiceTestSupport.createService();
 		assertEquals(serviceDao.merge(target), serviceDao.findUnique(target.getOperator(), target.getServiceName()));
+	}
+	
+	@Resource FilterDao<Unit, UnitFilter> unitDao;
+	@Test
+	public void unit() {
+		Unit target = UnitTestSupport.createUnit();
+		assertEquals(unitDao.merge(target), unitDao.findUnique(target.getEntity(), target.getUnitCode()));
+	}
+	
+	@Resource BasicDao<UserAssociation> userAssociationDao;
+	@Test
+	public void userAssociation() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		UserGroup userGroup = userGroupDao.merge(UserGroupTestSupport.createUserGroup(entity));
+		UserAssociation target = UserAssociationTestSupport.createUserAssociation(userGroup);
+		assertEquals(userAssociationDao.merge(target), userAssociationDao.findUnique(target.getParent(), target.getChild()));
+	}
+
+	@Resource FilterDao<UserGroup, UserFilter> userGroupDao;
+	@Test
+	public void userGroup() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		UserGroup target = UserGroupTestSupport.createUserGroup(entity);
+		assertEquals(userGroupDao.merge(target), userGroupDao.findUnique(target.getEntity(), target.getUserKey()));
 	}
 	
 }
