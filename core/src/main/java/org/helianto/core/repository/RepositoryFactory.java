@@ -13,10 +13,13 @@
  * limitations under the License.
  */
 
-package org.helianto.core.dao;
+package org.helianto.core.repository;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.dao.AbstractBasicDao;
+import org.helianto.core.dao.AbstractFilterDao;
+import org.helianto.core.dao.PersistenceStrategy;
 import org.helianto.core.filter.Filter;
 import org.springframework.stereotype.Component;
 

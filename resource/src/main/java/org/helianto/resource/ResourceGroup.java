@@ -37,9 +37,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.control.Control;
 import org.helianto.core.Entity;
 import org.helianto.core.NaturalKeyInfo;
+import org.helianto.document.Control;
 
 /**
  * <p>

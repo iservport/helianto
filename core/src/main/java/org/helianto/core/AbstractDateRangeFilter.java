@@ -13,12 +13,15 @@
  * limitations under the License.
  */
 
-package org.helianto.core.filter;
+package org.helianto.core;
 
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.DateRange;
 
 
 /**

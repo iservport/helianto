@@ -16,7 +16,6 @@
 
 package org.helianto.core;
 
-import org.helianto.core.filter.AbstractDateRangeFilter;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 
