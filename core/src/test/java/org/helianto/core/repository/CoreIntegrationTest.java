@@ -39,9 +39,13 @@ import org.helianto.core.Service;
 import org.helianto.core.ServiceFilter;
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
+import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserLog;
+import org.helianto.core.UserLogFilter;
+import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
@@ -59,6 +63,9 @@ import org.helianto.core.test.ServiceTestSupport;
 import org.helianto.core.test.UnitTestSupport;
 import org.helianto.core.test.UserAssociationTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
+import org.helianto.core.test.UserLogTestSupport;
+import org.helianto.core.test.UserRoleTestSupport;
+import org.helianto.core.test.UserTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -161,6 +168,26 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
 		UserGroup target = UserGroupTestSupport.createUserGroup(entity);
 		assertEquals(userGroupDao.merge(target), userGroupDao.findUnique(target.getEntity(), target.getUserKey()));
+	}
+	
+	@Resource FilterDao<UserLog, UserLogFilter> userLogDao;
+	@Test
+	public void userLogGroup() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		User user = (User) userGroupDao.merge(UserTestSupport.createUser(entity));
+		UserLog target = UserLogTestSupport.createUserLog(user);
+		assertEquals(userLogDao.merge(target), userLogDao.findUnique(target.getUser(), target.getLastEvent()));
+	}
+	
+	@Resource BasicDao<UserRole> userRoleDao;
+	@Test
+	public void userRole() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		User user = UserTestSupport.createUser(entity);
+		UserRole target = UserRoleTestSupport.createUserRole(user);
+		user.getRoles().add(target);
+		userGroupDao.persist(user);
+		assertEquals(userRoleDao.merge(target), userRoleDao.findUnique(target.getUserGroup(), target.getService(), target.getServiceExtension()));
 	}
 	
 }

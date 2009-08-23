@@ -43,8 +43,12 @@ import org.helianto.core.UnitFilter;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserLog;
+import org.helianto.core.UserLogFilter;
+import org.helianto.core.UserRole;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
+import org.helianto.core.dao.RepositoryFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -208,6 +212,28 @@ public class CoreHibernateRepository {
 		FilterDao<UserGroup, UserFilter> dao =  
 			repositoryFactory.filterDaoFactory(UserGroup.class, UserFilter.class, "entity", "userKey");
 		logger.info("Created userGroupDao");
+		return dao;
+	}
+
+	/**
+	 * User log data access.
+	 */
+	@Bean
+	public FilterDao<UserLog, UserLogFilter> userLogDao() {
+		FilterDao<UserLog, UserLogFilter> dao =  
+			repositoryFactory.filterDaoFactory(UserLog.class, UserLogFilter.class, "user", "lastEvent");
+		logger.info("Created userLogDao");
+		return dao;
+	}
+
+	/**
+	 * User role data access.
+	 */
+	@Bean
+	public BasicDao<UserRole> userRoleDao() {
+		BasicDao<UserRole> dao =  
+			repositoryFactory.basicDaoFactory(UserRole.class, "userGroup", "service", "serviceExtension");
+		logger.info("Created userRoleDao");
 		return dao;
 	}
 
