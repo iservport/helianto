@@ -3,6 +3,8 @@ package org.helianto.partner.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.Entity;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerRegistry;
 
@@ -15,15 +17,26 @@ public class PartnerTestSupport {
 
     /**
      * Test support method to create a <code>Partner</code>.
-     * @param partnerRegistry optional PartnerRegistry 
      */
-    public static Partner createPartner(Object... args) {
-        PartnerRegistry partnerRegistry;
-        try {
-            partnerRegistry = (PartnerRegistry) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
-        }
+    public static Partner createPartner() {
+        return PartnerTestSupport.createPartner(EntityTestSupport.createEntity());
+    }
+
+    /**
+     * Test support method to create a <code>Partner</code>.
+     * 
+     * @param entity 
+     */
+    public static Partner createPartner(Entity entity) {
+        return PartnerTestSupport.createPartner(PartnerRegistryTestSupport.createPartnerRegistry(entity));
+    }
+
+    /**
+     * Test support method to create a <code>Partner</code>.
+     * 
+     * @param partnerRegistry 
+     */
+    public static Partner createPartner(PartnerRegistry partnerRegistry) {
         Partner partner = Partner.partnerFactory(partnerRegistry);
         return partner;
     }

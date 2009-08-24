@@ -13,7 +13,7 @@ import org.helianto.process.ProcessDocumentAssociation;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DocumentAssociationTestSupport {
+public class ProcessDocumentAssociationTestSupport {
 
     /**
      * Test support method to create a <code>DocumentAssociation</code>.

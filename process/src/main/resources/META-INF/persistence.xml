@@ -7,6 +7,8 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>org.helianto.process.Release</class>
 		<class>org.helianto.process.ProcessDocument</class>
+		<class>org.helianto.process.ProcessRequirement</class>
+		<class>org.helianto.process.ProcessAgreement</class>
 		<class>org.helianto.process.ProcessDocumentAssociation</class>
 		<class>org.helianto.process.Method</class>
 		<class>org.helianto.process.Process</class>

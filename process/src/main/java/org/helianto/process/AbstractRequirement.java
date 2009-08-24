@@ -22,41 +22,26 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
-import org.helianto.document.AbstractControl;
 import org.helianto.core.Entity;
 import org.helianto.core.TopLevelNumberedEntity;
 import org.helianto.core.Unit;
+import org.helianto.document.AbstractControl;
 
 
 /**
  * Common properties to customer requirements, stock, purchase and production 
- * orders, and deliveries.
+ * orders, deliveries and agreements.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@javax.persistence.Entity
-@Table(name="prod_requirement",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "internalNumber"})}
-)
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-    name="type",
-    discriminatorType=DiscriminatorType.CHAR
-)
-@DiscriminatorValue("A")
+@MappedSuperclass
 public abstract class AbstractRequirement extends AbstractControl {
 
     private static final long serialVersionUID = 1L;
