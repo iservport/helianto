@@ -33,9 +33,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Entity;
 
 /**				
- * <p>
- * A class to represent document releases.
- * </p>
+ * A class to represent document revision releases.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity

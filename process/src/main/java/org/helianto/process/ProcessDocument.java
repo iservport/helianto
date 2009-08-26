@@ -26,13 +26,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Unit;
 import org.helianto.document.AbstractDocument;
+
 /**
  * Base class to a document hierarchy to be used in engineering structures.  
  * <p>
@@ -61,19 +65,40 @@ import org.helianto.document.AbstractDocument;
 public abstract class ProcessDocument extends AbstractDocument implements Comparator<ProcessDocumentAssociation> {
 
     private static final long serialVersionUID = 1L;
-    private Set<ProcessDocumentAssociation> parentAssociations = new HashSet<ProcessDocumentAssociation>();
+    private Unit unit;
+	private Set<ProcessDocumentAssociation> parentAssociations = new HashSet<ProcessDocumentAssociation>();
     private Set<ProcessDocumentAssociation> childAssociations = new HashSet<ProcessDocumentAssociation>();
     private char inheritanceType = org.helianto.process.InheritanceType.FINAL.getValue();
     private String processColor = "";
 
 
-    /** default constructor */
+    /** 
+	 * Default constructor.
+	 */
     public ProcessDocument() {
     	super();
     }
 
     /**
-     * ParentAssociations getter.
+     * Unit.
+     * 
+     * <p>
+     * Process documents often collaborate in material flows. In
+     * this case, it is appropriate to define a default unit to
+     * the Inventory class.
+     * </p>
+     */
+    @ManyToOne
+    @JoinColumn(name="unitId")
+    public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+
+    /**
+     * Association to parent members.
      */
     @OneToMany(mappedBy="child", 
     		   cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -85,7 +110,14 @@ public abstract class ProcessDocument extends AbstractDocument implements Compar
     }
 
     /**
-     * ChildAssociations getter.
+     * Association to child members.
+     * 
+     * <p>
+     * If this document is an instance of Process, its child
+     * associations may be, for example, operations to define
+     * the process sequence. As each operation is also an instance
+     * of this class, it may be associated to a set of characteristics.
+     * </p>
      */
     @OneToMany(mappedBy="parent", 
     		   cascade = {CascadeType.PERSIST, CascadeType.MERGE})

@@ -4,23 +4,20 @@
 
 <hibernate-configuration>
 	<session-factory>
-		<mapping class="org.helianto.process.Release" />
-		<mapping class="org.helianto.process.ProcessDocument" />
-		<mapping class="org.helianto.process.ProcessRequirement" />
-		<mapping class="org.helianto.process.ProcessAgreement" />
-		<mapping class="org.helianto.process.ProcessDocumentAssociation" />
-		<mapping class="org.helianto.process.Method" />
-		<mapping class="org.helianto.process.Process" />
-		<mapping class="org.helianto.process.Setup" />
-		<mapping class="org.helianto.process.Operation" />
-		<mapping class="org.helianto.process.Consumable" />
 		<mapping class="org.helianto.process.Cause" />
 		<mapping class="org.helianto.process.Characteristic" />
-		<mapping class="org.helianto.process.ControlPlan" />
-		<mapping class="org.helianto.process.MeasurementTechnique" />
+		<mapping class="org.helianto.process.Consumable" />
 		<mapping class="org.helianto.process.ControlMethod" />
-		<mapping class="org.helianto.process.CardSet" />
-		<mapping class="org.helianto.process.Card" />
+		<mapping class="org.helianto.process.ControlPlan" />
+		<mapping class="org.helianto.process.DocumentVersion" />
+		<mapping class="org.helianto.process.MeasurementTechnique" />
+		<mapping class="org.helianto.process.Method" />
+		<mapping class="org.helianto.process.Operation" />
+		<mapping class="org.helianto.process.Process" />
+		<mapping class="org.helianto.process.ProcessDocument" />
+		<mapping class="org.helianto.process.ProcessDocumentAssociation" />
+		<mapping class="org.helianto.process.Release" />
+		<mapping class="org.helianto.process.Setup" />
 	</session-factory>
 </hibernate-configuration>
 

@@ -29,6 +29,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.AbstractAssociation;
+
 /**
  * <p>
  * Represents a <code>DocumentAssociation</code>.  

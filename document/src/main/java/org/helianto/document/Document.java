@@ -55,10 +55,12 @@ public class Document extends AbstractDocument implements java.io.Serializable {
     
     private static final long serialVersionUID = 1L;
     private char contentType;
+    private Set<DocumentKey> documentKeys = new HashSet<DocumentKey>(0);
     private Set<DocumentTag> documentTags = new HashSet<DocumentTag>(0);
     private Set<DocumentAssociation> parents = new HashSet<DocumentAssociation>(0);
     private Set<DocumentAssociation> children = new HashSet<DocumentAssociation>(0);
     // transient
+    private List<DocumentKey> documentKeyList;
     private List<DocumentTag> documentTagList;
     private List<DocumentAssociation> parentList;
 	private List<DocumentAssociation> childList;
@@ -87,6 +89,28 @@ public class Document extends AbstractDocument implements java.io.Serializable {
     	return true;
     }
     
+    /**
+     * Document keys.
+     */
+    @OneToMany(mappedBy="document", cascade={CascadeType.ALL})
+    public Set<DocumentKey> getDocumentKeys() {
+        return this.documentKeys;
+    }
+    public void setDocumentKeys(Set<DocumentKey> documentKeys) {
+        this.documentKeys = documentKeys;
+    }
+    
+    /**
+     * Document key list.
+     */
+    @Transient
+    public List<DocumentKey> getDocumentKeyList() {
+		return documentKeyList;
+	}
+	public void setDocumentKeyList(List<DocumentKey> documentKeyList) {
+		this.documentKeyList = documentKeyList;
+	}
+
     /**
      * Document tags.
      */

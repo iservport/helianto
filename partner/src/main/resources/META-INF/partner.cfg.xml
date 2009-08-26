@@ -4,20 +4,20 @@
 
 <hibernate-configuration>
 	<session-factory>
+		<mapping class="org.helianto.partner.Account" />
 		<mapping class="org.helianto.partner.Address" />
-		<mapping class="org.helianto.partner.Contact" />
-		<mapping class="org.helianto.partner.PartnerRegistry" />
-		<mapping class="org.helianto.partner.Partner" />
 		<mapping class="org.helianto.partner.Agent" />
+		<mapping class="org.helianto.partner.Contact" />
 		<mapping class="org.helianto.partner.Customer" />
 		<mapping class="org.helianto.partner.Division" />
-		<mapping class="org.helianto.partner.Supplier" />
-		<mapping class="org.helianto.partner.Manufacturer" />
 		<mapping class="org.helianto.partner.Laboratory" />
-		<mapping class="org.helianto.partner.PartnerRegistryKey" />
+		<mapping class="org.helianto.partner.Manufacturer" />
+		<mapping class="org.helianto.partner.Partner" />
 		<mapping class="org.helianto.partner.PartnerKey" />
+		<mapping class="org.helianto.partner.PartnerRegistry" />
+		<mapping class="org.helianto.partner.PartnerRegistryKey" />
 		<mapping class="org.helianto.partner.Phone" />
-		<mapping class="org.helianto.partner.Account" />
+		<mapping class="org.helianto.partner.Supplier" />
 	</session-factory>
 </hibernate-configuration>
 

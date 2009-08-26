@@ -25,6 +25,7 @@
 			<module>document</module>
 			<module>resource</module>
 			<module>process</module>
+			<module>inventory</module>
 			<module>web</module>
 			<module>admin</module>
 		<!-- 

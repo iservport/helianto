@@ -42,7 +42,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * <code>ProcessMgr</code> interface.
+ * Default <code>ProcessMgr</code> interface implementation.
  * 
  * @author Mauricio Fernandes de Castro
  */

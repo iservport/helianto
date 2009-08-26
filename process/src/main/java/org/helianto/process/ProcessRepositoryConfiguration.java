@@ -35,28 +35,6 @@ import org.springframework.context.annotation.Configuration;
 public class ProcessRepositoryConfiguration {
 
 	/**
-	 * Card data access.
-	 */
-	@Bean
-	public BasicDao<Card> cardDao() {
-		BasicDao<Card> dao =  
-			repositoryFactory.basicDaoFactory(Card.class, "cardSet", "cardLabel");
-		logger.info("Created cardDao");
-		return dao;
-	}
-
-	/**
-	 * Card set data access.
-	 */
-	@Bean
-	public FilterDao<CardSet, CardSetFilter> cardSetDao() {
-		FilterDao<CardSet, CardSetFilter> dao =  
-			repositoryFactory.filterDaoFactory(CardSet.class, CardSetFilter.class, "entity", "internalNumber");
-		logger.info("Created cardSetDao");
-		return dao;
-	}
-
-	/**
 	 * Measurement technique data access.
 	 */
 	@Bean
@@ -64,17 +42,6 @@ public class ProcessRepositoryConfiguration {
 		FilterDao<MeasurementTechnique, MeasurementTechniqueFilter> dao =  
 			repositoryFactory.filterDaoFactory(MeasurementTechnique.class, MeasurementTechniqueFilter.class, "entity", "measurementTechniqueCode");
 		logger.info("Created measurementTechniqueDao");
-		return dao;
-	}
-
-	/**
-	 * Process agreement data access.
-	 */
-	@Bean
-	public FilterDao<ProcessAgreement, ProcessAgreementFilter> agreementDao() {
-		FilterDao<ProcessAgreement, ProcessAgreementFilter> dao =  
-			repositoryFactory.filterDaoFactory(ProcessAgreement.class, ProcessAgreementFilter.class, "entity", "internalNumber");
-		logger.info("Created agreementDao");
 		return dao;
 	}
 

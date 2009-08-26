@@ -16,27 +16,33 @@
 package org.helianto.partner;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.AbstractKeyValue;
 import org.helianto.core.KeyType;
 /**
- * <p>
- * Represents the relationship between the organization and other entities.  
- * </p>
+ * The content of a key associated to the partner.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
 @Table(name="prtnr_partnerKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerId", "keyTypeId"})}
 )
-public class PartnerKey implements java.io.Serializable {
+public class PartnerKey extends AbstractKeyValue {
+
+	/**
+	 * <<Transient>> Delegate to the actual key owner.
+	 */
+	@Transient
+	@Override
+	protected Object getKeyOwner() {
+		return getPartner();
+	}   
 
     /**
      * Factory method.
@@ -52,24 +58,10 @@ public class PartnerKey implements java.io.Serializable {
     }
 
     private static final long serialVersionUID = 1L;
-    private int id;
     private Partner partner;
-    private KeyType keyType;
-    private String keyValue;
 
     /** default constructor */
     public PartnerKey() {
-    }
-
-    /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
@@ -84,67 +76,14 @@ public class PartnerKey implements java.io.Serializable {
         this.partner = partner;
     }
 
-    /**
-     * Key type.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="keyTypeId", nullable=true)
-    public KeyType getKeyType() {
-        return this.keyType;
-    }
-    public void setKeyType(KeyType keyType) {
-        this.keyType = keyType;
-    }
-
-    /**
-     * Key value.
-     */
-    @Column(length=20)
-    public String getKeyValue() {
-        return this.keyValue;
-    }
-    public void setKeyValue(String keyValue) {
-        this.keyValue = keyValue;
-    }
-
-    /**
-     * toString
-     * @return String
-     */
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("partner").append("='").append(getPartner()).append("' ");
-        buffer.append("keyType").append("='").append(getKeyType()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
-    }
-
    /**
     * equals
     */
    public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof PartnerKey) ) return false;
-         PartnerKey castOther = (PartnerKey) other; 
-         
-         return ((this.getPartner()==castOther.getPartner()) || 
-        		 ( this.getPartner()!=null 
-        		&& castOther.getPartner()!=null && this.getPartner().equals(castOther.getPartner()) ))
-             && ((this.getKeyType()==castOther.getKeyType()) || ( this.getKeyType()!=null && castOther.getKeyType()!=null && this.getKeyType().equals(castOther.getKeyType()) ));
+         if (other instanceof PartnerKey) {
+        	 return super.equals(other);
+         }
+         return false;
    }
    
-   /**
-    * hashCode
-    */
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getPartner() == null ? 0 : this.getPartner().hashCode() );
-         result = 37 * result + ( getKeyType() == null ? 0 : this.getKeyType().hashCode() );
-         return result;
-   }   
-
 }

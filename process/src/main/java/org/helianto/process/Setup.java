@@ -29,7 +29,8 @@ import org.helianto.resource.Resource;
 import org.helianto.resource.ResourceGroup;
 
 /**
- * Represents a <code>Setup</code>.  
+ * Represents a <code>Setup</code>.
+ * 
  * <p>
  * The operation setup must be able to relate both <tt>Resource</tt>s
  * and <tt>ResourceGroup</tt>s. Besides the operation itself is not

@@ -29,9 +29,8 @@ import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 
 /**
- * <p>
- * A class to represent a material type.
- * </p>
+ * Represent a material type.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity

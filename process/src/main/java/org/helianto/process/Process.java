@@ -29,9 +29,12 @@ import org.helianto.core.Sequenceable;
 import org.helianto.partner.Partner;
 
 /**
+ * Represents a <code>Process</code>.
+ * 
  * <p>
- * Represents a <code>Process</code>.  
+ * A process is an ordered list of operations.
  * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity

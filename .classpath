@@ -22,6 +22,9 @@
 	<classpathentry excluding="**" kind="src" output="process/target/classes" path="process/src/main/resources"/>
 	<classpathentry kind="src" output="process/target/test-classes" path="process/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="process/target/test-classes" path="process/src/test/resources"/>
+	<classpathentry kind="src" path="inventory/src/main/java"/>
+	<classpathentry kind="src" path="inventory/src/main/resources"/>
+	<classpathentry kind="src" path="inventory/src/test/java"/>
 	<classpathentry kind="src" output="web/target/classes" path="web/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="web/target/classes" path="web/src/main/resources"/>
 	<classpathentry kind="src" output="web/target/test-classes" path="web/src/test/java"/>

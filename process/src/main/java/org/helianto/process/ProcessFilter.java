@@ -18,7 +18,6 @@ package org.helianto.process;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 
 /**

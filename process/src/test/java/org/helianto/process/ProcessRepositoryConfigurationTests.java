@@ -23,15 +23,10 @@ import org.helianto.core.Entity;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.Partner;
-import org.helianto.partner.test.PartnerTestSupport;
 import org.helianto.process.test.AbstractProcessDaoIntegrationTest;
-import org.helianto.process.test.CardSetTestSupport;
-import org.helianto.process.test.CardTestSupport;
 import org.helianto.process.test.CharacteristicTestSupport;
 import org.helianto.process.test.MeasurementTechniqueTestSupport;
 import org.helianto.process.test.OperationTestSupport;
-import org.helianto.process.test.ProcessAgreementTestSupport;
 import org.helianto.process.test.ProcessDocumentAssociationTestSupport;
 import org.helianto.process.test.ProcessDocumentTestSupport;
 import org.helianto.process.test.SetupTestSupport;
@@ -45,36 +40,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProcessRepositoryConfigurationTests extends AbstractProcessDaoIntegrationTest {
 
-	@Resource BasicDao<Card> cardDao;
-	@Test
-	public void card() {
-		Card target = CardTestSupport.createSample();
-		assertEquals(cardDao.merge(target), cardDao.findUnique(target.getCardSet(), target.getCardLabel()));
-	}
-	
-	@Resource FilterDao<CardSet, CardSetFilter> cardSetDao;
-	@Test
-	public void cardSet() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		CardSet target = CardSetTestSupport.createCardSet(entity);
-		assertEquals(cardSetDao.merge(target), cardSetDao.findUnique(target.getEntity(), target.getInternalNumber()));
-	}
-
 	@Resource FilterDao<MeasurementTechnique, MeasurementTechniqueFilter> measurementTechniqueDao;
 	@Test
 	public void measurementTechnique() {
 		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
 		MeasurementTechnique target = MeasurementTechniqueTestSupport.createMeasurementTechnique(entity);
 		assertEquals(measurementTechniqueDao.merge(target), measurementTechniqueDao.findUnique(target.getEntity(), target.getMeasurementTechniqueCode()));
-	}
-
-	@Resource FilterDao<ProcessAgreement, ProcessAgreementFilter> agreementDao;
-	@Test
-	public void agreement() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		Partner partner = PartnerTestSupport.createPartner(entity);
-		ProcessAgreement target = ProcessAgreementTestSupport.createProcessAgreement(partner);
-		assertEquals(agreementDao.merge(target), agreementDao.findUnique(target.getEntity(), target.getInternalNumber()));
 	}
 
 	@Resource BasicDao<ProcessDocumentAssociation> processDocumentAssociationDao;
