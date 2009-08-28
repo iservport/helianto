@@ -17,6 +17,8 @@ package org.helianto.inventory;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,6 +29,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -80,6 +83,7 @@ public class ProcessAgreement extends AbstractRequirement {
 	private char agreementLevel;
 	private BigDecimal agreementPrice = BigDecimal.ZERO;
 	private int minimalOrderDuration;
+	private Set<Tax> taxes = new HashSet<Tax>(); 
 
 	/** 
 	 * Constructor 
@@ -188,6 +192,17 @@ public class ProcessAgreement extends AbstractRequirement {
 	}
 	public void setMinimalOrderDuration(int minimalOrderDuration) {
 		this.minimalOrderDuration = minimalOrderDuration;
+	}
+
+	/**
+	 * A collection of taxes.
+	 */
+	@OneToMany(mappedBy="processAgreement")
+	public Set<Tax> getTaxes() {
+		return taxes;
+	}
+	public void setTaxes(Set<Tax> taxes) {
+		this.taxes = taxes;
 	}
 
     /**

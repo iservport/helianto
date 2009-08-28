@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.AbstractKeyValue;
+import org.helianto.core.AbstractKeyStringValue;
 import org.helianto.core.KeyType;
 /**
  * The content of a key associated to the document.
@@ -33,7 +33,7 @@ import org.helianto.core.KeyType;
 @Table(name="doc_docKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"documentId", "keyTypeId"})}
 )
-public class DocumentKey extends AbstractKeyValue {
+public class DocumentKey extends AbstractKeyStringValue {
 
 	/**
 	 * <<Transient>> Delegate to the actual key owner.

@@ -29,9 +29,8 @@ import javax.persistence.Version;
 import org.helianto.core.Entity;
 import org.helianto.core.TopLevelCodedEntity;
 /**
- * <p>
- * Represents a <code>Document</code>.  
- * </p>
+ * Base class to represent a <code>Document</code>.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass

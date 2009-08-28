@@ -66,6 +66,7 @@ public abstract class ProcessDocument extends AbstractDocument implements Compar
 
     private static final long serialVersionUID = 1L;
     private Unit unit;
+    private Set<ProcessDocumentKey> processDocumentKeys = new HashSet<ProcessDocumentKey>(0);
 	private Set<ProcessDocumentAssociation> parentAssociations = new HashSet<ProcessDocumentAssociation>();
     private Set<ProcessDocumentAssociation> childAssociations = new HashSet<ProcessDocumentAssociation>();
     private char inheritanceType = org.helianto.process.InheritanceType.FINAL.getValue();
@@ -97,6 +98,17 @@ public abstract class ProcessDocument extends AbstractDocument implements Compar
 		this.unit = unit;
 	}
 
+    /**
+     * Process document keys.
+     */
+    @OneToMany(mappedBy="processDocument", cascade={CascadeType.ALL})
+    public Set<ProcessDocumentKey> getProcessDocumentKeys() {
+        return this.processDocumentKeys;
+    }
+    public void setProcessDocumentKeys(Set<ProcessDocumentKey> processDocumentKeys) {
+        this.processDocumentKeys = processDocumentKeys;
+    }
+    
     /**
      * Association to parent members.
      */

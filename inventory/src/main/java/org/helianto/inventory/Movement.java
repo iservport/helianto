@@ -19,6 +19,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,6 +42,11 @@ import javax.persistence.Version;
 @Table(name="inv_movement",
     uniqueConstraints = {@UniqueConstraint(columnNames={"inventoryTransactionId", "inventoryId"})}
 )
+@DiscriminatorColumn(
+    name="type",
+    discriminatorType=DiscriminatorType.CHAR
+)
+@DiscriminatorValue("M")
 public class Movement implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

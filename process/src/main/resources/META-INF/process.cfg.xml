@@ -16,6 +16,7 @@
 		<mapping class="org.helianto.process.Process" />
 		<mapping class="org.helianto.process.ProcessDocument" />
 		<mapping class="org.helianto.process.ProcessDocumentAssociation" />
+		<mapping class="org.helianto.process.ProcessDocumentKey" />
 		<mapping class="org.helianto.process.Release" />
 		<mapping class="org.helianto.process.Setup" />
 	</session-factory>

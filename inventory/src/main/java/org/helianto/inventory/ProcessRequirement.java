@@ -15,14 +15,11 @@
 
 package org.helianto.inventory;
 
-import java.util.Set;
-
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -46,8 +43,6 @@ import javax.persistence.UniqueConstraint;
 public class ProcessRequirement extends AbstractRequirement {
 
 	private static final long serialVersionUID = 1L;
-	private Set<InventoryTransaction> sources;
-	private Set<InventoryTransaction> destinations;
 
 	@Transient
 	@Override
@@ -55,35 +50,15 @@ public class ProcessRequirement extends AbstractRequirement {
 		return "PROCREQ";
 	}
 
-	/**
-	 * Sources where quantities come from.
-	 */
-	@OneToMany(mappedBy="moveTo")
-	public Set<InventoryTransaction> getSources() {
-		return sources;
-	}
-	public void setSourceSources(Set<InventoryTransaction> sources) {
-		this.sources = sources;
-	}
-
-	/**
-	 * Destinations where quantities are loaded to.
-	 */
-	@OneToMany(mappedBy="moveFrom")
-	public Set<InventoryTransaction> getDestinations() {
-		return destinations;
-	}
-	public void setDestinations(Set<InventoryTransaction> destinations) {
-		this.destinations = destinations;
-	}
-
     /**
      * equals
      */
     @Override
     public boolean equals(Object other) {
-          if ( !(other instanceof Inventory) ) return false;
-          return super.equals(other);
+        if (other instanceof ProcessRequirement) {
+			return super.equals(other);
+		}
+		return false;
     }
     
 }

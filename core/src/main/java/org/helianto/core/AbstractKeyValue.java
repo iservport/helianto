@@ -16,7 +16,6 @@
 package org.helianto.core;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +24,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 /**
- * The content of a key to be associated.
+ * Subclasses overriding this may hold the content of a key to 
+ * be associated to an owner.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -36,7 +36,6 @@ public abstract class AbstractKeyValue implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private KeyType keyType;
-    private String keyValue;
 
     /** 
      * Default constructor
@@ -75,17 +74,6 @@ public abstract class AbstractKeyValue implements java.io.Serializable {
     }
     public void setKeyType(KeyType keyType) {
         this.keyType = keyType;
-    }
-
-    /**
-     * Key value.
-     */
-    @Column(length=20)
-    public String getKeyValue() {
-        return this.keyValue;
-    }
-    public void setKeyValue(String keyValue) {
-        this.keyValue = keyValue;
     }
 
     /**

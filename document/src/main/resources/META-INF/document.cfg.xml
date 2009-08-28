@@ -6,6 +6,7 @@
 	<session-factory>
 		<mapping class="org.helianto.document.Document" />
 		<mapping class="org.helianto.document.DocumentAssociation" />
+		<mapping class="org.helianto.document.DocumentCodeBuilder" />
 		<mapping class="org.helianto.document.DocumentKey" />
 		<mapping class="org.helianto.document.DocumentTag" />
 	</session-factory>

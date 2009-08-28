@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.process;
 
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
@@ -25,15 +25,15 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.AbstractKeyStringValue;
 import org.helianto.core.KeyType;
 /**
- * The content of a key associated to the partner.
+ * The content of a key associated to the process document.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="prtnr_partnerKey",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerId", "keyTypeId"})}
+@Table(name="proc_docKey",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"processDocumentId", "keyTypeId"})}
 )
-public class PartnerKey extends AbstractKeyStringValue {
+public class ProcessDocumentKey extends AbstractKeyStringValue {
 
 	/**
 	 * <<Transient>> Delegate to the actual key owner.
@@ -41,46 +41,49 @@ public class PartnerKey extends AbstractKeyStringValue {
 	@Transient
 	@Override
 	protected Object getKeyOwner() {
-		return getPartner();
+		return getProcessDocument();
 	}   
 
     /**
      * Factory method.
      * 
-     * @param partnerRegistry
+     * @param document
      * @param keyType
      */
-    public static PartnerKey partnerKeyFactory(Partner partner, KeyType keyType) {
-        PartnerKey partnerKey = new PartnerKey();
-        partnerKey.setPartner(partner);
-        partnerKey.setKeyType(keyType);
-        return partnerKey;
+    public static ProcessDocumentKey documentKeyFactory(ProcessDocument document, KeyType keyType) {
+    	ProcessDocumentKey documentKey = new ProcessDocumentKey();
+        documentKey.setProcessDocument(document);
+        documentKey.setKeyType(keyType);
+        return documentKey;
     }
 
     private static final long serialVersionUID = 1L;
-    private Partner partner;
+    private ProcessDocument processDocument;
 
-    /** default constructor */
-    public PartnerKey() {
+    /** 
+     * Default constructor.
+     */
+    public ProcessDocumentKey() {
+    	super();
     }
 
     /**
-     * Partner.
+     * Process document.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="partnerId", nullable=true)
-    public Partner getPartner() {
-        return this.partner;
+    @JoinColumn(name="processDocumentId", nullable=true)
+    public ProcessDocument getProcessDocument() {
+        return this.processDocument;
     }
-    public void setPartner(Partner partner) {
-        this.partner = partner;
+    public void setProcessDocument(ProcessDocument processDocument) {
+        this.processDocument = processDocument;
     }
 
    /**
     * equals
     */
    public boolean equals(Object other) {
-         if (other instanceof PartnerKey) {
+         if (other instanceof ProcessDocumentKey) {
         	 return super.equals(other);
          }
          return false;

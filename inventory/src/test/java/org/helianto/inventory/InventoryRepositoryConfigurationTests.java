@@ -23,12 +23,12 @@ import org.helianto.core.Entity;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
 import org.helianto.inventory.test.CardSetTestSupport;
 import org.helianto.inventory.test.CardTestSupport;
 import org.helianto.inventory.test.ProcessAgreementTestSupport;
 import org.helianto.partner.Partner;
 import org.helianto.partner.test.PartnerTestSupport;
-import org.helianto.process.test.AbstractProcessDaoIntegrationTest;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Transactional
-public class InventoryRepositoryConfigurationTests extends AbstractProcessDaoIntegrationTest {
+public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoIntegrationTest {
 
 	@Resource BasicDao<Card> cardDao;
 	@Test

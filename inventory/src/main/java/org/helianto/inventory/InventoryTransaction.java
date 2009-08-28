@@ -29,6 +29,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
@@ -74,6 +75,7 @@ public class InventoryTransaction extends AbstractEvent {
 	private BigDecimal movementQty;
 	private Set<Movement> movements = new HashSet<Movement>();
 	
+	@Transient
 	@Override
 	public String getInternalNumberKey() {
 		return "INVTX";

@@ -9,9 +9,11 @@
 		<mapping class="org.helianto.inventory.GrossRequirement" />
 		<mapping class="org.helianto.inventory.Inventory" />
 		<mapping class="org.helianto.inventory.InventoryTransaction" />
-		<mapping class="org.helianto.inventory.Movemement" />
+		<mapping class="org.helianto.inventory.Invoice" />
+		<mapping class="org.helianto.inventory.Movement" />
 		<mapping class="org.helianto.inventory.ProcessAgreement" />
 		<mapping class="org.helianto.inventory.ProcessRequirement" />
+		<mapping class="org.helianto.inventory.Tax" />
 	</session-factory>
 </hibernate-configuration>
 
