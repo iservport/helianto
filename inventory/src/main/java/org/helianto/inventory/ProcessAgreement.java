@@ -17,8 +17,8 @@ package org.helianto.inventory;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,6 +29,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -83,7 +84,8 @@ public class ProcessAgreement extends AbstractRequirement {
 	private char agreementLevel;
 	private BigDecimal agreementPrice = BigDecimal.ZERO;
 	private int minimalOrderDuration;
-	private Set<Tax> taxes = new HashSet<Tax>(); 
+	private char procurementOption;
+	private Map<String, Tax> taxes = new HashMap<String, Tax>(); 
 
 	/** 
 	 * Constructor 
@@ -193,15 +195,29 @@ public class ProcessAgreement extends AbstractRequirement {
 	public void setMinimalOrderDuration(int minimalOrderDuration) {
 		this.minimalOrderDuration = minimalOrderDuration;
 	}
+	
+	/**
+	 * Procurement option (make, buy local, import)
+	 */
+	public char getProcurementOption() {
+		return procurementOption;
+	}
+	public void setProcurementOption(char procurementOption) {
+		this.procurementOption = procurementOption;
+	}
+	public void setProcurementOption(ProcurementOption procurementOption) {
+		this.procurementOption = procurementOption.getValue();
+	}
 
 	/**
-	 * A collection of taxes.
+	 * A map of taxes.
 	 */
 	@OneToMany(mappedBy="processAgreement")
-	public Set<Tax> getTaxes() {
+	@MapKey(name="keyType")
+	public Map<String, Tax> getTaxes() {
 		return taxes;
 	}
-	public void setTaxes(Set<Tax> taxes) {
+	public void setTaxes(Map<String, Tax> taxes) {
 		this.taxes = taxes;
 	}
 

@@ -61,11 +61,11 @@ public class Tax extends AbstractKeyValue {
      * @param processAgreement
      * @param keyType
      */
-    public static Tax documentKeyFactory(ProcessAgreement processAgreement, KeyType keyType) {
-    	Tax documentKey = new Tax();
-        documentKey.setProcessAgreement(processAgreement);
-        documentKey.setKeyType(keyType);
-        return documentKey;
+    public static Tax taxFactory(ProcessAgreement processAgreement, KeyType keyType) {
+    	Tax tax = new Tax();
+        tax.setProcessAgreement(processAgreement);
+        tax.setKeyType(keyType);
+        return tax;
     }
 
     private static final long serialVersionUID = 1L;

@@ -15,19 +15,22 @@
 
 package org.helianto.core.test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Classs to support domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DomainTestSupport extends TestCase {
+public class DomainTestSupport  {
     
     public static final String STRING_TEST_VALUE = "TEST";
     public static final long LONG_TEST_VALUE = Long.MAX_VALUE;
