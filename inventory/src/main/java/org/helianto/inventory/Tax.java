@@ -18,6 +18,7 @@ package org.helianto.inventory;
 import java.math.BigDecimal;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -80,6 +81,24 @@ public class Tax extends AbstractKeyValue {
     public Tax() {
     	super();
     }
+    
+    /**
+	 * <<Immutable>> Tax code, a reference to the actual key code.
+	 * 
+	 * <p>
+	 * This is a workaround to provide a string key to an
+	 * associated Map. JPA associations with maps does not 
+	 * allow for a key that is not a true property of the value
+	 * class (unlike Hibernate).
+	 * </p>
+	 */
+    @Column(length=20)
+	public String getTaxCode() {
+		return getKeyType().getKeyCode();
+	}
+	public void setTaxCode(String taxCode) {
+		// this field is immutable
+	}
 
     /**
      * Process agreement.

@@ -77,14 +77,6 @@ public abstract class AbstractKeyValue implements java.io.Serializable {
     }
 
     /**
-     * <<Transient>> A reference to the key code.
-     */
-    @Transient
-    protected String getKeyCode() {
-    	return getKeyType().getKeyCode();
-    }
-
-    /**
      * toString
      * @return String
      */

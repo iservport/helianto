@@ -75,6 +75,13 @@ public class InventoryTransaction extends AbstractEvent {
 	private BigDecimal movementQty;
 	private Set<Movement> movements = new HashSet<Movement>();
 	
+	/**
+	 * Default constructor.
+	 */
+	public InventoryTransaction() {
+		super();
+	}
+
 	@Transient
 	@Override
 	public String getInternalNumberKey() {
@@ -82,22 +89,16 @@ public class InventoryTransaction extends AbstractEvent {
 	}
 	
 	/**
-	 * Entity.
+	 * <<NaturalKey>> Entity.
 	 */
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="entityId")
 	public Entity getEntity() {
 		return entity;
 	}
-	public void setEntity(Entity entity) {
+	public InventoryTransaction setEntity(Entity entity) {
 		this.entity = entity;
-	}
-
-	/**
-	 * Default constructor.
-	 */
-	public InventoryTransaction() {
-		super();
+		return this;
 	}
 
 	/**

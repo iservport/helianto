@@ -146,7 +146,7 @@ public class Movement implements Serializable {
     public boolean equals(Object other) {
          if ( (this == other ) ) return true;
 		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof CardSet) ) return false;
+		 if ( !(other instanceof Movement) ) return false;
 		 Movement castOther = ( Movement ) other; 
          
 		 return ( (this.getInventoryTransaction()==castOther.getInventoryTransaction()) || ( this.getInventoryTransaction()!=null && castOther.getInventoryTransaction()!=null && this.getInventoryTransaction().equals(castOther.getInventoryTransaction()) ) )
