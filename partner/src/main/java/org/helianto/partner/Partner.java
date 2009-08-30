@@ -134,6 +134,14 @@ public class Partner implements java.io.Serializable {
     }
 	
     /**
+     * <<Transient>> Convenience reference to the main address.
+     */
+	@Transient
+    public Address getMainAddress() {
+    	return getPartnerRegistry().getMainAddress();
+    }
+
+    /**
      * Account.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

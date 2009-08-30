@@ -126,29 +126,30 @@ Import-Package: com.iservport.production,com.mchange.v2.c3p0,freemarke
  istence,javax.servlet,javax.servlet.http,junit.framework,org.apache.c
  ommons.logging,org.easymock,org.easymock.classextension,org.helianto.
  core,org.helianto.document.validation,org.helianto.inventory.validati
- on,org.helianto.message.mail.composer,org.helianto.process.service,or
- g.helianto.web.controller,org.hibernate,org.hibernate.classic,org.hib
- ernate.ejb,org.junit,org.springframework.beans,org.springframework.be
- ans.factory,org.springframework.beans.factory.config,org.springframew
- ork.beans.factory.support,org.springframework.beans.propertyeditors,o
- rg.springframework.context,org.springframework.context.annotation,org
- .springframework.context.support,org.springframework.dao,org.springfr
- amework.dao.annotation,org.springframework.dao.support,org.springfram
- ework.mail,org.springframework.mail.javamail,org.springframework.mock
- .web,org.springframework.orm.hibernate3,org.springframework.orm.hiber
- nate3.annotation,org.springframework.orm.hibernate3.support,org.sprin
- gframework.orm.jpa.persistenceunit,org.springframework.security.acces
- s,org.springframework.security.authentication,org.springframework.sec
- urity.core,org.springframework.security.core.authority,org.springfram
- ework.security.core.context,org.springframework.security.core.userdet
- ails,org.springframework.stereotype,org.springframework.test,org.spri
- ngframework.test.context,org.springframework.test.context.junit4,org.
- springframework.transaction.annotation,org.springframework.ui.freemar
- ker,org.springframework.util,org.springframework.validation,org.sprin
- gframework.web.context.support,org.springframework.web.servlet,org.sp
- ringframework.web.servlet.i18n,org.springframework.web.servlet.theme,
- org.springframework.web.servlet.view,org.springframework.web.servlet.
- view.freemarker,org.springframework.webflow.action,org.springframewor
- k.webflow.core.collection,org.springframework.webflow.execution,org.s
- pringframework.webflow.mvc.builder,org.springframework.webflow.test
+ on,org.helianto.message.mail.composer,org.helianto.partner.test,org.h
+ elianto.process.service,org.helianto.web.controller,org.hibernate,org
+ .hibernate.classic,org.hibernate.ejb,org.junit,org.springframework.be
+ ans,org.springframework.beans.factory,org.springframework.beans.facto
+ ry.config,org.springframework.beans.factory.support,org.springframewo
+ rk.beans.propertyeditors,org.springframework.context,org.springframew
+ ork.context.annotation,org.springframework.context.support,org.spring
+ framework.dao,org.springframework.dao.annotation,org.springframework.
+ dao.support,org.springframework.mail,org.springframework.mail.javamai
+ l,org.springframework.mock.web,org.springframework.orm.hibernate3,org
+ .springframework.orm.hibernate3.annotation,org.springframework.orm.hi
+ bernate3.support,org.springframework.orm.jpa.persistenceunit,org.spri
+ ngframework.security.access,org.springframework.security.authenticati
+ on,org.springframework.security.core,org.springframework.security.cor
+ e.authority,org.springframework.security.core.context,org.springframe
+ work.security.core.userdetails,org.springframework.stereotype,org.spr
+ ingframework.test,org.springframework.test.context,org.springframewor
+ k.test.context.junit4,org.springframework.transaction.annotation,org.
+ springframework.ui.freemarker,org.springframework.util,org.springfram
+ ework.validation,org.springframework.web.context.support,org.springfr
+ amework.web.servlet,org.springframework.web.servlet.i18n,org.springfr
+ amework.web.servlet.theme,org.springframework.web.servlet.view,org.sp
+ ringframework.web.servlet.view.freemarker,org.springframework.webflow
+ .action,org.springframework.webflow.core.collection,org.springframewo
+ rk.webflow.execution,org.springframework.webflow.mvc.builder,org.spri
+ ngframework.webflow.test
 

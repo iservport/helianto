@@ -298,6 +298,25 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     public void setPostOfficeBox(String postOfficeBox) {
         this.postOfficeBox = postOfficeBox;
     }
+    
+    /**
+     * <<Transient>> Short string for address.
+     */
+    @Transient
+    public String getShortAddress() {
+    	StringBuilder sb = new StringBuilder(getAddress1())
+    		.append(getAddressNumber());
+    	if (getAddressNumber().length()>0) {
+    		sb.append(", ").append(getAddressNumber());
+    	}
+    	if (getAddressDetail().length()>0) {
+    		sb.append(" ").append(getAddressDetail());
+    	}
+    	if (getAddress2().length()>0) {
+    		sb.append(" - ").append(getAddress2());
+    	}
+    	return sb.toString();
+    }
 
     /**
      * Privacy level.

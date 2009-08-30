@@ -18,6 +18,7 @@
 		<mapping class="org.helianto.partner.PartnerRegistryKey" />
 		<mapping class="org.helianto.partner.Phone" />
 		<mapping class="org.helianto.partner.Supplier" />
+		<mapping class="org.helianto.partner.TransportPartner" />
 	</session-factory>
 </hibernate-configuration>
 

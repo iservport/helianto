@@ -35,6 +35,7 @@ import org.helianto.partner.test.PartnerRegistryTestSupport;
 import org.helianto.partner.test.PartnerTestSupport;
 import org.helianto.partner.test.PhoneTestSupport;
 import org.helianto.partner.test.SupplierTestSupport;
+import org.helianto.partner.test.TransportPartnerTestSupport;
 import org.junit.Test;
 
 
@@ -42,7 +43,7 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class PartnerIntegrationTest extends AbstractPartnerDaoIntegrationTest {
+public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 
 	@Resource FilterDao<Account, AccountFilter> accountDao;
 	@Test
@@ -94,6 +95,11 @@ public class PartnerIntegrationTest extends AbstractPartnerDaoIntegrationTest {
 	public void supplier() {
 		Supplier target = SupplierTestSupport.createSupplier();
 		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'S'));
+	}
+	@Test
+	public void transportPartner() {
+		TransportPartner target = TransportPartnerTestSupport.createTransportPartner();
+		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'T'));
 	}
 	
 	@Resource BasicDao<PartnerKey> partnerKeyDao;
