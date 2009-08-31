@@ -57,6 +57,39 @@ public class InventoryRepositoryConfiguration {
 	}
 
 	/**
+	 * Inventory data access.
+	 */
+	@Bean
+	public BasicDao<Inventory> inventoryDao() {
+		BasicDao<Inventory> dao =  
+			repositoryFactory.basicDaoFactory(Inventory.class, "entity", "internalNumber");
+		logger.info("Created inventoryDao");
+		return dao;
+	}
+
+	/**
+	 * Inventory transaction data access.
+	 */
+	@Bean
+	public BasicDao<InventoryTransaction> inventoryTransactionDao() {
+		BasicDao<InventoryTransaction> dao =  
+			repositoryFactory.basicDaoFactory(InventoryTransaction.class, "entity", "internalNumber");
+		logger.info("Created inventoryTransactionDao");
+		return dao;
+	}
+
+	/**
+	 * Movement data access.
+	 */
+	@Bean
+	public BasicDao<Movement> movementDao() {
+		BasicDao<Movement> dao =  
+			repositoryFactory.basicDaoFactory(Movement.class, "inventoryTransaction", "inventory");
+		logger.info("Created movementDao");
+		return dao;
+	}
+
+	/**
 	 * Picking data access.
 	 */
 	@Bean

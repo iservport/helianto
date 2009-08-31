@@ -43,10 +43,11 @@ public enum MovementDirection {
 	}
 	
 	public static MovementDirection fromValue(BigDecimal quantity) {
-		if (quantity.compareTo(BigDecimal.ZERO)==-1) {
+		int signum = quantity.signum();
+		if (signum==-1) {
 			return OUTPUT;
 		}
-		if (quantity.compareTo(BigDecimal.ZERO)==+1) {
+		if (signum==+1) {
 			return INPUT;
 		}
 		return NEUTRAL;

@@ -28,6 +28,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.TopLevelNumberedEntity;
 import org.helianto.process.ProcessDocument;
 
 
@@ -55,7 +56,7 @@ import org.helianto.process.ProcessDocument;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("I")
-public class Inventory extends AbstractRequirement {
+public class Inventory extends AbstractRequirement implements TopLevelNumberedEntity {
 	
 	/**
 	 * Factory method.

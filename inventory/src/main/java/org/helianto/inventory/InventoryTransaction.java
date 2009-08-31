@@ -33,6 +33,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.core.TopLevelNumberedEntity;
 import org.helianto.document.AbstractEvent;
 
 /**
@@ -57,7 +58,7 @@ import org.helianto.document.AbstractEvent;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("T")
-public class InventoryTransaction extends AbstractEvent {
+public class InventoryTransaction extends AbstractEvent implements TopLevelNumberedEntity {
 	
 	public static <T extends InventoryTransaction> T inventoryTransactionFactory(Class<T> clazz, Inventory moveFrom, Inventory moveTo, BigDecimal quantity) {
 		T inventoryTransaction = null;
@@ -124,6 +125,15 @@ public class InventoryTransaction extends AbstractEvent {
 	}
 	
 	/**
+	 * Required by <code>TopLevelNumberedEntity</code> interface.
+	 */
+	public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {
+		setEntity(entity);
+		setInternalNumber(internalNumber);
+		return this;
+	}
+	
+	/**
 	 * Move a quantity into an inventory.
 	 * 
 	 * @param inventory
@@ -151,14 +161,22 @@ public class InventoryTransaction extends AbstractEvent {
 		return move(from, quantity).move(to, quantity.negate());
 	}
 
-	/**
-	 * equals
-	 */
-	public boolean equals(Object other) {
-		if (other instanceof InventoryTransaction) {
-			return super.equals(other);
-		}
-		return false;
-	}
-	
+    @Override
+    public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof InventoryTransaction) ) return false;
+		 InventoryTransaction castOther = ( InventoryTransaction ) other; 
+         
+		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
+             && (this.getInternalNumber()==castOther.getInternalNumber());
+    }
+   
+    @Override
+    public int hashCode() {
+         int result = 17;
+         result = 37 * result + (int) this.getInternalNumber();
+         return result;
+   }
+
 }

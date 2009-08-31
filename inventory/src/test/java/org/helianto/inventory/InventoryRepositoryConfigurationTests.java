@@ -27,6 +27,7 @@ import org.helianto.core.test.TopLevelNumberedEntityTestSupport;
 import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
 import org.helianto.inventory.test.CardSetTestSupport;
 import org.helianto.inventory.test.CardTestSupport;
+import org.helianto.inventory.test.MovementTestSupport;
 import org.helianto.inventory.test.ProcessAgreementTestSupport;
 import org.helianto.partner.Partner;
 import org.helianto.partner.test.PartnerTestSupport;
@@ -55,6 +56,30 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 		assertEquals(cardSetDao.merge(target), cardSetDao.findUnique(target.getEntity(), target.getInternalNumber()));
 	}
 
+	@Resource BasicDao<Inventory> inventoryDao;
+	@Test
+	public void inventory() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		Inventory target = TopLevelNumberedEntityTestSupport.create(Inventory.class, entity);
+		assertEquals(inventoryDao.merge(target), inventoryDao.findUnique(target.getEntity(), target.getInternalNumber()));
+	}
+	
+	@Resource BasicDao<InventoryTransaction> inventoryTransactionDao;
+	@Test
+	public void inventoryTransaction() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		InventoryTransaction target = TopLevelNumberedEntityTestSupport.create(InventoryTransaction.class, entity);
+		assertEquals(inventoryTransactionDao.merge(target), inventoryTransactionDao.findUnique(target.getEntity(), target.getInternalNumber()));
+	}
+	
+	@Resource BasicDao<Movement> movementDao;
+	@Test
+	public void movement() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		Movement target = MovementTestSupport.create(entity);
+		assertEquals(movementDao.merge(target), movementDao.findUnique(target.getInventoryTransaction(), target.getInventory()));
+	}
+	
 	@Resource FilterDao<Picking, PickingFilter> pickingDao;
 	@Test
 	public void picking() {
