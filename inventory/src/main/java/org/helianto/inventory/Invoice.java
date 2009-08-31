@@ -15,6 +15,9 @@
 
 package org.helianto.inventory;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -23,6 +26,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -63,6 +67,7 @@ public class Invoice extends AbstractInventoryDocument {
     private static final long serialVersionUID = 1L;
     private char invoiceType;
     private Partner partner;
+    private Set<Picking> pickingSet = new HashSet<Picking>();
     
 	/**
      * Default constructor.
@@ -103,6 +108,17 @@ public class Invoice extends AbstractInventoryDocument {
 	}
 	public void setPartner(Partner partner) {
 		this.partner = partner;
+	}
+
+    /**
+	 * Picking set.
+	 */
+    @OneToMany(mappedBy="invoice", cascade=CascadeType.ALL)
+	public Set<Picking> getPickingSet() {
+		return pickingSet;
+	}
+	public void setPickingSet(Set<Picking> pickingSet) {
+		this.pickingSet = pickingSet;
 	}
 
     @Override

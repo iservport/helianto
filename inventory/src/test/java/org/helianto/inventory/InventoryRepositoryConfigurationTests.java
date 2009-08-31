@@ -23,6 +23,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.dao.BasicDao;
 import org.helianto.core.dao.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.test.TopLevelNumberedEntityTestSupport;
 import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
 import org.helianto.inventory.test.CardSetTestSupport;
 import org.helianto.inventory.test.CardTestSupport;
@@ -52,6 +53,14 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
 		CardSet target = CardSetTestSupport.createCardSet(entity);
 		assertEquals(cardSetDao.merge(target), cardSetDao.findUnique(target.getEntity(), target.getInternalNumber()));
+	}
+
+	@Resource FilterDao<Picking, PickingFilter> pickingDao;
+	@Test
+	public void picking() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		Picking target = TopLevelNumberedEntityTestSupport.create(Picking.class, entity);
+		assertEquals(pickingDao.merge(target), pickingDao.findUnique(target.getEntity(), target.getInternalNumber()));
 	}
 
 	@Resource FilterDao<ProcessAgreement, ProcessAgreementFilter> agreementDao;

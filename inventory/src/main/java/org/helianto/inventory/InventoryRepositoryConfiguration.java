@@ -57,6 +57,17 @@ public class InventoryRepositoryConfiguration {
 	}
 
 	/**
+	 * Picking data access.
+	 */
+	@Bean
+	public FilterDao<Picking, PickingFilter> pickingDao() {
+		FilterDao<Picking, PickingFilter> dao =  
+			repositoryFactory.filterDaoFactory(Picking.class, PickingFilter.class, "entity", "internalNumber");
+		logger.info("Created pickingDao");
+		return dao;
+	}
+
+	/**
 	 * Process agreement data access.
 	 */
 	@Bean

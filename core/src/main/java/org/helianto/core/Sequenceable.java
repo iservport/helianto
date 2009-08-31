@@ -18,7 +18,7 @@ package org.helianto.core;
 /**
  * Common Interface to entities having internalNumber.
  *  
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public interface Sequenceable {
 	
