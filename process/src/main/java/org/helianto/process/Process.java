@@ -117,7 +117,6 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
     /**
      * Return an association with a new <tt>Operation</tt>.
      */
-	@Override
 	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 		String operationCode = new StringBuilder("OP").append(sequence).toString();
 		return processOperationFactory(operationCode, 0, sequence);

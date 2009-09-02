@@ -114,7 +114,6 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
     /**
      * Return an association with a new <tt>Characteristic</tt>.
      */
-	@Override
 	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
 		String characteristicCode = new StringBuilder("CH").append(sequence).toString();
 		return operationCharacteristicFactory(characteristicCode, 0, sequence);

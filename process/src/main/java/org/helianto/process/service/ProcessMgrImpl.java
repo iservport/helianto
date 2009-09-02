@@ -137,16 +137,6 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     	return documentAssociation;
     }
     
-    public ProcessDocumentAssociation prepareAssociation(ProcessDocument parent, int sequence) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Parent class is "+parent.getClass());
-        }
-        ProcessDocument managedParent = processDocumentDao.merge(parent);
-        ProcessDocumentAssociation documentAssociation = managedParent.documentAssociationFactory(sequence);
-        processDocumentDao.evict(managedParent);
-    	return documentAssociation;
-    }
-    
     public List<ProcessDocumentAssociation> findCharacteristics(User user, Operation operation) {
 		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(user, operation);
         if (logger.isDebugEnabled()) {

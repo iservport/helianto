@@ -12,9 +12,4 @@ public class DocumentExtension extends ProcessDocument {
 	public DocumentExtension() {
 	}
 
-	@Override
-	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-		return null;
-	}
-
 }

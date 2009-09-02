@@ -36,9 +36,4 @@ public class Consumable extends DerivedProcessDocument {
 		super();
 	}
 	
-	@Override
-	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-		return null;
-	}
-
 }

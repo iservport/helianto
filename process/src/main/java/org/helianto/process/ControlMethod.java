@@ -47,12 +47,6 @@ public class ControlMethod extends ProcessDocument {
         this.sampleFrequency = sampleFrequency;
     }
     
-	@Override
-	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-    
 	public ControlMethod controlMethodFactory() {
 		ControlMethod controlMethod = new ControlMethod();
 		return controlMethod;

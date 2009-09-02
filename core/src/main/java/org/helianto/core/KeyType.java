@@ -73,7 +73,7 @@ public class KeyType implements java.io.Serializable {
     }
 
     /**
-     * Operator.
+     * <<NaturalKey>> Operator.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="operatorId", nullable=true)
@@ -85,14 +85,15 @@ public class KeyType implements java.io.Serializable {
     }
 
     /**
-     * Key code.
+     * <<NaturalKey>> Key code.
      */
     @Column(length=20)
     public String getKeyCode() {
         return this.keyCode;
     }
-    public void setKeyCode(String keyCode) {
+    public KeyType setKeyCode(String keyCode) {
         this.keyCode = keyCode;
+        return this;
     }
 
     /**

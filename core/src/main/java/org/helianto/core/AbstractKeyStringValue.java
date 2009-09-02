@@ -44,8 +44,9 @@ public abstract class AbstractKeyStringValue extends AbstractKeyValue {
     public String getKeyValue() {
         return this.keyValue;
     }
-    public void setKeyValue(String keyValue) {
+    public AbstractKeyStringValue setKeyValue(String keyValue) {
         this.keyValue = keyValue;
+        return this;
     }
 
    /**

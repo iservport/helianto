@@ -54,7 +54,7 @@ public class Movement implements Serializable {
 	private int version;
 	private InventoryTransaction inventoryTransaction;
 	private Inventory inventory;
-	private BigDecimal quantity;
+	private BigDecimal quantity = BigDecimal.ZERO;
 
 	/**
 	 * Default constructor.

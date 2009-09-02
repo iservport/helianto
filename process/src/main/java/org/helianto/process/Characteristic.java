@@ -106,7 +106,6 @@ public class Characteristic extends DerivedProcessDocument {
      * 
      * @param sequence
      */
-	@Override
 	public Method documentAssociationFactory(int sequence) {
 		ControlMethod child = ControlMethod.documentFactory(ControlMethod.class, getEntity(), "");
 		return documentAssociationFactory(child,sequence);

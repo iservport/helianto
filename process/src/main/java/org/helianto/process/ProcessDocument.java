@@ -62,7 +62,7 @@ import org.helianto.document.AbstractDocument;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class ProcessDocument extends AbstractDocument implements Comparator<ProcessDocumentAssociation> {
+public class ProcessDocument extends AbstractDocument implements Comparator<ProcessDocumentAssociation> {
 
     private static final long serialVersionUID = 1L;
     private Unit unit;
@@ -187,14 +187,6 @@ public abstract class ProcessDocument extends AbstractDocument implements Compar
     public static ProcessDocument processDocumentFactory(Entity entity, String docCode) {
         return AbstractDocument.documentFactory(ProcessDocument.class, entity, docCode);
     }
-
-    //1.1
-    /**
-     * <code>ProcessDocument</code> general factory.
-     * 
-     * @param sequence
-     */
-    public abstract ProcessDocumentAssociation documentAssociationFactory(int sequence);
 
     //1.2
     /**

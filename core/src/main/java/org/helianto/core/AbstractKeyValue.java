@@ -72,8 +72,9 @@ public abstract class AbstractKeyValue implements java.io.Serializable {
     public KeyType getKeyType() {
         return this.keyType;
     }
-    public void setKeyType(KeyType keyType) {
+    public AbstractKeyValue setKeyType(KeyType keyType) {
         this.keyType = keyType;
+        return this;
     }
 
     /**
