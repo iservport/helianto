@@ -84,7 +84,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 	 * List associated movements.
 	 */
 	@Transient
-	public List<Movement> movementList() {
+	public List<Movement> getMovementList() {
 		List<Movement> movementList = new ArrayList<Movement>(inventoryTransaction.getMovements());
 		return movementList;
 	}
