@@ -21,10 +21,12 @@ import java.util.Collection;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.repository.FilterDao;
 
 /**
  * Default implementation to <code>FilterDao</code> interface using Hibernate Session.
  * 
+ * @deprecated
  * @author Mauricio Fernandes de Castro
  */
 public abstract class AbstractHibernateFilterDao<T, F extends AbstractUserBackedCriteriaFilter> extends AbstractHibernateBasicDao<T> implements FilterDao<T, F> {

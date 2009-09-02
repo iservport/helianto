@@ -37,8 +37,8 @@ import org.helianto.core.ProvinceFilter;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.dao.BasicDao;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.FilterDao;
 import org.springframework.transaction.annotation.Transactional;
 
 /**

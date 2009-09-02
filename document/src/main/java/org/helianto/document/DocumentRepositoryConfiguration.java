@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.document;
 
 import javax.annotation.Resource;
 
@@ -32,49 +32,38 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @SuppressWarnings("unchecked")
-public class ProcessRepositoryConfiguration {
-
+public class DocumentRepositoryConfiguration {
+	
 	/**
-	 * Measurement technique data access.
+	 * Document association data access.
 	 */
 	@Bean
-	public FilterDao<MeasurementTechnique, MeasurementTechniqueFilter> measurementTechniqueDao() {
-		FilterDao<MeasurementTechnique, MeasurementTechniqueFilter> dao =  
-			repositoryFactory.filterDaoFactory(MeasurementTechnique.class, MeasurementTechniqueFilter.class, "entity", "measurementTechniqueCode");
-		logger.info("Created measurementTechniqueDao");
+	public BasicDao<DocumentAssociation> documentAssociationDao() {
+		BasicDao<DocumentAssociation> dao =  
+			repositoryFactory.basicDaoFactory(DocumentAssociation.class, "parent", "child");
+		logger.info("Created documentAssociationDao");
 		return dao;
 	}
 
 	/**
-	 * Process document association data access.
+	 * Document data access.
 	 */
 	@Bean
-	public BasicDao<ProcessDocumentAssociation> processDocumentAssociationDao() {
-		BasicDao<ProcessDocumentAssociation> dao =  
-			repositoryFactory.basicDaoFactory(ProcessDocumentAssociation.class, "parent", "child");
-		logger.info("Created processDocumentAssociationDao");
+	public FilterDao<Document, DocumentFilter> documentDao() {
+		FilterDao<Document, DocumentFilter> dao =  
+			repositoryFactory.filterDaoFactory(Document.class, DocumentFilter.class, "entity", "docCode");
+		logger.info("Created documentDao");
 		return dao;
 	}
 
 	/**
-	 * Process document data access.
+	 * Document tag data access.
 	 */
 	@Bean
-	public FilterDao<ProcessDocument, ProcessDocumentFilter> processDocumentDao() {
-		FilterDao<ProcessDocument, ProcessDocumentFilter> dao =  
-			repositoryFactory.filterDaoFactory(ProcessDocument.class, ProcessDocumentFilter.class, "entity", "docCode");
-		logger.info("Created processDocumentDao");
-		return dao;
-	}
-
-	/**
-	 * Setup data access.
-	 */
-	@Bean
-	public BasicDao<Setup> setupDao() {
-		BasicDao<Setup> dao =  
-			repositoryFactory.basicDaoFactory(Setup.class, "operation", "resource");
-		logger.info("Created setupDao");
+	public BasicDao<DocumentTag> documentTagDao() {
+		BasicDao<DocumentTag> dao =  
+			repositoryFactory.basicDaoFactory(DocumentTag.class, "document", "tagCode");
+		logger.info("Created documentTagDao");
 		return dao;
 	}
 
@@ -87,6 +76,6 @@ public class ProcessRepositoryConfiguration {
 		this.repositoryFactory = repositoryFactory;
 	}
 
-    private static final Log logger = LogFactory.getLog(ProcessRepositoryConfiguration.class);
+    private static final Log logger = LogFactory.getLog(DocumentRepositoryConfiguration.class);
 
 }

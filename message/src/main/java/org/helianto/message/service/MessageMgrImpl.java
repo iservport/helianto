@@ -26,7 +26,7 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Server;
 import org.helianto.core.ServerFilter;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.FilterDao;
 import org.helianto.message.mail.ConfigurableMailSenderFactory;
 import org.helianto.message.mail.compose.MailMessageComposer;
 import org.helianto.message.mail.compose.PasswordConfirmationMailForm;

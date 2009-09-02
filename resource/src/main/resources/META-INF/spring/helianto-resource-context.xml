@@ -23,6 +23,6 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-2.5.xsd">
                
-	<context:component-scan base-package="org.helianto.resource.repository,org.helianto.resource.service,org.helianto.resource.validation"/>
+	<context:component-scan base-package="org.helianto.resource,org.helianto.resource.service,org.helianto.resource.validation"/>
     
 </beans>

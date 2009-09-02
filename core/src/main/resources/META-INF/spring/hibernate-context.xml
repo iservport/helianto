@@ -60,7 +60,7 @@
 		</property>
 	</bean>	
 	
-	<bean id="persistenceStrategy" class="org.helianto.core.dao.HibernatePersistenceStrategy" />
+	<bean id="persistenceStrategy" class="org.helianto.core.repository.HibernatePersistenceStrategy" />
 
 	<!-- 
 	    Transaction manager for Hibernate 

@@ -20,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
-import org.helianto.core.dao.BasicDao;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.test.AbstractProcessDaoIntegrationTest;
 import org.helianto.process.test.CharacteristicTestSupport;

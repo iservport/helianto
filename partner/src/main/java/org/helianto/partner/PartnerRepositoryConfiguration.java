@@ -19,10 +19,9 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.dao.BasicDao;
-import org.helianto.core.dao.FilterDao;
-import org.helianto.core.repository.CoreHibernateRepository;
-import org.helianto.core.repository.RepositoryFactory;
+import org.helianto.core.RepositoryFactory;
+import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.FilterDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -121,6 +120,6 @@ public class PartnerRepositoryConfiguration {
 		this.repositoryFactory = repositoryFactory;
 	}
 
-    private static final Log logger = LogFactory.getLog(CoreHibernateRepository.class);
+    private static final Log logger = LogFactory.getLog(PartnerRepositoryConfiguration.class);
 
 }

@@ -26,8 +26,8 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.dao.AbstractBasicDao;
-import org.helianto.core.dao.PersistenceStrategy;
+import org.helianto.core.repository.AbstractBasicDao;
+import org.helianto.core.repository.PersistenceStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

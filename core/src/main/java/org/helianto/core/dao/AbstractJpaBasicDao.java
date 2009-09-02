@@ -19,6 +19,7 @@ import javax.persistence.EntityManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.repository.AbstractBasicDao;
 
 /**
  * Base implementation using Jpa for <code>BasicDao</code>.

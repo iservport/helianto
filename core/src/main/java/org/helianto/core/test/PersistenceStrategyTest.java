@@ -26,8 +26,8 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.dao.AbstractBasicDao;
 import org.helianto.core.dao.AbstractHibernateBasicDao;
+import org.helianto.core.repository.AbstractBasicDao;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;

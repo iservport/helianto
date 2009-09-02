@@ -19,6 +19,9 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.helianto.core.repository.AbstractBasicDao;
+import org.helianto.core.repository.HibernatePersistenceStrategy;
+import org.helianto.core.repository.PersistenceStrategy;
 import org.springframework.beans.factory.InitializingBean;
 
 /**

@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.inventory.ProcessAgreement;
 import org.helianto.inventory.ProcessAgreementFilter;

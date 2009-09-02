@@ -153,7 +153,7 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
     /**
      * Set of child <code>ResourceAssociation</code>s.
      */
-    @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="parent")
     public Set<ResourceAssociation> getChildAssociations() {
     	return this.childAssociations;
     }   
@@ -171,7 +171,7 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
     /**
      * Set of parent <code>ResourceAssociation</code>s.
      */
-    @OneToMany(mappedBy="child", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="child", cascade = {CascadeType.ALL})
     public Set<ResourceAssociation> getParentAssociations() {
     	return this.parentAssociations;
     }   

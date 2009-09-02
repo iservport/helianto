@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.helianto.core.Category;
 import org.helianto.core.CategoryFilter;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -13,36 +13,44 @@
  * limitations under the License.
  */
 
-package org.helianto.core.dao;
+package org.helianto.core.repository;
 
 import java.util.Collection;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.ejb.HibernateEntityManager;
+import org.hibernate.Query;
 
 /**
- * Jpa implementation for <code>PersistenceStrategy</code>.
+ * Hibernate implementation for <code>PersistenceStrategy</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("unchecked")
-public class JpaPersistenceStrategy implements PersistenceStrategy {
+public class HibernatePersistenceStrategy implements PersistenceStrategy {
+	
+	/**
+	 * Default constructor.
+	 */
+	public HibernatePersistenceStrategy() {		
+	}
+
+	/**
+	 * Session factory constructor.
+	 */
+	public HibernatePersistenceStrategy(org.hibernate.SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	public Collection<Object> find(String query, Object... values) {
-        Query result = this.em.createQuery(query);
-        /*
-         * Remember that ordinal parameters are 1-based!
-         */
-        int i = 1;
+        Query result = this.sessionFactory.getCurrentSession().createQuery(query);
+        int i = 0;
         for (Object value: values) {
             result.setParameter(i++, value);
         }
-        Collection<Object> resultList = result.getResultList();
+        Collection<Object> resultList = result.list();
         if (logger.isDebugEnabled()) {
             logger.debug("Found "+resultList.size()+" item(s)");
         }
@@ -53,62 +61,56 @@ public class JpaPersistenceStrategy implements PersistenceStrategy {
         if (logger.isDebugEnabled()) {
             logger.debug("Merging "+object);
         }
-        return this.em.merge(object);
+		return this.sessionFactory.getCurrentSession().merge(object);
 	}
 
 	public void persist(Object managedObject) {
         if (logger.isDebugEnabled()) {
             logger.debug("Persisting "+managedObject);
         }
-        this.em.persist(managedObject);
+        this.sessionFactory.getCurrentSession().persist(managedObject);
 	}
 
 	public void remove(Object object) {
         if (logger.isDebugEnabled()) {
             logger.debug("Removing "+object);
         }
-        this.em.remove(object);
+		this.sessionFactory.getCurrentSession().delete(object);
 	}
 
 	public void evict(Object object) {
-		if (this.em instanceof HibernateEntityManager) {
-	        if (logger.isDebugEnabled()) {
-	            logger.debug("Evicting "+object);
-	        }
-	        ((HibernateEntityManager) em).getSession().evict(object);
-		}
-		else {
-	        throw new IllegalArgumentException("Not supported on JPA 1.0");
-		}
+        if (logger.isDebugEnabled()) {
+            logger.debug("Evicting "+object);
+        }
+		this.sessionFactory.getCurrentSession().evict(object);
 	}
 	
 	public void flush() {
         if (logger.isDebugEnabled()) {
             logger.debug("Flushing session");
         }
-        this.em.flush();
+		this.sessionFactory.getCurrentSession().flush();
 	}
 	
 	public void clear() {
         if (logger.isDebugEnabled()) {
             logger.debug("Clearing session");
         }
-        this.em.clear();
+		this.sessionFactory.getCurrentSession().clear();
 	}
 
 	// collabs
     
-    private EntityManager em;
+    private org.hibernate.SessionFactory sessionFactory;
     
     /**
-     * Spring will inject a managed JPA {@link EntityManager} into this field.
+     * Spring will inject a managed Hibernate Session into this field.
      */
-    @PersistenceContext
-	public void setEntityManager(EntityManager em) {
-		this.em = em;
+    @Resource(name="sessionFactory")
+	public void setSessionFactory(org.hibernate.SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
-
-    private static final Log logger = LogFactory.getLog(JpaPersistenceStrategy.class);
+    private static final Log logger = LogFactory.getLog(HibernatePersistenceStrategy.class);
 
 }

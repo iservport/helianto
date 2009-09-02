@@ -30,7 +30,7 @@ import java.util.List;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.ServerFilter;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

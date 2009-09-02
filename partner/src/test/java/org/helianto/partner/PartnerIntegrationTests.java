@@ -19,8 +19,8 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.dao.BasicDao;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
 import org.helianto.partner.test.AccountTestSupport;
 import org.helianto.partner.test.AddressTestSupport;

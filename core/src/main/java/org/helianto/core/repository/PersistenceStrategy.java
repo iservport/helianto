@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.dao;
+package org.helianto.core.repository;
 
 import java.util.Collection;
 

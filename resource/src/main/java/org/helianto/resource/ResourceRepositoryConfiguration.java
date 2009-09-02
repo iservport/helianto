@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.resource;
 
 import javax.annotation.Resource;
 
@@ -32,49 +32,49 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @SuppressWarnings("unchecked")
-public class ProcessRepositoryConfiguration {
-
+public class ResourceRepositoryConfiguration {
+	
 	/**
-	 * Measurement technique data access.
+	 * Resource association data access.
 	 */
 	@Bean
-	public FilterDao<MeasurementTechnique, MeasurementTechniqueFilter> measurementTechniqueDao() {
-		FilterDao<MeasurementTechnique, MeasurementTechniqueFilter> dao =  
-			repositoryFactory.filterDaoFactory(MeasurementTechnique.class, MeasurementTechniqueFilter.class, "entity", "measurementTechniqueCode");
-		logger.info("Created measurementTechniqueDao");
+	public BasicDao<ResourceAssociation> resourceAssociationDao() {
+		BasicDao<ResourceAssociation> dao =  
+			repositoryFactory.basicDaoFactory(ResourceAssociation.class, "parent", "child");
+		logger.info("Created resourceAssociationDao");
 		return dao;
 	}
 
 	/**
-	 * Process document association data access.
+	 * Resource group data access.
 	 */
 	@Bean
-	public BasicDao<ProcessDocumentAssociation> processDocumentAssociationDao() {
-		BasicDao<ProcessDocumentAssociation> dao =  
-			repositoryFactory.basicDaoFactory(ProcessDocumentAssociation.class, "parent", "child");
-		logger.info("Created processDocumentAssociationDao");
+	public FilterDao<ResourceGroup, ResourceGroupFilter> resourceGroupDao() {
+		FilterDao<ResourceGroup, ResourceGroupFilter> dao =  
+			repositoryFactory.filterDaoFactory(ResourceGroup.class, ResourceGroupFilter.class, "entity", "resourceCode");
+		logger.info("Created resourceGroupDao");
 		return dao;
 	}
 
 	/**
-	 * Process document data access.
+	 * Resource parameter data access.
 	 */
 	@Bean
-	public FilterDao<ProcessDocument, ProcessDocumentFilter> processDocumentDao() {
-		FilterDao<ProcessDocument, ProcessDocumentFilter> dao =  
-			repositoryFactory.filterDaoFactory(ProcessDocument.class, ProcessDocumentFilter.class, "entity", "docCode");
-		logger.info("Created processDocumentDao");
+	public FilterDao<ResourceParameter, ResourceParameterFilter> resourceParameterDao() {
+		FilterDao<ResourceParameter, ResourceParameterFilter> dao =  
+			repositoryFactory.filterDaoFactory(ResourceParameter.class, ResourceParameterFilter.class, "entity", "parameterCode");
+		logger.info("Created resourceParameterDao");
 		return dao;
 	}
 
 	/**
-	 * Setup data access.
+	 * Resource parameter value data access.
 	 */
 	@Bean
-	public BasicDao<Setup> setupDao() {
-		BasicDao<Setup> dao =  
-			repositoryFactory.basicDaoFactory(Setup.class, "operation", "resource");
-		logger.info("Created setupDao");
+	public BasicDao<ResourceParameterValue> resourceParameterValueDao() {
+		BasicDao<ResourceParameterValue> dao =  
+			repositoryFactory.basicDaoFactory(ResourceParameterValue.class, "resource", "parameter");
+		logger.info("Created resourceParameterValueDao");
 		return dao;
 	}
 
@@ -87,6 +87,6 @@ public class ProcessRepositoryConfiguration {
 		this.repositoryFactory = repositoryFactory;
 	}
 
-    private static final Log logger = LogFactory.getLog(ProcessRepositoryConfiguration.class);
+    private static final Log logger = LogFactory.getLog(ResourceRepositoryConfiguration.class);
 
 }

@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.FilterDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;

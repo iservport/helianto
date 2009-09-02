@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.ResourceAssociation;
 import org.helianto.resource.ResourceGroup;
 import org.helianto.resource.ResourceGroupFilter;

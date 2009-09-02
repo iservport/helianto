@@ -16,7 +16,6 @@
 package org.helianto.resource.test;
 
 import org.helianto.core.Entity;
-import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.resource.Resource;
 
@@ -34,11 +33,7 @@ public class ResourceTestSupport {
     }
 
     public static Resource createResource(Entity entity) {
-        return ResourceTestSupport.createResource(entity, DomainTestSupport.getNonRepeatableStringValue(20, testKey++));
-    }
-
-    public static Resource createResource(Entity entity, String resourceCode) {
-        Resource resourceGroup = Resource.resourceFactory(entity, resourceCode);
+        Resource resourceGroup = Resource.resourceFactory(entity, String.valueOf(testKey++));
         return resourceGroup;
     }
 

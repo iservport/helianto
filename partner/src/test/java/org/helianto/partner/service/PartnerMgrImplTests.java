@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 import org.junit.After;

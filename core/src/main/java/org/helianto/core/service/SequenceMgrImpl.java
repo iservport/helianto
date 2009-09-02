@@ -26,8 +26,8 @@ import org.helianto.core.EntityFilter;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
-import org.helianto.core.dao.BasicDao;
-import org.helianto.core.dao.FilterDao;
+import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.FilterDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

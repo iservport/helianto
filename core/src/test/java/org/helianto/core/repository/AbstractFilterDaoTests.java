@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.helianto.core.Identity;
-import org.helianto.core.dao.AbstractFilterDao;
-import org.helianto.core.dao.PersistenceStrategy;
 import org.helianto.core.filter.UserBackedFilter;
 import org.junit.Before;
 import org.junit.Test;
