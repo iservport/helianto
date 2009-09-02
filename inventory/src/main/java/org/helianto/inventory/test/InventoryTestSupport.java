@@ -15,35 +15,35 @@
 
 package org.helianto.inventory.test;
 
-import org.helianto.core.test.TopLevelNumberedEntityTestSupport;
+import org.helianto.core.Entity;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.inventory.Inventory;
-import org.helianto.inventory.InventoryTransaction;
-import org.helianto.inventory.Movement;
 
 /**
- * Test support to Movement.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class MovementTestSupport {
+public class InventoryTestSupport {
 
+	private static long testKey = 0;
+	
 	/**
-	 * Create sample.
+	 * Create a sample.
 	 */
-	public static Movement create() {
-		return MovementTestSupport.create(new InventoryTransaction());
+	public static Inventory create() {
+		return InventoryTestSupport.create(EntityTestSupport.createEntity());
 	}
 
 	/**
-	 * Create sample.
+	 * Create a sample.
 	 * 
-	 * @param inventoryTransaction
+	 * @param entity
 	 */
-	public static Movement create(InventoryTransaction inventoryTransaction) {
-		Movement movement = new Movement();
-		movement.setInventoryTransaction(inventoryTransaction);
-		movement.setInventory(TopLevelNumberedEntityTestSupport.create(Inventory.class));
-		return movement;
+	public static Inventory create(Entity entity) {
+		Inventory inventory =  new Inventory();
+		inventory.setEntity(entity);
+		inventory.setInternalNumber(testKey++);
+		return inventory;
 	}
 
 }

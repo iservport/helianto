@@ -15,6 +15,7 @@
 
 package org.helianto.inventory;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,18 +24,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-
-import org.helianto.core.Entity;
-import org.helianto.core.TopLevelNumberedEntity;
-import org.helianto.document.AbstractEvent;
+import javax.persistence.Version;
 
 /**
  * Represents inventory movement.
@@ -49,16 +46,14 @@ import org.helianto.document.AbstractEvent;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="inv_transaction",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "internalNumber"})}
-)
+@Table(name="inv_transaction")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
     name="type",
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("T")
-public class InventoryTransaction extends AbstractEvent implements TopLevelNumberedEntity {
+public class InventoryTransaction implements Serializable {
 	
 	public static <T extends InventoryTransaction> T inventoryTransactionFactory(Class<T> clazz, Inventory moveFrom, Inventory moveTo, BigDecimal quantity) {
 		T inventoryTransaction = null;
@@ -72,8 +67,8 @@ public class InventoryTransaction extends AbstractEvent implements TopLevelNumbe
 	}
 
 	private static final long serialVersionUID = 1L;
-	private Entity entity;
-	private BigDecimal movementQty;
+    private int id;
+    private Integer version;
 	private Set<Movement> movements = new HashSet<Movement>();
 	
 	/**
@@ -83,36 +78,29 @@ public class InventoryTransaction extends AbstractEvent implements TopLevelNumbe
 		super();
 	}
 
-	@Transient
-	@Override
-	public String getInternalNumberKey() {
-		return "INVTX";
-	}
-	
-	/**
-	 * <<NaturalKey>> Entity.
-	 */
-	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="entityId")
-	public Entity getEntity() {
-		return entity;
-	}
-	public InventoryTransaction setEntity(Entity entity) {
-		this.entity = entity;
-		return this;
-	}
+    /**
+     * Primary key.
+     */
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
+        return this.id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	/**
-	 * Quantity moved.
-	 */
-	public BigDecimal getMovementQty() {
-		return movementQty;
-	}
-	public InventoryTransaction setMovementQty(BigDecimal movementQty) {
-		this.movementQty = movementQty;
-		return this;
-	}
-	
+    /**
+     * Version.
+     */
+    @Version
+    public Integer getVersion() {
+        return this.version;
+    }
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+    
+
 	/**
 	 * Set of movements.
 	 */
@@ -122,15 +110,6 @@ public class InventoryTransaction extends AbstractEvent implements TopLevelNumbe
 	}
 	public void setMovements(Set<Movement> movements) {
 		this.movements = movements;
-	}
-	
-	/**
-	 * Required by <code>TopLevelNumberedEntity</code> interface.
-	 */
-	public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {
-		setEntity(entity);
-		setInternalNumber(internalNumber);
-		return this;
 	}
 	
 	/**
@@ -160,23 +139,5 @@ public class InventoryTransaction extends AbstractEvent implements TopLevelNumbe
 	public InventoryTransaction move(Inventory from, Inventory to, BigDecimal quantity) {
 		return move(from, quantity).move(to, quantity.negate());
 	}
-
-    @Override
-    public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof InventoryTransaction) ) return false;
-		 InventoryTransaction castOther = ( InventoryTransaction ) other; 
-         
-		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
-             && (this.getInternalNumber()==castOther.getInternalNumber());
-    }
-   
-    @Override
-    public int hashCode() {
-         int result = 17;
-         result = 37 * result + (int) this.getInternalNumber();
-         return result;
-   }
 
 }

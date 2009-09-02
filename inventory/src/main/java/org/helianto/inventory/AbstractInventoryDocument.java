@@ -56,6 +56,16 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
     private InventoryTransaction inventoryTransaction;
     private Date issueDate;
 	private Date shipmentDate;
+	
+	/**
+	 * Default constructor.
+	 */
+	public AbstractInventoryDocument() {
+		super();
+		if (getInventoryTransaction()==null) {
+			setInventoryTransaction(new InventoryTransaction());
+		}
+	}
     
     /**
 	 * The wrapped inventory transaction

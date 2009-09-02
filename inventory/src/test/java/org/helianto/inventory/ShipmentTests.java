@@ -20,7 +20,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.inventory.test.InventoryTestSupport;
-import org.helianto.inventory.test.InventoryTransactionTestSupport;
 import org.junit.Test;
 
 
@@ -44,7 +43,7 @@ public class ShipmentTests {
 		assertFalse(shipment.equals(null));
 		assertTrue(shipment.equals(other));
 		
-		InventoryTransaction inventoryTransaction = InventoryTransactionTestSupport.create();
+		InventoryTransaction inventoryTransaction = new InventoryTransaction();
 		Inventory inventory = InventoryTestSupport.create();
 
 		shipment.setInventoryTransaction(inventoryTransaction);

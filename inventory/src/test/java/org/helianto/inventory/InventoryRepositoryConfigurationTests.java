@@ -64,14 +64,6 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 		assertEquals(inventoryDao.merge(target), inventoryDao.findUnique(target.getEntity(), target.getInternalNumber()));
 	}
 	
-	@Resource BasicDao<InventoryTransaction> inventoryTransactionDao;
-	@Test
-	public void inventoryTransaction() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		InventoryTransaction target = TopLevelNumberedEntityTestSupport.create(InventoryTransaction.class, entity);
-		assertEquals(inventoryTransactionDao.merge(target), inventoryTransactionDao.findUnique(target.getEntity(), target.getInternalNumber()));
-	}
-	
 	// FIXME
 //	@Resource BasicDao<Movement> movementDao;
 //	@Test

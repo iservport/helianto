@@ -16,19 +16,17 @@
 package org.helianto.inventory;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
 import org.helianto.core.Entity;
-import org.helianto.core.TopLevelNumberedEntity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.TopLevelNumberedEntityTestSupport;
-import org.helianto.document.AbstractEvent;
 import org.junit.Test;
 
 
@@ -41,9 +39,7 @@ public class InventoryTransactionTests {
 	@Test
 	public void constructor() {
 		InventoryTransaction inventoryTransaction = new InventoryTransaction();
-		assertTrue(inventoryTransaction instanceof AbstractEvent);
-		assertTrue(inventoryTransaction instanceof TopLevelNumberedEntity);
-		assertEquals("INVTX", inventoryTransaction.getInternalNumberKey());
+		assertTrue(inventoryTransaction instanceof Serializable);
 	}
 	
 	@Test
@@ -69,22 +65,6 @@ public class InventoryTransactionTests {
 
 	@Test
 	public void inventoryTransactionEquals() {
-		InventoryTransaction inventoryTransaction = new InventoryTransaction();
-		InventoryTransaction other = new InventoryTransaction();
-		assertFalse(inventoryTransaction.equals(null));
-		assertTrue(inventoryTransaction.equals(other));
-		
-		Entity entity = EntityTestSupport.createEntity();
-		inventoryTransaction.setKey(entity, Long.MAX_VALUE);
-		assertFalse(inventoryTransaction.equals(other));
-		other.setEntity(entity);
-		assertFalse(inventoryTransaction.equals(other));
-		other.setInternalNumber(Long.MAX_VALUE);
-		assertTrue(inventoryTransaction.equals(other));
-		assertEquals(inventoryTransaction.hashCode(), other.hashCode());
-		other.setEntity(new Entity());
-		assertFalse(inventoryTransaction.equals(other));
-		other.setInternalNumber(Long.MIN_VALUE);
-		assertFalse(inventoryTransaction.equals(other));
+		// we do not need equals because there is no natural key
 	}
 }
