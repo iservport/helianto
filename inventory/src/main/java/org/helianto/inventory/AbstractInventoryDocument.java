@@ -15,6 +15,7 @@
 
 package org.helianto.inventory;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +57,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
     private InventoryTransaction inventoryTransaction;
     private Date issueDate;
 	private Date shipmentDate;
+	private char blockingState;
 	
 	/**
 	 * Default constructor.
@@ -85,8 +87,37 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 	 */
 	@Transient
 	public List<Movement> getMovementList() {
-		List<Movement> movementList = new ArrayList<Movement>(inventoryTransaction.getMovements());
+		List<Movement> movementList = new ArrayList<Movement>(getInventoryTransaction().getMovements());
 		return movementList;
+	}
+
+	/**
+	 * Add movement.
+	 */
+	@Transient
+	public boolean addMovement(Movement movement) {
+		movement.setInventoryTransaction(getInventoryTransaction());
+		calculate();
+		return getInventoryTransaction().getMovements().add(movement);
+	}
+
+	/**
+	 * Create and add movement.
+	 */
+	@Transient
+	protected <T extends Movement> T addMovement(Class<T> clazz, Inventory inventory, BigDecimal qty) {
+		try {
+			T movement = clazz.newInstance();
+			movement.setInventory(inventory);
+			movement.setQuantity(qty);
+			if (addMovement(movement)) {
+				return movement;
+			}
+		}
+		catch (Exception e) {
+			throw new IllegalArgumentException("Unable to create movement", e);
+		}
+		throw new IllegalArgumentException("Unable to add movement to transaction");
 	}
 
 	/**
@@ -109,6 +140,31 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 	}
 	public void setShipmentDate(Date shipmentDate) {
 		this.shipmentDate = shipmentDate;
+	}
+
+	/**
+	 * The blocking state.
+	 * 
+	 * <p>
+	 * If the document is in calculate state, any change made
+	 * to a calculation field should trigger the calculate() method.
+	 * </p>
+	 */
+	public char getBlockingState() {
+		return blockingState;
+	}
+	public void setBlockingState(char blockingState) {
+		this.blockingState = blockingState;
+	}
+	public void setBlockingState(BlockingState blockingState) {
+		this.blockingState = blockingState.getValue();
+	}
+	
+	/**
+	 * 
+	 */
+	protected void calculate() {
+		
 	}
 
 }

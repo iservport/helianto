@@ -139,7 +139,7 @@ public class Tax extends AbstractKeyValue {
      */
 	@Transient
 	public Tax calculate() {
-		return setTaxValue(getTaxBaseValue().multiply(getTaxRate()));
+		return setTaxValue(getTaxBaseValue().multiply(getTaxRate()).divide(new BigDecimal(100)));
 	}
 
     /**
