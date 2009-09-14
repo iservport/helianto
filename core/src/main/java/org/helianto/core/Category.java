@@ -131,22 +131,6 @@ public class Category implements java.io.Serializable {
     }
 
     /**
-     * <code>Category</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getCategoryQueryStringBuilder() {
-        return new StringBuilder("select category from Category category ");
-    }
-
-    /**
-     * <code>Category</code> natural id query.
-     */
-    @Transient
-    public static String getCategoryNaturalIdQueryString() {
-        return getCategoryQueryStringBuilder().append("where category.entity = ? and category.categoryGroup = ?  and category.categoryCode = ? ").toString();
-    }
-
-    /**
      * <code>Category</code> query alias.
      */
     @Transient
