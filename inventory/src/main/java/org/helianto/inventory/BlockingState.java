@@ -25,29 +25,31 @@ public enum BlockingState {
 	/**
 	 * Initial state.
 	 */
-	OPEN('O', false, true),
+	OPEN('O', false, true, false),
 	/**
 	 * Force totals update both on master and detail sides of the transaction.
 	 */
-	CALCULATE('C', true, true),
+	CALCULATE('C', true, true, false),
 	/**
 	 * Immutable on fields that affect calculation.
 	 */
-	ISSUED('I', false, false),
+	ISSUED('I', false, false, true),
 	/**
 	 * Immutable on all fields, ready to account.
 	 */
-	CLOSED('C', false, false);
+	CLOSED('C', false, false, true);
 	
-	private BlockingState(char value, boolean totalizeOnChangeRequired, boolean totalizeOnChangeAllowed) {
+	private BlockingState(char value, boolean totalizeOnChangeRequired, boolean totalizeOnChangeAllowed, boolean immutable) {
 		this.value = value;
 		this.totalizeOnChangeRequired = totalizeOnChangeRequired;
 		this.totalizeOnChangeAllowed = totalizeOnChangeAllowed;
+		this.immutable = immutable;
 	}
 	
 	private char value;
 	private boolean totalizeOnChangeRequired;
 	private boolean totalizeOnChangeAllowed;
+	private boolean immutable;
 
 	/**
 	 * The value assigned to the blocking state.
@@ -66,6 +68,25 @@ public enum BlockingState {
 	 */
 	public boolean isTotalizeOnChangeAllowed() {
 		return totalizeOnChangeAllowed;
+	}
+	/**
+	 * True if any field can be changed.
+	 */
+	public boolean isImmutable() {
+		return immutable;
+	}
+	/**
+	 * Return the blocking state given the value.
+	 * 
+	 * @param value
+	 */
+	public static BlockingState fromValue(char value) {
+		for (BlockingState bs: BlockingState.values()) {
+			if (bs.getValue()==value) {
+				return bs;
+			}
+		}
+		throw new IllegalArgumentException("Invalid value");
 	}
 
 }

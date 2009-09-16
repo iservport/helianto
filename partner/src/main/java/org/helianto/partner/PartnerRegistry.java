@@ -157,7 +157,9 @@ public class PartnerRegistry implements java.io.Serializable {
     /**
      * Addresses.
      */
-    @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="partnerRegistry"
+    	, cascade=CascadeType.ALL
+    	, fetch=FetchType.EAGER)
     public Set<Address> getAddresses() {
         return this.addresses;
     }

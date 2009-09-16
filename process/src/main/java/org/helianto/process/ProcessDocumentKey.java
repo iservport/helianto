@@ -61,10 +61,20 @@ public class ProcessDocumentKey extends AbstractKeyStringValue {
     private ProcessDocument processDocument;
 
     /** 
-     * Default constructor.
+     * Empty constructor.
      */
     public ProcessDocumentKey() {
     	super();
+    }
+
+    /** 
+     * Preferred constructor.
+     * 
+     * @param processDocument
+     */
+    public ProcessDocumentKey(ProcessDocument processDocument) {
+    	super();
+    	setProcessDocument(processDocument);
     }
 
     /**

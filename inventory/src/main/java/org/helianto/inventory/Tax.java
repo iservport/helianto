@@ -94,7 +94,10 @@ public class Tax extends AbstractKeyValue {
 	 */
     @Column(length=20)
 	public String getTaxCode() {
-		return getKeyType().getKeyCode();
+    	if (getKeyType()!=null) {
+    		return getKeyType().getKeyCode();
+    	}
+		return "";
 	}
 	public void setTaxCode(String taxCode) {
 		// this field is immutable

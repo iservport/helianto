@@ -54,7 +54,9 @@ public class Contact extends Address {
     private String jobReference;
     private int priority;
 
-    /** default constructor */
+    /** 
+     * Empty constructor.
+	 */
     public Contact() {
     	super();
         setAddressType(AddressType.PERSONAL.getValue());
@@ -63,6 +65,16 @@ public class Contact extends Address {
         setJobReference("");
     }
 
+    /** 
+     * Preferred constructor.
+     * 
+     * @param partnerRegistry
+	 */
+    public Contact(PartnerRegistry partnerRegistry) {
+    	this();
+    	setPartnerRegistry(partnerRegistry);
+    }
+    
     /**
      * Identity getter.
      */

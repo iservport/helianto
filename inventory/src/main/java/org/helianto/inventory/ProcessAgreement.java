@@ -212,7 +212,7 @@ public class ProcessAgreement extends AbstractRequirement {
 	/**
 	 * A map of taxes.
 	 */
-	@OneToMany(mappedBy="processAgreement")
+	@OneToMany(mappedBy="processAgreement", cascade=CascadeType.ALL)
 	@MapKey(name="taxCode")
 	public Map<String, Tax> getTaxes() {
 		return taxes;

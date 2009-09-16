@@ -67,6 +67,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 		if (getInventoryTransaction()==null) {
 			setInventoryTransaction(new InventoryTransaction());
 		}
+		setBlockingState(BlockingState.OPEN);
 	}
     
     /**

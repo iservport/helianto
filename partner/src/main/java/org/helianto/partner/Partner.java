@@ -135,9 +135,22 @@ public class Partner implements java.io.Serializable {
 	
     /**
      * <<Transient>> Convenience reference to the main address.
+     * 
+     * <p>
+     * If the partner registry did not define the main address, fall-back to
+     * any address available.
+     * </p>
      */
 	@Transient
     public Address getMainAddress() {
+		if (getPartnerRegistry().getMainAddress()==null) {
+			if (getPartnerRegistry().getAddresses().size()>0) {
+				return getPartnerRegistry().getAddresses().iterator().next();
+			}
+			else {
+				return null;
+			}
+		}
     	return getPartnerRegistry().getMainAddress();
     }
 

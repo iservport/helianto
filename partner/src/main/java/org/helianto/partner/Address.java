@@ -86,7 +86,9 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     private Province province;
     private Set<Phone> phones = new HashSet<Phone>(0);
 
-    /** default constructor */
+    /** 
+     * Empty constructor.
+	 */
     public Address() {
         setAddressType(AddressType.MAIN.getValue());
         setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
@@ -98,6 +100,16 @@ public class Address implements java.io.Serializable, Comparable<Address> {
         setCityName("");
         setPostalCode("");
         setPostOfficeBox("");
+    }
+    
+    /** 
+     * Preferred constructor.
+     * 
+     * @param partnerRegistry
+	 */
+    public Address(PartnerRegistry partnerRegistry) {
+    	this();
+    	setPartnerRegistry(partnerRegistry);
     }
     
     /**
