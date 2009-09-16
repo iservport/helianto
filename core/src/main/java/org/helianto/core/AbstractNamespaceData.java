@@ -29,7 +29,6 @@ import javax.persistence.MappedSuperclass;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@javax.persistence.Entity
 @MappedSuperclass
 public class AbstractNamespaceData implements java.io.Serializable {
 

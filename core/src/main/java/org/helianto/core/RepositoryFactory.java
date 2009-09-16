@@ -59,6 +59,27 @@ public class RepositoryFactory {
 	 * @param <T>
 	 * @param <F>
 	 * @param targetClazz
+	 * @param params
+	 */
+	public <T, F extends Filter> AbstractFilterDao 
+	filterDaoFactory(Class<T> targetClazz, String... params) 
+	{
+		AbstractFilterDao<T, F> filterDao =  
+			new AbstractFilterDao(targetClazz) {
+			public PersistenceStrategy<T> getPersistenceStrategy() {
+				return persistenceStrategy;
+			}
+		};
+		setParams(filterDao, params);
+		return filterDao;
+	}
+	
+	/**
+	 * Return a new filter DAO.
+	 * 
+	 * @param <T>
+	 * @param <F>
+	 * @param targetClazz
 	 * @param filterClazz
 	 * @param params
 	 */

@@ -29,7 +29,6 @@ import javax.persistence.Transient;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@javax.persistence.Entity
 @MappedSuperclass
 public abstract class AbstractKeyValue implements java.io.Serializable {
 

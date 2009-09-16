@@ -179,7 +179,7 @@ public class Partner implements java.io.Serializable {
     /**
      * Partner keys.
      */
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy="partner", cascade=CascadeType.ALL)
     public Set<PartnerKey> getPartnerKeys() {
 		return partnerKeys;
 	}

@@ -89,7 +89,7 @@ public class ProcessDocument extends AbstractDocument implements Comparator<Proc
      * the Inventory class.
      * </p>
      */
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="unitId")
     public Unit getUnit() {
 		return unit;

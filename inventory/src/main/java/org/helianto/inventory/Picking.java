@@ -87,7 +87,7 @@ public class Picking implements Serializable, Sequenceable, TopLevelNumberedEnti
      * <<NaturalKey>> Owning entity.
      * @see {@link Entity}
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;

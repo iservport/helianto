@@ -22,7 +22,6 @@ import javax.persistence.MappedSuperclass;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@javax.persistence.Entity
 @MappedSuperclass
 public abstract class AbstractKeyStringValue extends AbstractKeyValue {
 

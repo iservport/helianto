@@ -87,7 +87,7 @@ public class Movement implements Serializable {
 	/**
 	 * Inventory transaction.
 	 */
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="inventoryTransactionId")
 	public InventoryTransaction getInventoryTransaction() {
 		return inventoryTransaction;
