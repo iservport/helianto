@@ -56,7 +56,7 @@ public class Partner implements java.io.Serializable {
      * @param partnerRegistry
      * @param sequence
      */
-    protected static <T extends Partner> T internalPartnerFactory(Class<T> clazz, PartnerRegistry partnerRegistry) {
+    public static <T extends Partner> T internalPartnerFactory(Class<T> clazz, PartnerRegistry partnerRegistry) {
         T partner = null;
         try {
         	partner = clazz.newInstance();

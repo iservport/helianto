@@ -75,7 +75,7 @@ public class PartnerRegistryKey implements java.io.Serializable {
     /**
      * Partner registry.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PartnerRegistry getPartnerRegistry() {
         return this.partnerRegistry;
