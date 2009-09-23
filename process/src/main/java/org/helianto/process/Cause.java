@@ -28,11 +28,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.Entity;
+import org.helianto.core.TopLevelNumberedEntity;
 /**
  * <p>
  * Represents a <code>Cause</code>.  
@@ -49,7 +49,7 @@ import org.helianto.core.Entity;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("C")
-public class Cause implements java.io.Serializable {
+public class Cause implements java.io.Serializable, TopLevelNumberedEntity {
 
     /**
      * <code>Cause</code> factory.
@@ -143,20 +143,16 @@ public class Cause implements java.io.Serializable {
     }
 
     /**
-     * <code>Cause</code> query <code>StringBuilder</code>.
+     * Required by <code>TopLevelNumberedEntity</code> interface.
+     * 
+     * @param entity
+     * @param internalNumber
      */
-    @Transient
-    public static StringBuilder getCauseQueryStringBuilder() {
-        return new StringBuilder("select cause from Cause cause ");
-    }
-
-    /**
-     * <code>Cause</code> natural id query.
-     */
-    @Transient
-    public static String getCauseNaturalIdQueryString() {
-        return getCauseQueryStringBuilder().append("where cause.entity = ? and cause.internalNumber= ? ").toString();
-    }
+    public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {
+    	setEntity(entity);
+    	setInternalNumber(internalNumber);
+    	return this;
+    }   
 
     /**
      * toString
@@ -195,6 +191,6 @@ public class Cause implements java.io.Serializable {
          int result = 17;
          result = 37 * result + (int) this.getInternalNumber();
          return result;
-   }   
+   }
 
 }

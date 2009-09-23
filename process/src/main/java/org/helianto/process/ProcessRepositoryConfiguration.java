@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.RepositoryFactory;
+import org.helianto.core.filter.AbstractFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @SuppressWarnings("unchecked")
 public class ProcessRepositoryConfiguration {
+
+	/**
+	 * Cause data access.
+	 */
+	@Bean
+	public FilterDao<Cause, CauseFilter> causeDao() {
+		FilterDao<Cause, CauseFilter> dao =  
+			repositoryFactory.filterDaoFactory(Cause.class, CauseFilter.class, "entity", "internalNumber");
+		logger.info("Created causeDao");
+		return dao;
+	}
 
 	/**
 	 * Measurement technique data access.

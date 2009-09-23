@@ -23,6 +23,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.test.TopLevelNumberedEntityTestSupport;
 import org.helianto.process.test.AbstractProcessDaoIntegrationTest;
 import org.helianto.process.test.CharacteristicTestSupport;
 import org.helianto.process.test.MeasurementTechniqueTestSupport;
@@ -39,6 +40,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public class ProcessRepositoryConfigurationTests extends AbstractProcessDaoIntegrationTest {
+
+	@Resource FilterDao<Cause, CauseFilter> causeDao;
+	@Test
+	public void cause() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		Cause target = TopLevelNumberedEntityTestSupport.create(Cause.class, entity);
+		assertEquals(causeDao.merge(target), causeDao.findUnique(target.getEntity(), target.getInternalNumber()));
+	}
 
 	@Resource FilterDao<MeasurementTechnique, MeasurementTechniqueFilter> measurementTechniqueDao;
 	@Test
