@@ -32,6 +32,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	
 	private Class<? extends T> clazz;
 	private String[] params;
+	private String selectClause;
 	
 	/**
 	 * Default constructor.
@@ -88,9 +89,18 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	/**
 	 * Subclasses may override to customize select clause creation.
 	 * 
+	 * <p>
+	 * If the select clause is set, use to create the query, 
+	 * otherwise build it like 'select ${objectAlias} from
+	 * ${objectName} ${objectAlias}'.
+	 * </p>
+	 * 
 	 * @param objectName
 	 */
 	protected StringBuilder getSelectBuilder() {
+		if (getSelectClause()!=null && getSelectClause().length()>0) {
+			return new StringBuilder(getSelectClause());
+		}
 		StringBuilder selectClause = new StringBuilder("select ");
 		return selectClause
 			.append(getObjectAlias())
@@ -101,6 +111,16 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 			.append(" ");
 	}
 	
+	/**
+	 * Optional select clause.
+	 */
+	public String getSelectClause() {
+		return selectClause;
+	}
+	public void setSelectClause(String selectClause) {
+		this.selectClause = selectClause;
+	}
+
 	public Collection<T> find(StringBuilder selectClause, String whereClause) {
         return find(selectClause, whereClause, new Object[0]);
 	}
