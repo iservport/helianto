@@ -19,8 +19,10 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Entity;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.test.AbstractDocumentDaoIntegrationTest;
 import org.helianto.document.test.DocumentTagTestSupport;
 import org.helianto.document.test.DocumentTestSupport;
@@ -47,6 +49,14 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	public void document() {
 		Document target = DocumentTestSupport.create(Document.class);
 		assertEquals(documentDao.merge(target), documentDao.findUnique(target.getEntity(), target.getDocCode()));
+	}
+	
+	@Resource FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> documentCodeBuilderDao;
+	@Test
+	public void documentCodeBuilder() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		DocumentCodeBuilder target = documentCodeBuilderDao.merge(new DocumentCodeBuilder(entity).setBuilderCode("CODE"));
+		assertEquals(target, documentCodeBuilderDao.findUnique(target.getEntity(), target.getBuilderCode()));
 	}
 	
 	@Resource BasicDao<DocumentTag> documentTagDao;

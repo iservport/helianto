@@ -57,6 +57,17 @@ public class DocumentRepositoryConfiguration {
 	}
 
 	/**
+	 * Document code builder data access.
+	 */
+	@Bean
+	public FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> documentCodeBuilderDao() {
+		FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> dao =  
+			repositoryFactory.filterDaoFactory(DocumentCodeBuilder.class, DocumentCodeBuilderFilter.class, "entity", "builderCode");
+		logger.info("Created documentCodeBuilderDao");
+		return dao;
+	}
+
+	/**
 	 * Document tag data access.
 	 */
 	@Bean

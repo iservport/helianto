@@ -42,7 +42,7 @@ import org.helianto.core.Entity;
  */
 @javax.persistence.Entity
 @Table(name="doc_doccodebuilder",
-	    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "prefix"})}
+	    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "builderCode"})}
 	)
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class DocumentCodeBuilder implements Serializable {
@@ -51,16 +51,26 @@ public class DocumentCodeBuilder implements Serializable {
     private int id;
     private Entity entity;
     private int version;
-	private String prefix;
+	private String builderCode;
 	private String numberPattern;
     
     /** 
-     * Default constructor
+     * Default constructor.
      */
     public DocumentCodeBuilder() {
     	super();
-    	setPrefix("");
+    	setBuilderCode("");
     	setNumberPattern("0000");
+    }
+
+    /** 
+     * Entity constructor.
+     * 
+     * @param entity
+     */
+    public DocumentCodeBuilder(Entity entity) {
+    	this();
+    	setEntity(entity);
     }
 
     /**
@@ -86,7 +96,7 @@ public class DocumentCodeBuilder implements Serializable {
     }
 
     /**
-     * Entity.
+     * <<NaturalKey>> Entity.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="entityId", nullable=true)
@@ -98,18 +108,25 @@ public class DocumentCodeBuilder implements Serializable {
     }
 
     /**
-     * Prefix.
+     * <<NaturalKey>> Code used to distinguish the builder.
      */
     @Column(length=12)
-    public String getPrefix() {
-        return this.prefix;
+    public String getBuilderCode() {
+        return this.builderCode;
     }
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
+    public DocumentCodeBuilder setBuilderCode(String builderCode) {
+        this.builderCode = builderCode;
+        return this;
     }
 
     /**
-     * Number pattern.
+     * Pattern used in association with <code>SequenceMgr</code>.
+     * 
+     * <p>
+     * Patterns like "P0000" will produce document codes
+     * like P0001, P0002, etc., while 0000/'09' builds
+     * 0001/09, 0002/09, etc.
+     * </p>
      */
     @Column(length=64)
 	public String getNumberPattern() {
@@ -125,7 +142,7 @@ public class DocumentCodeBuilder implements Serializable {
 	@Transient
 	public String buildCode(long internalNumber) {
 		Format formatter = new DecimalFormat(getNumberPattern());
-		return new StringBuilder(getPrefix().trim())
+		return new StringBuilder(getBuilderCode().trim())
 		    .append(formatter.format(internalNumber)).toString();
 	}
 
@@ -138,7 +155,7 @@ public class DocumentCodeBuilder implements Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("prefix").append("='").append(getPrefix()).append("' ");
+        buffer.append("prefix").append("='").append(getBuilderCode()).append("' ");
         buffer.append("]");
       
         return buffer.toString();
@@ -151,7 +168,7 @@ public class DocumentCodeBuilder implements Serializable {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof AbstractDocument) ) return false;
+         if ( !(other instanceof DocumentCodeBuilder) ) return false;
          DocumentCodeBuilder castOther = (DocumentCodeBuilder) other; 
          
          return ( ( this.getEntity()==castOther.getEntity()) 
@@ -160,10 +177,10 @@ public class DocumentCodeBuilder implements Serializable {
         			     && this.getEntity().equals(castOther.getEntity()
         			   ) 
         		))
-             && ( ( this.getPrefix()==castOther.getPrefix()) 
-            	    || ( this.getPrefix()!=null 
-            	    	 && castOther.getPrefix()!=null 
-            	    	 && this.getPrefix().equals(castOther.getPrefix()
+             && ( ( this.getBuilderCode()==castOther.getBuilderCode()) 
+            	    || ( this.getBuilderCode()!=null 
+            	    	 && castOther.getBuilderCode()!=null 
+            	    	 && this.getBuilderCode().equals(castOther.getBuilderCode()
             	    	)
             	));
    }
@@ -174,7 +191,7 @@ public class DocumentCodeBuilder implements Serializable {
    @Override
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getPrefix() == null ? 0 : this.getPrefix().hashCode() );
+         result = 37 * result + ( getBuilderCode() == null ? 0 : this.getBuilderCode().hashCode() );
          return result;
    }   
 

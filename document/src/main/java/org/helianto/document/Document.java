@@ -40,7 +40,7 @@ import org.helianto.core.Entity;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Document extends AbstractDocument {
+public class Document extends AbstractNumberedDocument {
 
     /**
      * Factory method.

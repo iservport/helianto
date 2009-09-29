@@ -61,13 +61,13 @@ public class AbstractNumberedDocument extends AbstractDocument implements Sequen
 	@Transient
 	public final String getInternalNumberKey() {
 		return new StringBuilder(getInternalDocCodeKey())
-		.append(getDocumentCodeBuilder().getPrefix())
+		.append(getDocumentCodeBuilder().getBuilderCode())
 		.toString();
 	}
 	
 	@Transient
 	public String getInternalDocCodeKey() {
-		return "DOC";
+		return "NDOC_";
 	}
 
 	/**
