@@ -44,7 +44,7 @@ import org.helianto.core.Entity;
     name="type",
     discriminatorType=DiscriminatorType.CHAR
 )
-@DiscriminatorValue("F")
+@DiscriminatorValue("A")
 public abstract class AbstractFunction extends AbstractDocument {
 
 	private static final long serialVersionUID = 1L;
