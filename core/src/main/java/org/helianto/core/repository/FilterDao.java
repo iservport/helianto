@@ -17,13 +17,15 @@ package org.helianto.core.repository;
 
 import java.util.Collection;
 
+import org.helianto.core.filter.Filter;
+
 
 /**
  * Extends <code>BasicDao</code> to support filters.
  * 
  * @author Mauricio Fernandes de Castro.
  */
-public interface FilterDao<T, F> extends BasicDao<T> {
+public interface FilterDao<T, F extends Filter> extends BasicDao<T> {
 
 	/**
 	 * Create a selection clause from the filter and return 

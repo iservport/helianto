@@ -110,17 +110,14 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	}
 
 	@Resource FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
-	@Test
-	public void partnerRegistry() {
-		PartnerRegistry target = PartnerRegistryTestSupport.createPartnerRegistry();
-		assertEquals(partnerRegistryDao.merge(target), partnerRegistryDao.findUnique(target.getEntity(), target.getPartnerAlias()));
-	}
-	
 	@Resource BasicDao<PartnerRegistryKey> partnerRegistryKeyDao;
 	@Test
-	public void partnerRegistryKey() {
-		PartnerRegistryKey target = PartnerRegistryKeyTestSupport.createPartnerRegistryKey();
-		assertEquals(partnerRegistryKeyDao.merge(target), partnerRegistryKeyDao.findUnique(target.getPartnerRegistry(), target.getKeyType()));
+	public void partnerRegistry() {
+		PartnerRegistry partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
+		assertEquals(partnerRegistryDao.merge(partnerRegistry), partnerRegistryDao.findUnique(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias()));
+
+		PartnerRegistryKey partnerRegistryKey = PartnerRegistryKeyTestSupport.createPartnerRegistryKey(partnerRegistry);
+		assertEquals(partnerRegistryKeyDao.merge(partnerRegistryKey), partnerRegistryKeyDao.findUnique(partnerRegistryKey.getPartnerRegistry(), partnerRegistryKey.getKeyType()));
 	}
 
 	@Resource BasicDao<Phone> phoneDao;

@@ -68,7 +68,6 @@ public class AbstractDocument implements java.io.Serializable, TopLevelCodedEnti
     	super();
     }
 
-    // Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;

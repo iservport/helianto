@@ -66,4 +66,12 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 		assertEquals(documentTagDao.merge(target), documentTagDao.findUnique(target.getDocument(), target.getTagCode()));
 	}
 
+	@Resource FilterDao<AbstractFunction, AbstractDocumentFilter> functionDao;
+	@Test
+	public void function() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		AbstractFunction target = functionDao.merge(new FunctionStub(entity));
+		assertEquals(target, functionDao.findUnique(target.getEntity(), target.getDocCode()));
+	}
+
 }

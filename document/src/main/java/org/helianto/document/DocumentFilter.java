@@ -17,7 +17,6 @@
 package org.helianto.document;
 
 import org.helianto.core.User;
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 
 /**
@@ -25,7 +24,7 @@ import org.helianto.core.filter.CriteriaBuilder;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DocumentFilter extends AbstractUserBackedCriteriaFilter {
+public class DocumentFilter extends AbstractDocumentFilter {
 
 	/**
 	 * Factory method.
@@ -39,23 +38,21 @@ public class DocumentFilter extends AbstractUserBackedCriteriaFilter {
 	}
 	
 	private static final long serialVersionUID = 1L;
-    private String docCode;
-    private String docNameLike;
     private char contentType;
     
+    /**
+     * Default constructor.
+     */
     public DocumentFilter() {
-		setDocCode("");
-		setDocNameLike("");
-		setContentType(' ');
+    	super();
     }
 
+    /**
+     * Reset.
+     */
 	public void reset() {
-		setDocCode("");
+		super.reset();
 		setContentType(' ');
-	}
-
-	public boolean isSelection() {
-		return getDocCode().length()>0;
 	}
 
 	public String getObjectAlias() {
@@ -64,26 +61,8 @@ public class DocumentFilter extends AbstractUserBackedCriteriaFilter {
 
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("contentType", getContentType(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("docCode", getDocCode(), mainCriteriaBuilder);
-	}
-
-	public String getDocCode() {
-		return docCode;
-	}
-	public void setDocCode(String docCode) {
-		this.docCode = docCode;
-	}
-	
-	public String getDocNameLike() {
-		return docNameLike;
-	}
-	public void setDocNameLike(String docNameLike) {
-		this.docNameLike = docNameLike;
 	}
 	
 	public char getContentType() {

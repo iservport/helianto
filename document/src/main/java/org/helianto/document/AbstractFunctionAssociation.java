@@ -24,48 +24,34 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.AbstractAssociation;
 
-
 /**
- * Document parent-child associations.
+ * Function parent-child associations.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="doc_assoc",
+@Table(name="doc_funcassoc",
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
-public class DocumentAssociation extends AbstractAssociation<Document, Document> {
+public class AbstractFunctionAssociation extends AbstractAssociation<AbstractFunction, AbstractFunction> {
 
-    /**
-     * Factory method.
-     * 
-     * @param parent
-     * @param child
-     */
-    public static DocumentAssociation documentAssociationFactory(Document parent, Document child) {
-    	DocumentAssociation documentAssociation = (DocumentAssociation) AbstractAssociation.associationFactory(DocumentAssociation.class, parent, child);
-    	child.getParents().add(documentAssociation);
-    	parent.getChildren().add(documentAssociation);
-        return documentAssociation;
-    }
-    
     private static final long serialVersionUID = 1L;
     
     /**
-     * Associated parent document.
+     * Associated parent function.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="parentId", nullable=true)
-	public Document getParent() {
+	public AbstractFunction getParent() {
 		return parent;
 	}
     
     /**
-     * Associated child document.
+     * Associated child function.
      */
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="childId", nullable=true)
-	public Document getChild() {
+	public AbstractFunction getChild() {
 		return child;
 	}
 

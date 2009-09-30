@@ -91,8 +91,8 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
     	setCreateIdentity(CreateIdentity.REJECT);
     }
 
-    // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id 
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="userId")
     public int getId() {
         return this.id;
@@ -102,7 +102,7 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
     }
 
     /**
-     * Entity getter.
+     * Entity.
      */
     @ManyToOne
     @JoinColumn(name="entityId", nullable=true)

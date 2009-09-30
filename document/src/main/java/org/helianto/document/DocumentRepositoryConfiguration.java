@@ -78,6 +78,17 @@ public class DocumentRepositoryConfiguration {
 		return dao;
 	}
 
+	/**
+	 * Function data access.
+	 */
+	@Bean
+	public FilterDao<AbstractFunction, AbstractDocumentFilter> functionDao() {
+		FilterDao<AbstractFunction, AbstractDocumentFilter> dao =  
+			repositoryFactory.filterDaoFactory(AbstractFunction.class, AbstractDocumentFilter.class, "entity", "docCode");
+		logger.info("Created functionDao");
+		return dao;
+	}
+	
 	// collabs
     
     private RepositoryFactory repositoryFactory;
