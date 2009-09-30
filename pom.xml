@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
-	<version>0.2.3-SNAPSHOT</version>
+	<version>0.2.3</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -52,7 +52,7 @@
 	</scm>
 	<properties>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<spring.main.version>3.0.0.M4</spring.main.version>
+		<spring.main.version>3.0.0.RC1</spring.main.version>
 		<spring.security.version>3.0.0.M1</spring.security.version>
 	</properties>
 	<build>
