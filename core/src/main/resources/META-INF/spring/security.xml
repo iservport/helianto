@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright 2005 I Serv Consultoria Empresarial Ltda.
 
@@ -28,7 +27,5 @@
 	<context:component-scan base-package="org.helianto.core.security"/>
 
     <security:authentication-provider user-service-ref="userDetailsService"/>
-
-    <security:global-method-security secured-annotations="enabled" jsr250-annotations="enabled"/>
 
 </beans>

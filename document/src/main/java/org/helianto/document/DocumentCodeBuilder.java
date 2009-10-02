@@ -21,6 +21,9 @@ import java.text.Format;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,6 +48,11 @@ import org.helianto.core.Entity;
 	    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "builderCode"})}
 	)
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name="type",
+    discriminatorType=DiscriminatorType.CHAR
+)
+@DiscriminatorValue("B")
 public class DocumentCodeBuilder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
