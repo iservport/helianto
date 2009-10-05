@@ -76,18 +76,14 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.2</version>
 				<configuration>
 					<testFailureIgnore>false</testFailureIgnore>
-					<childDelegation>true</childDelegation>
 					<includes>
-						<include implementation="java.lang.String">
-							**/*Tests.class
-						</include>
+						<include>**/*Tests.class</include>
 					</includes>
 					<excludes>
-						<exclude implementation="java.lang.String">
-							**/Abstract*
-						</exclude>
+						<exclude>**/Abstract*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -157,9 +153,14 @@ Application-TraceLevels: ${application.traceLevels}
 	        <url>http://maven.springframework.org/milestone/</url>
 	    </repository>
 	    <repository>
+	        <id>com.springsource.repository.bundles.milestone</id>
+	        <name>SpringSource Bundle Milestones</name>
+	        <url>http://repository.springsource.com/maven/bundles/milestone</url>
+	    </repository>
+	    <repository>
 	        <id>com.springsource.repository.bundles.release</id>
 	        <name>SpringSource Bundle Releases</name>
-	        <url>http://repository.springsource.com/maven/bundles/milestone</url>
+	        <url>http://repository.springsource.com/maven/bundles/release</url>
 	    </repository>
 	    <repository>  
 	        <id>com.springsource.repository.bundles.external</id>
@@ -167,9 +168,14 @@ Application-TraceLevels: ${application.traceLevels}
 	        <url>http://repository.springsource.com/maven/bundles/external</url>
 	    </repository>
 		<repository>
+			<id>com.springsource.repository.libraries.milestone</id>
+			<name>SpringSource Enterprise Bundle Repository - SpringSource Library Milestones</name>
+			<url>http://repository.springsource.com/maven/libraries/milestone</url>
+		</repository> 
+		<repository>
 			<id>com.springsource.repository.libraries.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource Library Releases</name>
-			<url>http://repository.springsource.com/maven/libraries/milestone</url>
+			<url>http://repository.springsource.com/maven/libraries/release</url>
 		</repository> 
 		<repository>
 			<id>com.springsource.repository.libraries.external</id>
@@ -279,7 +285,7 @@ Application-TraceLevels: ${application.traceLevels}
 		<dependency>
 			<groupId>org.junit</groupId>
 			<artifactId>com.springsource.org.junit</artifactId>
-			<version>4.6.0</version>
+			<version>4.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>
