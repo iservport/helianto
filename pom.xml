@@ -19,7 +19,7 @@
 	</description>
 	<url>http://www.helianto.org</url>
 	<modules>
-			<module>core</module>
+			<module>helianto-core</module>
 			<module>message</module>
 			<module>partner</module>
 			<module>document</module>

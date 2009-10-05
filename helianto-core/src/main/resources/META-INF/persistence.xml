@@ -1,0 +1,29 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+		version="1.0">
+
+	<persistence-unit name="HeliantoCore" transaction-type="RESOURCE_LOCAL">
+		<class>org.helianto.core.Identity</class>
+		<class>org.helianto.core.Credential</class>
+		<class>org.helianto.core.PrivateKey</class>
+		<class>org.helianto.core.DefaultEntity</class>
+		<class>org.helianto.core.Entity</class>
+		<class>org.helianto.core.InternalEnumerator</class>
+		<class>org.helianto.core.Server</class>
+		<class>org.helianto.core.Service</class>
+		<class>org.helianto.core.UserAssociation</class>
+		<class>org.helianto.core.UserGroup</class>
+		<class>org.helianto.core.User</class>
+		<class>org.helianto.core.UserLog</class>
+		<class>org.helianto.core.UserRole</class>
+		<class>org.helianto.core.Country</class>
+		<class>org.helianto.core.Operator</class>
+		<class>org.helianto.core.Province</class>
+		<class>org.helianto.core.Category</class>
+		<class>org.helianto.core.Unit</class>
+		<class>org.helianto.core.KeyType</class>
+		<class>org.helianto.core.Vocabulary</class>
+	</persistence-unit>
+
+</persistence>
