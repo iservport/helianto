@@ -15,7 +15,6 @@
 
 package org.helianto.core.security;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,11 +26,11 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.UserDetailsService;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 
 /**
  * A basic template for the {@link org.acegisecurity.userdetails.UserDetailsService}
@@ -98,11 +97,14 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         }
         // load the roles and convert to authorities
         Collection<UserRole> roles = loadAndValidateRoles(user);
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        // TODO security v3 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
+        int i = 0;
         for (UserRole r : roles) {
             String roleName = convertUserRoleToString(r);
-            authorities.add(new GrantedAuthorityImpl(roleName));
+            authorities[i++] = new GrantedAuthorityImpl(roleName);
         }
+        // TODO security v3 userDetailsAdapter.setAuthorities(authorities);
         userDetailsAdapter.setAuthorities(authorities);
         if (logger.isDebugEnabled()) {
             logger.debug("Step 6 successful: AUTHORITIES SUCCESSFULLY LOADED");

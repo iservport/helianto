@@ -53,7 +53,7 @@
 	<properties>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<spring.main.version>3.0.0.RC1</spring.main.version>
-		<spring.security.version>3.0.0.M1</spring.security.version>
+		<spring.security.version>2.0.5.RELEASE</spring.security.version>
 	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -201,7 +201,7 @@ Application-TraceLevels: ${application.traceLevels}
 			<artifactId>org.springframework.security.core</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>org.springframework.security.config</artifactId>
 			<version>${spring.security.version}</version>
@@ -210,7 +210,7 @@ Application-TraceLevels: ${application.traceLevels}
 			<groupId>org.springframework.security</groupId>
 			<artifactId>org.springframework.security.web</artifactId>
 			<version>${spring.security.version}</version>
-		</dependency>
+		</dependency-->
 <!-- dependency>  <groupId>org.springframework.webflow</groupId>  <artifactId>org.springframework.webflow-library</artifactId>  <type>libd</type>  <version>2.0.7.RELEASE</version> </dependency>
 <dependency>  <groupId>org.springframework.ws</groupId>  <artifactId>org.springframework.oxm.java5</artifactId>  <version>1.5.7.A</version> </dependency>
 <dependency>  <groupId>org.springframework.ws</groupId>  <artifactId>org.springframework.xml</artifactId>  <version>1.5.7.A</version> </dependency -->

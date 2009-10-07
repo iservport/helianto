@@ -1,16 +1,14 @@
 package org.helianto.core.security;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserType;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
 
 /**
  * A class compatible to an anonymous <code>UserDetails</code> implementation.
@@ -28,11 +26,18 @@ public class AnonymousUserDetails extends UserDetailsAdapter implements Serializ
 		return anonymousUser; 
 	}
 
-	public List<GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new GrantedAuthorityImpl("ROLE_ANONYMOUS"));
+	public GrantedAuthority[] getAuthorities() {
+		GrantedAuthority[] authorities = new GrantedAuthority[1];
+		authorities[0] = new GrantedAuthorityImpl("ROLE_ANONYMOUS");
         return authorities;
 	}
+	
+	// TODO
+//	public List<GrantedAuthority> getAuthorities() {
+//		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+//		authorities.add(new GrantedAuthorityImpl("ROLE_ANONYMOUS"));
+//        return authorities;
+//	}
 	
     public boolean isCredentialsNonExpired() {
         return true;

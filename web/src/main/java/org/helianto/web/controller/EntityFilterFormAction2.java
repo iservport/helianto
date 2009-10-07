@@ -26,7 +26,7 @@ import org.helianto.core.UserState;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.service.UserMgr;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 

@@ -1,9 +1,8 @@
 package org.helianto.core.test;
 
-import java.util.List;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.providers.AbstractAuthenticationToken;
 
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 
 
 /**
@@ -32,7 +31,7 @@ public class LocalTestingAuthenticationToken extends AbstractAuthenticationToken
         this.credentials = credentials;
     }
 
-    public LocalTestingAuthenticationToken(Object principal, Object credentials, List<GrantedAuthority> authorities) {
+    public LocalTestingAuthenticationToken(Object principal, Object credentials, GrantedAuthority[] authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
