@@ -20,12 +20,12 @@
 	<url>http://www.helianto.org</url>
 	<modules>
 			<module>helianto-core</module>
-			<module>message</module>
-			<module>partner</module>
+			<module>helianto-partner</module>
 			<module>document</module>
 			<module>resource</module>
 			<module>process</module>
 			<module>inventory</module>
+			<module>message</module>
 			<module>web</module>
 			<module>admin</module>
 		<!-- 

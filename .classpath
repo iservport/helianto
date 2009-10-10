@@ -4,9 +4,9 @@
 	<classpathentry kind="src" path="helianto-core/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-core/src/test/java"/>
 	<classpathentry kind="src" path="helianto-core/src/test/resources"/>
-	<classpathentry kind="src" path="partner/src/main/java"/>
-	<classpathentry kind="src" path="partner/src/main/resources"/>
-	<classpathentry kind="src" path="partner/src/test/java"/>
+	<classpathentry kind="src" path="helianto-partner/src/main/java"/>
+	<classpathentry kind="src" path="helianto-partner/src/main/resources"/>
+	<classpathentry kind="src" path="helianto-partner/src/test/java"/>
 	<classpathentry kind="src" path="document/src/main/java"/>
 	<classpathentry kind="src" path="document/src/main/resources"/>
 	<classpathentry kind="src" path="document/src/test/java"/>
