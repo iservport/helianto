@@ -21,7 +21,7 @@
 	<modules>
 			<module>helianto-core</module>
 			<module>helianto-partner</module>
-			<module>document</module>
+			<module>helianto-document</module>
 			<module>resource</module>
 			<module>process</module>
 			<module>inventory</module>
