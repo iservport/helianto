@@ -10,6 +10,9 @@
 	<classpathentry kind="src" path="helianto-document/src/main/java"/>
 	<classpathentry kind="src" path="helianto-document/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-document/src/test/java"/>
+	<classpathentry kind="src" path="helianto-resource/src/main/java"/>
+	<classpathentry kind="src" path="helianto-resource/src/main/resources"/>
+	<classpathentry kind="src" path="helianto-resource/src/test/java"/>
 	<classpathentry kind="src" path="process/src/main/java"/>
 	<classpathentry kind="src" path="process/src/main/resources"/>
 	<classpathentry kind="src" path="process/src/test/java"/>
