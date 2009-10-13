@@ -24,13 +24,15 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+import org.easymock.internal.matchers.CompareTo;
+
 /**
  * Base class to generic associations.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractAssociation<P, C> implements Association<P, C>, Serializable, NaturalKeyInfo {
+public abstract class AbstractAssociation<P, C> implements Association<P, C>, Serializable, NaturalKeyInfo, Comparable<AbstractAssociation> {
 	
     /**
      * Internal factory method.
@@ -102,7 +104,43 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
 		this.child = child;
 	}
 	
+	/**
+	 * Implements <code>Comparable</code> interface.
+	 * 
+	 * <p>
+	 * If parents are equal, delegate to {@link #compareChild(AbstractAssociation)},
+	 * otherwise delegate to {@link #compareParent(AbstractAssociation)}.
+	 * </p>
+	 */
+    @SuppressWarnings("unchecked")
+	public int compareTo(AbstractAssociation other) {
+    	if (this.parent.equals(other.parent)) {
+    		return compareChild(other);
+    	}
+		return compareParent(other);
+	}
+    
     /**
+     * Default implementation ignores child and order by sequence.
+     * 
+     * @param other
+     */
+    @SuppressWarnings("unchecked")
+	protected int compareChild(AbstractAssociation other) {
+    	return this.sequence - other.getSequence();
+    }
+
+    /**
+     * Default implementation ignores child and order by sequence.
+     * 
+     * @param other
+     */
+    @SuppressWarnings("unchecked")
+	protected int compareParent(AbstractAssociation other) {
+    	return this.sequence - other.getSequence();
+    }
+
+	/**
 	 * toString
 	 * 
 	 * @return String

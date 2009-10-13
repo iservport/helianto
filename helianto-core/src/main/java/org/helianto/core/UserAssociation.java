@@ -30,10 +30,10 @@ import javax.persistence.UniqueConstraint;
  * 		
  */
 @javax.persistence.Entity
-@Table(name="core_userassoc",
+@Table(name="core_userassoc", 
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
-public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> implements java.io.Serializable, Comparable<UserAssociation> {
+public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> implements java.io.Serializable {
 
     /**
      * <code>UserAssociation</code> factory method.
@@ -84,12 +84,11 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
         return this.child;
     }
 
-    /**
-     * Comparable.
-     */
-    public int compareTo(UserAssociation other) {
+    @SuppressWarnings("unchecked")
+	@Override
+    protected int compareChild(AbstractAssociation other) {
     	if (this.getChild()!=null && other.getChild()!=null) {
-    		return this.getChild().compareTo(other.getChild());
+    		return this.getChild().compareTo((UserGroup) other.getChild());
     	}
     	return 0;
     }

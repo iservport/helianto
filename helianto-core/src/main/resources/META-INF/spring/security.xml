@@ -24,5 +24,8 @@
 	<context:component-scan base-package="org.helianto.core.security"/>
 
     <sec:authentication-provider user-service-ref="userDetailsService"/>
+    
+    <sec:global-method-security secured-annotations="enabled" />
+    
 
 </beans>

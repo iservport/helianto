@@ -201,16 +201,19 @@ Application-TraceLevels: ${application.traceLevels}
 			<artifactId>org.springframework.security.core</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		<!-- dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>org.springframework.security.config</artifactId>
-			<version>${spring.security.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
-			<artifactId>org.springframework.security.web</artifactId>
+			<artifactId>org.springframework.security.annotation</artifactId>
 			<version>${spring.security.version}</version>
-		</dependency-->
+		</dependency>
+	<!--
+		dependency> <groupId>org.springframework.security</groupId>
+		<artifactId>org.springframework.security.config</artifactId>
+		<version>${spring.security.version}</version> </dependency>
+		<dependency> <groupId>org.springframework.security</groupId>
+		<artifactId>org.springframework.security.web</artifactId>
+		<version>${spring.security.version}</version> </dependency
+	-->
 <!-- dependency>  <groupId>org.springframework.webflow</groupId>  <artifactId>org.springframework.webflow-library</artifactId>  <type>libd</type>  <version>2.0.7.RELEASE</version> </dependency>
 <dependency>  <groupId>org.springframework.ws</groupId>  <artifactId>org.springframework.oxm.java5</artifactId>  <version>1.5.7.A</version> </dependency>
 <dependency>  <groupId>org.springframework.ws</groupId>  <artifactId>org.springframework.xml</artifactId>  <version>1.5.7.A</version> </dependency -->
