@@ -44,7 +44,7 @@ import javax.persistence.UniqueConstraint;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("T")
-public class DocumentTag extends AbstractTag implements Serializable {
+public class DocumentTag extends AbstractTag implements Serializable, Comparable<DocumentTag> {
 
     /**
      * <code>DocumentTag</code> generic factory.
@@ -91,6 +91,13 @@ public class DocumentTag extends AbstractTag implements Serializable {
     }
     public void setDocument(Document document) {
         this.document = document;
+    }
+    
+    /**
+     * Implements <code>Comparable</code> interface using {@link #getTagCode()}.
+     */
+    public int compareTo(DocumentTag other) {
+    	return this.getTagCode().compareTo(other.getTagCode());
     }
 
     /**

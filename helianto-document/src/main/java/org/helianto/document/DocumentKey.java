@@ -33,7 +33,7 @@ import org.helianto.core.KeyType;
 @Table(name="doc_docKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"documentId", "keyTypeId"})}
 )
-public class DocumentKey extends AbstractKeyStringValue {
+public class DocumentKey extends AbstractKeyStringValue implements Comparable<DocumentKey> {
 
 	/**
 	 * <<Transient>> Delegate to the actual key owner.
@@ -79,6 +79,13 @@ public class DocumentKey extends AbstractKeyStringValue {
         this.document = document;
     }
 
+    /**
+     * Implements <code>Comparable</code> using {@link KeyType#getKeyCode()}.
+     */
+    public int compareTo(DocumentKey other) {
+    	return this.getKeyType().getKeyCode().compareTo(other.getKeyType().getKeyCode());
+    }
+       
    /**
     * equals
     */
@@ -88,5 +95,5 @@ public class DocumentKey extends AbstractKeyStringValue {
          }
          return false;
    }
-   
+
 }

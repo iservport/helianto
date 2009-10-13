@@ -229,7 +229,7 @@ public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T
      * 
      */
     protected boolean afterApplyFilter(RequestContext context, F filter, List<T> targetList) {
-    	return true;
+    	return (targetList!=null && targetList.size()>0);
     }
     
     /**

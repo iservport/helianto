@@ -42,7 +42,7 @@ import org.helianto.core.AbstractAssociation;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class ResourceAssociation extends AbstractAssociation<ResourceGroup, ResourceGroup> implements Comparable<ResourceAssociation> {
+public class ResourceAssociation extends AbstractAssociation<ResourceGroup, ResourceGroup> {
 
     private static final long serialVersionUID = 1L;
 
@@ -90,17 +90,19 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
 			throw new IllegalArgumentException("Unable to create instance of "+clazz, e);
 		}
     }
-
-    public int compareTo(ResourceAssociation other) {
+    
+    @SuppressWarnings("unchecked")
+	@Override
+    protected int compareChild(AbstractAssociation other) {
     	if (getChild()!=null && other.getChild()!=null) {
     		if (getChild().equals(other.getChild()) && getParent()!=null && other.getParent()!=null) {
-    			return getParent().compareTo(other.getParent());
+    			return getParent().compareTo((ResourceGroup) other.getParent());
     		}
-    		return getChild().compareTo(other.getChild());
+    		return getChild().compareTo((ResourceGroup) other.getChild());
     	}
     	return 0;
     }
-       
+
     /**
      * Natural key info.
      */
