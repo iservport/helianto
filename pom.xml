@@ -23,7 +23,7 @@
 			<module>helianto-partner</module>
 			<module>helianto-document</module>
 			<module>helianto-resource</module>
-			<module>process</module>
+			<module>helianto-process</module>
 			<module>inventory</module>
 			<module>message</module>
 			<module>web</module>
