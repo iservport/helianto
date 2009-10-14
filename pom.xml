@@ -26,7 +26,7 @@
 			<module>helianto-process</module>
 			<module>helianto-inventory</module>
 			<module>helianto-message</module>
-			<module>web</module>
+			<module>helianto-web</module>
 			<module>admin</module>
 		<!-- 
 			<module>archetype1</module>
