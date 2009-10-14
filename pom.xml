@@ -27,7 +27,7 @@
 			<module>helianto-inventory</module>
 			<module>helianto-message</module>
 			<module>helianto-web</module>
-			<module>admin</module>
+			<module>helianto-admin</module>
 		<!-- 
 			<module>archetype1</module>
 		-->

@@ -1,0 +1,170 @@
+/**
+ * White sample stylesheet.
+ *
+ * @author Mauricio Fernandes de Castro
+ */
+ 
+@media screen {
+	body {
+	  background: #eeeeee;
+	}
+	#layout {
+	  background: white;
+	}
+	#sidebar {
+	  color: white;
+	  background: #777777;
+	}
+	#main {
+	  background: white;
+	}
+}
+@media print {
+	body {
+	  background: white;
+	}
+	#sidebar {
+	  background: white;
+	}
+	#main {
+	  background: white;
+	}
+}
+
+a, 
+a:link, 
+a:visited {
+  color: #4d647d;
+}
+a:hover {
+  color: #ff3300;
+}
+
+h1 {
+  background: #d9dbd6;
+}
+h3 {
+  color: #efe7d6;
+  background: #4d647d;
+}
+
+#headline, #main a {
+  background: none;
+}
+#leftnav p {
+  border-bottom: 1px solid white;
+}
+#leftnav p a:link {
+  color: #4d647d;
+  text-decoration:none;
+}
+#leftnav p a:hover {
+  color: #ff3300;
+  text-decoration:none;
+}
+#leftnav ul li {
+	color: #cddff7;
+	border-bottom: 2px solid #cddff7;
+}
+#poweredby ul li {
+	border-style: none;
+}
+#entityLine a, 
+#entityLine a:link, 
+#entityLine a:hover
+#entityLine a:visited {
+	  color: white;
+}
+.optionLine, table.optionLine tr td a {
+  text-decoration:none;
+  color: #ffffff;
+}
+#main h2, #main h3 {
+  color: #dd7d1b;
+  background: none;
+}
+#main h5 {
+  font-size: 100%;
+}
+#main li a, ul#nav, ul#nav li a
+{
+  color: white;
+  background-color: #444444;
+}
+#main li a:hover, table.optionLine tr td a:hover, #nav li a:hover 
+{
+  background-color:#ff3300
+}
+
+#main div table thead, .panel {
+  color: white;
+  background: #074759;
+}
+#sidebar a, 
+#sidebar a:link, 
+#sidebar a:visited {
+	  color: white;
+	  text-decoration: none;
+	  font-weight: bold;
+}
+#sidebar a:hover {
+	  text-decoration: underline;
+	  font-weight: bold;
+}
+#sidebar select {
+  color: #4d647d;
+}
+#selection {
+	color: #4d647d;
+	background: #f7f7f7;
+}
+#sidebar h3 {
+	background: #444444;
+}
+#sidebar h4, #selection h4 {
+	background: #5f5f5f;
+}
+#sidebox {
+	background-color: #acd9e5;
+	border: 1px solid #6fcbe5;
+}
+#sidebox p {
+	color: #800000;
+}
+#panel table {
+	background: #dddddd;
+}
+#panel h4 {
+	color: white;
+	background: #dd7d1b;
+}
+#panel h5 {
+	background: #dddddd;
+}
+#amount input {
+	border: 1px solid #157089;
+}
+.selectionList tbody {
+  background: #cfd3d6;
+}
+#info {
+	background: white;
+}
+#info h3 {
+	color: black;
+	background: white;
+}
+#remove
+{
+	background: #dddddd;
+	border: 1pt solid gray;
+}
+.row1 {
+	background: #eeeeee;
+}
+.alert_Y
+{
+	color: red;
+}
+.alert_N
+{ }

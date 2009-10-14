@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="preProcess">
+
+   <input name="operator" value="flowScope.operator"/>
+
+   <on-start>
+      <set name="flowScope.assign" value="'service/assign'"/>
+   </on-start>
+
+   <action-state id="preProcess">
+      <evaluate expression="serviceLoadAction.preProcess"/>
+      <transition to="serviceSelection.view"/>
+   </action-state>
+
+	<!-- 
+	 ! service 
+	 ! SELECTION VIEW
+	 !-->
+   <view-state id="serviceSelection.view" view="/frame">
+		<!-- 
+		 ! before selection
+		 -->
+      <on-render>
+         <evaluate expression="serviceLoadAction.load"/>
+         <set name="flashScope.forward" value="'toSelection'"/>
+         <set name="flashScope.sidenav" value="'service/selection_nav'"/>
+         <set name="flashScope.sidebar" value="'service/selection_filter'"/>
+         <set name="flashScope.template" value="'service/selection'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="selectTarget" to="serviceBrowse.view">
+         <evaluate expression="serviceLoadAction.selectTarget"/>
+      </transition>
+      <transition on="createTarget" to="serviceEdit.view">
+         <evaluate expression="serviceAction.createTarget"/>
+      </transition>
+      <transition on="toSelection" to="toParent"/>
+   </view-state>
+
+	<!-- 
+	 ! service  
+	 ! BROWSE VIEW
+	 !-->
+   <view-state id="serviceBrowse.view" view="/frame">
+		<!-- 
+		 ! before browse
+		 -->
+      <on-render>
+         <evaluate expression="serviceAction.prepareTarget"/>
+         <evaluate expression="serviceAction.resolveAuthorization"/>
+         <set name="flashScope.forward" value="'toSelection'"/>
+         <set name="flashScope.sidebar" value="'service/service_bar'"/>
+         <set name="flashScope.mainnav" value="'main_nav'"/>
+         <set name="flashScope.template" value="'service/service'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="editTarget" to="serviceEdit.view"/>
+		<!-- 
+		 ! backward transitions
+		 -->
+      <transition on="toSelection" to="serviceSelection.view"/>
+   </view-state>
+
+	<!-- 
+	 ! service  
+	 ! EDIT VIEW
+	 !-->
+   <view-state id="serviceEdit.view" view="/frame">
+		<!-- 
+		 ! before browse
+		 -->
+      <on-render>
+         <evaluate expression="serviceAction.editTarget"/>
+         <set name="flashScope.sidenav" value="'service/edit_nav'"/>
+         <set name="flashScope.sidebar" value="'service/service_bar'"/>
+         <set name="flashScope.template" value="'service/service_form'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="storeTarget" to="serviceBrowse.view">
+         <evaluate expression="serviceAction.bindAndValidate"/>
+         <evaluate expression="serviceAction.storeTarget"/>
+      </transition>
+      <transition on="cancelForm" to="serviceBrowse.view"/>
+   </view-state>
+
+	<!--
+	 ! End states 
+	// -->
+   <end-state id="toHome"/>
+   <end-state id="toParent"/>
+   <end-state id="returnTarget">
+      <output name="returnTarget" value="flowScope.service"/>
+   </end-state>
+
+</flow>

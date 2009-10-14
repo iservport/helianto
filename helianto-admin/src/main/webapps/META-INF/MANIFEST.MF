@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.helianto.admin.webapp
+Bundle-Vendor: The Helianto Project
+Import-Bundle: com.springsource.org.hsqldb;version="[1.8.0.9,1.8.0.9]"

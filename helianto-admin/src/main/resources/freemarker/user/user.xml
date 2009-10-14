@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="isNew">
+
+   <input name="entity" value="flowScope.entity" required="true"/>
+   <input name="user" value="flowScope.user" required="true"/>
+
+   <on-start>
+      <set name="flowScope.assign" value="'user/assign'"/>
+   </on-start>
+
+   <decision-state id="isNew">
+      <if test="flowScope.user.keyEmpty" then="userEdit.view" else="userBrowse.view"/>
+   </decision-state>
+
+	<!-- 
+	 ! user  
+	 ! BROWSE VIEW
+	 !-->
+   <view-state id="userBrowse.view" view="/frame">
+		<!-- 
+		 ! before browse
+		 -->
+      <on-render>
+         <evaluate expression="userAction.prepareTarget"/>
+         <evaluate expression="userAction.resolveAuthorization"/>
+         <set name="flashScope.sidenav" value="'user/user_nav'"/>
+         <set name="flashScope.sidebar" value="'user/user_bar'"/>
+         <set name="flashScope.mainnav" value="'main_nav'"/>
+         <set name="flashScope.template" value="'user/user'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="editTarget" to="userEdit.view"/>
+      <transition on="editIdentity" to="identityEdit.view"/>
+      <transition on="createUserRole" to="userRoleEdit.view">
+         <evaluate expression="userRoleAction.createTarget"/>
+      </transition>
+      <transition on="editUserRole" to="userRoleEdit.view">
+         <evaluate expression="userRoleAction.selectTarget"/>
+      </transition>
+		<!-- 
+		 ! backward transitions
+		 -->
+      <transition on="toSelection" to="toSelection"/>
+   </view-state>
+
+	<!-- 
+	 ! user  
+	 ! EDIT VIEW
+	 !-->
+   <view-state id="userEdit.view" view="/frame">
+		<!-- 
+		 ! before browse
+		 -->
+      <on-render>
+         <evaluate expression="userAction.editTarget"/>
+         <set name="flashScope.sidenav" value="'user/edit_nav'"/>
+         <set name="flashScope.sidebar" value="'user/user_bar'"/>
+         <set name="flashScope.template" value="'user/user_form'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="storeTarget" to="userBrowse.view">
+         <evaluate expression="userAction.bind"/>
+         <evaluate expression="userAction.storeTarget"/>
+      </transition>
+   </view-state>
+
+	<!-- 
+	 ! identity  
+	 ! EDIT VIEW
+	 !-->
+   <view-state id="identityEdit.view" view="/frame">
+		<!-- 
+		 ! before browse
+		 -->
+      <on-render>
+         <evaluate expression="userAction.editTarget"/>
+         <set name="flashScope.sidenav" value="'user/edit_nav'"/>
+         <set name="flashScope.sidebar" value="'user/identity_bar'"/>
+         <set name="flashScope.template" value="'user/identity_form'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="storeTarget" to="storeIdentity">
+         <evaluate expression="userAction.bind"/>
+      </transition>
+   </view-state>
+
+   <action-state id="storeIdentity">
+      <evaluate expression="userAction.storeTarget"/>
+      <transition on="success" to="userBrowse.view"/>
+      <transition on="error" to="identityEdit.view"/>
+   </action-state>
+
+	<!-- 
+	 ! userRole  
+	 ! EDIT VIEW
+	 !-->
+   <view-state id="userRoleEdit.view" view="/frame">
+		<!-- 
+		 ! before browse
+		 -->
+      <on-render>
+         <evaluate expression="userRoleAction.editTarget"/>
+         <set name="flashScope.sidenav" value="'user/edit_nav'"/>
+         <set name="flashScope.sidebar" value="'user/identity_bar'"/>
+         <set name="flashScope.template" value="'user/userRole_form'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="storeTarget" to="storeUserRole">
+         <evaluate expression="userRoleAction.bind"/>
+      </transition>
+   </view-state>
+
+   <action-state id="storeUserRole">
+      <evaluate expression="userRoleAction.storeTarget"/>
+      <transition on="success" to="userBrowse.view"/>
+      <transition on="error" to="userRoleEdit.view"/>
+   </action-state>
+
+	<!--
+	 ! End states 
+	// -->
+   <end-state id="backToHome"/>
+   <end-state id="backToParent"/>
+   <end-state id="toSelection">
+      <output name="entity" value="flowScope.user.entity"/>
+   </end-state>
+
+	<!--
+	 ! Globals 
+	// -->
+   <global-transitions>
+      <transition on="backToHome" to="backToHome"/>
+      <transition on="backToParent" to="backToParent"/>
+      <transition on="cancelForm" to="userBrowse.view"/>
+   </global-transitions>
+
+</flow>

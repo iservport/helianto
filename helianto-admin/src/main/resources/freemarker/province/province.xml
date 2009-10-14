@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="preProcess">
+
+   <input name="operator" value="flowScope.operator"/>
+
+   <on-start>
+      <set name="flowScope.assign" value="'province/assign'"/>
+   </on-start>
+
+   <action-state id="preProcess">
+      <evaluate expression="provinceFilterAction.preProcess"/>
+      <transition to="provinceSelection.view"/>
+   </action-state>
+
+	<!-- 
+	 ! province 
+	 ! SELECTION VIEW
+	 !-->
+   <view-state id="provinceSelection.view" view="/frame">
+		<!-- 
+		 ! before selection
+		 -->
+      <on-render>
+         <evaluate expression="provinceFilterAction.applyFilter"/>
+         <set name="flashScope.forward" value="'toSelection'"/>
+         <set name="flashScope.sidenav" value="'province/selection_nav'"/>
+         <set name="flashScope.sidebar" value="'province/selection_filter'"/>
+         <set name="flashScope.template" value="'province/selection'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="selectTarget" to="provinceBrowse.view">
+         <evaluate expression="provinceFilterAction.selectTarget"/>
+      </transition>
+      <transition on="createTarget" to="provinceEdit.view">
+         <evaluate expression="provinceAction.createTarget"/>
+      </transition>
+      <transition on="toSelection" to="toParent"/>
+   </view-state>
+
+	<!-- 
+	 ! province  
+	 ! BROWSE VIEW
+	 !-->
+   <view-state id="provinceBrowse.view" view="/frame">
+		<!-- 
+		 ! before browse
+		 -->
+      <on-render>
+         <evaluate expression="provinceAction.prepareTarget"/>
+         <evaluate expression="provinceAction.resolveAuthorization"/>
+         <set name="flashScope.forward" value="'toSelection'"/>
+         <set name="flashScope.sidebar" value="'province/province_bar'"/>
+         <set name="flashScope.mainnav" value="'main_nav'"/>
+         <set name="flashScope.template" value="'province/province'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="editTarget" to="provinceEdit.view"/>
+		<!-- 
+		 ! backward transitions
+		 -->
+      <transition on="toSelection" to="provinceSelection.view"/>
+   </view-state>
+
+	<!-- 
+	 ! province  
+	 ! EDIT VIEW
+	 !-->
+   <view-state id="provinceEdit.view" view="/frame">
+		<!-- 
+		 ! before browse
+		 -->
+      <on-render>
+         <evaluate expression="provinceAction.editTarget"/>
+         <set name="flashScope.sidenav" value="'province/edit_nav'"/>
+         <set name="flashScope.sidebar" value="'province/province_bar'"/>
+         <set name="flashScope.template" value="'province/province_form'"/>
+      </on-render>
+		<!-- 
+		 ! local transitions
+		 -->
+      <transition on="storeTarget" to="provinceBrowse.view">
+         <evaluate expression="provinceAction.bindAndValidate"/>
+         <evaluate expression="provinceAction.storeTarget"/>
+      </transition>
+      <transition on="cancelForm" to="provinceBrowse.view"/>
+   </view-state>
+
+	<!--
+	 ! End states 
+	// -->
+   <end-state id="toHome"/>
+   <end-state id="toParent"/>
+   <end-state id="returnTarget">
+      <output name="returnTarget" value="flowScope.province"/>
+   </end-state>
+
+</flow>
