@@ -1,0 +1,1 @@
+<#-- placeholder for annoucements, like company logo, banners, etc. -->

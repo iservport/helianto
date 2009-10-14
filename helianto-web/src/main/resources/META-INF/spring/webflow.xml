@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>	    	
+<!--
+	Copyright 2005 I Serv Consultoria Empresarial Ltda.
+	
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:flow="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
+           
+	<context:component-scan base-package="org.helianto.web.controller"/>
+	
+	<!--
+		Translate exceptions
+	-->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	<!--
+		Flow executor
+	-->
+	<flow:flow-executor id="flowExecutor" flow-registry="flowRegistry" />
+	<!--
+		Flow registry
+	-->
+    <flow:flow-registry id="flowRegistry" 
+        flow-builder-services="flowBuilderServices" >
+    	<flow:flow-location-pattern value="classpath*:/flows/**/*.xml"/>
+    	<flow:flow-location-pattern value="classpath*:/freemarker/**/*.xml"/>
+    </flow:flow-registry>
+    
+	<flow:flow-builder-services id="flowBuilderServices" 
+	    view-factory-creator="mvcViewFactoryCreator"/>
+	
+	<bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
+	    <property name="viewResolvers" ref="viewResolver"/>
+	</bean>
+
+	<!-- 
+		View resolver
+	-->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="cache" value="true" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+        <property name="contentType" value="text/html;charset=ISO-8859-1" />
+	</bean>
+
+</beans>
