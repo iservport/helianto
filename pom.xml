@@ -24,8 +24,8 @@
 			<module>helianto-document</module>
 			<module>helianto-resource</module>
 			<module>helianto-process</module>
-			<module>inventory</module>
-			<module>message</module>
+			<module>helianto-inventory</module>
+			<module>helianto-message</module>
 			<module>web</module>
 			<module>admin</module>
 		<!-- 

@@ -16,12 +16,12 @@
 	<classpathentry kind="src" path="helianto-process/src/main/java"/>
 	<classpathentry kind="src" path="helianto-process/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-process/src/test/java"/>
-	<classpathentry kind="src" path="inventory/src/main/java"/>
-	<classpathentry kind="src" path="inventory/src/main/resources"/>
-	<classpathentry kind="src" path="inventory/src/test/java"/>
-	<classpathentry kind="src" path="message/src/main/java"/>
-	<classpathentry kind="src" path="message/src/main/resources"/>
-	<classpathentry kind="src" path="message/src/test/java"/>
+	<classpathentry kind="src" path="helianto-inventory/src/main/java"/>
+	<classpathentry kind="src" path="helianto-inventory/src/main/resources"/>
+	<classpathentry kind="src" path="helianto-inventory/src/test/java"/>
+	<classpathentry kind="src" path="helianto-message/src/main/java"/>
+	<classpathentry kind="src" path="helianto-message/src/main/resources"/>
+	<classpathentry kind="src" path="helianto-message/src/test/java"/>
 	<classpathentry kind="src" path="web/src/main/java"/>
 	<classpathentry kind="src" path="web/src/main/resources"/>
 	<classpathentry kind="src" path="web/src/test/java"/>
