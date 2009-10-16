@@ -102,7 +102,7 @@
 
    <action-state id="storeIdentity">
       <evaluate expression="userAction.storeTarget"/>
-      <transition on="success" to="userBrowse.view"/>
+      <transition on="success" to="userGroupBrowse.view"/>
       <transition on="error" to="identityEdit.view"/>
    </action-state>
 

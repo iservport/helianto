@@ -112,7 +112,7 @@
 
    <action-state id="storeUserRole">
       <evaluate expression="userRoleAction.storeTarget"/>
-      <transition on="success" to="userBrowse.view"/>
+      <transition on="success" to="userAssociationBrowse.view"/>
       <transition on="error" to="userRoleEdit.view"/>
    </action-state>
 
