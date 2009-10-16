@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow-project-description>
+	<version>1</version>
+	<pluginVersion><![CDATA[2.2.6.200908051215-RELEASE]]></pluginVersion>
+	<configs>
+		<config>
+			<file>helianto-admin/src/main/resources/freemarker/user/userGroup.xml</file>
+			<name><![CDATA[userGroup]]></name>
+		</config>
+		<config>
+			<file>helianto-admin/src/main/resources/freemarker/user/userAssociation.xml</file>
+			<name><![CDATA[userAssociation]]></name>
+		</config>
+		<config>
+			<file>helianto-admin/src/main/resources/freemarker/keyType/keyType.xml</file>
+			<name><![CDATA[keyType]]></name>
+		</config>
+		<config>
+			<file>helianto-admin/src/main/resources/freemarker/service/service.xml</file>
+			<name><![CDATA[service]]></name>
+		</config>
+		<config>
+			<file>helianto-admin/src/main/resources/freemarker/province/province.xml</file>
+			<name><![CDATA[province]]></name>
+		</config>
+		<config>
+			<file>helianto-admin/src/main/resources/freemarker/entity/admin.xml</file>
+			<name><![CDATA[admin]]></name>
+		</config>
+		<config>
+			<file>helianto-admin/src/main/resources/freemarker/user/user.xml</file>
+			<name><![CDATA[user]]></name>
+		</config>
+	</configs>
+</webflow-project-description>
