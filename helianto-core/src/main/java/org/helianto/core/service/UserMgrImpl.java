@@ -29,6 +29,7 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.helianto.core.CreateIdentity;
+import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.EventType;
 import org.helianto.core.Identity;
@@ -161,10 +162,15 @@ public class UserMgrImpl implements UserMgr {
     			user.setIdentity(identity);
     		}
     		else if (user.getCreateIdentity()==CreateIdentity.AUTO.getValue()) {
+        		identity = Identity.identityFactory(principal);
         		if (logger.isDebugEnabled()) {
-        			logger.debug("Identity not found, creating one");
+        			logger.debug("Identity created: "+identity);
         		}
-        		identity = identityDao.merge(Identity.identityFactory(principal));
+        		Credential credential = Credential.credentialFactory(identity, "default");
+        		identity.getCredentials().add(credential);
+        		if (logger.isDebugEnabled()) {
+        			logger.debug("Credential created: "+credential);
+        		}
     			user.setIdentity(identity);
     		}
     		else {
@@ -181,10 +187,17 @@ public class UserMgrImpl implements UserMgr {
     }
 
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
-    	if (parentAssociation.isKeyEmpty() || parentAssociation.getChild() instanceof User && !validateIdentity((User) parentAssociation.getChild())) {
-    		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
+    	if (!parentAssociation.isKeyEmpty() && parentAssociation.getChild() instanceof User) {
+        	if (logger.isDebugEnabled()) {
+        		logger.debug("Validating "+parentAssociation.getChild());
+        	}
+        	User child = (User) parentAssociation.getChild();
+        	if(validateIdentity(child)) {
+        		child.setAccountNonExpired(true);
+            	return userAssociationDao.merge(parentAssociation);
+        	}
     	}
-    	return userAssociationDao.merge(parentAssociation);
+		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     }
 
 	public List<UserGroup> findUsers(UserFilter userFilter) {

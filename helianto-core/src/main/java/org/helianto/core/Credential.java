@@ -19,7 +19,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,9 +32,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 /**
- * <p>
  * Provides <code>Identity</code> with authentication information. 
- * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -43,6 +41,28 @@ import javax.persistence.Version;
     uniqueConstraints = {@UniqueConstraint(columnNames={"identityId"})}
 )
 public class Credential implements java.io.Serializable {
+
+    /**
+     * Empty <code>Identity</code> <code>Credential</code> factory.
+     * 
+     * @param identity
+     */
+    public static Credential credentialFactory(String password) {
+        Identity identity = Identity.identityFactory("");
+        return credentialFactory(identity, password);
+    }
+
+    /**
+     * <code>Credential</code> factory.
+     * 
+     * @param identity
+     */
+    public static Credential credentialFactory(Identity identity, String password) {
+        Credential credential = new Credential();
+        credential.setIdentity(identity);
+        credential.setPassword(password);
+        return credential;
+    }
 
     private static final long serialVersionUID = 1L;
     public static final String ALLOWED_CHARS_IN_PASSWORD = 
@@ -61,7 +81,9 @@ public class Credential implements java.io.Serializable {
     private boolean passwordDirty;
 
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public Credential() {
         setCredentialState(ActivityState.SUSPENDED);
         setLastModified(new Date());
@@ -71,7 +93,9 @@ public class Credential implements java.io.Serializable {
         setPasswordDirty(false);
     }
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public long getId() {
         return this.id;
@@ -83,7 +107,7 @@ public class Credential implements java.io.Serializable {
     /**
      * Identity owning this credential.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
     public Identity getIdentity() {
         return this.identity;
@@ -230,28 +254,6 @@ public class Credential implements java.io.Serializable {
     }
 
     /**
-     * Empty <code>Identity</code> <code>Credential</code> factory.
-     * 
-     * @param identity
-     */
-    public static Credential credentialFactory(String password) {
-        Identity identity = Identity.identityFactory("");
-        return credentialFactory(identity, password);
-    }
-
-    /**
-     * <code>Credential</code> factory.
-     * 
-     * @param identity
-     */
-    public static Credential credentialFactory(Identity identity, String password) {
-        Credential credential = new Credential();
-        credential.setIdentity(identity);
-        credential.setPassword(password);
-        return credential;
-    }
-
-    /**
      * VerifyPassword getter.
      */
     @Transient
@@ -319,22 +321,6 @@ public class Credential implements java.io.Serializable {
         return true;
     }
     
-    /**
-     * <code>Credential</code> natural id query.
-     */
-    @Transient
-    public static String getCredentialNaturalIdQueryString() {
-        return "select credential from Credential credential where credential.identity = ? ";
-    }
-
-    /**
-     * Shorthand <code>Credential</code> principal query.
-     */
-    @Transient
-    public static String getCredentialPrincipalQueryString() {
-        return "select credential from Credential credential where credential.identity.principal = ? ";
-    }
-
     /**
      * toString
      * @return String

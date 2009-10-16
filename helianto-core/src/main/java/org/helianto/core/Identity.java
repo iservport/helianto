@@ -16,12 +16,16 @@
 package org.helianto.core;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,10 +33,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
- *              
- * <p>
  * An uniquely identified actor.
- * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  *              
  *      
@@ -43,6 +45,33 @@ import javax.persistence.UniqueConstraint;
 )
 public class Identity implements java.io.Serializable {
 
+    /**
+     * <code>Identity</code> factory.
+     * 
+     * @param principal
+     */
+    public static Identity identityFactory(String principal) {
+        return identityFactory(principal, "");
+    }
+
+    /**
+     * <code>Identity</code> factory with current system date, <code>NOT_ADDRESSABLE</code>
+     * and flagged to be notified only <code>BY_REQUEST</code>.
+     *
+     * @param principal
+     * @param optionalAlias
+     * 
+     * @see IdentityType
+     * @see Notification
+     */
+    public static Identity identityFactory(String principal, String optionalAlias) {
+        Identity identity = new Identity();
+        
+        identity.setPrincipal(principal);
+        identity.setOptionalAlias(optionalAlias);
+        return identity;
+    }
+
     private static final long serialVersionUID = 1L;
     private long id;
     private String principal;
@@ -51,8 +80,11 @@ public class Identity implements java.io.Serializable {
     private Date created;
     private char identityType;
     private char notification;
+    private Set<Credential> credentials = new HashSet<Credential>();
 
-    /** default constructor */
+    /** 
+     * Default constructor
+     */
     public Identity() {
         setPersonalData(PersonalData.personalDataFactory("", ""));
         setCreated(new Date());
@@ -154,49 +186,17 @@ public class Identity implements java.io.Serializable {
     public void setNotification(Notification notification) {
         this.notification = notification.getValue();
     }
-
+    
     /**
-     * <code>Identity</code> factory.
-     * 
-     * @param principal
+     * A set of credentials.
      */
-    public static Identity identityFactory(String principal) {
-        return identityFactory(principal, "");
-    }
-
-    /**
-     * <code>Identity</code> factory with current system date, <code>NOT_ADDRESSABLE</code>
-     * and flagged to be notified only <code>BY_REQUEST</code>.
-     *
-     * @param principal
-     * @param optionalAlias
-     * 
-     * @see IdentityType
-     * @see Notification
-     */
-    public static Identity identityFactory(String principal, String optionalAlias) {
-        Identity identity = new Identity();
-        
-        identity.setPrincipal(principal);
-        identity.setOptionalAlias(optionalAlias);
-        return identity;
-    }
-
-    /**
-     * <code>Identity</code> query all.
-     */
-    @Transient
-    public static StringBuilder getIdentityQueryAllString() {
-        return new StringBuilder("select identity from Identity identity ");
-    }
-
-    /**
-     * <code>Identity</code> natural id query.
-     */
-    @Transient
-    public static String getIdentityNaturalIdQueryString() {
-        return "select identity from Identity identity where identity.principal = ? ";
-    }
+    @OneToMany(mappedBy="identity", cascade=CascadeType.ALL)
+    public Set<Credential> getCredentials() {
+		return credentials;
+	}
+    public void setCredentials(Set<Credential> credentials) {
+		this.credentials = credentials;
+	}
 
     /**
      * toString
