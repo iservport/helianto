@@ -36,10 +36,12 @@
         <listener-class>
         org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!-- wait until Spring Security 3.0 final
 	<listener>
 	  <listener-class>
 	  org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
+	-->
 	<!--
 			Dispatcher Servlet
 	-->
