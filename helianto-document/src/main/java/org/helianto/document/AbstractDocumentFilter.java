@@ -60,7 +60,6 @@ public abstract class AbstractDocumentFilter extends AbstractUserBackedCriteriaF
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("docName", getDocNameLike(), mainCriteriaBuilder);
-		appendOrderBy("docCode", mainCriteriaBuilder);
 	}
 
 	/**
