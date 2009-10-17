@@ -61,6 +61,7 @@ public class DocumentCodeBuilder implements Serializable {
     private int version;
 	private String builderCode;
 	private String numberPattern;
+	private String builderName;
     
     /** 
      * Default constructor.
@@ -69,6 +70,7 @@ public class DocumentCodeBuilder implements Serializable {
     	super();
     	setBuilderCode("");
     	setNumberPattern("0000");
+    	setBuilderName("");
     }
 
     /** 
@@ -136,12 +138,23 @@ public class DocumentCodeBuilder implements Serializable {
      * 0001/09, 0002/09, etc.
      * </p>
      */
-    @Column(length=64)
+    @Column(length=20)
 	public String getNumberPattern() {
 		return numberPattern;
 	}
 	public void setNumberPattern(String numberPattern) {
 		this.numberPattern = numberPattern;
+	}
+	
+	/**
+	 * Builder name.
+	 */
+    @Column(length=24)
+	public String getBuilderName() {
+		return builderName;
+	}
+	public void setBuilderName(String builderName) {
+		this.builderName = builderName;
 	}
 	
     /**
