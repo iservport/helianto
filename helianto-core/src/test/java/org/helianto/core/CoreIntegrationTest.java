@@ -64,19 +64,21 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	}
 	
 	@Resource BasicDao<Credential> credentialDao;
+	@Resource FilterDao<Identity, IdentityFilter> identityDao;
+	@Resource FilterDao<Server, ServerFilter> serverDao;
 	@Test
 	public void credential() {
-		Credential target = CredentialTestSupport.createCredential();
-		assertEquals(credentialDao.merge(target), credentialDao.findUnique(target.getIdentity()));
+		Identity identity = identityDao.merge(IdentityTestSupport.createIdentity());
+		assertEquals(identity, identityDao.findUnique(identity.getPrincipal()));
+		
+		Credential credential = credentialDao.merge(CredentialTestSupport.createCredential(identity));
+		assertEquals(credential, credentialDao.findUnique(credential.getIdentity()));
+
+		Server server = serverDao.merge(ServerTestSupport.createServer());
+		server.setCredential(credential);
+		assertEquals(server, serverDao.findUnique(server.getOperator(), server.getServerName()));
 	}
 	
-	@Resource FilterDao<Identity, IdentityFilter> identityDao;
-	@Test
-	public void identity() {
-		Identity target = IdentityTestSupport.createIdentity();
-		assertEquals(identityDao.merge(target), identityDao.findUnique(target.getPrincipal()));
-	}
-
 	@Resource BasicDao<InternalEnumerator> internalEnumeratorDao;
 	@Test
 	public void internalEnumerator() {
@@ -103,13 +105,6 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	public void province() {
 		Province target = ProvinceTestSupport.createProvince();
 		assertEquals(provinceDao.merge(target), provinceDao.findUnique(target.getOperator(), target.getProvinceCode()));
-	}
-	
-	@Resource FilterDao<Server, ServerFilter> serverDao;
-	@Test
-	public void server() {
-		Server target = ServerTestSupport.createServer();
-		assertEquals(serverDao.merge(target), serverDao.findUnique(target.getOperator(), target.getServerName()));
 	}
 	
 	@Resource FilterDao<Service, ServiceFilter> serviceDao;
