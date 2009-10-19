@@ -50,7 +50,7 @@ public interface DocumentMgr {
 	 * 
 	 * @param documentFilter
 	 */
-	public List<Document> findDocuments(Filter documentFilter);
+	public List<? extends Document> findDocuments(Filter documentFilter);
 	
 	/**
 	 * Remove the <code>Document</code> from the datastore.

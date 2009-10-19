@@ -117,8 +117,8 @@ public class DocumentMgrImpl implements DocumentMgr {
 		return cache;
 	}
 	
-	public List<Document> findDocuments(Filter documentFilter) {
-    	List<Document> documentList = (List<Document>) documentDao.find((DocumentFilter) documentFilter);
+	public List<? extends Document> findDocuments(Filter documentFilter) {
+    	List<? extends Document> documentList = (List<? extends Document>) documentDao.find((DocumentFilter) documentFilter);
     	if (logger.isDebugEnabled() && documentList!=null) {
     		logger.debug("Found document list of size "+documentList.size());
     	}
