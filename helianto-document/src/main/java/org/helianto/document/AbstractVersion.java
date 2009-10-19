@@ -22,10 +22,10 @@ import javax.persistence.MappedSuperclass;
 
 
 /**
- * <p>
  * A superclass to represent document versions.
- * </p>
+ * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated versions will be included on the document in future releases
  */
 @MappedSuperclass
 public class AbstractVersion implements java.io.Serializable {
