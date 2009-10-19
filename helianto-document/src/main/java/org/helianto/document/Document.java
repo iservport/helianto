@@ -54,7 +54,6 @@ public class Document extends AbstractNumberedDocument {
     }
     
     private static final long serialVersionUID = 1L;
-    private char contentType;
     private Set<DocumentKey> documentKeys = new HashSet<DocumentKey>(0);
     private Set<DocumentTag> documentTags = new HashSet<DocumentTag>(0);
     private Set<DocumentAssociation> parents = new HashSet<DocumentAssociation>(0);
@@ -72,23 +71,6 @@ public class Document extends AbstractNumberedDocument {
     	super();
     }
 
-    /**
-     * Content type.
-     */
-	public char getContentType() {
-		return contentType;
-	}
-	public void setContentType(char contentType) {
-		this.contentType = contentType;
-	}
-    /**
-     * True if document is editable.
-     */
-    @Transient
-    public boolean isEditable() {
-    	return true;
-    }
-    
     /**
      * Document keys.
      */

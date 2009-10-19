@@ -62,6 +62,7 @@ public class DocumentCodeBuilder implements Serializable {
 	private String builderCode;
 	private String numberPattern;
 	private String builderName;
+    private char contentType;
     
     /** 
      * Default constructor.
@@ -168,6 +169,16 @@ public class DocumentCodeBuilder implements Serializable {
 	}
 
     /**
+     * Content type.
+     */
+	public char getContentType() {
+		return contentType;
+	}
+	public void setContentType(char contentType) {
+		this.contentType = contentType;
+	}
+	
+    /**
      * toString
      * @return String
      */
@@ -176,7 +187,8 @@ public class DocumentCodeBuilder implements Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("prefix").append("='").append(getBuilderCode()).append("' ");
+        buffer.append("builderCode").append("='").append(getBuilderCode()).append("' ");
+        buffer.append("numberPattern").append("='").append(getNumberPattern()).append("' ");
         buffer.append("]");
       
         return buffer.toString();

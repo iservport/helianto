@@ -34,10 +34,18 @@ import org.junit.Test;
  * @author Mauricio Fernandes de Castro
  */
 public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoIntegrationTest {
+	
+	/**
+	 * Tries to remove the column 'contentType' from table 'doc_doc'
+	 */
+	@Test
+	public void fixLegacyCode() {
+		executeSqlScript("removeContentType.sql", true);
+	}
 
 	@Resource BasicDao<DocumentAssociation> documentAssociationDao;
 	@Test
-	public void address() {
+	public void documentAssociation() {
 		DocumentAssociation target = new DocumentAssociation();
 		target.setParent(DocumentTestSupport.create(Document.class));
 		target.setChild(DocumentTestSupport.create(Document.class));
@@ -73,5 +81,5 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 		AbstractFunction target = functionDao.merge(new FunctionStub(entity));
 		assertEquals(target, functionDao.findUnique(target.getEntity(), target.getDocCode()));
 	}
-
+	
 }

@@ -38,6 +38,7 @@ public class DocumentFilter extends AbstractDocumentFilter {
 	}
 	
 	private static final long serialVersionUID = 1L;
+	private String builderCode;
     private char contentType;
     
     /**
@@ -62,14 +63,28 @@ public class DocumentFilter extends AbstractDocumentFilter {
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
-		appendEqualFilter("contentType", getContentType(), mainCriteriaBuilder);
+		appendEqualFilter("documentCodeBuilder.contentType", getContentType(), mainCriteriaBuilder);
+		appendEqualFilter("documentCodeBuilder.builderCode", getBuilderCode(), mainCriteriaBuilder);
 	}
 	
+	/**
+	 * Content type filter.
+	 */
 	public char getContentType() {
 		return contentType;
 	}
 	public void setContentType(char contentType) {
 		this.contentType = contentType;
 	}
+	
+	/**
+	 * Builder code filter.
+	 */
+    public String getBuilderCode() {
+        return this.builderCode;
+    }
+    public void setBuilderCode(String builderCode) {
+        this.builderCode = builderCode;
+    }
 
 }
