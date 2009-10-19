@@ -51,10 +51,10 @@ public class DocumentMgrImpl implements DocumentMgr {
 	
 	public Document prepareDocument(Document document) {
 		Document managedDocument = documentDao.merge(document);
-		managedDocument.setDocumentKeyList(CoreUtils.createSortedList(document.getDocumentKeys()));
-		managedDocument.setDocumentTagList(CoreUtils.createSortedList(document.getDocumentTags()));
-		managedDocument.setParentList(CoreUtils.createList(document.getParents()));
-		managedDocument.setChildList(CoreUtils.createList(document.getChildren()));
+		managedDocument.setDocumentKeyList(CoreUtils.createSortedList(managedDocument.getDocumentKeys()));
+		managedDocument.setDocumentTagList(CoreUtils.createSortedList(managedDocument.getDocumentTags()));
+		managedDocument.setParentList(CoreUtils.createList(managedDocument.getParents()));
+		managedDocument.setChildList(CoreUtils.createList(managedDocument.getChildren()));
 		Collections.sort(managedDocument.getChildList());
 		documentDao.evict(managedDocument);
 		return managedDocument;
