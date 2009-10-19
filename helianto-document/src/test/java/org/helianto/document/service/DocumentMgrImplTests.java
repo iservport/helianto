@@ -16,7 +16,6 @@
 package org.helianto.document.service;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +24,9 @@ import org.easymock.EasyMock;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.document.Document;
-import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentCodeBuilder;
 import org.helianto.document.DocumentCodeBuilderFilter;
 import org.helianto.document.DocumentFilter;
-import org.helianto.document.DocumentKey;
-import org.helianto.document.DocumentTag;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,9 +78,6 @@ public class DocumentMgrImplTests {
 		EasyMock.replay(documentDao);
 		
 		documentMgr.prepareDocument(document);
-		for (boolean touched: cacheInspector) {
-			assertTrue(touched);
-		}
 		EasyMock.verify(documentDao);
 	}
 	
@@ -141,30 +134,11 @@ public class DocumentMgrImplTests {
 	private FilterDao<Document, DocumentFilter> documentDao;
 	private FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> documentCodeBuilderDao;
 	private SequenceMgr sequenceMgr;
-	private boolean[] cacheInspector;
 	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
-		cacheInspector = new boolean[] {false, false, false, false};
-		documentMgr = new DocumentMgrImpl(){
-			@Override protected List<DocumentKey> cacheDocumentKeyList(Document document) {
-				cacheInspector[0] = true;
-				return super.cacheDocumentKeyList(document);
-			}
-			@Override protected List<DocumentTag> cacheDocumentTagList(Document document) {
-				cacheInspector[1] = true;
-				return super.cacheDocumentTagList(document);
-			}
-			@Override protected List<DocumentAssociation> cacheParentAssociationList(Document document) {
-				cacheInspector[2] = true;
-				return super.cacheParentAssociationList(document);
-			}
-			@Override protected List<DocumentAssociation> cacheChildAssociationList(Document document) {
-				cacheInspector[3] = true;
-				return super.cacheChildAssociationList(document);
-			}
-		};
+		documentMgr = new DocumentMgrImpl();
 		documentDao = EasyMock.createMock(FilterDao.class);
 		documentMgr.setDocumentDao(documentDao);
 		documentCodeBuilderDao = EasyMock.createMock(FilterDao.class);

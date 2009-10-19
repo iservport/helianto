@@ -15,7 +15,6 @@
 
 package org.helianto.document.service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,13 +25,11 @@ import org.apache.commons.logging.LogFactory;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
+import org.helianto.core.utils.CoreUtils;
 import org.helianto.document.Document;
-import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentCodeBuilder;
 import org.helianto.document.DocumentCodeBuilderFilter;
 import org.helianto.document.DocumentFilter;
-import org.helianto.document.DocumentKey;
-import org.helianto.document.DocumentTag;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,67 +51,13 @@ public class DocumentMgrImpl implements DocumentMgr {
 	
 	public Document prepareDocument(Document document) {
 		Document managedDocument = documentDao.merge(document);
-		managedDocument.setDocumentKeyList(cacheDocumentKeyList(document));
-		managedDocument.setDocumentTagList(cacheDocumentTagList(document));
-		managedDocument.setParentList(cacheParentAssociationList(document));
-		managedDocument.setChildList(cacheChildAssociationList(document));
+		managedDocument.setDocumentKeyList(CoreUtils.createSortedList(document.getDocumentKeys()));
+		managedDocument.setDocumentTagList(CoreUtils.createSortedList(document.getDocumentTags()));
+		managedDocument.setParentList(CoreUtils.createList(document.getParents()));
+		managedDocument.setChildList(CoreUtils.createList(document.getChildren()));
+		Collections.sort(managedDocument.getChildList());
 		documentDao.evict(managedDocument);
 		return managedDocument;
-	}
-	
-	/**
-	 * Load and cache the document key set as an ordered list.
-	 *  
-	 * @param document
-	 */
-	protected List<DocumentKey> cacheDocumentKeyList(Document document) {
-		List<DocumentKey> cache = new ArrayList<DocumentKey>(document.getDocumentKeys());
-		Collections.sort(cache);
-    	if (logger.isDebugEnabled() && cache!=null) {
-    		logger.debug("Cached document key list of size "+cache.size());
-    	}
-		return cache;
-	}
-	
-	/**
-	 * Load and cache the document tag set as an ordered list.
-	 *  
-	 * @param document
-	 */
-	protected List<DocumentTag> cacheDocumentTagList(Document document) {
-		List<DocumentTag> cache = new ArrayList<DocumentTag>(document.getDocumentTags());
-		Collections.sort(cache);
-    	if (logger.isDebugEnabled() && cache!=null) {
-    		logger.debug("Cached document tag list of size "+cache.size());
-    	}
-		return cache;
-	}
-	
-	/**
-	 * Load and cache the parent document association set as a list.
-	 *  
-	 * @param document
-	 */
-	protected List<DocumentAssociation> cacheParentAssociationList(Document document) {
-		List<DocumentAssociation> cache = new ArrayList<DocumentAssociation>(document.getParents());
-    	if (logger.isDebugEnabled() && cache!=null) {
-    		logger.debug("Cached document parent association list of size "+cache.size());
-    	}
-		return cache;
-	}
-	
-	/**
-	 * Load and cache the child document association set as an ordered list.
-	 *  
-	 * @param document
-	 */
-	protected List<DocumentAssociation> cacheChildAssociationList(Document document) {
-		List<DocumentAssociation> cache = new ArrayList<DocumentAssociation>(document.getChildren());
-		Collections.sort(cache);
-    	if (logger.isDebugEnabled() && cache!=null) {
-    		logger.debug("Cached document parent association list of size "+cache.size());
-    	}
-		return cache;
 	}
 	
 	public List<? extends Document> findDocuments(Filter documentFilter) {

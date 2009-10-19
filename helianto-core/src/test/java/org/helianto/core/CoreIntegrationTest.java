@@ -74,9 +74,9 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 		Credential credential = credentialDao.merge(CredentialTestSupport.createCredential(identity));
 		assertEquals(credential, credentialDao.findUnique(credential.getIdentity()));
 
-		Server server = serverDao.merge(ServerTestSupport.createServer());
+		Server server = ServerTestSupport.createServer();
 		server.setCredential(credential);
-		assertEquals(server, serverDao.findUnique(server.getOperator(), server.getServerName()));
+		assertEquals(serverDao.merge(server), serverDao.findUnique(server.getOperator(), server.getServerName()));
 	}
 	
 	@Resource BasicDao<InternalEnumerator> internalEnumeratorDao;
