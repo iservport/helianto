@@ -40,6 +40,7 @@ public class DocumentCodeBuilderFilter extends AbstractUserBackedCriteriaFilter 
 	
 	private static final long serialVersionUID = 1L;
     private String builderCode;
+	private char contentType;
     
     /**
      * Default constructor.
@@ -63,6 +64,7 @@ public class DocumentCodeBuilderFilter extends AbstractUserBackedCriteriaFilter 
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("builderCode", getBuilderCode(), mainCriteriaBuilder);
+		appendEqualFilter("contentType", getContentType(), mainCriteriaBuilder);
 	}
 
 	@Override
@@ -70,6 +72,9 @@ public class DocumentCodeBuilderFilter extends AbstractUserBackedCriteriaFilter 
 		appendEqualFilter("builderCode", getBuilderCode(), mainCriteriaBuilder);
 	}
 
+    /**
+     * Builder code filter.
+     */
 	public String getBuilderCode() {
 		return builderCode;
 	}
@@ -77,5 +82,14 @@ public class DocumentCodeBuilderFilter extends AbstractUserBackedCriteriaFilter 
 		this.builderCode = builderCode;
 	}
 	
+    /**
+     * Content type filter.
+     */
+	public char getContentType() {
+		return contentType;
+	}
+	public void setContentType(char contentType) {
+		this.contentType = contentType;
+	}
 
 }
