@@ -158,4 +158,13 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 		assertEquals(userRoleDao.merge(target), userRoleDao.findUnique(target.getUserGroup(), target.getService(), target.getServiceExtension()));
 	}
 	
+	@Resource BasicDao<EntityPreference> entityPreferenceDao;
+	@Test
+	public void entityPreference() {
+		KeyType keyType = keyTypeDao.merge(KeyTypeTestSupport.createKeyType());
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity(keyType.getOperator()));
+		EntityPreference entityPreference = entityPreferenceDao.merge(EntityPreference.entityPreferenceFactory(entity, keyType));
+		assertEquals(entityPreference, entityPreferenceDao.findUnique(entityPreference.getEntity(), entityPreference.getKeyType()));
+	}
+	
 }

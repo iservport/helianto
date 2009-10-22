@@ -78,6 +78,17 @@ public class CoreRepositoryConfiguration {
 	}
 
 	/**
+	 * Entity preference data access.
+	 */
+	@Bean
+	public BasicDao<EntityPreference> entityPreferenceDao() {
+		BasicDao<EntityPreference> dao =  
+			repositoryFactory.basicDaoFactory(EntityPreference.class, "entity", "keyType");
+		logger.info("Created entityPreferenceDao");
+		return dao;
+	}
+
+	/**
 	 * Identity data access.
 	 */
 	@Bean

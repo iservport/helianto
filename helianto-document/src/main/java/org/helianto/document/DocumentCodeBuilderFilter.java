@@ -47,6 +47,7 @@ public class DocumentCodeBuilderFilter extends AbstractUserBackedCriteriaFilter 
      */
     public DocumentCodeBuilderFilter() {
 		reset();
+		setContentType(' ');
     }
 
 	public void reset() {

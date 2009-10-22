@@ -9,6 +9,7 @@
 		<mapping class="org.helianto.core.PrivateKey" />
 		<mapping class="org.helianto.core.DefaultEntity" />
 		<mapping class="org.helianto.core.Entity" />
+		<mapping class="org.helianto.core.EntityPreference" />
 		<mapping class="org.helianto.core.InternalEnumerator" />
 		<mapping class="org.helianto.core.Server" />
 		<mapping class="org.helianto.core.Service" />
