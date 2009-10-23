@@ -104,6 +104,7 @@ public class DocumentMgrImpl implements DocumentMgr {
 		this.documentCodeBuilderDao = documentCodeBuilderDao;
 	}
 	
+	@Resource
 	public void setSequenceMgr(SequenceMgr sequenceMgr) {
 		this.sequenceMgr = sequenceMgr;
 	}
