@@ -17,7 +17,6 @@ package org.helianto.document;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.text.Format;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -163,9 +162,7 @@ public class DocumentCodeBuilder implements Serializable {
      */
 	@Transient
 	public String buildCode(long internalNumber) {
-		Format formatter = new DecimalFormat(getNumberPattern());
-		return new StringBuilder(getBuilderCode().trim())
-		    .append(formatter.format(internalNumber)).toString();
+		return new DecimalFormat(getNumberPattern()).format(internalNumber);
 	}
 
     /**
