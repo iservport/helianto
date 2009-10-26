@@ -43,6 +43,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class DocumentMgrImpl implements DocumentMgr {
 
 	public Document storeDocument(Document document) {
+		if (document.isLocked()) {
+			throw new IllegalArgumentException("Tried to change a locked document.");
+		}
 		if (document.getDocumentCodeBuilder()!=null) {
 			sequenceMgr.validateInternalNumber(document);
 		}
