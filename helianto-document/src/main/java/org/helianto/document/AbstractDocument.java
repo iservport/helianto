@@ -66,6 +66,9 @@ public class AbstractDocument implements java.io.Serializable, TopLevelCodedEnti
     /** default constructor */
     public AbstractDocument() {
     	super();
+    	setDocName("");
+    	setDocFile("");
+    	setPriority('0');
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -146,6 +149,14 @@ public class AbstractDocument implements java.io.Serializable, TopLevelCodedEnti
     }
     public void setPriority(char priority) {
         this.priority = priority;
+    }
+    
+    /**
+     * By default, a document can be changed.
+     */
+    @Transient
+    public boolean isLocked() {
+    	return false;
     }
 
     /**
