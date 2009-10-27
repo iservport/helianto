@@ -86,7 +86,7 @@ public class InternalEnumerator implements java.io.Serializable {
     /**
      * Entity.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
