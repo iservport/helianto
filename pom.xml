@@ -310,8 +310,15 @@ Application-TraceLevels: ${application.traceLevels}
 			<groupId>org.freemarker</groupId>
 			<artifactId>com.springsource.freemarker</artifactId>
 			<version>2.3.15</version>
-		</dependency>		
-	</dependencies>
+		</dependency>
+		<!-- database -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.10</version>
+		</dependency>
+
+</dependencies>
 	<!-- 
 		!   Reporting
 		!-->

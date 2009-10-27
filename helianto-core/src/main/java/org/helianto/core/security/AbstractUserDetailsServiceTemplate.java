@@ -15,6 +15,7 @@
 
 package org.helianto.core.security;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -107,7 +108,7 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         // TODO security v3 userDetailsAdapter.setAuthorities(authorities);
         userDetailsAdapter.setAuthorities(authorities);
         if (logger.isDebugEnabled()) {
-            logger.debug("Step 6 successful: AUTHORITIES SUCCESSFULLY LOADED");
+            logger.debug("Step 6 successful: AUTHORITIES SUCCESSFULLY LOADED: "+Arrays.toString(authorities));
         }
         return userDetailsAdapter;
     }
