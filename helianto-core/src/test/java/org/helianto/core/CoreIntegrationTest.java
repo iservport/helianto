@@ -82,7 +82,8 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	@Resource BasicDao<InternalEnumerator> internalEnumeratorDao;
 	@Test
 	public void internalEnumerator() {
-		InternalEnumerator target = InternalEnumeratorTestSupport.createInternalEnumerator();
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		InternalEnumerator target = InternalEnumeratorTestSupport.createInternalEnumerator(entity);
 		assertEquals(internalEnumeratorDao.merge(target), internalEnumeratorDao.findUnique(target.getEntity(), target.getTypeName()));
 	}
 
