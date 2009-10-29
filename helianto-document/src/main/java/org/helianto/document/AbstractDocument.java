@@ -82,7 +82,7 @@ public class AbstractDocument implements java.io.Serializable, TopLevelCodedEnti
     /**
      * Entity.
      */
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
