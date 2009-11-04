@@ -40,7 +40,7 @@ import org.helianto.core.Entity;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Document extends AbstractNumberedDocument {
+public class Document extends AbstractNumberedDocument implements Comparable<Document> {
 
     /**
      * Factory method.
@@ -157,6 +157,13 @@ public class Document extends AbstractNumberedDocument {
 	}
 	public void setChildList(List<DocumentAssociation> childList) {
 		this.childList = childList;
+	}
+
+	/**
+	 * Sort by docCode.
+	 */
+	public int compareTo(Document next) {
+		return getDocCode().compareTo(next.getDocCode());
 	}
 
 	@Override

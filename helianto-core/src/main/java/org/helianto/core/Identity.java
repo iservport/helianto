@@ -143,7 +143,10 @@ public class Identity implements java.io.Serializable {
     @Transient
     public String getIdentityName() {
     	if (getPersonalData()==null) {
-    		return "";
+    		if (getOptionalAlias()!=null && getOptionalAlias().length()>0) {
+    			return getOptionalAlias();
+    		}
+    		return getPrincipal();
     	}
     	return new StringBuilder(getPersonalData().getFirstName())
     	    .append(" ")

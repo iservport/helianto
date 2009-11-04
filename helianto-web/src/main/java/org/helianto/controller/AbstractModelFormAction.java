@@ -203,10 +203,13 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
     
     @SuppressWarnings("unchecked")
 	protected T doSelectTarget(RequestContext context) throws Exception {
+    	List<T> targetList = (List<T>) getFormObjectScope().getScope(context).get(getTargetListAttributeName());
     	ParameterMap parameters = context.getRequestParameters();
-    	if (parameters.contains("target_index")) {
-    		int index = parameters.getInteger("target_index");
-    		List<T> targetList = (List<T>) getFormObjectScope().getScope(context).get(getTargetListAttributeName());
+    	int index = 0;
+    	if (targetList!=null) {
+        	if (targetList.size()>1 && parameters.contains("target_index")) {
+        		index = parameters.getInteger("target_index");
+        	}
     		T target = targetList.get(index);
     		if (target!=null) {
                 if (logger.isDebugEnabled()) {
@@ -214,12 +217,7 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
                 }
         		return target;
     		}
-    		else {
-    			logger.warn("Null target selected by index "+index);
-    		}
-            return null;
     	}
-		logger.warn("No selection parameter found");
         return null;
     }
         

@@ -83,6 +83,13 @@ public class DocumentMgrImpl implements DocumentMgr {
 		return documentCodeBuilderDao.merge(documentCodeBuilder);
 	}
 	
+	public DocumentCodeBuilder prepareDocumentCodeBuilder(DocumentCodeBuilder documentCodeBuilder) {
+		DocumentCodeBuilder managedDocumentCodeBuilder = documentCodeBuilderDao.merge(documentCodeBuilder);
+		managedDocumentCodeBuilder.setDocumentList(CoreUtils.createSortedList(managedDocumentCodeBuilder.getDocuments()));
+		documentCodeBuilderDao.evict(managedDocumentCodeBuilder);
+		return managedDocumentCodeBuilder;
+	}
+	
 	public List<DocumentCodeBuilder> findDocumentCodeBuilders(Filter documentCodeBuilderFilter) {
     	List<DocumentCodeBuilder> documentCodeBuilderList = (List<DocumentCodeBuilder>) documentCodeBuilderDao.find((DocumentCodeBuilderFilter) documentCodeBuilderFilter);
     	if (logger.isDebugEnabled() && documentCodeBuilderList!=null) {

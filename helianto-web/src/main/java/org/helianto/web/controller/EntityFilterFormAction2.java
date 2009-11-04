@@ -19,18 +19,14 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractFilterOnlyFormAction;
+import org.helianto.core.User;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserState;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.service.UserMgr;
-import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.providers.AuthenticationProvider;
-import org.springframework.security.providers.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -81,10 +77,7 @@ public class EntityFilterFormAction2 extends AbstractFilterOnlyFormAction<UserFi
 
 	@Override
 	protected boolean postProcessSelectTarget(RequestContext context, UserGroup target) throws Exception {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println("XXXXXXXXXXXXXXXXXX"+auth);
-//		UserDetails userDetails = userDetailsService.loadUserByUsername(target.getUserKey());
-//		SecurityContextHolder.getContext().setAuthentication(auth);
+		getPublicUserDetails().setUser((User) target);
 		getFormObjectScope().getScope(context).put(getTargetListAttributeName(), null);
 		return true;
 	}
@@ -97,16 +90,10 @@ public class EntityFilterFormAction2 extends AbstractFilterOnlyFormAction<UserFi
 	// collabs
 	
 	private UserMgr userMgr;
-	private UserDetailsService userDetailsService;
 
 	@Resource
 	public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;
 	}
 	
-	@Resource
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
-	}
-
 }

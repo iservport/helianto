@@ -17,6 +17,9 @@ package org.helianto.document;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,6 +33,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -62,6 +66,9 @@ public class DocumentCodeBuilder implements Serializable {
 	private String numberPattern;
 	private String builderName;
     private char contentType;
+    private Set<Document> documents = new HashSet<Document>();
+    // transient
+    private List<Document> documentList;
     
     /** 
      * Default constructor.
@@ -173,6 +180,28 @@ public class DocumentCodeBuilder implements Serializable {
 	}
 	public void setContentType(char contentType) {
 		this.contentType = contentType;
+	}
+	
+	/**
+	 * Document set.
+	 */
+	@OneToMany(mappedBy="documentCodeBuilder")
+	public Set<Document> getDocuments() {
+		return documents;
+	}
+	public void setDocuments(Set<Document> documents) {
+		this.documents = documents;
+	}
+	
+	/**
+	 * <<Transient>> Document list.
+	 */
+	@Transient
+	public List<Document> getDocumentList() {
+		return documentList;
+	}
+	public void setDocumentList(List<Document> documentList) {
+		this.documentList = documentList;
 	}
 	
     /**

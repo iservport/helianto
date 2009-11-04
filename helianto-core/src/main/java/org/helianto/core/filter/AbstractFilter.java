@@ -46,6 +46,9 @@ public abstract class AbstractFilter implements Serializable, Filter {
         }
         else {
         	doFilter(mainCriteriaBuilder);
+        	if (getOrderByString().length()>0) {
+        		appendOrderBy(getOrderByString(), mainCriteriaBuilder);
+        	}
         }
         postProcessFilter(mainCriteriaBuilder);
         if (logger.isDebugEnabled()) {
@@ -93,6 +96,13 @@ public abstract class AbstractFilter implements Serializable, Filter {
 	 * @param mainCriteriaBuilder
 	 */
 	protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	}
+	
+	/**
+	 * Hook to result set ordering.
+	 */
+	protected String getOrderByString() {
+		return "";
 	}
 	
 	// appenders

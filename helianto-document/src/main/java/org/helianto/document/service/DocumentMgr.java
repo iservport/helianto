@@ -69,6 +69,14 @@ public interface DocumentMgr {
 	public DocumentCodeBuilder storeDocumentCodeBuilder(DocumentCodeBuilder documentCodeBuilder);
 
 	/**
+	 * Prepare a <code>DocumentCodeBuilder</code> instance to return a
+	 * managed instance loaded with lazy collections.
+	 * 
+	 * @param documentCodeBuilder
+	 */
+	public DocumentCodeBuilder prepareDocumentCodeBuilder(DocumentCodeBuilder documentCodeBuilder);
+
+	/**
 	 * Find a <code>DocumentCodeBuilder</code> list.
 	 * 
 	 * @param documentCodeBuilderFilter

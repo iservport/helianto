@@ -46,6 +46,8 @@ public class DocumentFilter extends AbstractDocumentFilter {
      */
     public DocumentFilter() {
     	super();
+    	setBuilderCode("");
+    	setContentType(' ');
     }
 
     /**
