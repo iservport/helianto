@@ -77,6 +77,8 @@ public abstract class AbstractRequirement extends AbstractControl {
 	 */
     public AbstractRequirement() {
     	super();
+    	setRequirementDate(new Date());
+    	setResolution(RequirementState.FORECAST.getValue());
     }
 
     /**
