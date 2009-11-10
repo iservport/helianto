@@ -57,6 +57,14 @@ public class UserFilterFormAction extends AbstractFilterOnlyFormAction<UserFilte
 	protected List<UserGroup> doApplyFilter(UserFilter filter) {
 		return userMgr.findUsers(filter);
 	}
+	
+	/**
+	 * Force the result to success even if the list is empty.
+	 */
+	@Override
+	protected boolean afterApplyFilter(RequestContext context, UserFilter filter, List<UserGroup> targetList) {
+		return true;
+	}
 
 	@Override
 	public String getTargetAttributeName() {
