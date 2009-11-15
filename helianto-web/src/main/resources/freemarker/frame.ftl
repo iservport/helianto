@@ -76,8 +76,13 @@ href="?_eventId=${event}${param}&_flowExecutionKey=${flowExecutionKey}"><#nested
 
 <#macro select targetIndex="0", event="selectTarget", param="", title="">
 <td>
+<#if filterOption?if_exists='returnOption' >
+[<a <#if title!="" >title="${title}"</#if> 
+href="?_eventId=returnTarget&target_index=${targetIndex}${param}&_flowExecutionKey=${flowExecutionKey}"><#nested/></a>]
+<#else>
 <a <#if title!="" >title="${title}"</#if> 
 href="?_eventId=${event}&target_index=${targetIndex}${param}&_flowExecutionKey=${flowExecutionKey}"><#nested/></a>
+</#if>
 </td>
 </#macro>
 
