@@ -51,7 +51,7 @@ public class AbstractFunctionAssociation extends AbstractAssociation<AbstractFun
     /**
      * Associated parent function.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="parentId", nullable=true)
 	public AbstractFunction getParent() {
 		return parent;
@@ -60,7 +60,7 @@ public class AbstractFunctionAssociation extends AbstractAssociation<AbstractFun
     /**
      * Associated child function.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="childId", nullable=true)
 	public AbstractFunction getChild() {
 		return child;
