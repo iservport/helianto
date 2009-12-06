@@ -59,65 +59,44 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		assertEquals(addressDao.merge(target), addressDao.findUnique(target.getPartnerRegistry(), target.getSequence()));
 	}
 	
-	@Resource FilterDao<Partner, PartnerFilter> partnerDao;
-	@Test
-	public void partner() {
-		Partner target = PartnerTestSupport.createPartner();
-		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'P'));
-	}
-	// subclasses
-	@Test
-	public void agent() {
-		Agent target = AgentTestSupport.createAgent();
-		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'A'));
-	}
-	@Test
-	public void customer() {
-		Customer target = CustomerTestSupport.createCustomer();
-		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'C'));
-	}
-	@Test
-	public void division() {
-		Division target = DivisionTestSupport.createDivision();
-		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'D'));
-	}
-	@Test
-	public void laboratory() {
-		Laboratory target = LaboratoryTestSupport.createLaboratory();
-		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'L'));
-	}
-	@Test
-	public void manufacturer() {
-		Manufacturer target = ManufacturerTestSupport.createManufacturer();
-		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'M'));
-	}
-	@Test
-	public void supplier() {
-		Supplier target = SupplierTestSupport.createSupplier();
-		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'S'));
-	}
-	@Test
-	public void transportPartner() {
-		TransportPartner target = TransportPartnerTestSupport.createTransportPartner();
-		assertEquals(partnerDao.merge(target), partnerDao.findUnique(target.getPartnerRegistry(), 'T'));
-	}
-	
-	@Resource BasicDao<PartnerKey> partnerKeyDao;
-	@Test
-	public void partnerKey() {
-		PartnerKey target = PartnerKeyTestSupport.createPartnerKey();
-		assertEquals(partnerKeyDao.merge(target), partnerKeyDao.findUnique(target.getPartner(), target.getKeyType()));
-	}
-
 	@Resource FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
 	@Resource BasicDao<PartnerRegistryKey> partnerRegistryKeyDao;
+	@Resource FilterDao<Partner, PartnerFilter> partnerDao;
+	@Resource BasicDao<PartnerKey> partnerKeyDao;
 	@Test
 	public void partnerRegistry() {
-		PartnerRegistry partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
-		assertEquals(partnerRegistryDao.merge(partnerRegistry), partnerRegistryDao.findUnique(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias()));
+		PartnerRegistry partnerRegistry = partnerRegistryDao.merge(PartnerRegistryTestSupport.createPartnerRegistry());
+		assertEquals(partnerRegistry, partnerRegistryDao.findUnique(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias()));
 
 		PartnerRegistryKey partnerRegistryKey = PartnerRegistryKeyTestSupport.createPartnerRegistryKey(partnerRegistry);
 		assertEquals(partnerRegistryKeyDao.merge(partnerRegistryKey), partnerRegistryKeyDao.findUnique(partnerRegistryKey.getPartnerRegistry(), partnerRegistryKey.getKeyType()));
+
+		Partner partner = partnerDao.merge(PartnerTestSupport.createPartner(partnerRegistry));
+		assertEquals(partner, partnerDao.findUnique(partner.getPartnerRegistry(), 'P'));
+
+		Agent agent = AgentTestSupport.createAgent(partnerRegistry);
+		assertEquals(partnerDao.merge(agent), partnerDao.findUnique(agent.getPartnerRegistry(), 'A'));
+
+		Customer customer = CustomerTestSupport.createCustomer(partnerRegistry);
+		assertEquals(partnerDao.merge(customer), partnerDao.findUnique(customer.getPartnerRegistry(), 'C'));
+
+		Division division = DivisionTestSupport.createDivision(partnerRegistry);
+		assertEquals(partnerDao.merge(division), partnerDao.findUnique(division.getPartnerRegistry(), 'D'));
+
+		Laboratory laboratory = LaboratoryTestSupport.createLaboratory(partnerRegistry);
+		assertEquals(partnerDao.merge(laboratory), partnerDao.findUnique(laboratory.getPartnerRegistry(), 'L'));
+
+		Manufacturer manufacturer = ManufacturerTestSupport.createManufacturer(partnerRegistry);
+		assertEquals(partnerDao.merge(manufacturer), partnerDao.findUnique(manufacturer.getPartnerRegistry(), 'M'));
+
+		Supplier supplier = SupplierTestSupport.createSupplier(partnerRegistry);
+		assertEquals(partnerDao.merge(supplier), partnerDao.findUnique(supplier.getPartnerRegistry(), 'S'));
+
+		TransportPartner transport = TransportPartnerTestSupport.createTransportPartner(partnerRegistry);
+		assertEquals(partnerDao.merge(transport), partnerDao.findUnique(transport.getPartnerRegistry(), 'T'));
+
+		PartnerKey target = PartnerKeyTestSupport.createPartnerKey(partner);
+		assertEquals(partnerKeyDao.merge(target), partnerKeyDao.findUnique(target.getPartner(), target.getKeyType()));
 	}
 
 	@Resource BasicDao<Phone> phoneDao;

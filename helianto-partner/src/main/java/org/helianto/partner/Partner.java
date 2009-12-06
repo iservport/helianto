@@ -106,7 +106,7 @@ public class Partner implements java.io.Serializable {
     /**
      * PartnerRegistry.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PartnerRegistry getPartnerRegistry() {
         return this.partnerRegistry;

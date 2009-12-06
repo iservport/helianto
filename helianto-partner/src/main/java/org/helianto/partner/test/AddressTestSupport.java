@@ -22,11 +22,11 @@ public class AddressTestSupport {
      * @param sequence optional int 
      */
     public static Address createAddress(Object... args) {
-        PartnerRegistry partnerAssociation;
+        PartnerRegistry partnerRegistry;
         try {
-            partnerAssociation = (PartnerRegistry) args[0];
+            partnerRegistry = (PartnerRegistry) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            partnerAssociation = PartnerRegistryTestSupport.createPartnerRegistry();
+            partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
         }
         int sequence;
         try {
@@ -34,14 +34,14 @@ public class AddressTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             sequence = DomainTestSupport.getNonRepeatableIntValue(testKey++);
         }
-        Address address = Address.addressFactory(partnerAssociation, sequence);
+        Address address = Address.addressFactory(partnerRegistry, sequence);
         return address;
     }
     
     public static void populateAddress(Address address) {
     	address.setAddress1("Address1_"+testKey);
     	address.setAddressNumber("#_"+testKey);
-    	address.setAddressNumber("##_"+testKey);
+    	address.setAddressDetail("##_"+testKey);
     	address.setAddress2("Address2_"+testKey);
     	address.setAddress3("Address3_"+testKey);
     	address.setCityName("cityName"+testKey);
