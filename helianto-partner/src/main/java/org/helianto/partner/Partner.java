@@ -192,7 +192,7 @@ public class Partner implements java.io.Serializable {
     /**
      * Partner keys.
      */
-    @OneToMany(mappedBy="partner", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="partner")
     public Set<PartnerKey> getPartnerKeys() {
 		return partnerKeys;
 	}
