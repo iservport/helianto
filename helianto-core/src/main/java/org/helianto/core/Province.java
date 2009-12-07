@@ -70,15 +70,52 @@ public class Province  implements java.io.Serializable {
     private String provinceName;
     private Country country;
 
-	/** default constructor */
+	/**
+	 * Empty constructor.
+	 */
     public Province() {
-        this("");
+        setProvinceCode("");
+        setProvinceName("");
     }
 
-    /** Code constructor */
+	/**
+	 * Operator constructor.
+	 * 
+	 * @param operator
+	 */
+    public Province(Operator operator) {
+        this();
+        this.operator = operator;
+    }
+
+    /** Code constructor 
+     * @deprecated */
     public Province(String provinceCode) {
         setProvinceCode(provinceCode);
         setProvinceName("");
+    }
+
+    /**
+     * Code constructor.
+     * 
+     * @param operator
+     * @param provinceCode
+     */
+    public Province(Operator operator, String provinceCode) {
+    	this(operator);
+        setProvinceCode(provinceCode);
+    }
+
+    /**
+     * Name constructor.
+     * 
+     * @param operator
+     * @param provinceCode
+     * @param provinceName
+     */
+    public Province(Operator operator, String provinceCode, String provinceName) {
+    	this(operator, provinceCode);
+    	setProvinceName(provinceName);
     }
 
     /**
