@@ -24,7 +24,6 @@ public class LaboratoryTests{
         Laboratory laboratory = Laboratory.laboratoryFactory(partnerRegistry);
         
         assertSame(partnerRegistry, laboratory.getPartnerRegistry());
-        assertTrue(partnerRegistry.getPartners().contains(laboratory));
         
     }
     

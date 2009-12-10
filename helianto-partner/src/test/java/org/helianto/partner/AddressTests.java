@@ -29,7 +29,6 @@ public class AddressTests {
         assertEquals(sequence, address.getSequence());
         assertEquals(AddressType.MAIN.getValue(), address.getAddressType());
         assertEquals(PrivacyLevel.PUBLIC.getValue(), address.getPrivacyLevel());
-        assertTrue(partnerRegistry.getAddresses().contains(address));
         
     }
     

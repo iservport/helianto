@@ -1,6 +1,5 @@
 package org.helianto.process;
 
-import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -8,21 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.resource.Resource;
@@ -54,7 +38,6 @@ public class Setup  implements java.io.Serializable, Comparable<Setup> {
     public static Setup setupFactory(Operation operation, ResourceGroup resourceGroup) {
     	Setup setup = new Setup();
     	setup.setOperation(operation);
-    	operation.getSetups().add(setup);
     	setup.setResource(resourceGroup);
     	return setup;
     }
@@ -85,7 +68,7 @@ public class Setup  implements java.io.Serializable, Comparable<Setup> {
     /**
      * Parent operation.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="operationId", nullable=true)
     public Operation getOperation() {
 		return operation;
@@ -97,7 +80,7 @@ public class Setup  implements java.io.Serializable, Comparable<Setup> {
     /**
      * Related resource or resource group.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="resourceId", nullable=true)
     public ResourceGroup getResource() {
         return this.resource;

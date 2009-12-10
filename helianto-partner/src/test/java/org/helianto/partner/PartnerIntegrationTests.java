@@ -19,8 +19,12 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Entity;
+import org.helianto.core.KeyType;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
 import org.helianto.partner.test.AccountTestSupport;
 import org.helianto.partner.test.AddressTestSupport;
@@ -52,23 +56,21 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		assertEquals(accountDao.merge(target), accountDao.findUnique(target.getEntity(), target.getAccountCode()));
 	}
 	
-	@Resource BasicDao<Address> addressDao;
-	@Test
-	public void address() {
-		Address target = AddressTestSupport.createAddress();
-		assertEquals(addressDao.merge(target), addressDao.findUnique(target.getPartnerRegistry(), target.getSequence()));
-	}
-	
 	@Resource FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
+	@Resource BasicDao<KeyType> keyTypeDao;
 	@Resource BasicDao<PartnerRegistryKey> partnerRegistryKeyDao;
 	@Resource FilterDao<Partner, PartnerFilter> partnerDao;
 	@Resource BasicDao<PartnerKey> partnerKeyDao;
+	@Resource BasicDao<Address> addressDao;
+	@Resource BasicDao<Phone> phoneDao;
 	@Test
 	public void partnerRegistry() {
-		PartnerRegistry partnerRegistry = partnerRegistryDao.merge(PartnerRegistryTestSupport.createPartnerRegistry());
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		PartnerRegistry partnerRegistry = partnerRegistryDao.merge(PartnerRegistryTestSupport.createPartnerRegistry(entity));
 		assertEquals(partnerRegistry, partnerRegistryDao.findUnique(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias()));
 
-		PartnerRegistryKey partnerRegistryKey = PartnerRegistryKeyTestSupport.createPartnerRegistryKey(partnerRegistry);
+		KeyType keyType = keyTypeDao.merge(KeyTypeTestSupport.createKeyType(entity.getOperator()));
+		PartnerRegistryKey partnerRegistryKey = PartnerRegistryKeyTestSupport.createPartnerRegistryKey(partnerRegistry, keyType);
 		assertEquals(partnerRegistryKeyDao.merge(partnerRegistryKey), partnerRegistryKeyDao.findUnique(partnerRegistryKey.getPartnerRegistry(), partnerRegistryKey.getKeyType()));
 
 		Partner partner = partnerDao.merge(PartnerTestSupport.createPartner(partnerRegistry));
@@ -95,15 +97,14 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		TransportPartner transport = TransportPartnerTestSupport.createTransportPartner(partnerRegistry);
 		assertEquals(partnerDao.merge(transport), partnerDao.findUnique(transport.getPartnerRegistry(), 'T'));
 
-		PartnerKey target = PartnerKeyTestSupport.createPartnerKey(partner);
+		PartnerKey target = PartnerKeyTestSupport.createPartnerKey(partner, keyType);
 		assertEquals(partnerKeyDao.merge(target), partnerKeyDao.findUnique(target.getPartner(), target.getKeyType()));
-	}
 
-	@Resource BasicDao<Phone> phoneDao;
-	@Test
-	public void phone() {
-		Phone target = PhoneTestSupport.createPhone();
-		assertEquals(phoneDao.merge(target), phoneDao.findUnique(target.getAddress(), target.getSequence()));
+		Address address = AddressTestSupport.createAddress(partnerRegistry);
+		assertEquals(addressDao.merge(address), addressDao.findUnique(address.getPartnerRegistry(), address.getSequence()));
+
+		Phone phone = PhoneTestSupport.createPhone(address);
+		assertEquals(phoneDao.merge(phone), phoneDao.findUnique(phone.getAddress(), phone.getSequence()));
 	}
 
 }

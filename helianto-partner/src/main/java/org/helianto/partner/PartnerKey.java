@@ -15,7 +15,6 @@
 
 package org.helianto.partner;
 
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -67,7 +66,7 @@ public class PartnerKey extends AbstractKeyStringValue {
     /**
      * Partner.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="partnerId", nullable=true)
     public Partner getPartner() {
         return this.partner;

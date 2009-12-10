@@ -24,13 +24,12 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
-import org.easymock.internal.matchers.CompareTo;
-
 /**
  * Base class to generic associations.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@SuppressWarnings("unchecked")
 @MappedSuperclass
 public abstract class AbstractAssociation<P, C> implements Association<P, C>, Serializable, NaturalKeyInfo, Comparable<AbstractAssociation> {
 	
@@ -112,7 +111,6 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
 	 * otherwise delegate to {@link #compareParent(AbstractAssociation)}.
 	 * </p>
 	 */
-    @SuppressWarnings("unchecked")
 	public int compareTo(AbstractAssociation other) {
     	if (this.parent.equals(other.parent)) {
     		return compareChild(other);
@@ -125,7 +123,6 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
      * 
      * @param other
      */
-    @SuppressWarnings("unchecked")
 	protected int compareChild(AbstractAssociation other) {
     	return this.sequence - other.getSequence();
     }
@@ -135,8 +132,7 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
      * 
      * @param other
      */
-    @SuppressWarnings("unchecked")
-	protected int compareParent(AbstractAssociation other) {
+ 	protected int compareParent(AbstractAssociation other) {
     	return this.sequence - other.getSequence();
     }
 
@@ -159,7 +155,6 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
 	/**
 	 * equals
 	 */
-	@SuppressWarnings("unchecked")
 	public boolean equals(Object other) {
 		if ((this == other)) return true;
 		if ((other == null)) return false;

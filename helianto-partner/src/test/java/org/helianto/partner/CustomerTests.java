@@ -24,7 +24,6 @@ public class CustomerTests {
         Customer customer = Customer.customerFactory(partnerRegistry);
         
         assertSame(partnerRegistry, customer.getPartnerRegistry());
-        assertTrue(partnerRegistry.getPartners().contains(customer));
         
     }
     

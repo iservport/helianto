@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -75,7 +74,7 @@ public class KeyType implements java.io.Serializable {
     /**
      * <<NaturalKey>> Operator.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;

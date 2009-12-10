@@ -24,7 +24,6 @@ public class AgentTests {
         Agent agent = Agent.agentFactory(partnerRegistry);
         
         assertSame(partnerRegistry, agent.getPartnerRegistry());
-        assertTrue(partnerRegistry.getPartners().contains(agent));
         
     }
     

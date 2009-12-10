@@ -24,7 +24,6 @@ public class ManufacturerTests  {
         Manufacturer manufacturer = Manufacturer.manufacturerFactory(partnerRegistry);
         
         assertSame(partnerRegistry, manufacturer.getPartnerRegistry());
-        assertTrue(partnerRegistry.getPartners().contains(manufacturer));
         
     }
     

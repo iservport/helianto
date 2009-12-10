@@ -46,16 +46,18 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	@Resource BasicDao<DocumentAssociation> documentAssociationDao;
 	@Test
 	public void documentAssociation() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
 		DocumentAssociation target = new DocumentAssociation();
-		target.setParent(DocumentTestSupport.create(Document.class));
-		target.setChild(DocumentTestSupport.create(Document.class));
+		target.setParent(DocumentTestSupport.create(Document.class, entity));
+		target.setChild(DocumentTestSupport.create(Document.class, entity));
 		assertEquals(documentAssociationDao.merge(target), documentAssociationDao.findUnique(target.getParent(), target.getChild()));
 	}
 	
 	@Resource FilterDao<Document, DocumentFilter> documentDao;
 	@Test
 	public void document() {
-		Document target = DocumentTestSupport.create(Document.class);
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		Document target = DocumentTestSupport.create(Document.class, entity);
 		assertEquals(documentDao.merge(target), documentDao.findUnique(target.getEntity(), target.getDocCode()));
 	}
 	
@@ -70,7 +72,9 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	@Resource BasicDao<DocumentTag> documentTagDao;
 	@Test
 	public void documentTag() {
-		DocumentTag target = DocumentTagTestSupport.create(DocumentTag.class);
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		Document document = DocumentTestSupport.create(Document.class, entity);
+		DocumentTag target = DocumentTagTestSupport.create(DocumentTag.class, document);
 		assertEquals(documentTagDao.merge(target), documentTagDao.findUnique(target.getDocument(), target.getTagCode()));
 	}
 

@@ -22,7 +22,6 @@ public class SupplierTests {
         Supplier supplier = Supplier.supplierFactory(partnerRegistry);
         
         assertSame(partnerRegistry, supplier.getPartnerRegistry());
-        assertTrue(partnerRegistry.getPartners().contains(supplier));
         
     }
     

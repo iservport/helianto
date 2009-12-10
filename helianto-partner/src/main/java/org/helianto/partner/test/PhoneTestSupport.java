@@ -28,7 +28,7 @@ public class PhoneTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             address = AddressTestSupport.createAddress();
         }
-int sequence;
+        int sequence;
         try {
             sequence = (Integer) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {

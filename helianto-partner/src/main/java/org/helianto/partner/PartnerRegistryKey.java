@@ -15,7 +15,6 @@
 
 package org.helianto.partner;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -87,7 +86,7 @@ public class PartnerRegistryKey implements java.io.Serializable {
     /**
      * Key type.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="keyTypeId", nullable=true)
     public KeyType getKeyType() {
         return this.keyType;

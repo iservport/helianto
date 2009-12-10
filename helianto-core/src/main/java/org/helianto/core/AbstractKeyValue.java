@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -66,7 +65,7 @@ public abstract class AbstractKeyValue implements java.io.Serializable {
     /**
      * Key type.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="keyTypeId", nullable=true)
     public KeyType getKeyType() {
         return this.keyType;

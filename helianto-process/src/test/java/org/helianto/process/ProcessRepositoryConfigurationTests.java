@@ -31,6 +31,8 @@ import org.helianto.process.test.OperationTestSupport;
 import org.helianto.process.test.ProcessDocumentAssociationTestSupport;
 import org.helianto.process.test.ProcessDocumentTestSupport;
 import org.helianto.process.test.SetupTestSupport;
+import org.helianto.resource.ResourceGroup;
+import org.helianto.resource.test.ResourceGroupTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,35 +62,31 @@ public class ProcessRepositoryConfigurationTests extends AbstractProcessDaoInteg
 	@Resource BasicDao<ProcessDocumentAssociation> processDocumentAssociationDao;
 	@Test
 	public void processDocumentAssociation() {
-		ProcessDocument processDocument = ProcessDocumentTestSupport.createProcessDocument();
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		ProcessDocument processDocument = ProcessDocumentTestSupport.createProcessDocument(entity);
 		processDocumentDao.persist(processDocument);
 		ProcessDocumentAssociation target = ProcessDocumentAssociationTestSupport.createDocumentAssociation(processDocument);
 		assertEquals(processDocumentAssociationDao.merge(target), processDocumentAssociationDao.findUnique(target.getParent(), target.getChild()));
 	}
 	
 	@Resource FilterDao<ProcessDocument, ProcessDocumentFilter> processDocumentDao;
-	@Test
-	public void processDocument() {
-		ProcessDocument target = ProcessDocumentTestSupport.createProcessDocument();
-		assertEquals(processDocumentDao.merge(target), processDocumentDao.findUnique(target.getEntity(), target.getDocCode()));
-	}
-	// subclasses
-	@Test
-	public void characteristic() {
-		Characteristic target = CharacteristicTestSupport.createCharacteristic();
-		assertEquals(processDocumentDao.merge(target), processDocumentDao.findUnique(target.getEntity(), target.getDocCode()));
-	}
-	@Test
-	public void operation() {
-		Operation target = OperationTestSupport.createOperation();
-		assertEquals(processDocumentDao.merge(target), processDocumentDao.findUnique(target.getEntity(), target.getDocCode()));
-	}
-
+	@Resource BasicDao<ResourceGroup> resourceGroupDao;
 	@Resource BasicDao<Setup> setupDao;
 	@Test
-	public void setup() {
-		Setup target = SetupTestSupport.createSetup();
-		assertEquals(setupDao.merge(target), setupDao.findUnique(target.getOperation(), target.getResource()));
+	public void processDocument() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		ProcessDocument processDocument = ProcessDocumentTestSupport.createProcessDocument(entity);
+		assertEquals(processDocumentDao.merge(processDocument), processDocumentDao.findUnique(processDocument.getEntity(), processDocument.getDocCode()));
+
+		Characteristic characteristic = CharacteristicTestSupport.createCharacteristic(entity);
+		assertEquals(processDocumentDao.merge(characteristic), processDocumentDao.findUnique(characteristic.getEntity(), characteristic.getDocCode()));
+
+		Operation operation = (Operation) processDocumentDao.merge(OperationTestSupport.createOperation(entity));
+		assertEquals(operation, processDocumentDao.findUnique(operation.getEntity(), operation.getDocCode()));
+
+		ResourceGroup resource = resourceGroupDao.merge(ResourceGroupTestSupport.createResourceGroup(entity));
+		Setup setup = setupDao.merge(SetupTestSupport.createSetup(operation, resource));
+		assertEquals(setup, setupDao.findUnique(setup.getOperation(), setup.getResource()));
 	}
 	
 }

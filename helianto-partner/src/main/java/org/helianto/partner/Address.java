@@ -65,7 +65,6 @@ public class Address implements java.io.Serializable, Comparable<Address> {
         Address address = new Address();
         address.setPartnerRegistry(partnerRegistry);
         address.setSequence(sequence);
-        partnerRegistry.getAddresses().add(address);
         return address;
     }
 
@@ -181,7 +180,7 @@ public class Address implements java.io.Serializable, Comparable<Address> {
     /**
      * Partner registry.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PartnerRegistry getPartnerRegistry() {
         return this.partnerRegistry;

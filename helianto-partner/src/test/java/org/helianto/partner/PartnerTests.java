@@ -24,7 +24,6 @@ public class PartnerTests {
         Partner partner = Partner.partnerFactory(partnerRegistry);
         
         assertSame(partnerRegistry, partner.getPartnerRegistry());
-        assertTrue(partnerRegistry.getPartners().contains(partner));
         
     }
     

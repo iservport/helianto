@@ -40,6 +40,9 @@ public class Agent extends Partner implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private float agentComission;
 
+	/**
+	 *  Empty constructor
+	 */
     public Agent() {
     	super();
     }

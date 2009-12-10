@@ -31,7 +31,7 @@ public class ProcessDocumentAssociationTestSupport {
         try {
             child = (ProcessDocument) args[1];
         } catch(ArrayIndexOutOfBoundsException e) {
-            child = ProcessDocumentTestSupport.createProcessDocument();
+            child = ProcessDocumentTestSupport.createProcessDocument(parent.getEntity());
         }
         ProcessDocumentAssociation documentAssociation = ProcessDocumentAssociation.documentAssociationFactory(parent, child, AssociationType.GENERAL);
         return documentAssociation;

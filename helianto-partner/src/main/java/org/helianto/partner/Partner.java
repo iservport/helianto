@@ -65,9 +65,6 @@ public class Partner implements java.io.Serializable {
         	throw new RuntimeException("Unable to instantiate partner or descendant.");
         }
         partner.setPartnerRegistry(partnerRegistry);
-        partnerRegistry.getPartners().add(partner);
-        partner.setPartnerState(PartnerState.IDLE.getValue());
-        partner.setPriority('0');
         return partner;
     }
 
@@ -88,8 +85,12 @@ public class Partner implements java.io.Serializable {
     private char partnerState;
     private Set<PartnerKey> partnerKeys = new HashSet<PartnerKey>(0);
 
-	/** default constructor */
+	/**
+	 *  Empty constructor
+	 */
     public Partner() {
+        setPartnerState(PartnerState.IDLE.getValue());
+        setPriority('0');
     }
 
     /**
@@ -106,7 +107,7 @@ public class Partner implements java.io.Serializable {
     /**
      * PartnerRegistry.
      */
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PartnerRegistry getPartnerRegistry() {
         return this.partnerRegistry;
@@ -192,7 +193,7 @@ public class Partner implements java.io.Serializable {
     /**
      * Partner keys.
      */
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy="partner", cascade={CascadeType.MERGE, CascadeType.PERSIST})
     public Set<PartnerKey> getPartnerKeys() {
 		return partnerKeys;
 	}

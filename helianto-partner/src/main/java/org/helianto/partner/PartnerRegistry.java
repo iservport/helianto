@@ -90,7 +90,7 @@ public class PartnerRegistry implements java.io.Serializable {
     /**
      * Entity.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
@@ -202,7 +202,7 @@ public class PartnerRegistry implements java.io.Serializable {
     /**
      * Partner registry keys.
      */
-    @OneToMany(mappedBy="partnerRegistry")
+    @OneToMany(mappedBy="partnerRegistry", cascade={CascadeType.MERGE, CascadeType.PERSIST})
     public Set<PartnerRegistryKey> getPartnerRegistryKeys() {
 		return partnerRegistryKeys;
 	}

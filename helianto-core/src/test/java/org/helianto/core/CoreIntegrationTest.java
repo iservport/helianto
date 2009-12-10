@@ -87,18 +87,15 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 		assertEquals(internalEnumeratorDao.merge(target), internalEnumeratorDao.findUnique(target.getEntity(), target.getTypeName()));
 	}
 
+	@Resource FilterDao<Operator, OperatorFilter> operatorDao;
 	@Resource BasicDao<KeyType> keyTypeDao;
 	@Test
-	public void keyTypeDao() {
-		KeyType target = KeyTypeTestSupport.createKeyType();
-		assertEquals(keyTypeDao.merge(target), keyTypeDao.findUnique(target.getOperator(), target.getKeyCode()));
-	}
-
-	@Resource FilterDao<Operator, OperatorFilter> operatorDao;
-	@Test
 	public void operator() {
-		Operator target = OperatorTestSupport.createOperator();
-		assertEquals(operatorDao.merge(target), operatorDao.findUnique(target.getOperatorName()));
+		Operator operator = operatorDao.merge(OperatorTestSupport.createOperator());
+		assertEquals(operator, operatorDao.findUnique(operator.getOperatorName()));
+		
+		KeyType keyType = KeyTypeTestSupport.createKeyType(operator);
+		assertEquals(keyTypeDao.merge(keyType), keyTypeDao.findUnique(keyType.getOperator(), keyType.getKeyCode()));
 	}
 	
 	@Resource FilterDao<Province, ProvinceFilter> provinceDao;
@@ -162,8 +159,8 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	@Resource BasicDao<EntityPreference> entityPreferenceDao;
 	@Test
 	public void entityPreference() {
-		KeyType keyType = keyTypeDao.merge(KeyTypeTestSupport.createKeyType());
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity(keyType.getOperator()));
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		KeyType keyType = keyTypeDao.merge(KeyTypeTestSupport.createKeyType(entity.getOperator()));
 		EntityPreference entityPreference = entityPreferenceDao.merge(EntityPreference.entityPreferenceFactory(entity, keyType));
 		assertEquals(entityPreference, entityPreferenceDao.findUnique(entityPreference.getEntity(), entityPreference.getKeyType()));
 	}
