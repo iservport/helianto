@@ -52,7 +52,6 @@ public class KeyType implements java.io.Serializable {
     private int id;
     private Operator operator;
     private String keyCode;
-    private char keyMetaType;
     private String keyName;
     private String purpose;
 
@@ -95,19 +94,6 @@ public class KeyType implements java.io.Serializable {
         return this;
     }
 
-    /**
-	 * The type discriminator for this keyType.
-	 */
-	public char getKeyMetaType() {
-		return keyMetaType;
-	}
-	public void setKeyMetaType(char keyMetaType) {
-		this.keyMetaType = keyMetaType;
-	}
-	public void setKeyMetaType(KeyMetaType keyMetaType) {
-		this.keyMetaType = keyMetaType.getValue();
-	}
-	
     /**
      * Key name.
      */

@@ -20,11 +20,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.service.PostInstallationMgr;
 import org.springframework.beans.factory.InitializingBean;
+
 
 /**
  * Top isolation level to <code>org.helianto.core.Entity</code> instances.
@@ -83,6 +86,9 @@ public class Namespace implements InitializingBean {
 	/**
 	 * Key types used in this namespace (RO).
 	 */
+	public KeyType getKeyType(String keyCode) {
+		return keyTypeMap.get(keyCode);
+	}
 	public Map<String, KeyType> getKeyTypeMap() {
 		return keyTypeMap;
 	}
@@ -103,6 +109,9 @@ public class Namespace implements InitializingBean {
 	/**
 	 * Services used in this namespace (RO).
 	 */
+	public Service getService(String serviceName) {
+		return serviceMap.get(serviceName);
+	}
 	public Map<String, Service> getServiceMap() {
 		return serviceMap;
 	}
@@ -122,10 +131,18 @@ public class Namespace implements InitializingBean {
 
 	public void afterPropertiesSet() throws Exception {
 		Operator defaultOperator = postInstallationMgr.installOperator(getDefaultOperatorName(), isReinstall());
-
 		Map<String, KeyType> keyTypeMap = new HashMap<String, KeyType>();
-		for (String keyCode: getRequiredKeyTypeList()) {
-			keyTypeMap.put(keyCode, postInstallationMgr.installKey(defaultOperator, keyCode));
+		for (String keyCodeTuple: getRequiredKeyTypeList()) {
+			String[] keyCodes = keyCodeTuple.split(":");
+			String keyCode = keyCodes[0].trim();
+			KeyType keyType = postInstallationMgr.installKey(defaultOperator, keyCode);
+			if (keyCodes.length>1) {
+				keyType.setKeyName(keyCodes[1].trim());
+			}
+			keyTypeMap.put(keyCode, keyType);
+			if (logger.isDebugEnabled()) {
+				logger.debug("Key type "+keyType+" mapped to "+keyCode);
+			}
 		}
 
 		Map<String, Service> serviceMap = new HashMap<String, Service>();
@@ -146,5 +163,7 @@ public class Namespace implements InitializingBean {
 	public void setPostInstallationMgr(PostInstallationMgr postInstallationMgr) {
 		this.postInstallationMgr = postInstallationMgr;
 	}
+	
+	private static final Log logger = LogFactory.getLog(Namespace.class);
 	
 }
