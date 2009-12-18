@@ -50,6 +50,11 @@
 		<#include "${info!\"/empty\"}.ftl"/>
 </td>
 </tr>
+<tr >
+<td id="footer" colspan="3">
+        <#include "${footer!\"/empty\"}.ftl"/>
+</td>
+</tr>
 </table> <!-- end of bodyTable -->
 </body>
 </div>
