@@ -52,7 +52,7 @@
 	</scm>
 	<properties>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<spring.main.version>3.0.0.RC1</spring.main.version>
+		<spring.main.version>3.0.0.RELEASE</spring.main.version>
 		<spring.security.version>2.0.5.RELEASE</spring.security.version>
 	</properties>
 	<build>
@@ -318,7 +318,12 @@ Application-TraceLevels: ${application.traceLevels}
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>5.1.10</version>
 		</dependency>
-
+		<!-- Joda time -->
+		<dependency>
+			<groupId>org.joda</groupId>
+			<artifactId>com.springsource.org.joda.time</artifactId>
+			<version>1.6.0</version>
+		</dependency>
 </dependencies>
 	<!-- 
 		!   Reporting
