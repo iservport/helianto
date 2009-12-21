@@ -48,6 +48,15 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			defaultOperator = operatorDao.merge(defaultOperator);
 		}
 		logger.info("Default operator set to "+defaultOperator);
+		
+		Service adminService = Service.serviceFactory(defaultOperator, "ADMIN");
+		logger.info("Admin service created as "+adminService);
+		defaultOperator.getServiceMap().put(adminService.getServiceName(), adminService);
+		
+		Service userService = Service.serviceFactory(defaultOperator, "USER");
+		logger.info("User service created as "+userService);
+		defaultOperator.getServiceMap().put(userService.getServiceName(), userService);
+		
 		return defaultOperator;
 	}
 

@@ -75,8 +75,12 @@ public class NamespaceMgrTests {
 		Operator managedOperator = OperatorTestSupport.createOperator();
 		
 		expect(operatorDao.find(isA(OperatorFilter.class))).andReturn(operatorList);
-		expect(operatorDao.merge(isA(Operator.class))).andReturn(managedOperator);
+		expect(postInstallationMgr.installOperator("DEFAULT", false)).andReturn(managedOperator);
 		replay(operatorDao);
+		replay(postInstallationMgr);
+		
+//		expect(operatorDao.merge(isA(Operator.class))).andReturn(managedOperator);
+//		replay(operatorDao);
 		
 		entityDao.persist(isA(Entity.class));
 		replay(entityDao);
@@ -300,6 +304,7 @@ public class NamespaceMgrTests {
 //	}
 	
 	private NamespaceMgrImpl namespaceMgr;
+	private PostInstallationMgr postInstallationMgr;
 	private FilterDao<Operator, OperatorFilter> operatorDao;
 	private FilterDao<Province, ProvinceFilter> provinceDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
@@ -312,6 +317,8 @@ public class NamespaceMgrTests {
 	@Before
 	public void setUp() {
 		namespaceMgr = new NamespaceMgrImpl();
+		postInstallationMgr = createMock(PostInstallationMgr.class);
+		namespaceMgr.setPostInstallationMgr(postInstallationMgr);
 		operatorDao = createMock(FilterDao.class);
 		namespaceMgr.setOperatorDao(operatorDao);
 		provinceDao = createMock(FilterDao.class);
@@ -330,6 +337,7 @@ public class NamespaceMgrTests {
 	
 	@After
 	public void tearDown() {
+		reset(postInstallationMgr);
 		reset(operatorDao);
 		reset(provinceDao);
 		reset(entityDao);

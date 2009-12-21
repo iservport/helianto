@@ -61,7 +61,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 			if (logger.isInfoEnabled()) {
 				logger.info("Likely a first time install, creating defaults ...");
 			}
-			Operator operator = createOperator("DEFAULT");
+			Operator operator = postInstallationMgr.installOperator("DEFAULT", false);
 			if (logger.isInfoEnabled()) {
 				logger.info("About to create default entity to the default operator.");
 			}			
@@ -77,36 +77,8 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     	return operatorList;
 	}
 	
-	/**
-	 * Create the operator and automatically associate two basic services:
-	 * (1) admin, (2) user.
-	 * 
-	 * @param operatorName
-	 */
-	public Operator createOperator(String operatorName) {
-		Operator operator = Operator.operatorFactory(operatorName, null);
-		if (logger.isInfoEnabled()) {
-			logger.info("Operator created as "+operator);
-		}
-
-		Service adminService = Service.serviceFactory(operator, "ADMIN");
-		if (logger.isInfoEnabled()) {
-			logger.info("Admin service created as "+adminService);
-		}
-		operator.getServiceMap().put(adminService.getServiceName(), adminService);
-		
-		Service userService = Service.serviceFactory(operator, "USER");
-		if (logger.isInfoEnabled()) {
-			logger.info("User service created as "+userService);
-		}
-		operator.getServiceMap().put(userService.getServiceName(), userService);
-		
-		return operator;
-	}
-	
 	public Entity createAndPersistEntity(Operator operator, String alias) {
-		Operator managedOperator = operatorDao.merge(operator);
-		Entity entity = Entity.entityFactory(managedOperator, alias);
+		Entity entity = Entity.entityFactory(operator, alias);
 		if (logger.isInfoEnabled()) {
 			logger.info("Entity created as "+entity);
 		}
@@ -124,8 +96,8 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		}
 		userGroupDao.persist(defaultUser);
 		
-		Service adminService = managedOperator.getServiceMap().get("ADMIN"); 
-		Service userService = managedOperator.getServiceMap().get("USER"); 
+		Service adminService = operator.getServiceMap().get("ADMIN"); 
+		Service userService = operator.getServiceMap().get("USER"); 
 		
 		if (userService==null) {
 			throw new IllegalStateException("Unable to create entity, user service not found.");
@@ -281,6 +253,8 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 
 	// collabs
 	
+	private PostInstallationMgr postInstallationMgr;
+	
 	private FilterDao<Operator, OperatorFilter> operatorDao;
 	private FilterDao<Province, ProvinceFilter> provinceDao;
 	private FilterDao<Entity, EntityFilter> entityDao;
@@ -288,6 +262,11 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	private BasicDao<KeyType> keyTypeDao;
 	private BasicDao<Service> serviceDao;
 	private BasicDao<UserRole> userRoleDao;
+	
+	@Resource
+	public void setPostInstallationMgr(PostInstallationMgr postInstallationMgr) {
+		this.postInstallationMgr = postInstallationMgr;
+	}
 	
 	@Resource(name="operatorDao")
 	public void setOperatorDao(FilterDao<Operator, OperatorFilter> operatorDao) {

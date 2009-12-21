@@ -29,6 +29,10 @@ public interface PostInstallationMgr {
 	/**
 	 * Install an Operator, if does not exist.
 	 * 
+	 * <p>
+	 * Automatically associate two basic services: (1) admin, (2) user.
+	 * </p>
+	 * 
 	 * @param defaultOperatorName
 	 * @param reinstall
 	 */
