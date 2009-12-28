@@ -14,6 +14,9 @@
 	<classpathentry kind="src" path="helianto-resource/src/main/java"/>
 	<classpathentry kind="src" path="helianto-resource/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-resource/src/test/java"/>
+	<classpathentry kind="src" path="helianto-finance/src/main/java"/>
+	<classpathentry kind="src" path="helianto-finance/src/main/resources"/>
+	<classpathentry kind="src" path="helianto-finance/src/test/java"/>
 	<classpathentry kind="src" path="helianto-process/src/main/java"/>
 	<classpathentry kind="src" path="helianto-process/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-process/src/test/java"/>

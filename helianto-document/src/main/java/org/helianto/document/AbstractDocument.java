@@ -15,7 +15,6 @@
 
 package org.helianto.document;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -63,9 +62,11 @@ public class AbstractDocument implements java.io.Serializable, TopLevelCodedEnti
     private String docFile;
     private char priority;
 
-    /** default constructor */
+    /** 
+     * Default constructor
+     */
     public AbstractDocument() {
-    	super();
+    	setDocCode("");
     	setDocName("");
     	setDocFile("");
     	setPriority('0');

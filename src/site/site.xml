@@ -32,8 +32,8 @@
 		</menu>
 
 		<menu name="Documentation">
-			<item name="Reference guide (wiki)"
-				href="http://db.iservport.com/helianto" />
+			<item name="Reference guide"
+				href="reference/introduction" />
 			<item name="Helianto core Javadocs"
 				href="helianto-core/apidocs/index.html" />
 			<!--item name="Helianto process Javadocs" href="helianto-process/apidocs/index.html"/-->

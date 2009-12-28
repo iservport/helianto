@@ -18,10 +18,19 @@
 		Helianto strongly relies on the Spring Framework to achieve this.
 	</description>
 	<url>http://www.helianto.org</url>
+
+	<scm>
+		<connection>scm:svn:https://helianto.svn.sourceforge.net/svnroot/helianto/trunk</connection>
+		<developerConnection>scm:svn:https://helianto.svn.sourceforge.net/svnroot/helianto/trunk</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://helianto.svn.sourceforge.net/viewvc/helianto/trunk/</url>
+	</scm>
+	
 	<modules>
 			<module>helianto-core</module>
 			<module>helianto-partner</module>
 			<module>helianto-document</module>
+			<module>helianto-finance</module>
 			<module>helianto-resource</module>
 			<module>helianto-process</module>
 			<module>helianto-inventory</module>
@@ -32,7 +41,9 @@
 			<module>archetype1</module>
 		-->
 	</modules>
+	
 	<inceptionYear>2005</inceptionYear>
+	
 	<developers>
 		<developer>
 			<id>mauricio</id>
@@ -41,6 +52,7 @@
 			<timezone>-3</timezone>
 		</developer>
 	</developers>
+	
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -48,8 +60,7 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	<scm>
-	</scm>
+
 	<properties>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<spring.main.version>3.0.0.RELEASE</spring.main.version>
@@ -324,6 +335,19 @@ Application-TraceLevels: ${application.traceLevels}
 			<artifactId>com.springsource.org.joda.time</artifactId>
 			<version>1.6.0</version>
 		</dependency>
+		<!-- Build time only dependencies -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>com.springsource.javax.servlet</artifactId>
+			<version>2.4.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>com.springsource.javax.servlet.jsp</artifactId>
+			<version>2.1.0</version>
+			<scope>provided</scope>
+		</dependency>
 </dependencies>
 	<!-- 
 		!   Reporting
@@ -332,10 +356,27 @@ Application-TraceLevels: ${application.traceLevels}
 		<plugins>
 			<plugin>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>surefire-report-maven-plugin</artifactId>
+				<configuration>
+      				<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+    			</configuration> 
+				<!-- 
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>plugins</report>
+                            <report>license</report>
+                            <report>project-team</report>
+                            <report>summary</report>
+                            <report>cim</report>
+                            <report>issue-tracking</report>
+                            <report>scm</report>
+                            <report>plugin-management</report>
+                            <report>mailing-list</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+                -->
 			</plugin>
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -343,6 +384,11 @@ Application-TraceLevels: ${application.traceLevels}
 					<source>1.5</source>
 				</configuration>
 			</plugin>
+		      <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-report-plugin</artifactId>
+		        <version>2.4.2</version>
+		      </plugin>
 			<!-- plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changelog-plugin</artifactId>
@@ -353,6 +399,10 @@ Application-TraceLevels: ${application.traceLevels}
 			</plugin-->
 		</plugins>
 	</reporting>
+	<dependencyManagement>
+		<dependencies>
+		</dependencies>
+	</dependencyManagement>
 	<distributionManagement>
 		<repository>
 			<id>develrepo</id>
