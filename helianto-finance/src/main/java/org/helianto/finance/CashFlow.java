@@ -33,7 +33,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.document.AbstractDocument;
 import org.helianto.document.AbstractRecord;
 import org.helianto.partner.Partner;
 
@@ -44,7 +43,7 @@ import org.helianto.partner.Partner;
  */
 @javax.persistence.Entity
 @Table(name="fin_cashflow",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "internalNumber"})}
 )
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
@@ -84,16 +83,6 @@ public class CashFlow extends AbstractRecord implements Comparable<CashFlow> {
 	}
 	
 	/**
-	 * Owning entity
-	 */
-	public Entity getEntity() {
-		return entity;
-	}
-	public void setEntity(Entity entity) {
-		this.entity = entity;
-	}
-	
-	/**
 	 * Partner constructor.
 	 * 
 	 * @param partner
@@ -101,6 +90,18 @@ public class CashFlow extends AbstractRecord implements Comparable<CashFlow> {
 	public CashFlow(Partner partner) {
 		this(partner.getPartnerRegistry().getEntity());
 		setPartner(partner);
+	}
+	
+	/**
+	 * Owning entity
+	 */
+	@ManyToOne
+	@JoinColumn(name="entityId")
+	public Entity getEntity() {
+		return entity;
+	}
+	public void setEntity(Entity entity) {
+		this.entity = entity;
 	}
 	
 	/**
@@ -174,7 +175,7 @@ public class CashFlow extends AbstractRecord implements Comparable<CashFlow> {
 	   public boolean equals(Object other) {
 	         if ( (this == other ) ) return true;
 	         if ( (other == null ) ) return false;
-	         if ( !(other instanceof AbstractDocument) ) return false;
+	         if ( !(other instanceof CashFlow) ) return false;
 	         CashFlow castOther = (CashFlow) other; 
 	         
 	         return ( ( this.getEntity()==castOther.getEntity()) 

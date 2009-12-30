@@ -29,8 +29,7 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class FinanceRepositoryIntegrationTests extends
-		AbstractFinanceDaoIntegrationTest {
+public class FinanceRepositoryIntegrationTests extends AbstractFinanceDaoIntegrationTest {
 
 	@Resource
 	FilterDao<CashFlow, CashFlowFilter> cashFlowDao;
@@ -39,8 +38,7 @@ public class FinanceRepositoryIntegrationTests extends
 	public void cashFlow() {
 		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
 		CashFlow target = cashFlowDao.merge(new CashFlow(entity));
-		assertEquals(target, cashFlowDao.findUnique(target.getEntity(), target
-				.getDocCode()));
+		assertEquals(target, cashFlowDao.findUnique(target.getEntity(), target.getInternalNumber()));
 	}
 
 }

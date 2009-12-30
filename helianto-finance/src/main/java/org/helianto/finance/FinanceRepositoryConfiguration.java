@@ -39,7 +39,7 @@ public class FinanceRepositoryConfiguration {
 	@Bean
 	public FilterDao<CashFlow, CashFlowFilter> cashFlowDao() {
 		FilterDao<CashFlow, CashFlowFilter> dao =  
-			repositoryFactory.filterDaoFactory(CashFlow.class, CashFlowFilter.class, "entity", "docCode");
+			repositoryFactory.filterDaoFactory(CashFlow.class, CashFlowFilter.class, "entity", "internalNumber");
 		logger.info("Created cashFlowDao");
 		return dao;
 	}

@@ -59,17 +59,21 @@ public class CashFlowTests {
 	@Test
 	public void equals() {
 		final Entity entity = new Entity();
-		AbstractRecord abstractDocument = new AbstractRecord() {
-			private static final long serialVersionUID = 1L;
-			public Entity getEntity() {return entity; }
-			@Override  public long getInternalNumber() {return Long.MAX_VALUE; }
-		};
-		CashFlow cashFlow = new CashFlow() {
-			private static final long serialVersionUID = 1L;
-			@Override public Entity getEntity() {return entity; }
-			@Override  public long getInternalNumber() {return Long.MAX_VALUE; }
-		};
-		assertFalse(cashFlow.equals(abstractDocument));
+		CashFlow cashFlow = new CashFlow();
+		CashFlow other = new CashFlow();
+		assertTrue(cashFlow.equals(other));
+		
+		cashFlow.setEntity(entity);
+		cashFlow.setInternalNumber(Long.MAX_VALUE);
+		assertFalse(cashFlow.equals(other));
+		other.setEntity(entity);
+		assertFalse(cashFlow.equals(other));
+		other.setInternalNumber(Long.MAX_VALUE);
+		assertTrue(cashFlow.equals(other));
+		assertEquals(cashFlow.hashCode(), other.hashCode());
+		cashFlow.setInternalNumber(0);
+		assertFalse(cashFlow.equals(other));
+
 	}
 	
 	@Test

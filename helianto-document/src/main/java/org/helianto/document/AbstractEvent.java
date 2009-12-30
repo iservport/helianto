@@ -76,9 +76,9 @@ public abstract class AbstractEvent implements Serializable {
     private Date issueDate;
     private char privacyLevel;
 
-     // Constructors
-
-    /** default constructor */
+    /** 
+     * Empty constructor
+	 */
     public AbstractEvent() {
         setPrivacyLevel(PrivacyLevel.ZERO.getValue());
         setIssueDate(new Date());
