@@ -20,8 +20,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Date;
+
 import org.helianto.core.Entity;
-import org.helianto.document.AbstractDocument;
+import org.helianto.document.AbstractRecord;
 import org.helianto.partner.Partner;
 import org.helianto.partner.test.PartnerTestSupport;
 import org.junit.Test;
@@ -35,7 +37,7 @@ public class CashFlowTests {
 	@Test
 	public void constructor() {
 		CashFlow cashFlow = new CashFlow();
-		assertTrue(cashFlow instanceof AbstractDocument);
+		assertTrue(cashFlow instanceof AbstractRecord);
 	}
 
 	@Test
@@ -57,15 +59,15 @@ public class CashFlowTests {
 	@Test
 	public void equals() {
 		final Entity entity = new Entity();
-		AbstractDocument abstractDocument = new AbstractDocument() {
+		AbstractRecord abstractDocument = new AbstractRecord() {
 			private static final long serialVersionUID = 1L;
-			@Override public Entity getEntity() {return entity; }
-			@Override public String getDocCode() {return "CODE"; }
+			public Entity getEntity() {return entity; }
+			@Override  public long getInternalNumber() {return Long.MAX_VALUE; }
 		};
 		CashFlow cashFlow = new CashFlow() {
 			private static final long serialVersionUID = 1L;
 			@Override public Entity getEntity() {return entity; }
-			@Override public String getDocCode() {return "CODE"; }
+			@Override  public long getInternalNumber() {return Long.MAX_VALUE; }
 		};
 		assertFalse(cashFlow.equals(abstractDocument));
 	}
@@ -74,13 +76,13 @@ public class CashFlowTests {
 	public void compare() {
 		Entity entity = new Entity();
 		CashFlow cashFlow = new CashFlow(entity);
-		cashFlow.setDocCode("1");
+		cashFlow.setDueDate(new Date(1));
 		CashFlow other = new CashFlow(entity);
-		other.setDocCode("0");
+		other.setDueDate(new Date(0));
 		assertEquals(1, cashFlow.compareTo(other));
-		other.setDocCode("1");
+		other.setDueDate(new Date(1));
 		assertEquals(0, cashFlow.compareTo(other));
-		other.setDocCode("2");
+		other.setDueDate(new Date(2));
 		assertEquals(-1, cashFlow.compareTo(other));
 	}
 

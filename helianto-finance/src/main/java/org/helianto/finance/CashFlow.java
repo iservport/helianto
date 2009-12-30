@@ -15,8 +15,10 @@
 
 package org.helianto.finance;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -27,11 +29,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Identity;
 import org.helianto.document.AbstractDocument;
+import org.helianto.document.AbstractRecord;
 import org.helianto.partner.Partner;
 
 /**
@@ -49,14 +52,19 @@ import org.helianto.partner.Partner;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("C")
-public class CashFlow extends AbstractDocument implements Comparable<CashFlow> {
+public class CashFlow extends AbstractRecord implements Comparable<CashFlow> {
 
 	private static final long serialVersionUID = 1L;
+	private Entity entity;
 	private Partner partner;
-    private Identity owner;
-    private Date issueDate;
     private Date dueDate;
+    private BigDecimal amount;
+    private int balance;
 
+    @Transient
+    public String getInternalNumberKey() {
+    	return "CASHFLOW";
+    }
 	
 	/**
 	 * Empty constructor.
@@ -73,6 +81,16 @@ public class CashFlow extends AbstractDocument implements Comparable<CashFlow> {
 	public CashFlow(Entity entity) {
 		this();
 		setEntity(entity);
+	}
+	
+	/**
+	 * Owning entity
+	 */
+	public Entity getEntity() {
+		return entity;
+	}
+	public void setEntity(Entity entity) {
+		this.entity = entity;
 	}
 	
 	/**
@@ -98,29 +116,6 @@ public class CashFlow extends AbstractDocument implements Comparable<CashFlow> {
 	}
 	
 	/**
-	 * The owner.
-	 */
-	@ManyToOne
-	@JoinColumn(name="ownerId")
-	public Identity getOwner() {
-		return owner;
-	}
-	public void setOwner(Identity owner) {
-		this.owner = owner;
-	}
-	
-	/**
-	 * Cash flow issue date
-	 */
-    @Temporal(TemporalType.TIMESTAMP)
-	public Date getIssueDate() {
-		return issueDate;
-	}
-	public void setIssueDate(Date issueDate) {
-		this.issueDate = issueDate;
-	}
-	
-	/**
 	 * Cash flow due date
 	 */
     @Temporal(TemporalType.TIMESTAMP)
@@ -132,18 +127,73 @@ public class CashFlow extends AbstractDocument implements Comparable<CashFlow> {
 	}
 	
 	/**
+	 * The amount
+	 */
+	public BigDecimal getAmount() {
+		return amount;
+	}
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+	
+	/**
+	 * Balance, either CREDIT (1) or DEBIT  (-1)
+	 */
+	@Column(precision=2, scale=0)
+	public int getBalance() {
+		return balance;
+	}
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+	public void setBalance(Balance balance) {
+		this.balance = balance.getValue();
+	}
+	
+	/**
+	 * Resolution
+	 */
+	public void setResolution(char resolution) {
+		super.setResolution(resolution);
+	}
+	public void setResolution(CashFlowResolution resolution) {
+		super.setResolution(resolution.getValue());
+	}
+	
+	/**
 	 * Implements comparable using <code>docCode</code>.
 	 */
 	public int compareTo(CashFlow next) {
-		return this.getDocCode().compareTo(next.getDocCode());
+		return this.getDueDate().compareTo(next.getDueDate());
 	}
 	
-	@Override
-	public boolean equals(Object other) {
-		if (other instanceof CashFlow) {
-			return super.equals(other);
-		}
-		return false;
-	}
+	   /**
+	    * equals
+	    */
+	   @Override
+	   public boolean equals(Object other) {
+	         if ( (this == other ) ) return true;
+	         if ( (other == null ) ) return false;
+	         if ( !(other instanceof AbstractDocument) ) return false;
+	         CashFlow castOther = (CashFlow) other; 
+	         
+	         return ( ( this.getEntity()==castOther.getEntity()) 
+	        		    || ( this.getEntity()!=null 
+	        			     && castOther.getEntity()!=null 
+	        			     && this.getEntity().equals(castOther.getEntity()
+	        			   ) 
+	        		))
+	             && ( this.getInternalNumber()==castOther.getInternalNumber());
+	   }
+	   
+	   /**
+	    * hashCode
+	    */
+	   @Override
+	   public int hashCode() {
+	         int result = 17;
+	         result = 37 * result + (int) this.getInternalNumber();
+	         return result;
+	   }   
 
 }
