@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,15 +22,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Entity;
-
 /**
- * <p>
  * Categories.  
- * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -39,6 +34,16 @@ import org.helianto.core.Entity;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "categoryGroup", "categoryCode"})}
 )
 public class Category implements java.io.Serializable {
+
+    /**
+     * Factory method.
+     */
+    public static Category categoryFactory(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
+        Category category = new Category(entity);
+        category.setCategoryGroup(categoryGroup);
+        category.setCategoryCode(categoryCode);
+        return category;
+    }
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -48,11 +53,26 @@ public class Category implements java.io.Serializable {
     private String categoryName;
     private char priority;
 
-    /** default constructor */
+    /** 
+     * Default constructor
+     */
     public Category() {
+    	setCategoryGroup(CategoryGroup.NOT_DEFINED);
+    	setCategoryCode("");
+    	setCategoryName("");
+    	setPriority('0');
+    }
+    
+    /** 
+     * Entity constructor
+     * 
+     * @param entity
+     */
+    public Category(Entity entity) {
+    	this();
+    	setEntity(entity);
     }
 
-    // Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -64,8 +84,8 @@ public class Category implements java.io.Serializable {
     /**
      * Category entity.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="entityId", nullable=true)
+    @ManyToOne
+    @JoinColumn(name="entityId")
     public Entity getEntity() {
         return this.entity;
     }
@@ -119,37 +139,6 @@ public class Category implements java.io.Serializable {
 	}
 
     /**
-     * Factory method.
-     */
-    public static Category categoryFactory(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
-        Category category = new Category();
-        category.setEntity(entity);
-        category.setCategoryGroup(categoryGroup);
-        category.setCategoryCode(categoryCode);
-        category.setPriority('1');
-        return category;
-    }
-
-    /**
-     * <code>Category</code> query alias.
-     */
-    @Transient
-	public String getObjectAlias() {
-		return "category";
-	}
-
-    /**
-     * <code>Category</code> natural id query.
-     */
-    @Transient
-	public String getNaturalIdQueryString(StringBuilder selectClause) {
-		return selectClause.append("where ")
-		.append(getObjectAlias()).append(".entity = ? and ")
-		.append(getObjectAlias()).append(".categoryGroup = ?  and ")
-		.append(getObjectAlias()).append(".categoryCode = ? ").toString();
-	}
-
-    /**
      * toString
      * @return String
      */
@@ -175,9 +164,13 @@ public class Category implements java.io.Serializable {
         if ( !(other instanceof Category) ) return false;
          Category castOther = (Category) other; 
          
-        return ((this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ))
+        return ((this.getEntity()==castOther.getEntity()) 
+        		|| ( this.getEntity()!=null && castOther.getEntity()!=null 
+        				&& this.getEntity().equals(castOther.getEntity()) ))
             && (this.getCategoryGroup()==castOther.getCategoryGroup())
-            && ((this.getCategoryCode()==castOther.getCategoryCode()) || ( this.getCategoryCode()!=null && castOther.getCategoryCode()!=null && this.getCategoryCode().equals(castOther.getCategoryCode()) ));
+            && ((this.getCategoryCode()==castOther.getCategoryCode()) 
+            		|| ( this.getCategoryCode()!=null && castOther.getCategoryCode()!=null 
+            				&& this.getCategoryCode().equals(castOther.getCategoryCode()) ));
     }
    
     /**
