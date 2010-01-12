@@ -24,6 +24,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.standalone.NamespaceDefaults;
+
 /**
  * Domain object to indicate which <code>Entity</code>
  * may be taken by default when required by an association.
@@ -36,6 +38,7 @@ import javax.persistence.UniqueConstraint;
  * Each <code>DefaultEntity</code> should have a corresponding partner.
  * </p>
  * @author Mauricio Fernandes de Castro
+ * @deprecated see {@link NamespaceDefaults}
  */
 @javax.persistence.Entity
 @Table(name="core_defaultentity",
