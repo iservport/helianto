@@ -25,6 +25,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
                
+	<!--
+		Scan this packages for annotated beans.
+	-->
 	<context:component-scan base-package="org.helianto.core,org.helianto.core.service,org.helianto.core.validation"/>
 	    
 	<!--
@@ -33,6 +36,9 @@
 	-->
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 	
+	<!--
+	   Provides persistence exception translation based on the persistence exception translators found in this context. 
+	 -->
 	<bean id="persistenceExceptionInterceptor"
 	    class="org.springframework.dao.support.PersistenceExceptionTranslationInterceptor" />
 	
@@ -40,11 +46,33 @@
 	    <aop:advisor pointcut="execution(* *Dao(..))" advice-ref="persistenceExceptionInterceptor" />
 	</aop:config>
 
-
 	<!--
 		Instruct Spring to perform declarative transaction management
 		automatically on annotated classes.
 	-->
 	<tx:annotation-driven />
+	
+	<!-- 
+		Namespace defaults holder.
+	 -->
+	 <bean id="namespace" class="org.helianto.core.standalone.NamespaceDefaults" />
+	 
+	 <!--
+		Setup default operator in namespace defaults holder. A recommended practice is to use 
+		META-INF/helianto.properties to setup additional properties like requiredKeyTypeList and
+		requiredServiceList.
+	  -->
+	 <bean id="operatorInstaller" class="org.helianto.core.standalone.DefaultOperatorInstaller">
+	 	<property name="defaultOperatorName" value="DEFAULT" />
+	 	<property name="namespace" ref="namespace" />
+	 </bean>
+	
+	 <!--
+		Setup default entity in namespace defaults holder.
+	  -->
+	 <bean id="entityInstaller" class="org.helianto.core.standalone.DefaultEntityInstaller">
+	 	<property name="defaultEntityAlias" value="DEFAULT" />
+	 	<property name="namespace" ref="namespace" />
+	 </bean>
 	
 </beans>

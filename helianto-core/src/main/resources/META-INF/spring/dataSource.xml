@@ -28,6 +28,8 @@
 		<property name="locations">
 			<list>
 				<value>classpath:/META-INF/jdbc.properties</value>
+				<value>classpath:/META-INF/helianto.properties</value>
+				<value>file:#{ systemProperties['user.home'] }/.helianto.properties</value>
 			</list>
 		</property>
 	</bean>

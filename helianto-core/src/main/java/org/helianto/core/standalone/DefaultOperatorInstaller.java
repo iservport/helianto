@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+
 package org.helianto.core.standalone;
 
 import java.util.HashMap;
@@ -28,31 +29,18 @@ import org.helianto.core.Service;
 import org.helianto.core.service.PostInstallationMgr;
 import org.springframework.beans.factory.InitializingBean;
 
-
 /**
- * Top isolation level to <code>org.helianto.core.Entity</code> instances.
- * 
- * <p>
- * The topmost isolation level to domain objects is typically assured by the application 
- * context itself, or by some database connection. This namespace definition explicitly 
- * takes this responsibility and becomes the owner of a second isolation level formed by
- * <code>org.helianto.core.Entity</code>, <code>org.helianto.core.Service</code>, 
- * <code>org.helianto.core.Province</code>, <code>org.helianto.core.KeyType</code> and 
- * some ohter classes.
- * </p>
+ * Convenient to install the default operator if the namespace does not require multiple operators.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class Namespace implements InitializingBean {
+public class DefaultOperatorInstaller implements InitializingBean {
 	
 	private String defaultOperatorName = "DEFAULT";
-	private Operator defaultOperator;
 	private String[] requiredKeyTypeList;
-	private Map<String, KeyType> keyTypeMap;
 	private String[] requiredServiceList;
-	private Map<String, Service> serviceMap;
 	private boolean reinstall = false;
-	
+
 	/**
 	 * Name used to locate the default operator.
 	 */
@@ -61,16 +49,6 @@ public class Namespace implements InitializingBean {
 	}
 	public void setDefaultOperatorName(String defaultOperatorName) {
 		this.defaultOperatorName = defaultOperatorName;
-	}
-	
-	/**
-	 * The default operator instance controlling ths namespace (RO).
-	 */
-	public Operator getDefaultOperator() {
-		return defaultOperator;
-	}
-	protected final void setDefaultOperator(Operator defaultOperator) {
-		this.defaultOperator = defaultOperator;
 	}
 	
 	/**
@@ -84,19 +62,6 @@ public class Namespace implements InitializingBean {
 	}
 	
 	/**
-	 * Key types used in this namespace (RO).
-	 */
-	public KeyType getKeyType(String keyCode) {
-		return keyTypeMap.get(keyCode);
-	}
-	public Map<String, KeyType> getKeyTypeMap() {
-		return keyTypeMap;
-	}
-	protected final void setKeyTypeMap(Map<String, KeyType> keyTypeMap) {
-		this.keyTypeMap = keyTypeMap;
-	}
-	
-	/**
 	 * A comma separated list of required service names.
 	 */
 	public String[] getRequiredServiceList() {
@@ -104,19 +69,6 @@ public class Namespace implements InitializingBean {
 	}
 	public void setRequiredServiceList(String[] requiredServiceList) {
 		this.requiredServiceList = requiredServiceList;
-	}
-	
-	/**
-	 * Services used in this namespace (RO).
-	 */
-	public Service getService(String serviceName) {
-		return serviceMap.get(serviceName);
-	}
-	public Map<String, Service> getServiceMap() {
-		return serviceMap;
-	}
-	protected final void setServiceMap(Map<String, Service> serviceMap) {
-		this.serviceMap = serviceMap;
 	}
 	
 	/**
@@ -132,38 +84,48 @@ public class Namespace implements InitializingBean {
 	public void afterPropertiesSet() throws Exception {
 		Operator defaultOperator = postInstallationMgr.installOperator(getDefaultOperatorName(), isReinstall());
 		Map<String, KeyType> keyTypeMap = new HashMap<String, KeyType>();
-		for (String keyCodeTuple: getRequiredKeyTypeList()) {
-			String[] keyCodes = keyCodeTuple.split(":");
-			String keyCode = keyCodes[0].trim();
-			KeyType keyType = postInstallationMgr.installKey(defaultOperator, keyCode);
-			if (keyCodes.length>1) {
-				keyType.setKeyName(keyCodes[1].trim());
-			}
-			keyTypeMap.put(keyCode, keyType);
-			if (logger.isDebugEnabled()) {
-				logger.debug("Key type "+keyType+" mapped to "+keyCode);
+		if (getRequiredKeyTypeList()!=null) {
+			for (String keyCodeTuple: getRequiredKeyTypeList()) {
+				String[] keyCodes = keyCodeTuple.split(":");
+				String keyCode = keyCodes[0].trim();
+				KeyType keyType = postInstallationMgr.installKey(defaultOperator, keyCode);
+				if (keyCodes.length>1) {
+					keyType.setKeyName(keyCodes[1].trim());
+				}
+				keyTypeMap.put(keyCode, keyType);
+				if (logger.isDebugEnabled()) {
+					logger.debug("Key type "+keyType+" mapped to "+keyCode);
+				}
 			}
 		}
 
 		Map<String, Service> serviceMap = new HashMap<String, Service>();
-		for (String serviceName: getRequiredServiceList()) {
-			serviceMap.put(serviceName, postInstallationMgr.installService(defaultOperator, serviceName));
+		if (getRequiredServiceList()!=null) {
+			for (String serviceName: getRequiredServiceList()) {
+				serviceMap.put(serviceName, postInstallationMgr.installService(defaultOperator, serviceName));
+			}
 		}
 
-		setDefaultOperator(defaultOperator);
-		setKeyTypeMap(keyTypeMap);
-		setServiceMap(serviceMap);
+		namespace.setDefaultOperator(defaultOperator);
+		namespace.setKeyTypeMap(keyTypeMap);
+		namespace.setServiceMap(serviceMap);
 	}
 
 	// collabs
 	
+	private NamespaceDefaults namespace;
 	private PostInstallationMgr postInstallationMgr;
 	
+	@Resource
+	public void setNamespace(NamespaceDefaults namespace) {
+		this.namespace = namespace;
+	}
+
 	@Resource
 	public void setPostInstallationMgr(PostInstallationMgr postInstallationMgr) {
 		this.postInstallationMgr = postInstallationMgr;
 	}
 	
-	private static final Log logger = LogFactory.getLog(Namespace.class);
+	private static final Log logger = LogFactory.getLog(DefaultOperatorInstaller.class);
 	
 }

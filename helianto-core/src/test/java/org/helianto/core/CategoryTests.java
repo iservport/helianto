@@ -28,7 +28,7 @@ public class CategoryTests {
         assertSame(entity, category.getEntity());
         assertEquals(CategoryGroup.INSTRUMENT.getValue(), category.getCategoryGroup());
         assertEquals(categoryCode, category.getCategoryCode());
-        assertEquals('1', category.getPriority());
+        assertEquals('0', category.getPriority());
         
     }
     /**

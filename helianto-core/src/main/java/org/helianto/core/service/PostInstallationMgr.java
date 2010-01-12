@@ -15,9 +15,11 @@
 
 package org.helianto.core.service;
 
+import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
+import org.helianto.core.UserGroup;
 
 /**
  * Post installation tasks.
@@ -53,5 +55,23 @@ public interface PostInstallationMgr {
 	 * @param serviceName
 	 */
 	public Service installService(Operator defaultOperator, String serviceName);
+
+	/**
+	 * Install an Entity, if does not exist.
+	 * 
+	 * @param defaultOperator
+	 * @param entityAlias
+	 * @param reinstall
+	 */
+	public Entity installEntity(Operator defaultOperator, String entityAlias, boolean reinstall);
+	
+	/**
+	 * Install an UserGroup, if does not exist.
+	 * 
+	 * @param defaultEntity
+	 * @param userGroupName
+	 * @param reinstall
+	 */
+	public UserGroup instalUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall);
 
 }
