@@ -73,7 +73,7 @@
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-alpha-6</version>
+				<version>1.0-beta-6</version>
 			</extension>
 		</extensions>
 		<finalName>helianto</finalName>
@@ -348,7 +348,7 @@ Application-TraceLevels: ${application.traceLevels}
 			<version>2.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-</dependencies>
+    </dependencies>
 	<!-- 
 		!   Reporting
 		!-->

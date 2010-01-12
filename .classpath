@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="helianto-core/src/main/java"/>
-	<classpathentry kind="src" path="helianto-core/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-core/src/test/java"/>
-	<classpathentry kind="src" path="helianto-core/src/test/resources"/>
-	<classpathentry kind="src" path="helianto-partner/src/main/java"/>
-	<classpathentry kind="src" path="helianto-partner/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-partner/src/test/java"/>
-	<classpathentry kind="src" path="helianto-document/src/main/java"/>
-	<classpathentry kind="src" path="helianto-document/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-document/src/test/java"/>
-	<classpathentry kind="src" path="helianto-document/src/test/resources"/>
-	<classpathentry kind="src" path="helianto-resource/src/main/java"/>
-	<classpathentry kind="src" path="helianto-resource/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-resource/src/test/java"/>
-	<classpathentry kind="src" path="helianto-finance/src/main/java"/>
-	<classpathentry kind="src" path="helianto-finance/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-finance/src/test/java"/>
-	<classpathentry kind="src" path="helianto-process/src/main/java"/>
-	<classpathentry kind="src" path="helianto-process/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-process/src/test/java"/>
-	<classpathentry kind="src" path="helianto-inventory/src/main/java"/>
-	<classpathentry kind="src" path="helianto-inventory/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-inventory/src/test/java"/>
-	<classpathentry kind="src" path="helianto-message/src/main/java"/>
-	<classpathentry kind="src" path="helianto-message/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-message/src/test/java"/>
-	<classpathentry kind="src" path="helianto-web/src/main/java"/>
-	<classpathentry kind="src" path="helianto-web/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-web/src/test/java"/>
-	<classpathentry kind="src" path="helianto-admin/src/main/resources"/>
-	<classpathentry kind="src" path="helianto-admin/src/test/java"/>
+	<classpathentry kind="src" output="helianto-core/target/classes" path="helianto-core/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-core/target/classes" path="helianto-core/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-core/target/test-classes" path="helianto-core/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-core/target/test-classes" path="helianto-core/src/test/resources"/>
+	<classpathentry kind="src" output="helianto-partner/target/classes" path="helianto-partner/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-partner/target/classes" path="helianto-partner/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-partner/target/test-classes" path="helianto-partner/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-partner/target/test-classes" path="helianto-partner/src/test/resources"/>
+	<classpathentry kind="src" output="helianto-document/target/classes" path="helianto-document/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-document/target/classes" path="helianto-document/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-document/target/test-classes" path="helianto-document/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-document/target/test-classes" path="helianto-document/src/test/resources"/>
+	<classpathentry kind="src" output="helianto-finance/target/classes" path="helianto-finance/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-finance/target/classes" path="helianto-finance/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-finance/target/test-classes" path="helianto-finance/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-finance/target/test-classes" path="helianto-finance/src/test/resources"/>
+	<classpathentry kind="src" output="helianto-resource/target/classes" path="helianto-resource/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-resource/target/classes" path="helianto-resource/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-resource/target/test-classes" path="helianto-resource/src/test/java"/>
+	<classpathentry kind="src" output="helianto-process/target/classes" path="helianto-process/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-process/target/classes" path="helianto-process/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-process/target/test-classes" path="helianto-process/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-process/target/test-classes" path="helianto-process/src/test/resources"/>
+	<classpathentry kind="src" output="helianto-inventory/target/classes" path="helianto-inventory/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-inventory/target/classes" path="helianto-inventory/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-inventory/target/test-classes" path="helianto-inventory/src/test/java"/>
+	<classpathentry kind="src" output="helianto-message/target/classes" path="helianto-message/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-message/target/classes" path="helianto-message/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-message/target/test-classes" path="helianto-message/src/test/java"/>
+	<classpathentry kind="src" output="helianto-web/target/classes" path="helianto-web/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-web/target/classes" path="helianto-web/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-web/target/test-classes" path="helianto-web/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="helianto-web/target/test-classes" path="helianto-web/src/test/resources"/>
+	<classpathentry excluding="**" kind="src" output="helianto-admin/target/classes" path="helianto-admin/src/main/resources"/>
+	<classpathentry kind="src" output="helianto-admin/target/test-classes" path="helianto-admin/src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0"/>
 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
