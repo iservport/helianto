@@ -16,20 +16,16 @@
 
 package org.helianto.core.standalone;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.core.Service;
-import org.helianto.core.UserGroup;
 import org.helianto.core.service.PostInstallationMgr;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * Convenient to install the default entity if the namespace does not require multiple entities.
+ * Convenient to install the default entity if the namespace does not 
+ * require multiple entities.
  * 
  * @author Mauricio Fernandes de Castro
  */
