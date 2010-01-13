@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="mauricio ">
+	<META NAME="CHANGED" CONTENT="20100113;14462700">
+	<META NAME="SDFOOTNOTE" CONTENT=";;;;P">
+	<META NAME="SDENDNOTE" CONTENT="ARABIC">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin-left: 2cm; margin-right: 3.18cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		H1 { color: #000000 }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: left }
+		P.western { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt; so-language: en-US }
+		P.cjk { font-family: "Andale Sans UI", "Arial Unicode MS", sans-serif; so-language: zxx }
+		P.ctl { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="pt-BR" TEXT="#000000" DIR="LTR" STYLE="border: none; padding: 0cm">
+<H1>Módulo Helianto “core”</H1>
+<H1>Uma palavra sobre complexidade</H1>
+<P LANG="en-US" CLASS="western">Caso você esteja lendo este
+documento desde o início, é possível que esteja se perguntando se
+o Helianto “vale a pena”. Considerando o mundo dos requisitos que
+mudam sempre, você descobrirá que, em algum momento, SIM, vale. Mas
+caso você não esteja familiarizado com conceitos como injeção de
+dependências e mapeamento objeto-relacional, talvez você não venha
+sequer a experimentá-lo. Desde que este projeto passou a ser
+publicado como código aberto (2006), tais tecnologias ganharam
+progressivamente um papel de maior destaque. Elas tem atraído a
+atenção de muitos desenvolvedores, ainda que sejam criticadas pela
+sua complexidade.</P>
+<P LANG="en-US" CLASS="western">O Helianto pode ser visto como um
+atalho no caminho para o conhecimento e adoção desta forma de
+programar, uma alternativa “Learn as you go” (aprenda enquanto
+avança) que encoraja o uso de elementos de programação ágil e
+boas práticas, como programação orientada a testes (TDD), clara
+definição de interfaces e separação de interesses.</P>
+<P LANG="en-US" CLASS="western">Sendo assim, uma diretriz importante
+durante a escrita do guia de referência, especialmente este módulo
+“core” (núcleo), é ir além da simples descrição de
+características chave e também dizer algo de valor para os
+iniciantes. Pequenos exemplos e curtas explicações são mantidas ao
+mínimo para facilitar a leitura, mas não são certamente
+suficientes para cobrir tudo que é necessário para o entendimento
+completo dos temas apresentados.</P>
+<P LANG="en-US" CLASS="western">Para alguns termos que possa parecer
+estranhos aos principiantes, eis uma lista de links que podem ajudar:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western"><SPAN LANG="pt-BR">Injeção de
+	dependências (DI): <A HREF="http://martinfowler.com/articles/injection.html">http://martinfowler.com/articles/injection.html</A>
+	,
+	<A HREF="http://javafree.uol.com.br/artigo/871453/Inversion-Of-Control-Containers-de-Inversao-de-Controle-e-o-padrao-Dependency-Injection.html">http://javafree.uol.com.br/artigo/871453/Inversion-Of-Control-Containers-de-Inversao-de-Controle-e-o-padrao-Dependency-Injection.html</A>
+	, <A HREF="http://en.wikipedia.org/wiki/Dependency_injection">http://en.wikipedia.org/wiki/Dependency_injection</A>
+	, <A HREF="http://pt.wikipedia.org/wiki/Injeção_de_dependência">http://pt.wikipedia.org/wiki/Inje%C3%A7%C3%A3o_de_depend%C3%AAncia</A>
+	.</SPAN></P>
+	<LI><P LANG="en-US" CLASS="western"><SPAN LANG="pt-BR">Mapeamento
+	objeto-relacional (ORM):
+	<A HREF="http://en.wikipedia.org/wiki/Object-relational_mapping">http://en.wikipedia.org/wiki/Object-relational_mapping</A>
+	, <A HREF="http://pt.wikipedia.org/wiki/Mapeamento_objeto-relacional">http://pt.wikipedia.org/wiki/Mapeamento_objeto-relacional</A>
+	.</SPAN></P>
+	<LI><P LANG="en-US" CLASS="western"><SPAN LANG="pt-BR">API de
+	persistência Java (JPA):
+	<A HREF="http://en.wikipedia.org/wiki/Java_Persistence_API">http://en.wikipedia.org/wiki/Java_Persistence_API</A>
+	, <A HREF="http://pt.wikipedia.org/wiki/Java_Persistence_API">http://pt.wikipedia.org/wiki/Java_Persistence_API</A>
+	.</SPAN></P>
+</UL>
+<H1>Infraestrutura</H1>
+<P LANG="en-US" CLASS="western">A infraestrutura no módulo
+helianto-core provê injeção de dependências com Spring e
+mapeamento objeto-relacional com Hibernate. 
+</P>
+<P LANG="en-US" CLASS="western">O Helianto se vale do Hibernate
+(alternativamente JPA) para manter informações em uma base de dados
+SQL. Uma discussão completa sobre as vantagens e desvantagens do
+mapeamento objeto-relacional está além do escopo deste documento.
+Contudo, basta entender que em projetos que estendem o Helianto:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western"><B>Helianto dá enfase a classes
+	Java</B>: as tabelas de bancos de dados não são tão importantes
+	quanto as classes de domínio que elas mapeiam e serão, portanto,
+	raramente discutidas. A configuração do módulo core do Helianto
+	toma conta automaticamente da criação das tabelas, chaves
+	primárias, restrições de unicidade e chaves estrangerias
+	requeridas pelas classes de domínio (a serem persistidas) através
+	de anotações compatíveis com JPA. 
+	</P>
+	<LI><P LANG="en-US" CLASS="western"><B>Classes de domínio possuem
+	anotações JPA e são registradas: </B><SPAN STYLE="font-weight: normal">você
+	pode facilmente criar novas classes de domínio, mas antes deveria
+	saber como elas podem se relacionar com as classes de isolamento
+	fornecidas pelo Helianto.</SPAN></P>
+	<LI><P LANG="en-US" CLASS="western"><B>Objetos de acesso a dados,
+	também chamados de repositórios</B>: (embora muitos
+	desenvolvedores prefiram usar os artefatos Hiberante ou JPA
+	diretamente) são fornecidos para certas hierarquias de domínio.
+	Elas herdam de <I>AbstractBasicDao&lt;T&gt;</I> ou
+	<I>AbstractFilterDao&lt;T, F extends Filter&gt;</I> para expor um
+	sub-conjunto conveniente de operações de persistência. Onde um
+	filtro for implementado, um tipo especializado de objeto de valor,
+	seu <I>FilterDao</I> correspondente é capaz de criar consultas sem
+	a necessidade de escrita manual de SQL (nem HQL ou JPQL).</P>
+	<LI><P LANG="en-US" CLASS="western"><B>[NOVO] Spring 3 repository
+	factories</B>: são usadas para facilmente criar instâncias dos
+	DAOs e registrá-las no contexto Spring da aplicação. DAOs são
+	excelentes candidatos para injeção de dependência, uma
+	característica chave do Spring framework.</P>
+</OL>
+<P LANG="en-US" CLASS="western">Os fragmentos de código a seguir
+ilustram algumas das características acima.</P>
+<TABLE WIDTH=747 BORDER=0 CELLPADDING=5 CELLSPACING=0>
+	<COL WIDTH=737>
+	<TR>
+		<TD WIDTH=737 VALIGN=TOP BGCOLOR="#cccccc">
+			<P LANG="en-US" CLASS="western"><FONT SIZE=2><B>EXEMPLO DE CÓDIGO:
+			classe de domínio “Category”</B></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=737 VALIGN=TOP BGCOLOR="#e6e6e6">
+			<PRE><FONT COLOR="#b22222">/**</FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* Categories.  </SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* </SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* @author Mauricio Fernandes de Castro</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">*/</SPAN></FONT>
+<SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">@javax.persistence.Entity</SPAN></SPAN>
+<SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">@Table(name=<FONT COLOR="#666666">&quot;core_category&quot;</FONT>,</SPAN></SPAN>
+<SPAN STYLE="background: #ffff00">    <SPAN LANG="pt-BR">uniqueConstraints = {@UniqueConstraint(columnNames={</SPAN><FONT COLOR="#666666"><SPAN LANG="pt-BR">&quot;entityId&quot;</SPAN></FONT><SPAN LANG="pt-BR">, </SPAN><FONT COLOR="#666666"><SPAN LANG="pt-BR">&quot;categoryGroup&quot;</SPAN></FONT><SPAN LANG="pt-BR">, </SPAN><FONT COLOR="#666666"><SPAN LANG="pt-BR">&quot;categoryCode&quot;</SPAN></FONT><SPAN LANG="pt-BR">})}</SPAN></SPAN>
+<SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">)</SPAN></SPAN>
+<A NAME="Category"></A><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public class Category implements java</SPAN></FONT></STRONG><SPAN LANG="pt-BR">.io.Serializable {</SPAN>
+
+    <SPAN LANG="pt-BR">private static final long serialVersionUID = 1L;</SPAN>
+    <SPAN LANG="pt-BR">private int id;</SPAN>
+    <SPAN LANG="pt-BR">private Entity entity;</SPAN>
+    <SPAN LANG="pt-BR">private int categoryGroup;</SPAN>
+    
+    <SPAN LANG="pt-BR">// ... code ommited for brevity ...</SPAN>
+
+    <FONT COLOR="#b22222"><SPAN LANG="pt-BR">/**</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">* Category entity.</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">*/</SPAN></FONT>
+<SPAN STYLE="background: #ffff00">    <SPAN LANG="pt-BR">@ManyToOne</SPAN></SPAN>
+<SPAN STYLE="background: #ffff00">    <SPAN LANG="pt-BR">@JoinColumn(name=</SPAN><FONT COLOR="#666666"><SPAN LANG="pt-BR">&quot;entityId&quot;</SPAN></FONT><SPAN LANG="pt-BR">)</SPAN></SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public Entity getEntity()</SPAN></FONT></STRONG> <SPAN LANG="pt-BR">{</SPAN>
+        <FONT COLOR="#4169e1"><SPAN LANG="pt-BR">return</SPAN></FONT><SPAN LANG="pt-BR"> this.entity;</SPAN>
+    <SPAN LANG="pt-BR">}</SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public void setEntity(Entity entity)</SPAN></FONT></STRONG> <SPAN LANG="pt-BR">{</SPAN>
+        <SPAN LANG="pt-BR">this.entity = entity;</SPAN>
+    <SPAN LANG="pt-BR">}</SPAN>
+
+    <FONT COLOR="#b22222"><SPAN LANG="pt-BR">/**</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">* Group of categories.</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">*/</SPAN></FONT>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public int getCategoryGroup()</SPAN></FONT></STRONG> <SPAN LANG="pt-BR">{</SPAN>
+<STRONG><FONT COLOR="#4169e1">        </FONT></STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">return</SPAN></FONT> <SPAN LANG="pt-BR">categoryGroup;</SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><SPAN LANG="pt-BR">}</SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public void setCategoryGroup(int categoryGroup)</SPAN></FONT></STRONG> <SPAN LANG="pt-BR">{</SPAN>
+<STRONG><FONT COLOR="#4169e1">        </FONT></STRONG><SPAN LANG="pt-BR">this.categoryGroup = categoryGroup;</SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><SPAN LANG="pt-BR">}</SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public void setCategoryGroup(CategoryGroup categoryGroup)</SPAN></FONT></STRONG> <SPAN LANG="pt-BR">{</SPAN>
+<STRONG><FONT COLOR="#4169e1">        </FONT></STRONG><SPAN LANG="pt-BR">this.categoryGroup = categoryGroup.getValue();</SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><SPAN LANG="pt-BR">}</SPAN>
+
+    <FONT COLOR="#b22222"><SPAN LANG="pt-BR">/**</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">* Category code.</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">*/</SPAN></FONT>
+<SPAN STYLE="background: #ffff00">    <SPAN LANG="pt-BR">@Column(length=20)</SPAN></SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public String getCategoryCode()</SPAN></FONT></STRONG> <SPAN LANG="pt-BR">{</SPAN>
+        <FONT COLOR="#4169e1"><SPAN LANG="pt-BR">return</SPAN></FONT><SPAN LANG="pt-BR"> this.categoryCode;</SPAN>
+    <SPAN LANG="pt-BR">}</SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public void setCategoryCode(String categoryCode)</SPAN></FONT></STRONG> <SPAN LANG="pt-BR">{</SPAN>
+        <SPAN LANG="pt-BR">this.categoryCode = categoryCode;</SPAN>
+    <SPAN LANG="pt-BR">}</SPAN>
+
+    <SPAN LANG="pt-BR">// ... code ommited for brevity ...</SPAN>
+
+    <FONT COLOR="#b22222"><SPAN LANG="pt-BR">/**</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">* equals</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">*/</SPAN></FONT>
+    <SPAN LANG="pt-BR">@Override</SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public boolean </SPAN></FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">equals</SPAN></SPAN></FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">(Object other)</SPAN></FONT></STRONG> <SPAN LANG="pt-BR">{</SPAN>
+        <FONT COLOR="#4169e1"><SPAN LANG="pt-BR">if</SPAN></FONT><SPAN LANG="pt-BR"> ( (this == other ) ) </SPAN><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">return</SPAN></FONT><SPAN LANG="pt-BR"> true;</SPAN>
+        <FONT COLOR="#4169e1"><SPAN LANG="pt-BR">if</SPAN></FONT><SPAN LANG="pt-BR"> ( (other == null ) ) </SPAN><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">return</SPAN></FONT><SPAN LANG="pt-BR"> false;</SPAN>
+        <FONT COLOR="#4169e1"><SPAN LANG="pt-BR">if</SPAN></FONT><SPAN LANG="pt-BR"> ( !(other instanceof Category) ) </SPAN><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">return</SPAN></FONT><SPAN LANG="pt-BR"> false;</SPAN>
+         <SPAN LANG="pt-BR">Category castOther = (Category) other; </SPAN>
+         
+        <FONT COLOR="#4169e1"><SPAN LANG="pt-BR">return</SPAN></FONT><SPAN LANG="pt-BR"> ((this.getEntity()==castOther.getEntity()) </SPAN>
+                        <SPAN LANG="pt-BR">|| ( this.getEntity()!=null &amp;&amp; castOther.getEntity()!=null </SPAN>
+                                        <SPAN LANG="pt-BR">&amp;&amp; this.getEntity().equals(castOther.getEntity()) ))</SPAN>
+            <SPAN LANG="pt-BR">&amp;&amp; (this.getCategoryGroup()==castOther.getCategoryGroup())</SPAN>
+            <SPAN LANG="pt-BR">&amp;&amp; ((this.getCategoryCode()==castOther.getCategoryCode()) </SPAN>
+                        <SPAN LANG="pt-BR">|| ( this.getCategoryCode()!=null &amp;&amp; castOther.getCategoryCode()!=null </SPAN>
+                                        <SPAN LANG="pt-BR">&amp;&amp; this.getCategoryCode().equals(castOther.getCategoryCode()) ));</SPAN>
+    <SPAN LANG="pt-BR">}</SPAN>
+   
+    <FONT COLOR="#b22222"><SPAN LANG="pt-BR">/**</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">* hashCode</SPAN></FONT>
+<FONT COLOR="#b22222">     <SPAN LANG="pt-BR">*/</SPAN></FONT>
+    <SPAN LANG="pt-BR">@Override</SPAN>
+<STRONG><FONT COLOR="#4169e1">    </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public int </SPAN></FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">hashCode</SPAN></SPAN></FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">()</SPAN></FONT></STRONG> <SPAN LANG="pt-BR">{</SPAN>
+        <SPAN LANG="pt-BR">int result = 17;</SPAN>
+        <SPAN LANG="pt-BR">result = 37 * result + (int) this.getCategoryGroup();</SPAN>
+        <SPAN LANG="pt-BR">result = 37 * result + ( getCategoryCode() == null ? 0 : this.getCategoryCode().hashCode() );</SPAN>
+        <FONT COLOR="#4169e1"><SPAN LANG="pt-BR">return</SPAN></FONT><SPAN LANG="pt-BR"> result;</SPAN>
+    <SPAN LANG="pt-BR">}</SPAN>
+
+<SPAN LANG="pt-BR">}</SPAN></PRE>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western">O código em destaque mostra que:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">Anotações padrão JPA como
+	<I>@javax.persistence.Entity</I> e <I>@javax.persistence.Table</I>
+	são muito utilizadas, assim como <I>@javax.persistence.ManyToOne</I>
+	e outras.</P>
+	<LI><P LANG="en-US" CLASS="western"><SPAN STYLE="font-style: normal">A
+	anotação </SPAN><I>@javax.persistence.Table </I><SPAN STYLE="font-style: normal">inclui
+	pelo menos uma restrição de unicidade; isto é usado na definição
+	dos DAOs.</SPAN></P>
+	<LI><P LANG="en-US" CLASS="western">As classes persistentes de
+	domínio são Java beans.</P>
+	<LI><P LANG="en-US" CLASS="western">Os métodos equals e hashCode
+	são requeridos; NÃO OS ESQUEÇA!</P>
+</OL>
+<P LANG="en-US" CLASS="western">Algumas classes de domínio são
+parte de uma hierarquia e possuem mapeamento adicional.</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#cccccc">
+			<P LANG="en-US" CLASS="western"><B>EXEMPLO DE CÓDIGO: classe de
+			domínio “UserGroup”</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#e6e6e6">
+			<PRE><FONT COLOR="#b22222">/**</FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">*                      </SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* An user account (or group) represents a set of roles within an &lt;code&gt;Entity&lt;/code&gt;. </SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* </SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* @author Mauricio Fernandes de Castro</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">*/</SPAN></FONT>
+<SPAN LANG="pt-BR">@javax.persistence.Entity</SPAN>
+<SPAN LANG="pt-BR">@Table(name=<FONT COLOR="#666666">&quot;core_user&quot;</FONT>,</SPAN>
+    <SPAN LANG="pt-BR">uniqueConstraints = {@UniqueConstraint(columnNames={</SPAN><FONT COLOR="#666666"><SPAN LANG="pt-BR">&quot;entityId&quot;</SPAN></FONT><SPAN LANG="pt-BR">, </SPAN><FONT COLOR="#666666"><SPAN LANG="pt-BR">&quot;userKey&quot;</SPAN></FONT><SPAN LANG="pt-BR">})}</SPAN>
+<SPAN LANG="pt-BR">)</SPAN>
+<SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">@Inheritance(strategy = InheritanceType.SINGLE_TABLE)</SPAN></SPAN>
+<SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">@DiscriminatorColumn(</SPAN></SPAN>
+<SPAN STYLE="background: #ffff00">    <SPAN LANG="pt-BR">name=</SPAN><FONT COLOR="#666666"><SPAN LANG="pt-BR">&quot;type&quot;</SPAN></FONT><SPAN LANG="pt-BR">,</SPAN></SPAN>
+<SPAN STYLE="background: #ffff00">    <SPAN LANG="pt-BR">discriminatorType=DiscriminatorType.CHAR</SPAN></SPAN>
+<SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">)</SPAN></SPAN>
+<SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">@DiscriminatorValue(<FONT COLOR="#666666">&quot;G&quot;</FONT>)</SPAN></SPAN>
+<A NAME="UserGroup"></A><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public class UserGroup implements java</SPAN></FONT></STRONG><SPAN LANG="pt-BR">.io.Serializable, Comparable&lt;UserGroup&gt;, NaturalKeyInfo {</SPAN>
+    <SPAN LANG="pt-BR">// ... code ommited for brevity ...</SPAN></PRE>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western">O código em destaque mostra que:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">Todos os membros desta
+	hierarquia são armazenados na mesma tabela, <I>core_user</I>, que
+	tem uma coluna denominada <I>type</I> para distinguir as classes.</P>
+	<LI><P LANG="en-US" CLASS="western">UserGroup tem um valor em <I>type</I>
+	= 'G'.</P>
+</OL>
+<P LANG="en-US" CLASS="western"><I>UserGroup</I> é a raíz da
+hierarquia e pode ter como repositório <I>UserGroupDao</I>.</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#cccccc">
+			<P LANG="en-US" CLASS="western"><B>EXEMPLO DE CÓDIGO: classe de
+			domínio “User”</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#e6e6e6">
+			<PRE><FONT COLOR="#b22222">/**</FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* &lt;p&gt;</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* The user account.</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* &lt;/p&gt;</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* &lt;p&gt;</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* An user account represents the association between an &lt;code&gt;Identity&lt;/code&gt;</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* and an &lt;code&gt;Entity&lt;/code&gt;. Such association allows for a singly identified </SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* actor, i.e. a person or any other organizational &lt;code&gt;Identity&lt;/code&gt;, to keep</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* a single authentication scheme and have multiple authorization schemes, one per</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* &lt;code&gt;Entity&lt;/code&gt;.</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* &lt;/p&gt;</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">* @author Mauricio Fernandes de Castro</SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">*                      </SPAN></FONT>
+<FONT COLOR="#b22222"> <SPAN LANG="pt-BR">*/</SPAN></FONT>
+<SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">@javax.persistence.Entity</SPAN></SPAN>
+<SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">@DiscriminatorValue(<FONT COLOR="#666666">&quot;U&quot;</FONT>)</SPAN></SPAN>
+<A NAME="User"></A><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">public class User </SPAN></FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR"><SPAN STYLE="background: #ffff00">extends UserGroup</SPAN></SPAN></FONT></STRONG><STRONG><FONT COLOR="#4169e1"> </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN LANG="pt-BR">implements java</SPAN></FONT></STRONG><SPAN LANG="pt-BR">.io.Serializable {</SPAN>
+
+    <SPAN LANG="pt-BR">// ... code ommited for brevity ...</SPAN></PRE>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western">Outros membros da hierarquia são
+mais fáceis de anotar e de manter. A classe <I>User</I> class é
+persistida com <I>UserGroupDao</I>.</P>
+<P LANG="en-US" CLASS="western">Helianto não requer muito mais do
+que as poucas anotações mostradas aqui durante a criação de novas
+classes de domínio, embora haja muitos detalhes da especificação
+JPA não cobertos em detalhe neste documento. Mais exemplos podem ser
+encontrados no pacote raiz de cada módulo.</P>
+<H1>Tipos de instalação e níveis de isolamento</H1>
+<P LANG="en-US" CLASS="western">Sempre que é necessário manter
+organizações independentes em uma mesma base de dados, cuidados
+para que seus dados não se confundam devem ser tomados. O módulo
+core é responsável pela definição das estratégias principais de
+isolamento dentro do Helianto:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western"><B>Isolamento de entidade
+	(Entity)</B>, de tal forma que contas, clientes, equipamentos, etc.
+	De uma unidade de negócios não sejam acessíveis para outra
+	unidade de negócio.</P>
+	<LI><P LANG="en-US" CLASS="western"><B>Isolamento de ambiente
+	empresarial (Namespace)</B>, de tal forma que instâncias comuns a
+	um grupo de entidades (como províncias, parâmetros, etc.) possam
+	ser gerenciadas como uma unidade.</P>
+</OL>
+<P LANG="en-US" CLASS="western">Consequentemente:</P>
+<P LANG="en-US" CLASS="western">At least one instance of the Entity
+class and one instance of the Operator class must exist before you
+can handle a typical feature. 
+</P>
+<P LANG="en-US" CLASS="western"><BR><BR>
+</P>
+</BODY>
+</HTML>

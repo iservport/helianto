@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="mauricio ">
+	<META NAME="CHANGED" CONTENT="20100113;14423000">
+	<META NAME="SDFOOTNOTE" CONTENT=";;;;P">
+	<META NAME="SDENDNOTE" CONTENT="ARABIC">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin-left: 2cm; margin-right: 3.18cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		TD P { margin-bottom: 0.21cm; color: #000000; text-align: left }
+		TD P.western { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt; so-language: en-US }
+		TD P.cjk { font-family: "Andale Sans UI", "Arial Unicode MS", sans-serif; so-language: zxx }
+		TD P.ctl { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt }
+		H1 { color: #000000 }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: left }
+		P.western { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt; so-language: en-US }
+		P.cjk { font-family: "Andale Sans UI", "Arial Unicode MS", sans-serif; so-language: zxx }
+		P.ctl { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="pt-BR" TEXT="#000000" DIR="LTR" STYLE="border: none; padding: 0cm">
+<H1>Helianto core module</H1>
+<H1 LANG="en-US">A word on complexity</H1>
+<P LANG="en-US" CLASS="western">If you are reading this document from
+the beginning, you may likely be asking yourself if Helianto pays
+off. Considering the world of the ever-changing requirements, your
+experience with Helianto will show you, somehow, that YES, it has
+worthed. But if you are unfamiliar with concepts like dependency
+injection and object relational mapping, you may not give even it a
+try. Since this project was published as open source (2006), such
+technologies have increasingly grown to play a major role. 
+</P>
+<P LANG="en-US" CLASS="western">Helianto can be taken as a shortcut
+in the path for learning and adopting this way of programming. It is
+a “learn as you go” alternative that encourages use of agile
+techniques and sound programming practices, like test driven
+development (TDD), clear interface definitions and separation of
+concerns.</P>
+<P LANG="en-US" CLASS="western">Therefore, an important guideline for
+writing the reference, specially this core module, is to go beyond
+the plain description of key features and also say something valuable
+for beginners. Code samples and short explanations are kept as a
+minimum to facilitate reading on, but are surely not enough to cover
+all what is need to a full understanding of the presented subject. 
+</P>
+<P LANG="en-US" CLASS="western">For some odd words to beginners, here
+is a list o helpful links:</P>
+<UL>
+	<LI><P LANG="en-US" CLASS="western"><SPAN LANG="en-US">Dependency
+	injection (DI): <A HREF="http://martinfowler.com/articles/injection.html">http://martinfowler.com/articles/injection.html</A>
+	, <A HREF="http://en.wikipedia.org/wiki/Dependency_injection">http://en.wikipedia.org/wiki/Dependency_injection</A>
+	.</SPAN></P>
+	<LI><P LANG="en-US" CLASS="western"><SPAN LANG="en-US">Object
+	relational mapping (ORM):
+	<A HREF="http://en.wikipedia.org/wiki/Object-relational_mapping">http://en.wikipedia.org/wiki/Object-relational_mapping</A><A HREF="http://en.wikipedia.org/wiki/Object-relational_mapping">
+	</A>.</SPAN></P>
+	<LI><P LANG="en-US" CLASS="western"><SPAN LANG="en-US">Java
+	persistence API (JPA):
+	<A HREF="http://en.wikipedia.org/wiki/Java_Persistence_API">http://en.wikipedia.org/wiki/Java_Persistence_API</A>
+	.</SPAN></P>
+</UL>
+<H1 LANG="en-US">Infrastructure</H1>
+<P LANG="en-US" CLASS="western">Infrastructure in helianto-core
+module provides for Spring based dependency injection and JPA object
+relational mapping. 
+</P>
+<P LANG="en-US" CLASS="western">Helianto relies on Hibernate
+(alternatively JPA) to keep information on a SQL database. A full
+discussion on object relational mapping advantages and penalties is
+beyond the scope of this documentation. The first few things to note
+on a new project extending Helianto are:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western"><B>Helianto focuses on Java
+	classes</B>: database tables are not as important as domain classes
+	they are mapped to and they will seldom be discussed. The
+	helianto-core module configuration handles the automatic creation of
+	tables, primary keys, unique constraints and foreign keys required
+	by the persistent domain classes through JPA compatible annotations.
+		</P>
+	<LI><P LANG="en-US" CLASS="western"><B>Domain classes have JPA
+	annotations and are registered: y</B><SPAN STYLE="font-weight: normal">ou
+	can easily create new domain classes, but you should first be aware
+	(check the section below) how do they relate to the isolation
+	classes provided by Helianto.</SPAN></P>
+	<LI><P LANG="en-US" CLASS="western"><B>Data access objects, also
+	called repositories</B>: (although many developers may prefer to use
+	Hibernate or JPA artifacts directly) are provided for specific
+	domain hierarchies. They inherit from <I>AbstractBasicDao&lt;T&gt;</I>
+	or <I>AbstractFilterDao&lt;T, F extends Filter&gt;</I> to expose a
+	convenient subset of persistence operations. Wherever a filter is
+	implemented, a kind of specialized value object, its corresponding
+	<I>FilterDao</I> is capable to create queries without any SQL
+	handwriting (nor HQL or JPQL).</P>
+	<LI><P LANG="en-US" CLASS="western"><B>[NEW] Spring 3 repository
+	factories</B>: are used to easily create DAOs and register them to
+	the Spring root application context. DAOs are excellent candidates
+	for dependency injection, a key feature of the Spring framework.</P>
+</OL>
+<P LANG="en-US" CLASS="western">The following code fragments
+illustrate some of the above features.</P>
+<P LANG="en-US" CLASS="western">The highlighted code shows that:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">Standard JPA annotations like
+	<I>@javax.persistence.Entity</I> and <I>@javax.persistence.Table</I>
+	are often required, as well as <I>@javax.persistence.ManyToOne</I>
+	and others.</P>
+	<LI><P LANG="en-US" CLASS="western"><SPAN STYLE="font-style: normal">The
+	</SPAN><I>@javax.persistence.Table </I><SPAN STYLE="font-style: normal">annotation
+	includes at least one unique constraint definition; this is relevant
+	for the DAO definition.</SPAN></P>
+	<LI><P LANG="en-US" CLASS="western">Any persistent domain class is a
+	plain Java bean.</P>
+	<LI><P LANG="en-US" CLASS="western">The methods equals and hashCode
+	are required; DO NOT FORGET THEM!</P>
+</OL>
+<P LANG="en-US" CLASS="western">Some domain classes are part of a
+hierarchy and have additional mapping.</P>
+<TABLE WIDTH=747 BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=747>
+	<TR>
+		<TD WIDTH=747 VALIGN=TOP BGCOLOR="#cccccc">
+			<P LANG="en-US" CLASS="western"><B>CODE EXAMPLE: UserGroup domain
+			class</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=747 VALIGN=TOP BGCOLOR="#e6e6e6">
+			<PRE><FONT COLOR="#b22222">/**</FONT>
+<FONT COLOR="#b22222"> *                      </FONT>
+<FONT COLOR="#b22222"> * An user account (or group) represents a set of roles within an &lt;code&gt;Entity&lt;/code&gt;. </FONT>
+<FONT COLOR="#b22222"> * </FONT>
+<FONT COLOR="#b22222"> * @author Mauricio Fernandes de Castro</FONT>
+<FONT COLOR="#b22222"> */</FONT>
+@javax.persistence.Entity
+@Table(name=<FONT COLOR="#666666">&quot;core_user&quot;</FONT>,
+    uniqueConstraints = {@UniqueConstraint(columnNames={<FONT COLOR="#666666">&quot;entityId&quot;</FONT>, <FONT COLOR="#666666">&quot;userKey&quot;</FONT>})}
+)
+<SPAN STYLE="background: #ffff00">@Inheritance(strategy = InheritanceType.SINGLE_TABLE)</SPAN>
+<SPAN STYLE="background: #ffff00">@DiscriminatorColumn(</SPAN>
+<SPAN STYLE="background: #ffff00">    name=<FONT COLOR="#666666">&quot;type&quot;</FONT>,</SPAN>
+<SPAN STYLE="background: #ffff00">    discriminatorType=DiscriminatorType.CHAR</SPAN>
+<SPAN STYLE="background: #ffff00">)</SPAN>
+<SPAN STYLE="background: #ffff00">@DiscriminatorValue(<FONT COLOR="#666666">&quot;G&quot;</FONT>)</SPAN>
+<A NAME="UserGroup"></A><STRONG><FONT COLOR="#4169e1">public class UserGroup implements java</FONT></STRONG>.io.Serializable, Comparable&lt;UserGroup&gt;, NaturalKeyInfo {
+    // ... code ommited for brevity ...</PRE>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western">The highlighted code shows that:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">All members of the hierarchy are
+	stored to the same table, <I>core_user</I>, having a column named
+	<I>type</I> to distinguish classes.</P>
+	<LI><P LANG="en-US" CLASS="western">UserGroup has the char value of
+	'G'.</P>
+</OL>
+<P LANG="en-US" CLASS="western"><I>UserGroup</I> is the root of a
+hierarchy and may have a DAO like <I>UserGroupDao</I>.</P>
+<TABLE WIDTH=747 BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=747>
+	<TR>
+		<TD WIDTH=747 VALIGN=TOP BGCOLOR="#cccccc">
+			<P LANG="en-US" CLASS="western"><B>CODE EXAMPLE: User domain class</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=747 VALIGN=TOP BGCOLOR="#e6e6e6">
+			<PRE><FONT COLOR="#b22222">/**</FONT>
+<FONT COLOR="#b22222"> * &lt;p&gt;</FONT>
+<FONT COLOR="#b22222"> * The user account.</FONT>
+<FONT COLOR="#b22222"> * &lt;/p&gt;</FONT>
+<FONT COLOR="#b22222"> * &lt;p&gt;</FONT>
+<FONT COLOR="#b22222"> * An user account represents the association between an &lt;code&gt;Identity&lt;/code&gt;</FONT>
+<FONT COLOR="#b22222"> * and an &lt;code&gt;Entity&lt;/code&gt;. Such association allows for a singly identified </FONT>
+<FONT COLOR="#b22222"> * actor, i.e. a person or any other organizational &lt;code&gt;Identity&lt;/code&gt;, to keep</FONT>
+<FONT COLOR="#b22222"> * a single authentication scheme and have multiple authorization schemes, one per</FONT>
+<FONT COLOR="#b22222"> * &lt;code&gt;Entity&lt;/code&gt;.</FONT>
+<FONT COLOR="#b22222"> * &lt;/p&gt;</FONT>
+<FONT COLOR="#b22222"> * @author Mauricio Fernandes de Castro</FONT>
+<FONT COLOR="#b22222"> *                      </FONT>
+<FONT COLOR="#b22222"> */</FONT>
+<SPAN STYLE="background: #ffff00">@javax.persistence.Entity</SPAN>
+<SPAN STYLE="background: #ffff00">@DiscriminatorValue(<FONT COLOR="#666666">&quot;U&quot;</FONT>)</SPAN>
+<A NAME="User"></A><STRONG><FONT COLOR="#4169e1">public class User </FONT></STRONG><STRONG><FONT COLOR="#4169e1"><SPAN STYLE="background: #ffff00">extends UserGroup</SPAN></FONT></STRONG><STRONG><FONT COLOR="#4169e1"> implements java</FONT></STRONG>.io.Serializable {
+
+    // ... code ommited for brevity ...</PRE>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western">Other members of the hierarchy are
+easier to annotate and to maintain. The <I>User</I> class is
+persisted with the <I>UserGroupDao</I>.</P>
+<P LANG="en-US" CLASS="western">Helianto does not require much more
+than this few annotations briefly shown here to annotate domain
+classes, although there are many details of the JPA specification not
+covered in detail in this document. You may find more examples by
+browsing the code for each module root package, where domain classes
+are usually placed.</P>
+<H1>Alternative ORM engines</H1>
+<P LANG="en-US" CLASS="western">The default infrastructure
+configuration relies on Hibernate to persist data. It is possible to
+plug in any other JPA engine.</P>
+<H1>Installation types and isolation levels</H1>
+<P LANG="en-US" CLASS="western">After deploying any Helianto based
+war file to a web container like Tomcat, the infrastructure beans
+configured in Helianto create database tables according to classes
+defined as shown above. However, before an user is authorized into
+the system, certain instances must be created and persisted. This is
+going to be referred as installation.</P>
+<P LANG="en-US" CLASS="western">Domain classes are designed so that
+Helianto may be installed and used in any of the following use cases:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">Accounts, customers, equipment,
+	etc. belong all to the same company, organization or business
+	entity; this is the simplest use case, the so called stand-alone (or
+	single entity) installation.</P>
+	<LI><P LANG="en-US" CLASS="western">Users may choose to login to
+	organization A or B, and data from one entity must not be visible to
+	users logged to any other organization; this is the single namespace
+	installation.</P>
+	<LI><P LANG="en-US" CLASS="western">Groups of organizations share
+	common instances, and there is more than one group of organizations
+	that can be managed separately; this is the multi namespace
+	installation.</P>
+</OL>
+<P LANG="en-US" CLASS="western">Whenever is necessary to keep
+different organizations or namespaces under the same database, care
+must be taken to avoid data collision. The core module has domain
+classes responsible for laying out the main isolation strategies:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western"><B>Entity isolation</B>, meaning
+	that accounts, customers, equipment, etc. from one business entity
+	is not accessible to some other business entity. This is the main
+	responsibility assigned to the class org.helianto.core.Entity.</P>
+	<LI><P LANG="en-US" CLASS="western"><B>Namespace isolation</B>,
+	meaning that common instances to a group of entities (like
+	provinces, parameters, etc.) can be managed as a unit. This is the
+	main responsibility assigned to the class
+	org.helianto.core.Operator. Any Entity holds a reference to its
+	Operator.</P>
+</OL>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#cccccc">
+			<P LANG="en-US" CLASS="western"><B>ATTENTION!</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#e6e6e6">
+			<P LANG="en-US" CLASS="western">Do not use javax.persitence.Entity
+			where you may actually require org.helianto.core.Entity. If you
+			are writing code using an IDE like Eclipse or Spring STS, the
+			auto-complete feature may lead you to such mistake. This is not
+			easy to fix because the Entity class is a dependency to almost all
+			classes in this project. If Helianto have been created after the
+			first JPA specification, a better name like BusinessEntity would
+			have been used.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western">Isolation immediate consequences are:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">At least one instance of the
+	Entity class and one instance of the Operator class must exist
+	before you can use Helianto no matter what type of installation is
+	required; application and presentation layer must be responsible for
+	hiding domain classes that are not relevant in a particular use
+	case.</P>
+	<LI><P LANG="en-US" CLASS="western">All Helianto classes, except two
+	or three, have an Operator instance as an aggregate, or have it
+	aggregated in a nth level.</P>
+	<LI><P LANG="en-US" CLASS="western">Almost all, presumably 90% of
+	the Helianto classes have an Entity as an aggregate, or have it
+	aggregated in a nth level.</P>
+	<LI><P LANG="en-US" CLASS="western">Having such associations, it is
+	easy to sort out instances by Entity or Operator.</P>
+</OL>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#cccccc">
+			<P LANG="en-US" CLASS="western"><B>CODE REFERENCE</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#e6e6e6">
+			<P LANG="en-US" CLASS="western">Check the <B>org.helianto.core.filter</B>
+			package for interfaces and classes to help sorting out instances
+			by Entity or Operator as well as any other criterion.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#cccccc">
+			<P LANG="en-US" CLASS="western"><B>CODE REFERENCE</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#e6e6e6">
+			<P LANG="en-US" CLASS="western" STYLE="background: transparent"><SPAN STYLE="background: transparent">Check
+			the <B>org.helianto.core.standalone</B> package for beans to help
+			create and configure sensible defaults.</SPAN></P>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western" ALIGN=LEFT STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+</BODY>
+</HTML>

@@ -1,0 +1,463 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="BrOffice.org 2.4  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Maurício Castro">
+	<META NAME="CHANGED" CONTENT="20100104;14324800">
+	<META NAME="CHANGEDBY" CONTENT="Maurício Castro">
+	<META NAME="CHANGEDBY" CONTENT="Maurício Castro">
+	<META NAME="CHANGEDBY" CONTENT="Maurício Castro">
+	<META NAME="SDFOOTNOTE" CONTENT=";;;;P">
+	<META NAME="SDENDNOTE" CONTENT="ARABIC">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin-left: 2cm; margin-right: 3.18cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
+		TD P { margin-bottom: 0.21cm; color: #000000; text-align: left }
+		TD P.western { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt; so-language: en-US }
+		TD P.cjk { font-family: "Andale Sans UI", "Arial Unicode MS", sans-serif; so-language: zxx }
+		TD P.ctl { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt }
+		H1 { color: #000000 }
+		P { margin-bottom: 0.21cm; color: #000000; text-align: left }
+		P.western { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt; so-language: en-US }
+		P.cjk { font-family: "Andale Sans UI", "Arial Unicode MS", sans-serif; so-language: zxx }
+		P.ctl { font-family: "Thorndale", "Times New Roman", serif; font-size: 12pt }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="pt-BR" TEXT="#000000" DIR="LTR" STYLE="border: none; padding: 0cm">
+<H1>Helianto Reference Guide</H1>
+<P LANG="en-US" CLASS="western">Maurício Fernandes de Castro</P>
+<P LANG="en-US" CLASS="western">v. 0.2.6</P>
+<H1>What is Helianto</H1>
+<P LANG="en-US" CLASS="western">The Helianto Project was born after a
+discussion on how to leverage the competitive advantage of group of
+small organizations having different competences in the software
+business. The key value behind the Helianto mission development was
+to promote collaboration in disciplines where all members might have
+common requirements.</P>
+<P LANG="en-US" CLASS="western">The name &quot;Helianto&quot; derives
+from the Latin word for the sunflower plant. The idea showed up from
+an original sketch, where a couple of functional modules were drawn
+in a central corolla, surrounded by as many application &quot;petals&quot;
+as desired. The name still remains associated to the sunflower
+geometry, although the project focuses only the corolla.</P>
+<P LANG="en-US" CLASS="western">Helianto is not meant to be a product
+to be used out of the box. Actually, it requires customization and
+some expertise in object oriented programming to become a
+productivity tool. It strongly relies on Spring framework to achieve
+the majority of its goals. Those who are familiar with Spring's
+concepts like dependency injection and aspect orientation will be
+more comfortable here. And those who are not, will find at Helianto a
+fast and convenient learning path.</P>
+<P LANG="en-US" CLASS="western">Helianto is distributed under the
+&quot;Apache License v. 2.0&quot;.</P>
+<P LANG="en-US" CLASS="western">Currently, Helianto has a work in
+progress status. This document is currently in the process of being
+written, so not all topics are covered. Contributions are welcome.</P>
+<H1>How Helianto may help</H1>
+<P LANG="en-US" CLASS="western">Helianto aims to capture common
+project issues and combine it with sound project practices. Many
+designers need to model entities like customers or suppliers,
+payables and receivables, and so forth. Helianto provides extensible
+domain and service classes for them.</P>
+<P LANG="en-US" CLASS="western">Many designers have a growing
+interest on ORM. Helianto provides basic configuration for Spring and
+Hibernate or JPA to achieve this, as well as persistence layer for
+the supplied domain classes.</P>
+<P LANG="en-US" CLASS="western">Many designers would refactor the
+code to reduce coupling. Helianto enforces the use of dependency
+injection. Some have realized EJB is quite complex and will find here
+how to keep declarative transaction management simple. Some would
+like to</P>
+<P LANG="en-US" CLASS="western">benefit from a non invasive security
+framework. Helianto provides configuration and a template for a
+secure web application using Spring Security.</P>
+<P LANG="en-US" CLASS="western">Helianto strongly relies on Spring to
+achieve all of this. It also embeds a couple of design decisions that
+narrow the power of Spring. It is a trade off. In one hand, you have
+to follow a pre-configured application, but in the other, you may get
+ready</P>
+<P LANG="en-US" CLASS="western">shortly.</P>
+<P LANG="en-US" CLASS="western">The key value to develop Helianto
+classes and resources is to keep wide scope and flexibility to ease
+composition or extension.</P>
+<P LANG="en-US" CLASS="western">In most cases, to create an
+application backed by Helianto, the developer would:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">use maven to create a project
+	and resolve dependencies,</P>
+	<LI><P LANG="en-US" CLASS="western">customize the jdbc connection
+	through the jdbc.properties file (tables in the datastore are
+	automatically created),</P>
+	<LI><P LANG="en-US" CLASS="western">extend the presentation layer to
+	invoke the service layer methods available through Helianto
+	packages, and</P>
+	<LI><P LANG="en-US" CLASS="western">test and deploy the application
+	to a servlet container, like Tomcat.</P>
+</OL>
+<P LANG="en-US" CLASS="western">If the application requirements
+become more specific, the developer would also have to create or
+extend domain classes, create or extend service facades and wire them
+to the dependency injection container registry. Throughout this
+document, many of the aspects of such customization will be described
+in deeper detail. 
+</P>
+<H1>Mission</H1>
+<P LANG="en-US" CLASS="western">The mission is important for
+developers and users to keep expectations and development efforts
+within the same direction. 
+</P>
+<P LANG="en-US" CLASS="western">The Helianto Project Mission</P>
+<P LANG="en-US" CLASS="western">Continuously develop a server-side
+application base framework that:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">enforces separation of concerns,</P>
+	<LI><P LANG="en-US" CLASS="western">is as decoupled as possible from
+	the application and presentation layer, allowing the desired
+	customization to expose service and persistence layers that fits
+	best its purpose,</P>
+	<LI><P LANG="en-US" CLASS="western">provides an extensible and
+	flexible service layer (SPI and API) to accommodate both simple and
+	complex project requirements,</P>
+	<LI><P LANG="en-US" CLASS="western">concurrently provides a common
+	domain model to solve well known business problems and a persistence
+	layer as decoupled as possible from the datastore, and</P>
+	<LI><P LANG="en-US" CLASS="western">enforces good programming
+	practices like design patterns usage, rich documentation and
+	extensive testing.</P>
+</OL>
+<H1>Acknowledgments</H1>
+<P LANG="en-US" CLASS="western">The Helianto project includes
+software developed by the Apache Software Foundation
+(http://www.apache.org), Spring Source (http://www.springsource.com)
+and Hibernate (http://www.hibernate.org), among many others.</P>
+<P LANG="en-US" CLASS="western">Thanks to Atlassian for providing the
+excellent JIRA issue tracking as an Open Source license.</P>
+<P LANG="en-US" CLASS="western">It is virtually impossible to say
+thank you to all the people who contributed in some way to the
+current state of this project. Many of them are project leaders of
+the packages mentioned above. 
+</P>
+<H1>Software Requirements</H1>
+<P LANG="en-US" CLASS="western">At compile time:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">The source code includes
+	generics and enumerators, therefore a jdk 1.5 or higher is required.</P>
+	<LI><P LANG="en-US" CLASS="western">Spring Source STS IDE (or
+	Eclipse platform and the appropriate plugins) as well as Apache
+	Maven (v. 2.x) are recommended, although not required. Of course,
+	there are many dependencies listed in the pom files, and Maven will
+	help to have them ready to use.</P>
+</OL>
+<P LANG="en-US" CLASS="western">At run time:</P>
+<OL>
+	<LI><P LANG="en-US" CLASS="western">Jre 1.5 or higher is also
+	required,</P>
+	<LI><P LANG="en-US" CLASS="western">A servlet container, like
+	Tomcat. There is no requirement to an EJB container, although the
+	service layer components can be easily wrapped as EJB's.</P>
+	<LI><P LANG="en-US" CLASS="western">Any sql database can be used as
+	long as the appropriate properties are overridden in the
+	jdbc.properties file.</P>
+</OL>
+<H1>General architecture</H1>
+<P LANG="en-US" CLASS="western">The high level architecture is shown
+on the diagram below. Please notice that the dependencies are
+organized following the principle of separation of concerns to expose
+only what is going to be consumed on the next level.</P>
+<H1><IMG SRC="helianto-architeture.jpg" NAME="figura1" ALIGN=LEFT WIDTH=100% BORDER=0><BR CLEAR=LEFT>Modules</H1>
+<P LANG="en-US" CLASS="western">Here is the existing correlation
+between modules and the high level architecture:</P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=5 CELLSPACING=4 STYLE="page-break-inside: avoid">
+	<COL WIDTH=30*>
+	<COL WIDTH=55*>
+	<COL WIDTH=43*>
+	<COL WIDTH=43*>
+	<COL WIDTH=43*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western" STYLE="background: #cccccc">Module</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western" STYLE="background: #cccccc">Domain</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western" STYLE="background: #cccccc">Infrastructure</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western" STYLE="background: #cccccc">Service</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western" STYLE="background: #cccccc">Application</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western" STYLE="background: #cccccc">Presentation</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-core</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Basic isolation classes, security,
+			common classes.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Data sources, ORM wrappers,
+			repositories and factories.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Namespace, sequence,
+			post-installation, security and user management.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-partner</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Customer, supplier and other
+			partner related classes, accounting.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Repositories.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Partner and account management.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-document</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Basic document and control classes</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Repositories.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Document management.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-resource</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Resources and groups</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Repositories.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Resource management.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-finance</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Cash, payables, receivables,
+			statements, etc.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Repositories.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Finance management.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-process</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Processes, Parts, BOM, etc.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Repositories.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Process management.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-inventory</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Stocks, transactions, etc.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Repositories.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Inventory management.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-message</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Notification classes</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Communications infrastructure
+			(e-mail, RSS) 
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Message management.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-web</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Webflow templates</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Freemarker templates</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=12%>
+			<P LANG="en-US" CLASS="western">helianto-admin</P>
+		</TD>
+		<TD WIDTH=21%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Not available.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Basic application navigation.</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P LANG="en-US" CLASS="western">Admin application.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western">The next diagram shows module
+dependencies.</P>
+<H1><IMG SRC="helianto-packaging.jpg" NAME="figura2" ALIGN=LEFT WIDTH=100% BORDER=0><BR CLEAR=LEFT>How
+to create your own project based on Helianto</H1>
+<P LANG="en-US" CLASS="western">The easiest way to take advantage of
+Helianto capabilities is to create a new Maven project in Eclipse
+(Spring STS comes with all you will need for this) and setup the
+dependencies in pom.xml like this:</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#e6e6e6">
+			<PRE>                &lt;dependency&gt;
+                        &lt;groupId&gt;org.helianto&lt;/groupId&gt;
+                        &lt;artifactId&gt;helianto-core&lt;/artifactId&gt;
+                        &lt;version&gt;...&lt;/version&gt;
+                &lt;/dependency&gt;
+                &lt;dependency&gt;
+                        &lt;groupId&gt;org.helianto&lt;/groupId&gt;
+                        &lt;artifactId&gt;helianto-partner&lt;/artifactId&gt;
+                        &lt;version&gt;...&lt;/version&gt;
+                &lt;/dependency&gt;
+                &lt;dependency&gt;
+                        &lt;groupId&gt;org.helianto&lt;/groupId&gt;
+                        &lt;artifactId&gt;helianto-...&lt;/artifactId&gt;
+                        &lt;version&gt;...&lt;/version&gt;
+                &lt;/dependency&gt;</PRE>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western">Don't forget to replace the ellipsis
+(...) with the appropriate versions and other module names you may
+need. If you don't want to install the package manually in you local
+repository, add also this to your pom.xml:</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#e6e6e6">
+			<PRE>        &lt;repositories&gt;
+            &lt;repository&gt;
+                &lt;id&gt;org.helianto.sourceforge.repository.release&lt;/id&gt;
+                &lt;name&gt;Helianto Releases&lt;/name&gt;
+                &lt;url&gt;http://helianto.svn.sourceforge.net/viewvc/helianto/maven/&lt;/url&gt;
+            &lt;/repository&gt;
+        &lt;/repositories&gt; </PRE>
+		</TD>
+	</TR>
+</TABLE>
+<P LANG="en-US" CLASS="western">Please note that snapshots are not
+uploaded to this repository.</P>
+<P LANG="en-US" CLASS="western">The following chapters will describe
+in deeper detail the features available in every module.</P>
+</BODY>
+</HTML>
