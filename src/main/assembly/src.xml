@@ -31,7 +31,7 @@
     <moduleSet>
     	<sources>
     		<includeModuleDirectory>true</includeModuleDirectory>
-    		<outputDirectoryMapping>${module.name}/src</outputDirectoryMapping>
+    		<outputDirectoryMapping>${module.artifactId}/src</outputDirectoryMapping>
     	</sources>
     </moduleSet>
   </moduleSets>
