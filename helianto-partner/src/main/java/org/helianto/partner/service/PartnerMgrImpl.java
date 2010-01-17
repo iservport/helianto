@@ -98,7 +98,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     	}
 		return partnerList;
 	}
-
+	
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Partner storePartner(Partner partner) {
 		return partnerDao.merge(partner);

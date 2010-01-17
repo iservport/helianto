@@ -17,7 +17,9 @@ package org.helianto.partner.service;
 
 import java.util.List;
 
+import org.helianto.core.Entity;
 import org.helianto.partner.Address;
+import org.helianto.partner.Customer;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
@@ -55,7 +57,7 @@ public interface PartnerMgr {
      * Find <code>Partner</code>.
      */
 	public List<? extends Partner> findPartners(PartnerFilter partnerFilter);
-
+	
     /**
      * Write <code>Partner</code> to the datastore.
      */

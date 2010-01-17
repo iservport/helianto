@@ -44,7 +44,7 @@ import org.helianto.core.KeyType;
 @Table(name="prtnr_registry",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "partnerAlias"})}
 )
-public class PartnerRegistry implements java.io.Serializable {
+public class PartnerRegistry extends AbstractAddress implements java.io.Serializable {
 
     /**
      * Factory method.
@@ -53,8 +53,7 @@ public class PartnerRegistry implements java.io.Serializable {
      * @param partnerAlias
      */
     public static PartnerRegistry partnerRegistryFactory(Entity entity, String partnerAlias) {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
-        partnerRegistry.setEntity(entity);
+        PartnerRegistry partnerRegistry = new PartnerRegistry(entity);
         partnerRegistry.setPartnerAlias(partnerAlias);
         return partnerRegistry;
     }
@@ -72,8 +71,23 @@ public class PartnerRegistry implements java.io.Serializable {
     private @Transient Address mainAddress;
     private @Transient List<PartnerRegistryKey> partnerRegistryKeyList;
 
-    /** default constructor */
+    /** 
+     * Empty constructor.
+     */
     public PartnerRegistry() {
+    	super();
+    	setPartnerAlias("");
+    	setPartnerName("");
+    }
+
+    /** 
+     * Entity constructor.
+     * 
+     * @param entity
+     */
+    public PartnerRegistry(Entity entity) {
+    	this();
+    	setEntity(entity);
     }
 
     /**

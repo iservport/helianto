@@ -30,6 +30,22 @@ public class PartnerRegistryTests {
         assertEquals(partnerAlias, partnerRegistry.getPartnerAlias());
         
     }
+	
+	@Test
+	public void constructor() {
+		PartnerRegistry partnerRegistry = new PartnerRegistry();
+		assertTrue(partnerRegistry instanceof AbstractAddress);
+		assertEquals("", partnerRegistry.getPartnerAlias());
+		assertEquals("", partnerRegistry.getPartnerName());
+	}
+    
+	@Test
+	public void constructorEntity() {
+		Entity entity = new Entity();
+		PartnerRegistry partnerRegistry = new PartnerRegistry(entity);
+		assertTrue(partnerRegistry instanceof AbstractAddress);
+		assertEquals(entity, partnerRegistry.getEntity());
+	}
     
     /**
      * Test <code>PartnerRegistry</code> equals() method.

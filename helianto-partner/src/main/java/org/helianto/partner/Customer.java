@@ -17,6 +17,8 @@ package org.helianto.partner;
 
 import javax.persistence.DiscriminatorValue;
 
+import org.helianto.core.Entity;
+
 
 /**
  * <p>
@@ -44,6 +46,45 @@ public class Customer extends Partner implements java.io.Serializable {
      */
     public Customer() {
     	super();
+    }
+
+    /**
+     * Partner registry constructor.
+     * 
+     * @param partnerRegistry
+     */
+    public Customer(PartnerRegistry partnerRegistry) {
+    	this();
+    	setPartnerRegistry(partnerRegistry);
+    }
+
+    /**
+     * Entity constructor.
+     * 
+	 * <p>
+	 * Create a backing {@link PartnerRegistry} and associate a new Customer to it.
+	 * </p>
+	 * 
+     * @param entity
+     */
+    public Customer(Entity entity) {
+    	this(new PartnerRegistry(entity));
+    }
+
+    /**
+     * Partner constructor.
+     * 
+	 * <p>
+	 * Read the backing {@link PartnerRegistry} from a partner to associate a new Customer to it.
+	 * </p>
+	 * 
+     * @param partner
+     */
+    public Customer(Partner partner) {
+    	this(partner.getPartnerRegistry());
+    	if (partner instanceof Customer) {
+    		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
+    	}
     }
 
    /**
