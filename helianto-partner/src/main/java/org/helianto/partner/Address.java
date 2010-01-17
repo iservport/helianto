@@ -57,6 +57,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
 
     private static final long serialVersionUID = 1L;
     private PartnerRegistry partnerRegistry;
+    private char addressType;
     private char privacyLevel;
 
     /** 
@@ -64,6 +65,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
 	 */
     public Address() {
         super();
+        setAddressType(AddressType.MAIN.getValue());
         setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
     }
     
@@ -99,6 +101,19 @@ public class Address extends AbstractAddress implements Comparable<Address> {
         this.partnerRegistry = partnerRegistry;
     }
 
+
+    /**
+     * Address type.
+     */
+    public char getAddressType() {
+        return this.addressType;
+    }
+    public void setAddressType(char addressType) {
+        this.addressType = addressType;
+    }
+    public void setAddressType(AddressType addressType) {
+        this.addressType = addressType.getValue();
+    }
 
     /**
      * Privacy level.

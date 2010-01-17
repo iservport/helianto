@@ -42,7 +42,6 @@ public class AbstractAddress {
     private static final long serialVersionUID = 1L;
     private int id;
     private int sequence;
-    private char addressType;
     private String address1;
     private String addressNumber;
 	private String addressDetail;
@@ -58,7 +57,6 @@ public class AbstractAddress {
      * Empty constructor.
 	 */
     public AbstractAddress() {
-        setAddressType(AddressType.MAIN.getValue());
         setAddress1("");
         setAddressNumber("");
         setAddressDetail("");
@@ -143,19 +141,6 @@ public class AbstractAddress {
     }
     public void setSequence(int sequence) {
         this.sequence = sequence;
-    }
-
-    /**
-     * Address type.
-     */
-    public char getAddressType() {
-        return this.addressType;
-    }
-    public void setAddressType(char addressType) {
-        this.addressType = addressType;
-    }
-    public void setAddressType(AddressType addressType) {
-        this.addressType = addressType.getValue();
     }
 
     /**
