@@ -38,27 +38,27 @@ import org.springframework.webflow.execution.RequestContext;
 public class UserGroupFormActionTests extends AbstractEditAggregateFormActionTests<UserGroup, Entity, UserGroupFormAction, UserMgr>{
 	
 	@Override
-	protected UserGroup createTestInstance() {
+	public UserGroup createTestInstance() {
 		return UserGroupTestSupport.createUserGroup();
 	}
 	
 	@Override
-	protected UserGroup doPrepareTarget(UserMgr testMgr, UserGroup target) {
+	public UserGroup doPrepareTarget(UserMgr testMgr, UserGroup target) {
 		return testMgr.prepareUserGroup(target);
 	}
 	
 	@Override
-	protected UserGroup getPreparedTarget(UserGroupFormAction formAction, RequestContext context, UserGroup target) throws Exception {
+	public UserGroup getPreparedTarget(UserGroupFormAction formAction, RequestContext context, UserGroup target) throws Exception {
 		return formAction.doPrepareTarget(context, target);
 	}
 	
 	@Override
-	protected Entity getParent(UserGroup target) {
+	public Entity getParent(UserGroup target) {
 		return target.getEntity();
 	}
 	
 	@Override
-	protected Entity getManagedParent(UserGroupFormAction formAction, UserGroup target) throws Exception {
+	public Entity getManagedParent(UserGroupFormAction formAction, UserGroup target) throws Exception {
 		return formAction.getManagedParent(target);
 	}
 	
@@ -78,37 +78,37 @@ public class UserGroupFormActionTests extends AbstractEditAggregateFormActionTes
 	}
 	
 	@Override
-	protected UserGroup doStoreTarget(UserMgr testMgr, UserGroup detachedTarget) {
+	public UserGroup doStoreTarget(UserMgr testMgr, UserGroup detachedTarget) {
 		return testMgr.storeUserGroup(detachedTarget);
 	}
 	
 	@Override
-	protected UserGroup getStoredTarget(UserGroupFormAction formAction, UserGroup detachedTarget) throws Exception {
+	public UserGroup getStoredTarget(UserGroupFormAction formAction, UserGroup detachedTarget) throws Exception {
 		return formAction.doStoreTarget(detachedTarget);
 	}
 	
 	@Override
-	protected UserGroupFormAction createFormActionInstance() {
+	public UserGroupFormAction createFormActionInstance() {
 		return new UserGroupFormAction();
 	}
 
 	@Override
-	protected String getParentAttributeName() {
+	public String getParentAttributeName() {
 		return "entity";
 	}
 
 	@Override
-	protected String getTargetAttributeName() {
+	public String getTargetAttributeName() {
 		return "userGroup";
 	}
 
 	@Override
-	protected Class<UserMgr> getTestMgrClass() {
+	public Class<UserMgr> getTestMgrClass() {
 		return UserMgr.class;
 	}
 
 	@Override
-	protected void injectTestMgr(UserGroupFormAction formAction, UserMgr testMgr) {
+	public void injectTestMgr(UserGroupFormAction formAction, UserMgr testMgr) {
 		formAction.setUserMgr(testMgr);
 	}
 

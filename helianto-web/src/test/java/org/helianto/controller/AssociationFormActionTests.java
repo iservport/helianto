@@ -121,7 +121,7 @@ public class AssociationFormActionTests {
 		associationFormAction = new AbstractAssociationFormAction<StubAssociation, String, String>() {
 			@Override public StubAssociation doCreateTarget(RequestContext context, String parent) 
 			    throws Exception { return newAssociation; }
-			@Override protected StubAssociation doStoreTarget(StubAssociation detachedTarget) 
+			@Override public StubAssociation doStoreTarget(StubAssociation detachedTarget) 
 			    throws Exception { return detachedTarget.toUpperCase(); }
 			@Override public String getTargetAttributeName() { return "target"; }
 			@Override public String getParentAttributeName() { return "parent"; }

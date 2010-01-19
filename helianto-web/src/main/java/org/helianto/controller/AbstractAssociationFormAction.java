@@ -170,7 +170,7 @@ public abstract class AbstractAssociationFormAction<A extends AbstractAssociatio
 	 * @param managedAssociation
 	 * @throws Exception
 	 */
-    protected P getManagedParent(A managedAssociation) throws Exception {
+    public P getManagedParent(A managedAssociation) throws Exception {
     	return managedAssociation.getParent();
     }
  

@@ -37,7 +37,7 @@ import org.springframework.webflow.execution.RequestContext;
 public class EntityFormActionTests extends AbstractEditAggregateFormActionTests<Entity, Operator, EntityFormAction, NamespaceMgr>{
 	
 	@Override
-	protected Entity createTestInstance() {
+	public Entity createTestInstance() {
 		return EntityTestSupport.createEntity();
 	}
 	
@@ -72,57 +72,57 @@ public class EntityFormActionTests extends AbstractEditAggregateFormActionTests<
 	}
 	
 	@Override
-	protected Entity doPrepareTarget(NamespaceMgr testMgr, Entity target) {
+	public Entity doPrepareTarget(NamespaceMgr testMgr, Entity target) {
 		return testMgr.prepareEntity(target);
 	}
 	
 	@Override
-	protected Entity getPreparedTarget(EntityFormAction formAction, RequestContext context, Entity target) throws Exception {
+	public Entity getPreparedTarget(EntityFormAction formAction, RequestContext context, Entity target) throws Exception {
 		return formAction.doPrepareTarget(context, target);
 	}
 	
 	@Override
-	protected Operator getParent(Entity target) {
+	public Operator getParent(Entity target) {
 		return target.getOperator();
 	}
 	
 	@Override
-	protected Operator getManagedParent(EntityFormAction formAction, Entity target) throws Exception {
+	public Operator getManagedParent(EntityFormAction formAction, Entity target) throws Exception {
 		return formAction.getManagedParent(target);
 	}
 	
 	@Override
-	protected Entity doStoreTarget(NamespaceMgr testMgr, Entity detachedTarget) {
+	public Entity doStoreTarget(NamespaceMgr testMgr, Entity detachedTarget) {
 		return testMgr.storeEntity(detachedTarget);
 	}
 	
 	@Override
-	protected Entity getStoredTarget(EntityFormAction formAction, Entity detachedTarget) throws Exception {
+	public Entity getStoredTarget(EntityFormAction formAction, Entity detachedTarget) throws Exception {
 		return formAction.doStoreTarget(detachedTarget);
 	}
 	
 	@Override
-	protected EntityFormAction createFormActionInstance() {
+	public EntityFormAction createFormActionInstance() {
 		return new EntityFormAction();
 	}
 
 	@Override
-	protected String getParentAttributeName() {
+	public String getParentAttributeName() {
 		return "operator";
 	}
 
 	@Override
-	protected String getTargetAttributeName() {
+	public String getTargetAttributeName() {
 		return "entity";
 	}
 
 	@Override
-	protected Class<NamespaceMgr> getTestMgrClass() {
+	public Class<NamespaceMgr> getTestMgrClass() {
 		return NamespaceMgr.class;
 	}
 
 	@Override
-	protected void injectTestMgr(EntityFormAction formAction, NamespaceMgr testMgr) {
+	public void injectTestMgr(EntityFormAction formAction, NamespaceMgr testMgr) {
 		formAction.setNamespaceMgr(testMgr);
 	}
 
