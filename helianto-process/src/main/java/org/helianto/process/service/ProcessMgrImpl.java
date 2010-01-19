@@ -123,6 +123,11 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     public ProcessDocumentAssociation prepareAssociation(ProcessDocument parent, Object child) {
         if (logger.isDebugEnabled()) {
             logger.debug("Parent class is "+parent.getClass());
+        }
+        if (child==null) {
+        	return new ProcessDocumentAssociation(parent);
+        }
+        if (logger.isDebugEnabled()) {
             logger.debug("Child class is "+child.getClass());
         }
     	AssociationType associationType = AssociationType.resolveAssociationType(parent.getClass(), child.getClass());

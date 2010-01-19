@@ -53,8 +53,23 @@ public class ProcessDocumentAssociation extends AbstractAssociation<ProcessDocum
     private BigDecimal leftLimit = BigDecimal.ZERO;
 	private BigDecimal rightLimit = BigDecimal.ZERO;
 
-	/** default constructor */
+	/** 
+	 * Default constructor.
+	 */
     public ProcessDocumentAssociation() {
+    	super();
+        setAssociationType(AssociationType.GENERAL);
+        setAssociationRole(AssociationRole.NONE);
+    }
+
+	/** 
+	 * Parent constructor.
+	 * 
+	 * @param parent
+	 */
+    public ProcessDocumentAssociation(ProcessDocument parent) {
+    	this();
+    	setParent(parent);
     }
 
     /**
@@ -171,7 +186,6 @@ public class ProcessDocumentAssociation extends AbstractAssociation<ProcessDocum
 	        child.getParentAssociations().add(documentAssociation);
 	        documentAssociation.setSequence(sequence);
 	        documentAssociation.setAssociationType(associationType);
-	        documentAssociation.setAssociationRole(AssociationRole.NONE);
 	        return documentAssociation;
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Unable to create instance of "+clazz, e);
