@@ -339,12 +339,6 @@ Application-TraceLevels: ${application.traceLevels}
 		<!-- Build time only dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>com.springsource.javax.servlet</artifactId>
-			<version>2.4.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
 			<artifactId>com.springsource.javax.servlet.jsp</artifactId>
 			<version>2.1.0</version>
 			<scope>provided</scope>
