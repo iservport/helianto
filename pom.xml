@@ -203,6 +203,12 @@ Application-TraceLevels: ${application.traceLevels}
 			<artifactId>org.springframework.spring-library</artifactId>
 			<type>libd</type>
 			<version>${spring.main.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>org.springframework.web.portlet</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
