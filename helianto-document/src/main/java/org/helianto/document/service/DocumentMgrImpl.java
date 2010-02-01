@@ -20,8 +20,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
@@ -66,7 +66,7 @@ public class DocumentMgrImpl implements DocumentMgr {
 	public List<? extends Document> findDocuments(Filter documentFilter) {
     	List<? extends Document> documentList = (List<? extends Document>) documentDao.find((DocumentFilter) documentFilter);
     	if (logger.isDebugEnabled() && documentList!=null) {
-    		logger.debug("Found document list of size "+documentList.size());
+    		logger.debug("Found document list of size {}", documentList.size());
     	}
     	return documentList;
 	}
@@ -93,7 +93,7 @@ public class DocumentMgrImpl implements DocumentMgr {
 	public List<DocumentCodeBuilder> findDocumentCodeBuilders(Filter documentCodeBuilderFilter) {
     	List<DocumentCodeBuilder> documentCodeBuilderList = (List<DocumentCodeBuilder>) documentCodeBuilderDao.find((DocumentCodeBuilderFilter) documentCodeBuilderFilter);
     	if (logger.isDebugEnabled() && documentCodeBuilderList!=null) {
-    		logger.debug("Found document code builder list of size "+documentCodeBuilderList.size());
+    		logger.debug("Found document code builder list of size {}", documentCodeBuilderList.size());
     	}
     	return documentCodeBuilderList;
 	}
@@ -119,6 +119,6 @@ public class DocumentMgrImpl implements DocumentMgr {
 		this.sequenceMgr = sequenceMgr;
 	}
 	
-	private static final Log logger = LogFactory.getLog(DocumentMgrImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(DocumentMgrImpl.class);
 
 }
