@@ -21,8 +21,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
@@ -75,9 +75,7 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
             //TODO find only active credential
             Credential credential = securityMgr.findCredentialByIdentity(identity);
             if (credential!=null) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("User credential loaded");
-                }
+                logger.debug("User credential loaded");
                 return credential;
             } else {
                 throw new DataRetrievalFailureException("Bad credential");
@@ -93,7 +91,7 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     }
     
     /**
-     * Log this visit, next login this user will be selected
+     * Logger this visit, next login this user will be selected
      */
     @Override
 	public User storeUser(User user) {
@@ -121,7 +119,7 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
         this.userMgr = userMgr;
     }
 
-    private static Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
     
 }
 

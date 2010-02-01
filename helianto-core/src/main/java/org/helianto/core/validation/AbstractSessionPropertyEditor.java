@@ -20,8 +20,8 @@ import java.io.Serializable;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.SessionFactory;
 
 /**
@@ -61,20 +61,14 @@ public abstract class AbstractSessionPropertyEditor extends PropertyEditorSuppor
      */
     @SuppressWarnings("unchecked")
 	protected void setAsText(String id, Class clazz) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Loaded "+clazz.getName()+" property editor");
-        }
+        logger.debug("Loaded {} property editor", clazz.getName());
         try {
             Serializable key = resolveId(id);
             Object value = this.sessionFactory.getCurrentSession().load(clazz, key);
             super.setValue(value);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Loaded property: " + getValue()+" set from id="+id);
-            }
+            logger.debug("Loaded property: {} set from id={}", getValue(), id);
         } catch (Exception e) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Exception caugth during load: " + e.toString());
-            }
+            logger.debug("Exception caugth during load: ", e);
             super.setValue(null);
         }
     }
@@ -90,6 +84,6 @@ public abstract class AbstractSessionPropertyEditor extends PropertyEditorSuppor
         return value;
     }
     
-    static protected final Log logger = LogFactory.getLog(AbstractSessionPropertyEditor.class);
+    static protected final Logger logger = LoggerFactory.getLogger(AbstractSessionPropertyEditor.class);
 
 }

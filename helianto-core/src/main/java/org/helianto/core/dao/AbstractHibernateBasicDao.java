@@ -17,8 +17,8 @@ package org.helianto.core.dao;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.repository.AbstractBasicDao;
 import org.helianto.core.repository.HibernatePersistenceStrategy;
 import org.helianto.core.repository.PersistenceStrategy;
@@ -60,6 +60,6 @@ public abstract class AbstractHibernateBasicDao<T> extends AbstractBasicDao<T> i
 		this.sessionFactory = sessionFactory;
 	}
 
-    private static final Log logger = LogFactory.getLog(AbstractHibernateBasicDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractHibernateBasicDao.class);
 
 }

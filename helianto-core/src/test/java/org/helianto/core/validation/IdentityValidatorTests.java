@@ -18,8 +18,8 @@ package org.helianto.core.validation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Identity;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class IdentityValidatorTests {
     
     // fields 
     
-    private final Log logger = LogFactory.getLog(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     
     private Validator identityValidator;
     private BindException errors;
@@ -83,7 +83,7 @@ public class IdentityValidatorTests {
 
     @Test
     public void validatePrincipalInvalidChar() {
-        String invalidChar = "!#$%&*()-=+§£¢¬?{}[]°`'|,;/<>:~^°*?\"\'\\";
+        String invalidChar = "!#$%&*()-=+ï¿½ï¿½ï¿½ï¿½?{}[]ï¿½`'|,;/<>:~^ï¿½*?\"\'\\";
         for (char c : invalidChar.toCharArray()) {
             errors = new BindException(identity, "identity");
             identity.setPrincipal(String.valueOf(c));
@@ -120,17 +120,13 @@ public class IdentityValidatorTests {
     // helper methods
     
     private void checkRequiredErrors(BindException errors, String code) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Check required errors ");
-        }
+        logger.debug("Check required errors ");
         boolean hasErrors = false;
         for (Object object : errors.getAllErrors()) {
             hasErrors = true;
             ObjectError objectError = (ObjectError) object;
             assertEquals(code, objectError.getCode());
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n"+objectError.getCode()+"="+objectError.getDefaultMessage());
-            }
+            logger.debug("\n{}={}", objectError.getCode(), objectError.getDefaultMessage());
         }
         assertTrue(hasErrors);
     }

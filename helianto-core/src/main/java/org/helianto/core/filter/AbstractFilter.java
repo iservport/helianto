@@ -17,8 +17,8 @@ package org.helianto.core.filter;
 
 import java.io.Serializable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class to create criteria using a criteria builder.
@@ -51,9 +51,7 @@ public abstract class AbstractFilter implements Serializable, Filter {
         	}
         }
         postProcessFilter(mainCriteriaBuilder);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Filter query: "+mainCriteriaBuilder.getCriteriaAsString());
-        }
+        logger.debug("Filter query: {}", mainCriteriaBuilder.getCriteriaAsString());
         return mainCriteriaBuilder.getCriteriaAsString();
     }
 	
@@ -204,6 +202,6 @@ public abstract class AbstractFilter implements Serializable, Filter {
         }
     }
     
-    private static Log logger = LogFactory.getLog(AbstractFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(AbstractFilter.class);
 
 }

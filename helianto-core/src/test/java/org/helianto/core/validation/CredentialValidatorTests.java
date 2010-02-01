@@ -18,8 +18,8 @@ package org.helianto.core.validation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.junit.Before;
@@ -139,17 +139,13 @@ public class CredentialValidatorTests {
     // helper methods
     
     private void checkRequiredErrors(BindException errors, String code) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Check required errors ");
-        }
+        logger.debug("Check required errors ");
         boolean hasErrors = false;
         for (Object object : errors.getAllErrors()) {
             hasErrors = true;
             ObjectError objectError = (ObjectError) object;
             assertEquals(code, objectError.getCode());
-            if (logger.isDebugEnabled()) {
-                logger.debug("\n"+objectError.getCode()+"="+objectError.getDefaultMessage());
-            }
+            logger.debug("\n{}={}", objectError.getCode(), objectError.getDefaultMessage());
         }
         assertTrue(hasErrors);
     }
@@ -171,6 +167,6 @@ public class CredentialValidatorTests {
         errors = new BindException(credential, "credential");
     }
     
-    private static final Log logger = LogFactory.getLog(CredentialValidatorTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(CredentialValidatorTests.class);
     
 }

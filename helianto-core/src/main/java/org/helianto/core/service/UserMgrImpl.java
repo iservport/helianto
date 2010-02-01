@@ -26,8 +26,8 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
@@ -61,21 +61,15 @@ import org.springframework.util.Assert;
 public class UserMgrImpl implements UserMgr {
     
     public Identity findIdentityByPrincipal(String principal) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique with principal "+principal);
-        }
+        logger.debug("Finding unique with principal {}", principal);
         return (Identity) identityDao.findUnique(principal);
     }
 
     public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions) {
         List<Identity> identityList = (List<Identity>) identityDao.find(filter);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Found "+identityList.size()+" item(s)");
-        }
+        logger.debug("Found {} item(s)", identityList.size());
         identityList.removeAll(exclusions);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Removed "+exclusions.size()+" item(s)");
-        }
+        logger.debug("Removed {} item(s)", exclusions.size());
         return identityList ;
     }
 
@@ -95,17 +89,11 @@ public class UserMgrImpl implements UserMgr {
     public UserGroup prepareUserGroup(UserGroup userGroup) {
     	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
     	// child list
-		if (logger.isDebugEnabled()) {
-			logger.debug("About to load child association(s).");
-		}
+		logger.debug("About to load child association(s).");
     	Set<UserAssociation> childAssociations = managedUserGroup.getChildAssociations();
-		if (logger.isDebugEnabled() && childAssociations!=null) {
-			logger.debug("Loaded "+childAssociations.size()+" child association(s).");
-		}
+		logger.debug("Loaded {} child association(s).", childAssociations.size());
 		List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>(childAssociations);
-		if (logger.isDebugEnabled() && childAssociationList!=null) {
-			logger.debug("Listed "+childAssociationList.size()+" child association(s).");
-		}
+		logger.debug("Listed {} child association(s).", childAssociationList.size());
 		Collections.sort(childAssociationList);
 		managedUserGroup.setChildAssociationList(childAssociationList);
     	// role list
@@ -120,9 +108,7 @@ public class UserMgrImpl implements UserMgr {
 	 */
 	protected Set<UserRole> recurseUserRoles(Set<UserRole> roles, Set<UserAssociation> parentAssociations) {
 		Set<UserRole> localRoles = new HashSet<UserRole>(roles);
-		if (logger.isDebugEnabled()) {
-			logger.debug("Found "+localRoles.size()+" local role(s).");
-		}
+		logger.debug("Found {} local role(s).", localRoles.size());
 		for (UserAssociation parentAssociation: parentAssociations) {
 			UserGroup parent = parentAssociation.getParent();
 			localRoles.addAll(recurseUserRoles(parent.getRoles(), parent.getParentAssociations()));
@@ -150,47 +136,33 @@ public class UserMgrImpl implements UserMgr {
      */
     protected boolean validateIdentity(User user) {
     	if (user.getIdentity().getId()==0) {
-    		if (logger.isDebugEnabled()) {
-    			logger.debug("Looking for a candidate identity");
-    		}
+    		logger.debug("Looking for a candidate identity");
     		String principal = user.getUserKey();
-    		if (logger.isDebugEnabled()) {
-    			logger.debug("Using principal "+principal);
-    		}
+    		logger.debug("Using principal {}", principal);
     		Identity identity = identityDao.findUnique(principal);
     		if (identity!=null) {
     			user.setIdentity(identity);
     		}
     		else if (user.getCreateIdentity()==CreateIdentity.AUTO.getValue()) {
         		identity = Identity.identityFactory(principal);
-        		if (logger.isDebugEnabled()) {
-        			logger.debug("Identity created: "+identity);
-        		}
+        		logger.debug("Identity created: {}", identity);
         		Credential credential = Credential.credentialFactory(identity, "default");
         		identity.getCredentials().add(credential);
-        		if (logger.isDebugEnabled()) {
-        			logger.debug("Credential created: "+credential);
-        		}
+        		logger.debug("Credential created: {}", credential);
     			user.setIdentity(identity);
     		}
     		else {
-    			if (logger.isDebugEnabled()) {
-    				logger.debug("Unable to validate identity, identity not found and not created.");
-    			}
+    			logger.debug("Unable to validate identity, identity not found and not created.");
     			return false;    			
     		}
     	}
-		if (logger.isDebugEnabled()) {
-			logger.debug("User identified with "+user.getIdentity());
-		}
+		logger.debug("User identified with {}", user.getIdentity());
 		return true;
     }
 
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
     	if (!parentAssociation.isKeyEmpty() && parentAssociation.getChild() instanceof User) {
-        	if (logger.isDebugEnabled()) {
-        		logger.debug("Validating "+parentAssociation.getChild());
-        	}
+        	logger.debug("Validating {}", parentAssociation.getChild());
         	User child = (User) parentAssociation.getChild();
         	if(validateIdentity(child)) {
         		child.setAccountNonExpired(true);
@@ -202,18 +174,14 @@ public class UserMgrImpl implements UserMgr {
 
 	public List<UserGroup> findUsers(UserFilter userFilter) {
 		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(userFilter);
-    	if (logger.isDebugEnabled() && userList!=null) {
-    		logger.debug("Found user list of size "+userList.size());
-    	}
+    	logger.debug("Found user list of size {}", userList.size());
         return userList;
 	}
 
     public List<UserGroup> findUsers(Identity identity) {
     	UserFilter userFilter = new UserFilter(identity, true);
     	userFilter.setUserState(UserState.ACTIVE.getValue());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Filter users having state "+userFilter.getUserState());
-        }
+        logger.debug("Filter users having state {}", userFilter.getUserState());
         try {
     		return findUsers(userFilter);
         } catch (Exception e) {
@@ -294,7 +262,7 @@ public class UserMgrImpl implements UserMgr {
         this.provinceDao = provinceDao;
     }
 
-    private static final Log logger = LogFactory.getLog(UserMgrImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserMgrImpl.class);
 
 
 }

@@ -26,6 +26,8 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +46,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 
 	public Credential findCredentialByPrincipal(String principal) {
 		Identity identity = identityDao.findUnique(principal);
+		logger.debug("Found {}", identity);
 		return credentialDao.findUnique(identity);
 	}
 
@@ -78,6 +81,6 @@ public class SecurityMgrImpl implements SecurityMgr {
         this.credentialDao = credentialDao;
     }
 
-//    private final static Log logger = LogFactory.getLog(SecurityMgrImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(SecurityMgrImpl.class);
     
 }

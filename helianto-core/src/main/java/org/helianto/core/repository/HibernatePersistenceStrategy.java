@@ -19,8 +19,8 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Query;
 
 /**
@@ -51,51 +51,37 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
             result.setParameter(i++, value);
         }
         Collection<Object> resultList = result.list();
-        if (logger.isDebugEnabled()) {
-            logger.debug("Found "+resultList.size()+" item(s)");
-        }
+        logger.debug("Found {} item(s)", resultList.size());
         return resultList;
 	}
 
 	public Object merge(Object object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Merging "+object);
-        }
+        logger.debug("Merging {}", object);
 		return this.sessionFactory.getCurrentSession().merge(object);
 	}
 
 	public void persist(Object managedObject) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Persisting "+managedObject);
-        }
+        logger.debug("Persisting {}", managedObject);
         this.sessionFactory.getCurrentSession().persist(managedObject);
 	}
 
 	public void remove(Object object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Removing "+object);
-        }
+        logger.debug("Removing {}", object);
 		this.sessionFactory.getCurrentSession().delete(object);
 	}
 
 	public void evict(Object object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Evicting "+object);
-        }
+        logger.debug("Evicting {}", object);
 		this.sessionFactory.getCurrentSession().evict(object);
 	}
 	
 	public void flush() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Flushing session");
-        }
+        logger.debug("Flushing session");
 		this.sessionFactory.getCurrentSession().flush();
 	}
 	
 	public void clear() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Clearing session");
-        }
+        logger.debug("Clearing session");
 		this.sessionFactory.getCurrentSession().clear();
 	}
 
@@ -111,6 +97,6 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
 		this.sessionFactory = sessionFactory;
 	}
 
-    private static final Log logger = LogFactory.getLog(HibernatePersistenceStrategy.class);
+    private static final Logger logger = LoggerFactory.getLogger(HibernatePersistenceStrategy.class);
 
 }

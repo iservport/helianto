@@ -18,8 +18,8 @@ package org.helianto.core;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.PolymorphicFilter;
@@ -298,6 +298,6 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
         return buffer.toString();
     }
     
-    private static Log logger = LogFactory.getLog(UserFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(UserFilter.class);
 
 }

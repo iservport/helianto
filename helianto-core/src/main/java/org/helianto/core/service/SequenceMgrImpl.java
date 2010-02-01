@@ -19,8 +19,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Node;
@@ -43,14 +43,10 @@ public class SequenceMgrImpl implements SequenceMgr {
         if (sequenceable.getInternalNumber()==0) {
             long internalNumber = findNextInternalNumber(sequenceable.getEntity(), sequenceable.getInternalNumberKey());
             sequenceable.setInternalNumber(internalNumber);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Created key for new "+sequenceable.getInternalNumberKey()+" "+sequenceable.getInternalNumber());
-            }
+            logger.debug("Created key for new {} {}", sequenceable.getInternalNumberKey(), sequenceable.getInternalNumber());
         }
         else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("InternalNumber not generated");
-            }
+            logger.debug("InternalNumber not generated");
         }
 	}
 
@@ -60,9 +56,7 @@ public class SequenceMgrImpl implements SequenceMgr {
             long lastNumber = enumerator.getLastNumber();
             enumerator.setLastNumber(lastNumber+1);
             internalEnumeratorDao.persist(enumerator);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Incremented existing InternalEnumerator: "+enumerator);
-            }
+            logger.debug("Incremented existing InternalEnumerator: {}", enumerator);
             return lastNumber;
         } else  {
             enumerator = new InternalEnumerator();
@@ -70,9 +64,7 @@ public class SequenceMgrImpl implements SequenceMgr {
             enumerator.setTypeName(typeName);
             enumerator.setLastNumber(2);    
             internalEnumeratorDao.merge(enumerator);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Created InternalEnumerator: "+enumerator);
-            }
+            logger.debug("Created InternalEnumerator: {}", enumerator);
             return 1;
         }
     }
@@ -97,6 +89,6 @@ public class SequenceMgrImpl implements SequenceMgr {
 		this.treeBuilder = treeBuilder;
 	}
 
-	private static final Log logger = LogFactory.getLog(SequenceMgrImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(SequenceMgrImpl.class);
 
 }

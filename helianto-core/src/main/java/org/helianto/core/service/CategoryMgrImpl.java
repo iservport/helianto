@@ -19,8 +19,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Category;
 import org.helianto.core.CategoryFilter;
 import org.helianto.core.repository.FilterDao;
@@ -37,17 +37,13 @@ public class CategoryMgrImpl implements CategoryMgr {
     
 	public List<Category> findCategories(CategoryFilter categoryFilter) {
     	List<Category> categoryList = (List<Category>) categoryDao.find(categoryFilter);
-    	if (logger.isDebugEnabled() && categoryList!=null) {
-    		logger.debug("Found category list of size "+categoryList.size());
-    	}
+    	logger.debug("Found category list of size {}", categoryList.size());
     	return categoryList;
 	}
 
 	public Category storeCategory(Category category) {
 		Category managedCategory = categoryDao.merge(category);
-    	if (logger.isDebugEnabled()) {
-    		logger.debug("Stored category  "+managedCategory);
-    	}
+    	logger.debug("Stored category  "+managedCategory);
     	return managedCategory;
 	}
 
@@ -65,7 +61,7 @@ public class CategoryMgrImpl implements CategoryMgr {
         this.categoryDao = categoryDao;
     }
 
-    private final Log logger = LogFactory.getLog(CategoryMgrImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(CategoryMgrImpl.class);
 
 
 }

@@ -25,8 +25,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.EntityFilter;
 import org.helianto.core.KeyType;
@@ -53,47 +53,31 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	public List<Operator> findOperator() {
 		List<Operator> operatorList = (List<Operator>) operatorDao.find(new OperatorFilter());
 		if (operatorList!=null && operatorList.size()>0) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Found "+operatorList.size()+" namespace operator(s)");
-			}
+			logger.debug("Found {} namespace operator(s)", operatorList.size());
 		}
 		else {
-			if (logger.isInfoEnabled()) {
-				logger.info("Likely a first time install, creating defaults ...");
-			}
+			logger.info("Likely a first time install, creating defaults ...");
 			Operator operator = postInstallationMgr.installOperator("DEFAULT", false);
-			if (logger.isInfoEnabled()) {
-				logger.info("About to create default entity to the default operator.");
-			}			
+			logger.info("About to create default entity to the default operator.");
 			Entity entity = createAndPersistEntity(operator, operator.getOperatorName());
-			if (logger.isDebugEnabled()) {
-				logger.debug("New default entity added to the operator.");
-			}
+			logger.debug("New default entity added to the operator.");
 			operatorList.add(entity.getOperator());
-			if (logger.isDebugEnabled()) {
-				logger.debug("New default operator added to the list.");
-			}
+			logger.debug("New default operator added to the list.");
 		}
     	return operatorList;
 	}
 	
 	public Entity createAndPersistEntity(Operator operator, String alias) {
 		Entity entity = Entity.entityFactory(operator, alias);
-		if (logger.isInfoEnabled()) {
-			logger.info("Entity created as "+entity);
-		}
+		logger.info("Entity created as {}", entity);
 		entityDao.persist(entity);
 		
 		UserGroup manager = UserGroup.userGroupFactory(entity, "ADMIN");
-		if (logger.isInfoEnabled()) {
-			logger.info("Management user group created as "+manager);
-		}
+		logger.info("Management user group created as {}", manager);
 		userGroupDao.persist(manager);
 		
 		UserGroup defaultUser = UserGroup.userGroupFactory(entity, "USER");
-		if (logger.isInfoEnabled()) {
-			logger.info("Default user group created as "+defaultUser);
-		}
+		logger.info("Default user group created as {}", defaultUser);
 		userGroupDao.persist(defaultUser);
 		
 		Service adminService = operator.getServiceMap().get("ADMIN"); 
@@ -103,18 +87,14 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 			throw new IllegalStateException("Unable to create entity, user service not found.");
 		}
 		UserRole managerRole = UserRole.userRoleFactory(manager, adminService, "MANAGER");
-		if (logger.isInfoEnabled()) {
-			logger.info("Binding manager user group to admin service with "+managerRole);
-		}
+		logger.info("Binding manager user group to admin service with {}", managerRole);
 		userRoleDao.persist(managerRole);
 		
 		if (adminService==null) {
 			throw new IllegalStateException("Unable to create entity, admin service not found.");
 		}
 		UserRole userRole = UserRole.userRoleFactory(defaultUser, userService, "ALL");
-		if (logger.isInfoEnabled()) {
-			logger.info("Binding default user group to user service with "+userRole);
-		}
+		logger.info("Binding default user group to user service with {}", userRole);
 		userRoleDao.persist(userRole);
 		
 		return entity;
@@ -132,9 +112,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	@Transactional(readOnly=true)
 	public List<Province> findProvinces(ProvinceFilter filter) {
     	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
-    	if (logger.isDebugEnabled() && provinceList!=null) {
-    		logger.debug("Found province list of size "+provinceList.size());
-    	}
+    	logger.debug("Found province list of size {}", provinceList.size());
     	return provinceList;
 	}
 
@@ -161,9 +139,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	@Transactional(readOnly=true)
 	public List<Entity> findEntities(EntityFilter filter) {
 		List<Entity> entityList = (List<Entity>) entityDao.find(filter);
-		if (logger.isDebugEnabled()) {
-			logger.debug("Found "+entityList.size()+" entity(ies).");
-		}
+		logger.debug("Found {} entity(ies).", entityList.size());
 		return entityList;
 	}
 	
@@ -176,9 +152,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		List<UserGroup> userList = new ArrayList<UserGroup>(managedEntity.getUsers());
 		Collections.sort(userList);
 		managedEntity.setUserList(userList);
-    	if (logger.isDebugEnabled() && userList!=null) {
-    		logger.debug("Loaded user list of size "+userList.size());
-    	}
+    	logger.debug("Loaded user list of size {}", userList.size());
 		entityDao.evict(managedEntity);
 		return managedEntity;
 	}
@@ -194,9 +168,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	public List<KeyType> loadKeyTypes(Operator operator) {
 		Operator managedOperator = operatorDao.merge(operator);
 		List<KeyType> keyTypeList = new ArrayList<KeyType>(managedOperator.getKeyTypes());
-    	if (logger.isDebugEnabled() && keyTypeList!=null) {
-    		logger.debug("Loaded user list of size "+keyTypeList.size());
-    	}
+    	logger.debug("Loaded user list of size {}", keyTypeList.size());
 		return keyTypeList;
 	}
 
@@ -211,9 +183,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	public List<Service> loadServices(Operator operator) {
 		Operator managedOperator = operatorDao.merge(operator);
 		List<Service> serviceList = new ArrayList<Service>(managedOperator.getServiceMap().values());
-    	if (logger.isDebugEnabled() && serviceList!=null) {
-    		logger.debug("Loaded user list of size "+serviceList.size());
-    	}
+    	logger.debug("Loaded user list of size {}", serviceList.size());
 		return serviceList;
 	}
 
@@ -245,9 +215,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		else {
 			throw new IllegalArgumentException("Unable to map from empty services list.");
 		}
-    	if (logger.isDebugEnabled() && services!=null) {
-    		logger.debug("Loaded service map "+serviceNameMap);
-    	}
+    	logger.debug("Loaded service map {}", serviceNameMap);
 		return serviceNameMap;
 	}
 
@@ -303,6 +271,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
         this.userRoleDao = userRoleDao;
     }
     
-    private final Log logger = LogFactory.getLog(CategoryMgrImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(CategoryMgrImpl.class);
 
 }

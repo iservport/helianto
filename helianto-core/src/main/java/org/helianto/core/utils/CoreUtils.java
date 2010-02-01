@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Core utilities.
@@ -48,12 +48,10 @@ public class CoreUtils {
 	 */
 	public static <T> List<T> createList(Set<T> set) {
 		List<T> sortedList = new ArrayList<T>(set);
-    	if (logger.isDebugEnabled() && sortedList!=null) {
-    		logger.debug("Created list of size "+sortedList.size());
-    	}
+    	logger.debug("Created list of size {}", sortedList.size());
 		return sortedList;
 	}
 	
-	private static final Log logger = LogFactory.getLog(CoreUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(CoreUtils.class);
 
 }

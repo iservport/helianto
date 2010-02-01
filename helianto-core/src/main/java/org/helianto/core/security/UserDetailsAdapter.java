@@ -17,8 +17,8 @@ package org.helianto.core.security;
 
 import java.io.Serializable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.User;
@@ -107,18 +107,14 @@ public class UserDetailsAdapter implements
         	Object userDetails = authentication.getPrincipal();
         	if (userDetails instanceof PublicUserDetails) {
                 PublicUserDetails pud = (PublicUserDetails) userDetails;  
-                if (logger.isDebugEnabled()) {
-                    logger.debug("PublicUserDetails retrieved from security context");
-                }
+                logger.debug("PublicUserDetails retrieved from security context");
                 return pud;
         	}
     	} 
     	catch (Exception e) {
     		logger.warn("Error in security context ", e);
     	}
-        if (logger.isDebugEnabled()) {
-            logger.debug("PublicUserDetails not found!");
-        }
+        logger.debug("PublicUserDetails not found!");
     	return null;
     }
     
@@ -172,9 +168,7 @@ public class UserDetailsAdapter implements
     public final void setUser(User user) {
         validateUserAndCredentialCompatibility(user);
         this.user = user;
-        if (logger.isDebugEnabled()) {
-            logger.debug("User selected");
-        }
+        logger.debug("User selected");
     }
     
 	protected final void validateUserAndCredentialCompatibility(UserGroup user) {
@@ -183,9 +177,7 @@ public class UserDetailsAdapter implements
         if(!user.getUserKey().equals(credential.getIdentity().getPrincipal())) {
             throw new IllegalArgumentException("User and Credential must have the same principal");
         }
-        if (logger.isDebugEnabled()) {
-            logger.debug("User and Credential share the same Identity");
-        }
+        logger.debug("User and Credential share the same Identity");
     }
 
 	/**
@@ -212,6 +204,6 @@ public class UserDetailsAdapter implements
         return sb.toString();
     }
 
-    static final Log logger = LogFactory.getLog(UserDetailsAdapter.class);
+    static final Logger logger = LoggerFactory.getLogger(UserDetailsAdapter.class);
     
 }

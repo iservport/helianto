@@ -19,8 +19,8 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation for <code>BasicDao</code>.
@@ -126,9 +126,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	}
 
 	public T findUnique(Object... keys) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Finding unique with "+keys.length+" parameter(s)");
-        }
+        logger.debug("Finding unique with {} parameter(s)", keys.length);
 		Collection<T> uniqueList = find(getSelectBuilder(), getWhereClauseBuilder(getParams()).toString(), keys);
 		try {
 			if (uniqueList!=null && uniqueList.size()==0) {
@@ -168,9 +166,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
         	selectClause.append("where ").append(whereClause);
         }
         String query = selectClause.toString();
-        if (logger.isDebugEnabled()) {
-            logger.debug("Query "+query);
-        }
+        logger.debug("Query {}", query);
 		return (Collection<T>) getPersistenceStrategy().find(query, values);
 	}
 
@@ -217,6 +213,6 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 		this.persistenceStrategy = persistenceStrategy;
 	}
 
-    private static final Log logger = LogFactory.getLog(AbstractBasicDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractBasicDao.class);
 
 }

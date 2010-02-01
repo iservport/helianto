@@ -17,8 +17,8 @@ package org.helianto.core.dao;
 
 import javax.persistence.EntityManager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.repository.AbstractBasicDao;
 
 /**
@@ -30,7 +30,7 @@ public abstract class AbstractJpaBasicDao<T> extends AbstractBasicDao<T> {
 	
 	// collabs
     
-    private EntityManager em;
+    protected EntityManager em;
     
     /**
      * Spring will inject a managed JPA {@link EntityManager} into this field.
@@ -40,6 +40,6 @@ public abstract class AbstractJpaBasicDao<T> extends AbstractBasicDao<T> {
 		this.em = em;
 	}
 
-    private static final Log logger = LogFactory.getLog(AbstractJpaBasicDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractJpaBasicDao.class);
 
 }

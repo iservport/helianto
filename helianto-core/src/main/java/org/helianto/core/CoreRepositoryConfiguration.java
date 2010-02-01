@@ -17,8 +17,8 @@ package org.helianto.core;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.springframework.context.annotation.Bean;
@@ -229,6 +229,6 @@ public class CoreRepositoryConfiguration {
 		this.repositoryFactory = repositoryFactory;
 	}
 
-    private static final Log logger = LogFactory.getLog(CoreRepositoryConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(CoreRepositoryConfiguration.class);
 
 }

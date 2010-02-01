@@ -17,8 +17,8 @@ package org.helianto.core.service;
 
 import java.util.Locale;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
@@ -45,18 +45,18 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			defaultOperator = operatorDao.findUnique(defaultOperatorName);
 		}
 		if (defaultOperator==null) {
-			logger.info("About to install operator with name "+defaultOperatorName); 
+			logger.info("About to install operator with name {}", defaultOperatorName); 
 			defaultOperator = Operator.operatorFactory(defaultOperatorName, Locale.getDefault());
 			defaultOperator = operatorDao.merge(defaultOperator);
 		}
-		logger.info("Operator "+defaultOperator+" is now available");
+		logger.info("Operator {} is now available", defaultOperator);
 		
 		Service adminService = Service.serviceFactory(defaultOperator, "ADMIN");
-		logger.info("Admin service is installed by default as "+adminService);
+		logger.info("Admin service is installed by default as {}", adminService);
 		defaultOperator.getServiceMap().put(adminService.getServiceName(), adminService);
 		
 		Service userService = Service.serviceFactory(defaultOperator, "USER");
-		logger.info("User service is installed by default as "+userService);
+		logger.info("User service is installed by default as {}", userService);
 		defaultOperator.getServiceMap().put(userService.getServiceName(), userService);
 		
 		return defaultOperator;
@@ -65,22 +65,22 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	public KeyType installKey(Operator defaultOperator, String keyCode) {
 		KeyType keyType = keyTypeDao.findUnique(defaultOperator, keyCode);
 		if (keyType==null) {
-			logger.info("About to install key type "+keyCode);
+			logger.info("About to install key type {}", keyCode);
 			keyType = KeyType.keyTypeFactory(defaultOperator, keyCode);
 			keyType = keyTypeDao.merge(keyType);
 		}
-		logger.info("KeyType "+keyType+" is now available");
+		logger.info("KeyType {} is now available", keyType);
 		return keyType;
 	}
 
 	public Service installService(Operator defaultOperator, String serviceName) {
 		Service service = serviceDao.findUnique(defaultOperator, serviceName);
 		if (service==null) {
-			logger.info("About to install service with name "+serviceName);
+			logger.info("About to install service with name {}", serviceName);
 			service = Service.serviceFactory(defaultOperator, serviceName);
 			service = serviceDao.merge(service);
 		}
-		logger.info("Sevice "+service+" is now available.");
+		logger.info("Sevice {} is now available.", service);
 		return service;
 	}
 	
@@ -90,11 +90,11 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			defaultEntity = entityDao.findUnique(defaultOperator, entityAlias);
 		}
 		if (defaultEntity==null) {
-			logger.info("About to install entity with alias "+entityAlias); 
+			logger.info("About to install entity with alias {}", entityAlias); 
 			defaultEntity = Entity.entityFactory(defaultOperator, entityAlias);
 			defaultEntity = entityDao.merge(defaultEntity);
 		} 
-		logger.info("Entity "+defaultEntity+" is now available.");
+		logger.info("Entity {} is now available.", defaultEntity);
 		
 		return defaultEntity;
 	}
@@ -106,10 +106,10 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		}
 		if (userGroup==null) {
 			userGroup = UserGroup.userGroupFactory(defaultEntity, userGroupName);
-			logger.info("About to install user group with name "+userGroupName);
+			logger.info("About to install user group with name {}", userGroupName);
 			userGroupDao.persist(userGroup);
 		}
-		logger.info("UserGroup "+userGroup+" is now available.");
+		logger.info("UserGroup {} is now available.", userGroup);
 		
 		return userGroup;
 	}
@@ -147,6 +147,6 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		this.userGroupDao = userGroupDao;
 	}
 	
-	private static final Log logger = LogFactory.getLog(PostInstallationMgrImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(PostInstallationMgrImpl.class);
 
 }

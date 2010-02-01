@@ -19,8 +19,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
 import org.helianto.core.repository.FilterDao;
@@ -39,17 +39,13 @@ public class UnitMgrImpl implements UnitMgr {
     
 	public List<Unit> findUnits(UnitFilter unitFilter) {
     	List<Unit> unitList = (List<Unit>) unitDao.find(unitFilter);
-    	if (logger.isDebugEnabled() && unitList!=null) {
-    		logger.debug("Found unit list of size "+unitList.size());
-    	}
+    	logger.debug("Found unit list of size {}", unitList.size());
     	return unitList;
 	}
 
 	public Unit storeUnit(Unit unit) {
 		Unit managedUnit = unitDao.merge(unit);
-    	if (logger.isDebugEnabled()) {
-    		logger.debug("Stored unit  "+managedUnit);
-    	}
+    	logger.debug("Stored unit  {}", managedUnit);
     	return managedUnit;
 	}
 
@@ -68,7 +64,7 @@ public class UnitMgrImpl implements UnitMgr {
         this.unitDao = unitDao;
     }
 
-    private final Log logger = LogFactory.getLog(UnitMgrImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(UnitMgrImpl.class);
 
 
 }

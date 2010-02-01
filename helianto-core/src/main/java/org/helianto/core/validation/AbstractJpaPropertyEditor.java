@@ -21,8 +21,8 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class to <code>EntityManager</code> backed property editors.
@@ -47,20 +47,14 @@ public abstract class AbstractJpaPropertyEditor extends PropertyEditorSupport {
      */
     @SuppressWarnings("unchecked")
 	protected void setAsText(String id, Class clazz) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Loaded "+clazz.getName()+" property editor");
-        }
+        logger.debug("Loaded {} property editor", clazz.getName());
         try {
             Serializable key = resolveId(id);
             Object value = this.em.getReference(clazz, key);
             super.setValue(value);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Loaded property: " + getValue()+" set from id="+id);
-            }
+            logger.debug("Loaded property: {} set from id={}", getValue(), id);
         } catch (Exception e) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Exception caugth during load: " + e.toString());
-            }
+            logger.error("Exception caugth during load: ", e);
             super.setValue(null);
         }
     }
@@ -88,6 +82,6 @@ public abstract class AbstractJpaPropertyEditor extends PropertyEditorSupport {
 		this.em = em;
 	}
     
-    static protected final Log logger = LogFactory.getLog(AbstractJpaPropertyEditor.class);
+    static protected final Logger logger = LoggerFactory.getLogger(AbstractJpaPropertyEditor.class);
 
 }

@@ -18,8 +18,8 @@ package org.helianto.core.dao;
 
 import java.util.Collection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.repository.FilterDao;
 
@@ -36,6 +36,6 @@ public abstract class AbstractJpaFilterDao<T, F extends AbstractUserBackedCriter
 		return super.find(getSelectBuilder(), whereClause);
 	}
 
-    protected static Log logger = LogFactory.getLog(AbstractJpaFilterDao.class);
+    protected static Logger logger = LoggerFactory.getLogger(AbstractJpaFilterDao.class);
 
 }

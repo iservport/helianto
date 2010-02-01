@@ -18,8 +18,8 @@ package org.helianto.core.repository;
 
 import java.util.Collection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.filter.Filter;
 
 /**
@@ -27,9 +27,7 @@ import org.helianto.core.filter.Filter;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractFilterDao<T, F extends Filter> 
-    extends AbstractBasicDao<T> implements FilterDao<T, F> 
-{
+public abstract class AbstractFilterDao<T, F extends Filter> extends AbstractBasicDao<T> implements FilterDao<T, F> {
 
 	/**
 	 * Default constructor.
@@ -56,6 +54,6 @@ public abstract class AbstractFilterDao<T, F extends Filter>
 		return super.find(getSelectBuilder(), whereClause);
 	}
 
-    protected static Log logger = LogFactory.getLog(AbstractFilterDao.class);
+    protected static Logger logger = LoggerFactory.getLogger(AbstractFilterDao.class);
 
 }

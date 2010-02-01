@@ -21,8 +21,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
@@ -93,9 +93,7 @@ public class DefaultOperatorInstaller implements InitializingBean {
 					keyType.setKeyName(keyCodes[1].trim());
 				}
 				keyTypeMap.put(keyCode, keyType);
-				if (logger.isDebugEnabled()) {
-					logger.debug("Key type "+keyType+" mapped to "+keyCode);
-				}
+				logger.debug("Key type {} mapped to {}", keyType, keyCode);
 			}
 		}
 
@@ -126,6 +124,6 @@ public class DefaultOperatorInstaller implements InitializingBean {
 		this.postInstallationMgr = postInstallationMgr;
 	}
 	
-	private static final Log logger = LogFactory.getLog(DefaultOperatorInstaller.class);
+	private static final Logger logger = LoggerFactory.getLogger(DefaultOperatorInstaller.class);
 	
 }

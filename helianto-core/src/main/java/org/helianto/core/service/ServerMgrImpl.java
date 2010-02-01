@@ -20,8 +20,8 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
@@ -65,13 +65,9 @@ public class ServerMgrImpl  implements ServerMgr {
         if (identity==null) {
             identity = Identity.identityFactory(principal, principal);
             identityDao.persist(identity);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+identity);
-            }
+            logger.debug("Persisted {}", identity);
         } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Retrieved "+identity);
-            }
+            logger.debug("Retrieved {}", identity);
         }
         return identity;
     }
@@ -84,13 +80,9 @@ public class ServerMgrImpl  implements ServerMgr {
         if (userGroup==null) {
             userGroup = UserGroup.userGroupFactory(entity, userKey);
             userGroupDao.persist(userGroup);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+userGroup);
-            }
+            logger.debug("Persisted {}", userGroup);
         } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Retrieved "+userGroup);
-            }
+            logger.debug("Retrieved {}", userGroup);
         }
         return userGroup;
     }
@@ -103,13 +95,9 @@ public class ServerMgrImpl  implements ServerMgr {
         if (user==null) {
             user = User.userFactory(entity, identity);
             userGroupDao.persist(user);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+user);
-            }
+            logger.debug("Persisted {}", user);
         } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Retrieved "+user);
-            }
+            logger.debug("Retrieved {}", user);
         }
         return user;
     }
@@ -120,13 +108,9 @@ public class ServerMgrImpl  implements ServerMgr {
             service = Service.serviceFactory(entity
                     .getOperator(), serviceName);
             serviceDao.persist(service);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+service);
-            }
+            logger.debug("Persisted {}", service);
         } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Retrieved "+service);
-            }
+            logger.debug("Retrieved {}", service);
         }
         return service;
     }
@@ -136,13 +120,9 @@ public class ServerMgrImpl  implements ServerMgr {
         if (userRole==null) {
             userRole = UserRole.userRoleFactory(
                     userGroup, service, extension);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Persisted "+userRole);
-            }
+            logger.debug("Persisted {}", userRole);
         } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Retrieved "+userRole);
-            }
+            logger.debug("Retrieved {}", userRole);
         }
         return userRole;
     }
@@ -158,9 +138,7 @@ public class ServerMgrImpl  implements ServerMgr {
         Service service = findOrCreateService(entity, serviceName);
         for (String extension: extensions) {
             UserRole userRole = findOrCreateUserRole(userGroup, service, extension);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Role granted: "+userRole);
-            }
+            logger.debug("Role granted: {}", userRole);
         }
         userGroupDao.merge(userGroup);
         return userGroup;
@@ -170,27 +148,21 @@ public class ServerMgrImpl  implements ServerMgr {
     public User storeManager(Identity managerIdentity) {
         Operator operator = Operator.operatorFactory("DEFAULT", Locale.getDefault());
         Entity entity = Entity.entityFactory(operator, "DEFAULT");
-        if (logger.isDebugEnabled()) {
-            logger.debug("Entity created with defaults: "+entity);
-        }
+        logger.debug("Entity created with defaults: {}", entity);
         return storeManager(entity, managerIdentity);
     }
 
     public User storeManager(Entity entity, Identity managerIdentity) {
         UserGroup adminGroup = grant(entity, "ADMIN", new String[] {"MANAGER"});
         UserGroup userGroup = grant(entity, "USER", new String[] {"ALL", "DEL"});
-        if (logger.isDebugEnabled()) {
-            logger.debug("Parent groups ADMIN, USER stored ");
-        }
+        logger.debug("Parent groups ADMIN, USER stored ");
         User manager = User.userFactory(entity, managerIdentity);
         UserAssociation adminAssociation = UserAssociation.userAssociationFactory(adminGroup, manager);
         userAssociationDao.merge(adminAssociation);
         UserAssociation userAssociation = UserAssociation.userAssociationFactory(userGroup, manager);
         userAssociationDao.merge(userAssociation);
 //        userGroupDao.mergeUserGroup(manager);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Manager (member of ADMIN, USER): "+manager);
-        }
+        logger.debug("Manager (member of ADMIN, USER): {}", manager);
         return manager;
     }
 
@@ -234,6 +206,6 @@ public class ServerMgrImpl  implements ServerMgr {
         this.userAssociationDao = userAssociationDao;
     }
     
-    private final Log logger = LogFactory.getLog(ServerMgrImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(ServerMgrImpl.class);
 
 }

@@ -15,8 +15,8 @@
 
 package org.helianto.core.validation;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Identity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -37,7 +37,7 @@ import org.springframework.validation.Validator;
  */
 public class IdentityValidator implements Validator {
     
-    private final Log logger = LogFactory.getLog(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @SuppressWarnings("unchecked")
 	public boolean supports(Class clazz) {
@@ -54,39 +54,29 @@ public class IdentityValidator implements Validator {
     }
     
     public void validatePrincipal(Identity identity, Errors errors) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Validating Credential principal");
-        }
+        logger.debug("Validating Credential principal");
         String principal = identity.getPrincipal();
         if (principal == null || principal.length() == 0) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Identity principal should not be empty");
-            }
+            logger.debug("Identity principal should not be empty");
             errors.rejectValue("principal", 
                     "identity.error.empty", 
                     "Identity principal should not be empty");
         } else {
             for (char c : principal.toCharArray()) {
                 if (Character.isWhitespace(c)) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Identity principal should not have whitespace");
-                    }
+                    logger.debug("Identity principal should not have whitespace");
                     errors.rejectValue("principal", 
                             "identity.error.whitespace", 
                             "Identity principal should not have whitespace");
                 } else if (!Character.isLetterOrDigit(c) && (c!='@' & c!='.' & c!='_')) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Identity principal should not include invalid char " + c);
-                    }
+                    logger.debug("Identity principal should not include invalid char {}", c);
                     errors.rejectValue("principal", 
                             "identity.error.invalidchar", new Object[] { c },
                             "Identity principal should not include invalid char $1 " + c);
                 }
             }
             if (principal.length()>64) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Identity principal lenght should not exceed 64 chars");
-                }
+                logger.debug("Identity principal lenght should not exceed 64 chars");
                 errors.rejectValue("principal", 
                         "identity.error.principaltoolong", 
                         "Identity principal lenght should not exceed 64 chars");

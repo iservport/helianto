@@ -15,8 +15,8 @@
 
 package org.helianto.core.filter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 
 /**
@@ -95,11 +95,9 @@ public abstract class AbstractEntityBackedFilter extends AbstractFilter implemen
 	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendSegment("entity.id", "=")
         .append(entity.getId());
-		if (logger.isDebugEnabled()) {
-			logger.debug("Filter entity constraint set to "+entity.getAlias());
-		}
+		logger.debug("Filter entity constraint set to {}", entity.getAlias());
     }
     
-    private static Log logger = LogFactory.getLog(AbstractEntityBackedFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(AbstractEntityBackedFilter.class);
 
 }

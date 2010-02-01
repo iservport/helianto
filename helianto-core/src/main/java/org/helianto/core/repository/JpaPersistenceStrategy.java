@@ -21,8 +21,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.ejb.HibernateEntityManager;
 
 /**
@@ -43,38 +43,28 @@ public class JpaPersistenceStrategy implements PersistenceStrategy {
             result.setParameter(i++, value);
         }
         Collection<Object> resultList = result.getResultList();
-        if (logger.isDebugEnabled()) {
-            logger.debug("Found "+resultList.size()+" item(s)");
-        }
+        logger.debug("Found {} item(s)", resultList.size());
         return resultList;
 	}
 
 	public Object merge(Object object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Merging "+object);
-        }
+        logger.debug("Merging {}", object);
         return this.em.merge(object);
 	}
 
 	public void persist(Object managedObject) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Persisting "+managedObject);
-        }
+        logger.debug("Persisting {}", managedObject);
         this.em.persist(managedObject);
 	}
 
 	public void remove(Object object) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Removing "+object);
-        }
+        logger.debug("Removing {}", object);
         this.em.remove(object);
 	}
 
 	public void evict(Object object) {
 		if (this.em instanceof HibernateEntityManager) {
-	        if (logger.isDebugEnabled()) {
-	            logger.debug("Evicting "+object);
-	        }
+	        logger.debug("Evicting {}", object);
 	        ((HibernateEntityManager) em).getSession().evict(object);
 		}
 		else {
@@ -83,16 +73,12 @@ public class JpaPersistenceStrategy implements PersistenceStrategy {
 	}
 	
 	public void flush() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Flushing session");
-        }
+        logger.debug("Flushing session");
         this.em.flush();
 	}
 	
 	public void clear() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Clearing session");
-        }
+        logger.debug("Clearing session");
         this.em.clear();
 	}
 
@@ -109,6 +95,6 @@ public class JpaPersistenceStrategy implements PersistenceStrategy {
 	}
 
 
-    private static final Log logger = LogFactory.getLog(JpaPersistenceStrategy.class);
+    private static final Logger logger = LoggerFactory.getLogger(JpaPersistenceStrategy.class);
 
 }

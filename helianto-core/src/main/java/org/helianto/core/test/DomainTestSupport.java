@@ -21,9 +21,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Classs to support domain tests.
@@ -47,9 +46,7 @@ public class DomainTestSupport  {
      */
     public static Object minimalEqualsTest(Object objectUnderTest, Object other) {
         assertNotNull("Cant test equals() with a null object", objectUnderTest);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Object under test is is "+objectUnderTest);
-        }
+        logger.debug("Object under test is is {}", objectUnderTest);
         assertTrue("equals() failed", objectUnderTest.equals(objectUnderTest));
         assertFalse("null object", objectUnderTest.equals(null));
         assertFalse("equals(new Object) passed", objectUnderTest.equals(new Object()));
@@ -62,9 +59,7 @@ public class DomainTestSupport  {
     	}
         assertNotNull(other);
         assertFalse(objectUnderTest.equals(other));
-        if (logger.isDebugEnabled()) {
-            logger.debug("Copy is "+other);
-        }
+        logger.debug("Copy is {}", other);
         return other;
     }
     
@@ -97,9 +92,7 @@ public class DomainTestSupport  {
                 localKey = localKey.concat(localKey);
             }
         }
-        if (logger.isDebugEnabled()) {
-            logger.debug("New value is "+localKey);
-        }
+        logger.debug("New value is {}", localKey);
         return localKey;
     }
 
@@ -107,9 +100,7 @@ public class DomainTestSupport  {
      * Create a non-repeatable int value. 
      */
     public static int getNonRepeatableIntValue(int testKey) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("New value is "+testKey);
-        }
+        logger.debug("New value is {}", testKey);
         return testKey;
     }
 
@@ -117,9 +108,7 @@ public class DomainTestSupport  {
      * Create a non-repeatable int value. 
      */
     public static long getNonRepeatableLongValue(int testKey) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("New value is "+testKey);
-        }
+        logger.debug("New value is {}", testKey);
         return testKey;
     }
 
@@ -128,12 +117,10 @@ public class DomainTestSupport  {
      */
     public static Date getNonRepeatableDateValue(int testKey) {
         Date date = new Date(testKey);
-        if (logger.isDebugEnabled()) {
-            logger.debug("New date is "+date);
-        }
+        logger.debug("New date is {}", date);
         return date;
     }
 
-    protected static Log logger = LogFactory.getLog(DomainTestSupport.class);
+    protected static Logger logger = LoggerFactory.getLogger(DomainTestSupport.class);
     
 }

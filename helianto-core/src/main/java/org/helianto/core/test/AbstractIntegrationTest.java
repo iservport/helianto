@@ -17,8 +17,8 @@ package org.helianto.core.test;
 
 import java.util.Date;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 
 /**
@@ -65,6 +65,6 @@ public abstract class AbstractIntegrationTest extends AbstractTransactionalSprin
         return localKey;
     }
 
-    protected static Log logger = LogFactory.getLog(AbstractIntegrationTest.class);
+    protected static Logger logger = LoggerFactory.getLogger(AbstractIntegrationTest.class);
     
 }

@@ -19,8 +19,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
@@ -57,45 +57,31 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
      * <code>UserDetails</code>, and (6) create Authorities.</p>
      */
     public final UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Attempting login with username "+username);
-        }
+        logger.debug("Attempting login with username {}", username);
         // first, search identities having username as principal
         Identity identity = loadAndValidateIdentity(username);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Step 1 successful: Identity principal is "+identity.getPrincipal());
-        }
+        logger.debug("Step 1 successful: Identity principal is {}", identity.getPrincipal());
         // then see if there is a credential for that identity
         Credential credential = loadAndValidateCredential(identity);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Step 2 successful: Identity has a valid Credential");
-        }
+        logger.debug("Step 2 successful: Identity has a valid Credential");
         // and users sharing that identity
         List<UserGroup> userList = listUsers(identity);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Step 3 successful: User list is loaded with "+userList.size()+" item(s).");
-        }
+        logger.debug("Step 3 successful: User list is loaded with {} item(s).", userList.size());
         // what user will be selected? the last visitor
         User user = null;
         if (userList!=null && !userList.isEmpty()) {
             user = selectUser(userList);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Step 4 successful: User selected as '"+user.getIdentity().getIdentityName()+"' for entity '"+user.getEntity().getAlias()+"'");
-            }
+            logger.debug("Step 4 successful: User selected as '{}' for entity '{}'", user.getIdentity().getIdentityName(), user.getEntity().getAlias());
         }
         if (user==null) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Step 4 unsuccessful: User not selected");
-            }
+            logger.debug("Step 4 unsuccessful: User not selected");
             throw new UsernameNotFoundException("Not a valid username: "+username);
         }
         // store user
         User managedUser = storeUser(user);
         // create the adapter
         UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(managedUser, credential);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Step 5 successful: User details instance is prepared: USER IS SUCCESSFULLY LOADED");
-        }
+        logger.debug("Step 5 successful: User details instance is prepared: USER IS SUCCESSFULLY LOADED");
         // load the roles and convert to authorities
         Collection<UserRole> roles = loadAndValidateRoles(user);
         // TODO security v3 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
@@ -107,9 +93,7 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         }
         // TODO security v3 userDetailsAdapter.setAuthorities(authorities);
         userDetailsAdapter.setAuthorities(authorities);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Step 6 successful: AUTHORITIES SUCCESSFULLY LOADED: "+Arrays.toString(authorities));
-        }
+        logger.debug("Step 6 successful: AUTHORITIES SUCCESSFULLY LOADED: {}", Arrays.toString(authorities));
         return userDetailsAdapter;
     }
     
@@ -174,6 +158,6 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         return sb.toString();
     }
 
-    private final Log logger = LogFactory.getLog(UserDetailsServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
 }

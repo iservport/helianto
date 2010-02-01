@@ -15,15 +15,15 @@
 
 package org.helianto.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 
 /**
  * Category filter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 
@@ -64,18 +64,14 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
         // force to filter by group
-        if (logger.isDebugEnabled()) {
-            logger.debug("CategoryGroup is: '"+getCategoryGroup()+"'");
-        }
+        logger.debug("CategoryGroup is: '{}'", getCategoryGroup());
         mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
         .append(getCategoryGroup().getValue());
 	}
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("CategoryCode is: '"+getCategoryCode()+"'");
-        }
+        logger.debug("CategoryCode is: '{}'",getCategoryCode());
     	appendEqualFilter("categoryCode", getCategoryCode(), mainCriteriaBuilder);
     	reset();
 	}
@@ -133,6 +129,6 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
         return sb.toString();
 	}
 
-    private static Log logger = LogFactory.getLog(CategoryFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(CategoryFilter.class);
 
 }
