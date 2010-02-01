@@ -20,8 +20,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.finance.CashFlow;
@@ -41,7 +41,7 @@ public class FinanceMgrImpl implements FinanceMgr {
 	public List<? extends CashFlow> findCashFlows(Filter filter) {
         List<? extends CashFlow> cashFlowList = (List<? extends CashFlow>) cashFlowDao.find((CashFlowFilter) filter);
         if (logger.isDebugEnabled() && cashFlowList.size()>0) {
-            logger.debug("Found "+cashFlowList.size()+" item(s)");
+            logger.debug("Found {} item(s)", cashFlowList.size());
         }
         return cashFlowList ;
 	}
@@ -67,6 +67,6 @@ public class FinanceMgrImpl implements FinanceMgr {
 		this.cashFlowDao = cashFlowDao;
 	}
 	
-	private static final Log logger = LogFactory.getLog(FinanceMgrImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(FinanceMgrImpl.class);
 
 }
