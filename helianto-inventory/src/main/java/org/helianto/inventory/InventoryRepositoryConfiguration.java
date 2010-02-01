@@ -17,8 +17,8 @@ package org.helianto.inventory;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.RepositoryFactory;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
@@ -120,6 +120,6 @@ public class InventoryRepositoryConfiguration {
 		this.repositoryFactory = repositoryFactory;
 	}
 
-    private static final Log logger = LogFactory.getLog(InventoryRepositoryConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(InventoryRepositoryConfiguration.class);
 
 }

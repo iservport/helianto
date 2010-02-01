@@ -20,8 +20,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.inventory.ProcessAgreement;
@@ -47,7 +47,7 @@ public class ProcessAgreementMgrImpl implements ProcessAgreementMgr {
 	public List<ProcessAgreement> findAgreements(ProcessAgreementFilter agreementFilter) {
     	List<ProcessAgreement> agreementList = (List<ProcessAgreement>) agreementDao.find(agreementFilter);
     	if (logger.isDebugEnabled() && agreementList!=null) {
-    		logger.debug("Found agreement list of size "+agreementList.size());
+    		logger.debug("Found agreement list of size {}", agreementList.size());
     	}
     	return agreementList;
 	}
@@ -72,6 +72,6 @@ public class ProcessAgreementMgrImpl implements ProcessAgreementMgr {
 		this.sequenceMgr = sequenceMgr;
 	}
 
-	private static final Log logger = LogFactory.getLog(ProcessAgreementMgrImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProcessAgreementMgrImpl.class);
 
 }

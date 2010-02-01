@@ -20,8 +20,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
@@ -46,7 +46,7 @@ public class CardMgrImpl implements CardMgr {
 	public List<CardSet> findCardSets(CardSetFilter cardSetFilter) {
     	List<CardSet> cardSetList = (List<CardSet>) cardSetDao.find(cardSetFilter);
     	if (logger.isDebugEnabled() && cardSetList!=null) {
-    		logger.debug("Found card list of size "+cardSetList.size());
+    		logger.debug("Found card list of size {}", cardSetList.size());
     	}
     	return cardSetList;
 	}
@@ -58,24 +58,18 @@ public class CardMgrImpl implements CardMgr {
 
 	public Card findCard(Entity entity, String cardLabel, boolean createIfNecessary) throws InvalidCardException {
 		long cardSetNumber = CardSet.getInternalNumber(cardLabel);
-    	if (logger.isDebugEnabled()) {
-    		logger.debug("Card set number "+cardSetNumber);
-    	}
+    	logger.debug("Card set number {}", cardSetNumber);
     	CardSet cardSet = cardSetDao.findUnique(entity, cardSetNumber);
     	if (cardSet==null) {
 			throw new InvalidCardException(cardLabel, "card set not found");
     	}
     	Card card = doFindCard(cardSet, cardLabel);
     	if (card!=null) {
-        	if (logger.isDebugEnabled()) {
-        		logger.debug("Found card "+card.getCardLabel());
-        	}
+        	logger.debug("Found card {}", card.getCardLabel());
     	}
     	else if(createIfNecessary) {
     		card = doCreateCard(cardSet, cardLabel);
-        	if (logger.isDebugEnabled()) {
-        		logger.debug("Created card "+card.getCardLabel());
-        	}
+        	logger.debug("Created card {}", card.getCardLabel());
     	}
     	return card;
 	}
@@ -121,6 +115,6 @@ public class CardMgrImpl implements CardMgr {
 		this.sequenceMgr = sequenceMgr;
 	}
 
-	private static final Log logger = LogFactory.getLog(CardMgrImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(CardMgrImpl.class);
 
 }
