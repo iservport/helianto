@@ -21,8 +21,8 @@ import java.util.Set;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Identity;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -133,6 +133,6 @@ public class DecoratedPreparator implements MimeMessagePreparator {
         return buffer.toString();
     }
 
-    protected static final Log logger = LogFactory.getLog(DecoratedPreparator.class);
+    protected static final Logger logger = LoggerFactory.getLogger(DecoratedPreparator.class);
 
 }

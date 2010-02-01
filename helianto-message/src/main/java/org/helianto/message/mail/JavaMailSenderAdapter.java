@@ -22,8 +22,8 @@ import javax.mail.NoSuchProviderException;
 import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
@@ -187,7 +187,7 @@ public class JavaMailSenderAdapter {
         
     }
     
-    public static final Log logger = LogFactory.getLog(JavaMailSenderAdapter.class);
+    public static final Logger logger = LoggerFactory.getLogger(JavaMailSenderAdapter.class);
 
     public JavaMailSenderImpl getJavaMailSender() {
         return javaMailSender;

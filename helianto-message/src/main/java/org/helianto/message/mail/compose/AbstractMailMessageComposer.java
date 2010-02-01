@@ -18,8 +18,8 @@ package org.helianto.message.mail.compose;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -46,6 +46,6 @@ public abstract class AbstractMailMessageComposer implements MailMessageComposer
         return supportedKeys;
     }
 
-    protected static final Log logger = LogFactory.getLog(AbstractMailMessageComposer.class);
+    protected static final Logger logger = LoggerFactory.getLogger(AbstractMailMessageComposer.class);
 
 }

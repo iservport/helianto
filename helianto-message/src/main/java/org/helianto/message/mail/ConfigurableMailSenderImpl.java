@@ -19,8 +19,8 @@ import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Store;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Server;
 import org.springframework.mail.MailException;
@@ -145,6 +145,6 @@ public class ConfigurableMailSenderImpl extends JavaMailSenderImpl implements
         return accessServer;
     }
 
-    public static final Log logger = LogFactory.getLog(ConfigurableMailSenderImpl.class);
+    public static final Logger logger = LoggerFactory.getLogger(ConfigurableMailSenderImpl.class);
 
 }

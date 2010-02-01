@@ -17,8 +17,8 @@ package org.helianto.message.mail;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Server;
 import org.helianto.core.ServerType;
 import org.springframework.stereotype.Component;
@@ -88,6 +88,6 @@ public class ConfigurableMailSenderFactoryImpl implements ConfigurableMailSender
         }
     }
     
-    public static final Log logger = LogFactory.getLog(ConfigurableMailSenderFactoryImpl.class);
+    public static final Logger logger = LoggerFactory.getLogger(ConfigurableMailSenderFactoryImpl.class);
 
 }
