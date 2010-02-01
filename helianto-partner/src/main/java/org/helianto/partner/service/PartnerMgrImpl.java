@@ -20,8 +20,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.Address;
@@ -49,7 +49,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	public List<PartnerRegistry> findPartnerRegistries(PartnerRegistryFilter partnerRegistryFilter) {
 		List<PartnerRegistry> partnerRegistryList = (List<PartnerRegistry>) partnerRegistryDao.find(partnerRegistryFilter);
     	if (logger.isDebugEnabled() && partnerRegistryList!=null) {
-    		logger.debug("Found partner registry list of size "+partnerRegistryList.size());
+    		logger.debug("Found partner registry list of size {}", partnerRegistryList.size());
     	}
 		return partnerRegistryList;
 	}
@@ -94,7 +94,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	public List<? extends Partner> findPartners(PartnerFilter partnerFilter) {
 		List<Partner> partnerList = (List<Partner>) partnerDao.find(partnerFilter);
     	if (logger.isDebugEnabled() && partnerList!=null) {
-    		logger.debug("Found partner list of size "+partnerList.size());
+    		logger.debug("Found partner list of size {}", partnerList.size());
     	}
 		return partnerList;
 	}
@@ -171,6 +171,6 @@ public class PartnerMgrImpl implements PartnerMgr {
         this.phoneDao = phoneDao;
     }
     
-    private Log logger = LogFactory.getLog(PartnerMgrImpl.class);
+    private Logger logger = LoggerFactory.getLogger(PartnerMgrImpl.class);
 
 }

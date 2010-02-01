@@ -20,8 +20,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.Account;
 import org.helianto.partner.AccountFilter;
@@ -41,7 +41,7 @@ public class AccountMgrImpl implements AccountMgr {
 	public List<Account> findAccounts(AccountFilter accountFilter) {
 		List<Account> accountList = (List<Account>) accountDao.find(accountFilter);
     	if (logger.isDebugEnabled() && accountList!=null) {
-    		logger.debug("Found account list of size "+accountList.size());
+    		logger.debug("Found account list of size {}", accountList.size());
     	}
 		return accountList;
 	}
@@ -66,6 +66,6 @@ public class AccountMgrImpl implements AccountMgr {
     }
 
     
-    private Log logger = LogFactory.getLog(AccountMgrImpl.class);
+    private Logger logger = LoggerFactory.getLogger(AccountMgrImpl.class);
 
 }
