@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.AbstractNode;
 import org.helianto.core.Node;
 import org.helianto.process.ProcessDocumentAssociation;
@@ -90,21 +90,17 @@ public class ProcessNode extends AbstractNode<ProcessDocumentAssociation> {
 	public final List<Node> getChildList() {
 		List<Node> childList = new ArrayList<Node>();
 		List<ProcessDocumentAssociation> associationList = getContent().getChild().getChildAssociationList();
-    	if (logger.isDebugEnabled()) {
-    		logger.debug("Found "+associationList.size()+" association(s) under sequence "+getSequence());
+    	if (logger.isDebugEnabled() && associationList!=null) {
+    		logger.debug("Found {} association(s) under sequence {}", associationList.size(), getSequence());
     	}
 		for (ProcessDocumentAssociation documentAssociation: associationList) {
 			if (documentAssociation.getParent().equals(getContent().getChild())) {
 				childList.add(childNodeFactory(documentAssociation, true));
-		    	if (logger.isDebugEnabled()) {
-		    		logger.debug("Added "+documentAssociation+" as editable node");
-		    	}
+		    	logger.debug("Added {} as editable node", documentAssociation);
 			}
 			else {
 				childList.add(childNodeFactory(documentAssociation, false));
-		    	if (logger.isDebugEnabled()) {
-		    		logger.debug("Added "+documentAssociation+" as not editable node");
-		    	}
+		    	logger.debug("Added {} as not editable node", documentAssociation);
 			}
 		}
 		Collections.sort(childList);
@@ -120,6 +116,6 @@ public class ProcessNode extends AbstractNode<ProcessDocumentAssociation> {
 		return super.equals(other);
 	}
 	
-	private static final Log logger = LogFactory.getLog(ProcessNode.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProcessNode.class);
 
 }

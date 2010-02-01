@@ -19,8 +19,8 @@ package org.helianto.process;
 import java.io.Serializable;
 import java.util.Collection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
@@ -101,9 +101,7 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (!getClazz().equals(ProcessDocument.class)) {
-	        if (logger.isDebugEnabled()) {
-	            logger.debug("Document class is: '"+getClazz()+"'");
-	        }
+	        logger.debug("Document class is: '{}'", getClazz());
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
 	}
@@ -244,6 +242,6 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
         return builder.toString();
     }
 	
-	private static Log logger = LogFactory.getLog(ProcessDocument.class);
+	private static Logger logger = LoggerFactory.getLogger(ProcessDocument.class);
 
 }

@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
@@ -60,12 +60,12 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     public List<ProcessDocument> findProcessDocuments(ProcessDocumentFilter filter) {
         List<ProcessDocument> processDocumentList = (List<ProcessDocument>) processDocumentDao.find(filter);
         if (logger.isDebugEnabled() && processDocumentList.size()>0) {
-            logger.debug("Found "+processDocumentList.size()+" item(s)");
+            logger.debug("Found {} item(s)", processDocumentList.size());
         }
         if (filter.getExclusions()!=null && filter.getExclusions().size()>0) {
         	processDocumentList.removeAll(filter.getExclusions());
             if (logger.isDebugEnabled()) {
-                logger.debug("Removed "+filter.getExclusions()+" item(s)");
+                logger.debug("Removed {} item(s)", filter.getExclusions());
             }
         }
         return processDocumentList ;
@@ -87,13 +87,11 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
 	public List<ProcessDocumentAssociation> findOperations(User user, Process process) {
 		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(user, process);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created filter "+filter);
-        }
+        logger.debug("Created filter {}", filter);
 		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
 		List<ProcessDocumentAssociation> operationList = (List<ProcessDocumentAssociation>) processDocumentAssociationDao.find(criteria);
         if (logger.isDebugEnabled() && operationList.size()>0) {
-            logger.debug("Found "+operationList.size()+" item(s)");
+            logger.debug("Found {} item(s)", operationList.size());
         }
         return operationList ;
 	}
@@ -121,15 +119,11 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
     
     public ProcessDocumentAssociation prepareAssociation(ProcessDocument parent, Object child) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Parent class is "+parent.getClass());
-        }
+        logger.debug("Parent class is {}", parent.getClass());
         if (child==null) {
         	return new ProcessDocumentAssociation(parent);
         }
-        if (logger.isDebugEnabled()) {
-            logger.debug("Child class is "+child.getClass());
-        }
+        logger.debug("Child class is {}", child.getClass());
     	AssociationType associationType = AssociationType.resolveAssociationType(parent.getClass(), child.getClass());
     	if (associationType==null) {
     		logger.warn("Unknown association");
@@ -144,14 +138,10 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     
     public List<ProcessDocumentAssociation> findCharacteristics(User user, Operation operation) {
 		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(user, operation);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Created filter "+filter);
-        }
+        logger.debug("Created filter {}", filter);
 		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
 		List<ProcessDocumentAssociation> characteristicList = (List<ProcessDocumentAssociation>) processDocumentAssociationDao.find(criteria);
-        if (logger.isDebugEnabled() && characteristicList.size()>0) {
-            logger.debug("Found "+characteristicList.size()+" item(s)");
-        }
+        logger.debug("Found {} item(s)", characteristicList.size());
         return characteristicList ;
     }
 
@@ -159,7 +149,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     public ProcessDocumentAssociation prepareCharacteristic(Operation operation) {
     	Set<ProcessDocumentAssociation> characteristicSet = operation.getChildAssociations();
         if (logger.isDebugEnabled() && characteristicSet.size()>0) {
-            logger.debug("Found "+characteristicSet.size()+" item(s) before insertion.");
+            logger.debug("Found {} item(s) before insertion.", characteristicSet.size());
         }
     	return operation.operationCharacteristicFactory("", 0, 0);
     }
@@ -177,7 +167,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 		Operation managedOperation = (Operation) processDocumentDao.merge(operation);
 		List<Setup> listSetups = new ArrayList<Setup>(managedOperation.getSetups());
 	    if (logger.isDebugEnabled() && listSetups!=null) {
-	        logger.debug("Found "+listSetups.size()+" setup(s)");
+	        logger.debug("Found {} setup(s)", listSetups.size());
 	    }
 	    processDocumentDao.evict(managedOperation);
 	    Collections.sort(listSetups);
@@ -211,6 +201,6 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         this.sequenceMgr = sequenceMgr;
     }
 
-    public static final Log logger = LogFactory.getLog(ProcessMgrImpl.class);
+    public static final Logger logger = LoggerFactory.getLogger(ProcessMgrImpl.class);
 
 }

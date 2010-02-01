@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
@@ -134,13 +134,11 @@ public class DocumentAssociationTests {
 			child.setDocCode(i+"");
 			documentAssociation.setChild(child);
 			process.getChildAssociations().add(documentAssociation);
-			if (logger.isDebugEnabled()) {
-				logger.debug("Added "+documentAssociation);
-			}
+			logger.debug("Added {}", documentAssociation);
 		}
 	}
 	
-	private static final Log logger = LogFactory.getLog(DocumentAssociationTests.class);
+	private static final Logger logger = LoggerFactory.getLogger(DocumentAssociationTests.class);
 
 }
     
