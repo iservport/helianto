@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.repository.BasicDao;
@@ -56,7 +56,7 @@ public class ResourceMgrImpl implements ResourceMgr {
 	public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter) {
 		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(resourceGroupFilter);
 		if (logger.isDebugEnabled() && resourceGroupList!=null) {
-			logger.debug("Found resource group list of size "+resourceGroupList.size());
+			logger.debug("Found resource group list of size {}", resourceGroupList.size());
 		}
 		return resourceGroupList;
 	}
@@ -80,7 +80,7 @@ public class ResourceMgrImpl implements ResourceMgr {
     	childAssociationList.addAll(resourceGroup.getChildAssociations());
     	Collections.sort(childAssociationList);
     	if (logger.isDebugEnabled()) {
-    		logger.debug("Loaded "+childAssociationList.size()+" child association(s).");
+    		logger.debug("Loaded {} child association(s).", childAssociationList.size());
     	}
     	return childAssociationList;
 	}
@@ -90,13 +90,13 @@ public class ResourceMgrImpl implements ResourceMgr {
     	for (ResourceAssociation parentAssociation: resourceGroup.getParentAssociations()) {
     		ResourceGroup parent = parentAssociation.getParent();
         	if (logger.isDebugEnabled() && parent!=null) {
-        		logger.debug("Loading parent "+parent.getResourceCode()+" from "+resourceGroup.getResourceCode());
+        		logger.debug("Loading parent {} from {}", parent.getResourceCode(), resourceGroup.getResourceCode());
         	}
         	parentAssociationList.add(parentAssociation);
     	}
     	Collections.sort(parentAssociationList);
-    	if (logger.isDebugEnabled()) {
-    		logger.debug("Loaded "+parentAssociationList.size()+" parent association(s).");
+    	if (logger.isDebugEnabled() && parentAssociationList!=null) {
+    		logger.debug("Loaded {} parent association(s).", parentAssociationList.size());
     	}
     	return parentAssociationList;
 	}
@@ -184,6 +184,6 @@ public class ResourceMgrImpl implements ResourceMgr {
         this.sequenceMgr = sequenceMgr;
     }
 
-	static final Log logger = LogFactory.getLog(ResourceMgrImpl.class);
+	static final Logger logger = LoggerFactory.getLogger(ResourceMgrImpl.class);
 
 }

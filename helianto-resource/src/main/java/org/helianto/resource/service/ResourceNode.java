@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.AbstractNode;
 import org.helianto.core.Node;
 import org.helianto.resource.ResourceAssociation;
@@ -69,9 +69,7 @@ public class ResourceNode extends AbstractNode<ResourceAssociation> {
 			editable = true;
 		}
 		Node node = new ResourceNode(childAssociation, getLevel()+1, childAssociation.getSequence(), editable);
-    	if (logger.isDebugEnabled()) {
-    		logger.debug("Added "+childAssociation+" as "+(editable ? "" : "not ")+"editable node");
-    	}
+    	logger.debug("Added {} as {} editable node", childAssociation, (editable ? "" : "not "));
 		return node;
 	}
 
@@ -98,6 +96,6 @@ public class ResourceNode extends AbstractNode<ResourceAssociation> {
 		return super.equals(other);
 	}
 	
-	private static final Log logger = LogFactory.getLog(ResourceNode.class);
+	private static final Logger logger = LoggerFactory.getLogger(ResourceNode.class);
 
 }

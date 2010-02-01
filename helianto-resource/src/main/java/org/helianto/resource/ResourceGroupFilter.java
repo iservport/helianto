@@ -16,8 +16,8 @@
 
 package org.helianto.resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
@@ -96,9 +96,7 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter implem
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (!getClazz().equals(ResourceGroup.class)) {
-	        if (logger.isDebugEnabled()) {
-	            logger.debug("Resource group class is: '"+getClazz()+"'");
-	        }
+	        logger.debug("Resource group class is: '{}'", getClazz());
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
 	}
@@ -176,6 +174,6 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter implem
 		this.resourceType = resourceType;
 	}
 
-	private static Log logger = LogFactory.getLog(ResourceGroup.class);
+	private static Logger logger = LoggerFactory.getLogger(ResourceGroup.class);
 	
 }
