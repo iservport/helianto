@@ -94,6 +94,6 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 		this.namespaceMgr = namespaceMgr;
 	}
 	
-//	private static Log logger = LogFactory.getLog(EntityFormAction.class);
+//	private static Logger logger = LoggerFactory.getLogger(EntityFormAction.class);
 
 }

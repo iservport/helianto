@@ -29,8 +29,8 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
@@ -136,11 +136,9 @@ public abstract class AbstractFreeMarkerViewTestSupport {
         MockHttpServletResponse expectedResponse = new MockHttpServletResponse();
         FreeMarkerView fv = prepareView(templateName);
         fv.render(model, request, expectedResponse);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Url "+fv.getUrl());
-            if (request.getAttribute("errors")!=null) {
-                logger.debug("Errors: "+request.getAttribute("errors"));
-            }
+        logger.debug("Url {}", fv.getUrl());
+        if (request.getAttribute("errors")!=null) {
+            logger.debug("Errors: {}", request.getAttribute("errors"));
         }
         List<String> transitionList = searchTransition(expectedResponse.getContentAsString());
         if (visualTest) {
@@ -189,16 +187,12 @@ public abstract class AbstractFreeMarkerViewTestSupport {
             if (dirFile.exists() || dirFile.mkdirs()) {
                 outputStream = 
                     new PrintWriter(new FileWriter(outputDir.toString()+outputFileName));
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Output is "+outputDir.toString()+outputFileName);
-                }
+                logger.debug("Output is {}", outputDir.toString()+outputFileName);
             }
             else {
                 outputStream = 
                     new PrintWriter(new FileWriter(resourcePath+outputFileName));
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Output is "+resourcePath+outputFileName);
-                }
+                logger.debug("Output is {}", resourcePath+outputFileName);
             }
             outputStream.write(buffer);
         } catch (FileNotFoundException e) {
@@ -216,9 +210,7 @@ public abstract class AbstractFreeMarkerViewTestSupport {
     	Pattern pattern = Pattern.compile("_eventId.*\"");
     	Matcher matcher = pattern.matcher(text);
         List<String> transitionList = new ArrayList<String>();
-    	if (logger.isDebugEnabled()) {
-        	logger.debug("Searching transitions");
-    	}
+    	logger.debug("Searching transitions");
         while (matcher.find()) {
         	if (logger.isDebugEnabled()) {
             	logger.debug("Found " + matcher.group()+" at "+matcher.start());
@@ -233,6 +225,6 @@ public abstract class AbstractFreeMarkerViewTestSupport {
         this.outputFileName = outputFileName;
     }
     
-    private final Log logger = LogFactory.getLog(AbstractFreeMarkerViewTestSupport.class);
+    private final Logger logger = LoggerFactory.getLogger(AbstractFreeMarkerViewTestSupport.class);
 
 }

@@ -42,6 +42,6 @@ public class ServiceLoadFormAction extends AbstractLoadFormAction<Service, Opera
 		this.namespaceMgr = namespaceMgr;
 	}
 
-//	private static Log logger = LogFactory.getLog(ServiceFormAction.class);
+//	private static Logger logger = LoggerFactory.getLogger(ServiceFormAction.class);
 
 }

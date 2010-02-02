@@ -15,8 +15,8 @@
 
 package org.helianto.controller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.springframework.security.context.SecurityContextHolder;
@@ -58,12 +58,10 @@ public abstract class AbstractFormAction extends FormAction {
      */
     public Event invalidateSession(RequestContext context) {
         SecurityContextHolder.clearContext();
-        if (logger.isDebugEnabled()) {
-            logger.debug("Session invalidated");
-        }
+        logger.debug("Session invalidated");
         return success();
     }
     
-    protected static final Log logger = LogFactory.getLog(AbstractFormAction.class);
+    protected static final Logger logger = LoggerFactory.getLogger(AbstractFormAction.class);
 
 }

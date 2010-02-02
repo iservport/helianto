@@ -18,8 +18,8 @@ package org.helianto.controller;
 
 import java.io.Serializable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -47,6 +47,6 @@ public abstract class AbstractValidator<T> implements Validator, Serializable {
 	
 	protected abstract void doValidate(T target, Errors errors);
 	
-	protected final static Log logger = LogFactory.getLog(AbstractValidator.class);
+	protected final static Logger logger = LoggerFactory.getLogger(AbstractValidator.class);
 
 }

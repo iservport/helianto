@@ -77,6 +77,6 @@ public class KeyTypeFormAction extends AbstractEditAggregateFormAction<KeyType, 
 		this.namespaceMgr = namespaceMgr;
 	}
 
-//	private static Log logger = LogFactory.getLog(KeyTypeFormAction.class);
+//	private static Logger logger = LoggerFactory.getLogger(KeyTypeFormAction.class);
 
 }

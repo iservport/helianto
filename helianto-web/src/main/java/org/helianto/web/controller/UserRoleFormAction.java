@@ -108,6 +108,6 @@ public class UserRoleFormAction extends AbstractEditAggregateFormAction<UserRole
 		this.servicePropertyEditor = servicePropertyEditor;
 	}
 
-//	private static Log logger = LogFactory.getLog(ServiceFormAction.class);
+//	private static Logger logger = LoggerFactory.getLogger(ServiceFormAction.class);
 
 }

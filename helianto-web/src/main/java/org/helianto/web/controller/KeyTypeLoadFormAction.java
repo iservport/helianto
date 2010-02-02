@@ -42,6 +42,6 @@ public class KeyTypeLoadFormAction extends AbstractLoadFormAction<KeyType, Opera
 		this.namespaceMgr = namespaceMgr;
 	}
 
-//	private static Log logger = LogFactory.getLog(KeyTypeLoadFormAction.class);
+//	private static Logger logger = LoggerFactory.getLogger(KeyTypeLoadFormAction.class);
 
 }

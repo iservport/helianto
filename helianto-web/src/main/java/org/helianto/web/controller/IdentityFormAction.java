@@ -65,6 +65,6 @@ public class IdentityFormAction extends AbstractEditTargetFormAction<Identity> {
 		this.userMgr = userMgr;
 	}
 
-//	private static final Log logger = LogFactory.getLog(IdentityFormAction.class);
+//	private static final Logger logger = LoggerFactory.getLogger(IdentityFormAction.class);
 
 }

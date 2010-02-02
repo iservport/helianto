@@ -78,6 +78,6 @@ public class ProvinceFormAction extends
 		this.namespaceMgr = namespaceMgr;
 	}
 	
-//	private static Log logger = LogFactory.getLog(ProvinceFormAction.class);
+//	private static Logger logger = LoggerFactory.getLogger(ProvinceFormAction.class);
 
 }

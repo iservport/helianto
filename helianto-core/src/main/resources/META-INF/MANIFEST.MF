@@ -161,5 +161,6 @@ Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  et,org.springframework.web.servlet.i18n,org.springframework.web.servl
  et.theme,org.springframework.web.servlet.view.freemarker,org.springfr
  amework.webflow.action,org.springframework.webflow.core.collection,or
- g.springframework.webflow.execution,org.springframework.webflow.test
+ g.springframework.webflow.execution,org.springframework.webflow.mvc.b
+ uilder,org.springframework.webflow.test
 

@@ -58,6 +58,6 @@ public class ProvinceFilterFormAction extends AbstractFilterOnlyFormAction<Provi
 		this.namespaceMgr = namespaceMgr;
 	}
 	
-//	private static Log logger = LogFactory.getLog(ProvinceFilterFormAction.class);
+//	private static Logger logger = LoggerFactory.getLogger(ProvinceFilterFormAction.class);
 
 }
