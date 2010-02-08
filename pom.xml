@@ -175,6 +175,11 @@ Application-TraceLevels: ${application.traceLevels}
 	        <name>SpringSource Bundle Releases</name>
 	        <url>http://repository.springsource.com/maven/bundles/release</url>
 	    </repository>
+		<repository>
+		    <id>org.springframework.maven.snapshot</id>
+		    <name>Maven Central Compatible Spring Snapshot Repository</name>
+		    <url>http:// maven.springframework.org/snapshot</url>
+		</repository>
 	    <repository>  
 	        <id>com.springsource.repository.bundles.external</id>
 	        <name>SpringSource External Bundle Releases</name>
@@ -208,6 +213,10 @@ Application-TraceLevels: ${application.traceLevels}
 					<artifactId>org.springframework.web.portlet</artifactId>
 					<groupId>org.springframework</groupId>
 				</exclusion>
+		        <exclusion>
+		           <groupId>commons-logging</groupId>
+		           <artifactId>commons-logging</artifactId>
+		        </exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -219,23 +228,13 @@ Application-TraceLevels: ${application.traceLevels}
 			<groupId>org.springframework.security</groupId>
 			<artifactId>org.springframework.security.core</artifactId>
 			<version>${spring.security.version}</version>
+			
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>org.springframework.security.annotation</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-	<!--
-		dependency> <groupId>org.springframework.security</groupId>
-		<artifactId>org.springframework.security.config</artifactId>
-		<version>${spring.security.version}</version> </dependency>
-		<dependency> <groupId>org.springframework.security</groupId>
-		<artifactId>org.springframework.security.web</artifactId>
-		<version>${spring.security.version}</version> </dependency
-	-->
-<!-- dependency>  <groupId>org.springframework.webflow</groupId>  <artifactId>org.springframework.webflow-library</artifactId>  <type>libd</type>  <version>2.0.7.RELEASE</version> </dependency>
-<dependency>  <groupId>org.springframework.ws</groupId>  <artifactId>org.springframework.oxm.java5</artifactId>  <version>1.5.7.A</version> </dependency>
-<dependency>  <groupId>org.springframework.ws</groupId>  <artifactId>org.springframework.xml</artifactId>  <version>1.5.7.A</version> </dependency -->
         <!-- aspectJ bundles -->
 		<dependency>
 		    <groupId>org.aspectj</groupId>
@@ -299,15 +298,20 @@ Application-TraceLevels: ${application.traceLevels}
 		</dependency>
 		<!-- logging bundles -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>com.springsource.slf4j.api</artifactId>
-			<version>1.5.6</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>com.springsource.ch.qos.logback.classic</artifactId>
+			<version>0.9.15</version>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>com.springsource.slf4j.jcl</artifactId>
-			<version>1.5.6</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>com.springsource.ch.qos.logback.core</artifactId>
+			<version>0.9.15</version>
 		</dependency>
+	    <dependency>
+	        <groupId>org.slf4j</groupId>
+	        <artifactId>jcl-over-slf4j</artifactId>
+	        <version>1.5.10</version>
+	    </dependency>
 		<!-- test bundles -->
 		<dependency>
 			<groupId>org.junit</groupId>
@@ -331,11 +335,6 @@ Application-TraceLevels: ${application.traceLevels}
 			<version>2.3.15</version>
 		</dependency>
 		<!-- database -->
-		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>5.1.10</version>
-		</dependency>
 		<!-- Joda time -->
 		<dependency>
 			<groupId>org.joda</groupId>
@@ -360,24 +359,6 @@ Application-TraceLevels: ${application.traceLevels}
 				<configuration>
       				<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
     			</configuration> 
-				<!-- 
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>index</report>
-                            <report>plugins</report>
-                            <report>license</report>
-                            <report>project-team</report>
-                            <report>summary</report>
-                            <report>cim</report>
-                            <report>issue-tracking</report>
-                            <report>scm</report>
-                            <report>plugin-management</report>
-                            <report>mailing-list</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-                -->
 			</plugin>
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
