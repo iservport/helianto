@@ -26,10 +26,6 @@
 	<context:component-scan base-package="org.helianto.web.controller"/>
 			
 	<!--
-		Translate exceptions
-	-->
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-	<!--
 		Flow executor
 	-->
 	<flow:flow-executor id="flowExecutor" flow-registry="flowRegistry" />

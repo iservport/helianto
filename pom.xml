@@ -257,7 +257,7 @@ Application-TraceLevels: ${application.traceLevels}
 			<groupId>org.hibernate</groupId>
 			<artifactId>org.hibernate.ejb-library</artifactId>
 			<type>libd</type>
-			<version>3.4.0.GA</version>
+			<version>3.3.2.GA</version>
 		</dependency>
 		<!-- javax bundles -->
 		<dependency>
