@@ -15,6 +15,7 @@
 </head>
 <div id="layout">
 <body>
+<#include "${bodyscript!\"/empty\"}.ftl"/>
 <#-- a top navigation line -->
 <div id="entityLine">
 <p>
