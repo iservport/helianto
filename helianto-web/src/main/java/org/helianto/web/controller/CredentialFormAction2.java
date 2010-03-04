@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import org.helianto.controller.AbstractEditTargetFormAction;
 import org.helianto.core.Credential;
 import org.helianto.core.PasswordNotVerifiedException;
+import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.service.SecurityMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -43,12 +44,17 @@ public class CredentialFormAction2 extends AbstractEditTargetFormAction<Credenti
 
 	@Override
 	protected Credential doPrepareTarget(RequestContext context, Credential target) throws Exception {
-		return target;
+		SecureUserDetails secureUser = (SecureUserDetails) context.getConversationScope().get("secureUser");
+		return secureUser.getCredential();
 	}
 
 	@Override
 	protected Credential doStoreTarget(Credential detachedTarget) throws Exception {
-		return securityMgr.storeCredential(detachedTarget);
+		if (detachedTarget.isNewPasswordVerified()) {
+			logger.info("New password set.");
+			return securityMgr.storeCredential(detachedTarget);
+		}
+		throw new IllegalArgumentException("New password not set!");
 	}
 
 	@Override

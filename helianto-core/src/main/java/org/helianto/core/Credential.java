@@ -77,6 +77,8 @@ public class Credential implements java.io.Serializable {
     private Date expirationDate;
     private char encription;
     //transient fields
+    private String currentPassword;
+    private String newPassword;
     private String verifyPassword;
     private boolean passwordDirty;
 
@@ -90,6 +92,7 @@ public class Credential implements java.io.Serializable {
         setExpirationDate(getLastModified());
         setEncription(Encription.PLAIN_PASSWORD);
         setVerifyPassword("");
+        setCurrentPassword("");
         setPasswordDirty(false);
     }
 
@@ -254,20 +257,46 @@ public class Credential implements java.io.Serializable {
     }
 
     /**
-     * VerifyPassword getter.
+     * <<Transient>> Current password.
+     * 
+     * <p>
+     * Required before a new password is to be set.
+     * </p>
+     */
+    @Transient
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
+	
+    /**
+     * <<Transient>> New password.
+     */
+    @Transient
+	public String getNewPassword() {
+		return newPassword;
+	}
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+    /**
+     * <<Transient>> Verify password.
      */
     @Transient
     public String getVerifyPassword() {
         return verifyPassword;
     }
     /**
-     * VerifyPassword setter. Force <code>passwordDirty</code> to true.
+     * VerifyPassword setter. Forces <code>passwordDirty</code> to true.
      */
     public void setVerifyPassword(String verifyPassword) {
         this.verifyPassword = verifyPassword;
         this.passwordDirty = true;
     }
-
+    
     /**
      * PasswordDirty getter.
      */
@@ -283,26 +312,11 @@ public class Credential implements java.io.Serializable {
     }
 
     /**
-     * Password verifier.
-     * @deprecated in favour of non static method
-     */
-    @Transient
-    public static boolean verifyPassword(Credential credential) {
-        if (credential.getPassword().compareTo(credential.getVerifyPassword())!=0) {
-            credential.setPassword("");
-            credential.setVerifyPassword("");
-            credential.setPasswordDirty(true);
-            credential.setCredentialState(ActivityState.SUSPENDED.getValue());
-            return false;
-        }
-        credential.setVerifyPassword("");
-        credential.setPasswordDirty(false);
-        credential.setCredentialState(ActivityState.ACTIVE.getValue());
-        return true;
-    }
-    
-    /**
-     * Verify password against transient <code>verifyPassword</code> field.
+     * Verify <code>password</code>.
+     * 
+     * <p>
+     * True if <code>password</code> and <code>verifyPassword</code> transient field match.
+     * </p>
      */
     @Transient
     public boolean isPasswordVerified() {
@@ -319,6 +333,36 @@ public class Credential implements java.io.Serializable {
         setPasswordDirty(false);
         setCredentialState(ActivityState.ACTIVE.getValue());
         return true;
+    }
+    
+    /**
+     * Verify <code>password</code> field against transient <code>verifyPassword</code> transient field.
+     * 
+     * <p>
+     * Updates the <code>password</code> field and returns true if:
+     * </p>
+     * <ol>
+     * <li><code>currentPassword</code> transient field matches <code>password</code> field, and</li>
+     * <li><code>newPassword</code> transient field matches <code>verifyPassword</code> transient field.</li>
+     * </ol>
+     */
+    @Transient
+    public boolean isNewPasswordVerified() {
+    	if (getCurrentPassword()!=null 
+    			&& getCurrentPassword().length()>0 
+    			&& getPassword().compareTo(getCurrentPassword())==0) {
+    		// current password and password match
+    		if (getNewPassword()!=null 
+        			&& getNewPassword().length()>0
+        			&& getVerifyPassword()!=null
+        			&& getVerifyPassword().length()>0
+        			&& getNewPassword().compareTo(getVerifyPassword())==0) {
+        		// new password and verify password match
+    			setPassword(getNewPassword());
+    			return true;
+    		}
+    	}
+        return false;
     }
     
     /**
