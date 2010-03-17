@@ -37,7 +37,7 @@ import org.helianto.core.Province;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public class AbstractAddress {
+public abstract class AbstractAddress {
 
     private static final long serialVersionUID = 1L;
     private int id;

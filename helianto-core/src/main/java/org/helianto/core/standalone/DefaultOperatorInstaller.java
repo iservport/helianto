@@ -100,7 +100,7 @@ public class DefaultOperatorInstaller implements InitializingBean {
 		Map<String, Service> serviceMap = new HashMap<String, Service>();
 		if (getRequiredServiceList()!=null) {
 			for (String serviceName: getRequiredServiceList()) {
-				serviceMap.put(serviceName, postInstallationMgr.installService(defaultOperator, serviceName));
+				serviceMap.put(serviceName, postInstallationMgr.installService(defaultOperator, serviceName.trim()));
 			}
 		}
 
