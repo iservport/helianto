@@ -108,7 +108,9 @@ public class Operator implements java.io.Serializable {
     private Set<Province> provinces = new HashSet<Province>();
 	private Map<String, Service> serviceMap = new HashMap<String, Service>();
 
-    /** default constructor */
+    /** 
+     * Default constructor
+     */
     public Operator() {
     	setOperationMode(OperationMode.LOCAL);
         setOperatorSourceMailAddress("operator@helianto.org");
@@ -254,7 +256,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type map.
      */
-    @OneToMany(mappedBy="operator")
+    @OneToMany(mappedBy="operator", cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @MapKey(name="keyCode")
 	public Map<String, KeyType> getKeyTypeMap() {
 		return keyTypeMap;
@@ -266,8 +268,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Province set.
      */
-    @OneToMany(mappedBy="operator", cascade={ CascadeType.PERSIST, CascadeType.MERGE },
-    		fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
     public Set<Province> getProvinces() {
 		return provinces;
 	}
@@ -278,8 +279,7 @@ public class Operator implements java.io.Serializable {
 	/**
 	 * Service map, eagerly loaded.
 	 */
-	@OneToMany(mappedBy="operator", cascade={ CascadeType.PERSIST, CascadeType.MERGE },
-		fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="operator", cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
 	@MapKey(name="serviceName")
     public Map<String, Service> getServiceMap() {
 		return serviceMap;

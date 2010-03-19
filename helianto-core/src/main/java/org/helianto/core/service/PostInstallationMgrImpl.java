@@ -54,21 +54,33 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		}
 		logger.info("Operator {} is now available", defaultOperator);
 		
-		Service adminService = Service.serviceFactory(defaultOperator, "ADMIN");
-		logger.info("Admin service is installed by default as {}", adminService);
-		defaultOperator.getServiceMap().put(adminService.getServiceName(), adminService);
+		if (!defaultOperator.getServiceMap().containsKey("ADMIN")) {
+			Service adminService = Service.serviceFactory(defaultOperator, "ADMIN");
+			logger.info("Admin service is installed by default as {}", adminService);
+			defaultOperator.getServiceMap().put(adminService.getServiceName(), adminService);
+		}
+		else {
+			logger.debug("Admin service alredy installed.");
+		}
 		
-		Service userService = Service.serviceFactory(defaultOperator, "USER");
-		logger.info("User service is installed by default as {}", userService);
-		defaultOperator.getServiceMap().put(userService.getServiceName(), userService);
-		
+		if (!defaultOperator.getServiceMap().containsKey("USER")) {
+			Service userService = Service.serviceFactory(defaultOperator, "USER");
+			logger.info("User service is installed by default as {}", userService);
+			defaultOperator.getServiceMap().put(userService.getServiceName(), userService);
+		}
+		else {
+			logger.debug("User service alredy installed.");
+		}
+				
 		return defaultOperator;
 	}
 
 	public void installProvinces(Operator defaultOperator, Resource rs) {
 		List<Province> provinceList = provinceResourceParserStrategy.parseProvinces(defaultOperator, rs);
+		Operator managedOperator = operatorDao.merge(defaultOperator);
 		for (Province province: provinceList) {
 	    	if (provinceDao.findUnique(defaultOperator, province.getProvinceCode())==null) {
+	    		province.setOperator(managedOperator);
 		        provinceDao.merge(province);
 		        logger.info("Created province {}.", province);
 	    	}
@@ -82,7 +94,8 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		KeyType keyType = keyTypeDao.findUnique(defaultOperator, keyCode);
 		if (keyType==null) {
 			logger.info("About to install key type {}", keyCode);
-			keyType = KeyType.keyTypeFactory(defaultOperator, keyCode);
+			Operator managedOperator = operatorDao.merge(defaultOperator);
+			keyType = KeyType.keyTypeFactory(managedOperator, keyCode);
 			keyType = keyTypeDao.merge(keyType);
 		}
 		logger.info("KeyType {} is now available", keyType);
@@ -93,7 +106,8 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		Service service = serviceDao.findUnique(defaultOperator, serviceName);
 		if (service==null) {
 			logger.info("About to install service with name {}", serviceName);
-			service = Service.serviceFactory(defaultOperator, serviceName);
+			Operator managedOperator = operatorDao.merge(defaultOperator);
+			service = Service.serviceFactory(managedOperator, serviceName);
 			service = serviceDao.merge(service);
 		}
 		logger.info("Sevice {} is now available.", service);
@@ -107,7 +121,8 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		}
 		if (defaultEntity==null) {
 			logger.info("About to install entity with alias {}", entityAlias); 
-			defaultEntity = Entity.entityFactory(defaultOperator, entityAlias);
+			Operator managedOperator = operatorDao.merge(defaultOperator);
+			defaultEntity = Entity.entityFactory(managedOperator, entityAlias);
 			defaultEntity = entityDao.merge(defaultEntity);
 		} 
 		logger.info("Entity {} is now available.", defaultEntity);
