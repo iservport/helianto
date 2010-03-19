@@ -234,7 +234,7 @@ Application-TraceLevels: ${application.traceLevels}
 			<artifactId>org.springframework.security.annotation</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		<!-- 
+		<!--  
 		<dependency>
 			<groupId>org.springframework.ws</groupId>
 			<artifactId>org.springframework.ws.java5</artifactId>
