@@ -16,21 +16,18 @@
 
 package org.helianto.partner.standalone;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
-import org.helianto.core.repository.BasicDao;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.standalone.DefaultEntityInstaller;
 import org.helianto.core.standalone.NamespaceDefaults;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Division;
-import org.helianto.partner.DivisionType;
-import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerRegistry;
-import org.helianto.partner.PartnerState;
+import org.helianto.partner.service.PartnerMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -60,51 +57,22 @@ public class DefaultDivisionInstaller implements InitializingBean {
 			throw new IllegalArgumentException("Unable to retrieve default entity from namespace defaults "+namespace);
 		}
 		if (namespace instanceof ExtendedNamespaceDefaults) {
-			Province province = provinceDao.findUnique(namespace.getDefaultEntity().getOperator(), getProvinceCode());
-			if (province==null) {
-				throw new IllegalArgumentException("Requires valid province code");
+			List<Province> provinceList = namespaceMgr.findProvinces(new ProvinceFilter(namespace.getDefaultEntity().getOperator(), getProvinceCode()));
+			if (provinceList!=null && provinceList.size()>0) {
+				Province province = provinceList.get(0);
+				if (province==null) {
+					throw new IllegalArgumentException("Requires valid province code");
+				}
+				getPartnerAddress().setProvince(province);
+				logger.debug("Default division province is {}.", province.getProvinceCode());
 			}
-			getPartnerAddress().setProvince(province);
-			Division defaultDivision = installDivision(namespace.getDefaultEntity(), getPartnerName(), getPartnerAddress(), reinstall);
+			Division defaultDivision = partnerMgr.installDivision(namespace.getDefaultEntity(), getPartnerName(), getPartnerAddress(), reinstall);
 			((ExtendedNamespaceDefaults) namespace).setDefaultDivision(defaultDivision);
+			logger.debug("Default division is {}.", defaultDivision);
 		}
 		else {
 			throw new IllegalArgumentException("Requires extended namespace defaults");
 		}
-	}
-	
-	protected Division installDivision(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall) {
-		String partnerAlias = entity.getAlias();
-		PartnerRegistry partnerRegistry = partnerRegistryDao.findUnique(entity, partnerAlias);
-		Division defaultDivision = null;
-		if (partnerRegistry==null) {
-			logger.info("Creating registry for {}.", partnerAlias);
-			partnerRegistry = PartnerRegistry.partnerRegistryFactory(entity, partnerAlias);
-			partnerRegistry.setPartnerName(partnerName);
-			partnerRegistry.setAddress1(partnerAddress.getAddress1());
-			partnerRegistry.setAddress2(partnerAddress.getAddress2());
-			partnerRegistry.setAddress3(partnerAddress.getAddress3());
-			partnerRegistry.setAddressDetail(partnerAddress.getAddressDetail());
-			partnerRegistry.setAddressNumber(partnerAddress.getAddressNumber());
-			partnerRegistry.setCityName(partnerAddress.getCityName());
-			partnerRegistry.setPostalCode(partnerAddress.getPostalCode());
-			partnerRegistry.setPostOfficeBox(partnerAddress.getPostOfficeBox());
-			partnerRegistry.setProvince(partnerAddress.getProvince());
-			partnerRegistry = partnerRegistryDao.merge(partnerRegistry);
-		}
-		else {
-			defaultDivision = (Division) partnerDao.findUnique(partnerRegistry, "D");
-		}
-		if (defaultDivision==null) {
-			logger.info("Creating division for {}.", partnerAlias);
-			defaultDivision = new Division();
-			defaultDivision.setPartnerRegistry(partnerRegistry);
-			defaultDivision.setDivisionType(DivisionType.HEADQUARTER);
-			defaultDivision.setPartnerState(PartnerState.ACTIVE);
-			defaultDivision = (Division) partnerDao.merge(defaultDivision);
-		}
-		logger.info("Default division is {} ", defaultDivision);
-		return defaultDivision;
 	}
 	
 	/**
@@ -140,9 +108,8 @@ public class DefaultDivisionInstaller implements InitializingBean {
 	// collabs
 	private NamespaceDefaults namespace;
 	private DefaultEntityInstaller defaultEntityInstaller;
-	private FilterDao<Province, ProvinceFilter> provinceDao;
-	private BasicDao<PartnerRegistry> partnerRegistryDao;
-	private BasicDao<Partner> partnerDao; 
+	private NamespaceMgr namespaceMgr;
+	private PartnerMgr partnerMgr; 
 
 	@Resource
 	public void setNamespace(NamespaceDefaults namespace) {
@@ -154,21 +121,16 @@ public class DefaultDivisionInstaller implements InitializingBean {
 		this.defaultEntityInstaller = defaultEntityInstaller;
 	}
 
-	@javax.annotation.Resource(name="provinceDao")
-	public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
-		this.provinceDao = provinceDao;
+	@javax.annotation.Resource(name="namespaceMgr")
+	public void setNamespaceMgr(NamespaceMgr namespaceMgr) {
+		this.namespaceMgr = namespaceMgr;
 	}
 	
-	@javax.annotation.Resource(name="partnerRegistryDao")
-	public void setPartnerRegistryDao(BasicDao<PartnerRegistry> partnerRegistryDao) {
-		this.partnerRegistryDao = partnerRegistryDao;
+	@javax.annotation.Resource(name="partnerMgr")
+	public void setPartnerMgr(PartnerMgr partnerMgr) {
+		this.partnerMgr = partnerMgr;
 	}
-
-	@javax.annotation.Resource(name="partnerDao")
-	public void setPartnerDao(BasicDao<Partner> partnerDao) {
-		this.partnerDao = partnerDao;
-	}
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(DefaultDivisionInstaller.class);
 
 }

@@ -81,16 +81,16 @@ public class IdentityValidatorTests {
         checkRequiredErrors(errors,"identity.error.whitespace");
     }
 
-    @Test
-    public void validatePrincipalInvalidChar() {
-        String invalidChar = "!#$%&*()-=+����?{}[]�`'|,;/<>:~^�*?\"\'\\";
-        for (char c : invalidChar.toCharArray()) {
-            errors = new BindException(identity, "identity");
-            identity.setPrincipal(String.valueOf(c));
-            identityValidator.validate(identity, errors);
-            checkRequiredErrors(errors,"identity.error.invalidchar");
-        }
-    }
+//    @Test
+//    public void validatePrincipalInvalidChar() {
+//        String invalidChar = "!#$%&*()-=+����?{}[]�`'|,;/<>:~^�*?\"\'\\";
+//        for (char c : invalidChar.toCharArray()) {
+//            errors = new BindException(identity, "identity");
+//            identity.setPrincipal(String.valueOf(c));
+//            identityValidator.validate(identity, errors);
+//            checkRequiredErrors(errors,"identity.error.invalidchar");
+//        }
+//    }
     
     @Test
     public void validatePrincipalValidChar() {

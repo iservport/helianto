@@ -56,10 +56,23 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	
 	/**
 	 * Operator constructor.
+	 * 
+	 * @param operator
 	 */
 	public ProvinceFilter(Operator operator) {
 		this();
 		setOperator(operator);
+	}
+	
+	/**
+	 * Province code constructor.
+	 * 
+	 * @param operator
+	 * @param provinceCode
+	 */
+	public ProvinceFilter(Operator operator, String provinceCode) {
+		this(operator);
+		setProvinceCode(provinceCode);
 	}
 	
 	/**

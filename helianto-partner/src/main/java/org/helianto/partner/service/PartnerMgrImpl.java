@@ -22,16 +22,21 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.helianto.core.Entity;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
 import org.helianto.partner.AddressType;
+import org.helianto.partner.Division;
+import org.helianto.partner.DivisionType;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.PartnerRegistryFilter;
 import org.helianto.partner.PartnerRegistryKey;
+import org.helianto.partner.PartnerState;
 import org.helianto.partner.Phone;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -139,6 +144,41 @@ public class PartnerMgrImpl implements PartnerMgr {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public Division installDivision(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall) {
+		String partnerAlias = entity.getAlias();
+		PartnerRegistry partnerRegistry = partnerRegistryDao.findUnique(entity, partnerAlias);
+		Division defaultDivision = null;
+		if (partnerRegistry==null) {
+			logger.info("Creating registry for {}.", partnerAlias);
+			partnerRegistry = PartnerRegistry.partnerRegistryFactory(entity, partnerAlias);
+			partnerRegistry.setPartnerName(partnerName);
+			partnerRegistry.setAddress1(partnerAddress.getAddress1());
+			partnerRegistry.setAddress2(partnerAddress.getAddress2());
+			partnerRegistry.setAddress3(partnerAddress.getAddress3());
+			partnerRegistry.setAddressDetail(partnerAddress.getAddressDetail());
+			partnerRegistry.setAddressNumber(partnerAddress.getAddressNumber());
+			partnerRegistry.setCityName(partnerAddress.getCityName());
+			partnerRegistry.setPostalCode(partnerAddress.getPostalCode());
+			partnerRegistry.setPostOfficeBox(partnerAddress.getPostOfficeBox());
+			partnerRegistry.setProvince(partnerAddress.getProvince());
+			partnerRegistry = partnerRegistryDao.merge(partnerRegistry);
+		}
+		else {
+			defaultDivision = (Division) partnerDao.findUnique(partnerRegistry, "D");
+		}
+		if (defaultDivision==null) {
+			logger.info("Creating division for {}.", partnerAlias);
+			defaultDivision = new Division();
+			defaultDivision.setPartnerRegistry(partnerRegistry);
+			defaultDivision.setDivisionType(DivisionType.HEADQUARTER);
+			defaultDivision.setPartnerState(PartnerState.ACTIVE);
+			defaultDivision = (Division) partnerDao.merge(defaultDivision);
+		}
+		logger.info("Default division is {} ", defaultDivision);
+		return defaultDivision;
+	}
+	
     //- collaborators
     
     private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;

@@ -19,6 +19,8 @@ package org.helianto.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.webflow.action.FormAction;
 import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.Event;
@@ -58,6 +60,20 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
 	}
 
 	/**
+     * Target index attribute name.
+     */
+    public String getTargetIndexAttributeName() {
+		return "target_index";
+	}
+
+	/**
+     * Target list selection attribute name.
+     */
+    public String getTargetSubListAttributeName() {
+		return "targetSubList";
+	}
+
+	/**
 	 * Put the target in same scope as the form.
 	 * 
 	 * @param context
@@ -87,11 +103,21 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
 	 * 
 	 * @param context
 	 */
-	@SuppressWarnings("unchecked")
 	public T get(RequestContext context) {
-		T target = (T) getFormObjectScope().getScope(context).get(getTargetAttributeName());
+		return get(context, getTargetAttributeName());
+	}
+	
+	/**
+	 * Return the target from flow scope.
+	 * 
+	 * @param context
+	 * @param attributeName
+	 */
+	@SuppressWarnings("unchecked")
+	public T get(RequestContext context, String attributeName) {
+		T target = (T) getFormObjectScope().getScope(context).get(attributeName);
 		if (logger.isDebugEnabled()) {
-			logger.debug("Get model object '"+getTargetAttributeName()+"'="+target);
+			logger.debug("Get model object '{}'={}", getTargetAttributeName(), target);
 		}
 		return target;
 	}
@@ -207,8 +233,8 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
     	ParameterMap parameters = context.getRequestParameters();
     	int index = 0;
     	if (targetList!=null) {
-        	if (targetList.size()>1 && parameters.contains("target_index")) {
-        		index = parameters.getInteger("target_index");
+        	if (targetList.size()>1 && parameters.contains(getTargetIndexAttributeName())) {
+        		index = parameters.getInteger(getTargetIndexAttributeName());
         	}
     		T target = targetList.get(index);
     		if (target!=null) {
@@ -225,39 +251,61 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
     	return true;
     }
     
-//    /**
-//     * Post-process the selection .
-//     */
-//	public final Event postProcess(RequestContext context) {
-//        if (logger.isDebugEnabled()) {
-//            logger.debug("!---- STARTED");
-//            logger.debug("!---- postProcess\n");
-//        }
-//        try {
-//        	Object returnTarget =  get(context);
-//            if (doPostProcess(context, (T) get(context), returnTarget)) {
-//            	return success();
-//            }
-//        	else {
-//                logger.warn("Unable to post-process association selection subflow ");
-//                return error();
-//        	}
-//		} catch (Exception e) {
-//			logger.warn("Unable to pre-process the selection ", e);
-//            return error();
-//		}
-//    }
-//        
-//	/**
-//     * Hook to do any post-processing.
-//     * 
-//     * 
-//     * @throws Exception 
-//     */
-//    protected boolean doPostProcess(RequestContext context, T target, Object returnTarget) throws Exception {
-//    	return true;
-//    }
-//    
+    /**
+     * Select a target sub-list and make it available in the model.
+     */
+	public Event selectTargetSubList(RequestContext context) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("!---- STARTED");
+            logger.debug("!---- selectTargetSubList\n");
+        }
+        try {
+        	List<T> targetSubList = doSelectTargetSubList(context);
+    		if (targetSubList!=null) {
+    			put(context, targetSubList, getTargetSubListAttributeName());
+                if (postProcessSelectTargetSubList(context, targetSubList)) {
+                    return success();
+                }
+    		}
+    		else {
+    			logger.warn("Null target selected");
+    		}
+        } catch (Exception e) {
+            logger.warn("Unable to select target ", e);
+        }
+        return error();
+    }
+    
+    @SuppressWarnings("unchecked")
+	protected List<T> doSelectTargetSubList(RequestContext context) throws Exception {
+    	List<T> targetList = (List<T>) getFormObjectScope().getScope(context).get(getTargetListAttributeName());
+    	List<T> targetSubList = new ArrayList<T>();
+    	ParameterMap parameters = context.getRequestParameters();
+    	String[] indexes = null;
+    	if (targetList!=null) {
+        	if (targetList.size()>1 && parameters.contains(getTargetIndexAttributeName())) {
+        		indexes = parameters.getArray(getTargetIndexAttributeName());
+        	}
+        	if (indexes!=null && indexes.length>0) {
+        		for (String index: indexes) {
+            		T target = targetList.get(Integer.parseInt(index));
+            		if (target!=null) {
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("Index "+index+" of "+getTargetListAttributeName()+" added to target sublist");
+                        }
+                        targetSubList.add(target);
+            		}
+        		}
+        		return targetSubList;
+        	}
+    	}
+        return null;
+    }
+        
+    protected boolean postProcessSelectTargetSubList(RequestContext context, List<T> target) throws Exception {
+    	return true;
+    }
+    
     /**
      * Clear the target.
      */
@@ -314,5 +362,7 @@ public abstract class AbstractModelFormAction<T> extends FormAction {
         	return null;
         }
     }
+	
+	protected static final Logger logger = LoggerFactory.getLogger(AbstractModelFormAction.class);
     
 }

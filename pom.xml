@@ -228,12 +228,45 @@ Application-TraceLevels: ${application.traceLevels}
 			<groupId>org.springframework.security</groupId>
 			<artifactId>org.springframework.security.core</artifactId>
 			<version>${spring.security.version}</version>
-			
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>org.springframework.security.annotation</artifactId>
 			<version>${spring.security.version}</version>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>org.springframework.ws.java5</artifactId>
+			<version>1.5.9.A</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>org.springframework.ws.java5</artifactId>
+			<version>1.5.8.A</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>org.springframework.aop</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>org.springframework.beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>org.springframework.context</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>org.springframework.core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.ws</groupId>
+					<artifactId>org.springframework.oxm</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
         <!-- aspectJ bundles -->
 		<dependency>

@@ -18,8 +18,9 @@ package org.helianto.partner.service;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
-import org.helianto.partner.Customer;
+import org.helianto.partner.Division;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
@@ -88,4 +89,9 @@ public interface PartnerMgr {
      */
 	public PartnerRegistry removePartnerKey(PartnerKey partnerKey);
 
+    /**
+     * Convenience to install a division.
+     */
+	public Division installDivision(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall);
+	
 }

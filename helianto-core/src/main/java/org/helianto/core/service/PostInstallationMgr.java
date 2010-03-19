@@ -20,6 +20,7 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
+import org.springframework.core.io.Resource;
 
 /**
  * Post installation tasks.
@@ -39,9 +40,26 @@ public interface PostInstallationMgr {
 	 * @param reinstall
 	 */
 	public Operator installOperator(String defaultOperatorName, boolean reinstall);
+	
+	/**
+	 * Install provinces from a xml resource.
+	 * 
+	 * <p>Resource must contain a list of provinces:</p>
+	 * <pre>
+	 * &lt;provinces>
+	 *     &lt;province provinceCode="XX" provinceName="xxxx" />
+	 *     &lt;province provinceCode="YY" provinceName="yyyy" />
+	 *     ...
+	 * &lt;/provinces>
+	 * </pre>
+	 * 
+	 * @param defaultOperator
+	 * @param rs
+	 */
+	public void installProvinces(Operator defaultOperator, Resource rs);
 
 	/**
-	 * install a KeyType, if does not exist.
+	 * Install a KeyType, if does not exist.
 	 * 
 	 * @param defaultOperator
 	 * @param keyCode

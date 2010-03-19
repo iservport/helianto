@@ -19,15 +19,14 @@ package org.helianto.core.standalone;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.service.PostInstallationMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.core.io.ClassPathResource;
 
 /**
  * Convenient to install the default operator if the namespace does not require multiple operators.
@@ -37,6 +36,7 @@ import org.springframework.beans.factory.InitializingBean;
 public class DefaultOperatorInstaller implements InitializingBean {
 	
 	private String defaultOperatorName = "DEFAULT";
+	private String[] provinceSourceList;
 	private String[] requiredKeyTypeList;
 	private String[] requiredServiceList;
 	private boolean reinstall = false;
@@ -49,6 +49,16 @@ public class DefaultOperatorInstaller implements InitializingBean {
 	}
 	public void setDefaultOperatorName(String defaultOperatorName) {
 		this.defaultOperatorName = defaultOperatorName;
+	}
+	
+	/**
+	 * Province source list.
+	 */
+	public String[] getProvinceSourceList() {
+		return provinceSourceList;
+	}
+	public void setProvinceSourceList(String[] provinceSourceList) {
+		this.provinceSourceList = provinceSourceList;
 	}
 	
 	/**
@@ -82,7 +92,16 @@ public class DefaultOperatorInstaller implements InitializingBean {
 	}
 
 	public void afterPropertiesSet() throws Exception {
+		logger.debug("About to install default operator.");
 		Operator defaultOperator = postInstallationMgr.installOperator(getDefaultOperatorName(), isReinstall());
+		logger.debug("About to install provinces.");
+		if (getProvinceSourceList()!=null) {
+			for (String provinceSource: getProvinceSourceList()) {
+				logger.debug("Found province source from {}.", provinceSource);
+				postInstallationMgr.installProvinces(defaultOperator, new ClassPathResource(provinceSource.trim()));
+			}
+		}
+		logger.debug("About to install keys.");
 		Map<String, KeyType> keyTypeMap = new HashMap<String, KeyType>();
 		if (getRequiredKeyTypeList()!=null) {
 			for (String keyCodeTuple: getRequiredKeyTypeList()) {
@@ -96,7 +115,7 @@ public class DefaultOperatorInstaller implements InitializingBean {
 				logger.debug("Key type {} mapped to {}", keyType, keyCode);
 			}
 		}
-
+		logger.debug("About to install services.");
 		Map<String, Service> serviceMap = new HashMap<String, Service>();
 		if (getRequiredServiceList()!=null) {
 			for (String serviceName: getRequiredServiceList()) {
@@ -114,12 +133,12 @@ public class DefaultOperatorInstaller implements InitializingBean {
 	private NamespaceDefaults namespace;
 	private PostInstallationMgr postInstallationMgr;
 	
-	@Resource
+	@javax.annotation.Resource
 	public void setNamespace(NamespaceDefaults namespace) {
 		this.namespace = namespace;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setPostInstallationMgr(PostInstallationMgr postInstallationMgr) {
 		this.postInstallationMgr = postInstallationMgr;
 	}

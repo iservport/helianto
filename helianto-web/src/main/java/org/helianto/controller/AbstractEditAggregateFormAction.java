@@ -76,15 +76,15 @@ public abstract class AbstractEditAggregateFormAction<T, P> extends AbstractEdit
     
 	protected T doSelectTarget(RequestContext context) throws Exception {
     	ParameterMap parameters = context.getRequestParameters();
+		P parent = getParent(context);
+    	List<T> aggregateList = getAggregateList(context, parent);
+    	if (aggregateList==null) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Attempt to get aggregate list from parent failed");
+            }
+    	}
     	if (parameters.contains("target_index")) {
     		int index = parameters.getInteger("target_index");
-    		P parent = getParent(context);
-        	List<T> aggregateList = getAggregateList(context, parent);
-        	if (aggregateList==null) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Attempt to get aggregate list from parent failed");
-                }
-        	}
     		T target = aggregateList.get(index);
     		if (target!=null) {
                 if (logger.isDebugEnabled()) {

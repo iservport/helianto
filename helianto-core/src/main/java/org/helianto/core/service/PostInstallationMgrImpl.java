@@ -15,16 +15,19 @@
 
 package org.helianto.core.service;
 
+import java.util.List;
 import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
+import org.helianto.core.Province;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.repository.BasicDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -62,6 +65,19 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		return defaultOperator;
 	}
 
+	public void installProvinces(Operator defaultOperator, Resource rs) {
+		List<Province> provinceList = provinceResourceParserStrategy.parseProvinces(defaultOperator, rs);
+		for (Province province: provinceList) {
+	    	if (provinceDao.findUnique(defaultOperator, province.getProvinceCode())==null) {
+		        provinceDao.merge(province);
+		        logger.info("Created province {}.", province);
+	    	}
+	    	else {
+	    		logger.info("Found province {}.", province);
+	    	}
+		}
+	}
+	
 	public KeyType installKey(Operator defaultOperator, String keyCode) {
 		KeyType keyType = keyTypeDao.findUnique(defaultOperator, keyCode);
 		if (keyType==null) {
@@ -117,14 +133,21 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	// collabs
 	
 	private BasicDao<Operator> operatorDao;
+	private BasicDao<Province> provinceDao;
 	private BasicDao<KeyType> keyTypeDao;
 	private BasicDao<Service> serviceDao;
 	private BasicDao<Entity> entityDao;
 	private BasicDao<UserGroup> userGroupDao;
+	private ProvinceResourceParserStrategy provinceResourceParserStrategy;
 
 	@javax.annotation.Resource(name="operatorDao")
 	public void setOperatorDao(BasicDao<Operator> operatorDao) {
 		this.operatorDao = operatorDao;
+	}
+	
+	@javax.annotation.Resource(name="provinceDao")
+	public void setProvinceDao(BasicDao<Province> provinceDao) {
+		this.provinceDao = provinceDao;
 	}
 	
 	@javax.annotation.Resource(name="keyTypeDao")
@@ -146,6 +169,13 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	public void setUserGroupDao(BasicDao<UserGroup> userGroupDao) {
 		this.userGroupDao = userGroupDao;
 	}
+	
+	@javax.annotation.Resource(name="provinceResourceParserStrategy")
+	public void setProvinceResourceParserStrategy(ProvinceResourceParserStrategy provinceResourceParserStrategy) {
+		this.provinceResourceParserStrategy = provinceResourceParserStrategy;
+	}
+	
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostInstallationMgrImpl.class);
 
