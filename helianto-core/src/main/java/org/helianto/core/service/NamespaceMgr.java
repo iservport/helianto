@@ -86,6 +86,14 @@ public interface NamespaceMgr {
     public Operator storeOperator(Operator operator);
 
     /**
+     * Find <code>Province</code>.
+     * 
+     * @param operator
+     * @param provinceCode
+     */
+	public Province findProvince(Operator operator, String provinceCode);
+	
+    /**
      * Find <code>Province</code>s.
      */
 	public List<Province> findProvinces(ProvinceFilter filter);

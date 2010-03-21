@@ -68,7 +68,6 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
     private Set<PartnerRegistryKey> partnerRegistryKeys = new HashSet<PartnerRegistryKey>(0);
     private @Transient List<Partner> partnerList;
     private @Transient List<Address> addressList;
-    private @Transient Address mainAddress;
     private @Transient List<PartnerRegistryKey> partnerRegistryKeyList;
 
     /** 
@@ -202,17 +201,6 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
         this.addressList = addressList;
     }
     
-    /**
-     * <<Transient>> Convenience hold the main address.
-     */
-	@Transient
-    public Address getMainAddress() {
-    	return mainAddress;
-    }
-    public void setMainAddress(Address mainAddress) {
-        this.mainAddress = mainAddress;
-    }
-
     /**
      * Partner registry keys.
      */

@@ -21,6 +21,7 @@
 		<mapping class="org.helianto.core.Operator" />
 		<mapping class="org.helianto.core.Country" />
 		<mapping class="org.helianto.core.Province" />
+		<mapping class="org.helianto.core.City" />
 		<mapping class="org.helianto.core.Category" />
 		<mapping class="org.helianto.core.Unit" />
 		<mapping class="org.helianto.core.KeyType" />

@@ -66,6 +66,7 @@ public class Province  implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private Operator operator;
+    private Province parent;
     private String provinceCode;
     private String provinceName;
     private Country country;
@@ -86,13 +87,6 @@ public class Province  implements java.io.Serializable {
     public Province(Operator operator) {
         this();
         this.operator = operator;
-    }
-
-    /** Code constructor 
-     * @deprecated */
-    public Province(String provinceCode) {
-        setProvinceCode(provinceCode);
-        setProvinceName("");
     }
 
     /**
@@ -119,6 +113,18 @@ public class Province  implements java.io.Serializable {
     }
 
     /**
+     * Parent constructor.
+     * 
+     * @param provinceCode
+     * @param provinceName
+     * @param parent
+     */
+    public Province(String provinceCode, String provinceName, Province parent) {
+    	this(parent.getOperator(), provinceCode, provinceName);
+    	setParent(parent);
+    }
+
+    /**
      * Primary key.
      */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -141,6 +147,18 @@ public class Province  implements java.io.Serializable {
         this.operator = operator;
     }
     
+	/**
+	 * Parent province.
+	 */
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name="parentId")
+	public Province getParent() {
+		return parent;
+	}
+	public void setParent(Province parent) {
+		this.parent = parent;
+	}
+	
     /**
      * Province code.
      */

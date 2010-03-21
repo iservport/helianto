@@ -18,6 +18,7 @@ package org.helianto.core.service;
 import java.util.List;
 import java.util.Locale;
 
+import org.helianto.core.City;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
@@ -80,9 +81,17 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		Operator managedOperator = operatorDao.merge(defaultOperator);
 		for (Province province: provinceList) {
 	    	if (provinceDao.findUnique(defaultOperator, province.getProvinceCode())==null) {
+	    		if (province instanceof City && province.getParent()!=null) {
+	    			Province managedParent = provinceDao.findUnique(defaultOperator, province.getParent().getProvinceCode());
+	    			if (managedParent==null) {
+	    				managedParent = provinceDao.merge(province.getParent());
+	    			}
+	    			province.setParent(managedParent);
+	    		}
 	    		province.setOperator(managedOperator);
 		        provinceDao.merge(province);
 		        logger.info("Created province {}.", province);
+		        provinceDao.flush();
 	    	}
 	    	else {
 	    		logger.info("Found province {}.", province);

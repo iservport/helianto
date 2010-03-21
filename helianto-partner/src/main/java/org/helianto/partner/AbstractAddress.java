@@ -41,7 +41,6 @@ public abstract class AbstractAddress {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private int sequence;
     private String address1;
     private String addressNumber;
 	private String addressDetail;
@@ -131,16 +130,6 @@ public abstract class AbstractAddress {
     }
     public void setId(int id) {
         this.id = id;
-    }
-
-    /**
-     * Sequence.
-     */
-    public int getSequence() {
-        return this.sequence;
-    }
-    public void setSequence(int sequence) {
-        this.sequence = sequence;
     }
 
     /**
@@ -286,11 +275,4 @@ public abstract class AbstractAddress {
     	return "";
     }
     
-    /**
-     * Compare by sequence.
-     */
-    public int compareTo(AbstractAddress next) {
-    	return this.sequence - next.sequence;
-    }   
-
 }

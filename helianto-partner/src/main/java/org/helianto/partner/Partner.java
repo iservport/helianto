@@ -15,7 +15,9 @@
 
 package org.helianto.partner;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,9 +38,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.KeyType;
 /**
- * <p>
  * Represents the relationship between the organization and other entities.  
- * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -48,7 +49,7 @@ import org.helianto.core.KeyType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
-public class Partner implements java.io.Serializable {
+public class Partner extends AbstractAddress implements java.io.Serializable {
 
     /**
      * <code>Partner</code> factory.
@@ -84,6 +85,8 @@ public class Partner implements java.io.Serializable {
     private char priority;
     private char partnerState;
     private Set<PartnerKey> partnerKeys = new HashSet<PartnerKey>(0);
+    // transient
+    private List<PartnerKey> partnerKeyList = new ArrayList<PartnerKey>(0);
 
 	/**
 	 *  Empty constructor
@@ -138,21 +141,21 @@ public class Partner implements java.io.Serializable {
      * <<Transient>> Convenience reference to the main address.
      * 
      * <p>
-     * If the partner registry did not define the main address, fall-back to
-     * any address available.
+     * If the partner does not define the main address, falls back to
+     * this address.
      * </p>
      */
 	@Transient
-    public Address getMainAddress() {
-		if (getPartnerRegistry().getMainAddress()==null) {
-			if (getPartnerRegistry().getAddresses().size()>0) {
-				return getPartnerRegistry().getAddresses().iterator().next();
-			}
-			else {
+    public AbstractAddress getMainAddress() {
+		if (getProvince()==null) {
+			if (getPartnerRegistry().getProvince()==null) {
 				return null;
 			}
+			else {
+				return getPartnerRegistry();
+			}
 		}
-    	return getPartnerRegistry().getMainAddress();
+    	return this;
     }
 
     /**
@@ -199,6 +202,17 @@ public class Partner implements java.io.Serializable {
 	}
 	public void setPartnerKeys(Set<PartnerKey> partnerKeys) {
 		this.partnerKeys = partnerKeys;
+	}
+	
+	/**
+	 * <<Transient>> Partner key list.
+	 */
+	@Transient
+	public List<PartnerKey> getPartnerKeyList() {
+		return partnerKeyList;
+	}
+	public void setPartnerKeyList(List<PartnerKey> partnerKeyList) {
+		this.partnerKeyList = partnerKeyList;
 	}
 
 	/**

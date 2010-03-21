@@ -110,6 +110,12 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	}
 
 	@Transactional(readOnly=true)
+	public Province findProvince(Operator operator, String provinceCode) {
+		Province province = provinceDao.findUnique(operator, provinceCode);
+		return province;
+	}
+
+	@Transactional(readOnly=true)
 	public List<Province> findProvinces(ProvinceFilter filter) {
     	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
     	logger.debug("Found province list of size {}", provinceList.size());

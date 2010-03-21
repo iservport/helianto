@@ -17,16 +17,18 @@
 package org.helianto.partner.standalone;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.KeyType;
 import org.helianto.core.Province;
-import org.helianto.core.ProvinceFilter;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.standalone.DefaultEntityInstaller;
 import org.helianto.core.standalone.NamespaceDefaults;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Division;
+import org.helianto.partner.PartnerKey;
 import org.helianto.partner.service.PartnerMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +45,7 @@ public class DefaultDivisionInstaller implements InitializingBean {
 	private String partnerName = "DEFAULT";
 	private String provinceCode = "";
 	private AbstractAddress partnerAddress;
+	private String[] keyValues;
 	
 	/**
 	 * Empty constructor.
@@ -56,22 +59,47 @@ public class DefaultDivisionInstaller implements InitializingBean {
 		if (namespace.getDefaultEntity()==null) {
 			throw new IllegalArgumentException("Unable to retrieve default entity from namespace defaults "+namespace);
 		}
-		if (namespace instanceof ExtendedNamespaceDefaults) {
-			List<Province> provinceList = namespaceMgr.findProvinces(new ProvinceFilter(namespace.getDefaultEntity().getOperator(), getProvinceCode()));
-			if (provinceList!=null && provinceList.size()>0) {
-				Province province = provinceList.get(0);
-				if (province==null) {
-					throw new IllegalArgumentException("Requires valid province code");
-				}
-				getPartnerAddress().setProvince(province);
-				logger.debug("Default division province is {}.", province.getProvinceCode());
-			}
-			Division defaultDivision = partnerMgr.installDivision(namespace.getDefaultEntity(), getPartnerName(), getPartnerAddress(), reinstall);
-			((ExtendedNamespaceDefaults) namespace).setDefaultDivision(defaultDivision);
-			logger.debug("Default division is {}.", defaultDivision);
-		}
-		else {
+		if (!(namespace instanceof ExtendedNamespaceDefaults)) {
 			throw new IllegalArgumentException("Requires extended namespace defaults");
+		}
+		Province province = namespaceMgr.findProvince(namespace.getDefaultEntity().getOperator(), getProvinceCode());
+		if (province==null) {
+			throw new IllegalArgumentException("Requires valid province or city code");
+		}
+		getPartnerAddress().setProvince(province);
+		logger.debug("Default division province is {}.", province.getProvinceCode());
+		logger.debug("Ready to install default division with allias {} and name {}.", namespace.getDefaultEntity(), getPartnerName());
+		Division defaultDivision = partnerMgr.installDivision(namespace.getDefaultEntity(), getPartnerName(), getPartnerAddress(), reinstall);
+		((ExtendedNamespaceDefaults) namespace).setDefaultDivision(defaultDivision);
+		logger.debug("Default division is {}.", defaultDivision);
+
+		if (getKeyValues()!=null) {
+			logger.debug("Ready to install key value pairs {} to {}", getKeyValues(), defaultDivision);
+			List<KeyType> keyTypes = namespaceMgr.loadKeyTypes(namespace.getDefaultOperator());
+			Map<String, PartnerKey> partnerKeyMap = partnerMgr.loadPartnerKeyMap(defaultDivision);
+			for (String keyValueTuple: getKeyValues()) {
+				String[] keyValue = keyValueTuple.split(":");
+				boolean keyNotAvailable = true;
+				for (KeyType keyType: keyTypes) {
+					if (keyValue.length>1 && keyValue[0].trim().equals(keyType.getKeyCode())) {
+						PartnerKey partnerKey = null;
+						if (partnerKeyMap.containsKey(keyType.getKeyCode())) {
+							partnerKey = partnerKeyMap.get(keyType.getKeyCode());
+							logger.debug("Partner key {} already existing.", partnerKey);
+						}
+						else {
+							partnerKey = PartnerKey.partnerKeyFactory(defaultDivision, keyType);
+						}
+						partnerKey.setKeyValue(keyValue[1]);
+						partnerMgr.storePartnerKey(partnerKey);
+						keyNotAvailable = false;
+						break;
+					}
+				}
+				if(keyNotAvailable) {
+					logger.warn("Unable to set key value {}", keyValueTuple);
+				}
+			}
 		}
 	}
 	
@@ -105,8 +133,18 @@ public class DefaultDivisionInstaller implements InitializingBean {
 		this.partnerAddress = partnerAddress;
 	}
 	
+	/**
+	 * Key value list, formatted as key1:value1, key2:value2...
+	 */
+	public String[] getKeyValues() {
+		return keyValues;
+	}
+	public void setKeyValues(String[] keyValues) {
+		this.keyValues = keyValues;
+	}
+
 	// collabs
-	private NamespaceDefaults namespace;
+	protected NamespaceDefaults namespace;
 	private DefaultEntityInstaller defaultEntityInstaller;
 	private NamespaceMgr namespaceMgr;
 	private PartnerMgr partnerMgr; 
@@ -130,7 +168,7 @@ public class DefaultDivisionInstaller implements InitializingBean {
 	public void setPartnerMgr(PartnerMgr partnerMgr) {
 		this.partnerMgr = partnerMgr;
 	}
-	
-	private static final Logger logger = LoggerFactory.getLogger(DefaultDivisionInstaller.class);
 
+	private static final Logger logger = LoggerFactory.getLogger(DefaultDivisionInstaller.class);
+	
 }

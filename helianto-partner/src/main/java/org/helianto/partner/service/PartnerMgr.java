@@ -16,6 +16,7 @@
 package org.helianto.partner.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.helianto.core.Entity;
 import org.helianto.partner.AbstractAddress;
@@ -78,6 +79,11 @@ public interface PartnerMgr {
      * Remove <code>Address</code> from the datastore.
      */
 	public PartnerRegistry removeAddress(Address address);
+	
+    /**
+     * Load <code>PartnerKey</code> map keyed with the KeyCode.
+     */
+	public Map<String, PartnerKey> loadPartnerKeyMap(Partner partner);
 	
     /**
      * Write <code>PartnerKey</code> to the datastore.

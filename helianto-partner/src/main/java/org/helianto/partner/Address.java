@@ -57,6 +57,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
 
     private static final long serialVersionUID = 1L;
     private PartnerRegistry partnerRegistry;
+    private int sequence;
     private char addressType;
     private char privacyLevel;
 
@@ -101,6 +102,16 @@ public class Address extends AbstractAddress implements Comparable<Address> {
         this.partnerRegistry = partnerRegistry;
     }
 
+
+    /**
+     * Sequence.
+     */
+    public int getSequence() {
+        return this.sequence;
+    }
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
+    }
 
     /**
      * Address type.

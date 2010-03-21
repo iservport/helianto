@@ -16,18 +16,18 @@
 package org.helianto.partner.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
-import org.helianto.partner.AddressType;
 import org.helianto.partner.Division;
 import org.helianto.partner.DivisionType;
 import org.helianto.partner.Partner;
@@ -38,6 +38,8 @@ import org.helianto.partner.PartnerRegistryFilter;
 import org.helianto.partner.PartnerRegistryKey;
 import org.helianto.partner.PartnerState;
 import org.helianto.partner.Phone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,11 +77,6 @@ public class PartnerMgrImpl implements PartnerMgr {
 		PartnerRegistry managedPartnerRegistry = partnerRegistryDao.merge(partnerRegistry);
 		managedPartnerRegistry.setPartnerList(new ArrayList<Partner>(managedPartnerRegistry.getPartners()));
 		managedPartnerRegistry.setAddressList(new ArrayList<Address>(managedPartnerRegistry.getAddresses()));
-    	for (Address address: managedPartnerRegistry.getAddresses()) {
-    		if (address.getAddressType()==AddressType.MAIN.getValue()) {
-    			managedPartnerRegistry.setMainAddress(address);
-    		}
-    	}
 		managedPartnerRegistry.setPartnerRegistryKeyList(new ArrayList<PartnerRegistryKey>(managedPartnerRegistry.getPartnerRegistryKeys()));
 		partnerRegistryDao.evict(managedPartnerRegistry);
 		return managedPartnerRegistry;
@@ -122,6 +119,16 @@ public class PartnerMgrImpl implements PartnerMgr {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerRegistry removeAddress(Address address) {
 		throw new IllegalArgumentException("Not yet implemented");
+	}
+	
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public Map<String, PartnerKey> loadPartnerKeyMap(Partner partner) {
+		Map<String, PartnerKey> partnerKeyMap = new HashMap<String, PartnerKey>();
+		Set<PartnerKey> partnerKeys = partnerDao.merge(partner).getPartnerKeys();
+		for (PartnerKey partnerKey: partnerKeys) {
+			partnerKeyMap.put(partnerKey.getKeyType().getKeyCode(), partnerKey);
+		}
+		return partnerKeyMap;
 	}
 
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
