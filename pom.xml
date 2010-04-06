@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
-	<version>0.2.9-SNAPSHOT</version>
+	<version>0.2.9</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -64,7 +64,7 @@
 	<properties>
 		
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<spring.main.version>3.0.1.RELEASE-A</spring.main.version>
+		<spring.main.version>3.0.2.RELEASE</spring.main.version>
 		<spring.security.version>2.0.5.RELEASE</spring.security.version>
 	</properties>
 	<build>
@@ -290,7 +290,7 @@ Application-TraceLevels: ${application.traceLevels}
 			<groupId>org.hibernate</groupId>
 			<artifactId>org.hibernate.ejb-library</artifactId>
 			<type>libd</type>
-			<version>3.3.2.GA</version>
+			<version>3.4.0.GA</version> 
 		</dependency>
 		<!-- javax bundles -->
 		<dependency>
