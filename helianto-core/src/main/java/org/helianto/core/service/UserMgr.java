@@ -50,6 +50,7 @@ public interface UserMgr {
     
     /**
      * Store the given <code>Identity</code> and return a managed object.
+     * 
      * @param identity
      */
     public Identity storeIdentity(Identity identity);

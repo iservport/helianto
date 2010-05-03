@@ -31,8 +31,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.ActivityState;
-import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
+import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.Province;
@@ -60,8 +60,11 @@ import org.junit.Test;
  */
 public class UserMgrImplTests {
     
+	/**
+	 * Simplest case: new identity is persisted.
+	 */
 	@Test
-    public void storeIdentity() {
+    public void storeNewIdentity() {
         Identity managedIdentity = null, identity = new Identity();
         identity.setPrincipal("principal");
         
@@ -69,6 +72,51 @@ public class UserMgrImplTests {
         replay(principalGenerationStrategy);
         
         expect(identityDao.merge(identity)).andReturn(managedIdentity);
+        // null below means no duplication in the db
+        expect(identityDao.findUnique(identity.getPrincipal())).andReturn(null);
+        replay(identityDao);
+        
+        assertSame(managedIdentity, userMgr.storeIdentity(identity));
+        verify(identityDao);
+        verify(principalGenerationStrategy);
+    }
+    
+	/**
+	 * Existing identity is persisted.
+	 */
+	@Test
+    public void storeExistingIdentity() {
+        Identity managedIdentity = null, identity = new Identity();
+        identity.setPrincipal("principal");
+        // id other than zero is our best guess to say the identity is not new
+        identity.setId(1);
+        
+        principalGenerationStrategy.generatePrincipal(identity, 0);
+        replay(principalGenerationStrategy);
+        
+        expect(identityDao.merge(identity)).andReturn(managedIdentity);
+        replay(identityDao);
+        
+        assertSame(managedIdentity, userMgr.storeIdentity(identity));
+        verify(identityDao);
+        verify(principalGenerationStrategy);
+    }
+    
+	/**
+	 * Duplicate identity, exception raised.
+	 */
+	@Test(expected=DuplicateIdentityException.class)
+    public void duplicateIdentity() {
+        Identity managedIdentity = null, identity = new Identity();
+        identity.setPrincipal("principal");
+        // not null identity below is supposed to be retrieved from db
+        Identity checkForPreviousIdentity = new Identity();
+        
+        principalGenerationStrategy.generatePrincipal(identity, 0);
+        replay(principalGenerationStrategy);
+        
+//        expect(identityDao.merge(identity)).andReturn(managedIdentity);
+        expect(identityDao.findUnique(identity.getPrincipal())).andReturn(checkForPreviousIdentity);
         replay(identityDao);
         
         assertSame(managedIdentity, userMgr.storeIdentity(identity));

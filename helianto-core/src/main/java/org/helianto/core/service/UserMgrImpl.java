@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
+import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.Entity;
 import org.helianto.core.EventType;
 import org.helianto.core.Identity;
@@ -73,9 +74,28 @@ public class UserMgrImpl implements UserMgr {
         return identityList ;
     }
 
+    /**
+     * Store the given <code>Identity</code> and return a managed object.
+     * 
+     * <p>
+     * This implementation also checks for a previous identity with the same 
+     * principal and raises an <code>DuplicateIdentityException</code> accordingly.
+     * Note that the persistence context (or Hibernate session) is not affected by the latter
+     * because no integrity violation exception is allowed.</p>
+     * 
+     * @param identity
+     */
 	public Identity storeIdentity(Identity identity) {
 		int attemptCount = 0;
 		principalGenerationStrategy.generatePrincipal(identity, attemptCount);
+		if (identity.getId()==0) {
+			logger.debug("Identity with principal {} is likely new.", identity.getPrincipal());
+			Identity checkForPreviousIdentity = (Identity) identityDao.findUnique(identity.getPrincipal());
+			if (checkForPreviousIdentity!=null) {
+				logger.warn("Found previous identity with same principal as new indentity: {}, rejecting.", checkForPreviousIdentity);
+				throw new DuplicateIdentityException(checkForPreviousIdentity, "Found previous identity with same principal as new indentity");
+			}
+		}
 		return identityDao.merge(identity);
 	}
 	
