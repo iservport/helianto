@@ -74,13 +74,11 @@ public class NamespaceMgrTests {
 		List<Operator> operatorList = new ArrayList<Operator>();
 		Operator managedOperator = OperatorTestSupport.createOperator();
 		
+		expect(operatorDao.merge(isA(Operator.class))).andReturn(managedOperator);
 		expect(operatorDao.find(isA(OperatorFilter.class))).andReturn(operatorList);
 		expect(postInstallationMgr.installOperator("DEFAULT", false)).andReturn(managedOperator);
 		replay(operatorDao);
 		replay(postInstallationMgr);
-		
-//		expect(operatorDao.merge(isA(Operator.class))).andReturn(managedOperator);
-//		replay(operatorDao);
 		
 		entityDao.persist(isA(Entity.class));
 		replay(entityDao);

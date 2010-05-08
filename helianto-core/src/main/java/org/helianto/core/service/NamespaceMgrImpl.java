@@ -68,7 +68,8 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	}
 	
 	public Entity createAndPersistEntity(Operator operator, String alias) {
-		Entity entity = Entity.entityFactory(operator, alias);
+		Operator managedOperator = operatorDao.merge(operator);
+		Entity entity = Entity.entityFactory(managedOperator, alias);
 		logger.info("Entity created as {}", entity);
 		entityDao.persist(entity);
 		
@@ -80,8 +81,8 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		logger.info("Default user group created as {}", defaultUser);
 		userGroupDao.persist(defaultUser);
 		
-		Service adminService = operator.getServiceMap().get("ADMIN"); 
-		Service userService = operator.getServiceMap().get("USER"); 
+		Service adminService = managedOperator.getServiceMap().get("ADMIN"); 
+		Service userService = managedOperator.getServiceMap().get("USER"); 
 		
 		if (userService==null) {
 			throw new IllegalStateException("Unable to create entity, user service not found.");
