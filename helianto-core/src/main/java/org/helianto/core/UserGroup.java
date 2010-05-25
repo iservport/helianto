@@ -84,7 +84,7 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
     
 	/** default constructor */
     public UserGroup() {
-    	setUserKey("");
+    	setUserKey("NOGROUP");
     	setLastEvent(new Date());
     	setUserState(UserState.ACTIVE);
     	setAccountNonExpired(true);
@@ -116,6 +116,14 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
+    
+    /**
+     * <<Transient>> Convenience to return Operator.
+     */
+    @Transient
+    public Operator getOperator() {
+		return getEntity().getOperator();
+	}
 
     /**
      * User key.

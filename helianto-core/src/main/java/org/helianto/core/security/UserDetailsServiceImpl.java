@@ -15,23 +15,22 @@
 
 package org.helianto.core.security;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
-import org.helianto.core.UserRole;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,16 +97,19 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
         UserLog managedUserLog = userMgr.storeUserLog(user, new Date());
         return managedUserLog.getUser();
 	}
+    
+    @Override
+    protected UserDetails createUserDetails(User user, Credential credential) {
+    	User preparedUser = (User) userMgr.prepareUserGroup(user);
+    	return userDetailsFactory.createUserDetails(preparedUser, credential);
+    }
 
-	@Override
-	protected Collection<UserRole> loadAndValidateRoles(User user) {
-		return userMgr.prepareUserGroup(user).getRoleList();
-	}
 
 	//- collabs
 
     private SecurityMgr securityMgr;
     private UserMgr userMgr;
+    private UserDetailsFactory userDetailsFactory;
     
     @Resource
     public void setSecurityMgr(SecurityMgr securityMgr) {
@@ -118,6 +120,11 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     public void setUserMgr(UserMgr userMgr) {
         this.userMgr = userMgr;
     }
+    
+    @Resource
+    public void setUserDetailsFactory(UserDetailsFactory userDetailsFactory) {
+		this.userDetailsFactory = userDetailsFactory;
+	}
 
     private static Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
     

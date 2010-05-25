@@ -116,13 +116,13 @@ public class UserMgrImpl implements UserMgr {
 		logger.debug("Listed {} child association(s).", childAssociationList.size());
 		Collections.sort(childAssociationList);
 		managedUserGroup.setChildAssociationList(childAssociationList);
-    	// role list
+		logger.debug("Ready to recursively add user roles");
 		List<UserRole> roleList = new ArrayList<UserRole>(recurseUserRoles(managedUserGroup.getRoles(), managedUserGroup.getParentAssociations()));
 		managedUserGroup.setRoleList(roleList);
     	userGroupDao.evict(managedUserGroup);
     	return managedUserGroup;
     }
-
+	
     /**
 	 * Recurse into parent user groups to create a complete userRole List.
 	 */
@@ -137,7 +137,7 @@ public class UserMgrImpl implements UserMgr {
 	}
 
 	public UserGroup storeUserGroup(UserGroup userGroup) {
-    	if (userGroup.isKeyEmpty() || userGroup instanceof User && !validateIdentity((User) userGroup)) {
+    	if (userGroup.isKeyEmpty() || userGroup instanceof User && validateIdentity((User) userGroup)!=null) {
     		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     	}
         return userGroupDao.merge(userGroup);
@@ -154,13 +154,14 @@ public class UserMgrImpl implements UserMgr {
      * @param user
      * @param createIdentity
      */
-    protected boolean validateIdentity(User user) {
+    protected Identity validateIdentity(User user) {
     	if (user.getIdentity().getId()==0) {
     		logger.debug("Looking for a candidate identity");
     		String principal = user.getUserKey();
     		logger.debug("Using principal {}", principal);
     		Identity identity = identityDao.findUnique(principal);
     		if (identity!=null) {
+    			logger.debug("Identity found: {}", identity);
     			user.setIdentity(identity);
     		}
     		else if (user.getCreateIdentity()==CreateIdentity.AUTO.getValue()) {
@@ -172,22 +173,26 @@ public class UserMgrImpl implements UserMgr {
     			user.setIdentity(identity);
     		}
     		else {
-    			logger.debug("Unable to validate identity, identity not found and not created.");
-    			return false;    			
+    			logger.debug("Unable to validate identity, identity not found and not created.");			
     		}
+    		return identity;
     	}
 		logger.debug("User identified with {}", user.getIdentity());
-		return true;
+		return user.getIdentity();
     }
-
+    /**
+     * <p>Store <code>UserAssociation</code> and return a managed instance.</p>
+     * 
+     */
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
     	if (!parentAssociation.isKeyEmpty() && parentAssociation.getChild() instanceof User) {
-        	logger.debug("Validating {}", parentAssociation.getChild());
+        	logger.debug("Ready to validate {}", parentAssociation.getChild());
         	User child = (User) parentAssociation.getChild();
-        	if(validateIdentity(child)) {
-        		child.setAccountNonExpired(true);
-            	return userAssociationDao.merge(parentAssociation);
-        	}
+    		child.setIdentity(validateIdentity(child));
+    		child.setAccountNonExpired(true);
+    		UserGroup managedChild = userGroupDao.merge(child);
+    		parentAssociation.setChild(managedChild);
+        	return userAssociationDao.merge(parentAssociation);
     	}
 		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     }

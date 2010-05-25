@@ -69,8 +69,23 @@ public class UserRole  implements java.io.Serializable {
     private Service service;
     private String serviceExtension;
 
-    /** default constructor */
+    /** 
+     * Empty constructor.
+     */
     public UserRole() {
+    	setServiceExtension("READ");
+    }
+   
+    /** 
+     * Service constructor.
+     * 
+     * @param userGroup
+     * @param service
+     */
+    public UserRole(UserGroup userGroup, Service service) {
+    	this();
+    	setUserGroup(userGroup);
+    	setService(service);
     }
    
     /**
@@ -99,7 +114,7 @@ public class UserRole  implements java.io.Serializable {
     /**
      * Service.
      */
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="serviceId", nullable=true)
     public Service getService() {
         return this.service;

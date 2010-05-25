@@ -15,20 +15,15 @@
 
 package org.helianto.core.security;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
@@ -51,10 +46,10 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
      * Implements {@link org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)}
      * to provide {@link org.acegisecurity.userdetails.UserDetails} as an adapter.
      * 
-     * <p>It is a six step process: (1) load an <code>Identity<code>, (2) load a <code>Credential<code>,
+     * <p>It is a five step process: (1) load an <code>Identity<code>, (2) load a <code>Credential<code>,
      * (3) list a compatible <code>User</code>s, (4) select (or create) a <code>User</code> from the list, 
      * (5) create an adapter instance which both takes the selected <code>User</code> and satisfies 
-     * <code>UserDetails</code>, and (6) create Authorities.</p>
+     * <code>UserDetails</code>.</p>
      */
     public final UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         logger.debug("Attempting login with username {}", username);
@@ -80,20 +75,8 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
         // store user
         User managedUser = storeUser(user);
         // create the adapter
-        UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(managedUser, credential);
+        UserDetails userDetailsAdapter = createUserDetails(managedUser, credential);
         logger.debug("Step 5 successful: User details instance is prepared: USER IS SUCCESSFULLY LOADED");
-        // load the roles and convert to authorities
-        Collection<UserRole> roles = loadAndValidateRoles(user);
-        // TODO security v3 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
-        int i = 0;
-        for (UserRole r : roles) {
-            String roleName = convertUserRoleToString(r);
-            authorities[i++] = new GrantedAuthorityImpl(roleName);
-        }
-        // TODO security v3 userDetailsAdapter.setAuthorities(authorities);
-        userDetailsAdapter.setAuthorities(authorities);
-        logger.debug("Step 6 successful: AUTHORITIES SUCCESSFULLY LOADED: {}", Arrays.toString(authorities));
         return userDetailsAdapter;
     }
     
@@ -140,24 +123,13 @@ public abstract class AbstractUserDetailsServiceTemplate implements UserDetailsS
     }
     
     /**
-     * Hook to load and validate a <code>Role</code> collection.
+     * Create <code>UserDetails</code> instance..
      * 
-     * @param identity
+     * @param user
+     * @param credential
      */
-    protected abstract Collection<UserRole> loadAndValidateRoles(User user);
+    protected abstract UserDetails createUserDetails(User user, Credential credential);
     
-    /**
-     * Convert a role to a string.
-     * 
-     * @param userRole
-     */
-    protected String convertUserRoleToString(UserRole userRole) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ROLE_").append(userRole.getService().getServiceName())
-                .append("_").append(userRole.getServiceExtension());
-        return sb.toString();
-    }
-
-    private final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+     private final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
 }

@@ -18,6 +18,7 @@ package org.helianto.core.service;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
@@ -27,6 +28,7 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.UserRole;
 
 /**
  * Default user service layer interface for the core package.

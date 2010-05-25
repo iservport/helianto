@@ -13,28 +13,31 @@ import org.helianto.core.User;
  * @author Mauricio Fernandes de Castro
  */
 public class UserTestSupport {
+	
+    /**
+     * Test support method to create a <code>User</code>.
+     */
+	public static User createUser() {
+		return createUser(EntityTestSupport.createEntity());
+	}
+
+    /**
+     * Test support method to create a <code>User</code>.
+     * @param entity optional Entity 
+     */
+	public static User createUser(Entity entity) {
+		return createUser(entity, IdentityTestSupport.createIdentity());
+	}
 
     /**
      * Test support method to create a <code>User</code>.
      * @param entity optional Entity 
      * @param identity optional Identity 
      */
-    public static User createUser(Object... args) {
-        Entity entity;
-        try {
-            entity = (Entity) args[0];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            entity = EntityTestSupport.createEntity();
-        }
-        Identity identity;
-        try {
-            identity = (Identity) args[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            identity = IdentityTestSupport.createIdentity();
-        }
+	public static User createUser(Entity entity, Identity identity) {
         User user = User.userFactory(entity, identity);
-        return user;
-    }
+        return user;		
+	}
 
     /**
      * Test support method to create a <code>User</code> list.

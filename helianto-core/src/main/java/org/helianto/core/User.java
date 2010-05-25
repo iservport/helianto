@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -104,7 +103,7 @@ public class User extends UserGroup implements java.io.Serializable {
     /**
      * Identity.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
     public Identity getIdentity() {
         return this.identity;

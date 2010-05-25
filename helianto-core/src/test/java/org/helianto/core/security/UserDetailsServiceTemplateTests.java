@@ -36,7 +36,6 @@ import org.helianto.core.UserRole;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
-import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,11 +58,6 @@ public class UserDetailsServiceTemplateTests {
         assertSame(loadedCredential, ((SecureUserDetails) userDetails).getCredential());
     }
 	
-	public void convertUserRoleToString() {
-		UserRole userRole = UserRoleTestSupport.createUserRole(selectedUser);
-		String roleName = userDetailsService.convertUserRoleToString(userRole);
-		assertEquals(roleName, "ROLE_"+userRole.getService().getServiceName()+"_"+userRole.getServiceExtension());
-	}
     
 //  public void testLoadUsers() {
 //	Identity identity = new Identity();
@@ -155,12 +149,6 @@ public class UserDetailsServiceTemplateTests {
 		}
 
 		@Override
-		protected Set<UserRole> loadAndValidateRoles(User user) {
-			assertSame(selectedUser, user);
-			return roles;
-		}
-
-		@Override
 		public List<UserGroup> listUsers(Identity identity) {
 			return loadedUsers;
 		}
@@ -168,6 +156,11 @@ public class UserDetailsServiceTemplateTests {
 		@Override
 		public User storeUser(User user) {
 			return selectedUser;
+		}
+
+		@Override
+		protected UserDetails createUserDetails(User user, Credential credential) {
+			return new UserDetailsAdapter(selectedUser, loadedCredential);
 		}
         
     }

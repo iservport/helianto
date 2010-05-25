@@ -218,7 +218,7 @@ public class UserMgrImplTests {
 		User user = UserTestSupport.createUser();
 		user.getIdentity().setId(0);
 		user.getIdentity().setPrincipal("");
-		assertFalse(userMgr.validateIdentity(user));
+		assertTrue(userMgr.validateIdentity(user)==null);
     }
     
 	@Test
@@ -231,7 +231,7 @@ public class UserMgrImplTests {
 		expect(identityDao.findUnique("test")).andReturn(identity);
 		replay(identityDao);
 		
-		assertTrue(userMgr.validateIdentity(user));
+		assertTrue(userMgr.validateIdentity(user)!=null);
 		assertSame(identity, user.getIdentity());
 		verify(identityDao);
     }
@@ -257,14 +257,6 @@ public class UserMgrImplTests {
 	@Test(expected=IllegalArgumentException.class)
     public void storeUserAssociationNullKey() {
     	UserAssociation parentAssociation = new UserAssociation();
-    	
-    	userMgr.storeUserAssociation(parentAssociation);
-    }
-    
-	@Test(expected=IllegalArgumentException.class)
-    public void storeUserAssociationEmptyKey() {
-    	UserAssociation parentAssociation = new UserAssociation();
-    	parentAssociation.setChild(new User());
     	
     	userMgr.storeUserAssociation(parentAssociation);
     }

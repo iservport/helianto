@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -53,8 +52,21 @@ public class Service implements java.io.Serializable {
     private Operator operator;
     private String serviceName;
 
-    /** default constructor */
+    /** 
+     * Empty constructor.
+     */
     public Service() {
+    	setServiceName("USER");
+    }
+
+    /** 
+     * Operator constructor.
+     * 
+     * @param operator
+     */
+    public Service(Operator operator) {
+    	this();
+    	setOperator(operator);
     }
 
     /**
@@ -71,7 +83,7 @@ public class Service implements java.io.Serializable {
     /**
      * Operator.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;

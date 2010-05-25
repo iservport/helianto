@@ -15,12 +15,22 @@
 
 package org.helianto.core.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.PasswordNotVerifiedException;
+import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.security.PublicUserDetails;
@@ -60,6 +70,26 @@ public class SecurityMgrImpl implements SecurityMgr {
 	public void storeCredential(SecureUserDetails secureUser) {
 		Credential credential = credentialDao.merge(secureUser.getCredential());
 		secureUser.setCredential(credential);
+	}
+	
+	protected Collection<UserRole> loadAndValidateRoles(User user) {
+    	// role list
+		List<UserRole> roleList = new ArrayList<UserRole>(recurseUserRoles(user.getRoles(), user.getParentAssociations()));
+		user.setRoleList(roleList);
+		return user.getRoleList();
+	}
+	
+    /**
+	 * Recurse into parent user groups to create a complete userRole List.
+	 */
+	protected Set<UserRole> recurseUserRoles(Set<UserRole> roles, Set<UserAssociation> parentAssociations) {
+		Set<UserRole> localRoles = new HashSet<UserRole>(roles);
+		logger.debug("Found {} local role(s).", localRoles.size());
+		for (UserAssociation parentAssociation: parentAssociations) {
+			UserGroup parent = parentAssociation.getParent();
+			localRoles.addAll(recurseUserRoles(parent.getRoles(), parent.getParentAssociations()));
+		}
+		return localRoles;
 	}
 
     public PublicUserDetails findSecureUser() {

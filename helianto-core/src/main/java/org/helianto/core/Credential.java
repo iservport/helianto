@@ -91,6 +91,7 @@ public class Credential implements java.io.Serializable {
         setLastModified(new Date());
         setExpirationDate(getLastModified());
         setEncription(Encription.PLAIN_PASSWORD);
+        setPassword("default");
         setVerifyPassword("");
         setCurrentPassword("");
         setPasswordDirty(false);
