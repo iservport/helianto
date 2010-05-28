@@ -2,6 +2,7 @@ package org.helianto.core.security;
 
 import org.helianto.core.Credential;
 import org.helianto.core.User;
+import org.springframework.security.Authentication;
 import org.springframework.security.userdetails.UserDetails;
 
 /**
@@ -11,6 +12,14 @@ import org.springframework.security.userdetails.UserDetails;
  */
 public interface UserDetailsFactory {
 	
+	/**
+	 * Factory method.
+	 * 
+	 * @param user
+	 * @param previousAuthentication
+	 */
+	public UserDetails createUserDetails(User user, Authentication previousAuthentication);
+
 	/**
 	 * Factory method.
 	 * 
