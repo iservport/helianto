@@ -57,6 +57,14 @@ import javax.persistence.UniqueConstraint;
 )
 @DiscriminatorValue("G")
 public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, NaturalKeyInfo {
+	
+	/**
+	 * <<Transient>> Exposes the discriminator.
+	 */
+	@Transient
+	public char getDiscriminator() {
+		return 'G';
+	}
 
     /**
      * <code>UserGroup</code> factory.
@@ -82,13 +90,25 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
 	private Set<UserRole> roles = new HashSet<UserRole>();
     private List<UserRole> roleList = new ArrayList<UserRole>();
     
-	/** default constructor */
+	/** 
+	 * Empty constructor.
+	 */
     public UserGroup() {
     	setUserKey("NOGROUP");
     	setLastEvent(new Date());
     	setUserState(UserState.ACTIVE);
     	setAccountNonExpired(true);
     	setCreateIdentity(CreateIdentity.REJECT);
+    }
+
+	/** 
+	 * Entity constructor.
+	 * 
+	 * @param entity
+	 */
+    public UserGroup(Entity entity) {
+    	this();
+    	setEntity(entity);
     }
 
     @Id 

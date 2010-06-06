@@ -5,6 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 
@@ -14,6 +17,27 @@ import org.junit.Test;
  * @author Mauricio Fernandes de Castro
  */
 public class UserGroupTests {
+	
+	@Test
+	public void contructor() {
+		UserGroup userGroup = new UserGroup();
+		assertTrue(userGroup instanceof Serializable);
+		assertTrue(userGroup instanceof Comparable<?>);
+		assertTrue(userGroup instanceof NaturalKeyInfo);
+		assertEquals('G', userGroup.getDiscriminator());
+		assertEquals("NOGROUP", userGroup.getUserKey());
+		assertTrue(userGroup.getLastEvent() instanceof Date);
+    	assertEquals(UserState.ACTIVE.getValue(), userGroup.getUserState());
+    	assertTrue(userGroup.isAccountNonExpired());
+    	assertEquals(CreateIdentity.REJECT.getValue(), userGroup.getCreateIdentity());
+	}
+    
+	@Test
+	public void entityContructor() {
+		Entity entity = new Entity();
+		UserGroup userGroup = new UserGroup(entity);
+		assertSame(entity, userGroup.getEntity());
+	}
     
     /**
      * Test <code>UserGroup</code> static factory method.

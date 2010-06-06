@@ -102,8 +102,20 @@ public class Entity implements java.io.Serializable {
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     private List<UserGroup> userList;
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public Entity() {
+    }
+
+    /** 
+     * Operator constructor.
+     * 
+     * @param operator
+     */
+    public Entity(Operator operator) {
+    	this();
+    	setOperator(operator);
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)

@@ -1,6 +1,9 @@
 package org.helianto.core;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
@@ -11,6 +14,23 @@ import org.junit.Test;
  * @author Mauricio Fernandes de Castro
  */
 public class UserTests {
+    
+	@Test
+	public void contructor() {
+		User user = new User();
+		assertTrue(user instanceof UserGroup);
+		assertEquals('U', user.getDiscriminator());
+    	assertFalse(user.isAccountNonExpired());
+    	assertEquals(UserType.INTERNAL.getValue(), user.getUserType());
+    	assertEquals('0', user.getPrivacyLevel());
+	}
+    
+	@Test
+	public void entityContructor() {
+		Entity entity = new Entity();
+		User user = new User(entity);
+		assertSame(entity, user.getEntity());
+	}
     
     /**
      * Test <code>User</code> static factory method.

@@ -40,7 +40,15 @@ import javax.persistence.Transient;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("U")
-public class User extends UserGroup implements java.io.Serializable {
+public class User extends UserGroup {
+
+	/**
+	 * <<Transient>> Exposes the discriminator.
+	 */
+	@Transient
+	public char getDiscriminator() {
+		return 'U';
+	}
 
     /**
      * Factory method.
@@ -84,12 +92,24 @@ public class User extends UserGroup implements java.io.Serializable {
     private char privacyLevel;
 	private Set<UserLog> userLogs = new HashSet<UserLog>(0);
 
-	/** default constructor */
+	/** 
+	 * Empty constructor.
+	 */
     public User() {
     	super();
         setAccountNonExpired(false);
     	setUserType(UserType.INTERNAL);
     	setPrivacyLevel('0');
+    }
+
+	/** 
+	 * Entity constructor.
+	 * 
+	 * @param entity
+	 */
+    public User(Entity entity) {
+    	this();
+        setEntity(entity);
     }
 
     @Transient
