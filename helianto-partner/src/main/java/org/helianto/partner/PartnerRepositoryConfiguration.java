@@ -35,6 +35,18 @@ import org.springframework.context.annotation.Configuration;
 public class PartnerRepositoryConfiguration {
 	
 	/**
+	 * Public entity data access.
+	 */
+	@Bean
+	public FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao() {
+		FilterDao<PublicEntity, PublicEntityFilter> dao =  
+			repositoryFactory.filterDaoFactory(PublicEntity.class, PublicEntityFilter.class, "operator", "entity");
+		logger.info("Created publicEntityDao");
+		return dao;
+	}
+
+	
+	/**
 	 * Account data access.
 	 */
 	@Bean
