@@ -48,6 +48,15 @@ import org.junit.Test;
  * @author Mauricio Fernandes de Castro
  */
 public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
+	
+	@Resource FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;
+	@Test
+	public void publicEntity() {
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		PublicEntity publicEntity = new PublicEntity(entity);
+		assertEquals(publicEntityDao.merge(publicEntity), 
+				publicEntityDao.findUnique(publicEntity.getOperator(), publicEntity.getEntity()));
+	}
 
 	@Resource FilterDao<Account, AccountFilter> accountDao;
 	@Test
