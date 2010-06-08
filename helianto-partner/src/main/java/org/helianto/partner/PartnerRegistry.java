@@ -66,6 +66,7 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
     private Set<Partner> partners = new HashSet<Partner>(0);
     private Set<Address> addresses = new HashSet<Address>(0);
     private Set<PartnerRegistryKey> partnerRegistryKeys = new HashSet<PartnerRegistryKey>(0);
+    private Set<Phone> phones = new HashSet<Phone>(0);
     private @Transient List<Partner> partnerList;
     private @Transient List<Address> addressList;
     private @Transient List<PartnerRegistryKey> partnerRegistryKeyList;
@@ -212,6 +213,30 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
 		this.partnerRegistryKeys = partnerRegistryKeys;
 	}
 	
+    /**
+     * Phones.
+     */
+    @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
+    public Set<Phone> getPhones() {
+        return this.phones;
+    }
+    public void setPhones(Set<Phone> phones) {
+        this.phones = phones;
+    }
+
+    /**
+     * Convenient to get first phone of type {@link PhoneType}.MAIN.
+     */
+    @Transient
+    public String getMainPhone() {
+    	for (Phone mainPhone: getPhones()) {
+    		if (mainPhone.getPhoneType()==PhoneType.MAIN.getValue()) {
+    			return mainPhone.toString();
+    		}
+    	}
+    	return "";
+    }
+    
 	/**
 	 * Convenience to add a key type-value pair to the registry.
 	 * 

@@ -1,10 +1,10 @@
 package org.helianto.partner;
 
-import java.io.Serializable;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,12 +20,14 @@ import org.helianto.core.Operator;
  * @author mauriciofernandesdecastro
  */
 @javax.persistence.Entity
-@Table(name = "prtnr_publicentity", uniqueConstraints = { @UniqueConstraint(columnNames = {
+@Table(name = "prtnr_public", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"operatorId", "entityId" }) })
-public class PublicEntity implements Serializable {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
+@DiscriminatorValue("P")
+public class PublicEntity extends AbstractAddress {
 
 	private static final long serialVersionUID = 1L;
-	private int id;
 	private int version;
 	private Operator operator;
 	private Entity entity;
@@ -54,18 +56,6 @@ public class PublicEntity implements Serializable {
 	public PublicEntity(Entity entity) {
 		this(entity.getOperator());
 		setEntity(entity);
-	}
-
-	/**
-	 * Primary key.
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getId() {
-		return this.id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	/**

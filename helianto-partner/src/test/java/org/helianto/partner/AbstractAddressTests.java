@@ -16,6 +16,9 @@
 package org.helianto.partner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.Serializable;
 
 import org.junit.Test;
 
@@ -24,9 +27,11 @@ import org.junit.Test;
  */
 public class AbstractAddressTests {
 	
+	@SuppressWarnings("serial")
 	@Test
 	public void constructor() {
 		AbstractAddress abstractAddress = new AbstractAddress() {};
+		assertTrue(abstractAddress instanceof Serializable);
 		assertEquals("", abstractAddress.getAddress1());
 		assertEquals("", abstractAddress.getAddressNumber());
 		assertEquals("", abstractAddress.getAddressDetail());

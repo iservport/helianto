@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.test.DomainTestSupport;
+import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
+import org.helianto.partner.PartnerRegistry;
 import org.helianto.partner.Phone;
 
 /**
@@ -22,7 +24,7 @@ public class PhoneTestSupport {
      * @param sequence optional int 
      */
     public static Phone createPhone(Object... args) {
-        Address address;
+        AbstractAddress address;
         try {
             address = (Address) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
@@ -34,7 +36,9 @@ public class PhoneTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             sequence = DomainTestSupport.getNonRepeatableIntValue(testKey++);
         }
-        Phone phone = Phone.phoneFactory(address, sequence);
+        Phone phone = new Phone();
+        phone.setPartnerRegistry((PartnerRegistry) address);
+        phone.setSequence(sequence);
         return phone;
     }
 

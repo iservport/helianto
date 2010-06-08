@@ -15,18 +15,15 @@
 
 package org.helianto.partner;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.helianto.core.Province;
@@ -36,10 +33,10 @@ import org.helianto.core.Province;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@SuppressWarnings("serial")
 @javax.persistence.MappedSuperclass
-public abstract class AbstractAddress {
+public abstract class AbstractAddress implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     private int id;
     private String address1;
     private String addressNumber;
@@ -50,7 +47,6 @@ public abstract class AbstractAddress {
     private String postalCode;
     private String postOfficeBox;
     private Province province;
-    private Set<Phone> phones = new HashSet<Phone>(0);
 
     /** 
      * Empty constructor.
@@ -251,28 +247,4 @@ public abstract class AbstractAddress {
         this.province = province;
     }
 
-    /**
-     * Phones.
-     */
-    @OneToMany(mappedBy="address", fetch=FetchType.EAGER)
-    public Set<Phone> getPhones() {
-        return this.phones;
-    }
-    public void setPhones(Set<Phone> phones) {
-        this.phones = phones;
-    }
-
-    /**
-     * Convenient to get first phone of type {@link PhoneType}.MAIN.
-     */
-    @Transient
-    public String getMainPhone() {
-    	for (Phone mainPhone: getPhones()) {
-    		if (mainPhone.getPhoneType()==PhoneType.MAIN.getValue()) {
-    			return mainPhone.toString();
-    		}
-    	}
-    	return "";
-    }
-    
 }

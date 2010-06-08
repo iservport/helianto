@@ -15,7 +15,6 @@
 
 package org.helianto.partner;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,28 +29,14 @@ import javax.persistence.UniqueConstraint;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="prtnr_phone",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"addressId", "sequence"})}
+@Table(name="prtnr_phone2",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "sequence"})}
 )
 public class Phone implements java.io.Serializable {
 
-    /**
-     * Factory method.
-     * 
-     * @param address
-     * @param sequence
-     */
-    public static Phone phoneFactory(Address address, int sequence) {
-        Phone phone = new Phone();
-        phone.setAddress(address);
-        phone.setSequence(sequence);
-        address.getPhones().add(phone);
-        return phone;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
-    private Address address;
+    private PartnerRegistry partnerRegistry;
     private int sequence;
     private String phoneNumber;
     private String areaCode;
@@ -59,7 +44,9 @@ public class Phone implements java.io.Serializable {
     private String comment;
     private char privacyLevel;
 
-    /** default constructor */
+    /** 
+     * Default constructor
+     */
     public Phone() {
     }
 
@@ -75,16 +62,16 @@ public class Phone implements java.io.Serializable {
     }
 
     /**
-     * Address.
+     * Partner registry.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="addressId", nullable=true)
-    public Address getAddress() {
-        return this.address;
-    }
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+    @ManyToOne
+    @JoinColumn(name="partnerRegistryId", nullable=true)
+    public PartnerRegistry getPartnerRegistry() {
+		return partnerRegistry;
+	}
+    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
+		this.partnerRegistry = partnerRegistry;
+	}
 
     /**
      * Sequence.
@@ -177,7 +164,7 @@ public class Phone implements java.io.Serializable {
          if ( !(other instanceof Phone) ) return false;
          Phone castOther = (Phone) other; 
          
-         return ((this.getAddress()==castOther.getAddress()) || ( this.getAddress()!=null && castOther.getAddress()!=null && this.getAddress().equals(castOther.getAddress()) ))
+         return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ))
              && ((this.getSequence()==castOther.getSequence()));
    }
    
@@ -186,7 +173,7 @@ public class Phone implements java.io.Serializable {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getAddress() == null ? 0 : this.getAddress().hashCode() );
+         result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
          result = 37 * result + (int) this.getSequence();
          return result;
    }   

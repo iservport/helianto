@@ -109,13 +109,24 @@ public class Operator implements java.io.Serializable {
 	private Map<String, Service> serviceMap = new HashMap<String, Service>();
 
     /** 
-     * Default constructor
+     * Default constructor.
      */
     public Operator() {
     	setOperationMode(OperationMode.LOCAL);
         setOperatorSourceMailAddress("operator@helianto.org");
         setDefaultEncoding("ISO-8859-1");
         setOperatorHostAddress("http://www.helianto.org");
+        setLocale(Locale.getDefault());
+    }
+
+    /** 
+     * String constructor.
+     * 
+     * @param operatorName
+     */
+    public Operator(String operatorName) {
+    	this();
+    	setOperatorName(operatorName);
     }
 
     /**

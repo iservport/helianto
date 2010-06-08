@@ -112,8 +112,6 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		Address address = AddressTestSupport.createAddress(partnerRegistry);
 		assertEquals(addressDao.merge(address), addressDao.findUnique(address.getPartnerRegistry(), address.getSequence()));
 
-		Phone phone = PhoneTestSupport.createPhone(address);
-		assertEquals(phoneDao.merge(phone), phoneDao.findUnique(phone.getAddress(), phone.getSequence()));
 	}
 
 }
