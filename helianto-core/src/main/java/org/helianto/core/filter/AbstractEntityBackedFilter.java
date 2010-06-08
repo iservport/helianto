@@ -44,6 +44,9 @@ public abstract class AbstractEntityBackedFilter extends AbstractFilter implemen
 		setEntity(entity);
 	}
     
+	/**
+	 * Entity alias filter.
+	 */
     public Entity getEntity() {
         return entity;
     }

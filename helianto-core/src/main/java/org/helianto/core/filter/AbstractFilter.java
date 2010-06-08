@@ -37,6 +37,8 @@ public abstract class AbstractFilter implements Serializable, Filter {
 	
 	/**
 	 * Delegate criteria creation to a chain of processors.
+	 * 
+	 * @param mainCriteriaBuilder
 	 */
 	protected String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
         preProcessFilter(mainCriteriaBuilder);
