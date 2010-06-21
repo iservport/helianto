@@ -23,7 +23,7 @@ import org.helianto.core.Operator;
  *  
  * @author Mauricio Fernandes de Castro
  */
-public interface OperatorBackedFilter extends Filter {
+public interface OperatorBackedFilter extends ListFilter {
 	
 	/**
 	 * Operator filter property.

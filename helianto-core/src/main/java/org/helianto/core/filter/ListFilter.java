@@ -15,27 +15,55 @@
 
 package org.helianto.core.filter;
 
-import org.helianto.core.Entity;
+import java.util.List;
 
 /**
- * Extends the <code>Filter</code> interface to enforce the use
- * of <code>Entity</code> to build criteria.
+ * Extends {@link Filter} to add list behavior.
  *  
  * @author Mauricio Fernandes de Castro
  */
-public interface EntityBackedFilter extends ListFilter {
+public interface ListFilter extends Filter {
 	
 	/**
-	 * Create criteria.
+	 * Item list getter.
+	 */
+	public List<?> getList();
+
+	/**
+	 * Item list setter.
 	 * 
-	 * @param requireEntity raise unchecked exception if true and 
-	 *        entity is not defined.
+	 * @param itemList
 	 */
-	public String createCriteriaAsString(boolean requireEntity);
+	public void setList(List<?> itemList);
+
+	/**
+	 * Resulting list size.
+	 */
+	public int getListSize();
 	
 	/**
-	 * Entity filter property.
+	 * List index getter.
 	 */
-	public Entity getEntity();
+	public int getIndex();
+	
+	/**
+	 * List index setter.
+	 */
+	public Object setIndex(int index);
+	
+	/**
+	 * Current item.
+	 */
+	public Object getItem();
+	
+	/**
+	 * Increase index by one, if has next, to return the next item.
+	 */
+	public Object next();
+	
+	/**
+	 * Decrease index by one, if has previous, to return the previous item.
+	 */
+	public Object previous();
 	
 }

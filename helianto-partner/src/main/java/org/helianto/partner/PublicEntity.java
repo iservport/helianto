@@ -1,5 +1,6 @@
 package org.helianto.partner;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -31,11 +32,14 @@ public class PublicEntity extends AbstractAddress {
 	private int version;
 	private Operator operator;
 	private Entity entity;
+	private String entityName;
 
 	/**
 	 * Empty constructor.
 	 */
 	public PublicEntity() {
+		super();
+		
 	}
 
 	/**
@@ -91,6 +95,17 @@ public class PublicEntity extends AbstractAddress {
 	}
 	public void setEntity(Entity entity) {
 		this.entity = entity;
+	}
+	
+	/**
+	 * Entity name.
+	 */
+	@Column(length=64)
+	public String getEntityName() {
+		return entityName;
+	}
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
 	}
 
 	/**

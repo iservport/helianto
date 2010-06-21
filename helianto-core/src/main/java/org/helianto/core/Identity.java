@@ -140,17 +140,29 @@ public class Identity implements java.io.Serializable {
     public void setPersonalData(PersonalData personalData) {
         this.personalData = personalData;
     }
+    
+    /**
+     * <<Transient>> Safe identity name.
+     */
     @Transient
     public String getIdentityName() {
     	if (getPersonalData()==null) {
-    		if (getOptionalAlias()!=null && getOptionalAlias().length()>0) {
-    			return getOptionalAlias();
-    		}
-    		return getPrincipal();
+    		return getAlias();
     	}
     	return new StringBuilder(getPersonalData().getFirstName())
     	    .append(" ")
     	    .append(getPersonalData().getLastName()).toString();
+    }
+    
+    /**
+     * <<Transient>> Safe identity alias.
+     */
+    @Transient
+    public String getAlias() {
+		if (getOptionalAlias()!=null && getOptionalAlias().length()>0) {
+			return getOptionalAlias();
+		}
+		return getPrincipal();
     }
 
     /**

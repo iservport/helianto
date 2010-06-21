@@ -15,9 +15,10 @@
 
 package org.helianto.core.filter;
 
+
 /**
  * Filters implementing this interface are enabled to create 
- * string criteria to be forwarded to the persistence strategy.
+ * string criteria to collaborate with the persistence strategy.
  *  
  * @author Mauricio Fernandes de Castro
  */
@@ -46,5 +47,5 @@ public interface Filter {
 	 * Object alias to be used in query expressions.
 	 */
 	public String getObjectAlias();
-
+	
 }

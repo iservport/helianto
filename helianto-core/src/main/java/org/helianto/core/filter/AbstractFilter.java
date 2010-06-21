@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractFilter implements Serializable, Filter {
-
+	
 	/**
 	 * Delegate criteria creation to a builder.
 	 */

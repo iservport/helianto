@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractOperatorBackedCriteriaFilter extends AbstractFilter implements OperatorBackedFilter {
+public abstract class AbstractOperatorBackedCriteriaFilter extends AbstractListFilter implements OperatorBackedFilter {
 	
     private Operator operator;
     

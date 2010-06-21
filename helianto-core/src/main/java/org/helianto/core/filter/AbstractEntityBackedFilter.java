@@ -25,7 +25,7 @@ import org.helianto.core.Entity;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractEntityBackedFilter extends AbstractFilter implements EntityBackedFilter {
+public abstract class AbstractEntityBackedFilter extends AbstractListFilter implements EntityBackedFilter {
 	
     private Entity entity;
     

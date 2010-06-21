@@ -111,18 +111,21 @@ Export-Package: bundles,freemarker,freemarker.entity,freemarker.keyTyp
  ,org.helianto.resource.test;uses:="org.helianto.core,org.helianto.doc
  ument.test,org.helianto.resource,org.springframework.test.context",or
  g.helianto.resource.validation;uses:="org.helianto.core.validation,or
- g.springframework.stereotype",org.helianto.web.controller;uses:="java
- x.annotation,org.helianto.controller,org.helianto.core,org.helianto.c
- ore.filter,org.helianto.core.security,org.helianto.core.service,org.h
- elianto.web.test,org.junit,org.springframework.beans,org.springframew
- ork.stereotype,org.springframework.validation,org.springframework.web
- flow.execution",org.helianto.web.mail.compose;uses:="org.helianto.mes
- sage.mail.compose,org.springframework.mail.javamail",org.helianto.web
- .test;uses:="freemarker.template,org.helianto.controller,org.helianto
- .core.filter,org.helianto.core.security,org.junit,org.springframework
- .mock.web,org.springframework.web.servlet.view.freemarker,org.springf
- ramework.webflow.execution",org.helianto.web.util;uses:="org.junit",o
- rg.helianto.web.view;uses:="org.helianto.web.test,org.junit"
+ g.springframework.stereotype",org.helianto.web.action;uses:="org.heli
+ anto.core,org.helianto.core.filter,org.helianto.core.security,org.jun
+ it,org.springframework.webflow.core.collection",org.helianto.web.cont
+ roller;uses:="javax.annotation,org.helianto.controller,org.helianto.c
+ ore,org.helianto.core.filter,org.helianto.core.security,org.helianto.
+ core.service,org.helianto.web.test,org.junit,org.springframework.bean
+ s,org.springframework.stereotype,org.springframework.validation,org.s
+ pringframework.webflow.execution",org.helianto.web.mail.compose;uses:
+ ="org.helianto.message.mail.compose,org.springframework.mail.javamail
+ ",org.helianto.web.test;uses:="freemarker.template,org.helianto.contr
+ oller,org.helianto.core.filter,org.helianto.core.security,org.junit,o
+ rg.springframework.mock.web,org.springframework.web.servlet.view.free
+ marker,org.springframework.webflow.execution",org.helianto.web.util;u
+ ses:="org.junit",org.helianto.web.view;uses:="org.helianto.web.test,o
+ rg.junit"
 Tool: Bundlor 1.0.0.RELEASE
 Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  on,javax.mail,javax.mail.internet,javax.persistence,javax.servlet,jav

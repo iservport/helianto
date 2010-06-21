@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 import java.text.DateFormat;
 import java.util.Date;
 
-import org.helianto.core.Entity;
+import org.helianto.core.AbstractDateRangeFilter;
 import org.helianto.core.User;
 import org.helianto.core.test.SecurityTestSupport;
 import org.junit.Before;
@@ -281,7 +281,8 @@ public class CriteriaBuilderTests  {
     
     //- user backed filter stub
     
-    public class UserBackedFilterStub implements UserBackedFilter, DateRange {
+    @SuppressWarnings("serial")
+	public class UserBackedFilterStub extends AbstractDateRangeFilter {
 
         private Date fromDate;
         private Date toDate;
@@ -291,26 +292,22 @@ public class CriteriaBuilderTests  {
             user.getEntity().setId(Long.MAX_VALUE);
             return user;
         }
-        public void setUser(User arg0) {}
+        public void setUser(User user) {}
         public void reset() {}
 		public Date getFromDate() { return this.fromDate; }
 		public Date getToDate() { return this.toDate; }
 		public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
 		public void setToDate(Date toDate) { this.toDate = toDate; }
-		public boolean isSelection() { return false; }
-		public String createCriteriaAsString(boolean requireEntity) {
-			return null;
-		}
-		public Entity getEntity() {
-			return null;
-		}
-		public String createCriteriaAsString() {
-			return null;
-		}
-		public String getObjectAlias() {
-			return null;
-		}
-        
+//		public boolean isSelection() { return false; }
+//		public String createCriteriaAsString(boolean requireEntity) { return null; }
+//		public Entity getEntity() { return null; }
+//		public String createCriteriaAsString() { return null; }
+//		public String getObjectAlias() { return null; }
+//		public List<?> getList() { return null; }
+//		public void setList(List<?> itemList) { }
+		@Override protected void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+		@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+		public String getObjectAlias() { return "ALIAS"; }
     }
 
 }
