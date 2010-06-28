@@ -30,7 +30,7 @@ public abstract class AbstractFreemarkerMailMessageComposer extends
 
     public MimeMessagePreparator composeMessage(String key, MailForm mailForm) {
         //TODO use the factory
-        Configuration configuration = new Configuration();
+//        Configuration configuration = new Configuration();
 
 //        TemplateMailMessageDecorator templateMailMessageDecorator = 
 //            new TemplateMailMessageDecorator(

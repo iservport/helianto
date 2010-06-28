@@ -64,7 +64,7 @@ public class ServerTestSupport {
             for (int i=0;i<size;i++) {
                 Server server = createServer(o);
                 server.setPriority((byte) (Math.random()*size));  //random priority
-                server.setServerState(ActivityState.values()[(int) Math.random()*ActivityState.values().length].getValue());  //random state
+                server.setServerState(ActivityState.values()[(int) ((int) 100*Math.random()*ActivityState.values().length)].getValue());  //random state
                 serverList.add(server);
             }
         }

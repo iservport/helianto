@@ -15,9 +15,6 @@
 
 package org.helianto.core.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -33,22 +30,26 @@ import org.springframework.security.context.SecurityContextImpl;
  */
 public class SecurityTestSupport {
     
+    public static Authentication createAuthentication() {
+    	return createAuthentication(UserTestSupport.createUser());
+    }
+    
+    public static Authentication createAuthentication(User user) {
+        Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
+        UserDetailsAdapter secureUser = new UserDetailsAdapter(user, credential);
+    	return new LocalTestingAuthenticationToken(secureUser);
+    }
+    
     public static UserDetailsAdapter createUserDetailsAdapter() {
-        User user = UserTestSupport.createUser();
-        return createUserDetailsAdapter(user);
+        return createUserDetailsAdapter(UserTestSupport.createUser());
     }
 
     public static UserDetailsAdapter createUserDetailsAdapter(User user) {
-        List<User> users = new ArrayList<User>();
-        users.add(user);
-        Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
-        UserDetailsAdapter secureUser = new UserDetailsAdapter(user, credential);
+        Authentication authentication = createAuthentication(user);
         SecurityContext securityContext = new SecurityContextImpl();
-        Authentication authentication = new LocalTestingAuthenticationToken(secureUser);
         securityContext.setAuthentication(authentication);
         SecurityContextHolder.setContext(securityContext);
-        return secureUser;
-    }
-    
+        return (UserDetailsAdapter) authentication.getPrincipal();
+    }    
 
 }

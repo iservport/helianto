@@ -108,11 +108,13 @@ public class ConfigurableMailSenderImpl extends JavaMailSenderImpl implements
             if (accessServer==null) {
                 logger.warn("Unable to connect to store before sending a message: access server not available.");
             }
-            String host = accessServer.getServerHostAddress();
-            String username = accessServer.getCredential().getIdentity()
-                    .getPrincipal();
-            String password = accessServer.getCredential().getPassword();
-            store.connect(host, username, password);
+            else {
+                String host = accessServer.getServerHostAddress();
+                String username = accessServer.getCredential().getIdentity()
+                        .getPrincipal();
+                String password = accessServer.getCredential().getPassword();
+                store.connect(host, username, password);
+            }
         } catch (Exception e) {
             logger.warn("Exception ignored: ", e);
         }

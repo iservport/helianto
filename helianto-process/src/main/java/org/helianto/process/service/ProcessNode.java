@@ -19,12 +19,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.AbstractNode;
 import org.helianto.core.Node;
-import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.ProcessDocument;
+import org.helianto.process.ProcessDocumentAssociation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implement <code>Node</code> interface to provide a process tree.
@@ -112,7 +112,7 @@ public class ProcessNode extends AbstractNode<ProcessDocumentAssociation> {
 	 */
 	@Override
 	public final boolean equals(Object other) {
-		if (!(other instanceof ProcessDocumentNode)) return false;
+		if (!(other instanceof AbstractNode<?>)) return false;
 		return super.equals(other);
 	}
 	

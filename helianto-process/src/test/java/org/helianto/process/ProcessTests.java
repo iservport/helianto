@@ -37,9 +37,6 @@ public class ProcessTests {
     	Process process = new Process(), copy = new Process();
     	ProcessDocument parent = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
-			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-				return null;
-			}
     	};
 
         assertFalse(process.setKey(entity, "CODE")  .equals(parent.setKey(entity, "CODE")));

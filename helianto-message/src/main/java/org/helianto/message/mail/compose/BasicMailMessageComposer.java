@@ -40,7 +40,7 @@ public class BasicMailMessageComposer extends AbstractMailMessageComposer {
         if (!supports(key)) {
             throw new IllegalArgumentException("Unsupported key: "+key);
         } 
-        else if (key == "PASSWORD") {
+        else if (key.equals("PASSWORD")) {
             PasswordConfirmationMailMessageDecorator decoratedPreparator =
                 new PasswordConfirmationMailMessageDecorator(
                         new DecoratedPreparator(mailForm));

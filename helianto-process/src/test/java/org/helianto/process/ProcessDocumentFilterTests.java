@@ -64,9 +64,6 @@ public class ProcessDocumentFilterTests {
 	public void document() {
 		AbstractDocument document = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
-			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-				return null;
-			}
 		};
 		ProcessDocumentFilter processDocumentFilter = 
 			ProcessDocumentFilter.processDocumentFilterFactory(new User(), Process.class);

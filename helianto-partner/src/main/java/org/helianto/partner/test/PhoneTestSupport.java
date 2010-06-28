@@ -37,7 +37,8 @@ public class PhoneTestSupport {
             sequence = DomainTestSupport.getNonRepeatableIntValue(testKey++);
         }
         Phone phone = new Phone();
-        phone.setPartnerRegistry((PartnerRegistry) address);
+        // TODO review phone
+//        phone.setPartnerRegistry((PartnerRegistry) address);
         phone.setSequence(sequence);
         return phone;
     }

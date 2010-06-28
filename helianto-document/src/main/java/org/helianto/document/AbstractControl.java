@@ -171,7 +171,7 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     		return ControlState.FINISHED.getValue();
     	}
 		if (getResolution()==Resolution.CANCELLED.getValue()
-				| getResolution()==Resolution.WAIT.getValue()) {
+				|| getResolution()==Resolution.WAIT.getValue()) {
 			return ControlState.UNFINISHED.getValue();
 		}
     	if (getNextCheckDate()==null) return ' ';

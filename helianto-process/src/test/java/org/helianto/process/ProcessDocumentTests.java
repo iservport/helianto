@@ -26,9 +26,6 @@ public class ProcessDocumentTests {
 
     	ProcessDocument document = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
-			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-				return null;
-			}
     	};
     	document.setKey(entity, docCode);
 
@@ -46,9 +43,6 @@ public class ProcessDocumentTests {
         String docCode = DomainTestSupport.STRING_TEST_VALUE;
     	ProcessDocument parent = new ProcessDocument() {
 			private static final long serialVersionUID = 1L;
-			public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-				return null;
-			}
     	};
     	parent.setKey(entity, "PARENT");
         
