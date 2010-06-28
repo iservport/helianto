@@ -64,7 +64,7 @@
 	<properties>
 		
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<spring.main.version>3.0.2.RELEASE</spring.main.version>
+		<spring.main.version>3.0.3.RELEASE</spring.main.version>
 		<spring.security.version>2.0.5.RELEASE</spring.security.version>
 	</properties>
 	<build>
