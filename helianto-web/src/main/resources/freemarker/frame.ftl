@@ -80,6 +80,12 @@
 href="?_eventId=${event}${param}&_flowExecutionKey=${flowExecutionKey}"><#nested/></a>
 </#macro>
 
+<#--
+ # Macro to create a selection link, or a return link if filterOption 
+ # is enabled.
+ #
+ # @deprecated, prefer select2 (below)
+  -->
 <#macro select targetIndex="0", event="selectTarget", param="", title="">
 <td>
 <#if filterOption?if_exists='returnOption' >
@@ -88,6 +94,30 @@ href="?_eventId=returnTarget&target_index=${targetIndex}${param}&_flowExecutionK
 <#else>
 <a <#if title!="" >title="${title}"</#if> 
 href="?_eventId=${event}&target_index=${targetIndex}${param}&_flowExecutionKey=${flowExecutionKey}"><#nested/></a>
+</#if>
+</td>
+</#macro>
+
+<#--
+ # Macro to create a selection link, or a return link if filterOption 
+ # is enabled.
+ #
+ # The macro will automatically create a transition using the model variable 
+ # ${targetName}, either 'select${targetName}' or 'return${targetName}', 
+ # followed by '&index=${targetIndex}${param}' passed as macro parameters.
+ # The spring webflow ${flowExecutionKey} will be appended, if exists.
+ # 
+ # The return option also creates extra [] around the link to distinguish it
+ # from selection.
+  -->
+<#macro select2 targetIndex="0", param="", title="">
+<td>
+<#if filterOption?if_exists='returnOption' >
+[<a <#if title!="" >title="${title}"</#if> 
+href="?_eventId=return${targetName?cap_first}&index=${targetIndex}${param}<#if flowExecutionKey?exists >&_flowExecutionKey=${flowExecutionKey}"></#if><#nested/></a>]
+<#else>
+<a <#if title!="" >title="${title}"</#if> 
+href="?_eventId=select${targetName?cap_first}&index=${targetIndex}${param}<#if flowExecutionKey?exists >&_flowExecutionKey=${flowExecutionKey}"></#if><#nested/></a>
 </#if>
 </td>
 </#macro>

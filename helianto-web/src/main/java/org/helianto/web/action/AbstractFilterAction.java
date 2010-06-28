@@ -17,7 +17,6 @@ package org.helianto.web.action;
 
 import java.util.List;
 
-import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
@@ -51,6 +50,10 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param userDetails
 	 */
 	public String filter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		// also put the target name in the attribute map.
+		if (!attributes.contains("targetName")) {
+			attributes.put("targetName", getTargetName());
+		}
 		ListFilter filter = getFilter(attributes, userDetails);
 		logger.debug("Using filter {}.", filter);
 		List<T> itemList = doFilter(filter);
@@ -95,7 +98,7 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * 
 	 * @param filter
 	 */
-	protected abstract List<T> doFilter(Filter filter);
+	protected abstract List<T> doFilter(ListFilter filter);
 
 	// convenience methods
 	

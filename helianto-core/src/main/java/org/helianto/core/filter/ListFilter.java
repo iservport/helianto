@@ -49,7 +49,7 @@ public interface ListFilter extends Filter {
 	/**
 	 * List index setter.
 	 */
-	public Object setIndex(int index);
+	public void setIndex(int index);
 	
 	/**
 	 * Current item.

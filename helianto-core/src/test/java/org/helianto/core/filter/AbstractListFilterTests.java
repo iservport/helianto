@@ -86,7 +86,8 @@ public class AbstractListFilterTests {
 		assertTrue(filter.hasPrevious());
 		assertEquals("ONE", filter.previous());
 		assertEquals(0, filter.getIndex());
-		assertEquals("TWO", filter.setIndex(1));
+		filter.setIndex(1);
+		assertEquals("TWO", filter.getItem());
 		assertEquals("THREE", filter.next());
 		assertEquals(2, filter.getIndex());
 		assertFalse(filter.hasNext());

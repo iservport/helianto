@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.User;
-import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.junit.Before;
@@ -65,6 +64,7 @@ public class ActionFilterTests {
 	public void filter() {
 		attributes.put("NAMEFilter", filter);		
 		assertEquals("success", action.filter(attributes, userDetails));
+		assertEquals("NAME", attributes.get("targetName"));
 		assertSame(itemList, updatedItemList);
 	}
 	
@@ -89,7 +89,7 @@ public class ActionFilterTests {
 				return filter;
 			}
 			@Override
-			protected List<String> doFilter(Filter filter) {
+			protected List<String> doFilter(ListFilter filter) {
 				return itemList;
 			}
 			@Override 
@@ -113,7 +113,7 @@ public class ActionFilterTests {
 			public int getListSize() { return 0; }
 			public Object next() { return null; }
 			public Object previous() { return null; }
-			public Object setIndex(int index) { return null; }
+			public void setIndex(int index) { }
 		};
 		userDetails = new  PublicUserDetails() {
 			public void setUser(User user) { }

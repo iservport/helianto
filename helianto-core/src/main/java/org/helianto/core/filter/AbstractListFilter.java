@@ -57,12 +57,11 @@ public abstract class AbstractListFilter extends AbstractFilter implements ListF
 	public int getIndex() {
 		return index;
 	}
-	public Object setIndex(int index) {
+	public void setIndex(int index) {
 		if (index >= 0 && index < getListSize()) {
 			this.index = index;
 		}
 		logger.debug("Index is {}.", index);
-		return getItem();
 	}
 	
 	/**
