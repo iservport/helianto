@@ -18,30 +18,40 @@ package org.helianto.admin.freemarker;
 
 import java.util.List;
 
-import org.helianto.core.Entity;
-import org.helianto.core.EntityFilter;
-import org.helianto.core.test.EntityTestSupport;
+import org.helianto.core.User;
+import org.helianto.core.UserFilter;
+import org.helianto.core.UserGroup;
 import org.helianto.core.test.OperatorTestSupport;
+import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.web.test.AbstractViewTest;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class EntityViewTests extends AbstractViewTest<EntityFilter, Entity> {
+public class EntityViewTestPending extends AbstractViewTest<UserFilter, UserGroup> {
 
+	// TODO now it's frame2 ....
+	protected void process(String phase) throws Exception {
+		setOutputFileName(getOutputName()+phase+".htm");
+		processView("frame2.ftl", model, visualTest());
+	}
+	
 	@Override
-	protected EntityFilter createFilter() {
-		return EntityFilter.entityFilterFactory(null);
+	protected UserFilter createFilter() {
+		UserFilter userFilter = (UserFilter) UserFilter.userFilterFactory(getAuthorizedUser().getUser());
+		userFilter.setClazz(User.class);
+		model.put("userGroupFilter",  userFilter);
+		return userFilter;
 	}
 
 	@Override
-	protected Entity createTarget() {
-		return EntityTestSupport.createEntity();
+	protected UserGroup createTarget() {
+		return UserGroupTestSupport.createUserGroup();
 	}
 
 	@Override
-	protected List<Entity> getList() {
-		return EntityTestSupport.createEntityList(5);
+	protected List<UserGroup> getList() {
+		return UserGroupTestSupport.createUserGroupList(5);
 	}
 
 	@Override
@@ -63,6 +73,7 @@ public class EntityViewTests extends AbstractViewTest<EntityFilter, Entity> {
 	
 	protected void addToModel() {
 		model.put("operator", OperatorTestSupport.createOperator("DEFAULT"));
+		model.put("flowExecutionUrl", "url");
 	}
 	
 	@Override

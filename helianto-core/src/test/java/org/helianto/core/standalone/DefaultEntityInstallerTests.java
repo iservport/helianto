@@ -38,7 +38,7 @@ public class DefaultEntityInstallerTests {
 	@Test
 	public void afterPropertiesSet() throws Exception {
 		Entity defaultEntity = new Entity();
-		EasyMock.expect(postInstallationMgr.installEntity(defaultOperator, "DEFAULT", false)).andReturn(defaultEntity);
+		EasyMock.expect(postInstallationMgr.installEntity(defaultOperator, "DEFAULT", "manager", false)).andReturn(defaultEntity);
 		EasyMock.replay(postInstallationMgr);
 		
 		defaultEntityInstaller.afterPropertiesSet();

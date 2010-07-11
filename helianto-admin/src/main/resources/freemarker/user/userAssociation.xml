@@ -16,7 +16,7 @@
 	 ! userAssociation  
 	 ! BROWSE VIEW
 	 !-->
-   <view-state id="userAssociationBrowse.view" view="/frame">
+   <view-state id="userAssociationBrowse.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->
@@ -44,7 +44,7 @@
 	 ! userAssociation  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="userAssociationEdit.view" view="/frame">
+   <view-state id="userAssociationEdit.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->
@@ -68,7 +68,7 @@
 	 ! identity  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="identityEdit.view" view="/frame">
+   <view-state id="identityEdit.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->
@@ -92,7 +92,7 @@
 	 ! userRole  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="userRoleEdit.view" view="/frame">
+   <view-state id="userRoleEdit.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->

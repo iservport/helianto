@@ -78,11 +78,13 @@ public abstract class AbstractAction<T> implements Serializable {
 	}
 	
 	/**
-	 * Subclasses must override this to assure the actual target preparation.
+	 * Subclasses override this to assure the actual target preparation.
 	 * 
 	 * @param target
 	 */
-	protected abstract T doPrepare(T target);
+	protected T doPrepare(T target) {
+		return target;
+	}
 	
 	/**
 	 * Store the target received in the attribute map.

@@ -31,7 +31,6 @@ import org.helianto.document.DocumentCodeBuilder;
 import org.helianto.document.DocumentCodeBuilderFilter;
 import org.helianto.document.DocumentFilter;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implemtation for <code>DocumentMgr</code> interface.
@@ -39,7 +38,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("documentMgr")
-@Transactional
 public class DocumentMgrImpl implements DocumentMgr {
 
 	public Document storeDocument(Document document) {

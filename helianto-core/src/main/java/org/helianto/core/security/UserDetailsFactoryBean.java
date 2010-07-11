@@ -1,14 +1,16 @@
 package org.helianto.core.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.UserRole;
-import org.springframework.security.Authentication;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,11 +34,10 @@ public class UserDetailsFactoryBean implements UserDetailsFactory {
 
 	public UserDetails createUserDetails(User user, Credential credential) {
 		Collection<UserRole> roles = user.getRoleList();
-        GrantedAuthority[] authorities = new GrantedAuthority[roles.size()];
-        int i = 0;
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for (UserRole r : roles) {
             String roleName = convertUserRoleToString(r);
-            authorities[i++] = new GrantedAuthorityImpl(roleName);
+            authorities.add(new GrantedAuthorityImpl(roleName));
         }
         UserDetailsAdapter userDetails = new UserDetailsAdapter(user, credential);
         userDetails.setAuthorities(authorities);

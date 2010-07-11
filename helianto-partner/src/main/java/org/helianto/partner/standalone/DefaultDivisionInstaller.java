@@ -50,6 +50,7 @@ public class DefaultDivisionInstaller implements InitializingBean {
 	/**
 	 * Empty constructor.
 	 */
+	@SuppressWarnings("serial")
 	public DefaultDivisionInstaller() {
 		partnerAddress = new AbstractAddress() {};
 	}

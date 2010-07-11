@@ -39,7 +39,6 @@ import org.helianto.core.security.UserDetailsAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>SecurityMgr</code> interface.
@@ -47,7 +46,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("securityMgr")
-@Transactional
 public class SecurityMgrImpl implements SecurityMgr {
     
 	public Credential findCredentialByIdentity(Identity identity) {

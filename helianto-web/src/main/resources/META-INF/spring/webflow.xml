@@ -25,10 +25,24 @@
            
 	<context:component-scan base-package="org.helianto.web.controller"/>
 			
-	<!--
-		Flow executor
-	-->
-	<flow:flow-executor id="flowExecutor" flow-registry="flowRegistry" />
+    <!-- DefaultAnnotationHandlerMapping enables @RequestMapping at the METHOD-level. -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+
+    <!-- AnnotationMethodHandlerAdapter is required for @RequestMappings at the CLASS-level. -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+	<!-- Maps request paths to @Controller classes; e.g. a path of /hotels looks for a controller named HotelsController -->
+	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+		<property name="order" value="1" />
+		<property name="defaultHandler">
+			<!-- If no @Controller match, map path to a view to render; e.g. the "/intro" path would map to the view named "intro" -->	
+			<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+		</property>
+	</bean>
+
+    <!-- This is required to mix @Controller with "extends Controller". 
+            NOTE - Both must use @RequestMapping -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
 
 	<!--
 		Flow registry
@@ -39,6 +53,30 @@
     	<flow:flow-location-pattern value="classpath*:/freemarker/**/*.xml"/>
     </flow:flow-registry>
     
+	<!--
+		Flow executor
+        Executes flows: the entry point into the Spring Web Flow system 
+        @see http://sourceforge.net/projects/hibernate-swf/ -->
+    <flow:flow-executor id="flowExecutor" >
+        <!-- max-execution-snapshots="0" disables serializitation... 
+             You MUST ALSO set alwaysGenerateNewNextKey=false or else --> 
+        <flow:flow-execution-repository max-executions="10" />
+        <flow:flow-execution-listeners>
+            <flow:listener ref="persistenceFlowExecutionListener" />
+            <flow:listener ref="securityFlowExecutionListener" /> 
+        </flow:flow-execution-listeners>
+    </flow:flow-executor>
+    
+    <!-- Install a listener that manages the PersistenceContext --> 
+    <bean id="persistenceFlowExecutionListener" class="org.springframework.webflow.persistence.HibernateFlowExecutionListener">
+        <constructor-arg ref="sessionFactory" />
+        <constructor-arg ref="transactionManager" />
+    </bean>
+    
+    <!-- Install a listener that manages security --> 
+    <bean id="securityFlowExecutionListener" 
+        class="org.springframework.webflow.security.SecurityFlowExecutionListener" />
+       
 	<flow:flow-builder-services id="flowBuilderServices" 
 	    view-factory-creator="mvcViewFactoryCreator"/>
 	

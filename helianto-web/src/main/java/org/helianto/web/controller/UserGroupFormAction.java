@@ -33,7 +33,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("userGroupAction")
+@Component("userGroupAction2")
 public class UserGroupFormAction extends AbstractEditAggregateFormAction<UserGroup, Entity> {
 
 	@Override

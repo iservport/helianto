@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.helianto.core.filter.Filter;
 import org.helianto.finance.CashFlow;
-import org.springframework.security.annotation.Secured;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  * Finance service interface.

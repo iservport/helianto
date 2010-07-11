@@ -41,8 +41,6 @@ import org.helianto.partner.Phone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>PartnerMgr</code> interface.
@@ -52,7 +50,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("partnerMgr")
 public class PartnerMgrImpl implements PartnerMgr {
 
-	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	public List<PartnerRegistry> findPartnerRegistries(PartnerRegistryFilter partnerRegistryFilter) {
 		List<PartnerRegistry> partnerRegistryList = (List<PartnerRegistry>) partnerRegistryDao.find(partnerRegistryFilter);
     	if (logger.isDebugEnabled() && partnerRegistryList!=null) {
@@ -72,7 +69,6 @@ public class PartnerMgrImpl implements PartnerMgr {
      * <li>partnerRegistryKeyList.</li>
      * </ol>
      */
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerRegistry preparePartnerRegistry(PartnerRegistry partnerRegistry) {
 		PartnerRegistry managedPartnerRegistry = partnerRegistryDao.merge(partnerRegistry);
 		managedPartnerRegistry.setPartnerList(new ArrayList<Partner>(managedPartnerRegistry.getPartners()));
@@ -82,17 +78,14 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return managedPartnerRegistry;
 	}
 	
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerRegistry storePartnerRegistry(PartnerRegistry partnerRegistry) {
 		return partnerRegistryDao.merge(partnerRegistry);
 	}
 	
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public void removePartnerRegistry(PartnerRegistry partnerRegistry) {
     	partnerRegistryDao.remove(partnerRegistry);
     }
 
-	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	public List<? extends Partner> findPartners(PartnerFilter partnerFilter) {
 		List<Partner> partnerList = (List<Partner>) partnerDao.find(partnerFilter);
     	if (logger.isDebugEnabled() && partnerList!=null) {
@@ -101,27 +94,22 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerList;
 	}
 	
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Partner storePartner(Partner partner) {
 		return partnerDao.merge(partner);
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void removePartner(Partner partner) {
 		partnerDao.remove(partner);
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Address storeAddress(Address address) {
 		return addressDao.merge(address);
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerRegistry removeAddress(Address address) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Map<String, PartnerKey> loadPartnerKeyMap(Partner partner) {
 		Map<String, PartnerKey> partnerKeyMap = new HashMap<String, PartnerKey>();
 		Set<PartnerKey> partnerKeys = partnerDao.merge(partner).getPartnerKeys();
@@ -131,27 +119,22 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerKeyMap;
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerKey storePartnerKey(PartnerKey partnerKey) {
 		return partnerKeyDao.merge(partnerKey);
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerRegistry removePartnerKey(PartnerKey partnerKey) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Phone storePhone(Phone phone) {
 		return phoneDao.merge(phone);
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public PartnerRegistry removePhone(Phone phone) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Division installDivision(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall) {
 		String partnerAlias = entity.getAlias();
 		PartnerRegistry partnerRegistry = partnerRegistryDao.findUnique(entity, partnerAlias);

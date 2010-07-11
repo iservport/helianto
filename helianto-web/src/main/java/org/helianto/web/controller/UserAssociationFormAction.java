@@ -33,7 +33,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("userAssociationAction")
+@Component("userAssociationAction2")
 public class UserAssociationFormAction extends AbstractAssociationFormAction<UserAssociation, UserGroup, UserGroup> {
 
 	@Override

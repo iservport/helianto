@@ -41,12 +41,14 @@ import org.helianto.partner.test.PhoneTestSupport;
 import org.helianto.partner.test.SupplierTestSupport;
 import org.helianto.partner.test.TransportPartnerTestSupport;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Transactional
 public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Resource FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;

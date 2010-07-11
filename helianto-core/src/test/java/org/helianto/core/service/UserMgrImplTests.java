@@ -39,12 +39,12 @@ import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
+import org.helianto.core.UserAssociationFilter;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserLogFilter;
 import org.helianto.core.UserRole;
-import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
@@ -354,7 +354,7 @@ public class UserMgrImplTests {
     private FilterDao<Identity, IdentityFilter> identityDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
-    private BasicDao<UserAssociation> userAssociationDao;
+    private FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao;
     private FilterDao<Province, ProvinceFilter> provinceDao;
     private FilterDao<UserLog, UserLogFilter> userLogDao;
 

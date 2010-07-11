@@ -27,7 +27,6 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.finance.CashFlow;
 import org.helianto.finance.CashFlowFilter;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>FinanceMgr</code> internface.
@@ -35,7 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("financeMgr")
-@Transactional
 public class FinanceMgrImpl implements FinanceMgr {
 
 	public List<? extends CashFlow> findCashFlows(Filter filter) {

@@ -26,6 +26,7 @@ import org.helianto.core.service.PostInstallationMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 
 /**
@@ -92,16 +93,18 @@ public class DefaultOperatorInstaller implements InitializingBean {
 	}
 
 	public void afterPropertiesSet() throws Exception {
-		logger.debug("About to install default operator.");
+		logger.info("Operator is a minimum requirement; checking installation  ...");
 		Operator defaultOperator = postInstallationMgr.installOperator(getDefaultOperatorName(), isReinstall());
-		logger.debug("About to install provinces.");
+		
+		logger.info("Provinces are optionally installed per operator only if the appropriate xml files are supplied; checking installation  ...");
 		if (getProvinceSourceList()!=null) {
 			for (String provinceSource: getProvinceSourceList()) {
 				logger.debug("Found province source from {}.", provinceSource);
 				postInstallationMgr.installProvinces(defaultOperator, new ClassPathResource(provinceSource.trim()));
 			}
 		}
-		logger.debug("About to install keys.");
+		
+		logger.info("Key codes are optionally installed per operator; checking installation  ...");
 		Map<String, KeyType> keyTypeMap = new HashMap<String, KeyType>();
 		if (getRequiredKeyTypeList()!=null) {
 			for (String keyCodeTuple: getRequiredKeyTypeList()) {
@@ -115,7 +118,8 @@ public class DefaultOperatorInstaller implements InitializingBean {
 				logger.debug("Key type {} mapped to {}", keyType, keyCode);
 			}
 		}
-		logger.debug("About to install services.");
+		
+		logger.info("Admin and User services are minimum requirements, but other services are optionally installed per operator; checking installation  ...");
 		Map<String, Service> serviceMap = new HashMap<String, Service>();
 		if (getRequiredServiceList()!=null) {
 			for (String serviceName: getRequiredServiceList()) {
@@ -133,12 +137,12 @@ public class DefaultOperatorInstaller implements InitializingBean {
 	private NamespaceDefaults namespace;
 	private PostInstallationMgr postInstallationMgr;
 	
-	@javax.annotation.Resource
+    @Autowired
 	public void setNamespace(NamespaceDefaults namespace) {
 		this.namespace = namespace;
 	}
 
-	@javax.annotation.Resource
+    @Autowired
 	public void setPostInstallationMgr(PostInstallationMgr postInstallationMgr) {
 		this.postInstallationMgr = postInstallationMgr;
 	}

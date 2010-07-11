@@ -1,6 +1,7 @@
 package org.helianto.core.security;
 
-import org.springframework.security.providers.AbstractAuthenticationToken;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+
 
 /**
  * <code>Authentication</code> implementation required to replace a previously authenticated one.

@@ -29,7 +29,7 @@ import org.helianto.core.security.SwitchUserAuthenticationToken;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.core.security.UserDetailsFactory;
 import org.helianto.core.service.UserMgr;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 

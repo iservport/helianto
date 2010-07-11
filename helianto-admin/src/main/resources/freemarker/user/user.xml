@@ -16,7 +16,7 @@
 	 ! user  
 	 ! BROWSE VIEW
 	 !-->
-   <view-state id="userBrowse.view" view="/frame">
+   <view-state id="userBrowse.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->
@@ -49,7 +49,7 @@
 	 ! user  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="userEdit.view" view="/frame">
+   <view-state id="userEdit.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->
@@ -72,7 +72,7 @@
 	 ! identity  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="identityEdit.view" view="/frame">
+   <view-state id="identityEdit.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->
@@ -100,7 +100,7 @@
 	 ! userRole  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="userRoleEdit.view" view="/frame">
+   <view-state id="userRoleEdit.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->

@@ -39,7 +39,7 @@ import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @author Mauricio Fernandes de Castro

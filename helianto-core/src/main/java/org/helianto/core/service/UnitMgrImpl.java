@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.helianto.core.Unit;
 import org.helianto.core.UnitFilter;
 import org.helianto.core.repository.FilterDao;
-import org.springframework.transaction.annotation.Transactional;
 
 
 
@@ -34,7 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @org.springframework.stereotype.Service("unitMgr")
-@Transactional
 public class UnitMgrImpl implements UnitMgr {
     
 	public List<Unit> findUnits(UnitFilter unitFilter) {

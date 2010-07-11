@@ -23,7 +23,7 @@ import org.helianto.core.UnitFilter;
 /**
  * Service interface to units.
  * 
- * @author MaurÃ­cio Fernandes de Castro
+ * @author Maurício Fernandes de Castro
  */
 public interface UnitMgr {
 

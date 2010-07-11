@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
-	<version>0.2.10</version>
+	<version>0.3.0-SNAPSHOT</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -65,7 +65,7 @@
 		
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<spring.main.version>3.0.3.RELEASE</spring.main.version>
-		<spring.security.version>2.0.5.RELEASE</spring.security.version>
+		<spring.security.version>3.0.2.RELEASE</spring.security.version>
 	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -231,10 +231,14 @@ Application-TraceLevels: ${application.traceLevels}
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
-			<artifactId>org.springframework.security.annotation</artifactId>
+			<artifactId>org.springframework.security.web</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		<!--  
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>org.springframework.security.config</artifactId>
+		    <version>${spring.security.version}</version>
+		</dependency>		<!--  
 		<dependency>
 			<groupId>org.springframework.ws</groupId>
 			<artifactId>org.springframework.ws.java5</artifactId>

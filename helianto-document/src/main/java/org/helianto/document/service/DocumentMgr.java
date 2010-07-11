@@ -20,7 +20,7 @@ import java.util.List;
 import org.helianto.core.filter.Filter;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentCodeBuilder;
-import org.springframework.security.annotation.Secured;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  * Document service interface.

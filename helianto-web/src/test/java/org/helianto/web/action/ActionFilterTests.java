@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
@@ -114,10 +115,13 @@ public class ActionFilterTests {
 			public Object next() { return null; }
 			public Object previous() { return null; }
 			public void setIndex(int index) { }
+			public boolean isClear() { return true; }
+			public void setClear(boolean clear) { }
 		};
 		userDetails = new  PublicUserDetails() {
 			public void setUser(User user) { }
 			public User getUser() { return null; }
+			public Entity getEntity() { return null; }
 		};
 		userDetailsInCreation = null;
 	}

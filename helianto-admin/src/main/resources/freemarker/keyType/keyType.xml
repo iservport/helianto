@@ -19,7 +19,7 @@
 	 ! keyType 
 	 ! SELECTION VIEW
 	 !-->
-   <view-state id="keyTypeSelection.view" view="/frame">
+   <view-state id="keyTypeSelection.view" view="/frame2">
 		<!-- 
 		 ! before selection
 		 -->
@@ -46,7 +46,7 @@
 	 ! keyType  
 	 ! BROWSE VIEW
 	 !-->
-   <view-state id="keyTypeBrowse.view" view="/frame">
+   <view-state id="keyTypeBrowse.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->
@@ -72,7 +72,7 @@
 	 ! keyType  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="keyTypeEdit.view" view="/frame">
+   <view-state id="keyTypeEdit.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->

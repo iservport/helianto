@@ -2,3 +2,4 @@
 	<title>${title!"Selection"}</title>
 	<link href="../${testRoot!}helianto.css" rel="stylesheet" />
 	<link href="../${entityStyle!"white.css"}" rel="stylesheet" />
+	<link rel="icon" type="image/png" href="../favicon.png" />

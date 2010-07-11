@@ -111,6 +111,17 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
     	setEntity(entity);
     }
 
+	/** 
+	 * User group constructor.
+	 * 
+	 * @param entity
+	 * @param userKey
+	 */
+    public UserGroup(Entity entity, String userKey) {
+    	this(entity);
+    	setUserKey(userKey);
+    }
+
     @Id 
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="userId")
@@ -152,6 +163,7 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
     public String getUserKey() {
         return resolveUserKey(this.userKey);
     }
+    
     @Transient
     protected String resolveUserKey(String userKey) {
     	return userKey;

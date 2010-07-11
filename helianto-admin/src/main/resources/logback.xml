@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="true">
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+    </layout>
+  </appender>
+
+  <logger name="org.springframework.security" level="OFF"/>
+  <logger name="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" level="OFF"/>
+  <logger name="org.springframework.web.servlet.view.InternalResourceView" level="OFF"/>
+  <logger name="org.springframework.web.servlet.view.AbstractView" level="OFF"/>
+  <logger name="org.springframework.web.servlet.DispatcherServlet" level="OFF"/>
+  <logger name="org.springframework.web.bind.annotation.support.HandlerMethodInvoker" level="OFF"/>
+  <logger name="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" level="OFF"/>
+  <logger name="org.springframework.webflow" level="OFF"/>
+  <logger name="org.springframework.binding" level="DEBUG"/>
+  <logger name="org.hibernate" level="ERROR"/>
+  <logger name="org.helianto.core" level="DEBUG"/>
+  <logger name="org.helianto.web" level="DEBUG"/>
+
+  <root level="INFO">          
+    <appender-ref ref="STDOUT" />
+  </root>  
+  
+</configuration>

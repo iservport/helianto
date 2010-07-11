@@ -83,13 +83,36 @@ public class Identity implements java.io.Serializable {
     private Set<Credential> credentials = new HashSet<Credential>();
 
     /** 
-     * Default constructor
+     * Default constructor.
      */
     public Identity() {
         setPersonalData(PersonalData.personalDataFactory("", ""));
         setCreated(new Date());
         setIdentityType(IdentityType.EMAIL.getValue());
         setNotification(Notification.AUTOMATIC.getValue());
+    }
+
+    /** 
+     * Principal constructor.
+     * 
+     * @param principal
+     */
+    public Identity(String principal) {
+    	this();
+    	setPrincipal(principal);
+    	setOptionalAlias(getPrincipalName());
+    }
+
+    /** 
+     * Principal and optional alias constructor.
+     * 
+     * @param principal
+     * @param optionalAlias
+     */
+    public Identity(String principal, String optionalAlias) {
+    	this();
+    	setPrincipal(principal);
+    	setOptionalAlias(optionalAlias);
     }
 
     /**
@@ -110,6 +133,11 @@ public class Identity implements java.io.Serializable {
     public String getPrincipal() {
         return this.principal;
     }
+    /**
+     * Setting the principal also forces to lower case.
+     * 
+     * @param principal
+     */
     public void setPrincipal(String principal) {
         if (principal!=null) {
             this.principal = principal.toLowerCase();
@@ -120,7 +148,33 @@ public class Identity implements java.io.Serializable {
     }
 
     /**
-     * OptionalAlias getter.
+     * <<Transient>> Principal name, i.e., substring of principal before '@', if any,
+     * or the principal itself.
+     */
+    @Transient
+    public String getPrincipalName() {
+    	int position = getPrincipal().indexOf("@");
+    	if (position>0) {
+    		return getPrincipal().substring(0, position);
+    	}
+        return getPrincipal();
+    }
+    
+    /**
+     * <<Transient>> User principal domain, i.e., substring of principal after '@', if any,
+     * or empty string.
+     */
+    @Transient
+    public String getPrincipalDomain() {
+    	int position = getPrincipal().indexOf("@");
+    	if (position>0) {
+    		return getPrincipal().substring(position);
+    	}
+        return "";
+    }
+    
+    /**
+     * Optional alias.
      */
     @Column(length=20)
     public String getOptionalAlias() {
@@ -166,7 +220,7 @@ public class Identity implements java.io.Serializable {
     }
 
     /**
-     * Created getter.
+     * Date created.
      */
     @Temporal(TemporalType.TIMESTAMP)
     public Date getCreated() {

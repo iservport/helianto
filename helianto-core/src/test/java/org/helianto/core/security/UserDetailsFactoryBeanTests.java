@@ -31,13 +31,13 @@ public class UserDetailsFactoryBeanTests {
 	@Test
 	public void createUserDetails() {
 		user.getRoleList().add(new UserRole(user, service));
-	    Credential credential = new Credential();
+	    Credential credential = new Credential(user.getIdentity(), "default");
 		UserDetailsAdapter userDetails = (UserDetailsAdapter) userDetailsFactoryBean.createUserDetails(user, credential);
 		assertSame(user, userDetails.getUser());
 		assertEquals(user.getUserKey(), userDetails.getUsername());
 		assertSame(credential, userDetails.getCredential());
 		assertEquals("default", userDetails.getPassword());
-		assertEquals("ROLE_USER_READ", userDetails.getAuthorities()[0].toString());
+		assertEquals("ROLE_USER_READ", userDetails.getAuthorities().get(0).toString());
 	}
 
     // domain objects

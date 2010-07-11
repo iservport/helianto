@@ -20,6 +20,7 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 import org.springframework.core.io.Resource;
 
 /**
@@ -33,7 +34,7 @@ public interface PostInstallationMgr {
 	 * Install an Operator, if does not exist.
 	 * 
 	 * <p>
-	 * Automatically associate two basic services: (1) admin, (2) user.
+	 * Automatically associate two basic services: (1) ADMIN, (2) USER.
 	 * </p>
 	 * 
 	 * @param defaultOperatorName
@@ -79,9 +80,10 @@ public interface PostInstallationMgr {
 	 * 
 	 * @param defaultOperator
 	 * @param entityAlias
+	 * @param managerPricipal
 	 * @param reinstall
 	 */
-	public Entity installEntity(Operator defaultOperator, String entityAlias, boolean reinstall);
+	public Entity installEntity(Operator defaultOperator, String entityAlias, String managerPricipal, boolean reinstall);
 	
 	/**
 	 * Install an UserGroup, if does not exist.
@@ -90,6 +92,15 @@ public interface PostInstallationMgr {
 	 * @param userGroupName
 	 * @param reinstall
 	 */
-	public UserGroup instalUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall);
+	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall);
+	
+	/**
+	 * Install an UserRole, if does not exist.
+	 * 
+	 * @param userGroup
+	 * @param service
+	 * @param extension
+	 */
+	public UserRole installUserRole(UserGroup userGroup, Service service, String extension);
 
 }

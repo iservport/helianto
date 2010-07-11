@@ -3,75 +3,36 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+        
+   <secured attributes="ROLE_ADMIN_MANAGER" />
+   
+   <input name="userGroup"/>
 
    <on-start>
-      <set name="flowScope.assign" value="'entity/assign'"/>
-      <set name="conversationScope.entityStyle" value="'white.css'"/>
+      <set name="flowScope.basePath" value="'entity/'"/>
+      <set name="flowScope.assign"   value="'assign'"/>
    </on-start>
 
-   <action-state id="preProcess">
-      <evaluate expression="operatorFilterAction.applyFilter"/>
-      <transition on="success" to="entitySelection.view"/>
-   </action-state>
+	<action-state id="createIfNeeded">
+		<evaluate expression="homeAction.create(flowScope, currentUser.principal)" />
+        <transition on="edit" to="entityEdit.view"/>
+        <transition to="load"/>
+	</action-state>
 
-	<!-- 001
-	 ! entity 
-	 ! SELECTION VIEW
-	 !-->
-   <view-state id="entitySelection.view" view="/frame">
-		<!-- 
-		 ! before selection
-		 -->
-      <on-render>
-         <evaluate expression="entityFilterAction.applyFilter"/>
-         <set name="flashScope.forward" value="'entity/selection_fwd'"/>
-         <set name="flashScope.sidenav" value="'entity/selection_nav'"/>
-         <set name="flashScope.sidebar" value="'entity/selection_filter'"/>
-         <set name="flashScope.mainbar" value="'entity/mainbar'"/>
-         <set name="flashScope.template" value="'entity/selection'"/>
-         <set name="flashScope.info" value="'entity/info'"/>
-      </on-render>
-		<!-- 
-		 ! forward transitions
-		 -->
-      <transition on="toProvince" to="province.subflow"/>
-      <transition on="toKeyType" to="keyType.subflow"/>
-      <transition on="toService" to="service.subflow"/>
-		<!-- 
-		 ! local transitions
-		 -->
-      <transition on="selectTarget" to="entityBrowse.view">
-         <evaluate expression="entityFilterAction.selectTarget"/>
-      </transition>
-      <transition on="createTarget" to="entityEdit.view">
-         <evaluate expression="entityAction.createTarget"/>
-      </transition>
-   </view-state>
+	<action-state id="load">
+		<evaluate expression="homeAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="entityBrowse.view" />
+	</action-state>
 
-	<!-- 002
-	 ! entity  
-	 ! BROWSE VIEW
-	 !-->
-   <view-state id="entityBrowse.view" view="/frame">
-		<!-- 
-		 ! before browse
-		 -->
+   <view-state id="entityBrowse.view" view="/frame2">
+
       <on-render>
-         <evaluate expression="entityAction.prepareTarget"/>
-         <evaluate expression="entityAction.resolveAuthorization"/>
-         <set name="flashScope.forward" value="'toSelection'"/>
-         <set name="flashScope.sidenav" value="'entity/entity_nav'"/>
-         <set name="flashScope.sidebar" value="'entity/entity_bar'"/>
-         <set name="flashScope.mainnav" value="'main_nav'"/>
-         <set name="flashScope.template" value="'entity/entity'"/>
+         <set name="viewScope.sidebar"  value="'entity_bar'"/>
+         <set name="viewScope.template" value="'entity'"/>
       </on-render>
-		<!-- 
-		 ! forward transitions
-		 -->
+
       <transition on="toUser" to="user.subflow"/>
-		<!-- 
-		 ! local transitions
-		 -->
+
       <transition on="editTarget" to="entityEdit.view"/>
       <transition on="createUserGroup" to="userGroup.subflow">
          <evaluate expression="userGroupAction.createTarget"/>
@@ -82,25 +43,21 @@
       <transition on="selectUser" to="userBrowse.view">
          <evaluate expression="userGroupAction.selectTarget"/>
       </transition>
-		<!-- 
-		 ! backward transitions
-		 -->
-      <transition on="toSelection" to="entitySelection.view"/>
+
+      <transition on="toSelection" to="toSelection"/>
    </view-state>
 
 	<!-- 003
 	 ! entity  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="entityEdit.view" view="/frame">
+   <view-state id="entityEdit.view" view="/frame2" model="userGroup" >
 		<!-- 
 		 ! before browse
 		 -->
       <on-render>
-         <evaluate expression="entityAction.editTarget"/>
-         <set name="flashScope.sidenav" value="'entity/edit_nav'"/>
-         <set name="flashScope.sidebar" value="'entity/entity_bar'"/>
-         <set name="flashScope.template" value="'entity/entity_form'"/>
+         <set name="viewScope.sidebar"  value="'entity_bar'"/>
+         <set name="viewScope.template" value="'entity_form'"/>
       </on-render>
 		<!-- 
 		 ! local transitions
@@ -118,7 +75,7 @@
 	 !-->
    <subflow-state id="province.subflow" subflow="province">
       <input name="operator" value="flowScope.operator"/>
-      <transition on="toParent" to="entitySelection.view"/>
+      <transition on="toParent" to="selection.view"/>
    </subflow-state>
 
 	<!-- 
@@ -127,7 +84,7 @@
 	 !-->
    <subflow-state id="keyType.subflow" subflow="keyType">
       <input name="operator" value="flowScope.operator"/>
-      <transition on="toParent" to="entitySelection.view"/>
+      <transition on="toParent" to="selection.view"/>
    </subflow-state>
 
 	<!-- 
@@ -136,7 +93,7 @@
 	 !-->
    <subflow-state id="service.subflow" subflow="service">
       <input name="operator" value="flowScope.operator"/>
-      <transition on="toParent" to="entitySelection.view"/>
+      <transition on="toParent" to="selection.view"/>
    </subflow-state>
 
 	<!-- 
@@ -157,16 +114,16 @@
 	 ! user
 	 ! BROWSE VIEW
 	 !-->
-   <view-state id="userBrowse.view" view="/frame">
+   <view-state id="userBrowse.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->
       <on-render>
          <evaluate expression="userGroupAction.prepareTarget"/>
          <evaluate expression="userGroupAction.resolveAuthorization"/>
-         <set name="flashScope.forward" value="'toSelection'"/>
-         <set name="flashScope.sidebar" value="'user/userGroup_bar'"/>
-         <set name="flashScope.template" value="'user/userGroup'"/>
+         <set name="viewScope.forward" value="'toSelection'"/>
+         <set name="viewScope.sidebar" value="'user/userGroup_bar'"/>
+         <set name="viewScope.template" value="'user/userGroup'"/>
       </on-render>
 		<!-- 
 		 ! local transitions
@@ -200,6 +157,7 @@
 	 ! End states 
 	// -->
    <end-state id="toHome"/>
+   <end-state id="toSelection"/>
 
 	<!--
 	 ! Globals 

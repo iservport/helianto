@@ -29,29 +29,77 @@
 		Scan this packages for annotated beans.
 	-->
 	<context:component-scan base-package="org.helianto.core,org.helianto.core.service,org.helianto.core.validation"/>
-	    
-	<!--
-		Post-processor to perform exception translation on @Repository classes (from native
-		exceptions such as JPA PersistenceExceptions to Spring's DataAccessException hierarchy).
-	-
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-	-->
-	<!--
-	   Provides persistence exception translation based on the persistence exception translators found in this context. 
-	 -->
-	<bean id="persistenceExceptionInterceptor"
-	    class="org.springframework.dao.support.PersistenceExceptionTranslationInterceptor" />
 	
-	<aop:config>
-	    <aop:advisor pointcut="execution(* *Dao(..))" advice-ref="persistenceExceptionInterceptor" />
-	</aop:config>
+	<!-- Added with 0.3-->
+	
+	<!-- 
+        Required to let presentation layer (possibly with the aid of Spring Web Flow) manage 
+        the PersistenceContext...
+        @see http://sourceforge.net/projects/hibernate-swf/
+     -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager" >
+        <tx:attributes>
+        <!--
+            Comments below were originally written by Jim Alexander having Spring Web Flow 
+            in mind, but may be useful even if another mechanism other than a flow
+            provides a long unit of work. I kept the terms SWF and flow for simplicity.
+            [...]
+            There are several overall principals of implementing an extended 
+            PersistenceContext. [...]  
+             - WebFlow will manage the PersistenceContext. 
+             - SWF will create a new Hibernate SessionImpl when a new flow begins and will 
+               only close the session when webflow transitions into an end-state with 
+               commit="true" <end-state commit="true" >
+             - A typical WebFlow state-transition will bind the current request-thread 
+               to WebFlow's existing SessionImpl. When the state-transition is complete, 
+               WebFlow will not close the session.
+             - After given SWF state-transition has re-bound to the SessionImpl, WebFlow 
+               will [ call ] the service-API. The AOP TransactionInterceptor will request 
+               a new transaction from the existing thread-bound SessionImpl. After the
+               service-API call returns, AOP will commit the transaction but the SessionImpl 
+               will remain open. 
+             - WebFlow will only extend the PersistenceContext across multiple state 
+               transitions if [at least]: 
+                    1) transaction type = readonly (readonly="true") [...] 
+                    2) tx propagation: SUPPORTS (not REQUIRED ! ! !) [...]
+					[...]
+         -->
+            <tx:method name="commitSession" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="load*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="create*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="prepare*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
 
-	<!--
-		Instruct Spring to perform declarative transaction management
-		automatically on annotated classes.
-	-->
-	<tx:annotation-driven />
-	
+            <tx:method name="fin*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="merg*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="pers*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="remov*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+
+            <tx:method name="store*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="install*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <!-- This "*" pattern must appear last or else the other patterns will never match -->
+            <tx:method name="*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+          </tx:attributes>
+    </tx:advice>
+
+	<!-- 
+	    Required to apply transactions to service and installation APIs
+	 -->
+    <aop:config>
+        <aop:pointcut id="servicePointcut" expression="execution(* *..service.*Mgr*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
+    </aop:config>
+    
+    <aop:config>
+        <aop:pointcut id="testPointcut" expression="execution(* *..*Dao*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="testPointcut" />
+    </aop:config>
+    
+    <!-- Can't declare annotation-driven AND tx:advice to instruct Spring to perform declarative 
+         transaction management automatically on annotated classes.
+         [...]
+    <tx:annotation-driven transaction-manager="transactionManager" />
+     -->
+
 	<!-- 
 		Namespace defaults holder.
 	 -->

@@ -24,12 +24,13 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.Service;
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 import org.helianto.core.repository.BasicDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>PostInstallation</code>.
@@ -37,121 +38,170 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @org.springframework.stereotype.Service("postInstallationMgr")
-@Transactional
 public class PostInstallationMgrImpl implements PostInstallationMgr {
 
 	public Operator installOperator(String defaultOperatorName, boolean reinstall) {
+		
 		if (defaultOperatorName==null) {
 			defaultOperatorName = "DEFAULT";
 		}
+		
+		logger.info("Check operator {} installation with 'reinstall={}'", defaultOperatorName, reinstall);
 		Operator defaultOperator = null;
 		if (!reinstall) {
 			defaultOperator = operatorDao.findUnique(defaultOperatorName);
 		}
 		if (defaultOperator==null) {
-			logger.info("About to install operator with name {}", defaultOperatorName); 
+			logger.info("Will install operator {} ...", defaultOperatorName); 
 			defaultOperator = Operator.operatorFactory(defaultOperatorName, Locale.getDefault());
-			defaultOperator = operatorDao.merge(defaultOperator);
+			operatorDao.saveOrUpdate(defaultOperator);
 		}
-		logger.info("Operator {} is now available", defaultOperator);
+		logger.info("Default operator AVAILABLE as {}.", defaultOperator);
 		
-		if (!defaultOperator.getServiceMap().containsKey("ADMIN")) {
-			Service adminService = Service.serviceFactory(defaultOperator, "ADMIN");
-			logger.info("Admin service is installed by default as {}", adminService);
-			defaultOperator.getServiceMap().put(adminService.getServiceName(), adminService);
-		}
-		else {
-			logger.debug("Admin service alredy installed.");
-		}
+		Service adminService = installService(defaultOperator, "ADMIN");
+		defaultOperator.getServiceMap().put("ADMIN", adminService);
 		
-		if (!defaultOperator.getServiceMap().containsKey("USER")) {
-			Service userService = Service.serviceFactory(defaultOperator, "USER");
-			logger.info("User service is installed by default as {}", userService);
-			defaultOperator.getServiceMap().put(userService.getServiceName(), userService);
-		}
-		else {
-			logger.debug("User service alredy installed.");
-		}
+		Service userService = installService(defaultOperator, "USER");
+		defaultOperator.getServiceMap().put("USER", userService);
 				
 		return defaultOperator;
 	}
 
 	public void installProvinces(Operator defaultOperator, Resource rs) {
+		
+		operatorDao.saveOrUpdate(defaultOperator);
 		List<Province> provinceList = provinceResourceParserStrategy.parseProvinces(defaultOperator, rs);
-		Operator managedOperator = operatorDao.merge(defaultOperator);
+		
+		logger.info("Will install {} province(s) ...", provinceList.size());
 		for (Province province: provinceList) {
 	    	if (provinceDao.findUnique(defaultOperator, province.getProvinceCode())==null) {
 	    		if (province instanceof City && province.getParent()!=null) {
 	    			Province managedParent = provinceDao.findUnique(defaultOperator, province.getParent().getProvinceCode());
 	    			if (managedParent==null) {
-	    				managedParent = provinceDao.merge(province.getParent());
+	    				provinceDao.saveOrUpdate(province.getParent());
 	    			}
 	    			province.setParent(managedParent);
 	    		}
-	    		province.setOperator(managedOperator);
-		        provinceDao.merge(province);
-		        logger.info("Created province {}.", province);
-		        provinceDao.flush();
+	    		province.setOperator(defaultOperator);
+		        provinceDao.saveOrUpdate(province);
 	    	}
 	    	else {
-	    		logger.info("Found province {}.", province);
+	    		logger.info("Province AVAILABLE as {}.", province);
 	    	}
 		}
+		
 	}
 	
 	public KeyType installKey(Operator defaultOperator, String keyCode) {
+		
+		operatorDao.saveOrUpdate(defaultOperator);
+		
+		logger.info("Check key code {} installation ...", keyCode);
 		KeyType keyType = keyTypeDao.findUnique(defaultOperator, keyCode);
 		if (keyType==null) {
-			logger.info("About to install key type {}", keyCode);
-			Operator managedOperator = operatorDao.merge(defaultOperator);
-			keyType = KeyType.keyTypeFactory(managedOperator, keyCode);
-			keyType = keyTypeDao.merge(keyType);
+			logger.info("Will install key code {} ...", keyCode); 
+			keyType = KeyType.keyTypeFactory(defaultOperator, keyCode);
+			keyTypeDao.saveOrUpdate(keyType);
 		}
-		logger.info("KeyType {} is now available", keyType);
+		logger.info("KeyType  AVAILABLE as {}.", keyType);
+		
 		return keyType;
 	}
 
 	public Service installService(Operator defaultOperator, String serviceName) {
+		
+		operatorDao.saveOrUpdate(defaultOperator);
+		
+		logger.info("Check service {} installation ...", serviceName);
 		Service service = serviceDao.findUnique(defaultOperator, serviceName);
 		if (service==null) {
-			logger.info("About to install service with name {}", serviceName);
-			Operator managedOperator = operatorDao.merge(defaultOperator);
-			service = Service.serviceFactory(managedOperator, serviceName);
-			service = serviceDao.merge(service);
+			logger.info("Will install service {} ...", serviceName);
+			service = Service.serviceFactory(defaultOperator, serviceName);
+			serviceDao.saveOrUpdate(service);
 		}
-		logger.info("Sevice {} is now available.", service);
+		logger.info("Sevice AVAILABLE as {}.", service);
+		
 		return service;
 	}
 	
-	public Entity installEntity(Operator defaultOperator, String entityAlias, boolean reinstall) {
+	public Entity installEntity(Operator defaultOperator, String entityAlias, String managerPrincipal, boolean reinstall) {
+		
+		operatorDao.saveOrUpdate(defaultOperator);
+		
+		logger.info("Check entity {} installation with 'reinstall={}'", entityAlias, reinstall);
 		Entity defaultEntity = null;
 		if (!reinstall) {
 			defaultEntity = entityDao.findUnique(defaultOperator, entityAlias);
 		}
-		if (defaultEntity==null) {
-			logger.info("About to install entity with alias {}", entityAlias); 
-			Operator managedOperator = operatorDao.merge(defaultOperator);
-			defaultEntity = Entity.entityFactory(managedOperator, entityAlias);
-			defaultEntity = entityDao.merge(defaultEntity);
-		} 
-		logger.info("Entity {} is now available.", defaultEntity);
 		
+		if (defaultEntity==null) {
+			logger.info("Will install entity {} ...", entityAlias);
+			defaultEntity = Entity.entityFactory(defaultOperator, entityAlias);
+			entityDao.saveOrUpdate(defaultEntity);
+		} 
+		logger.info("Entity AVAILABLE as {}.", defaultEntity);
+		
+		//
+		UserGroup adminGroup = installUserGroup(defaultEntity, "ADMIN", reinstall);
+		
+		Service adminService = defaultOperator.getServiceMap().get("ADMIN");
+		if (adminService==null) {
+			throw new IllegalArgumentException("Unable to load required service 'ADMIN' from operator {} "+defaultOperator);
+		}
+		
+		UserRole adminRole = installUserRole(adminGroup, adminService, "MANAGER");
+		adminGroup.getRoles().add(adminRole);
+		
+		UserAssociation adminAssociation = userMgr.installUser(adminGroup, managerPrincipal);
+		logger.info("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
+		
+		//
+		UserGroup userGroup = installUserGroup(defaultEntity, "USER", reinstall);
+		
+		Service userService = defaultOperator.getServiceMap().get("USER");
+		if (userService==null) {
+			throw new IllegalArgumentException("Unable to load required service 'USER' from operator {} "+defaultOperator);
+		}
+		
+		UserRole userRole = installUserRole(userGroup, userService, "MANAGER");
+		userGroup.getRoles().add(userRole);
+		
+		UserAssociation userAssociation = userMgr.installUser(userGroup, managerPrincipal);
+		logger.info("Association to USER group AVAILABLE as {}.", userAssociation);
+
 		return defaultEntity;
 	}
 	
-	public UserGroup instalUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall) {
+	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall) {
+
+		entityDao.saveOrUpdate(defaultEntity);
+		
+		logger.info("Check user (group) {} installation with 'reinstall={}'", userGroupName, reinstall);
 		UserGroup userGroup = null;
 		if (!reinstall) {
 			userGroup = userGroupDao.findUnique(defaultEntity, userGroupName);
 		}
 		if (userGroup==null) {
+			logger.info("Will install user (group) {} ...", userGroupName);
 			userGroup = UserGroup.userGroupFactory(defaultEntity, userGroupName);
-			logger.info("About to install user group with name {}", userGroupName);
-			userGroupDao.persist(userGroup);
+			userGroupDao.saveOrUpdate(userGroup);
 		}
-		logger.info("UserGroup {} is now available.", userGroup);
+		logger.info("UserGroup AVAILABLE as {}.", userGroup);
 		
 		return userGroup;
+	}
+	
+	public UserRole installUserRole(UserGroup userGroup, Service service, String extension) {
+		
+		UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
+		if (userGroup==null) {
+			logger.info("Will install required user role USER_ALL for user group USER ...");
+			userRole = new UserRole(userGroup, service, "ALL");
+			userRoleDao.saveOrUpdate(userRole);
+		}
+		logger.info("User role AVAILABLE as {}.", userRole);
+		
+		return userRole;
 	}
 	
 	// collabs
@@ -162,7 +212,9 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	private BasicDao<Service> serviceDao;
 	private BasicDao<Entity> entityDao;
 	private BasicDao<UserGroup> userGroupDao;
+	private BasicDao<UserRole> userRoleDao;
 	private ProvinceResourceParserStrategy provinceResourceParserStrategy;
+	private UserMgr userMgr;
 
 	@javax.annotation.Resource(name="operatorDao")
 	public void setOperatorDao(BasicDao<Operator> operatorDao) {
@@ -194,12 +246,20 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		this.userGroupDao = userGroupDao;
 	}
 	
+	@javax.annotation.Resource(name="userRoleDao")
+	public void setUserRoleDao(BasicDao<UserRole> userRoleDao) {
+		this.userRoleDao = userRoleDao;
+	}
+	
 	@javax.annotation.Resource(name="provinceResourceParserStrategy")
 	public void setProvinceResourceParserStrategy(ProvinceResourceParserStrategy provinceResourceParserStrategy) {
 		this.provinceResourceParserStrategy = provinceResourceParserStrategy;
 	}
 	
-	
+	@javax.annotation.Resource(name="userMgr")
+	public void setUserMgr(UserMgr userMgr) {
+		this.userMgr = userMgr;
+	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostInstallationMgrImpl.class);
 

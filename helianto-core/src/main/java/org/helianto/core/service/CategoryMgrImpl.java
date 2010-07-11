@@ -19,12 +19,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Category;
 import org.helianto.core.CategoryFilter;
 import org.helianto.core.repository.FilterDao;
-import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation to category interface.
@@ -32,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @org.springframework.stereotype.Service("categoryMgr")
-@Transactional
 public class CategoryMgrImpl implements CategoryMgr {
     
 	public List<Category> findCategories(CategoryFilter categoryFilter) {

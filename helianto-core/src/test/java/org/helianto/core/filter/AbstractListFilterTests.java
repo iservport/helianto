@@ -2,6 +2,7 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -92,6 +93,17 @@ public class AbstractListFilterTests {
 		assertEquals(2, filter.getIndex());
 		assertFalse(filter.hasNext());
 		assertTrue(filter.hasPrevious());
+	}
+	
+	@Test
+	public void isClear() {
+		list.add("ONE");
+		assertEquals("ONE", filter.getItem());
+		assertFalse(filter.isClear());
+		filter.setIndex(-1);
+		assertEquals(-1, filter.getIndex());
+		assertTrue(filter.isClear());
+		assertNull(filter.getItem());
 	}
 	
 	@SuppressWarnings("serial")

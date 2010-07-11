@@ -1,4 +1,5 @@
 <#assign base="entity" />
+<#assign targetName="entity" />
 <#assign title="Namespace management" />
 
 <#assign userStateFilter={

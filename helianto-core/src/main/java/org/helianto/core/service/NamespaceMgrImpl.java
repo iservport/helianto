@@ -39,7 +39,6 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <code>NamespaceMgr</code> default implementation.
@@ -47,7 +46,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @org.springframework.stereotype.Service("namespaceMgr")
-@Transactional
 public class NamespaceMgrImpl implements NamespaceMgr {
 
 	public List<Operator> findOperator() {
@@ -101,7 +99,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return entity;
 	}
 
-	@Transactional(readOnly=true)
 	public Operator findOperatorByName(String operatorName) {
 		return operatorDao.findUnique(operatorName);
 	}
@@ -110,20 +107,17 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return operatorDao.merge(operator);
 	}
 
-	@Transactional(readOnly=true)
 	public Province findProvince(Operator operator, String provinceCode) {
 		Province province = provinceDao.findUnique(operator, provinceCode);
 		return province;
 	}
 
-	@Transactional(readOnly=true)
 	public List<Province> findProvinces(ProvinceFilter filter) {
     	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
     	logger.debug("Found province list of size {}", provinceList.size());
     	return provinceList;
 	}
 
-	@Transactional(readOnly=true)
 	public Province prepareProvince(Province province) {
 		Province managedProvince = provinceDao.merge(province);
 		managedProvince.getOperator();
@@ -131,26 +125,22 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedProvince;
 	}
 
-	@Transactional(readOnly=true)
 	public Province prepareNewProvince(Entity entity) {
 		Entity managedEntity = entityDao.merge(entity);
 		return Province.provinceFactory(managedEntity.getOperator());
 	}
 
-	@Transactional(readOnly=false)
 	public Province storeProvince(Province province) {
 		Province managedProvince =  provinceDao.merge(province);
 		return managedProvince;
 	}
 	
-	@Transactional(readOnly=true)
 	public List<Entity> findEntities(EntityFilter filter) {
 		List<Entity> entityList = (List<Entity>) entityDao.find(filter);
 		logger.debug("Found {} entity(ies).", entityList.size());
 		return entityList;
 	}
 	
-	@Transactional(readOnly=true)
 	public Entity prepareEntity(Entity entity) {
 		if (entity!=null && entity.getId()==0) {
 			return entity;
@@ -171,7 +161,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedEntity;
 	}
 
-	@Transactional(readOnly=false)
 	public List<KeyType> loadKeyTypes(Operator operator) {
 		Operator managedOperator = operatorDao.merge(operator);
 		List<KeyType> keyTypeList = new ArrayList<KeyType>(managedOperator.getKeyTypes());
@@ -186,7 +175,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedKeyType;
 	}
 
-	@Transactional(readOnly=false)
 	public List<Service> loadServices(Operator operator) {
 		Operator managedOperator = operatorDao.merge(operator);
 		List<Service> serviceList = new ArrayList<Service>(managedOperator.getServiceMap().values());

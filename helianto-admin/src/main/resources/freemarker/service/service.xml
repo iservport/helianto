@@ -16,7 +16,7 @@
 	 ! service 
 	 ! SELECTION VIEW
 	 !-->
-   <view-state id="serviceSelection.view" view="/frame">
+   <view-state id="serviceSelection.view" view="/frame2">
 		<!-- 
 		 ! before selection
 		 -->
@@ -43,7 +43,7 @@
 	 ! service  
 	 ! BROWSE VIEW
 	 !-->
-   <view-state id="serviceBrowse.view" view="/frame">
+   <view-state id="serviceBrowse.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->
@@ -69,7 +69,7 @@
 	 ! service  
 	 ! EDIT VIEW
 	 !-->
-   <view-state id="serviceEdit.view" view="/frame">
+   <view-state id="serviceEdit.view" view="/frame2">
 		<!-- 
 		 ! before browse
 		 -->

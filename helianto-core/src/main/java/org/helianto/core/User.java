@@ -112,6 +112,27 @@ public class User extends UserGroup {
         setEntity(entity);
     }
 
+	/** 
+	 * Credential constructor.
+	 * 
+	 * <p>
+	 * The credential is not used after its principal is read,
+	 * although is here to force previous creation.
+	 * </p>
+	 * 
+	 * @param entity
+	 * @param credential
+	 */
+    public User(Entity entity, Credential credential) {
+    	this(entity);
+    	setIdentity(credential.getIdentity());
+    }
+
+    /**
+     * Overridden to obtain the user key from the identity principal.
+     * 
+     * @param userKey
+     */
     @Transient
     protected String resolveUserKey(String userKey) {
     	if (getIdentity()!=null && getIdentity().getPrincipal()!=null && getIdentity().getPrincipal().length()>0) {
@@ -128,9 +149,16 @@ public class User extends UserGroup {
     public Identity getIdentity() {
         return this.identity;
     }
+    /**
+     * Setting the identity also sets the user key.
+     * 
+     * @param identity
+     */
     public void setIdentity(Identity identity) {
         this.identity = identity;
+    	setUserKey(resolveUserKey(""));
     }
+    
     /**
      * User principal.
      */
@@ -141,25 +169,24 @@ public class User extends UserGroup {
     	}
         return getIdentity().getPrincipal();
     }
+    
     /**
-     * User principal name.
+     * "<Transient>> User principal name.
      */
     @Transient
     public String getUserPrincipalName() {
-    	int position = getUserPrincipal().indexOf("@");
-    	if (position>0) {
-    		return getUserPrincipal().substring(0, position);
+    	if (getIdentity()!=null) {
+    		return getIdentity().getPrincipalName();
     	}
-        return getUserPrincipal();
+        return "";
     }
     /**
      * User principal domain.
      */
     @Transient
     public String getUserPrincipalDomain() {
-    	int position = getUserPrincipal().indexOf("@");
-    	if (position>0) {
-    		return getUserPrincipal().substring(position);
+    	if (getIdentity()!=null) {
+    		return getIdentity().getPrincipalDomain();
     	}
         return "";
     }

@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.junit.Before;
@@ -124,6 +125,7 @@ public class ActionTests {
 		userDetails = new  PublicUserDetails() {
 			public void setUser(User user) { }
 			public User getUser() { return null; }
+			public Entity getEntity() { return null; }
 		};
 		userDetailsInCreation = null;
 	}

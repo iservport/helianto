@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration>
+<configuration debug="true">
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <layout class="ch.qos.logback.classic.PatternLayout">
@@ -8,12 +8,13 @@
     </layout>
   </appender>
 
-  <logger name="org.springframework" level="ERROR"/>
   <logger name="org.springframework.security" level="DEBUG"/>
   <logger name="org.hibernate" level="ERROR"/>
 
-  <root level="DEBUG">          
+  <root level="INFO">          
     <appender-ref ref="STDOUT" />
   </root>  
   
 </configuration>
+
+

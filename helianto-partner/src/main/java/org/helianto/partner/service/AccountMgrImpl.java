@@ -26,8 +26,6 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.Account;
 import org.helianto.partner.AccountFilter;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default account service interface implementation.
@@ -37,7 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("accountMgr")
 public class AccountMgrImpl implements AccountMgr {
 
-	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	public List<Account> findAccounts(AccountFilter accountFilter) {
 		List<Account> accountList = (List<Account>) accountDao.find(accountFilter);
     	if (logger.isDebugEnabled() && accountList!=null) {
@@ -46,12 +43,10 @@ public class AccountMgrImpl implements AccountMgr {
 		return accountList;
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public Account storeAccount(Account account) {
 		return accountDao.merge(account);
 	}
 	
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public void removeAccount(Account account) {
     	accountDao.remove(account);
     }

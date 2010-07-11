@@ -31,7 +31,6 @@ import org.helianto.inventory.CardSet;
 import org.helianto.inventory.CardSetFilter;
 import org.helianto.inventory.InvalidCardException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -40,7 +39,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("cardMgr")
-@Transactional
 public class CardMgrImpl implements CardMgr {
 
 	public List<CardSet> findCardSets(CardSetFilter cardSetFilter) {

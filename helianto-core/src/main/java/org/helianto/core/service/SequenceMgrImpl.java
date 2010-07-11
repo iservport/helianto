@@ -27,7 +27,6 @@ import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
 import org.helianto.core.repository.BasicDao;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation of <code>SequenceMgr</code> interface.
@@ -35,10 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("sequenceMgr")
-@Transactional
 public class SequenceMgrImpl implements SequenceMgr {
 	
-	@Transactional(readOnly=false)
 	public void validateInternalNumber(Sequenceable sequenceable) {
         if (sequenceable.getInternalNumber()==0) {
             long internalNumber = findNextInternalNumber(sequenceable.getEntity(), sequenceable.getInternalNumberKey());

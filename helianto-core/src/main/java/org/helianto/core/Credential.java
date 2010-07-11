@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -91,10 +92,42 @@ public class Credential implements java.io.Serializable {
         setLastModified(new Date());
         setExpirationDate(getLastModified());
         setEncription(Encription.PLAIN_PASSWORD);
-        setPassword("default");
+        setPassword("inactive");
         setVerifyPassword("");
         setCurrentPassword("");
         setPasswordDirty(false);
+    }
+
+    /** 
+     * Identity constructor.
+     * 
+     * @param identity
+     */
+    public Credential(Identity identity) {
+    	this();
+    	setIdentity(identity);
+    }
+
+    /** 
+     * Password constructor.
+     * 
+     * @param identity
+     * @param password
+     */
+    public Credential(Identity identity, String password) {
+    	this(identity);
+        setPassword(password);
+        setCredentialState(ActivityState.INITIAL);
+    }
+
+    /** 
+     * Principal constructor.
+     * 
+     * @param principal
+     * @param password
+     */
+    public Credential(String principal, String password) {
+    	this(new Identity(principal), password);
     }
 
     /**
@@ -109,9 +142,9 @@ public class Credential implements java.io.Serializable {
     }
 
     /**
-     * Identity owning this credential.
+     * <<Cascading>> Identity owning this credential.
      */
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="identityId", nullable=true)
     public Identity getIdentity() {
         return this.identity;

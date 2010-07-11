@@ -21,6 +21,8 @@ import javax.annotation.Resource;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.service.PostInstallationMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
@@ -33,10 +35,11 @@ public class DefaultEntityInstaller implements InitializingBean {
 	
 	private String defaultEntityAlias = "DEFAULT";
 	private String[] requiredUserGroupList;
+	private String defaultManager = "manager";
 	private boolean reinstall = false;
 	
 	/**
-	 * @return the defaultEntityAlias
+	 * @return the default entity alias.
 	 */
 	public String getDefaultEntityAlias() {
 		return defaultEntityAlias;
@@ -46,7 +49,7 @@ public class DefaultEntityInstaller implements InitializingBean {
 	}
 	
 	/**
-	 * @return the requiredUserGroupList
+	 * @return the required user group list.
 	 */
 	public String[] getRequiredUserGroupList() {
 		return requiredUserGroupList;
@@ -56,7 +59,17 @@ public class DefaultEntityInstaller implements InitializingBean {
 	}
 	
 	/**
-	 * @return the reinstall
+	 * @return the default manager.
+	 */
+	public String getDefaultManager() {
+		return defaultManager;
+	}
+	public void setDefaultManager(String defaultManager) {
+		this.defaultManager = defaultManager;
+	}
+	
+	/**
+	 * True if reinstall is required.
 	 */
 	public boolean isReinstall() {
 		return reinstall;
@@ -70,14 +83,16 @@ public class DefaultEntityInstaller implements InitializingBean {
 	 */
 	public void afterPropertiesSet() throws Exception {
 		Operator defaultOperator = namespace.getDefaultOperator();
-		Entity defaultEntity = postInstallationMgr.installEntity(defaultOperator, getDefaultEntityAlias(), isReinstall());
-		namespace.setDefaultEntity(defaultEntity);
+		logger.info("A default entity is a minium requirement; checking installation for operator {}.", defaultOperator);
+		Entity defaultEntity = postInstallationMgr.installEntity(defaultOperator, getDefaultEntityAlias(), getDefaultManager(), isReinstall());
 		
 		if (getRequiredUserGroupList()!=null) {
 			for (String userGroupName: getRequiredUserGroupList()) {
-				postInstallationMgr.instalUserGroup(defaultEntity, userGroupName, isReinstall());
+				postInstallationMgr.installUserGroup(defaultEntity, userGroupName, isReinstall());
 			}
 		}
+
+		namespace.setDefaultEntity(defaultEntity);
 	}
 	
 	// collabs
@@ -94,5 +109,7 @@ public class DefaultEntityInstaller implements InitializingBean {
 	public void setPostInstallationMgr(PostInstallationMgr postInstallationMgr) {
 		this.postInstallationMgr = postInstallationMgr;
 	}
+	
+	private static final Logger logger = LoggerFactory.getLogger(DefaultEntityInstaller.class);
 	
 }

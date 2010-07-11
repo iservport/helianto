@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractListFilter;
 import org.helianto.core.filter.CriteriaBuilder;
@@ -80,6 +81,7 @@ public class MockFilterActionTests {
 		userDetails = new PublicUserDetails() {
 			public void setUser(User user) { }
 			public User getUser() { return null; }
+			public Entity getEntity() { return null; }
 		};
 		createdFilter = new AbstractListFilter() {
 			@Override protected void doFilter(CriteriaBuilder mainCriteriaBuilder) { }

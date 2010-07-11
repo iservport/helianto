@@ -20,8 +20,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
@@ -38,8 +36,9 @@ import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.ProcessDocumentFilter;
 import org.helianto.process.Setup;
 import org.helianto.resource.ResourceGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default <code>ProcessMgr</code> interface implementation.
@@ -47,7 +46,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("processMgr")
-@Transactional
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
     public List<Node> prepareTree(ProcessDocument processDocument) {

@@ -27,7 +27,6 @@ import org.helianto.core.service.SequenceMgr;
 import org.helianto.inventory.ProcessAgreement;
 import org.helianto.inventory.ProcessAgreementFilter;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default <code>ProcessAgreementMgr</code> interface implementation.
@@ -35,7 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("processAgreementMgr")
-@Transactional
 public class ProcessAgreementMgrImpl implements ProcessAgreementMgr {
 
 	public ProcessAgreement prepareAgreement(ProcessAgreement target) {

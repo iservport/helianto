@@ -1,3 +1,3 @@
-<p>The operator controlling the current namespace is named 
-<b>${operator.operatorName}.</b>
-</p>
+<h4>Entity 
+<b>${userGroup.entity.alias}.</b>
+</h4>

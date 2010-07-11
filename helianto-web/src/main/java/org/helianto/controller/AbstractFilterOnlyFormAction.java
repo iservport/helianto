@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.helianto.core.Node;
 import org.helianto.core.filter.UserBackedFilter;
-import org.springframework.security.AccessDeniedException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 

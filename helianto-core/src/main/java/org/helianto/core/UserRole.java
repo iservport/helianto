@@ -88,6 +88,18 @@ public class UserRole  implements java.io.Serializable {
     	setService(service);
     }
    
+    /** 
+     * Role constructor.
+     * 
+     * @param userGroup
+     * @param service
+     * @param serviceExtension
+     */
+    public UserRole(UserGroup userGroup, Service service, String serviceExtension) {
+    	this(userGroup, service);
+    	setServiceExtension(serviceExtension);
+    }
+   
     /**
      * Primary key.
      */

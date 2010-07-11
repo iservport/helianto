@@ -1,3 +1,3 @@
-<@anchor "toProvince">Provinces</@anchor></li>
-<@anchor "toKeyType">Key types</@anchor></li>
-<@anchor "toService">Services</@anchor></li>
+<@anchor "toProvince">Provinces</@anchor>
+<@anchor "toKeyType">Key types</@anchor>
+<@anchor "toService">Services</@anchor>

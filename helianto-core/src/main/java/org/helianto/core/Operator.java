@@ -290,7 +290,7 @@ public class Operator implements java.io.Serializable {
 	/**
 	 * Service map, eagerly loaded.
 	 */
-	@OneToMany(mappedBy="operator", cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="operator", cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
 	@MapKey(name="serviceName")
     public Map<String, Service> getServiceMap() {
 		return serviceMap;

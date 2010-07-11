@@ -15,6 +15,7 @@
 
 package org.helianto.core.security;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 
 /**
@@ -33,5 +34,11 @@ public interface PublicUserDetails {
      * Update the <code>User</code>.
      */
     public void setUser(User user);
+    
+    /**
+     * Convenience to retrieve the entity from the user.
+     */
+    public Entity getEntity();
+    
     
 }

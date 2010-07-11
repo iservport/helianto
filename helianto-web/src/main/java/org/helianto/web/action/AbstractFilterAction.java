@@ -74,17 +74,29 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param userDetails
 	 */
 	protected ListFilter getFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		if (hasFilter(attributes)) {
-			return (ListFilter) attributes.get(getFilterName());
-		}
-		else {
-			ListFilter filter = doCreateFilter(attributes, userDetails);
+		ListFilter filter = getFilter(attributes);
+		if (filter==null) {
+			filter = doCreateFilter(attributes, userDetails);
 			logger.debug("Created {}.", filter);
 			attributes.put(getFilterName(), filter);
-			return filter;
 		}
+		return filter;
 	}
 
+	/**
+	 * Subclasses may override this to customize filter retrieval.
+	 * 
+	 * @param attributes
+	 */
+	protected ListFilter getFilter(MutableAttributeMap attributes) {
+		ListFilter filter = null;
+		if (hasFilter(attributes)) {
+			filter = (ListFilter) attributes.get(getFilterName());
+			logger.debug("Retrieved {}.", filter);
+		}
+		return filter;
+	}
+	
 	/**
 	 * Hook to the actual filter creation.
 	 * 

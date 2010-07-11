@@ -2,8 +2,8 @@ package org.helianto.core.security;
 
 import org.helianto.core.Credential;
 import org.helianto.core.User;
-import org.springframework.security.Authentication;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * <code>UserDetails</code> factory interface.

@@ -39,7 +39,6 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>ServerMgr</code> interface.
@@ -47,7 +46,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @org.springframework.stereotype.Service("serverMgr")
-@Transactional
 public class ServerMgrImpl  implements ServerMgr {
 	
 	public Server findActiveServer(Operator operator, int n) {
