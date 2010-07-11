@@ -64,6 +64,11 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
         logger.debug("Persisting {}", managedObject);
         this.sessionFactory.getCurrentSession().persist(managedObject);
 	}
+	
+	public void saveOrUpdate(Object managedObject) {
+        logger.debug("Saving (or updating) {}", managedObject);
+        this.sessionFactory.getCurrentSession().saveOrUpdate(managedObject);
+	}
 
 	public void remove(Object object) {
         logger.debug("Removing {}", object);

@@ -45,6 +45,13 @@ public interface PersistenceStrategy<T> {
     public void persist(T managedObject);
     
     /**
+     * Hiberante operation to save or update a managed object.
+     * 
+     * @param managedObject
+     */
+    public void saveOrUpdate(T managedObject);
+    
+    /**
      * Merge an object and return a persisted managed object.
      * 
      * @param object

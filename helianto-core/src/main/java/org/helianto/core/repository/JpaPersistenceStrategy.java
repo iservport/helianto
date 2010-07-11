@@ -57,6 +57,10 @@ public class JpaPersistenceStrategy implements PersistenceStrategy {
         this.em.persist(managedObject);
 	}
 
+	public void saveOrUpdate(Object managedObject) {
+        throw new IllegalArgumentException("Illegal with JPA, use Hibernate instead...");
+	}
+
 	public void remove(Object object) {
         logger.debug("Removing {}", object);
         this.em.remove(object);
