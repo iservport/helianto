@@ -17,10 +17,10 @@ package org.helianto.core;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -180,9 +180,9 @@ public class CoreRepositoryConfiguration {
 	 * User association data access.
 	 */
 	@Bean
-	public BasicDao<UserAssociation> userAssociationDao() {
-		BasicDao<UserAssociation> dao =  
-			repositoryFactory.basicDaoFactory(UserAssociation.class, "parent", "child");
+	public FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao() {
+		FilterDao<UserAssociation, UserAssociationFilter> dao =  
+			repositoryFactory.filterDaoFactory(UserAssociation.class, UserAssociationFilter.class, "parent", "child");
 		logger.info("Created userAssociationDao");
 		return dao;
 	}

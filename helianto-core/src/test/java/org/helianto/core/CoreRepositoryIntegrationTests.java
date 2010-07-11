@@ -47,12 +47,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Transactional
-public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
+public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 
 	@Resource FilterDao<Category, CategoryFilter> categoryDao;
 	@Test
 	public void category() {
-		Category target = CategoryTestSupport.createCategory();
+		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		Category target = CategoryTestSupport.createCategory(entity);
 		assertEquals(categoryDao.merge(target), categoryDao.findUnique(target.getEntity(), target.getCategoryGroup(), target.getCategoryCode()));
 	}
 	
@@ -108,8 +109,9 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	@Resource FilterDao<Service, ServiceFilter> serviceDao;
 	@Test
 	public void service() {
-		Service target = ServiceTestSupport.createService();
-		assertEquals(serviceDao.merge(target), serviceDao.findUnique(target.getOperator(), target.getServiceName()));
+		Operator operator = operatorDao.merge(OperatorTestSupport.createOperator());
+		Service service = serviceDao.merge(ServiceTestSupport.createService(operator));
+		assertEquals(service, serviceDao.findUnique(service.getOperator(), service.getServiceName()));
 	}
 	
 	@Resource FilterDao<Unit, UnitFilter> unitDao;
@@ -119,7 +121,7 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 		assertEquals(unitDao.merge(target), unitDao.findUnique(target.getEntity(), target.getUnitCode()));
 	}
 	
-	@Resource BasicDao<UserAssociation> userAssociationDao;
+	@Resource FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao;
 	@Test
 	public void userAssociation() {
 		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
@@ -139,8 +141,9 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	@Resource FilterDao<UserLog, UserLogFilter> userLogDao;
 	@Test
 	public void userLogGroup() {
+		Identity identity = identityDao.merge(IdentityTestSupport.createIdentity());
 		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		User user = (User) userGroupDao.merge(UserTestSupport.createUser(entity));
+		User user = (User) userGroupDao.merge(UserTestSupport.createUser(entity, identity));
 		UserLog target = UserLogTestSupport.createUserLog(user);
 		assertEquals(userLogDao.merge(target), userLogDao.findUnique(target.getUser(), target.getLastEvent()));
 	}
@@ -148,9 +151,12 @@ public class CoreIntegrationTest extends AbstractDaoIntegrationTest {
 	@Resource BasicDao<UserRole> userRoleDao;
 	@Test
 	public void userRole() {
+		Operator operator = operatorDao.merge(OperatorTestSupport.createOperator());
+		Identity identity = identityDao.merge(IdentityTestSupport.createIdentity());
 		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		User user = UserTestSupport.createUser(entity);
-		UserRole target = UserRoleTestSupport.createUserRole(user);
+		Service service = serviceDao.merge(ServiceTestSupport.createService(operator));
+		User user = UserTestSupport.createUser(entity, identity);
+		UserRole target = UserRoleTestSupport.createUserRole(user, service);
 		user.getRoles().add(target);
 		userGroupDao.persist(user);
 		assertEquals(userRoleDao.merge(target), userRoleDao.findUnique(target.getUserGroup(), target.getService(), target.getServiceExtension()));

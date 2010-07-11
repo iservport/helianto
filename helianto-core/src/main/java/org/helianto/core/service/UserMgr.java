@@ -18,17 +18,16 @@ package org.helianto.core.service;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
+import org.helianto.core.UserAssociationFilter;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
-import org.helianto.core.UserRole;
 
 /**
  * Default user service layer interface for the core package.
@@ -83,9 +82,19 @@ public interface UserMgr {
     public UserGroup storeUserGroup(UserGroup userGroup);
     
     /**
+     * Find user associations.
+     */
+    public List<UserAssociation> findUserAssociations(UserAssociationFilter userAssociationFilter);
+    
+    /**
      * <p>Create <code>UserAssociation</code>.</p>
      */
     public UserAssociation prepareNewUserAssociation(UserGroup parent);
+    
+    /**
+     * <p>Create <code>UserAssociation</code> with a new identity.</p>
+     */
+    public UserAssociation installUser(UserGroup parent, String principal);
     
     /**
      * <p>Store <code>UserAssociation</code> and return a managed instance.</p>

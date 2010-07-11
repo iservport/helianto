@@ -48,6 +48,8 @@ public interface ListFilter extends Filter {
 	
 	/**
 	 * List index setter.
+	 * 
+	 * @param index
 	 */
 	public void setIndex(int index);
 	
@@ -65,5 +67,10 @@ public interface ListFilter extends Filter {
 	 * Decrease index by one, if has previous, to return the previous item.
 	 */
 	public Object previous();
+	
+	/**
+	 * True if getItem() return null.
+	 */
+	public boolean isClear();
 	
 }

@@ -26,8 +26,6 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
 import org.helianto.core.DuplicateIdentityException;
@@ -40,6 +38,7 @@ import org.helianto.core.Province;
 import org.helianto.core.ProvinceFilter;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
+import org.helianto.core.UserAssociationFilter;
 import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
@@ -48,9 +47,9 @@ import org.helianto.core.UserRole;
 import org.helianto.core.UserState;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 /**
  * Default <code>UserMgr</code> implementation.
@@ -58,7 +57,6 @@ import org.springframework.util.Assert;
  * @author Mauricio Fernandes de Castro
  */
 @Service("userMgr")
-@Transactional
 public class UserMgrImpl implements UserMgr {
     
     public Identity findIdentityByPrincipal(String principal) {
@@ -105,7 +103,6 @@ public class UserMgrImpl implements UserMgr {
     	return userGroup;
 	}
 	
-	@Transactional(readOnly=true)
     public UserGroup prepareUserGroup(UserGroup userGroup) {
     	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
     	// child list
@@ -216,15 +213,59 @@ public class UserMgrImpl implements UserMgr {
     }
 
 	public UserAssociation prepareNewUserAssociation(UserGroup parent) {
-		UserAssociation userAssociation = UserAssociation.userAssociationFactory(parent);
-    	if (logger.isDebugEnabled()) {
-    		logger.debug("Created user association ".concat(userAssociation.toString()));
-    	}
+		UserAssociation userAssociation = new UserAssociation(parent);
+    	logger.debug("Created user association {}.", userAssociation);
 		return userAssociation;
 	}
 
+	public List<UserAssociation> findUserAssociations(UserAssociationFilter userAssociationFilter) {
+		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationDao.find(userAssociationFilter);
+    	logger.debug("Found user association list of size {}", userAssociationList.size());
+        return userAssociationList;
+	}
+
+	public UserAssociation installUser(UserGroup parent, String principal) {
+		
+		logger.info("Check user installation with 'principal={}' as member of {}.", principal, parent);
+		User user = (User) userGroupDao.findUnique(parent.getEntity(), principal);
+		if (user==null) {
+			logger.info("Will install user {} ...", principal);
+			Identity identity = identityDao.findUnique(principal);
+			if (identity==null) {
+				logger.info("Will install identity for {}.", principal);
+				identity = new Identity(principal);
+				identityDao.saveOrUpdate(identity);
+			}
+			Credential credential = credentialDao.findUnique(identity);
+			if (credential==null) {
+				logger.info("Will install credential for {}.", identity);
+				credential = new Credential(identity);
+				credentialDao.saveOrUpdate(credential);
+			}
+			user = new User(parent.getEntity(), credential);
+		}
+		
+		if (user.isAccountNonExpired()) {
+			logger.warn("User {} EXPIRED! Will reset ...", user);
+			user.setAccountNonExpired(true);
+		}
+		userGroupDao.saveOrUpdate(user);
+		logger.info("User AVAILABLE as {}.", user);
+		
+		UserAssociation association = userAssociationDao.findUnique(parent, user);
+		if(association==null) {
+			logger.info("Will install user association for user group {} and {}.", parent, user);
+			association = new UserAssociation(parent, user);
+			userAssociationDao.saveOrUpdate(association);
+		}
+		logger.info("User {} available as part of association {}.", user, association);
+		return association;
+	}
+	
     public UserLog storeUserLog(User user, Date date) {
-        Assert.notNull(user.getIdentity());
+        if (user.getIdentity()==null) {
+            throw new IllegalArgumentException("Must have an identity");
+        }
         if (date==null) {
             date = new Date();
         }
@@ -250,8 +291,9 @@ public class UserMgrImpl implements UserMgr {
     //- collaborators
     
     private FilterDao<Identity, IdentityFilter> identityDao;
+    private BasicDao<Credential> credentialDao;
     private FilterDao<UserGroup, UserFilter> userGroupDao;
-    private BasicDao<UserAssociation> userAssociationDao;
+    private FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao;
     private FilterDao<UserLog, UserLogFilter> userLogDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private FilterDao<Province, ProvinceFilter> provinceDao;
@@ -261,6 +303,11 @@ public class UserMgrImpl implements UserMgr {
     public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
         this.identityDao = identityDao;
     }
+    
+    @Resource(name="credentialDao")
+    public void setCredentialDao(BasicDao<Credential> credentialDao) {
+		this.credentialDao = credentialDao;
+	}
 
     @Resource(name="userGroupDao")
 	public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
@@ -268,7 +315,7 @@ public class UserMgrImpl implements UserMgr {
 	}
 
     @Resource(name="userAssociationDao")
-	public void setUserAssociationDao(BasicDao<UserAssociation> userAssociationDao) {
+	public void setUserAssociationDao(FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao) {
 		this.userAssociationDao = userAssociationDao;
 	}
 

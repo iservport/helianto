@@ -15,6 +15,7 @@
 
 package org.helianto.core;
 
+import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -61,9 +62,42 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
 
     private static final long serialVersionUID = 1L;
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public UserAssociation() {
     	super();
+    }
+
+    /** 
+     * Parent constructor.
+     * 
+     * @param parent
+     */
+    public UserAssociation(UserGroup parent) {
+    	this();
+    	setParent(parent);
+    }
+
+    /** 
+     * Child constructor.
+     * 
+     * @param parent
+     * @param child
+     */
+    public UserAssociation(UserGroup parent, UserGroup child) {
+    	this(parent);
+    	setChild(child);
+    }
+
+    /** 
+     * Credential constructor.
+     * 
+     * @param parent
+     * @param childCredential
+     */
+    public UserAssociation(UserGroup parent, Credential childCredential) {
+    	this(parent, new User(parent.getEntity(), childCredential));
     }
 
     /**
@@ -78,7 +112,7 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
     /**
      * Child user group.
      */
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="childId", nullable=true)
     public UserGroup getChild() {
         return this.child;

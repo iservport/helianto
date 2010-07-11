@@ -17,6 +17,7 @@ package org.helianto.core;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,7 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     private char userState = ' ';
     private boolean orderByLastEventDesc = false;
 	private Collection<Identity> exclusions;
+	private UserAssociationFilter userAssociationFilter;
     
     /**
      * Default constructor
@@ -66,10 +68,11 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     	setIdentityPrincipal("");
     	setIdentityPrincipalLike("");
     	setExclusions(new HashSet<Identity>(0));
+    	setUserAssociationFilter(new UserAssociationFilter());
     }
     
     /**
-     * Identity constructor
+     * Identity constructor.
      */
     public UserFilter(Identity identity, boolean orderByLastEventDesc) {
     	this();
@@ -78,11 +81,25 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     }
     
     /**
-     * Entity constructor
+     * Entity constructor.
+     * 
+     * @param entity
      */
     public UserFilter(Entity entity) {
     	this();
     	setEntity(entity);
+    	getUserAssociationFilter().setEntity(entity);
+    }
+    
+    /**
+     * User constructor.
+     * 
+     * @param user
+     */
+    public UserFilter(User user) {
+    	this();
+    	setUser(user);
+    	getUserAssociationFilter().setUser(user);
     }
     
     /**
@@ -133,6 +150,9 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (getClazz()!=null) {
+			mainCriteriaBuilder.appendAnd().append(getClazz());
+		}
 		appendEqualFilter("userState", getUserState(), mainCriteriaBuilder);
 		appendLikeFilter("identity.principal", getIdentityPrincipalLike(), mainCriteriaBuilder);
         appendExclusionsFilter( mainCriteriaBuilder);
@@ -286,6 +306,26 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     public void setExclusions(Collection<Identity> exclusions) {
         this.exclusions = exclusions;
     }
+    
+    /**
+     * UserAssociation Filter composition.
+     */
+    public UserAssociationFilter getUserAssociationFilter() {
+		return userAssociationFilter;
+	}
+    public void setUserAssociationFilter(UserAssociationFilter userAssociationFilter) {
+		this.userAssociationFilter = userAssociationFilter;
+	}
+
+    /**
+     * Convenient to access UsserAssociation list.
+     */
+    public List<?> getUserAssociationList() {
+		return userAssociationFilter.getList();
+	}
+    public void setUserAssociationList(List<?> userAssociationList) {
+		this.userAssociationFilter.setList(userAssociationList);
+	}
 
     @Override
     public String toString() {

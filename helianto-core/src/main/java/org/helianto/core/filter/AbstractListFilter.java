@@ -57,8 +57,11 @@ public abstract class AbstractListFilter extends AbstractFilter implements ListF
 	public int getIndex() {
 		return index;
 	}
+	/**
+	 * The list index setter, allowed in the range -1 to list size.
+	 */
 	public void setIndex(int index) {
-		if (index >= 0 && index < getListSize()) {
+		if (index >= -1 && index < getListSize()) {
 			this.index = index;
 		}
 		logger.debug("Index is {}.", index);
@@ -89,7 +92,7 @@ public abstract class AbstractListFilter extends AbstractFilter implements ListF
 	 * Current item.
 	 */
 	public Object getItem() {
-		if (hasContents()) {
+		if (hasContents() && !isClear()) {
 			return getList().get(getIndex());
 		}
 		return null;
@@ -99,7 +102,7 @@ public abstract class AbstractListFilter extends AbstractFilter implements ListF
 	 * Increase index by one, if has next, to return the next item.
 	 */
 	public Object next() {
-		if (hasNext()) {
+		if (hasNext() && !isClear()) {
 			setIndex(index+1);
 		}
 		return getItem();
@@ -109,10 +112,17 @@ public abstract class AbstractListFilter extends AbstractFilter implements ListF
 	 * Decrease index by one, if has previous, to return the previous item.
 	 */
 	public Object previous() {
-		if (hasPrevious()) {
+		if (hasPrevious() && !isClear()) {
 			setIndex(index-1);
 		}
 		return getItem();
+	}
+	
+	/**
+	 * True if getItem() return null.
+	 */
+	public boolean isClear() {
+		return getIndex() < 0;
 	}
 	
     private static Logger logger = LoggerFactory.getLogger(AbstractListFilter.class);
