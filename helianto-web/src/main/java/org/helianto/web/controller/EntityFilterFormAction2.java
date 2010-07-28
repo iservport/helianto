@@ -41,6 +41,7 @@ import org.springframework.webflow.execution.RequestContext;
  * has also privileges to access them.
  * </p>
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @Component("entityFilterAction2")
 public class EntityFilterFormAction2 extends AbstractFilterOnlyFormAction<UserFilter, UserGroup> {

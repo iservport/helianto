@@ -17,13 +17,12 @@ package org.helianto.core;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.PolymorphicFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Filter to <code>User</code>.
@@ -58,7 +57,6 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     private char userState = ' ';
     private boolean orderByLastEventDesc = false;
 	private Collection<Identity> exclusions;
-	private UserAssociationFilter userAssociationFilter;
     
     /**
      * Default constructor
@@ -68,7 +66,6 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     	setIdentityPrincipal("");
     	setIdentityPrincipalLike("");
     	setExclusions(new HashSet<Identity>(0));
-    	setUserAssociationFilter(new UserAssociationFilter());
     }
     
     /**
@@ -88,7 +85,6 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     public UserFilter(Entity entity) {
     	this();
     	setEntity(entity);
-    	getUserAssociationFilter().setEntity(entity);
     }
     
     /**
@@ -99,7 +95,6 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     public UserFilter(User user) {
     	this();
     	setUser(user);
-    	getUserAssociationFilter().setUser(user);
     }
     
     /**
@@ -160,7 +155,7 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 			appendOrderBy("lastEvent DESC", mainCriteriaBuilder);
 		}
 		else {
-			appendOrderBy("identity.principal", mainCriteriaBuilder);
+			appendOrderBy("userKey", mainCriteriaBuilder);
 		}
 	}
 
@@ -307,26 +302,6 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
         this.exclusions = exclusions;
     }
     
-    /**
-     * UserAssociation Filter composition.
-     */
-    public UserAssociationFilter getUserAssociationFilter() {
-		return userAssociationFilter;
-	}
-    public void setUserAssociationFilter(UserAssociationFilter userAssociationFilter) {
-		this.userAssociationFilter = userAssociationFilter;
-	}
-
-    /**
-     * Convenient to access UsserAssociation list.
-     */
-    public List<?> getUserAssociationList() {
-		return userAssociationFilter.getList();
-	}
-    public void setUserAssociationList(List<?> userAssociationList) {
-		this.userAssociationFilter.setList(userAssociationList);
-	}
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

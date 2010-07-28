@@ -9,6 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
+	<groupId>org.helianto</groupId>
 	<artifactId>helianto-core</artifactId>
 	<name>Core</name>
 

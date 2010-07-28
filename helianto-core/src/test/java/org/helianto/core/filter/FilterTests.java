@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * @author mauriciofernandesdecastro
  */
-public class AbstractFilterTests {
+public class FilterTests {
 	
 	private AbstractFilter filter;
 	private CriteriaBuilder createdCriteriaBuilder, preProcessedCriteriaBuilder, selectionCriteriaBuilder, filterCriteriaBuilder, postProcessedCriteriaBuilder;

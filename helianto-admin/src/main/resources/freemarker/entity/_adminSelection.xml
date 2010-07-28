@@ -5,14 +5,22 @@
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
 	<secured attributes="ROLE_ADMIN_MANAGER" />
+	
+	<persistence-context />
 
 	<on-start>
-		<set name="flowScope.assign" value="'entity/assign'" />
+	    <set name="flowScope.basePath" value="'entity/'"/>
+		<set name="flowScope.assign"   value="'assign'" />
 		<set name="conversationScope.entityStyle" value="'white.css'" />
 	</on-start>
+	
+	<!--
+	 ! This flow implements the Helianto/Webflow selection pattern
+	 ! to list and select user associations. 
+	 -->
 
 	<action-state id="filter">
-		<evaluate expression="homeAction.filter(flowScope, currentUser.principal)" />
+		<evaluate expression="adminAction.filter(flowScope, currentUser.principal)" />
 		<transition on="success" to="selection.view" />
 	</action-state>
 	
@@ -21,13 +29,13 @@
 	 ! the parent group has the key 'user'.
 	 -->
 
-	<view-state id="selection.view" view="/frame2" model="userGroupFilter" >
+	<view-state id="selection.view" view="/frame2" model="userAssociationFilter" >
    
         <on-render>
-			<set name="viewScope.forward" value="'entity/selection_fwd'"/>
-			<set name="viewScope.sidenav" value="'entity/selection_nav'"/>
-			<set name="viewScope.sidebar" value="'entity/selection_filter'"/>
-			<set name="viewScope.template" value="'entity/selection'"/>
+			<set name="viewScope.forward"  value="'selection_fwd'"/>
+			<set name="viewScope.sidenav"  value="'selection_nav'"/>
+			<set name="viewScope.sidebar"  value="'selection_filter'"/>
+			<set name="viewScope.template" value="'selection'"/>
         </on-render>
 
 		<transition on="toProvince" to="province.subflow"/>
@@ -35,8 +43,8 @@
 		<transition on="toService" to="service.subflow"/>
 
 		<transition on="filter" to="filter" />
-		<transition on="selectEntity" to="entity.subflow" />
-		<transition on="createEntity" to="entity.subflow" />
+		<transition on="selectEntity" to="admin.subflow" />
+<!--		<transition on="createEntity" to="admin.subflow" />-->
 		
     </view-state>
    
@@ -44,8 +52,8 @@
 	 ! entity
 	 ! SUBFLOW
 	 !-->
-	<subflow-state id="entity.subflow" subflow="entity">
-		<input name="parent" value="userGroupFilter.item"/>
+	<subflow-state id="admin.subflow" subflow="_admin">
+		<input name="userAssociation" value="userAssociationFilter.item"/>
 		<transition on="toSelection" to="filter" />
 	</subflow-state>
 

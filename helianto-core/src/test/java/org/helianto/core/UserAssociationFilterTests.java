@@ -1,13 +1,12 @@
 package org.helianto.core;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.core.filter.UserBackedFilter;
-import org.helianto.core.test.UserTestSupport;
+import org.helianto.core.filter.ListFilter;
+import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 /**
@@ -18,58 +17,74 @@ public class UserAssociationFilterTests {
     @Test
 	public void constructor() {
 		assertTrue(filter instanceof Serializable);
-		assertTrue(filter instanceof UserBackedFilter);
+		assertTrue(filter instanceof ListFilter);
 	}
 	
-    @Test
-	public void factory() {
-		assertSame(filter.getUser(), user);
-	}
-	
-    public static String C1 = "userassociation.entity.id = 0 ";
-    public static String C2 = "AND userassociation.parent.id = 1 ";
-    public static String C3 = "AND userassociation.child.id = 2 ";
+    public static String C1 = "userassociation.parent.id = 1 ";
+    public static String C2 = "userassociation.child.id = 2 ";
+    public static String C3 = "AND userassociation.parent.userKey = 'PARENTKEY' ";
+    public static String C4 = "AND userassociation.child.identity.id = 3 ";
     public static String C0 = "order by userassociation.child.userKey ";
 
     @Test
     public void empty() {
-        assertEquals(C1+C0, filter.createCriteriaAsString());
+        assertEquals(C0, filter.createCriteriaAsString());
     }
     
     @Test
     public void parent() {
-    	UserGroup parent = new UserGroup(user.getEntity(), "PARENT");
+    	UserGroup parent = new UserGroup(entity, "PARENT");
     	parent.setId(1);
     	filter.setParent(parent);
-        assertEquals(C1+C2+C0, filter.createCriteriaAsString());
+        assertEquals(C1+C0, filter.createCriteriaAsString());
     }
     
     @Test
     public void child() {
-    	UserGroup child = new UserGroup(user.getEntity(), "CHILD");
+    	UserGroup child = new UserGroup(entity, "CHILD");
     	child.setId(2);
     	filter.setChild(child);
-        assertEquals(C1+C3+C0, filter.createCriteriaAsString());
+        assertEquals(C2+C0, filter.createCriteriaAsString());
     }
     
     @Test
     public void selection() {
-    	UserGroup parent = new UserGroup(user.getEntity(), "PARENT");
+    	UserGroup parent = new UserGroup(entity, "PARENT");
     	parent.setId(1);
     	filter.setParent(parent);
-    	UserGroup child = new UserGroup(user.getEntity(), "CHILD");
+    	UserGroup child = new UserGroup(entity, "CHILD");
     	child.setId(2);
     	filter.setChild(child);
-        assertEquals(C1+C2+C3, filter.createCriteriaAsString(false));
+        assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void parentKey() {
+    	UserGroup child = new UserGroup(entity, "CHILD");
+    	child.setId(2);
+    	filter.setChild(child);
+    	filter.setParentKey("PARENTKEY");
+        assertEquals(C2+C3+C0, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void childIdentity() {
+    	UserGroup parent = new UserGroup(entity, "PARENT");
+    	parent.setId(1);
+    	Identity childIdentity = new Identity("identity");
+    	childIdentity.setId(3);
+    	filter.setParent(parent);
+    	filter.setChildIdentity(childIdentity);
+        assertEquals(C1+C4+C0, filter.createCriteriaAsString());
     }
     
     private UserAssociationFilter filter;
-    private User user;
+    private Entity entity;
     
     @Before
     public void setUp() {
-    	user = UserTestSupport.createUser();
-    	filter = new UserAssociationFilter(user);
+    	entity = EntityTestSupport.createEntity();
+    	filter = new UserAssociationFilter();
     }
 }
 

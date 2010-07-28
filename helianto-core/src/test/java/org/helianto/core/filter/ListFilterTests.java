@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * @author mauriciofernandesdecastro
  */
-public class AbstractListFilterTests {
+public class ListFilterTests {
 	
 	private AbstractListFilter filter;
 	List<String> list;

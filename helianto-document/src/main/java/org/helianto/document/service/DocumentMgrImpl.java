@@ -20,8 +20,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
@@ -30,6 +28,8 @@ import org.helianto.document.Document;
 import org.helianto.document.DocumentCodeBuilder;
 import org.helianto.document.DocumentCodeBuilderFilter;
 import org.helianto.document.DocumentFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**

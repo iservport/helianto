@@ -127,7 +127,10 @@ Export-Package: bundles,freemarker,freemarker.entity,freemarker.keyTyp
  w.freemarker,org.springframework.webflow.execution",org.helianto.web.
  util;uses:="org.junit",org.helianto.web.view;uses:="org.helianto.web.
  test,org.junit"
+Bundle-Vendor: i-Serv Consultoria Empresarial
+Bundle-Version: 0.2.20080913
 Tool: Bundlor 1.0.0.RELEASE
+Bundle-Name: Helianto partner module
 Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  on,javax.mail,javax.mail.internet,javax.persistence,javax.servlet,jav
  ax.servlet.http,javax.xml.stream,org.apache.log4j,org.easymock,org.ea
@@ -151,12 +154,14 @@ Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  k.test.context,org.springframework.test.context.junit4,org.springfram
  ework.transaction.annotation,org.springframework.util,org.springframe
  work.validation,org.springframework.web.context.support,org.springfra
- mework.web.servlet,org.springframework.web.servlet.i18n,org.springfra
- mework.web.servlet.mvc,org.springframework.web.servlet.mvc.annotation
- ,org.springframework.web.servlet.mvc.support,org.springframework.web.
- servlet.theme,org.springframework.web.servlet.view.freemarker,org.spr
- ingframework.webflow.action,org.springframework.webflow.core.collecti
- on,org.springframework.webflow.execution,org.springframework.webflow.
- mvc.builder,org.springframework.webflow.persistence,org.springframewo
- rk.webflow.security,org.springframework.webflow.test
+ mework.web.multipart.commons,org.springframework.web.servlet,org.spri
+ ngframework.web.servlet.i18n,org.springframework.web.servlet.mvc,org.
+ springframework.web.servlet.mvc.annotation,org.springframework.web.se
+ rvlet.mvc.support,org.springframework.web.servlet.theme,org.springfra
+ mework.web.servlet.view.freemarker,org.springframework.webflow.action
+ ,org.springframework.webflow.core.collection,org.springframework.webf
+ low.execution,org.springframework.webflow.mvc.builder,org.springframe
+ work.webflow.mvc.servlet,org.springframework.webflow.persistence,org.
+ springframework.webflow.security,org.springframework.webflow.test
+Bundle-SymbolicName: org.helianto.partner.shared_services
 

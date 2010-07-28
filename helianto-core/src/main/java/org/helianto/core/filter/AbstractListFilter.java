@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class to create criteria using a criteria builder.
+ * Base class implementing <code>ListFilter</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
  */

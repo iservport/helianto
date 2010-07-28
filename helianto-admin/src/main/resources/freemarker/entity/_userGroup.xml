@@ -8,7 +8,7 @@
    
 	<persistence-context />
 
-	<input name="userAssociation"/>
+	<input name="userGroup"/>
 	
 	<on-start>
 	   <set name="flowScope.basePath" value="'entity/'"/>
@@ -16,19 +16,13 @@
 	</on-start>
 
 	<action-state id="createIfNeeded">
-		<evaluate expression="userAssociationAction.create(flowScope, currentUser.principal)" />
-        <transition on="edit" to="entityEdit.view"/>
+		<evaluate expression="userGroupAction.create(flowScope, currentUser.principal)" />
+        <transition on="edit" to="edit.view"/>
         <transition to="prefilter"/>
 	</action-state>
 	
-	<!--
-	 ! This flow implements two patterns: (1) view and edit, where the target is a user
-	 ! association, and (2) list and select, where the list is made of user association
-	 ! children.
-	 -->
-
 	<action-state id="prefilter">
-	    <set name="flowScope.parent" value="userAssociation.parent" />
+	    <set name="flowScope.parent" value="userGroup" />
 		<transition on="success" to="filter" />
 	</action-state>
 

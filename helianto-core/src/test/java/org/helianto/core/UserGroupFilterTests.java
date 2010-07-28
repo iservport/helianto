@@ -41,7 +41,7 @@ public class UserGroupFilterTests {
 	}
 
     public static String C1 = "usergroup.entity.id = 0 ";
-    public static String C2 = "order by usergroup.identity.principal ";
+    public static String C2 = "order by usergroup.userKey ";
     public static String C3 = "AND usergroup.identity.id = 1 ";
     public static String C4 = "AND usergroup.class=User ";
     public static String C5 = "AND usergroup.identity.principal = 'principal' ";

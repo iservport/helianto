@@ -6,11 +6,14 @@ import javax.annotation.Resource;
 
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserAssociationFilter;
+import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
@@ -30,14 +33,22 @@ public class UserAssociationAction extends AbstractFilterAction<UserAssociation>
 	@Override
 	protected UserAssociation doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		UserGroup parent = getParent(attributes);
-	    return new UserAssociation(parent);
+		if (parent!=null) {
+		    return new UserAssociation(parent);
+		}
+		throw new IllegalArgumentException("An user group named parent is required in scope before association creation.");
 	}
 	
 	@Override
 	protected ListFilter doCreateFilter(MutableAttributeMap attributes,	PublicUserDetails userDetails) {
 		UserGroup parent = getParent(attributes);
-		UserAssociationFilter userAssociationFilter = new UserAssociationFilter(userDetails.getUser());
+		UserFilter parentFilter = new UserFilter(parent.getEntity());
+		parentFilter.setClazz(UserGroup.class);
+		UserAssociationFilter userAssociationFilter = new UserAssociationFilter(parentFilter);
 		userAssociationFilter.setParent(parent);
+		UserGroup child = getChild(attributes);
+		userAssociationFilter.setChild(child);
+		logger.debug("Created userAssociationFilter with parent='{}' and child='{}' and also parent UserFilter.", parent, child);
 		return userAssociationFilter;
 	}
 	
@@ -53,12 +64,29 @@ public class UserAssociationAction extends AbstractFilterAction<UserAssociation>
 	}
 	
 	private UserGroup getParent(MutableAttributeMap attributes) {
-		if (!attributes.contains("parent")) {
-			throw new IllegalArgumentException("An user group named parent is required in scope.");
+		if (attributes.contains("parent")) {
+			return (UserGroup) attributes.get("parent");
 		}
-		UserGroup parent = (UserGroup) attributes.get("parent");
-		return parent;
+		return null;
 	}
+
+	private UserGroup getChild(MutableAttributeMap attributes) {
+		if (attributes.contains("child")) {
+			return (UserGroup) attributes.get("child");
+		}
+		return null;
+	}
+	
+	// custom actions
+	
+	public String preFilter(MutableAttributeMap attributes,	PublicUserDetails userDetails) {
+		UserAssociationFilter filter = (UserAssociationFilter) getFilter(attributes, userDetails);
+		ListFilter parentFilter = filter.getParentFilter();
+		List<UserGroup> groups = userMgr.findUsers((UserFilter) parentFilter);
+		parentFilter.setList(groups);
+		return "success";
+	}
+
 	// collabs
 	
 	private UserMgr userMgr;
@@ -67,5 +95,7 @@ public class UserAssociationAction extends AbstractFilterAction<UserAssociation>
 	public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;
 	}
+	
+	private final static Logger logger = LoggerFactory.getLogger(UserAssociationAction.class);
 
 }

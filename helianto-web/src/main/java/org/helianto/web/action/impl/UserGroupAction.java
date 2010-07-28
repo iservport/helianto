@@ -10,6 +10,8 @@ import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
@@ -28,7 +30,10 @@ public class UserGroupAction extends AbstractFilterAction<UserGroup> {
 
 	@Override
 	protected ListFilter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return UserFilter.userFilterFactory(userDetails.getUser().getIdentity());
+		UserFilter userFilter = new UserFilter(userDetails.getUser());
+		userFilter.setClazz(UserGroup.class);
+		logger.debug("Created userGroupFilter for entity='{}' and class='UserGroup'.", userFilter.getEntity());
+		return userFilter;
 	}
 
 	@Override
@@ -55,4 +60,5 @@ public class UserGroupAction extends AbstractFilterAction<UserGroup> {
 		this.userMgr = userMgr;
 	}
 
+	private final static Logger logger = LoggerFactory.getLogger(UserGroupAction.class);
 }

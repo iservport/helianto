@@ -1,3 +1,3 @@
 <h4>Entity 
-<b>${userGroup.entity.alias}.</b>
+<b>${userAssociation.child.entity.alias}</b>
 </h4>

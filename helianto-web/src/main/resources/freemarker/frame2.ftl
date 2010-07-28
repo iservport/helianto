@@ -106,21 +106,28 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
  # is enabled.
  #
  # The macro will automatically create a transition using the model variable 
- # ${targetName}, either 'select${targetName}' or 'return${targetName}', 
+ # ${targetName}, either 'select${name}' or 'return${name}', 
  # followed by '&index=${targetIndex}${param}' passed as macro parameters.
  # The spring webflow ${flowExecutionKey} will be appended, if exists.
  # 
  # The return option also creates extra [] around the link to distinguish it
  # from selection.
+ #
+ # @param targetIndex - the index to select, defaults to zero,
+ # @param name - name to be prepended with 'select' or 'return' to create the eventId, 
+ #               defaults to the current targetName from the model,
+ # @param indexName - the name of the first parameter, defaults to 'index',
+ # @param param - any aditional parameter, must start with '&',
+ # @param title - to be shown as a hint.
   -->
-<#macro select targetIndex="0", param="", title="">
+<#macro select targetIndex="0", name="${targetName}", indexName="index", param="", title="">
 <td>
 <#if filterOption?if_exists='returnOption' >
 [<a <#if title!="" >title="${title}"</#if> 
-href="${flowExecutionUrl}&_eventId=return${targetName?cap_first}&index=${targetIndex}${param}"><#nested/></a>]
+href="${flowExecutionUrl}&_eventId=return${name?cap_first}&${indexName}=${targetIndex}${param}"><#nested/></a>]
 <#else>
 <a <#if title!="" >title="${title}"</#if> 
-href="${flowExecutionUrl}&_eventId=select${targetName?cap_first}&index=${targetIndex}${param}"><#nested/></a>
+href="${flowExecutionUrl}&_eventId=select${name?cap_first}&${indexName}=${targetIndex}${param}"><#nested/></a>
 </#if>
 </td>
 </#macro>
@@ -148,8 +155,8 @@ href="${flowExecutionUrl}&_eventId=select${targetName?cap_first}&index=${targetI
 <#--
  # Macro to trigger object creation using the index = -1.
 -->
-<#macro create title="Create ${targetName?cap_first}">
-<a title="${title}" href="${flowExecutionUrl}&_eventId=create${targetName?cap_first}&index=-1"><#nested/></a>
+<#macro create name="${targetName}", title="Create ${name?cap_first}">
+<a title="${title}" href="${flowExecutionUrl}&_eventId=create${name?cap_first}&index=-1"><#nested/></a>
 </#macro>
 
 <#macro remove caption="Remove", target="target", action="home.htm">

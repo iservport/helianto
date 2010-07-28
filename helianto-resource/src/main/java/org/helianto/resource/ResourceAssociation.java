@@ -46,8 +46,11 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
 
     private static final long serialVersionUID = 1L;
 
-	/** default constructor */
+	/** 
+	 * Default constructor.
+	 */
     public ResourceAssociation() {
+    	super();
     }
 
     /**
