@@ -39,6 +39,9 @@ public class UserAssociationAction extends AbstractFilterAction<UserAssociation>
 		throw new IllegalArgumentException("An user group named parent is required in scope before association creation.");
 	}
 	
+	/**
+	 * When the user association filter is created, a parent user filter must first be created.
+	 */
 	@Override
 	protected ListFilter doCreateFilter(MutableAttributeMap attributes,	PublicUserDetails userDetails) {
 		UserGroup parent = getParent(attributes);

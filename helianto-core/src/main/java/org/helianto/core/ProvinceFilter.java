@@ -18,16 +18,16 @@ package org.helianto.core;
 
 import java.io.Serializable;
 
-import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.filter.PolymorphicFilter;
 
 /**
  * Province filter.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements Serializable {
+public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements Serializable, PolymorphicFilter<Province> {
 	
 	/**
 	 * Factory method.
@@ -45,12 +45,15 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	private Operator operator;
 	private String provinceCode;
 	private String provinceNameLike;
+	private Class<? extends Province> clazz;
+	private char discriminator;
 	
 	/**
 	 * Default constructor.
 	 */
 	public ProvinceFilter() {
 		super();
+		setClazz(Province.class);
 		reset();
 	}
 	
@@ -110,6 +113,13 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	public boolean isSelection() {
 		return getProvinceCode().length()>0;
 	}
+	
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (getClazz()!=null) {
+			mainCriteriaBuilder.appendAnd().append(getClazz());
+		}
+	}
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
@@ -157,6 +167,26 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	}
 	public void setProvinceNameLike(String provinceNameLike) {
 		this.provinceNameLike = provinceNameLike;
+	}
+	
+	/**
+	 * Class filter.
+	 */
+	public Class<? extends Province> getClazz() {
+		return this.clazz;
+	}
+	public void setClazz(Class<? extends Province> clazz) {
+		this.clazz = clazz;
+	}
+	
+	/**
+	 * Discriminator filter.
+	 */
+	public char getDiscriminator() {
+		return this.discriminator; 
+	}
+	public void setDiscriminator(char discriminator) {
+		this.discriminator = discriminator;
 	}
 
 }

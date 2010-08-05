@@ -29,8 +29,8 @@ import org.springframework.webflow.execution.RequestContext;
  * Presentation logic to store provinces.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("provinceAction")
 public class ProvinceFormAction extends
 		AbstractEditAggregateFormAction<Province, Operator> {
 

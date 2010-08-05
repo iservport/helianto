@@ -1,6 +1,3 @@
-<!--<div id="mainbar">-->
-<!--	<@create "createEntity">New entity</@create>-->
-<!--</div>-->
 <div id="panel">
 
 	<h2 >Entities</h2>

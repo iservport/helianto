@@ -30,8 +30,8 @@ import org.springframework.stereotype.Component;
  * Presentation logic to select provinces.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("provinceFilterAction")
 public class ProvinceFilterFormAction extends AbstractFilterOnlyFormAction<ProvinceFilter, Province> {
 
 	@Override

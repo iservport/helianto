@@ -24,15 +24,15 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.AbstractKeyStringValue;
 import org.helianto.core.KeyType;
 /**
- * The content of a key associated to the partner.
+ * The content of a key associated to the public entity.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="prtnr_partnerKey",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"partnerId", "keyTypeId"})}
+@Table(name="prtnr_publicEntityKey",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"publicEntityId", "keyTypeId"})}
 )
-public class PartnerKey extends AbstractKeyStringValue {
+public class PublicEntityKey extends AbstractKeyStringValue {
 
 	/**
 	 * <<Transient>> Delegate to the actual key owner.
@@ -40,49 +40,69 @@ public class PartnerKey extends AbstractKeyStringValue {
 	@Transient
 	@Override
 	protected Object getKeyOwner() {
-		return getPartner();
+		return getPublicEntity();
 	}   
 
-    /**
-     * Factory method.
-     * 
-     * @param partnerRegistry
-     * @param keyType
-     */
-    public static PartnerKey partnerKeyFactory(Partner partner, KeyType keyType) {
-        PartnerKey partnerKey = new PartnerKey();
-        partnerKey.setPartner(partner);
-        partnerKey.setKeyType(keyType);
-        return partnerKey;
-    }
-
     private static final long serialVersionUID = 1L;
-    private Partner partner;
+    private PublicEntity publicEntity;
 
     /** 
      * Default constructor.
      */
-    public PartnerKey() {
+    public PublicEntityKey() {
     	super();
+    }
+    
+    /** 
+     * Public entity constructor.
+     * 
+     * @param publicEntity
+     */
+    public PublicEntityKey(PublicEntity publicEntity) {
+    	this();
+    	setPublicEntity(publicEntity);
+    }
+    
+    /** 
+     * Key type constructor.
+     * 
+     * @param publicEntity
+     * @param keyType
+     */
+    public PublicEntityKey(PublicEntity publicEntity, KeyType keyType) {
+    	this(publicEntity);
+    	setKeyType(keyType);
+    }
+    
+    /** 
+     * Full constructor.
+     * 
+     * @param publicEntity
+     * @param keyType
+     * @param keyValue
+     */
+    public PublicEntityKey(PublicEntity publicEntity, KeyType keyType, String keyValue) {
+    	this(publicEntity, keyType);
+    	setKeyValue(keyValue);
     }
 
     /**
-     * Partner.
+     * Public entity.
      */
     @ManyToOne
-    @JoinColumn(name="partnerId", nullable=true)
-    public Partner getPartner() {
-        return this.partner;
-    }
-    public void setPartner(Partner partner) {
-        this.partner = partner;
-    }
+    @JoinColumn(name="publicEntityId", nullable=true)
+    public PublicEntity getPublicEntity() {
+		return publicEntity;
+	}
+    public void setPublicEntity(PublicEntity publicEntity) {
+		this.publicEntity = publicEntity;
+	}
 
    /**
     * equals
     */
    public boolean equals(Object other) {
-         if (other instanceof PartnerKey) {
+         if (other instanceof PublicEntityKey) {
         	 return super.equals(other);
          }
          return false;

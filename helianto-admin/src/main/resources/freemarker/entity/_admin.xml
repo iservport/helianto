@@ -37,8 +37,10 @@
       </on-render>
 
       <transition on="selectUserAssociation" to="userAssociation.subflow" />
+      <transition on="createUserAssociation" to="userAssociation.subflow" />
       <transition on="selectUserGroup"       to="filter" />
-      <transition on="toSelection" to="toSelection"/>
+      <transition on="toSelection"           to="toSelection"/>
+      <transition on="toHome"                to="toHome"/>
       
    </view-state>
 
@@ -47,7 +49,7 @@
 	 !-->
    <subflow-state id="userAssociation.subflow" subflow="_userAssociation">
 		<input name="userAssociation" value="userAssociationFilter.item"/>
-		<input name="userGroup"       value="userAssociationFilter.item"/>
+		<input name="userGroup"       value="userAssociationFilter.parentItem"/>
       <transition on="toParent" to="selection.view"/>
    </subflow-state>
 

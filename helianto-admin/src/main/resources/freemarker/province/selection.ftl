@@ -1,5 +1,9 @@
+<div id="mainbar">
+	<@create>New province</@create>
+</div>
+
 <div id="panel">
-<p>Found ${targetListSize?if_exists} province(s) under this namespace.</p>
+<p>Found ${provinceFilter.listSize?if_exists} province(s) under this namespace.</p>
 <table>
 <thead>
 <tr>
@@ -9,11 +13,11 @@
 </tr>
 </thead>
 <tbody>
-<#list targetList?if_exists as target>
-<tr class="row${target_index%2}">
-	<@select "${target_index}">${target.id}</@select>
-	<td>${target.provinceCode?if_exists}</td>
-	<td>${target.provinceName?if_exists}</td>
+<#list provinceFilter.list?if_exists as item >
+<tr class="row${item_index%2}">
+	<@select "${item_index}">${item.id}</@select>
+	<@select "${item_index}">${item.provinceCode?if_exists}</@select>
+	<td>${item.provinceName?if_exists}</td>
 </tr>
 </#list>
 </tbody>

@@ -53,12 +53,11 @@ public class PartnerMgrImplTests {
 	@Test
     public void storePartnerRegistry() {
     	PartnerRegistry partnerRegistry = new PartnerRegistry();
-    	PartnerRegistry managedPartnerRegistry = new PartnerRegistry();
     	
-    	expect(partnerRegistryDao.merge(partnerRegistry)).andReturn(managedPartnerRegistry);
+    	partnerRegistryDao.saveOrUpdate(partnerRegistry);
     	replay(partnerRegistryDao);
 
-    	assertSame(managedPartnerRegistry, partnerMgr.storePartnerRegistry(partnerRegistry));
+    	assertSame(partnerRegistry, partnerMgr.storePartnerRegistry(partnerRegistry));
     	verify(partnerRegistryDao);
     }
     

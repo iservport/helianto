@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<secured attributes="ROLE_ADMIN_MANAGER" />
+
+	<persistence-context />
+
+	<on-start>
+		<set name="flowScope.basePath" value="'province/'" />
+		<set name="flowScope.assign" value="'assign'" />
+	</on-start>
+
+	<action-state id="filter">
+		<evaluate expression="provinceAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="selection.view" />
+	</action-state>
+
+	<view-state id="selection.view" view="/frame2" model="provinceFilter">
+
+		<on-render>
+			<set name="viewScope.sidebar" value="'selection_filter'" />
+			<set name="viewScope.template" value="'selection'" />
+		</on-render>
+
+		<transition on="selectProvince" to="province.subflow" />
+		<transition on="createProvince" to="province.subflow" />
+
+		<transition on="toHome" to="toHome" />
+
+	</view-state>
+
+	<!-- 
+	 ! province
+	 ! SUBFLOW
+	 !-->
+	<subflow-state id="province.subflow" subflow="_province">
+		<input name="province" value="provinceFilter.item" />
+		<transition on="toSelection" to="filter" />
+		<transition on="cancel" to="filter" />
+		<transition on="toHome" to="toHome" />
+	</subflow-state>
+
+	<end-state id="toHome" />
+
+	<end-state id="returnTarget">
+		<output name="returnTarget" value="flowScope.province" />
+	</end-state>
+
+</flow>

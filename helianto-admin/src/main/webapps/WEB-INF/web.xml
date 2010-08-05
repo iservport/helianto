@@ -22,6 +22,7 @@
             classpath:/META-INF/spring/core-context.xml
             classpath:/META-INF/spring/message-context.xml
             classpath:/META-INF/spring/security.xml
+            classpath:/META-INF/spring/webmvc.xml
             classpath:/META-INF/spring/freemarker.xml
 	        classpath:/META-INF/spring/webflow.xml
 	        /WEB-INF/helianto-app.xml

@@ -11,7 +11,8 @@
 
 	<on-start>
 		<set name="flowScope.basePath" value="'user/'" />
-		<set name="flowScope.assign" value="'assign'" />
+		<set name="flowScope.assign"   value="'assign'" />
+	    <set name="flowScope.parent"   value="userGroup"/>
 	</on-start>
 
 	<action-state id="createIfNeeded">
@@ -45,6 +46,7 @@
 		<transition on="createUserAssociation" to="userAssociation.subflow" />
 
 		<transition on="toSelection" to="toSelection" />
+		<transition on="toHome"      to="toHome" />
 		
 	</view-state>
 
@@ -72,15 +74,9 @@
 		
 	</view-state>
 
-	<!--
-	 ! End states 
-	// -->
 	<end-state id="toHome" />
 	<end-state id="toSelection" />
 
-	<!--
-	 ! Globals 
-	// -->
 	<global-transitions>
 		<transition on="toHome" to="toHome" />
 		<transition on="forbidden" to="toHome" />

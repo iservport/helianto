@@ -1,5 +1,5 @@
 <div id="mainbar">
-	<@anchor "createUserGroup">New user group</@anchor> | 
+	<@create "userAssociation">New user group</@create> | 
 	<@anchor "toSelection">Back</@anchor>
 </div>
 

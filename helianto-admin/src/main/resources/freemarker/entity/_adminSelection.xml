@@ -33,7 +33,6 @@
    
         <on-render>
 			<set name="viewScope.forward"  value="'selection_fwd'"/>
-			<set name="viewScope.sidenav"  value="'selection_nav'"/>
 			<set name="viewScope.sidebar"  value="'selection_filter'"/>
 			<set name="viewScope.template" value="'selection'"/>
         </on-render>
@@ -55,15 +54,15 @@
 	<subflow-state id="admin.subflow" subflow="_admin">
 		<input name="userAssociation" value="userAssociationFilter.item"/>
 		<transition on="toSelection" to="filter" />
+		<transition on="toHome" to="filter" />
 	</subflow-state>
 
 	<!-- 
 	 ! province
 	 ! SUBFLOW
 	 !-->
-   <subflow-state id="province.subflow" subflow="province">
-      <input name="operator" value="flowScope.operator"/>
-      <transition on="toParent" to="selection.view"/>
+   <subflow-state id="province.subflow" subflow="_provinceSelection">
+      <transition on="toHome" to="selection.view"/>
    </subflow-state>
 
 	<!-- 

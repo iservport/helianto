@@ -162,7 +162,7 @@ public class Province  implements java.io.Serializable {
     /**
      * Province code.
      */
-    @Column(length=7)
+    @Column(length=12)
     public String getProvinceCode() {
         return this.provinceCode;
     }

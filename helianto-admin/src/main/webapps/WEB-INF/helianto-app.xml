@@ -25,6 +25,18 @@
       http://www.springframework.org/schema/security 
       http://www.springframework.org/schema/security/spring-security-3.0.xsd">  
                
+	<!--
+			Property configurer 
+	-->
+	<bean id="localPropertyOverrideConfigurer" 
+		parent="propertyOverrideConfigurer">
+		<property name="locations">
+			<list>
+				<value>file:#{ systemProperties['user.home'] }/.helianto.properties</value>
+			</list>
+		</property>
+	</bean>
+	
 	<security:http auto-config="true" >
 		<security:form-login login-page="/admin/login" always-use-default-target="true" default-target-url="/admin/_adminSelection"/>
 	</security:http>

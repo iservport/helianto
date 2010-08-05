@@ -79,7 +79,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 	
 	public PartnerRegistry storePartnerRegistry(PartnerRegistry partnerRegistry) {
-		return partnerRegistryDao.merge(partnerRegistry);
+		partnerRegistryDao.saveOrUpdate(partnerRegistry);
+		return partnerRegistry;
 	}
 	
     public void removePartnerRegistry(PartnerRegistry partnerRegistry) {
@@ -95,7 +96,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 	
 	public Partner storePartner(Partner partner) {
-		return partnerDao.merge(partner);
+		partnerDao.saveOrUpdate(partner);
+		return partner;
 	}
 
 	public void removePartner(Partner partner) {
@@ -103,7 +105,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 
 	public Address storeAddress(Address address) {
-		return addressDao.merge(address);
+		addressDao.saveOrUpdate(address);
+		return address;
 	}
 
 	public PartnerRegistry removeAddress(Address address) {
@@ -120,7 +123,9 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 
 	public PartnerKey storePartnerKey(PartnerKey partnerKey) {
-		return partnerKeyDao.merge(partnerKey);
+		partnerDao.saveOrUpdate(partnerKey.getPartner());
+		partnerKeyDao.saveOrUpdate(partnerKey);
+		return partnerKey;
 	}
 
 	public PartnerRegistry removePartnerKey(PartnerKey partnerKey) {
@@ -152,7 +157,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 			partnerRegistry.setPostalCode(partnerAddress.getPostalCode());
 			partnerRegistry.setPostOfficeBox(partnerAddress.getPostOfficeBox());
 			partnerRegistry.setProvince(partnerAddress.getProvince());
-			partnerRegistry = partnerRegistryDao.merge(partnerRegistry);
+			partnerRegistryDao.saveOrUpdate(partnerRegistry);
 		}
 		else {
 			defaultDivision = (Division) partnerDao.findUnique(partnerRegistry, "D");
@@ -163,7 +168,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 			defaultDivision.setPartnerRegistry(partnerRegistry);
 			defaultDivision.setDivisionType(DivisionType.HEADQUARTER);
 			defaultDivision.setPartnerState(PartnerState.ACTIVE);
-			defaultDivision = (Division) partnerDao.merge(defaultDivision);
+			partnerDao.saveOrUpdate(defaultDivision);
 		}
 		logger.info("Default division is {} ", defaultDivision);
 		return defaultDivision;

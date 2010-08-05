@@ -1,5 +1,8 @@
 package org.helianto.partner;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -8,6 +11,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -33,6 +37,9 @@ public class PublicEntity extends AbstractAddress {
 	private Operator operator;
 	private Entity entity;
 	private String entityName;
+	private char publicEntityType;
+	private char publicEntityVisibility;
+	private Set<PublicEntityKey> publicEntityKeys = new HashSet<PublicEntityKey>();
 
 	/**
 	 * Empty constructor.
@@ -106,6 +113,37 @@ public class PublicEntity extends AbstractAddress {
 	}
 	public void setEntityName(String entityName) {
 		this.entityName = entityName;
+	}
+	
+	/**
+	 * Type of public entity.
+	 */
+	public char getPublicEntityType() {
+		return publicEntityType;
+	}
+	public void setPublicEntityType(char publicEntityType) {
+		this.publicEntityType = publicEntityType;
+	}
+	public void setPublicEntityType(PublicEntityType publicEntityType) {
+		this.publicEntityType = publicEntityType.getValue();
+	}
+	
+	/**
+	 * Visibility of public entity.
+	 */
+	public char getPublicEntityVisibility() {
+		return publicEntityVisibility;
+	}
+	public void setPublicEntityVisibility(char publicEntityVisibility) {
+		this.publicEntityVisibility = publicEntityVisibility;
+	}
+	
+	@OneToMany(mappedBy="publicEntity")
+	public Set<PublicEntityKey> getPublicEntityKeys() {
+		return publicEntityKeys;
+	}
+	public void setPublicEntityKeys(Set<PublicEntityKey> publicEntityKeys) {
+		this.publicEntityKeys = publicEntityKeys;
 	}
 
 	/**
