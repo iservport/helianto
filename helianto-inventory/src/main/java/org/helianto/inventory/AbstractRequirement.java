@@ -88,7 +88,7 @@ public abstract class AbstractRequirement extends AbstractControl {
      * Usually a part or a process operation.
      * </p>
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="documentId", nullable=true)
     public ProcessDocument getProcessDocument() {
     	ProcessDocument externalProcessDocument = resolveExternalProcessDocument();
