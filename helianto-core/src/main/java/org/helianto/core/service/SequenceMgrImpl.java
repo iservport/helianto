@@ -36,19 +36,8 @@ import org.springframework.stereotype.Service;
 @Service("sequenceMgr")
 public class SequenceMgrImpl implements SequenceMgr {
 	
-	public void validateInternalNumber(Sequenceable sequenceable) {
-        if (sequenceable.getInternalNumber()==0) {
-            long internalNumber = findNextInternalNumber(sequenceable.getEntity(), sequenceable.getInternalNumberKey());
-            sequenceable.setInternalNumber(internalNumber);
-            logger.debug("Created key for new {} {}", sequenceable.getInternalNumberKey(), sequenceable.getInternalNumber());
-        }
-        else {
-            logger.debug("InternalNumber not generated");
-        }
-	}
-
-    public long findNextInternalNumber(Entity entity, String typeName) {
-        InternalEnumerator enumerator = internalEnumeratorDao.findUnique(entity, typeName);
+    public long newInternalNumber(Entity entity, String internalNumberKey) {
+        InternalEnumerator enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
         if (enumerator!=null) {
             long lastNumber = enumerator.getLastNumber();
             enumerator.setLastNumber(lastNumber+1);
@@ -58,7 +47,7 @@ public class SequenceMgrImpl implements SequenceMgr {
         } else  {
             enumerator = new InternalEnumerator();
             enumerator.setEntity(entity);
-            enumerator.setTypeName(typeName);
+            enumerator.setTypeName(internalNumberKey);
             enumerator.setLastNumber(2);    
             internalEnumeratorDao.merge(enumerator);
             logger.debug("Created InternalEnumerator: {}", enumerator);
@@ -66,6 +55,17 @@ public class SequenceMgrImpl implements SequenceMgr {
         }
     }
     
+	public void validateInternalNumber(Sequenceable sequenceable) {
+        if (sequenceable.getInternalNumber()==0) {
+            long internalNumber = newInternalNumber(sequenceable.getEntity(), sequenceable.getInternalNumberKey());
+            sequenceable.setInternalNumber(internalNumber);
+            logger.debug("Created key for new {} {}", sequenceable.getInternalNumberKey(), sequenceable.getInternalNumber());
+        }
+        else {
+            logger.debug("InternalNumber not generated");
+        }
+	}
+	
 	public List<Node> prepareTree(Node root) {
 		treeBuilder.buildTree(root);
 		return treeBuilder.getTree();

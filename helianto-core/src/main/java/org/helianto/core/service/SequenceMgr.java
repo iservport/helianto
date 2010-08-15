@@ -17,6 +17,7 @@ package org.helianto.core.service;
 
 import java.util.List;
 
+import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.Sequenceable;
 
@@ -26,6 +27,15 @@ import org.helianto.core.Sequenceable;
  * @author Mauricio Fernandes de Castro
  */
 public interface SequenceMgr {
+	
+	/**
+	 * Create a new internal number from a sequence named after a given internal 
+	 * number key. If the sequence does not exist, start a new one.
+	 * 
+	 * @param entity
+	 * @param internalNumberKey
+	 */
+	public long newInternalNumber(Entity entity, String internalNumberKey);
 	
 	/**
 	 * Inspect the <code>internalNumber</code> attribute of any class
