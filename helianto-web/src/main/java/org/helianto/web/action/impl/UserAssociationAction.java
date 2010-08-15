@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Credential;
+import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserAssociationFilter;
 import org.helianto.core.UserFilter;
@@ -34,7 +36,7 @@ public class UserAssociationAction extends AbstractFilterAction<UserAssociation>
 	protected UserAssociation doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		UserGroup parent = getParent(attributes);
 		if (parent!=null) {
-		    return new UserAssociation(parent);
+		    return new UserAssociation(parent, new User(parent.getEntity(), new Credential("", "default")));
 		}
 		throw new IllegalArgumentException("An user group named parent is required in scope before association creation.");
 	}
