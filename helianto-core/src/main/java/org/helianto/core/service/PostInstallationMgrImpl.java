@@ -46,17 +46,17 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			defaultOperatorName = "DEFAULT";
 		}
 		
-		logger.info("Check operator {} installation with 'reinstall={}'", defaultOperatorName, reinstall);
+		logger.debug("Check operator {} installation with 'reinstall={}'", defaultOperatorName, reinstall);
 		Operator defaultOperator = null;
 		if (!reinstall) {
 			defaultOperator = operatorDao.findUnique(defaultOperatorName);
 		}
 		if (defaultOperator==null) {
-			logger.info("Will install operator {} ...", defaultOperatorName); 
+			logger.debug("Will install operator {} ...", defaultOperatorName); 
 			defaultOperator = Operator.operatorFactory(defaultOperatorName, Locale.getDefault());
 			operatorDao.saveOrUpdate(defaultOperator);
 		}
-		logger.info("Default operator AVAILABLE as {}.", defaultOperator);
+		logger.debug("Default operator AVAILABLE as {}.", defaultOperator);
 		
 		Service adminService = installService(defaultOperator, "ADMIN");
 		defaultOperator.getServiceMap().put("ADMIN", adminService);
@@ -72,7 +72,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		operatorDao.saveOrUpdate(defaultOperator);
 		List<Province> provinceList = provinceResourceParserStrategy.parseProvinces(defaultOperator, rs);
 		
-		logger.info("Will install {} province(s) ...", provinceList.size());
+		logger.debug("Will install {} province(s) ...", provinceList.size());
 		for (Province province: provinceList) {
 	    	if (provinceDao.findUnique(defaultOperator, province.getProvinceCode())==null) {
 	    		if (province instanceof City && province.getParent()!=null) {
@@ -86,7 +86,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		        provinceDao.saveOrUpdate(province);
 	    	}
 	    	else {
-	    		logger.info("Province AVAILABLE as {}.", province);
+	    		logger.debug("Province AVAILABLE as {}.", province);
 	    	}
 		}
 		
@@ -96,14 +96,14 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		operatorDao.saveOrUpdate(defaultOperator);
 		
-		logger.info("Check key code {} installation ...", keyCode);
+		logger.debug("Check key code {} installation ...", keyCode);
 		KeyType keyType = keyTypeDao.findUnique(defaultOperator, keyCode);
 		if (keyType==null) {
-			logger.info("Will install key code {} ...", keyCode); 
+			logger.debug("Will install key code {} ...", keyCode); 
 			keyType = KeyType.keyTypeFactory(defaultOperator, keyCode);
 			keyTypeDao.saveOrUpdate(keyType);
 		}
-		logger.info("KeyType  AVAILABLE as {}.", keyType);
+		logger.debug("KeyType  AVAILABLE as {}.", keyType);
 		
 		return keyType;
 	}
@@ -112,14 +112,14 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		operatorDao.saveOrUpdate(defaultOperator);
 		
-		logger.info("Check service {} installation ...", serviceName);
+		logger.debug("Check service {} installation ...", serviceName);
 		Service service = serviceDao.findUnique(defaultOperator, serviceName);
 		if (service==null) {
-			logger.info("Will install service {} ...", serviceName);
+			logger.debug("Will install service {} ...", serviceName);
 			service = Service.serviceFactory(defaultOperator, serviceName);
 			serviceDao.saveOrUpdate(service);
 		}
-		logger.info("Sevice AVAILABLE as {}.", service);
+		logger.debug("Sevice AVAILABLE as {}.", service);
 		
 		return service;
 	}
@@ -128,18 +128,18 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		operatorDao.saveOrUpdate(defaultOperator);
 		
-		logger.info("Check entity {} installation with 'reinstall={}'", entityAlias, reinstall);
+		logger.debug("Check entity {} installation with 'reinstall={}'", entityAlias, reinstall);
 		Entity defaultEntity = null;
 		if (!reinstall) {
 			defaultEntity = entityDao.findUnique(defaultOperator, entityAlias);
 		}
 		
 		if (defaultEntity==null) {
-			logger.info("Will install entity {} ...", entityAlias);
+			logger.debug("Will install entity {} ...", entityAlias);
 			defaultEntity = Entity.entityFactory(defaultOperator, entityAlias);
 			entityDao.saveOrUpdate(defaultEntity);
 		} 
-		logger.info("Entity AVAILABLE as {}.", defaultEntity);
+		logger.debug("Entity AVAILABLE as {}.", defaultEntity);
 		
 		//
 		UserGroup adminGroup = installUserGroup(defaultEntity, "ADMIN", reinstall);
@@ -153,7 +153,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		adminGroup.getRoles().add(adminRole);
 		
 		UserAssociation adminAssociation = userMgr.installUser(adminGroup, managerPrincipal);
-		logger.info("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
+		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
 		
 		//
 		UserGroup userGroup = installUserGroup(defaultEntity, "USER", reinstall);
@@ -167,7 +167,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		userGroup.getRoles().add(userRole);
 		
 		UserAssociation userAssociation = userMgr.installUser(userGroup, managerPrincipal);
-		logger.info("Association to USER group AVAILABLE as {}.", userAssociation);
+		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
 
 		return defaultEntity;
 	}
@@ -176,17 +176,17 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 
 		entityDao.saveOrUpdate(defaultEntity);
 		
-		logger.info("Check user (group) {} installation with 'reinstall={}'", userGroupName, reinstall);
+		logger.debug("Check user (group) {} installation with 'reinstall={}'", userGroupName, reinstall);
 		UserGroup userGroup = null;
 		if (!reinstall) {
 			userGroup = userGroupDao.findUnique(defaultEntity, userGroupName);
 		}
 		if (userGroup==null) {
-			logger.info("Will install user (group) {} ...", userGroupName);
+			logger.debug("Will install user (group) {} ...", userGroupName);
 			userGroup = UserGroup.userGroupFactory(defaultEntity, userGroupName);
 			userGroupDao.saveOrUpdate(userGroup);
 		}
-		logger.info("UserGroup AVAILABLE as {}.", userGroup);
+		logger.debug("UserGroup AVAILABLE as {}.", userGroup);
 		
 		return userGroup;
 	}
@@ -195,11 +195,11 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
 		if (userGroup==null) {
-			logger.info("Will install required user role USER_ALL for user group USER ...");
+			logger.debug("Will install required user role USER_ALL for user group USER ...");
 			userRole = new UserRole(userGroup, service, "ALL");
 			userRoleDao.saveOrUpdate(userRole);
 		}
-		logger.info("User role AVAILABLE as {}.", userRole);
+		logger.debug("User role AVAILABLE as {}.", userRole);
 		
 		return userRole;
 	}
