@@ -1,8 +1,10 @@
 <div id="panel">
-<h2><@sayGroup /><b>${user.userKey}</b> <small>[${user.id}]</small></h2>
-<#if user.discriminator!='G' >
-<p>Personal data: <b>${user.userName}</b></p>
+<h2><@sayGroup /><b>${userAssociation.child.userKey}</b> <small>[${userAssociation.child.id}]</small></h2>
+<#if userAssociation.child.discriminator!='G' >
+<p>Personal data: <b>${userAssociation.child.userName}</b></p>
 </#if>
+
+<#-- 
 <h2>Assigned roles</h2>
 <table>
 <thead>
@@ -23,5 +25,5 @@
 </#list>
 </tbody>
 </table>
-
+-->
 </div>

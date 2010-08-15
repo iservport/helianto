@@ -6,6 +6,8 @@
 
 	<secured attributes="ROLE_USER_ALL" />
 
+	<persistence-context />
+
 	<input name="userGroup" />
 	<input name="userAssociation" />
 
@@ -50,10 +52,6 @@
 		
 	</view-state>
 
-	<!-- 
-	 ! userAssociation (recursive)
-	 ! SUBFLOW
-	 !-->
 	<subflow-state id="userAssociation.subflow" subflow="userAssociation">
 		<input name="userAssociation" value="userAssociationFilter.item"/>
 		<input name="userGroup"       value="userAssociationFilter.item"/>
@@ -68,18 +66,13 @@
 		</on-render>
 
 		<transition on="storeUserAssociation" to="show.view">
-			<evaluate expression="userAssociationAction.storeTarget" />
+			<evaluate expression="userAssociationAction.store(flowScope)" />
 		</transition>
 		<transition on="cancelForm" to="show.view"  bind="false"/>
 		
 	</view-state>
 
 	<end-state id="toHome" />
-	<end-state id="toSelection" />
-
-	<global-transitions>
-		<transition on="toHome" to="toHome" />
-		<transition on="forbidden" to="toHome" />
-	</global-transitions>
+	<end-state id="toSelection" commit="true" />
 
 </flow>

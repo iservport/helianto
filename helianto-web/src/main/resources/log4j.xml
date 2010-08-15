@@ -8,21 +8,6 @@
 				value="%p --- %C{1}.%M(%L) | %m%n"/>
 		</layout>
 	</appender>
-	<logger name="org.helianto.core">
-		<level value="ERROR"/>
-	</logger>
-	<logger name="org.helianto.process">
-		<level value="ERROR"/>
-	</logger>
-	<logger name="org.helianto.controller">
-		<level value="DEBUG"/>
-	</logger>
-	<logger name="org.helianto.web">
-		<level value="DEBUG"/>
-	</logger>
-	<logger name="org.hsqldb">
-		<level value="ERROR"/>
-	</logger>
 	<root>
 		<level value="WARN"/>
 		<appender-ref ref="CONSOLE"/>
