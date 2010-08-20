@@ -1,6 +1,8 @@
 package org.helianto.web.action.impl;
 
+import org.helianto.core.UserAssociation;
 import org.helianto.core.UserAssociationFilter;
+import org.helianto.core.UserGroup;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
@@ -14,10 +16,20 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * @author mauriciofernandesdecastro
  */
 @Component("adminAction")
-public class AdminAction extends UserAssociationAction {
+public class AdminAction extends UserGroupAssociationAction {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * The admin action is used to create a new top level group.
+	 */
+	@Override
+	protected UserAssociation doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		UserGroup parent = new UserGroup(userDetails.getEntity());
+		logger.debug("Association has {} and {}.", parent, userDetails.getUser());
+	    return new UserAssociation(parent, userDetails.getUser());
+	}
+	
 	@Override
 	protected ListFilter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		UserAssociationFilter userAssociationFilter = new UserAssociationFilter();

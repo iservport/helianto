@@ -77,7 +77,7 @@ public class ResourceParameterValue  implements java.io.Serializable {
     /**
      * Resource group.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="resourceId", nullable=true)
     public ResourceGroup getResource() {
         return this.resource;
@@ -89,7 +89,7 @@ public class ResourceParameterValue  implements java.io.Serializable {
     /**
      * Resource parameter.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="parameterId", nullable=true)
     public ResourceParameter getParameter() {
         return this.parameter;

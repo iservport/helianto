@@ -41,9 +41,7 @@ public class Service implements java.io.Serializable {
      * @param serviceName
      */
     public static Service serviceFactory(Operator operator, String serviceName) {
-        Service service = new Service();
-        service.setOperator(operator);
-        service.setServiceName(serviceName);
+        Service service = new Service(operator, serviceName);
         return service;
     }
 
@@ -67,6 +65,17 @@ public class Service implements java.io.Serializable {
     public Service(Operator operator) {
     	this();
     	setOperator(operator);
+    }
+
+    /** 
+     * Name constructor.
+     * 
+     * @param operator
+     * @param serviceName
+     */
+    public Service(Operator operator, String serviceName) {
+    	this(operator);
+    	setServiceName(serviceName);
     }
 
     /**

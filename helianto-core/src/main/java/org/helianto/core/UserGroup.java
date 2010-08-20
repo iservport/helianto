@@ -94,7 +94,7 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
 	 * Empty constructor.
 	 */
     public UserGroup() {
-    	setUserKey("NOGROUP");
+    	setUserKey("");
     	setLastEvent(new Date());
     	setUserState(UserState.ACTIVE);
     	setAccountNonExpired(true);
@@ -239,7 +239,7 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
     /**
      * Child associations.
      */
-    @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="parent", cascade = {CascadeType.ALL})
     public Set<UserAssociation> getChildAssociations() {
         return this.childAssociations;
     }

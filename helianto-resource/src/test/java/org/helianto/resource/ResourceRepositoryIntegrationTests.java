@@ -17,10 +17,8 @@ package org.helianto.resource;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.resource.test.AbstractResourceDaoIntegrationTest;
 import org.helianto.resource.test.ResourceGroupTestSupport;
 import org.helianto.resource.test.ResourceParameterTestSupport;
@@ -39,32 +37,25 @@ public class ResourceRepositoryIntegrationTests extends AbstractResourceDaoInteg
 
 	@javax.annotation.Resource BasicDao<ResourceAssociation> resourceAssociationDao;
 	@javax.annotation.Resource FilterDao<ResourceGroup, ResourceGroupFilter> resourceGroupDao;
+	@javax.annotation.Resource FilterDao<ResourceParameter, ResourceParameterFilter> resourceParameterDao;
+	@javax.annotation.Resource BasicDao<ResourceParameterValue> resourceParameterValueDao;
+	
 	@Test
-	public void resourceAssociationDao() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+	public void resource() {
 		
 		ResourceGroup parent = resourceGroupDao.merge(ResourceGroupTestSupport.createResourceGroup(entity));
 		assertEquals(parent, resourceGroupDao.findUnique(parent.getEntity(), parent.getResourceCode()));
 
-		ResourceAssociation target = new ResourceAssociation();
-		target.setParent(parent);
-		target.setChild(ResourceTestSupport.createResource(entity));
-		assertEquals(resourceAssociationDao.merge(target), resourceAssociationDao.findUnique(target.getParent(), target.getChild()));
+		ResourceAssociation resourceAssociation = new ResourceAssociation();
+		resourceAssociation.setParent(parent);
+		resourceAssociation.setChild(ResourceTestSupport.createResource(entity));
+		assertEquals(resourceAssociationDao.merge(resourceAssociation), resourceAssociationDao.findUnique(resourceAssociation.getParent(), resourceAssociation.getChild()));
 
-	}
-	
-	@javax.annotation.Resource FilterDao<ResourceParameter, ResourceParameterFilter> resourceParameterDao;
-	@Test
-	public void resourceParameter() {
-		ResourceParameter target = ResourceParameterTestSupport.createResourceParameter();
-		assertEquals(resourceParameterDao.merge(target), resourceParameterDao.findUnique(target.getEntity(), target.getParameterCode()));
-	}
-	
-	@javax.annotation.Resource BasicDao<ResourceParameterValue> resourceParameterValueDao;
-	@Test
-	public void resourceParameterValue() {
-		ResourceParameterValue target = ResourceParameterValueTestSupport.createResourceParameterValue();
-		assertEquals(resourceParameterValueDao.merge(target), resourceParameterValueDao.findUnique(target.getResource(), target.getParameter()));
+		ResourceParameter resourceParameter = ResourceParameterTestSupport.createResourceParameter(entity);
+		assertEquals(resourceParameterDao.merge(resourceParameter), resourceParameterDao.findUnique(resourceParameter.getEntity(), resourceParameter.getParameterCode()));
+
+		ResourceParameterValue resourceParameterValue = ResourceParameterValueTestSupport.createResourceParameterValue(parent, resourceParameter);
+		assertEquals(resourceParameterValueDao.merge(resourceParameterValue), resourceParameterValueDao.findUnique(resourceParameterValue.getResource(), resourceParameterValue.getParameter()));
 	}
 
 }

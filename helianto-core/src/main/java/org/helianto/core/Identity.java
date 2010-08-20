@@ -259,7 +259,7 @@ public class Identity implements java.io.Serializable {
     /**
      * A set of credentials.
      */
-    @OneToMany(mappedBy="identity", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="identity")
     public Set<Credential> getCredentials() {
 		return credentials;
 	}

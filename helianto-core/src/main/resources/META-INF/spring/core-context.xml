@@ -64,20 +64,20 @@
                     2) tx propagation: SUPPORTS (not REQUIRED ! ! !) [...]
 					[...]
          -->
-            <tx:method name="commitSession" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="load*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="create*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="prepare*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="commit*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="load*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="create*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="prepare*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
 
-            <tx:method name="fin*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="merg*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="pers*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="remov*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="fin*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="merg*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="pers*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="remov*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
 
-            <tx:method name="store*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="install*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="store*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="install*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
             <!-- This "*" pattern must appear last or else the other patterns will never match -->
-            <tx:method name="*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
           </tx:attributes>
     </tx:advice>
 
@@ -90,9 +90,18 @@
     </aop:config>
     
     <aop:config>
+        <aop:pointcut id="testPointcut" expression="execution(* *..*IntegrationTest*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="testPointcut" />
+    </aop:config>
+    
+    <!--
+    
+    <aop:config>
         <aop:pointcut id="testPointcut" expression="execution(* *..*Dao*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="testPointcut" />
     </aop:config>
+    
+    -->
     
     <!-- Can't declare annotation-driven AND tx:advice to instruct Spring to perform declarative 
          transaction management automatically on annotated classes.

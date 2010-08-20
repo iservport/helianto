@@ -1,7 +1,9 @@
 <div id="panel">
 
 	<h2 >Entities</h2>
-	<p>Here is a list of entities you are authorized as user.</p>
+	<p>For safety reasons, entities should not be handled directly. They are preferably accessed
+	using top level user groups, once they have been created by installation procedures. Pleas, check
+	below a list of entities you are authorized to manage.</p>
 	
 	<table >
 	<thead>

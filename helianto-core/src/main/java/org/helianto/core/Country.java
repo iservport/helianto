@@ -79,7 +79,7 @@ public class Country implements java.io.Serializable {
     /**
      * Namespace operator.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;

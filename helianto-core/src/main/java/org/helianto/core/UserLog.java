@@ -17,7 +17,6 @@ package org.helianto.core;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -79,7 +78,7 @@ public class UserLog implements java.io.Serializable {
     /**
      * User.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="userId", nullable=true)
     public User getUser() {
         return this.user;

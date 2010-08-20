@@ -154,7 +154,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Parent operator, if any.
      */
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="parentId", nullable=true)
     public Operator getParent() {
         return this.parent;
@@ -255,7 +255,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type set.
      */
-    @OneToMany(mappedBy="operator", cascade={ CascadeType.PERSIST, CascadeType.MERGE },
+    @OneToMany(mappedBy="operator", cascade={ CascadeType.ALL },
     		fetch=FetchType.LAZY)
     public Set<KeyType> getKeyTypes() {
 		return keyTypes;
@@ -267,7 +267,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type map.
      */
-    @OneToMany(mappedBy="operator", cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="operator", cascade={CascadeType.ALL})
     @MapKey(name="keyCode")
 	public Map<String, KeyType> getKeyTypeMap() {
 		return keyTypeMap;

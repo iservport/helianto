@@ -19,11 +19,9 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
 import org.helianto.partner.test.AccountTestSupport;
@@ -37,7 +35,6 @@ import org.helianto.partner.test.PartnerKeyTestSupport;
 import org.helianto.partner.test.PartnerRegistryKeyTestSupport;
 import org.helianto.partner.test.PartnerRegistryTestSupport;
 import org.helianto.partner.test.PartnerTestSupport;
-import org.helianto.partner.test.PhoneTestSupport;
 import org.helianto.partner.test.SupplierTestSupport;
 import org.helianto.partner.test.TransportPartnerTestSupport;
 import org.junit.Test;
@@ -52,21 +49,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Resource FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;
-	@Test
-	public void publicEntity() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		PublicEntity publicEntity = new PublicEntity(entity);
-		assertEquals(publicEntityDao.merge(publicEntity), 
-				publicEntityDao.findUnique(publicEntity.getOperator(), publicEntity.getEntity()));
-	}
-
 	@Resource FilterDao<Account, AccountFilter> accountDao;
-	@Test
-	public void account() {
-		Account target = AccountTestSupport.createAccount();
-		assertEquals(accountDao.merge(target), accountDao.findUnique(target.getEntity(), target.getAccountCode()));
-	}
-	
 	@Resource FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
 	@Resource BasicDao<KeyType> keyTypeDao;
 	@Resource BasicDao<PartnerRegistryKey> partnerRegistryKeyDao;
@@ -74,9 +57,16 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	@Resource BasicDao<PartnerKey> partnerKeyDao;
 	@Resource BasicDao<Address> addressDao;
 	@Resource BasicDao<Phone> phoneDao;
+
 	@Test
-	public void partnerRegistry() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+	public void partner() {
+		PublicEntity publicEntity = new PublicEntity(entity);
+		assertEquals(publicEntityDao.merge(publicEntity), 
+				publicEntityDao.findUnique(publicEntity.getOperator(), publicEntity.getEntity()));
+
+		Account target = AccountTestSupport.createAccount(entity);
+		assertEquals(accountDao.merge(target), accountDao.findUnique(target.getEntity(), target.getAccountCode()));
+
 		PartnerRegistry partnerRegistry = partnerRegistryDao.merge(PartnerRegistryTestSupport.createPartnerRegistry(entity));
 		assertEquals(partnerRegistry, partnerRegistryDao.findUnique(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias()));
 
@@ -108,8 +98,8 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		TransportPartner transport = TransportPartnerTestSupport.createTransportPartner(partnerRegistry);
 		assertEquals(partnerDao.merge(transport), partnerDao.findUnique(transport.getPartnerRegistry(), 'T'));
 
-		PartnerKey target = PartnerKeyTestSupport.createPartnerKey(partner, keyType);
-		assertEquals(partnerKeyDao.merge(target), partnerKeyDao.findUnique(target.getPartner(), target.getKeyType()));
+		PartnerKey partnerKey = PartnerKeyTestSupport.createPartnerKey(partner, keyType);
+		assertEquals(partnerKeyDao.merge(partnerKey), partnerKeyDao.findUnique(partnerKey.getPartner(), partnerKey.getKeyType()));
 
 		Address address = AddressTestSupport.createAddress(partnerRegistry);
 		assertEquals(addressDao.merge(address), addressDao.findUnique(address.getPartnerRegistry(), address.getSequence()));

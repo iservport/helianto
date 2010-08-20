@@ -60,9 +60,9 @@ public class ProvinceResourceParseStrategyImpl implements ProvinceResourceParser
 			    }
 			}
 		} catch (XMLStreamException e) {
-			throw new IllegalArgumentException("Unable to parse province data fiile", e);
+			throw new IllegalArgumentException("Unable to parse province data file", e);
 		} catch (IOException e) {
-			throw new IllegalArgumentException("Unable to read from province data fiile", e);
+			throw new IllegalArgumentException("Unable to read from province data file", e);
 		}
 		return provinceList;
 	}

@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -114,7 +113,7 @@ public class UserRole  implements java.io.Serializable {
     /**
      * User group.
      */
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="userId", nullable=true)
     public UserGroup getUserGroup() {
         return this.userGroup;

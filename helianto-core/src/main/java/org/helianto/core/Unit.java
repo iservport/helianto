@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,8 +24,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-
-import org.helianto.core.Entity;
 /**
  * <p>
  * Represents scale <code>Unit</code>s .  
@@ -79,7 +76,7 @@ public class Unit implements java.io.Serializable {
     /**
      * Entity getter.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
@@ -91,7 +88,7 @@ public class Unit implements java.io.Serializable {
     /**
      * Category getter.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     public Category getCategory() {
         return this.category;

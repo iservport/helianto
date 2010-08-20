@@ -13,12 +13,14 @@
 		<td><@spring.formInput "userAssociation.child.userKey", 'size="32" maxlength="40"'/></td>
 	</tr>
 
+	<#if userAssociation.child.identity?exists >
 	<tr>
 		<td>Create identity if does not exist</td>
 		<td><input type="checkBox" name="createIdentity" value="1" /></td>
 	</tr>
+	</#if>
 
-	<#else>
+	<#elseif userAssociation.child.identity?exists >
 
 	<tr>
 		<td>Identity [${userAssociation.child.identity.id}]</td>

@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -71,7 +70,7 @@ public class PrivateKey implements java.io.Serializable {
     /**
      * Credential.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="credentialId", nullable=true)
     public Credential getCredential() {
         return this.credential;

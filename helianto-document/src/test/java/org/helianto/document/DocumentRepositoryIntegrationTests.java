@@ -19,71 +19,46 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Entity;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.test.AbstractDocumentDaoIntegrationTest;
 import org.helianto.document.test.DocumentTagTestSupport;
 import org.helianto.document.test.DocumentTestSupport;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Transactional
 public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoIntegrationTest {
 	
-	/**
-	 * Tries to remove the column 'contentType' from table 'doc_doc'
-	 */
-	@Test
-	public void fixLegacyCode() {
-		executeSqlScript("removeContentType.sql", true);
-	}
-
 	@Resource BasicDao<DocumentAssociation> documentAssociationDao;
-	@Test
-	public void documentAssociation() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		DocumentAssociation target = new DocumentAssociation();
-		target.setParent(DocumentTestSupport.create(Document.class, entity));
-		target.setChild(DocumentTestSupport.create(Document.class, entity));
-		assertEquals(documentAssociationDao.merge(target), documentAssociationDao.findUnique(target.getParent(), target.getChild()));
-	}
-	
 	@Resource FilterDao<Document, DocumentFilter> documentDao;
-	@Test
-	public void document() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		Document target = DocumentTestSupport.create(Document.class, entity);
-		assertEquals(documentDao.merge(target), documentDao.findUnique(target.getEntity(), target.getDocCode()));
-	}
-	
 	@Resource FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> documentCodeBuilderDao;
-	@Test
-	public void documentCodeBuilder() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		DocumentCodeBuilder target = documentCodeBuilderDao.merge(new DocumentCodeBuilder(entity).setBuilderCode("CODE"));
-		assertEquals(target, documentCodeBuilderDao.findUnique(target.getEntity(), target.getBuilderCode()));
-	}
-	
 	@Resource BasicDao<DocumentTag> documentTagDao;
-	@Test
-	public void documentTag() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		Document document = DocumentTestSupport.create(Document.class, entity);
-		DocumentTag target = DocumentTagTestSupport.create(DocumentTag.class, document);
-		assertEquals(documentTagDao.merge(target), documentTagDao.findUnique(target.getDocument(), target.getTagCode()));
-	}
-
 	@Resource FilterDao<AbstractFunction, AbstractDocumentFilter> functionDao;
+
 	@Test
-	public void function() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		AbstractFunction target = functionDao.merge(new FunctionStub(entity));
-		assertEquals(target, functionDao.findUnique(target.getEntity(), target.getDocCode()));
+	public void commit() {
+		DocumentAssociation documentAssociation = new DocumentAssociation();
+		documentAssociation.setParent(DocumentTestSupport.create(Document.class, entity));
+		documentAssociation.setChild(DocumentTestSupport.create(Document.class, entity));
+		assertEquals(documentAssociationDao.merge(documentAssociation), documentAssociationDao.findUnique(documentAssociation.getParent(), documentAssociation.getChild()));
+
+		Document document = DocumentTestSupport.create(Document.class, entity);
+		assertEquals(documentDao.merge(document), documentDao.findUnique(document.getEntity(), document.getDocCode()));
+
+		DocumentCodeBuilder documentCodeBuilder = documentCodeBuilderDao.merge(new DocumentCodeBuilder(entity).setBuilderCode("CODE"));
+		assertEquals(documentCodeBuilder, documentCodeBuilderDao.findUnique(documentCodeBuilder.getEntity(), documentCodeBuilder.getBuilderCode()));
+
+		DocumentTag documentTag = DocumentTagTestSupport.create(DocumentTag.class, document);
+		assertEquals(documentTagDao.merge(documentTag), documentTagDao.findUnique(documentTag.getDocument(), documentTag.getTagCode()));
+
+		AbstractFunction function = functionDao.merge(new FunctionStub(entity));
+		assertEquals(function, functionDao.findUnique(function.getEntity(), function.getDocCode()));
 	}
 	
 }

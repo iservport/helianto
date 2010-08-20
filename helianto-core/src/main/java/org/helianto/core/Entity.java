@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -140,7 +139,7 @@ public class Entity implements java.io.Serializable {
     /**
      * Operator, lazy loaded.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
@@ -169,7 +168,7 @@ public class Entity implements java.io.Serializable {
     /**
      * User group set.
      */
-    @OneToMany(mappedBy="entity", cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy="entity")
     public Set<UserGroup> getUsers() {
 		return users;
 	}

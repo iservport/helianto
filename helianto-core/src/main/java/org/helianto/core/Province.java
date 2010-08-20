@@ -138,7 +138,7 @@ public class Province  implements java.io.Serializable {
     /**
      * Namespace operator.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
@@ -150,7 +150,7 @@ public class Province  implements java.io.Serializable {
 	/**
 	 * Parent province.
 	 */
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="parentId")
 	public Province getParent() {
 		return parent;

@@ -113,7 +113,7 @@ public class Server  implements java.io.Serializable {
     /**
      * Operator.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
@@ -214,7 +214,7 @@ public class Server  implements java.io.Serializable {
     /**
      * Credential.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="credentialId", nullable=true)
     public Credential getCredential() {
         return this.credential;

@@ -19,15 +19,12 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Entity;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.TopLevelNumberedEntityTestSupport;
 import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
 import org.helianto.inventory.test.CardSetTestSupport;
 import org.helianto.inventory.test.CardTestSupport;
-import org.helianto.inventory.test.MovementTestSupport;
 import org.helianto.inventory.test.ProcessAgreementTestSupport;
 import org.helianto.partner.Partner;
 import org.helianto.partner.test.PartnerTestSupport;
@@ -42,26 +39,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoIntegrationTest {
 
 	@Resource BasicDao<Card> cardDao;
-	@Test
-	public void card() {
-		Card target = CardTestSupport.createSample();
-		assertEquals(cardDao.merge(target), cardDao.findUnique(target.getCardSet(), target.getCardLabel()));
-	}
-	
 	@Resource FilterDao<CardSet, CardSetFilter> cardSetDao;
-	@Test
-	public void cardSet() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		CardSet target = CardSetTestSupport.createCardSet(entity);
-		assertEquals(cardSetDao.merge(target), cardSetDao.findUnique(target.getEntity(), target.getInternalNumber()));
-	}
-
 	@Resource BasicDao<Inventory> inventoryDao;
+	@Resource FilterDao<Picking, PickingFilter> pickingDao;
+	@Resource FilterDao<ProcessAgreement, ProcessAgreementFilter> agreementDao;
+
 	@Test
 	public void inventory() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		Inventory target = TopLevelNumberedEntityTestSupport.create(Inventory.class, entity);
-		assertEquals(inventoryDao.merge(target), inventoryDao.findUnique(target.getEntity(), target.getInternalNumber()));
+		Card card = CardTestSupport.createSample(entity);
+		assertEquals(cardDao.merge(card), cardDao.findUnique(card.getCardSet(), card.getCardLabel()));
+
+		CardSet cardSet = CardSetTestSupport.createCardSet(entity);
+		assertEquals(cardSetDao.merge(cardSet), cardSetDao.findUnique(cardSet.getEntity(), cardSet.getInternalNumber()));
+
+		Inventory inventory = TopLevelNumberedEntityTestSupport.create(Inventory.class, entity);
+		assertEquals(inventoryDao.merge(inventory), inventoryDao.findUnique(inventory.getEntity(), inventory.getInternalNumber()));
+
+		Picking picking = TopLevelNumberedEntityTestSupport.create(Picking.class, entity);
+		assertEquals(pickingDao.merge(picking), pickingDao.findUnique(picking.getEntity(), picking.getInternalNumber()));
+	
+		Partner partner = PartnerTestSupport.createPartner(entity);
+		ProcessAgreement processAgreement = ProcessAgreementTestSupport.createProcessAgreement(partner);
+		assertEquals(agreementDao.merge(processAgreement), agreementDao.findUnique(processAgreement.getEntity(), processAgreement.getInternalNumber()));
+
 	}
 	
 	// FIXME
@@ -73,21 +73,4 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 //		assertEquals(movementDao.merge(target), movementDao.findUnique(target.getInventoryTransaction(), target.getInventory()));
 //	}
 	
-	@Resource FilterDao<Picking, PickingFilter> pickingDao;
-	@Test
-	public void picking() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		Picking target = TopLevelNumberedEntityTestSupport.create(Picking.class, entity);
-		assertEquals(pickingDao.merge(target), pickingDao.findUnique(target.getEntity(), target.getInternalNumber()));
-	}
-
-	@Resource FilterDao<ProcessAgreement, ProcessAgreementFilter> agreementDao;
-	@Test
-	public void agreement() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		Partner partner = PartnerTestSupport.createPartner(entity);
-		ProcessAgreement target = ProcessAgreementTestSupport.createProcessAgreement(partner);
-		assertEquals(agreementDao.merge(target), agreementDao.findUnique(target.getEntity(), target.getInternalNumber()));
-	}
-
 }

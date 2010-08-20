@@ -19,6 +19,8 @@ package org.helianto.inventory.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.Entity;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;
 
@@ -33,7 +35,11 @@ public class CardTestSupport {
 	static int testKey = 1;
 
 	public static Card createSample() {
-		CardSet cardSet = CardSetTestSupport.createCardSet();
+		return createSample(EntityTestSupport.createEntity());
+	}
+
+	public static Card createSample(Entity entity) {
+		CardSet cardSet = CardSetTestSupport.createCardSet(entity);
 		cardSet.setCardRange(Integer.MAX_VALUE);
 		return createSample(cardSet);
 	}

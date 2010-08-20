@@ -25,7 +25,7 @@ public class UserGroupTests {
 		assertTrue(userGroup instanceof Comparable<?>);
 		assertTrue(userGroup instanceof NaturalKeyInfo);
 		assertEquals('G', userGroup.getDiscriminator());
-		assertEquals("NOGROUP", userGroup.getUserKey());
+		assertEquals("", userGroup.getUserKey());
 		assertTrue(userGroup.getLastEvent() instanceof Date);
     	assertEquals(UserState.ACTIVE.getValue(), userGroup.getUserState());
     	assertTrue(userGroup.isAccountNonExpired());

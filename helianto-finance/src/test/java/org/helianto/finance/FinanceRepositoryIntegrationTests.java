@@ -19,26 +19,38 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Entity;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.finance.test.AbstractFinanceDaoIntegrationTest;
+import org.helianto.partner.Partner;
+import org.helianto.partner.PartnerFilter;
+import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.test.PartnerRegistryTestSupport;
+import org.helianto.partner.test.PartnerTestSupport;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Transactional
 public class FinanceRepositoryIntegrationTests extends AbstractFinanceDaoIntegrationTest {
 
-	@Resource
-	FilterDao<CashFlow, CashFlowFilter> cashFlowDao;
+	@Resource FilterDao<Partner, PartnerFilter> partnerDao;
+	@Resource FilterDao<CashFlow, CashFlowFilter> cashFlowDao;
 
 	@Test
-	public void cashFlow() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		CashFlow target = cashFlowDao.merge(new CashFlow(entity));
-		assertEquals(target, cashFlowDao.findUnique(target.getEntity(), target.getInternalNumber()));
-	}
+	public void finance() {
+		
+		PartnerRegistry partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry(entity);
+		Partner partner = PartnerTestSupport.createPartner(partnerRegistry);
+		partnerDao.saveOrUpdate(partner);
+		partnerDao.flush();
 
+		CashFlow cashFlow = new CashFlow(partner);
+		cashFlowDao.saveOrUpdate(cashFlow);
+		
+		assertEquals(cashFlow, cashFlowDao.findUnique(cashFlow.getEntity(), cashFlow.getInternalNumber()));
+	}
+	
 }

@@ -25,11 +25,9 @@ import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
 import org.helianto.core.test.CountryTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.InternalEnumeratorTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;
-import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.ProvinceTestSupport;
 import org.helianto.core.test.ServerTestSupport;
 import org.helianto.core.test.ServiceTestSupport;
@@ -49,126 +47,79 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 
-	@Resource FilterDao<Category, CategoryFilter> categoryDao;
-	@Test
-	public void category() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		Category target = CategoryTestSupport.createCategory(entity);
-		assertEquals(categoryDao.merge(target), categoryDao.findUnique(target.getEntity(), target.getCategoryGroup(), target.getCategoryCode()));
-	}
-	
+	@Resource BasicDao<KeyType> keyTypeDao;
 	@Resource FilterDao<Country, CountryFilter> countryDao;
-	@Test
-	public void country() {
-		Country target = CountryTestSupport.createCountry();
-		assertEquals(countryDao.merge(target), countryDao.findUnique(target.getOperator(), target.getCountryCode()));
-	}
-	
+	@Resource FilterDao<Service, ServiceFilter> serviceDao;
+	@Resource FilterDao<Province, ProvinceFilter> provinceDao;
+	@Resource FilterDao<Category, CategoryFilter> categoryDao;
+	@Resource BasicDao<InternalEnumerator> internalEnumeratorDao;
+	@Resource FilterDao<Unit, UnitFilter> unitDao;
+	@Resource FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao;
+	@Resource FilterDao<UserGroup, UserFilter> userGroupDao;
 	@Resource BasicDao<Credential> credentialDao;
+	@Resource FilterDao<UserLog, UserLogFilter> userLogDao;
 	@Resource FilterDao<Identity, IdentityFilter> identityDao;
 	@Resource FilterDao<Server, ServerFilter> serverDao;
-	@Test
-	public void credential() {
-		Identity identity = identityDao.merge(IdentityTestSupport.createIdentity());
-		assertEquals(identity, identityDao.findUnique(identity.getPrincipal()));
-		
-		Credential credential = credentialDao.merge(CredentialTestSupport.createCredential(identity));
-		assertEquals(credential, credentialDao.findUnique(credential.getIdentity()));
-
-		Server server = ServerTestSupport.createServer();
-		server.setCredential(credential);
-		assertEquals(serverDao.merge(server), serverDao.findUnique(server.getOperator(), server.getServerName()));
-	}
+	@Resource BasicDao<UserRole> userRoleDao;
+	@Resource BasicDao<EntityPreference> entityPreferenceDao;	
 	
-	@Resource BasicDao<InternalEnumerator> internalEnumeratorDao;
-	@Test
-	public void internalEnumerator() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		InternalEnumerator target = InternalEnumeratorTestSupport.createInternalEnumerator(entity);
-		assertEquals(internalEnumeratorDao.merge(target), internalEnumeratorDao.findUnique(target.getEntity(), target.getTypeName()));
-	}
-
-	@Resource FilterDao<Operator, OperatorFilter> operatorDao;
-	@Resource BasicDao<KeyType> keyTypeDao;
 	@Test
 	public void operator() {
-		Operator operator = operatorDao.merge(OperatorTestSupport.createOperator());
-		assertEquals(operator, operatorDao.findUnique(operator.getOperatorName()));
+		Operator operator = entity.getOperator();
+
+		assertEquals(operator, getOperatorDao().findUnique(operator.getOperatorName()));
 		
 		KeyType keyType = KeyTypeTestSupport.createKeyType(operator);
 		assertEquals(keyTypeDao.merge(keyType), keyTypeDao.findUnique(keyType.getOperator(), keyType.getKeyCode()));
-	}
-	
-	@Resource FilterDao<Province, ProvinceFilter> provinceDao;
-	@Test
-	public void province() {
-		Province target = ProvinceTestSupport.createProvince();
-		assertEquals(provinceDao.merge(target), provinceDao.findUnique(target.getOperator(), target.getProvinceCode()));
-	}
-	
-	@Resource FilterDao<Service, ServiceFilter> serviceDao;
-	@Test
-	public void service() {
-		Operator operator = operatorDao.merge(OperatorTestSupport.createOperator());
-		Service service = serviceDao.merge(ServiceTestSupport.createService(operator));
-		assertEquals(service, serviceDao.findUnique(service.getOperator(), service.getServiceName()));
-	}
-	
-	@Resource FilterDao<Unit, UnitFilter> unitDao;
-	@Test
-	public void unit() {
-		Unit target = UnitTestSupport.createUnit();
-		assertEquals(unitDao.merge(target), unitDao.findUnique(target.getEntity(), target.getUnitCode()));
-	}
-	
-	@Resource FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao;
-	@Test
-	public void userAssociation() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		UserGroup userGroup = userGroupDao.merge(UserGroupTestSupport.createUserGroup(entity));
-		UserAssociation target = UserAssociationTestSupport.createUserAssociation(userGroup);
-		assertEquals(userAssociationDao.merge(target), userAssociationDao.findUnique(target.getParent(), target.getChild()));
-	}
 
-	@Resource FilterDao<UserGroup, UserFilter> userGroupDao;
-	@Test
-	public void userGroup() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		UserGroup target = UserGroupTestSupport.createUserGroup(entity);
-		assertEquals(userGroupDao.merge(target), userGroupDao.findUnique(target.getEntity(), target.getUserKey()));
-	}
-	
-	@Resource FilterDao<UserLog, UserLogFilter> userLogDao;
-	@Test
-	public void userLogGroup() {
+		Country target = CountryTestSupport.createCountry(operator);
+		assertEquals(countryDao.merge(target), countryDao.findUnique(target.getOperator(), target.getCountryCode()));
+
+		Service service = ServiceTestSupport.createService(operator);
+		assertEquals(serviceDao.merge(service), serviceDao.findUnique(operator, service.getServiceName()));
+		
+		Province province = ProvinceTestSupport.createProvince(operator);
+		assertEquals(provinceDao.merge(province), provinceDao.findUnique(province.getOperator(), province.getProvinceCode()));
+
+		Category category = CategoryTestSupport.createCategory(entity);
+		assertEquals(categoryDao.merge(category), categoryDao.findUnique(category.getEntity(), category.getCategoryGroup(), category.getCategoryCode()));
+
+		InternalEnumerator internalEnumerator = InternalEnumeratorTestSupport.createInternalEnumerator(entity);
+		assertEquals(internalEnumeratorDao.merge(internalEnumerator), internalEnumeratorDao.findUnique(internalEnumerator.getEntity(), internalEnumerator.getTypeName()));
+
+		Unit unit = UnitTestSupport.createUnit(entity);
+		assertEquals(unitDao.merge(unit), unitDao.findUnique(unit.getEntity(), unit.getUnitCode()));
+
+		UserGroup parent = userGroupDao.merge(UserGroupTestSupport.createUserGroup(entity));
+		UserAssociation userAssociation = UserAssociationTestSupport.createUserAssociation(parent);
+		userAssociationDao.saveOrUpdate(userAssociation);
+		assertEquals(userAssociation, userAssociationDao.findUnique(userAssociation.getParent(), userAssociation.getChild()));
+
+		UserGroup userGroup = UserGroupTestSupport.createUserGroup(entity);
+		assertEquals(userGroupDao.merge(userGroup), userGroupDao.findUnique(userGroup.getEntity(), userGroup.getUserKey()));
+
 		Identity identity = identityDao.merge(IdentityTestSupport.createIdentity());
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
+		assertEquals(identity, identityDao.findUnique(identity.getPrincipal()));
+		
 		User user = (User) userGroupDao.merge(UserTestSupport.createUser(entity, identity));
-		UserLog target = UserLogTestSupport.createUserLog(user);
-		assertEquals(userLogDao.merge(target), userLogDao.findUnique(target.getUser(), target.getLastEvent()));
-	}
-	
-	@Resource BasicDao<UserRole> userRoleDao;
-	@Test
-	public void userRole() {
-		Operator operator = operatorDao.merge(OperatorTestSupport.createOperator());
-		Identity identity = identityDao.merge(IdentityTestSupport.createIdentity());
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		Service service = serviceDao.merge(ServiceTestSupport.createService(operator));
-		User user = UserTestSupport.createUser(entity, identity);
-		UserRole target = UserRoleTestSupport.createUserRole(user, service);
-		user.getRoles().add(target);
+		UserLog userLog = UserLogTestSupport.createUserLog(user);
+		assertEquals(userLogDao.merge(userLog), userLogDao.findUnique(userLog.getUser(), userLog.getLastEvent()));
+
+		Credential credential = credentialDao.merge(CredentialTestSupport.createCredential(identity));
+		assertEquals(credential, credentialDao.findUnique(credential.getIdentity()));
+
+		Server server = ServerTestSupport.createServer(operator);
+		server.setCredential(credential);
+		assertEquals(serverDao.merge(server), serverDao.findUnique(server.getOperator(), server.getServerName()));
+
+		UserRole userRole = UserRoleTestSupport.createUserRole(user, service);
+		user.getRoles().add(userRole);
 		userGroupDao.persist(user);
-		assertEquals(userRoleDao.merge(target), userRoleDao.findUnique(target.getUserGroup(), target.getService(), target.getServiceExtension()));
-	}
-	
-	@Resource BasicDao<EntityPreference> entityPreferenceDao;
-	@Test
-	public void entityPreference() {
-		Entity entity = entityDao.merge(EntityTestSupport.createEntity());
-		KeyType keyType = keyTypeDao.merge(KeyTypeTestSupport.createKeyType(entity.getOperator()));
+		assertEquals(userRoleDao.merge(userRole), userRoleDao.findUnique(userRole.getUserGroup(), userRole.getService(), userRole.getServiceExtension()));
+
 		EntityPreference entityPreference = entityPreferenceDao.merge(EntityPreference.entityPreferenceFactory(entity, keyType));
 		assertEquals(entityPreference, entityPreferenceDao.findUnique(entityPreference.getEntity(), entityPreference.getKeyType()));
+
 	}
 	
 }

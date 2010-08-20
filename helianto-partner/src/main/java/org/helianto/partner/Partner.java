@@ -110,7 +110,7 @@ public class Partner extends AbstractAddress implements java.io.Serializable {
     /**
      * PartnerRegistry.
      */
-    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PartnerRegistry getPartnerRegistry() {
         return this.partnerRegistry;

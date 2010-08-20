@@ -94,7 +94,7 @@ public class ResourceParameter implements java.io.Serializable {
     /**
      * Entity.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
@@ -117,7 +117,7 @@ public class ResourceParameter implements java.io.Serializable {
     /**
      * Parent.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="parentId", nullable=true)
     public ResourceParameter getParent() {
         return this.parent;
@@ -129,7 +129,7 @@ public class ResourceParameter implements java.io.Serializable {
     /**
      * Unit.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="unitId", nullable=true)
     public Unit getUnit() {
         return this.unit;

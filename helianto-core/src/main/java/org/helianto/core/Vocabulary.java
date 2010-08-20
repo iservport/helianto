@@ -60,7 +60,7 @@ public class Vocabulary  implements java.io.Serializable {
     /**
      * Entity.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
@@ -80,7 +80,7 @@ public class Vocabulary  implements java.io.Serializable {
     /**
      * Vocabulary.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="parent", nullable=true)
     public Vocabulary getParent() {
         return this.parent;
