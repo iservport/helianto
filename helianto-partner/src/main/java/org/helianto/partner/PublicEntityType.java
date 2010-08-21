@@ -14,7 +14,11 @@ public enum PublicEntityType {
 	/**
 	 * Public entity is private.
 	 */
-	PRIVATE('1');
+	PRIVATE('1'),
+	/**
+	 * Public entity type not informed.
+	 */
+	NOT_INFORMED('N');
 	
 	private char value;
 

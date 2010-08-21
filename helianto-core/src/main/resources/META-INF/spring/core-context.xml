@@ -65,16 +65,16 @@
 					[...]
          -->
             <tx:method name="commit*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="load*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="create*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="prepare*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="load*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="create*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="prepare*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
 
-            <tx:method name="fin*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="merg*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="pers*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="remov*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="fin*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="merg*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="pers*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="remov*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
 
-            <tx:method name="store*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+            <tx:method name="store*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
             <tx:method name="install*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
             <!-- This "*" pattern must appear last or else the other patterns will never match -->
             <tx:method name="*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />

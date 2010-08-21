@@ -46,7 +46,8 @@ public class PublicEntity extends AbstractAddress {
 	 */
 	public PublicEntity() {
 		super();
-		
+		setPublicEntityType(PublicEntityType.NOT_INFORMED);
+		setPublicEntityVisibility(PublicEntityVisibility.REGISTERED);
 	}
 
 	/**
@@ -136,6 +137,9 @@ public class PublicEntity extends AbstractAddress {
 	}
 	public void setPublicEntityVisibility(char publicEntityVisibility) {
 		this.publicEntityVisibility = publicEntityVisibility;
+	}
+	public void setPublicEntityVisibility(PublicEntityVisibility publicEntityVisibility) {
+		this.publicEntityVisibility = publicEntityVisibility.getValue();
 	}
 	
 	@OneToMany(mappedBy="publicEntity")

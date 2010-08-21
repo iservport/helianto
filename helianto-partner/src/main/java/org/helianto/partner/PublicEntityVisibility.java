@@ -7,7 +7,14 @@ package org.helianto.partner;
  */
 public enum PublicEntityVisibility {
 
+	/**
+	 * Public entity is visible to all.
+	 */
 	ALL('A'),
+	/**
+	 * Visible only when the public entity has the same alias than a 
+	 * registered partner.
+	 */
 	REGISTERED('R');
 	
 	private char value;
