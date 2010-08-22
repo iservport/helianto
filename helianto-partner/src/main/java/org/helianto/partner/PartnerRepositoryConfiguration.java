@@ -40,7 +40,7 @@ public class PartnerRepositoryConfiguration {
 	@Bean
 	public FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao() {
 		FilterDao<PublicEntity, PublicEntityFilter> dao =  
-			repositoryFactory.filterDaoFactory(PublicEntity.class, PublicEntityFilter.class, "operator", "entity");
+			repositoryFactory.filterDaoFactory(PublicEntity.class, PublicEntityFilter.class, "operator", "entity", "class");
 		logger.info("Created publicEntityDao");
 		return dao;
 	}

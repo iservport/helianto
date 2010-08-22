@@ -62,7 +62,7 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	public void partner() {
 		PublicEntity publicEntity = new PublicEntity(entity);
 		assertEquals(publicEntityDao.merge(publicEntity), 
-				publicEntityDao.findUnique(publicEntity.getOperator(), publicEntity.getEntity()));
+				publicEntityDao.findUnique(publicEntity.getOperator(), publicEntity.getEntity(), 'P'));
 
 		Account target = AccountTestSupport.createAccount(entity);
 		assertEquals(accountDao.merge(target), accountDao.findUnique(target.getEntity(), target.getAccountCode()));

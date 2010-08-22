@@ -26,7 +26,7 @@ import org.helianto.core.Operator;
  */
 @javax.persistence.Entity
 @Table(name = "prtnr_public", uniqueConstraints = { @UniqueConstraint(columnNames = {
-		"operatorId", "entityId" }) })
+		"operatorId", "entityId", "type" }) })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
