@@ -24,8 +24,10 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
+import org.helianto.core.KeyType;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.service.NamespaceMgr;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
 import org.helianto.partner.Division;
@@ -174,6 +176,35 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return defaultDivision;
 	}
 	
+	public void installPartnerKeys(String[] keyValues, Division defaultDivision) {
+		logger.debug("Ready to install key value pairs {} to {}", keyValues, defaultDivision);
+		List<KeyType> keyTypes = namespaceMgr.loadKeyTypes(defaultDivision.getPartnerRegistry().getEntity().getOperator());
+		Map<String, PartnerKey> partnerKeyMap = loadPartnerKeyMap(defaultDivision);
+		for (String keyValueTuple: keyValues) {
+			String[] keyValue = keyValueTuple.split(":");
+			boolean keyNotAvailable = true;
+			for (KeyType keyType: keyTypes) {
+				if (keyValue.length>1 && keyValue[0].trim().equals(keyType.getKeyCode())) {
+					PartnerKey partnerKey = null;
+					if (partnerKeyMap.containsKey(keyType.getKeyCode())) {
+						partnerKey = partnerKeyMap.get(keyType.getKeyCode());
+						logger.debug("Partner key {} already existing.", partnerKey);
+					}
+					else {
+						partnerKey = PartnerKey.partnerKeyFactory(defaultDivision, keyType);
+					}
+					partnerKey.setKeyValue(keyValue[1]);
+					partnerKeyDao.saveOrUpdate(partnerKey);
+					keyNotAvailable = false;
+					break;
+				}
+			}
+			if(keyNotAvailable) {
+				logger.warn("Unable to set key value {}", keyValueTuple);
+			}
+		}
+	}
+	
     //- collaborators
     
     private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
@@ -181,6 +212,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private BasicDao<Address> addressDao;
     private BasicDao<PartnerKey> partnerKeyDao;
     private BasicDao<Phone> phoneDao;
+	private NamespaceMgr namespaceMgr;
 
     @Resource(name="partnerRegistryDao")
     public void setPartnerRegistryDao(FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao) {
@@ -206,6 +238,11 @@ public class PartnerMgrImpl implements PartnerMgr {
         this.phoneDao = phoneDao;
     }
     
+	@javax.annotation.Resource(name="namespaceMgr")
+	public void setNamespaceMgr(NamespaceMgr namespaceMgr) {
+		this.namespaceMgr = namespaceMgr;
+	}
+	
     private Logger logger = LoggerFactory.getLogger(PartnerMgrImpl.class);
 
 }

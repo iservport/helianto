@@ -16,19 +16,14 @@
 
 package org.helianto.partner.standalone;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
 
-import org.helianto.core.KeyType;
 import org.helianto.core.Province;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.standalone.DefaultEntityInstaller;
 import org.helianto.core.standalone.NamespaceDefaults;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Division;
-import org.helianto.partner.PartnerKey;
 import org.helianto.partner.service.PartnerMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,32 +70,7 @@ public class DefaultDivisionInstaller implements InitializingBean {
 		logger.debug("Default division is {}.", defaultDivision);
 
 		if (getKeyValues()!=null) {
-			logger.debug("Ready to install key value pairs {} to {}", getKeyValues(), defaultDivision);
-			List<KeyType> keyTypes = namespaceMgr.loadKeyTypes(namespace.getDefaultOperator());
-			Map<String, PartnerKey> partnerKeyMap = partnerMgr.loadPartnerKeyMap(defaultDivision);
-			for (String keyValueTuple: getKeyValues()) {
-				String[] keyValue = keyValueTuple.split(":");
-				boolean keyNotAvailable = true;
-				for (KeyType keyType: keyTypes) {
-					if (keyValue.length>1 && keyValue[0].trim().equals(keyType.getKeyCode())) {
-						PartnerKey partnerKey = null;
-						if (partnerKeyMap.containsKey(keyType.getKeyCode())) {
-							partnerKey = partnerKeyMap.get(keyType.getKeyCode());
-							logger.debug("Partner key {} already existing.", partnerKey);
-						}
-						else {
-							partnerKey = PartnerKey.partnerKeyFactory(defaultDivision, keyType);
-						}
-						partnerKey.setKeyValue(keyValue[1]);
-						partnerMgr.storePartnerKey(partnerKey);
-						keyNotAvailable = false;
-						break;
-					}
-				}
-				if(keyNotAvailable) {
-					logger.warn("Unable to set key value {}", keyValueTuple);
-				}
-			}
+			partnerMgr.installPartnerKeys(getKeyValues(), defaultDivision);
 		}
 	}
 	

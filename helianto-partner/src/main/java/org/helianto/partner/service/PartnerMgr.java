@@ -100,4 +100,9 @@ public interface PartnerMgr {
      */
 	public Division installDivision(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall);
 	
+    /**
+     * Convenience to install key values.
+     */
+	public void installPartnerKeys(String[] keyValues, Division defaultDivision);
+	
 }
