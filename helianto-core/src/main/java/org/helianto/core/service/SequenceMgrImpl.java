@@ -24,7 +24,10 @@ import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Node;
 import org.helianto.core.Operator;
 import org.helianto.core.PublicEnumerator;
-import org.helianto.core.Sequenceable;
+import org.helianto.core.number.DigitGenerationStrategy;
+import org.helianto.core.number.Numerable;
+import org.helianto.core.number.Sequenceable;
+import org.helianto.core.number.Verifiable;
 import org.helianto.core.repository.BasicDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,15 +79,40 @@ public class SequenceMgrImpl implements SequenceMgr {
         }
     }
     
+	public void validatePublicNumber(Numerable numerable) {
+        if (numerable.getPublicNumber()==0) {
+            long publicNumber = newPublicNumber(numerable.getOperator(), numerable.getPublicNumberKey());
+            numerable.setPublicNumber(publicNumber);
+            logger.debug("Created public key for new {} {}", numerable.getPublicNumberKey(), numerable.getPublicNumber());
+        }
+        else {
+            logger.debug("PublicNumber not generated");
+        }
+	}
+	
 	public void validateInternalNumber(Sequenceable sequenceable) {
         if (sequenceable.getInternalNumber()==0) {
             long internalNumber = newInternalNumber(sequenceable.getEntity(), sequenceable.getInternalNumberKey());
             sequenceable.setInternalNumber(internalNumber);
-            logger.debug("Created key for new {} {}", sequenceable.getInternalNumberKey(), sequenceable.getInternalNumber());
+            logger.debug("Created internal key for new {} {}", sequenceable.getInternalNumberKey(), sequenceable.getInternalNumber());
         }
         else {
             logger.debug("InternalNumber not generated");
         }
+	}
+	
+	public void generateVerificationDigit(Verifiable verifiable) {
+		long number = 0;
+		if (verifiable instanceof Numerable) {
+			number = ((Numerable) verifiable).getPublicNumber();
+		} 
+		else if (verifiable instanceof Sequenceable) {
+			number = ((Sequenceable) verifiable).getInternalNumber();
+		}
+		if (number!=0) {
+			verifiable.setVerificationDigit(digitGenerationStrategy.generateDigit(number));
+			logger.debug("Verification digit set in {}.", verifiable);
+		}
 	}
 	
 	public List<Node> prepareTree(Node root) {
@@ -96,6 +124,7 @@ public class SequenceMgrImpl implements SequenceMgr {
     
 	private BasicDao<PublicEnumerator> publicEnumeratorDao;
 	private BasicDao<InternalEnumerator> internalEnumeratorDao;
+	private DigitGenerationStrategy digitGenerationStrategy;
 	private TreeBuilder treeBuilder;
 	
     @Resource(name="publicEnumeratorDao")
@@ -107,6 +136,11 @@ public class SequenceMgrImpl implements SequenceMgr {
     public void setInternalEnumeratorDao(BasicDao<InternalEnumerator> internalEnumeratorDao) {
         this.internalEnumeratorDao = internalEnumeratorDao;
     }
+    
+    @Resource(name="digitGenerationStrategy")
+    public void setDigitGenerationStrategy(DigitGenerationStrategy digitGenerationStrategy) {
+		this.digitGenerationStrategy = digitGenerationStrategy;
+	}
 
 	@Resource
 	public void setTreeBuilder(TreeBuilder treeBuilder) {

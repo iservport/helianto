@@ -20,7 +20,9 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.Operator;
-import org.helianto.core.Sequenceable;
+import org.helianto.core.number.Numerable;
+import org.helianto.core.number.Sequenceable;
+import org.helianto.core.number.Verifiable;
 
 /**
  * A service to create sequences and trees.
@@ -48,6 +50,16 @@ public interface SequenceMgr {
 	public long newInternalNumber(Entity entity, String internalNumberKey);
 	
 	/**
+	 * Inspect the <code>publicNumber</code> attribute of any class
+	 * implementing the <code>Numerable</code> interface and
+	 * assign an appropriate value to it, based on the <code>publicNumberKey</code>
+	 * attribute, in collaboration with the <code>PublicEnumerator</code> class.
+	 * 
+	 * @param sequenceable
+	 */
+	public void validatePublicNumber(Numerable numerable);
+	
+	/**
 	 * Inspect the <code>internalNumber</code> attribute of any class
 	 * implementing the <code>Sequenceable</code> interface and
 	 * assign an appropriate value to it, based on the <code>internalNumberKey</code>
@@ -56,6 +68,14 @@ public interface SequenceMgr {
 	 * @param sequenceable
 	 */
 	public void validateInternalNumber(Sequenceable sequenceable);
+	
+	/**
+	 * Use reflection to inspect the <code>verifiable</code> parameter and, if it implements
+	 * either <code>Sequenceable</code> or <code>Numerable</code>, generates a digit for it.
+	 * 
+	 * @param verifiable
+	 */
+	public void generateVerificationDigit(Verifiable verifiable);
 	
 	/**
 	 * Create a tree.

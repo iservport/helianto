@@ -22,8 +22,8 @@ import java.util.Set;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
-import org.helianto.core.Sequenceable;
 import org.helianto.core.User;
+import org.helianto.core.number.Sequenceable;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;

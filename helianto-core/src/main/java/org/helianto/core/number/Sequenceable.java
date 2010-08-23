@@ -13,7 +13,9 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.number;
+
+import org.helianto.core.Entity;
 
 /**
  * Common Interface to entities having internalNumber.

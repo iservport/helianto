@@ -23,7 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.helianto.core.Sequenceable;
+import org.helianto.core.number.Sequenceable;
 import org.helianto.resource.ResourceGroup;
 
 

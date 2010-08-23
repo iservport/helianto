@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Sequenceable;
+import org.helianto.core.number.Sequenceable;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Test;
 

@@ -21,7 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.helianto.core.Sequenceable;
+import org.helianto.core.number.Sequenceable;
 
 /**
  * Extends <code>AbstractDocument</code> to control how docCode

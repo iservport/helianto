@@ -35,8 +35,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Sequenceable;
 import org.helianto.core.TopLevelNumberedEntity;
+import org.helianto.core.number.Sequenceable;
 
 /**
  * A simple picking report.

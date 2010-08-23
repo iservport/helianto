@@ -26,8 +26,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Sequenceable;
 import org.helianto.core.TopLevelNumberedEntity;
+import org.helianto.core.number.Sequenceable;
 
 
 /**

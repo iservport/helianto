@@ -28,8 +28,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Sequenceable;
 import org.helianto.core.TopLevelNumberedEntity;
+import org.helianto.core.number.Sequenceable;
 import org.helianto.process.DerivedProcessDocument;
 import org.helianto.process.ProcessDocument;
 
