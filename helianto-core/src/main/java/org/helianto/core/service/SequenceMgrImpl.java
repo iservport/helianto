@@ -19,13 +19,15 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Node;
+import org.helianto.core.Operator;
+import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Sequenceable;
 import org.helianto.core.repository.BasicDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -36,12 +38,31 @@ import org.springframework.stereotype.Service;
 @Service("sequenceMgr")
 public class SequenceMgrImpl implements SequenceMgr {
 	
+    public long newPublicNumber(Operator operator, String publicNumberKey) {
+    	PublicEnumerator enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
+        if (enumerator!=null) {
+            long lastNumber = enumerator.getLastNumber();
+            enumerator.setLastNumber(lastNumber+1);
+            publicEnumeratorDao.saveOrUpdate(enumerator);
+            logger.debug("Incremented existing PublicEnumerator: {}", enumerator);
+            return lastNumber;
+        } else  {
+            enumerator = new PublicEnumerator();
+            enumerator.setOperator(operator);
+            enumerator.setTypeName(publicNumberKey);
+            enumerator.setLastNumber(2);    
+            publicEnumeratorDao.saveOrUpdate(enumerator);
+            logger.debug("Created PublicEnumerator: {}", enumerator);
+            return 1;
+        }
+    }
+    
     public long newInternalNumber(Entity entity, String internalNumberKey) {
         InternalEnumerator enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
         if (enumerator!=null) {
             long lastNumber = enumerator.getLastNumber();
             enumerator.setLastNumber(lastNumber+1);
-            internalEnumeratorDao.persist(enumerator);
+            internalEnumeratorDao.saveOrUpdate(enumerator);
             logger.debug("Incremented existing InternalEnumerator: {}", enumerator);
             return lastNumber;
         } else  {
@@ -49,7 +70,7 @@ public class SequenceMgrImpl implements SequenceMgr {
             enumerator.setEntity(entity);
             enumerator.setTypeName(internalNumberKey);
             enumerator.setLastNumber(2);    
-            internalEnumeratorDao.merge(enumerator);
+            internalEnumeratorDao.saveOrUpdate(enumerator);
             logger.debug("Created InternalEnumerator: {}", enumerator);
             return 1;
         }
@@ -73,8 +94,14 @@ public class SequenceMgrImpl implements SequenceMgr {
 
     // collabs 
     
+	private BasicDao<PublicEnumerator> publicEnumeratorDao;
 	private BasicDao<InternalEnumerator> internalEnumeratorDao;
 	private TreeBuilder treeBuilder;
+	
+    @Resource(name="publicEnumeratorDao")
+	public void setPublicEnumeratorDao( BasicDao<PublicEnumerator> publicEnumeratorDao) {
+		this.publicEnumeratorDao = publicEnumeratorDao;
+	}
 
     @Resource(name="internalEnumeratorDao")
     public void setInternalEnumeratorDao(BasicDao<InternalEnumerator> internalEnumeratorDao) {

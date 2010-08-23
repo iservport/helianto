@@ -16,8 +16,8 @@
 package org.helianto.core.service;
 
 import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
@@ -43,7 +43,7 @@ public class SequenceMgrImplTests {
     	enumerator.setLastNumber(1000);
     	
     	expect(internalEnumeratorDao.findUnique(managedEntity, "TEST")).andReturn(enumerator);
-    	internalEnumeratorDao.persist(enumerator);
+    	internalEnumeratorDao.saveOrUpdate(enumerator);
     	replay(internalEnumeratorDao);
     	
     	sequenceMgr.validateInternalNumber(sequenceable);
@@ -73,10 +73,10 @@ public class SequenceMgrImplTests {
     @Test
     public void validateInternalNumberNull() {
     	Sequenceable sequenceable = new SequenceableStub();
-    	InternalEnumerator enumerator = null, managedEnumerator = new InternalEnumerator();
+    	InternalEnumerator enumerator = null;
     	
     	expect(internalEnumeratorDao.findUnique(managedEntity, "TEST")).andReturn(enumerator);
-    	expect(internalEnumeratorDao.merge(isA(InternalEnumerator.class))).andReturn(managedEnumerator);
+    	internalEnumeratorDao.saveOrUpdate(isA(InternalEnumerator.class));
     	replay(internalEnumeratorDao);
     	
     	sequenceMgr.validateInternalNumber(sequenceable);

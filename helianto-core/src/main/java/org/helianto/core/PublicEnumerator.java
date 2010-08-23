@@ -20,44 +20,44 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 /**
- * A class to hold last value for internal number lists.
+ * A class to hold last value for public number lists.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="core_internalenum",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "typeName"})}
+@Table(name="core_publicenum",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "typeName"})}
 )
-public class InternalEnumerator extends AbstractEnumerator {
+public class PublicEnumerator extends AbstractEnumerator {
 
     private static final long serialVersionUID = 1L;
-    private Entity entity;
+    private Operator operator;
 
     /**
      * Empty constructor.
      */
-    public InternalEnumerator() {
+    public PublicEnumerator() {
     	super();
     }
 
     /**
-     * Entity constructor.
+     * Operator constructor.
      * 
-     * @param entity
+     * @param operator
      */
-    public InternalEnumerator(Entity entity) {
+    public PublicEnumerator(Operator operator) {
     	this();
-    	setEntity(entity);
+    	setOperator(operator);
     }
 
     /**
      * Key constructor.
      * 
-     * @param entity
+     * @param operator
      * @param typeName
      */
-    public InternalEnumerator(Entity entity, String typeName) {
-    	this(entity);
+    public PublicEnumerator(Operator operator, String typeName) {
+    	this(operator);
     	setTypeName(typeName);
     }
 
@@ -65,13 +65,13 @@ public class InternalEnumerator extends AbstractEnumerator {
      * Entity.
      */
     @ManyToOne
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
+    @JoinColumn(name="operatorId", nullable=true)
+    public Operator getOperator() {
+		return operator;
+	}
+    public void setOperator(Operator operator) {
+		this.operator = operator;
+	}
 
    /**
     * equals
@@ -79,10 +79,10 @@ public class InternalEnumerator extends AbstractEnumerator {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof InternalEnumerator) ) return false;
-         InternalEnumerator castOther = (InternalEnumerator) other; 
+         if ( !(other instanceof PublicEnumerator) ) return false;
+         PublicEnumerator castOther = (PublicEnumerator) other; 
          
-         return ((this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ))
+         return ((this.getOperator()==castOther.getOperator()) || ( this.getOperator()!=null && castOther.getOperator()!=null && this.getOperator().equals(castOther.getOperator()) ))
              && ((this.getTypeName()==castOther.getTypeName()) || ( this.getTypeName()!=null && castOther.getTypeName()!=null && this.getTypeName().equals(castOther.getTypeName()) ));
    }
    

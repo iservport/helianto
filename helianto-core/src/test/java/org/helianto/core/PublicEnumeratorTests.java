@@ -11,28 +11,28 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class InternalEnumeratorTests {
+public class PublicEnumeratorTests {
     
 	@Test
     public void equality() {
-        Entity entity = new Entity();
+        Operator operator = new Operator("TEST");
         String typeName = DomainTestSupport.STRING_TEST_VALUE;
         
-        InternalEnumerator internalEnumerator = new InternalEnumerator(entity, typeName);
-        InternalEnumerator copy = (InternalEnumerator) DomainTestSupport.minimalEqualsTest(internalEnumerator);
+        PublicEnumerator publicEnumerator = new PublicEnumerator(operator, typeName);
+        PublicEnumerator copy = (PublicEnumerator) DomainTestSupport.minimalEqualsTest(publicEnumerator);
         
-        copy.setEntity(null);
+        copy.setOperator(null);
         copy.setTypeName(typeName);
-        assertFalse(internalEnumerator.equals(copy));
+        assertFalse(publicEnumerator.equals(copy));
 
-        copy.setEntity(entity);
+        copy.setOperator(operator);
         copy.setTypeName(null);
-        assertFalse(internalEnumerator.equals(copy));
+        assertFalse(publicEnumerator.equals(copy));
 
-        copy.setEntity(entity);
+        copy.setOperator(operator);
         copy.setTypeName(typeName);
 
-        assertTrue(internalEnumerator.equals(copy));
+        assertTrue(publicEnumerator.equals(copy));
     }
 
 }

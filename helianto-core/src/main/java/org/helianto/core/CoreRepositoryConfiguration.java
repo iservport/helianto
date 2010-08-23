@@ -111,6 +111,17 @@ public class CoreRepositoryConfiguration {
 	}
 
 	/**
+	 * Public enumerator data access.
+	 */
+	@Bean
+	public BasicDao<PublicEnumerator> publicEnumeratorDao() {
+		BasicDao<PublicEnumerator> dao =  
+			repositoryFactory.basicDaoFactory(PublicEnumerator.class, "operator", "typeName");
+		logger.info("Created publicEnumeratorDao");
+		return dao;
+	}
+
+	/**
 	 * Key type data access.
 	 */
 	@Bean

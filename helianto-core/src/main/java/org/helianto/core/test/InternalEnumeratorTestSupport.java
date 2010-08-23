@@ -33,7 +33,7 @@ public class InternalEnumeratorTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             typeName = DomainTestSupport.getNonRepeatableStringValue(testKey++, 12);
         }
-        InternalEnumerator internalEnumerator = InternalEnumerator.internalEnumeratorFactory(entity, typeName);
+        InternalEnumerator internalEnumerator =  new InternalEnumerator(entity, typeName);
         return internalEnumerator;
     }
 

@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
+import org.helianto.core.Operator;
 import org.helianto.core.Sequenceable;
 
 /**
@@ -27,6 +28,15 @@ import org.helianto.core.Sequenceable;
  * @author Mauricio Fernandes de Castro
  */
 public interface SequenceMgr {
+	
+	/**
+	 * Create a new public number from a sequence named after a given public 
+	 * number key. If the sequence does not exist, start a new one.
+	 * 
+	 * @param operator
+	 * @param publicNumberKey
+	 */
+	public long newPublicNumber(Operator operator, String publicNumberKey);
 	
 	/**
 	 * Create a new internal number from a sequence named after a given internal 

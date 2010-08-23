@@ -53,6 +53,7 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 	@Resource FilterDao<Province, ProvinceFilter> provinceDao;
 	@Resource FilterDao<Category, CategoryFilter> categoryDao;
 	@Resource BasicDao<InternalEnumerator> internalEnumeratorDao;
+	@Resource BasicDao<PublicEnumerator> publicEnumeratorDao;
 	@Resource FilterDao<Unit, UnitFilter> unitDao;
 	@Resource FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao;
 	@Resource FilterDao<UserGroup, UserFilter> userGroupDao;
@@ -86,6 +87,9 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 
 		InternalEnumerator internalEnumerator = InternalEnumeratorTestSupport.createInternalEnumerator(entity);
 		assertEquals(internalEnumeratorDao.merge(internalEnumerator), internalEnumeratorDao.findUnique(internalEnumerator.getEntity(), internalEnumerator.getTypeName()));
+
+		PublicEnumerator publicEnumerator = new PublicEnumerator(operator, "TEST");
+		assertEquals(publicEnumeratorDao.merge(publicEnumerator), publicEnumeratorDao.findUnique(operator, "TEST"));
 
 		Unit unit = UnitTestSupport.createUnit(entity);
 		assertEquals(unitDao.merge(unit), unitDao.findUnique(unit.getEntity(), unit.getUnitCode()));
