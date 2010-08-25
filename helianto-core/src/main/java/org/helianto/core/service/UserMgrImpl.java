@@ -246,13 +246,11 @@ public class UserMgrImpl implements UserMgr {
 				credentialDao.saveOrUpdate(credential);
 			}
 			user = new User(parent.getEntity(), credential);
-			user.setAccountNonExpired(true);
 		}
 		
-		if (user.isAccountNonExpired()) {
-			logger.warn("User {} EXPIRED! Will reset ...", user);
-			user.setAccountNonExpired(true);
-		}
+		user.setAccountNonExpired(true);
+		logger.warn("User {} set to {} expired.", user, accountNonExpired ? "non" : "");
+
 		userGroupDao.saveOrUpdate(user);
 		logger.info("User AVAILABLE as {}.", user);
 		

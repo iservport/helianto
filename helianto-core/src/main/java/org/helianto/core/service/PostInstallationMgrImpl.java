@@ -187,7 +187,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	public UserRole installUserRole(UserGroup userGroup, Service service, String extension) {
 		
 		UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
-		if (userGroup==null) {
+		if (userRole==null) {
 			logger.debug("Will install required user role USER_ALL for user group USER ...");
 			userRole = new UserRole(userGroup, service, "ALL");
 			userRoleDao.saveOrUpdate(userRole);
