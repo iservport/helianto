@@ -153,7 +153,7 @@ public abstract class AbstractAddress implements Serializable {
     /**
      * Optional address detail.
      */
-    @Column(length=12)
+    @Column(length=24)
 	public String getAddressDetail() {
 		return addressDetail;
 	}
