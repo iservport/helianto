@@ -261,7 +261,7 @@ public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, N
     /**
      * Roles for this group.
      */
-    @OneToMany(mappedBy="userGroup", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="userGroup")
     public Set<UserRole> getRoles() {
         return this.roles;
     }

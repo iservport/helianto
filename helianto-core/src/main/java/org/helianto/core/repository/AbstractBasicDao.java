@@ -130,6 +130,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 		Collection<T> uniqueList = find(getSelectBuilder(), getWhereClauseBuilder(getParams()).toString(), keys);
 		try {
 			if (uniqueList!=null && uniqueList.size()==0) {
+				logger.info("Finding unique RETURNING NULL");
 				return null;
 			}
 			if (uniqueList!=null && uniqueList.size()==1) {
