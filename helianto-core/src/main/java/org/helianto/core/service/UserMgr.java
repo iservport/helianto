@@ -38,6 +38,8 @@ public interface UserMgr {
 	
     /**
      * Find <core>Identity</core> by principal.
+     * 
+     * @param principal
      */
     public Identity findIdentityByPrincipal(String principal);
     
@@ -58,46 +60,66 @@ public interface UserMgr {
     
     /**
      * Create and prepare <code>UserGroup</code> in session.
+     * 
+     * @param entity
      */
     public UserGroup prepareNewUserGroup(Entity entity);
     
     /**
      * Prepare <code>UserGroup</code> in session.
+     * 
+     * @param userGroup
      */
     public UserGroup prepareUserGroup(UserGroup userGroup);
     
     /**
      * <p>List <code>UserGroup</code> by string criteria.</p>
+     * 
+     * @param userFilter
      */
     public List<UserGroup> findUsers(UserFilter userFilter);
     
     /**
      * Find users sharing the same identity.
+     * 
+     * @param identity
      */
     public List<UserGroup> findUsers(Identity identity);
 
     /**
      * <p>Store <code>UserGroup</code> and return a managed instance.</p>
+     * 
+     * @param userGroup
      */
     public UserGroup storeUserGroup(UserGroup userGroup);
     
     /**
      * Find user associations.
+     * 
+     * @param userAssociationFilter
      */
     public List<UserAssociation> findUserAssociations(UserAssociationFilter userAssociationFilter);
     
     /**
      * <p>Create <code>UserAssociation</code>.</p>
+     * 
+     * @param parent
      */
     public UserAssociation prepareNewUserAssociation(UserGroup parent);
     
     /**
      * <p>Create <code>UserAssociation</code> with a new identity.</p>
+     * 
+     * @param parent
+     * @param principal
+     * @param accountNonExpired
      */
-    public UserAssociation installUser(UserGroup parent, String principal);
+    public UserAssociation installUser(UserGroup parent, String principal, boolean accountNonExpired);
     
     /**
      * <p>Store <code>UserAssociation</code> and return a managed instance.</p>
+     * 
+     * @param parentAssociation
      */
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation);
     

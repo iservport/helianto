@@ -26,6 +26,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
 import org.helianto.core.DuplicateIdentityException;
@@ -224,7 +225,7 @@ public class UserMgrImpl implements UserMgr {
         return userAssociationList;
 	}
 
-	public UserAssociation installUser(UserGroup parent, String principal) {
+	public UserAssociation installUser(UserGroup parent, String principal, boolean accountNonExpired) {
 		
 		logger.info("Check user installation with 'principal={}' as member of {}.", principal, parent);
 		User user = (User) userGroupDao.findUnique(parent.getEntity(), principal);
@@ -240,9 +241,12 @@ public class UserMgrImpl implements UserMgr {
 			if (credential==null) {
 				logger.info("Will install credential for {}.", identity);
 				credential = new Credential(identity);
+				// TODO make it INTIAL
+				credential.setCredentialState(ActivityState.ACTIVE);
 				credentialDao.saveOrUpdate(credential);
 			}
 			user = new User(parent.getEntity(), credential);
+			user.setAccountNonExpired(true);
 		}
 		
 		if (user.isAccountNonExpired()) {

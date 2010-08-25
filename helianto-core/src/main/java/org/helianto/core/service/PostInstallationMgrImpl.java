@@ -145,7 +145,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		UserRole adminRole = installUserRole(adminGroup, adminService, "MANAGER");
 		adminGroup.getRoles().add(adminRole);
 		
-		UserAssociation adminAssociation = userMgr.installUser(adminGroup, managerPrincipal);
+		UserAssociation adminAssociation = userMgr.installUser(adminGroup, managerPrincipal, true);
 		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
 		
 		//
@@ -159,7 +159,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		UserRole userRole = installUserRole(userGroup, userService, "MANAGER");
 		userGroup.getRoles().add(userRole);
 		
-		UserAssociation userAssociation = userMgr.installUser(userGroup, managerPrincipal);
+		UserAssociation userAssociation = userMgr.installUser(userGroup, managerPrincipal, true);
 		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
 
 		return defaultEntity;
