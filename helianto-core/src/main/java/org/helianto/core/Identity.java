@@ -19,13 +19,18 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
+import javax.persistence.SecondaryTables;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,14 +40,15 @@ import javax.persistence.UniqueConstraint;
 /**
  * An uniquely identified actor.
  * 
- * @author Mauricio Fernandes de Castro
- *              
- *      
+ * @author Mauricio Fernandes de Castro              
  */
 @javax.persistence.Entity
 @Table(name="core_identity",
     uniqueConstraints = {@UniqueConstraint(columnNames={"principal"})}
 )
+@SecondaryTables({@SecondaryTable(name="core_identitydata", 
+	pkJoinColumns={@PrimaryKeyJoinColumn(name="id", referencedColumnName="id")})
+})
 public class Identity implements java.io.Serializable {
 
     /**
@@ -80,6 +86,9 @@ public class Identity implements java.io.Serializable {
     private Date created;
     private char identityType;
     private char notification;
+	private byte[] photo;
+    private String multipartFileContentType;
+
     private Set<Credential> credentials = new HashSet<Credential>();
 
     /** 
@@ -265,6 +274,30 @@ public class Identity implements java.io.Serializable {
 	}
     public void setCredentials(Set<Credential> credentials) {
 		this.credentials = credentials;
+	}
+    
+    /**
+     * Identity photo.
+     */
+    @Basic(fetch=FetchType.LAZY)
+    @Lob
+    @Column(table="core_identitydata")
+    public byte[] getPhoto() {
+		return photo;
+	}
+    public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+    
+    /**
+     * Tipo de conteúdo, tal como img/jpg, etc.
+     */
+	@Column(length=32)
+    public String getMultipartFileContentType() {
+		return multipartFileContentType;
+	}
+    public void setMultipartFileContentType(String multipartFileContentType) {
+		this.multipartFileContentType = multipartFileContentType;
 	}
 
     /**

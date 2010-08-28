@@ -113,23 +113,24 @@ Export-Package: bundles,freemarker,freemarker.entity,freemarker.keyTyp
  mework.test.context",org.helianto.resource.validation;uses:="org.heli
  anto.core.validation,org.springframework.stereotype",org.helianto.web
  .action;uses:="org.helianto.core,org.helianto.core.filter,org.heliant
- o.core.security,org.junit,org.springframework.webflow.core.collection
- ",org.helianto.web.action.impl;uses:="javax.annotation,org.helianto.c
- ore,org.helianto.core.filter,org.helianto.core.security,org.helianto.
- core.service,org.helianto.web.action,org.springframework.stereotype,o
- rg.springframework.webflow.core.collection",org.helianto.web.controll
- er;uses:="javax.annotation,org.helianto.controller,org.helianto.core,
- org.helianto.core.filter,org.helianto.core.security,org.helianto.core
- .service,org.helianto.web.test,org.junit,org.springframework.beans,or
- g.springframework.stereotype,org.springframework.validation,org.sprin
- gframework.webflow.execution",org.helianto.web.mail.compose;uses:="or
- g.helianto.message.mail.compose,org.springframework.mail.javamail",or
- g.helianto.web.test;uses:="freemarker.template,org.helianto.controlle
- r,org.helianto.core.filter,org.helianto.core.security,org.junit,org.s
- pringframework.mock.web,org.springframework.web.servlet.view.freemark
- er,org.springframework.webflow.execution",org.helianto.web.util;uses:
- ="org.junit",org.helianto.web.view;uses:="org.helianto.web.test,org.j
- unit"
+ o.core.security,org.junit,org.springframework.http,org.springframewor
+ k.webflow.core.collection",org.helianto.web.action.impl;uses:="javax.
+ annotation,org.helianto.core,org.helianto.core.filter,org.helianto.co
+ re.security,org.helianto.core.service,org.helianto.web.action,org.spr
+ ingframework.http,org.springframework.stereotype,org.springframework.
+ transaction.annotation,org.springframework.web.bind.annotation,org.sp
+ ringframework.webflow.core.collection",org.helianto.web.controller;us
+ es:="javax.annotation,org.helianto.controller,org.helianto.core,org.h
+ elianto.core.filter,org.helianto.core.security,org.helianto.core.serv
+ ice,org.helianto.web.test,org.junit,org.springframework.beans,org.spr
+ ingframework.stereotype,org.springframework.validation,org.springfram
+ ework.webflow.execution",org.helianto.web.mail.compose;uses:="org.hel
+ ianto.message.mail.compose,org.springframework.mail.javamail",org.hel
+ ianto.web.test;uses:="freemarker.template,org.helianto.controller,org
+ .helianto.core.filter,org.helianto.core.security,org.junit,org.spring
+ framework.mock.web,org.springframework.web.servlet.view.freemarker,or
+ g.springframework.webflow.execution",org.helianto.web.util;uses:="org
+ .junit",org.helianto.web.view;uses:="org.helianto.web.test,org.junit"
 Tool: Bundlor 1.0.0.RELEASE
 Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  on,javax.mail,javax.mail.internet,javax.persistence,javax.servlet,jav
@@ -142,25 +143,26 @@ Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  rk.beans.factory.support,org.springframework.beans.propertyeditors,or
  g.springframework.context,org.springframework.context.annotation,org.
  springframework.context.support,org.springframework.core.io,org.sprin
- gframework.dao,org.springframework.mail,org.springframework.mail.java
- mail,org.springframework.mock.web,org.springframework.orm.hibernate3,
- org.springframework.orm.hibernate3.annotation,org.springframework.orm
- .hibernate3.support,org.springframework.orm.jpa.persistenceunit,org.s
- pringframework.security.access,org.springframework.security.access.an
- notation,org.springframework.security.authentication,org.springframew
- ork.security.core,org.springframework.security.core.authority,org.spr
- ingframework.security.core.context,org.springframework.security.core.
- userdetails,org.springframework.stereotype,org.springframework.test,o
- rg.springframework.test.context,org.springframework.transaction.annot
- ation,org.springframework.util,org.springframework.validation,org.spr
- ingframework.web.context.support,org.springframework.web.multipart.co
- mmons,org.springframework.web.servlet,org.springframework.web.servlet
- .i18n,org.springframework.web.servlet.mvc,org.springframework.web.ser
- vlet.mvc.annotation,org.springframework.web.servlet.mvc.support,org.s
- pringframework.web.servlet.theme,org.springframework.web.servlet.view
- .freemarker,org.springframework.webflow.action,org.springframework.we
- bflow.core.collection,org.springframework.webflow.execution,org.sprin
- gframework.webflow.mvc.builder,org.springframework.webflow.mvc.servle
- t,org.springframework.webflow.persistence,org.springframework.webflow
- .security,org.springframework.webflow.test
+ gframework.dao,org.springframework.http,org.springframework.mail,org.
+ springframework.mail.javamail,org.springframework.mock.web,org.spring
+ framework.orm.hibernate3,org.springframework.orm.hibernate3.annotatio
+ n,org.springframework.orm.hibernate3.support,org.springframework.orm.
+ jpa.persistenceunit,org.springframework.security.access,org.springfra
+ mework.security.access.annotation,org.springframework.security.authen
+ tication,org.springframework.security.core,org.springframework.securi
+ ty.core.authority,org.springframework.security.core.context,org.sprin
+ gframework.security.core.userdetails,org.springframework.stereotype,o
+ rg.springframework.test,org.springframework.test.context,org.springfr
+ amework.transaction.annotation,org.springframework.util,org.springfra
+ mework.validation,org.springframework.web.bind.annotation,org.springf
+ ramework.web.context.support,org.springframework.web.multipart.common
+ s,org.springframework.web.servlet,org.springframework.web.servlet.i18
+ n,org.springframework.web.servlet.mvc,org.springframework.web.servlet
+ .mvc.annotation,org.springframework.web.servlet.mvc.support,org.sprin
+ gframework.web.servlet.theme,org.springframework.web.servlet.view.fre
+ emarker,org.springframework.webflow.action,org.springframework.webflo
+ w.core.collection,org.springframework.webflow.execution,org.springfra
+ mework.webflow.mvc.builder,org.springframework.webflow.mvc.servlet,or
+ g.springframework.webflow.persistence,org.springframework.webflow.sec
+ urity,org.springframework.webflow.test
 

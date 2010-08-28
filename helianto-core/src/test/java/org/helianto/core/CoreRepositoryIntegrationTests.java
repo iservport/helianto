@@ -25,7 +25,6 @@ import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
 import org.helianto.core.test.CountryTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
-import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.InternalEnumeratorTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.core.test.ProvinceTestSupport;
@@ -102,8 +101,14 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		UserGroup userGroup = UserGroupTestSupport.createUserGroup(entity);
 		assertEquals(userGroupDao.merge(userGroup), userGroupDao.findUnique(userGroup.getEntity(), userGroup.getUserKey()));
 
-		Identity identity = identityDao.merge(IdentityTestSupport.createIdentity());
-		assertEquals(identity, identityDao.findUnique(identity.getPrincipal()));
+		// test also the secondary table
+		Identity identity = new Identity("PRINCIPAL");
+		byte[] photo = new byte[] { 1, 2, 3 };
+		identity.setPhoto(photo);
+		identityDao.saveOrUpdate(identity);
+		Identity managedIdentity = identityDao.findUnique("principal");
+		assertEquals(identity, managedIdentity);
+		assertEquals(photo, managedIdentity.getPhoto());
 		
 		User user = (User) userGroupDao.merge(UserTestSupport.createUser(entity, identity));
 		UserLog userLog = UserLogTestSupport.createUserLog(user);
