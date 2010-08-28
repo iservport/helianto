@@ -48,14 +48,25 @@ public class Customer extends Partner implements java.io.Serializable {
     	super();
     }
 
-    /**
-     * Partner registry constructor.
+	/**
+     * Key constructor.
      * 
      * @param partnerRegistry
      */
     public Customer(PartnerRegistry partnerRegistry) {
     	this();
     	setPartnerRegistry(partnerRegistry);
+    }
+
+	/**
+     * Combined constructor, creates also a partnerRegistry.
+     * 
+     * @param entity
+     * @param partnerAlias
+     */
+    public Customer(Entity entity, String partnerAlias) {
+    	this();
+    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
     }
 
     /**
@@ -75,7 +86,7 @@ public class Customer extends Partner implements java.io.Serializable {
      * Partner constructor.
      * 
 	 * <p>
-	 * Read the backing {@link PartnerRegistry} from a partner to associate a new Customer to it.
+	 * Read the backing {@link PartnerRegistry} from a partner to associate the new instance to it.
 	 * </p>
 	 * 
      * @param partner

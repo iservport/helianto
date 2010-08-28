@@ -17,6 +17,8 @@ package org.helianto.partner;
 
 import javax.persistence.DiscriminatorValue;
 
+import org.helianto.core.Entity;
+
 
 /**
  * Represents a division inside a organization. 
@@ -44,6 +46,43 @@ public class Division extends Partner implements java.io.Serializable {
      */
     public Division() {
     	super();
+    }
+
+	/**
+     * Key constructor.
+     * 
+     * @param partnerRegistry
+     */
+    public Division(PartnerRegistry partnerRegistry) {
+    	this();
+    	setPartnerRegistry(partnerRegistry);
+    }
+
+	/**
+     * Combined constructor, creates also a partnerRegistry.
+     * 
+     * @param entity
+     * @param partnerAlias
+     */
+    public Division(Entity entity, String partnerAlias) {
+    	this();
+    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    }
+
+    /**
+     * Partner constructor.
+     * 
+	 * <p>
+	 * Read the backing {@link PartnerRegistry} from a partner to associate the new instance to it.
+	 * </p>
+	 * 
+     * @param partner
+     */
+    public Division(Partner partner) {
+    	this(partner.getPartnerRegistry());
+    	if (partner.getClass().isAssignableFrom(getClass())) {
+    		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
+    	}
     }
 
 	/**

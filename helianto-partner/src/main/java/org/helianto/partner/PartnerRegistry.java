@@ -90,6 +90,17 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
     	setEntity(entity);
     }
 
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param partnerAlias
+     */
+    public PartnerRegistry(Entity entity, String partnerAlias) {
+    	this(entity);
+    	setPartnerAlias(partnerAlias);
+    }
+
     /**
      * Primary key.
      */

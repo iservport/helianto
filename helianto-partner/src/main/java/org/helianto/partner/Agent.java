@@ -17,11 +17,12 @@ package org.helianto.partner;
 
 import javax.persistence.DiscriminatorValue;
 
+import org.helianto.core.Entity;
+
 
 /**
- * <p>
  * Represents a relationship to an Agent, like a sales representative. 
- * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -45,6 +46,43 @@ public class Agent extends Partner implements java.io.Serializable {
 	 */
     public Agent() {
     	super();
+    }
+
+	/**
+     * Key constructor.
+     * 
+     * @param partnerRegistry
+     */
+    public Agent(PartnerRegistry partnerRegistry) {
+    	this();
+    	setPartnerRegistry(partnerRegistry);
+    }
+
+	/**
+     * Combined constructor, creates also a partnerRegistry.
+     * 
+     * @param entity
+     * @param partnerAlias
+     */
+    public Agent(Entity entity, String partnerAlias) {
+    	this();
+    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    }
+
+    /**
+     * Partner constructor.
+     * 
+	 * <p>
+	 * Read the backing {@link PartnerRegistry} from a partner to associate the new instance to it.
+	 * </p>
+	 * 
+     * @param partner
+     */
+    public Agent(Partner partner) {
+    	this(partner.getPartnerRegistry());
+    	if (partner.getClass().isAssignableFrom(getClass())) {
+    		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
+    	}
     }
 
     /**
