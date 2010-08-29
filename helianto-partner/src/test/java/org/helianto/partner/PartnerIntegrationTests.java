@@ -26,17 +26,10 @@ import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
 import org.helianto.partner.test.AccountTestSupport;
 import org.helianto.partner.test.AddressTestSupport;
-import org.helianto.partner.test.AgentTestSupport;
-import org.helianto.partner.test.CustomerTestSupport;
-import org.helianto.partner.test.DivisionTestSupport;
-import org.helianto.partner.test.LaboratoryTestSupport;
-import org.helianto.partner.test.ManufacturerTestSupport;
 import org.helianto.partner.test.PartnerKeyTestSupport;
 import org.helianto.partner.test.PartnerRegistryKeyTestSupport;
 import org.helianto.partner.test.PartnerRegistryTestSupport;
 import org.helianto.partner.test.PartnerTestSupport;
-import org.helianto.partner.test.SupplierTestSupport;
-import org.helianto.partner.test.TransportPartnerTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,25 +70,25 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		Partner partner = partnerDao.merge(PartnerTestSupport.createPartner(partnerRegistry));
 		assertEquals(partner, partnerDao.findUnique(partner.getPartnerRegistry(), 'P'));
 
-		Agent agent = AgentTestSupport.createAgent(partnerRegistry);
+		Agent agent = new Agent(partnerRegistry);
 		assertEquals(partnerDao.merge(agent), partnerDao.findUnique(agent.getPartnerRegistry(), 'A'));
 
-		Customer customer = CustomerTestSupport.createCustomer(partnerRegistry);
+		Customer customer = new Customer(partnerRegistry);
 		assertEquals(partnerDao.merge(customer), partnerDao.findUnique(customer.getPartnerRegistry(), 'C'));
 
-		Division division = DivisionTestSupport.createDivision(partnerRegistry);
+		Division division = new Division(partnerRegistry);
 		assertEquals(partnerDao.merge(division), partnerDao.findUnique(division.getPartnerRegistry(), 'D'));
 
-		Laboratory laboratory = LaboratoryTestSupport.createLaboratory(partnerRegistry);
+		Laboratory laboratory = new Laboratory(partnerRegistry);
 		assertEquals(partnerDao.merge(laboratory), partnerDao.findUnique(laboratory.getPartnerRegistry(), 'L'));
 
-		Manufacturer manufacturer = ManufacturerTestSupport.createManufacturer(partnerRegistry);
+		Manufacturer manufacturer = new Manufacturer(partnerRegistry);
 		assertEquals(partnerDao.merge(manufacturer), partnerDao.findUnique(manufacturer.getPartnerRegistry(), 'M'));
 
-		Supplier supplier = SupplierTestSupport.createSupplier(partnerRegistry);
+		Supplier supplier = new Supplier(partnerRegistry);
 		assertEquals(partnerDao.merge(supplier), partnerDao.findUnique(supplier.getPartnerRegistry(), 'S'));
 
-		TransportPartner transport = TransportPartnerTestSupport.createTransportPartner(partnerRegistry);
+		TransportPartner transport = new TransportPartner(partnerRegistry);
 		assertEquals(partnerDao.merge(transport), partnerDao.findUnique(transport.getPartnerRegistry(), 'T'));
 
 		PartnerKey partnerKey = PartnerKeyTestSupport.createPartnerKey(partner, keyType);

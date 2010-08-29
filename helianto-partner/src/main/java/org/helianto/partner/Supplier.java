@@ -29,15 +29,6 @@ import org.helianto.core.Entity;
 @DiscriminatorValue("S")
 public class Supplier extends Partner implements java.io.Serializable {
 
-    /**
-     * Factory method.
-     * 
-     * @param partnerRegistry
-     */
-    public static Supplier supplierFactory(PartnerRegistry partnerRegistry) {
-        return internalPartnerFactory(Supplier.class, partnerRegistry);
-    }
-
     private static final long serialVersionUID = 1L;
 
 	/**

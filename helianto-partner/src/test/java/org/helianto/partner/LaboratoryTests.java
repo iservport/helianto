@@ -1,7 +1,6 @@
 package org.helianto.partner;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
@@ -15,26 +14,13 @@ import org.junit.Test;
 public class LaboratoryTests{
     
     /**
-     * Test <code>Laboratory</code> static factory method.
-     */
-	@Test
-    public void laboratoryFactory() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
-        
-        Laboratory laboratory = Laboratory.laboratoryFactory(partnerRegistry);
-        
-        assertSame(partnerRegistry, laboratory.getPartnerRegistry());
-        
-    }
-    
-    /**
      * Test <code>Laboratory</code> equals() method.
      */
 	@Test
     public void laboratoryEquals() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         
-        Laboratory laboratory = Laboratory.laboratoryFactory(partnerRegistry);
+        Laboratory laboratory = new Laboratory(partnerRegistry);
         Laboratory copy = (Laboratory) DomainTestSupport.minimalEqualsTest(laboratory);
         
         copy.setPartnerRegistry(null);

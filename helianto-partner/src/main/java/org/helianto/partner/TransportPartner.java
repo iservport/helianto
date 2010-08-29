@@ -17,6 +17,8 @@ package org.helianto.partner;
 
 import javax.persistence.DiscriminatorValue;
 
+import org.helianto.core.Entity;
+
 /**
  * <p>
  * Represents a relationship to a transportation partner. 
@@ -27,15 +29,6 @@ import javax.persistence.DiscriminatorValue;
 @DiscriminatorValue("T")
 public class TransportPartner extends Supplier {
 
-    /**
-     * Factory method.
-     * 
-     * @param partnerRegistry
-     */
-    public static TransportPartner transportPartnerFactory(PartnerRegistry partnerRegistry) {
-        return internalPartnerFactory(TransportPartner.class, partnerRegistry);
-    }
-
     private static final long serialVersionUID = 1L;
 
     /**
@@ -43,6 +36,43 @@ public class TransportPartner extends Supplier {
      */
     public TransportPartner() {
     	super();
+    }
+
+	/**
+     * Key constructor.
+     * 
+     * @param partnerRegistry
+     */
+    public TransportPartner(PartnerRegistry partnerRegistry) {
+    	this();
+    	setPartnerRegistry(partnerRegistry);
+    }
+
+	/**
+     * Combined constructor, creates also a partnerRegistry.
+     * 
+     * @param entity
+     * @param partnerAlias
+     */
+    public TransportPartner(Entity entity, String partnerAlias) {
+    	this();
+    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    }
+
+    /**
+     * Partner constructor.
+     * 
+	 * <p>
+	 * Read the backing {@link PartnerRegistry} from a partner to associate the new instance to it.
+	 * </p>
+	 * 
+     * @param partner
+     */
+    public TransportPartner(Partner partner) {
+    	this(partner.getPartnerRegistry());
+    	if (partner.getClass().isAssignableFrom(getClass())) {
+    		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
+    	}
     }
 
    /**

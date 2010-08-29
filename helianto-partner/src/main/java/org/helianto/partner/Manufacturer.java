@@ -17,6 +17,8 @@ package org.helianto.partner;
 
 import javax.persistence.DiscriminatorValue;
 
+import org.helianto.core.Entity;
+
 
 /**
  * <p>
@@ -28,15 +30,6 @@ import javax.persistence.DiscriminatorValue;
 @DiscriminatorValue("M")
 public class Manufacturer extends Partner implements java.io.Serializable {
 
-    /**
-     * Factory method.
-     * 
-     * @param partnerRegistry
-     */
-    public static Manufacturer manufacturerFactory(PartnerRegistry partnerRegistry) {
-        return internalPartnerFactory(Manufacturer.class, partnerRegistry);
-    }
-
     private static final long serialVersionUID = 1L;
 
     /**
@@ -44,6 +37,43 @@ public class Manufacturer extends Partner implements java.io.Serializable {
      */
     public Manufacturer() {
     	super();
+    }
+
+	/**
+     * Key constructor.
+     * 
+     * @param partnerRegistry
+     */
+    public Manufacturer(PartnerRegistry partnerRegistry) {
+    	this();
+    	setPartnerRegistry(partnerRegistry);
+    }
+
+	/**
+     * Combined constructor, creates also a partnerRegistry.
+     * 
+     * @param entity
+     * @param partnerAlias
+     */
+    public Manufacturer(Entity entity, String partnerAlias) {
+    	this();
+    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    }
+
+    /**
+     * Partner constructor.
+     * 
+	 * <p>
+	 * Read the backing {@link PartnerRegistry} from a partner to associate the new instance to it.
+	 * </p>
+	 * 
+     * @param partner
+     */
+    public Manufacturer(Partner partner) {
+    	this(partner.getPartnerRegistry());
+    	if (partner.getClass().isAssignableFrom(getClass())) {
+    		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
+    	}
     }
 
    /**

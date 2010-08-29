@@ -1,8 +1,7 @@
 package org.helianto.partner;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
@@ -16,19 +15,6 @@ import org.junit.Test;
  */
 public class CustomerTests {
     
-    /**
-     * Test <code>Customer</code> static factory method.
-     */
-	@Test
-    public void customerFactory() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
-        
-        Customer customer = Customer.customerFactory(partnerRegistry);
-        
-        assertSame(partnerRegistry, customer.getPartnerRegistry());
-        
-    }
-	
 	@Test
 	public void constructor() {
 		Customer customer = new Customer();
@@ -58,7 +44,7 @@ public class CustomerTests {
     public void customerEquals() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         
-        Customer customer = Customer.customerFactory(partnerRegistry);
+        Customer customer = new Customer(partnerRegistry);
         Customer copy = (Customer) DomainTestSupport.minimalEqualsTest(customer);
         
         copy.setPartnerRegistry(null);

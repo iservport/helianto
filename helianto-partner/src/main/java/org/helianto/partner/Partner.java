@@ -36,9 +36,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
+import org.helianto.core.Province;
 /**
- * Represents the relationship between the organization and other entities.  
+ * Represents the relationship between the organization and other entities.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -49,34 +51,7 @@ import org.helianto.core.KeyType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
-public class Partner extends AbstractAddress implements java.io.Serializable {
-
-    /**
-     * <code>Partner</code> factory.
-     * 
-     * @param partnerRegistry
-     * @param sequence
-     */
-    public static <T extends Partner> T internalPartnerFactory(Class<T> clazz, PartnerRegistry partnerRegistry) {
-        T partner = null;
-        try {
-        	partner = clazz.newInstance();
-        } 
-        catch (Exception e) {
-        	throw new RuntimeException("Unable to instantiate partner or descendant.");
-        }
-        partner.setPartnerRegistry(partnerRegistry);
-        return partner;
-    }
-
-    /**
-     * <code>Partner</code> factory.
-     * 
-     * @param partnerRegistry
-     */
-    public static Partner partnerFactory(PartnerRegistry partnerRegistry) {
-        return internalPartnerFactory(Partner.class, partnerRegistry);
-    }
+public class Partner implements java.io.Serializable, Addressee {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -94,6 +69,40 @@ public class Partner extends AbstractAddress implements java.io.Serializable {
     public Partner() {
         setPartnerState(PartnerState.IDLE.getValue());
         setPriority('0');
+    }
+
+	/**
+     * Key constructor.
+     * 
+     * @param partnerRegistry
+     */
+    public Partner(PartnerRegistry partnerRegistry) {
+    	this();
+    	setPartnerRegistry(partnerRegistry);
+    }
+
+	/**
+     * Combined constructor, creates also a partnerRegistry.
+     * 
+     * @param entity
+     * @param partnerAlias
+     */
+    public Partner(Entity entity, String partnerAlias) {
+    	this();
+    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    }
+
+    /**
+     * Entity constructor.
+     * 
+	 * <p>
+	 * Create a backing {@link PartnerRegistry} and associate a new Customer to it.
+	 * </p>
+	 * 
+     * @param entity
+     */
+    public Partner(Entity entity) {
+    	this(new PartnerRegistry(entity));
     }
 
     /**
@@ -126,7 +135,173 @@ public class Partner extends AbstractAddress implements java.io.Serializable {
     public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
         this.partnerRegistry = partnerRegistry;
     }
+    
+    // Implementation of the Addressee interface
+    // future implementations may choose from addresses on the parent partner registry.
 
+    @Transient
+    public String getAddress1() {
+        return this.getPartnerRegistry().getAddress1();
+    }
+    
+    @Transient
+    public String getAddressNumber() {
+    	return this.getPartnerRegistry().getAddressNumber();
+    }
+    
+    @Transient
+    public String getAddressDetail() {
+    	return this.getPartnerRegistry().getAddressDetail();
+    }
+
+    @Transient
+    public String getAddress2() {
+        return this.getPartnerRegistry().getAddress2();
+    }
+
+    @Transient
+    public String getAddress3() {
+        return this.getPartnerRegistry().getAddress3();
+    }
+    
+    @Transient
+    public String getPostOfficeBox() {
+    	return this.getPartnerRegistry().getPostOfficeBox();
+    }
+
+    @Transient
+    public String getPostalCode() {
+        return this.getPartnerRegistry().getPostalCode();
+    }
+
+    @Transient
+    public Province getProvince() {
+        return this.getPartnerRegistry().getProvince();
+    }
+    
+    @Transient
+    public String getCityName() {
+    	return this.getPartnerRegistry().getCityName();
+    }
+    
+    @Transient
+    public String getShortAddress() {
+    	return this.getPartnerRegistry().getShortAddress();
+    }
+    
+    // 
+    
+    /**
+     * <<Transient>> Return the current addressee.
+     * 
+     * <p>
+     * Current implementation defines the current addressee as the parent
+     * partner registry.
+     * </p>
+     */
+    @Transient
+    protected Addressee getAddresse() {
+    	return getAddressee(-1);
+    }
+
+    /**
+     * <<Transient>> Return the addressee selected by an index.
+     * 
+     * <p>
+     * Current implementation allways returns the parent
+     * partner registry.
+     * </p>
+     * 
+     * @param index
+     */
+    @Transient
+    protected Addressee getAddressee(int index) {
+    	return getPartnerRegistry();
+    }
+
+    // setter methods rely on getAddresse to update its contents.
+
+    /**
+     * Set the current addressee address1.
+     * 
+     * @param address1
+     */
+    public void setAddress1(String address1) {
+        getPartnerRegistry().setAddress1(address1);
+    }
+    
+    /**
+     * Set the current addressee addressNumber.
+     * 
+     * @param addressNumber
+     */
+    public void setAddressNumber(String addressNumber) {
+        getPartnerRegistry().setAddressNumber(addressNumber);
+    }
+    
+    /**
+     * Set the current addressee addressDetail.
+     * 
+     * @param addressDetail
+     */
+    public void setAddressDetail(String addressDetail) {
+        getPartnerRegistry().setAddressDetail(addressDetail);
+    }
+
+    /**
+     * Set the current addressee address2.
+     * 
+     * @param address2
+     */
+    public void setAddress2(String address2) {
+        getPartnerRegistry().setAddress2(address2);
+    }
+
+    /**
+     * Set the current addressee address3.
+     * 
+     * @param address3
+     */
+    public void setAddress3(String address3) {
+        getPartnerRegistry().setAddress3(address3);
+    }
+    
+    /**
+     * Set the current addressee postOfficeBox.
+     * 
+     * @param postOfficeBox
+     */
+    public void setPostOfficeBox(String postOfficeBox) {
+        getPartnerRegistry().setPostOfficeBox(postOfficeBox);
+    }
+
+    /**
+     * Set the current addressee postalCode.
+     * 
+     * @param postalCode
+     */
+    public void setPostalCode(String postalCode) {
+        getPartnerRegistry().setPostalCode(postalCode);
+    }
+
+    /**
+     * Set the current addressee province.
+     * 
+     * @param province
+     */
+    public void setProvince(Province province) {
+        getPartnerRegistry().setProvince(province);
+    }
+    
+    /**
+     * Set the current addressee cityName.
+     * 
+     * @param cityName
+     */
+    public void setCityName(String cityName) {
+        getPartnerRegistry().setCityName(cityName);
+    }
+    
     /**
      * <<Transient>> Convenience to add address.
      * 
@@ -137,27 +312,6 @@ public class Partner extends AbstractAddress implements java.io.Serializable {
     	return getPartnerRegistry().getAddresses().add(address);
     }
 	
-    /**
-     * <<Transient>> Convenience reference to the main address.
-     * 
-     * <p>
-     * If the partner does not define the main address, falls back to
-     * this address.
-     * </p>
-     */
-	@Transient
-    public AbstractAddress getMainAddress() {
-		if (getProvince()==null) {
-			if (getPartnerRegistry().getProvince()==null) {
-				return null;
-			}
-			else {
-				return getPartnerRegistry();
-			}
-		}
-    	return this;
-    }
-
     /**
      * Account.
      */

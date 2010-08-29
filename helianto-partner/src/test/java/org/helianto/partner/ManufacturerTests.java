@@ -1,7 +1,6 @@
 package org.helianto.partner;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
@@ -15,26 +14,13 @@ import org.junit.Test;
 public class ManufacturerTests  {
     
     /**
-     * Test <code>Manufacturer</code> static factory method.
-     */
-	@Test
-    public void testManufacturerFactory() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
-        
-        Manufacturer manufacturer = Manufacturer.manufacturerFactory(partnerRegistry);
-        
-        assertSame(partnerRegistry, manufacturer.getPartnerRegistry());
-        
-    }
-    
-    /**
      * Test <code>Manufacturer</code> equals() method.
      */
 	@Test
     public void testManufacturerEquals() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         
-        Manufacturer manufacturer = Manufacturer.manufacturerFactory(partnerRegistry);
+        Manufacturer manufacturer = new Manufacturer(partnerRegistry);
         Manufacturer copy = (Manufacturer) DomainTestSupport.minimalEqualsTest(manufacturer);
         
         copy.setPartnerRegistry(null);

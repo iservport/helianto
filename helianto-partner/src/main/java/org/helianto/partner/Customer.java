@@ -30,15 +30,6 @@ import org.helianto.core.Entity;
 @DiscriminatorValue("C")
 public class Customer extends Partner implements java.io.Serializable {
 
-    /**
-     * Factory method.
-     * 
-     * @param customer
-     */
-    public static Customer customerFactory(PartnerRegistry partnerRegistry) {
-        return internalPartnerFactory(Customer.class, partnerRegistry);
-    }
-
     private static final long serialVersionUID = 1L;
 
     /**

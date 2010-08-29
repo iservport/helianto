@@ -17,7 +17,6 @@ package org.helianto.partner;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -98,7 +97,7 @@ public abstract class AbstractPartialAddress implements Serializable {
     /**
      * Province.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="provinceId", nullable=true)
     public Province getProvince() {
         return this.province;

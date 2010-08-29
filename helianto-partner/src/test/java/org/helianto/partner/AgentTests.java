@@ -1,7 +1,6 @@
 package org.helianto.partner;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
@@ -15,25 +14,13 @@ import org.junit.Test;
 public class AgentTests {
     
     /**
-     * Test <code>Agent</code> static factory method.
-     */
-	@Test
-    public void agentFactory() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
-        
-        Agent agent = Agent.agentFactory(partnerRegistry);
-        
-        assertSame(partnerRegistry, agent.getPartnerRegistry());
-        
-    }
-    
-    /**
      * Test <code>Agent</code> equals() method.
      */
+	@Test
     public void agentEquals() {
         PartnerRegistry partnerRegistry = new PartnerRegistry();
         
-        Agent agent = Agent.agentFactory(partnerRegistry);
+        Agent agent = new Agent(partnerRegistry);
         Partner copy = (Agent) DomainTestSupport.minimalEqualsTest(agent);
         
         copy.setPartnerRegistry(null);

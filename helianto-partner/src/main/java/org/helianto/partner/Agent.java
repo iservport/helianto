@@ -29,15 +29,6 @@ import org.helianto.core.Entity;
 @DiscriminatorValue("A")
 public class Agent extends Partner implements java.io.Serializable {
 
-    /**
-     * Factory method.
-     * 
-     * @param partnerRegistry
-     */
-    public static Agent agentFactory(PartnerRegistry partnerRegistry) {
-        return internalPartnerFactory(Agent.class, partnerRegistry);
-    }
-
     private static final long serialVersionUID = 1L;
     private float agentComission;
 

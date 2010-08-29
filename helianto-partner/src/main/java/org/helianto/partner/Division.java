@@ -29,15 +29,6 @@ import org.helianto.core.Entity;
 @DiscriminatorValue("D")
 public class Division extends Partner implements java.io.Serializable {
 
-    /**
-     * Factory method.
-     * 
-     * @param customer
-     */
-    public static Division divisionFactory(PartnerRegistry partnerRegistry) {
-        return internalPartnerFactory(Division.class, partnerRegistry);
-    }
-
     private static final long serialVersionUID = 1L;
     private char divisionType;
 

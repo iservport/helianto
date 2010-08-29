@@ -27,7 +27,7 @@ import org.helianto.core.Province;
  */
 @SuppressWarnings("serial")
 @javax.persistence.MappedSuperclass
-public abstract class AbstractAddress extends AbstractPartialAddress {
+public abstract class AbstractAddress extends AbstractPartialAddress implements Addressee {
 
     private String addressNumber;
 	private String addressDetail;
@@ -102,9 +102,6 @@ public abstract class AbstractAddress extends AbstractPartialAddress {
         return this;
     }
 
-    /**
-     * Optional address number.
-     */
     @Column(length=8)
     public String getAddressNumber() {
 		return addressNumber;
@@ -113,9 +110,6 @@ public abstract class AbstractAddress extends AbstractPartialAddress {
 		this.addressNumber = addressNumber;
 	}
 
-    /**
-     * Optional address detail.
-     */
     @Column(length=24)
 	public String getAddressDetail() {
 		return addressDetail;
@@ -124,9 +118,6 @@ public abstract class AbstractAddress extends AbstractPartialAddress {
 		this.addressDetail = addressDetail;
 	}
 
-    /**
-     * Address3.
-     */
     @Column(length=32)
     public String getAddress3() {
         return this.address3;
@@ -135,9 +126,6 @@ public abstract class AbstractAddress extends AbstractPartialAddress {
         this.address3 = address3;
     }
 
-    /**
-     * City name.
-     */
     @Column(length=32)
     public String getCityName() {
         return this.cityName;
@@ -146,9 +134,6 @@ public abstract class AbstractAddress extends AbstractPartialAddress {
         this.cityName = cityName;
     }
 
-    /**
-     * Post office box.
-     */
     @Column(length=10)
     public String getPostOfficeBox() {
         return this.postOfficeBox;
@@ -157,9 +142,6 @@ public abstract class AbstractAddress extends AbstractPartialAddress {
         this.postOfficeBox = postOfficeBox;
     }
     
-    /**
-     * <<Transient>> Short string for address.
-     */
     @Transient
     public String getShortAddress() {
     	StringBuilder sb = new StringBuilder(getAddress1())
