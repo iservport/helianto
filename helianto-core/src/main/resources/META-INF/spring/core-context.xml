@@ -85,23 +85,19 @@
 	    Required to apply transactions to service and installation APIs
 	 -->
     <aop:config>
-        <aop:pointcut id="servicePointcut" expression="execution(* *..service.*Mgr*.*(..))" />
+        <aop:pointcut id="servicePointcut" expression="execution(* *..*Mgr*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
+    </aop:config>
+    
+    <aop:config>
+        <aop:pointcut id="repositoryPointcut" expression="execution(* *..*RepositoryConfiguration.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="repositoryPointcut" />
     </aop:config>
     
     <aop:config>
         <aop:pointcut id="testPointcut" expression="execution(* *..*IntegrationTest*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="testPointcut" />
     </aop:config>
-    
-    <!--
-    
-    <aop:config>
-        <aop:pointcut id="testPointcut" expression="execution(* *..*Dao*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="testPointcut" />
-    </aop:config>
-    
-    -->
     
     <!-- Can't declare annotation-driven AND tx:advice to instruct Spring to perform declarative 
          transaction management automatically on annotated classes.
