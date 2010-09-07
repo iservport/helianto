@@ -87,9 +87,7 @@ public class Entity implements java.io.Serializable {
      * @param alias
      */
     public static Entity entityFactory(Operator operator, String alias) {
-        Entity entity = new Entity();
-        entity.setOperator(operator);
-        entity.setAlias(alias);
+        Entity entity = new Entity(operator, alias);
         return entity;
     }
 
@@ -115,6 +113,17 @@ public class Entity implements java.io.Serializable {
     public Entity(Operator operator) {
     	this();
     	setOperator(operator);
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param operator
+     * @param alias
+     */
+    public Entity(Operator operator, String alias) {
+    	this(operator);
+    	setAlias(alias);
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
