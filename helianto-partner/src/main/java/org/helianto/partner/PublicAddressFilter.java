@@ -17,6 +17,7 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 	private static final long serialVersionUID = 1L;
 	private String postalCode;
 	private Province province;
+	private String provinceCode;
 	private String addressLike;
 	
 	/**
@@ -59,6 +60,16 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 	}
 	
 	/**
+	 * Province code filter.
+	 */
+	public String getProvinceCode() {
+		return provinceCode;
+	}
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
+	}
+	
+	/**
 	 * Address filter.
 	 */
 	public String getAddressLike() {
@@ -82,6 +93,7 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 		if (getProvince()!=null) {
 			appendEqualFilter("province.id", getProvince().getId(), mainCriteriaBuilder);
 		}
+		appendEqualFilter("province.provinceCode", getProvinceCode(), mainCriteriaBuilder);
 		appendLikeFilter("address1", getAddressLike(), mainCriteriaBuilder);
 	}
 	
@@ -102,6 +114,7 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 	public void reset() {
 		setPostalCode("");
 		setProvince(new Province(getOperator()));
+		setProvinceCode("");
 		setAddressLike("");
 	}
 	
