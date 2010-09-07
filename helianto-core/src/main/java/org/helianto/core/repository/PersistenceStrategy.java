@@ -45,6 +45,13 @@ public interface PersistenceStrategy<T> {
     public void persist(T managedObject);
     
     /**
+     * Hiberante operation to load a managed object.
+     * 
+     * @param managedObject
+     */
+    public T load(T managedObject);
+    
+    /**
      * Hiberante operation to save or update a managed object.
      * 
      * @param managedObject

@@ -184,6 +184,10 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	public void persist(T managedObject) {
         getPersistenceStrategy().persist(managedObject);
 	}
+	
+	public T load(T managedObject) {
+		return (T) getPersistenceStrategy().load(managedObject);
+	};
 
 	public void saveOrUpdate(T managedObject) {
         getPersistenceStrategy().saveOrUpdate(managedObject);

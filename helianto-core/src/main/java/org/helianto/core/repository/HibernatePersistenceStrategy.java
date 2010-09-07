@@ -15,6 +15,7 @@
 
 package org.helianto.core.repository;
 
+import java.lang.reflect.Method;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -63,6 +64,19 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
 	public void persist(Object managedObject) {
         logger.debug("Persisting {}", managedObject);
         this.sessionFactory.getCurrentSession().persist(managedObject);
+	}
+	
+	public Object load(Object managedObject) {
+		try {
+			Method idGetter = managedObject.getClass().getMethod("getId");
+			Long id = (Long) idGetter.invoke(managedObject);
+			logger.debug("Object id id {}", id);
+			return this.sessionFactory.getCurrentSession().load(managedObject.getClass(), id);
+		}
+		catch (Exception e) {
+			logger.warn("Unable to load {}.", e);
+		}
+		return null;
 	}
 	
 	public void saveOrUpdate(Object managedObject) {
