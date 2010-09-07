@@ -30,8 +30,9 @@ import org.springframework.stereotype.Component;
  * implementation as an inner class.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("configurableMailSenderFactory")
+//@Component("configurableMailSenderFactory")
 public class ConfigurableMailSenderFactoryImpl implements ConfigurableMailSenderFactory {
     
     public ConfigurableMailSender create(List<Server> serverList) {

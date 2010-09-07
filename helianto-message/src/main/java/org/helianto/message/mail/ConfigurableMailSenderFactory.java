@@ -23,6 +23,7 @@ import org.helianto.core.Server;
  * The <code>ConfigurableMailSender</code> factory interface.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public interface ConfigurableMailSenderFactory {
     

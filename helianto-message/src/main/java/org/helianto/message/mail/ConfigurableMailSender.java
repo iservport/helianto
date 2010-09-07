@@ -28,6 +28,7 @@ import org.springframework.mail.javamail.JavaMailSender;
  * is provided. 
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public interface ConfigurableMailSender extends JavaMailSender {
     

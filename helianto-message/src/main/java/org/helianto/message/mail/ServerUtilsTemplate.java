@@ -24,6 +24,7 @@ import org.helianto.core.Server;
  * list.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public interface ServerUtilsTemplate {
 

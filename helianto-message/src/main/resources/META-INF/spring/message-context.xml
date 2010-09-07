@@ -24,4 +24,6 @@
                
 	<context:component-scan base-package="org.helianto.message.mail,org.helianto.message.mail.composer,org.helianto.message.service"/>
 
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" />
+   
 </beans>

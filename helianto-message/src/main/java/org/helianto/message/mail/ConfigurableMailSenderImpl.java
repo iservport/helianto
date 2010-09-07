@@ -34,6 +34,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
  * configuration via the <code>Server</code> abstraction.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class ConfigurableMailSenderImpl extends JavaMailSenderImpl implements
         ConfigurableMailSender, JavaMailSender {

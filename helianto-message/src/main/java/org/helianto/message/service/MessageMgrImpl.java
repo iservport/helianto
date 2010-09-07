@@ -39,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Default <code>MessageMgr</code> interface implementation.
  *  
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @Service("messageMgr")
 public class MessageMgrImpl implements MessageMgr {
@@ -64,7 +65,7 @@ public class MessageMgrImpl implements MessageMgr {
         this.serverDao = serverDao;
     }
 
-    @Resource
+//    @Resource
     public void setConfigurableMailSenderFactory(
             ConfigurableMailSenderFactory configurableMailSenderFactory) {
         this.configurableMailSenderFactory = configurableMailSenderFactory;
