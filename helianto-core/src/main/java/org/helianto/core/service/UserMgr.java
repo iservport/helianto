@@ -44,6 +44,20 @@ public interface UserMgr {
     public Identity findIdentityByPrincipal(String principal);
     
     /**
+     * Load <core>Identity</core> by id.
+     * 
+     * @param id
+     */
+    public Identity loadIdentity(long id);
+    
+    /**
+     * Load the <core>Identity</core> photo.
+     * 
+     * @param identity
+     */
+    public byte[] loadIdentityPhoto(Identity identity);
+    
+    /**
      * <p>Selects an <code>Identity</code> list.
      * 
      * @param filter

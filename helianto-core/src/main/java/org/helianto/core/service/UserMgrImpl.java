@@ -64,6 +64,25 @@ public class UserMgrImpl implements UserMgr {
         logger.debug("Finding unique with principal {}", principal);
         return (Identity) identityDao.findUnique(principal);
     }
+    
+    public Identity loadIdentity(long id) {
+    	Identity sample = new Identity();
+    	sample.setId(id);
+    	Identity identity = identityDao.load(sample);
+    	if (identity!=null && identity.getPhoto()!=null) {
+    		logger.debug("Identity {} photo size is {}.", identity, identity.getPhoto().length);
+    	}
+    	return identity;
+    }
+    
+    public byte[] loadIdentityPhoto(Identity identity) {
+    	if (identity!=null && identity.getPhoto()!=null) {
+    		logger.debug("Identity {} photo size is {}.", identity, identity.getPhoto().length);
+    		return identity.getPhoto();
+    	}
+    	logger.debug("Identity {} photo not available.", identity);
+    	return null;
+    }
 
     public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions) {
         List<Identity> identityList = (List<Identity>) identityDao.find(filter);
