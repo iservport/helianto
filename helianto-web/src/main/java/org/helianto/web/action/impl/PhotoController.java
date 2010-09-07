@@ -27,15 +27,18 @@ public class PhotoController extends AbstractRenderController {
 	/**
 	 * Triggered when a photo must be loaded.
 	 * 
-	 * @param principal
+	 * @param identityId
 	 */
-	@RequestMapping(value = "/photo/{principal}", method = RequestMethod.GET)
+	@RequestMapping(value = "/photo/{identityId}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<byte[]> loadPhotoById(@PathVariable String principal) {
-		Identity identity = userMgr.findIdentityByPrincipal(principal);
-		boolean isNotEmpty = identity!=null && identity.getPhoto().length>0;
-		logger.debug("Render {} photo from identity {}.", isNotEmpty ?"":"EMPTY", identity);
-		return render(identity.getPhoto(), identity.getMultipartFileContentType(), isNotEmpty);
+	public ResponseEntity<byte[]> loadPhotoById(@PathVariable long identityId) {
+		Identity identity = userMgr.loadIdentity(identityId);
+		byte[] photo = identity.getPhoto();
+		if (photo!=null) {
+			logger.debug("Render photo from identity {}.", identity);
+			return render(photo, identity.getMultipartFileContentType(), true);
+		}
+		return null;
 	}
 	
     // collabs

@@ -27,10 +27,11 @@ public class PhotoControllerTests {
 		identity.setPhoto(photo);
 		identity.setMultipartFileContentType(MediaType.TEXT_PLAIN.toString());
 		
-		EasyMock.expect(userMgr.findIdentityByPrincipal("principal")).andReturn(identity);
+		EasyMock.expect(userMgr.loadIdentity(1)).andReturn(identity);
+//		EasyMock.expect(userMgr.loadIdentityPhoto(identity)).andReturn(photo);
 		EasyMock.replay(userMgr);
 		
-		ResponseEntity<byte[]> response = photoController.loadPhotoById("principal");
+		ResponseEntity<byte[]> response = photoController.loadPhotoById(1);
 		EasyMock.verify(userMgr);
 //		for (byte b: response.getBody()) {
 //			System.out.print((char) b);
