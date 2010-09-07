@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.helianto.core.repository.FilterDao;
+import org.helianto.partner.PublicAddress;
+import org.helianto.partner.PublicAddressFilter;
 import org.helianto.partner.PublicEntity;
 import org.helianto.partner.PublicEntityFilter;
 import org.helianto.partner.PublicEntityKey;
@@ -21,6 +23,23 @@ import org.springframework.stereotype.Service;
 @Service("publicEntityMgr")
 public class PublicEntityMgrImpl implements PublicEntityMgr {
 
+	public List<PublicAddress> findPublicAddress(PublicAddressFilter filter) {
+		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressDao.find(filter);
+		if (publicAddressList!=null) {
+			logger.debug("Found {} public addresses.", publicAddressList.size());
+		}
+		return publicAddressList;
+	}
+	
+	public PublicAddress storePublicAddress(PublicAddress publicAddress) {
+		publicAddressDao.saveOrUpdate(publicAddress);
+		return publicAddress;
+	}
+	
+	public void removePublicAddress(PublicAddress publicAddress) {
+		publicAddressDao.remove(publicAddress);
+	}
+	
 	public List<PublicEntity> findPublicEntities(PublicEntityFilter publicEntityFilter) {
 		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(publicEntityFilter);
 		if (publicEntitiyList!=null) {
@@ -55,7 +74,14 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	
 	// collabs
 	
+	private FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao;
 	private FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;
+	
+	@Resource(name="publicAddressDao")
+	public void setPublicAddressDao(
+			FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao) {
+		this.publicAddressDao = publicAddressDao;
+	}
 	
 	@Resource(name="publicEntityDao")
 	public void setPublicEntityDao(FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao) {

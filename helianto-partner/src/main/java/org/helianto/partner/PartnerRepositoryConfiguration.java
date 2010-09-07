@@ -17,11 +17,11 @@ package org.helianto.partner;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.RepositoryFactory;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -65,6 +65,17 @@ public class PartnerRepositoryConfiguration {
 		BasicDao<Address> dao =  
 			repositoryFactory.basicDaoFactory(Address.class, "partnerRegistry", "sequence");
 		logger.info("Created addressDao");
+		return dao;
+	}
+
+	/**
+	 * Address database data access.
+	 */
+	@Bean
+	public FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao() {
+		FilterDao<PublicAddress, PublicAddressFilter> dao =  
+			repositoryFactory.filterDaoFactory(PublicAddress.class, PublicAddressFilter.class, "operator", "postalCode");
+		logger.info("Created publicAddressDao");
 		return dao;
 	}
 

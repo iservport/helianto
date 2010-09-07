@@ -6,6 +6,7 @@
 	<session-factory>
 		<mapping class="org.helianto.partner.PublicEntity" />
 		<mapping class="org.helianto.partner.PublicEntityKey" />
+		<mapping class="org.helianto.partner.PublicAddress" />
 		<mapping class="org.helianto.partner.Account" />
 		<mapping class="org.helianto.partner.Address" />
 		<mapping class="org.helianto.partner.Agent" />

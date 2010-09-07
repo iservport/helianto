@@ -49,6 +49,7 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	@Resource FilterDao<Partner, PartnerFilter> partnerDao;
 	@Resource BasicDao<PartnerKey> partnerKeyDao;
 	@Resource BasicDao<Address> addressDao;
+	@Resource FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao;
 	@Resource BasicDao<Phone> phoneDao;
 
 	@Test
@@ -96,6 +97,10 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 
 		Address address = AddressTestSupport.createAddress(partnerRegistry);
 		assertEquals(addressDao.merge(address), addressDao.findUnique(address.getPartnerRegistry(), address.getSequence()));
+		
+		PublicAddress publicAddress = new PublicAddress(entity.getOperator(), "POSTALCODE");
+		publicAddressDao.saveOrUpdate(publicAddress);
+		assertEquals(publicAddress, publicAddressDao.findUnique(entity.getOperator(), "POSTALCODE"));
 
 	}
 

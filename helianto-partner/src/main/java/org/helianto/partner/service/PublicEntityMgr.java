@@ -18,6 +18,8 @@ package org.helianto.partner.service;
 import java.util.List;
 import java.util.Map;
 
+import org.helianto.partner.PublicAddress;
+import org.helianto.partner.PublicAddressFilter;
 import org.helianto.partner.PublicEntity;
 import org.helianto.partner.PublicEntityFilter;
 import org.helianto.partner.PublicEntityKey;
@@ -29,33 +31,66 @@ import org.helianto.partner.PublicEntityKey;
  */
 public interface PublicEntityMgr {
 
+	/**
+     * Find <code>PublicAddress</code> list.
+     * 
+     * @param filter
+     */
+	public List<PublicAddress> findPublicAddress(PublicAddressFilter filter);
+	
     /**
-     * Find <code>PublicEntity</code>.
+     * Write <code>PublicAddress</code> to the datastore.
+     * 
+     * @param publicAddress
+     */
+	public PublicAddress storePublicAddress(PublicAddress publicAddress);
+	
+    /**
+     * Remove <code>PublicAddress</code> from the datastore.
+     * 
+     * @param publicAddress
+     */
+	public void removePublicAddress(PublicAddress publicAddress);
+	
+	/**
+     * Find <code>PublicEntity</code> list.
+     * 
+     * @param publicEntityFilter
      */
 	public List<PublicEntity> findPublicEntities(PublicEntityFilter publicEntityFilter);
 	
     /**
      * Write <code>PublicEntity</code> to the datastore.
+     * 
+     * @param publicEntity
      */
     public PublicEntity storePublicEntity(PublicEntity publicEntity);
 
     /**
      * Remove <code>PublicEntity</code> from the datastore.
+     * 
+     * @param publicEntity
      */
     public void removePublicEntity(PublicEntity publicEntity);
 
     /**
      * Load <code>PublicEntityKey</code> map keyed with the KeyCode.
+     * 
+     * @param publicEntity
      */
 	public Map<String, PublicEntityKey> loadPublicEntityKeyMap(PublicEntity publicEntity);
 	
     /**
      * Write <code>PublicEntityKey</code> to the datastore.
+     * 
+     * @param publicEntityKey
      */
     public PublicEntityKey storePublicEntityKey(PublicEntityKey publicEntityKey);
 
     /**
      * Remove <code>PublicEntityKey</code> from the datastore.
+     * 
+     * @param publicEntityKey
      */
     public void removePublicEntityKey(PublicEntityKey publicEntityKey);
 
