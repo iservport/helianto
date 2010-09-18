@@ -16,6 +16,7 @@
 package org.helianto.core.security;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.helianto.core.User;
 
 /**
@@ -39,6 +40,11 @@ public interface PublicUserDetails {
      * Convenience to retrieve the entity from the user.
      */
     public Entity getEntity();
+    
+    /**
+     * Convenience to retrieve the operator from the user.
+     */
+    public Operator getOperator();
     
     
 }

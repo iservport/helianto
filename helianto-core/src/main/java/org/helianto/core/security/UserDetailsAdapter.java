@@ -21,6 +21,7 @@ import java.util.List;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
@@ -173,6 +174,10 @@ public class UserDetailsAdapter implements
     
     public Entity getEntity() {
     	return getUser().getEntity();
+    }
+    
+    public Operator getOperator() {
+    	return getEntity().getOperator();
     }
     
 	protected final void validateUserAndCredentialCompatibility(UserGroup user) {
