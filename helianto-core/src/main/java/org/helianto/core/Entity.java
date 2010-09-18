@@ -80,22 +80,12 @@ import javax.persistence.Version;
 @DiscriminatorValue("0")
 public class Entity implements java.io.Serializable {
 
-    /**
-     * <code>Entity</code> factory.
-     * 
-     * @param operator
-     * @param alias
-     */
-    public static Entity entityFactory(Operator operator, String alias) {
-        Entity entity = new Entity(operator, alias);
-        return entity;
-    }
-
     private static final long serialVersionUID = 1L;
     private long id;
     private int version;
     private Operator operator;
     private String alias;
+    private Identity manager;
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     private List<UserGroup> userList;
 
@@ -103,6 +93,7 @@ public class Entity implements java.io.Serializable {
      * Default constructor.
      */
     public Entity() {
+    	setManager(new Identity("",""));
     }
 
     /** 
@@ -173,6 +164,17 @@ public class Entity implements java.io.Serializable {
     public void setAlias(String alias) {
         this.alias = alias;
     }
+    
+    /**
+     * <<Transient>> Convenient to hold the manager during installation
+     */
+    @Transient
+    public Identity getManager() {
+		return manager;
+	}
+    public void setManager(Identity manager) {
+		this.manager = manager;
+	}
 
     /**
      * User group set.

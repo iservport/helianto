@@ -16,7 +16,7 @@
 
 package org.helianto.core;
 
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.AbstractOperatorBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 
 /**
@@ -24,72 +24,20 @@ import org.helianto.core.filter.CriteriaBuilder;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class EntityFilter extends AbstractUserBackedCriteriaFilter {
+public class EntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	
-	/**
-	 * Factory method.
-	 * 
-	 * @param user
-	 */
-	public static EntityFilter entityFilterFactory(User user) {
-		return AbstractUserBackedCriteriaFilter.filterFactory(EntityFilter.class, user);
-	}
-
 	private static final long serialVersionUID = 1L;
 	private String entityAlias;
-	private Operator operator;
 	private String entityAliasLike;
 
 	/**
 	 * Default constructor.
+	 * 
+	 * @param operator
 	 */
-	public EntityFilter() {
-		setEntityAlias("");
-		setEntityAliasLike("");
-	}
-
-	/**
-	 * Reset.
-	 */
-	public void reset() {
-		setEntityAliasLike("");
-	}
-
-	public boolean isSelection() {
-		return getEntityAlias().length()>0;
-	}
-
-	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-	}
-
-	@Override
-	protected boolean requireEntity() {
-		return false;
-	}
-
-	/**
-	 * Restrict entity selection to a given operator, if any. 
-	 */
-	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
-		if (getOperator()!=null) {
-			appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
-		}
-	}
-
-	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("alias", getEntityAliasLike(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("alias", getEntityAlias(), mainCriteriaBuilder);
-	}
-
-	public String getObjectAlias() {
-		return "entity";
+	public EntityFilter(Operator operator) {
+		super(operator);
+		reset();
 	}
 
 	/**
@@ -103,16 +51,6 @@ public class EntityFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	/**
-	 * Operator filter.
-	 */
-	public Operator getOperator() {
-		return operator;
-	}
-	public void setOperator(Operator operator) {
-		this.operator = operator;
-	}
-
-	/**
 	 * Entity alias like filter.
 	 */
 	public String getEntityAliasLike() {
@@ -122,4 +60,30 @@ public class EntityFilter extends AbstractUserBackedCriteriaFilter {
 		this.entityAliasLike = entityAliasLike;
 	}
 
+	/**
+	 * Reset.
+	 */
+	public void reset() {
+		setEntityAlias("");
+		setEntityAliasLike("");
+	}
+
+	public boolean isSelection() {
+		return getEntityAlias().length()>0;
+	}
+
+	@Override
+	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("alias", getEntityAlias(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("alias", getEntityAliasLike(), mainCriteriaBuilder);
+	}
+
+	@Override
+	protected String getOrderByString() {
+		return "alias";
+	}
 }

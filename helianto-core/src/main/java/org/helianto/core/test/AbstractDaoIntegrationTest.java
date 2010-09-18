@@ -9,8 +9,11 @@ import org.helianto.core.OperatorFilter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Base class to integration tests.
@@ -21,6 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations={
 		"classpath:/META-INF/spring/hibernate-context.xml", 
 		"classpath:/META-INF/spring/core-context.xml"})
+@Transactional
 public abstract class AbstractDaoIntegrationTest {
 
 	/**
@@ -30,12 +34,14 @@ public abstract class AbstractDaoIntegrationTest {
 	public static long testKey = 0;
 	
 	@Before
-	public void setUp() {
+	public void prepareSetUp() {
+		logger.debug("PREPARE TEST");
 		Operator operator = OperatorTestSupport.createOperator();
 		operatorDao.saveOrUpdate(operator);
 
 		entity = EntityTestSupport.createEntity(operator);
 			entityDao.saveOrUpdate(entity);
+		logger.debug("START TEST");
 	}
 	
 	// collabs
@@ -58,5 +64,7 @@ public abstract class AbstractDaoIntegrationTest {
 	public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
 		this.entityDao = entityDao;
 	}
+	
+	private static final Logger logger = LoggerFactory.getLogger(AbstractDaoIntegrationTest.class);
 	
 }

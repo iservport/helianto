@@ -45,7 +45,7 @@ public class EntityTestSupport {
      * @param alias
      */
     public static Entity createEntity(Operator operator, String alias) {
-        Entity entity = Entity.entityFactory(operator, alias);
+        Entity entity = new Entity(operator, alias);
         return entity;
     }
 
