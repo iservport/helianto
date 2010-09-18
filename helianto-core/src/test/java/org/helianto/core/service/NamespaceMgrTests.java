@@ -169,7 +169,7 @@ public class NamespaceMgrTests {
 	@Test
 	public void findEntities() {
 		List<Entity> entityList = EntityTestSupport.createEntityList(1);
-		EntityFilter filter = new EntityFilter();
+		EntityFilter filter = new EntityFilter(new Operator());
 		
 		expect(entityDao.find(filter)).andReturn(entityList);
 		replay(entityDao);

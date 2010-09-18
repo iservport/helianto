@@ -145,7 +145,7 @@ public class ServerMgrImpl  implements ServerMgr {
     
     public User storeManager(Identity managerIdentity) {
         Operator operator = Operator.operatorFactory("DEFAULT", Locale.getDefault());
-        Entity entity = Entity.entityFactory(operator, "DEFAULT");
+        Entity entity = new Entity(operator, "DEFAULT");
         logger.debug("Entity created with defaults: {}", entity);
         return storeManager(entity, managerIdentity);
     }

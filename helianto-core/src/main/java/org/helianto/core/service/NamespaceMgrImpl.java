@@ -67,7 +67,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	
 	public Entity createAndPersistEntity(Operator operator, String alias) {
 		Operator managedOperator = operatorDao.merge(operator);
-		Entity entity = Entity.entityFactory(managedOperator, alias);
+		Entity entity = new Entity(managedOperator, alias);
 		logger.info("Entity created as {}", entity);
 		entityDao.persist(entity);
 		
