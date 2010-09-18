@@ -249,21 +249,7 @@ public class UserMgrImpl implements UserMgr {
 		logger.info("Check user installation with 'principal={}' as member of {}.", principal, parent);
 		User user = (User) userGroupDao.findUnique(parent.getEntity(), principal);
 		if (user==null) {
-			logger.info("Will install user {} ...", principal);
-			Identity identity = identityDao.findUnique(principal);
-			if (identity==null) {
-				logger.info("Will install identity for {}.", principal);
-				identity = new Identity(principal);
-				identityDao.saveOrUpdate(identity);
-			}
-			Credential credential = credentialDao.findUnique(identity);
-			if (credential==null) {
-				logger.info("Will install credential for {}.", identity);
-				credential = new Credential(identity);
-				// TODO make it INTIAL
-				credential.setCredentialState(ActivityState.ACTIVE);
-				credentialDao.saveOrUpdate(credential);
-			}
+			Credential credential = installIdentity(principal);
 			user = new User(parent.getEntity(), credential);
 		}
 		
@@ -281,6 +267,30 @@ public class UserMgrImpl implements UserMgr {
 		}
 		logger.info("User {} available as part of association {}.", user, association);
 		return association;
+	}
+	
+	public Credential installIdentity(String principal) {
+		Identity identity = identityDao.findUnique(principal);
+		if (identity==null) {
+			logger.info("Will install identity for {}.", principal);
+			identity = new Identity(principal);
+			identityDao.saveOrUpdate(identity);
+		}
+		else {
+			logger.debug("Found existing identity for {}.", principal);
+		}
+		Credential credential = credentialDao.findUnique(identity);
+		if (credential==null) {
+			logger.info("Will install credential for {}.", identity);
+			credential = new Credential(identity);
+			// TODO make it INTIAL
+			credential.setCredentialState(ActivityState.ACTIVE);
+			credentialDao.saveOrUpdate(credential);
+		}
+		else {
+			logger.debug("Found existing credential for {}.", identity);
+		}
+		return credential;
 	}
 	
     public UserLog storeUserLog(User user, Date date) {

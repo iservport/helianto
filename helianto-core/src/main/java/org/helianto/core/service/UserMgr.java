@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.IdentityFilter;
@@ -129,6 +130,13 @@ public interface UserMgr {
      * @param accountNonExpired
      */
     public UserAssociation installUser(UserGroup parent, String principal, boolean accountNonExpired);
+    
+    /**
+     * <p>Create <code>Credential</code> and <code>Identity</code>.</p>
+     * 
+     * @param principal
+     */
+    public Credential installIdentity(String principal);
     
     /**
      * <p>Store <code>UserAssociation</code> and return a managed instance.</p>
