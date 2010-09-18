@@ -42,6 +42,14 @@ public abstract class AbstractOperatorBackedCriteriaFilter extends AbstractListF
     }
 
 	/**
+	 * Object alias to be used in query expressions.
+	 */
+	public String getObjectAlias() {
+		String className =  getClass().getSimpleName();
+		return className.substring(0, className.indexOf("Filter")).toLowerCase();
+	}
+	
+	/**
 	 * Restrict selection to a given operator, if any. 
 	 */
 	@Override
