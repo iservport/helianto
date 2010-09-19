@@ -269,6 +269,30 @@ public class UserMgrImpl implements UserMgr {
 		return association;
 	}
 	
+	public UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired) {
+		
+		logger.info("Check user installation with 'principal={}' as member of {}.", credential.getPrincipal(), parent);
+		User user = (User) userGroupDao.findUnique(parent.getEntity(), credential.getPrincipal());
+		if (user==null) {
+			user = new User(parent.getEntity(), credential);
+		}
+		
+		user.setAccountNonExpired(true);
+		logger.warn("User {} set to {} expired.", user, accountNonExpired ? "non" : "");
+
+		userGroupDao.saveOrUpdate(user);
+		logger.info("User AVAILABLE as {}.", user);
+		
+		UserAssociation association = userAssociationDao.findUnique(parent, user);
+		if(association==null) {
+			logger.info("Will install user association for user group {} and {}.", parent, user);
+			association = new UserAssociation(parent, user);
+			userAssociationDao.saveOrUpdate(association);
+		}
+		logger.info("User {} available as part of association {}.", user, association);
+		return association;
+	}
+	
 	public Credential installIdentity(String principal) {
 		Identity identity = identityDao.findUnique(principal);
 		if (identity==null) {
@@ -279,11 +303,15 @@ public class UserMgrImpl implements UserMgr {
 		else {
 			logger.debug("Found existing identity for {}.", principal);
 		}
+		return installCredential(identity);
+	}
+	
+	public Credential installCredential(Identity identity) {
 		Credential credential = credentialDao.findUnique(identity);
 		if (credential==null) {
 			logger.info("Will install credential for {}.", identity);
 			credential = new Credential(identity);
-			// TODO make it INTIAL
+			// TODO make it INITIAL
 			credential.setCredentialState(ActivityState.ACTIVE);
 			credentialDao.saveOrUpdate(credential);
 		}

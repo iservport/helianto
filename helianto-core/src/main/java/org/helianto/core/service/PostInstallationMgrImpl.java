@@ -15,9 +15,11 @@
 
 package org.helianto.core.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
@@ -118,6 +120,76 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	}
 	
 	public Entity installEntity(Operator defaultOperator, String entityAlias, String managerPrincipal, boolean reinstall) {
+		operatorDao.saveOrUpdate(defaultOperator);
+		
+		logger.debug("Check entity {} installation with 'reinstall={}'", entityAlias, reinstall);
+		Entity defaultEntity = null;
+		if (!reinstall) {
+			defaultEntity = entityDao.findUnique(defaultOperator, entityAlias);
+		}
+
+		if (defaultEntity==null) {
+			logger.debug("Will install entity {} ...", entityAlias);
+			defaultEntity = new Entity(defaultOperator, entityAlias);
+			entityDao.saveOrUpdate(defaultEntity);
+		} 
+		logger.debug("Entity AVAILABLE as {}.", defaultEntity);
+		
+		Credential credential = userMgr.installIdentity(managerPrincipal);
+
+		return installEntity(defaultEntity, credential);
+	}
+	
+	public Entity installEntity(Entity entity) {
+		logger.debug("Check new entity {} installation", entity);
+		if (entity.getManager()==null) {
+			throw new IllegalArgumentException("Unable to install entity: a manager identity is required.");
+		}
+		entityDao.saveOrUpdate(entity);
+		Credential credential = userMgr.installCredential(entity.getManager());
+		logger.debug("Clearing manager supplied with entity {} to avoid duplicate installation...", entity);
+		entity.setManager(null);
+		return installEntity(entity, credential);
+	}
+	
+	protected Entity installEntity(Entity entity, Credential credential) {
+		Operator operator = entity.getOperator();
+		
+		//
+		UserGroup adminGroup = installUserGroup(entity, "ADMIN", false);
+		
+		Service adminService = operator.getServiceMap().get("ADMIN");
+		if (adminService==null) {
+			throw new IllegalArgumentException("Unable to load required service 'ADMIN' from operator {} "+operator);
+		}
+		
+		UserRole adminRole = installUserRole(adminGroup, adminService, "MANAGER");
+		adminGroup.getRoles().add(adminRole);
+		
+		UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
+		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
+		
+		//
+		UserGroup userGroup = installUserGroup(entity, "USER", false);
+		
+		Service userService = operator.getServiceMap().get("USER");
+		if (userService==null) {
+			throw new IllegalArgumentException("Unable to load required service 'USER' from operator {} "+operator);
+		}
+		
+		UserRole userRole = installUserRole(userGroup, userService, "MANAGER");
+		userGroup.getRoles().add(userRole);
+		
+		UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
+		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
+		
+		entity.setInstallDate(new Date());
+		logger.debug("Entity {} installation finished at {}.", userAssociation, entity.getInstallDate());
+
+		return entity;
+	}
+	
+	public Entity installEntityWORK_IN_PROGRESS(Operator defaultOperator, String entityAlias, String managerPrincipal, boolean reinstall) {
 		
 		operatorDao.saveOrUpdate(defaultOperator);
 		
@@ -129,10 +201,12 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		if (defaultEntity==null) {
 			logger.debug("Will install entity {} ...", entityAlias);
-			defaultEntity = Entity.entityFactory(defaultOperator, entityAlias);
+			defaultEntity = new Entity(defaultOperator, entityAlias);
 			entityDao.saveOrUpdate(defaultEntity);
 		} 
 		logger.debug("Entity AVAILABLE as {}.", defaultEntity);
+		
+		Credential credential = userMgr.installIdentity(managerPrincipal);
 		
 		//
 		UserGroup adminGroup = installUserGroup(defaultEntity, "ADMIN", reinstall);
@@ -145,7 +219,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		UserRole adminRole = installUserRole(adminGroup, adminService, "MANAGER");
 		adminGroup.getRoles().add(adminRole);
 		
-		UserAssociation adminAssociation = userMgr.installUser(adminGroup, managerPrincipal, true);
+		UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
 		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
 		
 		//
@@ -159,7 +233,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		UserRole userRole = installUserRole(userGroup, userService, "MANAGER");
 		userGroup.getRoles().add(userRole);
 		
-		UserAssociation userAssociation = userMgr.installUser(userGroup, managerPrincipal, true);
+		UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
 		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
 
 		return defaultEntity;

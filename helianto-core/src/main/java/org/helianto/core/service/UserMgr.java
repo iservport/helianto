@@ -123,13 +123,13 @@ public interface UserMgr {
     public UserAssociation prepareNewUserAssociation(UserGroup parent);
     
     /**
-     * <p>Create <code>UserAssociation</code> with a new identity.</p>
+     * <p>Create <code>UserAssociation</code> with a new credential.</p>
      * 
      * @param parent
-     * @param principal
+     * @param credential
      * @param accountNonExpired
      */
-    public UserAssociation installUser(UserGroup parent, String principal, boolean accountNonExpired);
+    public UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired);
     
     /**
      * <p>Create <code>Credential</code> and <code>Identity</code>.</p>
@@ -137,6 +137,13 @@ public interface UserMgr {
      * @param principal
      */
     public Credential installIdentity(String principal);
+    
+    /**
+     * <p>Create <code>Credential</code>.</p>
+     * 
+     * @param identity
+     */
+    public Credential installCredential(Identity identity);
     
     /**
      * <p>Store <code>UserAssociation</code> and return a managed instance.</p>
