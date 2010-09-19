@@ -142,6 +142,17 @@ public class Credential implements java.io.Serializable {
     }
 
     /**
+     * Version.
+     */
+    @Version
+    public int getVersion() {
+        return this.version;
+    }
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    /**
      * <<Cascading>> Identity owning this credential.
      */
     @ManyToOne(cascade={CascadeType.ALL})
@@ -152,17 +163,14 @@ public class Credential implements java.io.Serializable {
     public void setIdentity(Identity identity) {
         this.identity = identity;
     }
-
+    
     /**
-     * Version.
+     * <<Transient>> Convenience to read identity principal.
      */
-    @Version
-    public int getVersion() {
-        return this.version;
-    }
-    public void setVersion(int version) {
-        this.version = version;
-    }
+    @Transient
+    public String getPrincipal() {
+		return getIdentity().getPrincipal();
+	}
 
     /**
      * Plain text password.
