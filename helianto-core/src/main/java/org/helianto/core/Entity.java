@@ -15,6 +15,7 @@
 
 package org.helianto.core;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +35,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -41,13 +44,14 @@ import javax.persistence.Version;
  *              
  * <p>
  * Domain object to represent the logical namespace of a business
- * organization or individual.
+ * organization or individual and provide for proper isolation to 
+ * other entities trying to access its related classes.
  * </p>
  * <p>
- * For example, if two equipment sets must be didtinguished in 
+ * For example, if two equipment sets must be distinguished in 
  * logical spaces to avoid identity collision, they
  * must be associated to different entities. This is also applicable for many
- * ohter domain classes, like accounts, statements, parts, processes, etc.
+ * other domain classes, like accounts, statements, parts, processes, etc.
  * The <code>Entity</code> is the root for many of such objects and allow
  * for the desirable isolation between two or more organizations, or even
  * smaller units within one organization. In other words, an <code>Entity</code>
@@ -85,6 +89,7 @@ public class Entity implements java.io.Serializable {
     private int version;
     private Operator operator;
     private String alias;
+    private Date installDate;
     private Identity manager;
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     private List<UserGroup> userList;
@@ -93,7 +98,7 @@ public class Entity implements java.io.Serializable {
      * Default constructor.
      */
     public Entity() {
-    	setManager(new Identity("",""));
+    	setAlias("");
     }
 
     /** 
@@ -115,6 +120,16 @@ public class Entity implements java.io.Serializable {
     public Entity(Operator operator, String alias) {
     	this(operator);
     	setAlias(alias);
+    }
+
+    /** 
+     * User constructor.
+     * 
+     * @param user
+     */
+    public Entity(User user) {
+    	this(user.getOperator());
+    	setManager(user.getIdentity());
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -164,6 +179,17 @@ public class Entity implements java.io.Serializable {
     public void setAlias(String alias) {
         this.alias = alias;
     }
+    
+    /**
+     * Date of installation.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getInstallDate() {
+		return installDate;
+	}
+    public void setInstallDate(Date installDate) {
+		this.installDate = installDate;
+	}
     
     /**
      * <<Transient>> Convenient to hold the manager during installation
