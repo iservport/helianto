@@ -23,7 +23,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>helianto-core</artifactId>
+			<artifactId>helianto-document</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

@@ -38,7 +38,7 @@ public class EntityFilterFormAction extends AbstractFilterOnlyFormAction<EntityF
 
 	@Override
 	public EntityFilter doCreateFilter() throws Exception {
-		EntityFilter entityFilter = EntityFilter.entityFilterFactory(null);
+		EntityFilter entityFilter = new EntityFilter(null);
 		return entityFilter;
 	}
 

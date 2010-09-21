@@ -72,7 +72,7 @@ public abstract class AbstractAction<T> implements Serializable {
 			return "noTarget";
 		}
 		T target = getTarget(attributes);
-		attributes.put(getTargetName(), doPrepare(target));
+		attributes.put(getTargetName(), doPrepare(target, attributes));
 		logger.debug("Prepared {}.", target);
 		return "success";
 	}
@@ -81,8 +81,9 @@ public abstract class AbstractAction<T> implements Serializable {
 	 * Subclasses override this to assure the actual target preparation.
 	 * 
 	 * @param target
+	 * @param attributes
 	 */
-	protected T doPrepare(T target) {
+	protected T doPrepare(T target, MutableAttributeMap attributes) {
 		return target;
 	}
 	

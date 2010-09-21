@@ -43,7 +43,7 @@ public class MockAction<T> extends AbstractAction<T> {
 	}
 
 	@Override
-	protected T doPrepare(T target) {
+	protected T doPrepare(T target, MutableAttributeMap attributes) {
 		receivedInPrepare = target;
 		return target;
 	}

@@ -35,7 +35,8 @@
 		<property name="freemarkerSettings">
 			<props>
 				<prop key="default_encoding">ISO-8859-1</prop>
-				<prop key="number_format">0.######</prop>
+				<prop key="number_format">computer</prop>
+				<prop key="whitespace_stripping">true</prop>
 			</props>
 		</property>
 	</bean>

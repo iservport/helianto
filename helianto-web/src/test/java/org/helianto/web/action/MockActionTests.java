@@ -5,6 +5,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.junit.Before;
@@ -62,6 +63,7 @@ public class MockActionTests {
 			public void setUser(User user) { }
 			public User getUser() { return null; }
 			public Entity getEntity() { return null; }
+			public Operator getOperator() { return null; }
 		};
 	}
 

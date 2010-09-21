@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.junit.Before;
@@ -113,7 +114,7 @@ public class ActionTests {
 				return "CREATED";
 			}
 			@Override
-			protected String doPrepare(String target) {
+			protected String doPrepare(String target, MutableAttributeMap attributes) {
 				return "PREPARED";
 			}
 			@Override
@@ -126,6 +127,7 @@ public class ActionTests {
 			public void setUser(User user) { }
 			public User getUser() { return null; }
 			public Entity getEntity() { return null; }
+			public Operator getOperator() { return null; }
 		};
 		userDetailsInCreation = null;
 	}

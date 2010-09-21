@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
@@ -96,7 +97,7 @@ public class ActionFilterTests {
 			@Override 
 			protected String doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) { return "CREATED"; }
 			@Override
-			protected String doPrepare(String target) { return "PREPARED"; }
+			protected String doPrepare(String target, MutableAttributeMap attributes) { return "PREPARED"; }
 			@Override
 			protected String doStore(String target) { return "STORED"; }
 		};
@@ -122,6 +123,7 @@ public class ActionFilterTests {
 			public void setUser(User user) { }
 			public User getUser() { return null; }
 			public Entity getEntity() { return null; }
+			public Operator getOperator() { return null; }
 		};
 		userDetailsInCreation = null;
 	}

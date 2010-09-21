@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Node;
+import org.helianto.core.filter.ListFilter;
 import org.helianto.core.filter.UserBackedFilter;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.webflow.execution.Event;
@@ -29,7 +30,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractFilterOnlyFormAction<F extends UserBackedFilter, T> extends AbstractComplexModelFormAction<T> {
+public abstract class AbstractFilterOnlyFormAction<F extends ListFilter, T> extends AbstractComplexModelFormAction<T> {
 
 	/**
      * Default constructor.

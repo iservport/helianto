@@ -31,7 +31,7 @@ import org.springframework.webflow.execution.RequestContext;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Component("entityAction")
+@Component("entityAction2")
 public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Operator> {
 
 	@Override
@@ -46,7 +46,7 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 
 	@Override
 	public Entity doCreateTarget(RequestContext context, Operator parent) throws Exception {
-		return Entity.entityFactory(parent, "");
+		return new Entity(parent, "");
 	}
 
 	/**

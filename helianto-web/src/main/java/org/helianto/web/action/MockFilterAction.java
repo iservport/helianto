@@ -57,7 +57,7 @@ public class MockFilterAction<T> extends AbstractFilterAction<T> {
 	}
 
 	@Override
-	protected T doPrepare(T target) {
+	protected T doPrepare(T target, MutableAttributeMap attributes) {
 		receivedInPrepare = target;
 		return target;
 	}
