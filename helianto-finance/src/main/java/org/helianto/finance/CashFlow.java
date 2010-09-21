@@ -88,7 +88,7 @@ public class CashFlow extends AbstractRecord implements Comparable<CashFlow> {
 	 * @param partner
 	 */
 	public CashFlow(Partner partner) {
-		this(partner.getPartnerRegistry().getEntity());
+		this(partner.getPrivateEntity().getEntity());
 		setPartner(partner);
 	}
 	

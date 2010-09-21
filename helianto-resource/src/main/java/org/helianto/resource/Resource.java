@@ -115,7 +115,7 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     @Transient
     public String getManufacturerAlias() {
     	if (getManufacturer()!=null) {
-    		return getManufacturer().getPartnerAlias();
+    		return getManufacturer().getEntityAlias();
     	}
     	return "";
     }
@@ -134,7 +134,7 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     @Transient
     public String getOwnerAlias() {
     	if (getOwner()!=null) {
-    		return getOwner().getPartnerAlias();
+    		return getOwner().getEntityAlias();
     	}
     	return "";
     }

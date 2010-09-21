@@ -23,8 +23,8 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.finance.test.AbstractFinanceDaoIntegrationTest;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
-import org.helianto.partner.PartnerRegistry;
-import org.helianto.partner.test.PartnerRegistryTestSupport;
+import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.test.PrivateEntityTestSupport;
 import org.helianto.partner.test.PartnerTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ public class FinanceRepositoryIntegrationTests extends AbstractFinanceDaoIntegra
 	@Test
 	public void finance() {
 		
-		PartnerRegistry partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry(entity);
+		PrivateEntity partnerRegistry = PrivateEntityTestSupport.createPartnerRegistry(entity);
 		Partner partner = PartnerTestSupport.createPartner(partnerRegistry);
 		partnerDao.saveOrUpdate(partner);
 		partnerDao.flush();

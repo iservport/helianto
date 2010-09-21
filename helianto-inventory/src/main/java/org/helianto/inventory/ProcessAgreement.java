@@ -119,7 +119,7 @@ public class ProcessAgreement extends AbstractRequirement {
     @Transient
     public String getPartnerAlias() {
     	if (partner==null) return "";
-        return this.partner.getPartnerAlias();
+        return this.partner.getEntityAlias();
     }
 
     /**

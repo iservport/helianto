@@ -55,7 +55,7 @@ public class ProcessAgreementTestSupport {
      * @param internalNumber
      */
     public static ProcessAgreement createProcessAgreement(Partner partner, Identity identity, long internalNumber) {
-    	ProcessAgreement agreement = ProcessAgreement.agreementFactory(partner.getPartnerRegistry().getEntity(), identity, internalNumber, new Date());
+    	ProcessAgreement agreement = ProcessAgreement.agreementFactory(partner.getPrivateEntity().getEntity(), identity, internalNumber, new Date());
     	agreement.setPartner(partner);
         if (maxAmount > 0) {
         	agreement.setRequirementAmount(BigDecimal.valueOf(Math.random()*maxAmount));
