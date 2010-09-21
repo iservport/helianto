@@ -23,6 +23,10 @@ package org.helianto.document;
 public enum TrackingMode {
     
     /**
+     * Not tracked.
+     */
+    NOT_TRACKED('N'),
+    /**
      * Continuous.
      */
     CONTINUOUS('C'),
