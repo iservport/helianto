@@ -22,7 +22,7 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
                
-	<context:component-scan base-package="org.helianto.message.mail,org.helianto.message.mail.composer,org.helianto.message.service"/>
+	<context:component-scan base-package="org.helianto.message.repository,org.helianto.message.mail,org.helianto.message.mail.composer,org.helianto.message.service"/>
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" />
    

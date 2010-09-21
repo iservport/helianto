@@ -72,70 +72,72 @@ Export-Package: bundles,freemarker,freemarker.entity,freemarker.keyTyp
  rg.springframework.mail.javamail",org.helianto.message.mail.compose;u
  ses:="javax.mail,javax.mail.internet,org.helianto.core,org.junit,org.
  springframework.mail.javamail,org.springframework.stereotype",org.hel
- ianto.message.service;uses:="javax.annotation,javax.mail,org.helianto
- .core.repository,org.helianto.message.mail,org.helianto.message.mail.
- compose,org.springframework.stereotype",org.helianto.message.transfor
- m;uses:="freemarker.template,org.junit",org.helianto.message.transfor
- m.mail;uses:="org.helianto.core,org.helianto.message.mail.compose,org
- .helianto.message.transform,org.junit",org.helianto.partner;uses:="ja
- vax.annotation,javax.persistence,org.helianto.core,org.helianto.core.
- filter,org.helianto.core.repository,org.helianto.partner.test,org.jun
- it,org.springframework.context.annotation,org.springframework.transac
- tion.annotation",org.helianto.partner.service;uses:="javax.annotation
- ,org.helianto.core,org.helianto.core.repository,org.helianto.core.ser
- vice,org.helianto.partner,org.junit,org.springframework.stereotype",o
- rg.helianto.partner.standalone;uses:="javax.annotation,org.helianto.c
- ore.service,org.helianto.core.standalone,org.helianto.partner,org.hel
- ianto.partner.service,org.springframework.beans.factory",org.helianto
- .partner.test;uses:="org.helianto.core,org.helianto.core.test,org.hel
- ianto.partner,org.springframework.test.context",org.helianto.partner.
- validation;uses:="org.helianto.core.validation,org.springframework.st
- ereotype",org.helianto.process;uses:="javax.annotation,javax.persiste
- nce,org.helianto.core,org.helianto.core.filter,org.helianto.core.numb
- er,org.helianto.core.repository,org.helianto.document,org.helianto.pa
- rtner,org.helianto.process.test,org.helianto.resource,org.junit,org.s
- pringframework.context.annotation,org.springframework.transaction.ann
- otation",org.helianto.process.service;uses:="javax.annotation,org.hel
- ianto.core,org.helianto.core.repository,org.helianto.core.service,org
- .helianto.partner.service,org.helianto.process,org.helianto.resource,
- org.junit,org.springframework.stereotype",org.helianto.process.test;u
- ses:="org.helianto.core,org.helianto.process,org.helianto.resource,or
- g.helianto.resource.test,org.springframework.test.context",org.helian
- to.process.validation;uses:="org.helianto.core.validation,org.springf
- ramework.stereotype",org.helianto.resource;uses:="javax.annotation,ja
- vax.persistence,org.helianto.core,org.helianto.core.filter,org.helian
- to.core.repository,org.helianto.document,org.helianto.partner,org.hel
- ianto.resource.test,org.junit,org.springframework.context.annotation,
- org.springframework.transaction.annotation",org.helianto.resource.ser
- vice;uses:="javax.annotation,org.helianto.core,org.helianto.core.repo
- sitory,org.helianto.core.service,org.helianto.resource,org.junit,org.
- springframework.stereotype",org.helianto.resource.test;uses:="org.hel
- ianto.core,org.helianto.document.test,org.helianto.resource,org.sprin
- gframework.test.context",org.helianto.resource.validation;uses:="org.
- helianto.core.validation,org.springframework.stereotype",org.helianto
- .web.action;uses:="org.helianto.core,org.helianto.core.filter,org.hel
- ianto.core.security,org.junit,org.springframework.http,org.springfram
- ework.webflow.core.collection",org.helianto.web.action.impl;uses:="ja
- vax.annotation,org.helianto.core,org.helianto.core.filter,org.heliant
- o.core.security,org.helianto.core.service,org.helianto.web.action,org
- .springframework.http,org.springframework.stereotype,org.springframew
- ork.web.bind.annotation,org.springframework.webflow.core.collection",
- org.helianto.web.controller;uses:="javax.annotation,org.helianto.cont
- roller,org.helianto.core,org.helianto.core.filter,org.helianto.core.s
- ecurity,org.helianto.core.service,org.helianto.web.test,org.junit,org
- .springframework.beans,org.springframework.stereotype,org.springframe
- work.validation,org.springframework.webflow.execution",org.helianto.w
- eb.mail.compose;uses:="org.helianto.message.mail.compose,org.springfr
- amework.mail.javamail",org.helianto.web.test;uses:="freemarker.templa
- te,org.helianto.controller,org.helianto.core.filter,org.helianto.core
- .security,org.junit,org.springframework.mock.web,org.springframework.
- web.servlet.view.freemarker,org.springframework.webflow.execution",or
- g.helianto.web.util;uses:="org.junit",org.helianto.web.view;uses:="or
- g.helianto.web.test,org.junit"
-Bundle-Vendor: i-Serv Consultoria Empresarial
-Bundle-Version: 0.2.20080913
+ ianto.message.repository;uses:="javax.annotation,org.helianto.core,or
+ g.helianto.core.repository,org.helianto.message.test,org.junit,org.sp
+ ringframework.context.annotation,org.springframework.transaction.anno
+ tation",org.helianto.message.service;uses:="javax.annotation,javax.ma
+ il,org.helianto.core.repository,org.helianto.message.mail,org.heliant
+ o.message.mail.compose,org.springframework.stereotype",org.helianto.m
+ essage.test;uses:="org.helianto.document.test,org.springframework.tes
+ t.context",org.helianto.message.transform;uses:="freemarker.template,
+ org.junit",org.helianto.message.transform.mail;uses:="org.helianto.co
+ re,org.helianto.message.mail.compose,org.helianto.message.transform,o
+ rg.junit",org.helianto.partner;uses:="javax.annotation,javax.persiste
+ nce,org.helianto.core,org.helianto.core.filter,org.helianto.core.repo
+ sitory,org.helianto.partner.test,org.junit,org.springframework.contex
+ t.annotation,org.springframework.transaction.annotation",org.helianto
+ .partner.service;uses:="javax.annotation,org.helianto.core,org.helian
+ to.core.repository,org.helianto.core.service,org.helianto.partner,org
+ .junit,org.springframework.stereotype",org.helianto.partner.standalon
+ e;uses:="javax.annotation,org.helianto.core.service,org.helianto.core
+ .standalone,org.helianto.partner,org.helianto.partner.service,org.spr
+ ingframework.beans.factory",org.helianto.partner.test;uses:="org.heli
+ anto.core,org.helianto.core.test,org.helianto.partner,org.springframe
+ work.test.context",org.helianto.partner.validation;uses:="org.heliant
+ o.core.validation,org.springframework.stereotype",org.helianto.proces
+ s;uses:="javax.annotation,javax.persistence,org.helianto.core,org.hel
+ ianto.core.filter,org.helianto.core.number,org.helianto.core.reposito
+ ry,org.helianto.document,org.helianto.partner,org.helianto.process.te
+ st,org.helianto.resource,org.junit,org.springframework.context.annota
+ tion,org.springframework.transaction.annotation",org.helianto.process
+ .service;uses:="javax.annotation,org.helianto.core,org.helianto.core.
+ repository,org.helianto.core.service,org.helianto.partner.service,org
+ .helianto.process,org.helianto.resource,org.junit,org.springframework
+ .stereotype",org.helianto.process.test;uses:="org.helianto.core,org.h
+ elianto.process,org.helianto.resource,org.helianto.resource.test,org.
+ springframework.test.context",org.helianto.process.validation;uses:="
+ org.helianto.core.validation,org.springframework.stereotype",org.heli
+ anto.resource;uses:="javax.annotation,javax.persistence,org.helianto.
+ core,org.helianto.core.filter,org.helianto.core.repository,org.helian
+ to.document,org.helianto.partner,org.helianto.resource.test,org.junit
+ ,org.springframework.context.annotation,org.springframework.transacti
+ on.annotation",org.helianto.resource.service;uses:="javax.annotation,
+ org.helianto.core,org.helianto.core.repository,org.helianto.core.serv
+ ice,org.helianto.resource,org.junit,org.springframework.stereotype",o
+ rg.helianto.resource.test;uses:="org.helianto.core,org.helianto.docum
+ ent.test,org.helianto.resource,org.springframework.test.context",org.
+ helianto.resource.validation;uses:="org.helianto.core.validation,org.
+ springframework.stereotype",org.helianto.web.action;uses:="org.helian
+ to.core,org.helianto.core.filter,org.helianto.core.security,org.junit
+ ,org.springframework.http,org.springframework.webflow.core.collection
+ ",org.helianto.web.action.impl;uses:="javax.annotation,org.helianto.c
+ ore,org.helianto.core.filter,org.helianto.core.security,org.helianto.
+ core.service,org.helianto.web.action,org.springframework.http,org.spr
+ ingframework.stereotype,org.springframework.web.bind.annotation,org.s
+ pringframework.webflow.core.collection",org.helianto.web.controller;u
+ ses:="javax.annotation,org.helianto.controller,org.helianto.core,org.
+ helianto.core.filter,org.helianto.core.security,org.helianto.core.ser
+ vice,org.helianto.web.test,org.junit,org.springframework.beans,org.sp
+ ringframework.stereotype,org.springframework.validation,org.springfra
+ mework.webflow.execution",org.helianto.web.mail.compose;uses:="org.he
+ lianto.message.mail.compose,org.springframework.mail.javamail",org.he
+ lianto.web.test;uses:="freemarker.template,org.helianto.controller,or
+ g.helianto.core.filter,org.helianto.core.security,org.junit,org.sprin
+ gframework.mock.web,org.springframework.web.servlet.view.freemarker,o
+ rg.springframework.webflow.execution",org.helianto.web.util;uses:="or
+ g.junit",org.helianto.web.view;uses:="org.helianto.web.test,org.junit
+ "
 Tool: Bundlor 1.0.0.RELEASE
-Bundle-Name: Helianto partner module
 Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  on,javax.mail,javax.mail.internet,javax.persistence,javax.servlet,jav
  ax.servlet.http,javax.xml.stream,org.apache.log4j,org.easymock,org.ea
@@ -169,5 +171,4 @@ Import-Package: com.mchange.v2.c3p0,freemarker.template,javax.annotati
  mework.webflow.mvc.builder,org.springframework.webflow.mvc.servlet,or
  g.springframework.webflow.persistence,org.springframework.webflow.sec
  urity,org.springframework.webflow.test
-Bundle-SymbolicName: org.helianto.partner.shared_services
 
