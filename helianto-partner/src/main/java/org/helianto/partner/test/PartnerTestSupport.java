@@ -6,7 +6,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.PrivateEntity;
 
 /**
  * Class to support <code>PartnerDao</code> tests.
@@ -28,16 +28,16 @@ public class PartnerTestSupport {
      * @param entity 
      */
     public static Partner createPartner(Entity entity) {
-        return PartnerTestSupport.createPartner(PartnerRegistryTestSupport.createPartnerRegistry(entity));
+        return PartnerTestSupport.createPartner(PrivateEntityTestSupport.createPartnerRegistry(entity));
     }
 
     /**
      * Test support method to create a <code>Partner</code>.
      * 
-     * @param partnerRegistry 
+     * @param privateEntity 
      */
-    public static Partner createPartner(PartnerRegistry partnerRegistry) {
-        Partner partner = new Partner(partnerRegistry);
+    public static Partner createPartner(PrivateEntity privateEntity) {
+        Partner partner = new Partner(privateEntity);
         return partner;
     }
 
@@ -47,20 +47,20 @@ public class PartnerTestSupport {
      * @param partnerListSize
      */
     public static List<Partner> createPartnerList(int partnerListSize) {
-        List<PartnerRegistry> partnerRegistryList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerListSize);
+        List<PrivateEntity> privateEntityList = PrivateEntityTestSupport.createPartnerRegistryList(partnerListSize);
 
-        return createPartnerList(partnerRegistryList);
+        return createPartnerList(privateEntityList);
     }
 
     /**
      * Test support method to create a <code>Partner</code> list.
      *
-     * @param partnerRegistryList
+     * @param privateEntityList
      */
-    public static List<Partner> createPartnerList(List<PartnerRegistry> partnerRegistryList) {
+    public static List<Partner> createPartnerList(List<PrivateEntity> privateEntityList) {
         List<Partner> partnerList = new ArrayList<Partner>();
-        for (PartnerRegistry partnerRegistry: partnerRegistryList) {
-   	        partnerList.add(createPartner(partnerRegistry));
+        for (PrivateEntity privateEntity: privateEntityList) {
+   	        partnerList.add(createPartner(privateEntity));
         }
         return partnerList;
     }

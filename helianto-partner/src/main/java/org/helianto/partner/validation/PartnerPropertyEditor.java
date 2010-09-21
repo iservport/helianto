@@ -30,7 +30,7 @@ public class PartnerPropertyEditor extends AbstractSessionPropertyEditor {
 	@Override
 	public String getAsText() {
 		Partner partner = (Partner) getValue();
-        return String.valueOf(partner.getPartnerRegistry().getPartnerAlias());
+        return String.valueOf(partner.getPrivateEntity().getPartnerAlias());
 	}
 
 	@Override

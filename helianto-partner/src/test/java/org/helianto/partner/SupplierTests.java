@@ -18,15 +18,15 @@ public class SupplierTests {
      */
 	@Test
     public void testSupplierEquals() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         
         Supplier supplier = new Supplier(partnerRegistry);
         Supplier copy = (Supplier) DomainTestSupport.minimalEqualsTest(supplier);
         
-        copy.setPartnerRegistry(null);
+        copy.setPrivateEntity(null);
         assertFalse(supplier.equals(copy));
 
-        copy.setPartnerRegistry(partnerRegistry);
+        copy.setPrivateEntity(partnerRegistry);
         assertTrue(supplier.equals(copy));
     }
 

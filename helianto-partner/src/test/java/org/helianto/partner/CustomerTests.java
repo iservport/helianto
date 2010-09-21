@@ -23,10 +23,10 @@ public class CustomerTests {
     
 	@Test
 	public void constructorPartnerRegistry() {
-		PartnerRegistry partnerRegistry = new PartnerRegistry();
+		PrivateEntity partnerRegistry = new PrivateEntity();
 		Customer customer = new Customer(partnerRegistry);
 		assertTrue(customer instanceof Partner);
-		assertEquals(customer.getPartnerRegistry(), partnerRegistry);
+		assertEquals(customer.getPrivateEntity(), partnerRegistry);
 	}
     
 	@Test
@@ -34,7 +34,7 @@ public class CustomerTests {
 		Entity entity = new Entity();
 		Customer customer = new Customer(entity);
 		assertTrue(customer instanceof Partner);
-		assertEquals(customer.getPartnerRegistry().getEntity(), entity);
+		assertEquals(customer.getPrivateEntity().getEntity(), entity);
 	}
     
     /**
@@ -42,15 +42,15 @@ public class CustomerTests {
      */
 	@Test
     public void customerEquals() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         
         Customer customer = new Customer(partnerRegistry);
         Customer copy = (Customer) DomainTestSupport.minimalEqualsTest(customer);
         
-        copy.setPartnerRegistry(null);
+        copy.setPrivateEntity(null);
         assertFalse(customer.equals(copy));
 
-        copy.setPartnerRegistry(partnerRegistry);
+        copy.setPrivateEntity(partnerRegistry);
         assertTrue(customer.equals(copy));
     }
 

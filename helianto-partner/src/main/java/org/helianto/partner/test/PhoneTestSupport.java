@@ -6,7 +6,7 @@ import java.util.List;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
-import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.Phone;
 
 /**

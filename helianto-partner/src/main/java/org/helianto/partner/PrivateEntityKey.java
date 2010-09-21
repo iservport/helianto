@@ -35,29 +35,52 @@ import org.helianto.core.KeyType;
 @Table(name="prtnr_partnerRegistryKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "keyTypeId"})}
 )
-public class PartnerRegistryKey implements java.io.Serializable {
-
-    /**
-     * Factory method.
-     * 
-     * @param partnerRegistry
-     * @param keyType
-     */
-    public static PartnerRegistryKey partnerRegistryKeyFactory(PartnerRegistry partnerRegistry, KeyType keyType) {
-        PartnerRegistryKey partnerKey = new PartnerRegistryKey();
-        partnerKey.setPartnerRegistry(partnerRegistry);
-        partnerKey.setKeyType(keyType);
-        return partnerKey;
-    }
+public class PrivateEntityKey implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private PartnerRegistry partnerRegistry;
+    private PrivateEntity privateEntity;
     private KeyType keyType;
     private String keyValue;
 
-    /** default constructor */
-    public PartnerRegistryKey() {
+    /** 
+     * Default constructor.
+     */
+    public PrivateEntityKey() {
+    	setKeyValue("");
+    }
+
+    /** 
+     * PrivateEntity constructor.
+     * 
+     * @param privateEntity
+     */
+    public PrivateEntityKey(PrivateEntity privateEntity) {
+    	this();
+    	setPrivateEntity(privateEntity);
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param privateEntity
+     * @param keyType
+     * @param keyValue
+     */
+    public PrivateEntityKey(PrivateEntity privateEntity, KeyType keyType, String keyValue) {
+    	this(privateEntity, keyType);
+    	setKeyValue(keyValue);
+    }
+
+    /** 
+     * Full constructor.
+     * 
+     * @param privateEntity
+     * @param keyType
+     */
+    public PrivateEntityKey(PrivateEntity privateEntity, KeyType keyType) {
+    	this(privateEntity);
+    	setKeyType(keyType);
     }
 
     /**
@@ -76,11 +99,11 @@ public class PartnerRegistryKey implements java.io.Serializable {
      */
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PartnerRegistry getPartnerRegistry() {
-        return this.partnerRegistry;
+    public PrivateEntity getPrivateEntity() {
+        return this.privateEntity;
     }
-    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
-        this.partnerRegistry = partnerRegistry;
+    public void setPrivateEntity(PrivateEntity privateEntity) {
+        this.privateEntity = privateEntity;
     }
 
     /**
@@ -114,7 +137,7 @@ public class PartnerRegistryKey implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("partnerRegistry").append("='").append(getPartnerRegistry()).append("' ");
+        buffer.append("privateEntity").append("='").append(getPrivateEntity()).append("' ");
         buffer.append("keyType").append("='").append(getKeyType()).append("' ");
         buffer.append("]");
       
@@ -127,10 +150,10 @@ public class PartnerRegistryKey implements java.io.Serializable {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof PartnerRegistryKey) ) return false;
-         PartnerRegistryKey castOther = (PartnerRegistryKey) other; 
+         if ( !(other instanceof PrivateEntityKey) ) return false;
+         PrivateEntityKey castOther = (PrivateEntityKey) other; 
          
-         return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ))
+         return ((this.getPrivateEntity()==castOther.getPrivateEntity()) || ( this.getPrivateEntity()!=null && castOther.getPrivateEntity()!=null && this.getPrivateEntity().equals(castOther.getPrivateEntity()) ))
              && ((this.getKeyType()==castOther.getKeyType()) || ( this.getKeyType()!=null && castOther.getKeyType()!=null && this.getKeyType().equals(castOther.getKeyType()) ));
    }
    
@@ -139,7 +162,7 @@ public class PartnerRegistryKey implements java.io.Serializable {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
+         result = 37 * result + ( getPrivateEntity() == null ? 0 : this.getPrivateEntity().hashCode() );
          result = 37 * result + ( getKeyType() == null ? 0 : this.getKeyType().hashCode() );
          return result;
    }   

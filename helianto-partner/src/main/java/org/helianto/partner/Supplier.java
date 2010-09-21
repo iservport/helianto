@@ -43,9 +43,9 @@ public class Supplier extends Partner implements java.io.Serializable {
      * 
      * @param partnerRegistry
      */
-    public Supplier(PartnerRegistry partnerRegistry) {
+    public Supplier(PrivateEntity partnerRegistry) {
     	this();
-    	setPartnerRegistry(partnerRegistry);
+    	setPrivateEntity(partnerRegistry);
     }
 
 	/**
@@ -56,20 +56,20 @@ public class Supplier extends Partner implements java.io.Serializable {
      */
     public Supplier(Entity entity, String partnerAlias) {
     	this();
-    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
 
     /**
      * Partner constructor.
      * 
 	 * <p>
-	 * Read the backing {@link PartnerRegistry} from a partner to associate the new instance to it.
+	 * Read the backing {@link PrivateEntity} from a partner to associate the new instance to it.
 	 * </p>
 	 * 
      * @param partner
      */
     public Supplier(Partner partner) {
-    	this(partner.getPartnerRegistry());
+    	this(partner.getPrivateEntity());
     	if (partner.getClass().isAssignableFrom(getClass())) {
     		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
     	}

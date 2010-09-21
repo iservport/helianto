@@ -20,7 +20,7 @@ public class ContactTests {
      */
 	@Test
     public void testContactFactory() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         Identity identity = new Identity();
         

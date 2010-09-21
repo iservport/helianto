@@ -39,7 +39,7 @@ public class Contact extends Address {
      * @param sequence
      * @param identity
      */
-    public static Contact contactFactory(PartnerRegistry partnerRegistry, int sequence, Identity identity) {
+    public static Contact contactFactory(PrivateEntity partnerRegistry, int sequence, Identity identity) {
         Contact contact = new Contact();
         contact.setPartnerRegistry(partnerRegistry);
         contact.setSequence(sequence);
@@ -70,7 +70,7 @@ public class Contact extends Address {
      * 
      * @param partnerRegistry
 	 */
-    public Contact(PartnerRegistry partnerRegistry) {
+    public Contact(PrivateEntity partnerRegistry) {
     	this();
     	setPartnerRegistry(partnerRegistry);
     }

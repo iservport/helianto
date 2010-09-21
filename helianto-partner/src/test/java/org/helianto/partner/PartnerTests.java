@@ -18,15 +18,15 @@ public class PartnerTests {
      */
 	@Test
     public void testPartnerEquals() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         
         Partner partner = new Partner(partnerRegistry);
         Partner copy = (Partner) DomainTestSupport.minimalEqualsTest(partner);
         
-        copy.setPartnerRegistry(null);
+        copy.setPrivateEntity(null);
         assertFalse(partner.equals(copy));
 
-        copy.setPartnerRegistry(partnerRegistry);
+        copy.setPrivateEntity(partnerRegistry);
         assertTrue(partner.equals(copy));
     }
 

@@ -35,9 +35,9 @@ import org.helianto.partner.DivisionType;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
-import org.helianto.partner.PartnerRegistry;
-import org.helianto.partner.PartnerRegistryFilter;
-import org.helianto.partner.PartnerRegistryKey;
+import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.PrivateEntityFilter;
+import org.helianto.partner.PrivateEntityKey;
 import org.helianto.partner.PartnerState;
 import org.helianto.partner.Phone;
 import org.slf4j.Logger;
@@ -52,12 +52,12 @@ import org.springframework.stereotype.Service;
 @Service("partnerMgr")
 public class PartnerMgrImpl implements PartnerMgr {
 
-	public List<PartnerRegistry> findPartnerRegistries(PartnerRegistryFilter partnerRegistryFilter) {
-		List<PartnerRegistry> partnerRegistryList = (List<PartnerRegistry>) partnerRegistryDao.find(partnerRegistryFilter);
-    	if (logger.isDebugEnabled() && partnerRegistryList!=null) {
-    		logger.debug("Found partner registry list of size {}", partnerRegistryList.size());
+	public List<PrivateEntity> findPartnerRegistries(PrivateEntityFilter privateEntityFilter) {
+		List<PrivateEntity> privateEntityList = (List<PrivateEntity>) privateEntityDao.find(privateEntityFilter);
+    	if (logger.isDebugEnabled() && privateEntityList!=null) {
+    		logger.debug("Found partner registry list of size {}", privateEntityList.size());
     	}
-		return partnerRegistryList;
+		return privateEntityList;
 	}
 
     /**
@@ -68,25 +68,25 @@ public class PartnerMgrImpl implements PartnerMgr {
      * <li>partnerList,</li>
      * <li>addressList,</li>
      * <li>mainAddress,</li>
-     * <li>partnerRegistryKeyList.</li>
+     * <li>privateEntityKeyList.</li>
      * </ol>
      */
-	public PartnerRegistry preparePartnerRegistry(PartnerRegistry partnerRegistry) {
-		PartnerRegistry managedPartnerRegistry = partnerRegistryDao.merge(partnerRegistry);
+	public PrivateEntity preparePartnerRegistry(PrivateEntity privateEntity) {
+		PrivateEntity managedPartnerRegistry = privateEntityDao.merge(privateEntity);
 		managedPartnerRegistry.setPartnerList(new ArrayList<Partner>(managedPartnerRegistry.getPartners()));
 		managedPartnerRegistry.setAddressList(new ArrayList<Address>(managedPartnerRegistry.getAddresses()));
-		managedPartnerRegistry.setPartnerRegistryKeyList(new ArrayList<PartnerRegistryKey>(managedPartnerRegistry.getPartnerRegistryKeys()));
-		partnerRegistryDao.evict(managedPartnerRegistry);
+		managedPartnerRegistry.setPartnerRegistryKeyList(new ArrayList<PrivateEntityKey>(managedPartnerRegistry.getPartnerRegistryKeys()));
+		privateEntityDao.evict(managedPartnerRegistry);
 		return managedPartnerRegistry;
 	}
 	
-	public PartnerRegistry storePartnerRegistry(PartnerRegistry partnerRegistry) {
-		partnerRegistryDao.saveOrUpdate(partnerRegistry);
-		return partnerRegistry;
+	public PrivateEntity storePartnerRegistry(PrivateEntity privateEntity) {
+		privateEntityDao.saveOrUpdate(privateEntity);
+		return privateEntity;
 	}
 	
-    public void removePartnerRegistry(PartnerRegistry partnerRegistry) {
-    	partnerRegistryDao.remove(partnerRegistry);
+    public void removePartnerRegistry(PrivateEntity privateEntity) {
+    	privateEntityDao.remove(privateEntity);
     }
 
 	public List<? extends Partner> findPartners(PartnerFilter partnerFilter) {
@@ -111,7 +111,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return address;
 	}
 
-	public PartnerRegistry removeAddress(Address address) {
+	public PrivateEntity removeAddress(Address address) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
@@ -130,7 +130,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerKey;
 	}
 
-	public PartnerRegistry removePartnerKey(PartnerKey partnerKey) {
+	public PrivateEntity removePartnerKey(PartnerKey partnerKey) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
@@ -138,36 +138,36 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return phoneDao.merge(phone);
 	}
 
-	public PartnerRegistry removePhone(Phone phone) {
+	public PrivateEntity removePhone(Phone phone) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
 	public Division installDivision(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall) {
 		String partnerAlias = entity.getAlias();
-		PartnerRegistry partnerRegistry = partnerRegistryDao.findUnique(entity, partnerAlias);
+		PrivateEntity privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
 		Division defaultDivision = null;
-		if (partnerRegistry==null) {
-			logger.info("Creating registry for {}.", partnerAlias);
-			partnerRegistry = PartnerRegistry.partnerRegistryFactory(entity, partnerAlias);
-			partnerRegistry.setPartnerName(partnerName);
-			partnerRegistry.setAddress1(partnerAddress.getAddress1());
-			partnerRegistry.setAddress2(partnerAddress.getAddress2());
-			partnerRegistry.setAddress3(partnerAddress.getAddress3());
-			partnerRegistry.setAddressDetail(partnerAddress.getAddressDetail());
-			partnerRegistry.setAddressNumber(partnerAddress.getAddressNumber());
-			partnerRegistry.setCityName(partnerAddress.getCityName());
-			partnerRegistry.setPostalCode(partnerAddress.getPostalCode());
-			partnerRegistry.setPostOfficeBox(partnerAddress.getPostOfficeBox());
-			partnerRegistry.setProvince(partnerAddress.getProvince());
-			partnerRegistryDao.saveOrUpdate(partnerRegistry);
+		if (privateEntity==null) {
+			logger.info("Creating private entity for {}.", partnerAlias);
+			privateEntity = new PrivateEntity(entity, partnerAlias);
+			privateEntity.setPartnerName(partnerName);
+			privateEntity.setAddress1(partnerAddress.getAddress1());
+			privateEntity.setAddress2(partnerAddress.getAddress2());
+			privateEntity.setAddress3(partnerAddress.getAddress3());
+			privateEntity.setAddressDetail(partnerAddress.getAddressDetail());
+			privateEntity.setAddressNumber(partnerAddress.getAddressNumber());
+			privateEntity.setCityName(partnerAddress.getCityName());
+			privateEntity.setPostalCode(partnerAddress.getPostalCode());
+			privateEntity.setPostOfficeBox(partnerAddress.getPostOfficeBox());
+			privateEntity.setProvince(partnerAddress.getProvince());
+			privateEntityDao.saveOrUpdate(privateEntity);
 		}
 		else {
-			defaultDivision = (Division) partnerDao.findUnique(partnerRegistry, "D");
+			defaultDivision = (Division) partnerDao.findUnique(privateEntity, "D");
 		}
 		if (defaultDivision==null) {
 			logger.info("Creating division for {}.", partnerAlias);
 			defaultDivision = new Division();
-			defaultDivision.setPartnerRegistry(partnerRegistry);
+			defaultDivision.setPrivateEntity(privateEntity);
 			defaultDivision.setDivisionType(DivisionType.HEADQUARTER);
 			defaultDivision.setPartnerState(PartnerState.ACTIVE);
 			partnerDao.saveOrUpdate(defaultDivision);
@@ -178,7 +178,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
 	public void installPartnerKeys(String[] keyValues, Division defaultDivision) {
 		logger.debug("Ready to install key value pairs {} to {}", keyValues, defaultDivision);
-		List<KeyType> keyTypes = namespaceMgr.loadKeyTypes(defaultDivision.getPartnerRegistry().getEntity().getOperator());
+		List<KeyType> keyTypes = namespaceMgr.loadKeyTypes(defaultDivision.getPrivateEntity().getEntity().getOperator());
 		Map<String, PartnerKey> partnerKeyMap = loadPartnerKeyMap(defaultDivision);
 		for (String keyValueTuple: keyValues) {
 			String[] keyValue = keyValueTuple.split(":");
@@ -207,16 +207,16 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
     //- collaborators
     
-    private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
+    private FilterDao<PrivateEntity, PrivateEntityFilter> privateEntityDao;
     private FilterDao<Partner, PartnerFilter> partnerDao;
     private BasicDao<Address> addressDao;
     private BasicDao<PartnerKey> partnerKeyDao;
     private BasicDao<Phone> phoneDao;
 	private NamespaceMgr namespaceMgr;
 
-    @Resource(name="partnerRegistryDao")
-    public void setPartnerRegistryDao(FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao) {
-        this.partnerRegistryDao = partnerRegistryDao;
+    @Resource(name="privateEntityDao")
+    public void setPrivateEntityDao(FilterDao<PrivateEntity, PrivateEntityFilter> privateEntityDao) {
+        this.privateEntityDao = privateEntityDao;
     }
 
     @Resource(name="partnerDao")

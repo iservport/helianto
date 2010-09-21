@@ -49,7 +49,11 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("entity.alias", getEntityAliasLike(), mainCriteriaBuilder);
-		appendOrderBy("entity.alias", mainCriteriaBuilder);
+	}
+	
+	@Override
+	protected String getOrderByString() {
+		return "entity.alias";
 	}
 	
 	@Override

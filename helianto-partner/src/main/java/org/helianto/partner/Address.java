@@ -49,14 +49,14 @@ public class Address extends AbstractAddress implements Comparable<Address> {
      * @param partnerRegistry
      * @param sequence
      */
-    public static Address addressFactory(PartnerRegistry partnerRegistry, int sequence) {
+    public static Address addressFactory(PrivateEntity partnerRegistry, int sequence) {
         Address address = new Address(partnerRegistry);
         address.setSequence(sequence);
         return address;
     }
 
     private static final long serialVersionUID = 1L;
-    private PartnerRegistry partnerRegistry;
+    private PrivateEntity partnerRegistry;
     private int sequence;
     private char addressType;
     private char privacyLevel;
@@ -75,7 +75,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
      * 
      * @param partnerRegistry
 	 */
-    public Address(PartnerRegistry partnerRegistry) {
+    public Address(PrivateEntity partnerRegistry) {
     	this();
     	setPartnerRegistry(partnerRegistry);
     }
@@ -85,7 +85,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
      */
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PartnerRegistry getPartnerRegistry() {
+    public PrivateEntity getPartnerRegistry() {
         return this.partnerRegistry;
     }
     @Transient
@@ -98,7 +98,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
     	if (this.partnerRegistry==null) return "";
     	return this.partnerRegistry.getPartnerName();
     }
-    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
+    public void setPartnerRegistry(PrivateEntity partnerRegistry) {
         this.partnerRegistry = partnerRegistry;
     }
 

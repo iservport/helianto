@@ -23,7 +23,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
+import org.helianto.core.City;
 import org.helianto.core.Province;
 
 /**
@@ -40,6 +42,7 @@ public abstract class AbstractPartialAddress implements Serializable {
     private String address2;
     private String postalCode;
     private Province province;
+    private String cityName;
 
     /** 
      * Empty constructor.
@@ -48,6 +51,7 @@ public abstract class AbstractPartialAddress implements Serializable {
         setAddress1("");
         setAddress2("");
         setPostalCode("");
+        setCityName("");
     }
     
     /**
@@ -104,6 +108,109 @@ public abstract class AbstractPartialAddress implements Serializable {
     }
     public void setProvince(Province province) {
         this.province = province;
+    }
+    
+    /**
+     * <<Transient>> Convenience method to expose the city.
+     * 
+     * <p>
+     * Return null when {@link #getProvince()} is not an instance
+     * of the class <code>City</code>.
+     * </p>
+     */
+    @Transient
+    public City getCity() {
+    	if (getProvince() instanceof City) {
+    		return (City) getProvince();
+    	}
+    	return null;
+    }
+    
+    /**
+     * <<Transient>> Convenience method to expose the parent province.
+     * 
+     * <p>
+     * Return null when {@link #getProvince()} is not an instance
+     * of the class <code>City</code>.
+     * </p>
+     */
+    @Transient
+    public Province getParentProvince() {
+    	if (getCity()!=null) {
+    		return getCity().getParent();
+    	}
+    	return null;
+    }
+    
+    /**
+     * <<Transient>> Convenience method to expose the province code.
+     * 
+     * <p>
+     * Select the most appropriate code based on {@link #getProvince()}.
+     * </p>
+     */
+    @Transient
+    public String getProvinceCode() {
+    	if (getParentProvince()!=null) {
+    		return getParentProvince().getProvinceCode();
+    	}
+    	if (getProvince()!=null) {
+    		return getProvince().getProvinceCode();
+    	}
+    	return "";
+    }
+    
+    /**
+     * <<Transient>> Convenience method to expose the province name.
+     * 
+     * <p>
+     * Select the most appropriate code based on {@link #getProvince()}.
+     * </p>
+     */
+    @Transient
+    public String getProvinceName() {
+    	if (getParentProvince()!=null) {
+    		return getParentProvince().getProvinceName();
+    	}
+    	if (getProvince()!=null) {
+    		return getProvince().getProvinceName();
+    	}
+    	return "";
+    }
+    
+    /**
+     * <<Transient>> Convenience method to expose the city code.
+     * 
+     * <p>
+     * Select the most appropriate code based on {@link #getCity()}.
+     * </p>
+     */
+    @Transient
+    public String getCityCode() {
+    	if (getCity()!=null) {
+    		return getCity().getProvinceCode();
+    	}
+    	return "";
+    }
+    
+    /**
+     * The city name.
+     * 
+     * <p>
+     * Invokes {@link #getCity()} to return either the actual content from the <code>cityName</code> field or 
+     * the corresponding property when {@link #getProvince()} is an instance
+     * of the class <code>City</code>.
+     * </p>
+     */
+    @Column(length=32)
+    public String getCityName() {
+    	if (getCity()!=null) {
+    		return getCity().getProvinceName();
+    	}
+        return this.cityName;
+    }
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
 }

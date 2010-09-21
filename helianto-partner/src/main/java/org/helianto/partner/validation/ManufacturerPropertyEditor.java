@@ -29,7 +29,7 @@ public class ManufacturerPropertyEditor extends AbstractSessionPropertyEditor {
     @Override
     public String getAsText() {
         Manufacturer manufacturer = (Manufacturer) getValue();
-        return String.valueOf(manufacturer.getPartnerRegistry().getPartnerAlias());
+        return String.valueOf(manufacturer.getPrivateEntity().getPartnerAlias());
     }
     
     @Override

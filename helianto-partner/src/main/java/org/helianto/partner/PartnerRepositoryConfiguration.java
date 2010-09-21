@@ -45,6 +45,17 @@ public class PartnerRepositoryConfiguration {
 		return dao;
 	}
 
+	/**
+	 * Public entity key data access.
+	 */
+	@Bean
+	public BasicDao<PublicEntityKey> publicEntityKeyDao() {
+		BasicDao<PublicEntityKey> dao =  
+			repositoryFactory.basicDaoFactory(PublicEntityKey.class, "publicEntity", "keyType");
+		logger.info("Created publicEntityKeyDao");
+		return dao;
+	}
+
 	
 	/**
 	 * Account data access.
@@ -85,7 +96,7 @@ public class PartnerRepositoryConfiguration {
 	@Bean
 	public FilterDao<Partner, PartnerFilter> partnerDao() {
 		FilterDao<Partner, PartnerFilter> dao =  
-			repositoryFactory.filterDaoFactory(Partner.class, PartnerFilter.class, "partnerRegistry", "class");
+			repositoryFactory.filterDaoFactory(Partner.class, PartnerFilter.class, "privateEntity", "class");
 		logger.info("Created partnerDao");
 		return dao;
 	}
@@ -102,24 +113,24 @@ public class PartnerRepositoryConfiguration {
 	}
 
 	/**
-	 * Partner registry data access.
+	 * Private entity data access.
 	 */
 	@Bean
-	public FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao() {
-		FilterDao<PartnerRegistry, PartnerRegistryFilter> dao =  
-			repositoryFactory.filterDaoFactory(PartnerRegistry.class, PartnerRegistryFilter.class, "entity", "partnerAlias");
-		logger.info("Created partnerRegistryDao");
+	public FilterDao<PrivateEntity, PrivateEntityFilter> privateEntityDao() {
+		FilterDao<PrivateEntity, PrivateEntityFilter> dao =  
+			repositoryFactory.filterDaoFactory(PrivateEntity.class, PrivateEntityFilter.class, "entity", "entityAlias");
+		logger.info("Created privateEntityDao");
 		return dao;
 	}
 
 	/**
-	 * Partner registry key data access.
+	 * Private entity key data access.
 	 */
 	@Bean
-	public BasicDao<PartnerRegistryKey> partnerRegistryKeyDao() {
-		BasicDao<PartnerRegistryKey> dao =  
-			repositoryFactory.basicDaoFactory(PartnerRegistryKey.class, "partnerRegistry", "keyType");
-		logger.info("Created partnerRegistryKeyDao");
+	public BasicDao<PrivateEntityKey> privateEntityKeyDao() {
+		BasicDao<PrivateEntityKey> dao =  
+			repositoryFactory.basicDaoFactory(PrivateEntityKey.class, "privateEntity", "keyType");
+		logger.info("Created privateEntityKeyDao");
 		return dao;
 	}
 

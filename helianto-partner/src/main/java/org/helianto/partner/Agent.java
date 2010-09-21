@@ -44,9 +44,9 @@ public class Agent extends Partner implements java.io.Serializable {
      * 
      * @param partnerRegistry
      */
-    public Agent(PartnerRegistry partnerRegistry) {
+    public Agent(PrivateEntity partnerRegistry) {
     	this();
-    	setPartnerRegistry(partnerRegistry);
+    	setPrivateEntity(partnerRegistry);
     }
 
 	/**
@@ -57,20 +57,20 @@ public class Agent extends Partner implements java.io.Serializable {
      */
     public Agent(Entity entity, String partnerAlias) {
     	this();
-    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
 
     /**
      * Partner constructor.
      * 
 	 * <p>
-	 * Read the backing {@link PartnerRegistry} from a partner to associate the new instance to it.
+	 * Read the backing {@link PrivateEntity} from a partner to associate the new instance to it.
 	 * </p>
 	 * 
      * @param partner
      */
     public Agent(Partner partner) {
-    	this(partner.getPartnerRegistry());
+    	this(partner.getPrivateEntity());
     	if (partner.getClass().isAssignableFrom(getClass())) {
     		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
     	}

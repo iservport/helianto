@@ -15,7 +15,7 @@
 package org.helianto.partner.validation;
 
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
-import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.PrivateEntity;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,13 +29,13 @@ public class PartnerAssociationPropertyEditor extends AbstractSessionPropertyEdi
 
 	@Override
 	public String getAsText() {
-		return String.valueOf(((PartnerRegistry) getValue())
+		return String.valueOf(((PrivateEntity) getValue())
 				.getPartnerAlias());
 	}
 
 	@Override
 	public void setAsText(String id) throws IllegalArgumentException {
-		setAsText(id, PartnerRegistry.class);
+		setAsText(id, PrivateEntity.class);
 	}
 
 }

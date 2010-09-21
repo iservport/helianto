@@ -44,9 +44,9 @@ public class Customer extends Partner implements java.io.Serializable {
      * 
      * @param partnerRegistry
      */
-    public Customer(PartnerRegistry partnerRegistry) {
+    public Customer(PrivateEntity partnerRegistry) {
     	this();
-    	setPartnerRegistry(partnerRegistry);
+    	setPrivateEntity(partnerRegistry);
     }
 
 	/**
@@ -57,33 +57,33 @@ public class Customer extends Partner implements java.io.Serializable {
      */
     public Customer(Entity entity, String partnerAlias) {
     	this();
-    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
 
     /**
      * Entity constructor.
      * 
 	 * <p>
-	 * Create a backing {@link PartnerRegistry} and associate a new Customer to it.
+	 * Create a backing {@link PrivateEntity} and associate a new Customer to it.
 	 * </p>
 	 * 
      * @param entity
      */
     public Customer(Entity entity) {
-    	this(new PartnerRegistry(entity));
+    	this(new PrivateEntity(entity));
     }
 
     /**
      * Partner constructor.
      * 
 	 * <p>
-	 * Read the backing {@link PartnerRegistry} from a partner to associate the new instance to it.
+	 * Read the backing {@link PrivateEntity} from a partner to associate the new instance to it.
 	 * </p>
 	 * 
      * @param partner
      */
     public Customer(Partner partner) {
-    	this(partner.getPartnerRegistry());
+    	this(partner.getPrivateEntity());
     	if (partner instanceof Customer) {
     		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
     	}

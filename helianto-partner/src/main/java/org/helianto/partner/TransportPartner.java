@@ -43,9 +43,9 @@ public class TransportPartner extends Supplier {
      * 
      * @param partnerRegistry
      */
-    public TransportPartner(PartnerRegistry partnerRegistry) {
+    public TransportPartner(PrivateEntity partnerRegistry) {
     	this();
-    	setPartnerRegistry(partnerRegistry);
+    	setPrivateEntity(partnerRegistry);
     }
 
 	/**
@@ -56,20 +56,20 @@ public class TransportPartner extends Supplier {
      */
     public TransportPartner(Entity entity, String partnerAlias) {
     	this();
-    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
 
     /**
      * Partner constructor.
      * 
 	 * <p>
-	 * Read the backing {@link PartnerRegistry} from a partner to associate the new instance to it.
+	 * Read the backing {@link PrivateEntity} from a partner to associate the new instance to it.
 	 * </p>
 	 * 
      * @param partner
      */
     public TransportPartner(Partner partner) {
-    	this(partner.getPartnerRegistry());
+    	this(partner.getPrivateEntity());
     	if (partner.getClass().isAssignableFrom(getClass())) {
     		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
     	}

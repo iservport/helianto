@@ -31,11 +31,11 @@ import org.junit.Test;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PartnerRegistryFilterTests {
+public class PrivateEntityFilterTests {
 	
     @Test
 	public void constructor() {
-		PartnerRegistryFilter partnerRegistryFilter = new PartnerRegistryFilter();
+		PrivateEntityFilter partnerRegistryFilter = new PrivateEntityFilter();
 		assertTrue(partnerRegistryFilter instanceof Serializable);
 		assertTrue(partnerRegistryFilter instanceof AbstractUserBackedCriteriaFilter);
 	}
@@ -43,21 +43,21 @@ public class PartnerRegistryFilterTests {
     @Test
 	public void factory() {
 		User user = new User();
-		PartnerRegistryFilter partnerRegistryFilter = PartnerRegistryFilter.partnerRegistryFilterFactory(user);
+		PrivateEntityFilter partnerRegistryFilter = new PrivateEntityFilter(user);
 		assertSame(partnerRegistryFilter.getUser(), user);
 	}
 	
     @Test
 	public void reset() {
-		PartnerRegistryFilter partnerRegistryFilter = PartnerRegistryFilter.partnerRegistryFilterFactory(new User());
+		PrivateEntityFilter partnerRegistryFilter = new PrivateEntityFilter(new User());
 		partnerRegistryFilter.setPartnerNameLike(null);
 		partnerRegistryFilter.reset();
 		assertEquals("", partnerRegistryFilter.getPartnerNameLike());
 	}
 
-    public static String C1 = "partnerregistry.entity.id = 0 ";
-    public static String C2 = "AND partnerregistry.partnerAlias = 'ALIAS' ";
-    public static String C3 = "AND lower(partnerregistry.partnerName) like '%name%' ";
+    public static String C1 = "privateentity.entity.id = 0 ";
+    public static String C2 = "AND privateentity.partnerAlias = 'ALIAS' ";
+    public static String C3 = "AND lower(privateentity.partnerName) like '%name%' ";
 
     @Test
     public void empty() {
@@ -76,11 +76,11 @@ public class PartnerRegistryFilterTests {
         assertEquals(C1+C3, filter.createCriteriaAsString(false));
     }
     
-    private PartnerRegistryFilter filter;
+    private PrivateEntityFilter filter;
     
     @Before
     public void setUp() {
-    	filter = PartnerRegistryFilter.partnerRegistryFilterFactory(UserTestSupport.createUser());
+    	filter = new PrivateEntityFilter(UserTestSupport.createUser());
     }
 	
 }

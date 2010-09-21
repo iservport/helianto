@@ -1,10 +1,13 @@
 package org.helianto.partner.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.PublicAddress;
 import org.helianto.partner.PublicAddressFilter;
@@ -40,7 +43,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		publicAddressDao.remove(publicAddress);
 	}
 	
-	public List<PublicEntity> findPublicEntities(PublicEntityFilter publicEntityFilter) {
+	public List<? extends PublicEntity> findPublicEntities(PublicEntityFilter publicEntityFilter) {
 		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(publicEntityFilter);
 		if (publicEntitiyList!=null) {
 			logger.debug("Found {} public entities.", publicEntitiyList.size());
@@ -58,24 +61,29 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	}
 	
 	public Map<String, PublicEntityKey> loadPublicEntityKeyMap(PublicEntity publicEntity) {
-		// TODO Auto-generated method stub
-		return null;
+		publicEntityDao.saveOrUpdate(publicEntity);
+		Map<String, PublicEntityKey> publicEntityKeyMap = new HashMap<String, PublicEntityKey>();
+		Set<PublicEntityKey> publicEntityKeys = publicEntity.getPublicEntityKeys();
+		for (PublicEntityKey publicEntityKey: publicEntityKeys) {
+			publicEntityKeyMap.put(publicEntityKey.getKeyType().getKeyCode(), publicEntityKey);
+		}
+		return publicEntityKeyMap;
 	}
 	
 	public PublicEntityKey storePublicEntityKey(PublicEntityKey publicEntityKey) {
-		// TODO Auto-generated method stub
-		return null;
+		publicEntityKeyDao.saveOrUpdate(publicEntityKey);
+		return publicEntityKey;
 	}
 	
 	public void removePublicEntityKey(PublicEntityKey publicEntityKey) {
-		// TODO Auto-generated method stub
-		
+		publicEntityKeyDao.remove(publicEntityKey);
 	}
 	
 	// collabs
 	
 	private FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao;
 	private FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;
+	private BasicDao<PublicEntityKey> publicEntityKeyDao;
 	
 	@Resource(name="publicAddressDao")
 	public void setPublicAddressDao(
@@ -86,6 +94,11 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	@Resource(name="publicEntityDao")
 	public void setPublicEntityDao(FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao) {
 		this.publicEntityDao = publicEntityDao;
+	}
+	
+	@Resource(name="publicEntityKeyDao")
+	public void setPublicEntityKeyDao(BasicDao<PublicEntityKey> publicEntityKeyDao) {
+		this.publicEntityKeyDao = publicEntityKeyDao;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(PublicEntityMgrImpl.class);

@@ -17,6 +17,7 @@ package org.helianto.partner;
 
 import java.io.Serializable;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
@@ -26,16 +27,7 @@ import org.helianto.core.filter.CriteriaBuilder;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PartnerRegistryFilter extends AbstractUserBackedCriteriaFilter implements Serializable {
-	
-	/**
-	 * Factory method.
-	 * 
-	 * @param user
-	 */
-	public static PartnerRegistryFilter partnerRegistryFilterFactory(User user) {
-		return AbstractUserBackedCriteriaFilter.filterFactory(PartnerRegistryFilter.class, user);
-	}
+public class PrivateEntityFilter extends AbstractUserBackedCriteriaFilter implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String partnerAlias;
@@ -44,9 +36,40 @@ public class PartnerRegistryFilter extends AbstractUserBackedCriteriaFilter impl
 	/**
 	 * Default constructor.
 	 */
-	public PartnerRegistryFilter() {
+	public PrivateEntityFilter() {
 		setPartnerAlias("");
 		setPartnerNameLike("");
+	}
+
+	/**
+	 * Entity constructor.
+	 * 
+	 * @param entity
+	 */
+	public PrivateEntityFilter(Entity entity) {
+		this();
+		setEntity(entity);
+	}
+
+	/**
+	 * User constructor.
+	 * 
+	 * @param user
+	 */
+	public PrivateEntityFilter(User user) {
+		this(user.getEntity());
+		setUser(user);
+	}
+
+	/**
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param partnerAlias
+	 */
+	public PrivateEntityFilter(Entity entity, String partnerAlias) {
+		this(entity);
+		setPartnerAlias(partnerAlias);
 	}
 
 	/**
@@ -62,7 +85,7 @@ public class PartnerRegistryFilter extends AbstractUserBackedCriteriaFilter impl
 	}
 
 	public String getObjectAlias() {
-		return "partnerregistry";
+		return "privateentity";
 	}
 
 	@Override

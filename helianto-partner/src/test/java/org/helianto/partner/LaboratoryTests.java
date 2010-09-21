@@ -18,15 +18,15 @@ public class LaboratoryTests{
      */
 	@Test
     public void laboratoryEquals() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         
         Laboratory laboratory = new Laboratory(partnerRegistry);
         Laboratory copy = (Laboratory) DomainTestSupport.minimalEqualsTest(laboratory);
         
-        copy.setPartnerRegistry(null);
+        copy.setPrivateEntity(null);
         assertFalse(laboratory.equals(copy));
 
-        copy.setPartnerRegistry(partnerRegistry);
+        copy.setPrivateEntity(partnerRegistry);
         assertTrue(laboratory.equals(copy));
     }
 

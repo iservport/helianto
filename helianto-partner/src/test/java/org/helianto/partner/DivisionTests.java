@@ -14,19 +14,19 @@ public class DivisionTests {
 	@Test
 	public void partner() {
 		Entity entity = new Entity();
-		PartnerRegistry registry = new PartnerRegistry(entity);
+		PrivateEntity registry = new PrivateEntity(entity);
 		Partner customer = new Customer(registry);
 		Division division = new Division(customer);
-		assertSame(registry, division.getPartnerRegistry());
+		assertSame(registry, division.getPrivateEntity());
 	}
 
 	@Test(expected=IllegalArgumentException.class)
 	public void partnerError() {
 		Entity entity = new Entity();
-		PartnerRegistry registry = new PartnerRegistry(entity);
+		PrivateEntity registry = new PrivateEntity(entity);
 		Partner other = new Division(registry);
 		Division division = new Division(other);
-		assertSame(registry, division.getPartnerRegistry());
+		assertSame(registry, division.getPrivateEntity());
 	}
 
 }

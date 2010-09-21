@@ -25,8 +25,8 @@ import java.util.List;
 
 import org.easymock.EasyMock;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.partner.PartnerRegistry;
-import org.helianto.partner.PartnerRegistryFilter;
+import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.PrivateEntityFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,51 +40,51 @@ public class PartnerMgrImplTests {
     
 	@Test
     public void findPartnerRegistries() {
-    	PartnerRegistryFilter partnerRegistryFilter = new PartnerRegistryFilter();
-    	List<PartnerRegistry> partnerRegistryList = new ArrayList<PartnerRegistry>();
+    	PrivateEntityFilter partnerRegistryFilter = new PrivateEntityFilter();
+    	List<PrivateEntity> partnerRegistryList = new ArrayList<PrivateEntity>();
     	
-    	expect(partnerRegistryDao.find(partnerRegistryFilter)).andReturn(partnerRegistryList);
-    	replay(partnerRegistryDao);
+    	expect(privateEntityDao.find(partnerRegistryFilter)).andReturn(partnerRegistryList);
+    	replay(privateEntityDao);
     	
     	assertSame(partnerRegistryList, partnerMgr.findPartnerRegistries(partnerRegistryFilter));
-    	verify(partnerRegistryDao);
+    	verify(privateEntityDao);
     }
     
 	@Test
     public void storePartnerRegistry() {
-    	PartnerRegistry partnerRegistry = new PartnerRegistry();
+    	PrivateEntity partnerRegistry = new PrivateEntity();
     	
-    	partnerRegistryDao.saveOrUpdate(partnerRegistry);
-    	replay(partnerRegistryDao);
+    	privateEntityDao.saveOrUpdate(partnerRegistry);
+    	replay(privateEntityDao);
 
     	assertSame(partnerRegistry, partnerMgr.storePartnerRegistry(partnerRegistry));
-    	verify(partnerRegistryDao);
+    	verify(privateEntityDao);
     }
     
 	@Test
     public void removePartnerRegistry() {
-    	PartnerRegistry partnerRegistry = new PartnerRegistry();
+    	PrivateEntity partnerRegistry = new PrivateEntity();
     	
-    	partnerRegistryDao.remove(partnerRegistry);
-    	replay(partnerRegistryDao);
+    	privateEntityDao.remove(partnerRegistry);
+    	replay(privateEntityDao);
 
     	partnerMgr.removePartnerRegistry(partnerRegistry);
-    	verify(partnerRegistryDao);
+    	verify(privateEntityDao);
     }
     
-    private FilterDao<PartnerRegistry, PartnerRegistryFilter> partnerRegistryDao;
+    private FilterDao<PrivateEntity, PrivateEntityFilter> privateEntityDao;
 
 	@SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         partnerMgr = new PartnerMgrImpl();
-        partnerRegistryDao = EasyMock.createMock(FilterDao.class);
-        partnerMgr.setPartnerRegistryDao(partnerRegistryDao);
+        privateEntityDao = EasyMock.createMock(FilterDao.class);
+        partnerMgr.setPrivateEntityDao(privateEntityDao);
     }
     
     @After
     public void tearDown() {
-    	EasyMock.reset(partnerRegistryDao);
+    	EasyMock.reset(privateEntityDao);
     }
 
 }

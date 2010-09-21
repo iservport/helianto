@@ -51,11 +51,11 @@ import org.helianto.core.Province;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
-public class Partner implements java.io.Serializable, Addressee {
+public class Partner implements java.io.Serializable, BusinessUnit {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private PartnerRegistry partnerRegistry;
+    private PrivateEntity partnerRegistry;
     private Account account;
     private char priority;
     private char partnerState;
@@ -76,9 +76,9 @@ public class Partner implements java.io.Serializable, Addressee {
      * 
      * @param partnerRegistry
      */
-    public Partner(PartnerRegistry partnerRegistry) {
+    public Partner(PrivateEntity partnerRegistry) {
     	this();
-    	setPartnerRegistry(partnerRegistry);
+    	setPrivateEntity(partnerRegistry);
     }
 
 	/**
@@ -89,20 +89,20 @@ public class Partner implements java.io.Serializable, Addressee {
      */
     public Partner(Entity entity, String partnerAlias) {
     	this();
-    	setPartnerRegistry(new PartnerRegistry(entity, partnerAlias));
+    	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
 
     /**
      * Entity constructor.
      * 
 	 * <p>
-	 * Create a backing {@link PartnerRegistry} and associate a new Customer to it.
+	 * Create a backing {@link PrivateEntity} and associate a new Customer to it.
 	 * </p>
 	 * 
      * @param entity
      */
     public Partner(Entity entity) {
-    	this(new PartnerRegistry(entity));
+    	this(new PrivateEntity(entity));
     }
 
     /**
@@ -121,74 +121,95 @@ public class Partner implements java.io.Serializable, Addressee {
      */
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PartnerRegistry getPartnerRegistry() {
+    public PrivateEntity getPrivateEntity() {
         return this.partnerRegistry;
     }
-    @Transient
-    public String getPartnerAlias() {
-    	return getPartnerRegistry().getPartnerAlias();
-    }
-    @Transient
-    public String getPartnerName() {
-    	return getPartnerRegistry().getPartnerName();
-    }
-    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
+    public void setPrivateEntity(PrivateEntity partnerRegistry) {
         this.partnerRegistry = partnerRegistry;
     }
     
-    // Implementation of the Addressee interface
+    /**
+     * <<Transient>> Convenience to retrieve <code>Entity</code> from parent
+     * <code>PrivateEntity</code>.
+     */
+    @Transient
+    public Entity getEntity() {
+    	return getPrivateEntity().getEntity();
+    }
+    
+    // Implementation of the BusinessUnit interface
     // future implementations may choose from addresses on the parent partner registry.
 
     @Transient
+    public String getEntityAlias() {
+    	return getPrivateEntity().getEntityAlias();
+    }
+    
+    @Transient
+    public String getEntityName() {
+    	return getPrivateEntity().getEntityName();
+    }
+
+    @Transient
     public String getAddress1() {
-        return this.getPartnerRegistry().getAddress1();
+        return this.getPrivateEntity().getAddress1();
     }
     
     @Transient
     public String getAddressNumber() {
-    	return this.getPartnerRegistry().getAddressNumber();
+    	return this.getPrivateEntity().getAddressNumber();
     }
     
     @Transient
     public String getAddressDetail() {
-    	return this.getPartnerRegistry().getAddressDetail();
+    	return this.getPrivateEntity().getAddressDetail();
     }
 
     @Transient
     public String getAddress2() {
-        return this.getPartnerRegistry().getAddress2();
+        return this.getPrivateEntity().getAddress2();
     }
 
     @Transient
     public String getAddress3() {
-        return this.getPartnerRegistry().getAddress3();
+        return this.getPrivateEntity().getAddress3();
     }
     
     @Transient
     public String getPostOfficeBox() {
-    	return this.getPartnerRegistry().getPostOfficeBox();
+    	return this.getPrivateEntity().getPostOfficeBox();
     }
 
     @Transient
     public String getPostalCode() {
-        return this.getPartnerRegistry().getPostalCode();
+        return this.getPrivateEntity().getPostalCode();
     }
 
     @Transient
     public Province getProvince() {
-        return this.getPartnerRegistry().getProvince();
+        return this.getPrivateEntity().getProvince();
     }
     
     @Transient
     public String getCityName() {
-    	return this.getPartnerRegistry().getCityName();
+    	return this.getPrivateEntity().getCityName();
     }
     
     @Transient
     public String getShortAddress() {
-    	return this.getPartnerRegistry().getShortAddress();
+    	return this.getPrivateEntity().getShortAddress();
     }
     
+    @Transient
+    public AbstractPhone getMainPhone() {
+    	return this.getPrivateEntity().getMainPhone();
+    }
+
+    @Transient
+    public String getMainEmail() {
+    	return this.getPrivateEntity().getMainEmail();
+    }
+
     // 
     
     /**
@@ -216,7 +237,7 @@ public class Partner implements java.io.Serializable, Addressee {
      */
     @Transient
     protected Addressee getAddressee(int index) {
-    	return getPartnerRegistry();
+    	return getPrivateEntity();
     }
 
     // setter methods rely on getAddresse to update its contents.
@@ -227,7 +248,7 @@ public class Partner implements java.io.Serializable, Addressee {
      * @param address1
      */
     public void setAddress1(String address1) {
-        getPartnerRegistry().setAddress1(address1);
+        getPrivateEntity().setAddress1(address1);
     }
     
     /**
@@ -236,7 +257,7 @@ public class Partner implements java.io.Serializable, Addressee {
      * @param addressNumber
      */
     public void setAddressNumber(String addressNumber) {
-        getPartnerRegistry().setAddressNumber(addressNumber);
+        getPrivateEntity().setAddressNumber(addressNumber);
     }
     
     /**
@@ -245,7 +266,7 @@ public class Partner implements java.io.Serializable, Addressee {
      * @param addressDetail
      */
     public void setAddressDetail(String addressDetail) {
-        getPartnerRegistry().setAddressDetail(addressDetail);
+        getPrivateEntity().setAddressDetail(addressDetail);
     }
 
     /**
@@ -254,7 +275,7 @@ public class Partner implements java.io.Serializable, Addressee {
      * @param address2
      */
     public void setAddress2(String address2) {
-        getPartnerRegistry().setAddress2(address2);
+        getPrivateEntity().setAddress2(address2);
     }
 
     /**
@@ -263,7 +284,7 @@ public class Partner implements java.io.Serializable, Addressee {
      * @param address3
      */
     public void setAddress3(String address3) {
-        getPartnerRegistry().setAddress3(address3);
+        getPrivateEntity().setAddress3(address3);
     }
     
     /**
@@ -272,7 +293,7 @@ public class Partner implements java.io.Serializable, Addressee {
      * @param postOfficeBox
      */
     public void setPostOfficeBox(String postOfficeBox) {
-        getPartnerRegistry().setPostOfficeBox(postOfficeBox);
+        getPrivateEntity().setPostOfficeBox(postOfficeBox);
     }
 
     /**
@@ -281,7 +302,7 @@ public class Partner implements java.io.Serializable, Addressee {
      * @param postalCode
      */
     public void setPostalCode(String postalCode) {
-        getPartnerRegistry().setPostalCode(postalCode);
+        getPrivateEntity().setPostalCode(postalCode);
     }
 
     /**
@@ -290,7 +311,7 @@ public class Partner implements java.io.Serializable, Addressee {
      * @param province
      */
     public void setProvince(Province province) {
-        getPartnerRegistry().setProvince(province);
+        getPrivateEntity().setProvince(province);
     }
     
     /**
@@ -299,7 +320,7 @@ public class Partner implements java.io.Serializable, Addressee {
      * @param cityName
      */
     public void setCityName(String cityName) {
-        getPartnerRegistry().setCityName(cityName);
+        getPrivateEntity().setCityName(cityName);
     }
     
     /**
@@ -309,7 +330,7 @@ public class Partner implements java.io.Serializable, Addressee {
      */
 	@Transient
     public boolean addAddress(Address address) {
-    	return getPartnerRegistry().getAddresses().add(address);
+    	return getPrivateEntity().getAddresses().add(address);
     }
 	
     /**
@@ -391,7 +412,7 @@ public class Partner implements java.io.Serializable, Addressee {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("partnerRegistry").append("='").append(getPartnerRegistry()).append("' ");
+        buffer.append("partnerRegistry").append("='").append(getPrivateEntity()).append("' ");
         buffer.append("]");
       
         return buffer.toString();
@@ -406,7 +427,7 @@ public class Partner implements java.io.Serializable, Addressee {
          if ( !(other instanceof Partner) ) return false;
          Partner castOther = (Partner) other; 
          
-         return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ));
+         return ((this.getPrivateEntity()==castOther.getPrivateEntity()) || ( this.getPrivateEntity()!=null && castOther.getPrivateEntity()!=null && this.getPrivateEntity().equals(castOther.getPrivateEntity()) ));
    }
    
    /**
@@ -414,7 +435,7 @@ public class Partner implements java.io.Serializable, Addressee {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
+         result = 37 * result + ( getPrivateEntity() == null ? 0 : this.getPrivateEntity().hashCode() );
          return result;
    }
 

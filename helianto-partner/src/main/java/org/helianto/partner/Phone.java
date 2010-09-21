@@ -32,15 +32,12 @@ import javax.persistence.UniqueConstraint;
 @Table(name="prtnr_phone2",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "sequence"})}
 )
-public class Phone implements java.io.Serializable {
+public class Phone extends AbstractPhone {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private PartnerRegistry partnerRegistry;
+    private PrivateEntity partnerRegistry;
     private int sequence;
-    private String phoneNumber;
-    private String areaCode;
-    private char phoneType;
     private String comment;
     private char privacyLevel;
 
@@ -66,10 +63,10 @@ public class Phone implements java.io.Serializable {
      */
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PartnerRegistry getPartnerRegistry() {
+    public PrivateEntity getPartnerRegistry() {
 		return partnerRegistry;
 	}
-    public void setPartnerRegistry(PartnerRegistry partnerRegistry) {
+    public void setPartnerRegistry(PrivateEntity partnerRegistry) {
 		this.partnerRegistry = partnerRegistry;
 	}
 
@@ -81,41 +78,6 @@ public class Phone implements java.io.Serializable {
     }
     public void setSequence(int sequence) {
         this.sequence = sequence;
-    }
-
-    /**
-     * Phone number.
-     */
-    @Column(length=20)
-    public String getPhoneNumber() {
-        return this.phoneNumber;
-    }
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    /**
-     * Area code.
-     */
-    @Column(length=2)
-    public String getAreaCode() {
-        return this.areaCode;
-    }
-    public void setAreaCode(String areaCode) {
-        this.areaCode = areaCode;
-    }
-
-    /**
-     * Phone type.
-     */
-    public char getPhoneType() {
-        return this.phoneType;
-    }
-    public void setPhoneType(char phoneType) {
-        this.phoneType = phoneType;
-    }
-    public void setPhoneType(PhoneType phoneType) {
-        this.phoneType = phoneType.getValue();
     }
 
     /**

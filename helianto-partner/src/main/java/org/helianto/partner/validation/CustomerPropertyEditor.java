@@ -30,7 +30,7 @@ public class CustomerPropertyEditor extends AbstractSessionPropertyEditor {
     @Override
     public String getAsText() {
         Customer customer = (Customer) getValue();
-        return String.valueOf(customer.getPartnerRegistry().getPartnerAlias());
+        return String.valueOf(customer.getPrivateEntity().getPartnerAlias());
     }
     
     @Override

@@ -20,7 +20,7 @@ public class AddressTests {
      */
 	@Test
     public void addressFactory() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
         Address address = Address.addressFactory(partnerRegistry, sequence);
@@ -37,7 +37,7 @@ public class AddressTests {
      */
 	@Test
     public void addressEquals() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
         Address address = Address.addressFactory(partnerRegistry, sequence);

@@ -7,14 +7,14 @@ import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 
-import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.PrivateEntity;
 
 /**
- * Class to support <code>PartnerRegistryDao</code> tests.
+ * Class to support <code>PrivateEntity</code> tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class PartnerRegistryTestSupport {
+public class PrivateEntityTestSupport {
 
     private static int testKey;
 
@@ -23,7 +23,7 @@ public class PartnerRegistryTestSupport {
      * @param entity optional Entity 
      * @param partnerAlias optional String 
      */
-    public static PartnerRegistry createPartnerRegistry(Object... args) {
+    public static PrivateEntity createPartnerRegistry(Object... args) {
         Entity entity;
         try {
             entity = (Entity) args[0];
@@ -36,7 +36,7 @@ public class PartnerRegistryTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             partnerAlias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
         }
-        PartnerRegistry partnerRegistry = PartnerRegistry.partnerRegistryFactory(entity, partnerAlias);
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, partnerAlias);
         partnerRegistry.setPartnerName("Name of "+partnerAlias);
         return partnerRegistry;
     }
@@ -46,7 +46,7 @@ public class PartnerRegistryTestSupport {
      *
      * @param partnerRegistryListSize
      */
-    public static List<PartnerRegistry> createPartnerRegistryList(int partnerRegistryListSize) {
+    public static List<PrivateEntity> createPartnerRegistryList(int partnerRegistryListSize) {
         return createPartnerRegistryList(partnerRegistryListSize, 1);
     }
 
@@ -56,7 +56,7 @@ public class PartnerRegistryTestSupport {
      * @param partnerRegistryListSize
      * @param entityListSize
      */
-    public static List<PartnerRegistry> createPartnerRegistryList(int partnerRegistryListSize, int entityListSize) {
+    public static List<PrivateEntity> createPartnerRegistryList(int partnerRegistryListSize, int entityListSize) {
         List<Entity> entityList = EntityTestSupport.createEntityList(entityListSize);
 
         return createPartnerRegistryList(partnerRegistryListSize, entityList);
@@ -68,8 +68,8 @@ public class PartnerRegistryTestSupport {
      * @param partnerRegistryListSize
      * @param entityList
      */
-    public static List<PartnerRegistry> createPartnerRegistryList(int partnerRegistryListSize, List<Entity> entityList) {
-        List<PartnerRegistry> partnerRegistryList = new ArrayList<PartnerRegistry>();
+    public static List<PrivateEntity> createPartnerRegistryList(int partnerRegistryListSize, List<Entity> entityList) {
+        List<PrivateEntity> partnerRegistryList = new ArrayList<PrivateEntity>();
         for (Entity entity: entityList) {
 	        for (int i=0;i<partnerRegistryListSize;i++) {
     	        partnerRegistryList.add(createPartnerRegistry(entity));

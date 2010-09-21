@@ -7,12 +7,14 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Embedded;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
@@ -30,7 +32,7 @@ import org.helianto.core.Operator;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
-public class PublicEntity extends AbstractAddress {
+public class PublicEntity extends AbstractAddress implements BusinessUnit {
 
 	private static final long serialVersionUID = 1L;
 	private int version;
@@ -39,6 +41,8 @@ public class PublicEntity extends AbstractAddress {
 	private String entityName;
 	private char publicEntityType;
 	private char publicEntityVisibility;
+    private AbstractPhone mainPhone;
+    private String mainEmail;
 	private Set<PublicEntityKey> publicEntityKeys = new HashSet<PublicEntityKey>();
 
 	/**
@@ -48,6 +52,8 @@ public class PublicEntity extends AbstractAddress {
 		super();
 		setPublicEntityType(PublicEntityType.NOT_INFORMED);
 		setPublicEntityVisibility(PublicEntityVisibility.REGISTERED);
+		setMainPhone(new AbstractPhone());
+		setMainEmail("");
 	}
 
 	/**
@@ -106,6 +112,14 @@ public class PublicEntity extends AbstractAddress {
 	}
 	
 	/**
+	 * Entity alias.
+	 */
+	@Transient
+	public String getEntityAlias() {
+		return getEntity().getAlias();
+	}
+	
+	/**
 	 * Entity name.
 	 */
 	@Column(length=64)
@@ -142,6 +156,28 @@ public class PublicEntity extends AbstractAddress {
 		this.publicEntityVisibility = publicEntityVisibility.getValue();
 	}
 	
+    /**
+     * Main phone.
+     */
+    @Embedded
+    public AbstractPhone getMainPhone() {
+		return mainPhone;
+	}
+    public void setMainPhone(AbstractPhone mainPhone) {
+		this.mainPhone = mainPhone;
+	}
+    
+    /**
+     * Main e-mail.
+     */
+    @Column(length=40)
+    public String getMainEmail() {
+		return mainEmail;
+	}
+    public void setMainEmail(String mainEmail) {
+		this.mainEmail = mainEmail;
+	}
+
 	@OneToMany(mappedBy="publicEntity")
 	public Set<PublicEntityKey> getPublicEntityKeys() {
 		return publicEntityKeys;

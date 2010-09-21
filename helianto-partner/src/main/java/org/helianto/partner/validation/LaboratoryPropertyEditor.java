@@ -29,7 +29,7 @@ public class LaboratoryPropertyEditor extends AbstractSessionPropertyEditor {
     @Override
     public String getAsText() {
         Laboratory laboratory = (Laboratory) getValue();
-        return String.valueOf(laboratory.getPartnerRegistry().getPartnerAlias());
+        return String.valueOf(laboratory.getPrivateEntity().getPartnerAlias());
     }
     
     @Override

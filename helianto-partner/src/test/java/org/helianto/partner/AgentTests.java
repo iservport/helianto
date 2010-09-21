@@ -18,15 +18,15 @@ public class AgentTests {
      */
 	@Test
     public void agentEquals() {
-        PartnerRegistry partnerRegistry = new PartnerRegistry();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         
         Agent agent = new Agent(partnerRegistry);
         Partner copy = (Agent) DomainTestSupport.minimalEqualsTest(agent);
         
-        copy.setPartnerRegistry(null);
+        copy.setPrivateEntity(null);
         assertFalse(agent.equals(copy));
 
-        copy.setPartnerRegistry(partnerRegistry);
+        copy.setPrivateEntity(partnerRegistry);
         assertTrue(agent.equals(copy));
     }
 

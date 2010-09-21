@@ -21,6 +21,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,49 +36,40 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 /**
- * <p>
- * Represents the relationship between the organization and other entities.  
- * </p>
+ * Only <code>PrivateEntity</code> instances may have rights to operate with the (owning) <code>Entity</code>.
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
 @Table(name="prtnr_registry",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "partnerAlias"})}
 )
-public class PartnerRegistry extends AbstractAddress implements java.io.Serializable {
-
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param partnerAlias
-     */
-    public static PartnerRegistry partnerRegistryFactory(Entity entity, String partnerAlias) {
-        PartnerRegistry partnerRegistry = new PartnerRegistry(entity);
-        partnerRegistry.setPartnerAlias(partnerAlias);
-        return partnerRegistry;
-    }
+public class PrivateEntity extends AbstractAddress implements java.io.Serializable, BusinessUnit {
 
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
     private String partnerAlias;
     private String partnerName;
+    private AbstractPhone mainPhone;
+    private String mainEmail;
     private Set<Partner> partners = new HashSet<Partner>(0);
     private Set<Address> addresses = new HashSet<Address>(0);
-    private Set<PartnerRegistryKey> partnerRegistryKeys = new HashSet<PartnerRegistryKey>(0);
+    private Set<PrivateEntityKey> partnerRegistryKeys = new HashSet<PrivateEntityKey>(0);
     private Set<Phone> phones = new HashSet<Phone>(0);
     private @Transient List<Partner> partnerList;
     private @Transient List<Address> addressList;
-    private @Transient List<PartnerRegistryKey> partnerRegistryKeyList;
+    private @Transient List<PrivateEntityKey> partnerRegistryKeyList;
 
     /** 
      * Empty constructor.
      */
-    public PartnerRegistry() {
+    public PrivateEntity() {
     	super();
     	setPartnerAlias("");
     	setPartnerName("");
+		setMainPhone(new AbstractPhone());
+		setMainEmail("");
     }
 
     /** 
@@ -85,7 +77,7 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
      * 
      * @param entity
      */
-    public PartnerRegistry(Entity entity) {
+    public PrivateEntity(Entity entity) {
     	this();
     	setEntity(entity);
     }
@@ -96,7 +88,7 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
      * @param entity
      * @param partnerAlias
      */
-    public PartnerRegistry(Entity entity, String partnerAlias) {
+    public PrivateEntity(Entity entity, String partnerAlias) {
     	this(entity);
     	setPartnerAlias(partnerAlias);
     }
@@ -126,23 +118,47 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
 
     /**
      * PartnerAlias.
+     * @deprecated use entityAlias instead.
      */
-    @Column(length=20)
+    @Transient
     public String getPartnerAlias() {
-        return this.partnerAlias;
+        return getEntityAlias();
     }
     public void setPartnerAlias(String partnerAlias) {
+        setEntityAlias(partnerAlias);
+    }
+
+    /**
+     * Entity alias.
+     */
+    @Column(length=20, name="partnerAlias")
+    public String getEntityAlias() {
+        return this.partnerAlias;
+    }
+    public void setEntityAlias(String partnerAlias) {
         this.partnerAlias = partnerAlias;
     }
 
     /**
      * PartnerName.
+     * @deprecated use entityName instead.
      */
-    @Column(length=64)
+    @Transient
     public String getPartnerName() {
-        return this.partnerName;
+        return getEntityName();
     }
     public void setPartnerName(String partnerName) {
+        setEntityName(partnerName);
+    }
+
+    /**
+     * Entity name.
+     */
+    @Column(length=64, name="partnerName")
+    public String getEntityName() {
+        return this.partnerName;
+    }
+    public void setEntityName(String partnerName) {
         this.partnerName = partnerName;
     }
 
@@ -156,11 +172,33 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
     	}
         return this.partnerName;
     }
+    
+    /**
+     * Main phone.
+     */
+    @Embedded
+    public AbstractPhone getMainPhone() {
+		return mainPhone;
+	}
+    public void setMainPhone(AbstractPhone mainPhone) {
+		this.mainPhone = mainPhone;
+	}
+    
+    /**
+     * Main e-mail.
+     */
+    @Column(length=40)
+    public String getMainEmail() {
+		return mainEmail;
+	}
+    public void setMainEmail(String mainEmail) {
+		this.mainEmail = mainEmail;
+	}
 
     /**
      * Partners.
      */
-    @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="privateEntity", fetch=FetchType.EAGER)
     public Set<Partner> getPartners() {
         return this.partners;
     }
@@ -216,11 +254,11 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
     /**
      * Partner registry keys.
      */
-    @OneToMany(mappedBy="partnerRegistry", cascade={CascadeType.MERGE, CascadeType.PERSIST})
-    public Set<PartnerRegistryKey> getPartnerRegistryKeys() {
+    @OneToMany(mappedBy="privateEntity", cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    public Set<PrivateEntityKey> getPartnerRegistryKeys() {
 		return partnerRegistryKeys;
 	}
-	public void setPartnerRegistryKeys(Set<PartnerRegistryKey> partnerRegistryKeys) {
+	public void setPartnerRegistryKeys(Set<PrivateEntityKey> partnerRegistryKeys) {
 		this.partnerRegistryKeys = partnerRegistryKeys;
 	}
 	
@@ -235,19 +273,6 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
         this.phones = phones;
     }
 
-    /**
-     * Convenient to get first phone of type {@link PhoneType}.MAIN.
-     */
-    @Transient
-    public String getMainPhone() {
-    	for (Phone mainPhone: getPhones()) {
-    		if (mainPhone.getPhoneType()==PhoneType.MAIN.getValue()) {
-    			return mainPhone.toString();
-    		}
-    	}
-    	return "";
-    }
-    
 	/**
 	 * Convenience to add a key type-value pair to the registry.
 	 * 
@@ -257,8 +282,7 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
 	 */
 	@Transient
 	public boolean addKeyValuePair(KeyType keyType, String keyValue) {
-		PartnerRegistryKey partnerRegistryKey = PartnerRegistryKey.partnerRegistryKeyFactory(this, keyType);
-		partnerRegistryKey.setKeyValue(keyValue);
+		PrivateEntityKey partnerRegistryKey = new PrivateEntityKey(this, keyType, keyValue);
 		return getPartnerRegistryKeys().add(partnerRegistryKey);
 	}
 
@@ -266,10 +290,10 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
      * <<Transient>> Convenience to hold ordered partner key list.
      */
 	@Transient
-    public List<PartnerRegistryKey> getPartnerRegistryKeyList() {
+    public List<PrivateEntityKey> getPartnerRegistryKeyList() {
     	return this.partnerRegistryKeyList;
     }
-    public void setPartnerRegistryKeyList(List<PartnerRegistryKey> partnerRegistryKeyList) {
+    public void setPartnerRegistryKeyList(List<PrivateEntityKey> partnerRegistryKeyList) {
         this.partnerRegistryKeyList = partnerRegistryKeyList;
     }
     
@@ -293,8 +317,8 @@ public class PartnerRegistry extends AbstractAddress implements java.io.Serializ
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof PartnerRegistry) ) return false;
-         PartnerRegistry castOther = (PartnerRegistry) other; 
+         if ( !(other instanceof PrivateEntity) ) return false;
+         PrivateEntity castOther = (PrivateEntity) other; 
          
          return ((this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ))
              && ((this.getPartnerAlias()==castOther.getPartnerAlias()) || ( this.getPartnerAlias()!=null && castOther.getPartnerAlias()!=null && this.getPartnerAlias().equals(castOther.getPartnerAlias()) ));

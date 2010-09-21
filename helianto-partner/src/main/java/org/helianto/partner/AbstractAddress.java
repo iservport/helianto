@@ -32,7 +32,6 @@ public abstract class AbstractAddress extends AbstractPartialAddress implements 
     private String addressNumber;
 	private String addressDetail;
     private String address3;
-    private String cityName;
     private String postOfficeBox;
 
     /** 
@@ -43,7 +42,6 @@ public abstract class AbstractAddress extends AbstractPartialAddress implements 
         setAddressNumber("");
         setAddressDetail("");
         setAddress3("");
-        setCityName("");
         setPostOfficeBox("");
     }
     
@@ -124,14 +122,6 @@ public abstract class AbstractAddress extends AbstractPartialAddress implements 
     }
     public void setAddress3(String address3) {
         this.address3 = address3;
-    }
-
-    @Column(length=32)
-    public String getCityName() {
-        return this.cityName;
-    }
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
     }
 
     @Column(length=10)

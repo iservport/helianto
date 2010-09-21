@@ -7,7 +7,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Contact;
-import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.PrivateEntity;
 
 /**
  * Class to support <code>ContactDao</code> tests.
@@ -25,11 +25,11 @@ public class ContactTestSupport {
      * @param identity optional Identity 
      */
     public static Contact createContact(Object... args) {
-        PartnerRegistry partnerAssociation;
+        PrivateEntity partnerAssociation;
         try {
-            partnerAssociation = (PartnerRegistry) args[0];
+            partnerAssociation = (PrivateEntity) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            partnerAssociation = PartnerRegistryTestSupport.createPartnerRegistry();
+            partnerAssociation = PrivateEntityTestSupport.createPartnerRegistry();
         }
         int sequence;
         try {
@@ -63,7 +63,7 @@ public class ContactTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Contact> createContactList(int contactListSize, int partnerAssociationListSize) {
-        List<PartnerRegistry> partnerAssociationList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerAssociationListSize);
+        List<PrivateEntity> partnerAssociationList = PrivateEntityTestSupport.createPartnerRegistryList(partnerAssociationListSize);
 
         return createContactList(contactListSize, partnerAssociationList);
     }
@@ -74,11 +74,11 @@ public class ContactTestSupport {
      * @param contactListSize
      * @param partnerAssociationList
      */
-    public static List<Contact> createContactList(int contactListSize, List<PartnerRegistry> partnerAssociationList) {
+    public static List<Contact> createContactList(int contactListSize, List<PrivateEntity> partnerAssociationList) {
         List<Contact> contactList = new ArrayList<Contact>();
-        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
+        for (PrivateEntity privateEntity: partnerAssociationList) {
             for (int i=0;i<contactListSize;i++) {
-                contactList.add(createContact(partnerRegistry));
+                contactList.add(createContact(privateEntity));
             }
         }
         return contactList;

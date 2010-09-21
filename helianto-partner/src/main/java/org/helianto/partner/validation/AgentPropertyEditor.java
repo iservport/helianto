@@ -28,7 +28,7 @@ public class AgentPropertyEditor extends AbstractSessionPropertyEditor {
     @Override
     public String getAsText() {
         Agent agent = (Agent) getValue();
-        return String.valueOf(agent.getPartnerRegistry().getPartnerAlias());
+        return String.valueOf(agent.getPrivateEntity().getPartnerAlias());
     }
     
     @Override

@@ -57,7 +57,7 @@ public interface PublicEntityMgr {
      * 
      * @param publicEntityFilter
      */
-	public List<PublicEntity> findPublicEntities(PublicEntityFilter publicEntityFilter);
+	public List<? extends PublicEntity> findPublicEntities(PublicEntityFilter publicEntityFilter);
 	
     /**
      * Write <code>PublicEntity</code> to the datastore.

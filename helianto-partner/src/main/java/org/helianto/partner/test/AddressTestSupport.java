@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Address;
-import org.helianto.partner.PartnerRegistry;
+import org.helianto.partner.PrivateEntity;
 
 /**
- * Class to support <code>AddressDao</code> tests.
+ * Class to support <code>Address</code> tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -18,15 +18,15 @@ public class AddressTestSupport {
 
     /**
      * Test support method to create a <code>Address</code>.
-     * @param partnerRegistry optional PartnerRegistry 
+     * @param privateEntity optional PartnerRegistry 
      * @param sequence optional int 
      */
     public static Address createAddress(Object... args) {
-        PartnerRegistry partnerRegistry;
+        PrivateEntity privateEntity;
         try {
-            partnerRegistry = (PartnerRegistry) args[0];
+            privateEntity = (PrivateEntity) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
-            partnerRegistry = PartnerRegistryTestSupport.createPartnerRegistry();
+            privateEntity = PrivateEntityTestSupport.createPartnerRegistry();
         }
         int sequence;
         try {
@@ -34,7 +34,7 @@ public class AddressTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             sequence = DomainTestSupport.getNonRepeatableIntValue(testKey++);
         }
-        Address address = Address.addressFactory(partnerRegistry, sequence);
+        Address address = Address.addressFactory(privateEntity, sequence);
         return address;
     }
     
@@ -64,7 +64,7 @@ public class AddressTestSupport {
      * @param partnerAssociationListSize
      */
     public static List<Address> createAddressList(int addressListSize, int partnerAssociationListSize) {
-        List<PartnerRegistry> partnerAssociationList = PartnerRegistryTestSupport.createPartnerRegistryList(partnerAssociationListSize);
+        List<PrivateEntity> partnerAssociationList = PrivateEntityTestSupport.createPartnerRegistryList(partnerAssociationListSize);
 
         return createAddressList(addressListSize, partnerAssociationList);
     }
@@ -75,11 +75,11 @@ public class AddressTestSupport {
      * @param addressListSize
      * @param partnerAssociationList
      */
-    public static List<Address> createAddressList(int addressListSize, List<PartnerRegistry> partnerAssociationList) {
+    public static List<Address> createAddressList(int addressListSize, List<PrivateEntity> partnerAssociationList) {
         List<Address> addressList = new ArrayList<Address>();
-        for (PartnerRegistry partnerRegistry: partnerAssociationList) {
+        for (PrivateEntity privateEntity: partnerAssociationList) {
 	        for (int i=0;i<addressListSize;i++) {
-    	        addressList.add(createAddress(partnerRegistry));
+    	        addressList.add(createAddress(privateEntity));
         	}
         }
         return addressList;
