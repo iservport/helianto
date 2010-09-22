@@ -191,8 +191,21 @@ public class Entity implements java.io.Serializable {
 		this.installDate = installDate;
 	}
     
+	/**
+	 * <<Transient>> True if install date is not null.
+	 */
+	@Transient
+	public boolean isInstalled() {
+		return getInstallDate()!=null;
+	}
+	
     /**
      * <<Transient>> Convenient to hold the manager during installation
+	 * 
+	 * <p>
+	 * Entity installation requires many steps. Please, check
+	 * service layer for installation procedures.
+	 * <p>
      */
     @Transient
     public Identity getManager() {

@@ -38,6 +38,7 @@ public class PublicEntity extends AbstractAddress implements BusinessUnit {
 	private int version;
 	private Operator operator;
 	private Entity entity;
+	private String newEntityAlias;
 	private String entityName;
 	private char publicEntityType;
 	private char publicEntityVisibility;
@@ -112,11 +113,43 @@ public class PublicEntity extends AbstractAddress implements BusinessUnit {
 	}
 	
 	/**
-	 * Entity alias.
+	 * <<Transient>> Entity alias.
 	 */
 	@Transient
 	public String getEntityAlias() {
-		return getEntity().getAlias();
+		if (getEntity()!=null) {
+			return getEntity().getAlias();
+		}
+		return "";
+	}
+	
+	/**
+	 * <<Transient>> True if Entity has already been installed.
+	 * 
+	 * <p>
+	 * Entity installation requires many steps. Please, check
+	 * service layer for installation procedures.
+	 * <p>
+	 */
+	@Transient
+	public boolean isEntityInstalled() {
+		if (getEntity()!=null) {
+			return getEntity().isInstalled();
+		}
+		return false;
+	}
+	
+	/**
+	 * <<Transient>> Should be used only to install a new Entity.
+	 * 
+	 * @see PublicEntity#isEntityInstalled()
+	 */
+	@Transient
+	public String getNewEntityAlias() {
+		return this.newEntityAlias;
+	}
+	public void setNewEntityAlias(String newEntityAlias) {
+		this.newEntityAlias = newEntityAlias;
 	}
 	
 	/**
