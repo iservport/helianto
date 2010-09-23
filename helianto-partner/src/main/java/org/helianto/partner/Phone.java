@@ -15,6 +15,7 @@
 
 package org.helianto.partner;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -61,7 +62,7 @@ public class Phone extends AbstractPhone {
     /**
      * Partner registry.
      */
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPartnerRegistry() {
 		return partnerRegistry;
