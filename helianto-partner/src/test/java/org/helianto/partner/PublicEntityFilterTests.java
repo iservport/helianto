@@ -29,7 +29,8 @@ public class PublicEntityFilterTests {
     public static String OB = "order by publicentity.entity.alias ";
     public static String C1 = "publicentity.operator.id = 1 ";
     public static String C2 = "AND publicentity.entity.alias = 'ALIAS' ";
-    public static String C3 = "AND lower(publicentity.entity.alias) like '%name%' ";
+    public static String C3 = "AND publicentity.class=PublicEntity ";
+    public static String C4 = "AND lower(publicentity.entity.alias) like '%name%' ";
 
     @Test
     public void empty() {
@@ -43,9 +44,15 @@ public class PublicEntityFilterTests {
     }
     
     @Test
+    public void filterClazz() {
+        filter.setClazz(PublicEntity.class);
+        assertEquals(C1+C3+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
     public void filterLike() {
         filter.setEntityAliasLike("NAME");
-        assertEquals(C1+C3+OB, filter.createCriteriaAsString());
+        assertEquals(C1+C4+OB, filter.createCriteriaAsString());
     }
     
     private PublicEntityFilter filter;

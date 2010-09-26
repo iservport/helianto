@@ -62,6 +62,11 @@ public interface PublicEntityMgr {
     /**
      * Write <code>PublicEntity</code> to the datastore.
      * 
+     * <p>
+     * Should be able to detect if the associated <code>Entity</code> is
+     * already installed and trigger installation accordingly.
+     * </p>
+     * 
      * @param publicEntity
      */
     public PublicEntity storePublicEntity(PublicEntity publicEntity);

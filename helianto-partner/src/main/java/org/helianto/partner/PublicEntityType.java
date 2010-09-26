@@ -10,11 +10,11 @@ public enum PublicEntityType {
 	/**
 	 * Public entity represents government, etc.
 	 */
-	PUBLIC('0'),
+	PUBLIC('P'),
 	/**
 	 * Public entity is private.
 	 */
-	PRIVATE('1'),
+	PRIVATE('R'),
 	/**
 	 * Public entity type not informed.
 	 */

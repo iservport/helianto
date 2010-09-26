@@ -19,6 +19,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 
 /**
@@ -39,6 +40,7 @@ public class PublicEntity extends AbstractAddress implements BusinessUnit {
 	private Operator operator;
 	private Entity entity;
 	private String newEntityAlias;
+	private Identity newEntityManager;
 	private String entityName;
 	private char publicEntityType;
 	private char publicEntityVisibility;
@@ -51,7 +53,7 @@ public class PublicEntity extends AbstractAddress implements BusinessUnit {
 	 */
 	public PublicEntity() {
 		super();
-		setPublicEntityType(PublicEntityType.NOT_INFORMED);
+		setPublicEntityTypeEnum(PublicEntityType.NOT_INFORMED);
 		setPublicEntityVisibility(PublicEntityVisibility.REGISTERED);
 		setMainPhone(new AbstractPhone());
 		setMainEmail("");
@@ -153,6 +155,34 @@ public class PublicEntity extends AbstractAddress implements BusinessUnit {
 	}
 	
 	/**
+	 * <<Transient>> Should be used only to install a new Entity.
+	 * 
+	 * @see PublicEntity#isEntityInstalled()
+	 */
+	@Transient
+	public Identity getNewEntityManager() {
+		return newEntityManager;
+	}
+	public void setNewEntityManager(Identity newEntityManager) {
+		this.newEntityManager = newEntityManager;
+	}
+	
+	/**
+	 * <<Transient>> Should be used only to install a new Entity.
+	 * 
+	 * @see PublicEntity#isEntityInstalled()
+	 */
+	@Transient
+	public boolean preProcessEntityInstallation() {
+		if (!isEntityInstalled()) {
+			getEntity().setAlias(getNewEntityAlias());
+			getEntity().setManager(getNewEntityManager());
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Entity name.
 	 */
 	@Column(length=64)
@@ -172,7 +202,7 @@ public class PublicEntity extends AbstractAddress implements BusinessUnit {
 	public void setPublicEntityType(char publicEntityType) {
 		this.publicEntityType = publicEntityType;
 	}
-	public void setPublicEntityType(PublicEntityType publicEntityType) {
+	public void setPublicEntityTypeEnum(PublicEntityType publicEntityType) {
 		this.publicEntityType = publicEntityType.getValue();
 	}
 	
@@ -219,6 +249,20 @@ public class PublicEntity extends AbstractAddress implements BusinessUnit {
 		this.publicEntityKeys = publicEntityKeys;
 	}
 
+	/**
+	 * Update fields provided by <code>PublicAddress</code>.
+	 * 
+	 * @param publicAddress
+	 */
+	public void setPublicAddress(PublicAddress publicAddress) {
+		if (publicAddress!=null) {
+			setAddress1(publicAddress.getAddress1());
+			setAddress2(publicAddress.getAddress2());
+			setPostalCode(publicAddress.getPostalCode());
+			setProvince(publicAddress.getProvince());
+		}
+	}
+	
 	/**
      * toString
      * @return String

@@ -3,6 +3,8 @@ package org.helianto.partner;
 import org.helianto.core.Operator;
 import org.helianto.core.filter.AbstractOperatorBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Public entity filter.
@@ -12,6 +14,7 @@ import org.helianto.core.filter.CriteriaBuilder;
 public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 
 	private static final long serialVersionUID = 1L;
+	private Class<? extends PublicEntity> clazz;
 	private String entityAlias;
 	private String entityAliasLike;
 	
@@ -24,6 +27,16 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 		super(operator);
 		setEntityAlias("");
 		setEntityAliasLike("");
+	}
+	
+	/**
+	 * Type filter.
+	 */
+	public Class<? extends PublicEntity> getClazz() {
+		return clazz;
+	}
+	public void setClazz(Class<? extends PublicEntity> clazz) {
+		this.clazz = clazz;
 	}
 	
 	/**
@@ -46,6 +59,18 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 		this.entityAliasLike = entityAliasLike;
 	}
 
+	/**
+	 * Restrict selection to a given operator, if any. 
+	 */
+	@Override
+	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		super.preProcessFilter(mainCriteriaBuilder);
+		if (getClazz()!=null) {
+			mainCriteriaBuilder.appendAnd().append(getClazz());
+			logger.debug("Added class {} restriction.", getClazz());
+		}
+	}
+	
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("entity.alias", getEntityAliasLike(), mainCriteriaBuilder);
@@ -74,4 +99,6 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	public void reset() {
 	}
 
+	private static final Logger logger  = LoggerFactory.getLogger(PublicEntityFilter.class);
+	
 }

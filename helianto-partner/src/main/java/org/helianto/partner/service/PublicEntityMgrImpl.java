@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.service.PostInstallationMgr;
 import org.helianto.partner.PublicAddress;
 import org.helianto.partner.PublicAddressFilter;
 import org.helianto.partner.PublicEntity;
@@ -52,6 +53,10 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	}
 	
 	public PublicEntity storePublicEntity(PublicEntity publicEntity) {
+		if (publicEntity.preProcessEntityInstallation()) {
+			// trigger entity installation
+			publicEntity.setEntity(postInstallationMgr.installEntity(publicEntity.getEntity()));
+		}
 		publicEntityDao.saveOrUpdate(publicEntity);
 		return publicEntity;
 	}
@@ -84,6 +89,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	private FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao;
 	private FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;
 	private BasicDao<PublicEntityKey> publicEntityKeyDao;
+	private PostInstallationMgr postInstallationMgr;
 	
 	@Resource(name="publicAddressDao")
 	public void setPublicAddressDao(
@@ -99,6 +105,11 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	@Resource(name="publicEntityKeyDao")
 	public void setPublicEntityKeyDao(BasicDao<PublicEntityKey> publicEntityKeyDao) {
 		this.publicEntityKeyDao = publicEntityKeyDao;
+	}
+	
+	@Resource
+	public void setPostInstallationMgr(PostInstallationMgr postInstallationMgr) {
+		this.postInstallationMgr = postInstallationMgr;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(PublicEntityMgrImpl.class);

@@ -1,14 +1,17 @@
 package org.helianto.partner.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.easymock.classextension.EasyMock;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.service.PostInstallationMgr;
 import org.helianto.partner.PublicAddress;
 import org.helianto.partner.PublicAddressFilter;
 import org.helianto.partner.PublicEntity;
@@ -74,8 +77,25 @@ public class PublicEntityMgrTests {
 	}
 	
 	@Test
+	public void storePublicEntityInstall() {
+		PublicEntity publicEntity = new PublicEntity(entity);
+		Entity installedEntity = new Entity();
+		
+		EasyMock.expect(postInstallationMgr.installEntity(entity)).andReturn(installedEntity);
+		EasyMock.replay(postInstallationMgr);
+		
+		publicEntityDao.saveOrUpdate(publicEntity);
+		EasyMock.replay(publicEntityDao);
+		
+		assertEquals(publicEntity, publicEntityMgr.storePublicEntity(publicEntity));
+		assertSame(installedEntity, publicEntity.getEntity());
+		EasyMock.verify(publicEntityDao);
+	}
+	
+	@Test
 	public void storePublicEntity() {
 		PublicEntity publicEntity = new PublicEntity(entity);
+		entity.setInstallDate(new Date());
 		
 		publicEntityDao.saveOrUpdate(publicEntity);
 		EasyMock.replay(publicEntityDao);
@@ -103,7 +123,8 @@ public class PublicEntityMgrTests {
 	private Entity entity;
 	private FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao;
 	private FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;
-
+	private PostInstallationMgr postInstallationMgr;
+	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
@@ -114,12 +135,15 @@ public class PublicEntityMgrTests {
 		((PublicEntityMgrImpl) publicEntityMgr).setPublicAddressDao(publicAddressDao);
 		publicEntityDao = EasyMock.createMock(FilterDao.class);
 		((PublicEntityMgrImpl) publicEntityMgr).setPublicEntityDao(publicEntityDao);
+		postInstallationMgr = EasyMock.createMock(PostInstallationMgr.class);
+		((PublicEntityMgrImpl) publicEntityMgr).setPostInstallationMgr(postInstallationMgr);
 	}
 	
 	@After
 	public void tearDown() {
 		EasyMock.reset(publicAddressDao);
 		EasyMock.reset(publicEntityDao);
+		EasyMock.reset(postInstallationMgr);
 	}
 
 }

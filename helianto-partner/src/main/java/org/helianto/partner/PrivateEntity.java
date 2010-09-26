@@ -297,6 +297,20 @@ public class PrivateEntity extends AbstractAddress implements java.io.Serializab
         this.partnerRegistryKeyList = partnerRegistryKeyList;
     }
     
+	/**
+	 * Update fields provided by <code>PublicAddress</code>.
+	 * 
+	 * @param publicAddress
+	 */
+	public void setPublicAddress(PublicAddress publicAddress) {
+		if (publicAddress!=null) {
+			setAddress1(publicAddress.getAddress1());
+			setAddress2(publicAddress.getAddress2());
+			setPostalCode(publicAddress.getPostalCode());
+			setProvince(publicAddress.getProvince());
+		}
+	}
+	
     /**
      * toString
      * @return String
@@ -305,7 +319,7 @@ public class PrivateEntity extends AbstractAddress implements java.io.Serializab
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("partnerAlias").append("='").append(getPartnerAlias()).append("' ");
+        buffer.append("partnerAlias").append("='").append(getEntityAlias()).append("' ");
         buffer.append("]");
       
         return buffer.toString();
@@ -321,7 +335,7 @@ public class PrivateEntity extends AbstractAddress implements java.io.Serializab
          PrivateEntity castOther = (PrivateEntity) other; 
          
          return ((this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ))
-             && ((this.getPartnerAlias()==castOther.getPartnerAlias()) || ( this.getPartnerAlias()!=null && castOther.getPartnerAlias()!=null && this.getPartnerAlias().equals(castOther.getPartnerAlias()) ));
+             && ((this.getEntityAlias()==castOther.getEntityAlias()) || ( this.getEntityAlias()!=null && castOther.getEntityAlias()!=null && this.getEntityAlias().equals(castOther.getEntityAlias()) ));
    }
    
    /**
@@ -329,7 +343,7 @@ public class PrivateEntity extends AbstractAddress implements java.io.Serializab
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getPartnerAlias() == null ? 0 : this.getPartnerAlias().hashCode() );
+         result = 37 * result + ( getEntityAlias() == null ? 0 : this.getEntityAlias().hashCode() );
          return result;
    }   
 
