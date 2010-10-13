@@ -102,6 +102,13 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partner;
 	}
 
+	public Partner storePartner(Partner partner, Entity entity) {
+		if (partner.isNewPrivateEntityRequested(entity)) {
+			return storePartner(partner);
+		}
+		throw new IllegalArgumentException("Unable to create partner: a private entity is required.");
+	}
+
 	public void removePartner(Partner partner) {
 		partnerDao.remove(partner);
 	}

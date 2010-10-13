@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.test.UserTestSupport;
@@ -38,46 +39,50 @@ public class PartnerFilterTests {
 		PartnerFilter partnerFilter = new PartnerFilter();
 		assertTrue(partnerFilter instanceof Serializable);
 		assertTrue(partnerFilter instanceof AbstractUserBackedCriteriaFilter);
-	}
-	
-    @Test
-	public void factory() {
-		User user = new User();
-		PartnerFilter partnerFilter = PartnerFilter.partnerFilterFactory(user);
+
+		Entity entity = new Entity();
+		partnerFilter = new PartnerFilter(entity);
+		assertSame(partnerFilter.getEntity(), entity);
+
+		partnerFilter = new PartnerFilter(entity, Customer.class);
+		assertSame(partnerFilter.getEntity(), entity);
+		assertEquals(Customer.class, partnerFilter.getClazz());
+
+		partnerFilter = new PartnerFilter(entity, Supplier.class);
+		assertSame(partnerFilter.getEntity(), entity);
+		assertEquals(Supplier.class, partnerFilter.getClazz());
+		
+		User user = new User(entity);
+		partnerFilter = new PartnerFilter(user);
+		assertSame(partnerFilter.getEntity(), entity);
 		assertSame(partnerFilter.getUser(), user);
-	}
-	
-    @Test
-	public void factoryCustomer() {
-		User user = new User();
-		PartnerFilter partnerFilter = PartnerFilter.partnerFilterFactory(user, Customer.class);
+
+		partnerFilter = new PartnerFilter(user, Customer.class);
+		assertSame(partnerFilter.getEntity(), entity);
 		assertSame(partnerFilter.getUser(), user);
 		assertEquals(Customer.class, partnerFilter.getClazz());
-	}
-	
-    @Test
-	public void factorySupplier() {
-		User user = new User();
-		PartnerFilter partnerFilter = PartnerFilter.partnerFilterFactory(user, Supplier.class);
+
+		partnerFilter = new PartnerFilter(user, Supplier.class);
+		assertSame(partnerFilter.getEntity(), entity);
 		assertSame(partnerFilter.getUser(), user);
 		assertEquals(Supplier.class, partnerFilter.getClazz());
 	}
 	
     @Test
 	public void reset() {
-		PartnerFilter partnerFilter = PartnerFilter.partnerFilterFactory(new User());
+		PartnerFilter partnerFilter = new PartnerFilter(new User());
 		partnerFilter.setPartnerNameLike("TEST");
 		partnerFilter.reset();
 		assertEquals("", partnerFilter.getPartnerNameLike());
 	}
 
-    public static String OB = "order by partner.partnerRegistry.partnerAlias ";
-    public static String C1 = "partner.partnerRegistry.entity.id = 1 ";
+    public static String OB = "order by partner.privateEntity.entityAlias ";
+    public static String C1 = "partner.privateEntity.entity.id = 1 ";
     public static String C2 = "AND partner.class=Partner ";
     public static String C7 = "AND partner.class=Customer ";
     public static String C3 = "AND partner.priority = '0' ";
-    public static String C4 = "AND partner.partnerRegistry.partnerAlias = 'ALIAS' ";
-    public static String C5 = "AND lower(partner.partnerRegistry.partnerName) like '%name%' ";
+    public static String C4 = "AND partner.privateEntity.entityAlias = 'ALIAS' ";
+    public static String C5 = "AND lower(partner.privateEntity.entityName) like '%name%' ";
     public static String C6 = "AND partner.partnerState = 'A' ";
 
     @Test
@@ -113,7 +118,7 @@ public class PartnerFilterTests {
     
     @Before
     public void setUp() {
-    	filter = PartnerFilter.partnerFilterFactory(UserTestSupport.createUser());
+    	filter = new PartnerFilter(UserTestSupport.createUser());
     	filter.getEntity().setId(1);
     }
 }

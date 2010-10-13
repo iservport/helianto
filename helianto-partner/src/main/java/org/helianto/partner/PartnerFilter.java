@@ -30,27 +30,6 @@ import org.helianto.core.filter.PolymorphicFilter;
  */
 public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements Serializable, PolymorphicFilter<Partner> {
 	
-	/**
-	 * Factory method.
-	 * 
-	 * @param user
-	 */
-	public static PartnerFilter partnerFilterFactory(User user) {
-		return AbstractUserBackedCriteriaFilter.filterFactory(PartnerFilter.class, user);
-	}
-	
-	/**
-	 * Factory method.
-	 * 
-	 * @param user
-	 * @param clazz
-	 */
-	public static PartnerFilter partnerFilterFactory(User user, Class<? extends Partner> clazz) {
-		PartnerFilter partnerFilter = AbstractUserBackedCriteriaFilter.filterFactory(PartnerFilter.class, user);
-		partnerFilter.setClazz(clazz);
-		return partnerFilter;
-	}
-	
 	private static final long serialVersionUID = 1L;
 	private String partnerAlias;
 	private String partnerNameLike;
@@ -66,6 +45,48 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 		setPartnerAlias("");
 		setPartnerNameLike("");
 		setPartnerState(' ');
+	}
+	
+	/**
+	 * Entity constructor.
+	 * 
+	 * @param entity
+	 */
+	public PartnerFilter(Entity entity) {
+		this();
+		setEntity(entity);
+	}
+
+	/**
+	 * Entity class constructor.
+	 * 
+	 * @param entity
+	 * @param clazz
+	 */
+	public PartnerFilter(Entity entity, Class<? extends Partner> clazz) {
+		this(entity);
+		setClazz(clazz);
+	}
+
+	/**
+	 * User constructor.
+	 * 
+	 * @param user
+	 */
+	public PartnerFilter(User user) {
+		this();
+		setUser(user);
+	}
+
+	/**
+	 * User class constructor.
+	 * 
+	 * @param user
+	 * @param clazz
+	 */
+	public PartnerFilter(User user, Class<? extends Partner> clazz) {
+		this(user);
+		setClazz(clazz);
 	}
 
 	/**
@@ -88,7 +109,7 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	 */
 	@Override
 	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("partnerRegistry.entity.id", entity.getId(), mainCriteriaBuilder);
+		appendEqualFilter("privateEntity.entity.id", entity.getId(), mainCriteriaBuilder);
 	}
 
 	@Override
@@ -100,15 +121,15 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("partnerRegistry.partnerAlias", getPartnerAlias(), mainCriteriaBuilder);
+		appendEqualFilter("privateEntity.entityAlias", getPartnerAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("partnerRegistry.partnerName", getPartnerNameLike(), mainCriteriaBuilder);
+		appendLikeFilter("privateEntity.entityName", getPartnerNameLike(), mainCriteriaBuilder);
 		appendEqualFilter("partnerState", getPartnerState(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);
-		appendOrderBy("partnerRegistry.partnerAlias", mainCriteriaBuilder);
+		appendOrderBy("privateEntity.entityAlias", mainCriteriaBuilder);
 	}
 
 	/**

@@ -16,26 +16,23 @@
 package org.helianto.inventory;
 
 import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.document.AbstractControlFilter;
 import org.helianto.partner.Partner;
-import org.helianto.process.ProcessDocument;
 
 /**
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessAgreementFilter extends AbstractControlFilter {
+public class ProcessAgreementFilter extends AbstractRequirementFilter {
 
 	private static final long serialVersionUID = 1L;
 	private String customerAliasLike;
 	private char agreementState;
-	private ProcessDocument process;
 	private int processIndex;
 	private Partner customer;
 
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		// TODO Auto-generated method stub
+		super.doFilter(mainCriteriaBuilder);
 		
 	}
 
@@ -61,16 +58,6 @@ public class ProcessAgreementFilter extends AbstractControlFilter {
 	}
 	public void setAgreementState(char agreementState) {
 		this.agreementState = agreementState;
-	}
-
-	/**
-	 * Process document filter.
-	 */
-	public ProcessDocument getProcess() {
-		return process;
-	}
-	public void setProcess(ProcessDocument process) {
-		this.process = process;
 	}
 
 	/**

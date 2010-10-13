@@ -1,9 +1,11 @@
 package org.helianto.partner;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.test.DomainTestSupport;
+import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.junit.Test;
 
 /**
@@ -18,16 +20,20 @@ public class LaboratoryTests{
      */
 	@Test
     public void laboratoryEquals() {
-        PrivateEntity partnerRegistry = new PrivateEntity();
+		Entity entity = new Entity(new Operator("DEFAULT"));
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
         
-        Laboratory laboratory = new Laboratory(partnerRegistry);
-        Laboratory copy = (Laboratory) DomainTestSupport.minimalEqualsTest(laboratory);
+        Laboratory laboratory = new Laboratory();
+        Laboratory other = new Laboratory();
         
-        copy.setPrivateEntity(null);
-        assertFalse(laboratory.equals(copy));
-
-        copy.setPrivateEntity(partnerRegistry);
-        assertTrue(laboratory.equals(copy));
+        assertTrue(laboratory.equals(other));
+        
+        laboratory.setPrivateEntity(partnerRegistry);
+        assertFalse(laboratory.equals(other));
+        other.setPrivateEntity(partnerRegistry);
+        assertTrue(laboratory.equals(other));
+        assertEquals(laboratory.hashCode(), other.hashCode());
+        assertFalse(laboratory.equals(new Partner(partnerRegistry)));
     }
 
 }

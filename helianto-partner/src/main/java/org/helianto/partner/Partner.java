@@ -40,7 +40,18 @@ import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Province;
 /**
- * Represents the relationship between the organization and other entities.
+ * Base class to represent the relationship between the organization and other entities.
+ * 
+ * <p>
+ * Tipical <code>Partner</code> extensions are Customers, Suppliers, etc. Every <code>Partner</code>
+ * (or subclass) instance imposes the existence of a <code>PrivateEntity</code> instance where default registry 
+ * data is stored. Subclasses are then free to override the default registry, delegated from its owning
+ * <code>PrivateEntity</code>.
+ * </p>
+ * <p>
+ * A transient {@link #newEntityAlias} field is provided to allow the service layer to create a new <code>Partner</code>
+ * and a new owning <code>PrivateEntity</code> in one single call.
+ * </p>
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -56,6 +67,7 @@ public class Partner implements java.io.Serializable, BusinessUnit {
     private static final long serialVersionUID = 1L;
     private int id;
     private PrivateEntity partnerRegistry;
+    private String newEntityAlias;
     private Account account;
     private char priority;
     private char partnerState;
@@ -67,6 +79,7 @@ public class Partner implements java.io.Serializable, BusinessUnit {
 	 *  Empty constructor
 	 */
     public Partner() {
+    	setNewEntityAlias("");
         setPartnerState(PartnerState.IDLE.getValue());
         setPriority('0');
     }
@@ -118,16 +131,34 @@ public class Partner implements java.io.Serializable, BusinessUnit {
 
     /**
      * PartnerRegistry.
+     * 
+     * <p>
+     * Never null.
+     * </p>
      */
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
+    	if (this.partnerRegistry==null) {
+    		this.partnerRegistry = new PrivateEntity();
+    	}
         return this.partnerRegistry;
     }
     public void setPrivateEntity(PrivateEntity partnerRegistry) {
         this.partnerRegistry = partnerRegistry;
     }
     
+	/**
+	 * <<Transient>> Should be used only to install a new PrivateEntity.
+	 */
+	@Transient
+	public String getNewEntityAlias() {
+		return this.newEntityAlias;
+	}
+	public void setNewEntityAlias(String newEntityAlias) {
+		this.newEntityAlias = newEntityAlias;
+	}
+	
     /**
      * <<Transient>> Convenience to retrieve <code>Entity</code> from parent
      * <code>PrivateEntity</code>.
@@ -137,8 +168,30 @@ public class Partner implements java.io.Serializable, BusinessUnit {
     	return getPrivateEntity().getEntity();
     }
     
+	/**
+	 * <<Transient>> True if the owning <code>PrivateEntity</code> has alias.
+	 */
+	@Transient
+	public boolean isPrivateEntityValid() {
+		return getEntityAlias().length()>0;
+	}
+	
+	/**
+	 * <<Transient>> Should be used only to create a new <code>PrivateEntity</code>.
+	 */
+	@Transient
+	public boolean isNewPrivateEntityRequested(Entity entity) {
+		if (!isPrivateEntityValid() && getNewEntityAlias().length()>0) {
+			getPrivateEntity().setEntity(entity);
+			getPrivateEntity().setEntityAlias(getNewEntityAlias());
+			setNewEntityAlias("");
+			return true;
+		}
+		return false;
+	}
+	
     // Implementation of the BusinessUnit interface
-    // future implementations may choose from addresses on the parent partner registry.
+    // future implementations may choose from addresses on the owning public entity.
 
     @Transient
     public String getEntityAlias() {

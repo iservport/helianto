@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
-import org.helianto.core.test.DomainTestSupport;
+import org.helianto.core.Operator;
 import org.junit.Test;
 
 /**
@@ -42,16 +42,20 @@ public class CustomerTests {
      */
 	@Test
     public void customerEquals() {
-        PrivateEntity partnerRegistry = new PrivateEntity();
+		Entity entity = new Entity(new Operator("DEFAULT"));
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
         
-        Customer customer = new Customer(partnerRegistry);
-        Customer copy = (Customer) DomainTestSupport.minimalEqualsTest(customer);
+        Customer customer = new Customer();
+        Customer other = new Customer();
         
-        copy.setPrivateEntity(null);
-        assertFalse(customer.equals(copy));
-
-        copy.setPrivateEntity(partnerRegistry);
-        assertTrue(customer.equals(copy));
+        assertTrue(customer.equals(other));
+        
+        customer.setPrivateEntity(partnerRegistry);
+        assertFalse(customer.equals(other));
+        other.setPrivateEntity(partnerRegistry);
+        assertTrue(customer.equals(other));
+        assertEquals(customer.hashCode(), other.hashCode());
+        assertFalse(customer.equals(new Partner(partnerRegistry)));
     }
 
 }

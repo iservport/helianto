@@ -1,8 +1,12 @@
 package org.helianto.partner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.junit.Test;
 
 /**
@@ -28,5 +32,23 @@ public class DivisionTests {
 		Division division = new Division(other);
 		assertSame(registry, division.getPrivateEntity());
 	}
+
+	@Test
+    public void equality() {
+		Entity entity = new Entity(new Operator("DEFAULT"));
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
+        
+        Division division = new Division();
+        Division other = new Division();
+        
+        assertTrue(division.equals(other));
+        
+        division.setPrivateEntity(partnerRegistry);
+        assertFalse(division.equals(other));
+        other.setPrivateEntity(partnerRegistry);
+        assertTrue(division.equals(other));
+        assertEquals(division.hashCode(), other.hashCode());
+        assertFalse(division.equals(new Partner(partnerRegistry)));
+    }
 
 }

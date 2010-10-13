@@ -1,9 +1,12 @@
 package org.helianto.partner;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.test.DomainTestSupport;
+import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.junit.Test;
 
 /**
@@ -18,17 +21,41 @@ public class PartnerTests {
      */
 	@Test
     public void testPartnerEquals() {
-        PrivateEntity partnerRegistry = new PrivateEntity();
+		Entity entity = new Entity(new Operator("DEFAULT"));
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
         
-        Partner partner = new Partner(partnerRegistry);
-        Partner copy = (Partner) DomainTestSupport.minimalEqualsTest(partner);
+        Partner partner = new Partner();
+        Partner other = new Partner();
         
-        copy.setPrivateEntity(null);
-        assertFalse(partner.equals(copy));
-
-        copy.setPrivateEntity(partnerRegistry);
-        assertTrue(partner.equals(copy));
+        assertTrue(partner.equals(other));
+        
+        partner.setPrivateEntity(partnerRegistry);
+        assertFalse(partner.equals(other));
+        other.setPrivateEntity(partnerRegistry);
+        assertTrue(partner.equals(other));
     }
+	
+	@Test
+	public void privateEntity() {
+		// private entity is never null
+		Partner partner = new Partner();
+		assertNotNull(partner.getPrivateEntity());
+    }
+	
+	@Test
+	public void newEntity() {
+		// by default, a new privateEntity is NOT created
+		Entity entity = new Entity();
+		Partner partner = new Partner();
+		assertFalse(partner.isPrivateEntityValid());
+		assertFalse(partner.isNewPrivateEntityRequested(entity));
+		// a transient newEntity not empty should trigger a new privateEntity creation
+		partner.setNewEntityAlias("TEST");
+		assertTrue(partner.isNewPrivateEntityRequested(entity));
+		assertTrue(partner.isPrivateEntityValid());
+		assertEquals(entity, partner.getEntity());
+		assertEquals("TEST", partner.getEntityAlias());
+	}
 
 }
     

@@ -76,6 +76,19 @@ public interface PartnerMgr {
      * @param partner
      */
 	public Partner storePartner(Partner partner);
+	
+    /**
+     * Write <code>Partner</code> to the datastore.
+     * 
+     * <p>
+     * Requires a newEntityAlias to allow for the owning <code>PrivateEntity</code> creation.
+     * </p>
+     * 
+     * @param partner
+     * @param entity
+     * @exception IllegalArgumentException
+     */
+	public Partner storePartner(Partner partner, Entity entity) throws IllegalArgumentException;
 
     /**
      * Remove <code>Partner</code> from the datastore.
