@@ -16,7 +16,6 @@
 package org.helianto.controller;
 
 import org.helianto.core.security.PublicUserDetails;
-import org.helianto.core.security.UserDetailsAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +47,7 @@ public abstract class AbstractFormAction extends FormAction {
      * Initialization.
      */
     public Event init(RequestContext context) {
-        PublicUserDetails secureUser = UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
+        PublicUserDetails secureUser = (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         context.getConversationScope().put("secureUser", secureUser);
     	return success();
     }

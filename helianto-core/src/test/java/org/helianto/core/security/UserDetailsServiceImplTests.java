@@ -17,21 +17,27 @@ package org.helianto.core.security;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.helianto.core.Credential;
-import org.helianto.core.Identity;
+import org.helianto.core.User;
+import org.helianto.core.UserFilter;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
-import org.helianto.core.test.CredentialTestSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
 /**
@@ -40,65 +46,37 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UserDetailsServiceImplTests {
     
     // class under test
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsServiceImpl2 userDetailsService;
     
     @Test
     public void loadAndValidateIdentity() {
-    	String principal = "TEST";
-    	Identity identity = new Identity();
+    	Credential credential = new Credential("USERNAME", "PASSWORD");
+    	List<UserGroup> userList = new ArrayList<UserGroup>();
+    	User user = new User();
+    	userList.add(user);
+    	Set<UserRole> roles = new HashSet<UserRole>();
     	
-		expect(userMgr.findIdentityByPrincipal(principal))
-		    .andReturn(identity);
+        expect(securityMgr.findCredentialByPrincipal("USERNAME")).andReturn(credential);
+		expect(userMgr.findUsers(isA(UserFilter.class))).andReturn(userList);
+		expect(userSelectorStrategy.selectUser(userList)).andReturn(user);
+        expect(securityMgr.findRoles(user, true)).andReturn(roles);
+        replay(securityMgr);
 		replay(userMgr);
+        replay(userSelectorStrategy);
     	
-		assertSame(identity, userDetailsService.loadAndValidateIdentity(principal));
+        UserDetailsAdapter userDetails = (UserDetailsAdapter) userDetailsService.loadUserByUsername("USERNAME");
+		assertSame(user, userDetails.getUser());
+		assertSame("PASSWORD", userDetails.getPassword());
+		verify(securityMgr);
 		verify(userMgr);
+		verify(userSelectorStrategy);
     }
     
-    @Test(expected=UsernameNotFoundException.class)
-    public void loadAndValidateIdentityNull() {
-        expect(userMgr.findIdentityByPrincipal("PRINCIPAL"))
-            .andReturn(null);
-        replay(userMgr);
-        
-        userDetailsService.loadAndValidateIdentity("PRINCIPAL");
-    }
-
-    @Test(expected=UsernameNotFoundException.class)
-    public void loadAndValidateIdentityError() {
-        expect(userMgr.findIdentityByPrincipal("PRINCIPAL"))
-            .andThrow(new UsernameNotFoundException("Error"));
-        replay(userMgr);
-        
-        userDetailsService.loadAndValidateIdentity("PRINCIPAL");
-    }
+    // collabs
     
-    @Test
-    public void loadAndValidateCredential() {
-        Credential credential = CredentialTestSupport.createCredential();
-        
-        expect(securityMgr.findCredentialByIdentity(credential.getIdentity()))
-            .andReturn(credential);
-        replay(securityMgr);
-        
-        assertSame(credential, userDetailsService.loadAndValidateCredential(credential.getIdentity()));
-        verify(securityMgr);
-    }
-
-    @Test(expected=DataRetrievalFailureException.class)
-    public void loadAndValidateCredentialNull() {
-        Identity identity = new Identity();
-        
-        expect(securityMgr.findCredentialByIdentity(identity))
-        	.andReturn(null);
-        replay(securityMgr);
-
-        userDetailsService.loadAndValidateCredential(identity);
-    }
-    
-    // collaborators
     private UserMgr userMgr;
     private SecurityMgr securityMgr;
+    private UserSelectorStrategy userSelectorStrategy;
 
     // setup
     
@@ -106,15 +84,18 @@ public class UserDetailsServiceImplTests {
     public void setUp() {
         userMgr = createMock(UserMgr.class);
         securityMgr = createMock(SecurityMgr.class);
-        userDetailsService = new UserDetailsServiceImpl();
+        userSelectorStrategy = createMock(UserSelectorStrategy.class);
+        userDetailsService = new UserDetailsServiceImpl2();
         userDetailsService.setUserMgr(userMgr);
         userDetailsService.setSecurityMgr(securityMgr);
+        userDetailsService.setUserSelectorStrategy(userSelectorStrategy);
     }
     
     @After
     public void tearDown() {
         reset(userMgr);
         reset(securityMgr);
+        reset(userSelectorStrategy);
     }
     
 }

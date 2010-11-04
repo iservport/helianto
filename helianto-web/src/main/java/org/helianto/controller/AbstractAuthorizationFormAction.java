@@ -24,9 +24,9 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
-import org.helianto.core.security.UserDetailsAdapter;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -48,7 +48,7 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
      * Authorized user set in security context.
      */
 	public User getAuthorizedUser() {
-        PublicUserDetails secureUser = UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
+		PublicUserDetails secureUser = (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (secureUser==null) {
         	return null;
         }
@@ -84,7 +84,7 @@ public abstract class AbstractAuthorizationFormAction<T> extends AbstractModelFo
             logger.debug("!---- STARTED");
             logger.debug("!---- createAuthorization\n");
         }
-        PublicUserDetails secureUser = UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
+        PublicUserDetails secureUser = (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         context.getConversationScope().put("secureUser", secureUser);
         return success();
     }

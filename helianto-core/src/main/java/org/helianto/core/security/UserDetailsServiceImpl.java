@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 /**
@@ -41,7 +40,6 @@ import org.springframework.util.Assert;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Service("userDetailsService")
 public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     
     /**
@@ -99,7 +97,7 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
     @Override
     protected UserDetails createUserDetails(User user, Credential credential) {
     	User preparedUser = (User) userMgr.prepareUserGroup(user);
-    	return userDetailsFactory.createUserDetails(preparedUser, credential);
+    	return new UserDetailsAdapter(preparedUser, credential, preparedUser.getRoles());
     }
 
 
@@ -107,7 +105,6 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
 
     private SecurityMgr securityMgr;
     private UserMgr userMgr;
-    private UserDetailsFactory userDetailsFactory;
     
     @Resource
     public void setSecurityMgr(SecurityMgr securityMgr) {
@@ -119,11 +116,6 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
         this.userMgr = userMgr;
     }
     
-    @Resource
-    public void setUserDetailsFactory(UserDetailsFactory userDetailsFactory) {
-		this.userDetailsFactory = userDetailsFactory;
-	}
-
     private static Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
     
 }

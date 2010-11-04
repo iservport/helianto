@@ -27,6 +27,7 @@ public abstract class AbstractDocumentFilter extends AbstractUserBackedCriteriaF
 
 	private static final long serialVersionUID = 1L;
     private String docCode;
+    private String docName;
     private String docNameLike;
     
     /**
@@ -59,6 +60,7 @@ public abstract class AbstractDocumentFilter extends AbstractUserBackedCriteriaF
 
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("docName", getDocName(), mainCriteriaBuilder);
 		appendLikeFilter("docName", getDocNameLike(), mainCriteriaBuilder);
 	}
 
@@ -70,6 +72,16 @@ public abstract class AbstractDocumentFilter extends AbstractUserBackedCriteriaF
 	}
 	public void setDocCode(String docCode) {
 		this.docCode = docCode;
+	}
+	
+	/**
+	 * Document name filter.
+	 */
+	public String getDocName() {
+		return docName;
+	}
+	public void setDocName(String docName) {
+		this.docName = docName;
 	}
 	
 	/**

@@ -29,6 +29,7 @@ public class UserAssociationFilter extends AbstractCompositeListFilter {
 	 */
 	public UserAssociationFilter() {
 		super();
+		setOrderByString("child.userKey");
 	}
 
 	/**
@@ -64,11 +65,6 @@ public class UserAssociationFilter extends AbstractCompositeListFilter {
 		appendEqualFilter("parent.userKey", getParentKey(), mainCriteriaBuilder);
 	}
 	
-	@Override
-	protected String getOrderByString() {
-		return "child.userKey";
-	}
-
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("parent.id", getParent().getId(), mainCriteriaBuilder);

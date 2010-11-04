@@ -33,9 +33,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.SecureUserDetails;
-import org.helianto.core.security.UserDetailsAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -90,19 +88,39 @@ public class SecurityMgrImpl implements SecurityMgr {
 		return localRoles;
 	}
 
-    public PublicUserDetails findSecureUser() {
-        return UserDetailsAdapter.retrievePublicUserDetailsFromSecurityContext();
-    }
+	public Set<UserRole> findRoles(UserGroup userGroup, boolean recursively) {
+		userGroupDao.saveOrUpdate(userGroup);
+		Set<UserRole> roles = new HashSet<UserRole>(userGroup.getRoles());
+		if (recursively) {
+			Set<UserAssociation> parents = userGroup.getParentAssociations();
+			for (UserAssociation parentAssociation: parents) {
+				UserGroup parent = parentAssociation.getParent();
+				if (parent!=null) {
+//					userGroupDao.saveOrUpdate(parent);
+					// TODO SORRY, for the moment only one level recursion available...
+					roles.addAll(parent.getRoles());
+				}
+			}
+		}
+		logger.debug("Found {} role(s) FOR {}.", roles.size(), userGroup);
+		return roles;
+	}
     
     // collabs
 
     private FilterDao<Identity, IdentityFilter> identityDao;
+    private BasicDao<UserGroup> userGroupDao;
     private BasicDao<Credential> credentialDao;
 
     @Resource(name="identityDao")
     public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
         this.identityDao = identityDao;
     }
+    
+    @Resource(name="userGroupDao")
+    public void setUserGroupDao(BasicDao<UserGroup> userGroupDao) {
+		this.userGroupDao = userGroupDao;
+	}
 
     @Resource(name="credentialDao")
     public void setCredentialDao(BasicDao<Credential> credentialDao) {
@@ -110,5 +128,5 @@ public class SecurityMgrImpl implements SecurityMgr {
     }
 
     private final static Logger logger = LoggerFactory.getLogger(SecurityMgrImpl.class);
-    
+
 }

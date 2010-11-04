@@ -25,6 +25,7 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	 */
 	public PublicEntityFilter(Operator operator) {
 		super(operator);
+		setOrderByString("entity.alias");
 		setEntityAlias("");
 		setEntityAliasLike("");
 	}
@@ -74,11 +75,6 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("entity.alias", getEntityAliasLike(), mainCriteriaBuilder);
-	}
-	
-	@Override
-	protected String getOrderByString() {
-		return "entity.alias";
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * Presentation logic to manage the current user association and other sibling associations.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated use securityAction
  */
 @Component("adminAction")
 public class AdminAction extends UserGroupAssociationAction {

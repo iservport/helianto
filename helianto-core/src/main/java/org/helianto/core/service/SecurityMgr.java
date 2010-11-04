@@ -15,10 +15,13 @@
 
 package org.helianto.core.service;
 
+import java.util.Set;
+
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.PasswordNotVerifiedException;
-import org.helianto.core.security.PublicUserDetails;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserRole;
 import org.helianto.core.security.SecureUserDetails;
 
 /**
@@ -49,13 +52,17 @@ public interface SecurityMgr {
     
     /**
      * Store the given <code>Credential</code> and update the secure user.
+     * 
      * @param identity
      */
     public void storeCredential(SecureUserDetails secureUser);
     
     /**
-     * <p>Utility method to find <code>PublicUserDetails</code> stored in a security context.</p>
+     * Find user roles by user group.
+     * 
+     * @param userGroup
+     * @param recursively
      */
-    public PublicUserDetails findSecureUser();
+    public Set<UserRole> findRoles(UserGroup userGroup, boolean recursively);
     
 }

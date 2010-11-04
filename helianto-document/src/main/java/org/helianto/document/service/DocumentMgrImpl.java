@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.NonUniqueResultException;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
@@ -67,6 +68,18 @@ public class DocumentMgrImpl implements DocumentMgr {
     		logger.debug("Found document list of size {}", documentList.size());
     	}
     	return documentList;
+	}
+	
+	public Document findDocument(Filter documentFilter) throws NonUniqueResultException {
+		List<? extends Document> documentList = findDocuments(documentFilter);
+		if (documentList.size()>1) {
+			throw new NonUniqueResultException("Found more than one document", documentList);
+		}
+		else if(documentList.size()==1) {
+			logger.debug("Found document {}", documentList.get(0));
+			return documentList.get(0);
+		}
+		return null;
 	}
 	
 	public void removeDocument(Document document) {

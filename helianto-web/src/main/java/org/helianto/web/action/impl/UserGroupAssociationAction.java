@@ -94,7 +94,7 @@ public class UserGroupAssociationAction extends AbstractFilterAction<UserAssocia
 
 	// collabs
 	
-	private UserMgr userMgr;
+	protected UserMgr userMgr;
 
 	@Resource
 	public void setUserMgr(UserMgr userMgr) {

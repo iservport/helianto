@@ -17,6 +17,7 @@ package org.helianto.document.service;
 
 import java.util.List;
 
+import org.helianto.core.NonUniqueResultException;
 import org.helianto.core.filter.Filter;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentCodeBuilder;
@@ -51,6 +52,13 @@ public interface DocumentMgr {
 	 * @param documentFilter
 	 */
 	public List<? extends Document> findDocuments(Filter documentFilter);
+	
+	/**
+	 * Find a <code>Document</code>.
+	 * 
+	 * @param documentFilter
+	 */
+	public Document findDocument(Filter documentFilter) throws NonUniqueResultException;
 	
 	/**
 	 * Remove the <code>Document</code> from the datastore.

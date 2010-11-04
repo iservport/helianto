@@ -22,10 +22,11 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
-	<!--
-		Scan this packages for annotated beans.
-	-->
-	<context:component-scan base-package="org.helianto.core.security"/>
+	<bean id="userDetailsService" class="org.helianto.core.security.UserDetailsServiceImpl2" />
+	
+	<bean id="userSelectionStrategy" class="org.helianto.core.security.DefaultUserSelectionStrategy" />
+	
+	<bean id="publicUserDetailsExtractor" class="org.helianto.core.security.SpringSecurityPublicUserDetailsExtractor" />
 	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="userDetailsService"/>

@@ -25,6 +25,7 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 	 */
 	public PublicAddressFilter(Operator operator) {
 		super(operator);
+		setOrderByString("province.provinceCode ASC,address1 ASC ");
 		reset();
 	}
 	
@@ -97,11 +98,6 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 		appendLikeFilter("address1", getAddressLike(), mainCriteriaBuilder);
 	}
 	
-	@Override
-	protected String getOrderByString() {
-		return "province.provinceCode ASC,address1 ASC ";
-	}
-
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("postalCode", getPostalCode(), mainCriteriaBuilder);

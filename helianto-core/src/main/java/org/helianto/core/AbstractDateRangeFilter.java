@@ -22,6 +22,7 @@ import java.util.GregorianCalendar;
 
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.DateRange;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 /**
@@ -69,6 +70,7 @@ public abstract class AbstractDateRangeFilter extends AbstractUserBackedCriteria
     /**
      * Start date
      */
+    @DateTimeFormat(style="S-")
     public Date getFromDate() {
         return this.fromDate;
     }
@@ -79,6 +81,7 @@ public abstract class AbstractDateRangeFilter extends AbstractUserBackedCriteria
     /**
      * End date
      */
+    @DateTimeFormat(style="S-")
     public Date getToDate() {
         return this.toDate;
     }

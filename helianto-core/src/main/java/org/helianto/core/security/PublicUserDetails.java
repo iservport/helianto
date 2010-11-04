@@ -32,11 +32,6 @@ public interface PublicUserDetails {
     public User getUser();
     
     /**
-     * Update the <code>User</code>.
-     */
-    public void setUser(User user);
-    
-    /**
      * Convenience to retrieve the entity from the user.
      */
     public Entity getEntity();

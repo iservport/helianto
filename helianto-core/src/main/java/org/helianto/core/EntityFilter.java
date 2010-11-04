@@ -37,6 +37,7 @@ public class EntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	 */
 	public EntityFilter(Operator operator) {
 		super(operator);
+		setOrderByString("alias");
 		reset();
 	}
 
@@ -82,8 +83,4 @@ public class EntityFilter extends AbstractOperatorBackedCriteriaFilter {
 		appendLikeFilter("alias", getEntityAliasLike(), mainCriteriaBuilder);
 	}
 
-	@Override
-	protected String getOrderByString() {
-		return "alias";
-	}
 }

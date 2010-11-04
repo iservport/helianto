@@ -16,7 +16,10 @@
 package org.helianto.core.filter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.helianto.core.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +31,98 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("serial")
 public abstract class AbstractFilter implements Serializable, Filter {
 	
+    private Entity entity;
+    private String orderByString = "";
+    private List<String> orderByList =  new ArrayList<String>();
+    
+    /**
+     * Default constructor.
+     */
+    public AbstractFilter() {
+    	setOrderByString("");
+    }
+    
+	/**
+	 * Entity filter.
+	 */
+    public Entity getEntity() {
+        return entity;
+    }
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+    
+    /**
+     * True if add all "order by" string are successful.
+     * 
+     * @param orderByStringArray
+     */
+    public boolean addOrderByString(String[] orderByStringArray) {
+    	boolean success = true;
+    	for (String orderByString: orderByStringArray) {
+    		success &= addOrderByString(orderByString);
+    	}
+		return success;
+	}
+    
+    /**
+     * True if add "order by" string is successful.
+     * 
+     * @param orderByString
+     */
+    public boolean addOrderByString(String orderByString) {
+    	if (!this.orderByList.contains(orderByString)) {
+    		if (this.orderByList.add(orderByString)) {
+    			if (getOrderByString().length()==0) {
+    				setOrderByString(orderByString);
+    			}
+    		}
+    		return true;
+    	}
+		return false;
+	}
+    
+    /**
+     * True if remove "order by" string is successful.
+     * 
+     * @param orderByString
+     */
+    public boolean removeOrderByString(String orderByString) {
+		return this.orderByList.remove(orderByString);
+	}
+    
+    /**
+     * Result set ordering.
+	 */
+	public String getOrderByString() {
+		return this.orderByString;
+	}
+    public void setOrderByString(String orderByString) {
+		this.orderByString = orderByString;
+	}
+    
+    /**
+     * True if order index updated the order by string successfuly.
+     * 
+     * @param index
+     */
+    public boolean setOrderBy(int index) {
+		if (index >=0 && index < this.orderByList.size()) {
+			setOrderByString(this.orderByList.get(index));
+			return true;
+		}
+		return false;
+	}
+    
+	/**
+	 * Entity as string alias.
+	 */
+    public String getEntityAsStringAlias() {
+    	if (getEntity()!=null) {
+    		return getEntity().getAlias();
+    	}
+        return "";
+    }
 	/**
 	 * Delegate criteria creation to a builder.
 	 */
@@ -97,14 +192,7 @@ public abstract class AbstractFilter implements Serializable, Filter {
 	 */
 	protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 	}
-	
-	/**
-	 * Hook to result set ordering.
-	 */
-	protected String getOrderByString() {
-		return "";
-	}
-	
+		
 	// appenders
 	
     /**

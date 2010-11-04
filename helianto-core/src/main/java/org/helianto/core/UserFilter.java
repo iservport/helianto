@@ -98,6 +98,16 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
     }
     
     /**
+     * User name constructor.
+     * 
+     * @param identityPrincipal
+     */
+    public UserFilter(String identityPrincipal) {
+    	this();
+    	setIdentityPrincipal(identityPrincipal);
+    }
+    
+    /**
      * Force filter to standards.
      */
     public void reset() {

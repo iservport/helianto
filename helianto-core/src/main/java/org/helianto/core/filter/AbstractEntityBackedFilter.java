@@ -27,8 +27,6 @@ import org.helianto.core.Entity;
 @SuppressWarnings("serial")
 public abstract class AbstractEntityBackedFilter extends AbstractListFilter implements EntityBackedFilter {
 	
-    private Entity entity;
-    
 	/**
 	 * Default constructor
 	 */
@@ -43,16 +41,6 @@ public abstract class AbstractEntityBackedFilter extends AbstractListFilter impl
 		this();
 		setEntity(entity);
 	}
-    
-	/**
-	 * Entity alias filter.
-	 */
-    public Entity getEntity() {
-        return entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
     
 	/**
 	 * If true, raise exception when entity is null. 

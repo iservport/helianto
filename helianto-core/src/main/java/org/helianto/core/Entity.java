@@ -40,6 +40,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
+
+import org.springframework.format.annotation.DateTimeFormat;
 /**
  *              
  * <p>
@@ -183,6 +185,7 @@ public class Entity implements java.io.Serializable {
     /**
      * Date of installation.
      */
+    @DateTimeFormat(style="S-")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getInstallDate() {
 		return installDate;

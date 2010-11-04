@@ -141,7 +141,7 @@ public class FilterTests {
 			}
 			@Override public boolean isSelection() { return selection; }
 			public void reset() { reset = true; }
-			@Override protected String getOrderByString() { return orderBy; }
+			@Override public String getOrderByString() { return orderBy; }
 		};
 	}
 

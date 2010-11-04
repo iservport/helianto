@@ -16,6 +16,8 @@
 package org.helianto.core.security;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.helianto.core.ActivityState;
@@ -23,16 +25,12 @@ import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.Assert;
 
 /**
  * Models core user information retieved by
@@ -66,7 +64,7 @@ import org.springframework.util.Assert;
  * @author Mauricio Fernandes de Castro
  */
 public class UserDetailsAdapter implements
-        Serializable, UserDetails, PublicUserDetails, SecureUserDetails {
+        Serializable, UserDetails, PublicUserDetails {
 
 	private static final long serialVersionUID = 1L;
     private User user;
@@ -79,46 +77,45 @@ public class UserDetailsAdapter implements
     UserDetailsAdapter() {}
     
     /**
-     * User constructor.
+     * Credential constructor.
+     * 
+     * @param user
+     * @param credential
      */
-    public UserDetailsAdapter(User user, Credential credential) {
-    	if (credential==null) {
-    		throw new IllegalArgumentException("Invalid credential");
-    	}
+    public UserDetailsAdapter(User user, Credential credential, Collection<UserRole> roles) {
+        this();
         this.user = user;
+        logger.info("Secured user: {}", user);
         this.credential = credential;
+        grantAuthorities(roles);
     }
     
     /**
-     * Static method to retrieve the <code>UserAdapter</code>
-     * instance held in the <code>SecurityContext</code>.
+     * Iterates through user roles to grant authorities.
+     * 
+     * @param roles
      */
-    public static PublicUserDetails retrievePublicUserDetailsFromSecurityContext() {
-    	try {
-    		SecurityContext context = SecurityContextHolder.getContext();
-    		if (context==null) {
-        		logger.warn("Security context not available.");
-    			return null;
-    		}
-    		Authentication authentication = context.getAuthentication();
-    		if (authentication==null) {
-        		logger.warn("Authentication not available.");
-    			return null;
-    		}
-        	Object userDetails = authentication.getPrincipal();
-        	if (userDetails instanceof PublicUserDetails) {
-                PublicUserDetails pud = (PublicUserDetails) userDetails;  
-                logger.debug("PublicUserDetails retrieved from security context");
-                return pud;
-        	}
-    	} 
-    	catch (Exception e) {
-    		logger.warn("Error in security context ", e);
-    	}
-        logger.debug("PublicUserDetails not found!");
-    	return null;
+    protected void grantAuthorities(Collection<UserRole> roles) {
+        authorities = new ArrayList<GrantedAuthority>();
+        for (UserRole r : roles) {
+            String roleName = getUserRoleAsString(r);
+            authorities.add(new GrantedAuthorityImpl(roleName));
+            logger.info("Granted authority: {}.", roleName);
+        }
     }
     
+    /**
+     * Converts user roles to authorities.
+     * 
+     * @param userRole
+     */
+    protected String getUserRoleAsString(UserRole userRole) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ROLE_").append(userRole.getService().getServiceName())
+                .append("_").append(userRole.getServiceExtension());
+        return sb.toString();
+    }
+
     public boolean isAccountNonExpired() {
         // TODO calculate account (User) expiration
         return user.isAccountNonExpired();
@@ -147,29 +144,18 @@ public class UserDetailsAdapter implements
     }
 
     public String getPassword() {
-        return credential.getPassword();
+    	if (credential!=null) {
+    		return credential.getPassword();
+    	}
+        return "";
      }
 
     public String getUsername() {
         return user.getIdentity().getPrincipal();
     }
     
-    public Credential getCredential() {
-        return credential;
-    }
-    public void setCredential(Credential credential) {
-    	this.credential = credential;
-    }
-
-
     public User getUser() {
         return user;
-    }
-    
-    public final void setUser(User user) {
-        validateUserAndCredentialCompatibility(user);
-        this.user = user;
-        logger.debug("User selected");
     }
     
     public Entity getEntity() {
@@ -180,39 +166,10 @@ public class UserDetailsAdapter implements
     	return getEntity().getOperator();
     }
     
-	protected final void validateUserAndCredentialCompatibility(UserGroup user) {
-        Assert.notNull(user, "Required to UserDetailsAdapter");
-        Assert.notNull(credential, "Required to UserDetailsAdapter");
-        if(!user.getUserKey().equals(credential.getIdentity().getPrincipal())) {
-            throw new IllegalArgumentException("User and Credential must have the same principal");
-        }
-        logger.debug("User and Credential share the same Identity");
-    }
-
-//	/**
-//	 * Authorities
-//	 */
-//    public GrantedAuthority[] getAuthorities() {
-//        return this.authorities;
-//    }
-//	public void setAuthorities(GrantedAuthority[] authorities) {
-//		this.authorities = authorities;
-//	}
-	// TODO security v3
     public List<GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
-	public void setAuthorities(List<GrantedAuthority> authorities) {
-		this.authorities = authorities;
-	}
-
-    public String convertUserRoleToString(UserRole userRole) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ROLE_").append(userRole.getService().getServiceName())
-                .append("_").append(userRole.getServiceExtension());
-        return sb.toString();
-    }
-
+    
     static final Logger logger = LoggerFactory.getLogger(UserDetailsAdapter.class);
     
 }
