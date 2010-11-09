@@ -17,6 +17,7 @@ package org.helianto.web.action;
 
 import java.util.List;
 
+import org.helianto.core.filter.AbstractFilter;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
@@ -77,7 +78,10 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		ListFilter filter = getFilter(attributes);
 		if (filter==null) {
 			filter = doCreateFilter(attributes, userDetails);
-			logger.debug("Created {}.", filter);
+			if (filter.getObjectAlias()==null) {
+				((AbstractFilter)filter).setObjectAlias(getTargetName());
+			}
+			logger.debug("Created {} with object alias {}.", filter, filter.getObjectAlias());
 			attributes.put(getFilterName(), filter);
 		}
 		return filter;

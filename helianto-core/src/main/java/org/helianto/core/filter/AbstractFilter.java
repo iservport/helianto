@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("serial")
 public abstract class AbstractFilter implements Serializable, Filter {
 	
+    private String objectAlias;
     private Entity entity;
     private String orderByString = "";
     private List<String> orderByList =  new ArrayList<String>();
@@ -41,6 +42,16 @@ public abstract class AbstractFilter implements Serializable, Filter {
     public AbstractFilter() {
     	setOrderByString("");
     }
+    
+    /**
+     * Provide a name to be used by the filter.
+     */
+    public String getObjectAlias() {
+    	return this.objectAlias;
+    }
+    public void setObjectAlias(String objectAlias) {
+		this.objectAlias = objectAlias;
+	}
     
 	/**
 	 * Entity filter.

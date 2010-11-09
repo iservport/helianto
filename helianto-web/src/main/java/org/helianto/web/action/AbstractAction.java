@@ -18,6 +18,9 @@ package org.helianto.web.action;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.helianto.core.naming.NamingConventionStrategy;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +39,9 @@ public abstract class AbstractAction<T> implements Serializable {
 	/**
 	 * Name used as key to retrieve the target from attribute maps.
 	 */
-	protected abstract String getTargetName();
+	protected String getTargetName() {
+		return actionNamingConventionStrategy.getObjectName(this);
+	}
 
 	/**
 	 * Create a new target in the attribute map.
@@ -192,6 +197,15 @@ public abstract class AbstractAction<T> implements Serializable {
 	
 	protected String getItemIndexParameterName(String itemName) {
 		return new StringBuilder(itemName).append("_index").toString();
+	}
+	
+	// collabs
+	
+	private NamingConventionStrategy actionNamingConventionStrategy;
+	
+	@Resource
+	public void setActionNamingConventionStrategy(NamingConventionStrategy actionNamingConventionStrategy) {
+		this.actionNamingConventionStrategy = actionNamingConventionStrategy;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(AbstractAction.class);

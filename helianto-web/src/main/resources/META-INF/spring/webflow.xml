@@ -74,4 +74,9 @@
         <property name="flowRegistry" ref="flowRegistry" />
     </bean>
 
+	<!-- 
+		Naming convention strateg.
+	 -->
+	 <bean id="actionNamingConventionStrategy" class="org.helianto.web.action.ActionNamingConventionStrategy" />
+	 
 </beans>
