@@ -33,7 +33,7 @@ import org.helianto.core.number.Sequenceable;
 public class AbstractNumberedDocument extends AbstractDocument implements Sequenceable {
 
 	private static final long serialVersionUID = 1L;
-	private DocumentCodeBuilder documentCodeBuilder;
+	private Serializer documentCodeBuilder;
 	private long internalNumber;
 	
 	/**
@@ -48,10 +48,10 @@ public class AbstractNumberedDocument extends AbstractDocument implements Sequen
 	 */
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="documentCodeBuilderId")
-	public DocumentCodeBuilder getDocumentCodeBuilder() {
+	public Serializer getDocumentCodeBuilder() {
 		return documentCodeBuilder;
 	}
-	public void setDocumentCodeBuilder(DocumentCodeBuilder documentCodeBuilder) {
+	public void setDocumentCodeBuilder(Serializer documentCodeBuilder) {
 		this.documentCodeBuilder = documentCodeBuilder;
 	}
 
