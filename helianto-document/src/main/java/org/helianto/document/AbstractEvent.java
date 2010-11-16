@@ -16,9 +16,6 @@
 package org.helianto.document;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
@@ -34,6 +31,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.helianto.core.Identity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 
@@ -130,33 +128,10 @@ public abstract class AbstractEvent implements Serializable {
     /**
      * Issue date.
      */
+    @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getIssueDate() {
         return this.issueDate;
-    }
-    /**
-     * Safe presentation issue date and time.
-     */
-    @Transient
-    public String getIssueDateTimeAsString() {
-        return getIssueDate()==null ? "" : 
-        	format(TemporalType.TIMESTAMP).format(getIssueDate());
-    }
-    /**
-     * Safe presentation issue date.
-     */
-    @Transient
-    public String getIssueDateAsString() {
-        return getIssueDate()==null ? "" : 
-        	format(TemporalType.DATE).format(getIssueDate());
-    }
-    /**
-     * Safe presentation issue time.
-     */
-    @Transient
-    public String getIssueTimeAsString() {
-        return getIssueDate()==null ? "" : 
-        	format(TemporalType.TIME).format(getIssueDate());
     }
     public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
@@ -202,17 +177,17 @@ public abstract class AbstractEvent implements Serializable {
         this.privacyLevel = privacyLevel.getValue();
     }
     
-    protected Format format(TemporalType temporalType) {
-    	switch (temporalType) {
-    	case TIMESTAMP: 
-    		return SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, getLocale());
-    	case DATE: 
-    		return SimpleDateFormat.getDateInstance(DateFormat.SHORT, getLocale());
-    	case TIME: 
-    		return SimpleDateFormat.getTimeInstance(DateFormat.SHORT, getLocale());
-    	}
-        return null;
-    }
+//    protected Format format(TemporalType temporalType) {
+//    	switch (temporalType) {
+//    	case TIMESTAMP: 
+//    		return SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, getLocale());
+//    	case DATE: 
+//    		return SimpleDateFormat.getDateInstance(DateFormat.SHORT, getLocale());
+//    	case TIME: 
+//    		return SimpleDateFormat.getTimeInstance(DateFormat.SHORT, getLocale());
+//    	}
+//        return null;
+//    }
 
     /**
      * toString

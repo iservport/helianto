@@ -28,6 +28,7 @@ import javax.persistence.Transient;
 import org.helianto.core.Entity;
 import org.helianto.core.TopLevelNumberedEntity;
 import org.helianto.core.number.Sequenceable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 /**
@@ -84,33 +85,10 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     /**
      * Date to be controlled.
      */
+    @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getNextCheckDate() {
         return this.nextCheckDate;
-    }
-    /**
-     * Safe presentation control date and time.
-     */
-    @Transient
-    public String getNextCheckDateTimeAsString() {
-        return getNextCheckDate()==null ? "" : 
-        	format(TemporalType.TIMESTAMP).format(getNextCheckDate());
-    }
-    /**
-     * Safe presentation control date.
-     */
-    @Transient
-    public String getNextCheckDateAsString() {
-        return getNextCheckDate()==null ? "" : 
-        	format(TemporalType.DATE).format(getNextCheckDate());
-    }
-    /**
-     * Safe presentation control time.
-     */
-    @Transient
-    public String getNextCheckTimeAsString() {
-        return getNextCheckDate()==null ? "" : 
-        	format(TemporalType.TIME).format(getNextCheckDate());
     }
     public void setNextCheckDate(Date nextCheckDate) {
         this.nextCheckDate = nextCheckDate;
