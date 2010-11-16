@@ -13,12 +13,40 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.repository;
 
 import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Category;
+import org.helianto.core.CategoryFilter;
+import org.helianto.core.Country;
+import org.helianto.core.CountryFilter;
+import org.helianto.core.Credential;
+import org.helianto.core.EntityPreference;
+import org.helianto.core.Identity;
+import org.helianto.core.IdentityFilter;
+import org.helianto.core.InternalEnumerator;
+import org.helianto.core.KeyType;
+import org.helianto.core.Operator;
+import org.helianto.core.Province;
+import org.helianto.core.ProvinceFilter;
+import org.helianto.core.PublicEnumerator;
+import org.helianto.core.Server;
+import org.helianto.core.ServerFilter;
+import org.helianto.core.Service;
+import org.helianto.core.ServiceFilter;
+import org.helianto.core.Unit;
+import org.helianto.core.UnitFilter;
+import org.helianto.core.User;
+import org.helianto.core.UserAssociation;
+import org.helianto.core.UserAssociationFilter;
+import org.helianto.core.UserFilter;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserLog;
+import org.helianto.core.UserLogFilter;
+import org.helianto.core.UserRole;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
