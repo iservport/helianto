@@ -19,8 +19,8 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.helianto.core.RepositoryFactory;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.RepositoryFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
