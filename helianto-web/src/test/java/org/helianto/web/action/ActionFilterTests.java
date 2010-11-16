@@ -117,9 +117,12 @@ public class ActionFilterTests {
 			public Object previous() { return null; }
 			public void setIndex(int index) { }
 			public boolean isClear() { return true; }
+			@SuppressWarnings("unused")
 			public void setClear(boolean clear) { }
+			public void setObjectAlias(String objectAlias) { }
 		};
 		userDetails = new  PublicUserDetails() {
+			@SuppressWarnings("unused")
 			public void setUser(User user) { }
 			public User getUser() { return null; }
 			public Entity getEntity() { return null; }

@@ -51,7 +51,7 @@ public abstract class AbstractFilterDao<T, F extends Filter> extends AbstractBas
 	 */
 	public Collection<T> find(F filter) {
 		String whereClause = filter.createCriteriaAsString();
-		return super.find(getSelectBuilder(), whereClause);
+		return super.find(getSelectBuilder(filter.getObjectAlias()), whereClause);
 	}
 
     protected static Logger logger = LoggerFactory.getLogger(AbstractFilterDao.class);

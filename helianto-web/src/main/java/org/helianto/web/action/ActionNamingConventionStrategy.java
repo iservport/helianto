@@ -13,8 +13,8 @@ public class ActionNamingConventionStrategy extends AbstractNamingConventionStra
 	protected String getSuffix() { return "ActionImpl"; }
 
 	@Override
-	protected boolean isValid(Object object) {
-		return object instanceof AbstractAction<?>;
+	protected boolean isValid(Class<?> clazz) {
+		return AbstractAction.class.isAssignableFrom(clazz);
 	}
 
 }

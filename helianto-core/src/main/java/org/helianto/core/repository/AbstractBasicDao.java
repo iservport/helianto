@@ -31,13 +31,16 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	
 	private Class<? extends T> clazz;
+	private String objectAlias;
 	private String[] params;
 	private String selectClause;
 	
 	/**
 	 * Default constructor.
 	 */
-	public AbstractBasicDao() { }
+	public AbstractBasicDao() {
+		this(null);
+	}
 	
 	/**
 	 * Class constructor.
@@ -45,7 +48,9 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	 * @param clazz
 	 */
 	public AbstractBasicDao(Class<? extends T> clazz) {
+		super();
 		setClazz(clazz);
+		setObjectAlias("alias");
 	}
 	
 	/**
@@ -80,12 +85,22 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	}
 
 	/**
-	 * Subclasses may override to customize persistent object alias.
+	 * Object alias.
 	 */
 	public String getObjectAlias() {
-        return getClazz().getSimpleName().toLowerCase();
+		return objectAlias;
+	}
+	public void setObjectAlias(String objectAlias) {
+		this.objectAlias = objectAlias;
 	}
 
+	/**
+	 * Subclasses may override to customize select clause creation.
+	 */
+	protected StringBuilder getSelectBuilder() {
+		return getSelectBuilder(getObjectAlias());
+	}
+	
 	/**
 	 * Subclasses may override to customize select clause creation.
 	 * 
@@ -97,17 +112,17 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	 * 
 	 * @param objectName
 	 */
-	protected StringBuilder getSelectBuilder() {
+	protected StringBuilder getSelectBuilder(String objectAlias) {
 		if (getSelectClause()!=null && getSelectClause().length()>0) {
 			return new StringBuilder(getSelectClause());
 		}
 		StringBuilder selectClause = new StringBuilder("select ");
 		return selectClause
-			.append(getObjectAlias())
+			.append(objectAlias)
 			.append(" from ")
 			.append(getObjectName())
 			.append(" ")
-			.append(getObjectAlias())
+			.append(objectAlias)
 			.append(" ");
 	}
 	
