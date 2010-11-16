@@ -118,9 +118,8 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
         return this.child;
     }
 
-    @SuppressWarnings("unchecked")
 	@Override
-    protected int compareChild(AbstractAssociation other) {
+    protected int compareChild(AbstractAssociation<UserGroup, UserGroup> other) {
     	if (this.getChild()!=null && other.getChild()!=null) {
     		return this.getChild().compareTo((UserGroup) other.getChild());
     	}
