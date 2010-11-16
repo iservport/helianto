@@ -29,9 +29,8 @@ import javax.persistence.Version;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@SuppressWarnings("unchecked")
 @MappedSuperclass
-public abstract class AbstractAssociation<P, C> implements Association<P, C>, Serializable, NaturalKeyInfo, Comparable<AbstractAssociation> {
+public abstract class AbstractAssociation<P, C> implements Association<P, C>, Serializable, NaturalKeyInfo, Comparable<AbstractAssociation<P,C>> {
 	
     /**
      * Internal factory method.
@@ -111,7 +110,7 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
 	 * otherwise delegate to {@link #compareParent(AbstractAssociation)}.
 	 * </p>
 	 */
-	public int compareTo(AbstractAssociation other) {
+	public int compareTo(AbstractAssociation<P,C> other) {
     	if (this.parent.equals(other.parent)) {
     		return compareChild(other);
     	}
@@ -123,7 +122,7 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
      * 
      * @param other
      */
-	protected int compareChild(AbstractAssociation other) {
+	protected int compareChild(AbstractAssociation<P,C> other) {
     	return this.sequence - other.getSequence();
     }
 
@@ -132,7 +131,7 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
      * 
      * @param other
      */
- 	protected int compareParent(AbstractAssociation other) {
+ 	protected int compareParent(AbstractAssociation<P,C> other) {
     	return this.sequence - other.getSequence();
     }
 
@@ -155,11 +154,12 @@ public abstract class AbstractAssociation<P, C> implements Association<P, C>, Se
 	/**
 	 * equals
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean equals(Object other) {
 		if ((this == other)) return true;
 		if ((other == null)) return false;
 		if (!(other instanceof AbstractAssociation)) return false;
-		AbstractAssociation castOther = (AbstractAssociation) other;
+		AbstractAssociation<P,C> castOther = (AbstractAssociation<P,C>) other;
 
 		return ((this.getParent() == castOther.getParent()) || (this
 				.getParent() != null

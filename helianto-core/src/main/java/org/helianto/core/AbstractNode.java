@@ -122,7 +122,7 @@ public abstract class AbstractNode<T> implements Node {
 		if ((this == other)) return true;
 		if ((other == null)) return false;
 		if (!(other instanceof AbstractNode)) return false;
-		AbstractNode<T> castOther = (AbstractNode) other;
+		AbstractNode<T> castOther = (AbstractNode<T>) other;
 		
 		return (
 				((this.getContent() == castOther.getContent()) 
