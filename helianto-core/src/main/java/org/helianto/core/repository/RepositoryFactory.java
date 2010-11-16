@@ -13,14 +13,14 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.repository;
 
 import javax.annotation.Resource;
 
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.AbstractBasicDao;
-import org.helianto.core.repository.AbstractFilterDao;
-import org.helianto.core.repository.PersistenceStrategy;
+import org.helianto.core.naming.NamingConventionStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -49,6 +49,7 @@ public class RepositoryFactory {
 				return persistenceStrategy;
 			}
 		};
+		setName(basicDao);
 		setParams(basicDao, params);
 		return basicDao;
 	}
@@ -70,6 +71,7 @@ public class RepositoryFactory {
 				return persistenceStrategy;
 			}
 		};
+		setName(filterDao);
 		setParams(filterDao, params);
 		return filterDao;
 	}
@@ -92,10 +94,23 @@ public class RepositoryFactory {
 				return persistenceStrategy;
 			}
 		};
+		setName(filterDao);
 		setParams(filterDao, params);
 		return filterDao;
 	}
 	
+	/**
+	 * Convenience to inject name.
+	 * 
+	 * @param <T>
+	 * @param basicDao
+	 */
+	protected <T> void setName(AbstractBasicDao<T> basicDao) {
+		String objectAlias = namingConventionStrategy.getConventionalName(basicDao.getClazz());
+		logger.debug("Object alias set to {}.", objectAlias);
+		basicDao.setObjectAlias(objectAlias);
+	}
+
 	/**
 	 * Convenience to inject parameters.
 	 * 
@@ -112,10 +127,18 @@ public class RepositoryFactory {
 	// collabs
     
     private PersistenceStrategy persistenceStrategy;
+    private NamingConventionStrategy namingConventionStrategy;
     
     @Resource
 	public void setPersistenceStrategy(PersistenceStrategy persistenceStrategy) {
 		this.persistenceStrategy = persistenceStrategy;
 	}
+    
+    @Resource(name="defaultNamingConventionStrategy")
+    public void setNamingConventionStrategy(NamingConventionStrategy namingConventionStrategy) {
+		this.namingConventionStrategy = namingConventionStrategy;
+	}
+    
+    private static final Logger logger = LoggerFactory.getLogger(RepositoryFactory.class);
     
 }
