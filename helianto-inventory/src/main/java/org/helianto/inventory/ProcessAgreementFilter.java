@@ -36,10 +36,6 @@ public class ProcessAgreementFilter extends AbstractRequirementFilter {
 		
 	}
 
-	public String getObjectAlias() {
-		return "processagreement";
-	}
-
 	/**
 	 * Reference customer alias filter.
 	 */

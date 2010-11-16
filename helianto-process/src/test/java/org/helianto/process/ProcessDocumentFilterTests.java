@@ -80,12 +80,12 @@ public class ProcessDocumentFilterTests {
 		assertEquals(processDocumentFilter.getClazz(), Process.class);
 	}
 	
-    public static String OB = "order by processdocument.docCode ";
-    public static String C0 = "processdocument.entity.id = 0 ";
-    public static String C1 = "AND processdocument.class=Operation ";
-    public static String C2 = "AND processdocument.docCode = 'DOCCODE' ";
-    public static String C3 = "AND lower(processdocument.docName) like '%name%' ";
-    public static String C4 = "AND processdocument.inheritanceType = 'C' ";
+    public static String OB = "order by alias.docCode ";
+    public static String C0 = "alias.entity.id = 0 ";
+    public static String C1 = "AND alias.class=Operation ";
+    public static String C2 = "AND alias.docCode = 'DOCCODE' ";
+    public static String C3 = "AND lower(alias.docName) like '%name%' ";
+    public static String C4 = "AND alias.inheritanceType = 'C' ";
 
     @Test
     public void empty() {

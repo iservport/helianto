@@ -11,17 +11,16 @@ import org.junit.Test;
  */
 public class FilterNamingConventionStrategyTests {
 	
-	FilterNamingConventionStrategy filterObjectAliasStrategy;
+	FilterNamingConventionStrategy filterNamingConventionStrategy;
 	
 	@Test
-	public void objectAlias() {
-		SomeClassFilter filter = new SomeClassFilter();
-		assertEquals("someClass", filterObjectAliasStrategy.getObjectName(filter));
+	public void conventionalName() {
+		assertEquals("someClass", filterNamingConventionStrategy.getConventionalName(SomeClassFilter.class));
 	}
 	
 	@Before
 	public void setUp() {
-		filterObjectAliasStrategy = new FilterNamingConventionStrategy();
+		filterNamingConventionStrategy = new FilterNamingConventionStrategy();
 	}
 	
 	class SomeClassFilter implements Filter {
@@ -29,7 +28,7 @@ public class FilterNamingConventionStrategyTests {
 		public String getObjectAlias() { return null; }
 		public boolean isSelection() { return false; }
 		public void reset() { }
-		
+		public void setObjectAlias(String objectAlias) { }
 	}
 
 }

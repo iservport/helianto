@@ -30,11 +30,11 @@ public class UserLogFilterTests {
 		assertSame(filter.getUser(), user);
 	}
 	
-    public static String C1 = "userlog.entity.id = 0 ";
-    public static String C2 = "AND userlog.user.identity.id = 1 ";
-    public static String C3 = "AND (userlog.lastEvent >= '1969-12-31 21:00:01' ) ";
-    public static String C4 = "AND (userlog.lastEvent < '1969-12-31 21:00:02' ) ";
-    public static String C5 = "AND (userlog.lastEvent >= '1969-12-31 21:00:01' AND userlog.lastEvent < '1969-12-31 21:00:02' ) ";
+    public static String C1 = "alias.entity.id = 0 ";
+    public static String C2 = "AND alias.user.identity.id = 1 ";
+    public static String C3 = "AND (alias.lastEvent >= '1969-12-31 21:00:01' ) ";
+    public static String C4 = "AND (alias.lastEvent < '1969-12-31 21:00:02' ) ";
+    public static String C5 = "AND (alias.lastEvent >= '1969-12-31 21:00:01' AND alias.lastEvent < '1969-12-31 21:00:02' ) ";
 
     @Test
     public void empty() {

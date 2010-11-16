@@ -14,12 +14,12 @@ import org.junit.Test;
  */
 public class ResourceGroupFilterTests {
 
-    public static String OB = "order by resourcegroup.resourceCode ";
-    public static String C0 = "resourcegroup.entity.id = 0 ";
-    public static String C1 = "AND resourcegroup.class=Resource ";
-    public static String C2 = "AND resourcegroup.resourceCode = 'CODE' ";
-    public static String C3 = "AND lower(resourcegroup.resourceName) like '%name%' ";
-    public static String C4 = "AND resourcegroup.resourceType = 'F' ";
+    public static String OB = "order by alias.resourceCode ";
+    public static String C0 = "alias.entity.id = 0 ";
+    public static String C1 = "AND alias.class=Resource ";
+    public static String C2 = "AND alias.resourceCode = 'CODE' ";
+    public static String C3 = "AND lower(alias.resourceName) like '%name%' ";
+    public static String C4 = "AND alias.resourceType = 'F' ";
 
     @Test
     public void empty() {

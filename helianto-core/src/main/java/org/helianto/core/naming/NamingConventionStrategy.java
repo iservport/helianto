@@ -8,10 +8,10 @@ package org.helianto.core.naming;
 public interface NamingConventionStrategy {
 	
 	/**
-	 * Return the object name.
+	 * Return the conventional name.
 	 * 
-	 * @param object
+	 * @param clazz
 	 */
-	public String getObjectName(Object object);
+	public String getConventionalName(Class<?> clazz);
 
 }

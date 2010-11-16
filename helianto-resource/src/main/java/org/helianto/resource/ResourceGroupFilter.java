@@ -89,10 +89,6 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter implem
 		return getResourceCode().length()>0;
 	}
 
-	public String getObjectAlias() {
-		return "resourcegroup";
-	}
-
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (!getClazz().equals(ResourceGroup.class)) {

@@ -60,10 +60,6 @@ public class ResourceParameterFilter extends AbstractUserBackedCriteriaFilter {
 		return getParameterCode().length()>0;
 	}
 
-	public String getObjectAlias() {
-		return "resourceparameter";
-	}
-
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("parameterCode", getParameterCode(), mainCriteriaBuilder);

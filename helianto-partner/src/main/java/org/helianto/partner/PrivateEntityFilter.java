@@ -84,10 +84,6 @@ public class PrivateEntityFilter extends AbstractUserBackedCriteriaFilter implem
 		return getPartnerAlias().length()>0;
 	}
 
-	public String getObjectAlias() {
-		return "privateentity";
-	}
-
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("partnerName", getPartnerNameLike(), mainCriteriaBuilder);

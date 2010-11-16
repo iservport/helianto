@@ -41,6 +41,7 @@ public abstract class AbstractFilter implements Serializable, Filter {
      */
     public AbstractFilter() {
     	setOrderByString("");
+    	setObjectAlias("alias");
     }
     
     /**

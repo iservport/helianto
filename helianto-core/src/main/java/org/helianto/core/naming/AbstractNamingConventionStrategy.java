@@ -1,5 +1,8 @@
 package org.helianto.core.naming;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Template base class to naming convention strategy implementations.
@@ -21,37 +24,38 @@ public abstract class AbstractNamingConventionStrategy implements NamingConventi
 	}
 	
 	/**
-	 * Convenience to define a suffix based naming convention.
+	 * Convenience to define a suffix based naming convention, ignored if null.
 	 */
 	protected abstract String getSuffix();
 	
 	/**
-	 * Convenience method to validate the instance.
+	 * Convenience method to validate the class.
 	 * 
 	 * @param object
 	 */
-	protected abstract boolean isValid(Object object);
+	protected abstract boolean isValid(Class<?> clazz);
 	
-	/** 
-	 * The class name
-	 * 
-	 * @param object
-	 */
-	protected String getClassName(Object object) {
-		return object.getClass().getSimpleName();
-	}
-	
-	public String getObjectName(Object object) {
-		if (isValid(object)) {
-			String objectName = getClassName(object).replace(getSuffix(), "");
-			if (isConvertToLowerCase()) {
-				return objectName.toLowerCase();
+	public String getConventionalName(Class<?> clazz) {
+		String conventionalName = "";
+		if (isValid(clazz)) {
+			String objectName = clazz.getSimpleName();
+			if (getSuffix()!=null) {
+				objectName = clazz.getSimpleName().replace(getSuffix(), "");
 			}
-			return new StringBuilder(objectName)
+			if (isConvertToLowerCase()) {
+				conventionalName = objectName.toLowerCase();
+			}
+			else {
+				conventionalName = new StringBuilder(objectName)
 				.replace(0, 1, String.valueOf(objectName.charAt(0)).toLowerCase())
 				.toString();
+			}
+			logger.debug("Conventional name is {}.", conventionalName);
+			return conventionalName;
 		}
-		throw new IllegalArgumentException("Invalid object.");
+		throw new IllegalArgumentException("Unable to resolve conventional name from class name.");
 	}
+	
+	private static final Logger logger = LoggerFactory.getLogger(AbstractNamingConventionStrategy.class);
 
 }

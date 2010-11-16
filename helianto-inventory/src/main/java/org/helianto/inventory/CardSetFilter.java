@@ -45,10 +45,6 @@ public class CardSetFilter extends AbstractUserBackedCriteriaFilter {
 		return getInternalNumber()>0;
 	}
 
-	public String getObjectAlias() {
-		return "cardset";
-	}
-
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);

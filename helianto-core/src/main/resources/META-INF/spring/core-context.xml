@@ -28,7 +28,7 @@
 	<!--
 		Scan this packages for annotated beans.
 	-->
-	<context:component-scan base-package="org.helianto.core,org.helianto.core.service,org.helianto.core.validation"/>
+	<context:component-scan base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.core.validation"/>
 	
 	<!-- Added with 0.3-->
 	
@@ -106,8 +106,10 @@
      -->
 
 	<!-- 
-		Naming convention strateg.
+		Naming convention strategies.
 	 -->
+	 <bean id="defaultNamingConventionStrategy" class="org.helianto.core.naming.DefaultNamingConventionStrategy" />
+	 
 	 <bean id="filterNamingConventionStrategy" class="org.helianto.core.filter.FilterNamingConventionStrategy" />
 	 
 	<!-- 

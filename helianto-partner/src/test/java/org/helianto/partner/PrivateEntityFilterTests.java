@@ -55,9 +55,9 @@ public class PrivateEntityFilterTests {
 		assertEquals("", partnerRegistryFilter.getPartnerNameLike());
 	}
 
-    public static String C1 = "privateentity.entity.id = 0 ";
-    public static String C2 = "AND privateentity.partnerAlias = 'ALIAS' ";
-    public static String C3 = "AND lower(privateentity.partnerName) like '%name%' ";
+    public static String C1 = "alias.entity.id = 0 ";
+    public static String C2 = "AND alias.partnerAlias = 'ALIAS' ";
+    public static String C3 = "AND lower(alias.partnerName) like '%name%' ";
 
     @Test
     public void empty() {

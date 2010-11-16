@@ -20,11 +20,11 @@ public class UserAssociationFilterTests {
 		assertTrue(filter instanceof ListFilter);
 	}
 	
-    public static String C1 = "userassociation.parent.id = 1 ";
-    public static String C2 = "userassociation.child.id = 2 ";
-    public static String C3 = "AND userassociation.parent.userKey = 'PARENTKEY' ";
-    public static String C4 = "AND userassociation.child.identity.id = 3 ";
-    public static String C0 = "order by userassociation.child.userKey ";
+    public static String C1 = "alias.parent.id = 1 ";
+    public static String C2 = "alias.child.id = 2 ";
+    public static String C3 = "AND alias.parent.userKey = 'PARENTKEY' ";
+    public static String C4 = "AND alias.child.identity.id = 3 ";
+    public static String C0 = "order by alias.child.userKey ";
 
     @Test
     public void empty() {

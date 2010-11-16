@@ -87,11 +87,6 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 		appendEqualFilter("entity.alias", getEntityAlias(), mainCriteriaBuilder);
 	}
 
-	public String getObjectAlias() {
-		// create expressions like "select publicentity from PublicEntity publicentity where ..."
-		return "publicentity";
-	}
-
 	public void reset() {
 	}
 

@@ -48,4 +48,9 @@ public interface Filter {
 	 */
 	public String getObjectAlias();
 	
+	/**
+	 * Object alias to be used in query expressions.
+	 */
+	public void setObjectAlias(String objectAlias);
+	
 }

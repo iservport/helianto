@@ -11,10 +11,10 @@ import org.junit.Test;
  */
 public class ResourceParameterFilterTests {
 
-    public static String OB = "order by resourceparameter.parameterCode ";
-    public static String C0 = "resourceparameter.entity.id = 0 ";
-    public static String C2 = "AND resourceparameter.parameterCode = 'CODE' ";
-    public static String C3 = "AND lower(resourceparameter.parameterName) like '%name%' ";
+    public static String OB = "order by alias.parameterCode ";
+    public static String C0 = "alias.entity.id = 0 ";
+    public static String C2 = "AND alias.parameterCode = 'CODE' ";
+    public static String C3 = "AND lower(alias.parameterName) like '%name%' ";
 
     @Test
     public void empty() {

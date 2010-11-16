@@ -107,7 +107,7 @@ public class CriteriaBuilder {
         if (!sqlFunction.equals("")) {
             criteria.append(sqlFunction).append("(");
         }
-        if (prefix.length()==0) {
+        if (prefix!=null && prefix.length()==0) {
             criteria.append(fieldName);
         }
         else {

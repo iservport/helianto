@@ -13,8 +13,8 @@ public class FilterNamingConventionStrategy extends AbstractNamingConventionStra
 	protected String getSuffix() { return "Filter"; }
 
 	@Override
-	protected boolean isValid(Object object) {
-		return object instanceof Filter;
+	protected boolean isValid(Class<?> clazz) {
+		return Filter.class.isAssignableFrom(clazz);
 	}
 
 }

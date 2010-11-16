@@ -120,10 +120,6 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 				|| getIdentityPrincipal()!=null && getIdentityPrincipal().length() > 0);
 	}
 
-	public String getObjectAlias() {
-		return "usergroup";
-	}
-
 	/**
 	 * Required to avoid exception when entity is not present.
 	 */

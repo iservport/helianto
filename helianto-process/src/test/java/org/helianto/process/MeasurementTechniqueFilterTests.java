@@ -12,10 +12,10 @@ import org.junit.Test;
  */
 public class MeasurementTechniqueFilterTests {
 
-    public static String OB = "order by measurementtechnique.measurementTechniqueCode ";
-    public static String C0 = "measurementtechnique.entity.id = 0 ";
-    public static String C1 = "AND measurementtechnique.measurementTechniqueCode = 'CODE' ";
-    public static String C2 = "AND measurementtechnique.measurementTechniqueName = 'NAME' ";
+    public static String OB = "order by alias.measurementTechniqueCode ";
+    public static String C0 = "alias.entity.id = 0 ";
+    public static String C1 = "AND alias.measurementTechniqueCode = 'CODE' ";
+    public static String C2 = "AND alias.measurementTechniqueName = 'NAME' ";
 
     @Test
     public void empty() {

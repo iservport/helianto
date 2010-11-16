@@ -61,10 +61,6 @@ public class OperatorFilter extends AbstractUserBackedCriteriaFilter {
 		return getOperatorName().length()>0;
 	}
 
-	public String getObjectAlias() {
-		return "operator";
-	}
-
 	/**
 	 * Do not raise exception when entity is null. 
 	 */

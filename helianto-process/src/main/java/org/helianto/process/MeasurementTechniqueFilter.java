@@ -61,10 +61,6 @@ public class MeasurementTechniqueFilter extends AbstractUserBackedCriteriaFilter
 		return getMeasurementTechniqueCode().length()>0;
 	}
 
-	public String getObjectAlias() {
-		return "measurementtechnique";
-	}
-
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getUnit()!=null) {

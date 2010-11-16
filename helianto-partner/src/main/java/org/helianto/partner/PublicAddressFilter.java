@@ -103,10 +103,6 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 		appendEqualFilter("postalCode", getPostalCode(), mainCriteriaBuilder);
 	}
 
-	public String getObjectAlias() {
-		return "publicaddress";
-	}
-
 	public void reset() {
 		setPostalCode("");
 		setProvince(new Province(getOperator()));

@@ -40,14 +40,14 @@ public class UserGroupFilterTests {
 		assertEquals(0, filter.getExclusions().size());
 	}
 
-    public static String C1 = "usergroup.entity.id = 0 ";
-    public static String C2 = "order by usergroup.userKey ";
-    public static String C3 = "AND usergroup.identity.id = 1 ";
-    public static String C4 = "AND usergroup.class=User ";
-    public static String C5 = "AND usergroup.identity.principal = 'principal' ";
-    public static String C6 = "AND usergroup.userState = 'A' ";
-    public static String C7 = "AND lower(usergroup.identity.principal) like '%principal%' ";
-    public static String C8 = "order by usergroup.lastEvent DESC ";
+    public static String C1 = "alias.entity.id = 0 ";
+    public static String C2 = "order by alias.userKey ";
+    public static String C3 = "AND alias.identity.id = 1 ";
+    public static String C4 = "AND alias.class=User ";
+    public static String C5 = "AND alias.identity.principal = 'principal' ";
+    public static String C6 = "AND alias.userState = 'A' ";
+    public static String C7 = "AND lower(alias.identity.principal) like '%principal%' ";
+    public static String C8 = "order by alias.lastEvent DESC ";
 
     @Test
     public void empty() {

@@ -89,10 +89,6 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
 		return getDocCode().length()>0;
 	}
 
-	public String getObjectAlias() {
-		return "processdocument";
-	}
-
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("docCode", getDocCode(), mainCriteriaBuilder);

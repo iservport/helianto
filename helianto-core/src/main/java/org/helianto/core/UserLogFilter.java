@@ -51,14 +51,6 @@ public class UserLogFilter extends AbstractDateRangeFilter {
 	public void reset() {
 	}
 
-	public boolean isSelection() {
-		return false;
-	}
-
-	public String getObjectAlias() {
-		return "userlog";
-	}
-
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendDateRange("lastEvent", this);

@@ -34,8 +34,8 @@ public class OperatorFilterTests {
 		assertEquals("", filter.getOperatorNameLike());
 	}
 
-    public static String C1 = "operator.operatorName = 'NAME' ";
-    public static String C2 = "lower(operator.operatorName) like '%name%' ";
+    public static String C1 = "alias.operatorName = 'NAME' ";
+    public static String C2 = "lower(alias.operatorName) like '%name%' ";
 
     @Test
     public void empty() {

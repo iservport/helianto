@@ -14,11 +14,11 @@ import org.junit.Test;
  */
 public class CardSetFilterTests {
 
-    public static String OB = "order by cardset.internalNumber ";
-    public static String C0 = "cardset.entity.id = 0 ";
-    public static String C1 = "AND cardset.internalNumber = 9223372036854775807 ";
-    public static String C2 = "AND cardset.cardType = 'D' ";
-    public static String C3 = "AND cardset.processDocument.id = 1 ";
+    public static String OB = "order by alias.internalNumber ";
+    public static String C0 = "alias.entity.id = 0 ";
+    public static String C1 = "AND alias.internalNumber = 9223372036854775807 ";
+    public static String C2 = "AND alias.cardType = 'D' ";
+    public static String C3 = "AND alias.processDocument.id = 1 ";
 
     @Test
     public void empty() {

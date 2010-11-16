@@ -71,10 +71,6 @@ public class UserAssociationFilter extends AbstractCompositeListFilter {
 		appendEqualFilter("child.id", getChild().getId(), mainCriteriaBuilder);
 	}
 	
-	public String getObjectAlias() {
-		return "userassociation";
-	}
-
 	public void reset() {
 	}
 	
