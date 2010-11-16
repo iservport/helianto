@@ -90,10 +90,6 @@ public class DocumentFilter extends AbstractDocumentFilter {
 		setContentType(' ');
 	}
 
-	public String getObjectAlias() {
-		return "document";
-	}
-
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
