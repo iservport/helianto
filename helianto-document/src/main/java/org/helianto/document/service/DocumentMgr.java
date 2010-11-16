@@ -20,8 +20,7 @@ import java.util.List;
 import org.helianto.core.NonUniqueResultException;
 import org.helianto.core.filter.Filter;
 import org.helianto.document.Document;
-import org.helianto.document.DocumentCodeBuilder;
-import org.springframework.security.access.annotation.Secured;
+import org.helianto.document.Serializer;
 
 /**
  * Document service interface.
@@ -35,7 +34,6 @@ public interface DocumentMgr {
 	 * 
 	 * @param document
 	 */
-	@Secured("ROLE_DOCUMENT_CHANGE")
 	public Document storeDocument(Document document);
 
 	/**
@@ -65,30 +63,20 @@ public interface DocumentMgr {
 	 * 
 	 * @param document
 	 */
-	@Secured("ROLE_DOCUMENT_DEL")
 	public void removeDocument(Document document);
 
 	/**
-	 * Store <code>DocumentCodeBuilder</code> in the datastore and return a managed instance.
+	 * Store a <code>Serializer</code>.
 	 * 
-	 * @param documentCodeBuilder
+	 * @param serializer
 	 */
-	@Secured("ROLE_DOCUMENT_CHANGE")
-	public DocumentCodeBuilder storeDocumentCodeBuilder(DocumentCodeBuilder documentCodeBuilder);
+	public Serializer storeSerializer(Serializer serializer);
 
 	/**
-	 * Prepare a <code>DocumentCodeBuilder</code> instance to return a
-	 * managed instance loaded with lazy collections.
+	 * Find a <code>Serializer</code> list.
 	 * 
-	 * @param documentCodeBuilder
+	 * @param serializerFilter
 	 */
-	public DocumentCodeBuilder prepareDocumentCodeBuilder(DocumentCodeBuilder documentCodeBuilder);
-
-	/**
-	 * Find a <code>DocumentCodeBuilder</code> list.
-	 * 
-	 * @param documentCodeBuilderFilter
-	 */
-	public List<DocumentCodeBuilder> findDocumentCodeBuilders(Filter documentCodeBuilderFilter);
+	public List<? extends Serializer> findSerializers(Filter serializerFilter);
 	
 }

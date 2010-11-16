@@ -16,24 +16,25 @@
 
 package org.helianto.document;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 
 /**
- * Document code builder filter.
+ * Serializer filter.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DocumentCodeBuilderFilter extends AbstractUserBackedCriteriaFilter {
+public class SerializerFilter extends AbstractUserBackedCriteriaFilter {
 
 	/**
 	 * Factory method.
 	 * 
 	 * @param user
 	 */
-	public static DocumentCodeBuilderFilter documentCodeBuilderFilterFactory(User user) {
-		DocumentCodeBuilderFilter documentCodeBuilderFilter = new DocumentCodeBuilderFilter();
+	public static SerializerFilter documentCodeBuilderFilterFactory(User user) {
+		SerializerFilter documentCodeBuilderFilter = new SerializerFilter();
 		documentCodeBuilderFilter.setUser(user);
 		return documentCodeBuilderFilter;
 	}
@@ -45,9 +46,30 @@ public class DocumentCodeBuilderFilter extends AbstractUserBackedCriteriaFilter 
     /**
      * Default constructor.
      */
-    public DocumentCodeBuilderFilter() {
-		reset();
+    public SerializerFilter() {
+		this(null, "");
+    }
+
+    /**
+     * Entity constructor.
+     * 
+     * @param entity
+     */
+    public SerializerFilter(Entity entity) {
+		this(entity, "");
+    }
+
+    /**
+     * Key constructor.
+     * 
+     * @param entity
+     * @param builderCode
+     */
+    public SerializerFilter(Entity entity, String builderCode) {
+    	super();
 		setContentType(' ');
+		setEntity(entity);
+		setBuilderCode(builderCode);
     }
 
 	public void reset() {
@@ -56,10 +78,6 @@ public class DocumentCodeBuilderFilter extends AbstractUserBackedCriteriaFilter 
 
 	public boolean isSelection() {
 		return getBuilderCode().length()>0;
-	}
-
-	public String getObjectAlias() {
-		return "documentcodebuilder";
 	}
 
 	@Override

@@ -42,7 +42,7 @@ import javax.persistence.Version;
 import org.helianto.core.Entity;
 
 /**
- * Represents groups of documents having a common docCode pattern.
+ * Wraps a number pattern to be used to generate a sequence of documents.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -56,7 +56,7 @@ import org.helianto.core.Entity;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("B")
-public class DocumentCodeBuilder implements Serializable {
+public class Serializer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
     private int id;
@@ -73,11 +73,8 @@ public class DocumentCodeBuilder implements Serializable {
     /** 
      * Default constructor.
      */
-    public DocumentCodeBuilder() {
-    	super();
-    	setBuilderCode("");
-    	setNumberPattern("0000");
-    	setBuilderName("");
+    public Serializer() {
+    	this(null);
     }
 
     /** 
@@ -85,9 +82,22 @@ public class DocumentCodeBuilder implements Serializable {
      * 
      * @param entity
      */
-    public DocumentCodeBuilder(Entity entity) {
-    	this();
+    public Serializer(Entity entity) {
+    	this(entity, "");
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param builderCode
+     */
+    public Serializer(Entity entity, String builderCode) {
+    	super();
     	setEntity(entity);
+    	setBuilderCode(builderCode);
+    	setNumberPattern("0000");
+    	setBuilderName("");
     }
 
     /**
@@ -127,13 +137,12 @@ public class DocumentCodeBuilder implements Serializable {
     /**
      * <<NaturalKey>> Code used to distinguish the builder.
      */
-    @Column(length=12)
+    @Column(length=24)
     public String getBuilderCode() {
         return this.builderCode;
     }
-    public DocumentCodeBuilder setBuilderCode(String builderCode) {
+    public void setBuilderCode(String builderCode) {
         this.builderCode = builderCode;
-        return this;
     }
 
     /**
@@ -227,8 +236,8 @@ public class DocumentCodeBuilder implements Serializable {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof DocumentCodeBuilder) ) return false;
-         DocumentCodeBuilder castOther = (DocumentCodeBuilder) other; 
+         if ( !(other instanceof Serializer) ) return false;
+         Serializer castOther = (Serializer) other; 
          
          return ( ( this.getEntity()==castOther.getEntity()) 
         		    || ( this.getEntity()!=null 

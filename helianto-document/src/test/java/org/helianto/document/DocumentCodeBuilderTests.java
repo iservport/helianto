@@ -34,15 +34,15 @@ public class DocumentCodeBuilderTests {
 	
 	@Test
 	public void constructor() {
-		DocumentCodeBuilder docBuilder = new DocumentCodeBuilder();
+		Serializer docBuilder = new Serializer();
 		assertTrue(docBuilder instanceof Serializable);
 	}
 	
 	@Test
 	public void builderEquals() {
-		DocumentCodeBuilder docBuilder = new DocumentCodeBuilder();
+		Serializer docBuilder = new Serializer();
 		assertFalse(docBuilder.equals(null));
-		DocumentCodeBuilder other = new DocumentCodeBuilder();
+		Serializer other = new Serializer();
 		assertTrue(docBuilder.equals(other));
 		
 		Entity entity = EntityTestSupport.createEntity();
@@ -63,7 +63,7 @@ public class DocumentCodeBuilderTests {
 	
 	@Test
 	public void build() {
-		DocumentCodeBuilder docBuilder = new DocumentCodeBuilder();
+		Serializer docBuilder = new Serializer();
 		docBuilder.setNumberPattern("ABC000");
 		assertEquals("ABC001", docBuilder.buildCode(1));
 		docBuilder.setNumberPattern("0000/'09'");

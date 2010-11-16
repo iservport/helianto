@@ -24,8 +24,8 @@ import org.easymock.EasyMock;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.document.Document;
-import org.helianto.document.DocumentCodeBuilder;
-import org.helianto.document.DocumentCodeBuilderFilter;
+import org.helianto.document.Serializer;
+import org.helianto.document.SerializerFilter;
 import org.helianto.document.DocumentFilter;
 import org.junit.After;
 import org.junit.Before;
@@ -55,7 +55,7 @@ public class DocumentMgrImplTests {
 	@Test
 	public void storeDocument() {
 		Document document= new Document();
-		document.setDocumentCodeBuilder(new DocumentCodeBuilder());
+		document.setDocumentCodeBuilder(new Serializer());
 		Document managedDocument = new Document();
 		
 		EasyMock.expect(documentDao.merge(document)).andReturn(managedDocument);
@@ -106,33 +106,32 @@ public class DocumentMgrImplTests {
 	
 	@Test
 	public void storeDocumentCodeBuilder() {
-		DocumentCodeBuilder documentCodeBuilder = new DocumentCodeBuilder();
-		DocumentCodeBuilder managedDocumentCodeBuilder = new DocumentCodeBuilder();
+		Serializer serializer = new Serializer();
 		
-		EasyMock.expect(documentCodeBuilderDao.merge(documentCodeBuilder)).andReturn(managedDocumentCodeBuilder);
-		EasyMock.replay(documentCodeBuilderDao);
+		serializerDao.saveOrUpdate(serializer);
+		EasyMock.replay(serializerDao);
 		
-		assertSame(managedDocumentCodeBuilder, documentMgr.storeDocumentCodeBuilder(documentCodeBuilder));
-		EasyMock.verify(documentCodeBuilderDao);
+		assertSame(serializer, documentMgr.storeSerializer(serializer));
+		EasyMock.verify(serializerDao);
 	}
 	
 	@Test
 	public void findDocumentCodeBuilders() {
-		List<DocumentCodeBuilder> documentCodeBuilderList = new ArrayList<DocumentCodeBuilder>();
-		DocumentCodeBuilderFilter documentCodeBuilderFilter = new DocumentCodeBuilderFilter();
+		List<Serializer> serializerList = new ArrayList<Serializer>();
+		SerializerFilter serializerFilter = new SerializerFilter();
 		
-		EasyMock.expect(documentCodeBuilderDao.find(documentCodeBuilderFilter)).andReturn(documentCodeBuilderList);
-		EasyMock.replay(documentCodeBuilderDao);
+		EasyMock.expect(serializerDao.find(serializerFilter)).andReturn(serializerList);
+		EasyMock.replay(serializerDao);
 		
-		assertSame(documentCodeBuilderList, documentMgr.findDocumentCodeBuilders(documentCodeBuilderFilter));
-		EasyMock.verify(documentCodeBuilderDao);
+		assertSame(serializerList, documentMgr.findSerializers(serializerFilter));
+		EasyMock.verify(serializerDao);
 	}
 	
 	//
 	
 	private DocumentMgrImpl documentMgr;
 	private FilterDao<Document, DocumentFilter> documentDao;
-	private FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> documentCodeBuilderDao;
+	private FilterDao<Serializer, SerializerFilter> serializerDao;
 	private SequenceMgr sequenceMgr;
 	
 	@SuppressWarnings("unchecked")
@@ -141,8 +140,8 @@ public class DocumentMgrImplTests {
 		documentMgr = new DocumentMgrImpl();
 		documentDao = EasyMock.createMock(FilterDao.class);
 		documentMgr.setDocumentDao(documentDao);
-		documentCodeBuilderDao = EasyMock.createMock(FilterDao.class);
-		documentMgr.setDocumentCodeBuilderDao(documentCodeBuilderDao);
+		serializerDao = EasyMock.createMock(FilterDao.class);
+		documentMgr.setSerializerDao(serializerDao);
 		sequenceMgr = EasyMock.createMock(SequenceMgr.class);
 		documentMgr.setSequenceMgr(sequenceMgr);
 	}
@@ -150,7 +149,7 @@ public class DocumentMgrImplTests {
 	@After
 	public void tearDown() {
 		EasyMock.reset(documentDao);
-		EasyMock.reset(documentCodeBuilderDao);
+		EasyMock.reset(serializerDao);
 		EasyMock.reset(sequenceMgr);
 	}
 

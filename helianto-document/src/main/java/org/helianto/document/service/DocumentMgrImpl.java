@@ -26,8 +26,8 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.core.utils.CoreUtils;
 import org.helianto.document.Document;
-import org.helianto.document.DocumentCodeBuilder;
-import org.helianto.document.DocumentCodeBuilderFilter;
+import org.helianto.document.Serializer;
+import org.helianto.document.SerializerFilter;
 import org.helianto.document.DocumentFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,29 +90,23 @@ public class DocumentMgrImpl implements DocumentMgr {
     	logger.info("Removed document "+document);
 	}
 	
-	public DocumentCodeBuilder storeDocumentCodeBuilder(DocumentCodeBuilder documentCodeBuilder) {
-		return documentCodeBuilderDao.merge(documentCodeBuilder);
+	public Serializer storeSerializer(Serializer serializer) {
+		serializerDao.saveOrUpdate(serializer);
+		return serializer;
 	}
 	
-	public DocumentCodeBuilder prepareDocumentCodeBuilder(DocumentCodeBuilder documentCodeBuilder) {
-		DocumentCodeBuilder managedDocumentCodeBuilder = documentCodeBuilderDao.merge(documentCodeBuilder);
-		managedDocumentCodeBuilder.setDocumentList(CoreUtils.createSortedList(managedDocumentCodeBuilder.getDocuments()));
-		documentCodeBuilderDao.evict(managedDocumentCodeBuilder);
-		return managedDocumentCodeBuilder;
-	}
-	
-	public List<DocumentCodeBuilder> findDocumentCodeBuilders(Filter documentCodeBuilderFilter) {
-    	List<DocumentCodeBuilder> documentCodeBuilderList = (List<DocumentCodeBuilder>) documentCodeBuilderDao.find((DocumentCodeBuilderFilter) documentCodeBuilderFilter);
-    	if (logger.isDebugEnabled() && documentCodeBuilderList!=null) {
-    		logger.debug("Found document code builder list of size {}", documentCodeBuilderList.size());
+	public List<? extends Serializer> findSerializers(Filter serializerFilter) {
+    	List<Serializer> serializerList = (List<Serializer>) serializerDao.find((SerializerFilter) serializerFilter);
+    	if (logger.isDebugEnabled() && serializerList!=null) {
+    		logger.debug("Found serializer list of size {}", serializerList.size());
     	}
-    	return documentCodeBuilderList;
+    	return serializerList;
 	}
 	
 	// collabs
 	
 	private FilterDao<Document, DocumentFilter> documentDao;
-	private FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> documentCodeBuilderDao;
+	private FilterDao<Serializer, SerializerFilter> serializerDao;
 	private SequenceMgr sequenceMgr;
 	
 	@Resource(name="documentDao")
@@ -120,9 +114,9 @@ public class DocumentMgrImpl implements DocumentMgr {
 		this.documentDao = documentDao;
 	}
 	
-	@Resource(name="documentCodeBuilderDao")
-	public void setDocumentCodeBuilderDao(FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> documentCodeBuilderDao) {
-		this.documentCodeBuilderDao = documentCodeBuilderDao;
+	@Resource(name="serializerDao")
+	public void setSerializerDao(FilterDao<Serializer, SerializerFilter> serializerDao) {
+		this.serializerDao = serializerDao;
 	}
 	
 	@Resource
