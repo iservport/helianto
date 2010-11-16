@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.repository;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,6 +21,15 @@ import javax.annotation.Resource;
 
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.document.AbstractDocumentFilter;
+import org.helianto.document.AbstractFunction;
+import org.helianto.document.Document;
+import org.helianto.document.DocumentAssociation;
+import org.helianto.document.DocumentFilter;
+import org.helianto.document.DocumentTag;
+import org.helianto.document.FunctionStub;
+import org.helianto.document.Serializer;
+import org.helianto.document.SerializerFilter;
 import org.helianto.document.test.AbstractDocumentDaoIntegrationTest;
 import org.helianto.document.test.DocumentTagTestSupport;
 import org.helianto.document.test.DocumentTestSupport;
@@ -37,7 +46,7 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	
 	@Resource BasicDao<DocumentAssociation> documentAssociationDao;
 	@Resource FilterDao<Document, DocumentFilter> documentDao;
-	@Resource FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> documentCodeBuilderDao;
+	@Resource FilterDao<Serializer, SerializerFilter> serializerDao;
 	@Resource BasicDao<DocumentTag> documentTagDao;
 	@Resource FilterDao<AbstractFunction, AbstractDocumentFilter> functionDao;
 
@@ -51,8 +60,12 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 		Document document = DocumentTestSupport.create(Document.class, entity);
 		assertEquals(documentDao.merge(document), documentDao.findUnique(document.getEntity(), document.getDocCode()));
 
-		DocumentCodeBuilder documentCodeBuilder = documentCodeBuilderDao.merge(new DocumentCodeBuilder(entity).setBuilderCode("CODE"));
-		assertEquals(documentCodeBuilder, documentCodeBuilderDao.findUnique(documentCodeBuilder.getEntity(), documentCodeBuilder.getBuilderCode()));
+		Serializer serializer = new Serializer(entity, "CODE");
+		serializerDao.saveOrUpdate(serializer);
+		assertEquals(serializer, serializerDao.findUnique(serializer.getEntity(), serializer.getBuilderCode()));
+		SerializerFilter serializerFilter = new SerializerFilter(entity, "CODE");
+		serializerFilter.setObjectAlias("serializer");
+		assertEquals(serializer, serializerDao.find(serializerFilter).iterator().next());
 
 		DocumentTag documentTag = DocumentTagTestSupport.create(DocumentTag.class, document);
 		assertEquals(documentTagDao.merge(documentTag), documentTagDao.findUnique(documentTag.getDocument(), documentTag.getTagCode()));

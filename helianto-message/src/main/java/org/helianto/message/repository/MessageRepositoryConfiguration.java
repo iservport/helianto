@@ -17,8 +17,8 @@ package org.helianto.message.repository;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.RepositoryFactory;
 import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.RepositoryFactory;
 import org.helianto.message.ServiceEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

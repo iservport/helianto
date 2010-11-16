@@ -13,15 +13,23 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.repository;
 
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.helianto.core.RepositoryFactory;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.RepositoryFactory;
+import org.helianto.document.AbstractDocumentFilter;
+import org.helianto.document.AbstractFunction;
+import org.helianto.document.Document;
+import org.helianto.document.DocumentAssociation;
+import org.helianto.document.SerializerFilter;
+import org.helianto.document.DocumentFilter;
+import org.helianto.document.DocumentTag;
+import org.helianto.document.Serializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -57,13 +65,13 @@ public class DocumentRepositoryConfiguration {
 	}
 
 	/**
-	 * Document code builder data access.
+	 * Serializer data access.
 	 */
 	@Bean
-	public FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> documentCodeBuilderDao() {
-		FilterDao<DocumentCodeBuilder, DocumentCodeBuilderFilter> dao =  
-			repositoryFactory.filterDaoFactory(DocumentCodeBuilder.class, DocumentCodeBuilderFilter.class, "entity", "builderCode");
-		logger.info("Created documentCodeBuilderDao");
+	public FilterDao<Serializer, SerializerFilter> serializerDao() {
+		FilterDao<Serializer, SerializerFilter> dao =  
+			repositoryFactory.filterDaoFactory(Serializer.class, SerializerFilter.class, "entity", "builderCode");
+		logger.info("Created serializerDao");
 		return dao;
 	}
 
