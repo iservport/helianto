@@ -84,7 +84,7 @@ public class DefaultEntityInstaller implements InitializingBean {
 	public void afterPropertiesSet() throws Exception {
 		Operator defaultOperator = namespace.getDefaultOperator();
 		logger.info("A default entity is a minium requirement; checking installation for operator {}.", defaultOperator);
-		Entity defaultEntity = postInstallationMgr.installEntity(defaultOperator, getDefaultEntityAlias(), getDefaultManager(), isReinstall());
+		Entity defaultEntity = postInstallationMgr.installEntity(defaultOperator, getDefaultEntityAlias().trim(), getDefaultManager(), isReinstall());
 		
 		if (getRequiredUserGroupList()!=null) {
 			for (String userGroupName: getRequiredUserGroupList()) {
