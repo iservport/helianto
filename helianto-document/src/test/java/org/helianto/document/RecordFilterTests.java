@@ -18,6 +18,7 @@ package org.helianto.document;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.helianto.core.DateFilterMode;
 import org.helianto.document.AbstractEventFilter;
 import org.helianto.document.AbstractRecordFilter;
 import org.junit.Before;
@@ -54,6 +55,7 @@ public class RecordFilterTests {
 			private static final long serialVersionUID = 1L;
 			public String getObjectAlias() { return "alias"; }
 		};
+		recordFilter.setDateFilterMode(DateFilterMode.DISABLE_DATE_RANGE);
 	}
 
 }

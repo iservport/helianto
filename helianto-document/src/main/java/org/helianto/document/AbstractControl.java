@@ -39,20 +39,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @javax.persistence.MappedSuperclass
 public abstract class AbstractControl extends AbstractRecord implements Serializable, Sequenceable, Control, Trackable, TopLevelNumberedEntity {
 
-    /**
-     * Factory method.
-     * 
-     * @param <T>
-     * @param clazz
-     * @param entity
-     * @param internalNumber
-     */
-    public static <T extends AbstractControl> T abstractControlFactory(Class<T> clazz, Entity entity, long internalNumber) {
-        T control = AbstractRecord.abstractRecordFactory(clazz, internalNumber);
-        control.setEntity(entity);
-        return control;
-    }
-    
     private static final long serialVersionUID = 1L;
     private Entity entity;
     private Date nextCheckDate;
@@ -60,13 +46,25 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     private int frequency;
     private int frequencyType;
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public AbstractControl() {
     	super();
     	setNextCheckDate(new Date());
         setTrackingMode(TrackingMode.END_ONLY);
     	setFrequency(0);
     	setFrequencyType(Calendar.DATE);
+    }
+    
+    /** 
+     * Entity constructor.
+     * 
+     * @param entity
+     */
+    public AbstractControl(Entity entity) {
+    	this();
+    	setEntity(entity);
     }
     
     /**

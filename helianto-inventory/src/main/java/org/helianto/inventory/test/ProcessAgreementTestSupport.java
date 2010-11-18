@@ -1,7 +1,6 @@
 package org.helianto.inventory.test;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import org.helianto.core.Identity;
 import org.helianto.core.test.DomainTestSupport;
@@ -55,8 +54,7 @@ public class ProcessAgreementTestSupport {
      * @param internalNumber
      */
     public static ProcessAgreement createProcessAgreement(Partner partner, Identity identity, long internalNumber) {
-    	ProcessAgreement agreement = ProcessAgreement.agreementFactory(partner.getPrivateEntity().getEntity(), identity, internalNumber, new Date());
-    	agreement.setPartner(partner);
+    	ProcessAgreement agreement = new ProcessAgreement(partner);
         if (maxAmount > 0) {
         	agreement.setRequirementAmount(BigDecimal.valueOf(Math.random()*maxAmount));
         }

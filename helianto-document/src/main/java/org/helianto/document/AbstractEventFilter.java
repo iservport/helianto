@@ -19,7 +19,7 @@ import org.helianto.core.AbstractDateRangeFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 
 /**
- * Event filter superclass.
+ * Filter base class to be used with event hierarchy.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -33,6 +33,7 @@ public abstract class AbstractEventFilter extends AbstractDateRangeFilter {
 	 */
 	public AbstractEventFilter() {
 		super();
+		setDateFieldName("issueDate");
 	}
 
 	/**
@@ -44,12 +45,12 @@ public abstract class AbstractEventFilter extends AbstractDateRangeFilter {
 	public void setInternalNumber(long internalNumber) {
 		this.internalNumber = internalNumber;
 	}
-
+	
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
 	}
-
+	
 	public boolean isSelection() {
 		return getInternalNumber()>0;
 	}

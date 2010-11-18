@@ -16,7 +16,6 @@
 package org.helianto.inventory;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,9 +34,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.document.AbstractControl;
 import org.helianto.partner.Partner;
 
 
@@ -63,21 +59,6 @@ import org.helianto.partner.Partner;
 @DiscriminatorValue("A")
 public class ProcessAgreement extends AbstractRequirement {
 
-	/**
-	 * Factory method.
-	 * 
-	 * @param entity
-	 * @param identity
-	 * @param internalNumber
-	 * @param agreementDate
-	 */
-    public static ProcessAgreement agreementFactory(Entity entity, Identity identity, long internalNumber, Date agreementDate) {
-    	ProcessAgreement agreement = AbstractControl.abstractControlFactory(ProcessAgreement.class, entity, internalNumber);
-    	agreement.setIssueDate(agreementDate);
-    	agreement.setOwner(identity);
-    	return agreement;
-    }
-
 	private static final long serialVersionUID = 1L;
 	private Partner partner;
 	private String agreementDesc;
@@ -88,12 +69,22 @@ public class ProcessAgreement extends AbstractRequirement {
 	private Map<String, Tax> taxes = new HashMap<String, Tax>(); 
 
 	/** 
-	 * Constructor 
+	 * Default constructor.
 	 */
     public ProcessAgreement() {
     	super();
     	setResolution(AgreementState.PENDING);
     	setAgreementLevel(AgreementLevel.REQUIRE_CREDIT_ASSESSMENT);
+    }
+
+	/** 
+	 * Partner constructor.
+	 * 
+	 * @param partner
+	 */
+    public ProcessAgreement(Partner partner) {
+    	this();
+    	setPartner(partner);
     }
 
     @Transient

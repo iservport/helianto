@@ -33,29 +33,13 @@ import javax.persistence.Transient;
 @javax.persistence.MappedSuperclass
 public abstract class AbstractRecord extends AbstractEvent {
 
-    /**
-     * Factory method.
-     * 
-     * @param <T>
-     * @param clazz
-     * @param internalNumber
-     */
-    public static <T extends AbstractRecord> T abstractRecordFactory(Class<T> clazz, long internalNumber) {
-        T event = null;
-        try {
-            event = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create record of class "+clazz, e);
-        }
-        event.setInternalNumber(internalNumber);
-        return event;
-    }
-    
     private static final long serialVersionUID = 1L;
     private int complete;
     private char resolution;
 
-    /** Default constructor */
+    /** 
+     * Default constructor.
+     */
     public AbstractRecord() {
     	super();
         setResolution(Resolution.PRELIMINARY.getValue());
@@ -76,9 +60,7 @@ public abstract class AbstractRecord extends AbstractEvent {
     @Transient
     public boolean isActive() {
     	if (getResolution()==Resolution.PRELIMINARY.getValue()) return true;
-    	if (getResolution()==Resolution.TODO.getValue()) return true;
-    	if (getResolution()==Resolution.WAIT.getValue()) return true;
-        return false;
+        return isRunning();
     }
     /**
      * True if the resolution indicates state RUNNIG.

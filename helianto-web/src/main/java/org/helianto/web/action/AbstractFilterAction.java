@@ -56,7 +56,7 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		}
 		ListFilter filter = getFilter(attributes, userDetails);
 		logger.debug("Using filter {}.", filter);
-		List<T> itemList = doFilter(filter);
+		List<T> itemList = doFilter(attributes, filter);
 		filter.setList(itemList);
 		logger.debug("Created list of size {} in filter.", itemList.size());
 		return "success";
@@ -105,6 +105,20 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param userDetails
 	 */
 	protected abstract ListFilter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails);
+
+	/**
+	 * Subclasses may override this to customize filter action.
+	 * 
+	 * <p>
+	 * Default implementation delegates to {@link #doFilter(ListFilter)}.
+	 * </p>
+	 * 
+	 * @param attributes
+	 * @param filter
+	 */
+	protected List<T> doFilter(MutableAttributeMap attributes, ListFilter filter) {
+		return doFilter(filter);
+	}
 
 	/**
 	 * Hook to the actual filter action.

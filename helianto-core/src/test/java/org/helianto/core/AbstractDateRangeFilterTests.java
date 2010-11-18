@@ -22,12 +22,13 @@ public class AbstractDateRangeFilterTests {
 		filter.setToDate(new Date(toDateInMilis));
 //		System.out.println(filter.getToDate());
 		filter.setInterval(-30);
-		filter.updateRangePast(false);
+		filter.setDateFilterMode(DateFilterMode.TO_DATE_MINUS_INTERVAL);
 		long fromDateInMilis = 30*1000*86400L;
 		// we chose a start date with time set to 21:00, but updateRangePast
 		// will normalize the time to 23:59:59 before calculations
 		// from 21:00 to 23:59:59 we need more 3*1000*3600-1000 milis
 //		System.out.println(new Date(fromDateInMilis+3*1000*3600-1000));
+		filter.doFilter(new CriteriaBuilder());
 //		System.out.println(filter.getFromDate());
 		assertEquals(fromDateInMilis+3*1000*3600-1000, filter.getFromDate().getTime());
 	}
@@ -35,7 +36,9 @@ public class AbstractDateRangeFilterTests {
 	@Test(expected=IllegalArgumentException.class)
 	public void updateRangePastError() {
 		filter.setInterval(30);
-		filter.updateRangePast(true);
+		filter.setIntervalIntegrityEnforced(true);
+		filter.setDateFilterMode(DateFilterMode.TO_DATE_MINUS_INTERVAL);
+		filter.doFilter(new CriteriaBuilder());
 	}
 	
 	@Test
@@ -44,30 +47,32 @@ public class AbstractDateRangeFilterTests {
 		filter.setFromDate(new Date(fromDateInMilis));
 //		System.out.println(filter.getFromDate());
 		filter.setInterval(+30);
-		filter.updateRangeFuture(false);
+		filter.setDateFilterMode(DateFilterMode.FROM_DATE_PLUS_INTERVAL);
 		long toDateInMilis = 90*1000*86400L;
 		// we chose a start date with time set to 21:00, but updateRangePast
 		// will normalize the time to 23:59:59 before calculations
 		// from 21:00 to 23:59:59 we need more 3*1000*3600-1000 milis
 //		System.out.println(new Date(toDateInMilis+3*1000*3600-1000));
 //		System.out.println(filter.getToDate());
+		filter.doFilter(new CriteriaBuilder());
 		assertEquals(toDateInMilis+3*1000*3600-1000, filter.getToDate().getTime());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void updateRangeFutureError() {
 		filter.setInterval(-30);
-		filter.updateRangeFuture(true);
+		filter.setIntervalIntegrityEnforced(true);
+		filter.setDateFilterMode(DateFilterMode.FROM_DATE_PLUS_INTERVAL);
+		filter.doFilter(new CriteriaBuilder());
 	}
 	
 	@Before
 	@SuppressWarnings("serial")
 	public void setUp() {
 		filter = new AbstractDateRangeFilter() {
-			public String getObjectAlias() { return "filter"; }
 			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
-			@Override protected void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
 		};
+		filter.setDateFieldName("test");
 	}
 
 }

@@ -16,9 +16,7 @@
 package org.helianto.document;
 
 
-import org.helianto.core.User;
 import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.document.AbstractRecordFilter;
 
 /**
  * Base class to control filters.
@@ -64,22 +62,6 @@ public abstract class AbstractControlFilter extends AbstractRecordFilter {
 		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("trackingMode", getTrackingMode(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);
-	}
-
-	/**
-	 * Generic factory method.
-	 * 
-	 * @param user
-	 */
-	protected static <T extends AbstractControlFilter> T  internalControlFilterFactory(Class<T> clazz, User user) {
-        T taskFilter = null;
-		try {
-			taskFilter = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create control filter of class "+clazz);
-		}
-        taskFilter.setUser(user);
-        return taskFilter;
 	}
 
 }
