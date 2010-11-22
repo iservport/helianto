@@ -183,10 +183,10 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return defaultDivision;
 	}
 	
-	public void installPartnerKeys(String[] keyValues, Division defaultDivision) {
-		logger.debug("Ready to install key value pairs {} to {}", keyValues, defaultDivision);
-		List<KeyType> keyTypes = namespaceMgr.loadKeyTypes(defaultDivision.getPrivateEntity().getEntity().getOperator());
-		Map<String, PartnerKey> partnerKeyMap = loadPartnerKeyMap(defaultDivision);
+	public void installPartnerKeys(String[] keyValues, Partner partner) {
+		logger.debug("Ready to install key value pairs {} to {}", keyValues, partner);
+		List<KeyType> keyTypes = namespaceMgr.loadKeyTypes(partner.getPrivateEntity().getEntity().getOperator());
+		Map<String, PartnerKey> partnerKeyMap = loadPartnerKeyMap(partner);
 		for (String keyValueTuple: keyValues) {
 			String[] keyValue = keyValueTuple.split(":");
 			boolean keyNotAvailable = true;
@@ -198,7 +198,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 						logger.debug("Partner key {} already existing.", partnerKey);
 					}
 					else {
-						partnerKey = PartnerKey.partnerKeyFactory(defaultDivision, keyType);
+						partnerKey = PartnerKey.partnerKeyFactory(partner, keyType);
 					}
 					partnerKey.setKeyValue(keyValue[1]);
 					partnerKeyDao.saveOrUpdate(partnerKey);

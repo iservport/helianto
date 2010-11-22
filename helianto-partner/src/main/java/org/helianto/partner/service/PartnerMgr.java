@@ -146,8 +146,8 @@ public interface PartnerMgr {
      * Convenience to install key values.
      * 
      * @param keyValues
-     * @param defaultDivision
+     * @param partner
      */
-	public void installPartnerKeys(String[] keyValues, Division defaultDivision);
+	public void installPartnerKeys(String[] keyValues, Partner partner);
 	
 }
