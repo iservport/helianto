@@ -53,23 +53,9 @@ public class ActionTests {
 		assertTrue(action.hasTarget(attributes));
 	}
 	
-	/**
-	 * If the target name can retrieve a target from the attributes map, the transition
-	 * must be "success".
-	 */
 	@Test
-	public void createBrowse() {
-		attributes.put("NAME", "VALUE");
-		assertEquals("browse", action.create(attributes, userDetails));
-	}
-	
-	/**
-	 * If the target name can not retrieve a target from the attributes map, the transition
-	 * must be "edit", and userDetails must be passed during a new target creation.
-	 */
-	@Test
-	public void createEdit() {
-		assertEquals("edit", action.create(attributes, userDetails));
+	public void create() {
+		assertEquals("success", action.create(attributes, userDetails));
 		assertTrue(attributes.contains("NAME"));
 		assertEquals("CREATED", attributes.get("NAME"));
 		assertSame(userDetails, userDetailsInCreation);

@@ -55,23 +55,6 @@ public abstract class AbstractRecord extends AbstractEvent {
         return validateResolution(this.resolution);
     }
     /**
-     * True if the resolution indicates state ACTIVE.
-     */
-    @Transient
-    public boolean isActive() {
-    	if (getResolution()==Resolution.PRELIMINARY.getValue()) return true;
-        return isRunning();
-    }
-    /**
-     * True if the resolution indicates state RUNNIG.
-     */
-    @Transient
-    public boolean isRunning() {
-    	if (getResolution()==Resolution.TODO.getValue()) return true;
-    	if (getResolution()==Resolution.WAIT.getValue()) return true;
-        return false;
-    }
-    /**
      * Do the actual resolution validation.
      */
     protected char validateResolution(char resolution) {
@@ -80,8 +63,19 @@ public abstract class AbstractRecord extends AbstractEvent {
     public void setResolution(char resolution) {
         this.resolution = resolution;
     }
+    public void setResolution(String resolution) {
+        this.resolution = resolution.charAt(0);
+    }
     public void setResolution(Resolution resolution) {
         this.resolution = resolution.getValue();
+    }
+    
+    /**
+     * Resolve record status.
+     */
+    @Transient
+    public RecordStateResolver getState() {
+    	return new RecordStateResolver(this);
     }
     
     /**

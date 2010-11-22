@@ -60,7 +60,25 @@ public abstract class AbstractControlFilter extends AbstractRecordFilter {
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
+		appendTrackingMode(mainCriteriaBuilder);
+		appendPriority(mainCriteriaBuilder);
+	}
+	
+	/**
+	 * Tracking mode appender.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	protected void appendTrackingMode(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("trackingMode", getTrackingMode(), mainCriteriaBuilder);
+	}
+
+	/**
+	 * Priority appender.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	protected void appendPriority(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);
 	}
 

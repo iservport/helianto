@@ -50,13 +50,13 @@ public abstract class AbstractAction<T> implements Serializable {
 	 * @param userDetails
 	 */
 	public String create(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		if (hasTarget(attributes)) {
-			return "browse";
-		}
+//		if (hasTarget(attributes)) {
+//			return "browse";
+//		}
 		T target = doCreate(attributes, userDetails);
 		attributes.put(getTargetName(), target);
-		logger.debug("Created {}.", target);
-		return "edit";
+		logger.debug("Created {} with name {}.", target, getTargetName());
+		return "success";
 	}
 	
 	/**
@@ -164,6 +164,7 @@ public abstract class AbstractAction<T> implements Serializable {
 	 */
 	protected boolean hasTarget(MutableAttributeMap attributes) {
 		if (attributes.contains(getTargetName()) && attributes.get(getTargetName())!=null) {
+			logger.debug("The current scope has a target with name: {}.", getTargetName());
 			return true;
 		}
 		return false;

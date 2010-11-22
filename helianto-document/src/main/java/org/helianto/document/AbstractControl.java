@@ -101,6 +101,14 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     public char getCheckDatePastAsChar() {
         return isCheckDatePast() ? 'Y' : 'N';
     }
+    
+    /**
+     * Resolve control status.
+     */
+    @Transient
+    public ControlStateResolver getState() {
+    	return new ControlStateResolver(this);
+    }
 
     /**
      * Tracking mode.
@@ -155,17 +163,6 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     		return ControlState.RUNNING.getValue();
     	}
     	return ControlState.LATE.getValue();
-    }
-    
-    /**
-     * True if next check date is past.
-     */
-    @Transient
-    public boolean isLate() {
-    	if ((new Date()).after(nextCheckDate)) {
-    		return true;
-    	}
-    	return false;
     }
     
 	public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {

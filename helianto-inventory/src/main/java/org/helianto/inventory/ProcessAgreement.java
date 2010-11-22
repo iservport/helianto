@@ -84,6 +84,7 @@ public class ProcessAgreement extends AbstractRequirement {
 	 */
     public ProcessAgreement(Partner partner) {
     	this();
+    	setEntity(partner.getEntity());
     	setPartner(partner);
     }
 
