@@ -23,6 +23,6 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
                
-	<context:component-scan base-package="org.helianto.inventory,org.helianto.inventory.service,org.helianto.inventory.validation"/>
+	<context:component-scan base-package="org.helianto.inventory.repository,org.helianto.inventory.service,org.helianto.inventory.validation"/>
     
 </beans>

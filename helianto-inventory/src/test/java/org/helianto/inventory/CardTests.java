@@ -16,12 +16,12 @@
 
 package org.helianto.inventory;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.test.DomainTestSupport;
-import org.helianto.inventory.Card;
-import org.helianto.inventory.CardSet;
+import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.junit.Test;
 
 
@@ -32,18 +32,26 @@ public class CardTests {
 
 	@Test
     public void carTestEquals() {
-		Card copy, card = new Card();
-		CardSet cardSet = new CardSet();
-        card.setKey(cardSet, "LABEL");
-        copy = (Card) DomainTestSupport.minimalEqualsTest(card);
-
-        copy.setKey(cardSet, "");
-        assertFalse(card.equals(copy));
-
-        copy.setKey(null, "LABEL");
-        assertFalse(card.equals(copy));
-
-        copy.setKey(cardSet, "LABEL");
-        assertTrue(card.equals(copy));
+		Card card = new Card();
+		assertFalse(card.equals(null));
+		
+		Card other = new Card();
+		assertTrue(card.equals(other));
+		
+		Entity entity = new Entity(new Operator("DEFAULT"), "ALIAS");
+		CardSet cardSet = new CardSet(entity, 0);
+        card.setCardSet(cardSet);
+        assertFalse(card.equals(other));
+        card.setCardLabel("LABEL");
+        assertFalse(card.equals(other));
+        other.setCardSet(cardSet);
+        assertFalse(card.equals(other));
+        other.setCardLabel("LABEL");
+        assertTrue(card.equals(other));
+        assertEquals(card.hashCode(), other.hashCode());
+        card.setCardSet(new CardSet(entity, 1));
+        assertFalse(card.equals(other));
+        card.setCardLabel("OTHER");
+        assertFalse(card.equals(other));
     }
 }

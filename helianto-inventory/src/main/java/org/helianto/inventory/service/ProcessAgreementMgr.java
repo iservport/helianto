@@ -26,6 +26,7 @@ import org.helianto.inventory.ProcessAgreementFilter;
  * Process agreement service interface.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated use InventoryMgr
  */
 public interface ProcessAgreementMgr {
 

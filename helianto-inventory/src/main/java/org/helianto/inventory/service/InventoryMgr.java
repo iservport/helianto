@@ -15,10 +15,45 @@
 
 package org.helianto.inventory.service;
 
+import java.util.List;
+
+import org.helianto.core.filter.ListFilter;
+import org.helianto.inventory.ProcessAgreement;
+import org.helianto.inventory.ProcessRequirement;
+
 /**
+ * Inventory service interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
 public interface InventoryMgr {
+
+	/**
+	 * Find process requirement.
+	 * 
+	 * @param filter
+	 */
+	public List<ProcessRequirement> findProcessRequirements(ListFilter filter);
+
+	/**
+	 * Store agreement.
+	 * 
+	 * @param requirement
+	 */
+	public ProcessRequirement storeProcessRequirement(ProcessRequirement requirement);
+
+	/**
+	 * Find process agreement.
+	 * 
+	 * @param filter
+	 */
+	public List<ProcessAgreement> findProcessAgreement(ListFilter filter);
+
+	/**
+	 * Store process agreement.
+	 * 
+	 * @param agreement
+	 */
+	public ProcessAgreement storeProcessAgreement(ProcessAgreement agreement);
 
 }

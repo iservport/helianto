@@ -45,7 +45,7 @@ public class CardTestSupport {
 	}
 
 	public static Card createSample(CardSet cardSet) {
-		return Card.cardFactory(cardSet, cardSet.getCardSetLabel()+"00"+(testKey++));
+		return new Card(cardSet, cardSet.getCardSetLabel()+"00"+(testKey++));
 	}
 
 	public static List<Card> createCardList(int cardListSize) {
