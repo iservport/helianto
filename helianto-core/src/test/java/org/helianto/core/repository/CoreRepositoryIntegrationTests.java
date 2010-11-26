@@ -20,35 +20,24 @@ import static org.junit.Assert.assertEquals;
 import javax.annotation.Resource;
 
 import org.helianto.core.Category;
-import org.helianto.core.CategoryFilter;
 import org.helianto.core.Country;
-import org.helianto.core.CountryFilter;
 import org.helianto.core.Credential;
 import org.helianto.core.EntityPreference;
 import org.helianto.core.Identity;
-import org.helianto.core.IdentityFilter;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.core.ProvinceFilter;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
-import org.helianto.core.ServerFilter;
 import org.helianto.core.Service;
-import org.helianto.core.ServiceFilter;
 import org.helianto.core.Unit;
-import org.helianto.core.UnitFilter;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
-import org.helianto.core.UserAssociationFilter;
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
-import org.helianto.core.UserLogFilter;
 import org.helianto.core.UserRole;
-import org.helianto.core.repository.BasicDao;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.filter.ListFilter;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
 import org.helianto.core.test.CountryTestSupport;
@@ -76,22 +65,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 
-	@Resource BasicDao<KeyType> keyTypeDao;
-	@Resource FilterDao<Country, CountryFilter> countryDao;
-	@Resource FilterDao<Service, ServiceFilter> serviceDao;
-	@Resource FilterDao<Province, ProvinceFilter> provinceDao;
-	@Resource FilterDao<Category, CategoryFilter> categoryDao;
-	@Resource BasicDao<InternalEnumerator> internalEnumeratorDao;
-	@Resource BasicDao<PublicEnumerator> publicEnumeratorDao;
-	@Resource FilterDao<Unit, UnitFilter> unitDao;
-	@Resource FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao;
-	@Resource FilterDao<UserGroup, UserFilter> userGroupDao;
-	@Resource BasicDao<Credential> credentialDao;
-	@Resource FilterDao<UserLog, UserLogFilter> userLogDao;
-	@Resource FilterDao<Identity, IdentityFilter> identityDao;
-	@Resource FilterDao<Server, ServerFilter> serverDao;
-	@Resource BasicDao<UserRole> userRoleDao;
-	@Resource BasicDao<EntityPreference> entityPreferenceDao;	
+	@Resource FilterDao<KeyType, ListFilter> keyTypeDao;
+	@Resource FilterDao<Country, ListFilter> countryDao;
+	@Resource FilterDao<Service, ListFilter> serviceDao;
+	@Resource FilterDao<Province, ListFilter> provinceDao;
+	@Resource FilterDao<Category, ListFilter> categoryDao;
+	@Resource FilterDao<InternalEnumerator, ListFilter> internalEnumeratorDao;
+	@Resource FilterDao<PublicEnumerator, ListFilter> publicEnumeratorDao;
+	@Resource FilterDao<Unit, ListFilter> unitDao;
+	@Resource FilterDao<UserAssociation, ListFilter> userAssociationDao;
+	@Resource FilterDao<UserGroup, ListFilter> userGroupDao;
+	@Resource FilterDao<Credential, ListFilter> credentialDao;
+	@Resource FilterDao<UserLog, ListFilter> userLogDao;
+	@Resource FilterDao<Identity, ListFilter> identityDao;
+	@Resource FilterDao<Server, ListFilter> serverDao;
+	@Resource FilterDao<UserRole, ListFilter> userRoleDao;
+	@Resource FilterDao<EntityPreference, ListFilter> entityPreferenceDao;	
 	
 	@Test
 	public void prepareOperator() {

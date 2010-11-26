@@ -15,40 +15,25 @@
 
 package org.helianto.core.repository;
 
-import javax.annotation.Resource;
-
 import org.helianto.core.Category;
-import org.helianto.core.CategoryFilter;
 import org.helianto.core.Country;
-import org.helianto.core.CountryFilter;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
-import org.helianto.core.EntityFilter;
 import org.helianto.core.EntityPreference;
 import org.helianto.core.Identity;
-import org.helianto.core.IdentityFilter;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
-import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
-import org.helianto.core.ProvinceFilter;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
-import org.helianto.core.ServerFilter;
 import org.helianto.core.Service;
-import org.helianto.core.ServiceFilter;
 import org.helianto.core.Unit;
-import org.helianto.core.UnitFilter;
 import org.helianto.core.UserAssociation;
-import org.helianto.core.UserAssociationFilter;
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
-import org.helianto.core.UserLogFilter;
 import org.helianto.core.UserRole;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.helianto.core.filter.ListFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -58,216 +43,150 @@ import org.springframework.context.annotation.Configuration;
  * @author Mauricio Fernandes de Castro
  */
 @Configuration
-@SuppressWarnings("unchecked")
-public class CoreRepositoryConfiguration {
+public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration {
 	
 	/**
 	 * Category data access.
 	 */
 	@Bean
-	public FilterDao<Category, CategoryFilter> categoryDao() {
-		FilterDao<Category, CategoryFilter> dao =  
-			repositoryFactory.filterDaoFactory(Category.class, CategoryFilter.class, "entity", "categoryGroup", "categoryCode");
-		logger.info("Created categoryDao");
-		return dao;
+	public FilterDao<Category, ListFilter> categoryDao() {
+		return getFilterDao(Category.class, "entity", "categoryGroup", "categoryCode");
 	}
 
 	/**
 	 * Country data access.
 	 */
 	@Bean
-	public FilterDao<Country, CountryFilter> countryDao() {
-		FilterDao<Country, CountryFilter> dao =  
-			repositoryFactory.filterDaoFactory(Country.class, CountryFilter.class, "operator", "countryCode");
-		logger.info("Created countryDao");
-		return dao;
+	public FilterDao<Country, ListFilter> countryDao() {
+		return getFilterDao(Country.class, "operator", "countryCode");
 	}
 
 	/**
 	 * Credential data access.
 	 */
 	@Bean
-	public BasicDao<Credential> credentialDao() {
-		BasicDao<Credential> dao =  
-			repositoryFactory.basicDaoFactory(Credential.class, "identity");
-		logger.info("Created credentialDao");
-		return dao;
+	public FilterDao<Credential, ListFilter> credentialDao() {
+		return getFilterDao(Credential.class, "identity");
 	}
 
 	/**
 	 * Entity data access.
 	 */
 	@Bean
-	public FilterDao<Entity, EntityFilter> entityDao() {
-		FilterDao<Entity, EntityFilter> dao =  
-			repositoryFactory.filterDaoFactory(Entity.class, EntityFilter.class, "operator", "alias");
-		logger.info("Created entityDao");
-		return dao;
+	public FilterDao<Entity, ListFilter> entityDao() {
+		return getFilterDao(Entity.class, "operator", "alias");
 	}
 
 	/**
 	 * Entity preference data access.
 	 */
 	@Bean
-	public BasicDao<EntityPreference> entityPreferenceDao() {
-		BasicDao<EntityPreference> dao =  
-			repositoryFactory.basicDaoFactory(EntityPreference.class, "entity", "keyType");
-		logger.info("Created entityPreferenceDao");
-		return dao;
+	public FilterDao<EntityPreference, ListFilter> entityPreferenceDao() {
+		return getFilterDao(EntityPreference.class, "entity", "keyType");
 	}
 
 	/**
 	 * Identity data access.
 	 */
 	@Bean
-	public FilterDao<Identity, IdentityFilter> identityDao() {
-		FilterDao<Identity, IdentityFilter> dao =  
-			repositoryFactory.filterDaoFactory(Identity.class, IdentityFilter.class, "principal");
-		logger.info("Created identityDao");
-		return dao;
+	public FilterDao<Identity, ListFilter> identityDao() {
+		return getFilterDao(Identity.class, "principal");
 	}
 
 	/**
 	 * Internal enumerator data access.
 	 */
 	@Bean
-	public BasicDao<InternalEnumerator> internalEnumeratorDao() {
-		BasicDao<InternalEnumerator> dao =  
-			repositoryFactory.basicDaoFactory(InternalEnumerator.class, "entity", "typeName");
-		logger.info("Created internalEnumeratorDao");
-		return dao;
+	public FilterDao<InternalEnumerator, ListFilter> internalEnumeratorDao() {
+		return getFilterDao(InternalEnumerator.class, "entity", "typeName");
 	}
 
 	/**
 	 * Public enumerator data access.
 	 */
 	@Bean
-	public BasicDao<PublicEnumerator> publicEnumeratorDao() {
-		BasicDao<PublicEnumerator> dao =  
-			repositoryFactory.basicDaoFactory(PublicEnumerator.class, "operator", "typeName");
-		logger.info("Created publicEnumeratorDao");
-		return dao;
+	public FilterDao<PublicEnumerator, ListFilter> publicEnumeratorDao() {
+		return getFilterDao(PublicEnumerator.class, "operator", "typeName");
 	}
 
 	/**
 	 * Key type data access.
 	 */
 	@Bean
-	public BasicDao<KeyType> keyTypeDao() {
-		BasicDao<KeyType> dao =  
-			repositoryFactory.basicDaoFactory(KeyType.class, "operator", "keyCode");
-		logger.info("Created keyTypeDao");
-		return dao;
+	public FilterDao<KeyType, ListFilter> keyTypeDao() {
+		return getFilterDao(KeyType.class, "operator", "keyCode");
 	}
 
 	/**
 	 * Operator data access.
 	 */
 	@Bean
-	public FilterDao<Operator, OperatorFilter> operatorDao() {
-		FilterDao<Operator, OperatorFilter> dao =  
-			repositoryFactory.filterDaoFactory(Operator.class, OperatorFilter.class, "operatorName");
-		logger.info("Created operatorDao");
-		return dao;
+	public FilterDao<Operator, ListFilter> operatorDao() {
+		return getFilterDao(Operator.class, "operatorName");
 	}
 
 	/**
 	 * Province data access.
 	 */
 	@Bean
-	public FilterDao<Province, ProvinceFilter> provinceDao() {
-		FilterDao<Province, ProvinceFilter> dao =  
-			repositoryFactory.filterDaoFactory(Province.class, ProvinceFilter.class, "operator", "provinceCode");
-		logger.info("Created provinceDao");
-		return dao;
+	public FilterDao<Province, ListFilter> provinceDao() {
+		return getFilterDao(Province.class, "operator", "provinceCode");
 	}
 
 	/**
 	 * Server data access.
 	 */
 	@Bean
-	public FilterDao<Server, ServerFilter> serverDao() {
-		FilterDao<Server, ServerFilter> dao =  
-			repositoryFactory.filterDaoFactory(Server.class, ServerFilter.class, "operator", "serverName");
-		logger.info("Created serverDao");
-		return dao;
+	public FilterDao<Server, ListFilter> serverDao() {
+		return getFilterDao(Server.class, "operator", "serverName");
 	}
 
 	/**
 	 * Service data access.
 	 */
 	@Bean
-	public FilterDao<Service, ServiceFilter> serviceDao() {
-		FilterDao<Service, ServiceFilter> dao =  
-			repositoryFactory.filterDaoFactory(Service.class, ServiceFilter.class, "operator", "serviceName");
-		logger.info("Created serviceDao");
-		return dao;
+	public FilterDao<Service, ListFilter> serviceDao() {
+		return getFilterDao(Service.class, "operator", "serviceName");
 	}
 
 	/**
 	 * Unit data access.
 	 */
 	@Bean
-	public FilterDao<Unit, UnitFilter> unitDao() {
-		FilterDao<Unit, UnitFilter> dao =  
-			repositoryFactory.filterDaoFactory(Unit.class, UnitFilter.class, "entity", "unitCode");
-		logger.info("Created unitDao");
-		return dao;
+	public FilterDao<Unit, ListFilter> unitDao() {
+		return getFilterDao(Unit.class, "entity", "unitCode");
 	}
 
 	/**
 	 * User association data access.
 	 */
 	@Bean
-	public FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao() {
-		FilterDao<UserAssociation, UserAssociationFilter> dao =  
-			repositoryFactory.filterDaoFactory(UserAssociation.class, UserAssociationFilter.class, "parent", "child");
-		logger.info("Created userAssociationDao");
-		return dao;
+	public FilterDao<UserAssociation, ListFilter> userAssociationDao() {
+		return getFilterDao(UserAssociation.class, "parent", "child");
 	}
 
 	/**
 	 * User group data access.
 	 */
 	@Bean
-	public FilterDao<UserGroup, UserFilter> userGroupDao() {
-		FilterDao<UserGroup, UserFilter> dao =  
-			repositoryFactory.filterDaoFactory(UserGroup.class, UserFilter.class, "entity", "userKey");
-		logger.info("Created userGroupDao");
-		return dao;
+	public FilterDao<UserGroup, ListFilter> userGroupDao() {
+		return getFilterDao(UserGroup.class, "entity", "userKey");
 	}
 
 	/**
 	 * User log data access.
 	 */
 	@Bean
-	public FilterDao<UserLog, UserLogFilter> userLogDao() {
-		FilterDao<UserLog, UserLogFilter> dao =  
-			repositoryFactory.filterDaoFactory(UserLog.class, UserLogFilter.class, "user", "lastEvent");
-		logger.info("Created userLogDao");
-		return dao;
+	public FilterDao<UserLog, ListFilter> userLogDao() {
+		return getFilterDao(UserLog.class, "user", "lastEvent");
 	}
 
 	/**
 	 * User role data access.
 	 */
 	@Bean
-	public BasicDao<UserRole> userRoleDao() {
-		BasicDao<UserRole> dao =  
-			repositoryFactory.basicDaoFactory(UserRole.class, "userGroup", "service", "serviceExtension");
-		logger.info("Created userRoleDao");
-		return dao;
+	public FilterDao<UserRole, ListFilter> userRoleDao() {
+		return getFilterDao(UserRole.class, "userGroup", "service", "serviceExtension");
 	}
-
-	// collabs
-    
-    private RepositoryFactory repositoryFactory;
-    
-    @Resource
-	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		this.repositoryFactory = repositoryFactory;
-	}
-
-    private static final Logger logger = LoggerFactory.getLogger(CoreRepositoryConfiguration.class);
 
 }

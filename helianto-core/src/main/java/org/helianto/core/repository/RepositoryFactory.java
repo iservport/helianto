@@ -18,6 +18,7 @@ package org.helianto.core.repository;
 import javax.annotation.Resource;
 
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.ListFilter;
 import org.helianto.core.naming.NamingConventionStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +41,9 @@ public class RepositoryFactory {
 	 * @param filterClazz
 	 * @param params
 	 */
-	public <T> AbstractBasicDao 
-	basicDaoFactory(Class<T> targetClazz, String... params) 
-	{
+	public <T> AbstractBasicDao<T> basicDaoFactory(Class<T> targetClazz, String... params) {
 		AbstractBasicDao<T> basicDao =  
-			new AbstractBasicDao(targetClazz) {
+			new AbstractBasicDao<T>(targetClazz) {
 			public PersistenceStrategy<T> getPersistenceStrategy() {
 				return persistenceStrategy;
 			}
@@ -55,18 +54,15 @@ public class RepositoryFactory {
 	}
 
 	/**
-	 * Return a new filter DAO.
+	 * Return a new <code>FilterDao</code>.
 	 * 
 	 * @param <T>
-	 * @param <F>
 	 * @param targetClazz
 	 * @param params
 	 */
-	public <T, F extends Filter> AbstractFilterDao 
-	filterDaoFactory(Class<T> targetClazz, String... params) 
-	{
-		AbstractFilterDao<T, F> filterDao =  
-			new AbstractFilterDao(targetClazz) {
+	public <T> AbstractFilterDao<T, ListFilter> filterDaoFactory(Class<T> targetClazz, String... params) {
+		AbstractFilterDao<T, ListFilter> filterDao =  
+			new AbstractFilterDao<T, ListFilter>(targetClazz) {
 			public PersistenceStrategy<T> getPersistenceStrategy() {
 				return persistenceStrategy;
 			}
@@ -84,7 +80,10 @@ public class RepositoryFactory {
 	 * @param targetClazz
 	 * @param filterClazz
 	 * @param params
+	 * 
+	 * @deprecated
 	 */
+	@SuppressWarnings("rawtypes")
 	public <T, F extends Filter> AbstractFilterDao 
 	filterDaoFactory(Class<T> targetClazz, Class<F> filterClazz, String... params) 
 	{
@@ -126,10 +125,12 @@ public class RepositoryFactory {
 
 	// collabs
     
-    private PersistenceStrategy persistenceStrategy;
+    @SuppressWarnings("rawtypes")
+	private PersistenceStrategy persistenceStrategy;
     private NamingConventionStrategy namingConventionStrategy;
     
-    @Resource
+    @SuppressWarnings("rawtypes")
+	@Resource
 	public void setPersistenceStrategy(PersistenceStrategy persistenceStrategy) {
 		this.persistenceStrategy = persistenceStrategy;
 	}
