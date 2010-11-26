@@ -24,6 +24,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.Entity;
+
 
 /**
  * A base class to represent orders, invoices, quality.
@@ -48,6 +50,25 @@ public class ProcessRequirement extends AbstractRequirement {
 	@Override
 	public String getInternalNumberKey() {
 		return "PROCREQ";
+	}
+	
+	/**
+	 * Empty constructor.
+	 */
+	public ProcessRequirement() {
+		super();
+	}
+
+	/**
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param internalNumber
+	 */
+	public ProcessRequirement(Entity entity, long internalNumber) {
+		super();
+		setEntity(entity);
+		setInternalNumber(internalNumber);
 	}
 
     /**
