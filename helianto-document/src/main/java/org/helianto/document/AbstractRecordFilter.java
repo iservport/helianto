@@ -49,7 +49,7 @@ public abstract class AbstractRecordFilter extends AbstractEventFilter {
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
-		appendPriority(mainCriteriaBuilder);
+		appendResolution(mainCriteriaBuilder);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public abstract class AbstractRecordFilter extends AbstractEventFilter {
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	protected void appendPriority(CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendResolution(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("resolution", getResolution(), mainCriteriaBuilder);
 	}
 
