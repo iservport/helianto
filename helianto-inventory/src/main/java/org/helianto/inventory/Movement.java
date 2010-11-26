@@ -63,6 +63,39 @@ public class Movement implements Serializable {
 	}
 
 	/**
+	 * Inventory constructor.
+	 * 
+	 * @param inventory
+	 */
+	public Movement(Inventory inventory) {
+		this(new InventoryTransaction(), inventory);
+	}
+
+	/**
+	 * Key constructor.
+	 * 
+	 * @param inventory
+	 * @param inventoryTransaction
+	 */
+	public Movement(InventoryTransaction inventoryTransaction, Inventory inventory) {
+		this(new InventoryTransaction(), inventory, BigDecimal.ONE);
+	}
+
+	/**
+	 * Quantity constructor.
+	 * 
+	 * @param inventoryTransaction
+	 * @param inventory
+	 * @param quantity
+	 */
+	public Movement(InventoryTransaction inventoryTransaction, Inventory inventory, BigDecimal quantity) {
+		super();
+		setInventoryTransaction(inventoryTransaction);
+		setInventory(inventory);
+		setQuantity(quantity);
+	}
+
+	/**
 	 * Auto generated primary key.
 	 */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -87,7 +120,7 @@ public class Movement implements Serializable {
 	/**
 	 * Inventory transaction.
 	 */
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="inventoryTransactionId")
 	public InventoryTransaction getInventoryTransaction() {
 		return inventoryTransaction;
