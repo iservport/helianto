@@ -67,12 +67,42 @@ public class CardSet implements java.io.Serializable, Sequenceable, TopLevelNumb
     private int cardRange;
     private char cardType;
 
-    /** default constructor */
-    public CardSet() {
+    /** 
+     * Default constructor.
+     */
+    CardSet() {
+    	super();
     	setCardRange(50);
     }
 
-    // Property accessors
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param internalNumber
+     */
+    public CardSet(Entity entity, long internalNumber) {
+    	super();
+    	setEntity(entity);
+    	setInternalNumber(internalNumber);
+    	setCardRange(50);
+    }
+
+    /** 
+     * Process document constructor.
+     * 
+     * @param process
+     * @param internalNumber
+     */
+    public CardSet(ProcessDocument process, long internalNumber) {
+    	this(process.getEntity(), internalNumber);
+    	setProcess(process);
+    	setCardRange(50);
+    }
+
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -191,7 +221,7 @@ public class CardSet implements java.io.Serializable, Sequenceable, TopLevelNumb
 	 * @param cardLabel
 	 */
     public Card cardFactory(String cardLabel) {
-        return Card.cardFactory(this, cardLabel);
+        return new Card(this, cardLabel);
     }
 
     @Transient

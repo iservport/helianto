@@ -40,17 +40,6 @@ import org.helianto.process.ProcessDocument;
 )
 public class Card implements java.io.Serializable {
 	
-    /**
-     * <code>Card</code> factory.
-     * 
-     * @param cardSet
-     * @param internalNumber
-     */
-    public static Card cardFactory(CardSet cardSet, String cardLabel) {
-        Card card = new Card(cardSet, cardLabel);
-        return card;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private CardSet cardSet;
@@ -58,23 +47,43 @@ public class Card implements java.io.Serializable {
     private int cardNumber;
 	private char cardState;
 
-    /** default constructor */
-    public Card() {
+    /** 
+     * Default constructor.
+     */
+    Card() {
+    	super();
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param cardSet
+     * @param cardLabel
+     */
+    public Card(CardSet cardSet, String cardLabel) {
+    	super();
+    	setCardSet(cardSet);
+        setCardLabel(cardLabel);
         setCardState(CardState.EMPTY);
     }
 
-    /** default constructor */
-    protected Card(CardSet cardSet, String cardLabel) {
-    	this();
-    	int cardNumber = validateCardLabel(cardSet, cardLabel);
+    /** 
+     * Number constructor.
+     * 
+     * @param cardSet
+     * @param cardNumber
+     */
+    public Card(CardSet cardSet, int cardNumber) {
+    	super();
     	setCardSet(cardSet);
-    	setCardLabel(cardSet, cardNumber);
+        setCardLabel(cardNumber);
+        setCardState(CardState.EMPTY);
     }
 
     /**
      * Validate card label.
      */
-	protected int validateCardLabel(CardSet cardSet, String cardLabel) {
+	public int validateCardLabel() {
 		try {
 			int cardNumber = Integer.parseInt(cardLabel.substring(5));
 			if (cardNumber > cardSet.getCardRange()) {
@@ -89,7 +98,9 @@ public class Card implements java.io.Serializable {
 	}
 	
 
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -120,12 +131,22 @@ public class Card implements java.io.Serializable {
     public void setCardLabel(String cardLabel) {
     	this.cardLabel = cardLabel;
     }
-    protected void setCardLabel(CardSet cardSet, int cardNumber) {
-    	this.cardLabel = new StringBuilder(cardSet.getCardSetLabel())
-    	.append(String.format("%1$05d", cardNumber))
-    	.toString();
+    protected void setCardLabel(int cardNumber) {
+    	this.cardLabel = formatCardLabel(cardNumber);
     	this.cardNumber = cardNumber;
     }
+    
+    /**
+     * Convenience to format card label using card number.
+     * 
+     * @param cardNumber
+     */
+    protected String formatCardLabel(int cardNumber) {
+    	return new StringBuilder(cardSet.getCardSetLabel())
+    	.append(String.format("%1$05d", cardNumber))
+    	.toString();
+    }
+    
     /**
      * Owning entity.
      */
