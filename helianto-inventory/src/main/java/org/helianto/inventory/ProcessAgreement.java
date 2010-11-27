@@ -130,7 +130,7 @@ public class ProcessAgreement extends AbstractRequirement {
      */
     @Override
     protected final char validateResolution(char agreementState) {
-    	if (isCheckDatePast()) {
+    	if (getState().isLate()) {
     		return AgreementState.EXPIRED.getValue();
     	}
         return agreementState;

@@ -39,7 +39,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
 import org.helianto.core.NaturalKeyInfo;
-import org.helianto.document.Control;
+import org.helianto.document.Controlable;
 
 /**
  * <p>
@@ -78,7 +78,7 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
     private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
     private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
     //transient
-    private Control controlReference;
+    private Controlable controlReference;
 	private List<ResourceAssociation> childAssociationList;
     private List<ResourceAssociation> parentAssociationList;
 
@@ -190,10 +190,10 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
      * <<Transient>> Control reference.
      */
     @Transient
-    public Control getControlReference() {
+    public Controlable getControlReference() {
 		return controlReference;
 	}
-	public void setControlReference(Control controlReference) {
+	public void setControlReference(Controlable controlReference) {
 		this.controlReference = controlReference;
 	}
 
