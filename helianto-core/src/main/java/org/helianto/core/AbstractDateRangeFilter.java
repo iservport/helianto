@@ -149,14 +149,13 @@ public abstract class AbstractDateRangeFilter extends AbstractUserBackedCriteria
      * @param force true will require negative interval to force consistency.
      */
 	protected void setRangeToDateMinusInterval(boolean force) {
-    	if (getToDate()==null) {
-    		setToDate(new Date());
+    	if (getToDate()!=null) {
+        	if (force && getInterval()>0) {
+        		throw new IllegalArgumentException("Interval must be negative to have start date before end date");
+        	}
+        	setFromDate(getReferenceDate(getToDate(), getInterval()));
+    		logger.debug("Filter {} from {} (or {} days before) to {}", new Object[] { getDateFieldName(), getFromDate(), getInterval(), getToDate() });
     	}
-    	if (force && getInterval()>0) {
-    		throw new IllegalArgumentException("Interval must be negative to have start date before end date");
-    	}
-    	setFromDate(getReferenceDate(getToDate(), getInterval()));
-		logger.debug("Filter {} from {} (or {} days before) to {}", new Object[] { getDateFieldName(), getFromDate(), getInterval(), getToDate() });
     }
 
     /**
@@ -166,14 +165,13 @@ public abstract class AbstractDateRangeFilter extends AbstractUserBackedCriteria
      * @param force true will require positive interval to force consistency.
      */
     protected void setRangeFromDatePlusInterval(boolean force) {
-    	if (getFromDate()==null) {
-    		setFromDate(new Date());
+    	if (getFromDate()!=null) {
+        	if (force && getInterval()<0) {
+        		throw new IllegalArgumentException("Interval must be positive to have start date before end date");
+        	}
+        	setToDate(getReferenceDate(getFromDate(), getInterval()));
+    		logger.debug("Filter {} from {} to {} (or {} days after)", new Object[] { getDateFieldName(), getFromDate(), getToDate(), getInterval() });
     	}
-    	if (force && getInterval()<0) {
-    		throw new IllegalArgumentException("Interval must be positive to have start date before end date");
-    	}
-    	setToDate(getReferenceDate(getFromDate(), getInterval()));
-		logger.debug("Filter {} from {} to {} (or {} days after)", new Object[] { getDateFieldName(), getFromDate(), getToDate(), getInterval() });
     }
 
     /**
