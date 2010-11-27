@@ -7,22 +7,29 @@ import java.util.Date;
  * 
  * @author mauriciofernandesdecastro
  */
-public class ControlStateResolver extends RecordStateResolver {
+public class ControlStateResolver extends RepeatableStateResolver {
 
 	/**
 	 * Control constructor.
 	 * 
 	 * @param control
 	 */
-	public ControlStateResolver(AbstractControl control) {
-		super(control);
+	public ControlStateResolver(Object target) {
+		super(target);
+	}
+
+	/**
+	 * Local resolver target.
+	 */
+	private Controlable getControl() {
+		return getResolverTarget();
 	}
 
     /**
      * True if next check date is past.
      */
     public boolean isLate() {
-    	if ((new Date()).after(((AbstractControl) getResolverTarget()).getNextCheckDate())) {
+    	if (getControl().getNextCheckDate()!=null && (new Date()).after(getControl().getNextCheckDate())) {
     		return true;
     	}
     	return false;

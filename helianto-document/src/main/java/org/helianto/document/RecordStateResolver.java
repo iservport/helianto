@@ -7,15 +7,15 @@ package org.helianto.document;
  */
 public class RecordStateResolver {
 	
-	private AbstractRecord record;
+	private Object target;
 	
 	/**
 	 * Record constructor.
 	 * 
 	 * @param record
 	 */
-	public RecordStateResolver(AbstractRecord record) {
-		this.record = record;
+	public RecordStateResolver(Object target) {
+		this.target = target;
 	}
 	
 	/**
@@ -24,8 +24,15 @@ public class RecordStateResolver {
 	 * @param <T>
 	 */
 	@SuppressWarnings("unchecked")
-	protected <T extends AbstractRecord> T getResolverTarget() {
-		return (T) this.record;
+	protected <T> T getResolverTarget() {
+		return (T) this.target;
+	}
+	
+	/**
+	 * Local resolver target.
+	 */
+	private Recordable getRecord() {
+		return getResolverTarget();
 	}
 
     /**
@@ -47,8 +54,8 @@ public class RecordStateResolver {
      * </p>
      */
     public boolean isRunning() {
-    	if (record.getResolution()==Resolution.PRELIMINARY.getValue()) return true;
-    	if (record.getResolution()==Resolution.TODO.getValue()) return true;
+    	if (getRecord().getResolution()==Resolution.PRELIMINARY.getValue()) return true;
+    	if (getRecord().getResolution()==Resolution.TODO.getValue()) return true;
         return isSuspended();
     }
 
@@ -60,7 +67,15 @@ public class RecordStateResolver {
      * </p>
      */
     public boolean isSuspended() {
-    	if (record.getResolution()==Resolution.WAIT.getValue()) return true;
+    	if (getRecord().getResolution()==Resolution.WAIT.getValue()) return true;
+        return false;
+    }
+
+    /**
+     * True if complete is 100%.
+     */
+    public boolean isComplete() {
+    	if (getRecord().getComplete()==100) return true;
         return false;
     }
 

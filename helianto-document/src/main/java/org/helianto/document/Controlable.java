@@ -23,21 +23,11 @@ import java.util.Date;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Control {
+public interface Controlable {
 
     /**
      * Date to be controlled.
      */
     public Date getNextCheckDate();
     
-    /**
-     * True if check date is past.
-     */
-    public boolean isCheckDatePast();
-    
-    /**
-     * 'Y' or 'N' if checkDate is past.
-     */
-    public char getCheckDatePastAsChar();
-
 }

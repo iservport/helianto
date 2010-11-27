@@ -13,35 +13,25 @@
  * limitations under the License.
  */
 
+
 package org.helianto.document;
 
-import java.util.Calendar;
 
 /**
- * Provide tracking information, like frequency value and type.
+ * Record interface.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated see Repeatable
  */
-public interface Trackable {
+public interface Recordable {
 
     /**
-     * Tracking mode.
-     * 
-     * @see {@link TrackingMode}
+     * Resolution.
      */
-    public char getTrackingMode();
+    public char getResolution();
     
     /**
-     * Frequency.
+     * Percentual to indicate how much of the record is complete.
      */
-    public int getFrequency();
+    public int getComplete();
     
-    /**
-     * Frequency type.
-     * 
-     * @see Calendar
-     */
-    public int getFrequencyType();
-
 }

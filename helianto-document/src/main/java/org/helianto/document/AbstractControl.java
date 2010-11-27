@@ -16,7 +16,6 @@
 package org.helianto.document;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.JoinColumn;
@@ -37,14 +36,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractControl extends AbstractRecord implements Serializable, Sequenceable, Control, Trackable, TopLevelNumberedEntity {
+public abstract class AbstractControl extends AbstractRepeatable implements Serializable, Sequenceable, Controlable, TopLevelNumberedEntity {
 
     private static final long serialVersionUID = 1L;
     private Entity entity;
     private Date nextCheckDate;
-    private char trackingMode;
-    private int frequency;
-    private int frequencyType;
 
     /** 
      * Default constructor.
@@ -52,9 +48,6 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     public AbstractControl() {
     	super();
     	setNextCheckDate(new Date());
-        setTrackingMode(TrackingMode.END_ONLY);
-    	setFrequency(0);
-    	setFrequencyType(Calendar.DATE);
     }
     
     /** 
@@ -91,16 +84,6 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     public void setNextCheckDate(Date nextCheckDate) {
         this.nextCheckDate = nextCheckDate;
     }
-    @Transient
-    public boolean isCheckDatePast() {
-//    	if (!isActive()) return false;
-    	if (nextCheckDate==null) return true;
-        return (nextCheckDate.before(new Date()));
-    }
-    @Transient
-    public char getCheckDatePastAsChar() {
-        return isCheckDatePast() ? 'Y' : 'N';
-    }
     
     /**
      * Resolve control status.
@@ -108,41 +91,6 @@ public abstract class AbstractControl extends AbstractRecord implements Serializ
     @Transient
     public ControlStateResolver getState() {
     	return new ControlStateResolver(this);
-    }
-
-    /**
-     * Tracking mode.
-     */
-    public char getTrackingMode() {
-    	return this.trackingMode;
-    }
-    public void setTrackingMode(char trackingMode) {
-    	this.trackingMode = trackingMode;
-    }
-    public void setTrackingMode(TrackingMode trackingMode) {
-    	this.trackingMode = trackingMode.getValue();
-    }
-    
-    /**
-     * Frequency.
-     */
-    public int getFrequency() {
-    	return this.frequency;
-    }
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
-    }
-    
-    /**
-     * Frequency type.
-     * 
-     * @see Calendar
-     */
-    public int getFrequencyType() {
-        return this.frequencyType;
-    }
-    public void setFrequencyType(int frequencyType) {
-        this.frequencyType = frequencyType;
     }
 
     /**

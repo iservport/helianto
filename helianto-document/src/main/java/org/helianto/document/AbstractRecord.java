@@ -31,7 +31,7 @@ import javax.persistence.Transient;
  */
 
 @javax.persistence.MappedSuperclass
-public abstract class AbstractRecord extends AbstractEvent {
+public abstract class AbstractRecord extends AbstractEvent implements Recordable {
 
     private static final long serialVersionUID = 1L;
     private int complete;
@@ -45,20 +45,8 @@ public abstract class AbstractRecord extends AbstractEvent {
         setResolution(Resolution.PRELIMINARY.getValue());
     }
     
-    /**
-     * Resolution.
-     * <p>
-     * Optionally, validate the resolution in {@link #validateResolution(char)}.
-     * </p>
-     */
     public char getResolution() {
         return validateResolution(this.resolution);
-    }
-    /**
-     * Do the actual resolution validation.
-     */
-    protected char validateResolution(char resolution) {
-    	return resolution;
     }
     public void setResolution(char resolution) {
         this.resolution = resolution;
@@ -71,6 +59,13 @@ public abstract class AbstractRecord extends AbstractEvent {
     }
     
     /**
+     * Do the actual resolution validation.
+     */
+    protected char validateResolution(char resolution) {
+    	return resolution;
+    }
+
+    /**
      * Resolve record status.
      */
     @Transient
@@ -78,9 +73,6 @@ public abstract class AbstractRecord extends AbstractEvent {
     	return new RecordStateResolver(this);
     }
     
-    /**
-     * Percentual to indicate how much of the record is complete.
-     */
     public int getComplete() {
     	return validateCompleteness(this.complete);
     }
