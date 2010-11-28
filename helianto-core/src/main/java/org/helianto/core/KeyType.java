@@ -73,6 +73,17 @@ public class KeyType implements java.io.Serializable {
     	setOperator(operator);
     }
 
+    /** 
+     * Key constructor
+     * 
+     * @param operator
+     * @param keyCode
+     */
+    public KeyType(Operator operator, String keyCode) {
+    	this(operator);
+    	setKeyCode(keyCode);
+    }
+
     /**
      * Primary key.
      */
