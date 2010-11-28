@@ -21,10 +21,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.core.User;
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
-import org.helianto.core.test.UserTestSupport;
-import org.helianto.document.AbstractDocument;
+import org.helianto.core.Entity;
+import org.helianto.core.filter.AbstractEntityBackedFilter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,49 +34,17 @@ public class ProcessDocumentFilterTests {
 	
 	@Test
 	public void constructor() {
-		ProcessDocumentFilter processDocumentFilter = new ProcessDocumentFilter();
-		assertTrue(processDocumentFilter instanceof Serializable);
-		assertTrue(processDocumentFilter instanceof AbstractUserBackedCriteriaFilter);
-	}
-	
-	@Test
-	public void factoryUser() {
-		User user = new User();
-		Class<? extends ProcessDocument> clazz = Process.class;
-		ProcessDocumentFilter processDocumentFilter = ProcessDocumentFilter.processDocumentFilterFactory(user, clazz);
-		assertSame(processDocumentFilter.getUser(), user);
-		assertEquals(processDocumentFilter.getClazz(), Process.class);
-	}
-	
-	@Test
-	public void factoryHierarchy() {
-		User user = new User();
+		assertTrue(filter instanceof Serializable);
+		assertTrue(filter instanceof AbstractEntityBackedFilter);
+		assertSame(filter.getEntity(), entity);
+		assertEquals(filter.getDocCode(), "");
+
 		ProcessDocument document = new Process();
-		ProcessDocumentFilter processDocumentFilter = ProcessDocumentFilter.processDocumentFilterFactory(user, document);
-		assertSame(processDocumentFilter.getUser(), user);
-		assertEquals(processDocumentFilter.getClazz(), Process.class);
-		assertEquals(processDocumentFilter.getDocument(), document);
+		filter = new ProcessDocumentFilter(document);
+//		assertEquals(filter.getClazz(), Process.class);
+		assertEquals(filter.getParent(), document);
 	}
 	
-	@Test
-	public void document() {
-		AbstractDocument document = new ProcessDocument() {
-			private static final long serialVersionUID = 1L;
-		};
-		ProcessDocumentFilter processDocumentFilter = 
-			ProcessDocumentFilter.processDocumentFilterFactory(new User(), Process.class);
-		processDocumentFilter.setDocument(document);
-		assertSame(processDocumentFilter.getDocument(), document);
-	}
-	
-	@Test
-	public void clazz() {
-		Class<? extends ProcessDocument> clazz = Process.class;
-		ProcessDocumentFilter processDocumentFilter = 
-			ProcessDocumentFilter.processDocumentFilterFactory(new User(), Process.class);
-		processDocumentFilter.setClazz(clazz);
-		assertEquals(processDocumentFilter.getClazz(), Process.class);
-	}
 	
     public static String OB = "order by alias.docCode ";
     public static String C0 = "alias.entity.id = 0 ";
@@ -89,6 +55,7 @@ public class ProcessDocumentFilterTests {
 
     @Test
     public void empty() {
+    	filter.setDocCode("");
         assertEquals(C0+OB, filter.createCriteriaAsString(false));
     }
     
@@ -117,12 +84,11 @@ public class ProcessDocumentFilterTests {
     }
     
     private ProcessDocumentFilter filter;
-    private User user;
+    private Entity entity = new Entity();
     
     @Before
     public void setUp() {
-    	user = UserTestSupport.createUser();
-    	filter = ProcessDocumentFilter.processDocumentFilterFactory(user, ProcessDocument.class);
+		filter = new ProcessDocumentFilter(entity, "");
     }
 
 }

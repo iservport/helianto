@@ -19,81 +19,52 @@ package org.helianto.process;
 import java.io.Serializable;
 import java.util.Collection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.helianto.core.User;
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.Entity;
 import org.helianto.core.filter.CriteriaBuilder;
 import org.helianto.core.filter.PolymorphicFilter;
-import org.helianto.document.AbstractDocument;
+import org.helianto.document.AbstractDocumentFilter;
 import org.helianto.partner.Partner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Process document filter.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter implements Serializable, PolymorphicFilter<ProcessDocument> {
-
-	/**
-	 * Factory method.
-	 * 
-	 * @param user
-	 * @param clazz
-	 */
-	public static ProcessDocumentFilter processDocumentFilterFactory(User user, Class<? extends ProcessDocument> clazz) {
-		ProcessDocumentFilter processDocumentFilter = new ProcessDocumentFilter();
-		processDocumentFilter.setUser(user);
-		processDocumentFilter.setClazz(clazz);
-		return processDocumentFilter;
-	}
-
-	/**
-	 * Factory method.
-	 * 
-	 * @param user
-	 * @param root
-	 */
-	public static ProcessDocumentFilter processDocumentFilterFactory(User user, ProcessDocument root) {
-		ProcessDocumentFilter processDocumentFilter = ProcessDocumentFilter.processDocumentFilterFactory(user, root.getClass());
-		processDocumentFilter.setDocument(root);
-		return processDocumentFilter;
-	}
+public class ProcessDocumentFilter extends AbstractDocumentFilter implements Serializable, PolymorphicFilter<ProcessDocument> {
 
     private static final long serialVersionUID = 1L;
 	private Class<? extends ProcessDocument> clazz;
-    private String docCode;
-	private String docNameLike;
 	private char inheritanceType;
 	private char priority;
-	private AbstractDocument document;
+	private ProcessDocument parent;
 	private Partner partner;
     private Collection<? extends ProcessDocument> exclusions;
 	
-	
-	public ProcessDocumentFilter() {
-		super();
+	/**
+	 * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
+	 */
+	public ProcessDocumentFilter(Entity entity, String docCode) {
+		super(entity, docCode);
 		setClazz(ProcessDocument.class);
-		setDocCode("");
-		setDocNameLike("");
 		setInheritanceType(' ');
 		setPriority(' ');
 	}
 	
-	public void reset() {
-		setDocCode("");
-		setDocNameLike("");
+	/**
+	 * Parent constructor.
+     * 
+     * @param parent
+	 */
+	public ProcessDocumentFilter(ProcessDocument parent) {
+		super(parent.getEntity(), "");
+		setParent(parent);
 	}
 	
-	public boolean isSelection() {
-		return getDocCode().length()>0;
-	}
-
-	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("docCode", getDocCode(), mainCriteriaBuilder);
-	}
-
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (!getClazz().equals(ProcessDocument.class)) {
@@ -104,7 +75,7 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
 
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("docName", getDocNameLike(), mainCriteriaBuilder);
+		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("inheritanceType", getInheritanceType(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);
 		appendOrderBy("docCode", mainCriteriaBuilder);
@@ -118,17 +89,6 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
 	}
 	public void setClazz(Class<? extends ProcessDocument> clazz) {
 		this.clazz = clazz;
-	}
-
-	/**
-	 * <<Chain>> Process document code.
-	 */
-	public String getDocCode() {
-		return docCode;
-	}
-	public ProcessDocumentFilter setDocCode(String docCode) {
-		this.docCode = docCode;
-		return this;
 	}
 
 	/**
@@ -166,16 +126,6 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
 	}
 
 	/**
-	 * Process name like.
-	 */
-    public String getDocNameLike() {
-		return docNameLike;
-	}
-	public void setDocNameLike(String docNameLike) {
-		this.docNameLike = docNameLike;
-	}
-
-	/**
 	 * Inheritance type.
 	 */
 	public char getInheritanceType() {
@@ -196,13 +146,13 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
 	}
 
 	/**
-	 * Subclass
+	 * Parent
 	 */
-	public AbstractDocument getDocument() {
-		return document;
+	public ProcessDocument getParent() {
+		return parent;
 	}
-	public void setDocument(AbstractDocument document) {
-		this.document = document;
+	public void setParent(ProcessDocument parent) {
+		this.parent = parent;
 	}
 	
 	/**
@@ -233,7 +183,7 @@ public class ProcessDocumentFilter extends AbstractUserBackedCriteriaFilter impl
 	public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        builder.append("document").append("='").append(getDocument()).append("' ");
+        builder.append("parent").append("='").append(getParent()).append("' ");
         builder.append("]");
         return builder.toString();
     }

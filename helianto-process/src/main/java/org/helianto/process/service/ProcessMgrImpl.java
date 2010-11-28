@@ -84,7 +84,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	}
 
 	public List<ProcessDocumentAssociation> findOperations(User user, Process process) {
-		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(user, process);
+		ProcessDocumentFilter filter = new ProcessDocumentFilter(process);
         logger.debug("Created filter {}", filter);
 		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
 		List<ProcessDocumentAssociation> operationList = (List<ProcessDocumentAssociation>) processDocumentAssociationDao.find(criteria);
@@ -104,7 +104,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 		return new StringBuilder()
 			.append(prefix)
 			.append(".parent.id=")
-			.append(filter.getDocument().getId())
+			.append(filter.getParent().getId())
 			.append(" order by ")
 			.append(prefix)
 			.append(".sequence ")
@@ -135,7 +135,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
     
     public List<ProcessDocumentAssociation> findCharacteristics(User user, Operation operation) {
-		ProcessDocumentFilter filter = ProcessDocumentFilter.processDocumentFilterFactory(user, operation);
+		ProcessDocumentFilter filter = new ProcessDocumentFilter((ProcessDocument) operation);
         logger.debug("Created filter {}", filter);
 		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
 		List<ProcessDocumentAssociation> characteristicList = (List<ProcessDocumentAssociation>) processDocumentAssociationDao.find(criteria);
