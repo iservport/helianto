@@ -15,7 +15,8 @@
 
 package org.helianto.document;
 
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.Entity;
+import org.helianto.core.filter.AbstractEntityBackedFilter;
 import org.helianto.core.filter.CriteriaBuilder;
 
 /**
@@ -23,7 +24,7 @@ import org.helianto.core.filter.CriteriaBuilder;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractDocumentFilter extends AbstractUserBackedCriteriaFilter {
+public abstract class AbstractDocumentFilter extends AbstractEntityBackedFilter {
 
 	private static final long serialVersionUID = 1L;
     private String docCode;
@@ -31,11 +32,16 @@ public abstract class AbstractDocumentFilter extends AbstractUserBackedCriteriaF
     private String docNameLike;
     
     /**
-     * Default constructor.
+     * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
      */
-    public AbstractDocumentFilter() {
+    public AbstractDocumentFilter(Entity entity, String docCode) {
     	super();
-		reset();
+    	setEntity(entity);
+    	setDocCode(docCode);
+		setDocNameLike("");
     }
 
     /**

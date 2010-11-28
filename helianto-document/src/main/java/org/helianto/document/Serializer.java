@@ -56,7 +56,7 @@ import org.helianto.core.Entity;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("B")
-public class Serializer implements Serializable {
+public class Serializer implements Serializable, Customizer {
 
 	private static final long serialVersionUID = 1L;
     private int id;

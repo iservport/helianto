@@ -21,12 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
+import org.helianto.core.Entity;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.document.Document;
+import org.helianto.document.DocumentFilter;
 import org.helianto.document.Serializer;
 import org.helianto.document.SerializerFilter;
-import org.helianto.document.DocumentFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -84,7 +85,7 @@ public class DocumentMgrImplTests {
 	@Test
 	public void findDocuments() {
 		List<Document> documentList = new ArrayList<Document>();
-		DocumentFilter documentFilter = new DocumentFilter();
+		DocumentFilter documentFilter = new DocumentFilter(new Entity(), "");
 		
 		EasyMock.expect(documentDao.find(documentFilter)).andReturn(documentList);
 		EasyMock.replay(documentDao);

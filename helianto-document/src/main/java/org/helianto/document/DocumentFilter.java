@@ -17,7 +17,6 @@
 package org.helianto.document;
 
 import org.helianto.core.Entity;
-import org.helianto.core.User;
 import org.helianto.core.filter.CriteriaBuilder;
 
 /**
@@ -27,50 +26,10 @@ import org.helianto.core.filter.CriteriaBuilder;
  */
 public class DocumentFilter extends AbstractDocumentFilter {
 
-	/**
-	 * Factory method.
-	 * 
-	 * @param user
-	 */
-	public static DocumentFilter documentFilterFactory(User user) {
-		DocumentFilter userDocumentFilter = new DocumentFilter();
-		userDocumentFilter.setUser(user);
-		return userDocumentFilter;
-	}
-	
 	private static final long serialVersionUID = 1L;
 	private String builderCode;
     private char contentType;
     
-    /**
-     * Default constructor.
-     */
-    public DocumentFilter() {
-    	super();
-    	setBuilderCode("");
-    	setContentType(' ');
-    }
-
-    /**
-     * Entity constructor.
-     * 
-     * @param entity
-     */
-    public DocumentFilter(Entity entity) {
-    	this();
-    	setEntity(entity);
-    }
-
-    /**
-     * User constructor.
-     * 
-     * @param user
-     */
-    public DocumentFilter(User user) {
-    	this();
-    	setUser(user);
-    }
-
     /**
      * Key constructor.
      * 
@@ -78,8 +37,9 @@ public class DocumentFilter extends AbstractDocumentFilter {
      * @param docCode
      */
     public DocumentFilter(Entity entity, String docCode) {
-    	this(entity);
-    	setDocCode(docCode);
+    	super(entity, docCode);
+    	setBuilderCode("");
+    	setContentType(' ');
     }
 
     /**

@@ -28,51 +28,57 @@ import org.helianto.core.number.Sequenceable;
  * is created.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated see AbstractCustomDocument
  */
 @MappedSuperclass
-public class AbstractNumberedDocument extends AbstractDocument implements Sequenceable {
+public class AbstractCustomDocument extends AbstractDocument implements Customizable {
 
 	private static final long serialVersionUID = 1L;
-	private Serializer documentCodeBuilder;
+	private Serializer series;
 	private long internalNumber;
 	
 	/**
 	 * Default constructor.
 	 */
-	public AbstractNumberedDocument() {
+	public AbstractCustomDocument() {
 		super();
 	}
 	
 	/**
-	 * The document code builder.
+	 * The document series.
 	 */
 	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="documentCodeBuilderId")
-	public Serializer getDocumentCodeBuilder() {
-		return documentCodeBuilder;
+	@JoinColumn(name="serializerId")
+	public Serializer getSeries() {
+		return series;
 	}
-	public void setDocumentCodeBuilder(Serializer documentCodeBuilder) {
-		this.documentCodeBuilder = documentCodeBuilder;
+	/**
+	 * Series setter, also sets superclass entity.
+	 * 
+	 * @param serializer
+	 */
+	public void setSeries(Serializer series) {
+		this.series = series;
+		super.setEntity(series.getEntity());
+	}
+	
+	/**
+	 * Subclasses may override this method to change how the prefix is created.
+	 */
+	@Transient
+	public StringBuilder getPrefix() {
+		return new StringBuilder(getSeries().getBuilderCode());
 	}
 
 	/**
-	 * Delegate the number key creation to {@link #getInternalDocCodeKey()}.
+	 * Required by {@link Sequenceable}.
 	 */
 	@Transient
 	public final String getInternalNumberKey() {
-		return new StringBuilder(getInternalDocCodeKey())
-		.append(getDocumentCodeBuilder().getBuilderCode())
-		.toString();
+		return getPrefix().toString();
 	}
 	
-	@Transient
-	public String getInternalDocCodeKey() {
-		return "NDOC_";
-	}
-
 	/**
-	 * The internal number.
+	 * Required by {@link Sequenceable}.
 	 */
 	public long getInternalNumber() {
 		return this.internalNumber;
