@@ -15,62 +15,12 @@
 
 package org.helianto.core.filter;
 
-import java.util.List;
 
 /**
  * Extends {@link Filter} to add list behavior.
  *  
  * @author Mauricio Fernandes de Castro
  */
-public interface ListFilter extends Filter {
-	
-	/**
-	 * Item list getter.
-	 */
-	public List<?> getList();
-
-	/**
-	 * Item list setter.
-	 * 
-	 * @param itemList
-	 */
-	public void setList(List<?> itemList);
-
-	/**
-	 * Resulting list size.
-	 */
-	public int getListSize();
-	
-	/**
-	 * List index getter.
-	 */
-	public int getIndex();
-	
-	/**
-	 * List index setter.
-	 * 
-	 * @param index
-	 */
-	public void setIndex(int index);
-	
-	/**
-	 * Current item.
-	 */
-	public Object getItem();
-	
-	/**
-	 * Increase index by one, if has next, to return the next item.
-	 */
-	public Object next();
-	
-	/**
-	 * Decrease index by one, if has previous, to return the previous item.
-	 */
-	public Object previous();
-	
-	/**
-	 * True if getItem() return null.
-	 */
-	public boolean isClear();
+public interface ListFilter extends Filter, Listable {
 	
 }
