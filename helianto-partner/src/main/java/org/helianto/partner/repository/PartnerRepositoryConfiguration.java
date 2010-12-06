@@ -13,13 +13,28 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.partner.repository;
 
 import javax.annotation.Resource;
 
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.RepositoryFactory;
+import org.helianto.partner.Account;
+import org.helianto.partner.AccountFilter;
+import org.helianto.partner.Address;
+import org.helianto.partner.Partner;
+import org.helianto.partner.PartnerFilter;
+import org.helianto.partner.PartnerKey;
+import org.helianto.partner.Phone;
+import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.PrivateEntityFilter;
+import org.helianto.partner.PrivateEntityKey;
+import org.helianto.partner.PublicAddress;
+import org.helianto.partner.PublicAddressFilter;
+import org.helianto.partner.PublicEntity;
+import org.helianto.partner.PublicEntityFilter;
+import org.helianto.partner.PublicEntityKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
