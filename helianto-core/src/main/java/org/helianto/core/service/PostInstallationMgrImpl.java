@@ -74,15 +74,23 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		List<Province> provinceList = provinceResourceParserStrategy.parseProvinces(defaultOperator, rs);
 		
 		logger.debug("Will install {} province(s) ...", provinceList.size());
-		for (Province province: provinceList) {
-	    	if (provinceDao.findUnique(defaultOperator, province.getProvinceCode())==null) {
-	    		province.setOperator(defaultOperator);
-	    		if (province.getParent()!=null) {
-	    			provinceDao.saveOrUpdate(province.getParent());
+		for (Province p: provinceList) {
+			Province province = provinceDao.findUnique(defaultOperator, p.getProvinceCode());
+	    	if (province==null) {
+	    		logger.debug("New province {}", p.getProvinceCode());
+	    		p.setOperator(defaultOperator);
+	    		if (p.getParent()!=null) {
+	    			Province parent = provinceDao.findUnique(defaultOperator, p.getParent().getProvinceCode());
+	    			if (parent==null) {
+	    				logger.debug("New parent {}", p.getParent().getProvinceCode());
+	    				p.setParent(parent);
+	    			}
 	    		}
-		        provinceDao.saveOrUpdate(province);
+		        provinceDao.saveOrUpdate(p);
 	    	}
-	    	logger.debug("Province AVAILABLE as {}.", province);
+	    	else {
+		    	logger.debug("Province AVAILABLE as {}.", province);	    		
+	    	}
 		}
 		
 	}
