@@ -165,7 +165,7 @@ public class Serializer implements Serializable, Customizer {
 	/**
 	 * Builder name.
 	 */
-    @Column(length=24)
+    @Column(length=128)
 	public String getBuilderName() {
 		return builderName;
 	}
