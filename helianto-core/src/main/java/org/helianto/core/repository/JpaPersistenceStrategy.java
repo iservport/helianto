@@ -15,6 +15,7 @@
 
 package org.helianto.core.repository;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
@@ -22,16 +23,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.hibernate.ejb.HibernateEntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.hibernate.ejb.HibernateEntityManager;
 
 /**
  * Jpa implementation for <code>PersistenceStrategy</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class JpaPersistenceStrategy implements PersistenceStrategy {
 
 	public Collection<Object> find(String query, Object... values) {
@@ -62,13 +63,17 @@ public class JpaPersistenceStrategy implements PersistenceStrategy {
 		try {
 			Method idGetter = managedObject.getClass().getMethod("getId");
 			Long id = (Long) idGetter.invoke(managedObject);
-			logger.debug("Object id id {}", id);
-			return this.em.getReference(managedObject.getClass(), id);
+			return load(managedObject.getClass(), id);
 		}
 		catch (Exception e) {
 			logger.warn("Unable to load {}.", e);
 		}
 		return null;
+	}
+	
+	public Object load(Class clazz, Serializable id) {
+		logger.debug("Object id id {}", id);
+		return this.em.getReference(clazz, id);
 	}
 
 	public void saveOrUpdate(Object managedObject) {

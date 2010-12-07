@@ -15,6 +15,7 @@
 
 package org.helianto.core.repository;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -45,11 +46,19 @@ public interface PersistenceStrategy<T> {
     public void persist(T managedObject);
     
     /**
-     * Hiberante operation to load a managed object.
+     * Operation to load a managed object.
      * 
      * @param managedObject
      */
     public T load(T managedObject);
+    
+    /**
+     * Operation to load a managed object.
+     * 
+     * @param clazz
+     * @param id
+     */
+    public T load(Class<? extends T> clazz, Serializable id);
     
     /**
      * Hiberante operation to save or update a managed object.

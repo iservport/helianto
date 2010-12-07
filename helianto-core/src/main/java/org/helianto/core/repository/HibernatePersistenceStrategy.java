@@ -15,6 +15,7 @@
 
 package org.helianto.core.repository;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
@@ -29,7 +30,7 @@ import org.hibernate.Query;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class HibernatePersistenceStrategy implements PersistenceStrategy {
 	
 	/**
@@ -70,13 +71,17 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
 		try {
 			Method idGetter = managedObject.getClass().getMethod("getId");
 			Long id = (Long) idGetter.invoke(managedObject);
-			logger.debug("Object id id {}", id);
-			return this.sessionFactory.getCurrentSession().load(managedObject.getClass(), id);
+			return load(managedObject.getClass(), id);
 		}
 		catch (Exception e) {
 			logger.warn("Unable to load {}.", e);
 		}
 		return null;
+	}
+	
+	public Object load(Class clazz, Serializable id) {
+		logger.debug("Object id id {}", id);
+		return this.sessionFactory.getCurrentSession().load(clazz, id);
 	}
 	
 	public void saveOrUpdate(Object managedObject) {

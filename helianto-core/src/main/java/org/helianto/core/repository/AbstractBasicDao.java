@@ -15,6 +15,7 @@
 
 package org.helianto.core.repository;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -27,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro.
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	
 	private Class<? extends T> clazz;
@@ -203,6 +204,10 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 	public T load(T managedObject) {
 		return (T) getPersistenceStrategy().load(managedObject);
 	};
+	
+	public T load(Class<? extends T> clazz, Serializable id) {
+		return (T) getPersistenceStrategy().load(clazz, id);
+	}
 
 	public void saveOrUpdate(T managedObject) {
         getPersistenceStrategy().saveOrUpdate(managedObject);
@@ -226,7 +231,7 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 
 	// collabs
     
-    private PersistenceStrategy persistenceStrategy;
+	private PersistenceStrategy persistenceStrategy;
     
     protected PersistenceStrategy getPersistenceStrategy() {
 		return this.persistenceStrategy;
