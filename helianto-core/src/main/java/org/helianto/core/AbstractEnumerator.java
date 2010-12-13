@@ -66,7 +66,7 @@ public abstract class AbstractEnumerator implements java.io.Serializable {
     /**
      * Type name.
      */
-    @Column(length=12)
+    @Column(length=24)
     public String getTypeName() {
         return this.typeName;
     }
