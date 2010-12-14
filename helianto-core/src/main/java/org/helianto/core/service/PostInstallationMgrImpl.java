@@ -72,6 +72,10 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		operatorDao.saveOrUpdate(defaultOperator);
 		List<Province> provinceList = provinceResourceParserStrategy.parseProvinces(defaultOperator, rs);
+		installProvinces(defaultOperator, provinceList);
+	}
+	
+	public void installProvinces(Operator defaultOperator, List<Province> provinceList) {
 		
 		logger.debug("Will install {} province(s) ...", provinceList.size());
 		for (Province p: provinceList) {

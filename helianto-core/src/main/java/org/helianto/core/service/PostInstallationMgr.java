@@ -15,9 +15,12 @@
 
 package org.helianto.core.service;
 
+import java.util.List;
+
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
+import org.helianto.core.Province;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
@@ -58,6 +61,14 @@ public interface PostInstallationMgr {
 	 * @param rs
 	 */
 	public void installProvinces(Operator defaultOperator, Resource rs);
+	
+	/**
+	 * Install provinces from a province list.
+	 * 
+	 * @param defaultOperator
+	 * @param provinceList
+	 */
+	public void installProvinces(Operator defaultOperator, List<Province> provinceList);
 
 	/**
 	 * Install a KeyType, if does not exist.
