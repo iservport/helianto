@@ -15,19 +15,12 @@
 
 package org.helianto.document.repository;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.helianto.core.repository.BasicDao;
+import org.helianto.core.filter.ListFilter;
+import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.repository.RepositoryFactory;
-import org.helianto.document.AbstractDocumentFilter;
 import org.helianto.document.AbstractFunction;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
-import org.helianto.document.SerializerFilter;
-import org.helianto.document.DocumentFilter;
 import org.helianto.document.DocumentTag;
 import org.helianto.document.Serializer;
 import org.springframework.context.annotation.Bean;
@@ -39,73 +32,46 @@ import org.springframework.context.annotation.Configuration;
  * @author Mauricio Fernandes de Castro
  */
 @Configuration
-@SuppressWarnings("unchecked")
-public class DocumentRepositoryConfiguration {
+public class DocumentRepositoryConfiguration extends AbstractRepositoryConfiguration {
 	
 	/**
 	 * Document association data access.
 	 */
 	@Bean
-	public BasicDao<DocumentAssociation> documentAssociationDao() {
-		BasicDao<DocumentAssociation> dao =  
-			repositoryFactory.basicDaoFactory(DocumentAssociation.class, "parent", "child");
-		logger.info("Created documentAssociationDao");
-		return dao;
+	public FilterDao<DocumentAssociation, ListFilter> documentAssociationDao() {
+		return getFilterDao(DocumentAssociation.class, "parent", "child");
 	}
 
 	/**
 	 * Document data access.
 	 */
 	@Bean
-	public FilterDao<Document, DocumentFilter> documentDao() {
-		FilterDao<Document, DocumentFilter> dao =  
-			repositoryFactory.filterDaoFactory(Document.class, DocumentFilter.class, "entity", "docCode");
-		logger.info("Created documentDao");
-		return dao;
+	public FilterDao<Document, ListFilter> documentDao() {
+		return getFilterDao(Document.class, "entity", "docCode");
 	}
 
 	/**
 	 * Serializer data access.
 	 */
 	@Bean
-	public FilterDao<Serializer, SerializerFilter> serializerDao() {
-		FilterDao<Serializer, SerializerFilter> dao =  
-			repositoryFactory.filterDaoFactory(Serializer.class, SerializerFilter.class, "entity", "builderCode");
-		logger.info("Created serializerDao");
-		return dao;
+	public FilterDao<Serializer, ListFilter> serializerDao() {
+		return getFilterDao(Serializer.class, "entity", "builderCode");
 	}
 
 	/**
 	 * Document tag data access.
 	 */
 	@Bean
-	public BasicDao<DocumentTag> documentTagDao() {
-		BasicDao<DocumentTag> dao =  
-			repositoryFactory.basicDaoFactory(DocumentTag.class, "document", "tagCode");
-		logger.info("Created documentTagDao");
-		return dao;
+	public FilterDao<DocumentTag, ListFilter> documentTagDao() {
+		return getFilterDao(DocumentTag.class, "document", "tagCode");
 	}
 
 	/**
 	 * Function data access.
 	 */
 	@Bean
-	public FilterDao<AbstractFunction, AbstractDocumentFilter> functionDao() {
-		FilterDao<AbstractFunction, AbstractDocumentFilter> dao =  
-			repositoryFactory.filterDaoFactory(AbstractFunction.class, AbstractDocumentFilter.class, "entity", "docCode");
-		logger.info("Created functionDao");
-		return dao;
+	public FilterDao<AbstractFunction, ListFilter> functionDao() {
+		return getFilterDao(AbstractFunction.class, "entity", "docCode");
 	}
 	
-	// collabs
-    
-    private RepositoryFactory repositoryFactory;
-    
-    @Resource
-	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		this.repositoryFactory = repositoryFactory;
-	}
-
-    private static final Logger logger = LoggerFactory.getLogger(DocumentRepositoryConfiguration.class);
-
 }

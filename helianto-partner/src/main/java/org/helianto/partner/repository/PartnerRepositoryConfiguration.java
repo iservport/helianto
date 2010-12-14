@@ -15,28 +15,19 @@
 
 package org.helianto.partner.repository;
 
-import javax.annotation.Resource;
-
-import org.helianto.core.repository.BasicDao;
+import org.helianto.core.filter.ListFilter;
+import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.repository.RepositoryFactory;
 import org.helianto.partner.Account;
-import org.helianto.partner.AccountFilter;
 import org.helianto.partner.Address;
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.Phone;
 import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.PrivateEntityFilter;
 import org.helianto.partner.PrivateEntityKey;
 import org.helianto.partner.PublicAddress;
-import org.helianto.partner.PublicAddressFilter;
 import org.helianto.partner.PublicEntity;
-import org.helianto.partner.PublicEntityFilter;
 import org.helianto.partner.PublicEntityKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -46,29 +37,22 @@ import org.springframework.context.annotation.Configuration;
  * @author Mauricio Fernandes de Castro
  */
 @Configuration
-@SuppressWarnings("unchecked")
-public class PartnerRepositoryConfiguration {
+public class PartnerRepositoryConfiguration extends AbstractRepositoryConfiguration {
 	
 	/**
 	 * Public entity data access.
 	 */
 	@Bean
-	public FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao() {
-		FilterDao<PublicEntity, PublicEntityFilter> dao =  
-			repositoryFactory.filterDaoFactory(PublicEntity.class, PublicEntityFilter.class, "operator", "entity", "class");
-		logger.info("Created publicEntityDao");
-		return dao;
+	public FilterDao<PublicEntity, ListFilter> publicEntityDao() {
+		return getFilterDao(PublicEntity.class, "operator", "entity", "class");
 	}
 
 	/**
 	 * Public entity key data access.
 	 */
 	@Bean
-	public BasicDao<PublicEntityKey> publicEntityKeyDao() {
-		BasicDao<PublicEntityKey> dao =  
-			repositoryFactory.basicDaoFactory(PublicEntityKey.class, "publicEntity", "keyType");
-		logger.info("Created publicEntityKeyDao");
-		return dao;
+	public FilterDao<PublicEntityKey, ListFilter> publicEntityKeyDao() {
+		return getFilterDao(PublicEntityKey.class, "publicEntity", "keyType");
 	}
 
 	
@@ -76,99 +60,64 @@ public class PartnerRepositoryConfiguration {
 	 * Account data access.
 	 */
 	@Bean
-	public FilterDao<Account, AccountFilter> accountDao() {
-		FilterDao<Account, AccountFilter> dao =  
-			repositoryFactory.filterDaoFactory(Account.class, AccountFilter.class, "entity", "accountCode");
-		logger.info("Created accountDao");
-		return dao;
+	public FilterDao<Account, ListFilter> accountDao() {
+		return getFilterDao(Account.class, "entity", "accountCode");
 	}
 
 	/**
 	 * Address data access.
 	 */
 	@Bean
-	public BasicDao<Address> addressDao() {
-		BasicDao<Address> dao =  
-			repositoryFactory.basicDaoFactory(Address.class, "partnerRegistry", "sequence");
-		logger.info("Created addressDao");
-		return dao;
+	public FilterDao<Address, ListFilter> addressDao() {
+		return getFilterDao(Address.class, "partnerRegistry", "sequence");
 	}
 
 	/**
 	 * Address database data access.
 	 */
 	@Bean
-	public FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao() {
-		FilterDao<PublicAddress, PublicAddressFilter> dao =  
-			repositoryFactory.filterDaoFactory(PublicAddress.class, PublicAddressFilter.class, "operator", "postalCode");
-		logger.info("Created publicAddressDao");
-		return dao;
+	public FilterDao<PublicAddress, ListFilter> publicAddressDao() {
+		return getFilterDao(PublicAddress.class, "operator", "postalCode");
 	}
 
 	/**
 	 * Partner data access.
 	 */
 	@Bean
-	public FilterDao<Partner, PartnerFilter> partnerDao() {
-		FilterDao<Partner, PartnerFilter> dao =  
-			repositoryFactory.filterDaoFactory(Partner.class, PartnerFilter.class, "privateEntity", "class");
-		logger.info("Created partnerDao");
-		return dao;
+	public FilterDao<Partner, ListFilter> partnerDao() {
+		return getFilterDao(Partner.class, "privateEntity", "class");
 	}
 
 	/**
 	 * Partner key data access.
 	 */
 	@Bean
-	public BasicDao<PartnerKey> partnerKeyDao() {
-		BasicDao<PartnerKey> dao =  
-			repositoryFactory.basicDaoFactory(PartnerKey.class, "partner", "keyType");
-		logger.info("Created partnerKeyDao");
-		return dao;
+	public FilterDao<PartnerKey, ListFilter> partnerKeyDao() {
+		return getFilterDao(PartnerKey.class, "partner", "keyType");
 	}
 
 	/**
 	 * Private entity data access.
 	 */
 	@Bean
-	public FilterDao<PrivateEntity, PrivateEntityFilter> privateEntityDao() {
-		FilterDao<PrivateEntity, PrivateEntityFilter> dao =  
-			repositoryFactory.filterDaoFactory(PrivateEntity.class, PrivateEntityFilter.class, "entity", "entityAlias");
-		logger.info("Created privateEntityDao");
-		return dao;
+	public FilterDao<PrivateEntity, ListFilter> privateEntityDao() {
+		return getFilterDao(PrivateEntity.class, "entity", "entityAlias");
 	}
 
 	/**
 	 * Private entity key data access.
 	 */
 	@Bean
-	public BasicDao<PrivateEntityKey> privateEntityKeyDao() {
-		BasicDao<PrivateEntityKey> dao =  
-			repositoryFactory.basicDaoFactory(PrivateEntityKey.class, "privateEntity", "keyType");
-		logger.info("Created privateEntityKeyDao");
-		return dao;
+	public FilterDao<PrivateEntityKey, ListFilter> privateEntityKeyDao() {
+		return getFilterDao(PrivateEntityKey.class, "privateEntity", "keyType");
 	}
 
 	/**
 	 * Phone data access.
 	 */
 	@Bean
-	public BasicDao<Phone> phoneDao() {
-		BasicDao<Phone> dao =  
-			repositoryFactory.basicDaoFactory(Phone.class, "address", "sequence");
-		logger.info("Created phoneDao");
-		return dao;
+	public FilterDao<Phone, ListFilter> phoneDao() {
+		return getFilterDao(Phone.class, "address", "sequence");
 	}
-
-	// collabs
-    
-    private RepositoryFactory repositoryFactory;
-    
-    @Resource
-	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		this.repositoryFactory = repositoryFactory;
-	}
-
-    private static final Logger logger = LoggerFactory.getLogger(PartnerRepositoryConfiguration.class);
 
 }

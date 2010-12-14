@@ -13,13 +13,15 @@
  * limitations under the License.
  */
 
-package org.helianto.finance;
+package org.helianto.finance.repository;
 
 import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
 import org.helianto.core.repository.FilterDao;
+import org.helianto.finance.CashFlow;
+import org.helianto.finance.CashFlowFilter;
 import org.helianto.finance.test.AbstractFinanceDaoIntegrationTest;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerFilter;

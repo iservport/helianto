@@ -13,14 +13,12 @@
  * limitations under the License.
  */
 
-package org.helianto.finance;
+package org.helianto.finance.repository;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.helianto.core.filter.ListFilter;
+import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.repository.RepositoryFactory;
+import org.helianto.finance.CashFlow;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,29 +28,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Mauricio Fernandes de Castro
  */
 @Configuration
-@SuppressWarnings("unchecked")
-public class FinanceRepositoryConfiguration {
+public class FinanceRepositoryConfiguration extends AbstractRepositoryConfiguration {
 	
 	/**
 	 * Cash flow data access.
 	 */
 	@Bean
-	public FilterDao<CashFlow, CashFlowFilter> cashFlowDao() {
-		FilterDao<CashFlow, CashFlowFilter> dao =  
-			repositoryFactory.filterDaoFactory(CashFlow.class, CashFlowFilter.class, "entity", "internalNumber");
-		logger.info("Created cashFlowDao");
-		return dao;
+	public FilterDao<CashFlow, ListFilter> cashFlowDao() {
+		return getFilterDao(CashFlow.class);
 	}
-
-	// collabs
-    
-    private RepositoryFactory repositoryFactory;
-    
-    @Resource
-	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		this.repositoryFactory = repositoryFactory;
-	}
-
-    private static final Logger logger = LoggerFactory.getLogger(FinanceRepositoryConfiguration.class);
 
 }

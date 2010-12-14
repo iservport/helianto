@@ -15,13 +15,10 @@
 
 package org.helianto.message.repository;
 
-import javax.annotation.Resource;
-
-import org.helianto.core.repository.BasicDao;
-import org.helianto.core.repository.RepositoryFactory;
+import org.helianto.core.filter.ListFilter;
+import org.helianto.core.repository.AbstractRepositoryConfiguration;
+import org.helianto.core.repository.FilterDao;
 import org.helianto.message.ServiceEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,37 +28,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Mauricio Fernandes de Castro
  */
 @Configuration
-@SuppressWarnings("unchecked")
-public class MessageRepositoryConfiguration {
+public class MessageRepositoryConfiguration extends AbstractRepositoryConfiguration {
 
 	/**
 	 * Card data access.
 	 */
 	@Bean
-	public BasicDao<ServiceEvent> serviceEventDao() {
-		BasicDao<ServiceEvent> dao =  
-			repositoryFactory.basicDaoFactory(ServiceEvent.class, "service", "eventCode");
-		logger.info("Created serviceEventDao");
-		return dao;
+	public FilterDao<ServiceEvent, ListFilter> serviceEventDao() {
+		return getFilterDao(ServiceEvent.class, "service", "eventCode");
 	}
-
-//	@Bean
-//	public FilterDao<ProcessAgreement, ProcessAgreementFilter> agreementDao() {
-//		FilterDao<ProcessAgreement, ProcessAgreementFilter> dao =  
-//			repositoryFactory.filterDaoFactory(ProcessAgreement.class, ProcessAgreementFilter.class, "entity", "internalNumber");
-//		logger.info("Created agreementDao");
-//		return dao;
-//	}
-
-	// collabs
-    
-    private RepositoryFactory repositoryFactory;
-    
-    @Resource
-	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		this.repositoryFactory = repositoryFactory;
-	}
-
-    private static final Logger logger = LoggerFactory.getLogger(MessageRepositoryConfiguration.class);
 
 }

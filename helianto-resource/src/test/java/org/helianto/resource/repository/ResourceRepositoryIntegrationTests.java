@@ -13,12 +13,18 @@
  * limitations under the License.
  */
 
-package org.helianto.resource;
+package org.helianto.resource.repository;
 
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.resource.ResourceAssociation;
+import org.helianto.resource.ResourceGroup;
+import org.helianto.resource.ResourceGroupFilter;
+import org.helianto.resource.ResourceParameter;
+import org.helianto.resource.ResourceParameterFilter;
+import org.helianto.resource.ResourceParameterValue;
 import org.helianto.resource.test.AbstractResourceDaoIntegrationTest;
 import org.helianto.resource.test.ResourceGroupTestSupport;
 import org.helianto.resource.test.ResourceParameterTestSupport;
