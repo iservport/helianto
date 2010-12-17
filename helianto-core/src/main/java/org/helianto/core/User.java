@@ -40,7 +40,7 @@ import javax.persistence.Transient;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("U")
-public class User extends UserGroup {
+public class User extends UserGroup implements PersonalEntity {
 
 	/**
 	 * <<Transient>> Exposes the discriminator.

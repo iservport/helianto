@@ -41,7 +41,7 @@ import javax.persistence.Version;
 @Table(name="core_credential",
     uniqueConstraints = {@UniqueConstraint(columnNames={"identityId"})}
 )
-public class Credential implements java.io.Serializable {
+public class Credential implements PersonalEntity {
 
     /**
      * Empty <code>Identity</code> <code>Credential</code> factory.
