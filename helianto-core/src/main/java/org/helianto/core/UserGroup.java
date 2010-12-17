@@ -56,7 +56,7 @@ import javax.persistence.UniqueConstraint;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("G")
-public class UserGroup implements java.io.Serializable, Comparable<UserGroup>, NaturalKeyInfo {
+public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKeyInfo {
 	
 	/**
 	 * <<Transient>> Exposes the discriminator.

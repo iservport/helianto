@@ -32,7 +32,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_service",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "serviceName"})}
 )
-public class Service implements java.io.Serializable {
+public class Service implements RootEntity {
 
     /**
      * Factory method.

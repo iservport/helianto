@@ -28,7 +28,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_publicenum",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "typeName"})}
 )
-public class PublicEnumerator extends AbstractEnumerator {
+public class PublicEnumerator extends AbstractEnumerator implements RootEntity {
 
     private static final long serialVersionUID = 1L;
     private Operator operator;

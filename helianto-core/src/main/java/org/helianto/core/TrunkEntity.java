@@ -16,15 +16,18 @@
 
 package org.helianto.core;
 
+import java.io.Serializable;
+
 /**
- * Interface to be implemented by top level entities,
- * i.e. entities that aggregate <tt>org.helianto.core.Entity</tt>
- * to be part of a unique key.
+ * To be implemented by any entity directly related to an <code>Entity</code>.
  * 
- * @author Mauricio Fernandes de Castro
+ * @author mauriciofernandesdecastro
  */
-public interface TopLevelEntity {
+public interface TrunkEntity extends Serializable {
 	
-	Entity getEntity();
+	/**
+	 * The owning entity.
+	 */
+	public Entity getEntity();
 
 }

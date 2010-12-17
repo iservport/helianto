@@ -30,7 +30,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_entitypref",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "keyTypeId"})}
 )
-public class EntityPreference extends AbstractKeyStringValue implements Comparable<EntityPreference> {
+public class EntityPreference extends AbstractKeyStringValue implements TrunkEntity, Comparable<EntityPreference> {
 
 	/**
 	 * <<Transient>> Delegate to the actual key owner.

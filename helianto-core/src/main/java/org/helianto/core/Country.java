@@ -33,7 +33,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_country",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "countryCode"})}
 )
-public class Country implements java.io.Serializable {
+public class Country implements RootEntity {
 
     /**
      * Factory method.

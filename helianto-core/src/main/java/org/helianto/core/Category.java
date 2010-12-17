@@ -33,7 +33,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_category",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "categoryGroup", "categoryCode"})}
 )
-public class Category implements java.io.Serializable {
+public class Category implements TrunkEntity {
 
     /**
      * Factory method.

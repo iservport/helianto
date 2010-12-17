@@ -28,7 +28,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_internalenum",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "typeName"})}
 )
-public class InternalEnumerator extends AbstractEnumerator {
+public class InternalEnumerator extends AbstractEnumerator implements TrunkEntity {
 
     private static final long serialVersionUID = 1L;
     private Entity entity;

@@ -49,7 +49,7 @@ import javax.persistence.UniqueConstraint;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("P")
-public class Province  implements java.io.Serializable {
+public class Province  implements RootEntity {
 
     /**
      * Factory method.

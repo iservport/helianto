@@ -84,7 +84,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("0")
-public class Entity implements java.io.Serializable {
+public class Entity implements RootEntity {
 
     private static final long serialVersionUID = 1L;
     private long id;

@@ -34,7 +34,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_unit",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "unitCode"})}
 )
-public class Unit implements java.io.Serializable {
+public class Unit implements TrunkEntity {
 
     /**
      * Factory method.

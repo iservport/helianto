@@ -22,7 +22,7 @@ package org.helianto.core;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface TopLevelCodedEntity extends TopLevelEntity {
+public interface TopLevelCodedEntity extends TrunkEntity {
 	
 	/**
 	 * Set unique key.
