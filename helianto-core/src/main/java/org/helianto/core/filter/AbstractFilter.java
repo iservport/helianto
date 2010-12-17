@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * Base class to create criteria using a criteria builder.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @SuppressWarnings("serial")
 public abstract class AbstractFilter implements Serializable, Filter {
