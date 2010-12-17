@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
  * Base class to filters that requires an <code>Operator</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see AbstractRootFilterAdapter
  */
 @SuppressWarnings("serial")
 public abstract class AbstractOperatorBackedCriteriaFilter extends AbstractListFilter implements OperatorBackedFilter {

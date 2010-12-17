@@ -23,6 +23,7 @@ import org.helianto.core.Entity;
  * Base class to filters that requires an <code>Entity</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see AbstractTrunkFilterAdapter
  */
 @SuppressWarnings("serial")
 public abstract class AbstractEntityBackedFilter extends AbstractListFilter implements EntityBackedFilter {

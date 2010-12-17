@@ -17,6 +17,7 @@ package org.helianto.core.filter;
 
 import java.util.List;
 
+import org.helianto.core.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +30,30 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractListFilter extends AbstractFilter implements ListFilter {
 	
 	private List<?> list;
+    private Entity entity;
 	private int index = 0;
 
 	/**
+	 * Entity filter.
+	 */
+    public Entity getEntity() {
+        return entity;
+    }
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+    
+	/**
+	 * Entity as string alias.
+	 */
+    public String getEntityAsStringAlias() {
+    	if (getEntity()!=null) {
+    		return getEntity().getAlias();
+    	}
+        return "";
+    }
+
+    /**
 	 * The resulting list.
 	 */
 	public List<?> getList() {

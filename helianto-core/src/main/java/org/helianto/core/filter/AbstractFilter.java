@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,13 +26,11 @@ import org.slf4j.LoggerFactory;
  * Base class to create criteria using a criteria builder.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
  */
 @SuppressWarnings("serial")
 public abstract class AbstractFilter implements Serializable, Filter {
 	
     private String objectAlias;
-    private Entity entity;
     private String orderByString = "";
     private List<String> orderByList =  new ArrayList<String>();
     
@@ -54,16 +51,6 @@ public abstract class AbstractFilter implements Serializable, Filter {
     public void setObjectAlias(String objectAlias) {
 		this.objectAlias = objectAlias;
 	}
-    
-	/**
-	 * Entity filter.
-	 */
-    public Entity getEntity() {
-        return entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
     
     /**
      * True if add all "order by" string are successful.
@@ -127,15 +114,6 @@ public abstract class AbstractFilter implements Serializable, Filter {
 		return false;
 	}
     
-	/**
-	 * Entity as string alias.
-	 */
-    public String getEntityAsStringAlias() {
-    	if (getEntity()!=null) {
-    		return getEntity().getAlias();
-    	}
-        return "";
-    }
 	/**
 	 * Delegate criteria creation to a builder.
 	 */

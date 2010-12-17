@@ -21,6 +21,7 @@ import org.helianto.core.User;
  * Interface to <code>User</code> backed filters.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see AbstractPersonalFilterAdapter
  */
 public interface UserBackedFilter extends EntityBackedFilter {
     
