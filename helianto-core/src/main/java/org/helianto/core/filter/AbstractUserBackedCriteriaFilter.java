@@ -24,6 +24,7 @@ import org.helianto.core.User;
  * Base class to filters that requires an <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see AbstractPersonalFilterAdapter
  */
 @SuppressWarnings("serial")
 public abstract class AbstractUserBackedCriteriaFilter extends AbstractEntityBackedFilter implements

@@ -427,6 +427,7 @@ public class CriteriaBuilder {
      * 
      * @param fieldName
      * @param dateRange
+     * @deprecated see AbstractDateRangeFilterAdapter
      */
     public void appendDateRange(String fieldName, DateRange dateRange) {
     	if (dateRange.getFromDate()==null && dateRange.getToDate()==null) {

@@ -32,6 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * Filter base class to be used with date fields.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see org.helianto.core.filter.AbstractDateRangeFilterAdapter
  */
 public abstract class AbstractDateRangeFilter extends AbstractUserBackedCriteriaFilter implements DateRange {
 
