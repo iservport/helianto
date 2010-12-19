@@ -19,9 +19,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.AbstractDateRangeFilter;
-import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.document.AbstractEventFilter;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractDateRangeFilter;
 import org.junit.Before;
 import org.junit.Test;
 

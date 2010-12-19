@@ -16,12 +16,11 @@
 package org.helianto.core.filter;
 
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
-import org.helianto.core.DateFilterMode;
 import org.helianto.core.TrunkEntity;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.DateCriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,46 +34,39 @@ import org.springframework.format.annotation.DateTimeFormat;
 public abstract class AbstractDateRangeFilterAdapter<T extends TrunkEntity> extends AbstractTrunkFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
-	private DateFilterMode dateFilterMode;
     private int interval = -7;
 
 	/** 
 	 * Default constructor
 	 * 
 	 * @param filter
-	 * @param dateFilterMode
 	 */
-    public AbstractDateRangeFilterAdapter(T filter, DateFilterMode dateFilterMode) {
+    public AbstractDateRangeFilterAdapter(T filter) {
     	super(filter);
-    	setDateFilterMode(dateFilterMode);
     }
     
 	/**
-	 * Filter mode.
-	 */
-	public DateFilterMode getDateFilterMode() {
-		return dateFilterMode;
-	}
-	public void setDateFilterMode(DateFilterMode dateFilterMode) {
-		this.dateFilterMode = dateFilterMode;
-	}
-	
-	/**
 	 * The date field name to be used with this filter.
 	 */
-	public abstract String getDateFieldName();
+	public String getDateFieldName() {
+		return "";
+	}
 	
     /**
      * Start date
      */
     @DateTimeFormat(style="S-")
-    public abstract Date getFromDate();
+    public Date getFromDate() {
+    	return null;
+    }
 
     /**
      * End date
      */
     @DateTimeFormat(style="S-")
-    public abstract Date getToDate();
+    public Date getToDate() {
+    	return new Date();
+    }
 
     /**
      * Interval to be added.
@@ -88,12 +80,10 @@ public abstract class AbstractDateRangeFilterAdapter<T extends TrunkEntity> exte
     
 	@Override
 	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		if (getDateFilterMode()!=DateFilterMode.DISABLE_DATE_RANGE 
-				&& getDateFieldName()!=null 
-				&& getDateFieldName().length()>0) {
-			CriteriaBuilder dateCriteria = new CriteriaBuilder(getObjectAlias());
-			appendFromDateRange(dateCriteria);	
-			appendToDateRange(dateCriteria);	
+		if (getDateFieldName().length()>0) {
+			DateCriteriaBuilder dateCriteria = new DateCriteriaBuilder(mainCriteriaBuilder.getPrefix(), getDateFieldName());
+			dateCriteria.appendFromDateRange(getFromDate(), getToDate(), getInterval());	
+			dateCriteria.appendToDateRange(getFromDate(), getToDate(), getInterval());
 			if (dateCriteria.getSegmentCount()>0) {
 				mainCriteriaBuilder.appendAnd().append(dateCriteria);
 			}
@@ -103,66 +93,6 @@ public abstract class AbstractDateRangeFilterAdapter<T extends TrunkEntity> exte
 		}
 	}
 
-    /**
-     * Append from date range.
-     * 
-     * @param criteriaBuilder
-     */
-    protected void appendFromDateRange(CriteriaBuilder criteriaBuilder) {
-        if (getFromDate()!=null) {
-        	criteriaBuilder.appendSegment(getDateFieldName(), ">=");
-        	if (getDateFilterMode().equals(DateFilterMode.TO_DATE_MINUS_INTERVAL) && getToDate()!=null) {
-        		criteriaBuilder.append(newCalendar(getToDate(), getInterval()).getTime());
-        	}
-        	else {
-            	criteriaBuilder.append(getFromDate());
-        	}
-        }
-    }
-    
-    /**
-     * Append to date range.
-     * 
-     * @param criteriaBuilder
-     */
-    protected void appendToDateRange(CriteriaBuilder criteriaBuilder) {
-        if (getToDate()!=null) {
-        	criteriaBuilder.appendAnd(getFromDate()!=null).appendSegment(getDateFieldName(), "<");
-        	if (getDateFilterMode().equals(DateFilterMode.FROM_DATE_PLUS_INTERVAL) && getFromDate()!=null) {
-        		criteriaBuilder.append(newCalendar(getFromDate(), getInterval()).getTime());
-        	}
-        	else {
-        		criteriaBuilder.append(getToDate());
-        	}
-        }
-    }
-    
-    /**
-     * New calendar instance for a date.
-     * 
-     * @param date
-     */
-    protected Calendar newCalendar(Date date) {
-    	Calendar reference = GregorianCalendar.getInstance();
-    	reference.setTime(date);
-    	reference.set(Calendar.HOUR_OF_DAY, 23);
-    	reference.set(Calendar.MINUTE, 59);
-    	reference.set(Calendar.SECOND, 59);
-    	return reference;
-    }
-    
-    /**
-     * New calendar instance for a day plus (or minus) interval.
-     * 
-     * @param date
-     * @param interval
-     */
-    protected Calendar newCalendar(Date date, int interval) {
-    	Calendar reference = newCalendar(date);
-    	reference.add(Calendar.DATE, interval);
-    	return reference;
-    }
-    
     private static final Logger logger = LoggerFactory.getLogger(AbstractDateRangeFilterAdapter.class);
     
 }

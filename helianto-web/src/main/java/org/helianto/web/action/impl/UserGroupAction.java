@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;

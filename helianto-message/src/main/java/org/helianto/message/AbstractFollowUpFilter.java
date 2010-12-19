@@ -15,7 +15,7 @@
 
 package org.helianto.message;
 
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.document.AbstractRecordFilter;
 
 /**

@@ -20,8 +20,8 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.helianto.core.Entity;
-import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.filter.PolymorphicFilter;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.PolymorphicFilter;
 import org.helianto.document.AbstractDocumentFilter;
 import org.helianto.partner.Partner;
 import org.slf4j.Logger;

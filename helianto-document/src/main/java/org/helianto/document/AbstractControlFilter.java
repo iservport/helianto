@@ -16,12 +16,13 @@
 package org.helianto.document;
 
 
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
 
 /**
  * Base class to control filters.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see org.helianto.document.filter.AbstractControlFilterAdapter
  */
 public abstract class AbstractControlFilter extends AbstractRecordFilter {
 

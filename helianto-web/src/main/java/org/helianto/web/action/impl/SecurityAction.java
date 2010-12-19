@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
-import org.helianto.core.UserAssociationFilter;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.classic.UserAssociationFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.core.service.SecurityMgr;

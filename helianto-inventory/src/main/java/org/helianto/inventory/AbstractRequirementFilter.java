@@ -15,7 +15,7 @@
 
 package org.helianto.inventory;
 
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.document.AbstractControlFilter;
 import org.helianto.process.ProcessDocument;
 

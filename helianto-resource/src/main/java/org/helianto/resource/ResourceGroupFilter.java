@@ -16,12 +16,12 @@
 
 package org.helianto.resource;
 
+import org.helianto.core.User;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.classic.PolymorphicFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.helianto.core.User;
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
-import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.filter.PolymorphicFilter;
 
 /**
  * Resource group polimorphic filter.

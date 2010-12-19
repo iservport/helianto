@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.test.TopLevelNumberedEntityTestSupport;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;
 import org.helianto.inventory.Inventory;
@@ -67,17 +66,17 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 		cardDao.saveOrUpdate(card);
 //		assertEquals(card, cardDao.findUnique(cardSet, "010000020"));
 
-		Inventory inventory = TopLevelNumberedEntityTestSupport.create(Inventory.class, entity);
+		Inventory inventory = new Inventory(entity, Long.MAX_VALUE);
 		inventoryDao.saveOrUpdate(inventory);
-		assertEquals(inventory, inventoryDao.findUnique(inventory.getEntity(), inventory.getInternalNumber()));
+		assertEquals(inventory, inventoryDao.findUnique(entity, Long.MAX_VALUE));
 
 		Movement movement = new Movement(inventory);
 		movementDao.saveOrUpdate(movement);
 		assertEquals(movement, movementDao.findUnique(movement.getInventoryTransaction(), inventory));
 
-		Picking picking = TopLevelNumberedEntityTestSupport.create(Picking.class, entity);
+		Picking picking = new Picking(entity, Long.MAX_VALUE);
 		pickingDao.saveOrUpdate(picking);
-		assertEquals(picking, pickingDao.findUnique(picking.getEntity(), picking.getInternalNumber()));
+		assertEquals(picking, pickingDao.findUnique(entity, Long.MAX_VALUE));
 	
 		ProcessRequirement processRequirement = new ProcessRequirement(entity, Long.MAX_VALUE);
 		processRequirementDao.saveOrUpdate(processRequirement);

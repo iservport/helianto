@@ -43,7 +43,7 @@ public class CauseTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             entity = EntityTestSupport.createEntity();
         }
-        Cause cause = Cause.causeFactory(entity, testKey++);
+        Cause cause = new Cause(entity, testKey++);
         return cause;
     }
 

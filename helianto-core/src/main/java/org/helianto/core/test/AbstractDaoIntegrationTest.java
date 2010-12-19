@@ -3,9 +3,9 @@ package org.helianto.core.test;
 import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
-import org.helianto.core.EntityFilter;
 import org.helianto.core.Operator;
-import org.helianto.core.OperatorFilter;
+import org.helianto.core.filter.classic.EntityFilter;
+import org.helianto.core.filter.classic.OperatorFilter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.Before;
 import org.junit.runner.RunWith;

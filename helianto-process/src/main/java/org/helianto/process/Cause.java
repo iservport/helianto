@@ -28,11 +28,12 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.Entity;
-import org.helianto.core.TopLevelNumberedEntity;
+import org.helianto.core.number.Sequenceable;
 /**
  * <p>
  * Represents a <code>Cause</code>.  
@@ -49,35 +50,7 @@ import org.helianto.core.TopLevelNumberedEntity;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("C")
-public class Cause implements java.io.Serializable, TopLevelNumberedEntity {
-
-    /**
-     * <code>Cause</code> factory.
-     * 
-     * @param entity
-     * @param internalNumber
-     */
-    public static Cause causeFactory(Entity entity, long internalNumber) {
-        return causeFactory(Cause.class, entity, internalNumber);
-    }
-
-    /**
-     * <code>Cause</code> factory.
-     * 
-     * @param entity
-     * @param internalNumber
-     */
-    public static <T extends Cause> T causeFactory(Class<T> clazz, Entity entity, long internalNumber) {
-        T cause = null;
-        try {
-            cause = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create cause of class "+clazz);
-        }
-        cause.setEntity(entity);
-        cause.setInternalNumber(internalNumber);
-        return cause;
-    }
+public class Cause implements java.io.Serializable, Sequenceable {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -85,10 +58,28 @@ public class Cause implements java.io.Serializable, TopLevelNumberedEntity {
     private long internalNumber;
     private int version;
     private String causeDesc;
+    
+    @Transient
+    public String getInternalNumberKey() {
+    	return "CAUSE";
+    }
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public Cause() {
     }
+
+    /**
+     * Key constructor.
+     * 
+     * @param entity
+     * @param internalNumber
+     */
+    public Cause(Entity entity, long internalNumber) {
+    	setEntity(entity);
+    	setInternalNumber(internalNumber);
+    }   
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
@@ -141,18 +132,6 @@ public class Cause implements java.io.Serializable, TopLevelNumberedEntity {
     public void setCauseDesc(String causeDesc) {
         this.causeDesc = causeDesc;
     }
-
-    /**
-     * Required by <code>TopLevelNumberedEntity</code> interface.
-     * 
-     * @param entity
-     * @param internalNumber
-     */
-    public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {
-    	setEntity(entity);
-    	setInternalNumber(internalNumber);
-    	return this;
-    }   
 
     /**
      * toString

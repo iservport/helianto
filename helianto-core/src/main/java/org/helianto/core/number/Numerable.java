@@ -15,19 +15,14 @@
 
 package org.helianto.core.number;
 
-import org.helianto.core.Operator;
+import org.helianto.core.RootEntity;
 
 /**
  * Common Interface to entities having publicNumber.
  *  
  * @author Mauricio Fernandes de Castro
  */
-public interface Numerable {
-	
-	/**
-	 * Operator containing the sequence.
-	 */
-	public Operator getOperator();
+public interface Numerable extends RootEntity {
 	
 	/**
 	 * Public number getter.

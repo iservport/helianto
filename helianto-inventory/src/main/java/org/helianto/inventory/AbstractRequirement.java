@@ -30,7 +30,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
-import org.helianto.core.TopLevelNumberedEntity;
 import org.helianto.core.Unit;
 import org.helianto.document.AbstractControl;
 import org.helianto.process.DerivedProcessDocument;
@@ -80,6 +79,18 @@ public abstract class AbstractRequirement extends AbstractControl {
     	setRequirementDate(new Date());
     	setResolution(RequirementState.FORECAST.getValue());
     }
+
+    /**
+     * Key constructor.
+     * 
+     * @param entity
+     * @param internalNumber
+     */
+	public AbstractRequirement(Entity entity, long internalNumber) {
+		this();
+        setEntity(entity);
+        setInternalNumber(internalNumber);
+	}
 
     /**
      * Owning process document.
@@ -194,12 +205,6 @@ public abstract class AbstractRequirement extends AbstractControl {
     public void setRequirementSign(RequirementSign requirementSign) {
         this.requirementSign = requirementSign.getValue();
     }
-
-	public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {
-        this.setEntity(entity);
-        this.setInternalNumber(internalNumber);
-		return this;
-	}
 
     /**
      * equals

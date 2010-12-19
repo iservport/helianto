@@ -15,8 +15,8 @@
 
 package org.helianto.document;
 
-import org.helianto.core.AbstractDateRangeFilter;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractDateRangeFilter;
 
 /**
  * Filter base class to be used with event hierarchy.

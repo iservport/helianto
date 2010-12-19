@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.CreateIdentity;
-import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.service.UserMgr;

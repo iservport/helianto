@@ -5,8 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
-import org.helianto.core.EntityFilter;
 import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.classic.EntityFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.service.PostInstallationMgr;

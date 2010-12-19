@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 
 import org.helianto.core.Operator;
-import org.helianto.core.filter.OperatorBackedFilter;
+import org.helianto.core.filter.classic.OperatorBackedFilter;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Before;
 import org.junit.Test;

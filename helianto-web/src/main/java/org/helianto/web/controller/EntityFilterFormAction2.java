@@ -20,9 +20,9 @@ import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractFilterOnlyFormAction;
 import org.helianto.core.User;
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserState;
+import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;

@@ -1,7 +1,7 @@
 package org.helianto.finance;
 
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 
 public class CashFlowFilter extends AbstractUserBackedCriteriaFilter {
 

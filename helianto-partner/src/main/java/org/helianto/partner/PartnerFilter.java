@@ -19,9 +19,9 @@ import java.io.Serializable;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
-import org.helianto.core.filter.CriteriaBuilder;
-import org.helianto.core.filter.PolymorphicFilter;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.classic.PolymorphicFilter;
 
 /**
  * Partner filter.

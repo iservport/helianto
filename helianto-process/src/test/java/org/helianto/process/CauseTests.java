@@ -21,10 +21,10 @@ public class CauseTests {
      * Test <code>Cause</code> static factory method.
      */
 	@Test
-    public void causeFactoryClass() {
+    public void constructor() {
         Entity entity = new Entity();
 
-		Cause cause = Cause.causeFactory(entity, Long.MAX_VALUE);
+		Cause cause = new Cause(entity, Long.MAX_VALUE);
 
         assertTrue(cause instanceof Cause);
 		assertSame(entity, cause.getEntity());
@@ -39,7 +39,7 @@ public class CauseTests {
     public void causeEquals() {
         Entity entity = new Entity();
         
-		Cause cause = Cause.causeFactory(entity, Long.MAX_VALUE);
+		Cause cause = new Cause(entity, Long.MAX_VALUE);
         Cause copy = (Cause) DomainTestSupport.minimalEqualsTest(cause);
         
         copy.setEntity(null);

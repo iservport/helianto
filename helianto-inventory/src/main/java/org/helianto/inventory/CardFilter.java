@@ -3,8 +3,8 @@ package org.helianto.inventory;
 import javax.persistence.Transient;
 
 import org.helianto.core.User;
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 import org.helianto.process.Process;
 
 public class CardFilter extends AbstractUserBackedCriteriaFilter {

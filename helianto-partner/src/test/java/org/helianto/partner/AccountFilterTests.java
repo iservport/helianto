@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 
 import org.helianto.core.User;
-import org.helianto.core.filter.UserBackedFilter;
+import org.helianto.core.filter.classic.UserBackedFilter;
 import org.helianto.core.test.UserTestSupport;
 import org.helianto.partner.AccountFilter;
 import org.helianto.partner.AccountType;

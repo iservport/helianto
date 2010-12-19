@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.core.filter.AbstractOperatorBackedCriteriaFilter;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractOperatorBackedCriteriaFilter;
 
 /**
  * Public address database filter.

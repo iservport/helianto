@@ -25,20 +25,21 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
-import org.helianto.core.EntityFilter;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
-import org.helianto.core.OperatorFilter;
 import org.helianto.core.Province;
-import org.helianto.core.ProvinceFilter;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.classic.EntityFilter;
+import org.helianto.core.filter.classic.OperatorFilter;
+import org.helianto.core.filter.classic.ProvinceFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <code>NamespaceMgr</code> default implementation.
@@ -135,8 +136,8 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return managedProvince;
 	}
 	
-	public List<Entity> findEntities(EntityFilter filter) {
-		List<Entity> entityList = (List<Entity>) entityDao.find(filter);
+	public List<Entity> findEntities(Filter filter) {
+		List<Entity> entityList = (List<Entity>) entityDao.find((EntityFilter) filter);
 		logger.debug("Found {} entity(ies).", entityList.size());
 		return entityList;
 	}

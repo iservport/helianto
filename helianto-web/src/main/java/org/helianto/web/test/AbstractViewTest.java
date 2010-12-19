@@ -20,10 +20,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.helianto.controller.DefaultTargetForm;
-import org.helianto.core.filter.UserBackedFilter;
+import org.helianto.core.filter.classic.UserBackedFilter;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.core.test.SecurityTestSupport;
-import org.helianto.web.test.AbstractFreeMarkerViewTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.validation.BeanPropertyBindingResult;

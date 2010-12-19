@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Category;
-import org.helianto.core.CategoryFilter;
+import org.helianto.core.filter.classic.CategoryFilter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;

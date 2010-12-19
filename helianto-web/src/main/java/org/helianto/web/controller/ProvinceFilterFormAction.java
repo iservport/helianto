@@ -22,9 +22,8 @@ import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractFilterOnlyFormAction;
 import org.helianto.core.Province;
-import org.helianto.core.ProvinceFilter;
+import org.helianto.core.filter.classic.ProvinceFilter;
 import org.helianto.core.service.NamespaceMgr;
-import org.springframework.stereotype.Component;
 
 /**
  * Presentation logic to select provinces.

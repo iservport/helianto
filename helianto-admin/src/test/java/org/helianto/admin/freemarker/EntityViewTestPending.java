@@ -19,8 +19,8 @@ package org.helianto.admin.freemarker;
 import java.util.List;
 
 import org.helianto.core.User;
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.web.test.AbstractViewTest;

@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.test.TopLevelNumberedEntityTestSupport;
 import org.helianto.process.Cause;
 import org.helianto.process.Characteristic;
 import org.helianto.process.MeasurementTechnique;
@@ -57,8 +56,8 @@ public class ProcessRepositoryConfigurationTests extends AbstractProcessDaoInteg
 
 	@Test
 	public void process() {
-		Cause cause = TopLevelNumberedEntityTestSupport.create(Cause.class, entity);
-		assertEquals(causeDao.merge(cause), causeDao.findUnique(cause.getEntity(), cause.getInternalNumber()));
+		Cause cause = new Cause(entity, Long.MAX_VALUE);
+		assertEquals(causeDao.merge(cause), causeDao.findUnique(entity, Long.MAX_VALUE));
 
 		MeasurementTechnique measurementTechnique = MeasurementTechniqueTestSupport.createMeasurementTechnique(entity);
 		assertEquals(measurementTechniqueDao.merge(measurementTechnique), measurementTechniqueDao.findUnique(measurementTechnique.getEntity(), measurementTechnique.getMeasurementTechniqueCode()));

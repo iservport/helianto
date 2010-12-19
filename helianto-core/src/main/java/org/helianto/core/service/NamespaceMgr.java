@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.helianto.core.Entity;
-import org.helianto.core.EntityFilter;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.core.ProvinceFilter;
 import org.helianto.core.Service;
 import org.helianto.core.UserRole;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.classic.ProvinceFilter;
 
 /**
  * Namespace management interface.
@@ -106,7 +106,7 @@ public interface NamespaceMgr {
     /**
      * Find <code>Entity</code>(ies).
      */
-	public List<Entity> findEntities(EntityFilter filter);
+	public List<Entity> findEntities(Filter filter);
 
     /**
      * Prepare <code>Entity</code> in session.

@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 
 import org.helianto.core.Entity;
-import org.helianto.core.filter.AbstractEntityBackedFilter;
+import org.helianto.core.filter.classic.AbstractEntityBackedFilter;
 import org.junit.Before;
 import org.junit.Test;
 

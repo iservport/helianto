@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Operator;
-import org.helianto.core.OperatorFilter;
+import org.helianto.core.filter.classic.OperatorFilter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;

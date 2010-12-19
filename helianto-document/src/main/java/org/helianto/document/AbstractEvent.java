@@ -15,7 +15,6 @@
 
 package org.helianto.document;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
 
@@ -46,26 +45,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 
 @javax.persistence.MappedSuperclass
-public abstract class AbstractEvent implements Serializable {
+public abstract class AbstractEvent implements Event {
 
-    /**
-     * Factory method.
-     * 
-     * @param <T>
-     * @param clazz
-     * @param internalNumber
-     */
-    public static <T extends AbstractEvent> T abstractEventFactory(Class<T> clazz, long internalNumber) {
-        T event = null;
-        try {
-            event = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create event of class "+clazz, e);
-        }
-        event.setInternalNumber(internalNumber);
-        return event;
-    }
-    
     private static final long serialVersionUID = 1L;
     private int id;
     private Integer version;
@@ -81,9 +62,6 @@ public abstract class AbstractEvent implements Serializable {
         setPrivacyLevel(PrivacyLevel.ZERO.getValue());
         setIssueDate(new Date());
     }
-    
-    @Transient
-    public abstract String getInternalNumberKey();
     
     /**
      * Locale.

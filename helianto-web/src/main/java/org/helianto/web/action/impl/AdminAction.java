@@ -1,9 +1,9 @@
 package org.helianto.web.action.impl;
 
 import org.helianto.core.UserAssociation;
-import org.helianto.core.UserAssociationFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.classic.UserAssociationFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

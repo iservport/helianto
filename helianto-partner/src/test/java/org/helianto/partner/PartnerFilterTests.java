@@ -23,7 +23,7 @@ import java.io.Serializable;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
+import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
 import org.junit.Test;

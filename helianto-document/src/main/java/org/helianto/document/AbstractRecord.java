@@ -17,9 +17,6 @@ package org.helianto.document;
 
 import javax.persistence.Transient;
 
-
-
-
 /**
  * Base class to represent a record.
  *  
@@ -29,7 +26,6 @@ import javax.persistence.Transient;
  * 
  * @author Mauricio Fernandes de Castro
  */
-
 @javax.persistence.MappedSuperclass
 public abstract class AbstractRecord extends AbstractEvent implements Recordable {
 

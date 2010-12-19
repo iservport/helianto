@@ -35,7 +35,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.core.TopLevelNumberedEntity;
 import org.helianto.core.number.Sequenceable;
 
 /**
@@ -53,7 +52,7 @@ import org.helianto.core.number.Sequenceable;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("P")
-public class Picking implements Serializable, Sequenceable, TopLevelNumberedEntity {
+public class Picking implements Serializable, Sequenceable {
 
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -65,11 +64,39 @@ public class Picking implements Serializable, Sequenceable, TopLevelNumberedEnti
     private BigDecimal netWeight;
     private BigDecimal grossWeight;
     
+    @Transient
+	public String getInternalNumberKey() {
+		return "PICKING";
+	}
+    
     /**
      * Constructor.
      */
     public Picking() {
     	setPackaging("");
+    }
+
+    /**
+     * Key constructor.
+     * 
+     * @param entity
+     * @param internalNumber
+     */
+    public Picking(Entity entity, long internalNumber) {
+    	this();
+    	setEntity(entity);
+    	setInternalNumber(internalNumber);
+    }
+
+    /**
+     * Invoice constructor.
+     * 
+     * @param invoice
+     * @param internalNumber
+     */
+    public Picking(Invoice invoice, long internalNumber) {
+    	this(invoice.getEntity(), internalNumber);
+    	setInvoice(invoice);
     }
 
     /**
@@ -105,11 +132,6 @@ public class Picking implements Serializable, Sequenceable, TopLevelNumberedEnti
     public void setInternalNumber(long internalNumber) {
         this.internalNumber = internalNumber;
     }
-    
-    @Transient
-	public String getInternalNumberKey() {
-		return "PICKING";
-	}
     
 	/**
 	 * Invoice.
@@ -163,15 +185,6 @@ public class Picking implements Serializable, Sequenceable, TopLevelNumberedEnti
     public void setGrossWeight(BigDecimal grossWeight) {
         this.grossWeight = grossWeight;
     }
-
-    /**
-     * Required by <code>TopLevelNumberedEntity</code> interface.
-     */
-	public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {
-		setEntity(entity);
-		setInternalNumber(internalNumber);
-		return this;
-	}
 
     /**
      * toString

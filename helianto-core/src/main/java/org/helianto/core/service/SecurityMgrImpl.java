@@ -25,12 +25,12 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
-import org.helianto.core.IdentityFilter;
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.helianto.core.filter.classic.IdentityFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.security.SecureUserDetails;

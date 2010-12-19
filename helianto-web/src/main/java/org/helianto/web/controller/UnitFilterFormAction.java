@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractFilterOnlyFormAction;
 import org.helianto.core.Unit;
-import org.helianto.core.UnitFilter;
+import org.helianto.core.filter.classic.UnitFilter;
 import org.helianto.core.service.UnitMgr;
 import org.springframework.stereotype.Component;
 

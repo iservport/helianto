@@ -22,13 +22,13 @@ import java.util.List;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.IdentityFilter;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
-import org.helianto.core.UserAssociationFilter;
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.filter.classic.IdentityFilter;
+import org.helianto.core.filter.classic.UserAssociationFilter;
+import org.helianto.core.filter.classic.UserFilter;
 
 /**
  * Default user service layer interface for the core package.

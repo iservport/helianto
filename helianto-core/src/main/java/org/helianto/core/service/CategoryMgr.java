@@ -18,8 +18,7 @@ package org.helianto.core.service;
 import java.util.List;
 
 import org.helianto.core.Category;
-
-import org.helianto.core.CategoryFilter;
+import org.helianto.core.filter.Filter;
 
 /**
  * Service interface to categories.
@@ -33,7 +32,7 @@ public interface CategoryMgr {
 	 * 
 	 * @param categoryFilter
 	 */
-	public List<Category> findCategories(CategoryFilter categoryFilter);
+	public List<Category> findCategories(Filter categoryFilter);
 
 	/**
 	 * Store category.

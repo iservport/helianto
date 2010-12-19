@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
+import org.helianto.core.criteria.CriteriaBuilder;
 import org.junit.Before;
 import org.junit.Test;
 

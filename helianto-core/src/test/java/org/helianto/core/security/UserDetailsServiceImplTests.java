@@ -30,9 +30,9 @@ import java.util.Set;
 
 import org.helianto.core.Credential;
 import org.helianto.core.User;
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.junit.After;

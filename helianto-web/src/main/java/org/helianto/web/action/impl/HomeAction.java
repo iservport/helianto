@@ -2,9 +2,9 @@ package org.helianto.web.action.impl;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;

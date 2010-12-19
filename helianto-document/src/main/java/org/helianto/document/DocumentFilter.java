@@ -17,7 +17,7 @@
 package org.helianto.document;
 
 import org.helianto.core.Entity;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
 
 /**
  * Document filter.

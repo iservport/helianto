@@ -16,7 +16,7 @@
 
 package org.helianto.controller;
 
-import org.helianto.core.filter.UserBackedFilter;
+import org.helianto.core.filter.classic.UserBackedFilter;
 
 /**
  * Default implementation for filter form.

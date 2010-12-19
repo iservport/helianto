@@ -19,8 +19,6 @@ import org.helianto.message.mail.compose.AbstractMailMessageComposer;
 import org.helianto.message.mail.compose.MailForm;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
-import freemarker.template.Configuration;
-
 /**
  * 
  * @author Mauricio Fernandes de Castro

@@ -15,7 +15,6 @@
 
 package org.helianto.document;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.JoinColumn;
@@ -25,8 +24,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
-import org.helianto.core.TopLevelNumberedEntity;
-import org.helianto.core.number.Sequenceable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -36,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractControl extends AbstractRepeatable implements Serializable, Sequenceable, Controlable, TopLevelNumberedEntity {
+public abstract class AbstractControl extends AbstractRepeatable implements Controlable {
 
     private static final long serialVersionUID = 1L;
     private Entity entity;
@@ -54,10 +51,12 @@ public abstract class AbstractControl extends AbstractRepeatable implements Seri
      * Entity constructor.
      * 
      * @param entity
+     * @param internalNumber
      */
-    public AbstractControl(Entity entity) {
+    public AbstractControl(Entity entity, long internalNumber) {
     	this();
     	setEntity(entity);
+    	setInternalNumber(internalNumber);
     }
     
     /**
@@ -113,12 +112,6 @@ public abstract class AbstractControl extends AbstractRepeatable implements Seri
     	return ControlState.LATE.getValue();
     }
     
-	public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {
-        this.setEntity(entity);
-        this.setInternalNumber(internalNumber);
-		return this;
-	}
-
     @Override
     public boolean equals(Object other) {
          if ( (this == other ) ) return true;

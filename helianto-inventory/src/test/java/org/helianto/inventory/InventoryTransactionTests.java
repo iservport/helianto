@@ -15,18 +15,10 @@
 
 package org.helianto.inventory;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Set;
 
-import org.helianto.core.Entity;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.core.test.TopLevelNumberedEntityTestSupport;
 import org.junit.Test;
 
 
@@ -42,27 +34,6 @@ public class InventoryTransactionTests {
 		assertTrue(inventoryTransaction instanceof Serializable);
 	}
 	
-	@Test
-	public void factory() {
-		Entity entity = EntityTestSupport.createEntity();
-		Inventory from = TopLevelNumberedEntityTestSupport.create(Inventory.class, entity);
-		Inventory to = TopLevelNumberedEntityTestSupport.create(Inventory.class, entity);
-		InventoryTransaction inventoryTransaction = InventoryTransaction.inventoryTransactionFactory(InventoryTransaction.class, from, to, new BigDecimal(100));
-		Set<Movement> movements = inventoryTransaction.getMovements();
-		assertEquals(2, movements.size());
-		for (Movement move: movements) {
-			if (move.getDirection().equals(MovementDirection.INPUT)) {
-				assertSame(from, move.getInventory());
-			}
-			else if (move.getDirection().equals(MovementDirection.OUTPUT)) {
-				assertSame(to, move.getInventory());
-			}
-			else {
-				fail("Either from or to are expected");
-			}
-		}
-	}
-
 	@Test
 	public void inventoryTransactionEquals() {
 		// we do not need equals because there is no natural key

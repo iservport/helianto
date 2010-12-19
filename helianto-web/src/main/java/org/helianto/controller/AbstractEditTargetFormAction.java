@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Node;
-import org.helianto.core.filter.UserBackedFilter;
+import org.helianto.core.filter.classic.UserBackedFilter;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.validation.Errors;

@@ -18,7 +18,7 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.IdentityFilter;
+import org.helianto.core.filter.classic.IdentityFilter;
 import org.junit.Before;
 import org.junit.Test;
 

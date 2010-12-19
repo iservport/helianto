@@ -23,7 +23,7 @@ import javax.mail.MessagingException;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Server;
-import org.helianto.core.ServerFilter;
+import org.helianto.core.filter.classic.ServerFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.message.mail.ConfigurableMailSenderFactory;
 import org.helianto.message.mail.compose.MailMessageComposer;

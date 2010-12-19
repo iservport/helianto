@@ -28,7 +28,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.TopLevelNumberedEntity;
+import org.helianto.core.Entity;
 import org.helianto.process.ProcessDocument;
 
 
@@ -56,33 +56,47 @@ import org.helianto.process.ProcessDocument;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("I")
-public class Inventory extends AbstractRequirement implements TopLevelNumberedEntity {
+public class Inventory extends AbstractRequirement {
 	
-	/**
-	 * Factory method.
-	 * 
-	 * @param clazz
-	 * @param item
-	 */
-	public static Inventory inventoryFactory(Class<Inventory> clazz, ProcessDocument item) {
-		return AbstractRequirement.internalRequirementFactory(clazz, item.getEntity(), new Date());
-	}
-    
 	private static final long serialVersionUID = 1L;
 	private Set<Movement> movements;
 	
+	@Transient
+	public String getInternalNumberKey() {
+		return "INVENT";
+	}
+
 	/**
 	 * Default constructor.
 	 */
 	public Inventory() {
 		super();
 		setRequirementSign(RequirementSign.INCREMENT);
+		setRequirementDate(new Date());
+		setResolution(RequirementState.FORECAST.getValue());
 	}
 
-	@Transient
-	@Override
-	public String getInternalNumberKey() {
-		return "INVENT";
+	/**
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param internalNumber
+	 */
+	public Inventory(Entity entity, long internalNumber) {
+		this();
+		setEntity(entity);
+		setInternalNumber(internalNumber);
+	}
+
+	/**
+	 * Item constructor.
+	 * 
+	 * @param item
+	 * @param internalNumber
+	 */
+	public Inventory(ProcessDocument item, long internalNumber) {
+		this(item.getEntity(), internalNumber);
+		setProcessDocument(item);
 	}
 
 	/**

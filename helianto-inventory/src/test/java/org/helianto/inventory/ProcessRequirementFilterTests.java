@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import org.helianto.core.DateFilterMode;
+import org.helianto.core.filter.classic.DateFilterMode;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
 import org.junit.Test;

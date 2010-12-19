@@ -19,8 +19,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractFilterOnlyFormAction;
-import org.helianto.core.UserFilter;
 import org.helianto.core.UserGroup;
+import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.service.UserMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;

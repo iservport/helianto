@@ -18,7 +18,7 @@ package org.helianto.document;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.DateFilterMode;
+import org.helianto.core.filter.classic.DateFilterMode;
 import org.helianto.document.AbstractEventFilter;
 import org.helianto.document.AbstractRecordFilter;
 import org.junit.Before;

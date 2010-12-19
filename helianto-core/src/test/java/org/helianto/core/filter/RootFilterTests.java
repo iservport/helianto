@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Operator;
 import org.helianto.core.RootEntity;
+import org.helianto.core.criteria.CriteriaBuilder;
 import org.junit.Before;
 import org.junit.Test;
 

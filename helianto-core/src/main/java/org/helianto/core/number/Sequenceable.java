@@ -15,19 +15,14 @@
 
 package org.helianto.core.number;
 
-import org.helianto.core.Entity;
+import org.helianto.core.TrunkEntity;
 
 /**
  * Common Interface to entities having internalNumber.
  *  
  * @author Mauricio Fernandes de Castro
  */
-public interface Sequenceable {
-	
-	/**
-	 * Entity containing the sequence.
-	 */
-	public Entity getEntity();
+public interface Sequenceable extends TrunkEntity {
 	
 	/**
 	 * InternalNumber getter.

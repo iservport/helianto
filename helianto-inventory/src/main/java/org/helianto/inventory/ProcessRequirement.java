@@ -47,7 +47,6 @@ public class ProcessRequirement extends AbstractRequirement {
 	private static final long serialVersionUID = 1L;
 
 	@Transient
-	@Override
 	public String getInternalNumberKey() {
 		return "PROCREQ";
 	}

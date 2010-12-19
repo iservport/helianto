@@ -18,12 +18,14 @@ package org.helianto.document;
 
 import java.util.Date;
 
+import org.helianto.core.TrunkEntity;
+
 /**
  * Control interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Controlable {
+public interface Controlable extends TrunkEntity {
 
     /**
      * Date to be controlled.

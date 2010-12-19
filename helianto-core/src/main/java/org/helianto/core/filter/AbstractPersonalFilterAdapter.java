@@ -2,6 +2,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalEntity;
+import org.helianto.core.criteria.CriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

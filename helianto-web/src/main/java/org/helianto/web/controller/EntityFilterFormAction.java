@@ -22,8 +22,8 @@ import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractFilterOnlyFormAction;
 import org.helianto.core.Entity;
-import org.helianto.core.EntityFilter;
 import org.helianto.core.Operator;
+import org.helianto.core.filter.classic.EntityFilter;
 import org.helianto.core.service.NamespaceMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;

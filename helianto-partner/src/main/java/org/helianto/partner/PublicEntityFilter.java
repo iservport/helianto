@@ -1,8 +1,8 @@
 package org.helianto.partner;
 
 import org.helianto.core.Operator;
-import org.helianto.core.filter.AbstractOperatorBackedCriteriaFilter;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractOperatorBackedCriteriaFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -17,8 +17,8 @@ package org.helianto.process;
 
 import org.helianto.core.Unit;
 import org.helianto.core.User;
-import org.helianto.core.filter.AbstractUserBackedCriteriaFilter;
-import org.helianto.core.filter.CriteriaBuilder;
+import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 
 /**
  * Measurement technique filter.

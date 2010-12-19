@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 
 import org.helianto.controller.AbstractEditTargetFormAction;
 import org.helianto.core.Category;
-import org.helianto.core.CategoryFilter;
+import org.helianto.core.filter.classic.CategoryFilter;
 import org.helianto.core.service.CategoryMgr;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;

@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.helianto.core.Unit;
-import org.helianto.core.UnitFilter;
+import org.helianto.core.filter.classic.UnitFilter;
 import org.helianto.core.repository.FilterDao;
 
 
