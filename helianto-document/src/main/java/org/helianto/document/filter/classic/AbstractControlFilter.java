@@ -13,11 +13,10 @@
  * limitations under the License.
  */
 
-package org.helianto.document.filter;
+package org.helianto.document.filter.classic;
 
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.document.AbstractRecordFilter;
 
 /**
  * Base class to control filters.
@@ -59,7 +58,7 @@ public abstract class AbstractControlFilter extends AbstractRecordFilter {
     }
     
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendTrackingMode(mainCriteriaBuilder);
 		appendPriority(mainCriteriaBuilder);

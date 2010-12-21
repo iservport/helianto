@@ -53,7 +53,7 @@ public class AgreementFilter extends AbstractUserBackedCriteriaFilter {
 	}
 	
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("resolution", getAgreementState(), mainCriteriaBuilder);
 		appendLikeFilter("summary", getSummaryLike(), mainCriteriaBuilder);
 		appendLikeFilter("partner.partnerRegistry.partnerAlias", getCustomerAliasLike(), mainCriteriaBuilder);

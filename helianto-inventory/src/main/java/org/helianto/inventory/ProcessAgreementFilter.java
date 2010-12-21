@@ -31,7 +31,7 @@ public class ProcessAgreementFilter extends AbstractRequirementFilter {
 	private Partner customer;
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		
 	}

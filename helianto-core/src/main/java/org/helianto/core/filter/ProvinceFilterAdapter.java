@@ -77,7 +77,7 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("provinceName", getFilter().getProvinceName(), mainCriteriaBuilder);
 	}
 

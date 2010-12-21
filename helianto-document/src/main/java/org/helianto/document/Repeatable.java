@@ -17,12 +17,14 @@ package org.helianto.document;
 
 import java.util.Calendar;
 
+import org.helianto.core.number.Sequenceable;
+
 /**
- * Control interface.
+ * Repeatable interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Repeatable {
+public interface Repeatable extends Sequenceable {
 
     /**
      * Tracking mode.

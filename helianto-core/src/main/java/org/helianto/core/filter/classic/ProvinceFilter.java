@@ -130,7 +130,7 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("provinceName", getProvinceNameLike(), mainCriteriaBuilder);
 	}
 

@@ -13,43 +13,46 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.filter;
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.document.AbstractEventFilter;
+import org.helianto.core.filter.AbstractFilter;
+import org.helianto.core.filter.AbstractSequenceFilterAdapterDecorator;
+import org.helianto.document.Recordable;
 
 /**
- * Record filter superclass.
+ * Base class to filters that require a <code>Record</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractRecordFilter extends AbstractEventFilter {
+public abstract class AbstractRecordFilterAdapter <T extends Recordable> extends AbstractSequenceFilterAdapterDecorator<T> {
 
 	private static final long serialVersionUID = 1L;
-	private char resolution;
 	
 	/**
-	 * Default constructor.
+	 * Filter constructor.
+	 * 
+	 * @param filter
 	 */
-	public AbstractRecordFilter() {
-		super();
-		setResolution(' ');
+	public AbstractRecordFilterAdapter(T filter) {
+		super(filter);
 	}
-
+	
 	/**
-	 * Resolution filter.
+	 * Decorator constructor.
+	 * 
+	 * @param filter
+	 * @param decoratedFilter
 	 */
-	public char getResolution() {
-		return resolution;
+	public AbstractRecordFilterAdapter(T filter, AbstractFilter decoratedFilter) {
+		super(filter, decoratedFilter);
 	}
-	public void setResolution(char resolution) {
-		this.resolution = resolution;
-	}
-
+	
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendResolution(mainCriteriaBuilder);
+		appendEqualFilter("complete", getFilter().getComplete(), true, mainCriteriaBuilder);
 	}
 
 	/**
@@ -58,7 +61,7 @@ public abstract class AbstractRecordFilter extends AbstractEventFilter {
 	 * @param mainCriteriaBuilder
 	 */
 	protected void appendResolution(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("resolution", getResolution(), mainCriteriaBuilder);
+		appendEqualFilter("resolution", getFilter().getResolution(), mainCriteriaBuilder);
 	}
 
 }

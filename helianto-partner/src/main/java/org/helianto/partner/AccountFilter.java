@@ -72,7 +72,7 @@ public class AccountFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("accountNameLike", getAccountNameLike(), mainCriteriaBuilder);
 		appendEqualFilter("accountType", getAccountType(), mainCriteriaBuilder);
 		appendOrderBy("accountCode", mainCriteriaBuilder);

@@ -51,7 +51,7 @@ public class CardSetFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("cardType", getCardType(), mainCriteriaBuilder);
 		if (getProcess()!=null) {
 			appendEqualFilter("processDocument.id", getProcess().getId(), mainCriteriaBuilder);

@@ -15,6 +15,8 @@
 
 package org.helianto.core.filter;
 
+import org.helianto.core.criteria.CriteriaBuilder;
+
 
 /**
  * Filters implementing this interface are enabled to create 
@@ -28,6 +30,13 @@ public interface Filter {
 	 * Create criteria.
 	 */
 	public String createCriteriaAsString();
+
+	/**
+	 * Create criteria.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder);
 
 	/**
 	 * Reset filter.

@@ -74,7 +74,7 @@ public class MeasurementTechniqueFilter extends AbstractUserBackedCriteriaFilter
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("measurementTechniqueName", getMeasurementTechniqueName(), mainCriteriaBuilder);
 		appendOrderBy("measurementTechniqueCode", mainCriteriaBuilder);
 	}

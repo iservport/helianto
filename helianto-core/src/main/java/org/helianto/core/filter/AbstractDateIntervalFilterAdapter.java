@@ -31,7 +31,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractDateRangeFilterAdapter<T extends TrunkEntity> extends AbstractTrunkFilterAdapter<T> {
+public abstract class AbstractDateIntervalFilterAdapter<T extends TrunkEntity> extends AbstractTrunkFilterAdapter<T> implements DateInterval {
 
 	private static final long serialVersionUID = 1L;
     private int interval = -7;
@@ -41,7 +41,7 @@ public abstract class AbstractDateRangeFilterAdapter<T extends TrunkEntity> exte
 	 * 
 	 * @param filter
 	 */
-    public AbstractDateRangeFilterAdapter(T filter) {
+    public AbstractDateIntervalFilterAdapter(T filter) {
     	super(filter);
     }
     
@@ -79,21 +79,32 @@ public abstract class AbstractDateRangeFilterAdapter<T extends TrunkEntity> exte
 	}
     
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getDateFieldName().length()>0) {
-			DateCriteriaBuilder dateCriteria = new DateCriteriaBuilder(mainCriteriaBuilder.getPrefix(), getDateFieldName());
-			dateCriteria.appendFromDateRange(getFromDate(), getToDate(), getInterval());	
-			dateCriteria.appendToDateRange(getFromDate(), getToDate(), getInterval());
-			if (dateCriteria.getSegmentCount()>0) {
-				mainCriteriaBuilder.appendAnd().append(dateCriteria);
-			}
+			appendDateInterval(mainCriteriaBuilder, getDateFieldName(), getDateInterval()); 
 		}
 		else {
 			logger.debug("Date range filter disabled");
 		}
 	}
+	
+	/**
+	 * Return the date interval as this filter adapter by default.
+	 */
+	protected DateInterval getDateInterval() {
+		return this;
+	}
+	
+	public void appendDateInterval(CriteriaBuilder mainCriteriaBuilder, String dateFieldName, DateInterval dateInterval) {
+		DateCriteriaBuilder dateCriteria = new DateCriteriaBuilder(mainCriteriaBuilder.getPrefix(), dateFieldName);
+		dateCriteria.appendFromDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());	
+		dateCriteria.appendToDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());
+		if (dateCriteria.getSegmentCount()>0) {
+			mainCriteriaBuilder.appendAnd().append(dateCriteria);
+		}
+	}
 
-    private static final Logger logger = LoggerFactory.getLogger(AbstractDateRangeFilterAdapter.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractDateIntervalFilterAdapter.class);
     
 }
 

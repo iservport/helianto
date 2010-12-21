@@ -8,7 +8,7 @@ public class CashFlowFilter extends AbstractUserBackedCriteriaFilter {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		// TODO Auto-generated method stub
 
 	}

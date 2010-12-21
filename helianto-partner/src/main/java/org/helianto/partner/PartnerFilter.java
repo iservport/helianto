@@ -125,7 +125,7 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("privateEntity.entityName", getPartnerNameLike(), mainCriteriaBuilder);
 		appendEqualFilter("partnerState", getPartnerState(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);

@@ -85,7 +85,7 @@ public class PrivateEntityFilter extends AbstractUserBackedCriteriaFilter implem
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("partnerName", getPartnerNameLike(), mainCriteriaBuilder);
 	}
 

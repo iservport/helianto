@@ -81,7 +81,7 @@ public class SerializerFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("builderCode", getBuilderCode(), mainCriteriaBuilder);
 		appendEqualFilter("contentType", getContentType(), mainCriteriaBuilder);
 	}

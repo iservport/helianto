@@ -153,7 +153,7 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}

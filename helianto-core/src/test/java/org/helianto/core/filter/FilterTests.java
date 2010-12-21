@@ -127,10 +127,12 @@ public class FilterTests {
 			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
 				selectionCriteriaBuilder = mainCriteriaBuilder;
 			}
-			@Override protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+			@Override
+			public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 				filterCriteriaBuilder = mainCriteriaBuilder;
 			}
-			@Override protected String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
+			@Override
+			public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
 				createdCriteriaBuilder = mainCriteriaBuilder;
 				return super.createCriteriaAsString(mainCriteriaBuilder);
 			}

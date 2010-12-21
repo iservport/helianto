@@ -101,7 +101,7 @@ public class ServerFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("serverName", getServerName(), mainCriteriaBuilder);
 		appendEqualFilter("serverType", getServerType(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);

@@ -46,7 +46,7 @@ public class FilterAdapterTests {
 		protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
 
 		@Override
-		protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 			appendEqualFilter("alias", getFilter().getUserKey(), mainCriteriaBuilder);
 			appendEqualFilter("userState", getFilter().getUserState(), mainCriteriaBuilder);
 			
@@ -73,7 +73,7 @@ public class FilterAdapterTests {
 		protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
 
 		@Override
-		protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 			appendEqualFilter("type", getFilter().getUserType(), mainCriteriaBuilder);
 			
 		}

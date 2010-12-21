@@ -59,7 +59,7 @@ public class ProcessRequirementFilter extends AbstractControlFilter {
 	}
 	
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());

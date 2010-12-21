@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.documentfilter.classic;
 
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractDateRangeFilter;
@@ -22,6 +22,7 @@ import org.helianto.core.filter.classic.AbstractDateRangeFilter;
  * Filter base class to be used with event hierarchy.
  * 
  * @author Mauricio Fernandes de Castro
+ * @derprecated see AbstractEventFilterAdapter
  */
 public abstract class AbstractEventFilter extends AbstractDateRangeFilter {
 

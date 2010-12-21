@@ -103,7 +103,7 @@ public class ResourceGroupFilter extends AbstractUserBackedCriteriaFilter implem
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("resourceName", getResourceNameLike(), mainCriteriaBuilder);
 		appendEqualFilter("resourceType", getResourceType(), mainCriteriaBuilder);
 		appendOrderBy("resourceCode", mainCriteriaBuilder);

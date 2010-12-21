@@ -42,7 +42,7 @@ public class ServiceFilterAdapter extends AbstractRootFilterAdapter<Service> {
 	public void reset() { }
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("serviceName", getFilter().getServiceName(), mainCriteriaBuilder);
 	}
 

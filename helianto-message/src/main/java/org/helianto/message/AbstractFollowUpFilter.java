@@ -16,7 +16,7 @@
 package org.helianto.message;
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.document.AbstractRecordFilter;
+import org.helianto.document.filter.classic.AbstractRecordFilter;
 
 /**
  * Base class to follow up filters..
@@ -47,7 +47,7 @@ public abstract class AbstractFollowUpFilter extends AbstractRecordFilter {
     }
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("notificationOption", getNotificationOption(), mainCriteriaBuilder);
 	}

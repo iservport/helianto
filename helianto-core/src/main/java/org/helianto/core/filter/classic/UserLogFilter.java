@@ -53,7 +53,7 @@ public class UserLogFilter extends AbstractDateRangeFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 //		mainCriteriaBuilder.appendDateRange("lastEvent", this);
 		if (getIdentity()!=null) {
 			appendEqualFilter("user.identity.id", getIdentity().getId(), mainCriteriaBuilder);

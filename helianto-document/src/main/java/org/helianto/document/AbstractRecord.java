@@ -37,8 +37,18 @@ public abstract class AbstractRecord extends AbstractEvent implements Recordable
      * Default constructor.
      */
     public AbstractRecord() {
+    	this(Resolution.PRELIMINARY.getValue());
+    }
+    
+    /** 
+     * Resolution constructor.
+     * 
+     * @param resolution
+     */
+    public AbstractRecord(char resolution) {
     	super();
-        setResolution(Resolution.PRELIMINARY.getValue());
+        setResolution(resolution);
+        setComplete(-1);
     }
     
     public char getResolution() {

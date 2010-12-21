@@ -43,5 +43,5 @@ public interface DateRange {
      * End date setter.
      */
     public void setToDate(Date toDate);
-
+    
 }

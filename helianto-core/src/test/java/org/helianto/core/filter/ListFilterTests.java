@@ -114,7 +114,8 @@ public class ListFilterTests {
 		filter = new AbstractListFilter() {
 			public String getObjectAlias() { return "TEST_ALIAS"; }
 			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
-			@Override protected void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+			@Override
+			public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
 			public void reset() { }
 		};
 		filter.setList(list);

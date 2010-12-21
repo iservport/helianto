@@ -26,6 +26,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
+import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.junit.Before;
@@ -104,6 +105,7 @@ public class ActionFilterTests {
 		attributes = new LocalAttributeMap();
 		filter = new ListFilter() {
 			public String createCriteriaAsString() { return "CRITERIA"; }
+			public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) { return "CRITERIA"; }
 			public String getObjectAlias() { return "ALIAS"; }
 			public boolean isSelection() { return false; }
 			public void reset() { }

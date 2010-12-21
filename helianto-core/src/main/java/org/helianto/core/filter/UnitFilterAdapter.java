@@ -53,7 +53,7 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
     	if (getFilter().getCategory()!=null) {
         	appendEqualFilter("category.id", getFilter().getCategory().getId(), mainCriteriaBuilder);
     	}

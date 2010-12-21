@@ -90,7 +90,7 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getProvince()!=null) {
 			appendEqualFilter("province.id", getProvince().getId(), mainCriteriaBuilder);
 		}

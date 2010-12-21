@@ -17,6 +17,7 @@ package org.helianto.document;
 
 
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.document.filter.classic.AbstractRecordFilter;
 
 /**
  * Base class to control filters.
@@ -59,7 +60,7 @@ public abstract class AbstractControlFilter extends AbstractRecordFilter {
     }
     
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendTrackingMode(mainCriteriaBuilder);
 		appendPriority(mainCriteriaBuilder);

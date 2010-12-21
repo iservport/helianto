@@ -89,7 +89,7 @@ public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("optionalAlias", getNameOrAliasSearch(), mainCriteriaBuilder);
 	}
 

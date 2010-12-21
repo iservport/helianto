@@ -13,10 +13,10 @@
  * limitations under the License.
  */
 
-package org.helianto.document.filter;
+package org.helianto.document.filter.classic;
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.document.AbstractEventFilter;
+import org.helianto.documentfilter.classic.AbstractEventFilter;
 
 /**
  * Record filter superclass.
@@ -47,7 +47,7 @@ public abstract class AbstractRecordFilter extends AbstractEventFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendResolution(mainCriteriaBuilder);
 	}

@@ -28,7 +28,7 @@ public class CauseFilter extends AbstractUserBackedCriteriaFilter {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 	}
 
 	@Override

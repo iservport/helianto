@@ -15,16 +15,17 @@
 
 package org.helianto.document.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractSequenceFilterAdapter;
+import java.util.Date;
+
+import org.helianto.core.filter.AbstractSequenceFilterAdapterDecorator;
 import org.helianto.document.Event;
 
 /**
- * Filter base class to be used with event hierarchy.
+ * Base class to filters that require an <code>Event</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractEventFilterAdapter<T extends Event> extends AbstractSequenceFilterAdapter<T> {
+public abstract class AbstractEventFilterAdapter<T extends Event> extends AbstractSequenceFilterAdapterDecorator<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,11 +38,19 @@ public abstract class AbstractEventFilterAdapter<T extends Event> extends Abstra
 		super(filter);
 	}
 	
+	/**
+	 * Filter by issue date.
+	 */
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		
-//		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
+	public String getDateFieldName() { 
+		return "issueDate"; 
 	}
 	
-
+	/**
+	 * Filter to date.
+	 */
+	public Date getToDate() {
+		return getFilter().getIssueDate();
+	}
+	
 }

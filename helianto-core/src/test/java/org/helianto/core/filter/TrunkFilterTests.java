@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.core.TrunkEntity;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +14,7 @@ import org.junit.Test;
  */
 public class TrunkFilterTests {
 	
-	private AbstractTrunkFilterAdapter<Trunk> trunkFilter;
+	private AbstractTrunkFilterAdapter<AbstractTrunk> trunkFilter;
 	private Entity entity;
 	private String keyField = "", filterField = "";
 	
@@ -41,8 +40,7 @@ public class TrunkFilterTests {
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
-		Trunk trunk = new Trunk();
-		trunkFilter = new AbstractTrunkFilterAdapter<Trunk>(trunk) {
+		trunkFilter = new AbstractTrunkFilterAdapter<AbstractTrunk>(new AbstractTrunk(entity) {}) {
 			public void reset() { }
 			@Override
 			public boolean isSelection() { return keyField.length()>0; };
@@ -51,20 +49,10 @@ public class TrunkFilterTests {
 				appendEqualFilter("keyField", keyField, mainCriteriaBuilder);
 			}
 			@Override
-			protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+			public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 				appendEqualFilter("filterField", filterField, mainCriteriaBuilder);
 			}
 		};
 	}
 	
-	/**
-	 * Test class.
-	 * 
-	 * @author mauriciofernandesdecastro
-	 */
-	@SuppressWarnings("serial")
-	class Trunk implements TrunkEntity {
-		public Entity getEntity() { return entity; }
-	}
-
 }

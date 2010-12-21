@@ -119,7 +119,7 @@ public abstract class AbstractDateRangeFilter extends AbstractUserBackedCriteria
 	}
     
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getDateFilterMode()!=DateFilterMode.DISABLE_DATE_RANGE 
 				&& getDateFieldName()!=null 
 				&& getDateFieldName().length()>0) {

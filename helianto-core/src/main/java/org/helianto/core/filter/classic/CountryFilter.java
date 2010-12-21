@@ -87,7 +87,7 @@ public class CountryFilter extends AbstractFilter implements Serializable {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("countryName", getCountryNameLike(), mainCriteriaBuilder);
 	}
 

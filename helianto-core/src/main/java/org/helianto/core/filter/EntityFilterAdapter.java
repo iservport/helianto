@@ -68,7 +68,7 @@ public class EntityFilterAdapter extends AbstractRootFilterAdapter<Entity> {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("alias", getEntityAliasLike(), mainCriteriaBuilder);
 	}
 

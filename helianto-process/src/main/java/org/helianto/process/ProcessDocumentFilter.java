@@ -74,7 +74,7 @@ public class ProcessDocumentFilter extends AbstractDocumentFilter implements Ser
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("inheritanceType", getInheritanceType(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);

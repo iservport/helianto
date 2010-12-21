@@ -13,14 +13,13 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.filter.classic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.filter.classic.DateFilterMode;
-import org.helianto.document.AbstractEventFilter;
-import org.helianto.document.AbstractRecordFilter;
+import org.helianto.documentfilter.classic.AbstractEventFilter;
 import org.junit.Before;
 import org.junit.Test;
 

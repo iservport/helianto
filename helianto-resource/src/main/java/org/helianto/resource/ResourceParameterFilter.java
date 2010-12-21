@@ -66,7 +66,7 @@ public class ResourceParameterFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("parameterName", getParameterNameLike(), mainCriteriaBuilder);
 		appendOrderBy("parameterCode", mainCriteriaBuilder);
 	}

@@ -65,7 +65,7 @@ public abstract class AbstractDocumentFilter extends AbstractEntityBackedFilter 
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("docName", getDocName(), mainCriteriaBuilder);
 		appendLikeFilter("docName", getDocNameLike(), mainCriteriaBuilder);
 	}

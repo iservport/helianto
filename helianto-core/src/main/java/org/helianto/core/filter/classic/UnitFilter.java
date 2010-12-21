@@ -86,7 +86,7 @@ public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
     	if (getCategory()!=null) {
         	appendEqualFilter("category.id", getCategory().getId(), mainCriteriaBuilder);
     	}

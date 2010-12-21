@@ -86,7 +86,8 @@ public class MockFilterActionTests {
 			public Operator getOperator() { return null; }
 		};
 		createdFilter = new AbstractListFilter() {
-			@Override protected void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+			@Override
+			public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
 			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
 			public String getObjectAlias() { return "ALIAS"; }
 			public void reset() { }

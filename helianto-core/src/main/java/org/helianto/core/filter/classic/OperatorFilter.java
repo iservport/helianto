@@ -79,7 +79,7 @@ public class OperatorFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("operatorName", getOperatorNameLike(), mainCriteriaBuilder);
 	}
 

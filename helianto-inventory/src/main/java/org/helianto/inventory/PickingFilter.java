@@ -39,7 +39,7 @@ public class PickingFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
 	}
 

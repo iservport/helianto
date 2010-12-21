@@ -50,7 +50,7 @@ public class PersonalFilterTests {
 				appendEqualFilter("keyField", keyField, mainCriteriaBuilder);
 			}
 			@Override
-			protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+			public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 				appendEqualFilter("filterField", filterField, mainCriteriaBuilder);
 			}
 		};

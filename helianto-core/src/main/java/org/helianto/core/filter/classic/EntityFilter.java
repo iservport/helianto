@@ -80,7 +80,7 @@ public class EntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("alias", getEntityAliasLike(), mainCriteriaBuilder);
 	}
 

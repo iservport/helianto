@@ -54,7 +54,7 @@ public class UserAssociationFilter extends AbstractCompositeListFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getParent()!=null) {
 			appendEqualFilter("parent.id", getParent().getId(), mainCriteriaBuilder);
 		}

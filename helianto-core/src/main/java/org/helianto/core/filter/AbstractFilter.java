@@ -127,7 +127,7 @@ public abstract class AbstractFilter implements Serializable, Filter {
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	protected String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
+	public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
         preProcessFilter(mainCriteriaBuilder);
         if (isSelection()) {
         	doSelect(mainCriteriaBuilder);
@@ -175,7 +175,7 @@ public abstract class AbstractFilter implements Serializable, Filter {
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	protected abstract void doFilter(CriteriaBuilder mainCriteriaBuilder);
+	public abstract void doFilter(CriteriaBuilder mainCriteriaBuilder);
 	
 	/**
 	 * Hook to the filter post-processor.
@@ -209,7 +209,19 @@ public abstract class AbstractFilter implements Serializable, Filter {
      * @param criteriaBuilder
      */
     protected void appendEqualFilter(String fieldName, int fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent>0) {
+    	appendEqualFilter(fieldName, fieldContent, false, criteriaBuilder);
+    }
+    
+    /**
+     * Equal appender.
+     * 
+     * @param fieldName
+     * @param fieldContent
+     * @param ignoreOnlyIfNegative
+     * @param criteriaBuilder
+     */
+    protected void appendEqualFilter(String fieldName, int fieldContent, boolean ignoreOnlyIfNegative, CriteriaBuilder criteriaBuilder) {
+    	if ((!ignoreOnlyIfNegative && fieldContent>0) | (ignoreOnlyIfNegative && fieldContent>=0)) {
             criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
             .append(fieldContent);
         }

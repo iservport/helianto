@@ -306,7 +306,8 @@ public class CriteriaBuilderTests  {
 //		public String getObjectAlias() { return null; }
 //		public List<?> getList() { return null; }
 //		public void setList(List<?> itemList) { }
-		@Override protected void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+		@Override
+		public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
 		@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
 		public String getObjectAlias() { return "ALIAS"; }
     }

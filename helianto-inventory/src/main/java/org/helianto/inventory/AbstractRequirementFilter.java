@@ -30,7 +30,7 @@ public abstract class AbstractRequirementFilter extends AbstractControlFilter {
 	private ProcessDocument process;
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		if (process!=null) {
 			appendEqualFilter("document.id", getProcess().getId(), mainCriteriaBuilder);

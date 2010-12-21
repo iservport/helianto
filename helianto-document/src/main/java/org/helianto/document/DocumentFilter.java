@@ -51,7 +51,7 @@ public class DocumentFilter extends AbstractDocumentFilter {
 	}
 
 	@Override
-	protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("documentCodeBuilder.contentType", getContentType(), mainCriteriaBuilder);
 		appendEqualFilter("documentCodeBuilder.builderCode", getBuilderCode(), mainCriteriaBuilder);

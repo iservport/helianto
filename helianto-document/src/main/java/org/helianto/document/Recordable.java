@@ -16,13 +16,15 @@
 
 package org.helianto.document;
 
+import org.helianto.core.number.Sequenceable;
+
 
 /**
  * Record interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Recordable {
+public interface Recordable extends Sequenceable {
 
     /**
      * Resolution.

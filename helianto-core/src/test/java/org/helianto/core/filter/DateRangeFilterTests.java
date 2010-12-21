@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 public class DateRangeFilterTests {
 
-	private AbstractDateRangeFilterAdapter<Trunk> dateFilter;
+	private AbstractDateIntervalFilterAdapter<Trunk> dateFilter;
 	private Entity entity;
 	private Date fromDate;
 	private Date toDate;
@@ -53,7 +53,7 @@ public class DateRangeFilterTests {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
 		Trunk trunk = new Trunk();
-		dateFilter = new AbstractDateRangeFilterAdapter<Trunk>(trunk) {
+		dateFilter = new AbstractDateIntervalFilterAdapter<Trunk>(trunk) {
 			public String getDateFieldName() { return "fieldName"; };
 			public java.util.Date getFromDate() { return fromDate; };
 			public java.util.Date getToDate() { return toDate; };
@@ -63,7 +63,7 @@ public class DateRangeFilterTests {
 			@Override
 			protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
 			@Override
-			protected void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+			public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 				super.doFilter(mainCriteriaBuilder);
 			}
 		};
