@@ -66,17 +66,17 @@ public class InventoryMgrImpl implements InventoryMgr {
 
 	// collabs
 
-	private FilterDao<ProcessRequirement, ListFilter> processRequirementDao;
-	private FilterDao<ProcessAgreement, ListFilter> agreementDao;
+	private FilterDao<ProcessRequirement> processRequirementDao;
+	private FilterDao<ProcessAgreement> agreementDao;
 	private SequenceMgr sequenceMgr;
 
 	@Resource(name="processRequirementDao")
-	public void setProcessRequirementDao(FilterDao<ProcessRequirement, ListFilter> processRequirementDao) {
+	public void setProcessRequirementDao(FilterDao<ProcessRequirement> processRequirementDao) {
 		this.processRequirementDao = processRequirementDao;
 	}
 	
 	@Resource(name="agreementDao")
-	public void setAgreementDao(FilterDao<ProcessAgreement, ListFilter> agreementDao) {
+	public void setAgreementDao(FilterDao<ProcessAgreement> agreementDao) {
 		this.agreementDao = agreementDao;
 	}
 	

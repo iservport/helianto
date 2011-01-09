@@ -15,7 +15,6 @@
 
 package org.helianto.resource.repository;
 
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.ResourceAssociation;
@@ -37,7 +36,7 @@ public class ResourceRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Resource association data access.
 	 */
 	@Bean
-	public FilterDao<ResourceAssociation, ListFilter> resourceAssociationDao() {
+	public FilterDao<ResourceAssociation> resourceAssociationDao() {
 		return getFilterDao(ResourceAssociation.class, "parent", "child");
 	}
 
@@ -45,7 +44,7 @@ public class ResourceRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Resource group data access.
 	 */
 	@Bean
-	public FilterDao<ResourceGroup, ListFilter> resourceGroupDao() {
+	public FilterDao<ResourceGroup> resourceGroupDao() {
 		return getFilterDao(ResourceGroup.class, "entity", "resourceCode");
 	}
 
@@ -53,7 +52,7 @@ public class ResourceRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Resource parameter data access.
 	 */
 	@Bean
-	public FilterDao<ResourceParameter, ListFilter> resourceParameterDao() {
+	public FilterDao<ResourceParameter> resourceParameterDao() {
 		return getFilterDao(ResourceParameter.class, "entity", "parameterCode");
 	}
 
@@ -61,7 +60,7 @@ public class ResourceRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Resource parameter value data access.
 	 */
 	@Bean
-	public FilterDao<ResourceParameterValue, ListFilter> resourceParameterValueDao() {
+	public FilterDao<ResourceParameterValue> resourceParameterValueDao() {
 		return getFilterDao(ResourceParameterValue.class, "resource", "parameter");
 	}
 

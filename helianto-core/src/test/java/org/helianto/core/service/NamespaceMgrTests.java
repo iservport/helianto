@@ -303,9 +303,9 @@ public class NamespaceMgrTests {
 	
 	private NamespaceMgrImpl namespaceMgr;
 	private PostInstallationMgr postInstallationMgr;
-	private FilterDao<Operator, OperatorFilter> operatorDao;
-	private FilterDao<Province, ProvinceFilter> provinceDao;
-	private FilterDao<Entity, EntityFilter> entityDao;
+	private FilterDao<Operator> operatorDao;
+	private FilterDao<Province> provinceDao;
+	private FilterDao<Entity> entityDao;
 	private BasicDao<UserGroup> userGroupDao;
 	private BasicDao<KeyType> keyTypeDao;
 	private BasicDao<Service> serviceDao;

@@ -15,7 +15,6 @@
 
 package org.helianto.message.repository;
 
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.message.ServiceEvent;
@@ -34,7 +33,7 @@ public class MessageRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Card data access.
 	 */
 	@Bean
-	public FilterDao<ServiceEvent, ListFilter> serviceEventDao() {
+	public FilterDao<ServiceEvent> serviceEventDao() {
 		return getFilterDao(ServiceEvent.class, "service", "eventCode");
 	}
 

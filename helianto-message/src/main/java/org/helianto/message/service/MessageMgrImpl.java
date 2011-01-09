@@ -53,12 +53,12 @@ public class MessageMgrImpl implements MessageMgr {
     
     // collabs
 
-    private FilterDao<Server, ServerFilter> serverDao;
+    private FilterDao<Server> serverDao;
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
     
     @Resource(name="serverDao")
-    public void setServerDao(FilterDao<Server, ServerFilter> serverDao) {
+    public void setServerDao(FilterDao<Server> serverDao) {
         this.serverDao = serverDao;
     }
 

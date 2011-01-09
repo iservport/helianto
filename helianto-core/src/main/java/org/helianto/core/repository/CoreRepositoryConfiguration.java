@@ -33,7 +33,6 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
-import org.helianto.core.filter.ListFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -49,7 +48,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Category data access.
 	 */
 	@Bean
-	public FilterDao<Category, ListFilter> categoryDao() {
+	public FilterDao<Category> categoryDao() {
 		return getFilterDao(Category.class, "entity", "categoryGroup", "categoryCode");
 	}
 
@@ -57,7 +56,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Country data access.
 	 */
 	@Bean
-	public FilterDao<Country, ListFilter> countryDao() {
+	public FilterDao<Country> countryDao() {
 		return getFilterDao(Country.class, "operator", "countryCode");
 	}
 
@@ -65,7 +64,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Credential data access.
 	 */
 	@Bean
-	public FilterDao<Credential, ListFilter> credentialDao() {
+	public FilterDao<Credential> credentialDao() {
 		return getFilterDao(Credential.class, "identity");
 	}
 
@@ -73,7 +72,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Entity data access.
 	 */
 	@Bean
-	public FilterDao<Entity, ListFilter> entityDao() {
+	public FilterDao<Entity> entityDao() {
 		return getFilterDao(Entity.class, "operator", "alias");
 	}
 
@@ -81,7 +80,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Entity preference data access.
 	 */
 	@Bean
-	public FilterDao<EntityPreference, ListFilter> entityPreferenceDao() {
+	public FilterDao<EntityPreference> entityPreferenceDao() {
 		return getFilterDao(EntityPreference.class, "entity", "keyType");
 	}
 
@@ -89,7 +88,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Identity data access.
 	 */
 	@Bean
-	public FilterDao<Identity, ListFilter> identityDao() {
+	public FilterDao<Identity> identityDao() {
 		return getFilterDao(Identity.class, "principal");
 	}
 
@@ -97,7 +96,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Internal enumerator data access.
 	 */
 	@Bean
-	public FilterDao<InternalEnumerator, ListFilter> internalEnumeratorDao() {
+	public FilterDao<InternalEnumerator> internalEnumeratorDao() {
 		return getFilterDao(InternalEnumerator.class, "entity", "typeName");
 	}
 
@@ -105,7 +104,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Public enumerator data access.
 	 */
 	@Bean
-	public FilterDao<PublicEnumerator, ListFilter> publicEnumeratorDao() {
+	public FilterDao<PublicEnumerator> publicEnumeratorDao() {
 		return getFilterDao(PublicEnumerator.class, "operator", "typeName");
 	}
 
@@ -113,7 +112,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Key type data access.
 	 */
 	@Bean
-	public FilterDao<KeyType, ListFilter> keyTypeDao() {
+	public FilterDao<KeyType> keyTypeDao() {
 		return getFilterDao(KeyType.class, "operator", "keyCode");
 	}
 
@@ -121,7 +120,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Operator data access.
 	 */
 	@Bean
-	public FilterDao<Operator, ListFilter> operatorDao() {
+	public FilterDao<Operator> operatorDao() {
 		return getFilterDao(Operator.class, "operatorName");
 	}
 
@@ -129,7 +128,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Province data access.
 	 */
 	@Bean
-	public FilterDao<Province, ListFilter> provinceDao() {
+	public FilterDao<Province> provinceDao() {
 		return getFilterDao(Province.class, "operator", "provinceCode");
 	}
 
@@ -137,7 +136,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Server data access.
 	 */
 	@Bean
-	public FilterDao<Server, ListFilter> serverDao() {
+	public FilterDao<Server> serverDao() {
 		return getFilterDao(Server.class, "operator", "serverName");
 	}
 
@@ -145,7 +144,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Service data access.
 	 */
 	@Bean
-	public FilterDao<Service, ListFilter> serviceDao() {
+	public FilterDao<Service> serviceDao() {
 		return getFilterDao(Service.class, "operator", "serviceName");
 	}
 
@@ -153,7 +152,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Unit data access.
 	 */
 	@Bean
-	public FilterDao<Unit, ListFilter> unitDao() {
+	public FilterDao<Unit> unitDao() {
 		return getFilterDao(Unit.class, "entity", "unitCode");
 	}
 
@@ -161,7 +160,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * User association data access.
 	 */
 	@Bean
-	public FilterDao<UserAssociation, ListFilter> userAssociationDao() {
+	public FilterDao<UserAssociation> userAssociationDao() {
 		return getFilterDao(UserAssociation.class, "parent", "child");
 	}
 
@@ -169,7 +168,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * User group data access.
 	 */
 	@Bean
-	public FilterDao<UserGroup, ListFilter> userGroupDao() {
+	public FilterDao<UserGroup> userGroupDao() {
 		return getFilterDao(UserGroup.class, "entity", "userKey");
 	}
 
@@ -177,7 +176,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * User log data access.
 	 */
 	@Bean
-	public FilterDao<UserLog, ListFilter> userLogDao() {
+	public FilterDao<UserLog> userLogDao() {
 		return getFilterDao(UserLog.class, "user", "lastEvent");
 	}
 
@@ -185,7 +184,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * User role data access.
 	 */
 	@Bean
-	public FilterDao<UserRole, ListFilter> userRoleDao() {
+	public FilterDao<UserRole> userRoleDao() {
 		return getFilterDao(UserRole.class, "userGroup", "service", "serviceExtension");
 	}
 

@@ -19,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;
@@ -43,15 +42,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoIntegrationTest {
 
-	@Resource FilterDao<ProcessDocument, ListFilter> processDocumentDao;
-	@Resource FilterDao<Partner, ListFilter> partnerDao;
-	@Resource FilterDao<Card, ListFilter> cardDao;
-	@Resource FilterDao<CardSet, ListFilter> cardSetDao;
-	@Resource FilterDao<Inventory, ListFilter> inventoryDao;
-	@Resource FilterDao<Movement, ListFilter> movementDao;
-	@Resource FilterDao<Picking, ListFilter> pickingDao;
-	@Resource FilterDao<ProcessRequirement, ListFilter> processRequirementDao;
-	@Resource FilterDao<ProcessAgreement, ListFilter> agreementDao;
+	@Resource FilterDao<ProcessDocument> processDocumentDao;
+	@Resource FilterDao<Partner> partnerDao;
+	@Resource FilterDao<Card> cardDao;
+	@Resource FilterDao<CardSet> cardSetDao;
+	@Resource FilterDao<Inventory> inventoryDao;
+	@Resource FilterDao<Movement> movementDao;
+	@Resource FilterDao<Picking> pickingDao;
+	@Resource FilterDao<ProcessRequirement> processRequirementDao;
+	@Resource FilterDao<ProcessAgreement> agreementDao;
 
 	@Test
 	public void inventory() {

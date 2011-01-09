@@ -37,6 +37,7 @@ public class Division extends Partner implements java.io.Serializable {
      */
     public Division() {
     	super();
+		setDivisionType(DivisionType.HEADQUARTER);
     }
 
 	/**

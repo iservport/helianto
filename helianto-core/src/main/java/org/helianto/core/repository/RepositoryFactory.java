@@ -18,7 +18,6 @@ package org.helianto.core.repository;
 import javax.annotation.Resource;
 
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.naming.NamingConventionStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,9 +59,9 @@ public class RepositoryFactory {
 	 * @param targetClazz
 	 * @param params
 	 */
-	public <T> AbstractFilterDao<T, ListFilter> filterDaoFactory(Class<T> targetClazz, String... params) {
-		AbstractFilterDao<T, ListFilter> filterDao =  
-			new AbstractFilterDao<T, ListFilter>(targetClazz) {
+	public <T> AbstractFilterDao<T> filterDaoFactory(Class<T> targetClazz, String... params) {
+		AbstractFilterDao<T> filterDao =  
+			new AbstractFilterDao<T>(targetClazz) {
 			public PersistenceStrategy<T> getPersistenceStrategy() {
 				return persistenceStrategy;
 			}
@@ -87,7 +86,7 @@ public class RepositoryFactory {
 	public <T, F extends Filter> AbstractFilterDao 
 	filterDaoFactory(Class<T> targetClazz, Class<F> filterClazz, String... params) 
 	{
-		AbstractFilterDao<T, F> filterDao =  
+		AbstractFilterDao<T> filterDao =  
 			new AbstractFilterDao(targetClazz) {
 			public PersistenceStrategy<T> getPersistenceStrategy() {
 				return persistenceStrategy;

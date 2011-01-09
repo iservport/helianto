@@ -39,6 +39,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Province;
+import org.helianto.core.TrunkEntity;
 /**
  * Base class to represent the relationship between the organization and other entities.
  * 
@@ -62,7 +63,7 @@ import org.helianto.core.Province;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
-public class Partner implements java.io.Serializable, BusinessUnit {
+public class Partner implements TrunkEntity, BusinessUnit {
 
     private static final long serialVersionUID = 1L;
     private int id;

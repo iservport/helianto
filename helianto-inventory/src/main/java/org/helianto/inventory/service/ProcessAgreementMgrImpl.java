@@ -57,11 +57,11 @@ public class ProcessAgreementMgrImpl implements ProcessAgreementMgr {
 
 	// collabs
 
-	private FilterDao<ProcessAgreement, ProcessAgreementFilter> agreementDao;
+	private FilterDao<ProcessAgreement> agreementDao;
 	private SequenceMgr sequenceMgr;
 
 	@Resource(name="agreementDao")
-	public void setAgreementDao(FilterDao<ProcessAgreement, ProcessAgreementFilter> agreementDao) {
+	public void setAgreementDao(FilterDao<ProcessAgreement> agreementDao) {
 		this.agreementDao = agreementDao;
 	}
 	

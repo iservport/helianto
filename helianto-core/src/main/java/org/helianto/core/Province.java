@@ -79,24 +79,15 @@ public class Province  implements RootEntity {
         setProvinceName("");
     }
 
-	/**
-	 * Operator constructor.
-	 * 
-	 * @param operator
-	 */
-    public Province(Operator operator) {
-        this();
-        this.operator = operator;
-    }
-
     /**
-     * Code constructor.
+     * Key constructor.
      * 
      * @param operator
      * @param provinceCode
      */
     public Province(Operator operator, String provinceCode) {
-    	this(operator);
+        this();
+        this.operator = operator;
         setProvinceCode(provinceCode);
     }
 

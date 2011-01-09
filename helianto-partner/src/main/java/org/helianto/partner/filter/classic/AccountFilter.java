@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.partner;
+package org.helianto.partner.filter.classic;
 
 import org.helianto.core.User;
 import org.helianto.core.criteria.CriteriaBuilder;

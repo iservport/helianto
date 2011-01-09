@@ -1,10 +1,11 @@
-package org.helianto.partner;
+package org.helianto.partner.filter.classic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.partner.filter.classic.PublicAddressFilter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,7 +45,7 @@ public class PublicAddressFilterTests {
 	
 	@Test
 	public void province() {
-		Province province = new Province(operator);
+		Province province = new Province(operator, "");
 		province.setId(1);
 		filter.setProvince(province);
 		assertEquals(C1+C3+ORDER, filter.createCriteriaAsString());

@@ -2,8 +2,6 @@ package org.helianto.core.repository;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.filter.ListFilter;
-
 /**
  * Base class to repository configuration using Spring 3.x Java Config to create DAOs.
  * 
@@ -35,7 +33,7 @@ public class AbstractRepositoryConfiguration {
 	 * @param <T>
 	 * @param clazz
 	 */
-	public <T> FilterDao<T, ListFilter> getFilterDao(Class<T> clazz) {
+	public <T> FilterDao<T> getFilterDao(Class<T> clazz) {
 		return repositoryFactory.filterDaoFactory(clazz, defaultKeys);
 	}
 
@@ -46,7 +44,7 @@ public class AbstractRepositoryConfiguration {
 	 * @param clazz
 	 * @param keys
 	 */
-	public <T> FilterDao<T, ListFilter> getFilterDao(Class<T> clazz, String... keys) {
+	public <T> FilterDao<T> getFilterDao(Class<T> clazz, String... keys) {
 		return repositoryFactory.filterDaoFactory(clazz, keys);
 	}
 

@@ -67,7 +67,7 @@ public class ServerMgrImplTests {
     }
     
     private ServerMgrImpl serverMgr;
-    private FilterDao<Server, ServerFilter> serverDao;
+    private FilterDao<Server> serverDao;
     
     @SuppressWarnings("unchecked")
 	@Before

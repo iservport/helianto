@@ -30,7 +30,6 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.filter.classic.IdentityFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.security.SecureUserDetails;
@@ -108,12 +107,12 @@ public class SecurityMgrImpl implements SecurityMgr {
     
     // collabs
 
-    private FilterDao<Identity, IdentityFilter> identityDao;
+    private FilterDao<Identity> identityDao;
     private BasicDao<UserGroup> userGroupDao;
     private BasicDao<Credential> credentialDao;
 
     @Resource(name="identityDao")
-    public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
+    public void setIdentityDao(FilterDao<Identity> identityDao) {
         this.identityDao = identityDao;
     }
     

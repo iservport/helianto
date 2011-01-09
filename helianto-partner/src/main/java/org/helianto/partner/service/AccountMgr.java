@@ -18,7 +18,7 @@ package org.helianto.partner.service;
 import java.util.List;
 
 import org.helianto.partner.Account;
-import org.helianto.partner.AccountFilter;
+import org.helianto.partner.filter.classic.AccountFilter;
 
 /**
  * Account service interface.

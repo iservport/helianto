@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.helianto.partner.PublicAddress;
-import org.helianto.partner.PublicAddressFilter;
 import org.helianto.partner.PublicEntity;
-import org.helianto.partner.PublicEntityFilter;
 import org.helianto.partner.PublicEntityKey;
+import org.helianto.partner.filter.classic.PublicAddressFilter;
+import org.helianto.partner.filter.classic.PublicEntityFilter;
 
 /**
  * Public entity service interface.

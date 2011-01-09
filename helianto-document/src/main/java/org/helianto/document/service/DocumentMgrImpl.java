@@ -105,17 +105,17 @@ public class DocumentMgrImpl implements DocumentMgr {
 	
 	// collabs
 	
-	private FilterDao<Document, DocumentFilter> documentDao;
-	private FilterDao<Serializer, SerializerFilter> serializerDao;
+	private FilterDao<Document> documentDao;
+	private FilterDao<Serializer> serializerDao;
 	private SequenceMgr sequenceMgr;
 	
 	@Resource(name="documentDao")
-	public void setDocumentDao(FilterDao<Document, DocumentFilter> documentDao) {
+	public void setDocumentDao(FilterDao<Document> documentDao) {
 		this.documentDao = documentDao;
 	}
 	
 	@Resource(name="serializerDao")
-	public void setSerializerDao(FilterDao<Serializer, SerializerFilter> serializerDao) {
+	public void setSerializerDao(FilterDao<Serializer> serializerDao) {
 		this.serializerDao = serializerDao;
 	}
 	

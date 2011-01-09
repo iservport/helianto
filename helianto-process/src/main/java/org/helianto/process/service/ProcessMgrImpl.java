@@ -174,13 +174,13 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	
     // collaborators 
 
-    private FilterDao<ProcessDocument, ProcessDocumentFilter> processDocumentDao;
+    private FilterDao<ProcessDocument> processDocumentDao;
     private BasicDao<Setup> setupDao;
     private BasicDao<ProcessDocumentAssociation> processDocumentAssociationDao;
     private SequenceMgr sequenceMgr;
     
     @javax.annotation.Resource(name="processDocumentDao")
-    public void setProcessDocumentDao(FilterDao<ProcessDocument, ProcessDocumentFilter> processDocumentDao) {
+    public void setProcessDocumentDao(FilterDao<ProcessDocument> processDocumentDao) {
         this.processDocumentDao = processDocumentDao;
     }
 

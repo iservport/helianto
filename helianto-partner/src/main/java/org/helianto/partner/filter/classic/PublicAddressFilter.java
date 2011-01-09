@@ -1,4 +1,4 @@
-package org.helianto.partner;
+package org.helianto.partner.filter.classic;
 
 import java.io.Serializable;
 
@@ -105,7 +105,7 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 
 	public void reset() {
 		setPostalCode("");
-		setProvince(new Province(getOperator()));
+		setProvince(new Province(getOperator(), ""));
 		setProvinceCode("");
 		setAddressLike("");
 	}

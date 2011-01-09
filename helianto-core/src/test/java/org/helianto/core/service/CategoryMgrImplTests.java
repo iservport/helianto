@@ -60,7 +60,7 @@ public class CategoryMgrImplTests {
     	verify(categoryDao);
     }
     
-    private FilterDao<Category, CategoryFilter> categoryDao;
+    private FilterDao<Category> categoryDao;
     
     @SuppressWarnings("unchecked")
 	@Before

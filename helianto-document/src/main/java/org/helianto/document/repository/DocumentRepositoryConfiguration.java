@@ -15,7 +15,6 @@
 
 package org.helianto.document.repository;
 
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.document.AbstractFunction;
@@ -38,7 +37,7 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Document association data access.
 	 */
 	@Bean
-	public FilterDao<DocumentAssociation, ListFilter> documentAssociationDao() {
+	public FilterDao<DocumentAssociation> documentAssociationDao() {
 		return getFilterDao(DocumentAssociation.class, "parent", "child");
 	}
 
@@ -46,7 +45,7 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Document data access.
 	 */
 	@Bean
-	public FilterDao<Document, ListFilter> documentDao() {
+	public FilterDao<Document> documentDao() {
 		return getFilterDao(Document.class, "entity", "docCode");
 	}
 
@@ -54,7 +53,7 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Serializer data access.
 	 */
 	@Bean
-	public FilterDao<Serializer, ListFilter> serializerDao() {
+	public FilterDao<Serializer> serializerDao() {
 		return getFilterDao(Serializer.class, "entity", "builderCode");
 	}
 
@@ -62,7 +61,7 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Document tag data access.
 	 */
 	@Bean
-	public FilterDao<DocumentTag, ListFilter> documentTagDao() {
+	public FilterDao<DocumentTag> documentTagDao() {
 		return getFilterDao(DocumentTag.class, "document", "tagCode");
 	}
 
@@ -70,7 +69,7 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Function data access.
 	 */
 	@Bean
-	public FilterDao<AbstractFunction, ListFilter> functionDao() {
+	public FilterDao<AbstractFunction> functionDao() {
 		return getFilterDao(AbstractFunction.class, "entity", "docCode");
 	}
 	

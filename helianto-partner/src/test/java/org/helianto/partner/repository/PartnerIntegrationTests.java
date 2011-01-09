@@ -24,7 +24,6 @@ import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.partner.Account;
-import org.helianto.partner.AccountFilter;
 import org.helianto.partner.Address;
 import org.helianto.partner.Agent;
 import org.helianto.partner.Customer;
@@ -32,16 +31,12 @@ import org.helianto.partner.Division;
 import org.helianto.partner.Laboratory;
 import org.helianto.partner.Manufacturer;
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.Phone;
 import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.PrivateEntityFilter;
 import org.helianto.partner.PrivateEntityKey;
 import org.helianto.partner.PublicAddress;
-import org.helianto.partner.PublicAddressFilter;
 import org.helianto.partner.PublicEntity;
-import org.helianto.partner.PublicEntityFilter;
 import org.helianto.partner.Supplier;
 import org.helianto.partner.TransportPartner;
 import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
@@ -62,15 +57,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
-	@Resource FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;
-	@Resource FilterDao<Account, AccountFilter> accountDao;
-	@Resource FilterDao<PrivateEntity, PrivateEntityFilter> privateEntityDao;
+	@Resource FilterDao<PublicEntity> publicEntityDao;
+	@Resource FilterDao<Account> accountDao;
+	@Resource FilterDao<PrivateEntity> privateEntityDao;
 	@Resource BasicDao<KeyType> keyTypeDao;
 	@Resource BasicDao<PrivateEntityKey> privateEntityKeyDao;
-	@Resource FilterDao<Partner, PartnerFilter> partnerDao;
+	@Resource FilterDao<Partner> partnerDao;
 	@Resource BasicDao<PartnerKey> partnerKeyDao;
 	@Resource BasicDao<Address> addressDao;
-	@Resource FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao;
+	@Resource FilterDao<PublicAddress> publicAddressDao;
 	@Resource BasicDao<Phone> phoneDao;
 
 	@Test

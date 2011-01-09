@@ -13,9 +13,9 @@ import org.helianto.core.Operator;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.PostInstallationMgr;
 import org.helianto.partner.PublicAddress;
-import org.helianto.partner.PublicAddressFilter;
 import org.helianto.partner.PublicEntity;
-import org.helianto.partner.PublicEntityFilter;
+import org.helianto.partner.filter.classic.PublicAddressFilter;
+import org.helianto.partner.filter.classic.PublicEntityFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -121,8 +121,8 @@ public class PublicEntityMgrTests {
 	
 	private Operator operator;
 	private Entity entity;
-	private FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao;
-	private FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;
+	private FilterDao<PublicAddress> publicAddressDao;
+	private FilterDao<PublicEntity> publicEntityDao;
 	private PostInstallationMgr postInstallationMgr;
 	
 	@SuppressWarnings("unchecked")

@@ -19,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.process.Cause;
 import org.helianto.process.Characteristic;
@@ -47,12 +46,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProcessRepositoryConfigurationTests extends AbstractProcessDaoIntegrationTest {
 
-	@Resource FilterDao<Cause, ListFilter> causeDao;
-	@Resource FilterDao<MeasurementTechnique, ListFilter> measurementTechniqueDao;
-	@Resource FilterDao<ProcessDocumentAssociation, ListFilter> processDocumentAssociationDao;
-	@Resource FilterDao<ProcessDocument, ListFilter> processDocumentDao;
-	@Resource FilterDao<ResourceGroup, ListFilter> resourceGroupDao;
-	@Resource FilterDao<Setup, ListFilter> setupDao;
+	@Resource FilterDao<Cause> causeDao;
+	@Resource FilterDao<MeasurementTechnique> measurementTechniqueDao;
+	@Resource FilterDao<ProcessDocumentAssociation> processDocumentAssociationDao;
+	@Resource FilterDao<ProcessDocument> processDocumentDao;
+	@Resource FilterDao<ResourceGroup> resourceGroupDao;
+	@Resource FilterDao<Setup> setupDao;
 
 	@Test
 	public void process() {

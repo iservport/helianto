@@ -19,14 +19,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.helianto.core.Entity;
+import org.helianto.core.filter.ListFilter;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
+import org.helianto.partner.Customer;
 import org.helianto.partner.Division;
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.PrivateEntityFilter;
+import org.helianto.partner.filter.classic.PrivateEntityFilter;
 
 /**
  * Default service layer interface for the partner package.
@@ -68,7 +69,7 @@ public interface PartnerMgr {
      * 
      * @param partnerFilter
      */
-	public List<? extends Partner> findPartners(PartnerFilter partnerFilter);
+	public List<? extends Partner> findPartners(ListFilter partnerFilter);
 	
     /**
      * Write <code>Partner</code> to the datastore.
@@ -141,6 +142,16 @@ public interface PartnerMgr {
      * @param reinstall
      */
 	public Division installDivision(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall);
+	
+    /**
+     * Convenience to install a customer.
+     * 
+     * @param entity
+     * @param partnerName
+     * @param partnerAddress
+     * @param reinstall
+     */
+	public Customer installCustomer(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall);
 	
     /**
      * Convenience to install key values.

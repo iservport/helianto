@@ -45,7 +45,6 @@ import org.helianto.core.filter.classic.IdentityFilter;
 import org.helianto.core.filter.classic.ProvinceFilter;
 import org.helianto.core.filter.classic.UserAssociationFilter;
 import org.helianto.core.filter.classic.UserFilter;
-import org.helianto.core.filter.classic.UserLogFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -349,17 +348,17 @@ public class UserMgrImpl implements UserMgr {
 
     //- collaborators
     
-    private FilterDao<Identity, IdentityFilter> identityDao;
+    private FilterDao<Identity> identityDao;
     private BasicDao<Credential> credentialDao;
-    private FilterDao<UserGroup, UserFilter> userGroupDao;
-    private FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao;
-    private FilterDao<UserLog, UserLogFilter> userLogDao;
+    private FilterDao<UserGroup> userGroupDao;
+    private FilterDao<UserAssociation> userAssociationDao;
+    private FilterDao<UserLog> userLogDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
-    private FilterDao<Province, ProvinceFilter> provinceDao;
+    private FilterDao<Province> provinceDao;
 	
 
     @Resource(name="identityDao")
-    public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
+    public void setIdentityDao(FilterDao<Identity> identityDao) {
         this.identityDao = identityDao;
     }
     
@@ -369,17 +368,17 @@ public class UserMgrImpl implements UserMgr {
 	}
 
     @Resource(name="userGroupDao")
-	public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
+	public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
 		this.userGroupDao = userGroupDao;
 	}
 
     @Resource(name="userAssociationDao")
-	public void setUserAssociationDao(FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao) {
+	public void setUserAssociationDao(FilterDao<UserAssociation> userAssociationDao) {
 		this.userAssociationDao = userAssociationDao;
 	}
 
     @Resource(name="userLogDao")
-    public void setUserLogDao(FilterDao<UserLog, UserLogFilter> userLogDao) {
+    public void setUserLogDao(FilterDao<UserLog> userLogDao) {
         this.userLogDao = userLogDao;
     }
     
@@ -389,7 +388,7 @@ public class UserMgrImpl implements UserMgr {
 	}
 
     @Resource(name="provinceDao")
-    public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
+    public void setProvinceDao(FilterDao<Province> provinceDao) {
         this.provinceDao = provinceDao;
     }
 

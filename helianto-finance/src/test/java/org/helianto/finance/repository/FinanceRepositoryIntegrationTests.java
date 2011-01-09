@@ -21,13 +21,11 @@ import javax.annotation.Resource;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.finance.CashFlow;
-import org.helianto.finance.CashFlowFilter;
 import org.helianto.finance.test.AbstractFinanceDaoIntegrationTest;
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.test.PrivateEntityTestSupport;
 import org.helianto.partner.test.PartnerTestSupport;
+import org.helianto.partner.test.PrivateEntityTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,8 +36,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class FinanceRepositoryIntegrationTests extends AbstractFinanceDaoIntegrationTest {
 
-	@Resource FilterDao<Partner, PartnerFilter> partnerDao;
-	@Resource FilterDao<CashFlow, CashFlowFilter> cashFlowDao;
+	@Resource FilterDao<Partner> partnerDao;
+	@Resource FilterDao<CashFlow> cashFlowDao;
 
 	@Test
 	public void finance() {

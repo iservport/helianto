@@ -81,7 +81,7 @@ public class ResourceMgrImplTests {
 	// collabs
 	
 	private ResourceMgrImpl resourceMgr;
-	private FilterDao<ResourceGroup, ResourceGroupFilter> resourceGroupDao;
+	private FilterDao<ResourceGroup> resourceGroupDao;
 	
 	@SuppressWarnings("unchecked")
 	@Before

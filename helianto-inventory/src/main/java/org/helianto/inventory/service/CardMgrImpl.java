@@ -95,11 +95,11 @@ public class CardMgrImpl implements CardMgr {
 	// collabs
 	
 	private BasicDao<Card> cardDao;
-	private FilterDao<CardSet, CardSetFilter> cardSetDao;
+	private FilterDao<CardSet> cardSetDao;
 	private SequenceMgr sequenceMgr;
 	
 	@Resource(name="cardSetDao")
-	public void setCardSetDao(FilterDao<CardSet, CardSetFilter> cardSetDao) {
+	public void setCardSetDao(FilterDao<CardSet> cardSetDao) {
 		this.cardSetDao = cardSetDao;
 	}
 

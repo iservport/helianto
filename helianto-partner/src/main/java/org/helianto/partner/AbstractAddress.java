@@ -45,6 +45,16 @@ public abstract class AbstractAddress extends AbstractPartialAddress implements 
         setPostOfficeBox("");
     }
     
+    /** 
+     * Province constructor.
+     * 
+     * @param province
+	 */
+    public AbstractAddress(Province province) {
+    	this();
+        setProvince(province);
+    }
+    
     /**
      * Convenience to chain a street address.
      * 

@@ -20,11 +20,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.Account;
-import org.helianto.partner.AccountFilter;
+import org.helianto.partner.filter.classic.AccountFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -53,10 +53,10 @@ public class AccountMgrImpl implements AccountMgr {
 
 	// collabs
 	
-	private FilterDao<Account, AccountFilter> accountDao;
+	private FilterDao<Account> accountDao;
 
     @Resource(name="accountDao")
-    public void setAccountDao(FilterDao<Account, AccountFilter> accountDao) {
+    public void setAccountDao(FilterDao<Account> accountDao) {
         this.accountDao = accountDao;
     }
 

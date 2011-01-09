@@ -1,4 +1,4 @@
-package org.helianto.partner;
+package org.helianto.partner.filter.classic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -9,8 +9,8 @@ import java.io.Serializable;
 import org.helianto.core.User;
 import org.helianto.core.filter.classic.UserBackedFilter;
 import org.helianto.core.test.UserTestSupport;
-import org.helianto.partner.AccountFilter;
 import org.helianto.partner.AccountType;
+import org.helianto.partner.filter.classic.AccountFilter;
 import org.junit.Before;
 import org.junit.Test;
 /**

@@ -4,8 +4,6 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.core.filter.classic.EntityFilter;
-import org.helianto.core.filter.classic.OperatorFilter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -46,22 +44,22 @@ public abstract class AbstractDaoIntegrationTest {
 	
 	// collabs
 
-    private FilterDao<Entity, EntityFilter> entityDao;
-	private FilterDao<Operator, OperatorFilter> operatorDao;
+    private FilterDao<Entity> entityDao;
+	private FilterDao<Operator> operatorDao;
 	
-	public FilterDao<Operator, OperatorFilter> getOperatorDao() {
+	public FilterDao<Operator> getOperatorDao() {
 		return operatorDao;
 	}
 	@Resource(name="operatorDao")
-	public void setOperatorDao(FilterDao<Operator, OperatorFilter> operatorDao) {
+	public void setOperatorDao(FilterDao<Operator> operatorDao) {
 		this.operatorDao = operatorDao;
 	}
 	
-	public FilterDao<Entity, EntityFilter> getEntityDao() {
+	public FilterDao<Entity> getEntityDao() {
 		return entityDao;
 	}
 	@Resource(name="entityDao")
-	public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
+	public void setEntityDao(FilterDao<Entity> entityDao) {
 		this.entityDao = entityDao;
 	}
 	

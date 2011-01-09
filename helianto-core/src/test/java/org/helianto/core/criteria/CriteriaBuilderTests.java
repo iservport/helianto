@@ -23,7 +23,6 @@ import java.util.Date;
 
 import org.helianto.core.User;
 import org.helianto.core.filter.classic.AbstractDateRangeFilter;
-import org.helianto.core.filter.classic.DateRange;
 import org.helianto.core.test.SecurityTestSupport;
 import org.junit.Before;
 import org.junit.Test;

@@ -58,10 +58,10 @@ public class FinanceMgrImpl implements FinanceMgr {
 		return null;
 	}
 	
-	private FilterDao<CashFlow, CashFlowFilter> cashFlowDao;
+	private FilterDao<CashFlow> cashFlowDao;
 	
 	@Resource(name="cashFlowDao")
-	public void setCashFlowDao(FilterDao<CashFlow, CashFlowFilter> cashFlowDao) {
+	public void setCashFlowDao(FilterDao<CashFlow> cashFlowDao) {
 		this.cashFlowDao = cashFlowDao;
 	}
 	

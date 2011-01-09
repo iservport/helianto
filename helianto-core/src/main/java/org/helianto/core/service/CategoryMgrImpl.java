@@ -53,10 +53,10 @@ public class CategoryMgrImpl implements CategoryMgr {
 
 
     //- collabs
-    private FilterDao<Category, CategoryFilter> categoryDao;
+    private FilterDao<Category> categoryDao;
     
     @Resource(name="categoryDao")
-    public void setCategoryDao(FilterDao<Category, CategoryFilter> categoryDao) {
+    public void setCategoryDao(FilterDao<Category> categoryDao) {
         this.categoryDao = categoryDao;
     }
 

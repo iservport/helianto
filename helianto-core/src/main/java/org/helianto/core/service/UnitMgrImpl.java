@@ -55,10 +55,10 @@ public class UnitMgrImpl implements UnitMgr {
 
     //- collabs
 
-    private FilterDao<Unit, UnitFilter> unitDao;
+    private FilterDao<Unit> unitDao;
     
 	@Resource(name="unitDao")
-    public void setUnitDao(FilterDao<Unit, UnitFilter> unitDao) {
+    public void setUnitDao(FilterDao<Unit> unitDao) {
         this.unitDao = unitDao;
     }
 

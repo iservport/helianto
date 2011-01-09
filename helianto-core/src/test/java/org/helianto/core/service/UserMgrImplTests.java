@@ -41,10 +41,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.classic.IdentityFilter;
-import org.helianto.core.filter.classic.ProvinceFilter;
-import org.helianto.core.filter.classic.UserAssociationFilter;
 import org.helianto.core.filter.classic.UserFilter;
-import org.helianto.core.filter.classic.UserLogFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
@@ -351,12 +348,12 @@ public class UserMgrImplTests {
     
     private UserMgrImpl userMgr;
     
-    private FilterDao<Identity, IdentityFilter> identityDao;
+    private FilterDao<Identity> identityDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
-    private FilterDao<UserGroup, UserFilter> userGroupDao;
-    private FilterDao<UserAssociation, UserAssociationFilter> userAssociationDao;
-    private FilterDao<Province, ProvinceFilter> provinceDao;
-    private FilterDao<UserLog, UserLogFilter> userLogDao;
+    private FilterDao<UserGroup> userGroupDao;
+    private FilterDao<UserAssociation> userAssociationDao;
+    private FilterDao<Province> provinceDao;
+    private FilterDao<UserLog> userLogDao;
 
     
     @SuppressWarnings("unchecked")

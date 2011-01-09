@@ -35,6 +35,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
+import org.helianto.core.TrunkEntity;
 /**
  * Only <code>PrivateEntity</code> instances may have rights to operate with the (owning) <code>Entity</code>.
  * 
@@ -44,7 +45,7 @@ import org.helianto.core.KeyType;
 @Table(name="prtnr_registry",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "partnerAlias"})}
 )
-public class PrivateEntity extends AbstractAddress implements java.io.Serializable, BusinessUnit {
+public class PrivateEntity extends AbstractAddress implements TrunkEntity, BusinessUnit {
 
     private static final long serialVersionUID = 1L;
     private int id;

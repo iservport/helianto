@@ -56,8 +56,8 @@ public class InventoryMgrImplTests {
 	// collabs
 	
 	private InventoryMgrImpl inventoryMgr;
-	private FilterDao<ProcessRequirement, ListFilter> processRequirementDao;
-	private FilterDao<ProcessAgreement, ListFilter> agreementDao;
+	private FilterDao<ProcessRequirement> processRequirementDao;
+	private FilterDao<ProcessAgreement> agreementDao;
 	private SequenceMgr sequenceMgr;
 	
 	@SuppressWarnings("unchecked")

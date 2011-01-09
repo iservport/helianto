@@ -77,7 +77,7 @@ public class OperatorMgrImplTests {
 
     // collabs
     
-    private FilterDao<Operator, OperatorFilter> operatorDao;
+    private FilterDao<Operator> operatorDao;
     
     @SuppressWarnings("unchecked")
 	@Before

@@ -25,7 +25,6 @@ import static org.junit.Assert.assertSame;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.PasswordNotVerifiedException;
-import org.helianto.core.filter.classic.IdentityFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.junit.After;
@@ -99,7 +98,7 @@ public class SecurityMgrImplTests {
     
     //~ collaborators
     
-	private FilterDao<Identity, IdentityFilter> identityDao;
+	private FilterDao<Identity> identityDao;
 	private BasicDao<Credential> credentialDao;
     
     //~ setup

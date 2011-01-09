@@ -57,12 +57,12 @@ public class AbstractFilterDaoTests {
 		verify(mockFilter);
 	}
 	
-	AbstractFilterDao<Identity, UserBackedFilter> stubDao;
+	AbstractFilterDao<Identity> stubDao;
 	UserBackedFilter mockFilter;
 	StringBuilder selectBuilder = new StringBuilder("SELECTCLAUSE ");
 	PersistenceStrategy<Identity> mockPersistenceStrategy;
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Before
 	public void setUp() {
 		mockFilter = createMock(UserBackedFilter.class);

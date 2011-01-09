@@ -11,10 +11,10 @@ import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.PostInstallationMgr;
 import org.helianto.partner.PublicAddress;
-import org.helianto.partner.PublicAddressFilter;
 import org.helianto.partner.PublicEntity;
-import org.helianto.partner.PublicEntityFilter;
 import org.helianto.partner.PublicEntityKey;
+import org.helianto.partner.filter.classic.PublicAddressFilter;
+import org.helianto.partner.filter.classic.PublicEntityFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -86,19 +86,18 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	
 	// collabs
 	
-	private FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao;
-	private FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao;
+	private FilterDao<PublicAddress> publicAddressDao;
+	private FilterDao<PublicEntity> publicEntityDao;
 	private BasicDao<PublicEntityKey> publicEntityKeyDao;
 	private PostInstallationMgr postInstallationMgr;
 	
 	@Resource(name="publicAddressDao")
-	public void setPublicAddressDao(
-			FilterDao<PublicAddress, PublicAddressFilter> publicAddressDao) {
+	public void setPublicAddressDao(FilterDao<PublicAddress> publicAddressDao) {
 		this.publicAddressDao = publicAddressDao;
 	}
 	
 	@Resource(name="publicEntityDao")
-	public void setPublicEntityDao(FilterDao<PublicEntity, PublicEntityFilter> publicEntityDao) {
+	public void setPublicEntityDao(FilterDao<PublicEntity> publicEntityDao) {
 		this.publicEntityDao = publicEntityDao;
 	}
 	

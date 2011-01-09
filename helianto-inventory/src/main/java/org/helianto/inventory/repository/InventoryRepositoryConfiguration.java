@@ -15,7 +15,6 @@
 
 package org.helianto.inventory.repository;
 
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.inventory.Card;
@@ -40,7 +39,7 @@ public class InventoryRepositoryConfiguration extends AbstractRepositoryConfigur
 	 * Card data access.
 	 */
 	@Bean
-	public FilterDao<Card, ListFilter> cardDao() {
+	public FilterDao<Card> cardDao() {
 		return getFilterDao(Card.class, "cardSet", "cardLabel");
 	}
 
@@ -48,7 +47,7 @@ public class InventoryRepositoryConfiguration extends AbstractRepositoryConfigur
 	 * Card set data access.
 	 */
 	@Bean
-	public FilterDao<CardSet, ListFilter> cardSetDao() {
+	public FilterDao<CardSet> cardSetDao() {
 		return getFilterDao(CardSet.class);
 	}
 
@@ -56,7 +55,7 @@ public class InventoryRepositoryConfiguration extends AbstractRepositoryConfigur
 	 * Inventory data access.
 	 */
 	@Bean
-	public FilterDao<Inventory, ListFilter> inventoryDao() {
+	public FilterDao<Inventory> inventoryDao() {
 		return getFilterDao(Inventory.class);
 	}
 
@@ -73,7 +72,7 @@ public class InventoryRepositoryConfiguration extends AbstractRepositoryConfigur
 	 * Movement data access.
 	 */
 	@Bean
-	public FilterDao<Movement, ListFilter> movementDao() {
+	public FilterDao<Movement> movementDao() {
 		return getFilterDao(Movement.class, "inventoryTransaction", "inventory");
 	}
 
@@ -81,7 +80,7 @@ public class InventoryRepositoryConfiguration extends AbstractRepositoryConfigur
 	 * Picking data access.
 	 */
 	@Bean
-	public FilterDao<Picking, ListFilter> pickingDao() {
+	public FilterDao<Picking> pickingDao() {
 		return getFilterDao(Picking.class);
 	}
 
@@ -89,7 +88,7 @@ public class InventoryRepositoryConfiguration extends AbstractRepositoryConfigur
 	 * Process requirement data access.
 	 */
 	@Bean
-	public FilterDao<ProcessRequirement, ListFilter> processRequirementDao() {
+	public FilterDao<ProcessRequirement> processRequirementDao() {
 		return getFilterDao(ProcessRequirement.class);
 	}
 
@@ -97,7 +96,7 @@ public class InventoryRepositoryConfiguration extends AbstractRepositoryConfigur
 	 * Process agreement data access.
 	 */
 	@Bean
-	public FilterDao<ProcessAgreement, ListFilter> agreementDao() {
+	public FilterDao<ProcessAgreement> agreementDao() {
 		return getFilterDao(ProcessAgreement.class);
 	}
 

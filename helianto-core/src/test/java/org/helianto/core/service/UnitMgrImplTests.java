@@ -61,7 +61,7 @@ public class UnitMgrImplTests {
     	verify(unitDao);
     }
     
-    private FilterDao<Unit, UnitFilter> unitDao;
+    private FilterDao<Unit> unitDao;
     
     @SuppressWarnings("unchecked")
 	@Before

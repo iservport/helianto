@@ -219,9 +219,9 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	
 	private PostInstallationMgr postInstallationMgr;
 	
-	private FilterDao<Operator, OperatorFilter> operatorDao;
-	private FilterDao<Province, ProvinceFilter> provinceDao;
-	private FilterDao<Entity, EntityFilter> entityDao;
+	private FilterDao<Operator> operatorDao;
+	private FilterDao<Province> provinceDao;
+	private FilterDao<Entity> entityDao;
 	private BasicDao<UserGroup> userGroupDao;
 	private BasicDao<KeyType> keyTypeDao;
 	private BasicDao<Service> serviceDao;
@@ -233,17 +233,17 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	}
 	
 	@Resource(name="operatorDao")
-	public void setOperatorDao(FilterDao<Operator, OperatorFilter> operatorDao) {
+	public void setOperatorDao(FilterDao<Operator> operatorDao) {
 		this.operatorDao = operatorDao;
 	}
 
     @Resource(name="provinceDao")
-    public void setProvinceDao(FilterDao<Province, ProvinceFilter> provinceDao) {
+    public void setProvinceDao(FilterDao<Province> provinceDao) {
         this.provinceDao = provinceDao;
     }
 
     @Resource(name="entityDao")
-    public void setEntityDao(FilterDao<Entity, EntityFilter> entityDao) {
+    public void setEntityDao(FilterDao<Entity> entityDao) {
         this.entityDao = entityDao;
     }
     

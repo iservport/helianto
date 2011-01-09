@@ -38,7 +38,7 @@ public class ProvinceAction  extends AbstractFilterAction<Province> {
 
 	@Override
 	protected Province doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new Province(userDetails.getEntity().getOperator());
+		return new Province(userDetails.getEntity().getOperator(), "");
 	}
 
 	@Override

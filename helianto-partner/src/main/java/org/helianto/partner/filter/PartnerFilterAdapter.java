@@ -13,98 +13,59 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
-
-import java.io.Serializable;
+package org.helianto.partner.filter;
 
 import org.helianto.core.Entity;
-import org.helianto.core.User;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
-import org.helianto.core.filter.classic.PolymorphicFilter;
+import org.helianto.core.filter.AbstractTrunkFilterAdapter;
+import org.helianto.partner.Agent;
+import org.helianto.partner.Customer;
+import org.helianto.partner.Division;
+import org.helianto.partner.Laboratory;
+import org.helianto.partner.Manufacturer;
+import org.helianto.partner.Partner;
+import org.helianto.partner.Supplier;
 
 /**
- * Partner filter.
+ * Partner filter adapter.
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements Serializable, PolymorphicFilter<Partner> {
+public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	
 	private static final long serialVersionUID = 1L;
-	private String partnerAlias;
-	private String partnerNameLike;
-	private char partnerState;
-	private char priority = '0';
 	private Class<? extends Partner> clazz = Partner.class;
 	
 	/**
 	 * Default constructor.
+	 * 
+	 * @param partner
 	 */
-	public PartnerFilter() {
-		super();
-		setPartnerAlias("");
-		setPartnerNameLike("");
-		setPartnerState(' ');
+	public PartnerFilterAdapter(Partner partner) {
+		super(partner);
 	}
 	
 	/**
-	 * Entity constructor.
+	 * Partner class constructor.
 	 * 
-	 * @param entity
-	 */
-	public PartnerFilter(Entity entity) {
-		this();
-		setEntity(entity);
-	}
-
-	/**
-	 * Entity class constructor.
-	 * 
-	 * @param entity
+	 * @param partner
 	 * @param clazz
 	 */
-	public PartnerFilter(Entity entity, Class<? extends Partner> clazz) {
-		this(entity);
-		setClazz(clazz);
-	}
-
-	/**
-	 * User constructor.
-	 * 
-	 * @param user
-	 */
-	public PartnerFilter(User user) {
-		this();
-		setUser(user);
-	}
-
-	/**
-	 * User class constructor.
-	 * 
-	 * @param user
-	 * @param clazz
-	 */
-	public PartnerFilter(User user, Class<? extends Partner> clazz) {
-		this(user);
+	public PartnerFilterAdapter(Partner partner, Class<? extends Partner> clazz) {
+		this(partner);
 		setClazz(clazz);
 	}
 
 	/**
 	 * Reset method.
 	 */
-	public void reset() {
-		setPartnerNameLike("");
-	}
+	public void reset() { }
 
 	public boolean isSelection() {
-		return getPartnerAlias().length()>0;
+		return getFilter().getEntityAlias().length()>0;
 	}
 
-	public String getObjectAlias() {
-		return "partner";
-	}
-
-	/**AbstractHibernateFilterDao
+	/**
 	 * Read entity from the associated partner registry.
 	 */
 	@Override
@@ -114,6 +75,7 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
@@ -121,14 +83,14 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.entityAlias", getPartnerAlias(), mainCriteriaBuilder);
+		appendEqualFilter("privateEntity.entityAlias", getFilter().getEntityAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("privateEntity.entityName", getPartnerNameLike(), mainCriteriaBuilder);
-		appendEqualFilter("partnerState", getPartnerState(), mainCriteriaBuilder);
-		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);
+		appendLikeFilter("privateEntity.entityName", getFilter().getEntityName(), mainCriteriaBuilder);
+		appendEqualFilter("partnerState", getFilter().getPartnerState(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);
 		appendOrderBy("privateEntity.entityAlias", mainCriteriaBuilder);
 	}
 
@@ -183,47 +145,6 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 		if (discriminator=='S') {
 			clazz = Supplier.class; 
 		}
-	}
-
-	/**
-	 * <<Chain>> Partner alias
-	 */
-	public String getPartnerAlias() {
-		return partnerAlias;
-	}
-	public PartnerFilter setPartnerAlias(String partnerAlias) {
-		this.partnerAlias = partnerAlias;
-		return this;
-	}
-
-	/**
-	 * Name like
-	 */
-	public String getPartnerNameLike() {
-		return partnerNameLike;
-	}
-	public void setPartnerNameLike(String partnerNameLike) {
-		this.partnerNameLike = partnerNameLike;
-	}
-
-	/**
-	 * Partner state
-	 */
-	public char getPartnerState() {
-		return partnerState;
-	}
-	public void setPartnerState(char partnerState) {
-		this.partnerState = partnerState;
-	}
-
-	/**
-	 * Priority
-	 */
-	public char getPriority() {
-		return priority;
-	}
-	public void setPriority(char priority) {
-		this.priority = priority;
 	}
 
 }

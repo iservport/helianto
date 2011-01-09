@@ -15,7 +15,6 @@
 
 package org.helianto.process.repository;
 
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.process.Cause;
@@ -38,7 +37,7 @@ public class ProcessRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Cause data access.
 	 */
 	@Bean
-	public FilterDao<Cause, ListFilter> causeDao() {
+	public FilterDao<Cause> causeDao() {
 		return getFilterDao(Cause.class);
 	}
 
@@ -46,7 +45,7 @@ public class ProcessRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Measurement technique data access.
 	 */
 	@Bean
-	public FilterDao<MeasurementTechnique, ListFilter> measurementTechniqueDao() {
+	public FilterDao<MeasurementTechnique> measurementTechniqueDao() {
 		return getFilterDao(MeasurementTechnique.class, "entity", "measurementTechniqueCode");
 	}
 
@@ -54,7 +53,7 @@ public class ProcessRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Process document association data access.
 	 */
 	@Bean
-	public FilterDao<ProcessDocumentAssociation, ListFilter> processDocumentAssociationDao() {
+	public FilterDao<ProcessDocumentAssociation> processDocumentAssociationDao() {
 		return getFilterDao(ProcessDocumentAssociation.class, "parent", "child");
 	}
 
@@ -62,7 +61,7 @@ public class ProcessRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Process document data access.
 	 */
 	@Bean
-	public FilterDao<ProcessDocument, ListFilter> processDocumentDao() {
+	public FilterDao<ProcessDocument> processDocumentDao() {
 		return getFilterDao(ProcessDocument.class, "entity", "docCode");
 	}
 
@@ -70,7 +69,7 @@ public class ProcessRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Setup data access.
 	 */
 	@Bean
-	public FilterDao<Setup, ListFilter> setupDao() {
+	public FilterDao<Setup> setupDao() {
 		return getFilterDao(Setup.class, "operation", "resource");
 	}
 

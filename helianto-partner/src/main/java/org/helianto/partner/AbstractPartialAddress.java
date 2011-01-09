@@ -54,6 +54,16 @@ public abstract class AbstractPartialAddress implements Serializable {
         setCityName("");
     }
     
+    /** 
+     * Province constructor.
+     * 
+     * @param province
+	 */
+    public AbstractPartialAddress(Province province) {
+    	this();
+        setProvince(province);
+    }
+    
     /**
      * Primary key.
      */

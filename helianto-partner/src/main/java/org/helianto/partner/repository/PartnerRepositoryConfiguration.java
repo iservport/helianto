@@ -15,7 +15,6 @@
 
 package org.helianto.partner.repository;
 
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.Account;
@@ -43,7 +42,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Public entity data access.
 	 */
 	@Bean
-	public FilterDao<PublicEntity, ListFilter> publicEntityDao() {
+	public FilterDao<PublicEntity> publicEntityDao() {
 		return getFilterDao(PublicEntity.class, "operator", "entity", "class");
 	}
 
@@ -51,7 +50,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Public entity key data access.
 	 */
 	@Bean
-	public FilterDao<PublicEntityKey, ListFilter> publicEntityKeyDao() {
+	public FilterDao<PublicEntityKey> publicEntityKeyDao() {
 		return getFilterDao(PublicEntityKey.class, "publicEntity", "keyType");
 	}
 
@@ -60,7 +59,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Account data access.
 	 */
 	@Bean
-	public FilterDao<Account, ListFilter> accountDao() {
+	public FilterDao<Account> accountDao() {
 		return getFilterDao(Account.class, "entity", "accountCode");
 	}
 
@@ -68,7 +67,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Address data access.
 	 */
 	@Bean
-	public FilterDao<Address, ListFilter> addressDao() {
+	public FilterDao<Address> addressDao() {
 		return getFilterDao(Address.class, "partnerRegistry", "sequence");
 	}
 
@@ -76,7 +75,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Address database data access.
 	 */
 	@Bean
-	public FilterDao<PublicAddress, ListFilter> publicAddressDao() {
+	public FilterDao<PublicAddress> publicAddressDao() {
 		return getFilterDao(PublicAddress.class, "operator", "postalCode");
 	}
 
@@ -84,7 +83,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Partner data access.
 	 */
 	@Bean
-	public FilterDao<Partner, ListFilter> partnerDao() {
+	public FilterDao<Partner> partnerDao() {
 		return getFilterDao(Partner.class, "privateEntity", "class");
 	}
 
@@ -92,7 +91,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Partner key data access.
 	 */
 	@Bean
-	public FilterDao<PartnerKey, ListFilter> partnerKeyDao() {
+	public FilterDao<PartnerKey> partnerKeyDao() {
 		return getFilterDao(PartnerKey.class, "partner", "keyType");
 	}
 
@@ -100,7 +99,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Private entity data access.
 	 */
 	@Bean
-	public FilterDao<PrivateEntity, ListFilter> privateEntityDao() {
+	public FilterDao<PrivateEntity> privateEntityDao() {
 		return getFilterDao(PrivateEntity.class, "entity", "entityAlias");
 	}
 
@@ -108,7 +107,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Private entity key data access.
 	 */
 	@Bean
-	public FilterDao<PrivateEntityKey, ListFilter> privateEntityKeyDao() {
+	public FilterDao<PrivateEntityKey> privateEntityKeyDao() {
 		return getFilterDao(PrivateEntityKey.class, "privateEntity", "keyType");
 	}
 
@@ -116,7 +115,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Phone data access.
 	 */
 	@Bean
-	public FilterDao<Phone, ListFilter> phoneDao() {
+	public FilterDao<Phone> phoneDao() {
 		return getFilterDao(Phone.class, "address", "sequence");
 	}
 

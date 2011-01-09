@@ -20,8 +20,6 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
@@ -33,12 +31,11 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.filter.classic.IdentityFilter;
 import org.helianto.core.filter.classic.ServerFilter;
-import org.helianto.core.filter.classic.ServiceFilter;
-import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation for <code>ServerMgr</code> interface.
@@ -166,16 +163,16 @@ public class ServerMgrImpl  implements ServerMgr {
 
     //~ collabs 
 
-    private FilterDao<Server, ServerFilter> serverDao;
+    private FilterDao<Server> serverDao;
     private BasicDao<UserRole> userRoleDao;
-    private FilterDao<Service, ServiceFilter> serviceDao;
-    private FilterDao<Identity, IdentityFilter> identityDao;
-    private FilterDao<UserGroup, UserFilter> userGroupDao;
+    private FilterDao<Service> serviceDao;
+    private FilterDao<Identity> identityDao;
+    private FilterDao<UserGroup> userGroupDao;
     private BasicDao<UserAssociation> userAssociationDao;
 
     
     @Resource(name="serverDao")
-    public void setServerDao(FilterDao<Server, ServerFilter> serverDao) {
+    public void setServerDao(FilterDao<Server> serverDao) {
         this.serverDao = serverDao;
     }
 
@@ -185,17 +182,17 @@ public class ServerMgrImpl  implements ServerMgr {
     }
 
     @Resource(name="serviceDao")
-    public void setServiceDao(FilterDao<Service, ServiceFilter> serviceDao) {
+    public void setServiceDao(FilterDao<Service> serviceDao) {
         this.serviceDao = serviceDao;
     }
 
     @Resource(name="identityDao")
-    public void setIdentityDao(FilterDao<Identity, IdentityFilter> identityDao) {
+    public void setIdentityDao(FilterDao<Identity> identityDao) {
         this.identityDao = identityDao;
     }
 
     @Resource(name="userGroupDao")
-	public void setUserGroupDao(FilterDao<UserGroup, UserFilter> userGroupDao) {
+	public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
 		this.userGroupDao = userGroupDao;
 	}
 

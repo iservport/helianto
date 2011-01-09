@@ -1,4 +1,4 @@
-package org.helianto.partner;
+package org.helianto.partner.filter.classic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -9,6 +9,8 @@ import java.io.Serializable;
 import org.helianto.core.Operator;
 import org.helianto.core.filter.classic.OperatorBackedFilter;
 import org.helianto.core.test.OperatorTestSupport;
+import org.helianto.partner.PublicEntity;
+import org.helianto.partner.filter.classic.PublicEntityFilter;
 import org.junit.Before;
 import org.junit.Test;
 

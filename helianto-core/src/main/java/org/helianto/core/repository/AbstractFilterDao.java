@@ -18,16 +18,16 @@ package org.helianto.core.repository;
 
 import java.util.Collection;
 
+import org.helianto.core.filter.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.helianto.core.filter.Filter;
 
 /**
  * Base implementation to <code>FilterDao</code> interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractFilterDao<T, F extends Filter> extends AbstractBasicDao<T> implements FilterDao<T, F> {
+public abstract class AbstractFilterDao<T> extends AbstractBasicDao<T> implements FilterDao<T> {
 
 	/**
 	 * Default constructor.
@@ -49,7 +49,7 @@ public abstract class AbstractFilterDao<T, F extends Filter> extends AbstractBas
 	 * Use the filter to create a where clause and delegate to
 	 * the superclass.
 	 */
-	public Collection<T> find(F filter) {
+	public Collection<T> find(Filter filter) {
 		String whereClause = filter.createCriteriaAsString();
 		return super.find(getSelectBuilder(filter.getObjectAlias()), whereClause);
 	}

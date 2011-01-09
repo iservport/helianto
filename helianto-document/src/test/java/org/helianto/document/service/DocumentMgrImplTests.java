@@ -131,8 +131,8 @@ public class DocumentMgrImplTests {
 	//
 	
 	private DocumentMgrImpl documentMgr;
-	private FilterDao<Document, DocumentFilter> documentDao;
-	private FilterDao<Serializer, SerializerFilter> serializerDao;
+	private FilterDao<Document> documentDao;
+	private FilterDao<Serializer> serializerDao;
 	private SequenceMgr sequenceMgr;
 	
 	@SuppressWarnings("unchecked")

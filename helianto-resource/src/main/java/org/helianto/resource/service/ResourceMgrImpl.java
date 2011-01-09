@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.repository.BasicDao;
@@ -31,9 +29,10 @@ import org.helianto.resource.ResourceAssociation;
 import org.helianto.resource.ResourceGroup;
 import org.helianto.resource.ResourceGroupFilter;
 import org.helianto.resource.ResourceParameter;
-import org.helianto.resource.ResourceParameterFilter;
 import org.helianto.resource.ResourceParameterValue;
 import org.helianto.resource.ResourceType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -151,14 +150,14 @@ public class ResourceMgrImpl implements ResourceMgr {
     
     // collaborators
 
-    private FilterDao<ResourceGroup, ResourceGroupFilter> resourceGroupDao;
+    private FilterDao<ResourceGroup> resourceGroupDao;
     private BasicDao<ResourceAssociation> resourceAssociationDao;
-    private FilterDao<ResourceParameter, ResourceParameterFilter> resourceParameterDao;
+    private FilterDao<ResourceParameter> resourceParameterDao;
     private BasicDao<ResourceParameterValue> resourceParameterValueDao;
     private SequenceMgr sequenceMgr;
     
     @javax.annotation.Resource(name="resourceGroupDao")
-    public void setResourceGroupDao(FilterDao<ResourceGroup, ResourceGroupFilter> resourceGroupDao) {
+    public void setResourceGroupDao(FilterDao<ResourceGroup> resourceGroupDao) {
         this.resourceGroupDao = resourceGroupDao;
     }
 
@@ -168,7 +167,7 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
 
     @javax.annotation.Resource(name="resourceParameterDao")
-    public void setResourceParameterDao(FilterDao<ResourceParameter, ResourceParameterFilter> resourceParameterDao) {
+    public void setResourceParameterDao(FilterDao<ResourceParameter> resourceParameterDao) {
         this.resourceParameterDao = resourceParameterDao;
     }
 

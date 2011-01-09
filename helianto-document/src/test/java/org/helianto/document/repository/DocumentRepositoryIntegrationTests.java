@@ -21,11 +21,9 @@ import javax.annotation.Resource;
 
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.document.AbstractDocumentFilter;
 import org.helianto.document.AbstractFunction;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
-import org.helianto.document.DocumentFilter;
 import org.helianto.document.DocumentTag;
 import org.helianto.document.FunctionStub;
 import org.helianto.document.Serializer;
@@ -45,10 +43,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoIntegrationTest {
 	
 	@Resource BasicDao<DocumentAssociation> documentAssociationDao;
-	@Resource FilterDao<Document, DocumentFilter> documentDao;
-	@Resource FilterDao<Serializer, SerializerFilter> serializerDao;
+	@Resource FilterDao<Document> documentDao;
+	@Resource FilterDao<Serializer> serializerDao;
 	@Resource BasicDao<DocumentTag> documentTagDao;
-	@Resource FilterDao<AbstractFunction, AbstractDocumentFilter> functionDao;
+	@Resource FilterDao<AbstractFunction> functionDao;
 
 	@Test
 	public void commit() {

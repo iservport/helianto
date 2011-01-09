@@ -15,7 +15,6 @@
 
 package org.helianto.finance.repository;
 
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.finance.CashFlow;
@@ -34,7 +33,7 @@ public class FinanceRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Cash flow data access.
 	 */
 	@Bean
-	public FilterDao<CashFlow, ListFilter> cashFlowDao() {
+	public FilterDao<CashFlow> cashFlowDao() {
 		return getFilterDao(CashFlow.class);
 	}
 

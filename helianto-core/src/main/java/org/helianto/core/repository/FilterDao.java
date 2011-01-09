@@ -25,7 +25,7 @@ import org.helianto.core.filter.Filter;
  * 
  * @author Mauricio Fernandes de Castro.
  */
-public interface FilterDao<T, F extends Filter> extends BasicDao<T> {
+public interface FilterDao<T> extends BasicDao<T> {
 
 	/**
 	 * Create a selection clause from the filter and return 
@@ -33,6 +33,6 @@ public interface FilterDao<T, F extends Filter> extends BasicDao<T> {
 	 * 
 	 * @param filter
 	 */
-    public Collection<T> find(F filter);
+    public Collection<T> find(Filter filter);
     
 }

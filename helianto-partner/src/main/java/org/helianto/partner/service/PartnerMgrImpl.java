@@ -25,21 +25,23 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
+import org.helianto.core.Province;
+import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
+import org.helianto.partner.Customer;
 import org.helianto.partner.Division;
-import org.helianto.partner.DivisionType;
 import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerFilter;
 import org.helianto.partner.PartnerKey;
-import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.PrivateEntityFilter;
-import org.helianto.partner.PrivateEntityKey;
 import org.helianto.partner.PartnerState;
 import org.helianto.partner.Phone;
+import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.PrivateEntityKey;
+import org.helianto.partner.filter.classic.PrivateEntityFilter;
+import org.helianto.partner.util.AddressUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -89,7 +91,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     	privateEntityDao.remove(privateEntity);
     }
 
-	public List<? extends Partner> findPartners(PartnerFilter partnerFilter) {
+	public List<? extends Partner> findPartners(ListFilter partnerFilter) {
 		List<Partner> partnerList = (List<Partner>) partnerDao.find(partnerFilter);
     	if (logger.isDebugEnabled() && partnerList!=null) {
     		logger.debug("Found partner list of size {}", partnerList.size());
@@ -152,35 +154,61 @@ public class PartnerMgrImpl implements PartnerMgr {
 	public Division installDivision(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall) {
 		String partnerAlias = entity.getAlias();
 		PrivateEntity privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
-		Division defaultDivision = null;
+		Division division = null;
 		if (privateEntity==null) {
 			logger.info("Creating private entity for {}.", partnerAlias);
 			privateEntity = new PrivateEntity(entity, partnerAlias);
 			privateEntity.setPartnerName(partnerName);
-			privateEntity.setAddress1(partnerAddress.getAddress1());
-			privateEntity.setAddress2(partnerAddress.getAddress2());
-			privateEntity.setAddress3(partnerAddress.getAddress3());
-			privateEntity.setAddressDetail(partnerAddress.getAddressDetail());
-			privateEntity.setAddressNumber(partnerAddress.getAddressNumber());
-			privateEntity.setCityName(partnerAddress.getCityName());
-			privateEntity.setPostalCode(partnerAddress.getPostalCode());
-			privateEntity.setPostOfficeBox(partnerAddress.getPostOfficeBox());
+			AddressUtils.copyAddress(partnerAddress, privateEntity);
+			Province province = provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode());
+			if (province==null) {
+				logger.error("A province was not found in database for {}, please, install first.", partnerAddress.getProvinceCode());
+				throw new IllegalArgumentException("A province is required here.");
+			}
+			privateEntity.setProvince(province);
+			privateEntityDao.saveOrUpdate(privateEntity);
+		}
+		else {
+			division = (Division) partnerDao.findUnique(privateEntity, "D");
+		}
+		if (division==null) {
+			logger.info("Creating division for {}.", partnerAlias);
+			division = new Division(privateEntity);
+			division.setPartnerState(PartnerState.ACTIVE);
+			partnerDao.saveOrUpdate(division);
+		}
+		logger.info("Default division is {} ", division);
+		return division;
+	}
+	
+	public Customer installCustomer(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall) {
+		String partnerAlias = entity.getAlias();
+		PrivateEntity privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
+		Customer customer = null;
+		if (privateEntity==null) {
+			logger.info("Creating private entity for {}.", partnerAlias);
+			privateEntity = new PrivateEntity(entity, partnerAlias);
+			privateEntity.setPartnerName(partnerName);
+			AddressUtils.copyAddress(partnerAddress, privateEntity);
+			Province province = provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode());
+			if (province==null) {
+				logger.error("A province was not found in database for {}, please, install first.", partnerAddress.getProvinceCode());
+				throw new IllegalArgumentException("A province is required here.");
+			}
 			privateEntity.setProvince(partnerAddress.getProvince());
 			privateEntityDao.saveOrUpdate(privateEntity);
 		}
 		else {
-			defaultDivision = (Division) partnerDao.findUnique(privateEntity, "D");
+			customer = (Customer) partnerDao.findUnique(privateEntity, "D");
 		}
-		if (defaultDivision==null) {
+		if (customer==null) {
 			logger.info("Creating division for {}.", partnerAlias);
-			defaultDivision = new Division();
-			defaultDivision.setPrivateEntity(privateEntity);
-			defaultDivision.setDivisionType(DivisionType.HEADQUARTER);
-			defaultDivision.setPartnerState(PartnerState.ACTIVE);
-			partnerDao.saveOrUpdate(defaultDivision);
+			customer = new Customer(privateEntity);
+			customer.setPartnerState(PartnerState.ACTIVE);
+			partnerDao.saveOrUpdate(customer);
 		}
-		logger.info("Default division is {} ", defaultDivision);
-		return defaultDivision;
+		logger.info("Default division is {} ", customer);
+		return customer;
 	}
 	
 	public void installPartnerKeys(String[] keyValues, Partner partner) {
@@ -214,20 +242,21 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
     //- collaborators
     
-    private FilterDao<PrivateEntity, PrivateEntityFilter> privateEntityDao;
-    private FilterDao<Partner, PartnerFilter> partnerDao;
+    private FilterDao<PrivateEntity> privateEntityDao;
+    private FilterDao<Partner> partnerDao;
     private BasicDao<Address> addressDao;
     private BasicDao<PartnerKey> partnerKeyDao;
+    private BasicDao<Province> provinceDao;
     private BasicDao<Phone> phoneDao;
 	private NamespaceMgr namespaceMgr;
 
     @Resource(name="privateEntityDao")
-    public void setPrivateEntityDao(FilterDao<PrivateEntity, PrivateEntityFilter> privateEntityDao) {
+    public void setPrivateEntityDao(FilterDao<PrivateEntity> privateEntityDao) {
         this.privateEntityDao = privateEntityDao;
     }
 
     @Resource(name="partnerDao")
-    public void setPartnerDao(FilterDao<Partner, PartnerFilter> partnerDao) {
+    public void setPartnerDao(FilterDao<Partner> partnerDao) {
         this.partnerDao = partnerDao;
     }
 
@@ -240,6 +269,12 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void setPartnerKeyDao(BasicDao<PartnerKey> partnerKeyDao) {
         this.partnerKeyDao = partnerKeyDao;
     }
+    
+    @Resource(name="provinceDao")
+    public void setProvinceDao(BasicDao<Province> provinceDao) {
+		this.provinceDao = provinceDao;
+	}
+    
     @Resource(name="phoneDao")
     public void setPhoneDao(BasicDao<Phone> phoneDao) {
         this.phoneDao = phoneDao;
