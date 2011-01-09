@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.process.filter.classic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -23,6 +23,11 @@ import java.io.Serializable;
 
 import org.helianto.core.Entity;
 import org.helianto.core.filter.classic.AbstractEntityBackedFilter;
+import org.helianto.process.InheritanceType;
+import org.helianto.process.Operation;
+import org.helianto.process.Process;
+import org.helianto.process.ProcessDocument;
+import org.helianto.process.filter.classic.ProcessDocumentFilter;
 import org.junit.Before;
 import org.junit.Test;
 

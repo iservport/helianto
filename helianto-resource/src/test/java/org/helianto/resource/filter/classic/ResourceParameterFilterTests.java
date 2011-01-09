@@ -1,9 +1,10 @@
-package org.helianto.resource;
+package org.helianto.resource.filter.classic;
 
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.User;
 import org.helianto.core.test.UserTestSupport;
+import org.helianto.resource.filter.classic.ResourceParameterFilter;
 import org.junit.Before;
 import org.junit.Test;
 /**

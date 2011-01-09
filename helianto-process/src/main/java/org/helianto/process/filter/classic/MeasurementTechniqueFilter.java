@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.process.filter.classic;
 
 import org.helianto.core.Unit;
 import org.helianto.core.User;

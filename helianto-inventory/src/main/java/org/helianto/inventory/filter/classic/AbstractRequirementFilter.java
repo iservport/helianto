@@ -13,33 +13,38 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.inventory.filter.classic;
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
+import org.helianto.document.filter.classic.AbstractControlFilter;
+import org.helianto.process.ProcessDocument;
 
 /**
- * Cause filter.
+ * Base requirement filter.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class CauseFilter extends AbstractUserBackedCriteriaFilter {
+public abstract class AbstractRequirementFilter extends AbstractControlFilter {
 
 	private static final long serialVersionUID = 1L;
+	private ProcessDocument process;
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		super.doFilter(mainCriteriaBuilder);
+		if (process!=null) {
+			appendEqualFilter("document.id", getProcess().getId(), mainCriteriaBuilder);
+		}
 	}
 
-	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	/**
+	 * Process document filter.
+	 */
+	public ProcessDocument getProcess() {
+		return process;
 	}
-
-	public String getObjectAlias() {
-		return "cause";
-	}
-
-	public void reset() {
+	public void setProcess(ProcessDocument process) {
+		this.process = process;
 	}
 
 }

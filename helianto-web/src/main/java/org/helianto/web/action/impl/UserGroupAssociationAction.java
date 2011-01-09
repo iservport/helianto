@@ -6,7 +6,8 @@ import javax.annotation.Resource;
 
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
-import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.Listable;
 import org.helianto.core.filter.classic.UserAssociationFilter;
 import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.security.PublicUserDetails;
@@ -45,7 +46,7 @@ public class UserGroupAssociationAction extends AbstractFilterAction<UserAssocia
 	 * When the user association filter is created, a parent user filter must first be created.
 	 */
 	@Override
-	protected ListFilter doCreateFilter(MutableAttributeMap attributes,	PublicUserDetails userDetails) {
+	protected Filter doCreateFilter(MutableAttributeMap attributes,	PublicUserDetails userDetails) {
 		UserGroup parent = getParent(attributes);
 		UserFilter parentFilter = new UserFilter(parent.getEntity());
 		parentFilter.setClazz(UserGroup.class);
@@ -58,7 +59,7 @@ public class UserGroupAssociationAction extends AbstractFilterAction<UserAssocia
 	}
 	
 	@Override
-	protected List<UserAssociation> doFilter(ListFilter filter) {
+	protected List<UserAssociation> doFilter(Filter filter) {
 		List<UserAssociation> associations = userMgr.findUserAssociations((UserAssociationFilter) filter);
 		return associations;
 	}
@@ -86,9 +87,11 @@ public class UserGroupAssociationAction extends AbstractFilterAction<UserAssocia
 	
 	public String preFilter(MutableAttributeMap attributes,	PublicUserDetails userDetails) {
 		UserAssociationFilter filter = (UserAssociationFilter) getFilter(attributes, userDetails);
-		ListFilter parentFilter = filter.getParentFilter();
+		Filter parentFilter = filter.getParentFilter();
 		List<UserGroup> groups = userMgr.findUsers((UserFilter) parentFilter);
-		parentFilter.setList(groups);
+		if (parentFilter instanceof Listable) {
+			((Listable) parentFilter).setList(groups);
+		}
 		return "success";
 	}
 

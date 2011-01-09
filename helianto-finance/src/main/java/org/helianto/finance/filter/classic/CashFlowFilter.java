@@ -1,4 +1,4 @@
-package org.helianto.finance;
+package org.helianto.finance.filter.classic;
 
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;

@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Category;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.classic.CategoryFilter;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class CategoryMgrImpl implements CategoryMgr {
     
 	public List<Category> findCategories(Filter categoryFilter) {
-    	List<Category> categoryList = (List<Category>) categoryDao.find((CategoryFilter) categoryFilter);
+    	List<Category> categoryList = (List<Category>) categoryDao.find(categoryFilter);
     	logger.debug("Found category list of size {}", categoryList.size());
     	return categoryList;
 	}

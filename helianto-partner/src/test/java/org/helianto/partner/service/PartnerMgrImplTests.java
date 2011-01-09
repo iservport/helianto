@@ -48,14 +48,14 @@ public class PartnerMgrImplTests {
     private PartnerMgrImpl partnerMgr;
     
 	@Test
-    public void findPartnerRegistries() {
+    public void findPrivateEntities() {
     	PrivateEntityFilter partnerRegistryFilter = new PrivateEntityFilter();
     	List<PrivateEntity> partnerRegistryList = new ArrayList<PrivateEntity>();
     	
     	expect(privateEntityDao.find(partnerRegistryFilter)).andReturn(partnerRegistryList);
     	replay(privateEntityDao);
     	
-    	assertSame(partnerRegistryList, partnerMgr.findPartnerRegistries(partnerRegistryFilter));
+    	assertSame(partnerRegistryList, partnerMgr.findPrivateEntities(partnerRegistryFilter));
     	verify(privateEntityDao);
     }
     
@@ -66,7 +66,7 @@ public class PartnerMgrImplTests {
     	privateEntityDao.saveOrUpdate(partnerRegistry);
     	replay(privateEntityDao);
 
-    	assertSame(partnerRegistry, partnerMgr.storePartnerRegistry(partnerRegistry));
+    	assertSame(partnerRegistry, partnerMgr.storePrivateEntity(partnerRegistry));
     	verify(privateEntityDao);
     }
     
@@ -77,7 +77,7 @@ public class PartnerMgrImplTests {
     	privateEntityDao.remove(partnerRegistry);
     	replay(privateEntityDao);
 
-    	partnerMgr.removePartnerRegistry(partnerRegistry);
+    	partnerMgr.removePrivateEntity(partnerRegistry);
     	verify(privateEntityDao);
     }
 	

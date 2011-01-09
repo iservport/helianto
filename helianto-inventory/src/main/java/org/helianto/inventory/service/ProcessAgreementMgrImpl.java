@@ -20,12 +20,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.inventory.ProcessAgreement;
-import org.helianto.inventory.ProcessAgreementFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -42,7 +42,7 @@ public class ProcessAgreementMgrImpl implements ProcessAgreementMgr {
 		return managedTarget;
 	}
 	
-	public List<ProcessAgreement> findAgreements(ProcessAgreementFilter agreementFilter) {
+	public List<ProcessAgreement> findAgreements(Filter agreementFilter) {
     	List<ProcessAgreement> agreementList = (List<ProcessAgreement>) agreementDao.find(agreementFilter);
     	if (logger.isDebugEnabled() && agreementList!=null) {
     		logger.debug("Found agreement list of size {}", agreementList.size());

@@ -27,6 +27,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.junit.Before;
@@ -92,7 +93,7 @@ public class ActionFilterTests {
 				return filter;
 			}
 			@Override
-			protected List<String> doFilter(ListFilter filter) {
+			protected List<String> doFilter(Filter filter) {
 				return itemList;
 			}
 			@Override 

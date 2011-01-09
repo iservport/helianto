@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.helianto.core.Entity;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
@@ -27,7 +28,6 @@ import org.helianto.partner.Division;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.filter.classic.PrivateEntityFilter;
 
 /**
  * Default service layer interface for the partner package.
@@ -37,32 +37,32 @@ import org.helianto.partner.filter.classic.PrivateEntityFilter;
 public interface PartnerMgr {
 
     /**
-     * Find <code>PartnerRegistry</code>.
+     * Find <code>PrivateEntity</code>.
      * 
      * @param privateEntityFilter
      */
-	public List<PrivateEntity> findPartnerRegistries(PrivateEntityFilter privateEntityFilter);
+	public List<PrivateEntity> findPrivateEntities(Filter privateEntityFilter);
 	
     /**
-     * Prepare <code>PartnerRegistry</code> to the application layer.
+     * Prepare <code>PrivateEntity</code> to the application layer.
      * 
      * @param privateEntity
      */
-    public PrivateEntity preparePartnerRegistry(PrivateEntity privateEntity);
+    public PrivateEntity preparePrivateEntity(PrivateEntity privateEntity);
 
     /**
-     * Write <code>PartnerRegistry</code> to the datastore.
+     * Write <code>PrivateEntity</code> to the datastore.
      * 
      * @param privateEntity
      */
-    public PrivateEntity storePartnerRegistry(PrivateEntity privateEntity);
+    public PrivateEntity storePrivateEntity(PrivateEntity privateEntity);
 
     /**
-     * Remove <code>PartnerRegistry</code> from the datastore.
+     * Remove <code>PrivateEntity</code> from the datastore.
      * 
      * @param privateEntity
      */
-    public void removePartnerRegistry(PrivateEntity privateEntity);
+    public void removePrivateEntity(PrivateEntity privateEntity);
 
     /**
      * Find <code>Partner</code>.

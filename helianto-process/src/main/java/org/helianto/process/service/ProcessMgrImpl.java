@@ -23,6 +23,7 @@ import java.util.Set;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.User;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
@@ -33,8 +34,8 @@ import org.helianto.process.Operation;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
-import org.helianto.process.ProcessDocumentFilter;
 import org.helianto.process.Setup;
+import org.helianto.process.filter.classic.ProcessDocumentFilter;
 import org.helianto.resource.ResourceGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,15 +56,18 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     	return processTree;
     }
 
-    public List<ProcessDocument> findProcessDocuments(ProcessDocumentFilter filter) {
+    public List<ProcessDocument> findProcessDocuments(Filter filter) {
         List<ProcessDocument> processDocumentList = (List<ProcessDocument>) processDocumentDao.find(filter);
         if (logger.isDebugEnabled() && processDocumentList.size()>0) {
             logger.debug("Found {} item(s)", processDocumentList.size());
         }
-        if (filter.getExclusions()!=null && filter.getExclusions().size()>0) {
-        	processDocumentList.removeAll(filter.getExclusions());
-            if (logger.isDebugEnabled()) {
-                logger.debug("Removed {} item(s)", filter.getExclusions());
+        if (filter instanceof ProcessDocumentFilter) {
+        	ProcessDocumentFilter processDocumentFilter = (ProcessDocumentFilter) filter;
+            if (processDocumentFilter.getExclusions()!=null && processDocumentFilter.getExclusions().size()>0) {
+            	processDocumentList.removeAll(processDocumentFilter.getExclusions());
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Removed {} item(s)", processDocumentFilter.getExclusions());
+                }
             }
         }
         return processDocumentList ;

@@ -3,7 +3,8 @@ package org.helianto.web.action.impl;
 import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.Listable;
 import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class HomeAction extends UserGroupAction {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected ListFilter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		UserFilter userFilter = (UserFilter) UserFilter.userFilterFactory(userDetails.getUser());
 		userFilter.setClazz(User.class);
 		return userFilter;
@@ -32,9 +33,9 @@ public class HomeAction extends UserGroupAction {
 	 * @param attributes
 	 */
 	public Entity getEntity(MutableAttributeMap attributes) {
-		ListFilter filter = getFilter(attributes);
-		if (filter.getItem()!=null && filter.getItem() instanceof UserGroup) {
-			return ((UserGroup) filter.getItem()).getEntity();
+		Filter filter = getFilter(attributes);
+		if (filter instanceof Listable && ((Listable) filter).getItem()!=null && ((Listable) filter).getItem() instanceof UserGroup) {
+			return ((UserGroup) ((Listable) filter).getItem()).getEntity();
 		}
 		return null;
 	}

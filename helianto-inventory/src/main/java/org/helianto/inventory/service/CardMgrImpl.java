@@ -20,16 +20,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.helianto.core.Entity;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;
-import org.helianto.inventory.CardSetFilter;
 import org.helianto.inventory.InvalidCardException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 
@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
 @Service("cardMgr")
 public class CardMgrImpl implements CardMgr {
 
-	public List<CardSet> findCardSets(CardSetFilter cardSetFilter) {
+	public List<CardSet> findCardSets(Filter cardSetFilter) {
     	List<CardSet> cardSetList = (List<CardSet>) cardSetDao.find(cardSetFilter);
     	if (logger.isDebugEnabled() && cardSetList!=null) {
     		logger.debug("Found card list of size {}", cardSetList.size());

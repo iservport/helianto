@@ -15,7 +15,7 @@ import java.util.Set;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.ResourceAssociation;
 import org.helianto.resource.ResourceGroup;
-import org.helianto.resource.ResourceGroupFilter;
+import org.helianto.resource.filter.classic.ResourceGroupFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

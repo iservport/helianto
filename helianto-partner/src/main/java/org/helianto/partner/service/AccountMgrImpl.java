@@ -20,9 +20,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.Account;
-import org.helianto.partner.filter.classic.AccountFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ import org.springframework.stereotype.Service;
 @Service("accountMgr")
 public class AccountMgrImpl implements AccountMgr {
 
-	public List<Account> findAccounts(AccountFilter accountFilter) {
+	public List<Account> findAccounts(Filter accountFilter) {
 		List<Account> accountList = (List<Account>) accountDao.find(accountFilter);
     	if (logger.isDebugEnabled() && accountList!=null) {
     		logger.debug("Found account list of size {}", accountList.size());

@@ -14,12 +14,14 @@
  */
 
 
-package org.helianto.resource;
+package org.helianto.resource.filter.classic;
 
 import org.helianto.core.User;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.classic.PolymorphicFilter;
+import org.helianto.resource.Resource;
+import org.helianto.resource.ResourceGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

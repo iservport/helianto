@@ -20,12 +20,12 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.User;
+import org.helianto.core.filter.Filter;
 import org.helianto.partner.service.PartnerMgr;
-import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Operation;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
-import org.helianto.process.ProcessDocumentFilter;
+import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Setup;
 import org.helianto.resource.ResourceGroup;
 
@@ -66,7 +66,7 @@ public interface ProcessMgr extends PartnerMgr {
     /**
      * Find process documents.
      */
-    public List<ProcessDocument> findProcessDocuments(ProcessDocumentFilter filter);
+    public List<ProcessDocument> findProcessDocuments(Filter filter);
     
     /**
      * Process factory method.

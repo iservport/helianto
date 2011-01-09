@@ -3,6 +3,7 @@ package org.helianto.web.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
@@ -20,10 +21,10 @@ public class MockFilterAction<T> extends AbstractFilterAction<T> {
 	MutableAttributeMap receivedAttributes;
 	PublicUserDetails receivedUserDetails;
 	T createdTarget;
-	ListFilter createdFilter;
+	Filter createdFilter;
 	T receivedInPrepare;
 	T receivedInStore;
-	ListFilter receivedFilter;
+	Filter receivedFilter;
 	List<T> targetList = new ArrayList<T>();
 	String targetName = "TARGET";
 	
@@ -50,7 +51,7 @@ public class MockFilterAction<T> extends AbstractFilterAction<T> {
 	}
 
 	@Override
-	protected ListFilter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		receivedAttributes = attributes;
 		receivedUserDetails = userDetails;
 		return createdFilter;
@@ -74,7 +75,7 @@ public class MockFilterAction<T> extends AbstractFilterAction<T> {
 	}
 
 	@Override
-	protected List<T> doFilter(ListFilter filter) {
+	protected List<T> doFilter(Filter filter) {
 		receivedFilter = filter;
 		return targetList;
 	}

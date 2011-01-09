@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.inventory;
+package org.helianto.inventory.filter.classic;
 
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;

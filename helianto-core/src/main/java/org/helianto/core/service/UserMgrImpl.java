@@ -41,9 +41,8 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.UserState;
-import org.helianto.core.filter.classic.IdentityFilter;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.ProvinceFilter;
-import org.helianto.core.filter.classic.UserAssociationFilter;
 import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
@@ -83,7 +82,7 @@ public class UserMgrImpl implements UserMgr {
     	return null;
     }
 
-    public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions) {
+    public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions) {
         List<Identity> identityList = (List<Identity>) identityDao.find(filter);
         logger.debug("Found {} item(s)", identityList.size());
         identityList.removeAll(exclusions);
@@ -213,7 +212,7 @@ public class UserMgrImpl implements UserMgr {
 		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     }
 
-	public List<UserGroup> findUsers(UserFilter userFilter) {
+	public List<UserGroup> findUsers(Filter userFilter) {
 		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(userFilter);
     	logger.debug("Found user list of size {}", userList.size());
         return userList;
@@ -237,7 +236,7 @@ public class UserMgrImpl implements UserMgr {
 		return userAssociation;
 	}
 
-	public List<UserAssociation> findUserAssociations(UserAssociationFilter userAssociationFilter) {
+	public List<UserAssociation> findUserAssociations(Filter userAssociationFilter) {
 		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationDao.find(userAssociationFilter);
     	logger.debug("Found user association list of size {}", userAssociationList.size());
         return userAssociationList;

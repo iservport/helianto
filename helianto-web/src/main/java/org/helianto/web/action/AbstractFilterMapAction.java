@@ -1,6 +1,7 @@
 package org.helianto.web.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.helianto.core.filter.Listable;
@@ -27,13 +28,15 @@ public abstract class AbstractFilterMapAction<T> extends org.helianto.web.action
 	}
 	
 	@Override
-	public String filter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		if(super.filter(attributes, userDetails).equals("success")) {
-			getPage(attributes, getTargetName()).setList(getFilter(attributes).getList());
-		}
-		return "success";
+	/**
+	 * Get a page.
+	 * 
+	 * @param attributes
+	 */
+	protected Listable getPage(MutableAttributeMap attributes) {
+		return getPage(attributes, getTargetName());
 	}
-
+	
 	/**
 	 * Get a list, or create a new.
 	 * 

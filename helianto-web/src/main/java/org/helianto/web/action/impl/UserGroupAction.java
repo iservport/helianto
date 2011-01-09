@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.UserGroup;
-import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
@@ -29,7 +29,7 @@ public class UserGroupAction extends AbstractFilterAction<UserGroup> {
 	protected String getTargetName() { return  "userGroup"; }
 
 	@Override
-	protected ListFilter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		UserFilter userFilter = new UserFilter(userDetails.getUser());
 		userFilter.setClazz(UserGroup.class);
 		logger.debug("Created userGroupFilter for entity='{}' and class='UserGroup'.", userFilter.getEntity());
@@ -37,7 +37,7 @@ public class UserGroupAction extends AbstractFilterAction<UserGroup> {
 	}
 
 	@Override
-	protected List<UserGroup> doFilter(ListFilter filter) {
+	protected List<UserGroup> doFilter(Filter filter) {
 		return userMgr.findUsers((UserFilter) filter);
 	}
 

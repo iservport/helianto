@@ -26,7 +26,6 @@ import org.helianto.core.Province;
 import org.helianto.core.Service;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.classic.ProvinceFilter;
 
 /**
  * Namespace management interface.
@@ -96,7 +95,7 @@ public interface NamespaceMgr {
     /**
      * Find <code>Province</code>s.
      */
-	public List<Province> findProvinces(ProvinceFilter filter);
+	public List<Province> findProvinces(Filter filter);
 	
     /**
      * Store <code>Province</code> to the data store.

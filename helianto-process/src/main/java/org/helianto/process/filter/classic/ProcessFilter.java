@@ -13,12 +13,13 @@
  * limitations under the License.
  */
 
-package org.helianto.process;
+package org.helianto.process.filter.classic;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
+import org.helianto.process.Process;
 
 /**
  * Filter to <code>User</code>.

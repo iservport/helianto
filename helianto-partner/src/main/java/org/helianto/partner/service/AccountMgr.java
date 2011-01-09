@@ -17,8 +17,8 @@ package org.helianto.partner.service;
 
 import java.util.List;
 
+import org.helianto.core.filter.Filter;
 import org.helianto.partner.Account;
-import org.helianto.partner.filter.classic.AccountFilter;
 
 /**
  * Account service interface.
@@ -30,7 +30,7 @@ public interface AccountMgr {
     /**
      * Find <code>Account</code>.
      */
-	public List<Account> findAccounts(AccountFilter accountFilter);
+	public List<Account> findAccounts(Filter accountFilter);
 	
     /**
      * Write <code>Account</code> to the datastore.

@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.finance.CashFlow;
-import org.helianto.finance.CashFlowFilter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,7 +36,7 @@ import org.springframework.stereotype.Service;
 public class FinanceMgrImpl implements FinanceMgr {
 
 	public List<? extends CashFlow> findCashFlows(Filter filter) {
-        List<? extends CashFlow> cashFlowList = (List<? extends CashFlow>) cashFlowDao.find((CashFlowFilter) filter);
+        List<? extends CashFlow> cashFlowList = (List<? extends CashFlow>) cashFlowDao.find(filter);
         if (logger.isDebugEnabled() && cashFlowList.size()>0) {
             logger.debug("Found {} item(s)", cashFlowList.size());
         }

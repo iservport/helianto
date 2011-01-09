@@ -27,7 +27,7 @@ import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentTag;
 import org.helianto.document.FunctionStub;
 import org.helianto.document.Serializer;
-import org.helianto.document.SerializerFilter;
+import org.helianto.document.filter.classic.SerializerFilter;
 import org.helianto.document.test.AbstractDocumentDaoIntegrationTest;
 import org.helianto.document.test.DocumentTagTestSupport;
 import org.helianto.document.test.DocumentTestSupport;

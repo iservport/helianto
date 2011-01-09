@@ -1,9 +1,10 @@
-package org.helianto.inventory;
+package org.helianto.inventory.filter.classic;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.document.AbstractControlFilter;
+import org.helianto.document.filter.classic.AbstractControlFilter;
+import org.helianto.inventory.ProcessRequirement;
 
 
 /**

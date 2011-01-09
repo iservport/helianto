@@ -21,13 +21,13 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.resource.Resource;
 import org.helianto.resource.ResourceAssociation;
 import org.helianto.resource.ResourceGroup;
-import org.helianto.resource.ResourceGroupFilter;
 import org.helianto.resource.ResourceParameter;
 import org.helianto.resource.ResourceParameterValue;
 import org.helianto.resource.ResourceType;
@@ -43,14 +43,14 @@ import org.springframework.stereotype.Service;
 @Service("resourceMgr")
 public class ResourceMgrImpl implements ResourceMgr {
 	
-    public List<Node> prepareTree(ResourceGroupFilter resourceGroupFilter) {
+    public List<Node> prepareTree(Filter resourceGroupFilter) {
     	List<ResourceGroup> resourceGroupList = findResourceGroups(resourceGroupFilter);
     	ResourceRootNode root = new ResourceRootNode(resourceGroupList);
     	List<Node> resourceTree = sequenceMgr.prepareTree(root);
     	return resourceTree;
     }
 
-	public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter) {
+	public List<ResourceGroup> findResourceGroups(Filter resourceGroupFilter) {
 		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(resourceGroupFilter);
 		if (logger.isDebugEnabled() && resourceGroupList!=null) {
 			logger.debug("Found resource group list of size {}", resourceGroupList.size());

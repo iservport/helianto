@@ -16,7 +16,7 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.inventory.ProcessAgreement;
 import org.helianto.inventory.ProcessRequirement;
-import org.helianto.inventory.ProcessRequirementFilter;
+import org.helianto.inventory.filter.classic.ProcessRequirementFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -19,9 +19,9 @@ package org.helianto.inventory.service;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.filter.Filter;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;
-import org.helianto.inventory.CardSetFilter;
 import org.helianto.inventory.InvalidCardException;
 
 
@@ -35,7 +35,7 @@ public interface CardMgr {
 	/**
 	 * Find card set list.
 	 */
-	public List<CardSet> findCardSets(CardSetFilter cardSetFilter);
+	public List<CardSet> findCardSets(Filter cardSetFilter);
 
 	/**
 	 * Store card set.

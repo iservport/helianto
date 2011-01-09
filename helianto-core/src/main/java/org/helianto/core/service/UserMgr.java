@@ -26,9 +26,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
-import org.helianto.core.filter.classic.IdentityFilter;
-import org.helianto.core.filter.classic.UserAssociationFilter;
-import org.helianto.core.filter.classic.UserFilter;
+import org.helianto.core.filter.Filter;
 
 /**
  * Default user service layer interface for the core package.
@@ -64,7 +62,7 @@ public interface UserMgr {
      * @param filter
      * @param exclusions list to be removed after selection
      */
-    public List<Identity> findIdentities(IdentityFilter filter, Collection<Identity> exclusions);
+    public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions);
     
     /**
      * Store the given <code>Identity</code> and return a managed object.
@@ -92,7 +90,7 @@ public interface UserMgr {
      * 
      * @param userFilter
      */
-    public List<UserGroup> findUsers(UserFilter userFilter);
+    public List<UserGroup> findUsers(Filter userFilter);
     
     /**
      * Find users sharing the same identity.
@@ -113,7 +111,7 @@ public interface UserMgr {
      * 
      * @param userAssociationFilter
      */
-    public List<UserAssociation> findUserAssociations(UserAssociationFilter userAssociationFilter);
+    public List<UserAssociation> findUserAssociations(Filter userAssociationFilter);
     
     /**
      * <p>Create <code>UserAssociation</code>.</p>

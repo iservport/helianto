@@ -19,10 +19,10 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
+import org.helianto.core.filter.Filter;
 import org.helianto.resource.Resource;
 import org.helianto.resource.ResourceAssociation;
 import org.helianto.resource.ResourceGroup;
-import org.helianto.resource.ResourceGroupFilter;
 import org.helianto.resource.ResourceParameter;
 import org.helianto.resource.ResourceParameterValue;
 
@@ -38,14 +38,14 @@ public interface ResourceMgr {
 	 * 
 	 * @param resourceGroupFilter
 	 */
-	public List<Node> prepareTree(ResourceGroupFilter resourceGroupFilter);
+	public List<Node> prepareTree(Filter resourceGroupFilter);
 	
     /**
      * Find <tt>ResourceGroup</tt>s using filter.
      * 
      * @param resourceGroupFilter
      */
-    public List<ResourceGroup> findResourceGroups(ResourceGroupFilter resourceGroupFilter);
+    public List<ResourceGroup> findResourceGroups(Filter resourceGroupFilter);
     
 	/**
      * <p>

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.filter.classic.EntityFilter;
 import org.helianto.core.security.PublicUserDetails;
@@ -34,7 +35,7 @@ public class EntityAction extends AbstractFilterAction<Entity> {
 	}
 
 	@Override
-	protected List<Entity> doFilter(ListFilter filter) {
+	protected List<Entity> doFilter(Filter filter) {
 		return namespaceMgr.findEntities((EntityFilter) filter);
 	}
 

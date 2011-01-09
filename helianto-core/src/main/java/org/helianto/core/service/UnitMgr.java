@@ -18,7 +18,7 @@ package org.helianto.core.service;
 import java.util.List;
 
 import org.helianto.core.Unit;
-import org.helianto.core.filter.classic.UnitFilter;
+import org.helianto.core.filter.Filter;
 
 /**
  * Service interface to units.
@@ -32,7 +32,7 @@ public interface UnitMgr {
 	 * 
 	 * @param unitFilter
 	 */
-	public List<Unit> findUnits(UnitFilter unitFilter);
+	public List<Unit> findUnits(Filter unitFilter);
 
 	/**
 	 * Store unit.

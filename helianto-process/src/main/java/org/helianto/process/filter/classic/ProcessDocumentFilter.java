@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.process;
+package org.helianto.process.filter.classic;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -22,8 +22,13 @@ import java.util.Collection;
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.classic.PolymorphicFilter;
-import org.helianto.document.AbstractDocumentFilter;
+import org.helianto.document.filter.classic.AbstractDocumentFilter;
 import org.helianto.partner.Partner;
+import org.helianto.process.Characteristic;
+import org.helianto.process.ControlMethod;
+import org.helianto.process.Operation;
+import org.helianto.process.Process;
+import org.helianto.process.ProcessDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

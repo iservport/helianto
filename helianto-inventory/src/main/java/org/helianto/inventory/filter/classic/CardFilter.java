@@ -1,4 +1,4 @@
-package org.helianto.inventory;
+package org.helianto.inventory.filter.classic;
 
 import javax.persistence.Transient;
 

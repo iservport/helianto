@@ -26,6 +26,7 @@ import javax.annotation.Resource;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Province;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
@@ -40,7 +41,6 @@ import org.helianto.partner.PartnerState;
 import org.helianto.partner.Phone;
 import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.PrivateEntityKey;
-import org.helianto.partner.filter.classic.PrivateEntityFilter;
 import org.helianto.partner.util.AddressUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +54,7 @@ import org.springframework.stereotype.Service;
 @Service("partnerMgr")
 public class PartnerMgrImpl implements PartnerMgr {
 
-	public List<PrivateEntity> findPartnerRegistries(PrivateEntityFilter privateEntityFilter) {
+	public List<PrivateEntity> findPrivateEntities(Filter privateEntityFilter) {
 		List<PrivateEntity> privateEntityList = (List<PrivateEntity>) privateEntityDao.find(privateEntityFilter);
     	if (logger.isDebugEnabled() && privateEntityList!=null) {
     		logger.debug("Found partner registry list of size {}", privateEntityList.size());
@@ -62,18 +62,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return privateEntityList;
 	}
 
-    /**
-     * Prepare <code>PartnerRegistry</code> to the application layer.
-     * 
-     * <p>Update the following transient fields:</p>
-     * <ol>
-     * <li>partnerList,</li>
-     * <li>addressList,</li>
-     * <li>mainAddress,</li>
-     * <li>privateEntityKeyList.</li>
-     * </ol>
-     */
-	public PrivateEntity preparePartnerRegistry(PrivateEntity privateEntity) {
+	public PrivateEntity preparePrivateEntity(PrivateEntity privateEntity) {
 		PrivateEntity managedPartnerRegistry = privateEntityDao.merge(privateEntity);
 		managedPartnerRegistry.setPartnerList(new ArrayList<Partner>(managedPartnerRegistry.getPartners()));
 		managedPartnerRegistry.setAddressList(new ArrayList<Address>(managedPartnerRegistry.getAddresses()));
@@ -82,12 +71,12 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return managedPartnerRegistry;
 	}
 	
-	public PrivateEntity storePartnerRegistry(PrivateEntity privateEntity) {
+	public PrivateEntity storePrivateEntity(PrivateEntity privateEntity) {
 		privateEntityDao.saveOrUpdate(privateEntity);
 		return privateEntity;
 	}
 	
-    public void removePartnerRegistry(PrivateEntity privateEntity) {
+    public void removePrivateEntity(PrivateEntity privateEntity) {
     	privateEntityDao.remove(privateEntity);
     }
 

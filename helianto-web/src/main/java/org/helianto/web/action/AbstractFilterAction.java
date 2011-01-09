@@ -17,7 +17,8 @@ package org.helianto.web.action;
 
 import java.util.List;
 
-import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.Listable;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,12 +55,28 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		if (!attributes.contains("targetName")) {
 			attributes.put("targetName", getTargetName());
 		}
-		ListFilter filter = getFilter(attributes, userDetails);
+		Filter filter = getFilter(attributes, userDetails);
 		logger.debug("Using filter {}.", filter);
 		List<T> itemList = doFilter(attributes, filter);
-		filter.setList(itemList);
-		logger.debug("Created list of size {} in filter.", itemList.size());
+		getPage(attributes).setList(itemList);
 		return "success";
+	}
+	
+	/**
+	 * Called after filter to get a receiver.
+	 * 
+	 * </p>
+	 * By default, try to use the filter as a <code>Listable</code> receiver.
+	 * </p>
+	 * 
+	 * @param attributes
+	 */
+	protected Listable getPage(MutableAttributeMap attributes) {
+		Filter filter = getFilter(attributes);
+		if (filter instanceof Listable) {
+			return (Listable) filter;
+		}
+		throw new IllegalArgumentException("Filter must provide a page to receive filter result list.");
 	}
 	
 	/**
@@ -73,8 +90,8 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param attributes
 	 * @param userDetails
 	 */
-	protected ListFilter getFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		ListFilter filter = getFilter(attributes);
+	protected Filter getFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		Filter filter = getFilter(attributes);
 		if (filter==null) {
 			filter = doCreateFilter(attributes, userDetails);
 			filter.setObjectAlias(getTargetName());
@@ -89,10 +106,10 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * 
 	 * @param attributes
 	 */
-	protected ListFilter getFilter(MutableAttributeMap attributes) {
-		ListFilter filter = null;
+	protected Filter getFilter(MutableAttributeMap attributes) {
+		Filter filter = null;
 		if (hasFilter(attributes)) {
-			filter = (ListFilter) attributes.get(getFilterName());
+			filter = (Filter) attributes.get(getFilterName());
 			logger.debug("Retrieved {}.", filter);
 		}
 		return filter;
@@ -104,19 +121,19 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param attributes
 	 * @param userDetails
 	 */
-	protected abstract ListFilter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails);
+	protected abstract Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails);
 
 	/**
 	 * Subclasses may override this to customize filter action.
 	 * 
 	 * <p>
-	 * Default implementation delegates to {@link #doFilter(ListFilter)}.
+	 * Default implementation delegates to {@link #doFilter(Filter)}.
 	 * </p>
 	 * 
 	 * @param attributes
 	 * @param filter
 	 */
-	protected List<T> doFilter(MutableAttributeMap attributes, ListFilter filter) {
+	protected List<T> doFilter(MutableAttributeMap attributes, Filter filter) {
 		return doFilter(filter);
 	}
 
@@ -125,7 +142,7 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * 
 	 * @param filter
 	 */
-	protected abstract List<T> doFilter(ListFilter filter);
+	protected abstract List<T> doFilter(Filter filter);
 
 	// convenience methods
 	

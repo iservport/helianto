@@ -19,11 +19,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Unit;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.helianto.core.Unit;
-import org.helianto.core.filter.classic.UnitFilter;
-import org.helianto.core.repository.FilterDao;
 
 
 
@@ -35,7 +35,7 @@ import org.helianto.core.repository.FilterDao;
 @org.springframework.stereotype.Service("unitMgr")
 public class UnitMgrImpl implements UnitMgr {
     
-	public List<Unit> findUnits(UnitFilter unitFilter) {
+	public List<Unit> findUnits(Filter unitFilter) {
     	List<Unit> unitList = (List<Unit>) unitDao.find(unitFilter);
     	logger.debug("Found unit list of size {}", unitList.size());
     	return unitList;

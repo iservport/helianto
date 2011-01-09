@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.message;
+package org.helianto.message.filter.classic;
 
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.document.filter.classic.AbstractRecordFilter;

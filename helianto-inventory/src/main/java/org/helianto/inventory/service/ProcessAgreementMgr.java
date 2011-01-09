@@ -18,8 +18,8 @@ package org.helianto.inventory.service;
 
 import java.util.List;
 
+import org.helianto.core.filter.Filter;
 import org.helianto.inventory.ProcessAgreement;
-import org.helianto.inventory.ProcessAgreementFilter;
 
 
 /**
@@ -38,7 +38,7 @@ public interface ProcessAgreementMgr {
 	/**
 	 * Find agreement.
 	 */
-	public List<ProcessAgreement> findAgreements(ProcessAgreementFilter processAgreementFilter);
+	public List<ProcessAgreement> findAgreements(Filter processAgreementFilter);
 
 	/**
 	 * Store agreement.

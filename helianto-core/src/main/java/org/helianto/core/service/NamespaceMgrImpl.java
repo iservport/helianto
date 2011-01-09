@@ -33,9 +33,7 @@ import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.classic.EntityFilter;
 import org.helianto.core.filter.classic.OperatorFilter;
-import org.helianto.core.filter.classic.ProvinceFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -113,7 +111,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return province;
 	}
 
-	public List<Province> findProvinces(ProvinceFilter filter) {
+	public List<Province> findProvinces(Filter filter) {
     	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
     	logger.debug("Found province list of size {}", provinceList.size());
     	return provinceList;
@@ -137,7 +135,7 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	}
 	
 	public List<Entity> findEntities(Filter filter) {
-		List<Entity> entityList = (List<Entity>) entityDao.find((EntityFilter) filter);
+		List<Entity> entityList = (List<Entity>) entityDao.find(filter);
 		logger.debug("Found {} entity(ies).", entityList.size());
 		return entityList;
 	}

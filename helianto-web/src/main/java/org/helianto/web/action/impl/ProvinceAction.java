@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.Province;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.filter.classic.ProvinceFilter;
 import org.helianto.core.security.PublicUserDetails;
@@ -32,7 +33,7 @@ public class ProvinceAction  extends AbstractFilterAction<Province> {
 	}
 
 	@Override
-	protected List<Province> doFilter(ListFilter filter) {
+	protected List<Province> doFilter(Filter filter) {
 		return namespaceMgr.findProvinces((ProvinceFilter) filter);
 	}
 

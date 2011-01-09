@@ -18,10 +18,10 @@ package org.helianto.partner.service;
 import java.util.List;
 import java.util.Map;
 
+import org.helianto.core.filter.Filter;
 import org.helianto.partner.PublicAddress;
 import org.helianto.partner.PublicEntity;
 import org.helianto.partner.PublicEntityKey;
-import org.helianto.partner.filter.classic.PublicAddressFilter;
 import org.helianto.partner.filter.classic.PublicEntityFilter;
 
 /**
@@ -36,7 +36,7 @@ public interface PublicEntityMgr {
      * 
      * @param filter
      */
-	public List<PublicAddress> findPublicAddress(PublicAddressFilter filter);
+	public List<PublicAddress> findPublicAddress(Filter filter);
 	
     /**
      * Write <code>PublicAddress</code> to the datastore.
