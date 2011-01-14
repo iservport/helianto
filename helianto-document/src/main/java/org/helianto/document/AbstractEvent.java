@@ -54,6 +54,8 @@ public abstract class AbstractEvent implements Event {
     private Identity owner;
     private Date issueDate;
     private char privacyLevel;
+    // transient, convenience for filters
+    private int interval;
 
     /** 
      * Empty constructor
@@ -154,6 +156,17 @@ public abstract class AbstractEvent implements Event {
     public void setPrivacyLevel(PrivacyLevel privacyLevel) {
         this.privacyLevel = privacyLevel.getValue();
     }
+    
+    /**
+     * <<Transient>> Convenience to pass date intervals when used as a filter.
+     */
+    @Transient
+    public int getInterval() {
+		return interval;
+	}
+    public void setInterval(int interval) {
+		this.interval = interval;
+	}
     
 //    protected Format format(TemporalType temporalType) {
 //    	switch (temporalType) {

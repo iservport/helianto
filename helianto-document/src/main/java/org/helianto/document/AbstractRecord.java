@@ -60,7 +60,7 @@ public abstract class AbstractRecord extends AbstractEvent implements Recordable
     public void setResolution(String resolution) {
         this.resolution = resolution.charAt(0);
     }
-    public void setResolution(Resolution resolution) {
+    public void setResolutionAsEnum(Resolution resolution) {
         this.resolution = resolution.getValue();
     }
     
