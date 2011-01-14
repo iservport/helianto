@@ -1,6 +1,7 @@
 package org.helianto.core.filter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,6 +17,22 @@ public class Page implements Serializable, Listable {
 	private static final long serialVersionUID = 1L;
 	private List<?> list;
 	private int index = 0;
+	
+	/**
+	 * Empty constructor.
+	 */
+	public Page() {
+		this(new ArrayList<Object>());
+	}
+
+	/**
+	 * List constructor.
+	 * 
+	 * @param list
+	 */
+	public Page(List<?> list) {
+		setList(list);
+	}
 
 	/**
 	 * The resulting list.

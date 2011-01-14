@@ -15,6 +15,7 @@
 
 package org.helianto.core.filter;
 
+import org.helianto.core.criteria.CriteriaBuilder;
 
 
 /**
@@ -23,21 +24,18 @@ package org.helianto.core.filter;
  *  
  * @author Mauricio Fernandes de Castro
  */
-public interface Filter {
+public interface CriteriaFilter extends Filter {
 	
 	/**
 	 * Create criteria.
+	 * 
+	 * @param mainCriteriaBuilder
 	 */
-	public String createCriteriaAsString();
+	public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder);
 
 	/**
-	 * Object alias to be used in query expressions.
+	 * Reset filter.
 	 */
-	public String getObjectAlias();
-	
-	/**
-	 * Object alias to be used in query expressions.
-	 */
-	public void setObjectAlias(String objectAlias);
+    public void reset();
 	
 }

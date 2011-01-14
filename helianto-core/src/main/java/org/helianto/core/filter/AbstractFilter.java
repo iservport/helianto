@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractFilter implements Serializable, Filter {
+public abstract class AbstractFilter implements Serializable, CriteriaFilter {
 	
     private String objectAlias;
     private String orderByString = "";
@@ -144,9 +144,13 @@ public abstract class AbstractFilter implements Serializable, Filter {
         return mainCriteriaBuilder.getCriteriaAsString();
     }
 	
-	/**
-	 * By default, filters do not return an unique result.
-	 */
+    /**
+     * If true, a unique result is expected, otherwise, a collection.
+     * 
+     * <p>
+     * Convenient when filter properties correspond to the natural key. By default, filters do not return an unique result.
+     * </p>
+     */
 	public boolean isSelection() {
 		return false;
 	}
