@@ -79,4 +79,6 @@
 	 -->
 	 <bean id="actionNamingConventionStrategy" class="org.helianto.web.action.ActionNamingConventionStrategy" />
 	 
+	 <bean id="modelActionNamingConventionStrategy" class="org.helianto.web.action.ModelActionNamingConventionStrategy" />
+	 
 </beans>
