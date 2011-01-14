@@ -48,7 +48,6 @@ import org.helianto.core.TrunkEntity;
 public class PrivateEntity extends AbstractAddress implements TrunkEntity, BusinessUnit {
 
     private static final long serialVersionUID = 1L;
-    private int id;
     private Entity entity;
     private String partnerAlias;
     private String partnerName;
@@ -92,17 +91,6 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
     public PrivateEntity(Entity entity, String partnerAlias) {
     	this(entity);
     	setPartnerAlias(partnerAlias);
-    }
-
-    /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
