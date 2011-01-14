@@ -50,7 +50,7 @@ public class ControlFilterAdapterTests {
 	@Test
 	public void toNextCheckDate() {
 		controlFilter.getFilter().setNextCheckDate(new Date(1000l));
-		assertEquals("alias.entity.id = 1 AND (alias.nextCheckDate < '1969-12-31 21:00:01' ) ", controlFilter.createCriteriaAsString());
+		assertEquals("alias.entity.id = 1 AND (alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ", controlFilter.createCriteriaAsString());
 	}
 	
 	@SuppressWarnings("serial")

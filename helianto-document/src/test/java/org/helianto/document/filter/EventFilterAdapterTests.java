@@ -52,7 +52,7 @@ public class EventFilterAdapterTests {
 	@Test
 	public void toIssueDate() {
 		eventFilter.getFilter().setIssueDate(new Date(1000l));
-		assertEquals("alias.entity.id = 1 AND (alias.issueDate < '1969-12-31 21:00:01' ) ", eventFilter.createCriteriaAsString());
+		assertEquals("alias.entity.id = 1 AND (alias.issueDate >= '1969-12-24 23:59:59' AND alias.issueDate < '1969-12-31 21:00:01' ) ", eventFilter.createCriteriaAsString());
 	}
 	
 	@SuppressWarnings("serial")

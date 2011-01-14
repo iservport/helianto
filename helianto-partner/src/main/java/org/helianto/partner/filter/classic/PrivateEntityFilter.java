@@ -26,6 +26,7 @@ import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
  * Partner registry filter.
  * 
  * @author Maurício Fernandes de Castro
+ * @deprecated see PartnerEntityFilterAdapter
  */
 public class PrivateEntityFilter extends AbstractUserBackedCriteriaFilter implements Serializable {
 	
@@ -86,12 +87,12 @@ public class PrivateEntityFilter extends AbstractUserBackedCriteriaFilter implem
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("partnerName", getPartnerNameLike(), mainCriteriaBuilder);
+		appendLikeFilter("entityName", getPartnerNameLike(), mainCriteriaBuilder);
 	}
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("partnerAlias", getPartnerAlias(), mainCriteriaBuilder);
+		appendEqualFilter("entityAlias", getPartnerAlias(), mainCriteriaBuilder);
 	}
 
 	/**

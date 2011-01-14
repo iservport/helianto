@@ -64,7 +64,7 @@ public class PrivateEntityFilterAdapter extends AbstractTrunkFilterAdapter<Priva
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("partnerAlias",getFilter(). getEntityAlias(), mainCriteriaBuilder);
+		appendEqualFilter("entityAlias",getFilter(). getEntityAlias(), mainCriteriaBuilder);
 	}
 
 }
