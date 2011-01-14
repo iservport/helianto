@@ -69,12 +69,18 @@ public class DateCriteriaBuilder extends CriteriaBuilder {
     public CriteriaBuilder appendFromDateRange(Date fromDate, Date toDate, int interval) {
         if (fromDate!=null) {
         	appendSegment(getDateFieldName(), ">=");
-        	if (interval>0 && toDate!=null) {
+        	if (interval<0 && toDate!=null) {
         		append(newCalendar(toDate, interval).getTime());
         	}
         	else {
             	append(fromDate);
         	}
+        }
+        else {
+        	if (interval<0 && toDate!=null) {
+        		appendSegment(getDateFieldName(), ">=");
+        		append(newCalendar(toDate, interval).getTime()).appendAnd();
+        	}        	
         }
         return this;
     }
@@ -89,11 +95,17 @@ public class DateCriteriaBuilder extends CriteriaBuilder {
     public CriteriaBuilder appendToDateRange(Date fromDate, Date toDate, int interval) {
         if (toDate!=null) {
         	appendAnd(fromDate!=null).appendSegment(getDateFieldName(), "<");
-        	if (interval<0 && fromDate!=null) {
+        	if (interval>0 && fromDate!=null) {
         		append(newCalendar(fromDate, interval).getTime());
         	}
         	else {
         		append(toDate);
+        	}
+        }
+        else {
+        	if (interval>0 && fromDate!=null) {
+        		appendAnd(fromDate!=null).appendSegment(getDateFieldName(), "<");
+        		append(newCalendar(fromDate, interval).getTime());
         	}
         }
         return this;

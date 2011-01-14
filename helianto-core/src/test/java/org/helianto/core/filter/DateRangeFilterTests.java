@@ -30,12 +30,27 @@ public class DateRangeFilterTests {
 	@Test
 	public void from() {
 		fromDate = new Date(1000l);
+		dateFilter.setInterval(7);
+		assertEquals("alias.entity.id = 1 AND (alias.fieldName >= '1969-12-31 21:00:01' AND alias.fieldName < '1970-01-07 23:59:59' ) ", dateFilter.createCriteriaAsString());
+	}
+	
+	@Test
+	public void fromZeroInterval() {
+		fromDate = new Date(1000l);
+		dateFilter.setInterval(0);
 		assertEquals("alias.entity.id = 1 AND (alias.fieldName >= '1969-12-31 21:00:01' ) ", dateFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void to() {
 		toDate = new Date(2000l);
+		assertEquals("alias.entity.id = 1 AND (alias.fieldName >= '1969-12-24 23:59:59' AND alias.fieldName < '1969-12-31 21:00:02' ) ", dateFilter.createCriteriaAsString());
+	}
+	
+	@Test
+	public void toZeroInterval() {
+		toDate = new Date(2000l);
+		dateFilter.setInterval(0);
 		assertEquals("alias.entity.id = 1 AND (alias.fieldName < '1969-12-31 21:00:02' ) ", dateFilter.createCriteriaAsString());
 	}
 	
