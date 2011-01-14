@@ -58,25 +58,28 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		Filter filter = getFilter(attributes, userDetails);
 		logger.debug("Using filter {}.", filter);
 		List<T> itemList = doFilter(attributes, filter);
-		getPage(attributes).setList(itemList);
+		put(attributes, itemList);
 		return "success";
 	}
 	
 	/**
-	 * Called after filter to get a receiver.
+	 * Called after doFilter to put the item list in the appropriate scope receiver.
 	 * 
 	 * </p>
 	 * By default, try to use the filter as a <code>Listable</code> receiver.
 	 * </p>
 	 * 
 	 * @param attributes
+	 * @param itemList
 	 */
-	protected Listable getPage(MutableAttributeMap attributes) {
+	protected void put(MutableAttributeMap attributes, List<T> itemList) {
 		Filter filter = getFilter(attributes);
 		if (filter instanceof Listable) {
-			return (Listable) filter;
+			((Listable) filter).setList(itemList);
 		}
-		throw new IllegalArgumentException("Filter must provide a page to receive filter result list.");
+		else {
+			throw new IllegalArgumentException("Filter must provide a page to receive filter result list.");
+		}
 	}
 	
 	/**

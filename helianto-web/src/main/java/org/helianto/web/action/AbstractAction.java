@@ -16,7 +16,6 @@
 package org.helianto.web.action;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -25,7 +24,6 @@ import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
-import org.springframework.webflow.core.collection.ParameterMap;
 
 /**
  * Base class to presentation logic.
@@ -50,9 +48,6 @@ public abstract class AbstractAction<T> implements Serializable {
 	 * @param userDetails
 	 */
 	public String create(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-//		if (hasTarget(attributes)) {
-//			return "browse";
-//		}
 		T target = doCreate(attributes, userDetails);
 		attributes.put(getTargetName(), target);
 		logger.debug("Created {} with name {}.", target, getTargetName());
@@ -114,33 +109,33 @@ public abstract class AbstractAction<T> implements Serializable {
 	
 	// TODO test the following code for convenience
 	
-	public String select(MutableAttributeMap attributes, ParameterMap parameters) {
-		return select(attributes, parameters, getItemIndexParameterName(getTargetName()));
-	}
-	
-	public String select(MutableAttributeMap attributes, ParameterMap parameters, String itemName) {
-		List<?> itemList = null;
-		String itemListName = getItemListName(itemName);
-		logger.debug("Looking for {}", itemListName);
-		if (attributes.contains(itemListName)) {
-			itemList = (List<?>) attributes.get(itemListName);
-		}
-		else {
-			return "not_a_list";
-		}
-    	int index = 0;
-    	if (itemList!=null) {
-        	if (itemList.size()>1 && parameters.contains(itemName)) {
-        		index = parameters.getInteger(itemName);
-        	}
-    		Object target = itemList.get(index);
-    		if (target!=null) {
-                logger.debug("Item #{} selected {}.", index, target);
-                attributes.put(itemName, target);
-    		}
-    	}
-		return "success";
-	}
+//	public String select(MutableAttributeMap attributes, ParameterMap parameters) {
+//		return select(attributes, parameters, getItemIndexParameterName(getTargetName()));
+//	}
+//	
+//	public String select(MutableAttributeMap attributes, ParameterMap parameters, String itemName) {
+//		List<?> itemList = null;
+//		String itemListName = getItemListName(itemName);
+//		logger.debug("Looking for {}", itemListName);
+//		if (attributes.contains(itemListName)) {
+//			itemList = (List<?>) attributes.get(itemListName);
+//		}
+//		else {
+//			return "not_a_list";
+//		}
+//    	int index = 0;
+//    	if (itemList!=null) {
+//        	if (itemList.size()>1 && parameters.contains(itemName)) {
+//        		index = parameters.getInteger(itemName);
+//        	}
+//    		Object target = itemList.get(index);
+//    		if (target!=null) {
+//                logger.debug("Item #{} selected {}.", index, target);
+//                attributes.put(itemName, target);
+//    		}
+//    	}
+//		return "success";
+//	}
 	
 	// convenience methods
 	
@@ -164,42 +159,42 @@ public abstract class AbstractAction<T> implements Serializable {
 	 */
 	protected boolean hasTarget(MutableAttributeMap attributes) {
 		if (attributes.contains(getTargetName()) && attributes.get(getTargetName())!=null) {
-			logger.debug("The current scope has a target with name: {}.", getTargetName());
+			logger.debug("The current scope has a target named: {}.", getTargetName());
 			return true;
 		}
 		return false;
 	}
 	
-	protected Object getReturnTarget(MutableAttributeMap attributes) {
-		if (hasReturnTarget(attributes)) {
-			return attributes.get(getReturnTargetName());
-		}
-		throw new IllegalArgumentException("Return target is not an attribute");
-	}
-	
-	protected String getReturnTargetName() {
-		return "returnTarget";
-	}
-	
-	protected boolean hasReturnTarget(MutableAttributeMap attributes) {
-		if (attributes.contains(getReturnTargetName()) && attributes.get(getReturnTargetName())!=null) {
-			return true;
-		}
-		return false;
-	}
-	
-	protected String getItemListName() {
-		return getItemListName(getTargetName());
-	}
-	
-	protected String getItemListName(String itemName) {
-		return new StringBuilder(itemName).append("List").toString();
-	}
-	
-	protected String getItemIndexParameterName(String itemName) {
-		return new StringBuilder(itemName).append("_index").toString();
-	}
-	
+//	protected Object getReturnTarget(MutableAttributeMap attributes) {
+//		if (hasReturnTarget(attributes)) {
+//			return attributes.get(getReturnTargetName());
+//		}
+//		throw new IllegalArgumentException("Return target is not an attribute");
+//	}
+//	
+//	protected String getReturnTargetName() {
+//		return "returnTarget";
+//	}
+//	
+//	protected boolean hasReturnTarget(MutableAttributeMap attributes) {
+//		if (attributes.contains(getReturnTargetName()) && attributes.get(getReturnTargetName())!=null) {
+//			return true;
+//		}
+//		return false;
+//	}
+//	
+//	protected String getItemListName() {
+//		return getItemListName(getTargetName());
+//	}
+//	
+//	protected String getItemListName(String itemName) {
+//		return new StringBuilder(itemName).append("List").toString();
+//	}
+//	
+//	protected String getItemIndexParameterName(String itemName) {
+//		return new StringBuilder(itemName).append("_index").toString();
+//	}
+//	
 	// collabs
 	
 	private NamingConventionStrategy actionNamingConventionStrategy;
