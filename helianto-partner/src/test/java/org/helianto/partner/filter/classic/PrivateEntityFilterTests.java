@@ -57,8 +57,8 @@ public class PrivateEntityFilterTests {
 	}
 
     public static String C1 = "alias.entity.id = 0 ";
-    public static String C2 = "AND alias.partnerAlias = 'ALIAS' ";
-    public static String C3 = "AND lower(alias.partnerName) like '%name%' ";
+    public static String C2 = "AND alias.entityAlias = 'ALIAS' ";
+    public static String C3 = "AND lower(alias.entityName) like '%name%' ";
 
     @Test
     public void empty() {

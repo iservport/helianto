@@ -110,6 +110,7 @@ public class ActionTests {
 		};
 		attributes = new LocalAttributeMap();
 		userDetails = new  PublicUserDetails() {
+			@SuppressWarnings("unused")
 			public void setUser(User user) { }
 			public User getUser() { return null; }
 			public Entity getEntity() { return null; }
