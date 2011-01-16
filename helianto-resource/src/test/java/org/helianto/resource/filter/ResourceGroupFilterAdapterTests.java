@@ -1,18 +1,18 @@
-package org.helianto.resource.filter.classic;
+package org.helianto.resource.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.User;
-import org.helianto.core.test.UserTestSupport;
+import org.helianto.core.Entity;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.resource.Resource;
+import org.helianto.resource.ResourceGroup;
 import org.helianto.resource.ResourceType;
-import org.helianto.resource.filter.classic.ResourceGroupFilter;
 import org.junit.Before;
 import org.junit.Test;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class ResourceGroupFilterTests {
+public class ResourceGroupFilterAdapterTests {
 
     public static String OB = "order by alias.resourceCode ";
     public static String C0 = "alias.entity.id = 0 ";
@@ -23,40 +23,41 @@ public class ResourceGroupFilterTests {
 
     @Test
     public void empty() {
-        assertEquals(C0+OB, filter.createCriteriaAsString(false));
+        assertEquals(C0+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void filterClazz() {
         filter.setClazz(Resource.class);
-        assertEquals(C0+C1+OB, filter.createCriteriaAsString(false));
+        assertEquals(C0+C1+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
-    	filter.setResourceCode("CODE");
-        assertEquals(C0+C2, filter.createCriteriaAsString(false));
+    	target.setResourceCode("CODE");
+        assertEquals(C0+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void filterName() {
-        filter.setResourceNameLike("NAME");
-        assertEquals(C0+C3+OB, filter.createCriteriaAsString(false));
+    	target.setResourceName("NAME");
+        assertEquals(C0+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void filterInheritance() {
-        filter.setResourceType(ResourceType.FIXTURE.getValue());
-        assertEquals(C0+C4+OB, filter.createCriteriaAsString(false));
+    	target.setResourceType(ResourceType.FIXTURE.getValue());
+        assertEquals(C0+C4+OB, filter.createCriteriaAsString());
     }
     
-    private ResourceGroupFilter filter;
-    private User user;
+    private ResourceGroupFilterAdapter filter;
+    private ResourceGroup target;;
     
     @Before
     public void setUp() {
-    	user = UserTestSupport.createUser();
-    	filter = ResourceGroupFilter.resourceGroupFilterFactory(user);
+    	Entity entity = EntityTestSupport.createEntity();
+    	target = new ResourceGroup(entity, "");
+    	filter = new ResourceGroupFilterAdapter(target);
     }
 }
 

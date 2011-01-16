@@ -34,16 +34,6 @@ import org.helianto.partner.Partner;
 @DiscriminatorValue("R")
 public class Resource extends ResourceGroup implements java.io.Serializable {
 
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param resourceCode
-     */
-    public static Resource resourceFactory(Entity entity, String resourceCode) {
-        return resourceGroupFactory(Resource.class, entity, resourceCode);
-    }
-
     private static final long serialVersionUID = 1L;
     private String serialNumber;
     private char resourceState;
@@ -51,12 +41,26 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     private Partner manufacturer;
     private Partner owner;
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     protected Resource() {
     	super();
     	setResourceType(' '); // delegate to service layer
     	setResourceState(ResourceState.ACTIVE);
     	setResourceClassification(ResourceClassification.ANY);
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param resourceCode
+     */
+    public Resource(Entity entity, String resourceCode) {
+    	this();
+    	setEntity(entity);
+    	setResourceCode(resourceCode);
     }
 
     /**

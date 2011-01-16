@@ -33,7 +33,7 @@ public class ResourceTestSupport {
     }
 
     public static Resource createResource(Entity entity) {
-        Resource resourceGroup = Resource.resourceFactory(entity, String.valueOf(testKey++));
+        Resource resourceGroup = new Resource(entity, String.valueOf(testKey++));
         return resourceGroup;
     }
 

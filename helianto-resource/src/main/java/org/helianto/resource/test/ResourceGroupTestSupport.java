@@ -41,7 +41,7 @@ public class ResourceGroupTestSupport {
     }
 
     public static ResourceGroup createResourceGroup(Entity entity, String resourceCode) {
-        ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(entity, resourceCode);
+        ResourceGroup resourceGroup = new ResourceGroup(entity, resourceCode);
         return resourceGroup;
     }
 

@@ -15,7 +15,7 @@ import java.util.Set;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.ResourceAssociation;
 import org.helianto.resource.ResourceGroup;
-import org.helianto.resource.filter.classic.ResourceGroupFilter;
+import org.helianto.resource.filter.ResourceGroupFilterAdapter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class ResourceMgrImplTests {
 	@Test
 	public void findResourceGroups() {
 		List<ResourceGroup> resourceGroupList = new ArrayList<ResourceGroup>();
-		ResourceGroupFilter filter = new ResourceGroupFilter();
+		ResourceGroupFilterAdapter filter = new ResourceGroupFilterAdapter(new ResourceGroup());
 		
 		expect(resourceGroupDao.find(filter)).andReturn(resourceGroupList);
 		replay(resourceGroupDao);

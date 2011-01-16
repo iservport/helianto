@@ -59,8 +59,8 @@ public class ResourceMgrImpl implements ResourceMgr {
 	}
     
 	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
-		ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(entity, rootEquipentCode);
-		resourceGroup.setResourceType(ResourceType.EQUIPMENT);
+		ResourceGroup resourceGroup = new ResourceGroup(entity, rootEquipentCode);
+		resourceGroup.setResourceTypeAsEnum(ResourceType.EQUIPMENT);
 		return resourceGroup;
     }
     

@@ -1,11 +1,12 @@
 package org.helianto.resource;
 
-import static org.junit.Assert.*;
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.resource.ResourceGroup;
 import org.junit.Test;
 
 
@@ -23,7 +24,7 @@ public class ResourceGroupTests {
     public void resourceGroupFactoryClass() {
         Entity entity = new Entity();
 
-		ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(entity, "CODE");
+		ResourceGroup resourceGroup = new ResourceGroup(entity, "CODE");
 
         assertTrue(resourceGroup instanceof ResourceGroup);
 		assertSame(entity, resourceGroup.getEntity());
@@ -38,7 +39,7 @@ public class ResourceGroupTests {
     public void resourceGroupEquals() {
         Entity entity = new Entity();
         
-		ResourceGroup resourceGroup = ResourceGroup.resourceGroupFactory(entity, "CODE");
+		ResourceGroup resourceGroup = new ResourceGroup(entity, "CODE");
         ResourceGroup copy = (ResourceGroup) DomainTestSupport.minimalEqualsTest(resourceGroup);
         
         copy.setEntity(null);

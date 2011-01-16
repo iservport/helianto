@@ -15,7 +15,6 @@
 
 package org.helianto.resource;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +38,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
 import org.helianto.core.NaturalKeyInfo;
+import org.helianto.core.TrunkEntity;
 import org.helianto.document.Controlable;
 
 /**
@@ -57,17 +57,7 @@ import org.helianto.document.Controlable;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("G")
-public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<ResourceGroup> {
-
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param resourceCode
-     */
-    public static ResourceGroup resourceGroupFactory(Entity entity, String resourceCode) {
-        return resourceGroupFactory(ResourceGroup.class, entity, resourceCode);
-    }
+public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<ResourceGroup> {
 
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -82,9 +72,25 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
 	private List<ResourceAssociation> childAssociationList;
     private List<ResourceAssociation> parentAssociationList;
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public ResourceGroup() {
-    	setResourceType(ResourceType.EQUIPMENT);
+    	setResourceTypeAsEnum(ResourceType.EQUIPMENT);
+    	setResourceCode("");
+    	setResourceName("");
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param resourceCode
+     */
+    public ResourceGroup(Entity entity, String resourceCode) {
+    	this();
+    	setEntity(entity);
+    	setResourceCode(resourceCode);
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -146,7 +152,7 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
     public void setResourceType(char resourceType) {
         this.resourceType = resourceType;
     }
-    public void setResourceType(ResourceType resourceType) {
+    public void setResourceTypeAsEnum(ResourceType resourceType) {
         this.resourceType = resourceType.getValue();
     }
     
@@ -196,40 +202,6 @@ public class ResourceGroup implements Serializable, NaturalKeyInfo, Comparable<R
 	public void setControlReference(Controlable controlReference) {
 		this.controlReference = controlReference;
 	}
-
-    /**
-     * <code>ResourceGroup</code> factory.
-     * 
-     * @param clazz
-     * @param entity
-     * @param resourceCode
-     */
-    protected static <T extends ResourceGroup> T resourceGroupFactory(Class<T> clazz, Entity entity, String resourceCode) {
-        T resourceGroup = null;
-        try {
-        	resourceGroup = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create document of class "+clazz);
-        }
-        resourceGroup.setEntity(entity);
-        resourceGroup.setResourceCode(resourceCode);
-        return resourceGroup;
-    }
-
-    /**
-     * Preferred method to create a <code>Resource</code>.
-     * 
-     * @param sequence
-     */
-    public ResourceAssociation associatedResourceFactory(Class<? extends ResourceGroup> clazz, int sequence) {
-    	String resourceCode = new StringBuilder(getResourceCode()).append("-").append(sequence).toString();
-    	ResourceGroup resource = resourceGroupFactory(clazz, this.getEntity(), resourceCode);
-    	if (resource.getResourceType()==' ') {
-        	resource.setResourceType(getResourceType());
-    	}
-    	ResourceAssociation resourceAssociation = ResourceAssociation.resourceAssociationFactory(ResourceAssociation.class, this, resource, sequence);
-    	return resourceAssociation;
-    }
 
     public int compareTo(ResourceGroup other) {
     	if (getResourceCode()!=null && other.getResourceCode()!=null) {
