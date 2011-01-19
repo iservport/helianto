@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.helianto.core.Entity;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.ListFilter;
 import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
 import org.helianto.partner.Customer;
@@ -69,7 +68,7 @@ public interface PartnerMgr {
      * 
      * @param partnerFilter
      */
-	public List<? extends Partner> findPartners(ListFilter partnerFilter);
+	public List<? extends Partner> findPartners(Filter partnerFilter);
 	
     /**
      * Write <code>Partner</code> to the datastore.

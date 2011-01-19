@@ -27,7 +27,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Province;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.NamespaceMgr;
@@ -80,7 +79,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     	privateEntityDao.remove(privateEntity);
     }
 
-	public List<? extends Partner> findPartners(ListFilter partnerFilter) {
+	public List<? extends Partner> findPartners(Filter partnerFilter) {
 		List<Partner> partnerList = (List<Partner>) partnerDao.find(partnerFilter);
     	if (logger.isDebugEnabled() && partnerList!=null) {
     		logger.debug("Found partner list of size {}", partnerList.size());
