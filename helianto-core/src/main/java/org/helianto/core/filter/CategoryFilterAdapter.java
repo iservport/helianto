@@ -16,6 +16,8 @@
 package org.helianto.core.filter;
 
 import org.helianto.core.Category;
+import org.helianto.core.CategoryGroup;
+import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,17 @@ public class CategoryFilterAdapter extends AbstractTrunkFilterAdapter<Category> 
 		super(category);
 	}
 	
+	/**
+	 * Default constructor
+     * 
+     * @param entity
+     * @param categoryGroup
+     * @param categoryCode
+	 */
+	public CategoryFilterAdapter(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
+		super(new Category(entity, categoryGroup, categoryCode));
+	}
+	
 	public void reset() {
 		getFilter().setCategoryCode("");
 		getFilter().setCategoryName("");
@@ -47,7 +60,7 @@ public class CategoryFilterAdapter extends AbstractTrunkFilterAdapter<Category> 
 
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
-        // force to filter by group
+        super.preProcessFilter(mainCriteriaBuilder);
         logger.debug("CategoryGroup is: '{}'", getFilter().getCategoryGroup());
         mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
         .append(getFilter().getCategoryGroup());
@@ -62,11 +75,7 @@ public class CategoryFilterAdapter extends AbstractTrunkFilterAdapter<Category> 
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("categoryNameLike", getFilter().getCategoryName(), mainCriteriaBuilder);
-	}
-
-	public String getObjectAlias() {
-		return "category";
+		appendLikeFilter("categoryName", getFilter().getCategoryName(), mainCriteriaBuilder);
 	}
 
     private static Logger logger = LoggerFactory.getLogger(CategoryFilterAdapter.class);

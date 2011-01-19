@@ -20,11 +20,11 @@ public class UnitTests {
      * Test <code>Unit</code> static factory method.
      */
 	@Test
-    public void unitFactory() {
+    public void constructor() {
         Entity entity = new Entity();
         String unitCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        Unit unit = Unit.unitFactory(entity, unitCode);
+        Unit unit = new Unit(entity, unitCode);
         
         assertSame(entity, unit.getEntity());
         assertEquals(unitCode, unit.getUnitCode());
@@ -40,7 +40,7 @@ public class UnitTests {
         Entity entity = new Entity();
         String unitCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        Unit unit = Unit.unitFactory(entity, unitCode);
+        Unit unit = new Unit(entity, unitCode);
         Unit copy = (Unit) DomainTestSupport.minimalEqualsTest(unit);
         
         copy.setEntity(null);

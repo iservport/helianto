@@ -16,6 +16,7 @@
 package org.helianto.core.filter;
 
 import org.helianto.core.CategoryGroup;
+import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 import org.helianto.core.criteria.CriteriaBuilder;
 
@@ -34,6 +35,16 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
 	 */
 	public UnitFilterAdapter(Unit unit) {
 		super(unit);
+	}
+	
+	/**
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param unitCode
+	 */
+	public UnitFilterAdapter(Entity entity, String unitCode) {
+		super(new Unit(entity, unitCode));
 	}
 	
 	public void reset() {

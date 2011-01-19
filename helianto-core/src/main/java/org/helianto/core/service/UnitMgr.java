@@ -17,6 +17,7 @@ package org.helianto.core.service;
 
 import java.util.List;
 
+import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 import org.helianto.core.filter.Filter;
 
@@ -26,6 +27,15 @@ import org.helianto.core.filter.Filter;
  * @author Maurício Fernandes de Castro
  */
 public interface UnitMgr {
+	
+	/**
+	 * Find unique unit.
+	 * 
+	 * @param entity
+	 * @param unitCode
+	 * @return
+	 */
+	public Unit findUnit(Entity entity, String unitCode);
 
 	/**
 	 * List units.
@@ -47,5 +57,14 @@ public interface UnitMgr {
 	 * @param unit
 	 */
 	public void removeUnit(Unit unit);
+	
+	/**
+	 * Install a unit if does not exist.
+	 * 
+	 * @param entity
+	 * @param unitCode
+	 * @param unitName
+	 */
+	public Unit installUnit(Entity entity, String unitCode, String unitName);
 
 }

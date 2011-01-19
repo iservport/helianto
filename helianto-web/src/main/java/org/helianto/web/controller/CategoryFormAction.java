@@ -38,7 +38,7 @@ public class CategoryFormAction extends AbstractEditTargetFormAction<Category> {
 	@Override
 	protected Category doCreateTarget(RequestContext context) throws Exception {
 		CategoryFilter filter = (CategoryFilter) getFormObjectScope().getScope(context).getRequired("filter");
-		return Category.categoryFactory(getAuthorizedEntity(), filter.getCategoryGroup(), "");
+		return new Category(getAuthorizedEntity(), filter.getCategoryGroup(), "");
 	}
 
 	@Override

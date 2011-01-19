@@ -58,7 +58,7 @@ public class CategoryTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             categoryCode = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
         }
-        Category category = Category.categoryFactory(entity, categoryGroup, categoryCode);
+        Category category = new Category(entity, categoryGroup, categoryCode);
         return category;
     }
 

@@ -37,7 +37,7 @@ public class UnitFormAction extends AbstractEditTargetFormAction<Unit> {
 
 	@Override
 	protected Unit doCreateTarget(RequestContext context) throws Exception {
-		return Unit.unitFactory(getAuthorizedEntity(), "");
+		return new Unit(getAuthorizedEntity(), "");
 	}
 
 	@Override

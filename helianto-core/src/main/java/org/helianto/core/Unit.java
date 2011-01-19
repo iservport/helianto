@@ -36,19 +36,6 @@ import javax.persistence.UniqueConstraint;
 )
 public class Unit implements TrunkEntity {
 
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param unitCode
-     */
-    public static Unit unitFactory(Entity entity, String unitCode) {
-        Unit unit = new Unit();
-        unit.setEntity(entity);
-        unit.setUnitCode(unitCode);
-        return unit;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -57,11 +44,25 @@ public class Unit implements TrunkEntity {
     private String unitName;
     private char priority;
 
-    /** default constructor */
+    /** 
+     * Default constructor
+     */
     public Unit() {
     	setUnitCode("");
     	setUnitName("");
         setPriority('1');
+    }
+
+    /**
+     * Key constructor.
+     * 
+     * @param entity
+     * @param unitCode
+     */
+    public Unit(Entity entity, String unitCode) {
+    	this();
+        setEntity(entity);
+        setUnitCode(unitCode);
     }
 
     // Property accessors

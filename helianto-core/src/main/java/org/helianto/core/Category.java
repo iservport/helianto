@@ -35,16 +35,6 @@ import javax.persistence.UniqueConstraint;
 )
 public class Category implements TrunkEntity {
 
-    /**
-     * Factory method.
-     */
-    public static Category categoryFactory(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
-        Category category = new Category(entity);
-        category.setCategoryGroup(categoryGroup);
-        category.setCategoryCode(categoryCode);
-        return category;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -64,13 +54,17 @@ public class Category implements TrunkEntity {
     }
     
     /** 
-     * Entity constructor
+     * Key constructor
      * 
      * @param entity
+     * @param categoryGroup
+     * @param categoryCode
      */
-    public Category(Entity entity) {
+    public  Category(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
     	this();
     	setEntity(entity);
+        setCategoryGroup(categoryGroup);
+        setCategoryCode(categoryCode);
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)

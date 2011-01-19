@@ -19,8 +19,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.UnitFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,15 @@ import org.slf4j.LoggerFactory;
  */
 @org.springframework.stereotype.Service("unitMgr")
 public class UnitMgrImpl implements UnitMgr {
+	
+	public Unit findUnit(Entity entity, String unitCode) {
+    	List<Unit> unitList = (List<Unit>) unitDao.find(new UnitFilterAdapter(entity, unitCode));
+    	if (unitList!=null && unitList.size()>0) {
+        	logger.debug("Found unit {}", unitList.get(0));
+    		return unitList.get(0);
+    	}
+    	return null;
+	}
     
 	public List<Unit> findUnits(Filter unitFilter) {
     	List<Unit> unitList = (List<Unit>) unitDao.find(unitFilter);
@@ -42,9 +53,9 @@ public class UnitMgrImpl implements UnitMgr {
 	}
 
 	public Unit storeUnit(Unit unit) {
-		Unit managedUnit = unitDao.merge(unit);
-    	logger.debug("Stored unit  {}", managedUnit);
-    	return managedUnit;
+		unitDao.saveOrUpdate(unit);
+    	logger.debug("Stored unit  {}", unit);
+    	return unit;
 	}
 
 	public void removeUnit(Unit unit) {
@@ -52,6 +63,18 @@ public class UnitMgrImpl implements UnitMgr {
 		
 	}
 
+	public Unit installUnit(Entity entity, String unitCode, String unitName) {
+    	List<Unit> unitList = (List<Unit>) unitDao.find(new UnitFilterAdapter(entity, unitCode));
+    	if (unitList!=null && unitList.size()>0) {
+        	logger.debug("Found existing unit  {}", unitList.get(0));
+    		return unitList.get(0);
+    	}
+    	Unit unit = new Unit(entity, unitCode);
+    	unit.setUnitName(unitName);
+    	unitDao.saveOrUpdate(unit);
+    	logger.debug("Installed unit  {}", unit);
+		return unit;
+	}
 
     //- collabs
 

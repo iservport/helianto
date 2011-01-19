@@ -49,18 +49,6 @@ public class UnitMgrImplTests {
     	verify(unitDao);
     }
     
-    @Test
-    public void storeCategory() {
-    	Unit unit = new Unit();
-    	Unit UnitCategory = new Unit();
-    	
-    	expect(unitDao.merge(unit)).andReturn(UnitCategory);
-    	replay(unitDao);
-    	
-    	assertSame(UnitCategory, unitMgr.storeUnit(unit));
-    	verify(unitDao);
-    }
-    
     private FilterDao<Unit> unitDao;
     
     @SuppressWarnings("unchecked")

@@ -23,7 +23,7 @@ public class CategoryTests {
         Entity entity = new Entity();
         String categoryCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        Category category = Category.categoryFactory(entity, CategoryGroup.INSTRUMENT, categoryCode);
+        Category category = new Category(entity, CategoryGroup.INSTRUMENT, categoryCode);
         
         assertSame(entity, category.getEntity());
         assertEquals(CategoryGroup.INSTRUMENT.getValue(), category.getCategoryGroup());
@@ -40,7 +40,7 @@ public class CategoryTests {
         CategoryGroup categoryGroup = CategoryGroup.INSTRUMENT;
         String categoryCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        Category category = Category.categoryFactory(entity, CategoryGroup.INSTRUMENT, categoryCode);
+        Category category = new Category(entity, CategoryGroup.INSTRUMENT, categoryCode);
         Category copy = (Category) DomainTestSupport.minimalEqualsTest(category);
         
         copy.setEntity(null);

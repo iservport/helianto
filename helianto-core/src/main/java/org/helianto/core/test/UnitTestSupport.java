@@ -51,7 +51,7 @@ public class UnitTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             unitCode = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
         }
-        Unit unit = Unit.unitFactory(entity, unitCode);
+        Unit unit = new Unit(entity, unitCode);
         return unit;
     }
 
