@@ -80,6 +80,18 @@ public class ProcessDocument extends AbstractDocument implements Comparator<Proc
     	super();
     }
 
+    /** 
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param docCode
+	 */
+    public ProcessDocument(Entity entity, String docCode) {
+    	this();
+    	setEntity(entity);
+    	setDocCode(docCode);
+    }
+
     /**
      * Unit.
      * 
