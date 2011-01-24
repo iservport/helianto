@@ -25,6 +25,7 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.inventory.ProcessAgreement;
 import org.helianto.inventory.ProcessRequirement;
+import org.helianto.inventory.Tax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -63,11 +64,25 @@ public class InventoryMgrImpl implements InventoryMgr {
 		sequenceMgr.validateInternalNumber(agreement);
 		return agreementDao.merge(agreement);
 	}
+	
+	public List<Tax> findTaxes(Filter filter) {
+    	List<Tax> taxList = (List<Tax>) taxDao.find(filter);
+    	if (logger.isDebugEnabled() && taxList!=null) {
+    		logger.debug("Found tax list of size {}", taxList.size());
+    	}
+    	return taxList;
+	}
+	
+	public Tax storeTax(Tax tax) {
+		taxDao.saveOrUpdate(tax);
+		return tax;
+	}
 
 	// collabs
 
 	private FilterDao<ProcessRequirement> processRequirementDao;
 	private FilterDao<ProcessAgreement> agreementDao;
+	private FilterDao<Tax> taxDao;
 	private SequenceMgr sequenceMgr;
 
 	@Resource(name="processRequirementDao")

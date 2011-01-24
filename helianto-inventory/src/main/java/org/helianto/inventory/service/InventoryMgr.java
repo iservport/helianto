@@ -20,6 +20,7 @@ import java.util.List;
 import org.helianto.core.filter.Filter;
 import org.helianto.inventory.ProcessAgreement;
 import org.helianto.inventory.ProcessRequirement;
+import org.helianto.inventory.Tax;
 
 /**
  * Inventory service interface.
@@ -55,5 +56,21 @@ public interface InventoryMgr {
 	 * @param agreement
 	 */
 	public ProcessAgreement storeProcessAgreement(ProcessAgreement agreement);
+	
+	/**
+	 * Find taxes.
+	 * 
+	 * @param filter
+	 */
+	public List<Tax> findTaxes(Filter filter);
+
+	/**
+	 * Store tax.
+	 * 
+	 * @param tax
+	 */
+	public Tax storeTax(Tax tax);
+
+	
 
 }

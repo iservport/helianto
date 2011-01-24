@@ -24,6 +24,7 @@ import org.helianto.inventory.Movement;
 import org.helianto.inventory.Picking;
 import org.helianto.inventory.ProcessAgreement;
 import org.helianto.inventory.ProcessRequirement;
+import org.helianto.inventory.Tax;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -57,6 +58,14 @@ public class InventoryRepositoryConfiguration extends AbstractRepositoryConfigur
 	@Bean
 	public FilterDao<Inventory> inventoryDao() {
 		return getFilterDao(Inventory.class);
+	}
+
+	/**
+	 * Tax data access.
+	 */
+	@Bean
+	public FilterDao<Tax> taxDao() {
+		return getFilterDao(Tax.class, "processAgreement", "keyType");
 	}
 
 //	Inventory transaction does not require a DAO, as it is always managed by some instance of inventory.
