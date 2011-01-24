@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.KeyType;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;
@@ -27,6 +28,7 @@ import org.helianto.inventory.Movement;
 import org.helianto.inventory.Picking;
 import org.helianto.inventory.ProcessAgreement;
 import org.helianto.inventory.ProcessRequirement;
+import org.helianto.inventory.Tax;
 import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
 import org.helianto.partner.Partner;
 import org.helianto.partner.test.PartnerTestSupport;
@@ -42,6 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoIntegrationTest {
 
+	@Resource FilterDao<KeyType> keyTypeDao;
 	@Resource FilterDao<ProcessDocument> processDocumentDao;
 	@Resource FilterDao<Partner> partnerDao;
 	@Resource FilterDao<Card> cardDao;
@@ -51,6 +54,7 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 	@Resource FilterDao<Picking> pickingDao;
 	@Resource FilterDao<ProcessRequirement> processRequirementDao;
 	@Resource FilterDao<ProcessAgreement> agreementDao;
+	@Resource FilterDao<Tax> taxDao;
 
 	@Test
 	public void inventory() {
@@ -68,7 +72,7 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 		Inventory inventory = new Inventory(entity, Long.MAX_VALUE);
 		inventoryDao.saveOrUpdate(inventory);
 		assertEquals(inventory, inventoryDao.findUnique(entity, Long.MAX_VALUE));
-
+		
 		Movement movement = new Movement(inventory);
 		movementDao.saveOrUpdate(movement);
 		assertEquals(movement, movementDao.findUnique(movement.getInventoryTransaction(), inventory));
@@ -86,6 +90,12 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 		ProcessAgreement processAgreement = new ProcessAgreement(partner);
 		agreementDao.saveOrUpdate(processAgreement);
 		assertEquals(processAgreement, agreementDao.findUnique(processAgreement.getEntity(), processAgreement.getInternalNumber()));
+
+		KeyType keyType = new KeyType(entity.getOperator(), "KEYTYPE");
+		keyTypeDao.saveOrUpdate(keyType);
+		Tax tax = new Tax(processAgreement, keyType);
+		taxDao.saveOrUpdate(tax);
+		assertEquals(tax, taxDao.findUnique(processAgreement, keyType));
 
 	}
 		
