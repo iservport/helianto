@@ -20,7 +20,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.inventory.ProcessAgreement;
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Service;
 @Service("inventoryMgr")
 public class InventoryMgrImpl implements InventoryMgr {
 
-	public List<ProcessRequirement> findProcessRequirements(ListFilter filter) {
+	public List<ProcessRequirement> findProcessRequirements(Filter filter) {
     	List<ProcessRequirement> requirementList = (List<ProcessRequirement>) processRequirementDao.find(filter);
     	if (logger.isDebugEnabled() && requirementList!=null) {
     		logger.debug("Found requirement list of size {}", requirementList.size());
@@ -51,7 +51,7 @@ public class InventoryMgrImpl implements InventoryMgr {
 		return requirement;
 	}
 
-	public List<ProcessAgreement> findProcessAgreement(ListFilter agreementFilter) {
+	public List<ProcessAgreement> findProcessAgreement(Filter agreementFilter) {
     	List<ProcessAgreement> agreementList = (List<ProcessAgreement>) agreementDao.find(agreementFilter);
     	if (logger.isDebugEnabled() && agreementList!=null) {
     		logger.debug("Found agreement list of size {}", agreementList.size());

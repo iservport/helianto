@@ -17,7 +17,7 @@ package org.helianto.inventory.service;
 
 import java.util.List;
 
-import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.Filter;
 import org.helianto.inventory.ProcessAgreement;
 import org.helianto.inventory.ProcessRequirement;
 
@@ -33,7 +33,7 @@ public interface InventoryMgr {
 	 * 
 	 * @param filter
 	 */
-	public List<ProcessRequirement> findProcessRequirements(ListFilter filter);
+	public List<ProcessRequirement> findProcessRequirements(Filter filter);
 
 	/**
 	 * Store agreement.
@@ -47,7 +47,7 @@ public interface InventoryMgr {
 	 * 
 	 * @param filter
 	 */
-	public List<ProcessAgreement> findProcessAgreement(ListFilter filter);
+	public List<ProcessAgreement> findProcessAgreement(Filter filter);
 
 	/**
 	 * Store process agreement.
