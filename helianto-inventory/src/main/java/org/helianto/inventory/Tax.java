@@ -80,8 +80,23 @@ public class Tax extends AbstractKeyValue {
      */
     public Tax() {
     	super();
+    	taxBaseValue = BigDecimal.ZERO;
+    	taxRate = BigDecimal.ZERO;
+    	taxValue = BigDecimal.ZERO;
     }
     
+    /**
+     * Key constructor.
+     * 
+     * @param processAgreement
+     * @param keyType
+     */
+    public Tax(ProcessAgreement processAgreement, KeyType keyType) {
+    	this();
+        setProcessAgreement(processAgreement);
+        setKeyType(keyType);
+    }
+
     /**
 	 * <<Immutable>> Tax code, a reference to the actual key code.
 	 * 
