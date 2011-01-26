@@ -18,7 +18,7 @@ package org.helianto.process.filter;
 import java.util.Collection;
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractFilterAdapter;
+import org.helianto.core.filter.AbstractTrunkFilterAdapter;
 import org.helianto.process.Characteristic;
 import org.helianto.process.ControlMethod;
 import org.helianto.process.Operation;
@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class ProcessDocumentFilterAdapter extends AbstractFilterAdapter<ProcessDocument>{
+public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<ProcessDocument>{
 
     private static final long serialVersionUID = 1L;
 	private Class<? extends ProcessDocument> clazz;
