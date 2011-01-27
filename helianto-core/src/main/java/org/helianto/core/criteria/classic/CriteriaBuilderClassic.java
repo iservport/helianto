@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.criteria;
+package org.helianto.core.criteria.classic;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,7 +22,7 @@ import java.util.Date;
 
 
 /**
- * Build an EJB-QL string criteria, appropriate to be appended
+ * Classic implementation to build an EJB-QL string criteria, appropriate to be appended
  * after the "where" keyword in a query.
  * 
  * <p><code>CriteriaBuilder</code> supports nesting, i.e., a
@@ -30,14 +30,17 @@ import java.util.Date;
  * one or more second-level instances. It is not thread-safe.</p>
  * 
  * @author Mauricio Fernandes de Castro
+ * @see {@link org.helianto.core.criteria.CriteriaBuilder}
  */
-public class CriteriaBuilder extends SelectFromBuilder {
+public class CriteriaBuilderClassic {
 
     static String DEFAULT_SQL_CONVERSION_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     static String DEFAULT_AND_CONNECTOR = "AND ";
     static String DEFAULT_OR_CONNECTOR = "OR ";
 
+    private String prefix;
     private String connector = DEFAULT_AND_CONNECTOR;
+    private StringBuilder criteria;
     private DateFormat formatter;
     private int openCount = 0;
     private int segmentCount = 0;
@@ -45,29 +48,28 @@ public class CriteriaBuilder extends SelectFromBuilder {
     /**
      * Default constructor.
      */
-    public CriteriaBuilder() {
+    public CriteriaBuilderClassic() {
         this("", DEFAULT_SQL_CONVERSION_DATE_FORMAT);
     }
     
     /**
-     * Default alias constructor.
+     * Default prefix constructor.
      * 
-     * @param alias
+     * @param prefix
      */
-    public CriteriaBuilder(String alias) {
-        this(alias, DEFAULT_SQL_CONVERSION_DATE_FORMAT);
+    public CriteriaBuilderClassic(String prefix) {
+        this(prefix, DEFAULT_SQL_CONVERSION_DATE_FORMAT);
     }
     
     /**
      * Constructor taking a date format string.
      * 
-     * @param alias
+     * @param prefix
      * @param dateFormat
      */
-    public CriteriaBuilder(String alias, String dateFormat) {
-    	super();
+    public CriteriaBuilderClassic(String prefix, String dateFormat) {
         setDateFormat(dateFormat);
-        createCriteria(alias);
+        createCriteria(prefix);
     }
     
     /**
@@ -82,11 +84,11 @@ public class CriteriaBuilder extends SelectFromBuilder {
     /**
      * Initialize a criteria.
      * 
-     * @param alias
+     * @param prefix
      */
-    public void createCriteria(String alias) {
-    	getNewInternalBuilder();
-        setAlias(alias);
+    public void createCriteria(String prefix) {
+        this.prefix = prefix;
+        criteria = new StringBuilder();
     }
 
     /**
@@ -95,7 +97,7 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * @param fieldName
      * @param sqlOperator
      */
-    public CriteriaBuilder appendSegment(String fieldName, String sqlOperator) {
+    public CriteriaBuilderClassic appendSegment(String fieldName, String sqlOperator) {
         return appendSegment(fieldName, sqlOperator, "");
     }
     
@@ -106,23 +108,23 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * @param sqlOperator
      * @param sqlFunction
      */
-    public CriteriaBuilder appendSegment(String fieldName, String sqlOperator, String sqlFunction) {
+    public CriteriaBuilderClassic appendSegment(String fieldName, String sqlOperator, String sqlFunction) {
         segmentCount++;
         if (!sqlFunction.equals("")) {
-            getInternalBuilder().append(sqlFunction).append("(");
+            criteria.append(sqlFunction).append("(");
         }
-        if (getAlias()!=null && getAlias().length()==0) {
-        	getInternalBuilder().append(fieldName);
+        if (prefix!=null && prefix.length()==0) {
+            criteria.append(fieldName);
         }
         else {
-        	getInternalBuilder().append(getAlias())
+            criteria.append(prefix)
             .append(".")
             .append(fieldName);
         }
         if (!sqlFunction.equals("")) {
-        	getInternalBuilder().append(")");
+            criteria.append(")");
         }
-        getInternalBuilder().append(" ")
+        criteria.append(" ")
             .append(sqlOperator)
             .append(" ");
         return this;
@@ -131,9 +133,9 @@ public class CriteriaBuilder extends SelectFromBuilder {
     /**
      * And appender.
      */
-    public CriteriaBuilder appendAnd() {
+    public CriteriaBuilderClassic appendAnd() {
         if (segmentCount>0) {
-        	getInternalBuilder().append(DEFAULT_AND_CONNECTOR);
+            criteria.append(DEFAULT_AND_CONNECTOR);
         }
         return this;
     }
@@ -141,7 +143,7 @@ public class CriteriaBuilder extends SelectFromBuilder {
     /**
      * Conditional and appender.
      */
-    public CriteriaBuilder appendAnd(boolean condition) {
+    public CriteriaBuilderClassic appendAnd(boolean condition) {
         if (condition) {
             return appendAnd();
         }
@@ -151,9 +153,9 @@ public class CriteriaBuilder extends SelectFromBuilder {
     /**
      * Or appender.
      */
-    public CriteriaBuilder appendOr() {
+    public CriteriaBuilderClassic appendOr() {
         if (segmentCount>0) {
-        	getInternalBuilder().append(DEFAULT_OR_CONNECTOR);
+            criteria.append(DEFAULT_OR_CONNECTOR);
         }
         return this;
     }
@@ -161,16 +163,37 @@ public class CriteriaBuilder extends SelectFromBuilder {
     /**
      * Conditional or appender.
      */
-    public CriteriaBuilder appendOr(boolean condition) {
+    public CriteriaBuilderClassic appendOr(boolean condition) {
         if (condition) {
             return appendOr();
         }
         return this;
     }
-    
-    @Override
-    public CriteriaBuilder append(String content) {
-    	return (CriteriaBuilder) super.append(content);
+
+    /**
+     * String appender.
+     * 
+     * @param content
+     */
+    public CriteriaBuilderClassic append(String content) {
+        criteria.append(content)
+        .append(" ");
+        return this;
+    }
+
+    /**
+     * String appender.
+     * 
+     * @param content
+     */
+    public CriteriaBuilderClassic appendWithPrefix(String content) {
+    	if (prefix.length()>0) {
+            criteria.append(prefix)
+            .append(".");
+    	}
+    	criteria.append(content)
+            .append(" ");
+        return this;
     }
 
     /**
@@ -178,9 +201,9 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param content
      */
-    public CriteriaBuilder append(Class<?> clazz) {
+    public CriteriaBuilderClassic append(Class<?> clazz) {
     	if (clazz!=null) {
-    		getInternalBuilder().append(getAlias())
+            criteria.append(prefix)
             .append(".class=")
             .append(clazz.getSimpleName())
             .append(" ");
@@ -193,8 +216,8 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param content
      */
-    public CriteriaBuilder appendString(String content) {
-    	getInternalBuilder().append("'")
+    public CriteriaBuilderClassic appendString(String content) {
+        criteria.append("'")
         .append(content)
         .append("' ");
         return this;
@@ -205,8 +228,8 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param content
      */
-    public CriteriaBuilder appendLike(String content) {
-    	getInternalBuilder().append("'%").append(content).append("%' ");
+    public CriteriaBuilderClassic appendLike(String content) {
+        criteria.append("'%").append(content).append("%' ");
         return this;
     }
 
@@ -215,8 +238,8 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param content
      */
-    public CriteriaBuilder append(int content) {
-    	getInternalBuilder().append(content)
+    public CriteriaBuilderClassic append(int content) {
+        criteria.append(content)
         .append(" ");
         return this;
     }
@@ -226,9 +249,9 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param content
      */
-    public CriteriaBuilder append(int[] content) {
+    public CriteriaBuilderClassic append(int[] content) {
     	if (content.length>0) {
-    		getInternalBuilder().append(Arrays.toString(content).replace("[", "(").replace("]", ")"))
+            criteria.append(Arrays.toString(content).replace("[", "(").replace("]", ")"))
             .append(" ");
     	}
         return this;
@@ -239,8 +262,8 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param content
      */
-    public CriteriaBuilder append(long content) {
-    	getInternalBuilder().append(content)
+    public CriteriaBuilderClassic append(long content) {
+        criteria.append(content)
         .append(" ");
         return this;
     }
@@ -250,9 +273,9 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param content
      */
-    public CriteriaBuilder append(long[] content) {
+    public CriteriaBuilderClassic append(long[] content) {
     	if (content.length>0) {
-    		getInternalBuilder().append(Arrays.toString(content).replace("[", "(").replace("]", ")"))
+            criteria.append(Arrays.toString(content).replace("[", "(").replace("]", ")"))
             .append(" ");
     	}
         return this;
@@ -263,8 +286,8 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param content
      */
-    public CriteriaBuilder append(char content) {
-    	getInternalBuilder().append("'").append(content).append("' ");
+    public CriteriaBuilderClassic append(char content) {
+        criteria.append("'").append(content).append("' ");
         return this;
     }
     
@@ -273,20 +296,58 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param content
      */
-    public CriteriaBuilder append(Date content) {
-    	getInternalBuilder().append("'").append(formatter.format(content)).append("' ");
+    public CriteriaBuilderClassic append(Date content) {
+        criteria.append("'").append(formatter.format(content)).append("' ");
         return this;
     }
     
+    /**
+     * Select appender.
+     * 
+     * @param fieldNames
+     * @return "select ${prefix}.${fieldName0}, ${prefix}.${fieldName1} "
+     */
+    public CriteriaBuilderClassic appendSelect(String... fieldNames) {
+    	String separator = "";
+    	criteria.append("select");
+    	if (fieldNames.length>0) {
+        	for (String fieldName: fieldNames) {
+        		append(separator).appendWithPrefix(fieldName);
+        		separator = ", ";
+        	}
+    	}
+    	else {
+    		criteria.append(" ")
+        	.append(prefix)
+        	.append(" ");
+    	}
+    	return this;
+    }
+
+    /**
+     * From class appender.
+     * 
+     * @param clazz
+     * @return "from ${clazz.simpleName} ${prefix} "
+     */
+    public CriteriaBuilderClassic appendFrom(Class<?> clazz) {
+    	criteria.append("from ")
+    	.append(clazz.getSimpleName())
+        .append(" ")
+    	.append(prefix)
+    	.append(" ");
+    	return this;
+    }
+
     /**
      * Where appender.
      * 
      * @param fieldName
      * @param sqlOperator
-     * @return "where ${alias}.${field0}, ${alias}.${field1} "
+     * @return "where ${prefix}.${field0}, ${prefix}.${field1} "
      */
-    public CriteriaBuilder appendWhere(String fieldName, String sqlOperator) {
-    	getInternalBuilder().append("where ");
+    public CriteriaBuilderClassic appendWhere(String fieldName, String sqlOperator) {
+    	criteria.append("where ");
    		appendSegment(fieldName, sqlOperator);
     	return this;
     }
@@ -295,11 +356,11 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * Group by appender.
      * 
      * @param fields
-     * @return "group by ${alias}.${fieldName0}, ${alias}.${fieldName1} "
+     * @return "group by ${prefix}.${fieldName0}, ${prefix}.${fieldName1} "
      */
-    public CriteriaBuilder appendGroupBy(String... fieldNames) {
+    public CriteriaBuilderClassic appendGroupBy(String... fieldNames) {
     	String separator = "";
-    	getInternalBuilder().append("group by");
+    	criteria.append("group by");
     	for (String fieldName: fieldNames) {
     		append(separator).appendWithPrefix(fieldName);
     		separator = ", ";
@@ -311,11 +372,11 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * Order by appender.
      * 
      * @param fields
-     * @return "order by ${alias}.${fieldName0}, ${alias}.${fieldName1} "
+     * @return "order by ${prefix}.${fieldName0}, ${prefix}.${fieldName1} "
      */
-    public CriteriaBuilder appendOrderBy(String... fieldNames) {
+    public CriteriaBuilderClassic appendOrderBy(String... fieldNames) {
     	String separator = "";
-    	getInternalBuilder().append("order by");
+    	criteria.append("order by");
     	for (String fieldName: fieldNames) {
     		append(separator).appendWithPrefix(fieldName);
     		separator = ", ";
@@ -328,10 +389,10 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * 
      * @param criteriaBuilder
      */
-    public CriteriaBuilder append(CriteriaBuilder criteriaBuilder) {
+    public CriteriaBuilderClassic append(CriteriaBuilderClassic criteriaBuilder) {
         segmentCount++;
         openParenthesis();
-        getInternalBuilder().append(criteriaBuilder.getCriteriaAsString());
+        criteria.append(criteriaBuilder.getCriteriaAsString());
         closeParenthesis();
         return this;
     }
@@ -339,8 +400,8 @@ public class CriteriaBuilder extends SelectFromBuilder {
     /**
      * Open parenthesis and increment a parenteheses counter.
      */
-    public CriteriaBuilder openParenthesis() {
-    	getInternalBuilder().append("(");
+    public CriteriaBuilderClassic openParenthesis() {
+        criteria.append("(");
         openCount++;
         return this;
     }
@@ -349,7 +410,7 @@ public class CriteriaBuilder extends SelectFromBuilder {
      * Open parenthesis and increment a parenteheses counter
      * if a condition is true.
      */
-    public CriteriaBuilder openParenthesis(boolean condition) {
+    public CriteriaBuilderClassic openParenthesis(boolean condition) {
         if (condition) {
             openParenthesis();
         }
@@ -362,20 +423,50 @@ public class CriteriaBuilder extends SelectFromBuilder {
      */
     public void closeParenthesis() {
         if (openCount > 0) {
-        	getInternalBuilder().append(") ");
+            criteria.append(") ");
             openCount--;
         }
     } 
     
+//    /**
+//     * Append a date range.
+//     * 
+//     * @param fieldName
+//     * @param dateRange
+//     * @deprecated see AbstractDateRangeFilterAdapter
+//     */
+//    public void appendDateRange(String fieldName, DateRange dateRange) {
+//    	if (dateRange.getFromDate()==null && dateRange.getToDate()==null) {
+//    		return;
+//    	}
+//    	appendAnd().openParenthesis(true);
+//        if (dateRange.getFromDate()!=null) {
+//        	appendSegment(fieldName, ">=").append(dateRange.getFromDate());
+//        }
+//        if (dateRange.getToDate()!=null) {
+//        	appendAnd(dateRange.getFromDate()!=null)
+//            .appendSegment(fieldName, "<")
+//            .append(dateRange.getToDate());
+//        }
+//        closeParenthesis();
+//    }
+//    
     /**
      * Prints the output as a string.
      * @return
      */
     public String getCriteriaAsString() {
-        return getInternalBuilder().toString();
+        return criteria.toString();
     }
 
     //- property getters
+
+    /**
+     * Prefix getter
+     */
+    public String getPrefix() {
+        return prefix;
+    }
 
     /**
      * Connector getter
