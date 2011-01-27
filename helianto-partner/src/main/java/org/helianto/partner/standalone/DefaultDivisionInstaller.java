@@ -16,9 +16,12 @@
 
 package org.helianto.partner.standalone;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.helianto.core.Province;
+import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.standalone.DefaultEntityInstaller;
 import org.helianto.core.standalone.NamespaceDefaults;
@@ -58,7 +61,11 @@ public class DefaultDivisionInstaller implements InitializingBean {
 		if (!(namespace instanceof ExtendedNamespaceDefaults)) {
 			throw new IllegalArgumentException("Requires extended namespace defaults");
 		}
-		Province province = namespaceMgr.findProvince(namespace.getDefaultEntity().getOperator(), getProvinceCode());
+		Province province = null;
+		List<Province> provinceList = namespaceMgr.findProvinces(new ProvinceFilterAdapter(namespace.getDefaultEntity().getOperator(), getProvinceCode()));
+		if (provinceList!=null && provinceList.size()>0) {
+			province = provinceList.get(0);
+		}
 		if (province==null) {
 			throw new IllegalArgumentException("Requires valid province or city code");
 		}
