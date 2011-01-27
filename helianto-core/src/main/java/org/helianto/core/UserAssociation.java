@@ -108,7 +108,7 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
     public UserGroup getParent() {
         return this.parent;
     }
-
+    
     /**
      * Child user group.
      */

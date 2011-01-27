@@ -36,32 +36,6 @@ import javax.persistence.UniqueConstraint;
 )
 public class UserRole  implements java.io.Serializable {
 
-    /**
-     * Factory method.
-     * 
-     * @param user
-     */
-    public static UserRole userRoleFactory(UserGroup user) {
-        UserRole userRole = new UserRole();
-        userRole.setUserGroup(user);
-        return userRole;
-    }
-    
-    /**
-     * Factory method.
-     * 
-     * @param user
-     * @param service
-     * @param serviceExtension
-     */
-    public static UserRole userRoleFactory(UserGroup user, Service service, String serviceExtension) {
-        UserRole userRole = UserRole.userRoleFactory(user);
-        userRole.setService(service);
-        userRole.setServiceExtension(serviceExtension);
-        user.getRoles().add(userRole);
-        return userRole;
-    }
-    
     private static final long serialVersionUID = 1L;
     private long id;
     private UserGroup userGroup;
@@ -72,30 +46,20 @@ public class UserRole  implements java.io.Serializable {
      * Empty constructor.
      */
     public UserRole() {
-    	setServiceExtension("READ");
+    	setServiceExtension("");
     }
    
     /** 
-     * Service constructor.
-     * 
-     * @param userGroup
-     * @param service
-     */
-    public UserRole(UserGroup userGroup, Service service) {
-    	this();
-    	setUserGroup(userGroup);
-    	setService(service);
-    }
-   
-    /** 
-     * Role constructor.
+     * Key constructor.
      * 
      * @param userGroup
      * @param service
      * @param serviceExtension
      */
     public UserRole(UserGroup userGroup, Service service, String serviceExtension) {
-    	this(userGroup, service);
+    	this();
+    	setUserGroup(userGroup);
+    	setService(service);
     	setServiceExtension(serviceExtension);
     }
    

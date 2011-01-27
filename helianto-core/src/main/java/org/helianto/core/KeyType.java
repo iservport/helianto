@@ -33,19 +33,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_keytype1",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "keyCode"})}
 )
-public class KeyType implements java.io.Serializable {
-
-    /**
-     * <code>KeyType</code> factory.
-     * 
-     * @param operator
-     * @param keyCode
-     */
-    public static KeyType keyTypeFactory(Operator operator, String keyCode) {
-        KeyType keyType = new KeyType(operator);
-        keyType.setKeyCode(keyCode);
-        return keyType;
-    }
+public class KeyType implements RootEntity {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -64,23 +52,14 @@ public class KeyType implements java.io.Serializable {
     }
 
     /** 
-     * Operator constructor
-     * 
-     * @param operator
-     */
-    public KeyType(Operator operator) {
-    	this();
-    	setOperator(operator);
-    }
-
-    /** 
      * Key constructor
      * 
      * @param operator
      * @param keyCode
      */
     public KeyType(Operator operator, String keyCode) {
-    	this(operator);
+    	this();
+    	setOperator(operator);
     	setKeyCode(keyCode);
     }
 

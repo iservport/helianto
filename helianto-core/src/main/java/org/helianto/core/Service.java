@@ -34,17 +34,6 @@ import javax.persistence.UniqueConstraint;
 )
 public class Service implements RootEntity {
 
-    /**
-     * Factory method.
-     * 
-     * @param operator
-     * @param serviceName
-     */
-    public static Service serviceFactory(Operator operator, String serviceName) {
-        Service service = new Service(operator, serviceName);
-        return service;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private Operator operator;
@@ -58,23 +47,14 @@ public class Service implements RootEntity {
     }
 
     /** 
-     * Operator constructor.
-     * 
-     * @param operator
-     */
-    public Service(Operator operator) {
-    	this();
-    	setOperator(operator);
-    }
-
-    /** 
-     * Name constructor.
+     * Key constructor.
      * 
      * @param operator
      * @param serviceName
      */
     public Service(Operator operator, String serviceName) {
-    	this(operator);
+    	this();
+    	setOperator(operator);
     	setServiceName(serviceName);
     }
 

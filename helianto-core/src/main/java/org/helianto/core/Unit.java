@@ -65,7 +65,20 @@ public class Unit implements TrunkEntity {
         setUnitCode(unitCode);
     }
 
-    // Property accessors
+    /**
+     * Convenience constructor.
+     * 
+     * @param category
+     * @param unitCode
+     */
+    public Unit(Category category, String unitCode) {
+    	this(category.getEntity(), unitCode);
+    	setCategory(category);
+    }
+
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
