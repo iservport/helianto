@@ -36,7 +36,7 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 
 	@Override
 	protected Entity doPrepareTarget(RequestContext context, Entity target) throws Exception {
-		return namespaceMgr.prepareEntity(target);
+		return target;
 	}
 
 	@Override
@@ -49,15 +49,8 @@ public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Op
 		return new Entity(parent, "");
 	}
 
-	/**
-	 * If it is a first time store, re-create the entity to assure for default
-	 * user group creation.
-	 */
 	@Override
 	protected Entity doStoreTarget(Entity detachedTarget) throws Exception {
-		if (detachedTarget.getId()==0) {
-			return namespaceMgr.createAndPersistEntity(detachedTarget.getOperator(), detachedTarget.getAlias());
-		} 
 		return namespaceMgr.storeEntity(detachedTarget);
 	}
 

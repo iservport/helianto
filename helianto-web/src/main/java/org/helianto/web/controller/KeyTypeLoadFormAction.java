@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.helianto.controller.AbstractLoadFormAction;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
+import org.helianto.core.filter.KeyTypeFilterAdapter;
 import org.helianto.core.service.NamespaceMgr;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ public class KeyTypeLoadFormAction extends AbstractLoadFormAction<KeyType, Opera
 
 	@Override
 	protected List<KeyType> doLoad(Operator operator) {
-		return namespaceMgr.loadKeyTypes(operator);
+		return namespaceMgr.findKeyTypes(new KeyTypeFilterAdapter(operator, ""));
 	}
 
 	@Override

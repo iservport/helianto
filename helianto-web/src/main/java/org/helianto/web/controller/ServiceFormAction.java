@@ -35,7 +35,7 @@ public class ServiceFormAction extends AbstractEditAggregateFormAction<Service, 
 
 	@Override
 	public Service doCreateTarget(RequestContext context, Operator parent) throws Exception {
-		return Service.serviceFactory(parent, "");
+		return new Service(parent, "");
 	}
 
 	@Override

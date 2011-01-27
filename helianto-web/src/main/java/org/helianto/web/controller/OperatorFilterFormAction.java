@@ -61,7 +61,7 @@ public class OperatorFilterFormAction extends AbstractFilterOnlyFormAction<Opera
 	 */
 	@Override
 	protected List<Operator> doApplyFilter(OperatorFilter filter) {
-		return namespaceMgr.findOperator();
+		return namespaceMgr.findOperators(filter);
 	}
 
 	/**

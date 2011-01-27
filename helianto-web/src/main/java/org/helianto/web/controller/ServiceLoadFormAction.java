@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.helianto.controller.AbstractLoadFormAction;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
+import org.helianto.core.filter.ServiceFilterAdapter;
 import org.helianto.core.service.NamespaceMgr;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ public class ServiceLoadFormAction extends AbstractLoadFormAction<Service, Opera
 
 	@Override
 	protected List<Service> doLoad(Operator operator) {
-		return namespaceMgr.loadServices(operator);
+		return namespaceMgr.findServices(new ServiceFilterAdapter(operator, ""));
 	}
 
 	@Override

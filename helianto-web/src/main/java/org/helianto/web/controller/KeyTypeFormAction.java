@@ -35,7 +35,7 @@ public class KeyTypeFormAction extends AbstractEditAggregateFormAction<KeyType, 
 
 	@Override
 	public KeyType doCreateTarget(RequestContext context, Operator parent) throws Exception {
-		return KeyType.keyTypeFactory(parent, "");
+		return new KeyType(parent, "");
 	}
 
 	@Override

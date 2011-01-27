@@ -41,7 +41,7 @@ public class UserRoleFormAction extends AbstractEditAggregateFormAction<UserRole
 
 	@Override
 	public UserRole doCreateTarget(RequestContext context, UserGroup parent) throws Exception {
-		return UserRole.userRoleFactory(parent);
+		return new UserRole(parent, null, "");
 	}
 
 	@Override
