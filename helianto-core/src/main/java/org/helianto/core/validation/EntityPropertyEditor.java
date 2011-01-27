@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
  * Default <code>Entity</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @Component
 public class EntityPropertyEditor extends AbstractSessionPropertyEditor {

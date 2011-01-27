@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
  * Default <code>UserAssociation</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @Component
 public class UserAssociationPropertyEditor extends AbstractSessionPropertyEditor {

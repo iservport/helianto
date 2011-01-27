@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
  * Default <code>Province</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @Component
 public class ProvincePropertyEditor extends AbstractSessionPropertyEditor {

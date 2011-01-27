@@ -28,6 +28,7 @@ import org.hibernate.SessionFactory;
  * Abstract base class to <code>Session</code> backed property editors.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public abstract class AbstractSessionPropertyEditor extends PropertyEditorSupport {
 
@@ -59,8 +60,7 @@ public abstract class AbstractSessionPropertyEditor extends PropertyEditorSuppor
      * @param id
      * @param clazz
      */
-    @SuppressWarnings("unchecked")
-	protected void setAsText(String id, Class clazz) {
+	protected void setAsText(String id, Class<?> clazz) {
         logger.debug("Loaded {} property editor", clazz.getName());
         try {
             Serializable key = resolveId(id);

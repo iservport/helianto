@@ -33,14 +33,13 @@ import org.springframework.validation.Validator;
  * <code>Credential password</code> and <code>Credential verifyPassword</code> must match. </p>
  * 
  * @author Mauricio Fernandes de Castro
- * @version $Id$
+ * @deprecated
  */
 public class IdentityValidator implements Validator {
     
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @SuppressWarnings("unchecked")
-	public boolean supports(Class clazz) {
+	public boolean supports(Class<?> clazz) {
         return Identity.class.equals(clazz);
     }
 

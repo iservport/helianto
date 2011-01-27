@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
  * Default backed <code>Unit</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @Component
 public class UnitPropertyEditor extends AbstractSessionPropertyEditor {

@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base class to <code>EntityManager</code> backed property editors.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public abstract class AbstractJpaPropertyEditor extends PropertyEditorSupport {
 
@@ -45,8 +46,7 @@ public abstract class AbstractJpaPropertyEditor extends PropertyEditorSupport {
      * @param id
      * @param clazz
      */
-    @SuppressWarnings("unchecked")
-	protected void setAsText(String id, Class clazz) {
+	protected void setAsText(String id, Class<?> clazz) {
         logger.debug("Loaded {} property editor", clazz.getName());
         try {
             Serializable key = resolveId(id);

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
  * Default <code>KeyType</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @Component
 public class KeyTypePropertyEditor extends AbstractSessionPropertyEditor {

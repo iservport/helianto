@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
  * Default <code>Identity</code> property editor.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @Component
 public class IdentityPropertyEditor extends AbstractSessionPropertyEditor {
