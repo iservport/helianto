@@ -1,22 +1,25 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
 
 /**
  * Convenience to be used in tests.
  * 
  * @author mauriciofernandesdecastro
  */
-public class TestingFilter extends AbstractListFilter {
+public class TestingFilter implements Filter {
 
 	private static final long serialVersionUID = 1L;
 
-	public void reset() { }
+	public String createCriteriaAsString() {
+		return "TESTFILTER";
+	}
 
-	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+	public String getObjectAlias() {
+		return "alias";
+	}
 
-	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+	public void setObjectAlias(String objectAlias) {}
+	
+	public String createSelectAsString() { return null; }
 
 }

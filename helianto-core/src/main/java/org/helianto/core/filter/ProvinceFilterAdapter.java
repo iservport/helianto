@@ -66,6 +66,7 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> {
 	
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}

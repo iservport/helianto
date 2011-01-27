@@ -15,6 +15,7 @@
 
 package org.helianto.core.filter;
 
+import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
@@ -32,6 +33,8 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
 	
 	/**
 	 * Default constructor.
+	 * 
+	 * @param unit
 	 */
 	public UnitFilterAdapter(Unit unit) {
 		super(unit);
@@ -44,7 +47,17 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
 	 * @param unitCode
 	 */
 	public UnitFilterAdapter(Entity entity, String unitCode) {
-		super(new Unit(entity, unitCode));
+		this(new Unit(entity, unitCode));
+	}
+	
+	/**
+	 * Convenience constructor.
+	 * 
+	 * @param category
+	 * @param unitCode
+	 */
+	public UnitFilterAdapter(Category category, String unitCode) {
+		this(new Unit(category, unitCode));
 	}
 	
 	public void reset() {
@@ -57,18 +70,14 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
 	}
 
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
-    	if (getCategoryGroup()!=null) {
-        	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), mainCriteriaBuilder);
-    	}
-	}
-
-	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+    	if (getCategoryGroup()!=null) {
+        	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), true, mainCriteriaBuilder);
+    	}
     	if (getFilter().getCategory()!=null) {
         	appendEqualFilter("category.id", getFilter().getCategory().getId(), mainCriteriaBuilder);
     	}
-    	appendLikeFilter("unitNameLike", getFilter().getUnitName(), mainCriteriaBuilder);
+    	appendLikeFilter("unitName", getFilter().getUnitName(), mainCriteriaBuilder);
 	}
 
 	@Override

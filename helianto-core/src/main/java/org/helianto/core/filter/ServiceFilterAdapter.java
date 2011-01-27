@@ -16,6 +16,7 @@
 
 package org.helianto.core.filter;
 
+import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.criteria.CriteriaBuilder;
 
@@ -30,9 +31,21 @@ public class ServiceFilterAdapter extends AbstractRootFilterAdapter<Service> {
     
     /**
      * Default constructor.
+     * 
+     * @param service
      */
     public ServiceFilterAdapter(Service service) {
     	super(service);
+    }
+
+    /**
+     * Key constructor.
+     * 
+     * @param operator
+     * @param serviceName
+     */
+    public ServiceFilterAdapter(Operator operator, String serviceName) {
+    	super(new Service(operator, serviceName));
     }
 
 	public boolean isSelection() {
