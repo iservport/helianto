@@ -20,6 +20,7 @@ public class ResourceGroupFilterAdapterTests {
     public static String C2 = "AND alias.resourceCode = 'CODE' ";
     public static String C3 = "AND lower(alias.resourceName) like '%name%' ";
     public static String C4 = "AND alias.resourceType = 'F' ";
+    public static String C5 = "AND parentAssociation.parent.id = 1 ";
 
     @Test
     public void empty() {
@@ -39,19 +40,28 @@ public class ResourceGroupFilterAdapterTests {
     }
     
     @Test
-    public void filterName() {
+    public void resourceName() {
     	target.setResourceName("NAME");
         assertEquals(C0+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
-    public void filterInheritance() {
+    public void resourceType() {
     	target.setResourceType(ResourceType.FIXTURE.getValue());
         assertEquals(C0+C4+OB, filter.createCriteriaAsString());
     }
     
+    @Test
+    public void parent() {
+    	ResourceGroup parent = new ResourceGroup(target.getEntity(), "PARENT");
+    	parent.setId(1);
+    	filter.setParent(parent);
+        assertEquals("select alias from ResourceGroup alias inner join alias.parentAssociations as parentAssociation ", filter.createSelectAsString());
+        assertEquals(C0+C5+OB, filter.createCriteriaAsString());
+    }
+    
     private ResourceGroupFilterAdapter filter;
-    private ResourceGroup target;;
+    private ResourceGroup target;
     
     @Before
     public void setUp() {
