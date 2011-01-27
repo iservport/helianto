@@ -25,8 +25,10 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
+import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.KeyTypeFilterAdapter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.NamespaceMgr;
@@ -201,7 +203,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
 	public void installPartnerKeys(String[] keyValues, Partner partner) {
 		logger.debug("Ready to install key value pairs {} to {}", keyValues, partner);
-		List<KeyType> keyTypes = namespaceMgr.loadKeyTypes(partner.getPrivateEntity().getEntity().getOperator());
+		Operator operator = partner.getPrivateEntity().getEntity().getOperator();
+		List<KeyType> keyTypes = namespaceMgr.findKeyTypes(new KeyTypeFilterAdapter(operator, ""));
 		Map<String, PartnerKey> partnerKeyMap = loadPartnerKeyMap(partner);
 		for (String keyValueTuple: keyValues) {
 			String[] keyValue = keyValueTuple.split(":");
