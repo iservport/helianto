@@ -31,9 +31,9 @@ public class OperatorTestSupport {
     }
 
     public static Operator createOperator(String operatorName) {
-        Operator operator = Operator.operatorFactory(operatorName, Locale.getDefault());
-        operator.getServiceMap().put("ADMIN", Service.serviceFactory(operator, "ADMIN"));
-        operator.getServiceMap().put("USER", Service.serviceFactory(operator, "USER"));
+        Operator operator = new Operator(operatorName, Locale.getDefault());
+        operator.getServiceMap().put("ADMIN", new Service(operator, "ADMIN"));
+        operator.getServiceMap().put("USER", new Service(operator, "USER"));
         return operator;
     }
 

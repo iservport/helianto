@@ -56,7 +56,7 @@ public class UserRoleTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             serviceExtension = DomainTestSupport.getNonRepeatableStringValue(testKey++, 8);
         }
-        UserRole userRole = UserRole.userRoleFactory(userGroup, service, serviceExtension);
+        UserRole userRole = new UserRole(userGroup, service, serviceExtension);
         return userRole;
     }
 

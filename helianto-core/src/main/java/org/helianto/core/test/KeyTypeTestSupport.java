@@ -33,7 +33,7 @@ public class KeyTypeTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             keyCode = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
         }
-        KeyType keyType = KeyType.keyTypeFactory(operator, keyCode);
+        KeyType keyType = new KeyType(operator, keyCode);
         return keyType;
     }
 

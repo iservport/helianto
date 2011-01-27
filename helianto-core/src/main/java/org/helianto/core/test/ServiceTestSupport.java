@@ -48,7 +48,7 @@ public class ServiceTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             serviceName = DomainTestSupport.getNonRepeatableStringValue(testKey++, 12);
         }
-        Service service = Service.serviceFactory(operator, serviceName);
+        Service service = new Service(operator, serviceName);
         return service;
     }
 

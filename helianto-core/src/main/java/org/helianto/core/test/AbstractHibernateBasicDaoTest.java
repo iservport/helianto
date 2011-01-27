@@ -139,6 +139,7 @@ public abstract class AbstractHibernateBasicDaoTest<T, D extends AbstractBasicDa
 		verify(persistenceStrategy);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	PersistenceStrategy persistenceStrategy;
 	AbstractBasicDao<T> sampleDao;
 	
