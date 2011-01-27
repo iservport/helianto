@@ -18,12 +18,9 @@ package org.helianto.core.service;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
@@ -34,19 +31,14 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.Service;
-import org.helianto.core.User;
-import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.filter.classic.EntityFilter;
-import org.helianto.core.filter.classic.OperatorFilter;
-import org.helianto.core.filter.classic.ProvinceFilter;
-import org.helianto.core.repository.BasicDao;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.ProvinceTestSupport;
-import org.helianto.core.test.ServiceTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 import org.junit.After;
 import org.junit.Before;
@@ -59,99 +51,38 @@ import org.junit.Test;
 public class NamespaceMgrTests {
 	
 	@Test
-	public void findOperatorExisting() {
+	public void findOperators() {
+		Filter filter = new TestingFilter();
 		List<Operator> operatorList = OperatorTestSupport.createOperatorList(1);
 		
-		expect(operatorDao.find(isA(OperatorFilter.class))).andReturn(operatorList);
+		expect(operatorDao.find(filter)).andReturn(operatorList);
 		replay(operatorDao);
 		
-		assertSame(operatorList , namespaceMgr.findOperator());
-		verify(operatorDao);
-	}
-	
-	@Test
-	public void findOperatorFirstTime() {
-		List<Operator> operatorList = new ArrayList<Operator>();
-		Operator managedOperator = OperatorTestSupport.createOperator();
-		
-		expect(operatorDao.merge(isA(Operator.class))).andReturn(managedOperator);
-		expect(operatorDao.find(isA(OperatorFilter.class))).andReturn(operatorList);
-		expect(postInstallationMgr.installOperator("DEFAULT", false)).andReturn(managedOperator);
-		replay(operatorDao);
-		replay(postInstallationMgr);
-		
-		entityDao.persist(isA(Entity.class));
-		replay(entityDao);
-		
-		userGroupDao.persist(isA(UserGroup.class));
-		expectLastCall().times(2);
-		replay(userGroupDao);
-		
-		assertSame(managedOperator, namespaceMgr.findOperator().get(0));
-		verify(operatorDao);
-		verify(entityDao);
-		verify(userGroupDao);
-		
-	}
-	
-	@Test
-	public void findOperatorByName() {
-		Operator operator = OperatorTestSupport.createOperator();
-		
-		expect(operatorDao.findUnique("NAME")).andReturn(operator);
-		replay(operatorDao);
-		
-		assertEquals(operator , namespaceMgr.findOperatorByName("NAME"));
+		assertSame(operatorList , namespaceMgr.findOperators(filter));
 		verify(operatorDao);
 	}
 	
 	@Test
 	public void storeOperator() {
 		Operator operator = OperatorTestSupport.createOperator();
-		Operator managedOperator = OperatorTestSupport.createOperator();
 		
-		expect(operatorDao.merge(operator)).andReturn(managedOperator);
+		operatorDao.saveOrUpdate(operator);
 		replay(operatorDao);
 		
-		assertSame(managedOperator , namespaceMgr.storeOperator(operator));
+		assertSame(operator , namespaceMgr.storeOperator(operator));
 		verify(operatorDao);
 	}
 	
 	@Test
 	public void findProvinces() {
 		List<Province> provinceList = ProvinceTestSupport.createProvinceList(1);
-		ProvinceFilter filter = new ProvinceFilter();
+		Filter filter = new TestingFilter();
 		
 		expect(provinceDao.find(filter)).andReturn(provinceList);
 		replay(provinceDao);
 		
 		assertSame(provinceList , namespaceMgr.findProvinces(filter));
 		verify(provinceDao);
-	}
-	
-	@Test
-	public void prepareProvince() {
-		Province province = ProvinceTestSupport.createProvince();
-		Province managedProvince = ProvinceTestSupport.createProvince();
-		
-		expect(provinceDao.merge(province)).andReturn(managedProvince);
-		provinceDao.evict(managedProvince);
-		replay(provinceDao);
-		
-		assertSame(managedProvince , namespaceMgr.prepareProvince(province));
-		verify(provinceDao);
-	}
-	
-	@Test
-	public void prepareNewProvince() {
-		Entity entity = EntityTestSupport.createEntity();
-		Entity managedEntity = EntityTestSupport.createEntity();
-		
-		expect(entityDao.merge(entity)).andReturn(managedEntity);
-		replay(entityDao);
-		
-		assertSame(managedEntity.getOperator() , namespaceMgr.prepareNewProvince(entity).getOperator());
-		verify(entityDao);
 	}
 	
 	@Test
@@ -169,7 +100,7 @@ public class NamespaceMgrTests {
 	@Test
 	public void findEntities() {
 		List<Entity> entityList = EntityTestSupport.createEntityList(1);
-		EntityFilter filter = new EntityFilter(new Operator());
+		Filter filter = new TestingFilter();
 		
 		expect(entityDao.find(filter)).andReturn(entityList);
 		replay(entityDao);
@@ -179,107 +110,82 @@ public class NamespaceMgrTests {
 	}
 	
 	@Test
-	public void prepareEntityNoId() {
+	public void storeEntity() {
 		Entity entity = EntityTestSupport.createEntity();
 		
+		entityDao.saveOrUpdate(entity);
 		replay(entityDao);
-
-		assertSame(entity , namespaceMgr.prepareEntity(entity));
+		
+		assertSame(entity , namespaceMgr.storeEntity(entity));
 		verify(entityDao);
 	}
 	
 	@Test
-	public void prepareEntity() {
-		Entity entity = EntityTestSupport.createEntity();
-		entity.setId(1);
-		Entity managedEntity = EntityTestSupport.createEntity();
-		User user = new User();
-		managedEntity.getUsers().add(user);
+	public void findKeyTypes() {
+		List<KeyType> keyTypeList = new ArrayList<KeyType>();
+		Filter filter = new TestingFilter();
 		
-		expect(entityDao.merge(entity)).andReturn(managedEntity);
-		entityDao.evict(managedEntity);
-		replay(entityDao);
-		
-		assertSame(managedEntity , namespaceMgr.prepareEntity(entity));
-		assertSame(user , managedEntity.getUserList().get(0));
-		verify(entityDao);
-	}
-	
-	@Test
-	public void storeNewEntity() {
-		Entity entity = EntityTestSupport.createEntity();
-		Entity managedEntity = EntityTestSupport.createEntity();
-		
-		expect(entityDao.merge(entity)).andReturn(managedEntity);
-		replay(entityDao);
-		
-		assertSame(managedEntity , namespaceMgr.storeEntity(entity));
-		verify(entityDao);
-	}
-	
-	@Test
-	public void loadKeyTypes() {
-		Operator operator = new Operator();
-		Operator managedOperator = new Operator();
-		KeyType keyType = new KeyType();
-		managedOperator.getKeyTypes().add(keyType);
-		
-		expect(operatorDao.merge(operator)).andReturn(managedOperator);
-		replay(operatorDao);
-		
-		List<KeyType> keyTypeList = namespaceMgr.loadKeyTypes(operator);
-		assertSame(keyType, keyTypeList.get(0));
-		verify(operatorDao);
-	}
-
-	@Test
-	public void storeKeyType() {
-		KeyType keyType = KeyTypeTestSupport.createKeyType();
-		KeyType managedKeyType = KeyTypeTestSupport.createKeyType();
-		
-		expect(keyTypeDao.merge(keyType)).andReturn(managedKeyType);
+		expect(keyTypeDao.find(filter)).andReturn(keyTypeList);
 		replay(keyTypeDao);
 		
-		assertSame(managedKeyType , namespaceMgr.storeKeyType(keyType));
+		assertSame(keyTypeList , namespaceMgr.findKeyTypes(filter));
 		verify(keyTypeDao);
 	}
 	
-//	@Test
-//	public void loadServices() {
-//		Operator operator = new Operator();
-//		Operator managedOperator = new Operator();
-//		Service service = new Service();
-//		managedOperator.getServices().add(service);
-//		
-//		expect(operatorDao.merge(operator)).andReturn(managedOperator);
-//		replay(operatorDao);
-//		
-//		List<Service> serviceList = namespaceMgr.loadServices(operator);
-//		assertSame(service, serviceList.get(0));
-//		verify(operatorDao);
-//	}
-//
 	@Test
-	public void storeService() {
-		Service service = ServiceTestSupport.createService();
-		Service managedService = ServiceTestSupport.createService();
+	public void storeKeyType() {
+		KeyType keyType = KeyTypeTestSupport.createKeyType();
 		
-		expect(serviceDao.merge(service)).andReturn(managedService);
+		keyTypeDao.saveOrUpdate(keyType);
+		replay(keyTypeDao);
+		
+		assertSame(keyType , namespaceMgr.storeKeyType(keyType));
+		verify(keyTypeDao);
+	}
+	
+	@Test
+	public void findServices() {
+		List<Service> serviceList = new ArrayList<Service>();
+		Filter filter = new TestingFilter();
+		
+		expect(serviceDao.find(filter)).andReturn(serviceList);
 		replay(serviceDao);
 		
-		assertSame(managedService , namespaceMgr.storeService(service));
+		assertSame(serviceList , namespaceMgr.findServices(filter));
 		verify(serviceDao);
+	}
+	
+	@Test
+	public void storeService() {
+		Service service = new Service(OperatorTestSupport.createOperator(), "NAME");
+		
+		serviceDao.saveOrUpdate(service);
+		replay(serviceDao);
+		
+		assertSame(service , namespaceMgr.storeService(service));
+		verify(serviceDao);
+	}
+	
+	@Test
+	public void findUserRoles() {
+		List<UserRole> userRoleList = new ArrayList<UserRole>();
+		Filter filter = new TestingFilter();
+		
+		expect(userRoleDao.find(filter)).andReturn(userRoleList);
+		replay(userRoleDao);
+		
+		assertSame(userRoleList , namespaceMgr.findUserRoles(filter));
+		verify(userRoleDao);
 	}
 	
 	@Test
 	public void storeUserRole() {
 		UserRole userRole = UserRoleTestSupport.createUserRole();
-		UserRole managedUserRole = UserRoleTestSupport.createUserRole();
 		
-		expect(userRoleDao.merge(userRole)).andReturn(managedUserRole);
+		userRoleDao.saveOrUpdate(userRole);
 		replay(userRoleDao);
 		
-		assertSame(managedUserRole , namespaceMgr.storeUserRole(userRole));
+		assertSame(userRole , namespaceMgr.storeUserRole(userRole));
 		verify(userRoleDao);
 	}
 	
@@ -302,44 +208,36 @@ public class NamespaceMgrTests {
 //	}
 	
 	private NamespaceMgrImpl namespaceMgr;
-	private PostInstallationMgr postInstallationMgr;
 	private FilterDao<Operator> operatorDao;
 	private FilterDao<Province> provinceDao;
 	private FilterDao<Entity> entityDao;
-	private BasicDao<UserGroup> userGroupDao;
-	private BasicDao<KeyType> keyTypeDao;
-	private BasicDao<Service> serviceDao;
-	private BasicDao<UserRole> userRoleDao;
+	private FilterDao<KeyType> keyTypeDao;
+	private FilterDao<Service> serviceDao;
+	private FilterDao<UserRole> userRoleDao;
 	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		namespaceMgr = new NamespaceMgrImpl();
-		postInstallationMgr = createMock(PostInstallationMgr.class);
-		namespaceMgr.setPostInstallationMgr(postInstallationMgr);
 		operatorDao = createMock(FilterDao.class);
 		namespaceMgr.setOperatorDao(operatorDao);
 		provinceDao = createMock(FilterDao.class);
 		namespaceMgr.setProvinceDao(provinceDao);
 		entityDao = createMock(FilterDao.class);
 		namespaceMgr.setEntityDao(entityDao);
-		userGroupDao = createMock(BasicDao.class);
-		namespaceMgr.setUserGroupDao(userGroupDao);
-		keyTypeDao = createMock(BasicDao.class);
+		keyTypeDao = createMock(FilterDao.class);
 		namespaceMgr.setKeyTypeDao(keyTypeDao);
-		serviceDao = createMock(BasicDao.class);
+		serviceDao = createMock(FilterDao.class);
 		namespaceMgr.setServiceDao(serviceDao);
-		userRoleDao = createMock(BasicDao.class);
+		userRoleDao = createMock(FilterDao.class);
 		namespaceMgr.setUserRoleDao(userRoleDao);
 	}
 	
 	@After
 	public void tearDown() {
-		reset(postInstallationMgr);
 		reset(operatorDao);
 		reset(provinceDao);
 		reset(entityDao);
-		reset(userGroupDao);
 		reset(keyTypeDao);
 		reset(serviceDao);
 		reset(userRoleDao);

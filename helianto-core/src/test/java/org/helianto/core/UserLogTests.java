@@ -15,17 +15,14 @@
 
 package org.helianto.core;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
 import org.helianto.core.test.DomainTestSupport;
-
-import junit.framework.TestCase;
-
-import org.helianto.core.User;
-
-import org.helianto.core.UserLog;
 import org.junit.Test;
 
 /**

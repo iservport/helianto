@@ -24,7 +24,7 @@ public class UserRoleTests  {
         Service service = new Service();
         String serviceExtension = DomainTestSupport.STRING_TEST_VALUE;
         
-        UserRole userRole = UserRole.userRoleFactory(userGroup, service, serviceExtension);
+        UserRole userRole = new UserRole(userGroup, service, serviceExtension);
         
         assertSame(userGroup, userRole.getUserGroup());
         assertSame(service, userRole.getService());

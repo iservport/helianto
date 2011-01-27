@@ -40,7 +40,7 @@ public class CriteriaBuilderTests  {
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
         assertEquals("1969-12-31 21:00:00", formatter.format(date));
-        assertEquals("", criteriaBuilder.getPrefix());
+        assertEquals("", criteriaBuilder.getAlias());
     }
     
     @Test
@@ -48,7 +48,7 @@ public class CriteriaBuilderTests  {
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
         assertEquals("1969-12-31 21:00:00", formatter.format(date));
-        assertEquals("PREFIX", criteriaBuilder.getPrefix());
+        assertEquals("PREFIX", criteriaBuilder.getAlias());
     }
     
     @Test
@@ -57,7 +57,7 @@ public class CriteriaBuilderTests  {
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
         assertEquals("31121969 210000", formatter.format(date));
-        assertEquals("OTHER_PREFIX", criteriaBuilder.getPrefix());
+        assertEquals("OTHER_PREFIX", criteriaBuilder.getAlias());
     }
     
     @Test
@@ -71,7 +71,7 @@ public class CriteriaBuilderTests  {
     @Test
     public void createCriteria() {
         criteriaBuilder.createCriteria("OTHER_PREFIX");
-        assertEquals("OTHER_PREFIX", criteriaBuilder.getPrefix());
+        assertEquals("OTHER_PREFIX", criteriaBuilder.getAlias());
     }
     
     @Test
@@ -123,11 +123,11 @@ public class CriteriaBuilderTests  {
         assertEquals("STRING ",criteriaBuilder.getCriteriaAsString());
     }
     
-    @Test
-    public void stringWithPrefixAppender() {
-        assertTrue(criteriaBuilder.appendWithPrefix("STRING") instanceof CriteriaBuilder);
-        assertEquals("PREFIX.STRING ",criteriaBuilder.getCriteriaAsString());
-    }
+//    @Test
+//    public void stringWithPrefixAppender() {
+//        assertTrue(criteriaBuilder.appendWithPrefix("STRING") instanceof CriteriaBuilder);
+//        assertEquals("PREFIX.STRING ",criteriaBuilder.getCriteriaAsString());
+//    }
     
     @Test
     public void stringLikeAppender() {

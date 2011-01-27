@@ -26,7 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Unit;
-import org.helianto.core.filter.classic.UnitFilter;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;
@@ -39,7 +40,7 @@ public class UnitMgrImplTests {
     
     @Test
     public void findUnits() {
-    	UnitFilter unitFilter = new UnitFilter();
+    	Filter unitFilter = new TestingFilter();
     	List<Unit> unitList = new ArrayList<Unit>();
     	
     	expect(unitDao.find(unitFilter)).andReturn(unitList);

@@ -178,7 +178,8 @@ public class SequenceMgrImplTests {
         reset(digitGenerationStrategy);
     }
     
-    public class NumerableStub implements Numerable {
+    @SuppressWarnings("serial")
+	public class NumerableStub implements Numerable {
     	
     	private long publicNumber = 0;
 
@@ -199,7 +200,8 @@ public class SequenceMgrImplTests {
 
     }
     
-    public class SequenceableStub implements Sequenceable {
+    @SuppressWarnings("serial")
+	public class SequenceableStub implements Sequenceable {
     	
     	private long internalNumber = 0;
 
@@ -220,7 +222,8 @@ public class SequenceMgrImplTests {
 
     }
     
-    public class SequenceableVerifiableStub implements Sequenceable, Verifiable {
+    @SuppressWarnings("serial")
+	public class SequenceableVerifiableStub implements Sequenceable, Verifiable {
     	
     	private long internalNumber = Long.MAX_VALUE;
     	private int digit = 0;

@@ -33,7 +33,7 @@ public class FilterTests {
 	@Test
 	public void mainCriteriaBuilder() {
 		filter.createCriteriaAsString();
-		assertEquals("TEST_ALIAS", createdCriteriaBuilder.getPrefix());
+		assertEquals("TEST_ALIAS", createdCriteriaBuilder.getAlias());
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class FilterTests {
 		assertSame(createdCriteriaBuilder, preProcessedCriteriaBuilder);
 		assertSame(createdCriteriaBuilder, selectionCriteriaBuilder);
 		assertTrue(reset);
-		assertEquals("FILTER", filterCriteriaBuilder.getPrefix());
+		assertEquals("FILTER", filterCriteriaBuilder.getAlias());
 		assertSame(postProcessedCriteriaBuilder, preProcessedCriteriaBuilder);
 	}
 	
@@ -60,7 +60,7 @@ public class FilterTests {
 		selection = false;
 		assertEquals("", filter.createCriteriaAsString());
 		assertSame(createdCriteriaBuilder, preProcessedCriteriaBuilder);
-		assertEquals("SELECTION", selectionCriteriaBuilder.getPrefix());
+		assertEquals("SELECTION", selectionCriteriaBuilder.getAlias());
 		assertFalse(reset);
 		assertSame(createdCriteriaBuilder, filterCriteriaBuilder);
 		assertSame(postProcessedCriteriaBuilder, preProcessedCriteriaBuilder);
@@ -72,7 +72,7 @@ public class FilterTests {
 		orderBy = "ORDER";
 		assertEquals("order by TEST_ALIAS.ORDER ", filter.createCriteriaAsString());
 		assertSame(createdCriteriaBuilder, preProcessedCriteriaBuilder);
-		assertEquals("SELECTION", selectionCriteriaBuilder.getPrefix());
+		assertEquals("SELECTION", selectionCriteriaBuilder.getAlias());
 		assertFalse(reset);
 		assertSame(createdCriteriaBuilder, filterCriteriaBuilder);
 		assertSame(postProcessedCriteriaBuilder, preProcessedCriteriaBuilder);

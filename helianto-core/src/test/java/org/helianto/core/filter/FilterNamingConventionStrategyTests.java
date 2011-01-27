@@ -31,6 +31,7 @@ public class FilterNamingConventionStrategyTests {
 		public boolean isSelection() { return false; }
 		public void reset() { }
 		public void setObjectAlias(String objectAlias) { }
+		public String createSelectAsString() { return null; }
 	}
 
 }

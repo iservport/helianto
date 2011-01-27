@@ -19,11 +19,11 @@ public class KeyTypeTests {
      * Test <code>KeyType</code> static factory method.
      */
 	@Test
-    public void keyTypeFactory() {
+    public void constructor() {
         Operator operator = new Operator();
         String keyCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        KeyType keyType = KeyType.keyTypeFactory(operator, keyCode);
+        KeyType keyType = new KeyType(operator, keyCode);
         
         assertSame(operator, keyType.getOperator());
         assertEquals(keyCode, keyType.getKeyCode());
@@ -38,7 +38,7 @@ public class KeyTypeTests {
         Operator operator = new Operator();
         String keyCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        KeyType keyType = KeyType.keyTypeFactory(operator, keyCode);
+        KeyType keyType = new KeyType(operator, keyCode);
         KeyType copy = (KeyType) DomainTestSupport.minimalEqualsTest(keyType);
         
         copy.setOperator(null);

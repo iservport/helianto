@@ -23,7 +23,7 @@ public class ServiceTests {
         Operator operator = new Operator();
         String serviceName = DomainTestSupport.STRING_TEST_VALUE;
         
-        Service service = Service.serviceFactory(operator, serviceName);
+        Service service = new Service(operator, serviceName);
         
         assertSame(operator, service.getOperator());
         assertEquals(serviceName, service.getServiceName());
@@ -38,7 +38,7 @@ public class ServiceTests {
         Operator operator = new Operator();
         String serviceName = DomainTestSupport.STRING_TEST_VALUE;
         
-        Service service = Service.serviceFactory(operator, serviceName);
+        Service service = new Service(operator, serviceName);
         Service copy = (Service) DomainTestSupport.minimalEqualsTest(service);
         
         copy.setOperator(null);
