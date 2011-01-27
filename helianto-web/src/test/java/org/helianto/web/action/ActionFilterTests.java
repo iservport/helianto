@@ -123,6 +123,7 @@ public class ActionFilterTests {
 			@SuppressWarnings("unused")
 			public void setClear(boolean clear) { }
 			public void setObjectAlias(String objectAlias) { }
+			public String createSelectAsString() { return null; }
 		};
 		userDetails = new  PublicUserDetails() {
 			@SuppressWarnings("unused")
