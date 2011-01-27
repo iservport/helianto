@@ -47,6 +47,13 @@ public interface ResourceMgr {
      */
     public List<ResourceGroup> findResourceGroups(Filter resourceGroupFilter);
     
+    /**
+     * Find <tt>ResourceAssociation</tt>s using filter.
+     * 
+     * @param resourceAssociationFilter
+     */
+    public List<ResourceAssociation> findResourceAssociations(Filter resourceAssociationFilter);
+    
 	/**
      * <p>
      * Method required to create the equipment tree.
