@@ -38,7 +38,16 @@ public abstract class AbstractAction<T> implements Serializable {
 	 * Name used as key to retrieve the target from attribute maps.
 	 */
 	protected String getTargetName() {
-		return actionNamingConventionStrategy.getConventionalName(this.getClass());
+		return getTargetName(this.getClass());
+	}
+
+	/**
+	 * Name used as key to retrieve the target from attribute maps.
+	 * 
+	 * @param clazz
+	 */
+	protected String getTargetName(Class<?> clazz) {
+		return actionNamingConventionStrategy.getConventionalName(clazz);
 	}
 
 	/**
