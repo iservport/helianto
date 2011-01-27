@@ -58,7 +58,7 @@ public class AgreementFilter extends AbstractUserBackedCriteriaFilter {
 		appendLikeFilter("summary", getSummaryLike(), mainCriteriaBuilder);
 		appendLikeFilter("partner.partnerRegistry.partnerAlias", getCustomerAliasLike(), mainCriteriaBuilder);
 		if (getProcess()!=null) {
-			mainCriteriaBuilder.appendAnd().append(processCriteriaBuilder(mainCriteriaBuilder.getPrefix()));
+			mainCriteriaBuilder.appendAnd().append(processCriteriaBuilder(mainCriteriaBuilder.getAlias()));
 		}
 	}
 	
