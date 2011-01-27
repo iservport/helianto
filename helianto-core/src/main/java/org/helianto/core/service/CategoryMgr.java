@@ -18,6 +18,8 @@ package org.helianto.core.service;
 import java.util.List;
 
 import org.helianto.core.Category;
+import org.helianto.core.CategoryGroup;
+import org.helianto.core.Entity;
 import org.helianto.core.filter.Filter;
 
 /**
@@ -47,5 +49,14 @@ public interface CategoryMgr {
 	 * @param category
 	 */
 	public void removeCategory(Category category);
+
+	/**
+	 * Install category.
+	 * 
+     * @param entity
+     * @param categoryGroup
+     * @param categoryCode
+	 */
+	public Category installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName);
 
 }

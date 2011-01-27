@@ -100,8 +100,7 @@ public class ServerMgrImpl  implements ServerMgr {
     public Service findOrCreateService(Entity entity, String serviceName) {
         Service service = serviceDao.findUnique(entity.getOperator(), serviceName);
         if (service==null) {
-            service = Service.serviceFactory(entity
-                    .getOperator(), serviceName);
+            service = new Service(entity.getOperator(), serviceName);
             serviceDao.persist(service);
             logger.debug("Persisted {}", service);
         } else {
@@ -113,8 +112,7 @@ public class ServerMgrImpl  implements ServerMgr {
     public UserRole findOrCreateUserRole(UserGroup userGroup, Service service, String extension) {
         UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
         if (userRole==null) {
-            userRole = UserRole.userRoleFactory(
-                    userGroup, service, extension);
+            userRole = new UserRole(userGroup, service, extension);
             logger.debug("Persisted {}", userRole);
         } else {
             logger.debug("Retrieved {}", userRole);
@@ -141,7 +139,7 @@ public class ServerMgrImpl  implements ServerMgr {
 
     
     public User storeManager(Identity managerIdentity) {
-        Operator operator = Operator.operatorFactory("DEFAULT", Locale.getDefault());
+        Operator operator = new Operator("DEFAULT", Locale.getDefault());
         Entity entity = new Entity(operator, "DEFAULT");
         logger.debug("Entity created with defaults: {}", entity);
         return storeManager(entity, managerIdentity);

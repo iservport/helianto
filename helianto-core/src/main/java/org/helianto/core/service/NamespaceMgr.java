@@ -51,94 +51,85 @@ public interface NamespaceMgr {
 
     /**
      * <p>Find <code>Operator</code> list.</p>
-     */
-    public List<Operator> findOperator();
-
-    /**
-     * <p>Persist a new <code>Entity</code>.</p>
      * 
-     * <p>Two user groups are automatically created and associated to the new 
-     * entity: (1) the admin user, reserved to hold privileges to manage other groups
-     * and users, (2) the default user group, to grant access to the application entry 
-     * point. </p>
+     * @param operatorFilter
      */
-    public Entity createAndPersistEntity(Operator operator, String alias);
-    
-    /**
-     * <p>Find <code>Operator</code> by name.</p>
-     */
-    public Operator findOperatorByName(String operatorName);
+    public List<Operator> findOperators(Filter operatorFilter);
 
-	/**
-	 * Prepare a <code>Province</code> to the presentation layer.
-	 */
-	public Province prepareProvince(Province province);
-	
-	/**
-	 * Prepare a new <code>Province</code> to the presentation layer.
-	 */
-	public Province prepareNewProvince(Entity entity);
-	
     /**
      * Store <code>Operator</code>.
+     * 
+     * @param operator
      */
     public Operator storeOperator(Operator operator);
 
     /**
-     * Find <code>Province</code>.
-     * 
-     * @param operator
-     * @param provinceCode
-     */
-	public Province findProvince(Operator operator, String provinceCode);
-	
-    /**
      * Find <code>Province</code>s.
+     * 
+     * @param filter
      */
 	public List<Province> findProvinces(Filter filter);
 	
     /**
      * Store <code>Province</code> to the data store.
+     * 
+     * @param province
      */
 	public Province storeProvince(Province province);
 	
     /**
      * Find <code>Entity</code>(ies).
+     * 
+     * @param filter
      */
 	public List<Entity> findEntities(Filter filter);
 
     /**
-     * Prepare <code>Entity</code> in session.
-     */
-	public Entity prepareEntity(Entity entity);
-
-    /**
      * Store <code>Entity</code> to the data store.
+     * 
+     * @param entity
      */
 	public Entity storeEntity(Entity entity);
 
     /**
-     * Load <code>KeyType</code>(s).
+     * Find <code>KeyType</code>(s).
+     * 
+     * @param keyTypeFilter
      */
-	public List<KeyType> loadKeyTypes(Operator operator);
+	public List<KeyType> findKeyTypes(Filter keyTypeFilter);
 
     /**
      * Store <code>KeyType</code> to the data store.
+     * 
+     * @param keyType
      */
 	public KeyType storeKeyType(KeyType keyType);
 
     /**
-     * Load <code>Service</code>(s).
+     * Find <code>Service</code>(s).
+     * 
+     * @param serviceFilter
      */
-	public List<Service> loadServices(Operator operator);
+	public List<Service> findServices(Filter serviceFilter);
 
     /**
      * Store <code>Service</code> to the data store.
+     * 
+     * @param service
      */
 	public Service storeService(Service service);
 
     /**
+     * Find <code>UserRole</code>(s).
+     * 
+     * @param userRoleFilter
+     */
+	public List<UserRole> findUserRoles(Filter userRoleFilter);
+
+    /**
      * Store <code>UserRole</code> to the data store.
+     * 
+     * @param userRole
      */
 	public UserRole storeUserRole(UserRole userRole);
 

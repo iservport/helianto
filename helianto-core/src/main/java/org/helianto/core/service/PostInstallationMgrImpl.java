@@ -54,7 +54,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		}
 		if (defaultOperator==null) {
 			logger.debug("Will install operator {} ...", defaultOperatorName); 
-			defaultOperator = Operator.operatorFactory(defaultOperatorName, Locale.getDefault());
+			defaultOperator = new Operator(defaultOperatorName, Locale.getDefault());
 			operatorDao.saveOrUpdate(defaultOperator);
 		}
 		logger.debug("Default operator AVAILABLE as {}.", defaultOperator);
@@ -107,7 +107,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		KeyType keyType = keyTypeDao.findUnique(defaultOperator, keyCode);
 		if (keyType==null) {
 			logger.debug("Will install key code {} ...", keyCode); 
-			keyType = KeyType.keyTypeFactory(defaultOperator, keyCode);
+			keyType = new KeyType(defaultOperator, keyCode);
 			keyTypeDao.saveOrUpdate(keyType);
 		}
 		logger.debug("KeyType  AVAILABLE as {}.", keyType);
@@ -123,7 +123,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		Service service = serviceDao.findUnique(defaultOperator, serviceName);
 		if (service==null) {
 			logger.debug("Will install service {} ...", serviceName);
-			service = Service.serviceFactory(defaultOperator, serviceName);
+			service = new Service(defaultOperator, serviceName);
 			serviceDao.saveOrUpdate(service);
 		}
 		logger.debug("Sevice AVAILABLE as {}.", service);

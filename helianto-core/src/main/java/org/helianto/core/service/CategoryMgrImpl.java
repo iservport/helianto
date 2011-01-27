@@ -20,6 +20,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.Category;
+import org.helianto.core.CategoryGroup;
+import org.helianto.core.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -48,6 +50,19 @@ public class CategoryMgrImpl implements CategoryMgr {
 	public void removeCategory(Category category) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public Category installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName) {
+    	Category category = categoryDao.findUnique(entity, categoryGroup, categoryCode);
+    	if (category!=null) {
+        	logger.debug("Found category {}", category);
+    		return category;
+    	}
+    	category = new Category(entity, categoryGroup, categoryCode);
+    	category.setCategoryName(categoryName);
+    	categoryDao.saveOrUpdate(category);
+    	logger.debug("Category {} installed.", category);
+    	return category;
 	}
 
 
