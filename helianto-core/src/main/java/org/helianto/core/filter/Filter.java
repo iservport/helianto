@@ -40,4 +40,9 @@ public interface Filter {
 	 */
 	public void setObjectAlias(String objectAlias);
 	
+	/**
+	 * Create select.
+	 */
+	public String createSelectAsString();
+	
 }

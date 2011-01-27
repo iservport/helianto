@@ -96,7 +96,7 @@ public abstract class AbstractDateIntervalFilterAdapter<T extends TrunkEntity> e
 	}
 	
 	public void appendDateInterval(CriteriaBuilder mainCriteriaBuilder, String dateFieldName, DateInterval dateInterval) {
-		DateCriteriaBuilder dateCriteria = new DateCriteriaBuilder(mainCriteriaBuilder.getPrefix(), dateFieldName);
+		DateCriteriaBuilder dateCriteria = new DateCriteriaBuilder(mainCriteriaBuilder.getAlias(), dateFieldName);
 		dateCriteria.appendFromDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());	
 		dateCriteria.appendToDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());
 		if (dateCriteria.getSegmentCount()>0) {

@@ -53,6 +53,10 @@ public abstract class AbstractFilter implements Serializable, CriteriaFilter {
 		this.objectAlias = objectAlias;
 	}
     
+    public String createSelectAsString() {
+    	return null;
+    }
+    
     /**
      * True if add all "order by" string are successful.
      * 
