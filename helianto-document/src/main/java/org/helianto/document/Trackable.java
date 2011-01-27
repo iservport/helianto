@@ -21,7 +21,6 @@ import java.util.Calendar;
  * Provide tracking information, like frequency value and type.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated see Repeatable
  */
 public interface Trackable {
 

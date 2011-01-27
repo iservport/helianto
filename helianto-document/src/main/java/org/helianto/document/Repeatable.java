@@ -15,8 +15,6 @@
 
 package org.helianto.document;
 
-import java.util.Calendar;
-
 import org.helianto.core.number.Sequenceable;
 
 /**
@@ -24,25 +22,6 @@ import org.helianto.core.number.Sequenceable;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Repeatable extends Sequenceable {
-
-    /**
-     * Tracking mode.
-     * 
-     * @see {@link TrackingMode}
-     */
-    public char getTrackingMode();
-    
-    /**
-     * Frequency.
-     */
-    public int getFrequency();
-    
-    /**
-     * Frequency type.
-     * 
-     * @see Calendar
-     */
-    public int getFrequencyType();
+public interface Repeatable extends Sequenceable, Trackable {
 
 }
