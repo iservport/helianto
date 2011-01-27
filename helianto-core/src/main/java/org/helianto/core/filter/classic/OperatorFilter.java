@@ -29,6 +29,7 @@ import org.helianto.core.criteria.CriteriaBuilder;
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class OperatorFilter extends AbstractUserBackedCriteriaFilter {
 
