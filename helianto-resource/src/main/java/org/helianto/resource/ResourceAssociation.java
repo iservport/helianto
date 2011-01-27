@@ -27,6 +27,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.AbstractAssociation;
+
 /**
  * Enable <tt>Resource</tt>s and <tt>ResourceGroup</tt>s to associate 
  * to each other in a many-to-many relationship.
@@ -51,6 +52,20 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
 	 */
     public ResourceAssociation() {
     	super();
+    }
+
+	/** 
+	 * Key constructor.
+	 * 
+	 * @param parent
+	 * @param child
+	 */
+    public ResourceAssociation(ResourceGroup parent, ResourceGroup child) {
+    	this();
+    	setParent(parent);
+    	if (child!=null) {
+    		setChild(child);
+    	}
     }
 
     /**
@@ -94,7 +109,7 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
 		}
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "rawtypes" })
 	@Override
     protected int compareChild(AbstractAssociation other) {
     	if (getChild()!=null && other.getChild()!=null) {
