@@ -51,9 +51,21 @@ public abstract class AbstractFilterDao<T> extends AbstractBasicDao<T> implement
 	 */
 	public Collection<T> find(Filter filter) {
 		String whereClause = filter.createCriteriaAsString();
-		return super.find(getSelectBuilder(filter.getObjectAlias()), whereClause);
+		return super.find(getSelectBuilder(filter), whereClause);
 	}
 
+	/**
+	 * Overload {@link #getSelectBuilder(String)} to allow select clause by filter.
+	 * 
+	 * @param filter
+	 */
+	protected StringBuilder getSelectBuilder(Filter filter) {
+		if (filter.createSelectAsString()!=null) {
+			return new StringBuilder(filter.createSelectAsString());
+		}
+		return super.getSelectBuilder(filter.getObjectAlias());
+	}
+	
     protected static Logger logger = LoggerFactory.getLogger(AbstractFilterDao.class);
 
 }
