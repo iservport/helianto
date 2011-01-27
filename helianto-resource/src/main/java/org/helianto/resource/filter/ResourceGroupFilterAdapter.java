@@ -17,6 +17,7 @@
 package org.helianto.resource.filter;
 
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.filter.AbstractTrunkFilterAdapter;
 import org.helianto.resource.Resource;
 import org.helianto.resource.ResourceGroup;
@@ -32,6 +33,7 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 
     private static final long serialVersionUID = 1L;
 	private Class<? extends ResourceGroup> clazz = ResourceGroup.class;
+	private ResourceGroup parent;
 	
 	/**
 	 * Default constructor.
@@ -51,6 +53,17 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	}
 
 	@Override
+	public String createSelectAsString() {
+		SelectFromBuilder builder = new SelectFromBuilder(ResourceGroup.class, getObjectAlias());
+		builder.createSelectFrom();
+		if (getParent()!=null) {
+	        logger.debug("Parent resource group is: '{}'", getParent());
+	        builder.appendInnerJoin("parentAssociations", "parentAssociation");
+		}
+		return builder.getAsString();
+	}
+	
+	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (!getClazz().equals(ResourceGroup.class)) {
@@ -66,6 +79,9 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		if (getParent()!=null) {
+			mainCriteriaBuilder.appendAnd().append("parentAssociation.parent.id =").append(getParent().getId());
+		}
 		appendLikeFilter("resourceName", getFilter().getResourceName(), mainCriteriaBuilder);
 		appendEqualFilter("resourceType", getFilter().getResourceType(), mainCriteriaBuilder);
 		appendOrderBy("resourceCode", mainCriteriaBuilder);
@@ -79,6 +95,16 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	}
 	public void setClazz(Class<? extends ResourceGroup> clazz) {
 		this.clazz = clazz;
+	}
+	
+	/**
+	 * Parent filter.
+	 */
+	public ResourceGroup getParent() {
+		return parent;
+	}
+	public void setParent(ResourceGroup parent) {
+		this.parent = parent;
 	}
 
 	/**
@@ -102,9 +128,6 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 		}
 	}
 
-	/**
-	 * Resource name like.
-	 */
-	private static Logger logger = LoggerFactory.getLogger(ResourceGroup.class);
+	private static Logger logger = LoggerFactory.getLogger(ResourceGroupFilterAdapter.class);
 	
 }
