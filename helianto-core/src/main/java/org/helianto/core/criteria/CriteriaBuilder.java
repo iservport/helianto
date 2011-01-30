@@ -59,6 +59,17 @@ public class CriteriaBuilder extends SelectFromBuilder {
     }
     
     /**
+     * Class alias constructor.
+     * 
+     * @param clazz
+     * @param alias
+     */
+    public CriteriaBuilder(Class<?> clazz, String alias) {
+        this(alias, DEFAULT_SQL_CONVERSION_DATE_FORMAT);
+        setClazz(clazz);
+    }
+    
+    /**
      * Constructor taking a date format string.
      * 
      * @param alias
