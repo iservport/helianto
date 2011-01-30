@@ -46,19 +46,25 @@ public class ProvinceFilterAdapterTests  {
 
     @Test
     public void empty() {
+        assertEquals(C0, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void clazz() {
+    	filter.setClazz(Province.class);
         assertEquals(C0+C1, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
     	target.setProvinceCode("CODE");
-        assertEquals(C0+C1+C2, filter.createCriteriaAsString());
+        assertEquals(C0+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void filter() {
     	target.setProvinceName("NAME_LIKE");
-        assertEquals(C0+C1+C3, filter.createCriteriaAsString());
+        assertEquals(C0+C3, filter.createCriteriaAsString());
     }
     
     // collabs

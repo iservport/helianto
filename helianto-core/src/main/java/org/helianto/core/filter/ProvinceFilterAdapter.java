@@ -36,7 +36,6 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> {
 	 */
 	public ProvinceFilterAdapter(Province province) {
 		super(province);
-		setClazz(Province.class);
 	}
 	
 	/**
