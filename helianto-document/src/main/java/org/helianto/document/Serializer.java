@@ -15,7 +15,6 @@
 
 package org.helianto.document;
 
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.List;
@@ -56,7 +55,7 @@ import org.helianto.core.Entity;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("B")
-public class Serializer implements Serializable, Customizer {
+public class Serializer implements Customizer {
 
 	private static final long serialVersionUID = 1L;
     private int id;
@@ -98,6 +97,7 @@ public class Serializer implements Serializable, Customizer {
     	setBuilderCode(builderCode);
     	setNumberPattern("0000");
     	setBuilderName("");
+    	setContentType(' ');
     }
 
     /**

@@ -1,5 +1,7 @@
 package org.helianto.document;
 
+import org.helianto.core.TrunkEntity;
+
 
 
 /**
@@ -7,7 +9,7 @@ package org.helianto.document;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface Customizer {
+public interface Customizer extends TrunkEntity {
 
     /**
      * Pattern to be used in association with <code>SequenceMgr</code>.
