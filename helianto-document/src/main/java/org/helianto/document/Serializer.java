@@ -139,10 +139,18 @@ public class Serializer implements Customizer {
      */
     @Column(length=24)
     public String getBuilderCode() {
-        return this.builderCode;
+        return getInternalBuilderCode();
     }
     public void setBuilderCode(String builderCode) {
         this.builderCode = builderCode;
+    }
+    
+    /**
+     * Sublcasses may change the way a builder code is retrieved.
+     */
+    @Transient
+    protected String getInternalBuilderCode() {
+        return this.builderCode;
     }
 
     /**
@@ -167,12 +175,20 @@ public class Serializer implements Customizer {
 	 */
     @Column(length=128)
 	public String getBuilderName() {
-		return builderName;
+		return getInternalBuilderName();
 	}
 	public void setBuilderName(String builderName) {
 		this.builderName = builderName;
 	}
 	
+    /**
+     * Sublcasses may change the way a builder code is retrieved.
+     */
+    @Transient
+    protected String getInternalBuilderName() {
+    	return builderName;
+    }
+
     /**
      * Build the code.
      */
