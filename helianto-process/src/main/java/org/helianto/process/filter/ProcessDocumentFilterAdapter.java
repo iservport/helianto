@@ -17,6 +17,7 @@ package org.helianto.process.filter;
 
 import java.util.Collection;
 
+import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.AbstractTrunkFilterAdapter;
 import org.helianto.process.Characteristic;
@@ -40,10 +41,22 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
     private Collection<? extends ProcessDocument> exclusions;
     
     /**
-     * Default constructor
+     * Default constructor.
+     * 
+     * @param processDocument
      */
     public ProcessDocumentFilterAdapter(ProcessDocument processDocument) {
     	super(processDocument);
+    }
+    
+    /**
+     * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public ProcessDocumentFilterAdapter(Entity entity, String docCode) {
+    	super(new ProcessDocument(entity, docCode));
     }
     
     /**
