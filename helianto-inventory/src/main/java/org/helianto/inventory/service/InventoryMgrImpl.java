@@ -95,6 +95,11 @@ public class InventoryMgrImpl implements InventoryMgr {
 		this.agreementDao = agreementDao;
 	}
 	
+	@Resource(name="taxDao")
+	public void setTaxDao(FilterDao<Tax> taxDao) {
+		this.taxDao = taxDao;
+	}
+	
 	@Resource
 	public void setSequenceMgr(SequenceMgr sequenceMgr) {
 		this.sequenceMgr = sequenceMgr;
