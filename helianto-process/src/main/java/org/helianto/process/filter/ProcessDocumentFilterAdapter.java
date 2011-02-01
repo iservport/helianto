@@ -55,7 +55,7 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 	@Override
 	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
-		if (!getClazz().equals(ProcessDocument.class)) {
+		if (getClazz()!=null && !getClazz().equals(ProcessDocument.class)) {
 	        logger.debug("Document class is: '{}'", getClazz());
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
