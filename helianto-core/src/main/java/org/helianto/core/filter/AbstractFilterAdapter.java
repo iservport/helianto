@@ -28,5 +28,14 @@ public abstract class AbstractFilterAdapter<T> extends AbstractFilter {
 	public T getFilter() {
 		return filter;
 	}
+	
+	/**
+	 * Internal filter setter.
+	 * 
+	 * @param filter
+	 */
+	protected void setFilter(T filter) {
+		this.filter = filter;
+	}
 
 }
