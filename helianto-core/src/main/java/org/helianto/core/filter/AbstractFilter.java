@@ -39,8 +39,17 @@ public abstract class AbstractFilter implements Serializable, CriteriaFilter {
      * Default constructor.
      */
     public AbstractFilter() {
+    	this("alias");
+    }
+    
+    /**
+     * Alias constructor.
+     * 
+     * @param alias
+     */
+    public AbstractFilter(String alias) {
     	setOrderByString("");
-    	setObjectAlias("alias");
+    	setObjectAlias(alias);
     }
     
     /**
