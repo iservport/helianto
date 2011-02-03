@@ -116,7 +116,7 @@ public class UserMgrImpl implements UserMgr {
 	}
 	
     public UserGroup prepareNewUserGroup(Entity entity) {
-    	UserGroup userGroup = UserGroup.userGroupFactory(entity, "");
+    	UserGroup userGroup = new UserGroup(entity, "");
     	entity.getUsers().add(userGroup);
     	return userGroup;
 	}

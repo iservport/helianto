@@ -66,16 +66,6 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
 		return 'G';
 	}
 
-    /**
-     * <code>UserGroup</code> factory.
-     * 
-     * @param entity
-     * @param userKey
-     */
-    public static UserGroup userGroupFactory(Entity entity, String userKey) {
-        return UserGroup.internalUserGroupFactory(UserGroup.class, entity, userKey);
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -96,7 +86,7 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
     public UserGroup() {
     	setUserKey("");
     	setLastEvent(new Date());
-    	setUserState(UserState.ACTIVE);
+    	setUserStateAsEnum(UserState.ACTIVE);
     	setAccountNonExpired(true);
     	setCreateIdentity(CreateIdentity.REJECT);
     }
@@ -161,13 +151,9 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
      */
     @Column(length=40)
     public String getUserKey() {
-        return resolveUserKey(this.userKey);
+        return getInternalUserKey();
     }
     
-    @Transient
-    protected String resolveUserKey(String userKey) {
-    	return userKey;
-    }
     public void setUserKey(String userKey) {
         this.userKey = userKey;
     }
@@ -176,7 +162,15 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
     	return getUserKey().length()==0;
     }
 
-	/**
+    /**
+     * <<Transient>> Subclasses may override to customize userKey creation.
+     */
+    @Transient
+    protected String getInternalUserKey() {
+    	return this.userKey;
+    }
+
+    /**
      * Last event
      */
     @Temporal(TemporalType.TIMESTAMP)
@@ -196,7 +190,7 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
     public void setUserState(char userState) {
         this.userState = userState;
     }
-    public void setUserState(UserState userState) {
+    public void setUserStateAsEnum(UserState userState) {
         this.userState = userState.getValue();
     }
 

@@ -73,7 +73,7 @@ public class ServerMgrImpl  implements ServerMgr {
             userGroup = userGroupDao.findUnique(entity, userKey);
         }
         if (userGroup==null) {
-            userGroup = UserGroup.userGroupFactory(entity, userKey);
+            userGroup = new UserGroup(entity, userKey);
             userGroupDao.persist(userGroup);
             logger.debug("Persisted {}", userGroup);
         } else {

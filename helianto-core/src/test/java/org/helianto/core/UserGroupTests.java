@@ -46,7 +46,7 @@ public class UserGroupTests {
     public void userGroupFactory() {
         Entity entity = new Entity();
         
-        UserGroup userGroup = UserGroup.userGroupFactory(entity, "userKey");
+        UserGroup userGroup = new UserGroup(entity, "userKey");
         
         assertSame(entity, userGroup.getEntity());
         assertEquals("userKey", userGroup.getUserKey());
@@ -60,7 +60,7 @@ public class UserGroupTests {
     public void userGroupEquals() {
         Entity entity = new Entity();
         
-        UserGroup userGroup = UserGroup.userGroupFactory(entity, "userKey");
+        UserGroup userGroup = new UserGroup(entity, "userKey");
         UserGroup copy = (UserGroup) DomainTestSupport.minimalEqualsTest(userGroup);
         
         copy.setEntity(null);

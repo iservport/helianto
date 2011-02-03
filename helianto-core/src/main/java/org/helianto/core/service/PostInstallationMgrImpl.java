@@ -262,7 +262,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		}
 		if (userGroup==null) {
 			logger.debug("Will install user (group) {} ...", userGroupName);
-			userGroup = UserGroup.userGroupFactory(defaultEntity, userGroupName);
+			userGroup = new UserGroup(defaultEntity, userGroupName);
 			userGroupDao.saveOrUpdate(userGroup);
 		}
 		logger.debug("UserGroup AVAILABLE as {}.", userGroup);

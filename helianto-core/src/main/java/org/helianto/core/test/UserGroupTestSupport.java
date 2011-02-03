@@ -36,7 +36,7 @@ public class UserGroupTestSupport {
      * @param userKey
      */
     public static UserGroup createUserGroup(Entity entity, String userKey) {
-        UserGroup userGroup = UserGroup.userGroupFactory(entity, userKey);
+        UserGroup userGroup = new UserGroup(entity, userKey);
     	return userGroup;
     }
 
