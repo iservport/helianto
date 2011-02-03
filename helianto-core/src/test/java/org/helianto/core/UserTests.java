@@ -64,7 +64,7 @@ public class UserTests {
         assertFalse(user.equals(copy));
 
         copy.setEntity(entity);
-        copy.setIdentity(null);
+        copy.setIdentity(new Identity("TEST"));
         assertFalse(user.equals(copy));
 
         copy.setEntity(entity);
