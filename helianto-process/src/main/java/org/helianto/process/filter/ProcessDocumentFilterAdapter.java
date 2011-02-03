@@ -19,6 +19,7 @@ import java.util.Collection;
 
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.filter.AbstractTrunkFilterAdapter;
 import org.helianto.process.Characteristic;
 import org.helianto.process.ControlMethod;
@@ -47,6 +48,7 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
      */
     public ProcessDocumentFilterAdapter(ProcessDocument processDocument) {
     	super(processDocument);
+    	reset();
     }
     
     /**
@@ -63,6 +65,18 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
      * Force filter to standards.
      */
     public void reset() {
+    	getFilter().setInheritanceType(' ');
+    	getFilter().setPriority(' ');
+    }
+    
+    @Override
+    public String createSelectAsString() {
+    	if (getParent()==null) {
+        	return super.createSelectAsString();
+    	}
+		SelectFromBuilder builder = new SelectFromBuilder(ProcessDocument.class, getObjectAlias());
+		builder.createSelectFrom().appendParentInnerJoin();
+    	return builder.getAsString();
     }
     	
 	@Override
@@ -71,6 +85,10 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 		if (getClazz()!=null && !getClazz().equals(ProcessDocument.class)) {
 	        logger.debug("Document class is: '{}'", getClazz());
 			mainCriteriaBuilder.appendAnd().append(getClazz());
+		}
+		if (getParent()!=null) {
+	        logger.debug("Document parent is: '{}'", getParent());
+			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.id =").append(getParent().getId());
 		}
 	}
 	
@@ -86,7 +104,7 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-//		super.doFilter(mainCriteriaBuilder);
+		appendLikeFilter("docName", getFilter().getDocName(), mainCriteriaBuilder);
 		appendEqualFilter("inheritanceType", getFilter().getInheritanceType(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);
 		appendOrderBy("docCode", mainCriteriaBuilder);
