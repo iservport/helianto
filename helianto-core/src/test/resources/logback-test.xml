@@ -20,6 +20,7 @@
   <logger name="org.springframework.orm" level="DEBUG"/>
   <logger name="org.springframework.security" level="DEBUG"/>
   <logger name="org.hibernate" level="OFF"/>
+  <logger name="org.hibernate.SQL" level="DEBUG"/>
   <logger name="org.hibernate.jdbc" level="DEBUG"/>
   <logger name="org.hibernate.jdbc.AbstractBatcher" level="OFF"/>
   <logger name="org.hibernate.impl" level="DEBUG"/>
