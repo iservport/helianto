@@ -69,4 +69,18 @@ public class SelectFromBuilder extends SelectBuilder {
     	return this;
     }
     
+    /**
+     * Parent association inner join appender.
+     */
+    public SelectFromBuilder appendParentInnerJoin() {
+    	return appendInnerJoin("parentAssociations", "parentAssociations");
+    }
+    
+    /**
+     * Child association inner join appender.
+     */
+    public SelectFromBuilder appendChildInnerJoin() {
+    	return appendInnerJoin("childAssociations", "childAssociations");
+    }
+    
 }
