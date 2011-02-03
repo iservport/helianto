@@ -14,7 +14,7 @@ import org.junit.Test;
  * 
  * @author mauriciofernandesdecastro
  */
-public class UserFilterTests {
+public class UserBackedFilterTests {
 	
 	private AbstractUserFilterAdapter<Trunk> userFilter;
 	private Entity entity;
