@@ -130,15 +130,13 @@ public class User extends UserGroup implements PersonalEntity {
 
     /**
      * Overridden to obtain the user key from the identity principal.
-     * 
-     * @param userKey
      */
     @Transient
-    protected String resolveUserKey(String userKey) {
+    protected String getInternalUserKey() {
     	if (getIdentity()!=null && getIdentity().getPrincipal()!=null && getIdentity().getPrincipal().length()>0) {
     		return getIdentity().getPrincipal();
     	}
-        return userKey;
+        return super.getInternalUserKey();
     }
     
     /**
@@ -156,7 +154,7 @@ public class User extends UserGroup implements PersonalEntity {
      */
     public void setIdentity(Identity identity) {
         this.identity = identity;
-    	setUserKey(resolveUserKey(""));
+    	setUserKey(getInternalUserKey());
     }
     
     /**
