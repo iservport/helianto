@@ -50,42 +50,6 @@ public class User extends UserGroup implements PersonalEntity {
 		return 'U';
 	}
 
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     */
-    public static User userFactory(Entity entity) {
-    	User user = UserGroup.internalUserGroupFactory(User.class, entity, "");
-    	user.setIdentity(Identity.identityFactory(""));
-    	return user;
-    }
-
-    /**
-     * Factory method.
-     * 
-     * @param userAssociation
-     */
-    public static User userFactory(UserAssociation userAssociation) {
-    	User user = UserGroup.internalUserGroupFactory(User.class, userAssociation.getParent().getEntity(), "");
-    	userAssociation.setChild(user);
-    	user.getParentAssociations().add(userAssociation);
-    	user.setIdentity(Identity.identityFactory(""));
-    	return user;
-    }
-
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param identity
-     */
-    public static User userFactory(Entity entity, Identity identity) {
-        User user = UserGroup.internalUserGroupFactory(User.class, entity, identity.getPrincipal());
-        user.setIdentity(identity);
-        return user;
-    }
-
     private static final long serialVersionUID = 1L;
     private Identity identity;
     private char userType;
@@ -103,13 +67,15 @@ public class User extends UserGroup implements PersonalEntity {
     }
 
 	/** 
-	 * Entity constructor.
+	 * Key constructor.
 	 * 
 	 * @param entity
+	 * @param credential
 	 */
-    public User(Entity entity) {
+    public User(Entity entity, Identity identity) {
     	this();
         setEntity(entity);
+    	setIdentity(identity);
     }
 
 	/** 
@@ -124,8 +90,18 @@ public class User extends UserGroup implements PersonalEntity {
 	 * @param credential
 	 */
     public User(Entity entity, Credential credential) {
-    	this(entity);
-    	setIdentity(credential.getIdentity());
+    	this(entity, credential.getIdentity());
+    }
+
+	/** 
+	 * Parent constructor.
+	 * 
+	 * @param parent
+	 * @param childCredential
+	 */
+    public User(UserGroup parent, Credential childCredential) {
+    	this(parent.getEntity(), childCredential);
+    	parent.getChildAssociations().add(new UserAssociation(parent, childCredential));
     }
 
     /**
