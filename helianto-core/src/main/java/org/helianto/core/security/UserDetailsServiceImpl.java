@@ -80,9 +80,10 @@ public class UserDetailsServiceImpl extends AbstractUserDetailsServiceTemplate {
         }
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<UserGroup> listUsers(Identity identity) {
-    	return userMgr.findUsers(identity);
+    	return (List<UserGroup>) userMgr.findUsers(identity);
     }
     
     /**

@@ -28,7 +28,7 @@ public class UserTests {
 	@Test
 	public void entityContructor() {
 		Entity entity = new Entity();
-		User user = new User(entity);
+		User user = new User(entity, new Identity("PRINCIPAL"));
 		assertSame(entity, user.getEntity());
 	}
     
@@ -40,7 +40,7 @@ public class UserTests {
         Entity entity = new Entity();
         Identity identity = new Identity();
         
-        User user = User.userFactory(entity, identity);
+        User user = new User(entity, identity);
         
         assertSame(entity, user.getEntity());
         assertSame(identity, user.getIdentity());
@@ -56,7 +56,7 @@ public class UserTests {
         Identity identity = new Identity();
         identity.setPrincipal("principal");
         
-        User user = User.userFactory(entity, identity);
+        User user = new User(entity, identity);
         User copy = (User) DomainTestSupport.minimalEqualsTest(user);
         
         copy.setEntity(null);

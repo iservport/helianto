@@ -90,14 +90,14 @@ public interface UserMgr {
      * 
      * @param userFilter
      */
-    public List<UserGroup> findUsers(Filter userFilter);
+    public List<? extends UserGroup> findUsers(Filter userFilter);
     
     /**
      * Find users sharing the same identity.
      * 
      * @param identity
      */
-    public List<UserGroup> findUsers(Identity identity);
+    public List<? extends UserGroup> findUsers(Identity identity);
 
     /**
      * <p>Store <code>UserGroup</code> and return a managed instance.</p>

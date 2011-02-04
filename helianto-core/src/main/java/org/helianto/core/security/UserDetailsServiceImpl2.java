@@ -32,7 +32,8 @@ public class UserDetailsServiceImpl2 implements UserDetailsService {
 		if (credential==null) {
 			throw new UsernameNotFoundException("Unable to find credential for "+username);
 		}
-		List<UserGroup> userList = userMgr.findUsers(new UserFilter(username));
+		@SuppressWarnings("unchecked")
+		List<UserGroup> userList = (List<UserGroup>) userMgr.findUsers(new UserFilter(username));
 		logger.debug("Found {} user(s) matching {}.", userList.size(), username);
 		if (userList!=null && userList.size()>0) {
 			User user = userSelectorStrategy.selectUser(userList);

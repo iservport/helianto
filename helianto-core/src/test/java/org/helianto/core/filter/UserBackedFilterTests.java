@@ -3,6 +3,7 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.TrunkEntity;
 import org.helianto.core.User;
@@ -42,7 +43,7 @@ public class UserBackedFilterTests {
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
-		User user = new User(entity);
+		User user = new User(entity, new Identity("PRINCIPAL"));
 		Trunk trunk = new Trunk();
 		userFilter = new AbstractUserFilterAdapter<Trunk>(trunk, user) {
 			public void reset() { }

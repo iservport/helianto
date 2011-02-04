@@ -212,13 +212,13 @@ public class UserMgrImpl implements UserMgr {
 		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     }
 
-	public List<UserGroup> findUsers(Filter userFilter) {
+	public List<? extends UserGroup> findUsers(Filter userFilter) {
 		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(userFilter);
     	logger.debug("Found user list of size {}", userList.size());
         return userList;
 	}
 
-    public List<UserGroup> findUsers(Identity identity) {
+    public List<? extends UserGroup> findUsers(Identity identity) {
     	UserFilter userFilter = new UserFilter(identity, true);
     	userFilter.setUserState(UserState.ACTIVE.getValue());
         logger.debug("Filter users having state {}", userFilter.getUserState());

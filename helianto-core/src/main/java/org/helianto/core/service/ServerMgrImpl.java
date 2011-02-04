@@ -88,7 +88,7 @@ public class ServerMgrImpl  implements ServerMgr {
             user = (User) userGroupDao.findUnique(entity, identity);
         }
         if (user==null) {
-            user = User.userFactory(entity, identity);
+            user = new User(entity, identity);
             userGroupDao.persist(user);
             logger.debug("Persisted {}", user);
         } else {
@@ -149,7 +149,7 @@ public class ServerMgrImpl  implements ServerMgr {
         UserGroup adminGroup = grant(entity, "ADMIN", new String[] {"MANAGER"});
         UserGroup userGroup = grant(entity, "USER", new String[] {"ALL", "DEL"});
         logger.debug("Parent groups ADMIN, USER stored ");
-        User manager = User.userFactory(entity, managerIdentity);
+        User manager = new User(entity, managerIdentity);
         UserAssociation adminAssociation = UserAssociation.userAssociationFactory(adminGroup, manager);
         userAssociationDao.merge(adminAssociation);
         UserAssociation userAssociation = UserAssociation.userAssociationFactory(userGroup, manager);
