@@ -65,9 +65,10 @@ public class EntityFilterFormAction2 extends AbstractFilterOnlyFormAction<UserFi
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected List<UserGroup> doApplyFilter(UserFilter filter) {
-		return userMgr.findUsers(filter);
+		return (List<UserGroup>) userMgr.findUsers(filter);
 	}
 
 	@Override

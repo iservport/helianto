@@ -35,7 +35,7 @@ public class UserTestSupport {
      * @param identity optional Identity 
      */
 	public static User createUser(Entity entity, Identity identity) {
-        User user = User.userFactory(entity, identity);
+        User user = new User(entity, identity);
         return user;		
 	}
 

@@ -53,9 +53,10 @@ public class UserFilterFormAction extends AbstractFilterOnlyFormAction<UserFilte
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected List<UserGroup> doApplyFilter(UserFilter filter) {
-		return userMgr.findUsers(filter);
+		return (List<UserGroup>) userMgr.findUsers(filter);
 	}
 	
 	/**
