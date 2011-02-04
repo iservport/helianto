@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * Filter to <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class UserFilter extends AbstractUserBackedCriteriaFilter implements PolymorphicFilter<UserGroup> {
 
