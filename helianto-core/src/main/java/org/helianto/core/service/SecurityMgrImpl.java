@@ -33,8 +33,13 @@ import org.helianto.core.UserRole;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.security.SecureUserDetails;
+import org.helianto.core.security.UserDetailsAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 /**
@@ -103,6 +108,17 @@ public class SecurityMgrImpl implements SecurityMgr {
 		}
 		logger.debug("Found {} role(s) FOR {}.", roles.size(), userGroup);
 		return roles;
+	}
+	
+	public void authenticate(User user, Set<UserRole> roles) {
+		UserDetails userDetails = new UserDetailsAdapter(user, null, roles);
+		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "any", userDetails.getAuthorities());   //   PreAuthenticatedAuthenticationToken(aPrincipal, aCredentials, anAuthorities);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		logger.debug("Authenticated {}.", authentication);
+	}
+	
+	public void clearAuthentication() {
+		SecurityContextHolder.clearContext();
 	}
     
     // collabs

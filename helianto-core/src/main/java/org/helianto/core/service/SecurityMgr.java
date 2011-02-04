@@ -20,6 +20,7 @@ import java.util.Set;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.PasswordNotVerifiedException;
+import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.security.SecureUserDetails;
@@ -64,5 +65,18 @@ public interface SecurityMgr {
      * @param recursively
      */
     public Set<UserRole> findRoles(UserGroup userGroup, boolean recursively);
+    
+    /**
+     * Used to authenticate a known <code>User</code> with a set of <code>UserRole</code>s.
+     * 
+     * @param user
+     * @param roles
+     */
+    public void authenticate(User user, Set<UserRole> roles);
+	
+    /**
+     * Clear the current authentication.
+     */
+	public void clearAuthentication();
     
 }
