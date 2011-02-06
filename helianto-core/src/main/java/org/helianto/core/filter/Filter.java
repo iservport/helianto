@@ -26,6 +26,11 @@ package org.helianto.core.filter;
 public interface Filter {
 	
 	/**
+	 * Create select.
+	 */
+	public String createSelectAsString();
+	
+	/**
 	 * Create criteria.
 	 */
 	public String createCriteriaAsString();
@@ -39,10 +44,5 @@ public interface Filter {
 	 * Object alias to be used in query expressions.
 	 */
 	public void setObjectAlias(String objectAlias);
-	
-	/**
-	 * Create select.
-	 */
-	public String createSelectAsString();
 	
 }
