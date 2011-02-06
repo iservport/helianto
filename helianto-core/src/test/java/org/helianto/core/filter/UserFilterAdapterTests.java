@@ -46,6 +46,7 @@ public class UserFilterAdapterTests {
 	static String C3 = "AND alias.identity.id not in (  1 ,  2 ) ";
 	static String C4 = "AND alias.class=UserGroup ";
 	static String C5 = "AND parentAssociations.parent.id = 100 ";
+	static String C6 = "parentAssociations.parent.userKey = 'USER' ";
 	
 	@Test
 	public void empty() {
@@ -90,6 +91,13 @@ public class UserFilterAdapterTests {
 		filter.setParent(parent);
 		assertEquals(S1+S2, filter.createSelectAsString());
 		assertEquals(C0+C5+O0, filter.createCriteriaAsString());
+	}
+
+	@Test
+	public void parentUserKey() {
+		filter = new UserFilterAdapter("USER");
+		assertEquals(S1+S2, filter.createSelectAsString());
+		assertEquals(C6+O0, filter.createCriteriaAsString());
 	}
 
 	// collabs

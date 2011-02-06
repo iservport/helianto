@@ -38,6 +38,7 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
     private static final long serialVersionUID = 1L;
     private Class<? extends UserGroup> clazz;
     private UserGroup parent;
+    private String parentUserKey;
     private boolean orderByLastEventDesc = false;
 	private Collection<Identity> exclusions;
     
@@ -72,6 +73,16 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
     }
     
     /**
+     * Parent user key constructor.
+     * 
+     * @param parentUserKey
+     */
+    public UserFilterAdapter(String parentUserKey) {
+    	this(new UserGroup());
+    	setParentUserKey(parentUserKey);
+    }
+    
+    /**
      * Force filter to standards.
      */
     public void reset() {
@@ -84,7 +95,7 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
      */
 	@Override
 	public String createSelectAsString() {
-		if (getParent()!=null) {
+		if (getParent()!=null | (getParentUserKey()!=null && getParentUserKey().length()>0)) {
 			SelectFromBuilder selectFromBuilder = new SelectFromBuilder(UserGroup.class, getObjectAlias());
 			selectFromBuilder.createSelectFrom().appendParentInnerJoin();
 			return selectFromBuilder.getAsString();
@@ -105,6 +116,9 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
 		}
 		if (getParent()!=null) {
 			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.id =").append(getParent().getId());
+		}
+		if (getParentUserKey()!=null && getParentUserKey().length()>0) {
+			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.userKey =").appendString(getParentUserKey());
 		}
 	}
 
@@ -196,6 +210,16 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
 	}
 	public void setParent(UserGroup parent) {
 		this.parent = parent;
+	}
+	
+	/**
+	 * Parent user key filter.
+	 */
+	public String getParentUserKey() {
+		return parentUserKey;
+	}
+	public void setParentUserKey(String parentUserKey) {
+		this.parentUserKey = parentUserKey;
 	}
 
     /**
