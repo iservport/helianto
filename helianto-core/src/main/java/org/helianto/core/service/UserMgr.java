@@ -22,10 +22,12 @@ import java.util.List;
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
+import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
 
 /**
@@ -157,5 +159,23 @@ public interface UserMgr {
      * @param date
      */
 	public UserLog storeUserLog(User user, Date date);
+
+	/**
+	 * Install an UserGroup, if does not exist.
+	 * 
+	 * @param defaultEntity
+	 * @param userGroupName
+	 * @param reinstall
+	 */
+	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall);
+
+	/**
+	 * Install an UserRole, if does not exist.
+	 * 
+	 * @param userGroup
+	 * @param service
+	 * @param extension
+	 */
+	public UserRole installUserRole(UserGroup userGroup, Service service, String extension);
 	
 }

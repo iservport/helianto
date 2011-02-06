@@ -167,29 +167,35 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	protected Entity installEntity(Entity entity, Credential credential) {
 		Operator operator = entity.getOperator();
 		
-		//
-		UserGroup adminGroup = installUserGroup(entity, "ADMIN", false);
+		UserGroup adminGroup  = new UserGroup(entity, "ADMIN");
+		userGroupDao.saveOrUpdate(adminGroup);
 		
 		Service adminService = operator.getServiceMap().get("ADMIN");
 		if (adminService==null) {
 			throw new IllegalArgumentException("Unable to load required service 'ADMIN' from operator {} "+operator);
 		}
 		
-		UserRole adminRole = installUserRole(adminGroup, adminService, "MANAGER");
+//		UserRole adminRole = installUserRole(adminGroup, adminService, "MANAGER");
+		UserRole adminRole = new UserRole(adminGroup, adminService, "MANAGER");
+		userRoleDao.saveOrUpdate(adminRole);
+
 		adminGroup.getRoles().add(adminRole);
 		
 		UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
 		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
 		
-		//
-		UserGroup userGroup = installUserGroup(entity, "USER", false);
+		UserGroup userGroup  = new UserGroup(entity, "USER");
+		userGroupDao.saveOrUpdate(userGroup);
 		
 		Service userService = operator.getServiceMap().get("USER");
 		if (userService==null) {
 			throw new IllegalArgumentException("Unable to load required service 'USER' from operator {} "+operator);
 		}
 		
-		UserRole userRole = installUserRole(userGroup, userService, "MANAGER");
+//		UserRole userRole = installUserRole(userGroup, userService, "MANAGER");
+		UserRole userRole = new UserRole(userGroup, userService, "ALL");
+		userRoleDao.saveOrUpdate(userRole);
+		
 		userGroup.getRoles().add(userRole);
 		
 		UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
@@ -201,88 +207,56 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		return entity;
 	}
 	
-	public Entity installEntityWORK_IN_PROGRESS(Operator defaultOperator, String entityAlias, String managerPrincipal, boolean reinstall) {
-		
-		operatorDao.saveOrUpdate(defaultOperator);
-		
-		logger.debug("Check entity {} installation with 'reinstall={}'", entityAlias, reinstall);
-		Entity defaultEntity = null;
-		if (!reinstall) {
-			defaultEntity = entityDao.findUnique(defaultOperator, entityAlias);
-		}
-		
-		if (defaultEntity==null) {
-			logger.debug("Will install entity {} ...", entityAlias);
-			defaultEntity = new Entity(defaultOperator, entityAlias);
-			entityDao.saveOrUpdate(defaultEntity);
-		} 
-		logger.debug("Entity AVAILABLE as {}.", defaultEntity);
-		
-		Credential credential = userMgr.installIdentity(managerPrincipal);
-		
-		//
-		UserGroup adminGroup = installUserGroup(defaultEntity, "ADMIN", reinstall);
-		
-		Service adminService = defaultOperator.getServiceMap().get("ADMIN");
-		if (adminService==null) {
-			throw new IllegalArgumentException("Unable to load required service 'ADMIN' from operator {} "+defaultOperator);
-		}
-		
-		UserRole adminRole = installUserRole(adminGroup, adminService, "MANAGER");
-		adminGroup.getRoles().add(adminRole);
-		
-		UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
-		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
-		
-		//
-		UserGroup userGroup = installUserGroup(defaultEntity, "USER", reinstall);
-		
-		Service userService = defaultOperator.getServiceMap().get("USER");
-		if (userService==null) {
-			throw new IllegalArgumentException("Unable to load required service 'USER' from operator {} "+defaultOperator);
-		}
-		
-		UserRole userRole = installUserRole(userGroup, userService, "MANAGER");
-		userGroup.getRoles().add(userRole);
-		
-		UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
-		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
-
-		return defaultEntity;
-	}
-	
-	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall) {
-
-		entityDao.saveOrUpdate(defaultEntity);
-		
-		logger.debug("Check user (group) {} installation with 'reinstall={}'", userGroupName, reinstall);
-		UserGroup userGroup = null;
-		if (!reinstall) {
-			userGroup = userGroupDao.findUnique(defaultEntity, userGroupName);
-		}
-		if (userGroup==null) {
-			logger.debug("Will install user (group) {} ...", userGroupName);
-			userGroup = new UserGroup(defaultEntity, userGroupName);
-			userGroupDao.saveOrUpdate(userGroup);
-		}
-		logger.debug("UserGroup AVAILABLE as {}.", userGroup);
-		
-		return userGroup;
-	}
-	
-	public UserRole installUserRole(UserGroup userGroup, Service service, String extension) {
-		
-		UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
-		if (userRole==null) {
-			userRole = new UserRole(userGroup, service, extension);
-			logger.debug("Will install required user role {} for user group {} ...", userRole, userGroup);
-			userRoleDao.saveOrUpdate(userRole);
-		}
-		logger.debug("User role AVAILABLE as {}.", userRole);
-		
-		return userRole;
-	}
-	
+//	public Entity installEntityWORK_IN_PROGRESS(Operator defaultOperator, String entityAlias, String managerPrincipal, boolean reinstall) {
+//		
+//		operatorDao.saveOrUpdate(defaultOperator);
+//		
+//		logger.debug("Check entity {} installation with 'reinstall={}'", entityAlias, reinstall);
+//		Entity defaultEntity = null;
+//		if (!reinstall) {
+//			defaultEntity = entityDao.findUnique(defaultOperator, entityAlias);
+//		}
+//		
+//		if (defaultEntity==null) {
+//			logger.debug("Will install entity {} ...", entityAlias);
+//			defaultEntity = new Entity(defaultOperator, entityAlias);
+//			entityDao.saveOrUpdate(defaultEntity);
+//		} 
+//		logger.debug("Entity AVAILABLE as {}.", defaultEntity);
+//		
+//		Credential credential = userMgr.installIdentity(managerPrincipal);
+//		
+//		//
+//		UserGroup adminGroup = installUserGroup(defaultEntity, "ADMIN", reinstall);
+//		
+//		Service adminService = defaultOperator.getServiceMap().get("ADMIN");
+//		if (adminService==null) {
+//			throw new IllegalArgumentException("Unable to load required service 'ADMIN' from operator {} "+defaultOperator);
+//		}
+//		
+//		UserRole adminRole = installUserRole(adminGroup, adminService, "MANAGER");
+//		adminGroup.getRoles().add(adminRole);
+//		
+//		UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
+//		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
+//		
+//		//
+//		UserGroup userGroup = installUserGroup(defaultEntity, "USER", reinstall);
+//		
+//		Service userService = defaultOperator.getServiceMap().get("USER");
+//		if (userService==null) {
+//			throw new IllegalArgumentException("Unable to load required service 'USER' from operator {} "+defaultOperator);
+//		}
+//		
+//		UserRole userRole = installUserRole(userGroup, userService, "MANAGER");
+//		userGroup.getRoles().add(userRole);
+//		
+//		UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
+//		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
+//
+//		return defaultEntity;
+//	}
+//	
 	// collabs
 	
 	private BasicDao<Operator> operatorDao;

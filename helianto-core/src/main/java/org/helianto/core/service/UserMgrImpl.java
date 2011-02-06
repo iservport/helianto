@@ -35,6 +35,7 @@ import org.helianto.core.EventType;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
@@ -44,18 +45,16 @@ import org.helianto.core.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.ProvinceFilter;
 import org.helianto.core.filter.classic.UserFilter;
-import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 /**
  * Default <code>UserMgr</code> implementation.
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Service("userMgr")
+@org.springframework.stereotype.Service("userMgr")
 public class UserMgrImpl implements UserMgr {
     
     public Identity findIdentityByPrincipal(String principal) {
@@ -242,6 +241,25 @@ public class UserMgrImpl implements UserMgr {
         return userAssociationList;
 	}
 
+	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall) {
+
+		entityDao.saveOrUpdate(defaultEntity);
+		
+		logger.debug("Check user (group) {} installation with 'reinstall={}'", userGroupName, reinstall);
+		UserGroup userGroup = null;
+		if (!reinstall) {
+			userGroup = userGroupDao.findUnique(defaultEntity, userGroupName);
+		}
+		if (userGroup==null) {
+			logger.debug("Will install user (group) {} ...", userGroupName);
+			userGroup = new UserGroup(defaultEntity, userGroupName);
+			userGroupDao.saveOrUpdate(userGroup);
+		}
+		logger.debug("UserGroup AVAILABLE as {}.", userGroup);
+		
+		return userGroup;
+	}
+	
 	public UserAssociation installUser(UserGroup parent, String principal, boolean accountNonExpired) {
 		
 		logger.info("Check user installation with 'principal={}' as member of {}.", principal, parent);
@@ -319,6 +337,19 @@ public class UserMgrImpl implements UserMgr {
 		return credential;
 	}
 	
+	public UserRole installUserRole(UserGroup userGroup, Service service, String extension) {
+		
+		UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
+		if (userRole==null) {
+			userRole = new UserRole(userGroup, service, extension);
+			logger.debug("Will install required user role {} for user group {} ...", userRole, userGroup);
+			userRoleDao.saveOrUpdate(userRole);
+		}
+		logger.debug("User role AVAILABLE as {}.", userRole);
+		
+		return userRole;
+	}
+	
     public UserLog storeUserLog(User user, Date date) {
         if (user.getIdentity()==null) {
             throw new IllegalArgumentException("Must have an identity");
@@ -347,22 +378,29 @@ public class UserMgrImpl implements UserMgr {
 
     //- collaborators
     
+    private FilterDao<Entity> entityDao;
     private FilterDao<Identity> identityDao;
-    private BasicDao<Credential> credentialDao;
+    private FilterDao<Credential> credentialDao;
     private FilterDao<UserGroup> userGroupDao;
     private FilterDao<UserAssociation> userAssociationDao;
+    private FilterDao<UserRole> userRoleDao;
     private FilterDao<UserLog> userLogDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
     private FilterDao<Province> provinceDao;
 	
 
+    @Resource(name="entityDao")
+    public void setEntityDao(FilterDao<Entity> entityDao) {
+        this.entityDao = entityDao;
+    }
+    
     @Resource(name="identityDao")
     public void setIdentityDao(FilterDao<Identity> identityDao) {
         this.identityDao = identityDao;
     }
     
     @Resource(name="credentialDao")
-    public void setCredentialDao(BasicDao<Credential> credentialDao) {
+    public void setCredentialDao(FilterDao<Credential> credentialDao) {
 		this.credentialDao = credentialDao;
 	}
 
@@ -376,6 +414,11 @@ public class UserMgrImpl implements UserMgr {
 		this.userAssociationDao = userAssociationDao;
 	}
 
+	@javax.annotation.Resource(name="userRoleDao")
+	public void setUserRoleDao(FilterDao<UserRole> userRoleDao) {
+		this.userRoleDao = userRoleDao;
+	}
+	
     @Resource(name="userLogDao")
     public void setUserLogDao(FilterDao<UserLog> userLogDao) {
         this.userLogDao = userLogDao;

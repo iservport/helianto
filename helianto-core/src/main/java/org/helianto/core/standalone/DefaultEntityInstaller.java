@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.service.PostInstallationMgr;
+import org.helianto.core.service.UserMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -88,7 +89,7 @@ public class DefaultEntityInstaller implements InitializingBean {
 		
 		if (getRequiredUserGroupList()!=null) {
 			for (String userGroupName: getRequiredUserGroupList()) {
-				postInstallationMgr.installUserGroup(defaultEntity, userGroupName, isReinstall());
+				userMgr.installUserGroup(defaultEntity, userGroupName, isReinstall());
 			}
 		}
 
@@ -99,6 +100,7 @@ public class DefaultEntityInstaller implements InitializingBean {
 	
 	private NamespaceDefaults namespace;
 	private PostInstallationMgr postInstallationMgr;
+	private UserMgr userMgr;
 	
 	@Resource
 	public void setNamespace(NamespaceDefaults namespace) {
@@ -108,6 +110,11 @@ public class DefaultEntityInstaller implements InitializingBean {
 	@Resource
 	public void setPostInstallationMgr(PostInstallationMgr postInstallationMgr) {
 		this.postInstallationMgr = postInstallationMgr;
+	}
+	
+	@Resource
+	public void setUserMgr(UserMgr userMgr) {
+		this.userMgr = userMgr;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(DefaultEntityInstaller.class);

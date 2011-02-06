@@ -22,8 +22,6 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.Service;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
 import org.springframework.core.io.Resource;
 
 /**
@@ -113,23 +111,5 @@ public interface PostInstallationMgr {
 	 * @param entity
 	 */
 	public Entity installEntity(Entity entity);
-	
-	/**
-	 * Install an UserGroup, if does not exist.
-	 * 
-	 * @param defaultEntity
-	 * @param userGroupName
-	 * @param reinstall
-	 */
-	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall);
-	
-	/**
-	 * Install an UserRole, if does not exist.
-	 * 
-	 * @param userGroup
-	 * @param service
-	 * @param extension
-	 */
-	public UserRole installUserRole(UserGroup userGroup, Service service, String extension);
 
 }
