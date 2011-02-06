@@ -91,6 +91,17 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
     }
 
     /** 
+     * Child constructor.
+     * 
+     * @param parent
+     * @param child
+     */
+    public UserAssociation(UserGroup parent, User child) {
+    	this(parent);
+    	setChild(child);
+    }
+
+    /** 
      * Credential constructor.
      * 
      * @param parent
