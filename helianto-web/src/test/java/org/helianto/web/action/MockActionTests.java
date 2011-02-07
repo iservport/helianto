@@ -60,6 +60,7 @@ public class MockActionTests {
 		mockAction = new MockAction<String>();
 		attributes = new LocalAttributeMap();
 		userDetails = new PublicUserDetails() {
+			@SuppressWarnings("unused")
 			public void setUser(User user) { }
 			public User getUser() { return null; }
 			public Entity getEntity() { return null; }

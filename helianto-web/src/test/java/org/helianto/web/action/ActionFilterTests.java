@@ -26,9 +26,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,9 +41,11 @@ public class ActionFilterTests {
 
 	private AbstractFilterAction<String> action;
 	private MutableAttributeMap attributes;
-	private ListFilter filter;
-	private List<String> itemList, updatedItemList;
+	private Filter filter;
+	private List<String> itemList;
 	private PublicUserDetails userDetails, userDetailsInCreation;
+	@SuppressWarnings("rawtypes")
+	private SimpleModel simpleModel;
 	
 	@Test
 	public void inheritance() {
@@ -69,26 +69,32 @@ public class ActionFilterTests {
 		attributes.put("NAMEFilter", filter);		
 		assertEquals("success", action.filter(attributes, userDetails));
 		assertEquals("NAME", attributes.get("targetName"));
-		assertSame(itemList, updatedItemList);
+		assertSame(itemList, simpleModel.getList());
 	}
 	
 	@Test
 	public void filterCreate() {
 		assertEquals("success", action.filter(attributes, userDetails));
-		assertSame(itemList, updatedItemList);
 		assertSame(userDetails, userDetailsInCreation);
 	}
 	
-	@SuppressWarnings("serial")
+	@Test
+	public void hasModel() {
+		assertFalse(action.hasModel(attributes));
+		attributes.put("NAMEModel", simpleModel);
+		assertTrue(action.hasModel(attributes));
+	}
+	
+	@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 	@Before
 	public void setUp() {
 		itemList = new ArrayList<String>();
 		itemList.add("ONE");
-		updatedItemList = null;
+		simpleModel = new SimpleModel(new Object());
 		action = new AbstractFilterAction<String>() {
 			@Override protected String getTargetName() { return "NAME"; }
 			@Override
-			protected ListFilter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+			protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 				userDetailsInCreation = userDetails;
 				return filter;
 			}
@@ -102,26 +108,17 @@ public class ActionFilterTests {
 			protected String doPrepare(String target, MutableAttributeMap attributes) { return "PREPARED"; }
 			@Override
 			protected String doStore(String target) { return "STORED"; }
+			@Override
+			protected SimpleModel getModel(MutableAttributeMap attributes) {
+				return simpleModel;
+			}
 		};
 		attributes = new LocalAttributeMap();
-		filter = new ListFilter() {
+		filter = new Filter() {
 			public String createCriteriaAsString() { return "CRITERIA"; }
-			public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) { return "CRITERIA"; }
 			public String getObjectAlias() { return "ALIAS"; }
-			public boolean isSelection() { return false; }
-			public void reset() { }
-			public List<String> getList() { return itemList; }
-			@SuppressWarnings("unchecked")
-			public void setList(List<?> itemList) { updatedItemList = (List<String>) itemList; }
-			public int getIndex() { return 0; }
-			public Object getItem() { return null; }
-			public int getListSize() { return 0; }
-			public Object next() { return null; }
-			public Object previous() { return null; }
-			public void setIndex(int index) { }
-			public boolean isClear() { return true; }
 			@SuppressWarnings("unused")
-			public void setClear(boolean clear) { }
+			public boolean isSelection() { return false; }
 			public void setObjectAlias(String objectAlias) { }
 			public String createSelectAsString() { return null; }
 		};

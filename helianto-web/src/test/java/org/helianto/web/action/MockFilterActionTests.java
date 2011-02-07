@@ -12,7 +12,7 @@ import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.AbstractListFilter;
-import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.security.PublicUserDetails;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,8 @@ public class MockFilterActionTests {
 	private MockFilterAction<String> mockFilterAction;
 	private MutableAttributeMap attributes;
 	private PublicUserDetails userDetails;
-	private ListFilter createdFilter;
+	private Filter createdFilter;
+	private SimpleModel<Object> createdModel;
 	private List<String> targetList;
 	
 	@Test
@@ -52,12 +53,13 @@ public class MockFilterActionTests {
 	@Test
 	public void filter() {
 		mockFilterAction.createdFilter = createdFilter;
+		mockFilterAction.createdModel = createdModel;
 		mockFilterAction.targetList = targetList;
 		mockFilterAction.filter(attributes, userDetails);
 		assertEquals(createdFilter, attributes.get("TARGETFilter"));
 		assertSame(attributes, mockFilterAction.receivedAttributes);
 		assertSame(userDetails, mockFilterAction.receivedUserDetails);
-		assertSame(targetList, createdFilter.getList());
+		assertSame(targetList, createdModel.getList());
 	}
 	
 	@Test
@@ -80,6 +82,7 @@ public class MockFilterActionTests {
 		mockFilterAction = new MockFilterAction<String>();
 		attributes = new LocalAttributeMap();
 		userDetails = new PublicUserDetails() {
+			@SuppressWarnings("unused")
 			public void setUser(User user) { }
 			public User getUser() { return null; }
 			public Entity getEntity() { return null; }
@@ -92,6 +95,7 @@ public class MockFilterActionTests {
 			public String getObjectAlias() { return "ALIAS"; }
 			public void reset() { }
 		};
+		createdModel = new SimpleModel<Object>(createdFilter, userDetails.getUser());
 		targetList = new ArrayList<String>();
 	}
 

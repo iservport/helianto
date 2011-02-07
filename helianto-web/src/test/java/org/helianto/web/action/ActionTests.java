@@ -107,6 +107,10 @@ public class ActionTests {
 			protected String doStore(String target) {
 				return "STORED";
 			}
+			@Override
+			protected <M> M doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+				return null;
+			}
 		};
 		attributes = new LocalAttributeMap();
 		userDetails = new  PublicUserDetails() {
