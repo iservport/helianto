@@ -88,7 +88,8 @@ public class UserGroupAssociationAction extends AbstractFilterAction<UserAssocia
 	public String preFilter(MutableAttributeMap attributes,	PublicUserDetails userDetails) {
 		UserAssociationFilter filter = (UserAssociationFilter) getFilter(attributes, userDetails);
 		Filter parentFilter = filter.getParentFilter();
-		List<UserGroup> groups = userMgr.findUsers((UserFilter) parentFilter);
+		@SuppressWarnings("unchecked")
+		List<UserGroup> groups = (List<UserGroup>) userMgr.findUsers((UserFilter) parentFilter);
 		if (parentFilter instanceof Listable) {
 			((Listable) parentFilter).setList(groups);
 		}
