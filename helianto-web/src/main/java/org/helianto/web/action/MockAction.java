@@ -59,4 +59,10 @@ public class MockAction<T> extends AbstractAction<T> {
 		return targetName;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	protected SimpleModel doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		return new SimpleModel(new Object());
+	}
+
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.ListFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
@@ -22,6 +21,7 @@ public class MockFilterAction<T> extends AbstractFilterAction<T> {
 	PublicUserDetails receivedUserDetails;
 	T createdTarget;
 	Filter createdFilter;
+	SimpleModel<Object> createdModel;
 	T receivedInPrepare;
 	T receivedInStore;
 	Filter receivedFilter;
@@ -78,6 +78,20 @@ public class MockFilterAction<T> extends AbstractFilterAction<T> {
 	protected List<T> doFilter(Filter filter) {
 		receivedFilter = filter;
 		return targetList;
+	}
+	
+	@Override
+	protected SimpleModel<?> doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		receivedAttributes = attributes;
+		receivedUserDetails = userDetails;
+		return super.doCreateModel(attributes, userDetails);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected SimpleModel<Object> getModel(MutableAttributeMap attributes) {
+		receivedAttributes = attributes;
+		return createdModel;
 	}
 
 }

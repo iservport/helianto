@@ -51,6 +51,17 @@ public abstract class AbstractAction<T> implements Serializable {
 	}
 
 	/**
+	 * Name used as key to retrieve the model from attribute maps.
+	 * 
+	 * <p>
+	 * Default behavior is to append "Model"to the target name.
+	 * </p>
+	 */
+	protected String getModelName() {
+		return new StringBuilder(getTargetName()).append("Model").toString();
+	}
+
+	/**
 	 * Create a new target in the attribute map.
 	 * 
 	 * @param attributes
@@ -115,37 +126,27 @@ public abstract class AbstractAction<T> implements Serializable {
 	 * @param attributes
 	 */
 	protected abstract T doStore(T target);
+		
+	/**
+	 * Create a new Model in the attribute map.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 */
+	public String createModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		Object model = doCreateModel(attributes, userDetails);
+		attributes.put(getModelName(), model);
+		logger.debug("Created {} with name {}.", model, getModelName());
+		return "success";
+	}
 	
-	// TODO test the following code for convenience
-	
-//	public String select(MutableAttributeMap attributes, ParameterMap parameters) {
-//		return select(attributes, parameters, getItemIndexParameterName(getTargetName()));
-//	}
-//	
-//	public String select(MutableAttributeMap attributes, ParameterMap parameters, String itemName) {
-//		List<?> itemList = null;
-//		String itemListName = getItemListName(itemName);
-//		logger.debug("Looking for {}", itemListName);
-//		if (attributes.contains(itemListName)) {
-//			itemList = (List<?>) attributes.get(itemListName);
-//		}
-//		else {
-//			return "not_a_list";
-//		}
-//    	int index = 0;
-//    	if (itemList!=null) {
-//        	if (itemList.size()>1 && parameters.contains(itemName)) {
-//        		index = parameters.getInteger(itemName);
-//        	}
-//    		Object target = itemList.get(index);
-//    		if (target!=null) {
-//                logger.debug("Item #{} selected {}.", index, target);
-//                attributes.put(itemName, target);
-//    		}
-//    	}
-//		return "success";
-//	}
-	
+	/**
+	 * Subclasses must override this to assure the actual target persistence.
+	 * 
+	 * @param attributes
+	 */
+	protected abstract <M> M doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails);
+		
 	// convenience methods
 	
 	/**
@@ -162,6 +163,34 @@ public abstract class AbstractAction<T> implements Serializable {
 	}
 	
 	/**
+	 * Subclasses may override this to customize model retrieval.
+	 * 
+	 * @param attributes
+	 * @param <M>
+	 */
+	@SuppressWarnings("unchecked")
+	protected <M> M getModel(MutableAttributeMap attributes) {
+		M model = null;
+		if (hasModel(attributes)) {
+			model = (M) attributes.get(getModelName());
+			logger.debug("Retrieved {}.", model);
+		}
+		return model;
+	}
+
+	/**
+	 * True if the attribute map has a not null model.
+	 * 
+	 * @param attributes
+	 */
+	protected boolean hasModel(MutableAttributeMap attributes) {
+		if (attributes.contains(getModelName()) && attributes.get(getModelName())!=null) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * True if the atribute map has a not null target.
 	 * 
 	 * @param attributes
@@ -174,36 +203,6 @@ public abstract class AbstractAction<T> implements Serializable {
 		return false;
 	}
 	
-//	protected Object getReturnTarget(MutableAttributeMap attributes) {
-//		if (hasReturnTarget(attributes)) {
-//			return attributes.get(getReturnTargetName());
-//		}
-//		throw new IllegalArgumentException("Return target is not an attribute");
-//	}
-//	
-//	protected String getReturnTargetName() {
-//		return "returnTarget";
-//	}
-//	
-//	protected boolean hasReturnTarget(MutableAttributeMap attributes) {
-//		if (attributes.contains(getReturnTargetName()) && attributes.get(getReturnTargetName())!=null) {
-//			return true;
-//		}
-//		return false;
-//	}
-//	
-//	protected String getItemListName() {
-//		return getItemListName(getTargetName());
-//	}
-//	
-//	protected String getItemListName(String itemName) {
-//		return new StringBuilder(itemName).append("List").toString();
-//	}
-//	
-//	protected String getItemIndexParameterName(String itemName) {
-//		return new StringBuilder(itemName).append("_index").toString();
-//	}
-//	
 	// collabs
 	
 	private NamingConventionStrategy actionNamingConventionStrategy;

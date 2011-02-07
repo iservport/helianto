@@ -32,6 +32,16 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
 public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Default model is of type <code>SimpleModel</code>.
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	protected SimpleModel<?> doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		Filter filter = getFilter(attributes, userDetails);
+		return new SimpleModel(filter, userDetails.getUser());
+	}
 
 	/**
 	 * Name used as key to retrieve the filter from attribute maps.
@@ -73,13 +83,9 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param itemList
 	 */
 	protected void put(MutableAttributeMap attributes, List<T> itemList) {
-		Filter filter = getFilter(attributes);
-		if (filter instanceof Listable) {
-			((Listable) filter).setList(itemList);
-		}
-		else {
-			throw new IllegalArgumentException("Filter must provide a page to receive filter result list.");
-		}
+		Listable model = getModel(attributes);
+		logger.debug("Updating model {}.", model);
+		model.setList(itemList);
 	}
 	
 	/**
@@ -147,10 +153,8 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 */
 	protected abstract List<T> doFilter(Filter filter);
 
-	// convenience methods
-	
 	/**
-	 * True if the atribute map has a not null filter.
+	 * True if the attribute map has a not null filter.
 	 * 
 	 * @param attributes
 	 */
@@ -161,6 +165,6 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		return false;
 	}
 	
-	private static final Logger logger = LoggerFactory.getLogger(AbstractFilterAction.class);
+	static final Logger logger = LoggerFactory.getLogger(AbstractFilterAction.class);
 	
 }
