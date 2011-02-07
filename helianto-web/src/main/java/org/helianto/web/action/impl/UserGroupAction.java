@@ -36,9 +36,10 @@ public class UserGroupAction extends AbstractFilterAction<UserGroup> {
 		return userFilter;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected List<UserGroup> doFilter(Filter filter) {
-		return userMgr.findUsers((UserFilter) filter);
+		return (List<UserGroup>) userMgr.findUsers((UserFilter) filter);
 	}
 
 	@Override
