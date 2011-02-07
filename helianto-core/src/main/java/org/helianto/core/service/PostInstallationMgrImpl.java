@@ -145,7 +145,10 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			defaultEntity = new Entity(defaultOperator, entityAlias);
 			entityDao.saveOrUpdate(defaultEntity);
 		} 
-		logger.debug("Entity AVAILABLE as {}.", defaultEntity);
+		else {
+			logger.debug("Entity AVAILABLE as {}.", defaultEntity);
+			return defaultEntity;
+		}
 		
 		Credential credential = userMgr.installIdentity(managerPrincipal);
 
