@@ -14,14 +14,13 @@ import org.helianto.core.service.PostInstallationMgr;
 import org.helianto.web.action.AbstractFilterAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
 /**
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
-@Component("entityAction")
 public class EntityAction extends AbstractFilterAction<Entity> {
 
 	private static final long serialVersionUID = 1L;

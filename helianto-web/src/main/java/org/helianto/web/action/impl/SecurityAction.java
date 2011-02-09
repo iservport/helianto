@@ -25,6 +25,7 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * Presentation logic used exclusively to switch users sharing the same identity.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated use authorizationAction.
  */
 @Component("securityAction")
 public class SecurityAction extends UserGroupAssociationAction {
