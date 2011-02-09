@@ -48,11 +48,7 @@ to help developers embrace leading technologies and best practices with a flexib
 <h3>You can use this application as an entry point to explore and learn how to
 develop your own. Add value, starting from Helianto artifacts!</h3>
 
-<p>For example, it is possible to create and expose more than one operator or
-namespace and select them to filter entities, although this is out of the scope of this
-application. If you are a programmer, a good start would be to uncomment certain parts
-of this source code and modify them to show a target list placed in memory
-just for demostration purposes.</p>
+<p>Please, read <a href="info">this short introduction</a> first.</p>
 
 <div id="loginForm">
 

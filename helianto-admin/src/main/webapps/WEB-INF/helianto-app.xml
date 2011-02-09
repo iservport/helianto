@@ -17,30 +17,49 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
   xmlns:context="http://www.springframework.org/schema/context"
   xmlns:security="http://www.springframework.org/schema/security"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:flow="http://www.springframework.org/schema/webflow-config"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans 
       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context-3.0.xsd
       http://www.springframework.org/schema/security 
-      http://www.springframework.org/schema/security/spring-security-3.0.xsd">  
-               
+      http://www.springframework.org/schema/security/spring-security-3.0.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+      http://www.springframework.org/schema/webflow-config 
+      http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
+
+    <mvc:annotation-driven/>
+                   
 	<!--
 			Property configurer 
 	-->
-	<bean id="localPropertyOverrideConfigurer" 
-		parent="propertyOverrideConfigurer">
+	<bean id="propertyOverrideConfigurer" 
+		class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreInvalidKeys" value="true" />
 		<property name="locations">
 			<list>
-				<value>file:#{ systemProperties['user.home'] }/.helianto.properties</value>
+				<value>classpath:/META-INF/jdbc.properties</value>
 			</list>
 		</property>
 	</bean>
-	
+
 	<security:http auto-config="true" >
-		<security:form-login login-page="/admin/login" always-use-default-target="true" default-target-url="/admin/_adminSelection"/>
+		<security:form-login login-page="/helianto/login" />
 	</security:http>
 
     <context:component-scan base-package="org.helianto.*.controller,org.helianto.*.action.impl"/>
 
+    <import resource="classpath:/META-INF/spring/hibernate-context.xml"/>
+    <import resource="classpath:/META-INF/spring/support.xml"/>
+    <import resource="classpath:/META-INF/spring/core-context.xml"/>
+    <import resource="classpath:/META-INF/spring/partner-context.xml"/>
+    <import resource="classpath:/META-INF/spring/message-context.xml"/>
+    <import resource="classpath:/META-INF/spring/security.xml"/>
+    <import resource="classpath:/META-INF/spring/webmvc.xml"/>
+    <import resource="classpath:/META-INF/spring/freemarker.xml"/>
+    <import resource="classpath:/META-INF/spring/webflow.xml"/>
 </beans>

@@ -15,19 +15,7 @@
     </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>
-            classpath:/META-INF/spring/dataSource.xml
-            classpath:/META-INF/spring/hibernate-context.xml
-            classpath:/META-INF/spring/support.xml
-            classpath:/META-INF/spring/core-context.xml
-            classpath:/META-INF/spring/message-context.xml
-            classpath:/META-INF/spring/security.xml
-            classpath:/META-INF/spring/webmvc.xml
-            classpath:/META-INF/spring/freemarker.xml
-	        classpath:/META-INF/spring/webflow.xml
-	        /WEB-INF/helianto-app.xml
-
-        </param-value>
+        <param-value>/WEB-INF/helianto-app.xml</param-value>
     </context-param>
 	<listener>
 		<listener-class>
@@ -53,7 +41,19 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>helianto</servlet-name>
-		<url-pattern>/admin/*</url-pattern>
+		<url-pattern>/helianto/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- 
+	    Serves static resource content from .jar files such as spring-js.jar 
+	-->
+	<servlet>
+	    <servlet-name>Resource Servlet</servlet-name>
+	    <servlet-class>org.springframework.js.resource.ResourceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>Resource Servlet</servlet-name>
+	    <url-pattern>/resources/*</url-pattern>
 	</servlet-mapping>
 
     <!--

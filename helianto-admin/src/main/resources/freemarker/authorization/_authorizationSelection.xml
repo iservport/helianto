@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+        parent="_menu">
+
+	<secured attributes="ROLE_ADMIN_MANAGER" />
+	
+	<persistence-context />
+
+	<on-start>
+		<set name="conversationScope.basePath" value="'authorization/'" />
+		<set name="conversationScope.assign"   value="'assign'" />
+		<evaluate expression="authorizationAction.createModel(flowScope, currentUser.principal)" />
+	</on-start>
+
+	<action-state id="filter">
+		<evaluate expression="authorizationAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="selection.view" />
+	</action-state>
+
+	<view-state id="selection.view" view="/frame2"  model="authorizationModel" >
+
+		<transition on="info" to="info.view" />
+		
+		<transition on="selectAuthorization" to="selection.view" >
+			<set name="flowScope.authorization"  value="authorizationModel.item"/>
+		</transition>
+		
+		<transition on="createAuthorization" to="entity.subflow" >
+			<evaluate expression="entityAction.create(flowScope, currentUser.principal)" />
+		</transition>
+		
+		<on-exit>
+			<evaluate expression="authorizationAction.authenticate(flowScope)" />
+		</on-exit>
+
+	</view-state>
+
+	<view-state id="info.view" view="info" >
+
+		<transition on="toSelection" to="selection.view" />
+		
+	</view-state>
+	
+	<subflow-state id="user.subflow" subflow="_user">
+		<input name="user" />
+		<transition on="toCommit" to="filter" />
+		<transition on="toReturn" to="filter" />
+	</subflow-state>
+	
+	<subflow-state id="entity.subflow" subflow="_entity">
+		<input name="entity" />
+		<transition on="toCommit" to="filter" />
+		<transition on="toReturn" to="selection.view" />
+	</subflow-state>
+	
+</flow>

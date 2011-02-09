@@ -6,10 +6,12 @@
 
 	<form method="post" >
 		<p>Entity alias:</p>
-		<p><@spring.formInput "userGroup.entity.alias", 'size="20" maxlength="20"'/></p>
+		<p><@spring.formInput "entity.alias", 'size="20" maxlength="20"'/></p>
 		<@perr/>
-		<@submit2 />
-		<@flowKey />
+		<input type="hidden" name="_eventId" value="storeEntity" />
+		<input type="submit" value="Instalar" />
+		<@flowKey/>
+	
 	</form>
 
 </div>

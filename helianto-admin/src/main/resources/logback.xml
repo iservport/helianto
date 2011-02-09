@@ -9,6 +9,7 @@
   </appender>
 
   <logger name="org.springframework.security" level="OFF"/>
+  <logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG"/>
   <logger name="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" level="OFF"/>
   <logger name="org.springframework.web.servlet.view.InternalResourceView" level="OFF"/>
   <logger name="org.springframework.web.servlet.view.AbstractView" level="OFF"/>
