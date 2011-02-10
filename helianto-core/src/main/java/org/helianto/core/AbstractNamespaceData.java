@@ -29,7 +29,7 @@ import javax.persistence.MappedSuperclass;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public class AbstractNamespaceData implements java.io.Serializable {
+public class AbstractNamespaceData implements RootEntity {
 
     /**
      * Factory method.
@@ -97,7 +97,7 @@ public class AbstractNamespaceData implements java.io.Serializable {
     /**
      * Data name.
      */
-    @Column(length=128)
+    @Column(length=256)
     public String getDataName() {
         return this.dataName;
     }
