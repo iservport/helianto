@@ -19,7 +19,7 @@
 	<h3>Root, trunk and business spaces</h3>
 	
 	<p>To get started quickly, Helianto provides installation routines to create a user named "manager".
-	A manager is automatically assigned full privileges, being able to control both so called "root" and 
+	A manager is automatically assigned full privileges, being able to control both so called "root" 
 	and "trunk" entities.</p>
 	
 	<p>This concept help to bind entities within isolation levels and create a management hierarchy. One can say, 
