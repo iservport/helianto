@@ -415,5 +415,14 @@ public class CriteriaBuilder extends SelectFromBuilder {
     public int getSegmentCount() {
         return segmentCount;
     }
+    
+    /**
+     * Add count to segment count.
+     * 
+     * @param count
+     */
+    public void addSegmentCount(int count) {
+    	segmentCount += count;
+    }
 
 }
