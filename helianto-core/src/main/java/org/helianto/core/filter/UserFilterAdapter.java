@@ -83,6 +83,17 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
     }
     
     /**
+     * Manager constructor.
+     * 
+     * @param parentUserKey
+     * @param identity
+     */
+    public UserFilterAdapter(String parentUserKey, Identity identity) {
+    	this(parentUserKey);
+    	getFilter().setUserKey(identity.getPrincipal());
+    }
+    
+    /**
      * Force filter to standards.
      */
     public void reset() {

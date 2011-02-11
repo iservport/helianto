@@ -34,7 +34,7 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	}
 	
 	protected Filter doCreateFilter(MutableAttributeMap attributes,	PublicUserDetails userDetails) {
-		return new UserFilterAdapter("USER");
+		return new UserFilterAdapter("USER", userDetails.getUser().getIdentity());
 	}
 	
 	protected List<User> doFilter(Filter filter) {

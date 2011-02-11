@@ -180,3 +180,54 @@ href="${flowExecutionUrl}&_eventId=select${name?cap_first}&${indexName}=${target
 	</tbody>
 	</table>
 </#macro>
+
+<#macro formDate path >
+     <@spring.bind path/>
+	    <input type="text" id="${spring.status.expression}" 
+	        name="${spring.status.expression}" 
+	        value="${spring.stringStatusValue}" size="8"
+	        style="width:7em; padding: 1px;"
+    <@spring.closeTag/>
+	<script type="text/javascript">
+        Spring.addDecoration(
+        new Spring.ElementDecoration({
+        	elementId : '${spring.status.expression}', 
+        	widgetType : 'dijit.form.DateTextBox', 
+        	widgetAttrs : {
+        		required: false, 
+        		value : dojo.date.locale.parse('${spring.stringStatusValue}', {selector : 'date', datePattern : 'dd/MM/yy'}), 
+        		displayedValue : '${spring.stringStatusValue}',
+        		serialize : function(d, options){
+					return dojo.date.locale.format(d, {selector : 'date', datePattern : 'MM/dd/yy'});
+				},
+				lang : 'pt-br'
+        	}
+        })); 
+    </script>
+</#macro>
+
+<#macro formDateTime path >
+     <@spring.bind path/>
+	    <input type="text" id="${spring.status.expression}" 
+	        name="${spring.status.expression}" 
+	        value="${spring.stringStatusValue?date?string('dd/MM/yy')}" size="8"
+	        style=" width:7em; padding: 1px;"
+    <@spring.closeTag/>
+	<script type="text/javascript">
+        Spring.addDecoration(
+        new Spring.ElementDecoration({
+        	elementId : '${spring.status.expression}', 
+        	widgetType : 'dijit.form.DateTextBox', 
+        	widgetAttrs : {
+        		required: false, 
+        		value : dojo.date.locale.parse('${spring.stringStatusValue?date?string('dd/MM/yy')}', {selector : 'date', datePattern : 'dd/MM/yy'}), 
+        		displayedValue : '${spring.stringStatusValue?date?string('dd/MM/yy')}',
+        		serialize : function(d, options){
+					return dojo.date.locale.format(d, {selector : 'date', datePattern : 'MM/dd/yy'});
+				},
+				constraints : {fullYear:false},
+				lang : 'pt-br'
+        	}
+        })); 
+    </script>
+</#macro>
