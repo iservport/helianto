@@ -41,6 +41,7 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
     private String parentUserKey;
     private boolean orderByLastEventDesc = false;
 	private Collection<Identity> exclusions;
+	private Identity identity;
     
     /**
      * Default constructor.
@@ -90,7 +91,7 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
      */
     public UserFilterAdapter(String parentUserKey, Identity identity) {
     	this(parentUserKey);
-    	getFilter().setUserKey(identity.getPrincipal());
+    	setIdentity(identity);
     }
     
     /**
@@ -127,9 +128,14 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
 		}
 		if (getParent()!=null) {
 			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.id =").append(getParent().getId());
+			mainCriteriaBuilder.addSegmentCount(1);
 		}
 		if (getParentUserKey()!=null && getParentUserKey().length()>0) {
 			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.userKey =").appendString(getParentUserKey());
+			mainCriteriaBuilder.addSegmentCount(1);
+		}
+		if (getIdentity()!=null && getIdentity().getId()>0) {
+			mainCriteriaBuilder.appendAnd().appendSegment("identity.id", "=").append(getIdentity().getId());
 		}
 	}
 
@@ -252,6 +258,16 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
     public void setExclusions(Collection<Identity> exclusions) {
         this.exclusions = exclusions;
     }
+    
+    /**
+     * Identity filter.
+     */
+    public Identity getIdentity() {
+		return identity;
+	}
+    public void setIdentity(Identity identity) {
+		this.identity = identity;
+	}
     
     private static Logger logger = LoggerFactory.getLogger(UserFilterAdapter.class);
 

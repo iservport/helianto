@@ -47,6 +47,7 @@ public class UserFilterAdapterTests {
 	static String C4 = "AND alias.class=UserGroup ";
 	static String C5 = "AND parentAssociations.parent.id = 100 ";
 	static String C6 = "parentAssociations.parent.userKey = 'USER' ";
+	static String C7 = "AND alias.identity.id = 1 ";
 	
 	@Test
 	public void empty() {
@@ -66,7 +67,7 @@ public class UserFilterAdapterTests {
 	}
 
 	@Test
-	public void exclusins() {
+	public void exclusions() {
 		List<Identity> exclusions = new ArrayList<Identity>();
 		Identity i1 = new Identity("1");
 		i1.setId(1);
@@ -98,6 +99,14 @@ public class UserFilterAdapterTests {
 		filter = new UserFilterAdapter("USER");
 		assertEquals(S1+S2, filter.createSelectAsString());
 		assertEquals(C6+O0, filter.createCriteriaAsString());
+	}
+	
+	@Test
+	public void identity() {
+		Identity identity = new Identity("PRINCIPAL");
+		identity.setId(1);
+		filter.setIdentity(identity);
+		assertEquals(C0+C7+O0, filter.createCriteriaAsString());
 	}
 
 	// collabs
