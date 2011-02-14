@@ -20,6 +20,7 @@ public abstract class AbstractFilterAdapter<T> extends AbstractFilter {
 	 */
 	public AbstractFilterAdapter(T filter) {
 		this.filter = filter;
+		reset();
 	}
 
 	/**

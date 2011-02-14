@@ -52,7 +52,6 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> {
 	 * Filter reset.
 	 */
 	public void reset() {
-		getFilter().setProvinceCode("");
 		getFilter().setProvinceName("");
 	}
 

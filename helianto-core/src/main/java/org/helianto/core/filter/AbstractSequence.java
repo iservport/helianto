@@ -24,6 +24,9 @@ public abstract class AbstractSequence extends AbstractTrunk implements Sequence
 		setInternalNumber(internalNumber);
 	}
 
+	/**
+	 * Internal number.
+	 */
 	public long getInternalNumber() {
 		return this.internalNumber;
 	}
@@ -31,6 +34,9 @@ public abstract class AbstractSequence extends AbstractTrunk implements Sequence
 		this.internalNumber = internalNumber;
 	}
 	
+	/**
+	 * The entity key.
+	 */
 	public String getInternalNumberKey() { 
 		return "KEY";
 	}
