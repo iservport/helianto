@@ -34,40 +34,39 @@ public class PartnerFilterAdapterTests {
 	
     public static String OB = "order by alias.privateEntity.entityAlias ";
     public static String C1 = "alias.privateEntity.entity.id = 1 ";
-    public static String C2 = "AND alias.class=Partner ";
-    public static String C7 = "AND alias.class=Customer ";
-    public static String C3 = "AND alias.priority = '0' ";
-    public static String C4 = "AND alias.privateEntity.entityAlias = 'PARTNER' ";
+    public static String C2 = "AND alias.priority = '0' ";
+    public static String C3 = "AND alias.privateEntity.entityAlias = 'PARTNER' ";
+    public static String C4 = "AND alias.class=Customer ";
     public static String C5 = "AND lower(alias.privateEntity.entityName) like '%name%' ";
     public static String C6 = "AND alias.partnerState = 'A' ";
 
     @Test
     public void empty() {
-        assertEquals(C1+C2+C3+OB, filter.createCriteriaAsString());
+        assertEquals(C1+C2+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
     	partner.getPrivateEntity().setEntityAlias("PARTNER");
-        assertEquals(C1+C2+C4, filter.createCriteriaAsString());
+        assertEquals(C1+C3, filter.createCriteriaAsString());
     }
     
     @Test
     public void filterClazz() {
         filter.setClazz(Customer.class);
-        assertEquals(C1+C7+C3+OB, filter.createCriteriaAsString());
+        assertEquals(C1+C4+C2+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void filterName() {
     	partner.getPrivateEntity().setEntityName("NAME");
-        assertEquals(C1+C2+C5+C3+OB, filter.createCriteriaAsString());
+        assertEquals(C1+C5+C2+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void filterState() {
         partner.setPartnerState(PartnerState.ACTIVE.getValue());
-        assertEquals(C1+C2+C6+C3+OB, filter.createCriteriaAsString());
+        assertEquals(C1+C6+C2+OB, filter.createCriteriaAsString());
     }
     
     private PartnerFilterAdapter filter;
@@ -79,8 +78,6 @@ public class PartnerFilterAdapterTests {
     	entity.setId(1);
     	PrivateEntity privateEntity = new PrivateEntity(entity, "");
     	partner = new Partner(privateEntity);
-    	filter = new PartnerFilterAdapter(partner, Partner.class);
-    	// clean
-    	partner.setPartnerState(' ');
+    	filter = new PartnerFilterAdapter(partner);
     }
 }
