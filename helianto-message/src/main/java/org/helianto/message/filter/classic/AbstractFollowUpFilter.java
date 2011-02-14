@@ -19,9 +19,10 @@ import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.document.filter.classic.AbstractRecordFilter;
 
 /**
- * Base class to follow up filters..
+ * Base class to follow up filters.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public abstract class AbstractFollowUpFilter extends AbstractRecordFilter {
 

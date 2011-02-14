@@ -18,7 +18,6 @@ package org.helianto.message;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
-import org.helianto.core.number.Sequenceable;
 import org.helianto.document.AbstractRecord;
 
 /**
@@ -27,7 +26,7 @@ import org.helianto.document.AbstractRecord;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractFollowUp extends AbstractRecord implements Sequenceable, Comparable<AbstractFollowUp> {
+public abstract class AbstractFollowUp extends AbstractRecord implements Comparable<AbstractFollowUp> {
 
     private static final long serialVersionUID = 1L;
     private String followUpDesc;
@@ -38,7 +37,7 @@ public abstract class AbstractFollowUp extends AbstractRecord implements Sequenc
      */
     protected AbstractFollowUp() {
     	super();
-    	setNotificationOption(NotificationOption.REPORTER.getValue());
+    	setNotificationOptionAsEnum(NotificationOption.REPORTER);
     }
 
     /**
@@ -61,7 +60,7 @@ public abstract class AbstractFollowUp extends AbstractRecord implements Sequenc
     public void setNotificationOption(char notificationOption) {
     	this.notificationOption = notificationOption;
     }
-    public void setNotificationOption(NotificationOption notificationOption) {
+    public void setNotificationOptionAsEnum(NotificationOption notificationOption) {
     	this.notificationOption = notificationOption.getValue();
     }
     
