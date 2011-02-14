@@ -34,6 +34,7 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
     private static final long serialVersionUID = 1L;
 	private Class<? extends ResourceGroup> clazz = ResourceGroup.class;
 	private ResourceGroup parent;
+	private ResourceGroup child;
 	
 	/**
 	 * Default constructor.
@@ -60,6 +61,10 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	        logger.debug("Parent resource group is: '{}'", getParent());
 	        builder.appendInnerJoin("parentAssociations", "parentAssociation");
 		}
+		if (getChild()!=null) {
+	        logger.debug("Child resource group is: '{}'", getParent());
+	        builder.appendInnerJoin("childAssociations", "childAssociation");
+		}
 		return builder.getAsString();
 	}
 	
@@ -81,6 +86,11 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getParent()!=null) {
 			mainCriteriaBuilder.appendAnd().append("parentAssociation.parent.id =").append(getParent().getId());
+			mainCriteriaBuilder.addSegmentCount(1);
+		}
+		if (getChild()!=null) {
+			mainCriteriaBuilder.appendAnd().append("childAssociation.child.id =").append(getChild().getId());
+			mainCriteriaBuilder.addSegmentCount(1);
 		}
 		appendLikeFilter("resourceName", getFilter().getResourceName(), mainCriteriaBuilder);
 		appendEqualFilter("resourceType", getFilter().getResourceType(), mainCriteriaBuilder);
@@ -105,6 +115,16 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	}
 	public void setParent(ResourceGroup parent) {
 		this.parent = parent;
+	}
+	
+	/**
+	 * Child filter.
+	 */
+	public ResourceGroup getChild() {
+		return child;
+	}
+	public void setChild(ResourceGroup child) {
+		this.child = child;
 	}
 
 	/**
