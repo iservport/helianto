@@ -34,7 +34,7 @@ import org.helianto.partner.Supplier;
 public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	
 	private static final long serialVersionUID = 1L;
-	private Class<? extends Partner> clazz = Partner.class;
+	private Class<? extends Partner> clazz;
 	
 	/**
 	 * Default constructor.
@@ -43,6 +43,7 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	 */
 	public PartnerFilterAdapter(Partner partner) {
 		super(partner);
+		reset();
 	}
 	
 	/**
@@ -59,7 +60,9 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	/**
 	 * Reset method.
 	 */
-	public void reset() { }
+	public void reset() { 
+		getFilter().setPartnerState(' ');
+	}
 
 	public boolean isSelection() {
 		return getFilter().getEntityAlias().length()>0;
@@ -105,6 +108,9 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	}
 	
 	public char getDiscriminator() {
+		if (clazz==null) {
+			return ' '; 
+		}
 		if (clazz.equals(Agent.class)) {
 			return 'A'; 
 		}
@@ -144,6 +150,9 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 		}
 		if (discriminator=='S') {
 			clazz = Supplier.class; 
+		}
+		if (discriminator==' ') {
+			clazz = null; 
 		}
 	}
 
