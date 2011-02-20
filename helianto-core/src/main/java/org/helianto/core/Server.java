@@ -40,38 +40,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="core_vocabulary",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "serverName"})}
 )
-public class Server  implements java.io.Serializable {
-
-    /**
-     * Default <code>Server</code> creator.
-     * 
-     * Set ServerState to ActivityState.ACTIVE and
-     * RequiredEncription to Encription.PLAIN_PASSWORD by default.
-     * 
-     * @param requiredOperator
-     * @param serverName
-     * @param serverType if null, default is ServerType.SMTP_SERVER
-     * @param credential if null, create one with serverName and empty password
-     * 
-     * @see ServerType
-     * @see ActivityState
-     * @see Encription
-     */
-    public static Server serverFactory(Operator requiredOperator, String serverName, ServerType serverType, Credential credential) {
-        Server server = new Server();
-        server.setOperator(requiredOperator);
-        server.setServerName(serverName);
-        if (serverType!=null) {
-            server.setServerType(serverType.getValue());
-        }
-        if (credential==null) {
-            Identity identity = Identity.identityFactory("", "");
-            credential = Credential.credentialFactory(identity, "");
-            credential.getIdentity().setPrincipal(serverName);
-        } 
-        server.setCredential(credential);
-        return server;
-    }
+public class Server  implements RootEntity {
 
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -86,19 +55,45 @@ public class Server  implements java.io.Serializable {
     private char requiredEncription;
     private Credential credential;
 
-     // Constructors
-
-    /** default constructor */
+    /**
+     * Default constructor.
+     */
     public Server() {
     	setServerHostAddress("");
     	setServerPort(-1);
     	setServerDesc("");
     	setServerType(ServerType.SMTP_SERVER.getValue());
         setPriority((byte) 1);
-        setServerState(ActivityState.ACTIVE);
-        setRequiredEncription(Encription.PLAIN_PASSWORD);
+        setServerStateAsEnum(ActivityState.ACTIVE);
+        setRequiredEncriptionAsEnum(Encription.PLAIN_PASSWORD);
     }
 
+    /**
+     * Key constructor.
+     * 
+     * @param operator
+     * @param serverName
+     */
+    public Server(Operator operator, String serverName) {
+    	this();
+    	setOperator(operator);
+    	setServerName(serverName);
+    }
+    
+    /**
+     * Credential constructor.
+     * 
+     * @param operator
+     * @param serverName
+     * @param serverType
+     * @param credential
+     */
+    public Server(Operator operator, String serverName, ServerType serverType, Credential credential) {
+    	this(operator, serverName);
+        setServerType(serverType.getValue());
+        setCredential(credential);
+    }
+    
     /**
      * Primary key.
      */
@@ -194,7 +189,7 @@ public class Server  implements java.io.Serializable {
     public void setServerState(char serverState) {
         this.serverState = serverState;
     }
-    public void setServerState(ActivityState serverState) {
+    public void setServerStateAsEnum(ActivityState serverState) {
         this.serverState = serverState.getValue();
     }
     
@@ -207,7 +202,7 @@ public class Server  implements java.io.Serializable {
     public void setRequiredEncription(char requiredEncription) {
         this.requiredEncription = requiredEncription;
     }
-    public void setRequiredEncription(Encription requiredEncription) {
+    public void setRequiredEncriptionAsEnum(Encription requiredEncription) {
         this.requiredEncription = requiredEncription.getValue();
     }
     
