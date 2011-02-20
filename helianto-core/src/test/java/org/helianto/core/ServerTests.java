@@ -16,10 +16,10 @@ import org.junit.Test;
 public class ServerTests  {
     
 	@Test
-    public void serverFactory() {
+    public void constructor() {
         Operator operator = new Operator();
         Credential credential = new Credential();
-        Server server = Server.serverFactory(operator, "NAME", ServerType.HTTP_SERVER, credential);
+        Server server = new Server(operator, "NAME", ServerType.HTTP_SERVER, credential);
         
         assertSame(operator, server.getOperator());
         assertEquals("NAME", server.getServerName());
@@ -34,24 +34,14 @@ public class ServerTests  {
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), server.getRequiredEncription());
     }
 
-	@Test
-    public void serverFactoryDefaults() {
-        Operator operator = new Operator();
-        Server server = Server.serverFactory(operator, "NAME", null, null);
-        
-        assertEquals(ServerType.SMTP_SERVER.getValue(), server.getServerType());
-        assertEquals("NAME".toLowerCase(), server.getCredential().getIdentity().getPrincipal());
-        assertSame("", server.getCredential().getPassword());
-    }
-
     /**
      * Test <code>Category</code> equals() method.
      */
 	@Test
-    public void categoryEquals() {
+    public void serverEquals() {
         Operator operator = new Operator();
         Credential credential = new Credential();
-        Server server = Server.serverFactory(operator, "NAME", ServerType.HTTP_SERVER, credential);
+        Server server = new Server(operator, "NAME", ServerType.HTTP_SERVER, credential);
         Server copy = (Server) DomainTestSupport.minimalEqualsTest(server);
         
         copy.setOperator(server.getOperator());
