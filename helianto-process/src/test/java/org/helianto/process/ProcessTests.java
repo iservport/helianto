@@ -56,11 +56,9 @@ public class ProcessTests {
 	public void processFactory() {
 		Entity entity = EntityTestSupport.createEntity();
 		String processCode = "PROCESSCODE";
-		long internalNumber = Long.MAX_VALUE;
-		Process process = Process.processFactory(entity, processCode, internalNumber);
+		Process process = new Process(entity, processCode);
 		assertSame(entity, process.getEntity());
 		assertEquals(processCode, process.getDocCode());
-		assertEquals(internalNumber, process.getInternalNumber());
 	}
 
 }

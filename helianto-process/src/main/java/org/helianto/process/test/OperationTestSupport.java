@@ -41,7 +41,7 @@ public class OperationTestSupport {
 	}
 
 	public static Operation createOperation(Entity entity, String docCode) {
-        return Operation.documentFactory(Operation.class, entity, docCode);
+        return new Operation(entity, docCode);
 	}
 
 	public static void createSetups(Operation operation, int setupCount) {

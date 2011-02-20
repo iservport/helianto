@@ -41,26 +41,27 @@ import org.helianto.partner.Partner;
 @Table(name="proc_process")
 public class Process extends DerivedProcessDocument implements Sequenceable {
 
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param processCode
-     * @param internalNumber
-     */
-    public static Process processFactory(Entity entity, String processCode, long internalNumber) {
-    	Process process = documentFactory(Process.class, entity, processCode);
-    	process.setInternalNumber(internalNumber);
-    	return process;
-    }
-
     private static final long serialVersionUID = 1L;
     private long internalNumber;
     private Partner partner;
 
-	/** default constructor */
+    /** 
+     * Default constructor.
+     */
     public Process() {
     	super();
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public Process(Entity entity, String docCode) {
+    	this();
+    	setEntity(entity);
+    	setDocCode(docCode);
     }
 
     /**
@@ -113,41 +114,6 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
     	return operations;
     }
     
-	//1.1
-    /**
-     * Return an association with a new <tt>Operation</tt>.
-     */
-	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-		String operationCode = new StringBuilder("OP").append(sequence).toString();
-		return processOperationFactory(operationCode, 0, sequence);
-	}
-
-    //1.2
-    /**
-     * <code>Process</code> operation factory.
-     * 
-     * @param operationCode
-     * @param internalNumber
-     * @param sequence
-     */
-    public ProcessDocumentAssociation processOperationFactory(String operationCode, long internalNumber, int sequence) {
-    	ProcessDocumentAssociation documentAssociation = documentAssociationFactory(Operation.class, operationCode, sequence);
-        return documentAssociation;
-    }
-
-    //1.3
-    /**
-     * <code>Process</code> characteristic factory.
-     * 
-     * @param characteristicCode
-     * @param internalNumber
-     * @param sequence
-     */
-    public ProcessDocumentAssociation processCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
-    	ProcessDocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
-        return documentAssociation;
-    }
-
     public boolean equals(Object other) {
 		 if ( !(other instanceof Process) ) return false;
 		 return super.equals(other);

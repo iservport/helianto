@@ -33,12 +33,11 @@ public class SetupTestSupport {
 	}
 
 	public static Setup createSetup(Operation operation) {
-		ResourceGroup resourceGroup = ResourceGroupTestSupport.createResourceGroup();
-		return operation.operationSetupFactory(resourceGroup);
+		return createSetup(operation, ResourceGroupTestSupport.createResourceGroup());
 	}
 
 	public static Setup createSetup(Operation operation, ResourceGroup resourceGroup) {
-		return operation.operationSetupFactory(resourceGroup);
+		return new Setup(operation, resourceGroup);
 	}
 	
 }

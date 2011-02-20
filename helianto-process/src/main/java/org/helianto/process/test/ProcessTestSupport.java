@@ -59,7 +59,7 @@ public class ProcessTestSupport {
      * @param docCode
      */
 	public static Process createProcess(Entity entity, String docCode) {
-        return Process.documentFactory(Process.class, entity, docCode);
+        return new Process(entity, docCode);
 	}
 
     /**

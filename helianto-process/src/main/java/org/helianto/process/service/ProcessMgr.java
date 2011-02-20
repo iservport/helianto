@@ -27,7 +27,6 @@ import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Setup;
-import org.helianto.resource.ResourceGroup;
 
 /**
  * <code>ProcessMgr</code> interface.
@@ -99,19 +98,9 @@ public interface ProcessMgr extends PartnerMgr {
     public List<ProcessDocumentAssociation> findCharacteristics(User user, Operation operation);
     
     /**
-     * Associated characteristic creation.
-     */
-    public ProcessDocumentAssociation prepareCharacteristic(Operation operation);
-    
-    /**
      * Store document associations.
      */
     public ProcessDocumentAssociation storeDocumentAssociation(ProcessDocumentAssociation documentAssociation);
-    
-	/**
-	 * Create setup. 
-	 */
-	public Setup prepareNewSetup(Operation operation, ResourceGroup resourceGroup);
     
     /**
      * Store setups.

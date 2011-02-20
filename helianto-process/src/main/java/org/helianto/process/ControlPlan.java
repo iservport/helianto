@@ -37,10 +37,25 @@ public class ControlPlan extends AbstractDocument implements Sequenceable {
     private int phase;
 
 
-    /** default constructor */
+    /** 
+     * Document constructor.
+     */
     public ControlPlan() {
+    	super();
+    	setPhaseAsEnum(ProcessPhase.PRODUCTION);
     }
 
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public ControlPlan(Entity entity, String docCode) {
+    	this();
+    	setEntity(entity);
+    	setDocCode(docCode);
+    }
     /**
      * Internal number.
      */
@@ -56,7 +71,6 @@ public class ControlPlan extends AbstractDocument implements Sequenceable {
 	public String getInternalNumberKey() {
 		return "CTRLPLN";
 	}
- 
     
     /**
      * Phase.
@@ -67,36 +81,8 @@ public class ControlPlan extends AbstractDocument implements Sequenceable {
     public void setPhase(int phase) {
         this.phase = phase;
     }
-    public void setPhase(ProcessPhase phase) {
+    public void setPhaseAsEnum(ProcessPhase phase) {
         this.phase = phase.getValue();
-    }
-    
-    /**
-     * <code>ControlPlan</code> factory.
-     * 
-     * @param entity
-     * @param internalNumber
-     */
-    public static ControlPlan controlPlanFactory(Entity entity, long internalNumber) {
-    	ControlPlan controlPlan = documentFactory(ControlPlan.class, entity, "");
-    	controlPlan.setInternalNumber(internalNumber);
-    	return controlPlan;
-    }
-
-    /**
-     * <code>ControlPlan</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getControlPlanQueryStringBuilder() {
-        return new StringBuilder("select controlPlan from ControlPlan controlPlan ");
-    }
-
-    /**
-     * <code>ControlPlan</code> natural id query.
-     */
-    @Transient
-    public static String getControlPlanNaturalIdQueryString() {
-        return getControlPlanQueryStringBuilder().append("where controlPlan.entity = ? and controlPlan.docCode = ? ").toString();
     }
     
     public boolean equals(Object other) {

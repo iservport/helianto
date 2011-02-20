@@ -100,31 +100,6 @@ public class Characteristic extends DerivedProcessDocument {
         this.classification = classification;
     }
     
-	//1.1
-    /**
-     * Return an association with a new <tt>ControlMethod</tt>.
-     * 
-     * @param sequence
-     */
-	public Method documentAssociationFactory(int sequence) {
-		ControlMethod child = ControlMethod.documentFactory(ControlMethod.class, getEntity(), "");
-		return documentAssociationFactory(child,sequence);
-	}
-
-    //1.2
-    /**
-     * <code>Characteristic</code> method factory.
-     * 
-     * @param child
-     * @param sequence
-     */
-    public Method documentAssociationFactory(ControlMethod child, int sequence) {
-    	Method method = (Method) ProcessDocumentAssociation.documentAssociationFactory(Method.class, this, child, AssociationType.CHARACTERISTIC_METHOD, sequence);
-    	method.setLeftLimitRequired(true);
-    	method.setRightLimitRequired(true);
-        return method;
-    }
-
    /**
     * equals
     */

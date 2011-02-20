@@ -23,8 +23,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.helianto.core.Entity;
 import org.helianto.core.number.Sequenceable;
-import org.helianto.resource.ResourceGroup;
 
 
 /**
@@ -43,10 +43,24 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
     private long operationTime;
     private List<Setup> setups = new ArrayList<Setup>(0);
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public Operation() {
     	super();
     	setOperationType(OperationType.OPERATION);
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public Operation(Entity entity, String docCode) {
+    	this();
+    	setEntity(entity);
+    	setDocCode(docCode);
     }
 
     /**
@@ -95,51 +109,6 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
     }
     public void setSetups(List<Setup> setups) {
         this.setups = setups;
-    }
-
-    //1.0
-    /**
-     * <code>Operation</code> subprocess factory.
-     * 
-     * @param processCode
-     * @param internalNumber
-     * @param sequence
-     */
-    public ProcessDocumentAssociation operationProcessFactory(String processCode, long internalNumber, int sequence) {
-    	ProcessDocumentAssociation documentAssociation = documentAssociationFactory(Process.class, processCode, sequence);
-        return documentAssociation;
-    }
-
-	//1.1
-    /**
-     * Return an association with a new <tt>Characteristic</tt>.
-     */
-	public ProcessDocumentAssociation documentAssociationFactory(int sequence) {
-		String characteristicCode = new StringBuilder("CH").append(sequence).toString();
-		return operationCharacteristicFactory(characteristicCode, 0, sequence);
-	}
-
-    //1.2
-    /**
-     * <code>Operation</code> characteristic factory.
-     * 
-     * @param characteristicCode
-     * @param internalNumber
-     * @param sequence
-     */
-    public ProcessDocumentAssociation operationCharacteristicFactory(String characteristicCode, long internalNumber, int sequence) {
-    	ProcessDocumentAssociation documentAssociation = documentAssociationFactory(Characteristic.class, characteristicCode, sequence);
-        return documentAssociation;
-    }
-
-    /**
-     * <code>Operation</code> setup factory.
-     * 
-     * @param resourceGroup
-     */
-    public Setup operationSetupFactory(ResourceGroup resourceGroup) {
-    	Setup setup = Setup.setupFactory(this, resourceGroup);
-        return setup;
     }
 
 	public boolean equals(Object other) {

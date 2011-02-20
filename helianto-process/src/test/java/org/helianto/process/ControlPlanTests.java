@@ -24,11 +24,11 @@ public class ControlPlanTests {
     public void controlPlanFactoryClass() {
     	Entity entity = new Entity();
 
-        ControlPlan controlPlan = ControlPlan.controlPlanFactory(entity, Integer.MAX_VALUE);
+        ControlPlan controlPlan = new ControlPlan(entity, "CODE");
 
         assertTrue(controlPlan instanceof ControlPlan);
 		assertSame(entity, controlPlan.getEntity());
-        assertEquals(Integer.MAX_VALUE, controlPlan.getInternalNumber());
+        assertEquals("CODE", controlPlan.getDocCode());
         
     }
     
@@ -39,20 +39,20 @@ public class ControlPlanTests {
     public void controlPlanEquals() {
     	Entity entity = new Entity();
 
-        ControlPlan controlPlan = ControlPlan.controlPlanFactory(entity, Integer.MAX_VALUE);
+        ControlPlan controlPlan = new ControlPlan(entity, "CODE");
 
         ControlPlan copy = (ControlPlan) DomainTestSupport.minimalEqualsTest(controlPlan);
         
         copy.setEntity(null);
-        copy.setInternalNumber(Integer.MAX_VALUE);
+        copy.setDocCode("CODE");
         assertFalse(controlPlan.equals(copy));
 
         copy.setEntity(entity);
-        copy.setInternalNumber(0);
+        copy.setDocCode("");
         assertFalse(controlPlan.equals(copy));
 
         copy.setEntity(entity);
-        copy.setInternalNumber(Integer.MAX_VALUE);
+        copy.setDocCode("CODE");
 
         assertTrue(controlPlan.equals(copy));
     }

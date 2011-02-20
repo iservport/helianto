@@ -29,19 +29,6 @@ import org.helianto.resource.ResourceGroup;
 )
 public class Setup  implements java.io.Serializable, Comparable<Setup> {
 
-    /**
-     * Factory method.
-     * 
-     * @param operation
-     * @param resourceGroup
-     */
-    public static Setup setupFactory(Operation operation, ResourceGroup resourceGroup) {
-    	Setup setup = new Setup();
-    	setup.setOperation(operation);
-    	setup.setResource(resourceGroup);
-    	return setup;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private Operation operation;
@@ -50,13 +37,28 @@ public class Setup  implements java.io.Serializable, Comparable<Setup> {
     private long setupTime;
     private long transportTime;
 
-     // Constructors
-
-    /** default package constructor */
+    /** 
+     * Default constructor.
+     */
     public Setup() {
     	setPriority(0);
     }
 
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public Setup(Operation operation, ResourceGroup resourceGroup) {
+    	this();
+    	setOperation(operation);
+    	setResource(resourceGroup);
+    }
+
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;

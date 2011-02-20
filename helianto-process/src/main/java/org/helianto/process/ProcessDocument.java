@@ -197,7 +197,7 @@ public class ProcessDocument extends AbstractDocument implements Comparator<Proc
      * @param docCode
      */
     public static ProcessDocument processDocumentFactory(Entity entity, String docCode) {
-        return AbstractDocument.documentFactory(ProcessDocument.class, entity, docCode);
+        return new ProcessDocument(entity, docCode);
     }
 
     //1.2
@@ -212,41 +212,25 @@ public class ProcessDocument extends AbstractDocument implements Comparator<Proc
         return association;
     }
 
-    //1.3
-    /**
-     * <code>ProcessDocument</code> general factory.
-     * 
-     * <p>
-     * Create a new child <code>ProcessDocument</code> and a new
-     * <code>DocumentAssociation</code> to contain it.
-     * </p>
-     * 
-     * @param clazz
-     * @param docCode
-     * @param sequence
-     */
-    protected <T extends ProcessDocument> ProcessDocumentAssociation documentAssociationFactory(Class<T> childClazz, String childCode, int sequence) {
-    	ProcessDocument document = ProcessDocument.documentFactory(childClazz, getEntity(), childCode);
-    	AssociationType associationType = AssociationType.resolveAssociationType(getClass(), childClazz);
-        ProcessDocumentAssociation association = ProcessDocumentAssociation.documentAssociationFactory(this, document, associationType, sequence);
-        return association;
-    }
-
-    /**
-     * <code>ProcessDocument</code> query <code>StringBuilder</code>.
-     */
-    @Transient
-    public static StringBuilder getProcessDocumentQueryStringBuilder() {
-        return new StringBuilder("select processDocument from ProcessDocument processDocument ");
-    }
-
-    /**
-     * <code>ProcessDocument</code> natural id query.
-     */
-    @Transient
-    public static String getProcessDocumentNaturalIdQueryString() {
-        return getProcessDocumentQueryStringBuilder().append("where processDocument.entity = ? and processDocument.docCode = ? ").toString();
-    }
+//    //1.3
+//    /**
+//     * <code>ProcessDocument</code> general factory.
+//     * 
+//     * <p>
+//     * Create a new child <code>ProcessDocument</code> and a new
+//     * <code>DocumentAssociation</code> to contain it.
+//     * </p>
+//     * 
+//     * @param clazz
+//     * @param docCode
+//     * @param sequence
+//     */
+//    protected <T extends ProcessDocument> ProcessDocumentAssociation documentAssociationFactory(Class<T> childClazz, String childCode, int sequence) {
+//    	ProcessDocument document = ProcessDocument.documentFactory(childClazz, getEntity(), childCode);
+//    	AssociationType associationType = AssociationType.resolveAssociationType(getClass(), childClazz);
+//        ProcessDocumentAssociation association = ProcessDocumentAssociation.documentAssociationFactory(this, document, associationType, sequence);
+//        return association;
+//    }
 
    /**
     * equals

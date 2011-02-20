@@ -18,7 +18,6 @@ package org.helianto.process.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Node;
@@ -36,7 +35,6 @@ import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Setup;
 import org.helianto.process.filter.classic.ProcessDocumentFilter;
-import org.helianto.resource.ResourceGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -146,20 +144,6 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         logger.debug("Found {} item(s)", characteristicList.size());
         return characteristicList ;
     }
-
-    @Deprecated
-    public ProcessDocumentAssociation prepareCharacteristic(Operation operation) {
-    	Set<ProcessDocumentAssociation> characteristicSet = operation.getChildAssociations();
-        if (logger.isDebugEnabled() && characteristicSet.size()>0) {
-            logger.debug("Found {} item(s) before insertion.", characteristicSet.size());
-        }
-    	return operation.operationCharacteristicFactory("", 0, 0);
-    }
-    
-	public Setup prepareNewSetup(Operation operation, ResourceGroup resourceGroup) {
-		Operation managedOperation = (Operation) processDocumentDao.merge(operation);
-		return managedOperation.operationSetupFactory(resourceGroup);
-	}
 
     public Setup storeSetup(Setup setup) {
     	return setupDao.merge(setup);
