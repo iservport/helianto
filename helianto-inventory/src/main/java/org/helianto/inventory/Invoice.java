@@ -32,8 +32,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.document.AbstractDocument;
-import org.helianto.document.Document;
 import org.helianto.partner.Partner;
 
 /**
@@ -53,17 +51,6 @@ import org.helianto.partner.Partner;
 @DiscriminatorValue("I")
 public class Invoice extends AbstractInventoryDocument {
 
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param docCode
-     */
-    public static Document documentFactory(Entity entity, String docCode) {
-        Document document = AbstractDocument.documentFactory(Document.class, entity, docCode);
-        return document;
-    }
-    
     private static final long serialVersionUID = 1L;
     private char invoiceType;
     private Partner partner;
@@ -74,6 +61,19 @@ public class Invoice extends AbstractInventoryDocument {
      */
     public Invoice() {
     	super();
+    	setInvoiceTypeAsEnum(InvoiceType.OUTPUT);
+    }
+    
+	/**
+     * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public Invoice(Entity entity, String docCode) {
+    	this();
+    	setEntity(entity);
+    	setDocCode(docCode);
     }
     
 	/**
@@ -94,7 +94,7 @@ public class Invoice extends AbstractInventoryDocument {
 	public void setInvoiceType(char invoiceType) {
 		this.invoiceType = invoiceType;
 	}
-	public void setInvoiceType(InvoiceType invoiceType) {
+	public void setInvoiceTypeAsEnum(InvoiceType invoiceType) {
 		this.invoiceType = invoiceType.getValue();
 	}
 

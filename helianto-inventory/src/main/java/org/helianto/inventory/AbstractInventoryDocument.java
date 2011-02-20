@@ -28,10 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.helianto.core.Entity;
-import org.helianto.document.AbstractDocument;
 import org.helianto.document.AbstractNumberedDocument;
-import org.helianto.document.Document;
 
 
 /**
@@ -42,17 +39,6 @@ import org.helianto.document.Document;
 @MappedSuperclass
 public class AbstractInventoryDocument extends AbstractNumberedDocument {
 
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param docCode
-     */
-    public static Document documentFactory(Entity entity, String docCode) {
-        Document document = AbstractDocument.documentFactory(Document.class, entity, docCode);
-        return document;
-    }
-    
     private static final long serialVersionUID = 1L;
     private InventoryTransaction inventoryTransaction;
     private Date issueDate;
