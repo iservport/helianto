@@ -25,6 +25,7 @@ import org.helianto.core.criteria.CriteriaBuilder;
  * Server filter.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class ServerFilter extends AbstractUserBackedCriteriaFilter {
 	

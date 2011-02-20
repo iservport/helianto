@@ -4,6 +4,7 @@ package org.helianto.core.filter.classic;
  * Convenience to operate date range filters.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 public enum DateFilterMode {
 	

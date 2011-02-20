@@ -23,6 +23,7 @@ import org.helianto.core.criteria.CriteriaBuilder;
  * <code>Identity</code> filter.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
 

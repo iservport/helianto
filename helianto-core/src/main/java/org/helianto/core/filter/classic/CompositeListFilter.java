@@ -23,6 +23,7 @@ import org.helianto.core.filter.ListFilter;
  * Extends {@link ListFilter} to add composite list behavior.
  *  
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public interface CompositeListFilter extends ListFilter {
 	
