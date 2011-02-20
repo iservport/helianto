@@ -49,7 +49,7 @@ public class ServerTestSupport {
             credential = CredentialTestSupport.createCredential();
         }
         ServerType serverType = ServerType.values()[testKey % 3];
-        Server server = Server.serverFactory(operator, serverName, serverType, credential);
+        Server server = new Server(operator, serverName, serverType, credential);
         return server;
     }
 
@@ -64,7 +64,7 @@ public class ServerTestSupport {
             for (int i=0;i<size;i++) {
                 Server server = createServer(o);
                 server.setPriority((byte) (Math.random()*size));  //random priority
-                server.setServerState(ActivityState.ACTIVE);  
+                server.setServerStateAsEnum(ActivityState.ACTIVE);  
                 serverList.add(server);
             }
         }
