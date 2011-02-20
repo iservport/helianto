@@ -35,24 +35,6 @@ import org.helianto.core.TopLevelCodedEntity;
 @MappedSuperclass
 public class AbstractDocument implements java.io.Serializable, TopLevelCodedEntity {
 
-    /**
-     * <code>Document</code> generic factory.
-     * 
-     * @param entity
-     * @param docCode
-     */
-    public static <T extends AbstractDocument> T documentFactory(Class<T> clazz, Entity entity, String docCode) {
-        T document = null;
-        try {
-            document = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create document of class "+clazz, e);
-        }
-        document.setEntity(entity);
-        document.setDocCode(docCode);
-        return document;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -67,6 +49,20 @@ public class AbstractDocument implements java.io.Serializable, TopLevelCodedEnti
      */
     public AbstractDocument() {
     	setDocCode("");
+    	setDocName("");
+    	setDocFile("");
+    	setPriority('0');
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public AbstractDocument(Entity entity, String docCode) {
+    	setEntity(entity);
+    	setDocCode(docCode);
     	setDocName("");
     	setDocFile("");
     	setPriority('0');

@@ -210,7 +210,7 @@ public class Serializer implements Customizer {
 	/**
 	 * Document set.
 	 */
-	@OneToMany(mappedBy="documentCodeBuilder")
+	@OneToMany(mappedBy="series")
 	public Set<Document> getDocuments() {
 		return documents;
 	}

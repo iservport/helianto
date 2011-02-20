@@ -56,7 +56,7 @@ public class DocumentMgrImplTests {
 	@Test
 	public void storeDocument() {
 		Document document= new Document();
-		document.setDocumentCodeBuilder(new Serializer());
+		document.setSeries(new Serializer());
 		Document managedDocument = new Document();
 		
 		EasyMock.expect(documentDao.merge(document)).andReturn(managedDocument);

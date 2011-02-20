@@ -32,7 +32,7 @@ public class DocumentTests {
 	@Test
 	public void factory() {
 		Entity entity = EntityTestSupport.createEntity();
-		Document document = Document.documentFactory(entity, "DOCCODE");
+		Document document = new Document(entity, "DOCCODE");
 		assertSame(entity, document.getEntity());
 		assertEquals("DOCCODE", document.getDocCode());
 	}

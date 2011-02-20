@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import org.helianto.core.Entity;
 import org.helianto.core.number.Sequenceable;
 
 /**
@@ -43,6 +44,16 @@ public class AbstractCustomDocument extends AbstractDocument implements Customiz
 		super();
 	}
 	
+	/** 
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param docCode
+	 */
+    public AbstractCustomDocument(Entity entity, String docCode) {
+    	super(entity, docCode);
+    }
+	
 	/**
 	 * The document series.
 	 */
@@ -58,7 +69,9 @@ public class AbstractCustomDocument extends AbstractDocument implements Customiz
 	 */
 	public void setSeries(Serializer series) {
 		this.series = series;
-		super.setEntity(series.getEntity());
+		if (series!=null) {
+			super.setEntity(series.getEntity());
+		}
 	}
 	
 	/**

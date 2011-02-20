@@ -40,19 +40,8 @@ import org.helianto.core.Entity;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Document extends AbstractNumberedDocument implements Comparable<Document> {
+public class Document extends AbstractCustomDocument implements Comparable<Document> {
 
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param docCode
-     */
-    public static Document documentFactory(Entity entity, String docCode) {
-        Document document = AbstractDocument.documentFactory(Document.class, entity, docCode);
-        return document;
-    }
-    
     private static final long serialVersionUID = 1L;
     private Set<DocumentKey> documentKeys = new HashSet<DocumentKey>(0);
     private Set<DocumentTag> documentTags = new HashSet<DocumentTag>(0);
@@ -69,6 +58,16 @@ public class Document extends AbstractNumberedDocument implements Comparable<Doc
 	 */
     public Document() {
     	super();
+    }
+
+	/** 
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param docCode
+	 */
+    public Document(Entity entity, String docCode) {
+    	super(entity, docCode);
     }
 
     /**
