@@ -59,7 +59,8 @@ public class ProcessDocumentTestSupport {
      */
     public static ProcessDocument createProcessDocument(Entity entity, String docCode) {
         ProcessDocument document = new Process();
-        document.setKey(entity, docCode);
+        document.setEntity(entity);
+        document.setDocCode(docCode);
         return document;
     }
 

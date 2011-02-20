@@ -17,7 +17,9 @@
 package org.helianto.document;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
@@ -30,11 +32,58 @@ import org.junit.Test;
 public class DocumentTests {
 	
 	@Test
-	public void factory() {
+	public void constructor() {
 		Entity entity = EntityTestSupport.createEntity();
 		Document document = new Document(entity, "DOCCODE");
 		assertSame(entity, document.getEntity());
 		assertEquals("DOCCODE", document.getDocCode());
+	}
+	
+	@Test
+	@SuppressWarnings("serial")
+	public void abstractDocumentEquals() {
+		AbstractDocument document = new AbstractDocument(null, null) { };
+		assertFalse(document.equals(null));
+		
+		AbstractDocument other = new AbstractDocument(null, null) { };
+		assertTrue(document.equals(other));
+		
+		Entity entity = EntityTestSupport.createEntity();
+		document.setEntity(entity);
+		assertFalse(document.equals(other));
+		document.setDocCode("CODE");
+		assertFalse(document.equals(other));
+		other.setEntity(entity);
+		assertFalse(document.equals(other));
+		other.setDocCode("CODE");
+		assertTrue(document.equals(other));
+		assertEquals(document.hashCode(), other.hashCode());
+		document.setDocCode("");
+		assertFalse(document.equals(other));
+		document.setEntity(new Entity());
+		assertFalse(document.equals(other));
+	}
+	
+	@Test
+	@SuppressWarnings("serial")
+	public void abstractCustomDocumentEquals() {
+		Entity entity = EntityTestSupport.createEntity();
+		AbstractCustomDocument document = new AbstractCustomDocument(entity, "CODE") { };
+		AbstractCustomDocument other = new AbstractCustomDocument(entity, "CODE") { };
+		assertTrue(document.equals(other));
+		AbstractDocument ancestor = new AbstractDocument(entity, "CODE") { };
+		assertFalse(document.equals(ancestor));
+	}
+	
+	@Test
+	@SuppressWarnings("serial")
+	public void documentEquals() {
+		Entity entity = EntityTestSupport.createEntity();
+		Document document = new Document(entity, "CODE") { };
+		Document other = new Document(entity, "CODE") { };
+		assertTrue(document.equals(other));
+		AbstractCustomDocument ancestor = new AbstractCustomDocument(entity, "CODE") { };
+		assertFalse(document.equals(ancestor));
 	}
 	
 }

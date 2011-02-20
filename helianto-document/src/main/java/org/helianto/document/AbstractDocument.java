@@ -26,14 +26,14 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.helianto.core.Entity;
-import org.helianto.core.TopLevelCodedEntity;
+import org.helianto.core.TrunkEntity;
 /**
  * Base class to represent a <code>Document</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public class AbstractDocument implements java.io.Serializable, TopLevelCodedEntity {
+public abstract class AbstractDocument implements TrunkEntity {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -131,12 +131,6 @@ public class AbstractDocument implements java.io.Serializable, TopLevelCodedEnti
     public void setDocFile(String docFile) {
         this.docFile = docFile;
     }
-
-	public TopLevelCodedEntity setKey(Entity entity, String docCode) {
-		this.setEntity(entity);
-		this.setDocCode(docCode);
-		return this;
-	}
 
     /**
      * Priority.

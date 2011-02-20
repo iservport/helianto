@@ -23,6 +23,7 @@ import org.helianto.core.filter.classic.AbstractEntityBackedFilter;
  * Base to document filters.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public abstract class AbstractDocumentFilter extends AbstractEntityBackedFilter {
 

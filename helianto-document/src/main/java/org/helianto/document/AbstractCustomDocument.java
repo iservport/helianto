@@ -31,7 +31,7 @@ import org.helianto.core.number.Sequenceable;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public class AbstractCustomDocument extends AbstractDocument implements Customizable {
+public abstract class AbstractCustomDocument extends AbstractDocument implements Customizable {
 
 	private static final long serialVersionUID = 1L;
 	private Serializer series;
@@ -99,5 +99,11 @@ public class AbstractCustomDocument extends AbstractDocument implements Customiz
 	public void setInternalNumber(long internalNumber) {
 		this.internalNumber = internalNumber;
 	}
+
+	@Override
+    public boolean equals(Object other) {
+		 if ( !(other instanceof AbstractCustomDocument) ) return false;
+		 return super.equals(other);
+    }
 
 }

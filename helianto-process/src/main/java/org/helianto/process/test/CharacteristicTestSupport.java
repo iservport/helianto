@@ -55,7 +55,8 @@ public class CharacteristicTestSupport {
      */
     public static Characteristic createCharacteristic(Entity entity, String docCode) {
     	Characteristic document = new Characteristic();
-        document.setKey(entity, docCode);
+        document.setEntity(entity);
+        document.setDocCode(docCode);
         return document;
     }
 

@@ -27,6 +27,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+
+import org.helianto.core.Entity;
 /**
  * Makes a process document able to inherit associations from ancestors.  
  * <p>
@@ -43,9 +45,23 @@ public abstract class DerivedProcessDocument extends ProcessDocument {
     private static final long serialVersionUID = 1L;
     private ProcessDocument parent;
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public DerivedProcessDocument() {
     	super();
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param docCode
+     */
+    public DerivedProcessDocument(Entity entity, String docCode) {
+    	this();
+    	setEntity(entity);
+    	setDocCode(docCode);
     }
 
     /**

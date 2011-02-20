@@ -10,30 +10,28 @@ import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.AbstractDocument;
 import org.junit.Test;
 
-
 /**
- * <code>Document</code> domain tests.
  * 
- * @author Mauricio Fernandes de Castro
+ * @author mauriciofernandesdecastro
  */
-public class ProcessDocumentTests {
-    
-	@Test
-    public void constructor() {
-        Entity entity = EntityTestSupport.createEntity();
-    	ProcessDocument document = new ProcessDocument(entity, "CODE");
+public class DerivedProcessDocumentTests {
 
-		assertSame(entity, document.getEntity());
-        assertEquals("CODE", document.getDocCode());
-    }
-    
-	@Test
 	@SuppressWarnings("serial")
-	public void processDocumentEquals() {
-		ProcessDocument document = new ProcessDocument(null, null) { };
+	@Test
+	public void constructor() {
+		Entity entity = EntityTestSupport.createEntity();
+		DerivedProcessDocument process = new DerivedProcessDocument(entity, "PROCESSCODE") { };
+		assertSame(entity, process.getEntity());
+		assertEquals("PROCESSCODE", process.getDocCode());
+	}
+
+	@SuppressWarnings("serial")
+	@Test
+    public void derivedProcessDocumentTestsEquals() {
+		DerivedProcessDocument document = new DerivedProcessDocument(null, null) { };
 		assertFalse(document.equals(null));
 		
-		ProcessDocument other = new ProcessDocument(null, null) { };
+		DerivedProcessDocument other = new DerivedProcessDocument(null, null) { };
 		assertTrue(document.equals(other));
 		
 		Entity entity = EntityTestSupport.createEntity();
@@ -53,8 +51,5 @@ public class ProcessDocumentTests {
 
 		AbstractDocument ancestor = new AbstractDocument(entity, "CODE") { };
 		assertFalse(document.equals(ancestor));
-	}
-	
+    }
 }
-    
-    

@@ -31,34 +31,39 @@ import org.junit.Test;
 public class ProcessTests {
 	
 	@Test
-    public void equals() {
-    	Entity entity = new Entity();
-
-    	Process process = new Process(), copy = new Process();
-    	ProcessDocument parent = new ProcessDocument() {
-			private static final long serialVersionUID = 1L;
-    	};
-
-        assertFalse(process.setKey(entity, "CODE")  .equals(parent.setKey(entity, "CODE")));
-        assertTrue (process.setKey(null, null)      .equals(copy.setKey(null, null)));
-        assertTrue (process.setKey(null, "")        .equals(copy.setKey(null, "")));
-        assertFalse(process.setKey(null, "")        .equals(copy.setKey(null, "CODE")));
-        assertFalse(process.setKey(null, "CODE")    .equals(copy.setKey(null, "")));
-        assertTrue (process.setKey(entity, null)    .equals(copy.setKey(entity, null)));
-        assertTrue (process.setKey(entity, "")      .equals(copy.setKey(entity, "")));
-        assertFalse(process.setKey(entity, "CODE")  .equals(copy.setKey(entity, "")));
-        assertFalse(process.setKey(entity, "")      .equals(copy.setKey(entity, "CODE")));
-        assertTrue (process.setKey(entity, "CODE")  .equals(copy.setKey(entity, "CODE")));
-
-    }
-    
-	@Test
-	public void processFactory() {
+	public void constructor() {
 		Entity entity = EntityTestSupport.createEntity();
-		String processCode = "PROCESSCODE";
-		Process process = new Process(entity, processCode);
+		Process process = new Process(entity, "PROCESSCODE");
 		assertSame(entity, process.getEntity());
-		assertEquals(processCode, process.getDocCode());
+		assertEquals("PROCESSCODE", process.getDocCode());
 	}
 
+	@SuppressWarnings("serial")
+	@Test
+    public void processTestsEquals() {
+		Process document = new Process(null, null);
+		assertFalse(document.equals(null));
+		
+		Process other = new Process(null, null);
+		assertTrue(document.equals(other));
+		
+		Entity entity = EntityTestSupport.createEntity();
+		document.setEntity(entity);
+		assertFalse(document.equals(other));
+		document.setDocCode("CODE");
+		assertFalse(document.equals(other));
+		other.setEntity(entity);
+		assertFalse(document.equals(other));
+		other.setDocCode("CODE");
+		assertTrue(document.equals(other));
+		assertEquals(document.hashCode(), other.hashCode());
+		document.setDocCode("");
+		assertFalse(document.equals(other));
+		document.setEntity(new Entity());
+		assertFalse(document.equals(other));
+
+		DerivedProcessDocument ancestor = new DerivedProcessDocument(entity, "CODE") { };
+		assertFalse(document.equals(ancestor));
+    }
+    
 }

@@ -18,6 +18,7 @@ package org.helianto.document.filter;
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.AbstractTrunkFilterAdapter;
+import org.helianto.document.AbstractDocument;
 import org.helianto.document.Document;
 
 /**
@@ -25,29 +26,27 @@ import org.helianto.document.Document;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Document> {
+public abstract class AbstractDocumentFilterAdapter<T extends AbstractDocument> extends AbstractTrunkFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     
-    public AbstractDocumentFilterAdapter(Document target) {
+	/**
+	 * Default constructor.
+	 * 
+	 * @param target
+	 */
+    public AbstractDocumentFilterAdapter(T target) {
 		super(target);
+		reset();
+		setOrderByString("docCode");
 	}
     
-    /**
-     * Key constructor.
-     * 
-     * @param entity
-     * @param docCode
-     */
-    public AbstractDocumentFilterAdapter(Entity entity, String docCode) {
-    	super(new Document(entity, docCode));
-    }
-
     /**
      * Reset filter.
      */
 	public void reset() {
 		getFilter().setDocName("");
+		getFilter().setPriority(' ');
 	}
 	
 	/**
@@ -64,8 +63,8 @@ public abstract class AbstractDocumentFilterAdapter extends AbstractTrunkFilterA
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("docName", getFilter().getDocName(), mainCriteriaBuilder);
 		appendLikeFilter("docName", getFilter().getDocName(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);
 	}
 
 }
