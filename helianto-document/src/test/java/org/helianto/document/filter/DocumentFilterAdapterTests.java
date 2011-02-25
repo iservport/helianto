@@ -19,6 +19,8 @@ public class DocumentFilterAdapterTests {
 	String C2 = "AND alias.docCode = 'CODE' ";
 	String C3 = "AND lower(alias.docName) like '%name%' ";
 	String C4 = "AND alias.priority = '0' ";
+	String C5 = "AND alias.series.builderCode = 'CODE' ";
+	String C6 = "AND alias.series.contentType = 'A' ";
 	
 	@Test
 	public void empty() {
@@ -41,6 +43,20 @@ public class DocumentFilterAdapterTests {
 	public void priority() {
 		target.setPriority('0');
 		assertEquals(C1+C4+OB, filter.createCriteriaAsString());
+	}
+	
+	@Test
+	public void builderCode() {
+		filter = new DocumentFilterAdapter<Document>(target);
+		((DocumentFilterAdapter<?>) filter).setBuilderCode("CODE");
+		assertEquals(C1+C5+OB, filter.createCriteriaAsString());
+	}
+	
+	@Test
+	public void contentType() {
+		filter = new DocumentFilterAdapter<Document>(target);
+		((DocumentFilterAdapter<?>) filter).setContentType('A');
+		assertEquals(C1+C6+OB, filter.createCriteriaAsString());
 	}
 	
 	// locals

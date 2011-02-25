@@ -22,6 +22,7 @@ import org.helianto.core.criteria.CriteriaBuilder;
  * Base class to control filters.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public abstract class AbstractControlFilter extends AbstractRecordFilter {
 

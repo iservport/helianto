@@ -25,6 +25,7 @@ import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
  * Serializer filter.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class SerializerFilter extends AbstractUserBackedCriteriaFilter {
 

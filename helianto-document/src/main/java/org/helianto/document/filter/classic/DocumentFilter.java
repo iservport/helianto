@@ -23,6 +23,7 @@ import org.helianto.core.criteria.CriteriaBuilder;
  * Document filter.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class DocumentFilter extends AbstractDocumentFilter {
 

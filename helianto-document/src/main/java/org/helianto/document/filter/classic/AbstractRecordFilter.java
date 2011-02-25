@@ -22,6 +22,7 @@ import org.helianto.documentfilter.classic.AbstractEventFilter;
  * Record filter superclass.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public abstract class AbstractRecordFilter extends AbstractEventFilter {
 
