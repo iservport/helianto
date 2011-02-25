@@ -7,6 +7,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.RootEntity;
 
 /**
  * Address databases in a common environment searchable by postal code.  
@@ -17,7 +18,7 @@ import org.helianto.core.Province;
 @Table(name="prtnr_publicaddress",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "postalCode"})}
 )
-public class PublicAddress extends AbstractPartialAddress implements java.io.Serializable {
+public class PublicAddress extends AbstractPartialAddress implements RootEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Operator operator;
@@ -32,23 +33,14 @@ public class PublicAddress extends AbstractPartialAddress implements java.io.Ser
 	}
 
 	/**
-	 * Operator constructor.
-	 * 
-	 * @param operator
-	 */
-	public PublicAddress(Operator operator) {
-		this();
-		setOperator(operator);
-	}
-	
-	/**
 	 * Key constructor.
 	 * 
 	 * @param operator
 	 * @param postalCode
 	 */
 	public PublicAddress(Operator operator, String postalCode) {
-		this(operator);
+		this();
+		setOperator(operator);
 		setPostalCode(postalCode);
 	}
 	

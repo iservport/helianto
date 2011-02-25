@@ -21,6 +21,7 @@ import javax.persistence.Version;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
+import org.helianto.core.RootEntity;
 
 /**
  * A registry for public entities.
@@ -33,7 +34,7 @@ import org.helianto.core.Operator;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
-public class PublicEntity extends AbstractAddress implements BusinessUnit {
+public class PublicEntity extends AbstractAddress implements RootEntity, BusinessUnit {
 
 	private static final long serialVersionUID = 1L;
 	private int version;

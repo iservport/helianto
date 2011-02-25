@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
  * Public entity filter.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 

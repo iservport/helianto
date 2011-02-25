@@ -23,9 +23,6 @@ public class PublicAddressTests {
 		assertTrue(publicAddress instanceof Serializable);
 		
 		Operator operator = new Operator("OPERATOR");
-		publicAddress = new PublicAddress(operator);
-		assertSame(operator, publicAddress.getOperator());
-		
 		publicAddress = new PublicAddress(operator, "POSTALCODE");
 		assertSame(operator, publicAddress.getOperator());
 		assertEquals("POSTALCODE", publicAddress.getPostalCode());

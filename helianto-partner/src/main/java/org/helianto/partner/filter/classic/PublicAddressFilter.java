@@ -11,6 +11,7 @@ import org.helianto.core.filter.classic.AbstractOperatorBackedCriteriaFilter;
  * Public address database filter.
  * 
  * @author Maurício Fernandes de Castro
+ * @deprecated
  */
 public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter implements Serializable {
 

@@ -44,7 +44,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		publicAddressDao.remove(publicAddress);
 	}
 	
-	public List<? extends PublicEntity> findPublicEntities(PublicEntityFilter publicEntityFilter) {
+	public List<? extends PublicEntity> findPublicEntities(Filter publicEntityFilter) {
 		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(publicEntityFilter);
 		if (publicEntitiyList!=null) {
 			logger.debug("Found {} public entities.", publicEntitiyList.size());

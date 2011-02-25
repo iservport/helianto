@@ -23,9 +23,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -243,7 +240,7 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
     /**
      * Partner registry keys.
      */
-    @OneToMany(mappedBy="privateEntity", cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy="privateEntity", cascade=CascadeType.ALL)
     public Set<PrivateEntityKey> getPartnerRegistryKeys() {
 		return partnerRegistryKeys;
 	}
