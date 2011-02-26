@@ -27,6 +27,8 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.Listable;
+import org.helianto.core.filter.Page;
 import org.helianto.core.security.PublicUserDetails;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +39,7 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * 
  * @author mauriciofernandesdecastro
  */
-public class ActionFilterTests {
+public class FilterActionTests {
 
 	private AbstractFilterAction<String> action;
 	private MutableAttributeMap attributes;
@@ -73,16 +75,44 @@ public class ActionFilterTests {
 	}
 	
 	@Test
-	public void filterCreate() {
-		assertEquals("success", action.filter(attributes, userDetails));
-		assertSame(userDetails, userDetailsInCreation);
+	public void modelName() {
+		assertEquals("NAMEModel", action.getModelName());
+	}
+	
+	@Test
+	public void getModel() {
+		Listable model = new Page();
+		attributes.put("NAMEModel", model);
+		assertSame(model, action.getModel(attributes));
 	}
 	
 	@Test
 	public void hasModel() {
-		assertFalse(action.hasModel(attributes));
-		attributes.put("NAMEModel", simpleModel);
 		assertTrue(action.hasModel(attributes));
+	}
+	
+	@Test
+	public void putListable() {
+		Listable model = new Page();
+		attributes.put("NAMEModel", model);
+		List<String> newItemList = new ArrayList<String>();
+		action.put(attributes, newItemList);
+		assertSame(newItemList, model.getList());
+	}
+	
+	@Test
+	public void putPageModel() {
+		PageModel<String> model = new PageModel<String>();
+		attributes.put("NAMEModel", model);
+		List<String> newItemList = new ArrayList<String>();
+		action.put(attributes, newItemList);
+		assertSame(newItemList, model.getPages().get("NAME").getList());
+	}
+	
+	@Test
+	public void filterCreate() {
+		assertEquals("success", action.filter(attributes, userDetails));
+		assertSame(userDetails, userDetailsInCreation);
 	}
 	
 	@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
@@ -90,7 +120,6 @@ public class ActionFilterTests {
 	public void setUp() {
 		itemList = new ArrayList<String>();
 		itemList.add("ONE");
-		simpleModel = new SimpleModel(new Object());
 		action = new AbstractFilterAction<String>() {
 			@Override protected String getTargetName() { return "NAME"; }
 			@Override
@@ -108,12 +137,10 @@ public class ActionFilterTests {
 			protected String doPrepare(String target, MutableAttributeMap attributes) { return "PREPARED"; }
 			@Override
 			protected String doStore(String target) { return "STORED"; }
-			@Override
-			protected SimpleModel getModel(MutableAttributeMap attributes) {
-				return simpleModel;
-			}
 		};
+		simpleModel = new SimpleModel(new Object());
 		attributes = new LocalAttributeMap();
+		attributes.put("NAMEModel", simpleModel);
 		filter = new Filter() {
 			public String createCriteriaAsString() { return "CRITERIA"; }
 			public String getObjectAlias() { return "ALIAS"; }
