@@ -9,57 +9,20 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<#include "${head!\"/head\"}.ftl"/>
-<#include "${script!\"/script\"}.ftl"/>
-</head>
-<div id="layout">
-<body>
-<#if forward?exists ><#include "${bodyscript!\"/empty\"}.ftl"/></#if>
-<#-- a top navigation line -->
-<div id="entityLine">
-<p>
-        <#if search?exists ><#include "${search}.ftl"/></#if>
-        <#include "${home!\"/home\"}.ftl"/>
-        <#if navigate?exists ><#include "${navigate}.ftl"/></#if>
-    	<b>${title!"Selection"}</b>
-</p>
-</div>
-<div id="navigationLine">
-<p>
-		<#if forward?exists ><#include "${basePath!\"\"}${forward}.ftl"/></#if>
-</p>
-</div>
-<div id="headLine">
-		<#if announcement?exists ><#include "${basePath!\"\"}${announcement}.ftl"/></#if>
-</div>
-<table name="bodyTable">
-<#-- actual content starts here -->
-<tr id="content">
-<td id="sidebar">
-        <#if sidenav?exists ><#include "${basePath!\"\"}${sidenav}.ftl"/></#if>
-        <#if sidebar?exists ><#include "${basePath!\"\"}${sidebar}.ftl"/></#if>
-        <#if siderel?exists ><#include "${basePath!\"\"}${siderel}.ftl"/></#if>
-</td>
-<td id="main">
-		<div id="mainnav"><#if mainnav?exists ><#include "${basePath!\"\"}${mainnav}.ftl"/></#if></div>
-		<div id="mainbar"><#if mainbar?exists ><#include "${basePath!\"\"}${mainbar}.ftl"/></#if></div>
-		<div id="tempnav"><#if tempnav?exists ><#include "${basePath!\"\"}${tempnav}.ftl"/></#if></div>
-		<#include "${basePath!\"\"}${template!\"/empty\"}.ftl"/>
-</td>
-<td id="info">
-		<#if info?exists ><#include "${basePath!\"\"}${info}.ftl"/></#if>
-</td>
-</tr>
-<tr >
-<td id="footer" colspan="3">
-        <#if footer?exists ><#include "${basePath!\"\"}${footer}.ftl"/></#if>
-</td>
-</tr>
-</table> <!-- end of bodyTable -->
-</body>
-</div>
+	<head>
+		<#include "${head!\"/head\"}.ftl"/>
+		<#include "${script!\"/script\"}.ftl"/>
+	</head>
+	<body class="tundra">
+		<#include "body.ftl" />
+	</body>
 </html>
+
+<#--
+ #
+ # Macro section.
+ #
+-->
 
 <#--
  # This frame have a couple of macros to help manage Spring Web Flow 
@@ -137,6 +100,37 @@ href="${flowExecutionUrl}&_eventId=select${name?cap_first}&${indexName}=${target
 		<p><@spring.showErrors " " /></p>
     </#if>
 </#macro>	
+
+<#--
+ # Macro to create a selection link to a PageModel , or a return link if filterOption 
+ # is enabled.
+ #
+ # The macro will automatically create a transition using the model variable 
+ # ${targetName}, either 'select${name}' or 'return${name}', 
+ # followed by '&pages['name'].index=${targetIndex}${param}' passed as macro parameters.
+ # The spring webflow ${flowExecutionUrl} is included.
+ # 
+ # The return option also creates extra [] around the link to distinguish it
+ # from selection.
+ #
+ # @param targetIndex - the index to select, defaults to zero,
+ # @param name - name to be prepended with 'select' or 'return' to create the eventId, 
+ #               defaults to the current targetName from the model,
+ # @param indexName - the name of the first parameter, defaults to 'index',
+ # @param param - any aditional parameter, must start with '&',
+ # @param title - to be shown as a hint.
+  -->
+<#macro selectModel targetIndex="0", name="${targetName}", indexName="index", param="", title="">
+<td>
+<#if filterOption?if_exists='returnOption' >
+[<a <#if title!="" >title="${title}"</#if> 
+href="${flowExecutionUrl}&_eventId=return${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>]
+<#else>
+<a <#if title!="" >title="${title}"</#if> 
+href="${flowExecutionUrl}&_eventId=select${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>
+</#if>
+</td>
+</#macro>
 
 <#--
  # Macro to help with security roles.
