@@ -36,7 +36,6 @@
 			<module>helianto-inventory</module>
 			<module>helianto-message</module>
 			<module>helianto-web</module>
-			<module>helianto-admin</module>
 		<!-- 
 			<module>archetype1</module>
 		-->
@@ -424,9 +423,13 @@ Application-TraceLevels: ${application.traceLevels}
 	</dependencyManagement>
 	<distributionManagement>
 		<repository>
-			<id>develrepo</id>
-			<url>file://localhost/var/www/maven/</url>
+			<id>org.helianto.repository.devel</id>
+			<url>ftp://ftp.helianto.org/repository</url>
 		</repository>
+		<snapshotRepository>
+			<id>org.helianto.repository.snapshot</id>
+			<url>ftp://ftp.helianto.org/snapshot</url>
+		</snapshotRepository>
 		<site>
 			<id>website</id>
 			<url>file://localhost/var/www/helianto-site/</url>
