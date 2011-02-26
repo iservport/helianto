@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+        parent="_menu">
+
+	<secured attributes="ROLE_USER_ALL, ROLE_ADMIN_MANAGER" />
+	
+	<persistence-context />
+
+	<on-start>
+		<set name="flowScope.basePath" value="'user/'" />
+		<set name="flowScope.assign"   value="'assign'" />
+		<evaluate expression="userModelAction.createModel(flowScope, currentUser.principal)" />
+	</on-start>
+
+	<action-state id="userGroup.filter">
+		<evaluate expression="userGroupAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="filter" />
+	</action-state>
+
+	<action-state id="filter">
+		<evaluate expression="userAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="selection.view" />
+	</action-state>
+	
+	<!--  view section -->
+
+	<view-state id="selection.view" view="/frame2"  model="userModel" >
+
+		<transition on="selectUserGroup"
+		            to="filter" >
+				<set name="flowScope.userGroup"  value="userModel.pages['userGroup'].item"/>
+			</transition>
+		
+		<transition on="selectUser" 
+		            to="selection.view" >
+				<set name="flowScope.user"  value="userModel.pages['user'].item"/>
+			</transition>
+		
+		<transition on="createUser"
+		            to="user.subflow" >
+				<evaluate expression="entityAction.create(flowScope, currentUser.principal)" />
+			</transition>
+		
+		<transition on="toSelection"        to="toCommit"/>
+		
+	</view-state>
+
+	<!--<view-state id="show.view" view="/frame2" model="userModel" >
+
+		<on-render>
+			<set name="viewScope.user"     value="userAssociation.child" />
+			<set name="viewScope.sidebar"  value="'user2_bar'" />
+			<set name="viewScope.template" value="'user2'" />
+		</on-render>
+
+		<transition on="editUserAssociation"   to="edit.view" />
+		<transition on="selectUserAssociation" to="userAssociation.subflow" />
+		<transition on="createUserGroupAssociation" to="userAssociation.subflow" />
+		<transition on="createUserAssociation"      to="userAssociation.subflow" />
+
+		<transition on="toSelection" to="toSelection" />
+		<transition on="toHome"      to="toHome" />
+		
+	</view-state>
+
+	<subflow-state id="userGroupAssociation.subflow" subflow="_userGroupAssociation">
+		<input name="userAssociation" value="userAssociationFilter.item"/>
+		<input name="userGroup"       value="userAssociationFilter.item"/>
+		<transition on="toSelection" to="filter" />
+	</subflow-state>
+
+	<subflow-state id="userAssociation.subflow" subflow="_userAssociation">
+		<input name="userAssociation" value="userAssociationFilter.item"/>
+		<input name="userGroup"       value="userAssociationFilter.item"/>
+		<transition on="toSelection" to="filter" />
+	</subflow-state>
+
+	<view-state id="edit.view" view="/frame2" model="userAssociation" >
+	
+		<on-render>
+			<set name="viewScope.sidebar"  value="'user2_bar'" />
+			<set name="viewScope.template" value="'user2_form'" />
+		</on-render>
+
+		<transition on="storeUserAssociation" to="show.view">
+			<evaluate expression="userAssociationAction.store(flowScope)" />
+		</transition>
+		<transition on="cancelForm" to="show.view"  bind="false"/>
+		
+	</view-state>
+
+	-->
+
+	<subflow-state id="user.subflow" subflow="_user">
+		<input name="userAssociation" value="userAssociationFilter.item"/>
+		<input name="userGroup"       value="userAssociationFilter.item"/>
+		<transition on="toSelection" to="filter" />
+	</subflow-state>
+
+	
+	<end-state id="toCommit" commit="true" />
+
+</flow>

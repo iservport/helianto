@@ -1,8 +1,9 @@
-<h2>Available authorizations</h2>
-
 <div class="toolbar">
-	<@secure "ROLE_ADMIN_MANAGER" ><@create "Authorization", "class='button grey1'">+ Authorizing entity</@create></@secure>
+	<@secure "ROLE_ADMIN_MANAGER" ><span class="button grey1"><@create "Authorization">+ Authorizing entity</@create></span></@secure>
 </div>
+
+<div id="panel">
+<h2>Available authorizations</h2>
 
 <div class="selectionList">
 
@@ -28,4 +29,4 @@
 	</table>
 
 </div>
-
+</div>
