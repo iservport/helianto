@@ -12,11 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
 /**
- * Action to collaborate with a <code>PageModel</code>.
+ * Business delegate (action) base class designed to collaborate with a <code>PageModel</code>
+ * based flow.
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractModelAction<F> implements Serializable {
+public abstract class AbstractModelAction<F> implements Serializable, ModelAction {
 	
 	private static final long serialVersionUID = 1L;
 	private String modelName;

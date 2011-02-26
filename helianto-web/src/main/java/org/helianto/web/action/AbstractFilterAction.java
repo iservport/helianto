@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.Listable;
+import org.helianto.core.filter.Page;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,17 +76,22 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	/**
 	 * Called after doFilter to put the item list in the appropriate scope receiver.
 	 * 
-	 * </p>
-	 * By default, try to use the filter as a <code>Listable</code> receiver.
-	 * </p>
-	 * 
 	 * @param attributes
 	 * @param itemList
 	 */
 	protected void put(MutableAttributeMap attributes, List<T> itemList) {
-		Listable model = getModel(attributes);
-		logger.debug("Updating model {}.", model);
-		model.setList(itemList);
+		Object model = getModel(attributes);
+		if (model instanceof PageModel) {
+			logger.debug("Updating page model {}.", model);
+			((PageModel<?>) getModel(attributes)).getPages().put(getTargetName(), new Page(itemList));
+		}
+		else if(model instanceof Listable) {
+			logger.debug("Updating listable model {}.", model);
+			((Listable) model).setList(itemList);
+		}
+		else {
+			throw new IllegalArgumentException("Must provide a selection model to hold the filter result.");
+		}
 	}
 	
 	/**
