@@ -26,7 +26,7 @@
   <logger name="org.hibernate.impl" level="DEBUG"/>
   <logger name="org.aopalliance" level="OFF"/>
 
-  <root level="DEBUG">          
+  <root level="INFO">          
     <appender-ref ref="STDOUT" />
   </root>  
   
