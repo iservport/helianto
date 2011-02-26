@@ -28,15 +28,14 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.service.NamespaceMgr;
 import org.springframework.beans.PropertyEditorRegistry;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
  * Presentation logic to select user roles.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("userRoleAction")
 public class UserRoleFormAction extends AbstractEditAggregateFormAction<UserRole, UserGroup> {
 
 	@Override

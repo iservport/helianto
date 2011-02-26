@@ -20,15 +20,14 @@ import javax.annotation.Resource;
 import org.helianto.controller.AbstractEditTargetFormAction;
 import org.helianto.core.Identity;
 import org.helianto.core.service.UserMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
  * Presentation logic to identity selection.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("identityAction")
 public class IdentityFormAction extends AbstractEditTargetFormAction<Identity> {
 
 	@Override

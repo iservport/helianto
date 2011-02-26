@@ -9,14 +9,13 @@ import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.filter.ServiceFilterAdapter;
 import org.helianto.core.service.NamespaceMgr;
-import org.springframework.stereotype.Component;
 
 /**
  * Presentation logic to load services.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("serviceLoadAction")
 public class ServiceLoadFormAction extends AbstractLoadFormAction<Service, Operator> {
 
 	@Override

@@ -25,15 +25,14 @@ import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.Entity;
 import org.helianto.core.UserGroup;
 import org.helianto.core.service.UserMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
  * Presentation logic to store user groups.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("userGroupAction2")
 public class UserGroupFormAction extends AbstractEditAggregateFormAction<UserGroup, Entity> {
 
 	@Override

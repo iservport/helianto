@@ -24,15 +24,14 @@ import org.helianto.controller.AbstractEditTargetFormAction;
 import org.helianto.core.Category;
 import org.helianto.core.filter.classic.CategoryFilter;
 import org.helianto.core.service.CategoryMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
  * Presentation logic to store categories.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("categoryAction")
 public class CategoryFormAction extends AbstractEditTargetFormAction<Category> {
 
 	@Override

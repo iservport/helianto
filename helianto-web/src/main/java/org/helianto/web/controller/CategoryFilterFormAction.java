@@ -25,15 +25,14 @@ import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.filter.classic.CategoryFilter;
 import org.helianto.core.service.CategoryMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
  * Presentation logic to select categories.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("categoryFilterAction")
 public class CategoryFilterFormAction extends AbstractFilterOnlyFormAction<CategoryFilter, Category> {
 
 	@Override

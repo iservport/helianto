@@ -22,7 +22,6 @@ import org.helianto.controller.AbstractFilterOnlyFormAction;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.service.UserMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 
@@ -30,8 +29,8 @@ import org.springframework.webflow.execution.RequestContext;
  * Presentation logic to select users.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("userFilterAction")
 public class UserFilterFormAction extends AbstractFilterOnlyFormAction<UserFilter, UserGroup> {
 	
 	@Override

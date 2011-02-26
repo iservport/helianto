@@ -24,15 +24,14 @@ import org.helianto.controller.AbstractEditTargetFormAction;
 import org.helianto.core.Category;
 import org.helianto.core.Unit;
 import org.helianto.core.service.UnitMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
  * Presentation logic to store categories.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("unitAction")
 public class UnitFormAction extends AbstractEditTargetFormAction<Unit> {
 
 	@Override

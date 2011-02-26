@@ -24,14 +24,13 @@ import org.helianto.controller.AbstractFilterOnlyFormAction;
 import org.helianto.core.Unit;
 import org.helianto.core.filter.classic.UnitFilter;
 import org.helianto.core.service.UnitMgr;
-import org.springframework.stereotype.Component;
 
 /**
  * Presentation logic to select units.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("unitFilterAction")
 public class UnitFilterFormAction extends AbstractFilterOnlyFormAction<UnitFilter, Unit> {
 
 	@Override

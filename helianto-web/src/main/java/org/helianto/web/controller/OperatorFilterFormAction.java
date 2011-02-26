@@ -24,7 +24,6 @@ import org.helianto.controller.AbstractFilterOnlyFormAction;
 import org.helianto.core.Operator;
 import org.helianto.core.filter.classic.OperatorFilter;
 import org.helianto.core.service.NamespaceMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 
@@ -32,8 +31,8 @@ import org.springframework.webflow.execution.RequestContext;
  * Presentation logic to select namespace operators.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("operatorFilterAction")
 public class OperatorFilterFormAction extends AbstractFilterOnlyFormAction<OperatorFilter, Operator> {
 
 	/**

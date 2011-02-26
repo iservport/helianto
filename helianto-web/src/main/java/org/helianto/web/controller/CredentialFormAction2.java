@@ -25,7 +25,6 @@ import org.helianto.core.Credential;
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.service.SecurityMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -33,8 +32,8 @@ import org.springframework.webflow.execution.RequestContext;
  * Presentation logic to store credentials.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("credentialAction2")
 public class CredentialFormAction2 extends AbstractEditTargetFormAction<Credential> {
 
 	@Override

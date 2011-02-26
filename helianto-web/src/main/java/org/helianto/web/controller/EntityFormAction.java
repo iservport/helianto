@@ -22,7 +22,6 @@ import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.service.NamespaceMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Validator;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -30,8 +29,8 @@ import org.springframework.webflow.execution.RequestContext;
  * Presentation logic to store entities.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("entityAction2")
 public class EntityFormAction extends AbstractEditAggregateFormAction<Entity, Operator> {
 
 	@Override

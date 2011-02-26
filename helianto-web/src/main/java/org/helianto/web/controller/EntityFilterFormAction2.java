@@ -30,7 +30,6 @@ import org.helianto.core.service.UserMgr;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 
@@ -43,7 +42,6 @@ import org.springframework.webflow.execution.RequestContext;
  * @author Mauricio Fernandes de Castro
  * @deprecated
  */
-@Component("entityFilterAction2")
 public class EntityFilterFormAction2 extends AbstractFilterOnlyFormAction<UserFilter, UserGroup> {
 	
 	/**

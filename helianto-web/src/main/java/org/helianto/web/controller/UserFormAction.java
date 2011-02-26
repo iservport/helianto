@@ -25,7 +25,6 @@ import org.helianto.core.CreateIdentity;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.service.UserMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -33,8 +32,8 @@ import org.springframework.webflow.execution.RequestContext;
  * Presentation logic to store users.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("userAction")
 public class UserFormAction extends AbstractEditAggregateFormAction<User, UserAssociation> {
 
 	@Override

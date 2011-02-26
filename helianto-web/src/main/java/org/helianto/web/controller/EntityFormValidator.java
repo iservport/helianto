@@ -18,7 +18,6 @@ package org.helianto.web.controller;
 
 import org.helianto.controller.AbstractValidator;
 import org.helianto.core.Entity;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
@@ -26,8 +25,8 @@ import org.springframework.validation.ValidationUtils;
  * Validate entity forms.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("entityFormValidator")
 public class EntityFormValidator extends AbstractValidator<Entity> {
 
 	private static final long serialVersionUID = 1L;

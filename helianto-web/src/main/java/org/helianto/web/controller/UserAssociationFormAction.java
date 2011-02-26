@@ -24,7 +24,6 @@ import org.helianto.core.CreateIdentity;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.service.UserMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -32,8 +31,8 @@ import org.springframework.webflow.execution.RequestContext;
  * Presentation logic to create user association.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("userAssociationAction2")
 public class UserAssociationFormAction extends AbstractAssociationFormAction<UserAssociation, UserGroup, UserGroup> {
 
 	@Override

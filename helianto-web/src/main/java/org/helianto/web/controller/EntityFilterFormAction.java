@@ -25,15 +25,14 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.filter.classic.EntityFilter;
 import org.helianto.core.service.NamespaceMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
  * Presentation logic to filter entities related to a single namespace.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("entityFilterAction")
 public class EntityFilterFormAction extends AbstractFilterOnlyFormAction<EntityFilter, Entity> {
 
 	@Override

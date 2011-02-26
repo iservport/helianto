@@ -22,15 +22,14 @@ import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
 import org.helianto.core.service.NamespaceMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
  * Presentation logic to select Services.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("serviceAction")
 public class ServiceFormAction extends AbstractEditAggregateFormAction<Service, Operator> {
 
 	@Override

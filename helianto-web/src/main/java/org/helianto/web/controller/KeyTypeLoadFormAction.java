@@ -9,14 +9,13 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.filter.KeyTypeFilterAdapter;
 import org.helianto.core.service.NamespaceMgr;
-import org.springframework.stereotype.Component;
 
 /**
  * Presentation logic to load key types.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("keyTypeLoadAction")
 public class KeyTypeLoadFormAction extends AbstractLoadFormAction<KeyType, Operator> {
 
 	@Override

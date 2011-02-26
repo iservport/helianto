@@ -22,15 +22,14 @@ import org.helianto.controller.AbstractEditAggregateFormAction;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.service.NamespaceMgr;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.execution.RequestContext;
 
 /**
  * Presentation logic to select key types.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-@Component("keyTypeAction")
 public class KeyTypeFormAction extends AbstractEditAggregateFormAction<KeyType, Operator> {
 
 	@Override
