@@ -1,0 +1,116 @@
+#layout {
+	background: none repeat scroll 0 0 transparent;
+}
+
+.container {
+	width: 980px;
+	margin: auto;
+}
+#menu {
+	height: 140px;
+	margin-left: 240px;
+	margin-top: 0;
+	text-align: right;
+}
+
+#entity {
+	visibility: hidden;
+}
+
+a {
+	background: none repeat scroll 0 0 transparent;
+	text-decoration: none;
+}
+
+a:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+strong {
+	font-weight: bold;
+}
+
+p {
+	margin-bottom: 10px;
+}
+
+em {
+	font-style: italic;
+}
+
+input,select {
+	font-size: 11px;
+	padding: 3px 5px;
+}
+
+textarea {
+	font-family: Arial;
+	padding: 0 0 0 5px;
+}
+
+h1 {
+	font-family: "Trebuchet MS", Tahoma;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 8px 0;
+}
+
+.optionLine,
+table.optionLine tr td a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#main h5 {
+	font-size: 100%;
+}
+
+#sidebar a,
+#sidebar a:link,
+#sidebar a:visited {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#sidebar a:hover {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.toolbar {
+	float: right;
+}
+
+.button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	padding: .5em 1em .55em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+/* uncomment to have rounded corner buttons
+.button {
+	-webkit-border-radius: 2em;
+	-moz-border-radius: 2em;
+	border-radius: 2em;
+}
+*/
+
+.button:hover {
+	text-decoration: none;
+}
+.button:active {
+	position: relative;
+	top: 1px;
+}
+
+
+
+
