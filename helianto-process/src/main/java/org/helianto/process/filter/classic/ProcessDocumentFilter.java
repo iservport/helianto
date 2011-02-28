@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * Process document filter.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class ProcessDocumentFilter extends AbstractDocumentFilter implements Serializable, PolymorphicFilter<ProcessDocument> {
 

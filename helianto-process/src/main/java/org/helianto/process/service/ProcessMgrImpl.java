@@ -23,6 +23,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.User;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.ParentFilter;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
@@ -102,11 +103,11 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	 * @param filter
 	 * @param prefix
 	 */
-	protected String createProcessDocumentCriteriaAsString(ProcessDocumentFilterAdapter filter, String prefix) {
+	protected String createProcessDocumentCriteriaAsString(ParentFilter filter, String prefix) {
 		return new StringBuilder()
 			.append(prefix)
 			.append(".parent.id=")
-			.append(filter.getParent().getId())
+			.append(filter.getParentId())
 			.append(" order by ")
 			.append(prefix)
 			.append(".sequence ")

@@ -21,6 +21,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.filter.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.ParentFilter;
 import org.helianto.process.Characteristic;
 import org.helianto.process.ControlMethod;
 import org.helianto.process.Operation;
@@ -34,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<ProcessDocument>{
+public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<ProcessDocument> implements ParentFilter {
 
     private static final long serialVersionUID = 1L;
 	private Class<? extends ProcessDocument> clazz;
@@ -157,11 +158,19 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 	/**
 	 * Parent
 	 */
+	@SuppressWarnings("unchecked")
 	public ProcessDocument getParent() {
 		return parent;
 	}
 	public void setParent(ProcessDocument parent) {
 		this.parent = parent;
+	}
+	
+	public long getParentId() {
+		if (getParent()!=null) {
+			return getParent().getId();
+		}
+		return 0;
 	}
 	
 	/**
