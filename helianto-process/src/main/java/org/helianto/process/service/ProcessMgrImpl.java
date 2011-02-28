@@ -34,7 +34,7 @@ import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Setup;
-import org.helianto.process.filter.classic.ProcessDocumentFilter;
+import org.helianto.process.filter.ProcessDocumentFilterAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -59,8 +59,8 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         if (logger.isDebugEnabled() && processDocumentList.size()>0) {
             logger.debug("Found {} item(s)", processDocumentList.size());
         }
-        if (filter instanceof ProcessDocumentFilter) {
-        	ProcessDocumentFilter processDocumentFilter = (ProcessDocumentFilter) filter;
+        if (filter instanceof ProcessDocumentFilterAdapter) {
+        	ProcessDocumentFilterAdapter processDocumentFilter = (ProcessDocumentFilterAdapter) filter;
             if (processDocumentFilter.getExclusions()!=null && processDocumentFilter.getExclusions().size()>0) {
             	processDocumentList.removeAll(processDocumentFilter.getExclusions());
                 if (logger.isDebugEnabled()) {
@@ -86,7 +86,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	}
 
 	public List<ProcessDocumentAssociation> findOperations(User user, Process process) {
-		ProcessDocumentFilter filter = new ProcessDocumentFilter(process);
+		ProcessDocumentFilterAdapter filter = new ProcessDocumentFilterAdapter(process);
         logger.debug("Created filter {}", filter);
 		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
 		List<ProcessDocumentAssociation> operationList = (List<ProcessDocumentAssociation>) processDocumentAssociationDao.find(criteria);
@@ -102,7 +102,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	 * @param filter
 	 * @param prefix
 	 */
-	protected String createProcessDocumentCriteriaAsString(ProcessDocumentFilter filter, String prefix) {
+	protected String createProcessDocumentCriteriaAsString(ProcessDocumentFilterAdapter filter, String prefix) {
 		return new StringBuilder()
 			.append(prefix)
 			.append(".parent.id=")
@@ -137,7 +137,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
     
     public List<ProcessDocumentAssociation> findCharacteristics(User user, Operation operation) {
-		ProcessDocumentFilter filter = new ProcessDocumentFilter((ProcessDocument) operation);
+		ProcessDocumentFilterAdapter filter = new ProcessDocumentFilterAdapter((ProcessDocument) operation);
         logger.debug("Created filter {}", filter);
 		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
 		List<ProcessDocumentAssociation> characteristicList = (List<ProcessDocumentAssociation>) processDocumentAssociationDao.find(criteria);
