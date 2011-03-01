@@ -49,6 +49,11 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> i
 		this(new Province(operator,  provinceCode));
 	}
 	
+	@Override
+	public String getOrderByString() {
+		return "provinceCode";
+	}
+	
 	/**
 	 * Filter reset.
 	 */

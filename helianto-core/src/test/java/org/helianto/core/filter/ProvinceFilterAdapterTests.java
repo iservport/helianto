@@ -39,6 +39,7 @@ public class ProvinceFilterAdapterTests  {
 		assertEquals("CODE", filter.getFilter().getProvinceCode());
 	}
 	
+    public static String OB = "order by alias.provinceCode ";
     public static String C0 = "alias.operator.id = 1 ";
     public static String C1 = "AND alias.class=Province ";
     public static String C2 = "AND alias.provinceCode = 'CODE' ";
@@ -47,13 +48,13 @@ public class ProvinceFilterAdapterTests  {
 
     @Test
     public void empty() {
-        assertEquals(C0, filter.createCriteriaAsString());
+        assertEquals(C0+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void clazz() {
     	filter.setClazz(Province.class);
-        assertEquals(C0+C1, filter.createCriteriaAsString());
+        assertEquals(C0+C1+OB, filter.createCriteriaAsString());
     }
     
     @Test
@@ -65,7 +66,7 @@ public class ProvinceFilterAdapterTests  {
     @Test
     public void filter() {
     	target.setProvinceName("NAME_LIKE");
-        assertEquals(C0+C3, filter.createCriteriaAsString());
+        assertEquals(C0+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
@@ -73,7 +74,7 @@ public class ProvinceFilterAdapterTests  {
     	Province parent = new Province(target.getOperator(), "PARENT");
     	parent.setId(1);
     	filter.setParent(parent);
-        assertEquals(C0+C4, filter.createCriteriaAsString());
+        assertEquals(C0+C4+OB, filter.createCriteriaAsString());
     }
     
     // collabs
