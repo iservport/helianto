@@ -25,10 +25,11 @@ import org.helianto.core.criteria.CriteriaBuilder;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> {
+public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> implements ParentFilter {
 	
 	private static final long serialVersionUID = 1L;
 	private Class<? extends Province> clazz;
+	private Province parent;
 	private char discriminator;
 	
 	/**
@@ -68,6 +69,9 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> {
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
+		if (getParent()!=null) {
+			appendEqualFilter("parent.id", getParentId(), mainCriteriaBuilder);
+		}
 	}
 
 	@Override
@@ -88,6 +92,24 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> {
 	}
 	public void setClazz(Class<? extends Province> clazz) {
 		this.clazz = clazz;
+	}
+	
+	/**
+	 * Parent filter.
+	 */
+	@SuppressWarnings("unchecked")
+	public Province getParent() {
+		return parent;
+	}
+	public void setParent(Province parent) {
+		this.parent = parent;
+	}
+	
+	public long getParentId() {
+		if (getParent()!=null) {
+			return getParent().getId();
+		}
+		return 0;
 	}
 	
 	/**

@@ -43,6 +43,7 @@ public class ProvinceFilterAdapterTests  {
     public static String C1 = "AND alias.class=Province ";
     public static String C2 = "AND alias.provinceCode = 'CODE' ";
     public static String C3 = "AND lower(alias.provinceName) like '%name_like%' ";
+    public static String C4 = "AND alias.parent.id = 1 ";
 
     @Test
     public void empty() {
@@ -65,6 +66,14 @@ public class ProvinceFilterAdapterTests  {
     public void filter() {
     	target.setProvinceName("NAME_LIKE");
         assertEquals(C0+C3, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void parent() {
+    	Province parent = new Province(target.getOperator(), "PARENT");
+    	parent.setId(1);
+    	filter.setParent(parent);
+        assertEquals(C0+C4, filter.createCriteriaAsString());
     }
     
     // collabs
