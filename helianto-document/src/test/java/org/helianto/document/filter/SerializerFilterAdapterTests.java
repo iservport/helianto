@@ -47,14 +47,14 @@ public class SerializerFilterAdapterTests {
 		assertEquals("alias.entity.id = 0 AND alias.contentType = 'X' ", filter.createCriteriaAsString());
 	}
 	
-	private SerializerFilterAdapter filter;
+	private SerializerFilterAdapter<Serializer> filter;
 	private Serializer target;
 	
 	@Before
 	public void setUp() {
 		Entity entity = EntityTestSupport.createEntity();
 		target = new Serializer(entity, "");
-		filter = new SerializerFilterAdapter(target);
+		filter = new SerializerFilterAdapter<Serializer>(target);
 		// clean filter
 //		repeatableFilter.getFilter().setTrackingMode(' ');
 	}

@@ -26,7 +26,7 @@ import org.helianto.document.Serializer;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class SerializerFilterAdapter extends AbstractTrunkFilterAdapter<Serializer> {
+public class SerializerFilterAdapter<T extends Serializer> extends AbstractTrunkFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     
@@ -35,7 +35,7 @@ public class SerializerFilterAdapter extends AbstractTrunkFilterAdapter<Serializ
      * 
      * @param serializer
      */
-    public SerializerFilterAdapter(Serializer serializer) {
+    public SerializerFilterAdapter(T serializer) {
 		super(serializer);
     }
 
@@ -45,8 +45,9 @@ public class SerializerFilterAdapter extends AbstractTrunkFilterAdapter<Serializ
      * @param entity
      * @param builderCode
      */
-    public SerializerFilterAdapter(Entity entity, String builderCode) {
-    	super(new Serializer(entity, builderCode));
+    @SuppressWarnings("unchecked")
+	public SerializerFilterAdapter(Entity entity, String builderCode) {
+    	super((T) new Serializer(entity, builderCode));
     }
 
 	public void reset() { }
