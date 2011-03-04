@@ -25,10 +25,17 @@ public class SelectFromBuilderTests {
 	}
 
 	@Test
+	public void innerJoin() {
+		SelectFromBuilder builder = new SelectFromBuilder(User.class);
+		assertEquals("select user from User user " +
+				"inner join user.parentAssociations as parentAssociation ", builder.createSelectFrom().appendInnerJoin("parentAssociations", "parentAssociation").getAsString());
+	}
+
+	@Test
 	public void join() {
 		SelectFromBuilder builder = new SelectFromBuilder(User.class);
-		assertEquals("select user from User user inner " +
-				"join user.parentAssociations as parentAssociation ", builder.createSelectFrom().appendInnerJoin("parentAssociations", "parentAssociation").getAsString());
+		assertEquals("select user from User user " +
+				"left outer join user.parentAssociations as parentAssociation ", builder.createSelectFrom().appendJoin("left outer", "parentAssociations", "parentAssociation").getAsString());
 	}
 
 }

@@ -56,17 +56,29 @@ public class SelectFromBuilder extends SelectBuilder {
     }
     
     /**
+     * Join appender.
+     * 
+     * @param joinType
+     * @param propertyName
+     * @param joinedClassAlias
+     */
+    public SelectFromBuilder appendJoin(String joinType, String propertyName, String joinedClassAlias) {
+    	append(joinType)
+    	    .append("join")
+    	    .appendWithPrefix(propertyName)
+    	    .append("as")
+    	    .append(joinedClassAlias);
+    	return this;
+    }
+    
+    /**
      * Inner join appender.
      * 
      * @param propertyName
      * @param joinedClassAlias
      */
     public SelectFromBuilder appendInnerJoin(String propertyName, String joinedClassAlias) {
-    	append("inner join")
-    	    .appendWithPrefix(propertyName)
-    	    .append("as")
-    	    .append(joinedClassAlias);
-    	return this;
+    	return appendJoin("inner", propertyName, joinedClassAlias);
     }
     
     /**
