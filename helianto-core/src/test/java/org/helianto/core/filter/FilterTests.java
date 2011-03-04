@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
+import org.helianto.core.Prioritizable;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.junit.Before;
 import org.junit.Test;
@@ -112,6 +113,16 @@ public class FilterTests {
 	public void appendLikeCaseFilter() {
 		filter.appendLikeCaseFilter("TEST", "content", createdCriteriaBuilder);
 		assertEquals("CREATED.TEST like '%content%' ", createdCriteriaBuilder.getCriteriaAsString());
+	}
+	
+	@Test
+	public void appendPriorityRange() {
+		Prioritizable priorityFilter = new Prioritizable() {
+			public char getPriority() { return '2'; }
+		};
+		filter.appendPriorityRange(priorityFilter, createdCriteriaBuilder);
+		assertEquals("CREATED.priority in (0, 1, 2) ", createdCriteriaBuilder.getCriteriaAsString());
+		
 	}
 	
 	@SuppressWarnings("serial")

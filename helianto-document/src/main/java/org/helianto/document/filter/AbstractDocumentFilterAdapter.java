@@ -15,11 +15,9 @@
 
 package org.helianto.document.filter;
 
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.AbstractTrunkFilterAdapter;
 import org.helianto.document.AbstractDocument;
-import org.helianto.document.Document;
 
 /**
  * Base to document filter adapters.
@@ -64,6 +62,15 @@ public abstract class AbstractDocumentFilterAdapter<T extends AbstractDocument> 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("docName", getFilter().getDocName(), mainCriteriaBuilder);
+		appendPriority(mainCriteriaBuilder);
+	}
+	
+	/**
+	 * Subclasses may override to allow priority range filter.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	protected void appendPriority(CriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);
 	}
 

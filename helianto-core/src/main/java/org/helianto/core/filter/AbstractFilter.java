@@ -17,8 +17,10 @@ package org.helianto.core.filter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.helianto.core.Prioritizable;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -300,6 +302,28 @@ public abstract class AbstractFilter implements Serializable, CriteriaFilter {
         }
     }
     
+    /**
+     * Priority range appender.
+     * 
+     * @param sample
+     * @param mainCriteriaBuilder
+     */
+	protected void appendPriorityRange(Prioritizable sample, CriteriaBuilder mainCriteriaBuilder) {
+		String priorityChain = "0123456789";
+		int priority = priorityChain.indexOf(sample.getPriority());
+		if (logger.isDebugEnabled()) {
+			logger.debug("Prioridade estabelecida: "+priority);
+		}
+		if (priority>=0) {
+			String filterSet = priorityChain.substring(0, priority+1);
+			if (logger.isDebugEnabled()) {
+				logger.debug("Outras prioridades inclu�das: "+filterSet);
+			}
+			mainCriteriaBuilder.appendAnd().appendSegment("priority", "in")
+			.append(Arrays.toString(filterSet.toCharArray()).replace("[", "(").replace("]", ")"));
+		}
+	}
+	
     /**
      * Base order by segment.
      * 

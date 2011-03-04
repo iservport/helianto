@@ -26,6 +26,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Prioritizable;
 import org.helianto.core.TrunkEntity;
 /**
  * Base class to represent a <code>Document</code>.
@@ -33,7 +34,7 @@ import org.helianto.core.TrunkEntity;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractDocument implements TrunkEntity {
+public abstract class AbstractDocument implements TrunkEntity, Prioritizable {
 
     private static final long serialVersionUID = 1L;
     private int id;
