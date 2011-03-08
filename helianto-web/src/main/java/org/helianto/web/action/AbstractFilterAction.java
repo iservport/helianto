@@ -68,8 +68,9 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		}
 		Filter filter = getFilter(attributes, userDetails);
 		logger.debug("Using filter {}.", filter);
-		List<T> itemList = doFilter(attributes, filter);
+		List<T> itemList = doFilter(attributes, filter, userDetails);
 		put(attributes, itemList);
+		autoSelect(attributes, itemList);
 		return "success";
 	}
 	
@@ -94,6 +95,22 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		}
 	}
 	
+	/**
+	 * Called after put to auto select a item list in the appropriate scope receiver.
+	 * 
+	 * @param attributes
+	 * @param itemList
+	 */
+	protected boolean autoSelect(MutableAttributeMap attributes, List<T> itemList) {
+		T target = getTarget(attributes);
+		if (target==null && itemList!=null && itemList.size()>0) {
+			attributes.put(getTargetName(), itemList.get(0));
+			logger.debug("Auto selected: {}.", itemList.get(0));
+			return true;
+		}
+		return false;
+	}
+		
 	/**
 	 * Subclasses may override this to customize filter retrieval.
 	 * 
@@ -137,6 +154,21 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param userDetails
 	 */
 	protected abstract Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails);
+
+	/**
+	 * Subclasses may override this to customize filter action.
+	 * 
+	 * <p>
+	 * Default implementation delegates to {@link #doFilter(MutableAttributeMap, Filter)}.
+	 * </p>
+	 * 
+	 * @param attributes
+	 * @param filter
+	 * @param userDetails
+	 */
+	protected List<T> doFilter(MutableAttributeMap attributes, Filter filter, PublicUserDetails userDetails) {
+		return doFilter(attributes, filter);
+	}
 
 	/**
 	 * Subclasses may override this to customize filter action.
