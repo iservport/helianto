@@ -102,7 +102,7 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param itemList
 	 */
 	protected boolean autoSelect(MutableAttributeMap attributes, List<T> itemList) {
-		T target = getTarget(attributes);
+		@SuppressWarnings("unchecked") T target = (T) attributes.get(getTargetName());
 		if (target==null && itemList!=null && itemList.size()>0) {
 			attributes.put(getTargetName(), itemList.get(0));
 			logger.debug("Auto selected: {}.", itemList.get(0));
