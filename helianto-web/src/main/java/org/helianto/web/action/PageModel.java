@@ -20,6 +20,7 @@ public class PageModel<F> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private User user;
 	private F filter;
+	private String searchString;
 	private Map<String, Listable> pages;
 	private String pageName;
 	
@@ -90,6 +91,16 @@ public class PageModel<F> implements Serializable {
 	}
 	public void setFilter(F filter) {
 		this.filter = filter;
+	}
+	
+	/**
+	 * Search string.
+	 */
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
 	}
 	
 	/**
