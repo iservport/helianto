@@ -10,13 +10,13 @@ import org.helianto.core.criteria.CriteriaBuilder;
 public abstract class AbstractSearchFilter extends AbstractAliasFilter {
 	
 	private static final long serialVersionUID = 1L;
-	private AbstractFilter filter;
+	private AbstractAliasFilter filter;
 	private String searchString;
 	
 	/**
 	 * Constructor.
 	 */
-	public AbstractSearchFilter(AbstractFilter filter) {
+	public AbstractSearchFilter(AbstractAliasFilter filter) {
 		this.filter = filter;
 		setObjectAlias(filter.getObjectAlias());
 	}
