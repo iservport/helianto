@@ -15,6 +15,7 @@ public class SerarchFilterTests {
 	@Test
 	public void filter() {
 		AbstractFilter sourceFilter = new AbstractFilter() {
+			@Override public String createSelectAsString() { return "SELECT STRING"; }
 			public void reset() { }
 			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {}
 			@Override public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
@@ -30,6 +31,7 @@ public class SerarchFilterTests {
 		};
 		filter.setSearchString("SEARCHSTRING");
 		assertEquals("alias.uniqueField = 'key' AND lower(alias.searchField) like '%searchstring%' ", filter.createCriteriaAsString());
+		assertEquals(sourceFilter.createSelectAsString(), filter.createSelectAsString());
 	}
 	
 }

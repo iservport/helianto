@@ -18,6 +18,7 @@ public abstract class AbstractSearchFilter extends AbstractAliasFilter {
 	 */
 	public AbstractSearchFilter(AbstractFilter filter) {
 		this.filter = filter;
+		setObjectAlias(filter.getObjectAlias());
 	}
 	
 	/**
@@ -33,6 +34,11 @@ public abstract class AbstractSearchFilter extends AbstractAliasFilter {
 	}
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
+	}
+	
+	@Override
+	public String createSelectAsString() {
+		return filter.createSelectAsString();
 	}
 
 	@Override
