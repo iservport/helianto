@@ -75,7 +75,7 @@ public class ServiceFilter extends AbstractUserBackedCriteriaFilter {
 	 * Restrict entity selection to a given operator, if any. 
 	 */
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getOperator()!=null) {
 			appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
 		}

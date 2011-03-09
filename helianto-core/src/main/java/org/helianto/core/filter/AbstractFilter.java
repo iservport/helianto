@@ -15,7 +15,6 @@
 
 package org.helianto.core.filter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,9 +30,8 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractFilter implements Serializable, CriteriaFilter {
+public abstract class AbstractFilter extends AbstractAliasFilter {
 	
-    private String objectAlias;
     private String orderByString = "";
     private List<String> orderByList =  new ArrayList<String>();
     
@@ -41,7 +39,7 @@ public abstract class AbstractFilter implements Serializable, CriteriaFilter {
      * Default constructor.
      */
     public AbstractFilter() {
-    	this("alias");
+    	super("alias");
     }
     
     /**
@@ -50,22 +48,8 @@ public abstract class AbstractFilter implements Serializable, CriteriaFilter {
      * @param alias
      */
     public AbstractFilter(String alias) {
+    	super(alias);
     	setOrderByString("");
-    	setObjectAlias(alias);
-    }
-    
-    /**
-     * Provide a name to be used by the filter.
-     */
-    public String getObjectAlias() {
-    	return this.objectAlias;
-    }
-    public void setObjectAlias(String objectAlias) {
-		this.objectAlias = objectAlias;
-	}
-    
-    public String createSelectAsString() {
-    	return null;
     }
     
     /**
@@ -137,64 +121,7 @@ public abstract class AbstractFilter implements Serializable, CriteriaFilter {
         return createCriteriaAsString(new CriteriaBuilder(getObjectAlias()));
     }
 	
-	/**
-	 * Delegate criteria creation to a chain of processors.
-	 * 
-	 * @param mainCriteriaBuilder
-	 */
-	public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
-        preProcessFilter(mainCriteriaBuilder);
-        if (isSelection()) {
-        	doSelect(mainCriteriaBuilder);
-        	reset();
-        }
-        else {
-        	doFilter(mainCriteriaBuilder);
-        	if (getOrderByString().length()>0) {
-        		appendOrderBy(getOrderByString(), mainCriteriaBuilder);
-        	}
-        }
-        postProcessFilter(mainCriteriaBuilder);
-        logger.debug("Filter query: {}", mainCriteriaBuilder.getCriteriaAsString());
-        return mainCriteriaBuilder.getCriteriaAsString();
-    }
-	
-    /**
-     * If true, a unique result is expected, otherwise, a collection.
-     * 
-     * <p>
-     * Convenient when filter properties correspond to the natural key. By default, filters do not return an unique result.
-     * </p>
-     */
-	public boolean isSelection() {
-		return false;
-	}
-	
 	// processors
-	
-	/**
-	 * Subclasses overriding this method should create query segments
-	 * to be included for both selection and filter operations.
-	 * 
-	 * @param filter
-	 * @param mainCriteriaBuilder
-	 */
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
-	}
-	
-	/**
-	 * Hook to the selection processor.
-	 * 
-	 * @param mainCriteriaBuilder
-	 */
-	protected abstract void doSelect(CriteriaBuilder mainCriteriaBuilder);
-	
-	/**
-	 * Hook to the filter processor.
-	 * 
-	 * @param mainCriteriaBuilder
-	 */
-	public abstract void doFilter(CriteriaBuilder mainCriteriaBuilder);
 	
 	/**
 	 * Hook to the filter post-processor.
@@ -202,103 +129,23 @@ public abstract class AbstractFilter implements Serializable, CriteriaFilter {
 	 * @param mainCriteriaBuilder
 	 */
 	protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+    	if (getOrderByString().length()>0) {
+    		appendOrderBy(getOrderByString(), mainCriteriaBuilder);
+    	}
 	}
 		
 	// appenders
 	
     /**
-     * Equal appender.
+     * Base order by segment.
      * 
-     * @param fieldName
      * @param fieldContent
      * @param criteriaBuilder
      */
-    protected void appendEqualFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent!=null && fieldContent.length()>0) {
-            criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
-            .appendString(fieldContent);
-        }
-    }
-    
-    /**
-     * Equal appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendEqualFilter(String fieldName, int fieldContent, CriteriaBuilder criteriaBuilder) {
-    	appendEqualFilter(fieldName, fieldContent, false, criteriaBuilder);
-    }
-    
-    /**
-     * Equal appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param ignoreOnlyIfNegative
-     * @param criteriaBuilder
-     */
-    protected void appendEqualFilter(String fieldName, int fieldContent, boolean ignoreOnlyIfNegative, CriteriaBuilder criteriaBuilder) {
-    	if ((!ignoreOnlyIfNegative && fieldContent>0) | (ignoreOnlyIfNegative && fieldContent>=0)) {
-            criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
-            .append(fieldContent);
-        }
-    }
-    
-    /**
-     * Equal appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendEqualFilter(String fieldName, long fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent>0) {
-            criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
-            .append(fieldContent);
-        }
-    }
-    
-    /**
-     * Equal appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendEqualFilter(String fieldName, char fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent!=' ') {
-            criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
-            .append(fieldContent);
-        }
-    }
-    
-    /**
-     * Case sensitive like appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendLikeCaseFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent!=null && fieldContent.length()>0) {
-    		criteriaBuilder.appendAnd().appendSegment(fieldName, "like")
-            .appendLike(fieldContent);
-        }
-    }
-    
-    /**
-     * Case unsensitive like appender.
-     * 
-     * @param fieldName
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendLikeFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	if (fieldContent!=null && fieldContent.length()>0) {
-    		criteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
-            .appendLike(fieldContent.toLowerCase());
+    protected void appendOrderBy(String fieldContent, CriteriaBuilder criteriaBuilder) {
+    	String[] fieldNames = fieldContent.split(",");
+    	if (fieldNames.length>0) {
+    		criteriaBuilder.appendOrderBy(fieldNames);
         }
     }
     
@@ -324,19 +171,6 @@ public abstract class AbstractFilter implements Serializable, CriteriaFilter {
 		}
 	}
 	
-    /**
-     * Base order by segment.
-     * 
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendOrderBy(String fieldContent, CriteriaBuilder criteriaBuilder) {
-    	String[] fieldNames = fieldContent.split(",");
-    	if (fieldNames.length>0) {
-    		criteriaBuilder.appendOrderBy(fieldNames);
-        }
-    }
-    
     private static Logger logger = LoggerFactory.getLogger(AbstractFilter.class);
 
 }

@@ -45,7 +45,7 @@ public class UserAssociationFilter extends AbstractCompositeListFilter {
 	}
 	
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (isSyncParent() && getParentItem()!=null) {
 			setParent((UserGroup) getParentItem());

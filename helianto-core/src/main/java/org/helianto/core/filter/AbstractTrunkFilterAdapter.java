@@ -35,7 +35,7 @@ public abstract class AbstractTrunkFilterAdapter <T extends TrunkEntity> extends
 	 * Restrict selection to a given entity, if any. 
 	 */
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getEntity()!=null) {
 			appendEntityFilter(getEntity(), mainCriteriaBuilder);
 			logger.debug("Filter constraint set to {}.", getEntity());

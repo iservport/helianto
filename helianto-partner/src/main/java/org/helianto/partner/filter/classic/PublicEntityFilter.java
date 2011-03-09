@@ -66,7 +66,7 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	 * Restrict selection to a given operator, if any. 
 	 */
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());

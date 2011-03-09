@@ -69,7 +69,7 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	}
 	
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (!getClazz().equals(ResourceGroup.class)) {
 	        logger.debug("Resource group class is: '{}'", getClazz());

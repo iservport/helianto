@@ -43,7 +43,7 @@ public class TaxFilterAdapter extends AbstractFilterAdapter<Tax> {
 	public void reset() { }
 	
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getFilter().getProcessAgreement()!=null) {
 			appendEqualFilter("processAgreement.id", getFilter().getProcessAgreement().getId(), mainCriteriaBuilder);

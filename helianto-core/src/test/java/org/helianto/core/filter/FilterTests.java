@@ -53,7 +53,6 @@ public class FilterTests {
 		assertSame(createdCriteriaBuilder, selectionCriteriaBuilder);
 		assertTrue(reset);
 		assertEquals("FILTER", filterCriteriaBuilder.getAlias());
-		assertSame(postProcessedCriteriaBuilder, preProcessedCriteriaBuilder);
 	}
 	
 	@Test
@@ -147,10 +146,12 @@ public class FilterTests {
 				createdCriteriaBuilder = mainCriteriaBuilder;
 				return super.createCriteriaAsString(mainCriteriaBuilder);
 			}
-			@Override protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+			@Override
+			public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 				preProcessedCriteriaBuilder = mainCriteriaBuilder;
 			}
 			@Override protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+				super.postProcessFilter(mainCriteriaBuilder);
 				postProcessedCriteriaBuilder = mainCriteriaBuilder;
 			}
 			@Override public boolean isSelection() { return selection; }

@@ -53,7 +53,7 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
     }
     
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getParent()!=null) {
 	        logger.debug("Parent control is: '{}'", getParent());

@@ -29,7 +29,7 @@ public class ResourceAssociationFilterAdapter extends AbstractFilterAdapter<Reso
 	 * Restrict selection to a given entity, if any. 
 	 */
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getFilter().getParent()!=null) {
 			appendEqualFilter("parent.id", getFilter().getParent().getId(), mainCriteriaBuilder);
 			setOrderByString("child.resourceCode");

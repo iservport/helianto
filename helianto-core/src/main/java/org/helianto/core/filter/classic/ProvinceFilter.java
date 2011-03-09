@@ -118,7 +118,7 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	}
 	
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}

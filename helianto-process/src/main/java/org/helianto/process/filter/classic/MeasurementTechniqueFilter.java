@@ -62,7 +62,7 @@ public class MeasurementTechniqueFilter extends AbstractUserBackedCriteriaFilter
 	}
 
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getUnit()!=null) {
 			appendEqualFilter("unit.id", getUnit().getId(), mainCriteriaBuilder);
 		}

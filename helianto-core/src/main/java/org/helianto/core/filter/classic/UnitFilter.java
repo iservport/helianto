@@ -79,7 +79,7 @@ public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
     	if (getCategoryGroup()!=null) {
         	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), mainCriteriaBuilder);
     	}

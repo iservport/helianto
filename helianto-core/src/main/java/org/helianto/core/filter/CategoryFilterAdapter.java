@@ -59,7 +59,7 @@ public class CategoryFilterAdapter extends AbstractTrunkFilterAdapter<Category> 
 	}
 
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
         super.preProcessFilter(mainCriteriaBuilder);
         logger.debug("CategoryGroup is: '{}'", getFilter().getCategoryGroup());
         mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")

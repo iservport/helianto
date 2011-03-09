@@ -46,7 +46,7 @@ public class AgreementFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		if (getCustomer()!=null) {
 			appendEqualFilter("partner.id", getCustomer().getId(), mainCriteriaBuilder);
 		}
