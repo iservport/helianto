@@ -9,6 +9,8 @@
 	
 	<persistence-context />
 
+    <input name="filterOption" />
+
 	<on-start>
 		<set name="conversationScope.basePath" value="'service/'" />
 		<set name="conversationScope.assign"   value="'assign'" />

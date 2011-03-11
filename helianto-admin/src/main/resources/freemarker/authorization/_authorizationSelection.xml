@@ -9,6 +9,8 @@
 	
 	<persistence-context />
 
+    <input name="filterOption" />
+
 	<on-start>
 		<set name="flowScope.basePath" value="'authorization/'" />
 		<set name="flowScope.assign"   value="'assign'" />

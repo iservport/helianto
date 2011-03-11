@@ -8,6 +8,8 @@
 
 	<persistence-context />
 
+    <input name="filterOption" />
+
 	<on-start>
 		<set name="flowScope.basePath" value="'province/'" />
 		<set name="flowScope.assign" value="'assign'" />
