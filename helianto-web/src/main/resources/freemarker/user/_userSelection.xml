@@ -9,6 +9,8 @@
 	
 	<persistence-context />
 
+    <input name="filterOption" />
+
 	<on-start>
 		<set name="flowScope.basePath" value="'user/'" />
 		<set name="flowScope.assign"   value="'assign'" />
@@ -29,6 +31,10 @@
 
 	<view-state id="selection.view" view="/frame2"  model="userModel" >
 
+		<on-render>
+			<set name="viewScope.group" value="'group'" />
+		</on-render>
+
 		<transition on="selectUserGroup"
 		            to="filter" >
 				<set name="flowScope.userGroup"  value="userModel.pages['userGroup'].item"/>
@@ -36,6 +42,11 @@
 		
 		<transition on="selectUser" 
 		            to="selection.view" >
+				<set name="flowScope.user"  value="userModel.pages['user'].item"/>
+			</transition>
+		
+		<transition on="returnUser" 
+		            to="toReturn" >
 				<set name="flowScope.user"  value="userModel.pages['user'].item"/>
 			</transition>
 		
@@ -102,5 +113,9 @@
 
 	
 	<end-state id="toCommit" commit="true" />
+
+	<end-state id="toReturn" commit="true" >
+		<output name="user" />
+	</end-state>
 
 </flow>
