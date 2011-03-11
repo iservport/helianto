@@ -121,7 +121,6 @@ href="${flowExecutionUrl}&_eventId=select${name?cap_first}&${indexName}=${target
  # @param title - to be shown as a hint.
   -->
 <#macro selectModel targetIndex="0", name="${targetName}", indexName="index", param="", title="">
-<td>
 <#if filterOption?if_exists='returnOption' >
 [<a <#if title!="" >title="${title}"</#if> 
 href="${flowExecutionUrl}&_eventId=return${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>]
@@ -129,6 +128,30 @@ href="${flowExecutionUrl}&_eventId=return${name?cap_first}&pages['${name?uncap_f
 <a <#if title!="" >title="${title}"</#if> 
 href="${flowExecutionUrl}&_eventId=select${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>
 </#if>
+</#macro>
+
+<#--
+ # Macro to create a selection link (enclosed by the tag <tr>) to a PageModel , 
+ # or a return link if filterOption is enabled.
+ #
+ # The macro will automatically create a transition using the model variable 
+ # ${targetName}, either 'select${name}' or 'return${name}', 
+ # followed by '&pages['name'].index=${targetIndex}${param}' passed as macro parameters.
+ # The spring webflow ${flowExecutionUrl} is included.
+ # 
+ # The return option also creates extra [] around the link to distinguish it
+ # from selection.
+ #
+ # @param targetIndex - the index to select, defaults to zero,
+ # @param name - name to be prepended with 'select' or 'return' to create the eventId, 
+ #               defaults to the current targetName from the model,
+ # @param indexName - the name of the first parameter, defaults to 'index',
+ # @param param - any aditional parameter, must start with '&',
+ # @param title - to be shown as a hint.
+  -->
+<#macro selectModelTr targetIndex="0", name="${targetName}", indexName="index", param="", title="">
+<td>
+<@selectModel targetIndex, name, indexName, param, title ><#nested/></@selectModel>
 </td>
 </#macro>
 
@@ -174,6 +197,24 @@ href="${flowExecutionUrl}&_eventId=select${name?cap_first}&pages['${name?uncap_f
 	</tbody>
 	</table>
 </#macro>
+
+<#--
+ # Convenience to group box lines and show errors as table cells.
+ # Modifies cgroup to accept args like colspan, etc
+ #
+ # @author Mauricio Fernandes de Castro
+-->
+<#macro input label="", attr="", separator=":<br />", classOrStyle="">
+	<td ${attr}>
+	<b>${label}</b>${separator}
+	<#nested />
+	<#if spring?exists && spring.status.errorMessages?has_content >
+	<div class="bxError" >
+    <@spring.showErrors "<br/>" />
+    </div>
+    </#if>
+    </td>
+</#macro>	
 
 <#macro formDate path >
      <@spring.bind path/>
