@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<ResourceGroup>{
 
     private static final long serialVersionUID = 1L;
-	private Class<? extends ResourceGroup> clazz = ResourceGroup.class;
+	private Class<? extends ResourceGroup> clazz;
 	private ResourceGroup parent;
 	private ResourceGroup child;
 	
@@ -71,7 +71,7 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	@Override
 	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
-		if (!getClazz().equals(ResourceGroup.class)) {
+		if (getClazz()!=null) {
 	        logger.debug("Resource group class is: '{}'", getClazz());
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
