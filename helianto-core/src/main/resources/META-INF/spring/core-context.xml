@@ -68,7 +68,7 @@
             <tx:method name="load*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
             <tx:method name="create*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
             <tx:method name="prepare*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-
+            
             <tx:method name="fin*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
             <tx:method name="merg*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
             <tx:method name="pers*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
