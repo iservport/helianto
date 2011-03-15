@@ -98,6 +98,21 @@ public abstract class AbstractCustomDocument extends AbstractDocument implements
 	}
 	public void setInternalNumber(long internalNumber) {
 		this.internalNumber = internalNumber;
+		if (internalNumber>0 && isKeyEmpty() && getSeries()!=null) {
+			afterInternalNumberSet(internalNumber);
+		}
+	}
+	
+	/**
+	 * Called after {@link #setInternalNumber(long)}, when {@link #internalNumber} is 
+	 * set with a positive number, {@link #isKeyEmpty()} is true and {@link #getSeries()} 
+	 * is not null.
+	 * 
+	 * @param internalNumber
+	 */
+	@Transient
+	protected void afterInternalNumberSet(long internalNumber) {
+		setDocCode(getSeries().buildCode(internalNumber));
 	}
 
 	@Override
