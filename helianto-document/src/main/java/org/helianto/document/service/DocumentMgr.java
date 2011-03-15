@@ -30,21 +30,6 @@ import org.helianto.document.Serializer;
 public interface DocumentMgr {
 	
 	/**
-	 * Store <code>Document</code> in the datastore and return a managed instance.
-	 * 
-	 * @param document
-	 */
-	public Document storeDocument(Document document);
-
-	/**
-	 * Prepare a <code>Document</code> instance to return a
-	 * managed instance loaded with lazy collections.
-	 * 
-	 * @param document
-	 */
-	public Document prepareDocument(Document document);
-
-	/**
 	 * Find a <code>Document</code> list.
 	 * 
 	 * @param documentFilter
@@ -58,6 +43,13 @@ public interface DocumentMgr {
 	 */
 	public Document findDocument(Filter documentFilter) throws NonUniqueResultException;
 	
+	/**
+	 * Store <code>Document</code> in the datastore and return a managed instance.
+	 * 
+	 * @param document
+	 */
+	public Document storeDocument(Document document);
+
 	/**
 	 * Remove the <code>Document</code> from the datastore.
 	 * 

@@ -16,7 +16,6 @@
 package org.helianto.document;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -24,7 +23,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
@@ -47,11 +45,6 @@ public class Document extends AbstractCustomDocument implements Comparable<Docum
     private Set<DocumentTag> documentTags = new HashSet<DocumentTag>(0);
     private Set<DocumentAssociation> parents = new HashSet<DocumentAssociation>(0);
     private Set<DocumentAssociation> children = new HashSet<DocumentAssociation>(0);
-    // transient
-    private List<DocumentKey> documentKeyList;
-    private List<DocumentTag> documentTagList;
-    private List<DocumentAssociation> parentList;
-	private List<DocumentAssociation> childList;
 
 	/** 
 	 * Default constructor 
@@ -82,17 +75,6 @@ public class Document extends AbstractCustomDocument implements Comparable<Docum
     }
     
     /**
-     * Document key list.
-     */
-    @Transient
-    public List<DocumentKey> getDocumentKeyList() {
-		return documentKeyList;
-	}
-	public void setDocumentKeyList(List<DocumentKey> documentKeyList) {
-		this.documentKeyList = documentKeyList;
-	}
-
-    /**
      * Document tags.
      */
     @OneToMany(mappedBy="document", cascade={CascadeType.ALL})
@@ -104,20 +86,9 @@ public class Document extends AbstractCustomDocument implements Comparable<Docum
     }
     
     /**
-     * Document tag list.
-     */
-    @Transient
-    public List<DocumentTag> getDocumentTagList() {
-		return documentTagList;
-	}
-	public void setDocumentTagList(List<DocumentTag> documentTagList) {
-		this.documentTagList = documentTagList;
-	}
-
-    /**
      * Parent document associations.
      */
-    @OneToMany(mappedBy="child", cascade={CascadeType.ALL})
+    @OneToMany(mappedBy="child")
     public Set<DocumentAssociation> getParents() {
         return this.parents;
     }
@@ -125,17 +96,6 @@ public class Document extends AbstractCustomDocument implements Comparable<Docum
         this.parents = parents;
     }
     
-    /**
-     * Parent document association list.
-     */
-    @Transient
-    public List<DocumentAssociation> getParentList() {
-		return parentList;
-	}
-	public void setParentList(List<DocumentAssociation> parentList) {
-		this.parentList = parentList;
-	}
-
     /**
      * Child document associations.
      */
@@ -147,17 +107,6 @@ public class Document extends AbstractCustomDocument implements Comparable<Docum
         this.children = children;
     }
     
-    /**
-     * Child document association list.
-     */
-    @Transient
-	public List<DocumentAssociation> getChildList() {
-		return childList;
-	}
-	public void setChildList(List<DocumentAssociation> childList) {
-		this.childList = childList;
-	}
-
 	/**
 	 * Sort by docCode.
 	 */

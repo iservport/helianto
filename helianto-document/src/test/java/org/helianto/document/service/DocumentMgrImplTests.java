@@ -70,19 +70,6 @@ public class DocumentMgrImplTests {
 	}
 	
 	@Test
-	public void prepareDocument() {
-		Document document= new Document();
-		Document managedDocument = new Document();
-		
-		EasyMock.expect(documentDao.merge(document)).andReturn(managedDocument);
-		documentDao.evict(managedDocument);
-		EasyMock.replay(documentDao);
-		
-		documentMgr.prepareDocument(document);
-		EasyMock.verify(documentDao);
-	}
-	
-	@Test
 	public void findDocuments() {
 		List<Document> documentList = new ArrayList<Document>();
 		DocumentFilter documentFilter = new DocumentFilter(new Entity(), "");

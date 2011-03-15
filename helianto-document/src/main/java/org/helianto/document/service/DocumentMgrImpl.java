@@ -15,7 +15,6 @@
 
 package org.helianto.document.service;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,7 +23,6 @@ import org.helianto.core.NonUniqueResultException;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
-import org.helianto.core.utils.CoreUtils;
 import org.helianto.document.Document;
 import org.helianto.document.Serializer;
 import org.slf4j.Logger;
@@ -47,17 +45,6 @@ public class DocumentMgrImpl implements DocumentMgr {
 			sequenceMgr.validateInternalNumber(document);
 		}
 		return documentDao.merge(document);
-	}
-	
-	public Document prepareDocument(Document document) {
-		Document managedDocument = documentDao.merge(document);
-		managedDocument.setDocumentKeyList(CoreUtils.createSortedList(managedDocument.getDocumentKeys()));
-		managedDocument.setDocumentTagList(CoreUtils.createSortedList(managedDocument.getDocumentTags()));
-		managedDocument.setParentList(CoreUtils.createList(managedDocument.getParents()));
-		managedDocument.setChildList(CoreUtils.createList(managedDocument.getChildren()));
-		Collections.sort(managedDocument.getChildList());
-		documentDao.evict(managedDocument);
-		return managedDocument;
 	}
 	
 	public List<? extends Document> findDocuments(Filter documentFilter) {
