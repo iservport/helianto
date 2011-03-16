@@ -16,6 +16,7 @@
 package org.helianto.document;
 
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -36,25 +37,12 @@ import org.helianto.core.AbstractAssociation;
 )
 public class DocumentAssociation extends AbstractAssociation<Document, Document> {
 
-    /**
-     * Factory method.
-     * 
-     * @param parent
-     * @param child
-     */
-    public static DocumentAssociation documentAssociationFactory(Document parent, Document child) {
-    	DocumentAssociation documentAssociation = (DocumentAssociation) AbstractAssociation.associationFactory(DocumentAssociation.class, parent, child);
-    	child.getParents().add(documentAssociation);
-    	parent.getChildren().add(documentAssociation);
-        return documentAssociation;
-    }
-    
     private static final long serialVersionUID = 1L;
     
     /**
      * Associated parent document.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="parentId", nullable=true)
 	public Document getParent() {
 		return parent;
@@ -63,7 +51,7 @@ public class DocumentAssociation extends AbstractAssociation<Document, Document>
     /**
      * Associated child document.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="childId", nullable=true)
 	public Document getChild() {
 		return child;

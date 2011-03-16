@@ -51,12 +51,16 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	@Test
 	public void commit() {
 		DocumentAssociation documentAssociation = new DocumentAssociation();
-		documentAssociation.setParent(DocumentTestSupport.create(Document.class, entity));
+		Document parent = DocumentTestSupport.create(Document.class, entity);
+		documentDao.saveOrUpdate(parent);
+		documentAssociation.setParent(parent);
 		documentAssociation.setChild(DocumentTestSupport.create(Document.class, entity));
-		assertEquals(documentAssociationDao.merge(documentAssociation), documentAssociationDao.findUnique(documentAssociation.getParent(), documentAssociation.getChild()));
+		documentAssociationDao.saveOrUpdate(documentAssociation);
+		assertEquals(documentAssociation, documentAssociationDao.findUnique(documentAssociation.getParent(), documentAssociation.getChild()));
 
 		Document document = DocumentTestSupport.create(Document.class, entity);
-		assertEquals(documentDao.merge(document), documentDao.findUnique(document.getEntity(), document.getDocCode()));
+		documentDao.saveOrUpdate(document);
+		assertEquals(document, documentDao.findUnique(document.getEntity(), document.getDocCode()));
 
 		Serializer serializer = new Serializer(entity, "CODE");
 		serializerDao.saveOrUpdate(serializer);
