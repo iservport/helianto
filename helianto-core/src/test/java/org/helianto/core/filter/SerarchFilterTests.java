@@ -23,7 +23,7 @@ public class SerarchFilterTests {
 				mainCriteriaBuilder.appendSegment("uniqueField", "=").appendString("key");
 			}
 		};
-		AbstractSearchFilter filter = new AbstractSearchFilter(sourceFilter) {
+		SearchFilter filter = new SearchFilter(sourceFilter) {
 			public void reset() {}
 			@Override public String getSearchFieldName() {
 				return "searchField";
