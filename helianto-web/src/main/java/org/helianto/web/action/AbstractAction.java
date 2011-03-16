@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
 /**
- * Base class to presentation logic.
+ * Base class to presentation logic based on spring webflow.
  * 
  * @author Mauricio Fernandes de Castro
  */

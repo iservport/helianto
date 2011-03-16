@@ -9,30 +9,31 @@ import org.helianto.core.filter.Page;
  * 
  * @author mauriciofernandesdecastro
  */
-public class SimpleModel<F> extends Page {
+public class SimpleModel<F> extends Page implements FormModel<F> {
 
 	private static final long serialVersionUID = 1L;
 	private User user;
-	private F filter;
+	private F form;
+	private String searchString;
 	
 	/**
 	 * Constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public SimpleModel(F filter) {
+	public SimpleModel(F form) {
 		super();
-		setFilter(filter);
+		setForm(form);
 	}
 	
 	/**
 	 * User constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 * @param user
 	 */
-	public SimpleModel(F filter, User user) {
-		this(filter);
+	public SimpleModel(F form, User user) {
+		this(form);
 		setUser(user);
 	}
 	
@@ -56,14 +57,25 @@ public class SimpleModel<F> extends Page {
 		return null;
 	}
 		
+	public F getForm() {
+		return form;
+	}
+	public void setForm(F filter) {
+		this.form = filter;
+	}
+	
 	/**
-	 * Filter.
+	 * @deprecated used getForm().
 	 */
 	public F getFilter() {
-		return filter;
+		return form;
 	}
-	public void setFilter(F filter) {
-		this.filter = filter;
+	
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
 	}
 	
 }

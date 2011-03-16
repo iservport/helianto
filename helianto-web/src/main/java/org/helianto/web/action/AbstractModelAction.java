@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.User;
 import org.helianto.core.naming.NamingConventionStrategy;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
@@ -12,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
 /**
- * Business delegate (action) base class designed to collaborate with a <code>PageModel</code>
+ * Business delegate (action) base class designed to collaborate with a {@link FormModel}
  * based flow.
  * 
  * @author mauriciofernandesdecastro
@@ -37,51 +36,51 @@ public abstract class AbstractModelAction<F> implements Serializable, ModelActio
 	}
 
 	/**
-	 * Create a new model in the attribute map.
+	 * Create a new model and form in the attribute map.
 	 * 
 	 * @param attributes
 	 * @param userDetails
 	 */
 	public String createModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		User user = userDetails.getUser();
-		PageModel<F> pageModel = getModel(attributes);
-		if (pageModel==null) {
-			pageModel = new PageModel<F>(user, "selection"); 
-			putModel(attributes, pageModel);
+		FormModel<F> formModel = getModel(attributes);
+		if (formModel==null) {
+			formModel = doCreateModel(attributes, userDetails); 
+			putModel(attributes, formModel);
 		}
-		F filter = doCreateFilter(attributes, pageModel);
-		pageModel.setFilter(filter);
+		F form = doCreateForm(attributes, userDetails, formModel);
+		formModel.setForm(form);
 		return "success";
 	}
 	
-	@SuppressWarnings("unchecked")
-	public PageModel<F> getModel(MutableAttributeMap attributes) {
-		return (PageModel<F>) attributes.get(getModelName());
+	/**
+	 * Default model is an instance of {@link PageModel}.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 */
+	protected FormModel<F> doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		return new PageModel<F>(); 
 	}
 	
-	protected void putModel(MutableAttributeMap attributes, PageModel<F> pageModel) {
-		if (pageModel!=null) {
-			attributes.put(getModelName(), pageModel);
+	@SuppressWarnings("unchecked")
+	public FormModel<F> getModel(MutableAttributeMap attributes) {
+		return (FormModel<F>) attributes.get(getModelName());
+	}
+	
+	protected void putModel(MutableAttributeMap attributes, FormModel<F> formModel) {
+		if (formModel!=null) {
+			attributes.put(getModelName(), formModel);
 		}
 	}
 	
 	/**
-	 * Subclasses may use this method instead of {@link #doCreateFilter(MutableAttributeMap, User)}.
+	 * Hook to the actual form creation.
 	 * 
 	 * @param attributes
-	 * @param pageModel
+	 * @param userDetails
+	 * @param formModel
 	 */
-	protected F doCreateFilter(MutableAttributeMap attributes, PageModel<F> pageModel) {
-		return doCreateFilter(attributes, pageModel.getUser());
-	}
-	
-	/**
-	 * Hook to the actual filter creation.
-	 * 
-	 * @param attributes
-	 * @param user
-	 */
-	protected abstract F doCreateFilter(MutableAttributeMap attributes, User user);
+	protected abstract F doCreateForm(MutableAttributeMap attributes, PublicUserDetails userDetails, FormModel<F> formModel);
 	
 	// collabs
 	

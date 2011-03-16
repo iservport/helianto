@@ -2,7 +2,9 @@ package org.helianto.web.action.impl;
 
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.security.PublicUserDetails;
 import org.helianto.web.action.AbstractModelAction;
+import org.helianto.web.action.FormModel;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
@@ -17,8 +19,8 @@ public class UserModelActionImpl extends AbstractModelAction<User> {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected User doCreateFilter(MutableAttributeMap attributes, User user) {
-		return new User(user.getEntity(), (Identity) null);
+	protected User doCreateForm(MutableAttributeMap attributes, PublicUserDetails userDetails, FormModel<User> formModel) {
+		return new User(userDetails.getEntity(), (Identity) null);
 	}
 
 }

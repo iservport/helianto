@@ -17,16 +17,34 @@ package org.helianto.web.action;
 
 import java.util.List;
 
+import org.helianto.core.filter.AbstractFilter;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.Listable;
 import org.helianto.core.filter.Page;
+import org.helianto.core.filter.SearchFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
 /**
- * Base class to presentation logic.
+ * Extends {@link AbstractAction} to provide {@link Filter} based behavior to presentation logic.
+ * 
+ * <p>
+ * Any business delegate inheriting from this class will provide presentation logic with 
+ * three distinct use cases:</p>
+ * <ol>
+ * <li><b>filter:</b> a list of type &lt;T&gt; is requested from the service layer using
+ * the filter keyed in the appropriate webflow scope by the {@link #getFilterName()} 
+ * property.</li>
+ * <li><b>search:</b> similar to the previous use case, but using {@link SearchFilter}.</li>
+ * <li><b>select:</b> special case where the filter flag {@link AbstractFilter#isSelection()} 
+ * is true, meaning that the resulting list will return 0 or 1 entries.</li>
+ * </ol>
+ * 
+ * <p>
+ * In any case, the resulting list is kept in the webflow context using a model.
+ * </p>
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -56,7 +74,50 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	}
 
 	/**
-	 * Create a new item list in the attribute map.
+	 * Name used to trigger a search.
+	 * 
+	 * <p>
+	 * Default behavior flags as search not allowed by providing a null name.
+	 * </p>
+	 */
+	protected String getSearchFieldName() {
+		return null;
+	}
+
+	/**
+	 * Create a new item list in the attribute map according to the <b>search</b
+	 * use case described above.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 */
+	public String search(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		String searchString = bindSearchString(attributes);
+		if (searchString.length()==0) {
+			logger.warn("Empty search string");
+			return "success";
+		}
+		// also put the target name in the attribute map.
+		if (!attributes.contains("targetName")) {
+			attributes.put("targetName", getTargetName());
+		}
+		Filter filter = getFilter(attributes, userDetails);
+		SearchFilter searchFilter = new SearchFilter(filter, getSearchFieldName(), searchString);
+		return internalFilter(attributes, userDetails, searchFilter);
+	}
+	
+	protected String bindSearchString(MutableAttributeMap attributes) {
+		if (getSearchFieldName()==null) {
+			throw new IllegalArgumentException("Unable to search if search field name is not provided");
+		}
+		FormModel<?> model = getModel(attributes);
+		String searchString = model.getSearchString();
+		return searchString;
+	}
+	
+	/**
+	 * Create a new item list in the attribute map according to the <b>filter</b
+	 * use case described above.
 	 * 
 	 * @param attributes
 	 * @param userDetails
@@ -67,6 +128,18 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 			attributes.put("targetName", getTargetName());
 		}
 		Filter filter = getFilter(attributes, userDetails);
+		return internalFilter(attributes, userDetails, filter);
+	}
+	
+	/**
+	 * Called after {@link #search(MutableAttributeMap, PublicUserDetails)} or 
+	 * {@link #filter(MutableAttributeMap, PublicUserDetails)}.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 * @param filter
+	 */
+	protected String internalFilter(MutableAttributeMap attributes, PublicUserDetails userDetails, Filter filter) {
 		logger.debug("Using filter {}.", filter);
 		List<T> itemList = doFilter(attributes, filter, userDetails);
 		put(attributes, itemList);

@@ -1,6 +1,5 @@
 package org.helianto.web.action;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -15,11 +14,11 @@ import org.helianto.core.filter.Page;
  * 
  * @author mauriciofernandesdecastro
  */
-public class PageModel<F> implements Serializable {
+public class PageModel<F> implements FormModel<F> {
 
 	private static final long serialVersionUID = 1L;
-	private User user;
-	private F filter;
+//	private User user;
+	private F form;
 	private String searchString;
 	private Map<String, Listable> pages;
 	private String pageName;
@@ -31,40 +30,40 @@ public class PageModel<F> implements Serializable {
 		setPages(new HashMap<String, Listable>());
 	}
 	
-	/**
-	 * Construtor de usuário.
-	 * 
-	 * @param user
-	 * @param pageNames
-	 */
-	public PageModel(User user, String... pageNames) {
-		this();
-		setUser(user);
-		for (String p : pageNames) {
-			getPages().put(p, new Page());
-			setPageName(pageNames[0]);
-		}
-	}
+//	/**
+//	 * Construtor de usuário.
+//	 * 
+//	 * @param user
+//	 * @param pageNames
+//	 */
+//	public PageModel(User user, String... pageNames) {
+//		this();
+//		setUser(user);
+//		for (String p : pageNames) {
+//			getPages().put(p, new Page());
+//			setPageName(pageNames[0]);
+//		}
+//	}
 	
-	/**
-	 * User.
-	 */
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	/**
-	 * Convenience to retrieve entity.
-	 */
-	public Entity getEntity() {
-		if (getUser()!=null) {
-			return getUser().getEntity();
-		}
-		return null;
-	}
+//	/**
+//	 * User.
+//	 */
+//	public User getUser() {
+//		return user;
+//	}
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
+//	
+//	/**
+//	 * Convenience to retrieve entity.
+//	 */
+//	public Entity getEntity() {
+//		if (getUser()!=null) {
+//			return getUser().getEntity();
+//		}
+//		return null;
+//	}
 	
 	/**
 	 * Page names.
@@ -83,19 +82,20 @@ public class PageModel<F> implements Serializable {
 		this.pages = pages;
 	}
 	
-	/**
-	 * Filter.
-	 */
-	public F getFilter() {
-		return filter;
+	public F getForm() {
+		return form;
 	}
-	public void setFilter(F filter) {
-		this.filter = filter;
+	public void setForm(F filter) {
+		this.form = filter;
 	}
 	
 	/**
-	 * Search string.
+	 * @deprecated used getForm().
 	 */
+	public F getFilter() {
+		return form;
+	}
+	
 	public String getSearchString() {
 		return searchString;
 	}
@@ -122,5 +122,5 @@ public class PageModel<F> implements Serializable {
 	public void setPage(Listable page) {
 		getPages().put(getPageName(), page);
 	}
-	
+
 }
