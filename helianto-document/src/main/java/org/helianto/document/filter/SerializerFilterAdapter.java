@@ -19,6 +19,7 @@ package org.helianto.document.filter;
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.AbstractTrunkFilterAdapter;
+import org.helianto.document.AbstractSerializer;
 import org.helianto.document.Serializer;
 
 /**
@@ -26,7 +27,7 @@ import org.helianto.document.Serializer;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class SerializerFilterAdapter<T extends Serializer> extends AbstractTrunkFilterAdapter<T> {
+public class SerializerFilterAdapter<T extends AbstractSerializer<?>> extends AbstractTrunkFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     
