@@ -7,8 +7,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
+import org.helianto.core.Entity;
 import org.helianto.core.Prioritizable;
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,6 +37,22 @@ public class FilterTests {
 	public void mainCriteriaBuilder() {
 		filter.createCriteriaAsString();
 		assertEquals("TEST_ALIAS", createdCriteriaBuilder.getAlias());
+	}
+	
+	@Test
+	public void preProcessParent() {
+		filter = new ParentStub();
+		assertTrue(filter instanceof ParentFilter);
+		assertTrue(((ParentFilter) filter).getParentId()>0);
+		assertEquals("TEST_ALIAS.parent.id = 100 ", filter.createCriteriaAsString());
+	}
+	
+	@Test
+	public void preProcessClazz() {
+		filter = new PolymorphicStub();
+		assertTrue(filter instanceof PolymorphicFilter);
+		assertTrue(((PolymorphicFilter<?>) filter).getClazz()!=null);
+		assertEquals("TEST_ALIAS.class=Entity ", filter.createCriteriaAsString());
 	}
 	
 	/**
@@ -124,7 +142,6 @@ public class FilterTests {
 		
 	}
 	
-	@SuppressWarnings("serial")
 	@Before
 	public void setUp() {
 		createdCriteriaBuilder = new CriteriaBuilder("CREATED");
@@ -132,32 +149,74 @@ public class FilterTests {
 		selectionCriteriaBuilder = new CriteriaBuilder("SELECTION");
 		filterCriteriaBuilder = new CriteriaBuilder("FILTER");
 		postProcessedCriteriaBuilder = new CriteriaBuilder("POSTPROC");
-		filter = new AbstractFilter() {
-			public String getObjectAlias() { return "TEST_ALIAS"; }
-			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-				selectionCriteriaBuilder = mainCriteriaBuilder;
-			}
-			@Override
-			public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-				filterCriteriaBuilder = mainCriteriaBuilder;
-			}
-			@Override
-			public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
-				createdCriteriaBuilder = mainCriteriaBuilder;
-				return super.createCriteriaAsString(mainCriteriaBuilder);
-			}
-			@Override
-			public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
-				preProcessedCriteriaBuilder = mainCriteriaBuilder;
-			}
-			@Override protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
-				super.postProcessFilter(mainCriteriaBuilder);
-				postProcessedCriteriaBuilder = mainCriteriaBuilder;
-			}
-			@Override public boolean isSelection() { return selection; }
-			public void reset() { reset = true; }
-			@Override public String getOrderByString() { return orderBy; }
-		};
+		filter = new FilterStub();
 	}
+	
+	/**
+	 * Private filter stub class.
+	 */
+	@SuppressWarnings("serial")
+	private class FilterStub extends AbstractFilter {
+		
+		public String getObjectAlias() { return "TEST_ALIAS"; }
+		
+		@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+			selectionCriteriaBuilder = mainCriteriaBuilder;
+		}
+		
+		@Override
+		public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+			filterCriteriaBuilder = mainCriteriaBuilder;
+		}
+		
+		@Override
+		public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
+			createdCriteriaBuilder = mainCriteriaBuilder;
+			return super.createCriteriaAsString(mainCriteriaBuilder);
+		}
+		
+		@Override
+		public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+			super.preProcessFilter(mainCriteriaBuilder);
+			preProcessedCriteriaBuilder = mainCriteriaBuilder;
+		}
+		
+		@Override protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+			super.postProcessFilter(mainCriteriaBuilder);
+			postProcessedCriteriaBuilder = mainCriteriaBuilder;
+		}
+		
+		@Override public boolean isSelection() { return selection; }
+		
+		public void reset() { reset = true; }
+		
+		@Override public String getOrderByString() { return orderBy; }
+
+	}
+	
+	/**
+	 * Private polymorphic filter stub class.
+	 */
+	@SuppressWarnings("serial")
+	private class PolymorphicStub extends FilterStub  implements PolymorphicFilter<Entity> {
+
+		public Class<? extends Entity> getClazz() { return Entity.class; }
+
+		public void setClazz(Class<? extends Entity> clazz) { }
+		
+	}
+
+	/**
+	 * Private parent filter stub class.
+	 */
+	@SuppressWarnings("serial")
+	private class ParentStub extends FilterStub  implements ParentFilter {
+
+		@SuppressWarnings("unchecked") public Entity getParent() { return EntityTestSupport.createEntity(); }
+
+		public long getParentId() { return 100; }
+
+	}
+
 
 }
