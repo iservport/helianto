@@ -2,41 +2,49 @@ package org.helianto.core.filter;
 
 
 /**
- * Filter adapter.
+ * Base class to filters that wrap a form.
  * 
  * @author mauriciofernandesdecastro
  *
- * @param <T>
+ * @param <F>
  */
-public abstract class AbstractFilterAdapter<T> extends AbstractFilter {
+public abstract class AbstractFilterAdapter<F> extends AbstractFilter {
 	
 	private static final long serialVersionUID = 1L;
-	private T filter; 
+	private F form; 
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public AbstractFilterAdapter(T filter) {
-		this.filter = filter;
+	public AbstractFilterAdapter(F form) {
+		this.form = form;
 		reset();
 	}
 
 	/**
-	 * The filter.
+	 * The form.
 	 */
-	public T getFilter() {
-		return filter;
+	public F getForm() {
+		return form;
+	}
+	
+	/**
+	 * The filter.
+	 * @deprecated use getForm()
+	 */
+	public F getFilter() {
+		return form;
 	}
 	
 	/**
 	 * Internal filter setter.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	protected void setFilter(T filter) {
-		this.filter = filter;
+	protected void setForm(F form) {
+		this.form = form;
 	}
 
 }

@@ -7,28 +7,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class to filters that require an <code>Entity</code>.
+ * Base class to filter adapters that require an <code>Entity</code> form.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractTrunkFilterAdapter <T extends TrunkEntity> extends AbstractFilterAdapter<T> {
+public abstract class AbstractTrunkFilterAdapter <F extends TrunkEntity> extends AbstractFilterAdapter<F> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Filter constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public AbstractTrunkFilterAdapter(T filter) {
-		super(filter);
+	public AbstractTrunkFilterAdapter(F form) {
+		super(form);
 	}
 	
 	/**
 	 * The entity.
 	 */
 	public Entity getEntity() {
-		return getFilter().getEntity();
+		return getForm().getEntity();
 	}
 	
 	/**

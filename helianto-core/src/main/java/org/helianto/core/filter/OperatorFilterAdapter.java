@@ -16,10 +16,10 @@ public class OperatorFilterAdapter extends AbstractFilterAdapter<Operator> {
 	/**
 	 * Default constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public OperatorFilterAdapter(Operator filter) {
-		super(filter);
+	public OperatorFilterAdapter(Operator form) {
+		super(form);
 	}
 
 	/**
@@ -46,17 +46,17 @@ public class OperatorFilterAdapter extends AbstractFilterAdapter<Operator> {
 	
 	@Override
 	public boolean isSelection() {
-		return isUniqueName() && getFilter().getOperatorName().length()>0;
+		return isUniqueName() && getForm().getOperatorName().length()>0;
 	}
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("operatorName", getFilter().getOperatorName(), mainCriteriaBuilder);		
+		appendEqualFilter("operatorName", getForm().getOperatorName(), mainCriteriaBuilder);		
 	}
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) { 
-		appendLikeFilter("operatorName", getFilter().getOperatorName(), mainCriteriaBuilder);
+		appendLikeFilter("operatorName", getForm().getOperatorName(), mainCriteriaBuilder);
 	}
 	
 	/**

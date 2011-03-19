@@ -7,28 +7,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class to filters that require an <code>Operator</code>.
+ * Base class to filter adapters that require an <code>Operator</code> form.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractRootFilterAdapter<T extends RootEntity> extends AbstractFilterAdapter<T> {
+public abstract class AbstractRootFilterAdapter<F extends RootEntity> extends AbstractFilterAdapter<F> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Filter constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public AbstractRootFilterAdapter(T filter) {
-		super(filter);
+	public AbstractRootFilterAdapter(F form) {
+		super(form);
 	}
 	
 	/**
 	 * The operator.
 	 */
 	public Operator getOperator() {
-		return getFilter().getOperator();
+		return getForm().getOperator();
 	}
 
 	/**

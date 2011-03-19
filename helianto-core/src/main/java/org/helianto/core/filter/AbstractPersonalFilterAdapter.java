@@ -11,24 +11,24 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractPersonalFilterAdapter <T extends PersonalEntity> extends AbstractFilterAdapter<T> {
+public abstract class AbstractPersonalFilterAdapter <F extends PersonalEntity> extends AbstractFilterAdapter<F> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Filter constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public AbstractPersonalFilterAdapter(T filter) {
-		super(filter);
+	public AbstractPersonalFilterAdapter(F form) {
+		super(form);
 	}
 	
 	/**
 	 * The identity.
 	 */
 	public Identity getIdentity() {
-		return getFilter().getIdentity();
+		return getForm().getIdentity();
 	}
 
 	/**
