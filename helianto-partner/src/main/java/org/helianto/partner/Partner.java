@@ -72,6 +72,7 @@ public class Partner implements TrunkEntity, BusinessUnit {
     private Account account;
     private char priority;
     private char partnerState;
+    private char taxClass;
     private Set<PartnerKey> partnerKeys = new HashSet<PartnerKey>(0);
     // transient
     private List<PartnerKey> partnerKeyList = new ArrayList<PartnerKey>(0);
@@ -83,6 +84,7 @@ public class Partner implements TrunkEntity, BusinessUnit {
     	setNewEntityAlias("");
         setPartnerState(PartnerState.IDLE.getValue());
         setPriority('0');
+        setTaxClass(' ');
     }
 
 	/**
@@ -421,6 +423,16 @@ public class Partner implements TrunkEntity, BusinessUnit {
     public void setPartnerState(PartnerState partnerState) {
         this.partnerState = partnerState.getValue();
     }
+    
+    /**
+     * Class related to tax requirements.
+     */
+    public char getTaxClass() {
+		return taxClass;
+	}
+    public void setTaxClass(char taxClass) {
+		this.taxClass = taxClass;
+	}
 
     /**
      * Partner keys.

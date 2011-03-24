@@ -35,7 +35,7 @@ public class AbstractPhone implements java.io.Serializable {
     public AbstractPhone() {
     	setPhoneNumber("");
     	setAreaCode("");
-    	setPhoneType(PhoneType.MAIN);
+    	setPhoneTypeAsEnum(PhoneType.MAIN);
     }
 
     /**
@@ -69,7 +69,7 @@ public class AbstractPhone implements java.io.Serializable {
     public void setPhoneType(char phoneType) {
         this.phoneType = phoneType;
     }
-    public void setPhoneType(PhoneType phoneType) {
+    public void setPhoneTypeAsEnum(PhoneType phoneType) {
         this.phoneType = phoneType.getValue();
     }
 

@@ -46,6 +46,39 @@ public class Phone extends AbstractPhone {
      * Default constructor
      */
     public Phone() {
+    	this("");
+    }
+
+    /** 
+     * Phone constructor.
+     * 
+     * @param phoneNumber
+     */
+    public Phone(String phoneNumber) {
+    	this("", phoneNumber);
+    }
+
+    /** 
+     * Phone area constructor.
+     * 
+     * @param areaCode
+     * @param phoneNumber
+     */
+    public Phone(String areaCode, String phoneNumber) {
+    	this(areaCode, phoneNumber, PhoneType.MAIN);
+    }
+
+    /** 
+     * Phone area type constructor.
+     * 
+     * @param areaCode
+     * @param phoneNumber
+     * @param phoneType
+     */
+    public Phone(String areaCode, String phoneNumber, PhoneType phoneType) {
+    	setAreaCode(areaCode);
+    	setPhoneNumber(phoneNumber);
+    	setPhoneTypeAsEnum(phoneType);
     }
 
     /**
@@ -107,6 +140,18 @@ public class Phone extends AbstractPhone {
      * @return String
      */
     public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer
+        .append(getAreaCode())
+        .append(getPhoneNumber());
+
+        return buffer.toString();
+    }
+    /**
+     * toFormatedString
+     * @return String
+     */
+    public String toFormattedString() {
         StringBuffer buffer = new StringBuffer();
 
         buffer

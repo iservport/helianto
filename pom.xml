@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project</name>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.3.0-20110324</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -424,11 +424,11 @@ Application-TraceLevels: ${application.traceLevels}
 	<distributionManagement>
 		<repository>
 			<id>org.helianto.repository.devel</id>
-			<url>ftp://ftp.helianto.org/repository</url>
+			<url>ftp://www.helianto.org/public_html/repository</url>
 		</repository>
 		<snapshotRepository>
 			<id>org.helianto.repository.snapshot</id>
-			<url>ftp://ftp.helianto.org/snapshot</url>
+			<url>ftp://www.helianto.org/public_html/snapshot</url>
 		</snapshotRepository>
 		<site>
 			<id>website</id>
