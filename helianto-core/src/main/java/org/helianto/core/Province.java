@@ -51,18 +51,6 @@ import javax.persistence.UniqueConstraint;
 @DiscriminatorValue("P")
 public class Province  implements RootEntity {
 
-    /**
-     * Factory method.
-     * 
-     * @param requiredOperator
-     */
-    public static Province provinceFactory(Operator requiredOperator) {
-        Province province = new Province();
-        province.setOperator(requiredOperator);
-        return province;
-    }
-
-
     private static final long serialVersionUID = 1L;
     private int id;
     private Operator operator;

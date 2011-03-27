@@ -25,9 +25,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
- * <p>
  * Private Key.
- * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -36,29 +35,32 @@ import javax.persistence.UniqueConstraint;
 )
 public class PrivateKey implements java.io.Serializable {
 
+    private static final long serialVersionUID = 1L;
+    private int id;
+    private Credential credential;
+    private String privateKey;
+
+    /** 
+     * Default constructor.
+     */
+    public PrivateKey() {
+    }
+
     /**
      * <code>PrivateKey</code> created with minumum requirements.
      * 
      * @param credential
      * @param privateKeyValue
      */
-    public static PrivateKey privateKeyFactory(Credential requiredCredential, String privateKeyValue) {
-        PrivateKey privateKey = new PrivateKey();
-        privateKey.setCredential(requiredCredential);
-        privateKey.setPrivateKey(privateKeyValue);
-        return privateKey;
+    public PrivateKey(Credential requiredCredential, String privateKeyValue) {
+    	this();
+        setCredential(requiredCredential);
+        setPrivateKey(privateKeyValue);
     }
     
-    private static final long serialVersionUID = 1L;
-    private int id;
-    private Credential credential;
-    private String privateKey;
-
-    /** default constructor */
-    public PrivateKey() {
-    }
-
-    // Property accessors
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;

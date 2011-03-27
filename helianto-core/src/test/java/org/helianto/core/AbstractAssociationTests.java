@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
+import org.helianto.core.base.AbstractAssociation;
 import org.helianto.core.test.IdentityTestSupport;
 import org.junit.Before;
 import org.junit.Test;

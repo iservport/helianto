@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
+import org.helianto.core.filter.base.AbstractSequence;
+import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -2,7 +2,7 @@ package org.helianto.resource.filter;
 
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractFilterAdapter;
+import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.resource.ResourceAssociation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

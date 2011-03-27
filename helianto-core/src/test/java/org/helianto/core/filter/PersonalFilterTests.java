@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalEntity;
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.base.AbstractPersonalFilterAdapter;
 import org.junit.Before;
 import org.junit.Test;
 

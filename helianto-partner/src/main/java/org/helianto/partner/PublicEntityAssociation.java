@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.AbstractAssociation;
+import org.helianto.core.base.AbstractAssociation;
 
 /**
  * Association between public entities.

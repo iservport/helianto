@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractListFilter;
 import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.base.AbstractListFilter;
 import org.helianto.core.filter.classic.AbstractCompositeListFilter;
 import org.helianto.core.filter.classic.CompositeListFilter;
 import org.junit.Before;

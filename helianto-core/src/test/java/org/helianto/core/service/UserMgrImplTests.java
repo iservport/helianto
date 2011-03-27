@@ -328,7 +328,9 @@ public class UserMgrImplTests {
         UserGroup parent = UserGroupTestSupport.createUserGroup();
         UserRole[] roles1 = UserRoleTestSupport.createUserRoles(managedUser, "E1", "E2");
         UserRole[] roles2 = UserRoleTestSupport.createUserRoles(parent, "E2", "E3");
-        UserAssociation.userAssociationFactory(parent, managedUser);
+        UserAssociation association = new UserAssociation(parent, managedUser);
+        parent.getChildAssociations().add(association);
+        managedUser.getParentAssociations().add(association);
 
     	expect(userGroupDao.merge(user)).andReturn(managedUser);
     	userGroupDao.evict(managedUser);

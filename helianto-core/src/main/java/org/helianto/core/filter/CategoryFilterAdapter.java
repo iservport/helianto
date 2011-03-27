@@ -19,6 +19,7 @@ import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

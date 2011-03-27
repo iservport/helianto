@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.User;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractFilterAdapter;
+import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Test;
 

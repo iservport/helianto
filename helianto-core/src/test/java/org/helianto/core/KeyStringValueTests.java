@@ -18,6 +18,8 @@ package org.helianto.core;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.helianto.core.base.AbstractKeyStringValue;
+import org.helianto.core.base.AbstractKeyValue;
 import org.junit.Test;
 
 

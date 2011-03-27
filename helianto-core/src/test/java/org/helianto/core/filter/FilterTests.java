@@ -10,6 +10,7 @@ import java.io.Serializable;
 import org.helianto.core.Entity;
 import org.helianto.core.Prioritizable;
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ import org.junit.Test;
  */
 public class FilterTests {
 	
-	private AbstractFilter filter;
+	private FilterStub filter;
 	private CriteriaBuilder createdCriteriaBuilder, preProcessedCriteriaBuilder, selectionCriteriaBuilder, filterCriteriaBuilder, postProcessedCriteriaBuilder;
 	private boolean selection, reset;
 	private String orderBy = "";
@@ -184,6 +185,46 @@ public class FilterTests {
 		@Override protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
 			super.postProcessFilter(mainCriteriaBuilder);
 			postProcessedCriteriaBuilder = mainCriteriaBuilder;
+		}
+		
+		@Override
+		protected void appendEqualFilter(String fieldName, char fieldContent, CriteriaBuilder criteriaBuilder) {
+			super.appendEqualFilter(fieldName, fieldContent, criteriaBuilder);
+		}
+		
+		@Override
+		protected void appendEqualFilter(String fieldName, int fieldContent, boolean ignoreOnlyIfNegative, CriteriaBuilder criteriaBuilder) {
+			super.appendEqualFilter(fieldName, fieldContent, ignoreOnlyIfNegative, criteriaBuilder);
+		}
+		
+		@Override
+		protected void appendEqualFilter(String fieldName, int fieldContent, CriteriaBuilder criteriaBuilder) {
+			super.appendEqualFilter(fieldName, fieldContent, criteriaBuilder);
+		}
+		
+		@Override
+		protected void appendEqualFilter(String fieldName, long fieldContent, CriteriaBuilder criteriaBuilder) {
+			super.appendEqualFilter(fieldName, fieldContent, criteriaBuilder);
+		}
+		
+		@Override
+		protected void appendEqualFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+			super.appendEqualFilter(fieldName, fieldContent, criteriaBuilder);
+		}
+		
+		@Override
+		protected void appendLikeCaseFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+			super.appendLikeCaseFilter(fieldName, fieldContent, criteriaBuilder);
+		}
+		
+		@Override
+		protected void appendLikeFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+			super.appendLikeFilter(fieldName, fieldContent, criteriaBuilder);
+		}
+		
+		@Override
+		protected void appendPriorityRange(Prioritizable sample, CriteriaBuilder mainCriteriaBuilder) {
+			super.appendPriorityRange(sample, mainCriteriaBuilder);
 		}
 		
 		@Override public boolean isSelection() { return selection; }

@@ -28,6 +28,7 @@ import java.util.Collection;
 
 import org.helianto.core.Identity;
 import org.helianto.core.filter.classic.UserBackedFilter;
+import org.helianto.core.repository.base.AbstractFilterDao;
 import org.junit.Before;
 import org.junit.Test;
 

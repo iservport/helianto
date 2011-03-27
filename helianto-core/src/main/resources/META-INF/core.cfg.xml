@@ -6,7 +6,6 @@
 		<mapping class="org.helianto.core.Identity" />
 		<mapping class="org.helianto.core.Credential" />
 		<mapping class="org.helianto.core.PrivateKey" />
-		<mapping class="org.helianto.core.DefaultEntity" />
 		<mapping class="org.helianto.core.Entity" />
 		<mapping class="org.helianto.core.EntityPreference" />
 		<mapping class="org.helianto.core.InternalEnumerator" />
@@ -25,7 +24,6 @@
 		<mapping class="org.helianto.core.Category" />
 		<mapping class="org.helianto.core.Unit" />
 		<mapping class="org.helianto.core.KeyType" />
-		<mapping class="org.helianto.core.Vocabulary" />
 	</session-factory>
 </hibernate-configuration>
 

@@ -17,11 +17,11 @@ package org.helianto.web.action;
 
 import java.util.List;
 
-import org.helianto.core.filter.AbstractFilter;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.Listable;
 import org.helianto.core.filter.Page;
 import org.helianto.core.filter.SearchFilter;
+import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

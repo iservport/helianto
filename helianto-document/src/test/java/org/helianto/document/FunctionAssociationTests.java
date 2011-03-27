@@ -17,7 +17,7 @@ package org.helianto.document;
 
 import static org.junit.Assert.*;
 
-import org.helianto.core.AbstractAssociation;
+import org.helianto.core.base.AbstractAssociation;
 import org.junit.Test;
 
 

@@ -22,13 +22,24 @@ package org.helianto.core;
  */
 public enum UserState {
     
+	/**
+	 * Active.
+	 */
     ACTIVE('A'),
+    /**
+     * Inactive.
+     */
     INACTIVE('I');
     
     private char value;
+    
     private UserState(char type) {
         this.value = type;
     }
+    
+    /**
+     * Database value.
+     */
     public char getValue() {
         return value;
     }

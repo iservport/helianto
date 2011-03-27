@@ -15,8 +15,8 @@
 
 package org.helianto.partner.repository;
 
-import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.partner.Account;
 import org.helianto.partner.Address;
 import org.helianto.partner.Partner;

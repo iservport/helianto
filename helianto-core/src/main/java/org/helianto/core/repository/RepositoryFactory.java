@@ -19,6 +19,8 @@ import javax.annotation.Resource;
 
 import org.helianto.core.filter.Filter;
 import org.helianto.core.naming.NamingConventionStrategy;
+import org.helianto.core.repository.base.AbstractBasicDao;
+import org.helianto.core.repository.base.AbstractFilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

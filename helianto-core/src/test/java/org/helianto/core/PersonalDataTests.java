@@ -30,9 +30,9 @@ public class PersonalDataTests {
      * Test <code>PersonalData</code> static factory method.
      */
 	@Test
-    public void personalDataFactory() {
+    public void constructor() {
         PersonalData personalData = 
-            PersonalData.personalDataFactory("", "");
+            new PersonalData("", "");
         
         assertEquals("", personalData.getFirstName());
         assertEquals("", personalData.getLastName());

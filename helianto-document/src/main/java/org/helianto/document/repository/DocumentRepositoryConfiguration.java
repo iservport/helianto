@@ -15,8 +15,8 @@
 
 package org.helianto.document.repository;
 
-import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.document.AbstractFunction;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;

@@ -43,7 +43,7 @@ import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.UserState;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.classic.ProvinceFilter;
+import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.classic.UserFilter;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -357,7 +357,7 @@ public class UserMgrImpl implements UserMgr {
         if (date==null) {
             date = new Date();
         }
-        UserLog userLog = UserLog.userLogFactory(user, date, EventType.LOGIN_ATTEMPT);
+        UserLog userLog = new UserLog(user, date, EventType.LOGIN_ATTEMPT);
         return userLogDao.merge(userLog);
     }
     
@@ -372,7 +372,7 @@ public class UserMgrImpl implements UserMgr {
     }
     
     public List<Province> findProvinceByOperator(Operator operator) {
-    	ProvinceFilter filter = new ProvinceFilter(operator);
+    	ProvinceFilterAdapter filter = new ProvinceFilterAdapter(operator, "");
         return (List<Province>) provinceDao.find(filter);
     }
 

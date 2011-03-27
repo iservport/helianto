@@ -21,9 +21,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * <p>
  * Personal data, if any.
- * </p>
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -36,34 +34,44 @@ public class PersonalData implements Serializable {
     private char gender;
     private char appellation;
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public PersonalData() {
+    	this("", "");
+    }
+    
+    /**
+     * Name constructor.
+     * 
+     * @param firstName
+     * @param lastName
+     */
+    public PersonalData(String firstName, String lastName) {
+        setFirstName(firstName);
+        setLastName(lastName);
+        setGenderAsEnum(Gender.NOT_SUPPLIED);
+        setAppellationAsEnum(Appellation.NOT_SUPPLIED);
     }
 
     /**
-     * FirstName getter.
+     * First name.
      */
     @Column(length=32)
     public String getFirstName() {
         return this.firstName;
     }
-    /**
-     * FirstName setter.
-     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
     /**
-     * LastName getter.
+     * Last name.
      */
     @Column(length=32)
     public String getLastName() {
         return this.lastName;
     }
-    /**
-     * LastName setter.
-     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -77,12 +85,12 @@ public class PersonalData implements Serializable {
     public void setGender(char gender) {
         this.gender = gender;
     }
-    public void setGender(Gender gender) {
+    public void setGenderAsEnum(Gender gender) {
         this.gender = gender.getValue();
     }
 
     /**
-     * Appellation getter.
+     * Appellation.
      */
     public char getAppellation() {
         return this.appellation;
@@ -90,25 +98,8 @@ public class PersonalData implements Serializable {
     public void setAppellation(char appellation) {
         this.appellation = appellation;
     }
-    public void setAppellation(Appellation appellation) {
+    public void setAppellationAsEnum(Appellation appellation) {
         this.appellation = appellation.getValue();
-    }
-
-    /**
-     * <code>PersonalData</code> is created by default with
-     * appellation and gender as <code>NOT_SUPPLIED</code>.
-     * 
-     * @see Appellation
-     * @see Gender
-     */
-    public static PersonalData personalDataFactory(String firstName, String lastName) {
-        PersonalData personalData = new PersonalData();
-        
-        personalData.setFirstName(firstName);
-        personalData.setLastName(lastName);
-        personalData.setAppellation(Appellation.NOT_SUPPLIED.getValue());
-        personalData.setGender(Gender.NOT_SUPPLIED.getValue());
-        return personalData;
     }
 
 }

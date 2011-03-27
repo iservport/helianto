@@ -17,6 +17,8 @@ package org.helianto.core.repository;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.helianto.core.Category;
@@ -43,13 +45,10 @@ import org.helianto.core.test.CountryTestSupport;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.InternalEnumeratorTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;
-import org.helianto.core.test.ProvinceTestSupport;
 import org.helianto.core.test.ServerTestSupport;
 import org.helianto.core.test.ServiceTestSupport;
 import org.helianto.core.test.UnitTestSupport;
-import org.helianto.core.test.UserAssociationTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
-import org.helianto.core.test.UserLogTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Test;
@@ -82,7 +81,7 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 	@Resource FilterDao<EntityPreference> entityPreferenceDao;	
 	
 	@Test
-	public void prepareOperator() {
+	public void core() {
 		logger.debug("START TEST");
 		Operator operator = entity.getOperator();
 
@@ -103,9 +102,9 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		serviceDao.saveOrUpdate(service);
 		assertEquals(service, serviceDao.findUnique(operator, service.getServiceName()));
 		
-		Province province = ProvinceTestSupport.createProvince(operator);
+		Province province = new Province(operator, "CODE");
 		provinceDao.saveOrUpdate(province);
-		assertEquals(province, provinceDao.findUnique(province.getOperator(), province.getProvinceCode()));
+		assertEquals(province, provinceDao.findUnique(operator, "CODE"));
 
 		Category category = CategoryTestSupport.createCategory(entity);
 		categoryDao.saveOrUpdate(category);
@@ -123,15 +122,15 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		unitDao.saveOrUpdate(unit);
 		assertEquals(unit, unitDao.findUnique(unit.getEntity(), unit.getUnitCode()));
 
-		UserGroup parent = UserGroupTestSupport.createUserGroup(entity);
-		userGroupDao.saveOrUpdate(parent);
-		UserAssociation userAssociation = UserAssociationTestSupport.createUserAssociation(parent);
-		userAssociationDao.saveOrUpdate(userAssociation);
-		assertEquals(userAssociation, userAssociationDao.findUnique(userAssociation.getParent(), userAssociation.getChild()));
-
 		UserGroup userGroup = UserGroupTestSupport.createUserGroup(entity);
 		userGroupDao.saveOrUpdate(userGroup);
 		assertEquals(userGroup, userGroupDao.findUnique(userGroup.getEntity(), userGroup.getUserKey()));
+
+		UserGroup parent = UserGroupTestSupport.createUserGroup(entity);
+		userGroupDao.saveOrUpdate(parent);
+		UserAssociation userAssociation = new UserAssociation(parent, userGroup);
+		userAssociationDao.saveOrUpdate(userAssociation);
+		assertEquals(userAssociation, userAssociationDao.findUnique(parent, userGroup));
 
 		// test also the secondary table
 		Identity identity = new Identity("PRINCIPAL");
@@ -144,9 +143,10 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		
 		User user = UserTestSupport.createUser(entity, identity);
 		userGroupDao.saveOrUpdate(user);
-		UserLog userLog = UserLogTestSupport.createUserLog(user);
+		Date lastEvent = new Date();
+		UserLog userLog = new UserLog(user, lastEvent);
 		userLogDao.saveOrUpdate(userLog);
-		assertEquals(userLog, userLogDao.findUnique(userLog.getUser(), userLog.getLastEvent()));
+		assertEquals(userLog, userLogDao.findUnique(user, lastEvent));
 
 		Credential credential = CredentialTestSupport.createCredential(identity);
 		credentialDao.saveOrUpdate(credential);

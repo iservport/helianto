@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import org.helianto.core.base.AbstractKeyStringValue;
 import org.junit.Test;
 
 /**

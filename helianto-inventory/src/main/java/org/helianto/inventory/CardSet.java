@@ -28,7 +28,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.core.TopLevelNumberedEntity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.process.DerivedProcessDocument;
 import org.helianto.process.ProcessDocument;
@@ -42,7 +41,7 @@ import org.helianto.process.ProcessDocument;
 @Table(name="inv_cardset",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "internalNumber"})}
 )
-public class CardSet implements java.io.Serializable, Sequenceable, TopLevelNumberedEntity {
+public class CardSet implements java.io.Serializable, Sequenceable {
 
     /**
      * <code>CardSet</code> factory.
@@ -223,13 +222,6 @@ public class CardSet implements java.io.Serializable, Sequenceable, TopLevelNumb
     public Card cardFactory(String cardLabel) {
         return new Card(this, cardLabel);
     }
-
-    @Transient
-	public TopLevelNumberedEntity setKey(Entity entity, long internalNumber) {
-    	setEntity(entity);
-    	setInternalNumber(internalNumber);
-		return this;
-	}
 
     /**
      * toString

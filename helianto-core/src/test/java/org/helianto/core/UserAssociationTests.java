@@ -18,16 +18,14 @@ public class UserAssociationTests {
      * Test <code>UserAssociation</code> static factory method.
      */
 	@Test
-    public void userAssociationFactory() {
+    public void constructor() {
         UserGroup parent = new UserGroup();
         UserGroup child = new UserGroup();
         
-        UserAssociation userAssociation = UserAssociation.userAssociationFactory(parent, child);
+        UserAssociation userAssociation = new UserAssociation(parent, child);
         
         assertSame(parent, userAssociation.getParent());
-        assertTrue(parent.getChildAssociations().contains(userAssociation));
         assertSame(child, userAssociation.getChild());
-        assertTrue(child.getParentAssociations().contains(userAssociation));
         
     }
     
@@ -39,7 +37,7 @@ public class UserAssociationTests {
         UserGroup parent = new UserGroup();
         UserGroup child = new UserGroup();
         
-        UserAssociation userAssociation = UserAssociation.userAssociationFactory(parent, child);
+        UserAssociation userAssociation = new UserAssociation(parent, child);
         UserAssociation copy = (UserAssociation) DomainTestSupport.minimalEqualsTest(userAssociation);
         
         copy.setParent(null);

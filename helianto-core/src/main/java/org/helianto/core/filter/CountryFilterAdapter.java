@@ -18,6 +18,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.Country;
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 
 /**
  * Country filter adapter.

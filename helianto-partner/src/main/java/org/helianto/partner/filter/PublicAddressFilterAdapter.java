@@ -2,7 +2,7 @@ package org.helianto.partner.filter;
 
 import org.helianto.core.Operator;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractRootFilterAdapter;
+import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 import org.helianto.partner.PublicAddress;
 
 /**

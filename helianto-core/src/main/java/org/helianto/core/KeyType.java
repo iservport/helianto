@@ -24,9 +24,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 /**
- * <p>
  * Represent key types like customer, supplier or government assigned numbers.
- * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity

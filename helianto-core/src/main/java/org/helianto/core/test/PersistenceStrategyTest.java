@@ -21,7 +21,7 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 
-import org.helianto.core.repository.AbstractBasicDao;
+import org.helianto.core.repository.base.AbstractBasicDao;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.junit.Before;

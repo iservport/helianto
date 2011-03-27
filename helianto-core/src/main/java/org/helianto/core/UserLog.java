@@ -38,30 +38,40 @@ import javax.persistence.UniqueConstraint;
 )
 public class UserLog implements java.io.Serializable {
 
-    /**
-     * <code>UserLog</code> factory.
-     * 
-     * @param user
-     * @param lastEvent
-     * @param eventType
-     */
-    public static UserLog userLogFactory(User user, Date lastEvent, EventType eventType) {
-    	user.setLastEvent(lastEvent);
-        UserLog userLog = new UserLog();
-        userLog.setUser(user);
-        userLog.setLastEvent(lastEvent);
-        userLog.setEventType(eventType.getValue());
-        return userLog;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private User user;
     private Date lastEvent;
     private int eventType;
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public UserLog() {
+    }
+
+    /**
+     * Key constructor.
+     * 
+     * @param user
+     * @param lastEvent
+     */
+    public UserLog(User user, Date lastEvent) {
+    	this(user, lastEvent, EventType.LOGIN);
+    }
+
+    /**
+     * Full constructor.
+     * 
+     * @param user
+     * @param lastEvent
+     * @param eventType
+     */
+    public UserLog(User user, Date lastEvent, EventType eventType) {
+    	user.setLastEvent(lastEvent);
+        setUser(user);
+        setLastEvent(lastEvent);
+        setEventTypeAsEnum(eventType);
     }
 
     /**
@@ -107,7 +117,7 @@ public class UserLog implements java.io.Serializable {
     public void setEventType(int eventType) {
         this.eventType = eventType;
     }
-    public void setEventType(EventType eventType) {
+    public void setEventTypeAsEnum(EventType eventType) {
         this.eventType = eventType.getValue();
     }
 

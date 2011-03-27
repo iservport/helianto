@@ -22,6 +22,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
+import org.helianto.core.base.AbstractAssociation;
 /**
  * 				
  * <p>
@@ -35,30 +37,6 @@ import javax.persistence.UniqueConstraint;
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
 public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> implements java.io.Serializable {
-
-    /**
-     * <code>UserAssociation</code> factory method.
-     * 
-     * @param parent
-     */
-    public static UserAssociation userAssociationFactory(UserGroup parent) {
-        UserAssociation userAssociation = (UserAssociation) AbstractAssociation.associationFactory(UserAssociation.class, parent, null);
-        parent.getChildAssociations().add(userAssociation);
-        return userAssociation;
-    }
-
-    /**
-     * <code>UserAssociation</code> factory method.
-     * 
-     * @param parent
-     * @param child
-     */
-    public static UserAssociation userAssociationFactory(UserGroup parent, UserGroup child) {
-        UserAssociation userAssociation = (UserAssociation) AbstractAssociation.associationFactory(UserAssociation.class, parent, child);
-        parent.getChildAssociations().add(userAssociation);
-        child.getParentAssociations().add(userAssociation);
-        return userAssociation;
-    }
 
     private static final long serialVersionUID = 1L;
 

@@ -25,6 +25,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
+import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

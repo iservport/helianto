@@ -35,9 +35,10 @@ import javax.persistence.UniqueConstraint;
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @javax.persistence.Entity
-@Table(name="core_vocabulary",
+@Table(name="core_serv",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "serverName"})}
 )
 public class Server  implements RootEntity {

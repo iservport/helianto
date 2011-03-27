@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -209,13 +208,4 @@ public class User extends UserGroup implements PersonalEntity {
 		this.userLogs = userLogs;
 	}
 	
-    /**
-     * <code>UserLog</code> factory mehod.
-     * 
-     * @param eventType
-     */
-    public UserLog userLogFactory(EventType eventType) {
-    	return UserLog.userLogFactory(this, new Date(), eventType);
-    }
-    
 }

@@ -19,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import org.helianto.core.base.AbstractEnumerator;
 /**
  * A class to hold last value for public number lists.
  * 
@@ -41,23 +43,14 @@ public class PublicEnumerator extends AbstractEnumerator implements RootEntity {
     }
 
     /**
-     * Operator constructor.
-     * 
-     * @param operator
-     */
-    public PublicEnumerator(Operator operator) {
-    	this();
-    	setOperator(operator);
-    }
-
-    /**
      * Key constructor.
      * 
      * @param operator
      * @param typeName
      */
     public PublicEnumerator(Operator operator, String typeName) {
-    	this(operator);
+    	this();
+    	setOperator(operator);
     	setTypeName(typeName);
     }
 

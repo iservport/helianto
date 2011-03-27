@@ -95,7 +95,7 @@ public class Identity implements java.io.Serializable {
      * Default constructor.
      */
     public Identity() {
-        setPersonalData(PersonalData.personalDataFactory("", ""));
+        setPersonalData(new PersonalData());
         setCreated(new Date());
         setIdentityType(IdentityType.EMAIL.getValue());
         setNotification(Notification.AUTOMATIC.getValue());

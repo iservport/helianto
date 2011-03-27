@@ -17,8 +17,8 @@ package org.helianto.core.filter.classic;
 
 import java.util.List;
 
-import org.helianto.core.filter.AbstractListFilter;
 import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.base.AbstractListFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

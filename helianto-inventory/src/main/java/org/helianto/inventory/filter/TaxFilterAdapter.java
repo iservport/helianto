@@ -1,7 +1,7 @@
 package org.helianto.inventory.filter;
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractFilterAdapter;
+import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.inventory.Tax;
 
 /**

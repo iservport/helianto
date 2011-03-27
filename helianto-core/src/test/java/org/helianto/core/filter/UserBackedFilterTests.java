@@ -8,6 +8,7 @@ import org.helianto.core.Operator;
 import org.helianto.core.TrunkEntity;
 import org.helianto.core.User;
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.base.AbstractUserFilterAdapter;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -15,8 +15,8 @@
 
 package org.helianto.process.repository;
 
-import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.process.Cause;
 import org.helianto.process.MeasurementTechnique;
 import org.helianto.process.ProcessDocument;

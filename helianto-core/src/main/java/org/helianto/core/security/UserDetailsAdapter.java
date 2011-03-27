@@ -74,7 +74,7 @@ public class UserDetailsAdapter implements
     /**
      * Default constructor
      */
-    UserDetailsAdapter() {}
+    public UserDetailsAdapter() {}
     
     /**
      * Credential constructor.

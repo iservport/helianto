@@ -18,7 +18,7 @@ package org.helianto.document.filter;
 
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.document.AbstractSerializer;
 import org.helianto.document.Serializer;
 

@@ -19,9 +19,11 @@ package org.helianto.core;
  * User types. 
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public enum UserType {
     
+	
     ADMINISTRATOR('A'),
     EXTERNAL('E'),
     INTERNAL('I'),

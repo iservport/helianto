@@ -42,7 +42,7 @@ public class UserLogTests {
         user.setIdentity(identity);
         Date lastEvent = DomainTestSupport.DATE_TEST_VALUE;
         
-        UserLog userLog = UserLog.userLogFactory(user, lastEvent, EventType.LOGIN_ATTEMPT);
+        UserLog userLog = new UserLog(user, lastEvent, EventType.LOGIN_ATTEMPT);
         
         assertSame(user, userLog.getUser());
         assertEquals(lastEvent, userLog.getLastEvent());
@@ -60,7 +60,7 @@ public class UserLogTests {
         user.setIdentity(identity);
         Date lastEvent = DomainTestSupport.DATE_TEST_VALUE;
         
-        UserLog userLog = UserLog.userLogFactory(user, lastEvent, EventType.LOGIN_ATTEMPT);
+        UserLog userLog = new UserLog(user, lastEvent, EventType.LOGIN_ATTEMPT);
         UserLog copy = (UserLog) DomainTestSupport.minimalEqualsTest(userLog);
         
         copy.setUser(null);

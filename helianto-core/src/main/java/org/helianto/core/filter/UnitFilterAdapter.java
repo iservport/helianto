@@ -20,6 +20,7 @@ import org.helianto.core.CategoryGroup;
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
 import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 
 /**
  * Unit filter adapter.

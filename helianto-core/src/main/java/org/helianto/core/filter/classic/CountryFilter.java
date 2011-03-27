@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 import org.helianto.core.Operator;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractFilter;
+import org.helianto.core.filter.base.AbstractFilter;
 
 /**
  * Country filter.

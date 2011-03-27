@@ -16,8 +16,8 @@
 package org.helianto.document.filter;
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.core.filter.AbstractFilter;
-import org.helianto.core.filter.AbstractSequenceFilterAdapterDecorator;
+import org.helianto.core.filter.base.AbstractFilter;
+import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
 import org.helianto.document.Recordable;
 
 /**

@@ -38,7 +38,6 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.core.test.ProvinceTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 import org.junit.After;
 import org.junit.Before;
@@ -75,7 +74,7 @@ public class NamespaceMgrTests {
 	
 	@Test
 	public void findProvinces() {
-		List<Province> provinceList = ProvinceTestSupport.createProvinceList(1);
+		List<Province> provinceList = new ArrayList<Province>();
 		Filter filter = new TestingFilter();
 		
 		expect(provinceDao.find(filter)).andReturn(provinceList);
@@ -87,8 +86,8 @@ public class NamespaceMgrTests {
 	
 	@Test
 	public void storeProvince() {
-		Province province = ProvinceTestSupport.createProvince();
-		Province managedProvince = ProvinceTestSupport.createProvince();
+		Province province = new Province();
+		Province managedProvince = new Province();
 		
 		expect(provinceDao.merge(province)).andReturn(managedProvince);
 		replay(provinceDao);

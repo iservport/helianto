@@ -15,8 +15,8 @@
 
 package org.helianto.resource.repository;
 
-import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.resource.ResourceAssociation;
 import org.helianto.resource.ResourceGroup;
 import org.helianto.resource.ResourceParameter;

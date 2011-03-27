@@ -21,8 +21,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.helianto.core.AbstractNode;
 import org.helianto.core.Node;
+import org.helianto.core.base.AbstractNode;
 import org.helianto.resource.ResourceAssociation;
 
 /**

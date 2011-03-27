@@ -19,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import org.helianto.core.base.AbstractEnumerator;
 /**
  * A class to hold last value for internal number lists.
  * 

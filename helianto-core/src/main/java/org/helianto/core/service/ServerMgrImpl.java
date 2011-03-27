@@ -150,9 +150,9 @@ public class ServerMgrImpl  implements ServerMgr {
         UserGroup userGroup = grant(entity, "USER", new String[] {"ALL", "DEL"});
         logger.debug("Parent groups ADMIN, USER stored ");
         User manager = new User(entity, managerIdentity);
-        UserAssociation adminAssociation = UserAssociation.userAssociationFactory(adminGroup, manager);
+        UserAssociation adminAssociation = new UserAssociation(adminGroup, manager);
         userAssociationDao.merge(adminAssociation);
-        UserAssociation userAssociation = UserAssociation.userAssociationFactory(userGroup, manager);
+        UserAssociation userAssociation = new UserAssociation(userGroup, manager);
         userAssociationDao.merge(userAssociation);
 //        userGroupDao.mergeUserGroup(manager);
         logger.debug("Manager (member of ADMIN, USER): {}", manager);

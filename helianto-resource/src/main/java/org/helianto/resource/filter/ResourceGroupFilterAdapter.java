@@ -18,7 +18,7 @@ package org.helianto.resource.filter;
 
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
-import org.helianto.core.filter.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.resource.Resource;
 import org.helianto.resource.ResourceGroup;
 import org.slf4j.Logger;

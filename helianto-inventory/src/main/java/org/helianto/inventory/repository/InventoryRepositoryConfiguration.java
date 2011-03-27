@@ -15,8 +15,8 @@
 
 package org.helianto.inventory.repository;
 
-import org.helianto.core.repository.AbstractRepositoryConfiguration;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;
 import org.helianto.inventory.Inventory;

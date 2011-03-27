@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
+import org.helianto.core.base.AbstractKeyValue;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Test;
 

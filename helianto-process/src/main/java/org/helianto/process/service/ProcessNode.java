@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.helianto.core.AbstractNode;
 import org.helianto.core.Node;
+import org.helianto.core.base.AbstractNode;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
 import org.slf4j.Logger;

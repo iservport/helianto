@@ -20,6 +20,7 @@ package org.helianto.core;
  * Server types.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public enum ServerType {
 
