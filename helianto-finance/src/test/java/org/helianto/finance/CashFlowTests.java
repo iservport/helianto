@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Date;
 
 import org.helianto.core.Entity;
-import org.helianto.document.AbstractRecord;
+import org.helianto.document.base.AbstractRecord;
 import org.helianto.partner.Partner;
 import org.helianto.partner.test.PartnerTestSupport;
 import org.junit.Test;

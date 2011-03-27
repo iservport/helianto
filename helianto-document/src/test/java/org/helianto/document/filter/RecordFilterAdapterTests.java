@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.document.AbstractRecord;
+import org.helianto.document.base.AbstractRecord;
 import org.junit.Before;
 import org.junit.Test;
 

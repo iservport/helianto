@@ -31,7 +31,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
-import org.helianto.document.AbstractControl;
+import org.helianto.document.base.AbstractControl;
 import org.helianto.process.DerivedProcessDocument;
 import org.helianto.process.ProcessDocument;
 

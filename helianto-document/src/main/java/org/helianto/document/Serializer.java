@@ -27,6 +27,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.document.base.AbstractSerializer;
 
 /**
  * Wraps a number pattern to be used to generate a sequence of documents.

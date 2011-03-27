@@ -20,11 +20,11 @@ public class AccountTests {
      * Test <code>Account</code> static factory method.
      */
 	@Test
-    public void accountFactory() {
+    public void constructor() {
         Entity entity = new Entity();
         String accountCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        Account account = Account.accountFactory(entity, accountCode);
+        Account account = new Account(entity, accountCode);
         
         assertSame(entity, account.getEntity());
         assertEquals(accountCode, account.getAccountCode());
@@ -40,7 +40,7 @@ public class AccountTests {
         Entity entity = new Entity();
         String accountCode = DomainTestSupport.STRING_TEST_VALUE;
         
-        Account account = Account.accountFactory(entity, accountCode);
+        Account account = new Account(entity, accountCode);
         Account copy = (Account) DomainTestSupport.minimalEqualsTest(account);
         
         copy.setEntity(null);

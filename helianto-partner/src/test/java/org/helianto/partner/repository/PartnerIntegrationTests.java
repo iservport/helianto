@@ -40,7 +40,6 @@ import org.helianto.partner.PublicEntity;
 import org.helianto.partner.Supplier;
 import org.helianto.partner.TransportPartner;
 import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
-import org.helianto.partner.test.AccountTestSupport;
 import org.helianto.partner.test.AddressTestSupport;
 import org.helianto.partner.test.PartnerKeyTestSupport;
 import org.helianto.partner.test.PartnerTestSupport;
@@ -74,11 +73,12 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		assertEquals(publicEntityDao.merge(publicEntity), 
 				publicEntityDao.findUnique(publicEntity.getOperator(), publicEntity.getEntity(), 'P'));
 
-		Account target = AccountTestSupport.createAccount(entity);
-		assertEquals(accountDao.merge(target), accountDao.findUnique(target.getEntity(), target.getAccountCode()));
+		Account account = new Account(entity, "CODE");
+		accountDao.saveOrUpdate(account);
+		assertEquals(account, accountDao.findUnique(entity, "CODE"));
 
 		PrivateEntity partnerRegistry = privateEntityDao.merge(PrivateEntityTestSupport.createPartnerRegistry(entity));
-		assertEquals(partnerRegistry, privateEntityDao.findUnique(partnerRegistry.getEntity(), partnerRegistry.getPartnerAlias()));
+		assertEquals(partnerRegistry, privateEntityDao.findUnique(partnerRegistry.getEntity(), partnerRegistry.getEntityAlias()));
 
 		KeyType keyType = keyTypeDao.merge(KeyTypeTestSupport.createKeyType(entity.getOperator()));
 		PrivateEntityKey partnerRegistryKey = PrivateEntityKeyTestSupport.createPartnerRegistryKey(partnerRegistry, keyType);

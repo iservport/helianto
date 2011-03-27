@@ -22,7 +22,7 @@ import java.util.Date;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.document.AbstractEvent;
+import org.helianto.document.base.AbstractEvent;
 import org.helianto.document.filter.AbstractEventFilterAdapter;
 import org.junit.Before;
 import org.junit.Test;

@@ -33,7 +33,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.document.AbstractRecord;
+import org.helianto.document.base.AbstractRecord;
 import org.helianto.partner.Partner;
 
 /**

@@ -8,6 +8,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.RootEntity;
+import org.helianto.partner.base.AbstractPartialAddress;
 
 /**
  * Address databases in a common environment searchable by postal code.  

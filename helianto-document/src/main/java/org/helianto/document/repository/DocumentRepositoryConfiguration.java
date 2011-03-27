@@ -17,7 +17,7 @@ package org.helianto.document.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.document.AbstractFunction;
+import org.helianto.document.Function;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentTag;
@@ -69,8 +69,8 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 	 * Function data access.
 	 */
 	@Bean
-	public FilterDao<AbstractFunction> functionDao() {
-		return getFilterDao(AbstractFunction.class, "entity", "docCode");
+	public FilterDao<Function> functionDao() {
+		return getFilterDao(Function.class, "entity", "docCode");
 	}
 	
 }

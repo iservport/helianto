@@ -3,10 +3,10 @@
     "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<mapping class="org.helianto.document.AbstractFunction" />
-		<mapping class="org.helianto.document.AbstractFunctionAssociation" />
 		<mapping class="org.helianto.document.Document" />
 		<mapping class="org.helianto.document.DocumentAssociation" />
+		<mapping class="org.helianto.document.Function" />
+		<mapping class="org.helianto.document.FunctionAssociation" />
 		<mapping class="org.helianto.document.Serializer" />
 		<mapping class="org.helianto.document.DocumentKey" />
 		<mapping class="org.helianto.document.DocumentTag" />

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
+import org.helianto.document.base.AbstractCustomDocument;
 import org.junit.Test;
 
 /**

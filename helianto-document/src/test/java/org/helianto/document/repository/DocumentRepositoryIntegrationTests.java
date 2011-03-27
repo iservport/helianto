@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.document.AbstractFunction;
+import org.helianto.document.Function;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentTag;
@@ -46,7 +46,7 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	@Resource FilterDao<Document> documentDao;
 	@Resource FilterDao<Serializer> serializerDao;
 	@Resource BasicDao<DocumentTag> documentTagDao;
-	@Resource FilterDao<AbstractFunction> functionDao;
+	@Resource FilterDao<Function> functionDao;
 
 	@Test
 	public void commit() {
@@ -72,7 +72,7 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 		DocumentTag documentTag = DocumentTagTestSupport.create(DocumentTag.class, document);
 		assertEquals(documentTagDao.merge(documentTag), documentTagDao.findUnique(documentTag.getDocument(), documentTag.getTagCode()));
 
-		AbstractFunction function = functionDao.merge(new FunctionStub(entity));
+		Function function = functionDao.merge(new FunctionStub(entity));
 		assertEquals(function, functionDao.findUnique(function.getEntity(), function.getDocCode()));
 	}
 	

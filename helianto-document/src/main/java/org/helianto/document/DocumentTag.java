@@ -29,6 +29,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.document.base.AbstractTag;
+
 /**
  * Tags applicable to documents.
  * 

@@ -16,7 +16,6 @@
 package org.helianto.document.filter.classic;
 
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.documentfilter.classic.AbstractEventFilter;
 
 /**
  * Record filter superclass.

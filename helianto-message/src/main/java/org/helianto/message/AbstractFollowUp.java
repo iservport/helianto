@@ -18,7 +18,7 @@ package org.helianto.message;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
-import org.helianto.document.AbstractRecord;
+import org.helianto.document.base.AbstractRecord;
 
 /**
  * Base class to follow up.

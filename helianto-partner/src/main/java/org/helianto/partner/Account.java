@@ -27,9 +27,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
 /**
- * <p>
  * Represents accounts.  
- * </p>
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
@@ -38,19 +37,6 @@ import org.helianto.core.Entity;
 )
 public class Account implements java.io.Serializable {
 
-    /**
-     * Factory method.
-     * 
-     * @param entity
-     * @param accountCode
-     */
-    public static Account accountFactory(Entity entity, String accountCode) {
-        Account account = new Account();
-        account.setEntity(entity);
-        account.setAccountCode(accountCode);
-        return account;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -58,9 +44,23 @@ public class Account implements java.io.Serializable {
     private String accountName;
     private char accountType;
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public Account() {
-        setAccountType(AccountType.ASSET.getValue());
+        setAccountTypeAsEnum(AccountType.ASSET);
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param entity
+     * @param accountCode
+     */
+    public Account(Entity entity, String accountCode) {
+        this();
+        setEntity(entity);
+        setAccountCode(accountCode);
     }
 
     /**
@@ -120,7 +120,7 @@ public class Account implements java.io.Serializable {
     public void setAccountType(char accountType) {
         this.accountType = accountType;
     }
-    public void setAccountType(AccountType accountType) {
+    public void setAccountTypeAsEnum(AccountType accountType) {
         this.accountType = AccountType.ASSET.getValue();
     }
 

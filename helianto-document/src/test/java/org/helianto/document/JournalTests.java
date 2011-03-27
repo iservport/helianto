@@ -23,8 +23,8 @@ import java.util.Date;
 import org.helianto.core.Entity;
 import org.helianto.core.PrivacyLevel;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.AbstractJournal;
 import org.helianto.document.Resolution;
+import org.helianto.document.base.AbstractJournal;
 import org.junit.Before;
 import org.junit.Test;
 

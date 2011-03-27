@@ -17,7 +17,7 @@ package org.helianto.document.filter;
 
 import org.helianto.core.criteria.CriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.document.AbstractDocument;
+import org.helianto.document.base.AbstractDocument;
 
 /**
  * Base to document filter adapters.

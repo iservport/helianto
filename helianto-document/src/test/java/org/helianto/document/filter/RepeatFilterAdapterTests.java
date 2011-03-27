@@ -20,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.document.AbstractRepeatable;
 import org.helianto.document.TrackingMode;
+import org.helianto.document.base.AbstractRepeatable;
 import org.junit.Before;
 import org.junit.Test;
 

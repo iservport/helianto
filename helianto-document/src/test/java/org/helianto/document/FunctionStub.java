@@ -21,7 +21,7 @@ import org.helianto.core.Entity;
 
 @javax.persistence.Entity
 @DiscriminatorValue("-")
-public class FunctionStub extends AbstractFunction {
+public class FunctionStub extends Function {
 
 	private static final long serialVersionUID = 1L;
 	

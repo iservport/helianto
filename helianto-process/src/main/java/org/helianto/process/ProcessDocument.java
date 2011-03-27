@@ -35,7 +35,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
-import org.helianto.document.AbstractDocument;
+import org.helianto.document.base.AbstractDocument;
 
 /**
  * Base class to a document hierarchy to be used in engineering structures.  

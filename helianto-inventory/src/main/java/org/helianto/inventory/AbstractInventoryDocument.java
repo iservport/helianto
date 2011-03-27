@@ -28,7 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.helianto.document.AbstractNumberedDocument;
+import org.helianto.document.base.AbstractNumberedDocument;
 
 
 /**

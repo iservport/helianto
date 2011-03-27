@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.AbstractControl;
+import org.helianto.document.base.AbstractControl;
 import org.helianto.message.AbstractFollowUp;
 import org.junit.Before;
 import org.junit.Test;

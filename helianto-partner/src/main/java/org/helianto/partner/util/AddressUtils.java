@@ -1,8 +1,8 @@
 package org.helianto.partner.util;
 
 import org.helianto.core.Province;
-import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.base.AbstractAddress;
 
 /**
  * Helper class to handle addresses.

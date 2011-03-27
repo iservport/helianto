@@ -20,13 +20,13 @@ import java.util.Map;
 
 import org.helianto.core.Entity;
 import org.helianto.core.filter.Filter;
-import org.helianto.partner.AbstractAddress;
 import org.helianto.partner.Address;
 import org.helianto.partner.Customer;
 import org.helianto.partner.Division;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.base.AbstractAddress;
 
 /**
  * Default service layer interface for the partner package.

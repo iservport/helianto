@@ -17,7 +17,7 @@ package org.helianto.message.filter;
 
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.CriteriaBuilder;
-import org.helianto.document.AbstractControl;
+import org.helianto.document.base.AbstractControl;
 import org.helianto.document.filter.AbstractRecordFilterAdapter;
 import org.helianto.message.AbstractFollowUp;
 import org.slf4j.Logger;

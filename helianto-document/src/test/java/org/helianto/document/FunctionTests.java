@@ -19,6 +19,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
+import org.helianto.document.base.AbstractDocument;
 import org.junit.Test;
 
 
@@ -31,17 +32,17 @@ public class FunctionTests {
 	@SuppressWarnings("serial")
 	@Test
 	public void constructor() {
-		AbstractFunction function = new AbstractFunction() { };
+		Function function = new Function() { };
 		assertTrue(function instanceof AbstractDocument);
-		assertTrue(function.getParentAssociations().add(new AbstractFunctionAssociation() {}));
-		assertTrue(function.getChildAssociations().add(new AbstractFunctionAssociation() {}));
+		assertTrue(function.getParentAssociations().add(new FunctionAssociation() {}));
+		assertTrue(function.getChildAssociations().add(new FunctionAssociation() {}));
 	}
 	
 	@SuppressWarnings("serial")
 	@Test
 	public void entity() {
 		Entity entity = new Entity();
-		AbstractFunction function = new AbstractFunction(entity) { };
+		Function function = new Function(entity) { };
 		assertSame(entity, function.getEntity());
 	}
 

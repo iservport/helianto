@@ -29,16 +29,16 @@ public class FunctionAssociationTests {
 	
 	@Test
 	public void constructor() {
-		AbstractFunctionAssociation assoc = new AbstractFunctionAssociation();
+		FunctionAssociation assoc = new FunctionAssociation();
 		assertTrue(assoc instanceof AbstractAssociation);
 	}
 	
 	@SuppressWarnings("serial")
 	@Test
 	public void association() {
-		AbstractFunction parent = new AbstractFunction() {};
-		AbstractFunction child  = new AbstractFunction() {};
-		AbstractFunctionAssociation assoc = new AbstractFunctionAssociation();
+		Function parent = new Function() {};
+		Function child  = new Function() {};
+		FunctionAssociation assoc = new FunctionAssociation();
 		assoc.setParent(parent);
 		assoc.setChild(child);
 		assertSame(parent, assoc.getParent());

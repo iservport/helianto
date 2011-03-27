@@ -1,5 +1,7 @@
 package org.helianto.partner;
 
+import org.helianto.partner.base.AbstractPhone;
+
 /**
  * General business unit interface.
  * 

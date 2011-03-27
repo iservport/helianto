@@ -6,7 +6,7 @@ import static org.junit.Assert.assertSame;
 import org.helianto.core.City;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.partner.AbstractAddress;
+import org.helianto.partner.base.AbstractAddress;
 import org.junit.Before;
 import org.junit.Test;
 
