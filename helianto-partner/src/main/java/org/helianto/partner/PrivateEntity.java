@@ -52,6 +52,7 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
     private String partnerName;
     private AbstractPhone mainPhone;
     private String mainEmail;
+    private String parsedContent;
     private Set<Partner> partners = new HashSet<Partner>(0);
     private Set<Address> addresses = new HashSet<Address>(0);
     private Set<PrivateEntityKey> partnerRegistryKeys = new HashSet<PrivateEntityKey>(0);
@@ -181,6 +182,17 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
 	}
     public void setMainEmail(String mainEmail) {
 		this.mainEmail = mainEmail;
+	}
+    
+    /**
+     * Text content to be parsed on binding to a custom form.
+     */
+    @Column(length=512)
+    public String getParsedContent() {
+		return parsedContent;
+	}
+    public void setParsedContent(String parsedContent) {
+		this.parsedContent = parsedContent;
 	}
 
     /**
