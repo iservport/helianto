@@ -32,7 +32,7 @@ import org.helianto.core.Entity;
 import org.helianto.document.base.AbstractDocument;
 
 /**
- * Base class to functions.
+ * Base class to roles.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -46,7 +46,7 @@ import org.helianto.document.base.AbstractDocument;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public abstract class Function extends AbstractDocument {
+public class Role extends AbstractDocument {
 
 	private static final long serialVersionUID = 1L;
     private Set<FunctionAssociation> parentAssociations = new HashSet<FunctionAssociation>();
@@ -55,18 +55,20 @@ public abstract class Function extends AbstractDocument {
     /**
      * Default constructor.
      */
-    public Function() {
+    public Role() {
     	super();
     }
 
     /**
-     * Entity constructor.
+     * Key constructor.
      * 
      * @param entity
+     * @param roleCode
      */
-    public Function(Entity entity) {
+    public Role(Entity entity, String roleCode) {
     	this();
     	setEntity(entity);
+    	setDocCode(roleCode);
     }
 
 	/**

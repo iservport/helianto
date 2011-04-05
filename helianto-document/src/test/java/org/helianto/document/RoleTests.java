@@ -27,12 +27,12 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class FunctionTests {
+public class RoleTests {
 	
 	@SuppressWarnings("serial")
 	@Test
 	public void constructor() {
-		Function function = new Function() { };
+		Role function = new Role() { };
 		assertTrue(function instanceof AbstractDocument);
 		assertTrue(function.getParentAssociations().add(new FunctionAssociation() {}));
 		assertTrue(function.getChildAssociations().add(new FunctionAssociation() {}));
@@ -42,7 +42,7 @@ public class FunctionTests {
 	@Test
 	public void entity() {
 		Entity entity = new Entity();
-		Function function = new Function(entity) { };
+		Role function = new Role(entity, "") { };
 		assertSame(entity, function.getEntity());
 	}
 

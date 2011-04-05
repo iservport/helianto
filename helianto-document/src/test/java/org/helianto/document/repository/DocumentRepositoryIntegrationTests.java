@@ -21,12 +21,12 @@ import javax.annotation.Resource;
 
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.document.Function;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentTag;
-import org.helianto.document.FunctionStub;
+import org.helianto.document.Role;
 import org.helianto.document.Serializer;
+import org.helianto.document.filter.SerializerFilterAdapter;
 import org.helianto.document.filter.classic.SerializerFilter;
 import org.helianto.document.test.AbstractDocumentDaoIntegrationTest;
 import org.helianto.document.test.DocumentTagTestSupport;
@@ -46,7 +46,7 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	@Resource FilterDao<Document> documentDao;
 	@Resource FilterDao<Serializer> serializerDao;
 	@Resource BasicDao<DocumentTag> documentTagDao;
-	@Resource FilterDao<Function> functionDao;
+	@Resource FilterDao<Role> roleDao;
 
 	@Test
 	public void commit() {
@@ -65,15 +65,17 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 		Serializer serializer = new Serializer(entity, "CODE");
 		serializerDao.saveOrUpdate(serializer);
 		assertEquals(serializer, serializerDao.findUnique(serializer.getEntity(), serializer.getBuilderCode()));
-		SerializerFilter serializerFilter = new SerializerFilter(entity, "CODE");
+		@SuppressWarnings("rawtypes")
+		SerializerFilterAdapter serializerFilter = new SerializerFilterAdapter(entity, "CODE");
 		serializerFilter.setObjectAlias("serializer");
 		assertEquals(serializer, serializerDao.find(serializerFilter).iterator().next());
 
 		DocumentTag documentTag = DocumentTagTestSupport.create(DocumentTag.class, document);
 		assertEquals(documentTagDao.merge(documentTag), documentTagDao.findUnique(documentTag.getDocument(), documentTag.getTagCode()));
 
-		Function function = functionDao.merge(new FunctionStub(entity));
-		assertEquals(function, functionDao.findUnique(function.getEntity(), function.getDocCode()));
+		Role role = new Role(entity, "CODE");
+		roleDao.saveOrUpdate(role);
+		assertEquals(role, roleDao.findUnique(entity, "CODE"));
 	}
 	
 }

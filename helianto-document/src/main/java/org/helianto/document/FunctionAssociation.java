@@ -43,7 +43,7 @@ import org.helianto.core.base.AbstractAssociation;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class FunctionAssociation extends AbstractAssociation<Function, Function> {
+public class FunctionAssociation extends AbstractAssociation<Role, Role> {
 
     private static final long serialVersionUID = 1L;
     
@@ -52,7 +52,7 @@ public class FunctionAssociation extends AbstractAssociation<Function, Function>
      */
     @ManyToOne
     @JoinColumn(name="parentId", nullable=true)
-	public Function getParent() {
+	public Role getParent() {
 		return parent;
 	}
     
@@ -61,7 +61,7 @@ public class FunctionAssociation extends AbstractAssociation<Function, Function>
      */
     @ManyToOne
     @JoinColumn(name="childId", nullable=true)
-	public Function getChild() {
+	public Role getChild() {
 		return child;
 	}
 

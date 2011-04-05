@@ -36,8 +36,8 @@ public class FunctionAssociationTests {
 	@SuppressWarnings("serial")
 	@Test
 	public void association() {
-		Function parent = new Function() {};
-		Function child  = new Function() {};
+		Role parent = new Role() {};
+		Role child  = new Role() {};
 		FunctionAssociation assoc = new FunctionAssociation();
 		assoc.setParent(parent);
 		assoc.setChild(child);
