@@ -276,6 +276,32 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		return false;
 	}
 	
+	/**
+	 * Override new target creation to allow passing filter data.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 */
+	@Override
+	public String create(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		Filter filter = getFilter(attributes);
+		T target = doCreate(attributes, userDetails, filter);
+		attributes.put(getTargetName(), target);
+		logger.debug("Created {} with name {}.", target, getTargetName());
+		return "success";
+	}
+	
+	/**
+	 * Provide the actual target creation with filter data.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 * @param filter
+	 */
+	protected T doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails, Filter filter) {
+		return doCreate(attributes, userDetails);
+	}
+	
 	static final Logger logger = LoggerFactory.getLogger(AbstractFilterAction.class);
 	
 }

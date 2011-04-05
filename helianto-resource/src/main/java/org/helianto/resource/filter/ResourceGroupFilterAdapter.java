@@ -41,7 +41,7 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	 */
 	public ResourceGroupFilterAdapter(ResourceGroup resourceGroup) {
 		super(resourceGroup);
-		getFilter().setResourceType(' ');
+		getForm().setResourceType(' ');
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	public void reset() { }
 
 	public boolean isSelection() {
-		return getFilter().getResourceCode().length()>0;
+		return getForm().getResourceCode().length()>0;
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("resourceCode", getFilter().getResourceCode(), mainCriteriaBuilder);
+		appendEqualFilter("resourceCode", getForm().getResourceCode(), mainCriteriaBuilder);
 	}
 
 	@Override
@@ -92,8 +92,8 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 			mainCriteriaBuilder.appendAnd().append("childAssociation.child.id =").append(getChild().getId());
 			mainCriteriaBuilder.addSegmentCount(1);
 		}
-		appendLikeFilter("resourceName", getFilter().getResourceName(), mainCriteriaBuilder);
-		appendEqualFilter("resourceType", getFilter().getResourceType(), mainCriteriaBuilder);
+		appendLikeFilter("resourceName", getForm().getResourceName(), mainCriteriaBuilder);
+		appendEqualFilter("resourceType", getForm().getResourceType(), mainCriteriaBuilder);
 		appendOrderBy("resourceCode", mainCriteriaBuilder);
 	}
 
