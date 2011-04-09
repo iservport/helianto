@@ -17,8 +17,8 @@ public class PublicEntityFilterAdapterTests {
     public void constructor() {
     	Entity entity = EntityTestSupport.createEntity();
     	filter = new PublicEntityFilterAdapter(entity);
-		assertEquals(entity.getOperator(), filter.getFilter().getOperator());
-		assertEquals(entity, filter.getFilter().getEntity());
+		assertEquals(entity.getOperator(), filter.getForm().getOperator());
+		assertEquals(entity, filter.getForm().getEntity());
 	}
 	
     public static String OB = "order by alias.entity.alias ";
@@ -26,6 +26,7 @@ public class PublicEntityFilterAdapterTests {
     public static String C2 = "AND alias.entity.alias = 'ALIAS' ";
     public static String C3 = "AND alias.class=PublicEntity ";
     public static String C4 = "AND lower(alias.entityName) like '%name%' ";
+    public static String C5 = "AND alias.publicEntityType = 'X' ";
 
     @Test
     public void empty() {
@@ -48,6 +49,12 @@ public class PublicEntityFilterAdapterTests {
     public void name() {
     	sample.setEntityName("NAME");
         assertEquals(C1+C4+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void type() {
+    	sample.setPublicEntityType('X');
+        assertEquals(C1+C5+OB, filter.createCriteriaAsString());
     }
     
     private PublicEntityFilterAdapter filter;

@@ -38,7 +38,8 @@ public class PublicEntityFilterAdapter extends AbstractRootFilterAdapter<PublicE
 	}
 	
 	public void reset() {
-		getFilter().setEntityAlias("");
+		getForm().setEntityAlias("");
+		getForm().setPublicEntityType(' ');
 	}
 	
 	/**
@@ -65,17 +66,18 @@ public class PublicEntityFilterAdapter extends AbstractRootFilterAdapter<PublicE
 	
 	@Override
 	public boolean isSelection() {
-		return getFilter().getEntityAlias().length()>0;
+		return getForm().getEntityAlias().length()>0;
 	}
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("entity.alias", getFilter().getEntityAlias(), mainCriteriaBuilder);
+		appendEqualFilter("entity.alias", getForm().getEntityAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("entityName", getFilter().getEntityName(), mainCriteriaBuilder);
+		appendEqualFilter("publicEntityType", getForm().getPublicEntityType(), mainCriteriaBuilder);
+		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
 	}
 	
 	private static final Logger logger  = LoggerFactory.getLogger(PublicEntityFilterAdapter.class);
