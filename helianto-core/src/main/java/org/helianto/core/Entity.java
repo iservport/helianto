@@ -92,6 +92,7 @@ public class Entity implements RootEntity {
     private Operator operator;
     private String alias;
     private Date installDate;
+    private String properties;
     private Identity manager;
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     private List<UserGroup> userList;
@@ -200,6 +201,17 @@ public class Entity implements RootEntity {
 	@Transient
 	public boolean isInstalled() {
 		return getInstallDate()!=null;
+	}
+	
+	/**
+	 * Custom properties.
+	 */
+	@Column(length=128)
+	public String getProperties() {
+		return properties;
+	}
+	public void setProperties(String properties) {
+		this.properties = properties;
 	}
 	
     /**
