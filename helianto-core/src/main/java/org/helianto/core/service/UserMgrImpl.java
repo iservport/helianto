@@ -114,12 +114,18 @@ public class UserMgrImpl implements UserMgr {
 		return identityDao.merge(identity);
 	}
 	
+	/**
+	 * @deprecated
+	 */
     public UserGroup prepareNewUserGroup(Entity entity) {
     	UserGroup userGroup = new UserGroup(entity, "");
     	entity.getUsers().add(userGroup);
     	return userGroup;
 	}
 	
+	/**
+	 * @deprecated
+	 */
     public UserGroup prepareUserGroup(UserGroup userGroup) {
     	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
     	// child list
@@ -154,7 +160,8 @@ public class UserMgrImpl implements UserMgr {
     	if (userGroup.isKeyEmpty() || userGroup instanceof User && validateIdentity((User) userGroup)!=null) {
     		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     	}
-        return userGroupDao.merge(userGroup);
+    	userGroupDao.saveOrUpdate(userGroup);
+        return userGroup;
     }
     
     /**
@@ -229,6 +236,9 @@ public class UserMgrImpl implements UserMgr {
         return null;
     }
 
+	/**
+	 * @deprecated
+	 */
 	public UserAssociation prepareNewUserAssociation(UserGroup parent) {
 		UserAssociation userAssociation = new UserAssociation(parent);
     	logger.debug("Created user association {}.", userAssociation);

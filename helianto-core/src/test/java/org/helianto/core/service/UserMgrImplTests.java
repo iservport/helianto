@@ -201,12 +201,11 @@ public class UserMgrImplTests {
 	@Test
     public void storeUserGroup() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-    	UserGroup managedUserGroup = new UserGroup();
     	
-    	expect(userGroupDao.merge(userGroup)).andReturn(managedUserGroup);
+    	userGroupDao.saveOrUpdate(userGroup);
     	replay(userGroupDao);
     	
-    	assertSame(managedUserGroup, userMgr.storeUserGroup(userGroup));
+    	assertSame(userGroup, userMgr.storeUserGroup(userGroup));
     	verify(userGroupDao);
     }
     
