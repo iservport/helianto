@@ -22,7 +22,6 @@ import org.helianto.core.filter.Filter;
 import org.helianto.partner.PublicAddress;
 import org.helianto.partner.PublicEntity;
 import org.helianto.partner.PublicEntityKey;
-import org.helianto.partner.filter.classic.PublicEntityFilter;
 
 /**
  * Public entity service interface.

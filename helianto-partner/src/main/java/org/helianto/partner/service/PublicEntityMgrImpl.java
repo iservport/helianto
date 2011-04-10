@@ -14,7 +14,6 @@ import org.helianto.core.service.PostInstallationMgr;
 import org.helianto.partner.PublicAddress;
 import org.helianto.partner.PublicEntity;
 import org.helianto.partner.PublicEntityKey;
-import org.helianto.partner.filter.classic.PublicEntityFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
