@@ -27,7 +27,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.helianto.core.ActivityState;
-import org.helianto.core.CreateIdentity;
 import org.helianto.core.Credential;
 import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.Entity;
@@ -157,11 +156,11 @@ public class UserMgrImpl implements UserMgr {
 	}
 
 	public UserGroup storeUserGroup(UserGroup userGroup) {
-    	if (userGroup.isKeyEmpty() || userGroup instanceof User && validateIdentity((User) userGroup)!=null) {
-    		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
+    	if (!userGroup.isKeyEmpty()) {
+        	userGroupDao.saveOrUpdate(userGroup);
+            return userGroup;
     	}
-    	userGroupDao.saveOrUpdate(userGroup);
-        return userGroup;
+		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     }
     
     /**
@@ -174,6 +173,7 @@ public class UserMgrImpl implements UserMgr {
      * 
      * @param user
      * @param createIdentity
+     * @deprecated
      */
     protected Identity validateIdentity(User user) {
     	if (user.getIdentity().getId()==0) {
@@ -181,21 +181,21 @@ public class UserMgrImpl implements UserMgr {
     		String principal = user.getUserKey();
     		logger.debug("Using principal {}", principal);
     		Identity identity = identityDao.findUnique(principal);
-    		if (identity!=null) {
-    			logger.debug("Identity found: {}", identity);
-    			user.setIdentity(identity);
-    		}
-    		else if (user.getCreateIdentity()==CreateIdentity.AUTO.getValue()) {
-        		identity = Identity.identityFactory(principal);
-        		logger.debug("Identity created: {}", identity);
-        		Credential credential = Credential.credentialFactory(identity, "default");
-        		identity.getCredentials().add(credential);
-        		logger.debug("Credential created: {}", credential);
-    			user.setIdentity(identity);
-    		}
-    		else {
-    			logger.debug("Unable to validate identity, identity not found and not created.");			
-    		}
+//    		if (identity!=null) {
+//    			logger.debug("Identity found: {}", identity);
+//    			user.setIdentity(identity);
+//    		}
+//    		else if (user.getCreateIdentity()==CreateIdentity.AUTO.getValue()) {
+//        		identity = Identity.identityFactory(principal);
+//        		logger.debug("Identity created: {}", identity);
+//        		Credential credential = Credential.credentialFactory(identity, "default");
+//        		identity.getCredentials().add(credential);
+//        		logger.debug("Credential created: {}", credential);
+//    			user.setIdentity(identity);
+//    		}
+//    		else {
+//    			logger.debug("Unable to validate identity, identity not found and not created.");			
+//    		}
     		return identity;
     	}
 		logger.debug("User identified with {}", user.getIdentity());

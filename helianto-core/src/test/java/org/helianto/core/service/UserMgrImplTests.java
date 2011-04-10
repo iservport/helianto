@@ -217,21 +217,6 @@ public class UserMgrImplTests {
 		assertTrue(userMgr.validateIdentity(user)==null);
     }
     
-	@Test
-    public void validateCandidateLoaded() {
-		User user = UserTestSupport.createUser();
-		user.getIdentity().setId(0);
-		user.getIdentity().setPrincipal("test");
-		Identity identity = new Identity();
-		
-		expect(identityDao.findUnique("test")).andReturn(identity);
-		replay(identityDao);
-		
-		assertTrue(userMgr.validateIdentity(user)!=null);
-		assertSame(identity, user.getIdentity());
-		verify(identityDao);
-    }
-    
 	// TODO review test
 //	@Test
 //    public void validateCandidateCreated() {
