@@ -76,6 +76,7 @@ public class PublicEntityFilterAdapter extends AbstractRootFilterAdapter<PublicE
 
 	@Override
 	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("entity.id", getForm().getEntity().getId(), mainCriteriaBuilder);
 		appendEqualFilter("publicEntityType", getForm().getPublicEntityType(), mainCriteriaBuilder);
 		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
 	}

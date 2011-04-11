@@ -27,6 +27,7 @@ public class PublicEntityFilterAdapterTests {
     public static String C3 = "AND alias.class=PublicEntity ";
     public static String C4 = "AND lower(alias.entityName) like '%name%' ";
     public static String C5 = "AND alias.publicEntityType = 'X' ";
+    public static String C6 = "AND alias.entity.id = 2 ";
 
     @Test
     public void empty() {
@@ -55,6 +56,12 @@ public class PublicEntityFilterAdapterTests {
     public void type() {
     	sample.setPublicEntityType('X');
         assertEquals(C1+C5+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void entity() {
+    	sample.getEntity().setId(2);
+        assertEquals(C1+C6+OB, filter.createCriteriaAsString());
     }
     
     private PublicEntityFilterAdapter filter;
