@@ -89,6 +89,9 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	    				logger.debug("New parent {}", p.getParent().getProvinceCode());
 	    				p.setParent(parent);
 	    			}
+	    			else {
+	    				logger.debug("Current parent {}", p.getParent().getProvinceCode());
+	    			}
 	    		}
 		        provinceDao.saveOrUpdate(p);
 	    	}

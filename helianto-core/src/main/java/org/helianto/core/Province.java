@@ -58,6 +58,7 @@ public class Province  implements RootEntity, Comparable<Province> {
     private String provinceCode;
     private String provinceName;
     private Country country;
+    private char priority;
 
 	/**
 	 * Empty constructor.
@@ -172,13 +173,26 @@ public class Province  implements RootEntity, Comparable<Province> {
 		this.country = country;
 	}
 
-	public int compareTo(Province next) {
-		if (getProvinceCode()!=null && next.getProvinceCode()!=null) {
-			return getProvinceCode().compareTo(next.getProvinceCode());
-		}
-		return 0;
+	/**
+	 * Province priority.
+	 */
+	public char getPriority() {
+		return priority;
+	}
+	public void setPriority(char priority) {
+		this.priority = priority;
 	}
 
+	public int compareTo(Province next) {
+		if (getPriority()==next.getPriority()) {
+			if (getProvinceCode()!=null && next.getProvinceCode()!=null) {
+				return getProvinceCode().compareTo(next.getProvinceCode());
+			}
+			return 0;
+		}
+		return getPriority()-next.getPriority();
+	}
+	
     /**
      * toString
      * @return String

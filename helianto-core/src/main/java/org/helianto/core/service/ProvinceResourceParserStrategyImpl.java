@@ -1,19 +1,3 @@
-/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
 package org.helianto.core.service;
 
 import java.io.IOException;
@@ -38,7 +22,7 @@ import org.springframework.stereotype.Component;
  * @author Mauricio Fernandes de Castro
  */
 @Component("provinceResourceParserStrategy")
-public class ProvinceResourceParseStrategyImpl implements ProvinceResourceParserStrategy {
+public class ProvinceResourceParserStrategyImpl implements ProvinceResourceParserStrategy {
 
 	public List<Province> parseProvinces(Operator operator, Resource rs) {
 		List<Province> provinceList = new ArrayList<Province>();
@@ -55,6 +39,11 @@ public class ProvinceResourceParseStrategyImpl implements ProvinceResourceParser
 			    if (event == XMLStreamConstants.START_ELEMENT && parser.getLocalName()=="province") {
 			    	String provinceCode = parser.getAttributeValue("", "provinceCode");
 			    	Province province = new Province(operator, provinceCode, parser.getAttributeValue("", "provinceName"));
+			    	String priority = parser.getAttributeValue("", "priority");
+			    	province.setPriority('0');
+			    	if (priority!=null && priority.length()>0) {
+				    	province.setPriority(priority.charAt(0));
+			    	}
 			    	provinceList.add(province);
 			    	logger.debug("Added {} to province list.", province);
 			    }
@@ -67,6 +56,6 @@ public class ProvinceResourceParseStrategyImpl implements ProvinceResourceParser
 		return provinceList;
 	}
 	
-	private static final Logger logger = LoggerFactory.getLogger(ProvinceResourceParseStrategyImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProvinceResourceParserStrategyImpl.class);
 	
 }
