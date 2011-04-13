@@ -49,7 +49,7 @@ import javax.persistence.UniqueConstraint;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("P")
-public class Province  implements RootEntity {
+public class Province  implements RootEntity, Comparable<Province> {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -170,6 +170,13 @@ public class Province  implements RootEntity {
 	}
 	public void setCountry(Country country) {
 		this.country = country;
+	}
+
+	public int compareTo(Province next) {
+		if (getProvinceCode()!=null && next.getProvinceCode()!=null) {
+			return getProvinceCode().compareTo(next.getProvinceCode());
+		}
+		return 0;
 	}
 
     /**
