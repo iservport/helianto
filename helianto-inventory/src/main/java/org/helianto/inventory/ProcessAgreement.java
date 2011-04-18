@@ -34,6 +34,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.Entity;
 import org.helianto.partner.Partner;
 
 
@@ -78,13 +79,24 @@ public class ProcessAgreement extends AbstractRequirement {
     }
 
 	/** 
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param internalNumber
+	 */
+    public ProcessAgreement(Entity entity, long internalNumber) {
+    	this();
+    	setEntity(entity);
+    	setInternalNumber(internalNumber);
+    }
+
+	/** 
 	 * Partner constructor.
 	 * 
 	 * @param partner
 	 */
     public ProcessAgreement(Partner partner) {
-    	this();
-    	setEntity(partner.getEntity());
+    	this(partner.getEntity(), 0);
     	setPartner(partner);
     }
 
