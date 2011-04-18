@@ -15,6 +15,7 @@
 
 package org.helianto.core.service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -78,6 +79,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	public void installProvinces(Operator defaultOperator, List<Province> provinceList) {
 		
 		logger.debug("Will install {} province(s) ...", provinceList.size());
+		Collections.sort(provinceList);
 		for (Province p: provinceList) {
 			Province province = provinceDao.findUnique(defaultOperator, p.getProvinceCode());
 	    	if (province==null) {
