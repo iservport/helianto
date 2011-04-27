@@ -7,23 +7,24 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
 /**
- * Presentation logic to manage user associations.
+ * Presentation logic to create user association.
  * 
- * @author mauriciofernandesdecastro
- * @deprecated see UserAssociationActionImpl
+ * @author Mauricio Fernandes de Castro
  */
-public class UserAssociationAction extends UserGroupAssociationAction {
-
+@Component("userAssociationAction")
+public class UserAssociationActionImpl extends UserGroupAssociationActionImpl {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected UserAssociation doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		UserGroup parent = getParent(attributes);
 		if (parent!=null) {
-			User child = new User(parent.getEntity(), new Credential("", "default"));
+			UserGroup child = new User(parent, new Credential(userDetails.getUser().getIdentity(), "123456"));
 			logger.debug("Association has {} and {}.", parent, child);
 		    return new UserAssociation(parent, child);
 		}
@@ -31,6 +32,6 @@ public class UserAssociationAction extends UserGroupAssociationAction {
 	}
 	
 	
-	private final static Logger logger = LoggerFactory.getLogger(UserAssociationAction.class);
+	private final static Logger logger = LoggerFactory.getLogger(UserAssociationActionImpl.class);
 
 }

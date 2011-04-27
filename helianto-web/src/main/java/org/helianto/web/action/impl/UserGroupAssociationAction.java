@@ -15,15 +15,14 @@ import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
 /**
  * Presentation logic to create user association.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see UserGroupAssociationActionImpl
  */
-@Component("userGroupAssociationAction")
 public class UserGroupAssociationAction extends AbstractFilterAction<UserAssociation> {
 	
 	private static final long serialVersionUID = 1L;

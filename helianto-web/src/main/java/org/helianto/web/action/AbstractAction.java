@@ -19,6 +19,7 @@ import java.io.Serializable;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.filter.Filter;
 import org.helianto.core.naming.NamingConventionStrategy;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
@@ -141,12 +142,17 @@ public abstract class AbstractAction<T> implements Serializable {
 	}
 	
 	/**
-	 * Subclasses must override this to assure the actual target persistence.
+	 * Default model is of type <code>SimpleModel</code>.
 	 * 
 	 * @param attributes
+	 * @param userDetails
 	 */
-	protected abstract <M> M doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails);
-		
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected SimpleModel<?> doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		Object form = getTarget(attributes);
+		return new SimpleModel(form, userDetails.getUser());
+	}
+
 	// convenience methods
 	
 	/**

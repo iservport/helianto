@@ -25,25 +25,20 @@ public class EntityAction extends AbstractFilterAction<Entity> {
 
 	private static final long serialVersionUID = 1L;
 
-	@Override
 	protected String getTargetName() { return "entity"; }
 
-	@Override
 	protected ListFilter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		return new EntityFilter(userDetails.getOperator());
 	}
 
-	@Override
 	protected List<Entity> doFilter(Filter filter) {
 		return namespaceMgr.findEntities((EntityFilter) filter);
 	}
 
-	@Override
-	protected Entity doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+	public Entity doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		return new Entity(userDetails.getUser());
 	}
 
-	@Override
 	protected Entity doStore(Entity target) {
 		Entity entity = null;
 		if (target.getManager()!=null) {

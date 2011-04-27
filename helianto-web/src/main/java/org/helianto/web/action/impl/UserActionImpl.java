@@ -2,7 +2,6 @@ package org.helianto.web.action.impl;
 
 import java.util.List;
 
-import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.Filter;
@@ -37,7 +36,7 @@ public class UserActionImpl extends UserGroupActionImpl {
 	
 	@Override
 	protected User doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new User(userDetails.getEntity(), (Identity) null);
+		throw new IllegalArgumentException("Please, run userAssociationAction#create(...) instead.");
 	}
 
 	private final static Logger logger = LoggerFactory.getLogger(UserActionImpl.class);

@@ -94,11 +94,6 @@ public class ActionTests {
 	public void setUp() {
 		action = new AbstractAction<String>() {
 			@Override protected String getTargetName() { return "NAME"; }
-			@Override 
-			protected String doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-				userDetailsInCreation = userDetails;
-				return "CREATED";
-			}
 			@Override
 			protected String doPrepare(String target, MutableAttributeMap attributes) {
 				return "PREPARED";
@@ -108,8 +103,9 @@ public class ActionTests {
 				return "STORED";
 			}
 			@Override
-			protected <M> M doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-				return null;
+			protected String doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+				userDetailsInCreation = userDetails;
+				return "CREATED";
 			}
 		};
 		attributes = new LocalAttributeMap();

@@ -162,9 +162,9 @@ href="${flowExecutionUrl}&_eventId=select${name?cap_first}&pages['${name?uncap_f
  # the appropriate privileges.
 -->
 <#macro secure role="ROLE_USER_ALL">
-	<#if !secureUser?exists>
+	<#if !currentUser?exists>
 		<#nested/>
-	<#elseif secureUser.authorities?seq_contains(role) >
+	<#elseif currentUser.authorities?seq_contains(role) >
 		<#nested/>
 	</#if>
 </#macro>

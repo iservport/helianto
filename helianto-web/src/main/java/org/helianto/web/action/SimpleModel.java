@@ -5,7 +5,7 @@ import org.helianto.core.User;
 import org.helianto.core.filter.Page;
 
 /**
- * Simple model to aggregate a filter to a page. 
+ * Simple model to aggregate a form to a page. 
  * 
  * @author mauriciofernandesdecastro
  */

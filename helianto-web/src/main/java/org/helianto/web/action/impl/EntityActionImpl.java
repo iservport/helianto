@@ -22,12 +22,6 @@ public class EntityActionImpl extends AbstractAction<Entity> {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected <M> M doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		// not required
-		return null;
-	}
-
-	@Override
 	protected Entity doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		return new Entity(userDetails.getUser());
 	}

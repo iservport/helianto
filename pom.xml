@@ -245,31 +245,9 @@ Application-TraceLevels: ${application.traceLevels}
 		</dependency>
 		-->
 		<dependency>
-			<groupId>org.springframework.ws</groupId>
-			<artifactId>org.springframework.ws.java5</artifactId>
-			<version>1.5.8.A</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>org.springframework.aop</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>org.springframework.beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>org.springframework.context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>org.springframework.core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.ws</groupId>
-					<artifactId>org.springframework.oxm</artifactId>
-				</exclusion>
-			</exclusions>
+		    <groupId>org.springframework.ws</groupId>
+		    <artifactId>org.springframework.ws</artifactId>
+		    <version>2.0.0.RELEASE</version>
 		</dependency>
         <!-- aspectJ bundles -->
 		<dependency>
@@ -376,13 +354,6 @@ Application-TraceLevels: ${application.traceLevels}
 			<groupId>org.joda</groupId>
 			<artifactId>com.springsource.org.joda.time</artifactId>
 			<version>1.6.0</version>
-		</dependency>
-		<!-- Build time only dependencies -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>com.springsource.javax.servlet.jsp</artifactId>
-			<version>2.1.0</version>
-			<scope>provided</scope>
 		</dependency>
     </dependencies>
 	<!-- 

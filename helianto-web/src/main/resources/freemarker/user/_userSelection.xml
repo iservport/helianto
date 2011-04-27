@@ -51,8 +51,8 @@
 			</transition>
 		
 		<transition on="createUser"
-		            to="user.subflow" >
-				<evaluate expression="entityAction.create(flowScope, currentUser.principal)" />
+		            to="userAssociation.subflow" >
+				<evaluate expression="userAssociationAction.create(flowScope, currentUser.principal)" />
 			</transition>
 		
 		<transition on="toSelection"        to="toCommit"/>
@@ -89,6 +89,12 @@
 		<transition on="toSelection" to="filter" />
 	</subflow-state>
 
+	<subflow-state id="user.subflow" subflow="_user">
+		<input name="userAssociation" value="userAssociationFilter.item"/>
+		<input name="userGroup"       value="userAssociationFilter.item"/>
+		<transition on="toSelection" to="filter" />
+	</subflow-state>
+
 	<view-state id="edit.view" view="/frame2" model="userAssociation" >
 	
 		<on-render>
@@ -105,12 +111,11 @@
 
 	-->
 
-	<subflow-state id="user.subflow" subflow="_user">
-		<input name="userAssociation" value="userAssociationFilter.item"/>
-		<input name="userGroup"       value="userAssociationFilter.item"/>
-		<transition on="toSelection" to="filter" />
+	<subflow-state id="userAssociation.subflow" subflow="_userAssociation">
+		<input name="userAssociation" value="flowScope.userAssociation"/>
+		<transition on="toCommit" to="filter" />
+		<transition on="toReturn" to="selection.view" />
 	</subflow-state>
-
 	
 	<end-state id="toCommit" commit="true" />
 
