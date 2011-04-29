@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+        parent="_menu">
+
+	<secured attributes="ROLE_USER_ALL" />
+
+	<persistence-context />
+
+	<on-start>
+		<set name="flowScope.basePath" value="'identity/'" />
+		<set name="flowScope.assign"   value="'assign'" />
+	</on-start>
+
+	<action-state id="create">
+		<evaluate expression="identityAction.create(flowScope, currentUser.principal)" />
+		<transition on="success"  to="selection.view" />
+	</action-state>
+	
+	<view-state id="selection.view" view="/frame2" model="identity">
+
+		<on-render>
+			<set name="viewScope.sidebar"  value="'identity_bar'" />
+			<set name="viewScope.template" value="'filter'" />
+		</on-render>
+
+		<transition on="applyFilter"       to="filter" />
+		
+		<transition on="cancelForm" to="toReturn" bind="false"/>
+		
+	</view-state>
+	
+	<action-state id="filter">
+		<evaluate expression="identityAction.filter(flowScope, currentUser.principal)" />
+		<transition on="foundOne"  to="edit.view" />
+		<transition on="foundMany" to="selection.view" />
+		<transition on="notFound"  to="selection.view" />
+	</action-state>
+	
+	<view-state id="edit.view" view="/frame2" model="identity">
+
+		<on-render>
+			<set name="viewScope.sidebar"  value="'identity_bar'" />
+			<set name="viewScope.template" value="'identity_form'" />
+		</on-render>
+
+		<transition on="storeIdentity" to="toCommit">
+			<evaluate expression="identityAction.store(flowScope)" />
+		</transition>
+		
+		<transition on="cancelForm" to="toReturn" bind="false"/>
+		
+	</view-state>
+
+	<end-state id="toCommit" commit="true"/>
+
+	<end-state id="toReturn" commit="true"/>
+
+</flow>
