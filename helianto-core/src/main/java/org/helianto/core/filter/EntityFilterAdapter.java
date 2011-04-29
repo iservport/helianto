@@ -33,7 +33,7 @@ public class EntityFilterAdapter extends AbstractRootFilterAdapter<Entity> {
 	/**
 	 * Default constructor.
 	 * 
-	 * @param operator
+	 * @param entity
 	 */
 	public EntityFilterAdapter(Entity entity) {
 		super(entity);
@@ -55,17 +55,17 @@ public class EntityFilterAdapter extends AbstractRootFilterAdapter<Entity> {
 	 * Reset.
 	 */
 	public void reset() {
-		getFilter().setAlias("");
+		getForm().setAlias("");
 		setEntityAliasLike("");
 	}
 
 	public boolean isSelection() {
-		return getFilter().getAlias().length()>0;
+		return getForm().getAlias().length()>0;
 	}
 
 	@Override
 	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("alias", getFilter().getAlias(), mainCriteriaBuilder);
+		appendEqualFilter("alias", getForm().getAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
