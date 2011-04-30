@@ -143,10 +143,26 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		logger.debug("Using filter {}.", filter);
 		List<T> itemList = doFilter(attributes, filter, userDetails);
 		put(attributes, itemList);
-		autoSelect(attributes, itemList);
-		return "success";
+		return internalFilter(attributes, itemList);
 	}
 	
+	/**
+	 * Called after {@link #internalFilter(MutableAttributeMap, PublicUserDetails, Filter)} to auto 
+	 * select a item list in the appropriate scope receiver.
+	 * 
+	 * @param attributes
+	 * @param itemList
+	 */
+	protected String internalFilter(MutableAttributeMap attributes, List<T> itemList) {
+		@SuppressWarnings("unchecked") T target = (T) attributes.get(getTargetName());
+		if (target==null && itemList!=null && itemList.size()>0) {
+			attributes.put(getTargetName(), itemList.get(0));
+			logger.debug("Auto selected: {}.", itemList.get(0));
+			return "success";
+		}
+		return "success";
+	}
+		
 	/**
 	 * Called after doFilter to put the item list in the appropriate scope receiver.
 	 * 
@@ -168,22 +184,6 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 		}
 	}
 	
-	/**
-	 * Called after put to auto select a item list in the appropriate scope receiver.
-	 * 
-	 * @param attributes
-	 * @param itemList
-	 */
-	protected boolean autoSelect(MutableAttributeMap attributes, List<T> itemList) {
-		@SuppressWarnings("unchecked") T target = (T) attributes.get(getTargetName());
-		if (target==null && itemList!=null && itemList.size()>0) {
-			attributes.put(getTargetName(), itemList.get(0));
-			logger.debug("Auto selected: {}.", itemList.get(0));
-			return true;
-		}
-		return false;
-	}
-		
 	/**
 	 * Subclasses may override this to customize filter retrieval.
 	 * 

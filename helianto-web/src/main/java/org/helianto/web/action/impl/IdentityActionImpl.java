@@ -10,6 +10,8 @@ import org.helianto.core.filter.IdentityFilterAdapter;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
@@ -32,6 +34,17 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 	protected List<Identity> doFilter(Filter filter) {
 		return userMgr.findIdentities(filter, null);
 	}
+	
+	protected String internalFilter(MutableAttributeMap attributes, List<Identity> itemList) {
+		if (itemList!=null && itemList.size()>0) {
+			attributes.put(getTargetName(), itemList.get(0));
+			logger.debug("Auto selected: {}.", itemList.get(0));
+			return "success";
+		}
+		attributes.put(getTargetName(), null);
+		logger.debug("Filter selection empty, auto selecte cleared the target");
+		return "error";
+	}
 
 	@Override
 	protected Identity doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
@@ -51,5 +64,7 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 	public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;
 	}
+	
+	private static final Logger logger = LoggerFactory.getLogger(IdentityActionImpl.class);
 
 }

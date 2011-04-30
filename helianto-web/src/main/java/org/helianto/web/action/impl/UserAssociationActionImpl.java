@@ -1,6 +1,7 @@
 package org.helianto.web.action.impl;
 
 import org.helianto.core.Credential;
+import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
@@ -24,7 +25,7 @@ public class UserAssociationActionImpl extends UserGroupAssociationActionImpl {
 	protected UserAssociation doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		UserGroup parent = getParent(attributes);
 		if (parent!=null) {
-			UserGroup child = new User(parent, new Credential(userDetails.getUser().getIdentity(), "123456"));
+			UserGroup child = new User(parent, new Credential(new Identity(""), "123456"));
 			logger.debug("Association has {} and {}.", parent, child);
 		    return new UserAssociation(parent, child);
 		}

@@ -12,6 +12,7 @@
 	<on-start>
 		<set name="flowScope.basePath" value="'identity/'" />
 		<set name="flowScope.assign"   value="'assign'" />
+		<evaluate expression="identityAction.createModel(flowScope, currentUser.principal)" />
 	</on-start>
 
 	<action-state id="create">
@@ -34,9 +35,8 @@
 	
 	<action-state id="filter">
 		<evaluate expression="identityAction.filter(flowScope, currentUser.principal)" />
-		<transition on="foundOne"  to="edit.view" />
-		<transition on="foundMany" to="selection.view" />
-		<transition on="notFound"  to="selection.view" />
+		<transition on="success" to="edit.view" />
+		<transition on="error"   to="selection.view" />
 	</action-state>
 	
 	<view-state id="edit.view" view="/frame2" model="identity">

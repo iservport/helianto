@@ -58,6 +58,9 @@
 		<transition on="toSelection"        to="toCommit"/>
 		
 	</view-state>
+	
+	<view-state id="identity.view" view="/frame2"  model="userModel" >
+	</view-state>
 
 	<!--<view-state id="show.view" view="/frame2" model="userModel" >
 
@@ -111,6 +114,14 @@
 
 	-->
 
+	<subflow-state id="identity.subflow" subflow="_identity">
+		<output name="identity" value="flowScope.identity"/>
+		<transition on="toCommit" to="userAssociation.subflow" >
+			<evaluate expression="userAssociationAction.create(flowScope, currentUser.principal)" />
+		</transition>
+		<transition on="toReturn" to="selection.view" />
+	</subflow-state>
+	
 	<subflow-state id="userAssociation.subflow" subflow="_userAssociation">
 		<input name="userAssociation" value="flowScope.userAssociation"/>
 		<transition on="toCommit" to="filter" />

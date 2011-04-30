@@ -19,7 +19,6 @@ import java.io.Serializable;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.filter.Filter;
 import org.helianto.core.naming.NamingConventionStrategy;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
