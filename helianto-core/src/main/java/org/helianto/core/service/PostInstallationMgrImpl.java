@@ -80,26 +80,48 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		logger.debug("Will install {} province(s) ...", provinceList.size());
 		Collections.sort(provinceList);
+		// due to problems with postgres, the installation is now in two phases
+		// first only  provinces
 		for (Province p: provinceList) {
-			Province province = provinceDao.findUnique(defaultOperator, p.getProvinceCode());
-	    	if (province==null) {
-	    		logger.debug("New province {}", p.getProvinceCode());
-	    		p.setOperator(defaultOperator);
-	    		if (p.getParent()!=null) {
-	    			Province parent = provinceDao.findUnique(defaultOperator, p.getParent().getProvinceCode());
-	    			if (parent==null) {
-	    				logger.debug("New parent {}", p.getParent().getProvinceCode());
-	    				p.setParent(parent);
-	    			}
-	    			else {
-	    				logger.debug("Current parent {}", p.getParent().getProvinceCode());
-	    			}
-	    		}
-		        provinceDao.saveOrUpdate(p);
-	    	}
-	    	else {
-		    	logger.debug("Province AVAILABLE as {}.", province);	    		
-	    	}
+			if (p.getClass().equals(Province.class)) {
+				Province province = provinceDao.findUnique(defaultOperator, p.getProvinceCode());
+		    	if (province==null) {
+		    		logger.debug("New province {}", p.getProvinceCode());
+		    		p.setOperator(defaultOperator);
+		    		if (p.getParent()!=null) {
+		    			throw new IllegalArgumentException("Progrmming error: instances of Province class must not have a parent");
+		    		}
+			        provinceDao.saveOrUpdate(p);
+		    	}
+		    	else {
+			    	logger.debug("Province AVAILABLE as {}.", province);	    		
+		    	}
+			}
+		}
+		provinceDao.flush();
+    	// then other descendants
+		for (Province d: provinceList) {
+			if (!d.getClass().equals(Province.class)) {
+				Province province = provinceDao.findUnique(defaultOperator, d.getProvinceCode());
+		    	if (province==null) {
+		    		logger.debug("New province {}", d.getProvinceCode());
+		    		d.setOperator(defaultOperator);
+		    		if (d.getParent()!=null) {
+		    			Province parent = provinceDao.findUnique(defaultOperator, d.getParent().getProvinceCode());
+		    			if (parent==null) {
+		    				logger.debug("New parent {}", d.getParent().getProvinceCode());
+		    				d.setParent(parent);
+		    			}
+		    			else {
+		    				logger.debug("Current parent {}", d.getParent().getProvinceCode());
+		    			}
+		    		}
+			        provinceDao.saveOrUpdate(d);
+		    	}
+		    	else {
+			    	logger.debug("Province AVAILABLE as {}.", province);	    		
+		    	}
+			}
 		}
 		
 	}

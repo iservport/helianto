@@ -131,7 +131,7 @@ public class Province  implements RootEntity, Comparable<Province> {
 	 * Parent province.
 	 */
 	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="parentId")
+	@JoinColumn(name="parentId", nullable=true)
 	public Province getParent() {
 		return parent;
 	}
