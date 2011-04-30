@@ -10,6 +10,10 @@
 
 
   <logger name="org.hibernate" level="OFF"/>
+  <logger name="org.springframework.webflow" level="DEBUG"/>
+  <logger name="org.springframework.binding" level="DEBUG"/>
+  <logger name="org.helianto.web" level="DEBUG"/>
+
 
   <root level="DEBUG">          
     <appender-ref ref="STDOUT" />
