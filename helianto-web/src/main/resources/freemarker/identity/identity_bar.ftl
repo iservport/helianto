@@ -1,2 +1,1 @@
-<h4>Entity alias</h4>
-<p>${entity.alias}</p>
+<h4>Entity: ${currentUser.principal.entity.alias}</h4>

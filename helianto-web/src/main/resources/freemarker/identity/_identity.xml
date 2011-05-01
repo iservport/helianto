@@ -20,23 +20,21 @@
 		<transition on="success"  to="selection.view" />
 	</action-state>
 	
-	<view-state id="selection.view" view="/frame2" model="identity">
+	<view-state id="selection.view" view="/frame2" model="identityModel">
 
 		<on-render>
 			<set name="viewScope.sidebar"  value="'identity_bar'" />
 			<set name="viewScope.template" value="'filter'" />
 		</on-render>
 
-		<transition on="applyFilter"       to="filter" />
-		
 		<transition on="cancelForm" to="toReturn" bind="false"/>
 		
 	</view-state>
 	
 	<action-state id="filter">
 		<evaluate expression="identityAction.filter(flowScope, currentUser.principal)" />
-		<transition on="success" to="edit.view" />
-		<transition on="error"   to="selection.view" />
+		<transition on="create"        to="edit.view" />
+		<transition on="searchAgain"   to="selection.view" />
 	</action-state>
 	
 	<view-state id="edit.view" view="/frame2" model="identity">

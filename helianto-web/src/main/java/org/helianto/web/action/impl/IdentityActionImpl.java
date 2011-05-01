@@ -35,15 +35,21 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 		return userMgr.findIdentities(filter, null);
 	}
 	
+	/**
+	 * Overriden to route "create" only if the principal does not exist.
+	 * 
+	 * @param attributes
+	 * @param itemList
+	 */
 	protected String internalFilter(MutableAttributeMap attributes, List<Identity> itemList) {
-		if (itemList!=null && itemList.size()>0) {
+		if (itemList!=null && itemList.size()==0) {
 			attributes.put(getTargetName(), itemList.get(0));
 			logger.debug("Auto selected: {}.", itemList.get(0));
-			return "success";
+			return "create";
 		}
 		attributes.put(getTargetName(), null);
 		logger.debug("Filter selection empty, auto selecte cleared the target");
-		return "error";
+		return "searchAgain";
 	}
 
 	@Override

@@ -1,8 +1,15 @@
-<form method="POST">
+<div id="panel">
 
-	<h4>Status:</h4>
-	<p><@spring.formInput "identity.principal" 'size="40"' /> </p>
+	<form method="POST">
 
-	<p><@submit2 "applyFilter", "Search" /></p>
-	<@flowKey/>
-</form>
+		<h4>Principal:</h4>
+		<p><@spring.formInput "identityModel.filter.form.principal" 'size="40"' /> </p>
+	
+		<@perr/>
+		<input type="hidden" name="_eventId" value="applyFilter" />
+		<input type="submit" value="Search" />
+		<@flowKey/>
+
+	</form>
+
+</div>

@@ -63,7 +63,7 @@ public class IdentityFlowTests extends AbstractXmlFlowExecutionTests {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void testApplyFilterSuccess() {
+	public void testApplyFilterCreate() {
 	    setCurrentState("selection.view");
 	    Identity form = new Identity("");
 	    getFlowScope().put("identity", form);
@@ -87,7 +87,7 @@ public class IdentityFlowTests extends AbstractXmlFlowExecutionTests {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void testApplyFilterError() {
+	public void testApplyFilterSearchAgain() {
 	    setCurrentState("selection.view");
 	    Identity form = new Identity("");
 	    getFlowScope().put("identity", form);

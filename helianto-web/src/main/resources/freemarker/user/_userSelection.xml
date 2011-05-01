@@ -51,7 +51,10 @@
 			</transition>
 		
 		<transition on="createUser"
-		            to="userAssociation.subflow" >
+		            to="identity.subflow" />
+		
+		<transition on="createAssociation"
+		            to="identity.subflow" >
 				<evaluate expression="userAssociationAction.create(flowScope, currentUser.principal)" />
 			</transition>
 		
