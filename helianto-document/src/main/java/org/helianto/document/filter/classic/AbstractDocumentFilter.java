@@ -16,7 +16,7 @@
 package org.helianto.document.filter.classic;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractEntityBackedFilter;
 
 /**
@@ -61,12 +61,12 @@ public abstract class AbstractDocumentFilter extends AbstractEntityBackedFilter 
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("docCode", getDocCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("docName", getDocName(), mainCriteriaBuilder);
 		appendLikeFilter("docName", getDocNameLike(), mainCriteriaBuilder);
 	}

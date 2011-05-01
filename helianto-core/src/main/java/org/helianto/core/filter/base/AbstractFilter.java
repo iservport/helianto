@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.helianto.core.Prioritizable;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,8 +117,9 @@ public abstract class AbstractFilter extends AbstractAliasFilter {
 	/**
 	 * Delegate criteria creation to a builder.
 	 */
+    @Override
 	public String createCriteriaAsString() {
-        return createCriteriaAsString(new CriteriaBuilder(getObjectAlias()));
+        return createCriteriaAsString(new OrmCriteriaBuilder(getObjectAlias()));
     }
 	
 	// processors
@@ -128,9 +129,10 @@ public abstract class AbstractFilter extends AbstractAliasFilter {
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+    @Override
+	protected void postProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
     	if (getOrderByString().length()>0) {
-    		appendOrderBy(getOrderByString(), mainCriteriaBuilder);
+    		appendOrderBy(getOrderByString(), (OrmCriteriaBuilder) mainCriteriaBuilder);
     	}
 	}
 		
@@ -142,7 +144,7 @@ public abstract class AbstractFilter extends AbstractAliasFilter {
      * @param fieldContent
      * @param criteriaBuilder
      */
-    protected void appendOrderBy(String fieldContent, CriteriaBuilder criteriaBuilder) {
+    protected void appendOrderBy(String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
     	String[] fieldNames = fieldContent.split(",");
     	if (fieldNames.length>0) {
     		criteriaBuilder.appendOrderBy(fieldNames);
@@ -155,7 +157,7 @@ public abstract class AbstractFilter extends AbstractAliasFilter {
      * @param sample
      * @param mainCriteriaBuilder
      */
-	protected void appendPriorityRange(Prioritizable sample, CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendPriorityRange(Prioritizable sample, OrmCriteriaBuilder mainCriteriaBuilder) {
 		String priorityChain = "0123456789";
 		int priority = priorityChain.indexOf(sample.getPriority());
 		if (logger.isDebugEnabled()) {

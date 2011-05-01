@@ -1,7 +1,7 @@
 package org.helianto.partner.filter;
 
 import org.helianto.core.Operator;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 import org.helianto.partner.PublicAddress;
 
@@ -67,7 +67,7 @@ public class PublicAddressFilterAdapter extends AbstractRootFilterAdapter<Public
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getFilter().getProvince()!=null) {
 			appendEqualFilter("province.id", getFilter().getProvince().getId(), mainCriteriaBuilder);
 		}
@@ -76,7 +76,7 @@ public class PublicAddressFilterAdapter extends AbstractRootFilterAdapter<Public
 	}
 	
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("postalCode", getFilter().getPostalCode(), mainCriteriaBuilder);
 	}
 

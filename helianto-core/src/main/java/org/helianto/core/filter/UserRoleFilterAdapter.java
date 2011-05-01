@@ -3,7 +3,7 @@ package org.helianto.core.filter;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
 
 /**
@@ -46,14 +46,14 @@ public class UserRoleFilterAdapter extends AbstractFilterAdapter<UserRole> {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("userGroup.id", getFilter().getUserGroup().getId(), mainCriteriaBuilder);
 		appendEqualFilter("service.id", getFilter().getService().getId(), mainCriteriaBuilder);
 		appendEqualFilter("serviceExtension", getFilter().getServiceExtension(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getFilter().getUserGroup()!=null) {
 			appendEqualFilter("userGroup.id", getFilter().getUserGroup().getId(), mainCriteriaBuilder);
 		}

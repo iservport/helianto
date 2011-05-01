@@ -2,7 +2,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 
 /**
@@ -41,12 +41,12 @@ public class KeyTypeFilterAdapter extends AbstractRootFilterAdapter<KeyType> {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("keyCode", getFilter().getKeyCode(), mainCriteriaBuilder);		
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) { 
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { 
 		appendLikeFilter("keyName", getFilter().getKeyName(), mainCriteriaBuilder);
 	}
 	

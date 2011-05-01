@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DateCriteriaBuilder extends CriteriaBuilder {
+public class DateCriteriaBuilder extends OrmCriteriaBuilder {
 	
 	private String dateFieldName;
 	
@@ -66,7 +66,7 @@ public class DateCriteriaBuilder extends CriteriaBuilder {
      * @param toDate
      * @param interval
      */
-    public CriteriaBuilder appendFromDateRange(Date fromDate, Date toDate, int interval) {
+    public OrmCriteriaBuilder appendFromDateRange(Date fromDate, Date toDate, int interval) {
         if (fromDate!=null) {
         	appendSegment(getDateFieldName(), ">=");
         	if (interval<0 && toDate!=null) {
@@ -92,7 +92,7 @@ public class DateCriteriaBuilder extends CriteriaBuilder {
      * @param toDate
      * @param interval
      */
-    public CriteriaBuilder appendToDateRange(Date fromDate, Date toDate, int interval) {
+    public OrmCriteriaBuilder appendToDateRange(Date fromDate, Date toDate, int interval) {
         if (toDate!=null) {
         	appendAnd(fromDate!=null).appendSegment(getDateFieldName(), "<");
         	if (interval>0 && fromDate!=null) {

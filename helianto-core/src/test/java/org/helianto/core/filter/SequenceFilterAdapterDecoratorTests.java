@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractSequence;
 import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class SequenceFilterAdapterDecoratorTests {
 		AbstractSequenceFilterAdapterDecorator<AbstractSequence> decoratedFilter = 
 			new AbstractSequenceFilterAdapterDecorator<AbstractSequence>(new AbstractSequence(entity, 0) {}) {
 			public void reset() { }
-			@Override public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 				super.doFilter(mainCriteriaBuilder);
 				appendEqualFilter("field1", "value1", mainCriteriaBuilder);
 			}
@@ -32,7 +32,7 @@ public class SequenceFilterAdapterDecoratorTests {
 		AbstractSequenceFilterAdapterDecorator<AbstractSequence> sequenceFilter = 
 			new AbstractSequenceFilterAdapterDecorator<AbstractSequence>(new AbstractSequence(entity, 0) {}, decoratedFilter) {
 			public void reset() { }
-			@Override public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 				super.doFilter(mainCriteriaBuilder);
 				appendEqualFilter("field2", "value2", mainCriteriaBuilder);
 			}

@@ -15,7 +15,7 @@
 
 package org.helianto.core.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 
 
 /**
@@ -31,7 +31,7 @@ public interface CriteriaFilter extends Filter {
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder);
+	public String createCriteriaAsString(OrmCriteriaBuilder mainCriteriaBuilder);
 
 	/**
 	 * Reset filter.

@@ -17,7 +17,7 @@ package org.helianto.process.filter.classic;
 
 import org.helianto.core.Unit;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 
 /**
@@ -62,19 +62,19 @@ public class MeasurementTechniqueFilter extends AbstractUserBackedCriteriaFilter
 	}
 
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getUnit()!=null) {
 			appendEqualFilter("unit.id", getUnit().getId(), mainCriteriaBuilder);
 		}
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("measurementTechniqueCode", getMeasurementTechniqueCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("measurementTechniqueName", getMeasurementTechniqueName(), mainCriteriaBuilder);
 		appendOrderBy("measurementTechniqueCode", mainCriteriaBuilder);
 	}

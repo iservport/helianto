@@ -1,7 +1,7 @@
 package org.helianto.core.filter.base;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.number.Sequenceable;
 
 /**
@@ -49,12 +49,12 @@ public abstract class AbstractSequenceFilterAdapterDecorator <T extends Sequence
 	public boolean isSelection() { return getFilter().getInternalNumber()>0; }
 	
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("internalNumber", getFilter().getInternalNumber(), mainCriteriaBuilder);
 	}
 	
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		if (decoratedFilter!=null) {
 			decoratedFilter.doFilter(mainCriteriaBuilder);

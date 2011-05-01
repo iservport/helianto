@@ -19,7 +19,7 @@ import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 
 /**
@@ -71,7 +71,7 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
     	if (getCategoryGroup()!=null) {
         	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), true, mainCriteriaBuilder);
     	}
@@ -82,7 +82,7 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
     	appendEqualFilter("unitCode", getFilter().getUnitCode(), mainCriteriaBuilder);
 	}
 

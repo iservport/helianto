@@ -3,7 +3,7 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Operator;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRoot;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 import org.junit.Before;
@@ -46,11 +46,11 @@ public class RootFilterTests {
 			@Override
 			public boolean isSelection() { return keyField.length()>0; };
 			@Override
-			protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+			protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 				appendEqualFilter("keyField", keyField, mainCriteriaBuilder);
 			}
 			@Override
-			public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 				appendEqualFilter("filterField", filterField, mainCriteriaBuilder);
 			}
 		};

@@ -1,6 +1,6 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractAliasFilter;
 
 /**
@@ -78,12 +78,12 @@ public class SearchFilter extends AbstractAliasFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		throw new IllegalArgumentException("Not applicable to search filters!");
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (filter instanceof AbstractAliasFilter) {
 			((AbstractAliasFilter) filter).preProcessFilter(mainCriteriaBuilder);
 		}

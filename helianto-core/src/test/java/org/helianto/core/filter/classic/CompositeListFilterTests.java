@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.ListFilter;
 import org.helianto.core.filter.base.AbstractListFilter;
 import org.helianto.core.filter.classic.AbstractCompositeListFilter;
@@ -99,16 +99,16 @@ public class CompositeListFilterTests {
 		list = new ArrayList<String>();
 		filter = new AbstractCompositeListFilter() {
 			public String getObjectAlias() { return "TEST_ALIAS"; }
-			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			@Override
-			public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			public void reset() { }
 		};
 		ListFilter parentFilter = new AbstractListFilter() {
 			public String getObjectAlias() { return "PARENT_ALIAS"; }
-			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			@Override
-			public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			public void reset() { }
 		};
 		filter.setParentFilter(parentFilter);

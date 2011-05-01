@@ -1,7 +1,7 @@
 package org.helianto.partner.filter;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 import org.helianto.partner.PublicEntity;
 import org.slf4j.Logger;
@@ -56,7 +56,7 @@ public class PublicEntityFilterAdapter extends AbstractRootFilterAdapter<PublicE
 	 * Restrict selection to a given operator, if any. 
 	 */
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
@@ -70,12 +70,12 @@ public class PublicEntityFilterAdapter extends AbstractRootFilterAdapter<PublicE
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("entity.alias", getForm().getEntityAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("entity.id", getForm().getEntity().getId(), mainCriteriaBuilder);
 		appendEqualFilter("publicEntityType", getForm().getPublicEntityType(), mainCriteriaBuilder);
 		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);

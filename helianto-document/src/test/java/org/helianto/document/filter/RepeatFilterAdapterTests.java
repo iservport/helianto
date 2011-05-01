@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.document.TrackingMode;
 import org.helianto.document.base.AbstractRepeatable;
 import org.junit.Before;
@@ -67,7 +67,7 @@ public class RepeatFilterAdapterTests {
 		repeatableFilter = new AbstractRepeatFilterAdapter<AbstractRepeatable>(new RepeatableStub()) {
 			public void reset() { }
 			@Override
-			public void doFilter(CriteriaBuilder mainCriteriaBuilder) { 
+			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { 
 				super.doFilter(mainCriteriaBuilder);
 			}
 		};

@@ -1,7 +1,7 @@
 package org.helianto.core.filter.classic;
 
 import org.helianto.core.Operator;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractListFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +56,7 @@ public abstract class AbstractOperatorBackedCriteriaFilter extends AbstractListF
 	 * Restrict selection to a given operator, if any. 
 	 */
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getOperator()!=null) {
 			appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
 			logger.debug("Will add '{}.operator.id = {}' to the beginning of any filter string", getObjectAlias(), operator.getId());

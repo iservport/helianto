@@ -15,7 +15,7 @@
 
 package org.helianto.document.filter.classic;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 
 /**
  * Record filter superclass.
@@ -47,7 +47,7 @@ public abstract class AbstractRecordFilter extends AbstractEventFilter {
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendResolution(mainCriteriaBuilder);
 	}
@@ -57,7 +57,7 @@ public abstract class AbstractRecordFilter extends AbstractEventFilter {
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	protected void appendResolution(CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendResolution(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("resolution", getResolution(), mainCriteriaBuilder);
 	}
 

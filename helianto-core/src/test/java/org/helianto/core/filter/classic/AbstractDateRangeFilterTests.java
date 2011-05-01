@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractDateRangeFilter;
 import org.helianto.core.filter.classic.DateFilterMode;
 import org.junit.Before;
@@ -30,7 +30,7 @@ public class AbstractDateRangeFilterTests {
 		// will normalize the time to 23:59:59 before calculations
 		// from 21:00 to 23:59:59 we need more 3*1000*3600-1000 milis
 //		System.out.println(new Date(fromDateInMilis+3*1000*3600-1000));
-		filter.doFilter(new CriteriaBuilder());
+		filter.doFilter(new OrmCriteriaBuilder());
 //		System.out.println(filter.getFromDate());
 		assertEquals(fromDateInMilis+3*1000*3600-1000, filter.getFromDate().getTime());
 	}
@@ -40,7 +40,7 @@ public class AbstractDateRangeFilterTests {
 		filter.setInterval(30);
 		filter.setIntervalIntegrityEnforced(true);
 		filter.setDateFilterMode(DateFilterMode.TO_DATE_MINUS_INTERVAL);
-		filter.doFilter(new CriteriaBuilder());
+		filter.doFilter(new OrmCriteriaBuilder());
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class AbstractDateRangeFilterTests {
 		// from 21:00 to 23:59:59 we need more 3*1000*3600-1000 milis
 //		System.out.println(new Date(toDateInMilis+3*1000*3600-1000));
 //		System.out.println(filter.getToDate());
-		filter.doFilter(new CriteriaBuilder());
+		filter.doFilter(new OrmCriteriaBuilder());
 		assertEquals(toDateInMilis+3*1000*3600-1000, filter.getToDate().getTime());
 	}
 	
@@ -65,14 +65,14 @@ public class AbstractDateRangeFilterTests {
 		filter.setInterval(-30);
 		filter.setIntervalIntegrityEnforced(true);
 		filter.setDateFilterMode(DateFilterMode.FROM_DATE_PLUS_INTERVAL);
-		filter.doFilter(new CriteriaBuilder());
+		filter.doFilter(new OrmCriteriaBuilder());
 	}
 	
 	@Before
 	@SuppressWarnings("serial")
 	public void setUp() {
 		filter = new AbstractDateRangeFilter() {
-			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 		};
 		filter.setDateFieldName("test");
 	}

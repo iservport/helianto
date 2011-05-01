@@ -1,7 +1,7 @@
 package org.helianto.core.filter;
 
 import org.helianto.core.Identity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
 
 /**
@@ -42,12 +42,12 @@ public class IdentityFilterAdapter extends AbstractFilterAdapter<Identity>{
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("principal", getForm().getPrincipal(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("personalData.firstName", getForm().getPersonalData().getFirstName(), mainCriteriaBuilder);
 	}
 

@@ -16,7 +16,7 @@
 package org.helianto.inventory.filter.classic;
 
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 import org.helianto.partner.Partner;
 import org.helianto.process.ProcessDocument;
@@ -46,14 +46,14 @@ public class AgreementFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getCustomer()!=null) {
 			appendEqualFilter("partner.id", getCustomer().getId(), mainCriteriaBuilder);
 		}
 	}
 	
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("resolution", getAgreementState(), mainCriteriaBuilder);
 		appendLikeFilter("summary", getSummaryLike(), mainCriteriaBuilder);
 		appendLikeFilter("partner.partnerRegistry.partnerAlias", getCustomerAliasLike(), mainCriteriaBuilder);
@@ -62,15 +62,15 @@ public class AgreementFilter extends AbstractUserBackedCriteriaFilter {
 		}
 	}
 	
-	protected CriteriaBuilder processCriteriaBuilder(String prefix) {
-		CriteriaBuilder processCriteriaBuilder = new CriteriaBuilder(prefix);
+	protected OrmCriteriaBuilder processCriteriaBuilder(String prefix) {
+		OrmCriteriaBuilder processCriteriaBuilder = new OrmCriteriaBuilder(prefix);
 		processCriteriaBuilder.appendSegment("processDocument.id", "=").append(getProcess().getId());
 		processCriteriaBuilder.appendOr().appendSegment("processDocument.parent.id", "=").append(getProcess().getId());
 		return processCriteriaBuilder;
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
 	}
 

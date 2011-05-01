@@ -1,6 +1,6 @@
 package org.helianto.finance.filter.classic;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 
 public class CashFlowFilter extends AbstractUserBackedCriteriaFilter {
@@ -8,13 +8,13 @@ public class CashFlowFilter extends AbstractUserBackedCriteriaFilter {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		// TODO Auto-generated method stub
 
 	}

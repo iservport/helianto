@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.classic.PolymorphicFilter;
 import org.helianto.partner.Agent;
@@ -116,24 +116,24 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	 * Read entity from the associated partner registry.
 	 */
 	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("privateEntity.entity.id", entity.getId(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("privateEntity.entityAlias", getPartnerAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("privateEntity.entityName", getPartnerNameLike(), mainCriteriaBuilder);
 		appendEqualFilter("partnerState", getPartnerState(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);

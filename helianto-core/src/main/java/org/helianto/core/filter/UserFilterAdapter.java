@@ -23,7 +23,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.slf4j.Logger;
@@ -99,7 +99,7 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
      * Force filter to standards.
      */
     public void reset() {
-    	getFilter().setUserState(' ');
+    	getForm().setUserState(' ');
     	setExclusions(new HashSet<Identity>(0));
     }
     
@@ -118,11 +118,11 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
 	
 
 	public boolean isSelection() {
-		return getFilter().getUserKey()!=null && getFilter().getUserKey().length()>0;
+		return getForm().getUserKey()!=null && getForm().getUserKey().length()>0;
 	}
 
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
@@ -141,13 +141,13 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("userKey", getFilter().getUserKey(), mainCriteriaBuilder);
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("userKey", getForm().getUserKey(), (OrmCriteriaBuilder) mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("userState", getFilter().getUserState(), mainCriteriaBuilder);
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("userState", getForm().getUserState(), mainCriteriaBuilder);
         appendExclusionsFilter( mainCriteriaBuilder);
 	}
 	
@@ -166,7 +166,7 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
      * @param filter
      * @param criteriaBuilder
      */
-    protected void appendExclusionsFilter(CriteriaBuilder criteriaBuilder) {
+    protected void appendExclusionsFilter(OrmCriteriaBuilder criteriaBuilder) {
         if (getExclusions()!=null && getExclusions().size() > 0) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Found "+getExclusions().size()+" exclusion(s).");

@@ -2,7 +2,7 @@ package org.helianto.core.filter.base;
 
 import org.helianto.core.Entity;
 import org.helianto.core.TrunkEntity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public abstract class AbstractTrunkFilterAdapter <F extends TrunkEntity> extends
 	 * Restrict selection to a given entity, if any. 
 	 */
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getEntity()!=null) {
 			appendEntityFilter(getEntity(), mainCriteriaBuilder);
 			logger.debug("Filter constraint set to {}.", getEntity());
@@ -48,7 +48,7 @@ public abstract class AbstractTrunkFilterAdapter <F extends TrunkEntity> extends
      * @param entity
 	 * @param mainCriteriaBuilder
      */
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendSegment("entity.id", "=").append(entity.getId());
     }
     

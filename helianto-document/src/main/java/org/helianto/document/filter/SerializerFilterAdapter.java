@@ -17,7 +17,7 @@
 package org.helianto.document.filter;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.document.Serializer;
 import org.helianto.document.base.AbstractSerializer;
@@ -58,12 +58,12 @@ public class SerializerFilterAdapter<T extends AbstractSerializer<?>> extends Ab
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("contentType", getFilter().getContentType(), mainCriteriaBuilder);
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("builderCode", getFilter().getBuilderCode(), mainCriteriaBuilder);
 	}
 

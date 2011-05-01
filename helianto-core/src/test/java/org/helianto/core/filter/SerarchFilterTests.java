@@ -2,7 +2,7 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilter;
 import org.junit.Test;
 
@@ -18,9 +18,9 @@ public class SerarchFilterTests {
 		AbstractFilter sourceFilter = new AbstractFilter() {
 			@Override public String createSelectAsString() { return "SELECT STRING"; }
 			public void reset() { }
-			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {}
-			@Override public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
-			@Override public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {}
+			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
+			@Override public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 				mainCriteriaBuilder.appendSegment("uniqueField", "=").appendString("key");
 			}
 		};

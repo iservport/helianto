@@ -22,7 +22,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 
 /**
  * Province filter.
@@ -105,7 +105,7 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	 * Filter provinces using same operator as the current entity.
 	 */
 	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendSegment("operator.id", "=")
 			.append(entity.getOperator().getId());
 	}
@@ -118,19 +118,19 @@ public class ProvinceFilter extends AbstractUserBackedCriteriaFilter implements 
 	}
 	
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("provinceCode", getProvinceCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("provinceName", getProvinceNameLike(), mainCriteriaBuilder);
 	}
 

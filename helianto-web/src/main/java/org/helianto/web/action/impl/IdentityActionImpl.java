@@ -43,13 +43,10 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 	 */
 	protected String internalFilter(MutableAttributeMap attributes, List<Identity> itemList) {
 		if (itemList!=null && itemList.size()==0) {
-			attributes.put(getTargetName(), itemList.get(0));
-			logger.debug("Auto selected: {}.", itemList.get(0));
 			return "create";
 		}
-		attributes.put(getTargetName(), null);
-		logger.debug("Filter selection empty, auto selecte cleared the target");
-		return "searchAgain";
+		logger.debug("Selected: {}.", itemList.get(0));
+		return "use";
 	}
 
 	@Override

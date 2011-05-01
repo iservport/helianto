@@ -15,7 +15,7 @@
 
 package org.helianto.document.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.document.base.AbstractDocument;
 
@@ -55,12 +55,12 @@ public abstract class AbstractDocumentFilterAdapter<T extends AbstractDocument> 
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("docCode", getFilter().getDocCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("docName", getFilter().getDocName(), mainCriteriaBuilder);
 		appendPriority(mainCriteriaBuilder);
 	}
@@ -70,7 +70,7 @@ public abstract class AbstractDocumentFilterAdapter<T extends AbstractDocument> 
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	protected void appendPriority(CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendPriority(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);
 	}
 

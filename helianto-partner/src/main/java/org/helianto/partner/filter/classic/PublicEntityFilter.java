@@ -1,7 +1,7 @@
 package org.helianto.partner.filter.classic;
 
 import org.helianto.core.Operator;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractOperatorBackedCriteriaFilter;
 import org.helianto.partner.PublicEntity;
 import org.slf4j.Logger;
@@ -66,7 +66,7 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	 * Restrict selection to a given operator, if any. 
 	 */
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
@@ -75,7 +75,7 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	}
 	
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("entity.alias", getEntityAliasLike(), mainCriteriaBuilder);
 	}
 	
@@ -85,7 +85,7 @@ public class PublicEntityFilter extends AbstractOperatorBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("entity.alias", getEntityAlias(), mainCriteriaBuilder);
 	}
 

@@ -15,7 +15,7 @@
 
 package org.helianto.inventory.filter.classic;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.document.filter.classic.AbstractControlFilter;
 import org.helianto.process.ProcessDocument;
 
@@ -30,7 +30,7 @@ public abstract class AbstractRequirementFilter extends AbstractControlFilter {
 	private ProcessDocument process;
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		if (process!=null) {
 			appendEqualFilter("document.id", getProcess().getId(), mainCriteriaBuilder);

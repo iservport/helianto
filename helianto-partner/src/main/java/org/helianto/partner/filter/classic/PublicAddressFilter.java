@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractOperatorBackedCriteriaFilter;
 
 /**
@@ -91,7 +91,7 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getProvince()!=null) {
 			appendEqualFilter("province.id", getProvince().getId(), mainCriteriaBuilder);
 		}
@@ -100,7 +100,7 @@ public class PublicAddressFilter extends AbstractOperatorBackedCriteriaFilter im
 	}
 	
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("postalCode", getPostalCode(), mainCriteriaBuilder);
 	}
 

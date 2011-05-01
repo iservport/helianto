@@ -15,7 +15,7 @@
 
 package org.helianto.inventory.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
 import org.helianto.inventory.ProcessAgreement;
 
@@ -40,7 +40,7 @@ public class ProcessAgreementFilterAdapter extends AbstractSequenceFilterAdapter
 	public void reset() { }
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		if (getFilter().getPartner()!=null) {
 			appendEqualFilter("partner.id", getFilter().getPartner().getId(), mainCriteriaBuilder);

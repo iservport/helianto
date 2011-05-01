@@ -1,6 +1,6 @@
 package org.helianto.core.filter.base;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 
 /**
  * Extends <code>AbstractAliasFilter</code> to provide search string functionality.
@@ -42,12 +42,12 @@ public abstract class AbstractSearchFilter extends AbstractAliasFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		// not required by search filter
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		filter.preProcessFilter(mainCriteriaBuilder);
 		appendLikeFilter(getSearchFieldName(), getSearchString(), mainCriteriaBuilder);
 	}

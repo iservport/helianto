@@ -18,7 +18,7 @@ package org.helianto.process.filter;
 import java.util.Collection;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.filter.ParentFilter;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
@@ -81,7 +81,7 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
     }
     	
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null && !getClazz().equals(ProcessDocument.class)) {
 	        logger.debug("Document class is: '{}'", getClazz());
@@ -99,12 +99,12 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("docCode", getFilter().getDocCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("docName", getFilter().getDocName(), mainCriteriaBuilder);
 		appendEqualFilter("inheritanceType", getFilter().getInheritanceType(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);

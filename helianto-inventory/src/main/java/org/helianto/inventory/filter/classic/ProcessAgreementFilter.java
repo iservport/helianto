@@ -15,7 +15,7 @@
 
 package org.helianto.inventory.filter.classic;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.partner.Partner;
 
 /**
@@ -31,7 +31,7 @@ public class ProcessAgreementFilter extends AbstractRequirementFilter {
 	private Partner customer;
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		
 	}

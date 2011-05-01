@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.PolymorphicFilter;
 import org.helianto.document.filter.classic.AbstractDocumentFilter;
 import org.helianto.partner.Partner;
@@ -72,7 +72,7 @@ public class ProcessDocumentFilter extends AbstractDocumentFilter implements Ser
 	}
 	
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (!getClazz().equals(ProcessDocument.class)) {
 	        logger.debug("Document class is: '{}'", getClazz());
 			mainCriteriaBuilder.appendAnd().append(getClazz());
@@ -80,7 +80,7 @@ public class ProcessDocumentFilter extends AbstractDocumentFilter implements Ser
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("inheritanceType", getInheritanceType(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getPriority(), mainCriteriaBuilder);

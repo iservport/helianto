@@ -17,7 +17,7 @@ package org.helianto.core.filter.classic;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 
 /**
  * <code>Identity</code> filter.
@@ -80,7 +80,7 @@ public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
 	 * associated to it.
 	 */
 	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (entity!=null) {
 			mainCriteriaBuilder.appendAnd().appendSegment("id", "in")
 		        .append("(select user.identity.id from User user where user.entity.id = ")
@@ -90,12 +90,12 @@ public class IdentityFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("optionalAlias", getNameOrAliasSearch(), mainCriteriaBuilder);
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("principal", getPrincipal(), mainCriteriaBuilder);
 	}
 

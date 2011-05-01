@@ -72,7 +72,6 @@ public class IdentityFlowTests extends AbstractXmlFlowExecutionTests {
 	    context.setEventId("applyFilter");
 	    
 	    List<Identity> identityList = new ArrayList<Identity>();
-	    identityList.add(new Identity("TEST"));
 	    
 	    EasyMock.expect(userMgr.findIdentities(EasyMock.isA(Filter.class), (Collection<Identity>) EasyMock.isNull())).andReturn(identityList);
 	    EasyMock.replay(userMgr);
@@ -87,7 +86,7 @@ public class IdentityFlowTests extends AbstractXmlFlowExecutionTests {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void testApplyFilterSearchAgain() {
+	public void testApplyFilterUse() {
 	    setCurrentState("selection.view");
 	    Identity form = new Identity("");
 	    getFlowScope().put("identity", form);
@@ -96,6 +95,7 @@ public class IdentityFlowTests extends AbstractXmlFlowExecutionTests {
 	    context.setEventId("applyFilter");
 	    
 	    List<Identity> identityList = new ArrayList<Identity>();
+	    identityList.add(new Identity("TEST"));
 	    
 	    EasyMock.expect(userMgr.findIdentities(EasyMock.isA(Filter.class), (Collection<Identity>) EasyMock.isNull())).andReturn(identityList);
 	    EasyMock.replay(userMgr);

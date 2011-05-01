@@ -10,7 +10,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.base.AbstractListFilter;
 import org.helianto.core.security.PublicUserDetails;
@@ -90,8 +90,8 @@ public class MockFilterActionTests {
 		};
 		createdFilter = new AbstractListFilter() {
 			@Override
-			public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
-			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
+			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			public String getObjectAlias() { return "ALIAS"; }
 			public void reset() { }
 		};

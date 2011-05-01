@@ -1,6 +1,6 @@
 package org.helianto.inventory.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.inventory.Tax;
 
@@ -43,7 +43,7 @@ public class TaxFilterAdapter extends AbstractFilterAdapter<Tax> {
 	public void reset() { }
 	
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getFilter().getProcessAgreement()!=null) {
 			appendEqualFilter("processAgreement.id", getFilter().getProcessAgreement().getId(), mainCriteriaBuilder);
@@ -51,12 +51,12 @@ public class TaxFilterAdapter extends AbstractFilterAdapter<Tax> {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("keyType.id", getFilter().getKeyType().getId(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("keyType.keyCode", getKeyCode(), mainCriteriaBuilder);
 	}
 	

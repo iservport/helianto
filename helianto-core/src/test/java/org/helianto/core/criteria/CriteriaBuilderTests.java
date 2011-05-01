@@ -32,11 +32,11 @@ import org.junit.Test;
  */
 public class CriteriaBuilderTests  {
     
-    private CriteriaBuilder criteriaBuilder;
+    private OrmCriteriaBuilder criteriaBuilder;
     
     @Test
     public void defaultConstructor() {
-    	criteriaBuilder = new CriteriaBuilder();
+    	criteriaBuilder = new OrmCriteriaBuilder();
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
         assertEquals("1969-12-31 21:00:00", formatter.format(date));
@@ -53,7 +53,7 @@ public class CriteriaBuilderTests  {
     
     @Test
     public void dateFormatConstructor() {
-        criteriaBuilder = new CriteriaBuilder("OTHER_PREFIX", "ddMMyyyy HHmmss");
+        criteriaBuilder = new OrmCriteriaBuilder("OTHER_PREFIX", "ddMMyyyy HHmmss");
         DateFormat formatter = criteriaBuilder.getFormatter();
         Date date = new Date(0);
         assertEquals("31121969 210000", formatter.format(date));
@@ -76,50 +76,50 @@ public class CriteriaBuilderTests  {
     
     @Test
     public void segmentAppender() {
-        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR") instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR") instanceof OrmCriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR ", criteriaBuilder.getCriteriaAsString());
         assertEquals(1, criteriaBuilder.getSegmentCount());
     }
     
     @Test
     public void appendAndFirstSegment() {
-        assertTrue(criteriaBuilder.appendAnd() instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.appendAnd() instanceof OrmCriteriaBuilder);
         assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void appendAnd() {
-        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendAnd() instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendAnd() instanceof OrmCriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR AND ", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void appendAndFalse() {
-        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendAnd(false) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendAnd(false) instanceof OrmCriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR ", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void appendOrFirstSegment() {
-        assertTrue(criteriaBuilder.appendOr() instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.appendOr() instanceof OrmCriteriaBuilder);
         assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void appendOr() {
-        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendOr() instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendOr() instanceof OrmCriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR OR ", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void appendOrFalse() {
-        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendOr(false) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.appendSegment("FIELDNAME", "OPERATOR").appendOr(false) instanceof OrmCriteriaBuilder);
         assertEquals("PREFIX.FIELDNAME OPERATOR ", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void stringAppender() {
-        assertTrue(criteriaBuilder.append("STRING") instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append("STRING") instanceof OrmCriteriaBuilder);
         assertEquals("STRING ",criteriaBuilder.getCriteriaAsString());
     }
     
@@ -131,81 +131,81 @@ public class CriteriaBuilderTests  {
     
     @Test
     public void stringLikeAppender() {
-        assertTrue(criteriaBuilder.appendLike("STRING") instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.appendLike("STRING") instanceof OrmCriteriaBuilder);
         assertEquals("'%STRING%' ",criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void integerAppender() {
-        assertTrue(criteriaBuilder.append(Integer.MAX_VALUE) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(Integer.MAX_VALUE) instanceof OrmCriteriaBuilder);
         assertEquals("2147483647 ",criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void integerArrayAppender() {
     	int[] keys = new int[] { 1, 2, 3 };
-        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(keys) instanceof OrmCriteriaBuilder);
         assertEquals("(1, 2, 3) ", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void integerArrayAppenderSingle() {
     	int[] keys = new int[] { 1 };
-        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(keys) instanceof OrmCriteriaBuilder);
         assertEquals("(1) ", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void integerArrayAppenderEmpty() {
     	int[] keys = new int[0];
-        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(keys) instanceof OrmCriteriaBuilder);
         assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void longAppender() {
-        assertTrue(criteriaBuilder.append(Long.MAX_VALUE) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(Long.MAX_VALUE) instanceof OrmCriteriaBuilder);
         assertEquals("9223372036854775807 ",criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void longArrayAppender() {
     	long[] keys = new long[] { 1, 2, 3 };
-        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(keys) instanceof OrmCriteriaBuilder);
         assertEquals("(1, 2, 3) ", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void longArrayAppenderSingle() {
     	long[] keys = new long[] { 1 };
-        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(keys) instanceof OrmCriteriaBuilder);
         assertEquals("(1) ", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void longArrayAppenderEmpty() {
     	long[] keys = new long[0];
-        assertTrue(criteriaBuilder.append(keys) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(keys) instanceof OrmCriteriaBuilder);
         assertEquals("", criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void charAppender() {
-        assertTrue(criteriaBuilder.append('A') instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append('A') instanceof OrmCriteriaBuilder);
         assertEquals("'A' ",criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void dateAppender() {
-        assertTrue(criteriaBuilder.append(new Date(0)) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(new Date(0)) instanceof OrmCriteriaBuilder);
         assertEquals("'1969-12-31 21:00:00' ",criteriaBuilder.getCriteriaAsString());
     }
     
     @Test
     public void subCriteriaAppender() {
-        CriteriaBuilder subCriteriaBuilder = new CriteriaBuilder("PREFIX");
+        OrmCriteriaBuilder subCriteriaBuilder = new OrmCriteriaBuilder("PREFIX");
         subCriteriaBuilder.append("TEST");
-        assertTrue(criteriaBuilder.append(subCriteriaBuilder) instanceof CriteriaBuilder);
+        assertTrue(criteriaBuilder.append(subCriteriaBuilder) instanceof OrmCriteriaBuilder);
         assertEquals("(TEST ) ",criteriaBuilder.getCriteriaAsString());
     }
     
@@ -276,7 +276,7 @@ public class CriteriaBuilderTests  {
 //    
     @Before
     public void setUp() {
-        criteriaBuilder = new CriteriaBuilder("PREFIX");
+        criteriaBuilder = new OrmCriteriaBuilder("PREFIX");
     }
     
     //- user backed filter stub
@@ -306,8 +306,8 @@ public class CriteriaBuilderTests  {
 //		public List<?> getList() { return null; }
 //		public void setList(List<?> itemList) { }
 		@Override
-		public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
-		@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+		public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
+		@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 		public String getObjectAlias() { return "ALIAS"; }
     }
 

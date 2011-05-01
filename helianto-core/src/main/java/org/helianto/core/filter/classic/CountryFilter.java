@@ -19,7 +19,7 @@ package org.helianto.core.filter.classic;
 import java.io.Serializable;
 
 import org.helianto.core.Operator;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilter;
 
 /**
@@ -82,12 +82,12 @@ public class CountryFilter extends AbstractFilter implements Serializable {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("countryCode", getCountryCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("countryName", getCountryNameLike(), mainCriteriaBuilder);
 	}
 

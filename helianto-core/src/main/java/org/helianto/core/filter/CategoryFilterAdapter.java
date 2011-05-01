@@ -18,7 +18,7 @@ package org.helianto.core.filter;
 import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,32 +51,32 @@ public class CategoryFilterAdapter extends AbstractTrunkFilterAdapter<Category> 
 	}
 	
 	public void reset() {
-		getFilter().setCategoryCode("");
-		getFilter().setCategoryName("");
+		getForm().setCategoryCode("");
+		getForm().setCategoryName("");
 	}
 	
 	public boolean isSelection() {
-		return (getFilter().getCategoryCode().length()>0);
+		return (getForm().getCategoryCode().length()>0);
 	}
 
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
         super.preProcessFilter(mainCriteriaBuilder);
-        logger.debug("CategoryGroup is: '{}'", getFilter().getCategoryGroup());
+        logger.debug("CategoryGroup is: '{}'", getForm().getCategoryGroup());
         mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
-        .append(getFilter().getCategoryGroup());
+        .append(getForm().getCategoryGroup());
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
-        logger.debug("CategoryCode is: '{}'",getFilter().getCategoryCode());
-    	appendEqualFilter("categoryCode", getFilter().getCategoryCode(), mainCriteriaBuilder);
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
+        logger.debug("CategoryCode is: '{}'",getForm().getCategoryCode());
+    	appendEqualFilter("categoryCode", getForm().getCategoryCode(), (OrmCriteriaBuilder) mainCriteriaBuilder);
     	reset();
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("categoryName", getFilter().getCategoryName(), mainCriteriaBuilder);
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("categoryName", getForm().getCategoryName(), (OrmCriteriaBuilder) mainCriteriaBuilder);
 	}
 
     private static Logger logger = LoggerFactory.getLogger(CategoryFilterAdapter.class);

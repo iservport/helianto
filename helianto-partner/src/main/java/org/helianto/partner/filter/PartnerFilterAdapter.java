@@ -16,7 +16,7 @@
 package org.helianto.partner.filter;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.partner.Agent;
 import org.helianto.partner.Customer;
@@ -72,12 +72,12 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	 * Read entity from the associated partner registry.
 	 */
 	@Override
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("privateEntity.entity.id", entity.getId(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
@@ -85,12 +85,12 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("privateEntity.entityAlias", getFilter().getEntityAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("privateEntity.entityName", getFilter().getEntityName(), mainCriteriaBuilder);
 		appendEqualFilter("partnerState", getFilter().getPartnerState(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);

@@ -19,7 +19,7 @@ package org.helianto.core.filter.base;
 import java.util.Date;
 
 import org.helianto.core.TrunkEntity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.DateCriteriaBuilder;
 import org.helianto.core.filter.DateInterval;
 import org.slf4j.Logger;
@@ -80,7 +80,7 @@ public abstract class AbstractDateIntervalFilterAdapter<T extends TrunkEntity> e
 	}
     
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getDateFieldName().length()>0) {
 			appendDateInterval(mainCriteriaBuilder, getDateFieldName(), getDateInterval()); 
 		}
@@ -96,7 +96,7 @@ public abstract class AbstractDateIntervalFilterAdapter<T extends TrunkEntity> e
 		return this;
 	}
 	
-	public void appendDateInterval(CriteriaBuilder mainCriteriaBuilder, String dateFieldName, DateInterval dateInterval) {
+	public void appendDateInterval(OrmCriteriaBuilder mainCriteriaBuilder, String dateFieldName, DateInterval dateInterval) {
 		DateCriteriaBuilder dateCriteria = new DateCriteriaBuilder(mainCriteriaBuilder.getAlias(), dateFieldName);
 		dateCriteria.appendFromDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());	
 		dateCriteria.appendToDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());

@@ -1,7 +1,7 @@
 package org.helianto.resource.filter;
 
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.resource.ResourceAssociation;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class ResourceAssociationFilterAdapter extends AbstractFilterAdapter<Reso
 	 * Restrict selection to a given entity, if any. 
 	 */
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getFilter().getParent()!=null) {
 			appendEqualFilter("parent.id", getFilter().getParent().getId(), mainCriteriaBuilder);
 			setOrderByString("child.resourceCode");
@@ -50,12 +50,12 @@ public class ResourceAssociationFilterAdapter extends AbstractFilterAdapter<Reso
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("child.id", getFilter().getChild().getId(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
 	
 	private static Logger logger = LoggerFactory.getLogger(ResourceAssociationFilterAdapter.class);
 

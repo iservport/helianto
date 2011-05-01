@@ -1,6 +1,6 @@
 package org.helianto.document.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.document.Document;
 
 /**
@@ -25,7 +25,7 @@ public class DocumentFilterAdapter<T extends Document> extends AbstractDocumentF
 	}
 	
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("series.contentType", getContentType(), mainCriteriaBuilder);
 		appendEqualFilter("series.builderCode", getBuilderCode(), mainCriteriaBuilder);

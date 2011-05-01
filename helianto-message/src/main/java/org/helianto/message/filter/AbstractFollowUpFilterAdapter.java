@@ -16,7 +16,7 @@
 package org.helianto.message.filter;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.document.base.AbstractControl;
 import org.helianto.document.filter.AbstractRecordFilterAdapter;
 import org.helianto.message.AbstractFollowUp;
@@ -48,12 +48,12 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
     	getFilter().setNotificationOption(' ');
     }
 
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendSegment(new StringBuilder(getControlFieldName()).append(".entity.id").toString(), "=").append(entity.getId());
     }
     
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getParent()!=null) {
 	        logger.debug("Parent control is: '{}'", getParent());
@@ -69,7 +69,7 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("notificationOption", getFilter().getNotificationOption(), mainCriteriaBuilder);
 	}

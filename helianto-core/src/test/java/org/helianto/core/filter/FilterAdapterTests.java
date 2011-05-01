@@ -3,7 +3,7 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Test;
@@ -43,10 +43,10 @@ public class FilterAdapterTests {
 		public void reset() { }
 
 		@Override
-		protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+		protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 
 		@Override
-		public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 			appendEqualFilter("alias", getFilter().getUserKey(), mainCriteriaBuilder);
 			appendEqualFilter("userState", getFilter().getUserState(), mainCriteriaBuilder);
 			
@@ -70,10 +70,10 @@ public class FilterAdapterTests {
 		public void reset() { }
 
 		@Override
-		protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+		protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 
 		@Override
-		public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 			appendEqualFilter("type", getFilter().getUserType(), mainCriteriaBuilder);
 			
 		}

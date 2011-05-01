@@ -20,7 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -119,7 +119,7 @@ public abstract class AbstractDateRangeFilter extends AbstractUserBackedCriteria
 	}
     
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getDateFilterMode()!=DateFilterMode.DISABLE_DATE_RANGE 
 				&& getDateFieldName()!=null 
 				&& getDateFieldName().length()>0) {

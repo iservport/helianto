@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.filter.base.AbstractListFilter;
 import org.junit.Before;
@@ -115,9 +115,9 @@ public class ListFilterTests {
 		list = new ArrayList<String>();
 		filter = new AbstractListFilter() {
 			public String getObjectAlias() { return "TEST_ALIAS"; }
-			@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			@Override
-			public void doFilter(CriteriaBuilder mainCriteriaBuilder) { }
+			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			public void reset() { }
 		};
 		filter.setList(list);

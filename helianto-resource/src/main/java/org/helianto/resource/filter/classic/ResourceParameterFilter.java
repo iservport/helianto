@@ -17,7 +17,7 @@
 package org.helianto.resource.filter.classic;
 
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 
 /**
@@ -61,12 +61,12 @@ public class ResourceParameterFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("parameterCode", getParameterCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("parameterName", getParameterNameLike(), mainCriteriaBuilder);
 		appendOrderBy("parameterCode", mainCriteriaBuilder);
 	}

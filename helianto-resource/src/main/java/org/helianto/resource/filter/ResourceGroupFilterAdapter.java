@@ -16,7 +16,7 @@
 
 package org.helianto.resource.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.resource.Resource;
@@ -69,7 +69,7 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	}
 	
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 	        logger.debug("Resource group class is: '{}'", getClazz());
@@ -78,12 +78,12 @@ public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<Resou
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("resourceCode", getForm().getResourceCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getParent()!=null) {
 			mainCriteriaBuilder.appendAnd().append("parentAssociation.parent.id =").append(getParent().getId());
 			mainCriteriaBuilder.addSegmentCount(1);

@@ -16,7 +16,7 @@
 package org.helianto.core.filter.classic;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractListFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +70,7 @@ public abstract class AbstractEntityBackedFilter extends AbstractListFilter impl
 	 * Delegate criteria creation to a chain of processors.
 	 */
 	public final String createCriteriaAsString(boolean requireEntity) {
-        CriteriaBuilder mainCriteriaBuilder = new CriteriaBuilder(getObjectAlias());
+        OrmCriteriaBuilder mainCriteriaBuilder = new OrmCriteriaBuilder(getObjectAlias());
         if (requireEntity && getEntity()==null) {
             throw new IllegalArgumentException("User or entity required!");
         }
@@ -86,7 +86,7 @@ public abstract class AbstractEntityBackedFilter extends AbstractListFilter impl
      * @param entity
 	 * @param mainCriteriaBuilder
      */
-	protected void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendSegment("entity.id", "=")
         .append(entity.getId());
 		logger.debug("Filter entity constraint set to {}", entity.getAlias());

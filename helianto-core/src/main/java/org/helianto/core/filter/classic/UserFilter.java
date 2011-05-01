@@ -23,7 +23,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserState;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,14 +137,14 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 	
 	
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getIdentity()!=null) {
 			appendEqualFilter("identity.id", getIdentity().getId(), mainCriteriaBuilder);
 		}
@@ -154,7 +154,7 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
 		}
@@ -174,7 +174,7 @@ public class UserFilter extends AbstractUserBackedCriteriaFilter implements Poly
      * @param filter
      * @param criteriaBuilder
      */
-    protected void appendExclusionsFilter(CriteriaBuilder criteriaBuilder) {
+    protected void appendExclusionsFilter(OrmCriteriaBuilder criteriaBuilder) {
         if (getExclusions()!=null && getExclusions().size() > 0) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Found "+getExclusions().size()+" exclusion(s).");

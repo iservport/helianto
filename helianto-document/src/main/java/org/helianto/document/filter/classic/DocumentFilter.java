@@ -17,7 +17,7 @@
 package org.helianto.document.filter.classic;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 
 /**
  * Document filter.
@@ -52,7 +52,7 @@ public class DocumentFilter extends AbstractDocumentFilter {
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("documentCodeBuilder.contentType", getContentType(), mainCriteriaBuilder);
 		appendEqualFilter("documentCodeBuilder.builderCode", getBuilderCode(), mainCriteriaBuilder);

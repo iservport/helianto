@@ -15,7 +15,7 @@
 
 package org.helianto.inventory.filter.classic;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 
 /**
@@ -39,7 +39,7 @@ public class PickingFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
 	}
 
@@ -48,7 +48,7 @@ public class PickingFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 	}
 	
 	public String getObjectAlias() {

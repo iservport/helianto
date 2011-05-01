@@ -1,7 +1,7 @@
 package org.helianto.core.filter.base;
 
 import org.helianto.core.Operator;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.number.Numerable;
 
 /**
@@ -49,12 +49,12 @@ public abstract class AbstractNumberFilterAdapterDecorator <T extends Numerable>
 	public boolean isSelection() { return getFilter().getPublicNumber()>0; }
 	
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("publicNumber", getFilter().getPublicNumber(), mainCriteriaBuilder);
 	}
 	
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (decoratedFilter!=null) {
 			decoratedFilter.doFilter(mainCriteriaBuilder);
 		}

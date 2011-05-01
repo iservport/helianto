@@ -15,7 +15,7 @@
 
 package org.helianto.document.filter.classic;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractDateRangeFilter;
 
 /**
@@ -48,7 +48,7 @@ public abstract class AbstractEventFilter extends AbstractDateRangeFilter {
 	}
 	
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
 	}
 	

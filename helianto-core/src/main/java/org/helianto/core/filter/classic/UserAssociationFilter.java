@@ -2,7 +2,7 @@ package org.helianto.core.filter.classic;
 
 import org.helianto.core.Identity;
 import org.helianto.core.UserGroup;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.ListFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class UserAssociationFilter extends AbstractCompositeListFilter {
 	}
 	
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
 		if (isSyncParent() && getParentItem()!=null) {
 			setParent((UserGroup) getParentItem());
@@ -54,7 +54,7 @@ public class UserAssociationFilter extends AbstractCompositeListFilter {
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getParent()!=null) {
 			appendEqualFilter("parent.id", getParent().getId(), mainCriteriaBuilder);
 		}
@@ -68,7 +68,7 @@ public class UserAssociationFilter extends AbstractCompositeListFilter {
 	}
 	
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("parent.id", getParent().getId(), mainCriteriaBuilder);
 		appendEqualFilter("child.id", getChild().getId(), mainCriteriaBuilder);
 	}

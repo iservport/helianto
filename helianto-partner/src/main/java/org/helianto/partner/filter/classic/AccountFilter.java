@@ -17,7 +17,7 @@
 package org.helianto.partner.filter.classic;
 
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 
 /**
@@ -67,12 +67,12 @@ public class AccountFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("accountCode", getAccountCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("accountNameLike", getAccountNameLike(), mainCriteriaBuilder);
 		appendEqualFilter("accountType", getAccountType(), mainCriteriaBuilder);
 		appendOrderBy("accountCode", mainCriteriaBuilder);

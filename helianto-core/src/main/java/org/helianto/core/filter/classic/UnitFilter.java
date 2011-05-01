@@ -18,7 +18,7 @@ package org.helianto.core.filter.classic;
 import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 
 /**
  * Unit filter.
@@ -79,14 +79,14 @@ public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
     	if (getCategoryGroup()!=null) {
         	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), mainCriteriaBuilder);
     	}
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
     	if (getCategory()!=null) {
         	appendEqualFilter("category.id", getCategory().getId(), mainCriteriaBuilder);
     	}
@@ -94,7 +94,7 @@ public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
     	appendEqualFilter("unitCode", getUnitCode(), mainCriteriaBuilder);
 	}
 

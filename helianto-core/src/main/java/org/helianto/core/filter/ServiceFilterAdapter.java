@@ -18,7 +18,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 
 /**
@@ -56,11 +56,11 @@ public class ServiceFilterAdapter extends AbstractRootFilterAdapter<Service> {
 	public void reset() { }
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("serviceName", getFilter().getServiceName(), mainCriteriaBuilder);
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) { }
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 
 }

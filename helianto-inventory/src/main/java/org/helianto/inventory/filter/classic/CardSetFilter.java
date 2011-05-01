@@ -4,7 +4,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 import org.helianto.process.Process;
 
@@ -46,12 +46,12 @@ public class CardSetFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("internalNumber", getInternalNumber(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("cardType", getCardType(), mainCriteriaBuilder);
 		if (getProcess()!=null) {
 			appendEqualFilter("processDocument.id", getProcess().getId(), mainCriteriaBuilder);
@@ -60,7 +60,7 @@ public class CardSetFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected final void appendEntityFilter(Entity entity, CriteriaBuilder mainCriteriaBuilder) {
+	protected final void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendSegment("entity.id", "=")
         .append(entity.getId());
     }

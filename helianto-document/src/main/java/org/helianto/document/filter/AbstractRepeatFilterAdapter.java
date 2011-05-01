@@ -15,7 +15,7 @@
 
 package org.helianto.document.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
 import org.helianto.document.Repeatable;
@@ -49,7 +49,7 @@ public abstract class AbstractRepeatFilterAdapter <T extends Repeatable> extends
 	}
 	
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendEqualFilter("trackingMode", getFilter().getTrackingMode(), mainCriteriaBuilder);
 		appendEqualFilter("frequency", getFilter().getFrequency(), mainCriteriaBuilder);

@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Prioritizable;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
@@ -21,7 +21,7 @@ import org.junit.Test;
 public class FilterTests {
 	
 	private FilterStub filter;
-	private CriteriaBuilder createdCriteriaBuilder, preProcessedCriteriaBuilder, selectionCriteriaBuilder, filterCriteriaBuilder, postProcessedCriteriaBuilder;
+	private OrmCriteriaBuilder createdCriteriaBuilder, preProcessedCriteriaBuilder, selectionCriteriaBuilder, filterCriteriaBuilder, postProcessedCriteriaBuilder;
 	private boolean selection, reset;
 	private String orderBy = "";
 	
@@ -145,11 +145,11 @@ public class FilterTests {
 	
 	@Before
 	public void setUp() {
-		createdCriteriaBuilder = new CriteriaBuilder("CREATED");
-		preProcessedCriteriaBuilder = new CriteriaBuilder("PREPROC");
-		selectionCriteriaBuilder = new CriteriaBuilder("SELECTION");
-		filterCriteriaBuilder = new CriteriaBuilder("FILTER");
-		postProcessedCriteriaBuilder = new CriteriaBuilder("POSTPROC");
+		createdCriteriaBuilder = new OrmCriteriaBuilder("CREATED");
+		preProcessedCriteriaBuilder = new OrmCriteriaBuilder("PREPROC");
+		selectionCriteriaBuilder = new OrmCriteriaBuilder("SELECTION");
+		filterCriteriaBuilder = new OrmCriteriaBuilder("FILTER");
+		postProcessedCriteriaBuilder = new OrmCriteriaBuilder("POSTPROC");
 		filter = new FilterStub();
 	}
 	
@@ -161,69 +161,69 @@ public class FilterTests {
 		
 		public String getObjectAlias() { return "TEST_ALIAS"; }
 		
-		@Override protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+		@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 			selectionCriteriaBuilder = mainCriteriaBuilder;
 		}
 		
 		@Override
-		public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+		public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 			filterCriteriaBuilder = mainCriteriaBuilder;
 		}
 		
 		@Override
-		public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
+		public String createCriteriaAsString(OrmCriteriaBuilder mainCriteriaBuilder) {
 			createdCriteriaBuilder = mainCriteriaBuilder;
 			return super.createCriteriaAsString(mainCriteriaBuilder);
 		}
 		
 		@Override
-		public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 			super.preProcessFilter(mainCriteriaBuilder);
 			preProcessedCriteriaBuilder = mainCriteriaBuilder;
 		}
 		
-		@Override protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+		@Override protected void postProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 			super.postProcessFilter(mainCriteriaBuilder);
 			postProcessedCriteriaBuilder = mainCriteriaBuilder;
 		}
 		
 		@Override
-		protected void appendEqualFilter(String fieldName, char fieldContent, CriteriaBuilder criteriaBuilder) {
+		protected void appendEqualFilter(String fieldName, char fieldContent, OrmCriteriaBuilder criteriaBuilder) {
 			super.appendEqualFilter(fieldName, fieldContent, criteriaBuilder);
 		}
 		
 		@Override
-		protected void appendEqualFilter(String fieldName, int fieldContent, boolean ignoreOnlyIfNegative, CriteriaBuilder criteriaBuilder) {
+		protected void appendEqualFilter(String fieldName, int fieldContent, boolean ignoreOnlyIfNegative, OrmCriteriaBuilder criteriaBuilder) {
 			super.appendEqualFilter(fieldName, fieldContent, ignoreOnlyIfNegative, criteriaBuilder);
 		}
 		
 		@Override
-		protected void appendEqualFilter(String fieldName, int fieldContent, CriteriaBuilder criteriaBuilder) {
+		protected void appendEqualFilter(String fieldName, int fieldContent, OrmCriteriaBuilder criteriaBuilder) {
 			super.appendEqualFilter(fieldName, fieldContent, criteriaBuilder);
 		}
 		
 		@Override
-		protected void appendEqualFilter(String fieldName, long fieldContent, CriteriaBuilder criteriaBuilder) {
+		protected void appendEqualFilter(String fieldName, long fieldContent, OrmCriteriaBuilder criteriaBuilder) {
 			super.appendEqualFilter(fieldName, fieldContent, criteriaBuilder);
 		}
 		
 		@Override
-		protected void appendEqualFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+		protected void appendEqualFilter(String fieldName, String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
 			super.appendEqualFilter(fieldName, fieldContent, criteriaBuilder);
 		}
 		
 		@Override
-		protected void appendLikeCaseFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+		protected void appendLikeCaseFilter(String fieldName, String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
 			super.appendLikeCaseFilter(fieldName, fieldContent, criteriaBuilder);
 		}
 		
 		@Override
-		protected void appendLikeFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+		protected void appendLikeFilter(String fieldName, String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
 			super.appendLikeFilter(fieldName, fieldContent, criteriaBuilder);
 		}
 		
 		@Override
-		protected void appendPriorityRange(Prioritizable sample, CriteriaBuilder mainCriteriaBuilder) {
+		protected void appendPriorityRange(Prioritizable sample, OrmCriteriaBuilder mainCriteriaBuilder) {
 			super.appendPriorityRange(sample, mainCriteriaBuilder);
 		}
 		

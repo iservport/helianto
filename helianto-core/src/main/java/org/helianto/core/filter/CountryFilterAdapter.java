@@ -17,7 +17,7 @@
 package org.helianto.core.filter;
 
 import org.helianto.core.Country;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 
 /**
@@ -52,12 +52,12 @@ public class CountryFilterAdapter extends AbstractRootFilterAdapter<Country> {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("countryCode", getFilter().getCountryCode(), mainCriteriaBuilder);
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("countryName", getFilter().getCountryName(), mainCriteriaBuilder);
 	}
 

@@ -16,7 +16,7 @@
 package org.helianto.partner.filter;
 
 import org.helianto.core.Entity;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.partner.PrivateEntity;
 
@@ -58,12 +58,12 @@ public class PrivateEntityFilterAdapter extends AbstractTrunkFilterAdapter<Priva
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("entityName", getFilter().getEntityName(), mainCriteriaBuilder);
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("entityAlias",getFilter(). getEntityAlias(), mainCriteriaBuilder);
 	}
 

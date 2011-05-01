@@ -17,7 +17,7 @@ package org.helianto.core.filter.base;
 
 import java.io.Serializable;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.CriteriaFilter;
 import org.helianto.core.filter.ParentFilter;
 import org.helianto.core.filter.PolymorphicFilter;
@@ -68,7 +68,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 * Delegate criteria creation to a builder.
 	 */
 	public String createCriteriaAsString() {
-        return createCriteriaAsString(new CriteriaBuilder(getObjectAlias()));
+        return createCriteriaAsString(new OrmCriteriaBuilder(getObjectAlias()));
     }
 	
 	/**
@@ -76,13 +76,15 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	public String createCriteriaAsString(CriteriaBuilder mainCriteriaBuilder) {
+	public String createCriteriaAsString(OrmCriteriaBuilder mainCriteriaBuilder) {
         preProcessFilter(mainCriteriaBuilder);
         if (isSelection()) {
+        	logger.debug("Filter in 'selection' mode.");
         	doSelect(mainCriteriaBuilder);
         	reset();
         }
         else {
+        	logger.debug("Filter in 'filter' mode.");
         	doFilter(mainCriteriaBuilder);
             postProcessFilter(mainCriteriaBuilder);
         }
@@ -110,7 +112,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 * @param filter
 	 * @param mainCriteriaBuilder
 	 */
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (this instanceof PolymorphicFilter<?> && ((PolymorphicFilter<?>) this).getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(((PolymorphicFilter<?>) this).getClazz());
 			logger.debug("Class restriction applied using {}.", ((PolymorphicFilter<?>) this).getClazz());
@@ -134,21 +136,21 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	protected abstract void doSelect(CriteriaBuilder mainCriteriaBuilder);
+	protected abstract void doSelect(OrmCriteriaBuilder mainCriteriaBuilder);
 	
 	/**
 	 * Hook to the filter processor.
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	public abstract void doFilter(CriteriaBuilder mainCriteriaBuilder);
+	public abstract void doFilter(OrmCriteriaBuilder mainCriteriaBuilder);
 	
 	/**
 	 * Hook to the filter post-processor.
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	protected void postProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	protected void postProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 	}
 		
 	// appenders
@@ -160,7 +162,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * @param fieldContent
      * @param criteriaBuilder
      */
-    protected void appendEqualFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+    protected void appendEqualFilter(String fieldName, String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
     	if (fieldContent!=null && fieldContent.length()>0) {
             criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
             .appendString(fieldContent);
@@ -174,7 +176,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * @param fieldContent
      * @param criteriaBuilder
      */
-    protected void appendEqualFilter(String fieldName, int fieldContent, CriteriaBuilder criteriaBuilder) {
+    protected void appendEqualFilter(String fieldName, int fieldContent, OrmCriteriaBuilder criteriaBuilder) {
     	appendEqualFilter(fieldName, fieldContent, false, criteriaBuilder);
     }
     
@@ -186,7 +188,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * @param ignoreOnlyIfNegative
      * @param criteriaBuilder
      */
-    protected void appendEqualFilter(String fieldName, int fieldContent, boolean ignoreOnlyIfNegative, CriteriaBuilder criteriaBuilder) {
+    protected void appendEqualFilter(String fieldName, int fieldContent, boolean ignoreOnlyIfNegative, OrmCriteriaBuilder criteriaBuilder) {
     	if ((!ignoreOnlyIfNegative && fieldContent>0) | (ignoreOnlyIfNegative && fieldContent>=0)) {
             criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
             .append(fieldContent);
@@ -200,7 +202,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * @param fieldContent
      * @param criteriaBuilder
      */
-    protected void appendEqualFilter(String fieldName, long fieldContent, CriteriaBuilder criteriaBuilder) {
+    protected void appendEqualFilter(String fieldName, long fieldContent, OrmCriteriaBuilder criteriaBuilder) {
     	if (fieldContent>0) {
             criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
             .append(fieldContent);
@@ -214,7 +216,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * @param fieldContent
      * @param criteriaBuilder
      */
-    protected void appendEqualFilter(String fieldName, char fieldContent, CriteriaBuilder criteriaBuilder) {
+    protected void appendEqualFilter(String fieldName, char fieldContent, OrmCriteriaBuilder criteriaBuilder) {
     	if (fieldContent!=' ') {
             criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
             .append(fieldContent);
@@ -228,7 +230,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * @param fieldContent
      * @param criteriaBuilder
      */
-    protected void appendLikeCaseFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+    protected void appendLikeCaseFilter(String fieldName, String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
     	if (fieldContent!=null && fieldContent.length()>0) {
     		criteriaBuilder.appendAnd().appendSegment(fieldName, "like")
             .appendLike(fieldContent);
@@ -242,7 +244,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * @param fieldContent
      * @param criteriaBuilder
      */
-    protected void appendLikeFilter(String fieldName, String fieldContent, CriteriaBuilder criteriaBuilder) {
+    protected void appendLikeFilter(String fieldName, String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
     	if (fieldContent!=null && fieldContent.length()>0) {
     		criteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
             .appendLike(fieldContent.toLowerCase());

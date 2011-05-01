@@ -17,7 +17,7 @@ package org.helianto.core.filter.classic;
 
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,7 +64,7 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	public void preProcessFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
         // force to filter by group
         logger.debug("CategoryGroup is: '{}'", getCategoryGroup());
         mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
@@ -72,14 +72,14 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
         logger.debug("CategoryCode is: '{}'",getCategoryCode());
     	appendEqualFilter("categoryCode", getCategoryCode(), mainCriteriaBuilder);
     	reset();
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("categoryNameLike", getCategoryNameLike(), mainCriteriaBuilder);
 	}
 

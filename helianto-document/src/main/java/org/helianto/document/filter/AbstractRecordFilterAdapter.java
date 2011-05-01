@@ -15,7 +15,7 @@
 
 package org.helianto.document.filter;
 
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
 import org.helianto.document.Recordable;
@@ -49,7 +49,7 @@ public abstract class AbstractRecordFilterAdapter <T extends Recordable> extends
 	}
 	
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendResolution(mainCriteriaBuilder);
 		appendEqualFilter("complete", getFilter().getComplete(), true, mainCriteriaBuilder);
@@ -60,7 +60,7 @@ public abstract class AbstractRecordFilterAdapter <T extends Recordable> extends
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
-	protected void appendResolution(CriteriaBuilder mainCriteriaBuilder) {
+	protected void appendResolution(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("resolution", getFilter().getResolution(), mainCriteriaBuilder);
 	}
 

@@ -18,7 +18,7 @@ package org.helianto.core.filter.classic;
 
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 
 /**
  * <code>UserLog</code> filter.
@@ -53,7 +53,7 @@ public class UserLogFilter extends AbstractDateRangeFilter {
 	}
 
 	@Override
-	public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 //		mainCriteriaBuilder.appendDateRange("lastEvent", this);
 		if (getIdentity()!=null) {
 			appendEqualFilter("user.identity.id", getIdentity().getId(), mainCriteriaBuilder);
@@ -61,7 +61,7 @@ public class UserLogFilter extends AbstractDateRangeFilter {
 	}
 
 	@Override
-	protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 	}
 
 	/**

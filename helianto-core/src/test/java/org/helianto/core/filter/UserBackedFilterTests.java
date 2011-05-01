@@ -7,7 +7,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.TrunkEntity;
 import org.helianto.core.User;
-import org.helianto.core.criteria.CriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractUserFilterAdapter;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,11 +51,11 @@ public class UserBackedFilterTests {
 			@Override
 			public boolean isSelection() { return keyField.length()>0; };
 			@Override
-			protected void doSelect(CriteriaBuilder mainCriteriaBuilder) {
+			protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 				appendEqualFilter("keyField", keyField, mainCriteriaBuilder);
 			}
 			@Override
-			public void doFilter(CriteriaBuilder mainCriteriaBuilder) {
+			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 				appendEqualFilter("filterField", filterField, mainCriteriaBuilder);
 			}
 		};
