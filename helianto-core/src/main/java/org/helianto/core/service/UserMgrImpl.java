@@ -82,9 +82,11 @@ public class UserMgrImpl implements UserMgr {
 
     public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions) {
         List<Identity> identityList = (List<Identity>) identityDao.find(filter);
-        logger.debug("Found {} item(s)", identityList.size());
-        identityList.removeAll(exclusions);
-        logger.debug("Removed {} item(s)", exclusions.size());
+        logger.debug("Found {} item(s).", identityList.size());
+        if (exclusions!=null) {
+            identityList.removeAll(exclusions);
+            logger.debug("Removed {} item(s)", exclusions.size());
+        }
         return identityList ;
     }
 
