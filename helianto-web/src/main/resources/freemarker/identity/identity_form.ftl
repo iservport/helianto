@@ -1,5 +1,7 @@
 <div id="panel">
 
+	<h2>Principal: ${identity.principal}</h2>
+
 	<form method="POST">
 	
 		<p>Optional alias</p>

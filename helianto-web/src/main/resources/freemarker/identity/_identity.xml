@@ -20,7 +20,7 @@
 		<transition on="success"  to="selection.view" />
 	</action-state>
 	
-	<view-state id="selection.view" view="/frame2" model="identity">
+	<view-state id="selection.view" view="/frame2" model="identityModel">
 
 		<on-render>
 			<set name="viewScope.sidebar"  value="'identity_bar'" />
@@ -34,7 +34,9 @@
 	<action-state id="filter">
 		<evaluate expression="identityAction.filter(flowScope, currentUser.principal)" />
 		<transition on="create" to="edit.view" />
-		<transition on="use"    to="selection.view" />
+		<transition on="use"    to="selection.view" >
+			<set name="flowScope.identity"  value="identityModel.item"/>
+		</transition>
 	</action-state>
 	
 	<view-state id="edit.view" view="/frame2" model="identity">

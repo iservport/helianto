@@ -23,10 +23,6 @@ package org.helianto.core;
 public enum IdentityType {
     
     /**
-     * The identity will be supplied to an user group.
-     */
-    GROUP('G'),
-    /**
      * The identity principal may not be used as email.
      */
     NOT_ADDRESSABLE('N'),

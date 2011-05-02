@@ -21,11 +21,18 @@ public class UserAssociationActionImpl extends UserGroupAssociationActionImpl {
 	
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Requires a parent and an identity to create an user assocition.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 */
 	@Override
 	protected UserAssociation doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		UserGroup parent = getParent(attributes);
-		if (parent!=null) {
-			UserGroup child = new User(parent, new Credential(new Identity(""), "123456"));
+		Identity identity = (Identity) attributes.get("identity");
+		if (parent!=null && identity!=null) {
+			UserGroup child = new User(parent, new Credential(identity, "123456"));
 			logger.debug("Association has {} and {}.", parent, child);
 		    return new UserAssociation(parent, child);
 		}

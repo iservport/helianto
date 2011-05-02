@@ -67,12 +67,20 @@ public interface UserMgr {
     public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions);
     
     /**
-     * Store the given <code>Identity</code> and return a managed object.
+     * Store the given <code>Identity</code>.
      * 
      * @param identity
      */
     public Identity storeIdentity(Identity identity);
     
+    /**
+     * Store the given <code>Identity</code>.
+     * 
+     * @param identity
+     * @param generate
+     */
+	public Identity storeIdentity(Identity identity, boolean generate);
+	
     /**
      * Create and prepare <code>UserGroup</code> in session.
      * 

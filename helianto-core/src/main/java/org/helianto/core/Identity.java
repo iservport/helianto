@@ -97,8 +97,8 @@ public class Identity implements java.io.Serializable {
     public Identity() {
         setPersonalData(new PersonalData());
         setCreated(new Date());
-        setIdentityType(IdentityType.EMAIL.getValue());
-        setNotification(Notification.AUTOMATIC.getValue());
+        setIdentityTypeAsEnum(IdentityType.EMAIL);
+        setNotificationAsEnum(Notification.AUTOMATIC);
     }
 
     /** 
@@ -248,7 +248,7 @@ public class Identity implements java.io.Serializable {
     public void setIdentityType(char identityType) {
         this.identityType = identityType;
     }
-    public void setIdentityType(IdentityType identityType) {
+    public void setIdentityTypeAsEnum(IdentityType identityType) {
         this.identityType = identityType.getValue();
     }
 
@@ -261,7 +261,7 @@ public class Identity implements java.io.Serializable {
     public void setNotification(char notification) {
         this.notification = notification;
     }
-    public void setNotification(Notification notification) {
+    public void setNotificationAsEnum(Notification notification) {
         this.notification = notification.getValue();
     }
     

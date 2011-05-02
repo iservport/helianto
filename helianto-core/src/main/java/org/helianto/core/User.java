@@ -61,7 +61,7 @@ public class User extends UserGroup implements PersonalEntity {
     public User() {
     	super();
         setAccountNonExpired(false);
-    	setUserType(UserType.INTERNAL);
+    	setUserTypeAsEnum(UserType.INTERNAL);
     	setPrivacyLevel('0');
     }
 
@@ -183,7 +183,7 @@ public class User extends UserGroup implements PersonalEntity {
     public void setUserType(char userType) {
         this.userType = userType;
     }
-    public void setUserType(UserType userType) {
+    public void setUserTypeAsEnum(UserType userType) {
         this.userType = userType.getValue();
     }
 

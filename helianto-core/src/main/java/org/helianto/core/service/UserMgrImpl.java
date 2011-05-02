@@ -91,7 +91,17 @@ public class UserMgrImpl implements UserMgr {
     }
 
     /**
-     * Store the given <code>Identity</code> and return a managed object.
+     * Store the given <code>Identity</code>.
+     * 
+     * @param identity
+     */
+	public Identity storeIdentity(Identity identity) {
+		identityDao.saveOrUpdate(identity);
+		return identity;
+	}
+	
+    /**
+     * Store the given <code>Identity</code>.
      * 
      * <p>
      * This implementation also checks for a previous identity with the same 
@@ -100,19 +110,23 @@ public class UserMgrImpl implements UserMgr {
      * because no integrity violation exception is allowed.</p>
      * 
      * @param identity
+     * @param generate
      */
-	public Identity storeIdentity(Identity identity) {
-		int attemptCount = 0;
-		principalGenerationStrategy.generatePrincipal(identity, attemptCount);
-		if (identity.getId()==0) {
-			logger.debug("Identity with principal {} is likely new.", identity.getPrincipal());
-			Identity checkForPreviousIdentity = (Identity) identityDao.findUnique(identity.getPrincipal());
-			if (checkForPreviousIdentity!=null) {
-				logger.warn("Found previous identity with same principal as new indentity: {}, rejecting.", checkForPreviousIdentity);
-				throw new DuplicateIdentityException(checkForPreviousIdentity, "Found previous identity with same principal as new indentity");
+	public Identity storeIdentity(Identity identity, boolean generate) {
+		if (generate) {
+			int attemptCount = 0;
+			principalGenerationStrategy.generatePrincipal(identity, attemptCount);
+			if (identity.getId()==0) {
+				logger.debug("Identity with principal {} is likely new.", identity.getPrincipal());
+				Identity checkForPreviousIdentity = (Identity) identityDao.findUnique(identity.getPrincipal());
+				if (checkForPreviousIdentity!=null) {
+					logger.warn("Found previous identity with same principal as new indentity: {}, rejecting.", checkForPreviousIdentity);
+					throw new DuplicateIdentityException(checkForPreviousIdentity, "Found previous identity with same principal as new indentity");
+				}
 			}
 		}
-		return identityDao.merge(identity);
+		identityDao.saveOrUpdate(identity);
+		return identity;
 	}
 	
 	/**

@@ -62,18 +62,18 @@ public class UserMgrImplTests {
 	 */
 	@Test
     public void storeNewIdentity() {
-        Identity managedIdentity = null, identity = new Identity();
+        Identity identity = new Identity();
         identity.setPrincipal("principal");
         
         principalGenerationStrategy.generatePrincipal(identity, 0);
         replay(principalGenerationStrategy);
         
-        expect(identityDao.merge(identity)).andReturn(managedIdentity);
+        identityDao.saveOrUpdate(identity);
         // null below means no duplication in the db
         expect(identityDao.findUnique(identity.getPrincipal())).andReturn(null);
         replay(identityDao);
         
-        assertSame(managedIdentity, userMgr.storeIdentity(identity));
+        assertSame(identity, userMgr.storeIdentity(identity, true));
         verify(identityDao);
         verify(principalGenerationStrategy);
     }
@@ -82,21 +82,15 @@ public class UserMgrImplTests {
 	 * Existing identity is persisted.
 	 */
 	@Test
-    public void storeExistingIdentity() {
-        Identity managedIdentity = null, identity = new Identity();
+    public void storeIdentity() {
+        Identity identity = new Identity();
         identity.setPrincipal("principal");
-        // id other than zero is our best guess to say the identity is not new
-        identity.setId(1);
         
-        principalGenerationStrategy.generatePrincipal(identity, 0);
-        replay(principalGenerationStrategy);
-        
-        expect(identityDao.merge(identity)).andReturn(managedIdentity);
+        identityDao.saveOrUpdate(identity);
         replay(identityDao);
         
-        assertSame(managedIdentity, userMgr.storeIdentity(identity));
+        assertSame(identity, userMgr.storeIdentity(identity));
         verify(identityDao);
-        verify(principalGenerationStrategy);
     }
     
 	/**
@@ -112,11 +106,10 @@ public class UserMgrImplTests {
         principalGenerationStrategy.generatePrincipal(identity, 0);
         replay(principalGenerationStrategy);
         
-//        expect(identityDao.merge(identity)).andReturn(managedIdentity);
         expect(identityDao.findUnique(identity.getPrincipal())).andReturn(checkForPreviousIdentity);
         replay(identityDao);
         
-        assertSame(managedIdentity, userMgr.storeIdentity(identity));
+        assertSame(managedIdentity, userMgr.storeIdentity(identity, true));
         verify(identityDao);
         verify(principalGenerationStrategy);
     }

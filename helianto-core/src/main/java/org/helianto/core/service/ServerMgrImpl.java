@@ -23,7 +23,6 @@ import javax.annotation.Resource;
 import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
-import org.helianto.core.IdentityType;
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
@@ -120,12 +119,6 @@ public class ServerMgrImpl  implements ServerMgr {
         return userRole;
     }
 
-    protected Identity createGroupIdentity(String groupName) {
-    	Identity groupIdentity = Identity.identityFactory(groupName, groupName);
-        groupIdentity.setIdentityType(IdentityType.GROUP.getValue());
-    	return groupIdentity;
-    }
-    
     protected UserGroup grant(Entity entity, String serviceName, String[] extensions) {
         UserGroup userGroup = findOrCreateUserGroup(entity, serviceName);
         Service service = findOrCreateService(entity, serviceName);
