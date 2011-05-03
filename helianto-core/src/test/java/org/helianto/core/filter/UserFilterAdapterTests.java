@@ -23,18 +23,18 @@ public class UserFilterAdapterTests {
 	
 	@Test
 	public void constructor() {
-		assertSame(target, filter.getFilter());
+		assertSame(target, filter.getForm());
 		
 		Entity entity = new Entity();
 		filter = new UserFilterAdapter(entity, "OTHERKEY");
-		assertSame(entity, filter.getFilter().getEntity());
-		assertEquals("OTHERKEY", filter.getFilter().getUserKey());
+		assertSame(entity, filter.getForm().getEntity());
+		assertEquals("OTHERKEY", filter.getForm().getUserKey());
 		
 		Identity identity = new Identity("PRINCIPAL");
 		filter = new UserFilterAdapter(entity, identity);
-		assertSame(entity, filter.getFilter().getEntity());
-		assertEquals("principal", filter.getFilter().getUserKey());
-		assertSame(identity, ((User)filter.getFilter()).getIdentity());
+		assertSame(entity, filter.getForm().getEntity());
+		assertEquals("principal", filter.getForm().getUserKey());
+		assertSame(identity, ((User)filter.getForm()).getIdentity());
 	}
 	
 	static String S1 = "select alias from UserGroup alias ";

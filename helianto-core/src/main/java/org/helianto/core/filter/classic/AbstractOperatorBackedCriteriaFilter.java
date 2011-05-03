@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @deprecated see AbstractRootFilterAdapter
  */
 @SuppressWarnings("serial")
-public abstract class AbstractOperatorBackedCriteriaFilter extends AbstractListFilter implements OperatorBackedFilter {
+public abstract class AbstractOperatorBackedCriteriaFilter extends AbstractListFilter {
 	
     private Operator operator;
     

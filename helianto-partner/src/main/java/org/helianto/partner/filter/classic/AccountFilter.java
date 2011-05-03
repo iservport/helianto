@@ -16,7 +16,6 @@
 
 package org.helianto.partner.filter.classic;
 
-import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 
@@ -26,15 +25,6 @@ import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
  */
 public class AccountFilter extends AbstractUserBackedCriteriaFilter {
 	
-	/**
-	 * Factory method.
-	 * 
-	 * @param user
-	 */
-	public static AccountFilter accountFilterFactory(User user) {
-		return AbstractUserBackedCriteriaFilter.filterFactory(AccountFilter.class, user);
-	}
-
 	private static final long serialVersionUID = 1L;
     private String accountCode;
     private String accountNameLike;

@@ -18,7 +18,6 @@ package org.helianto.core.filter.base;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.filter.ListFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractListFilter extends AbstractFilter implements ListFilter {
+public abstract class AbstractListFilter extends AbstractFilter {
 	
 	private List<?> list;
     private Entity entity;

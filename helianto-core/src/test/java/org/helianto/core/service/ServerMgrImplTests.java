@@ -29,7 +29,7 @@ import java.util.List;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Server;
-import org.helianto.core.filter.classic.ServerFilter;
+import org.helianto.core.filter.ServerFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class ServerMgrImplTests {
     	Operator operator = new Operator();
     	List<Server> serverList = new ArrayList<Server>();
     	
-    	expect(serverDao.find(isA(ServerFilter.class))).andReturn(serverList);
+    	expect(serverDao.find(isA(ServerFilterAdapter.class))).andReturn(serverList);
     	replay(serverDao);
     	
     	assertNull(serverMgr.findActiveServer(operator, 0));
@@ -59,7 +59,7 @@ public class ServerMgrImplTests {
     	Server server = new Server();
     	serverList.add(server);
     	
-    	expect(serverDao.find(isA(ServerFilter.class))).andReturn(serverList);
+    	expect(serverDao.find(isA(ServerFilterAdapter.class))).andReturn(serverList);
     	replay(serverDao);
     	
     	assertSame(serverList.get(0), serverMgr.findActiveServer(operator, 0));

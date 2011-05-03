@@ -33,7 +33,9 @@
 	
 	<action-state id="filter">
 		<evaluate expression="identityAction.filter(flowScope, currentUser.principal)" />
-		<transition on="create" to="edit.view" />
+		<transition on="create" to="edit.view" >
+			<set name="flowScope.identity"  value="identityModel.form"/>
+		</transition>
 		<transition on="use"    to="selection.view" >
 			<set name="flowScope.identity"  value="identityModel.item"/>
 		</transition>
@@ -54,7 +56,9 @@
 		
 	</view-state>
 
-	<end-state id="toCommit" commit="true"/>
+	<end-state id="toCommit" commit="true">
+		<output name="identity" value="flowScope.identity"/>
+	</end-state>
 
 	<end-state id="toReturn" commit="true"/>
 

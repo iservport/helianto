@@ -53,13 +53,12 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Default model is of type <code>SimpleModel</code>.
+	 * Default model is of type <code>SimpleModel</code> embedding a form of type <T>.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected SimpleModel<?> doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		Filter filter = getFilter(attributes, userDetails);
-		return new SimpleModel(filter, userDetails.getUser());
+		return new SimpleModel(doCreate(attributes, userDetails), userDetails.getUser());
 	}
 
 	/**
@@ -196,9 +195,14 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param userDetails
 	 */
 	protected Filter getFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		Filter filter = getFilter(attributes);
+		Filter filter = null;
+		if (attributes.contains(getFilterName()) && attributes.get(getFilterName())!=null) {
+			filter = (Filter) attributes.get(getFilterName());
+		}
 		if (filter==null) {
 			filter = doCreateFilter(attributes, userDetails);
+		}
+		if (filter!=null) {
 			filter.setObjectAlias(getTargetName());
 			logger.debug("Created {} with object alias {}.", filter, filter.getObjectAlias());
 			attributes.put(getFilterName(), filter);
@@ -210,6 +214,7 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * Subclasses may override this to customize filter retrieval.
 	 * 
 	 * @param attributes
+	 * @deprecated
 	 */
 	protected Filter getFilter(MutableAttributeMap attributes) {
 		Filter filter = null;
@@ -268,6 +273,7 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * True if the attribute map has a not null filter.
 	 * 
 	 * @param attributes
+	 * @deprecated
 	 */
 	protected boolean hasFilter(MutableAttributeMap attributes) {
 		if (attributes.contains(getFilterName()) && attributes.get(getFilterName())!=null) {
@@ -284,7 +290,7 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 */
 	@Override
 	public String create(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		Filter filter = getFilter(attributes);
+		Filter filter = getFilter(attributes, userDetails);
 		T target = doCreate(attributes, userDetails, filter);
 		attributes.put(getTargetName(), target);
 		logger.debug("Created {} with name {}.", target, getTargetName());

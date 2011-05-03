@@ -74,39 +74,12 @@ public class MailFormTests {
             fail();
         }
         
-        try {
-        	Set<Identity> identities = new HashSet<Identity>();
-            recipient.setIdentityType(IdentityType.GROUP.getValue());
-            identities.add(recipient);
-            mailForm.setRecipientIdentities(identities);
-            fail();
-        }
-        catch (IllegalArgumentException e) {
-            assertEquals("Identity is not addressable.", e.getMessage());
-        }
-        catch (Exception e) {
-            fail();
-        }
-        
         //personal email is ok
     	Set<Identity> identities = new HashSet<Identity>();
         recipient.setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
         identities.add(recipient);
         mailForm.setRecipientIdentities(identities);
 
-        //but the getter is also validated
-        try {
-            recipient.setIdentityType(IdentityType.GROUP.getValue());
-            mailForm.getRecipientIdentities();
-            fail();
-        }
-        catch (IllegalArgumentException e) {
-            assertEquals("Identity is not addressable.", e.getMessage());
-        }
-        catch (Exception e) {
-            fail();
-        }
-        
     }
     
     public static MailForm createMailForm() {

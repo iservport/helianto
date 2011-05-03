@@ -80,6 +80,7 @@ public class IdentityFlowTests extends AbstractXmlFlowExecutionTests {
 
 	    assertCurrentStateEquals("edit.view");
 	    
+	    assertSame(form, getRequiredFlowAttribute("identity"));
 	    LocalAttributeMap viewScope = (LocalAttributeMap) getRequiredFlowAttribute("viewScope");
 	    assertEquals("identity_bar",  viewScope.get("sidebar"));
 	    assertEquals("identity_form", viewScope.get("template"));

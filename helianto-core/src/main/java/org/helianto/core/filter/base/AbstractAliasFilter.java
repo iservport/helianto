@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractAliasFilter implements Serializable, CriteriaFilter {
+public abstract class AbstractAliasFilter implements Serializable, CriteriaFilter<OrmCriteriaBuilder> {
 	
     private String objectAlias;
     

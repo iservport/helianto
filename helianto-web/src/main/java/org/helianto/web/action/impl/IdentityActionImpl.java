@@ -10,6 +10,7 @@ import org.helianto.core.filter.IdentityFilterAdapter;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
+import org.helianto.web.action.SimpleModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -25,9 +26,10 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new IdentityFilterAdapter("");
+		return new IdentityFilterAdapter(((SimpleModel<Identity>) getModel(attributes)).getForm());
 	}
 
 	@Override

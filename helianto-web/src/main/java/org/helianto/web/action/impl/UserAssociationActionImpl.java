@@ -29,14 +29,17 @@ public class UserAssociationActionImpl extends UserGroupAssociationActionImpl {
 	 */
 	@Override
 	protected UserAssociation doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		UserGroup parent = getParent(attributes);
-		Identity identity = (Identity) attributes.get("identity");
-		if (parent!=null && identity!=null) {
-			UserGroup child = new User(parent, new Credential(identity, "123456"));
-			logger.debug("Association has {} and {}.", parent, child);
-		    return new UserAssociation(parent, child);
+		UserGroup parent = (UserGroup) attributes.get("userGroup");
+		if (parent==null) {
+			throw new IllegalArgumentException("An user group is required in scope before association creation.");			
 		}
-		throw new IllegalArgumentException("An user group named parent is required in scope before association creation.");
+		Identity identity = (Identity) attributes.get("identity");
+		if (identity==null) {
+			throw new IllegalArgumentException("An identity is required in scope before association creation.");			
+		}
+		UserGroup child = new User(parent, new Credential(identity, "123456"));
+		logger.debug("Association has {} and {}.", parent, child);
+	    return new UserAssociation(parent, child);
 	}
 	
 	

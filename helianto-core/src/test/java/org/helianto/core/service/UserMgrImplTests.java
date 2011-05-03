@@ -40,8 +40,8 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
-import org.helianto.core.filter.classic.IdentityFilter;
-import org.helianto.core.filter.classic.UserFilter;
+import org.helianto.core.filter.IdentityFilterAdapter;
+import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
@@ -130,14 +130,13 @@ public class UserMgrImplTests {
 	@Test
     public void selectIdentities() {
         int size = 10;
-        IdentityFilter filter = new IdentityFilter();
+        IdentityFilterAdapter filter = new IdentityFilterAdapter("");
         List<Identity> identityList = IdentityTestSupport.createIdentityList(size);
         List<Identity> exclusions = new ArrayList<Identity>();
         Identity excluded = identityList.get((int) (Math.random()*size));
         exclusions.add(excluded);
 
-        expect(identityDao.find(filter))        
-            .andReturn(identityList);
+        expect(identityDao.find(filter)).andReturn(identityList);
         replay(identityDao);
 
         assertSame(identityList, userMgr.findIdentities(filter, exclusions));
@@ -165,7 +164,7 @@ public class UserMgrImplTests {
     
 	@Test
     public void findUsers() {
-    	UserFilter userFilter = new UserFilter();
+    	UserFilterAdapter userFilter = new UserFilterAdapter(new User());
     	List<UserGroup> userList = new ArrayList<UserGroup>();
     	
     	expect(userGroupDao.find(userFilter)).andReturn(userList);

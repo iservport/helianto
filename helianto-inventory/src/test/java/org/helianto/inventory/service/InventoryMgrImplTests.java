@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.filter.ListFilter;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.inventory.ProcessAgreement;
@@ -30,7 +30,7 @@ public class InventoryMgrImplTests {
 	@Test
 	public void findProcessRequirements() {
 		List<ProcessRequirement> requirementList = new ArrayList<ProcessRequirement>();
-		ListFilter filter = new ProcessRequirementFilter(new Entity());
+		Filter filter = new ProcessRequirementFilter(new Entity());
 		
 		expect(processRequirementDao.find(filter)).andReturn(requirementList);
 		replay(processRequirementDao);

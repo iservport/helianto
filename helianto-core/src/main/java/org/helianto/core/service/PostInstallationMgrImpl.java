@@ -183,6 +183,9 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	}
 	
 	public Entity installEntity(Entity entity) {
+		if (entity.getOperator()==null) {
+			throw new IllegalArgumentException("An opertor is required.");
+		}
 		logger.debug("Check new entity {} installation", entity);
 		if (entity.getManager()==null) {
 			throw new IllegalArgumentException("Unable to install entity: a manager identity is required.");

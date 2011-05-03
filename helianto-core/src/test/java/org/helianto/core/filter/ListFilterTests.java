@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.filter.base.AbstractListFilter;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,12 +20,6 @@ public class ListFilterTests {
 	
 	private AbstractListFilter filter;
 	List<String> list;
-	
-	@Test
-	public void inheritance() {
-		assertTrue(filter instanceof AbstractFilter);
-		assertTrue(filter instanceof ListFilter);
-	}
 	
 	@Test
 	public void listEmpty() {

@@ -39,6 +39,7 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
     private static final long serialVersionUID = 1L;
     private Class<? extends UserGroup> clazz;
     private UserGroup parent;
+    private String userKey;
     private String parentUserKey;
     private boolean orderByLastEventDesc = false;
 	private Collection<Identity> exclusions;
@@ -147,6 +148,7 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("userKey", getUserKey(), mainCriteriaBuilder);
 		appendEqualFilter("userState", getForm().getUserState(), mainCriteriaBuilder);
         appendExclusionsFilter( mainCriteriaBuilder);
 	}
@@ -230,6 +232,16 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
 		this.parent = parent;
 	}
 	
+	/**
+	 * User key filter.
+	 */
+	public String getUserKey() {
+		return userKey;
+	}
+	public void setUserKey(String userKey) {
+		this.userKey = userKey;
+	}
+
 	/**
 	 * Parent user key filter.
 	 */

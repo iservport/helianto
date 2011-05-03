@@ -9,7 +9,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.filter.classic.UserFilter;
+import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.slf4j.Logger;
@@ -32,8 +32,10 @@ public class UserDetailsServiceImpl2 implements UserDetailsService {
 		if (credential==null) {
 			throw new UsernameNotFoundException("Unable to find credential for "+username);
 		}
+		UserFilterAdapter filter = new UserFilterAdapter(new User());
+		filter.setUserKey(username);
 		@SuppressWarnings("unchecked")
-		List<UserGroup> userList = (List<UserGroup>) userMgr.findUsers(new UserFilter(username));
+		List<UserGroup> userList = (List<UserGroup>) userMgr.findUsers(filter);
 		logger.debug("Found {} user(s) matching {}.", userList.size(), username);
 		if (userList!=null && userList.size()>0) {
 			User user = userSelectorStrategy.selectUser(userList);

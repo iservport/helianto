@@ -17,13 +17,8 @@ package org.helianto.core.filter.classic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
-import java.io.Serializable;
 
 import org.helianto.core.User;
-import org.helianto.core.filter.classic.ProvinceFilter;
-import org.helianto.core.filter.classic.UserBackedFilter;
 import org.helianto.core.test.OperatorTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Before;
@@ -35,12 +30,6 @@ import org.junit.Test;
  */
 public class ProvinceFilterTests  {
     
-    @Test
-    public void constructor() {
-		assertTrue(filter instanceof Serializable);
-		assertTrue(filter instanceof UserBackedFilter);
-	}
-	
     @Test
 	public void factory() {
 		assertSame(filter.getUser(), user);

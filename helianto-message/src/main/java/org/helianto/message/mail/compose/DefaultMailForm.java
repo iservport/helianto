@@ -62,8 +62,7 @@ public class DefaultMailForm implements MailForm {
 	protected Identity validatePrincipal(Identity identity) {
         if (identity == null
                 || identity.getIdentityType() == IdentityType.NOT_ADDRESSABLE
-                        .getValue()
-                || identity.getIdentityType() == IdentityType.GROUP.getValue()) {
+                        .getValue()) {
             throw new IllegalArgumentException("Identity is not addressable.");
         }
         return identity;

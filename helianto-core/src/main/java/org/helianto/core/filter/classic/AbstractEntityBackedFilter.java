@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @deprecated see AbstractTrunkFilterAdapter
  */
 @SuppressWarnings("serial")
-public abstract class AbstractEntityBackedFilter extends AbstractListFilter implements EntityBackedFilter {
+public abstract class AbstractEntityBackedFilter extends AbstractListFilter {
 	
 	/**
 	 * Default constructor

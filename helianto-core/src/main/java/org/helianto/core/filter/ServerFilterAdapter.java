@@ -17,10 +17,10 @@ public class ServerFilterAdapter extends AbstractRootFilterAdapter<Server> {
 	/**
 	 * Default constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public ServerFilterAdapter(Server filter) {
-		super(filter);
+	public ServerFilterAdapter(Server form) {
+		super(form);
 		reset();
 	}
 
@@ -35,26 +35,26 @@ public class ServerFilterAdapter extends AbstractRootFilterAdapter<Server> {
 	}
 
 	public void reset() {
-    	getFilter().setServerType(' ');
-    	getFilter().setPriority((byte) 0);
-    	getFilter().setServerState(' ');
+    	getForm().setServerType(' ');
+    	getForm().setPriority((byte) 0);
+    	getForm().setServerState(' ');
 	}
 	
 	@Override
 	public boolean isSelection() {
-		return getFilter().getServerName().length()>0;
+		return getForm().getServerName().length()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("serverName", getFilter().getServerName(), mainCriteriaBuilder);
+		appendEqualFilter("serverName", getForm().getServerName(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("serverType", getFilter().getServerType(), mainCriteriaBuilder);
-		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);
-		appendEqualFilter("serverState", getFilter().getServerState(), mainCriteriaBuilder);
+		appendEqualFilter("serverType", getForm().getServerType(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getForm().getPriority(), mainCriteriaBuilder);
+		appendEqualFilter("serverState", getForm().getServerState(), mainCriteriaBuilder);
 		appendOrderBy("priority", mainCriteriaBuilder);
 	}
 

@@ -20,7 +20,6 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
@@ -30,7 +29,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.filter.classic.ServerFilter;
+import org.helianto.core.filter.ServerFilterAdapter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -45,8 +44,8 @@ import org.slf4j.LoggerFactory;
 public class ServerMgrImpl  implements ServerMgr {
 	
 	public Server findActiveServer(Operator operator, int n) {
-    	ServerFilter filter = new ServerFilter(ActivityState.ACTIVE.getValue());
-    	filter.setOperator(operator);
+    	ServerFilterAdapter filter = new ServerFilterAdapter(new Server());
+    	filter.getForm().setOperator(operator);
         List<Server> serverList = (List<Server>) serverDao.find(filter);
 		if (serverList!=null && serverList.size()> n) {
 			return serverList.get(n);

@@ -21,7 +21,9 @@ public class CardSetFilter extends AbstractUserBackedCriteriaFilter {
 	 * @param user
 	 */
 	public static CardSetFilter cardSetFilterFactory(User user) {
-		return AbstractUserBackedCriteriaFilter.filterFactory(CardSetFilter.class, user);
+		CardSetFilter filter = new CardSetFilter();
+		filter.setUser(user);
+		return filter;
 	}
 
 	private static final long serialVersionUID = 1L;

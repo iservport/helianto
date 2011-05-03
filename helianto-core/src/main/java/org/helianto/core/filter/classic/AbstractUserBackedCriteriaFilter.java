@@ -27,8 +27,7 @@ import org.helianto.core.User;
  * @deprecated see AbstractPersonalFilterAdapter
  */
 @SuppressWarnings("serial")
-public abstract class AbstractUserBackedCriteriaFilter extends AbstractEntityBackedFilter implements
-        UserBackedFilter {
+public abstract class AbstractUserBackedCriteriaFilter extends AbstractEntityBackedFilter {
 	
     /**
      * Static factory method.

@@ -43,7 +43,7 @@ import org.helianto.core.UserRole;
 import org.helianto.core.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
-import org.helianto.core.filter.classic.UserFilter;
+import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -241,9 +241,10 @@ public class UserMgrImpl implements UserMgr {
 	}
 
     public List<? extends UserGroup> findUsers(Identity identity) {
-    	UserFilter userFilter = new UserFilter(identity, true);
-    	userFilter.setUserState(UserState.ACTIVE.getValue());
-        logger.debug("Filter users having state {}", userFilter.getUserState());
+    	UserFilterAdapter userFilter = new UserFilterAdapter(new User());
+    	userFilter.setIdentity(identity);
+    	userFilter.getForm().setUserState(UserState.ACTIVE.getValue());
+        logger.debug("Filter users having state {}", userFilter.getForm().getUserState());
         try {
     		return findUsers(userFilter);
         } catch (Exception e) {

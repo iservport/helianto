@@ -33,7 +33,9 @@ public class MeasurementTechniqueFilter extends AbstractUserBackedCriteriaFilter
 	 * @param user
 	 */
 	public static MeasurementTechniqueFilter measurementTechniqueFilterFactory(User user) {
-		return AbstractUserBackedCriteriaFilter.filterFactory(MeasurementTechniqueFilter.class, user);
+		MeasurementTechniqueFilter filter = new MeasurementTechniqueFilter();
+		filter.setUser(user);
+		return filter;
 	}
 
 	private static final long serialVersionUID = 1L;

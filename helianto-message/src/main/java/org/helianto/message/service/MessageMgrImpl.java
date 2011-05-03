@@ -21,9 +21,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Server;
-import org.helianto.core.filter.classic.ServerFilter;
+import org.helianto.core.filter.ServerFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.message.mail.ConfigurableMailSenderFactory;
 import org.helianto.message.mail.compose.MailMessageComposer;
@@ -44,8 +43,8 @@ public class MessageMgrImpl implements MessageMgr {
 
     public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
 	    throws MessagingException {
-		ServerFilter filter = new ServerFilter(ActivityState.ACTIVE.getValue());
-		filter.setOperator(mailForm.getOperator());
+		ServerFilterAdapter filter = new ServerFilterAdapter(new Server());
+		filter.getForm().setOperator(mailForm.getOperator());
 		List<Server> serverList = (List<Server>) serverDao.find(filter);
 		JavaMailSender sender = configurableMailSenderFactory.create(serverList);
 		sender.send(mailMessageComposer.composeMessage("PASSWORD", mailForm));
