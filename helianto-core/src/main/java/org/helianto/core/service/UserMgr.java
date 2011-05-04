@@ -82,20 +82,6 @@ public interface UserMgr {
 	public Identity storeIdentity(Identity identity, boolean generate);
 	
     /**
-     * Create and prepare <code>UserGroup</code> in session.
-     * 
-     * @param entity
-     */
-    public UserGroup prepareNewUserGroup(Entity entity);
-    
-    /**
-     * Prepare <code>UserGroup</code> in session.
-     * 
-     * @param userGroup
-     */
-    public UserGroup prepareUserGroup(UserGroup userGroup);
-    
-    /**
      * <p>List <code>UserGroup</code> by string criteria.</p>
      * 
      * @param userFilter
@@ -122,13 +108,6 @@ public interface UserMgr {
      * @param userAssociationFilter
      */
     public List<UserAssociation> findUserAssociations(Filter userAssociationFilter);
-    
-    /**
-     * <p>Create <code>UserAssociation</code>.</p>
-     * 
-     * @param parent
-     */
-    public UserAssociation prepareNewUserAssociation(UserGroup parent);
     
     /**
      * <p>Create <code>UserAssociation</code> with a new credential.</p>

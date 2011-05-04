@@ -10,6 +10,7 @@ import org.helianto.web.action.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
 /**
@@ -42,6 +43,7 @@ public class UserGroupAssociationActionImpl extends AbstractAction<UserAssociati
 	}
 	
 	@Override
+	@Transactional(readOnly=false)
 	protected UserAssociation doStore(UserAssociation target) {
 		return userMgr.storeUserAssociation(target);
 	}

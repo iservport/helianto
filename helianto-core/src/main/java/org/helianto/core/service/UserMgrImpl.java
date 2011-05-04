@@ -15,9 +15,7 @@
 
 package org.helianto.core.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -129,35 +127,6 @@ public class UserMgrImpl implements UserMgr {
 		return identity;
 	}
 	
-	/**
-	 * @deprecated
-	 */
-    public UserGroup prepareNewUserGroup(Entity entity) {
-    	UserGroup userGroup = new UserGroup(entity, "");
-    	entity.getUsers().add(userGroup);
-    	return userGroup;
-	}
-	
-	/**
-	 * @deprecated
-	 */
-    public UserGroup prepareUserGroup(UserGroup userGroup) {
-    	UserGroup managedUserGroup = userGroupDao.merge(userGroup);
-    	// child list
-		logger.debug("About to load child association(s).");
-    	Set<UserAssociation> childAssociations = managedUserGroup.getChildAssociations();
-		logger.debug("Loaded {} child association(s).", childAssociations.size());
-		List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>(childAssociations);
-		logger.debug("Listed {} child association(s).", childAssociationList.size());
-		Collections.sort(childAssociationList);
-		managedUserGroup.setChildAssociationList(childAssociationList);
-		logger.debug("Ready to recursively add user roles");
-		List<UserRole> roleList = new ArrayList<UserRole>(recurseUserRoles(managedUserGroup.getRoles(), managedUserGroup.getParentAssociations()));
-		managedUserGroup.setRoleList(roleList);
-    	userGroupDao.evict(managedUserGroup);
-    	return managedUserGroup;
-    }
-	
     /**
 	 * Recurse into parent user groups to create a complete userRole List.
 	 */
@@ -217,22 +186,6 @@ public class UserMgrImpl implements UserMgr {
 		logger.debug("User identified with {}", user.getIdentity());
 		return user.getIdentity();
     }
-    /**
-     * <p>Store <code>UserAssociation</code> and return a managed instance.</p>
-     * 
-     */
-    public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
-    	if (!parentAssociation.isKeyEmpty() && parentAssociation.getChild() instanceof User) {
-        	logger.debug("Ready to validate {}", parentAssociation.getChild());
-        	User child = (User) parentAssociation.getChild();
-    		child.setIdentity(validateIdentity(child));
-    		child.setAccountNonExpired(true);
-    		UserGroup managedChild = userGroupDao.merge(child);
-    		parentAssociation.setChild(managedChild);
-        	return userAssociationDao.merge(parentAssociation);
-    	}
-		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
-    }
 
 	public List<? extends UserGroup> findUsers(Filter userFilter) {
 		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(userFilter);
@@ -253,20 +206,20 @@ public class UserMgrImpl implements UserMgr {
         return null;
     }
 
-	/**
-	 * @deprecated
-	 */
-	public UserAssociation prepareNewUserAssociation(UserGroup parent) {
-		UserAssociation userAssociation = new UserAssociation(parent);
-    	logger.debug("Created user association {}.", userAssociation);
-		return userAssociation;
-	}
-
 	public List<UserAssociation> findUserAssociations(Filter userAssociationFilter) {
 		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationDao.find(userAssociationFilter);
     	logger.debug("Found user association list of size {}", userAssociationList.size());
         return userAssociationList;
 	}
+
+    public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
+    	if (parentAssociation.getChild() instanceof User) {
+        	Identity identity = identityDao.load(((User) parentAssociation.getChild()).getIdentity());
+        	((User) parentAssociation.getChild()).setIdentity(identity);
+    	}
+    	userAssociationDao.saveOrUpdate(parentAssociation);
+    	return parentAssociation;
+    }
 
 	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall) {
 
@@ -385,7 +338,8 @@ public class UserMgrImpl implements UserMgr {
             date = new Date();
         }
         UserLog userLog = new UserLog(user, date, EventType.LOGIN_ATTEMPT);
-        return userLogDao.merge(userLog);
+        userLogDao.saveOrUpdate(userLog);
+        return userLog;
     }
     
     /**

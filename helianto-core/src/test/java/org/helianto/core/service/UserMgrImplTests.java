@@ -39,14 +39,12 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
-import org.helianto.core.UserRole;
 import org.helianto.core.filter.IdentityFilterAdapter;
 import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
-import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.After;
 import org.junit.Before;
@@ -154,15 +152,6 @@ public class UserMgrImplTests {
     }
     
 	@Test
-    public void prepareNewUserAssociation() {
-    	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-    	
-    	UserAssociation userAssociation = userMgr.prepareNewUserAssociation(userGroup);
-    	
-    	assertSame(userGroup, userAssociation.getParent());
-    }
-    
-	@Test
     public void findUsers() {
     	UserFilterAdapter userFilter = new UserFilterAdapter(new User());
     	List<UserGroup> userList = new ArrayList<UserGroup>();
@@ -209,46 +198,14 @@ public class UserMgrImplTests {
 		assertTrue(userMgr.validateIdentity(user)==null);
     }
     
-	// TODO review test
-//	@Test
-//    public void validateCandidateCreated() {
-//		User user = UserTestSupport.createUser();
-//		user.getIdentity().setId(0);
-//		user.getIdentity().setPrincipal("test");
-//		user.setCreateIdentity(CreateIdentity.AUTO);
-//		Identity identity = new Identity();
-//		
-//		expect(identityDao.findUnique("test")).andReturn(null);
-//		expect(identityDao.merge(isA(Identity.class))).andReturn(identity);
-//		replay(identityDao);
-//		
-//		assertTrue(userMgr.validateIdentity(user));
-//		assertSame(identity, user.getIdentity());
-//		verify(identityDao);
-//    }
-//    
-	@Test(expected=IllegalArgumentException.class)
-    public void storeUserAssociationNullKey() {
-    	UserAssociation parentAssociation = new UserAssociation();
-    	
-    	userMgr.storeUserAssociation(parentAssociation);
-    }
-    
 	@Test
     public void storeUserAssociation() {
     	UserAssociation parentAssociation = new UserAssociation();
-    	parentAssociation.setChild(UserTestSupport.createUser());
-    	UserAssociation managedUserAssociation = new UserAssociation();
-		Identity identity = new Identity();
-    	
-		expect(identityDao.findUnique(parentAssociation.getChild().getUserKey())).andReturn(identity);
-		replay(identityDao);
-		
-    	expect(userAssociationDao.merge(parentAssociation))
-    	    .andReturn(managedUserAssociation);
+	
+    	userAssociationDao.saveOrUpdate(parentAssociation);
     	replay(userAssociationDao);
     	
-    	assertSame(managedUserAssociation, userMgr.storeUserAssociation(parentAssociation));
+    	assertSame(parentAssociation, userMgr.storeUserAssociation(parentAssociation));
     	verify(userAssociationDao);
     }
     
@@ -264,64 +221,14 @@ public class UserMgrImplTests {
         Identity identity = new Identity();
         User user = new User();
         user.setIdentity(identity);
-        UserLog managedUserLog = new UserLog();
         
-        expect(userLogDao.merge(isA(UserLog.class))).andReturn(managedUserLog);
+        userLogDao.saveOrUpdate(isA(UserLog.class));
         replay(userLogDao);
         
         userMgr.storeUserLog(user,date);
         verify(userLogDao);
     }
 
-    /**
-     * All roles come from the user.
-     */
-	@Test
-    public void prepareUserGroupLocal() {
-        UserGroup user =  new UserGroup();
-        UserGroup managedUser =  UserGroupTestSupport.createUserGroup();
-        UserRole[] roles = UserRoleTestSupport.createUserRoles(managedUser, "E1", "E2");
-        
-    	expect(userGroupDao.merge(user)).andReturn(managedUser);
-    	userGroupDao.evict(managedUser);
-    	replay(userGroupDao);
-    	
-    	List<UserRole> roleList = userMgr.prepareUserGroup(user).getRoleList();
-        verify(userGroupDao);
-
-        assertEquals(2, roleList.size());
-        assertTrue(roleList.contains(roles[0]));
-        assertTrue(roleList.contains(roles[1]));
-    }
-    
-    /**
-     * Some roles come from the ancestor.
-     */
-	@Test
-    public void prepareUserGroupFromAncestor() {
-        UserGroup user =  new UserGroup();
-        UserGroup managedUser =  UserGroupTestSupport.createUserGroup();
-        UserGroup parent = UserGroupTestSupport.createUserGroup();
-        UserRole[] roles1 = UserRoleTestSupport.createUserRoles(managedUser, "E1", "E2");
-        UserRole[] roles2 = UserRoleTestSupport.createUserRoles(parent, "E2", "E3");
-        UserAssociation association = new UserAssociation(parent, managedUser);
-        parent.getChildAssociations().add(association);
-        managedUser.getParentAssociations().add(association);
-
-    	expect(userGroupDao.merge(user)).andReturn(managedUser);
-    	userGroupDao.evict(managedUser);
-    	replay(userGroupDao);
-    	
-    	List<UserRole> roleList = userMgr.prepareUserGroup(user).getRoleList();
-        verify(userGroupDao);
-
-        assertEquals(4, roleList.size());
-        assertTrue(roleList.contains(roles1[0]));
-        assertTrue(roleList.contains(roles1[1]));
-        assertTrue(roleList.contains(roles2[0]));
-        assertTrue(roleList.contains(roles2[1]));
-    }
-    
     // 
     
     private UserMgrImpl userMgr;

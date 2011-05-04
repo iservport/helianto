@@ -30,9 +30,14 @@
 		<transition on="cancelForm" to="toReturn" bind="false"/>
 		
 	</view-state>
-
+	
 	<end-state id="toCommit" commit="true"/>
-
+<!-- 	<end-state id="toCommit" commit="true">
+		<on-entry>
+			<evaluate expression="persistenceContext.flush()" />
+		</on-entry>
+	</end-state>
+ -->
 	<end-state id="toReturn" commit="true"/>
 
 
