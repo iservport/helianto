@@ -43,5 +43,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/com.springsource.sts.ide.tomcat.runtimeTarget/SpringSource tc Server (Runtime) v6.0"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

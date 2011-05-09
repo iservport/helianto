@@ -15,6 +15,7 @@
 
 package org.helianto.core.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -220,6 +221,23 @@ public class UserMgrImpl implements UserMgr {
     	userAssociationDao.saveOrUpdate(parentAssociation);
     	return parentAssociation;
     }
+    
+    /**
+     * Limted (so far) to one level.
+     * 
+     * @param userGroup
+     */
+    public List<UserGroup> findParentChain(UserGroup userGroup) {
+    	userGroupDao.saveOrUpdate(userGroup);
+    	List<UserGroup> parentList = new ArrayList<UserGroup>();
+    	parentList.add(userGroup);
+    	if(userGroup.getParentAssociations()!=null) {
+    		for (UserAssociation association: userGroup.getParentAssociations()) {
+    			parentList.add(association.getParent());
+    		}
+    	}
+    	return parentList;
+    }
 
 	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall) {
 
@@ -352,6 +370,19 @@ public class UserMgrImpl implements UserMgr {
         throw new RuntimeException("Principal should not be null or empty.");
     }
     
+	public List<UserRole> findUserRoles(Filter filter) {
+		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
+    	if (userRoleList!=null && userRoleList.size()>0) {
+    		logger.debug("Loaded user role list of size {}", userRoleList.size());
+    	}
+    	return userRoleList;
+	}
+
+	public UserRole storeUserRole(UserRole userRole) {
+		userRoleDao.saveOrUpdate(userRole);
+		return userRole;
+	}
+
     public List<Province> findProvinceByOperator(Operator operator) {
     	ProvinceFilterAdapter filter = new ProvinceFilterAdapter(operator, "");
         return (List<Province>) provinceDao.find(filter);

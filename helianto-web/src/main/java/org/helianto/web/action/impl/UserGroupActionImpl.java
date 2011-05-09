@@ -63,7 +63,7 @@ public class UserGroupActionImpl extends AbstractFilterAction<UserGroup> {
 
 	@Override
 	protected UserGroup doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new UserGroup(userDetails.getEntity());
+		return new UserGroup(userDetails.getEntity(), "");
 	}
 
 	@Override

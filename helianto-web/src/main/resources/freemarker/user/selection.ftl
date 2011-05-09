@@ -1,9 +1,14 @@
 <div id="panel">
-	<div class="toolbar">
-		<@secure "ROLE_ADMIN_MANAGER" ><span class="button grey1"><@anchor "toSelection">> Authorizing entities</@anchor></span></@secure>
-	</div>
+	<h5>
+		${userModel.pages['user'].listSize!"0"} user(s) found<#if userGroup?exists > in group <@anchor "showUserGroup">${userGroup.userKey}</@anchor></#if>.
+		<div class="toolbar">
+		<#if userGroup.userKey=='user'>
+			<@secure "ROLE_USER_ALL" ><@create "User" >+ User</@create></@secure>
+		</#if>
+		<@secure "ROLE_USER_ALL" ><@create "UserGroup" >+ UserGroup</@create></@secure>
+		</div>
+	</h5>
 	<#if userGroup?exists>
-	<h2>Users in ${userGroup.userKey}</h2>
 	<table>
 		<thead>
 		<tr>
@@ -14,12 +19,13 @@
 		<tbody>
 		<#list userModel.pages['user'].list?if_exists as user >
 		<tr class="row${user_index%2}">
-		  <@selectModelTr "${user_index}", "user">${user.id?c}</@selectModelTr>
+		  <td ><@selectModel "${user_index}", "user">${user.id?c}</@selectModel></td>
 		  <td >
-		      ${user.userKey}<br />
-		      ${user.userPrincipal?if_exists}
+		      <@selectModel "${user_index}", "user">${user.userName}</@selectModel><br />
+		      <#if user.identity?exists >${user.identity.optionalAlias}</#if>
 		  </td>
-		  <td >${user.userState?if_exists}</td>
+		  <td><@selectModel "${user_index}", "user">${user.userKey}</@selectModel></td>
+		  <td >${userState[user.userState?if_exists]}</td>
 		</tr>
 		</#list>
 		</tbody>

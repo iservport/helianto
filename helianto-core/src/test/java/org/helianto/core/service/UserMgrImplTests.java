@@ -39,12 +39,16 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.UserRole;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.IdentityFilterAdapter;
+import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
+import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.After;
 import org.junit.Before;
@@ -189,6 +193,36 @@ public class UserMgrImplTests {
     	assertSame(userGroup, userMgr.storeUserGroup(userGroup));
     	verify(userGroupDao);
     }
+	
+	@Test
+	public void findUserGroupParentRoot() {
+    	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+		
+    	userGroupDao.saveOrUpdate(userGroup);
+    	replay(userGroupDao);
+    	
+    	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(userGroup);
+    	verify(userGroupDao);
+    	
+    	assertSame(userGroup, expectedUserGroupList.get(0));
+	}
+    
+	@Test
+	public void findUserGroupParentLevel1() {
+    	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+		User user = UserTestSupport.createUser();
+		UserAssociation association = new UserAssociation(userGroup, user);
+		user.getParentAssociations().add(association);
+		
+    	userGroupDao.saveOrUpdate(user);
+    	replay(userGroupDao);
+    	
+    	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(user);
+    	verify(userGroupDao);
+    	
+    	assertSame(user, expectedUserGroupList.get(0));
+    	assertSame(userGroup, expectedUserGroupList.get(1));
+	}
     
 	@Test
     public void validateEmptyCandidate() {
@@ -229,6 +263,29 @@ public class UserMgrImplTests {
         verify(userLogDao);
     }
 
+	@Test
+	public void findUserRoles() {
+		List<UserRole> userRoleList = new ArrayList<UserRole>();
+		Filter filter = new TestingFilter();
+		
+		expect(userRoleDao.find(filter)).andReturn(userRoleList);
+		replay(userRoleDao);
+		
+		assertSame(userRoleList , userMgr.findUserRoles(filter));
+		verify(userRoleDao);
+	}
+	
+	@Test
+	public void storeUserRole() {
+		UserRole userRole = UserRoleTestSupport.createUserRole();
+		
+		userRoleDao.saveOrUpdate(userRole);
+		replay(userRoleDao);
+		
+		assertSame(userRole , userMgr.storeUserRole(userRole));
+		verify(userRoleDao);
+	}
+	
     // 
     
     private UserMgrImpl userMgr;
@@ -239,6 +296,7 @@ public class UserMgrImplTests {
     private FilterDao<UserAssociation> userAssociationDao;
     private FilterDao<Province> provinceDao;
     private FilterDao<UserLog> userLogDao;
+    private FilterDao<UserRole> userRoleDao;
 
     
     @SuppressWarnings("unchecked")
@@ -257,6 +315,8 @@ public class UserMgrImplTests {
         userMgr.setProvinceDao(provinceDao);
         userLogDao = createMock(FilterDao.class);
         userMgr.setUserLogDao(userLogDao);
+		userRoleDao = createMock(FilterDao.class);
+		userMgr.setUserRoleDao(userRoleDao);
     }
     
     @After
@@ -267,6 +327,7 @@ public class UserMgrImplTests {
         reset(userAssociationDao);
         reset(provinceDao);
         reset(userLogDao);
+		reset(userRoleDao);
     }
     
 }

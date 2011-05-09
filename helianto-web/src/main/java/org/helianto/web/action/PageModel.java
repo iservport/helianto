@@ -4,10 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.helianto.core.Entity;
-import org.helianto.core.User;
 import org.helianto.core.filter.Listable;
-import org.helianto.core.filter.Page;
 
 /**
  * Page model.

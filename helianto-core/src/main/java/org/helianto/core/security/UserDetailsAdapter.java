@@ -98,9 +98,11 @@ public class UserDetailsAdapter implements
     protected void grantAuthorities(Collection<UserRole> roles) {
         authorities = new ArrayList<GrantedAuthority>();
         for (UserRole r : roles) {
-            String roleName = getUserRoleAsString(r);
-            authorities.add(new GrantedAuthorityImpl(roleName));
-            logger.info("Granted authority: {}.", roleName);
+            String[] roleNames = getUserRolesAsString(r);
+            for (String roleName: roleNames) {
+                authorities.add(new GrantedAuthorityImpl(roleName));
+                logger.info("Granted authority: {}.", roleName);
+            }
         }
     }
     
@@ -109,11 +111,17 @@ public class UserDetailsAdapter implements
      * 
      * @param userRole
      */
-    protected String getUserRoleAsString(UserRole userRole) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ROLE_").append(userRole.getService().getServiceName())
-                .append("_").append(userRole.getServiceExtension());
-        return sb.toString();
+    protected String[] getUserRolesAsString(UserRole userRole) {
+        String[] extensions = userRole.getServiceExtension().split(",");
+        String[] roleNames = new String[extensions.length];
+        int i = 0;
+        for (String extension: extensions) {
+            StringBuilder sb = new StringBuilder("ROLE_");
+            sb.append(userRole.getService().getServiceName())
+            	.append("_").append(extension.trim());
+            roleNames[i++] = sb.toString();
+        }
+        return roleNames;
     }
 
     public boolean isAccountNonExpired() {

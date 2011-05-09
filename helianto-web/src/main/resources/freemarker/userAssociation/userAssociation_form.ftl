@@ -1,5 +1,9 @@
 <div id="panel">
 
+	<div id="toolbar">
+		<@anchor "cancelForm">Cancel</@anchor>
+	</div>
+	
 	<h2>${userAssociation.child.userKey}</h2>
 
 	<p>Optional alias: ${userAssociation.child.identity.optionalAlias}</p>

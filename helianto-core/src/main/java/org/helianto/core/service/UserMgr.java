@@ -140,6 +140,13 @@ public interface UserMgr {
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation);
     
     /**
+     * Find a list of parents for a given <code>UserGroup</code>, including itself.
+     * 
+     * @param userGroup
+     */
+    public List<UserGroup> findParentChain(UserGroup userGroup);
+    
+    /**
      * Store <code>UserLog<code>.
      * 
      * @param user
@@ -157,6 +164,13 @@ public interface UserMgr {
 	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall);
 
 	/**
+	 * Find <code>UserRole</code>(s).
+	 * 
+	 * @param userRoleFilter
+	 */
+	public List<UserRole> findUserRoles(Filter userRoleFilter);
+	
+	/**
 	 * Install an UserRole, if does not exist.
 	 * 
 	 * @param userGroup
@@ -164,5 +178,12 @@ public interface UserMgr {
 	 * @param extension
 	 */
 	public UserRole installUserRole(UserGroup userGroup, Service service, String extension);
-	
+
+	/**
+	 * Store <code>UserRole</code> to the data store.
+	 * 
+	 * @param userRole
+	 */
+	public UserRole storeUserRole(UserRole userRole);
+
 }

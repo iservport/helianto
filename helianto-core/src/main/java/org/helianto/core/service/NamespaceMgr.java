@@ -120,20 +120,6 @@ public interface NamespaceMgr {
 	public Service storeService(Service service);
 
     /**
-     * Find <code>UserRole</code>(s).
-     * 
-     * @param userRoleFilter
-     */
-	public List<UserRole> findUserRoles(Filter userRoleFilter);
-
-    /**
-     * Store <code>UserRole</code> to the data store.
-     * 
-     * @param userRole
-     */
-	public UserRole storeUserRole(UserRole userRole);
-
-	/**
 	 * Load a service name map.
 	 */
 	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole);

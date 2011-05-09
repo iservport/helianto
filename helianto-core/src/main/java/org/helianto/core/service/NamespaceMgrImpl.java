@@ -107,19 +107,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return service;
 	}
 
-	public List<UserRole> findUserRoles(Filter filter) {
-		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
-    	if (userRoleList!=null && userRoleList.size()>0) {
-    		logger.debug("Loaded user role list of size {}", userRoleList.size());
-    	}
-    	return userRoleList;
-	}
-
-	public UserRole storeUserRole(UserRole userRole) {
-		userRoleDao.saveOrUpdate(userRole);
-		return userRole;
-	}
-
 	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole) {
 		Operator managedOperator = operatorDao.merge(operator);
 		Map<String, String> serviceNameMap = new HashMap<String, String>();
@@ -147,7 +134,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 	private FilterDao<Entity> entityDao;
 	private FilterDao<KeyType> keyTypeDao;
 	private FilterDao<Service> serviceDao;
-	private FilterDao<UserRole> userRoleDao;
 	
 	@Resource(name="operatorDao")
 	public void setOperatorDao(FilterDao<Operator> operatorDao) {
@@ -172,11 +158,6 @@ public class NamespaceMgrImpl implements NamespaceMgr {
     @Resource(name="serviceDao")
     public void setServiceDao(FilterDao<Service> serviceDao) {
         this.serviceDao = serviceDao;
-    }
-    
-    @Resource(name="userRoleDao")
-    public void setUserRoleDao(FilterDao<UserRole> userRoleDao) {
-        this.userRoleDao = userRoleDao;
     }
     
     private final Logger logger = LoggerFactory.getLogger(CategoryMgrImpl.class);

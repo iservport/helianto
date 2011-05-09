@@ -33,13 +33,16 @@ public class UserGroupAssociationActionImpl extends AbstractAction<UserAssociati
 
 	@Override
 	protected UserAssociation doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		UserGroup parent = getParent(attributes);
-		if (parent!=null) {
-			UserGroup child = new UserGroup(parent.getEntity());
-			logger.debug("Association has {} and {}.", parent, child);
-		    return new UserAssociation(parent, child);
+		UserGroup parent = (UserGroup) attributes.get("userGroup");
+		if (parent==null) {
+			throw new IllegalArgumentException("A parent user group is required in scope before association creation.");
 		}
-		throw new IllegalArgumentException("An user group named parent is required in scope before association creation.");
+		UserGroup child = (UserGroup) attributes.get("user");
+		if (child==null) {
+			throw new IllegalArgumentException("A child user is required in scope before association creation.");			
+		}
+		logger.debug("Association has {} and {}.", parent, child);
+	    return new UserAssociation(parent, child);
 	}
 	
 	@Override
@@ -48,13 +51,6 @@ public class UserGroupAssociationActionImpl extends AbstractAction<UserAssociati
 		return userMgr.storeUserAssociation(target);
 	}
 	
-	protected UserGroup getParent(MutableAttributeMap attributes) {
-		if (attributes.contains("userGroup")) {
-			return (UserGroup) attributes.get("userGroup");
-		}
-		return null;
-	}
-
 	protected UserGroup getChild(MutableAttributeMap attributes) {
 		if (attributes.contains("child")) {
 			return (UserGroup) attributes.get("child");

@@ -31,14 +31,12 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.Service;
-import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
-import org.helianto.core.test.UserRoleTestSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -165,29 +163,6 @@ public class NamespaceMgrTests {
 		verify(serviceDao);
 	}
 	
-	@Test
-	public void findUserRoles() {
-		List<UserRole> userRoleList = new ArrayList<UserRole>();
-		Filter filter = new TestingFilter();
-		
-		expect(userRoleDao.find(filter)).andReturn(userRoleList);
-		replay(userRoleDao);
-		
-		assertSame(userRoleList , namespaceMgr.findUserRoles(filter));
-		verify(userRoleDao);
-	}
-	
-	@Test
-	public void storeUserRole() {
-		UserRole userRole = UserRoleTestSupport.createUserRole();
-		
-		userRoleDao.saveOrUpdate(userRole);
-		replay(userRoleDao);
-		
-		assertSame(userRole , namespaceMgr.storeUserRole(userRole));
-		verify(userRoleDao);
-	}
-	
 //	@Test
 //	public void loadServiceNameMap() {
 //		Operator operator = new Operator();
@@ -212,7 +187,7 @@ public class NamespaceMgrTests {
 	private FilterDao<Entity> entityDao;
 	private FilterDao<KeyType> keyTypeDao;
 	private FilterDao<Service> serviceDao;
-	private FilterDao<UserRole> userRoleDao;
+	
 	
 	@SuppressWarnings("unchecked")
 	@Before
@@ -228,8 +203,6 @@ public class NamespaceMgrTests {
 		namespaceMgr.setKeyTypeDao(keyTypeDao);
 		serviceDao = createMock(FilterDao.class);
 		namespaceMgr.setServiceDao(serviceDao);
-		userRoleDao = createMock(FilterDao.class);
-		namespaceMgr.setUserRoleDao(userRoleDao);
 	}
 	
 	@After
@@ -239,7 +212,6 @@ public class NamespaceMgrTests {
 		reset(entityDao);
 		reset(keyTypeDao);
 		reset(serviceDao);
-		reset(userRoleDao);
 	}
 
 }
