@@ -186,4 +186,11 @@ public interface UserMgr {
 	 */
 	public UserRole storeUserRole(UserRole userRole);
 
+	/**
+	 * Remove <code>UserRole</code> from the data store.
+	 * 
+	 * @param userRole
+	 */
+	public void removeUserRole(UserRole userRole);
+
 }

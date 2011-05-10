@@ -382,6 +382,11 @@ public class UserMgrImpl implements UserMgr {
 		userRoleDao.saveOrUpdate(userRole);
 		return userRole;
 	}
+	
+	public void removeUserRole(UserRole userRole) {
+		userRoleDao.remove(userRole);
+		userRoleDao.flush();
+	}
 
     public List<Province> findProvinceByOperator(Operator operator) {
     	ProvinceFilterAdapter filter = new ProvinceFilterAdapter(operator, "");
