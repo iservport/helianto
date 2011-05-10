@@ -17,7 +17,7 @@
 	<tbody>
 	<#list userModel.pages['userGroupRole'].list?if_exists as userRole >
 	<tr class="row${userRole_index%2}">
-		<td><@selectModel "${userRole_index}", "userRole">${userRole.id?c}</@selectModel></td>
+		<td><@selectModel "${userRole_index}", "userGroupRole">${userRole.id?c}</@selectModel></td>
 		<td >${userRole.serviceName}</td>
 		<td >${userRole.serviceExtension}</td>
 	</tr>

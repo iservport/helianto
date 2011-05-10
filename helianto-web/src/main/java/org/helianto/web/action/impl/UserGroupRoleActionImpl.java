@@ -70,6 +70,12 @@ public class UserGroupRoleActionImpl extends AbstractFilterAction<UserRole> {
 		return userMgr.storeUserRole(target);
 	}
 	
+	@Override
+	protected String doRemove(UserRole target) {
+		userMgr.removeUserRole(target);
+		return "success";
+	}
+	
 	// collabs
 	
 	private UserMgr userMgr;

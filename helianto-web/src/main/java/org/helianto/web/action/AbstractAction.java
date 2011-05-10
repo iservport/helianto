@@ -24,9 +24,14 @@ import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
+import org.springframework.webflow.core.collection.ParameterMap;
 
 /**
  * Base class to presentation logic based on spring webflow.
+ * 
+ * <p>
+ * Exposes operations: create, prepare, store and remove.
+ * </p>
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -126,6 +131,39 @@ public abstract class AbstractAction<T> implements Serializable {
 	 * @param attributes
 	 */
 	protected abstract T doStore(T target);
+	
+	/**
+	 * Remove the target received in the attribute map.
+	 * 
+	 * @param attributes
+	 * @param parameters
+	 */
+	public String remove(MutableAttributeMap attributes, ParameterMap parameters) {
+		if (!hasTarget(attributes)) {
+			return "noTarget";
+		}
+		String confirmRemoval = parameters.get("confirmRemoval");
+		logger.debug("Removal confirmation is: '{}'.", confirmRemoval);
+		if (confirmRemoval!=null && confirmRemoval.equals("R")) {
+			String result = doRemove(getTarget(attributes));
+			if (result.equals("success")) {
+				attributes.put(getTargetName(), null);
+				logger.debug("Removed: {}.", getTargetName());
+			}
+			return result;
+		}
+		logger.debug("Not removed: {}.", getTargetName());
+		return "failure";
+	}
+		
+	/**
+	 * Default behavior throws an exception.
+	 * 
+	 * @param target
+	 */
+	protected String doRemove(T target) {
+		throw new UnsupportedOperationException("Removal not supported");
+	}
 		
 	/**
 	 * Create a new Model in the attribute map.

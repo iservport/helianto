@@ -13,9 +13,22 @@
 		
 		<@perr/>
 		<input type="hidden" name="_eventId" value="storeUserRole" />
-		<input type="submit" value="Atualizar" />
+		<input type="submit" value="Update" />
 		<@flowKey/>
 	
 	</form>
+	
+	<hr />
+	
+	<form method="POST">
+	
+		<p><input type="checkbox" name="confirmRemoval" value="R"/> Remove</p>
+		<@perr/>
+		<input type="hidden" name="_eventId" value="removeUserRole" />
+		<input type="submit" value="Remove" />
+		<@flowKey/>
+	
+	</form>
+	
 	
 </div>

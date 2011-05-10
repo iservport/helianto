@@ -14,7 +14,7 @@
 		
 		<@perr/>
 		<input type="hidden" name="_eventId" value="storeUserGroup" />
-		<input type="submit" value="Atualizar" />
+		<input type="submit" value="Update" />
 		<@flowKey/>
 	
 	</form>

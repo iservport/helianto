@@ -8,7 +8,7 @@
 		</#if>
 	</#list>
 	<#if !isCurrent >
-	<div style="float: right;">[ + ]</div>
+	<div style="float: right;">></div>
 	<@selectModel "${service_index}", "Service">${service.id?c}</@selectModel>
 	<@selectModel "${service_index}", "Service">${service.serviceName}</@selectModel>
 	</#if>

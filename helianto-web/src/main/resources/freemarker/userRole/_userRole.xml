@@ -27,6 +27,10 @@
 			<evaluate expression="userRoleAction.store(flowScope)" />
 		</transition>
 		
+		<transition on="removeUserRole" to="toCommit">
+			<evaluate expression="userRoleAction.remove(flowScope, requestParameters)" />
+		</transition>
+		
 		<transition on="cancelForm" to="toReturn" bind="false"/>
 		
 	</view-state>

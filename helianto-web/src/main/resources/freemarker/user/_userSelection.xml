@@ -10,6 +10,8 @@
 	<persistence-context />
 
     <input name="filterOption" />
+    
+    <!-- Filter section -->
 
 	<on-start>
 		<set name="flowScope.basePath" value="'user/'" />
@@ -42,7 +44,7 @@
 		<transition on="success" to="group.view" />
 	</action-state>
 	
-	<!--  view section -->
+	<!-- View section -->
 
 	<view-state id="selection.view" view="/frame2"  model="userModel" >
 
@@ -101,6 +103,7 @@
 		
 	</view-state>
 	
+	<!--  view specific action -->
 	<action-state id="createUserGroupAssociation">
 		<evaluate expression="userGroupAssociationAction.create(flowScope, currentUser.principal)" />
 		<transition on="success"  to="userAssociation.subflow" />
@@ -115,12 +118,9 @@
 			<set name="viewScope.siderel"  value="'userGroup_rel'" />
 		</on-render>
 
-		<transition on="editUserGroup"
-					to="userGroup.subflow" />
-		
-		<transition on="selectUserRole"
-		            to="group.view" >
-				<set name="flowScope.userRole"  value="userModel.pages['userRole'].item"/>
+		<transition on="selectUserGroupRole"
+		            to="userGroupRole.subflow" >
+				<set name="flowScope.userGroupRole"  value="userModel.pages['userGroupRole'].item"/>
 			</transition>
 		
 		<transition on="selectService"
@@ -132,12 +132,13 @@
 		
 	</view-state>
 	
+	<!--  view specific action -->
 	<action-state id="createUserGroupRole">
 		<evaluate expression="userGroupRoleAction.create(flowScope, currentUser.principal)" />
 		<transition on="success"  to="userGroupRole.subflow" />
 	</action-state>
 	
-	<!-- subflow section -->
+	<!-- Subflow section -->
 
 	<subflow-state id="identity.subflow" subflow="_identity">
 		<output name="identity" value="flowScope.identity"/>

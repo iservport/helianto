@@ -13,9 +13,9 @@
 	${userGroup.id?c}
 	${userGroup.userKey}
 	<#else>
+	<div style="float: right;">></div>
 	<@selectModel "${userGroup_index}">${userGroup.id?c}</@selectModel>
 	<@selectModel "${userGroup_index}">${userGroup.userKey}</@selectModel>
-	<div style="float: right;">[ + ]</div>
 	</#if>
 	</p>
 </#list>
