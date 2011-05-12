@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
         parent="_menu">
 
-	<secured attributes="ROLE_ADMIN_MANAGER" />
+	<secured attributes="ROLE_USER_ALL" />
 	
 	<persistence-context />
 
