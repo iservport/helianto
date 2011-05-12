@@ -95,6 +95,11 @@ public class JpaPersistenceStrategy implements PersistenceStrategy {
 		}
 	}
 	
+	public void refresh(Object object) {
+		this.em.refresh(object);
+	}
+	
+	
 	public void flush() {
         logger.debug("Flushing session");
         this.em.flush();

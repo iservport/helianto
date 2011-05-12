@@ -229,12 +229,17 @@ public class UserMgrImpl implements UserMgr {
      */
     public List<UserGroup> findParentChain(UserGroup userGroup) {
     	userGroupDao.saveOrUpdate(userGroup);
+    	userGroupDao.refresh(userGroup);
     	List<UserGroup> parentList = new ArrayList<UserGroup>();
     	parentList.add(userGroup);
     	if(userGroup.getParentAssociations()!=null) {
+    		logger.debug("Parent list for {} has {} item(s).", userGroup,  userGroup.getParentAssociations().size());
     		for (UserAssociation association: userGroup.getParentAssociations()) {
     			parentList.add(association.getParent());
     		}
+    	}
+    	else {
+    		logger.warn("Parent list for {} is null.", userGroup);
     	}
     	return parentList;
     }

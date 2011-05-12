@@ -219,6 +219,10 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
         getPersistenceStrategy().remove(object);
 	}
 
+	public void refresh(T object) {
+        getPersistenceStrategy().refresh(object);
+	}
+
 	public void evict(T object) {
         getPersistenceStrategy().evict(object);
 	}

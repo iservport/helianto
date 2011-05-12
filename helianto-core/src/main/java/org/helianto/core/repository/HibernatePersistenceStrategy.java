@@ -99,6 +99,10 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
 		this.sessionFactory.getCurrentSession().evict(object);
 	}
 	
+	public void refresh(Object object) {
+		this.sessionFactory.getCurrentSession().refresh(object);
+	}
+	
 	public void flush() {
         logger.debug("Flushing session");
 		this.sessionFactory.getCurrentSession().flush();

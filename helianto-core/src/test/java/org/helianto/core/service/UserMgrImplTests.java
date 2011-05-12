@@ -199,6 +199,7 @@ public class UserMgrImplTests {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
 		
     	userGroupDao.saveOrUpdate(userGroup);
+    	userGroupDao.refresh(userGroup);
     	replay(userGroupDao);
     	
     	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(userGroup);
@@ -215,6 +216,7 @@ public class UserMgrImplTests {
 		user.getParentAssociations().add(association);
 		
     	userGroupDao.saveOrUpdate(user);
+    	userGroupDao.refresh(user);
     	replay(userGroupDao);
     	
     	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(user);

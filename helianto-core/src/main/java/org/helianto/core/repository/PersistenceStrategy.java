@@ -89,6 +89,13 @@ public interface PersistenceStrategy<T> {
     public void evict(T object);
     
     /**
+     * Refresh an object.
+     * 
+     * @param object
+     */
+    public void refresh(T object);
+    
+    /**
      * Flush the session.
      */
 	public void flush();
