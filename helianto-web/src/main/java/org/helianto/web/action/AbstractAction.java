@@ -91,6 +91,7 @@ public abstract class AbstractAction<T> implements Serializable {
 	 * Replace the target with a prepared one.
 	 * 
 	 * @param attributes
+	 * @deprecated
 	 */
 	public String prepare(MutableAttributeMap attributes) {
 		if (!hasTarget(attributes)) {
@@ -107,6 +108,7 @@ public abstract class AbstractAction<T> implements Serializable {
 	 * 
 	 * @param target
 	 * @param attributes
+	 * @deprecated
 	 */
 	protected T doPrepare(T target, MutableAttributeMap attributes) {
 		return target;
