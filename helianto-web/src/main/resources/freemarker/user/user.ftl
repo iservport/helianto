@@ -5,9 +5,9 @@
 		<@anchor "toSelection"><<</@anchor>
 	</div>
 	
-	<h2>${user.identity.principal}</h2>
-	<p>First Name: <b>${user.identity.personalData.firstName}</b></p>
-	<p>Last Name: <b>${user.identity.personalData.lastName}</b></p>
+	<h2>Principal: ${user.identity.principal}</h2>
+	<p>First name: <b>${user.identity.personalData.firstName}</b></p>
+	<p>Last name: <b>${user.identity.personalData.lastName}</b></p>
 	<p>Appellation: <b>${appellation[user.identity.personalData.appellation]}</b></p>
 	<p>Gender: <b>${gender[user.identity.personalData.gender]}</b></p>
 	
@@ -18,7 +18,7 @@
 	<tr>
 	  <td colspan="2">Service</td>
 	  <td >Role</td>
-	  <td >Source</td>
+	  <td >Group</td>
 	</tr>
 	</thead>
 	<tbody>

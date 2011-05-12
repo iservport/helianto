@@ -7,7 +7,7 @@
 	<h2>${userAssociation.child.userKey}</h2>
 
 	<p>Optional alias: ${userAssociation.child.identity.optionalAlias}</p>
-	<p>Optional alias: ${userAssociation.child.identity.identityName}</p>
+	<p>Nome completo:  ${userAssociation.child.identity.identityName}</p>
 	
 	<form method="POST">
 	
@@ -16,7 +16,7 @@
 		
 		<@perr/>
 		<input type="hidden" name="_eventId" value="storeUserAssociation" />
-		<input type="submit" value="Atualizar" />
+		<input type="submit" value="Update" />
 		<@flowKey/>
 
 	</form>

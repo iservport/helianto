@@ -2,17 +2,17 @@
 	<h5>
 		${userModel.pages['user'].listSize!"0"} user(s) found<#if userGroup?exists > in group <@anchor "showUserGroup">${userGroup.userKey}</@anchor></#if>.
 		<div class="toolbar">
-		<#if userGroup.userKey=='user'>
-			<@secure "ROLE_USER_ALL" ><@create "User" >+ User</@create></@secure>
-		</#if>
-		<@secure "ROLE_USER_ALL" ><@create "UserGroup" >+ UserGroup</@create></@secure>
+			<#if userGroup.userKey?lower_case=='user'>
+				<@secure "ROLE_USER_ALL" ><@create "User" >+ User</@create></@secure>
+			</#if>
+			<@secure "ROLE_USER_ALL" ><@create "UserGroup" >+ UserGroup</@create></@secure>
 		</div>
 	</h5>
 	<#if userGroup?exists>
 	<table>
 		<thead>
 		<tr>
-		  <td colspan="2">User name</td>
+		  <td colspan="3">User name</td>
 		  <td >Status</td>
 		</tr>
 		</thead>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+        parent="_menu">
+
+	<secured attributes="ROLE_USER_ALL" />
+	
+	<persistence-context />
+
+    <input name="filterOption" />
+
+	<on-start>
+		<set name="conversationScope.basePath" value="'service/'" />
+		<set name="conversationScope.assign"   value="'assign'" />
+	</on-start>
+
+	<action-state id="filter">
+		<evaluate expression="serviceAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="selection.view" />
+	</action-state>
+
+	<view-state id="selection.view" view="/frame2"  model="serviceFilter" >
+
+		<transition on="selectService" to="selection.view" >
+			<set name="flowScope.authorization"  value="serviceFilter.item"/>
+		</transition>
+		
+	</view-state>
+
+</flow>

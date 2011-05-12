@@ -18,25 +18,24 @@
 		</div>
 	</div><!-- End of topContainer -->
 	<table name="bodyTable">
-	<#if group?exists >
 	<#-- group line -->
-	<tr class="groupLine">
-		<td id="sidegrp">
-		        <#if sidegrp?exists ><#include "${basePath!\"\"}${sidegrp}.ftl"/></#if>
-		</td>
-		<td id="grp">
-				<#include "${basePath!\"\"}${group}.ftl"/>
-		</td>
-	</tr>
-	</#if>
-	<#-- content line -->
-	<tr id="content">
-		<td id="sidebar">
+	<tr >
+		<td id="sidebar" rowspan="2">
 		        <#if sidenav?exists ><#include "${basePath!\"\"}${sidenav}.ftl"/></#if>
 		        <#if sidebar?exists ><#include "${basePath!\"\"}${sidebar}.ftl"/></#if>
 		        <#if siderel?exists ><#include "${basePath!\"\"}${siderel}.ftl"/></#if>
 		</td>
-		<td id="main">
+	<#-- start of conditional group block -->
+		<#if group?exists >
+		<td id="grp">
+				<#include "${basePath!\"\"}${group}.ftl"/>
+		</td>
+	</tr>
+	<#-- content line -->
+	<tr >
+		</#if>
+	<#-- end of conditional group block -->
+		<td id="main" style="vertical-align: top;">
 				<#include "${basePath!\"\"}${template!\"/empty\"}.ftl"/>
 		</td>
 	</tr>

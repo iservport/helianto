@@ -6,6 +6,19 @@
 	width: 980px;
 	margin: auto;
 }
+
+/* Headline must match background-image height */
+.topContainer {
+	height: 160px;
+	margin-left: 480px;
+	margin-top: 10px;
+}
+
+/* Headline must match background-image height */
+#headLine {
+	height: 200px;
+}
+
 #menu {
 	height: 140px;
 	margin-left: 240px;

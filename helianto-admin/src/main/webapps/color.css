@@ -7,11 +7,6 @@ body {
 	background-repeat: no-repeat;
 }
 
-/* Headline must match background-image height */
-#headLine {
-	height: 160px;
-}
-
 #menu {
 	color: #444444;
 }

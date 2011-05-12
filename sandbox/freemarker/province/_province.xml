@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<secured attributes="ROLE_ADMIN_MANAGER" />
+
+	<persistence-context />
+	
+	<input name="province"/>
+
+	<on-start>
+		<set name="flowScope.basePath" value="'province/'" />
+		<set name="flowScope.assign"   value="'assign'" />
+	</on-start>
+
+	<action-state id="createIfNeeded">
+		<evaluate expression="provinceAction.create(flowScope, currentUser.principal)" />
+		<transition on="edit" to="edit.view" />
+		<transition to="show.view" />
+	</action-state>
+
+	<view-state id="show.view" view="/frame2">
+
+		<on-render>
+			<set name="viewScope.sidebar"  value="'province_bar'" />
+			<set name="viewScope.template" value="'province'" />
+		</on-render>
+
+		<transition on="editProvince"  to="edit.view" />
+		<transition on="toSelection"   to="toSelection" />
+		<transition on="toHome"        to="toHome" />
+		
+	</view-state>
+
+	<view-state id="edit.view" view="/frame2" model="province" >
+
+		<on-render>
+			<set name="viewScope.sidebar"  value="'province_bar'" />
+			<set name="viewScope.template" value="'province_form'" />
+		</on-render>
+
+		<transition on="storeTarget" to="show.view">
+			<evaluate expression="provinceAction.store(flowScope)" />
+		</transition>
+		<transition on="cancelForm" to="cancel" bind="false"/>
+
+	</view-state>
+
+	<!--
+	 ! End states 
+	// -->
+	<end-state id="toHome" />
+	<end-state id="toSelection" commit="true" />
+	<end-state id="cancel" commit="false" />
+
+</flow>

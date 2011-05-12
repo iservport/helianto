@@ -30,6 +30,7 @@
         flow-builder-services="flowBuilderServices" >
     	<flow:flow-location-pattern value="classpath*:/flows/**/*.xml"/>
     	<flow:flow-location-pattern value="classpath*:/freemarker/**/*.xml"/>
+    	<flow:flow-location-pattern value="/**/_menu.xml"/>
     </flow:flow-registry>
     
 	<!--
