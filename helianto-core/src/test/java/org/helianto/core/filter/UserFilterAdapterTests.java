@@ -109,6 +109,15 @@ public class UserFilterAdapterTests {
 		assertEquals(C0+C7+O0, filter.createCriteriaAsString());
 	}
 
+	@Test
+	public void parentIdentity() {
+		Identity identity = new Identity("PRINCIPAL");
+		identity.setId(1);
+		filter.setParentUserKey("USER");
+		filter.setIdentity(identity);
+		assertEquals(C0+"AND "+C6+C7+O0, filter.createCriteriaAsString());
+	}
+
 	// collabs
 	
 	private UserFilterAdapter filter;
