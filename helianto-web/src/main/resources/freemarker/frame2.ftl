@@ -82,15 +82,20 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
  # @param indexName - the name of the first parameter, defaults to 'index',
  # @param param - any aditional parameter, must start with '&',
  # @param title - to be shown as a hint.
+ # @param role - the required role to allow selection.
   -->
-<#macro select targetIndex="0", name="${targetName}", indexName="index", param="", title="">
+<#macro select targetIndex="0", name="${targetName}", indexName="index", param="", title="", role="ROLE_USER_ALL">
 <td>
 <#if filterOption?if_exists='returnOption' >
-[<a <#if title!="" >title="${title}"</#if> 
-href="${flowExecutionUrl}&_eventId=return${name?cap_first}&${indexName}=${targetIndex}${param}"><#nested/></a>]
+	[<a <#if title!="" >title="${title}"</#if> 
+	href="${flowExecutionUrl}&_eventId=return${name?cap_first}&${indexName}=${targetIndex}${param}"><#nested/></a>]
 <#else>
-<a <#if title!="" >title="${title}"</#if> 
-href="${flowExecutionUrl}&_eventId=select${name?cap_first}&${indexName}=${targetIndex}${param}"><#nested/></a>
+	<#if currentUser?exists && currentUser.authorities?seq_contains(role) >
+		<a <#if title!="" >title="${title}"</#if> 
+		href="${flowExecutionUrl}&_eventId=select${name?cap_first}&${indexName}=${targetIndex}${param}"><#nested/></a>
+	<#else>
+		<#nested/>
+	</#if>
 </#if>
 </td>
 </#macro>
@@ -119,14 +124,19 @@ href="${flowExecutionUrl}&_eventId=select${name?cap_first}&${indexName}=${target
  # @param indexName - the name of the first parameter, defaults to 'index',
  # @param param - any aditional parameter, must start with '&',
  # @param title - to be shown as a hint.
+ # @param role - the required role to allow selection.
   -->
-<#macro selectModel targetIndex="0", name="${targetName}", indexName="index", param="", title="">
+<#macro selectModel targetIndex="0", name="${targetName}", indexName="index", param="", title="", role="ROLE_USER_ALL">
 <#if filterOption?if_exists='returnOption' >
-[<a <#if title!="" >title="${title}"</#if> 
-href="${flowExecutionUrl}&_eventId=return${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>]
+	[<a <#if title!="" >title="${title}"</#if> 
+	href="${flowExecutionUrl}&_eventId=return${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>]
 <#else>
-<a <#if title!="" >title="${title}"</#if> 
-href="${flowExecutionUrl}&_eventId=select${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>
+	<#if currentUser?exists && currentUser.authorities?seq_contains(role) >
+		<a <#if title!="" >title="${title}"</#if> 
+		href="${flowExecutionUrl}&_eventId=select${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>
+	<#else>
+		<#nested/>
+	</#if>
 </#if>
 </#macro>
 
@@ -148,10 +158,11 @@ href="${flowExecutionUrl}&_eventId=select${name?cap_first}&pages['${name?uncap_f
  # @param indexName - the name of the first parameter, defaults to 'index',
  # @param param - any aditional parameter, must start with '&',
  # @param title - to be shown as a hint.
+ # @param role - the required role to allow selection.
   -->
-<#macro selectModelTr targetIndex="0", name="${targetName}", indexName="index", param="", title="">
+<#macro selectModelTr targetIndex="0", name="${targetName}", indexName="index", param="", title="", role="ROLE_USER_ALL">
 <td>
-<@selectModel targetIndex, name, indexName, param, title ><#nested/></@selectModel>
+<@selectModel targetIndex, name, indexName, param, title, role ><#nested/></@selectModel>
 </td>
 </#macro>
 
