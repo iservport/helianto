@@ -28,8 +28,6 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	private static final long serialVersionUID = 1L;
 
 	protected User doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-//		UserGroup parent = userMgr.findUsers(userFilter)
-//		User user = new User(parent, childCredential)
 		return new User();
 	}
 	

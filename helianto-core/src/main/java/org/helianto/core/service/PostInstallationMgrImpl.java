@@ -235,6 +235,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
 		
 		entity.setInstallDate(new Date());
+		entityDao.refresh(entity);
 		logger.debug("Entity {} installation finished at {}.", userAssociation, entity.getInstallDate());
 
 		return entity;
