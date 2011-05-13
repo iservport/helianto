@@ -41,6 +41,10 @@
 <#--
  # Macro to create a selection link.
  #
+ # @param event - the name of the event.
+ # @param param - parameters to be appended starting with &amp;
+ # @param title - to be shown as a hint.
+ #
   -->
 <#macro anchor event="createTarget", param="", title="">
 <a <#if title!="" >title="${title}"</#if>href="${flowExecutionUrl}&_eventId=${event}${param}"><#nested/></a>

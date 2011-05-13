@@ -7,7 +7,7 @@
 	<h2>${userAssociation.child.userKey}</h2>
 
 	<p>Optional alias: ${userAssociation.child.identity.optionalAlias}</p>
-	<p>Nome completo:  ${userAssociation.child.identity.identityName}</p>
+	<p>Full name:  ${userAssociation.child.identity.identityName}</p>
 	
 	<form method="POST">
 	

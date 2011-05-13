@@ -208,13 +208,12 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			throw new IllegalArgumentException("Unable to load required service 'ADMIN' from operator {} "+operator);
 		}
 		
-//		UserRole adminRole = installUserRole(adminGroup, adminService, "MANAGER");
 		UserRole adminRole = new UserRole(adminGroup, adminService, "MANAGER");
-		userRoleDao.saveOrUpdate(adminRole);
-
 		adminGroup.getRoles().add(adminRole);
+		userRoleDao.saveOrUpdate(adminRole);
 		
 		UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
+		adminGroup.getChildAssociations().add(adminAssociation);
 		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
 		
 		UserGroup userGroup  = new UserGroup(entity, "USER");
@@ -225,17 +224,17 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			throw new IllegalArgumentException("Unable to load required service 'USER' from operator {} "+operator);
 		}
 		
-//		UserRole userRole = installUserRole(userGroup, userService, "MANAGER");
 		UserRole userRole = new UserRole(userGroup, userService, "ALL");
+		userGroup.getRoles().add(userRole);
 		userRoleDao.saveOrUpdate(userRole);
 		
-		userGroup.getRoles().add(userRole);
-		
 		UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
+		userGroup.getChildAssociations().add(userAssociation);
 		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
 		
-		entity.setInstallDate(new Date());
 		entityDao.refresh(entity);
+		entity.setInstallDate(new Date());
+		entityDao.flush();
 		logger.debug("Entity {} installation finished at {}.", userAssociation, entity.getInstallDate());
 
 		return entity;

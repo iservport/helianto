@@ -11,12 +11,18 @@
 	<link href="../helianto.css" rel="stylesheet" />
 	<link href="../layout.css"   rel="stylesheet" />
 	<link href="../color.css"    rel="stylesheet" />
+	<link href="../menu/menu_style.css"    rel="stylesheet" />
 	<link rel="icon" type="image/png" href="../favicon.png" />
 </head>
 <body>
 <div class="container">
 
-	<h1 style="height: 160px; margin-left: 360px;">Thank you for your interest in the Helianto Project</h1>
+	<div class="topContainer">
+		<div class="menuLine">
+				<#include "menu.ftl"/>
+		</div>
+	</div>
+	<h1 style="margin-left: 400px;">Thank you for your interest in the Helianto Project</h1>
 	
 	<div style="width: 200px; float: right; padding: 20px;">
 	
@@ -48,7 +54,7 @@
 	
 	<p>This concept help to bind entities within isolation levels and create a management hierarchy. One can say, 
 	for example, that the organization "A" creates a business space isolated from the business space of 
-	organization "B". Trunk entities like accounts or customers from organization "A" are not visible to 
+	organization "B". Trunk entities, like accounts or customers from organization "A", are not visible to 
 	any organization "B" user. Root entities, however, may be shared across business spaces, what is appropriate
 	in the case of provinces or system level services.</p>
 	
@@ -81,3 +87,35 @@
 </div>
 </body>
 </html>
+
+
+<#--
+ # Macro to help with security roles.
+ #
+ # When wrapping an anchor, causes it to be displayed only if the user has
+ # the appropriate privileges.
+-->
+<#macro secure role="ROLE_USER_ALL">
+	<#if !currentUser?exists>
+		<#-- do not show -->
+	<#elseif currentUser.authorities?seq_contains(role) >
+		<#nested/>
+	</#if>
+</#macro>
+
+<#--
+ # Macro to create a selection link.
+ #
+ # @param event - the name of the event.
+ # @param param - parameters to be appended starting with &amp;
+ # @param title - to be shown as a hint.
+ #
+  -->
+<#macro anchor event="createTarget", param="", title="">
+<#if flowExecutionUrl?exists >
+<a <#if title!="" >title="${title}"</#if>href="${flowExecutionUrl}&_eventId=${event}${param}"><#nested/></a>
+<#else>
+<#nested/>
+</#if>
+</#macro>
+

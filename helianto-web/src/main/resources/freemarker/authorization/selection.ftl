@@ -19,7 +19,7 @@
 		</thead>
 		<tbody>
 		<#list authorizationModel.list?if_exists as authorization >
-			<tr>
+			<tr class="row${authorization_index%2}">
 				<@select "${authorization_index}">${authorization.entity.id}</@select>
 				<@select "${authorization_index}">${authorization.entity.alias?if_exists}</@select>
 				<td>${authorization.userKey}</td>

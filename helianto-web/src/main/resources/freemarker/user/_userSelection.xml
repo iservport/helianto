@@ -91,9 +91,13 @@
 
 		<on-render>
 			<set name="viewScope.sidebar"  value="'user_bar'" />
+			<set name="viewScope.siderel"  value="'user_rel'" />
 			<set name="viewScope.template" value="'user'" />
 		</on-render>
 
+		<transition on="editUser"
+		            to="user.subflow" />
+		
 		<transition on="selectUserGroup"
 		            to="createUserGroupAssociation" >
 				<set name="flowScope.userGroup"  value="userModel.pages['userGroup'].item"/>
@@ -161,9 +165,9 @@
 	</subflow-state>
 
 	<subflow-state id="user.subflow" subflow="_user">
-		<input name="userAssociation" value="userAssociationFilter.item"/>
-		<input name="userGroup"       value="userAssociationFilter.item"/>
-		<transition on="toSelection" to="filter" />
+		<input name="user" />
+		<transition on="toCommit" to="service.filter" />
+		<transition on="toReturn" to="show.view" />
 	</subflow-state>
 
 	<subflow-state id="userGroupRole.subflow" subflow="_userRole">

@@ -8,30 +8,33 @@
 	<secured attributes="ROLE_USER_ALL" />
 	
 	<persistence-context />
-
+	
 	<on-start>
 		<set name="conversationScope.basePath" value="'authorization/'" />
 		<set name="conversationScope.assign"   value="'assign'" />
 		<evaluate expression="authorizationAction.createModel(flowScope, currentUser.principal)" />
 	</on-start>
 
+	<!-- Filter section -->
+
 	<action-state id="filter">
 		<evaluate expression="authorizationAction.filter(flowScope, currentUser.principal)" />
 		<transition on="success" to="selection.view" />
 	</action-state>
+	
+	<!-- View section -->
 
 	<view-state id="selection.view" view="/frame2"  model="authorizationModel" >
 
-		<transition on="info" to="info.view" />
+		<transition on="selectAuthorization" 
+					to="filter" >
+				<set name="flowScope.authorization"  value="authorizationModel.item"/>
+			</transition>
 		
-		<transition on="selectAuthorization" to="filter" >
-			<set name="flowScope.authorization"  value="authorizationModel.item"/>
-			<evaluate expression="authorizationAction.store(flowScope)" />
-		</transition>
-		
-		<transition on="createAuthorization" to="entity.subflow" >
-			<evaluate expression="entityAction.create(flowScope, currentUser.principal)" />
-		</transition>
+		<transition on="createAuthorization" 
+					to="entity.subflow" >
+				<evaluate expression="entityAction.create(flowScope, currentUser.principal)" />
+			</transition>
 		
 		<transition on="authorize" >
 			<evaluate expression="authorizationAction.authenticate(flowScope)" />
@@ -39,12 +42,8 @@
 		
 	</view-state>
 
-	<view-state id="info.view" view="info" >
+	<!-- Subflow section -->
 
-		<transition on="toSelection" to="selection.view" />
-		
-	</view-state>
-	
 	<subflow-state id="user.subflow" subflow="_user">
 		<input name="user" />
 		<transition on="toCommit" to="filter" />

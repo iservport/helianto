@@ -42,7 +42,7 @@ public class UserGroupActionImpl extends AbstractFilterAction<UserGroup> {
 	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		PageModel<User> model = getModel(attributes);
-		UserFilterAdapter filter = new UserFilterAdapter(model.getFilter());
+		UserFilterAdapter filter = new UserFilterAdapter(model.getForm());
 		logger.debug("Created userGroupFilter {}.",filter);
 		return filter;
 	}
