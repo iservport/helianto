@@ -31,7 +31,9 @@
 		
 	</view-state>
 
-	<end-state id="toCommit" commit="true"/>
+	<end-state id="toCommit" commit="true">
+		<output name="userGroup" value="flowScope.userGroup" />
+	</end-state>
 
 	<end-state id="toReturn" commit="true"/>
 

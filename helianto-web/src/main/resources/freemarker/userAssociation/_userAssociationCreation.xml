@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+        parent="_menu">
+
+	<secured attributes="ROLE_USER_ALL, ROLE_ADMIN_MANAGER" />
+	
+	<persistence-context />
+
+    <input name="userGroup" />
+    
+	<on-start>
+		<set name="flowScope.basePath" value="'identity/'" />
+		<set name="flowScope.assign"   value="'assign'" />
+		<evaluate expression="identityAction.createModel(flowScope, currentUser.principal)" />
+		<evaluate expression="identityAction.create(flowScope, currentUser.principal)" />
+	</on-start>
+
+	<view-state id="selection.view" view="/frame2" model="identityModel">
+
+		<on-render>
+			<set name="viewScope.sidebar"  value="'identity_bar'" />
+			<set name="viewScope.template" value="'filter'" />
+		</on-render>
+
+		<transition on="cancelForm" to="toReturn" bind="false"/>
+		
+	</view-state>
+	
+	<action-state id="filter">
+		<evaluate expression="identityAction.filter(flowScope, currentUser.principal)" />
+		<transition on="create" to="identity.subflow"  />
+		<transition on="use"    to="selection.view" >
+			<set name="flowScope.identity"  value="identityModel.item"/>
+		</transition>
+	</action-state>
+	
+	<!-- Subflow section -->
+
+	<subflow-state id="identity.subflow" subflow="_identity">
+		<input name="identity" value="identityModel.form"/>
+		<output name="identity" value="flowScope.identity"/>
+		<transition on="toCommit" to="credential.subflow" >
+			<evaluate expression="credentialAction.create(flowScope, currentUser.principal)" />
+		</transition>
+		<transition on="toReturn" to="toReturn" />
+	</subflow-state>
+	
+	<subflow-state id="credential.subflow" subflow="_credential">
+		<input name="credential" />
+		<output name="credential" value="flowScope.credential"/>
+		<transition on="toCommit" to="userAssociation.subflow" >
+			<evaluate expression="userAssociationAction.create(flowScope, currentUser.principal)" />
+		</transition>
+		<transition on="toReturn" to="toReturn" />
+	</subflow-state>
+	
+	<subflow-state id="userAssociation.subflow" subflow="_userAssociation">
+		<input name="userAssociation" value="flowScope.userAssociation"/>
+		<transition on="toCommit" to="toCommit" />
+		<transition on="toReturn" to="toReturn" />
+	</subflow-state>
+	
+	<end-state id="toCommit" commit="true" >
+		<output name="userAssociation" value="flowScope.userAssociation" />
+	</end-state>
+
+	<end-state id="toReturn" commit="false" />
+
+</flow>

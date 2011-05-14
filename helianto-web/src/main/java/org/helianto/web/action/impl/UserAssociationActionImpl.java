@@ -1,7 +1,6 @@
 package org.helianto.web.action.impl;
 
 import org.helianto.core.Credential;
-import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
@@ -33,11 +32,12 @@ public class UserAssociationActionImpl extends UserGroupAssociationActionImpl {
 		if (parent==null) {
 			throw new IllegalArgumentException("An user group is required in scope before association creation.");			
 		}
-		Identity identity = (Identity) attributes.get("identity");
-		if (identity==null) {
-			throw new IllegalArgumentException("An identity is required in scope before association creation.");			
+		Credential credential = (Credential) attributes.get("credential");
+		if (credential==null) {
+			throw new IllegalArgumentException("A credential is required in scope before association creation.");			
 		}
-		UserGroup child = new User(parent, new Credential(identity, "123456"));
+		UserGroup child = new User(parent, credential);
+		child.setAccountNonExpired(true);
 		logger.debug("Association has {} and {}.", parent, child);
 	    return new UserAssociation(parent, child);
 	}

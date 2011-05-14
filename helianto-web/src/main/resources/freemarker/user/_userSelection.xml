@@ -29,21 +29,6 @@
 		<transition on="success" to="selection.view" />
 	</action-state>
 	
-	<action-state id="userRole.filter">
-		<evaluate expression="userRoleAction.filter(flowScope, currentUser.principal)" />
-		<transition on="success" to="show.view" />
-	</action-state>
-	
-	<action-state id="service.filter">
-		<evaluate expression="serviceAction.filter(flowScope, currentUser.principal)" />
-		<transition on="success" to="userGroupRole.filter" />
-	</action-state>
-	
-	<action-state id="userGroupRole.filter">
-		<evaluate expression="userGroupRoleAction.filter(flowScope, currentUser.principal)" />
-		<transition on="success" to="group.view" />
-	</action-state>
-	
 	<!-- View section -->
 
 	<view-state id="selection.view" view="/frame2"  model="userModel" >
@@ -71,21 +56,31 @@
 			</transition>
 		
 		<transition on="createUser"
-		            to="identity.subflow" />
+		            to="userAssociationCreation.subflow" />
 		
 		<transition on="createUserGroup"
 		            to="userGroup.subflow" >
 				<evaluate expression="userGroupAction.create(flowScope, currentUser.principal)" />
 			</transition>
 		
-		<transition on="createAssociation"
-		            to="identity.subflow" >
-				<evaluate expression="userAssociationAction.create(flowScope, currentUser.principal)" />
-			</transition>
-		
 		<transition on="toSelection"        to="toCommit"/>
 		
 	</view-state>
+	
+	<action-state id="userRole.filter">
+		<evaluate expression="userRoleAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="show.view" />
+	</action-state>
+	
+	<action-state id="service.filter">
+		<evaluate expression="serviceAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="userGroupRole.filter" />
+	</action-state>
+	
+	<action-state id="userGroupRole.filter">
+		<evaluate expression="userGroupRoleAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="group.view" />
+	</action-state>
 	
 	<view-state id="show.view" view="/frame2" model="userModel" >
 
@@ -122,6 +117,9 @@
 			<set name="viewScope.siderel"  value="'userGroup_rel'" />
 		</on-render>
 
+		<transition on="editUserGroup"
+		            to="userGroup.subflow" />
+		
 		<transition on="selectUserGroupRole"
 		            to="userGroupRole.subflow" >
 				<set name="flowScope.userGroupRole"  value="userModel.pages['userGroupRole'].item"/>
@@ -144,11 +142,10 @@
 	
 	<!-- Subflow section -->
 
-	<subflow-state id="identity.subflow" subflow="_identity">
-		<output name="identity" value="flowScope.identity"/>
-		<transition on="toCommit" to="userAssociation.subflow" >
-			<evaluate expression="userAssociationAction.create(flowScope, currentUser.principal)" />
-		</transition>
+	<subflow-state id="userAssociationCreation.subflow" subflow="_userAssociationCreation">
+		<input name="userGroup" />
+		<output name="userAssociation" value="flowScope.userAssociation" />
+		<transition on="toCommit" to="userAssociation.subflow" />
 		<transition on="toReturn" to="selection.view" />
 	</subflow-state>
 	
@@ -160,6 +157,7 @@
 	
 	<subflow-state id="userGroup.subflow" subflow="_userGroup">
 		<input name="userGroup" />
+		<output name="userGroup" value="flowScope.userGroup" />
 		<transition on="toCommit" to="userGroup.filter" />
 		<transition on="toReturn" to="selection.view" />
 	</subflow-state>
