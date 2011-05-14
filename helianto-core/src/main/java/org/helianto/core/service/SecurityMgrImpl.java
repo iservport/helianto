@@ -62,13 +62,15 @@ public class SecurityMgrImpl implements SecurityMgr {
 
 	public Credential storeCredential(Credential credential) throws PasswordNotVerifiedException {
 		if (credential.isPasswordVerified()) {
-	        return credentialDao.merge(credential);
+	        credentialDao.saveOrUpdate(credential);
+	        return credential;
 		}
 		throw new PasswordNotVerifiedException();
 	}
 
 	public void storeCredential(SecureUserDetails secureUser) {
-		Credential credential = credentialDao.merge(secureUser.getCredential());
+		Credential credential = secureUser.getCredential();
+		credentialDao.saveOrUpdate(secureUser.getCredential());
 		secureUser.setCredential(credential);
 	}
 	

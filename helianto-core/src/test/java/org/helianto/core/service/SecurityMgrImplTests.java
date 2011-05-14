@@ -86,13 +86,13 @@ public class SecurityMgrImplTests {
     
     @Test
     public void storeCredentialVerified() {
-        Credential managedCredential = null, credential = Credential.credentialFactory("PASSWORD");
+        Credential credential = Credential.credentialFactory("PASSWORD");
         credential.setVerifyPassword("PASSWORD");
         
-        expect(credentialDao.merge(credential)).andReturn(managedCredential);
+        credentialDao.saveOrUpdate(credential);
         replay(credentialDao);
         
-        assertSame(managedCredential, securityMgr.storeCredential(credential));
+        assertSame(credential, securityMgr.storeCredential(credential));
         verify(credentialDao);
     }
     
