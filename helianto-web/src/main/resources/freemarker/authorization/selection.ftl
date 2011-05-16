@@ -20,8 +20,8 @@
 		<tbody>
 		<#list authorizationModel.list?if_exists as authorization >
 			<tr class="row${authorization_index%2}">
-				<@select "${authorization_index}">${authorization.entity.id}</@select>
-				<@select "${authorization_index}">${authorization.entity.alias?if_exists}</@select>
+				<@select "${authorization_index}", "Authorization", "index", "", "Select authorization", "ROLE_ADMIN, ROLE_USER">${authorization.entity.id}</@select>
+				<@select "${authorization_index}", "Authorization", "index", "", "Select authorization", "ROLE_ADMIN, ROLE_USER">${authorization.entity.alias?if_exists}</@select>
 				<td>${authorization.userKey}</td>
 				<td>${authorization.entity.installDate?date}</td>
 			</tr>

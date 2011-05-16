@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
         
-	<secured attributes="ROLE_USER_ALL" />
+	<secured attributes="ROLE_ADMIN, ROLE_USER" />
    
 	<persistence-context />
 

@@ -88,18 +88,20 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
  # @param title - to be shown as a hint.
  # @param role - the required role to allow selection.
   -->
-<#macro select targetIndex="0", name="${targetName}", indexName="index", param="", title="", role="ROLE_USER_ALL">
+<#macro select targetIndex="0", name="${targetName}", indexName="index", param="", title="", role="ROLE_USER">
 <td>
 <#if filterOption?if_exists='returnOption' >
 	[<a <#if title!="" >title="${title}"</#if> 
 	href="${flowExecutionUrl}&_eventId=return${name?cap_first}&${indexName}=${targetIndex}${param}"><#nested/></a>]
 <#else>
-	<#if currentUser?exists && currentUser.authorities?seq_contains(role) >
 		<a <#if title!="" >title="${title}"</#if> 
 		href="${flowExecutionUrl}&_eventId=select${name?cap_first}&${indexName}=${targetIndex}${param}"><#nested/></a>
+		<#--
+	<#if isInRole(role) >
 	<#else>
 		<#nested/>
 	</#if>
+	-->
 </#if>
 </td>
 </#macro>
@@ -130,17 +132,19 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
  # @param title - to be shown as a hint.
  # @param role - the required role to allow selection.
   -->
-<#macro selectModel targetIndex="0", name="${targetName}", indexName="index", param="", title="", role="ROLE_USER_ALL">
+<#macro selectModel targetIndex="0", name="${targetName}", indexName="index", param="", title="", role="ROLE_USER">
 <#if filterOption?if_exists='returnOption' >
 	[<a <#if title!="" >title="${title}"</#if> 
 	href="${flowExecutionUrl}&_eventId=return${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>]
 <#else>
-	<#if currentUser?exists && currentUser.authorities?seq_contains(role) >
 		<a <#if title!="" >title="${title}"</#if> 
 		href="${flowExecutionUrl}&_eventId=select${name?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>
+		<#--
+	<#if currentUser?exists && currentUser.authorities?seq_contains(role) >
 	<#else>
 		<#nested/>
 	</#if>
+	-->
 </#if>
 </#macro>
 
@@ -171,16 +175,48 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
 </#macro>
 
 <#--
+ # Function to help with security roles.
+ #
+ # @param roles - a comma separated list of roles.
+ # @return true if any role of the roles is assigned to the current user
+-->
+<#function isInRole roles="ROLE_USER">
+	<#if !currentUser?exists>
+		<#return false />
+	<#else>
+		<#assign isInRole = false />
+		<#list roles?split(",") as r >
+			<#if currentUser.authorities?seq_contains(r?trim) >
+				<#assign isInRole = true />
+			</#if>
+		</#list>
+		<#if isInRole >
+			<#return true />
+		</#if>
+	</#if>
+</#function>
+
+<#--
  # Macro to help with security roles.
  #
  # When wrapping an anchor, causes it to be displayed only if the user has
  # the appropriate privileges.
+ # 
+ # @param roles - a comma separated list of roles.
 -->
-<#macro secure role="ROLE_USER_ALL">
+<#macro secure roles="ROLE_USER">
 	<#if !currentUser?exists>
-		<#nested/>
-	<#elseif currentUser.authorities?seq_contains(role) >
-		<#nested/>
+		<#nested />
+	<#else>
+		<#assign isInRole = false />
+		<#list roles?split(",") as r >
+			<#if currentUser.authorities?seq_contains(r?trim) >
+				<#assign isInRole = true />
+			</#if>
+		</#list>
+		<#if isInRole >
+			<#nested />
+		</#if>
 	</#if>
 </#macro>
 

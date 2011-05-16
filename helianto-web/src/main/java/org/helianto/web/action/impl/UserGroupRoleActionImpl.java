@@ -31,6 +31,11 @@ public class UserGroupRoleActionImpl extends AbstractFilterAction<UserRole> {
 	}
 	
 	@Override
+	protected String getTargetName() {
+		return "userRole";
+	}
+	
+	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		return new UserRoleFilterAdapter(new UserRole());
 	}

@@ -113,15 +113,27 @@ public class UserDetailsAdapter implements
      */
     protected String[] getUserRolesAsString(UserRole userRole) {
         String[] extensions = userRole.getServiceExtension().split(",");
-        String[] roleNames = new String[extensions.length];
+        String[] roleNames = new String[extensions.length+1];
         int i = 0;
+        roleNames[i++] = formatRole(userRole.getService().getServiceName(), null);
         for (String extension: extensions) {
-            StringBuilder sb = new StringBuilder("ROLE_");
-            sb.append(userRole.getService().getServiceName())
-            	.append("_").append(extension.trim());
-            roleNames[i++] = sb.toString();
+            roleNames[i++] = formatRole(userRole.getService().getServiceName(), extension);
         }
         return roleNames;
+    }
+    
+    /**
+     * Internal role formatter.
+     * 
+     * @param serviceName
+     * @param extension
+     */
+    protected String formatRole(String serviceName, String extension) {
+        StringBuilder sb = new StringBuilder("ROLE_").append(serviceName);
+        if (extension!=null && extension.length()>0) {
+        	sb.append("_").append(extension.trim());
+        }
+        return sb.toString();
     }
 
     public boolean isAccountNonExpired() {

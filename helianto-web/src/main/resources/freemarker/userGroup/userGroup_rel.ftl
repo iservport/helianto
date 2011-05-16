@@ -2,7 +2,7 @@
 <#list userModel.pages['service'].list?if_exists as service >
 	<p>
 	<#assign isCurrent=false />
-	<#list userModel.pages['userGroupRole'].list?if_exists as currentRole >
+	<#list userModel.pages['userRole'].list?if_exists as currentRole >
 		<#if currentRole.service.id==service.id >
 			<#assign isCurrent=true />
 		</#if>
