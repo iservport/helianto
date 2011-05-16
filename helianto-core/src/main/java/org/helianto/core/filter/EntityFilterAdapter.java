@@ -17,6 +17,7 @@
 package org.helianto.core.filter;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Operator;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 
@@ -42,6 +43,16 @@ public class EntityFilterAdapter extends AbstractRootFilterAdapter<Entity> {
 	}
 
 	/**
+	 * Key constructor.
+	 * 
+	 * @param operator
+	 * @param alias
+	 */
+	public EntityFilterAdapter(Operator operator, String alias) {
+		this(new Entity(operator, alias));
+	}
+
+	/**
 	 * Entity alias like filter.
 	 */
 	public String getEntityAliasLike() {
@@ -55,7 +66,6 @@ public class EntityFilterAdapter extends AbstractRootFilterAdapter<Entity> {
 	 * Reset.
 	 */
 	public void reset() {
-		getForm().setAlias("");
 		setEntityAliasLike("");
 	}
 
