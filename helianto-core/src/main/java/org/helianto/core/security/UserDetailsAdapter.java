@@ -98,11 +98,13 @@ public class UserDetailsAdapter implements
     protected void grantAuthorities(Collection<UserRole> roles) {
         authorities = new ArrayList<GrantedAuthority>();
         for (UserRole r : roles) {
-            String[] roleNames = getUserRolesAsString(r);
-            for (String roleName: roleNames) {
-                authorities.add(new GrantedAuthorityImpl(roleName));
-                logger.info("Granted authority: {}.", roleName);
-            }
+        	if (r.getActivityState()==ActivityState.ACTIVE.getValue()) {
+                String[] roleNames = getUserRolesAsString(r);
+                for (String roleName: roleNames) {
+                    authorities.add(new GrantedAuthorityImpl(roleName));
+                    logger.info("Granted authority: {}.", roleName);
+                }
+        	}
         }
     }
     

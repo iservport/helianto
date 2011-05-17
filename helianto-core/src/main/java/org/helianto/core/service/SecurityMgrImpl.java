@@ -30,7 +30,6 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -112,6 +111,31 @@ public class SecurityMgrImpl implements SecurityMgr {
 		return roles;
 	}
 	
+//	public List<UserRole> findRoles(Filter filter, boolean recursively) {
+//		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
+//		if (recursively) {
+//			UserGroup userGroup = ((UserRoleFilterAdapter) filter).getForm().getUserGroup();
+//			if (userGroup==null) {
+//				throw new IllegalArgumentException("UserGroup required.");
+//			}
+//			userGroupDao.saveOrUpdate(userGroup);
+//			Set<UserAssociation> parents = userGroup.getParentAssociations();
+//			for (UserAssociation parentAssociation: parents) {
+//				UserGroup parent = parentAssociation.getParent();
+//				if (parent!=null) {
+////					userGroupDao.saveOrUpdate(parent);
+//					// TODO SORRY, for the moment only one level recursion available...
+//					UserRoleFilterAdapter parentFilter = (UserRoleFilterAdapter) ((UserRoleFilterAdapter) filter).clone();
+//					parentFilter.getForm
+//					List<UserRole> userParentRoleList = (List<UserRole>) userRoleDao.find(filter);
+//					roles.addAll(parent.getRoles());
+//				}
+//			}
+//		}
+//		logger.debug("Found {} role(s) FOR {}.", roles.size(), userGroup);
+//		return roles;
+//	}
+	
 	public void authenticate(User user, Set<UserRole> roles) {
 		UserDetails userDetails = new UserDetailsAdapter(user, null, roles);
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "any", userDetails.getAuthorities());   //   PreAuthenticatedAuthenticationToken(aPrincipal, aCredentials, anAuthorities);
@@ -126,8 +150,9 @@ public class SecurityMgrImpl implements SecurityMgr {
     // collabs
 
     private FilterDao<Identity> identityDao;
-    private BasicDao<UserGroup> userGroupDao;
-    private BasicDao<Credential> credentialDao;
+    private FilterDao<UserGroup> userGroupDao;
+    private FilterDao<UserRole> userRoleDao;
+    private FilterDao<Credential> credentialDao;
 
     @Resource(name="identityDao")
     public void setIdentityDao(FilterDao<Identity> identityDao) {
@@ -135,12 +160,17 @@ public class SecurityMgrImpl implements SecurityMgr {
     }
     
     @Resource(name="userGroupDao")
-    public void setUserGroupDao(BasicDao<UserGroup> userGroupDao) {
+    public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
 		this.userGroupDao = userGroupDao;
 	}
 
+    @Resource(name="userRoleDao")
+    public void setUserRoleDao(FilterDao<UserRole> userRoleDao) {
+		this.userRoleDao = userRoleDao;
+	}
+
     @Resource(name="credentialDao")
-    public void setCredentialDao(BasicDao<Credential> credentialDao) {
+    public void setCredentialDao(FilterDao<Credential> credentialDao) {
         this.credentialDao = credentialDao;
     }
 

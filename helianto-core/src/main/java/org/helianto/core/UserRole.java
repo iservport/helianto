@@ -42,12 +42,14 @@ public class UserRole  implements java.io.Serializable {
     private UserGroup userGroup;
     private Service service;
     private String serviceExtension;
+    private char activityState;
 
     /** 
      * Empty constructor.
      */
     public UserRole() {
     	setServiceExtension("");
+    	setActivityStateAsEnum(ActivityState.ACTIVE);
     }
    
     /** 
@@ -128,6 +130,19 @@ public class UserRole  implements java.io.Serializable {
     public String getUserRoleName() {
         return "ROLE_"+service.getServiceName().toUpperCase()+"_"+serviceExtension;
     }
+    
+    /**
+     * Activity state.
+     */
+    public char getActivityState() {
+		return activityState;
+	}
+    public void setActivityState(char activityState) {
+		this.activityState = activityState;
+	}
+    public void setActivityStateAsEnum(ActivityState activityState) {
+		this.activityState = activityState.getValue();
+	}
 
     /**
      * toString

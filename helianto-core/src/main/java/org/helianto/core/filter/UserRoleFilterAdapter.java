@@ -38,7 +38,9 @@ public class UserRoleFilterAdapter extends AbstractFilterAdapter<UserRole> {
 		super(new UserRole(user, service, serviceExtension));
 	}
 
-	public void reset() { }
+	public void reset() { 
+		getForm().setActivityState(' ');
+	}
 	
 	@Override
 	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
@@ -78,6 +80,7 @@ public class UserRoleFilterAdapter extends AbstractFilterAdapter<UserRole> {
 			appendEqualFilter("service.id", getForm().getService().getId(), mainCriteriaBuilder);
 		}
 		appendLikeFilter("serviceExtension", getForm().getServiceExtension(), mainCriteriaBuilder);
+		appendEqualFilter("activityState", getForm().getActivityState(), mainCriteriaBuilder);
 	}
 	
 	/**
