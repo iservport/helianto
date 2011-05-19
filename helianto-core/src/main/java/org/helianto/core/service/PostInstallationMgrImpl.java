@@ -208,7 +208,8 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			throw new IllegalArgumentException("Unable to load required service 'ADMIN' from operator {} "+operator);
 		}
 		
-		UserRole adminRole = new UserRole(adminGroup, adminService, "MANAGER");
+		// the user installing the entity is assigned administrative roles.
+		UserRole adminRole = new UserRole(adminGroup, adminService, "READ, WRITE");
 		adminGroup.getRoles().add(adminRole);
 		userRoleDao.saveOrUpdate(adminRole);
 		
@@ -224,7 +225,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			throw new IllegalArgumentException("Unable to load required service 'USER' from operator {} "+operator);
 		}
 		
-		UserRole userRole = new UserRole(userGroup, userService, "ALL");
+		UserRole userRole = new UserRole(userGroup, userService, "READ, WRITE");
 		userGroup.getRoles().add(userRole);
 		userRoleDao.saveOrUpdate(userRole);
 		
