@@ -44,7 +44,9 @@ public class DocumentMgrImpl implements DocumentMgr {
 		if (document.getSeries()!=null) {
 			sequenceMgr.validateInternalNumber(document);
 		}
-		return documentDao.merge(document);
+		documentDao.saveOrUpdate(document);
+		documentDao.flush();
+		return document;
 	}
 	
 	public List<? extends Document> findDocuments(Filter documentFilter) {
