@@ -3,9 +3,9 @@
 		${userModel.pages['user'].listSize!"0"} user(s) found<#if userGroup?exists > in group <@anchor "showUserGroup">${userGroup.userKey}</@anchor></#if>.
 		<div class="toolbar">
 			<#if userGroup.userKey?lower_case=='user'>
-				<@secure "ROLE_USER_ALL" ><@create "User" >+ User</@create></@secure>
+				<@secure "ROLE_USER_WRITE" ><@create "User" >+ User</@create></@secure>
 			</#if>
-			<@secure "ROLE_USER_ALL" ><@create "UserGroup" >+ UserGroup</@create></@secure>
+			<@secure "ROLE_USER_WRITE" ><@create "UserGroup" >+ UserGroup</@create></@secure>
 		</div>
 	</h5>
 	<#if userGroup?exists>

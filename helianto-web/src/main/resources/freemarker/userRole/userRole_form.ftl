@@ -30,7 +30,7 @@
 	
 		<p><input type="checkbox" name="confirmRemoval" value="R"/> Remove</p>
 		
-		<input type="hidden" name="_eventId" value="removeUserRole" />
+		<input type="hidden" name="_eventId" value="removeUserGroupRole" />
 		<input type="submit" value="Remove" />
 		<@flowKey/>
 	

@@ -162,7 +162,7 @@
 		
 		<transition on="selectUserRole"
 		            to="userGroupRole.subflow" >
-				<set name="flowScope.userGroupRole"  value="userModel.pages['userRole'].item"/>
+				<set name="flowScope.userRole"  value="userModel.pages['userRole'].item"/>
 			</transition>
 		
 		<transition on="selectService"
@@ -182,7 +182,8 @@
 	<subflow-state id="userGroupRole.subflow" subflow="_userRole">
 		<input name="userGroup" value="flowScope.userGroup"/>
 		<input name="userRole"  value="flowScope.userRole"/>
-		<output name="userRole" value="flowScope.userGroupRole"/>
+		<output name="userGroup" value="flowScope.userGroup"/>
+		<output name="userRole"  value="flowScope.userGroupRole"/>
 		<transition on="toCommit" to="service.filter" />
 		<transition on="toReturn" to="group.view" />
 	</subflow-state>
