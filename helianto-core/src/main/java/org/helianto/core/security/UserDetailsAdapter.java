@@ -18,7 +18,9 @@ package org.helianto.core.security;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
@@ -87,39 +89,43 @@ public class UserDetailsAdapter implements
         this.user = user;
         logger.info("Secured user: {}", user);
         this.credential = credential;
-        grantAuthorities(roles);
+        grantAuthorities(roles, user);
     }
     
     /**
      * Iterates through user roles to grant authorities.
      * 
      * @param roles
+     * @param user
      */
-    protected void grantAuthorities(Collection<UserRole> roles) {
+    protected void grantAuthorities(Collection<UserRole> roles, User user) {
         authorities = new ArrayList<GrantedAuthority>();
+        Set<String> roleNames = new HashSet<String>();
         for (UserRole r : roles) {
         	if (r.getActivityState()==ActivityState.ACTIVE.getValue()) {
-                String[] roleNames = getUserRolesAsString(r);
-                for (String roleName: roleNames) {
-                    authorities.add(new GrantedAuthorityImpl(roleName));
-                    logger.info("Granted authority: {}.", roleName);
-                }
+               roleNames.addAll(getUserRolesAsString(r, user));
         	}
+        }
+        for (String roleName: roleNames) {
+            authorities.add(new GrantedAuthorityImpl(roleName));
+            logger.info("Granted authority: {}.", roleName);
         }
     }
     
     /**
-     * Converts user roles to authorities.
+     * Converts user roles to authorities, including "ROLE_SELF_ID_x", where
+     * x is the authorized user identity primary key.
      * 
      * @param userRole
+     * @param user
      */
-    protected String[] getUserRolesAsString(UserRole userRole) {
+    protected Set<String> getUserRolesAsString(UserRole userRole, User user) {
+        Set<String> roleNames = new HashSet<String>();
+        roleNames.add(formatRole("SELF", new StringBuilder("ID_").append(user.getIdentity().getId()).toString()));
         String[] extensions = userRole.getServiceExtension().split(",");
-        String[] roleNames = new String[extensions.length+1];
-        int i = 0;
-        roleNames[i++] = formatRole(userRole.getService().getServiceName(), null);
+        roleNames.add(formatRole(userRole.getService().getServiceName(), null));
         for (String extension: extensions) {
-            roleNames[i++] = formatRole(userRole.getService().getServiceName(), extension);
+        	roleNames.add(formatRole(userRole.getService().getServiceName(), extension));
         }
         return roleNames;
     }
