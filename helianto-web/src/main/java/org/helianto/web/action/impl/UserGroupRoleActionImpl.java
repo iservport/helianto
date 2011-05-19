@@ -76,8 +76,9 @@ public class UserGroupRoleActionImpl extends AbstractFilterAction<UserRole> {
 	}
 	
 	@Override
-	protected String doRemove(UserRole target) {
-		userMgr.removeUserRole(target);
+	protected String doRemove(MutableAttributeMap attributes, UserRole target) {
+		UserGroup userGroup = getOwner(attributes);
+		userMgr.removeUserRole(target, userGroup);
 		return "success";
 	}
 	
