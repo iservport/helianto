@@ -190,7 +190,8 @@ public interface UserMgr {
 	 * Remove <code>UserRole</code> from the data store.
 	 * 
 	 * @param userRole
+	 * @param userGroup
 	 */
-	public void removeUserRole(UserRole userRole);
+	public void removeUserRole(UserRole userRole, UserGroup userGroup);
 
 }

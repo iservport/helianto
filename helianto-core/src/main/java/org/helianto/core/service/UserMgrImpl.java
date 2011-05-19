@@ -385,12 +385,29 @@ public class UserMgrImpl implements UserMgr {
 
 	public UserRole storeUserRole(UserRole userRole) {
 		userRoleDao.saveOrUpdate(userRole);
+		userRoleDao.flush();
 		return userRole;
 	}
 	
-	public void removeUserRole(UserRole userRole) {
-		userRoleDao.remove(userRole);
-		userRoleDao.flush();
+	public void removeUserRole(UserRole userRole, UserGroup userGroup) {
+		userGroupDao.saveOrUpdate(userGroup);
+		if (userGroup!=null ) {
+			UserRole[] rr = (UserRole[]) userGroup.getRoles().toArray();
+			for (UserRole r: rr) {
+				System.out.println("User role: "+r);
+				if (r.getUserGroup().equals(userGroup)) {
+					userRoleDao.remove(userRole);
+					userGroup.getRoles().remove(userRole);
+//					userRoleDao.flush();
+					System.out.println("= "+userRole);
+				}
+				else {
+					System.out.println("!= "+userRole);
+				}
+			}
+		}
+		throw new IllegalArgumentException("User role " +
+				userRole+"does not belong to user group " + userGroup+".");
 	}
 
     public List<Province> findProvinceByOperator(Operator operator) {
