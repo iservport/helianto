@@ -221,6 +221,28 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
 </#macro>
 
 <#--
+ # Macro to help with security roles.
+ #
+ # When wrapping an anchor, causes it to be displayed only if the user has NOT
+ # the appropriate privileges.
+ # 
+ # @param roles - a comma separated list of roles.
+-->
+<#macro unsecure roles="ROLE_USER">
+	<#if currentUser?exists>
+		<#assign isInRole = false />
+		<#list roles?split(",") as r >
+			<#if currentUser.authorities?seq_contains(r?trim) >
+				<#assign isInRole = true />
+			</#if>
+		</#list>
+		<#if !isInRole >
+			<#nested />
+		</#if>
+	</#if>
+</#macro>
+
+<#--
  # Macro to trigger object creation using the index = -1.
 -->
 <#macro create name="${targetName}", title="Create ${name?cap_first}">
