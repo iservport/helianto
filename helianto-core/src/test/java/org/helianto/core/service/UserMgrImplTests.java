@@ -282,6 +282,7 @@ public class UserMgrImplTests {
 		UserRole userRole = UserRoleTestSupport.createUserRole();
 		
 		userRoleDao.saveOrUpdate(userRole);
+		userRoleDao.flush();
 		replay(userRoleDao);
 		
 		assertSame(userRole , userMgr.storeUserRole(userRole));
