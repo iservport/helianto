@@ -41,6 +41,18 @@ import org.springframework.stereotype.Service;
 @Service("sequenceMgr")
 public class SequenceMgrImpl implements SequenceMgr {
 	
+	public long findOrCreatePublicNumber(Operator operator, String publicNumberKey) {
+		PublicEnumerator enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
+		if (enumerator!=null) {
+			return enumerator.getLastNumber();
+		} else  {
+            enumerator = new PublicEnumerator(operator, publicNumberKey);
+            publicEnumeratorDao.saveOrUpdate(enumerator);
+            logger.debug("Created PublicEnumerator: {}", enumerator);
+            return 1;
+        }
+	}
+	
     public long newPublicNumber(Operator operator, String publicNumberKey) {
     	PublicEnumerator enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
         if (enumerator!=null) {
@@ -60,6 +72,18 @@ public class SequenceMgrImpl implements SequenceMgr {
         }
     }
     
+	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey) {
+		InternalEnumerator enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
+		if (enumerator!=null) {
+			return enumerator.getLastNumber();
+		} else  {
+            enumerator = new InternalEnumerator(entity, internalNumberKey);
+            internalEnumeratorDao.saveOrUpdate(enumerator);
+            logger.debug("Created InternalEnumerator: {}", enumerator);
+            return 1;
+        }
+	}
+	
     public long newInternalNumber(Entity entity, String internalNumberKey) {
         InternalEnumerator enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
         if (enumerator!=null) {

@@ -32,6 +32,15 @@ import org.helianto.core.number.Verifiable;
 public interface SequenceMgr {
 	
 	/**
+	 * Find a public number from a sequence named after a given public 
+	 * number key.
+	 * 
+	 * @param operator
+	 * @param publicNumberKey
+	 */
+	public long findOrCreatePublicNumber(Operator operator, String publicNumberKey);
+	
+	/**
 	 * Create a new public number from a sequence named after a given public 
 	 * number key. If the sequence does not exist, start a new one.
 	 * 
@@ -39,6 +48,15 @@ public interface SequenceMgr {
 	 * @param publicNumberKey
 	 */
 	public long newPublicNumber(Operator operator, String publicNumberKey);
+	
+	/**
+	 * Find an internal number from a sequence named after a given internal 
+	 * number key.
+	 * 
+	 * @param entity
+	 * @param internalNumberKey
+	 */
+	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey);
 	
 	/**
 	 * Create a new internal number from a sequence named after a given internal 

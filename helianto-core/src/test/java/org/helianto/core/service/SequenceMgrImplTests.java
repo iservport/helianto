@@ -23,6 +23,7 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
 
+import org.easymock.EasyMock;
 import org.helianto.core.Entity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Operator;
@@ -36,11 +37,37 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 
+ * @author mauriciofernandesdecastro
+ */
 public class SequenceMgrImplTests {
     
     private SequenceMgrImpl sequenceMgr;
     private Operator operator = new Operator();
     private Entity entity = new Entity();
+    
+    @Test
+    public void findOrCreatePublicNumber() {
+    	PublicEnumerator enumerator = new PublicEnumerator();
+    	enumerator.setLastNumber(1000);
+    	
+    	expect(publicEnumeratorDao.findUnique(operator, "PUBLIC")).andReturn(enumerator);
+    	replay(publicEnumeratorDao);
+    	
+    	assertEquals(1000, sequenceMgr.findOrCreatePublicNumber(operator, "PUBLIC"));
+    	verify(publicEnumeratorDao);
+    }
+
+    @Test
+    public void findOrCreatePublicNumberNull() {
+    	expect(publicEnumeratorDao.findUnique(operator, "PUBLIC")).andReturn(null);
+    	publicEnumeratorDao.saveOrUpdate(EasyMock.isA(PublicEnumerator.class));
+    	replay(publicEnumeratorDao);
+    	
+    	assertEquals(1, sequenceMgr.findOrCreatePublicNumber(operator, "PUBLIC"));
+    	verify(publicEnumeratorDao);
+    }
 
     @Test
     public void validatePublicNumberZeroNotNull() {
@@ -58,6 +85,28 @@ public class SequenceMgrImplTests {
     	verify(publicEnumeratorDao);
     }
     
+    @Test
+    public void findOrCreateInternalNumber() {
+    	InternalEnumerator enumerator = new InternalEnumerator();
+    	enumerator.setLastNumber(1000);
+    	
+    	expect(internalEnumeratorDao.findUnique(entity, "INTERNAL")).andReturn(enumerator);
+    	replay(internalEnumeratorDao);
+    	
+    	assertEquals(1000, sequenceMgr.findOrCreateInternalNumber(entity, "INTERNAL"));
+    	verify(internalEnumeratorDao);
+    }
+
+    @Test
+    public void findOrCreateInternalNumberNull() {
+    	expect(internalEnumeratorDao.findUnique(entity, "INTERNAL")).andReturn(null);
+    	internalEnumeratorDao.saveOrUpdate(EasyMock.isA(InternalEnumerator.class));
+    	replay(internalEnumeratorDao);
+    	
+    	assertEquals(1, sequenceMgr.findOrCreateInternalNumber(entity, "INTERNAL"));
+    	verify(internalEnumeratorDao);
+    }
+
     @Test
     public void validateInternalNumberZeroNotNull() {
     	Sequenceable sequenceable = new SequenceableStub();
