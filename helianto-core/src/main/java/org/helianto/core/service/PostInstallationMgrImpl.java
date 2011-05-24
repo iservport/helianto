@@ -216,6 +216,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
 		adminGroup.getChildAssociations().add(adminAssociation);
 		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
+		userRoleDao.flush();
 		
 		UserGroup userGroup  = new UserGroup(entity, "USER");
 		userGroupDao.saveOrUpdate(userGroup);
@@ -232,8 +233,8 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
 		userGroup.getChildAssociations().add(userAssociation);
 		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
+		userRoleDao.flush();
 		
-		entityDao.refresh(entity);
 		entity.setInstallDate(new Date());
 		entityDao.flush();
 		logger.debug("Entity {} installation finished at {}.", userAssociation, entity.getInstallDate());
