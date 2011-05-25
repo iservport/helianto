@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.ActivityState;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
@@ -39,6 +40,7 @@ public class UserRoleFilterAdapterTests {
     public static String C2 = "AND alias.serviceExtension = 'EXT' ";
     public static String C3 = "AND lower(alias.categoryName) like '%name_like%' ";
     public static String C4 = "alias.userGroup.id in (1, 10) ";
+    public static String C5 = "AND alias.activityState = 'C' ";
 
     @Test
     public void empty() {
@@ -47,9 +49,9 @@ public class UserRoleFilterAdapterTests {
     
     @Test
     public void select() {
-    	target.setUserGroup(userGroup);
-    	target.setService(service);
-    	target.setServiceExtension("EXT");
+    	form.setUserGroup(userGroup);
+    	form.setService(service);
+    	form.setServiceExtension("EXT");
         assertEquals(C0+C1+C2, filter.createCriteriaAsString());
     }
     
@@ -64,8 +66,15 @@ public class UserRoleFilterAdapterTests {
         assertEquals(C4, filter.createCriteriaAsString());
     }
     
+    @Test
+    public void activityState() {
+    	form.setUserGroup(userGroup);
+    	form.setActivityStateAsEnum(ActivityState.CANCELLED);
+    	assertEquals(C0+C5, filter.createCriteriaAsString());
+    }
+    
     private UserRoleFilterAdapter filter;
-    private UserRole target;
+    private UserRole form;
     private UserGroup userGroup;
     private Service service;
     
@@ -75,8 +84,8 @@ public class UserRoleFilterAdapterTests {
     	userGroup.setId(1);
     	service = new Service(OperatorTestSupport.createOperator(), "SERVICE");
     	service.setId(2);
-    	target = new UserRole();
-    	filter = new UserRoleFilterAdapter(target);
+    	form = new UserRole();
+    	filter = new UserRoleFilterAdapter(form);
     }
 
 }

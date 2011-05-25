@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractAliasFilter implements Serializable, CriteriaFilter<OrmCriteriaBuilder> {
+public abstract class AbstractAliasFilter implements Serializable, CriteriaFilter<OrmCriteriaBuilder>, Cloneable {
 	
     private String objectAlias;
     
@@ -249,6 +249,11 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
     		criteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
             .appendLike(fieldContent.toLowerCase());
         }
+    }
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+    	return super.clone();
     }
     
     private static Logger logger = LoggerFactory.getLogger(AbstractAliasFilter.class);

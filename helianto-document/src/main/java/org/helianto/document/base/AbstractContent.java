@@ -45,11 +45,35 @@ public class AbstractContent extends Document implements Cloneable, Uploadable {
 	 */
     public AbstractContent() {
     	super();
-    	setDocCode("CONTENT");
     	setEncoding("ISO8859_1");
     	setMultipartFileContentType("text/html");
     }
 
+    /**
+     * True if {@link #afterInternalNumberSet(long)} starts with "text".
+     */
+    @Transient
+    public boolean isText() {
+    	if (getMultipartFileContentType().startsWith("text")) {
+    		return true;
+    	}
+    	return false;
+    }
+
+    /**
+     * True if {@link #afterInternalNumberSet(long)} starts with "text/html".
+     */
+    @Transient
+    public boolean isHtml() {
+    	if (getMultipartFileContentType().startsWith("text/html")) {
+    		return true;
+    	}
+    	return false;
+    }
+
+    /**
+     * @deprecated
+     */
     @Transient
     public boolean isEditable() {
     	if (getMultipartFileContentType().startsWith("text")) {
@@ -58,6 +82,9 @@ public class AbstractContent extends Document implements Cloneable, Uploadable {
     	return false;
     }
 
+    /**
+     * True if {@link #afterInternalNumberSet(long)} starts with "image".
+     */
     @Transient
     public boolean isImage() {
     	if (getMultipartFileContentType().startsWith("image")) {
@@ -77,9 +104,12 @@ public class AbstractContent extends Document implements Cloneable, Uploadable {
     	this.content = content.getBytes();
     }
     
+    /**
+     * Helper method to get text content as String.
+     */
     @Transient
     public String getContentAsString() {
-    	if (getContent()!=null) {
+    	if (getContent()!=null && isText()) {
     		return new String(getContent());
     	}
     	return "";

@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
         abstract="true">
 
-	<secured attributes="ROLE_USER_ALL, ROLE_ADMIN_MANAGER" />
+	<secured attributes="ROLE_ADMIN, ROLE_USER" />
 
 	<view-state id="selection.view" view="/frame2"  >
 
@@ -25,6 +25,16 @@
 	</view-state>
 	
 	<view-state id="show.view"      view="/frame2"  >
+
+		<!-- "toAdmin" -->
+		<transition on="toAdmin"           to="toAdmin" />
+		<transition on="toUsers"           to="toUsers" />
+		
+		<transition on="logout"            to="logout" />
+		
+	</view-state>
+	
+	<view-state id="group.view"      view="/frame2"  >
 
 		<!-- "toAdmin" -->
 		<transition on="toAdmin"           to="toAdmin" />

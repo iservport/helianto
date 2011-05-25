@@ -27,7 +27,6 @@
 		</transition>
 		
 		<transition on="cancelForm" to="toReturn" bind="false"/>
-		<transition on="toReports"  to="toReturn" bind="false"/>
 		
 	</view-state>
 

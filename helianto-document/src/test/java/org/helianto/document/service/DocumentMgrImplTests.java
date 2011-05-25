@@ -42,13 +42,13 @@ public class DocumentMgrImplTests {
 	@Test
 	public void storeDocumentNoBuilder() {
 		Document document= new Document();
-		Document managedDocument = new Document();
 		
-		EasyMock.expect(documentDao.merge(document)).andReturn(managedDocument);
+		documentDao.saveOrUpdate(document);
+		documentDao.flush();
 		EasyMock.replay(documentDao);
 		EasyMock.replay(sequenceMgr);
 		
-		assertSame(managedDocument, documentMgr.storeDocument(document));
+		assertSame(document, documentMgr.storeDocument(document));
 		EasyMock.verify(documentDao);
 		EasyMock.verify(sequenceMgr);
 	}
@@ -57,14 +57,14 @@ public class DocumentMgrImplTests {
 	public void storeDocument() {
 		Document document= new Document();
 		document.setSeries(new Serializer());
-		Document managedDocument = new Document();
 		
-		EasyMock.expect(documentDao.merge(document)).andReturn(managedDocument);
+		documentDao.saveOrUpdate(document);
+		documentDao.flush();
 		EasyMock.replay(documentDao);
 		sequenceMgr.validateInternalNumber(document);
 		EasyMock.replay(sequenceMgr);
 		
-		assertSame(managedDocument, documentMgr.storeDocument(document));
+		assertSame(document, documentMgr.storeDocument(document));
 		EasyMock.verify(documentDao);
 		EasyMock.verify(sequenceMgr);
 	}

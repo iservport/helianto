@@ -62,12 +62,12 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
 	}
 	
 	public void reset() {
-		getFilter().setUnitCode("");
-		getFilter().setUnitName("");
+		getForm().setUnitName("");
+		getForm().setPriority(' ');
 	}
 
 	public boolean isSelection() {
-		return getFilter().getUnitCode().length()>0;
+		return getForm().getUnitCode().length()>0;
 	}
 
 	@Override
@@ -75,15 +75,15 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
     	if (getCategoryGroup()!=null) {
         	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), true, mainCriteriaBuilder);
     	}
-    	if (getFilter().getCategory()!=null) {
-        	appendEqualFilter("category.id", getFilter().getCategory().getId(), mainCriteriaBuilder);
+    	if (getForm().getCategory()!=null) {
+        	appendEqualFilter("category.id", getForm().getCategory().getId(), mainCriteriaBuilder);
     	}
-    	appendLikeFilter("unitName", getFilter().getUnitName(), mainCriteriaBuilder);
+    	appendLikeFilter("unitName", getForm().getUnitName(), mainCriteriaBuilder);
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-    	appendEqualFilter("unitCode", getFilter().getUnitCode(), mainCriteriaBuilder);
+    	appendEqualFilter("unitCode", getForm().getUnitCode(), mainCriteriaBuilder);
 	}
 
 	/**

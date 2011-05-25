@@ -18,7 +18,9 @@ package org.helianto.core.security;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
@@ -87,41 +89,59 @@ public class UserDetailsAdapter implements
         this.user = user;
         logger.info("Secured user: {}", user);
         this.credential = credential;
-        grantAuthorities(roles);
+        grantAuthorities(roles, user);
     }
     
     /**
      * Iterates through user roles to grant authorities.
      * 
      * @param roles
+     * @param user
      */
-    protected void grantAuthorities(Collection<UserRole> roles) {
+    protected void grantAuthorities(Collection<UserRole> roles, User user) {
         authorities = new ArrayList<GrantedAuthority>();
+        Set<String> roleNames = new HashSet<String>();
         for (UserRole r : roles) {
-            String[] roleNames = getUserRolesAsString(r);
-            for (String roleName: roleNames) {
-                authorities.add(new GrantedAuthorityImpl(roleName));
-                logger.info("Granted authority: {}.", roleName);
-            }
+        	if (r.getActivityState()==ActivityState.ACTIVE.getValue()) {
+               roleNames.addAll(getUserRolesAsString(r, user));
+        	}
+        }
+        for (String roleName: roleNames) {
+            authorities.add(new GrantedAuthorityImpl(roleName));
+            logger.info("Granted authority: {}.", roleName);
         }
     }
     
     /**
-     * Converts user roles to authorities.
+     * Converts user roles to authorities, including "ROLE_SELF_ID_x", where
+     * x is the authorized user identity primary key.
      * 
      * @param userRole
+     * @param user
      */
-    protected String[] getUserRolesAsString(UserRole userRole) {
+    protected Set<String> getUserRolesAsString(UserRole userRole, User user) {
+        Set<String> roleNames = new HashSet<String>();
+        roleNames.add(formatRole("SELF", new StringBuilder("ID_").append(user.getIdentity().getId()).toString()));
         String[] extensions = userRole.getServiceExtension().split(",");
-        String[] roleNames = new String[extensions.length];
-        int i = 0;
+        roleNames.add(formatRole(userRole.getService().getServiceName(), null));
         for (String extension: extensions) {
-            StringBuilder sb = new StringBuilder("ROLE_");
-            sb.append(userRole.getService().getServiceName())
-            	.append("_").append(extension.trim());
-            roleNames[i++] = sb.toString();
+        	roleNames.add(formatRole(userRole.getService().getServiceName(), extension));
         }
         return roleNames;
+    }
+    
+    /**
+     * Internal role formatter.
+     * 
+     * @param serviceName
+     * @param extension
+     */
+    protected String formatRole(String serviceName, String extension) {
+        StringBuilder sb = new StringBuilder("ROLE_").append(serviceName);
+        if (extension!=null && extension.length()>0) {
+        	sb.append("_").append(extension.trim());
+        }
+        return sb.toString();
     }
 
     public boolean isAccountNonExpired() {

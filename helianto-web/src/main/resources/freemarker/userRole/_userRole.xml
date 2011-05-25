@@ -5,11 +5,12 @@
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
         parent="_menu">
 
-	<secured attributes="ROLE_USER_ALL" />
+	<secured attributes="ROLE_ADMIN, ROLE_USER" />
 
 	<persistence-context />
 
 	<input name="userRole" />
+	<input name="userGroup" />
 
 	<on-start>
 		<set name="flowScope.basePath" value="'userRole/'" />
@@ -27,7 +28,11 @@
 			<evaluate expression="userRoleAction.store(flowScope)" />
 		</transition>
 		
-		<transition on="removeUserRole" to="toCommit">
+		<transition on="removeUserGroupRole" to="toReturn">
+			<evaluate expression="userGroupRoleAction.remove(flowScope, requestParameters)" />
+		</transition>
+		
+		<transition on="removeUserRole" to="toReturn">
 			<evaluate expression="userRoleAction.remove(flowScope, requestParameters)" />
 		</transition>
 		
@@ -35,7 +40,10 @@
 		
 	</view-state>
 
-	<end-state id="toCommit" commit="true"/>
+	<end-state id="toCommit" commit="true">
+		<output name="userRole"  value="flowScope.userRole"/>
+		<output name="userGroup" value="flowScope.userGroup"/>
+	</end-state>
 
 	<end-state id="toReturn" commit="true"/>
 

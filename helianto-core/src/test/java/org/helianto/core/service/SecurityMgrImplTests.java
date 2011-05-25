@@ -25,7 +25,6 @@ import static org.junit.Assert.assertSame;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.PasswordNotVerifiedException;
-import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;
@@ -86,20 +85,20 @@ public class SecurityMgrImplTests {
     
     @Test
     public void storeCredentialVerified() {
-        Credential managedCredential = null, credential = Credential.credentialFactory("PASSWORD");
+        Credential credential = Credential.credentialFactory("PASSWORD");
         credential.setVerifyPassword("PASSWORD");
         
-        expect(credentialDao.merge(credential)).andReturn(managedCredential);
+        credentialDao.saveOrUpdate(credential);
         replay(credentialDao);
         
-        assertSame(managedCredential, securityMgr.storeCredential(credential));
+        assertSame(credential, securityMgr.storeCredential(credential));
         verify(credentialDao);
     }
     
     //~ collaborators
     
 	private FilterDao<Identity> identityDao;
-	private BasicDao<Credential> credentialDao;
+	private FilterDao<Credential> credentialDao;
     
     //~ setup
     
@@ -109,7 +108,7 @@ public class SecurityMgrImplTests {
         securityMgr = new SecurityMgrImpl();
         identityDao = createMock(FilterDao.class);
         securityMgr.setIdentityDao(identityDao);
-        credentialDao = createMock(BasicDao.class);
+        credentialDao = createMock(FilterDao.class);
         securityMgr.setCredentialDao(credentialDao);
     }
     

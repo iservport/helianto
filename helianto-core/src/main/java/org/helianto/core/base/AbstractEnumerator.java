@@ -39,6 +39,7 @@ public abstract class AbstractEnumerator implements java.io.Serializable {
      * Empty constructor.
      */
     public AbstractEnumerator() {
+    	setLastNumber(1L);
     }
 
     /**

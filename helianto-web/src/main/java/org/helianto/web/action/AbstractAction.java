@@ -147,7 +147,7 @@ public abstract class AbstractAction<T> implements Serializable {
 		String confirmRemoval = parameters.get("confirmRemoval");
 		logger.debug("Removal confirmation is: '{}'.", confirmRemoval);
 		if (confirmRemoval!=null && confirmRemoval.equals("R")) {
-			String result = doRemove(getTarget(attributes));
+			String result = doRemove(attributes, getTarget(attributes));
 			if (result.equals("success")) {
 				attributes.put(getTargetName(), null);
 				logger.debug("Removed: {}.", getTargetName());
@@ -156,6 +156,16 @@ public abstract class AbstractAction<T> implements Serializable {
 		}
 		logger.debug("Not removed: {}.", getTargetName());
 		return "failure";
+	}
+		
+	/**
+	 * Default behavior throws an exception.
+	 * 
+	 * @param attributes
+	 * @param target
+	 */
+	protected String doRemove(MutableAttributeMap attributes, T target) {
+		return doRemove(target);
 	}
 		
 	/**
