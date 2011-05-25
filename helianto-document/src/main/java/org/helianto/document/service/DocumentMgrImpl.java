@@ -41,10 +41,10 @@ public class DocumentMgrImpl implements DocumentMgr {
 		if (document.isLocked()) {
 			throw new IllegalArgumentException("Tried to change a locked document.");
 		}
+		documentDao.saveOrUpdate(document);
 		if (document.getSeries()!=null) {
 			sequenceMgr.validateInternalNumber(document);
 		}
-		documentDao.saveOrUpdate(document);
 		documentDao.flush();
 		return document;
 	}

@@ -57,23 +57,14 @@
     <bean id="securityFlowExecutionListener" 
         class="org.springframework.webflow.security.SecurityFlowExecutionListener" />
        
+       
+       
 	<flow:flow-builder-services id="flowBuilderServices" 
 	    view-factory-creator="mvcViewFactoryCreator"/>
 	
 	<bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
 	    <property name="viewResolvers" ref="viewResolver"/>
 	</bean>
-
-    <!-- Dispatches requests mapped to flows to FlowHandler implementations -->
-    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
-        <property name="flowExecutor" ref="flowExecutor"/>
-        <property name="flowExecutor.executionRepository.alwaysGenerateNewNextKey" value="false"/>
-    </bean>
-
-    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
-        <property name="order" value="2" />
-        <property name="flowRegistry" ref="flowRegistry" />
-    </bean>
 
 	<!-- 
 		Naming convention strateg.

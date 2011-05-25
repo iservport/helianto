@@ -95,7 +95,7 @@
     </aop:config>
     
     <aop:config>
-        <aop:pointcut id="controllerPointcut" expression="execution(* *..*Controller.*(..))" />
+        <aop:pointcut id="controllerPointcut" expression="execution(* *..*Controller*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="controllerPointcut" />
     </aop:config>
     
