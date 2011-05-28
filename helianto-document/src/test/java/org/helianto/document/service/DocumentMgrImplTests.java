@@ -104,7 +104,7 @@ public class DocumentMgrImplTests {
 		EasyMock.expect(privateDocumentDao.find(filter)).andReturn(documentList);
 		EasyMock.replay(privateDocumentDao);
 		
-		assertSame(documentList, documentMgr.findDocuments(filter));
+		assertSame(documentList, documentMgr.findPrivateDocuments(filter));
 		EasyMock.verify(privateDocumentDao);
 	}
 	
