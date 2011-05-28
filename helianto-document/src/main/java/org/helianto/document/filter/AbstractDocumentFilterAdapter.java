@@ -43,25 +43,25 @@ public abstract class AbstractDocumentFilterAdapter<T extends AbstractDocument> 
      * Reset filter.
      */
 	public void reset() {
-		getFilter().setDocName("");
-		getFilter().setPriority(' ');
+		getForm().setDocName("");
+		getForm().setPriority(' ');
 	}
 	
 	/**
 	 * True when filter must select a distinct document.
 	 */
 	public boolean isSelection() {
-		return getFilter().getDocCode().length()>0;
+		return getForm().getDocCode().length()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("docCode", getFilter().getDocCode(), mainCriteriaBuilder);
+		appendEqualFilter("docCode", getForm().getDocCode(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("docName", getFilter().getDocName(), mainCriteriaBuilder);
+		appendLikeFilter("docName", getForm().getDocName(), mainCriteriaBuilder);
 		appendPriority(mainCriteriaBuilder);
 	}
 	
@@ -71,7 +71,7 @@ public abstract class AbstractDocumentFilterAdapter<T extends AbstractDocument> 
 	 * @param mainCriteriaBuilder
 	 */
 	protected void appendPriority(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getForm().getPriority(), mainCriteriaBuilder);
 	}
 
 }

@@ -24,6 +24,7 @@ public class PrivateDocument extends AbstractDocument implements Comparable<Priv
 
     private static final long serialVersionUID = 1L;
     private byte[] content;
+    private char contentType;
     // transient
     private transient MultipartFile file;
 
@@ -32,6 +33,7 @@ public class PrivateDocument extends AbstractDocument implements Comparable<Priv
 	 */
     public PrivateDocument() {
     	super();
+    	setContentType(' ');
     }
 
 	/** 
@@ -76,6 +78,16 @@ public class PrivateDocument extends AbstractDocument implements Comparable<Priv
     	return this.content.length;
     }
     
+	/**
+	 * Content type filter.
+	 */
+	public char getContentType() {
+		return contentType;
+	}
+	public void setContentType(char contentType) {
+		this.contentType = contentType;
+	}
+	
 	/**
 	 * <<Transient>> Convenience property to hold uploaded data.
 	 */
