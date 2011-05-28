@@ -44,6 +44,7 @@ public class PrivateDocument extends AbstractDocument implements Comparable<Priv
 	 */
     public PrivateDocument(Entity entity, String docCode) {
     	super(entity, docCode);
+    	setContentType(' ');
     }
 
 

@@ -24,6 +24,7 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.document.Document;
+import org.helianto.document.PrivateDocument;
 import org.helianto.document.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,12 +50,29 @@ public class DocumentMgrImpl implements DocumentMgr {
 		return document;
 	}
 	
+	public PrivateDocument storeDocument(PrivateDocument privateDocument) {
+		if (privateDocument.isLocked()) {
+			throw new IllegalArgumentException("Tried to change a locked private document.");
+		}
+		privateDocumentDao.saveOrUpdate(privateDocument);
+		privateDocumentDao.flush();
+		return privateDocument;
+	}
+	
 	public List<? extends Document> findDocuments(Filter documentFilter) {
     	List<? extends Document> documentList = (List<? extends Document>) documentDao.find(documentFilter);
     	if (logger.isDebugEnabled() && documentList!=null) {
     		logger.debug("Found document list of size {}", documentList.size());
     	}
     	return documentList;
+	}
+	
+	public List<PrivateDocument> findPrivateDocuments(Filter privateDocumentFilter) {
+    	List<PrivateDocument> privateDocumentList = (List<PrivateDocument>) privateDocumentDao.find(privateDocumentFilter);
+    	if (logger.isDebugEnabled() && privateDocumentList!=null) {
+    		logger.debug("Found private document list of size {}", privateDocumentList.size());
+    	}
+    	return privateDocumentList;
 	}
 	
 	public Document findDocument(Filter documentFilter) throws NonUniqueResultException {
@@ -93,12 +111,18 @@ public class DocumentMgrImpl implements DocumentMgr {
 	// collabs
 	
 	private FilterDao<Document> documentDao;
+	private FilterDao<PrivateDocument> privateDocumentDao;
 	private FilterDao<Serializer> serializerDao;
 	private SequenceMgr sequenceMgr;
 	
 	@Resource(name="documentDao")
 	public void setDocumentDao(FilterDao<Document> documentDao) {
 		this.documentDao = documentDao;
+	}
+	
+	@Resource(name="privateDocumentDao")
+	public void setPrivateDocumentDao(FilterDao<PrivateDocument> privateDocumentDao) {
+		this.privateDocumentDao = privateDocumentDao;
 	}
 	
 	@Resource(name="serializerDao")

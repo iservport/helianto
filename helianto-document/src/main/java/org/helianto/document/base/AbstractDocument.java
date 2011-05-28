@@ -51,12 +51,7 @@ public abstract class AbstractDocument implements TrunkEntity, Prioritizable {
      * Default constructor
      */
     public AbstractDocument() {
-    	setDocCode("");
-    	setDocName("");
-    	setDocFile("");
-    	setPriority('0');
-    	setEncoding("ISO8859_1");
-    	setMultipartFileContentType("text/plain");
+    	init("");
     }
 
     /** 
@@ -66,11 +61,22 @@ public abstract class AbstractDocument implements TrunkEntity, Prioritizable {
      * @param docCode
      */
     public AbstractDocument(Entity entity, String docCode) {
+    	init(docCode);
     	setEntity(entity);
+    }
+    
+    /**
+     * Document initialization.
+     * 
+     * @param docCode
+     */
+    protected void init(String docCode) {
     	setDocCode(docCode);
     	setDocName("");
     	setDocFile("");
     	setPriority('0');
+    	setEncoding("ISO8859_1");
+    	setMultipartFileContentType("text/plain");
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
