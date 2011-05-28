@@ -1,36 +1,26 @@
-/* Copyright 2005 I Serv Consultoria Empresarial Ltda.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package org.helianto.document.base;
+package org.helianto.document;
 
 import java.io.IOException;
 
 import javax.persistence.Lob;
+import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
-import org.helianto.document.Document;
-import org.helianto.document.Uploadable;
+import org.helianto.core.Entity;
+import org.helianto.document.base.AbstractDocument;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Implements <code>Uploadable</code> interface.
+ * A document visible only to the entity.
  * 
- * @author Mauricio Fernandes de Castro
+ * @author mauriciofernandesdecastro
  */
-@javax.persistence.MappedSuperclass
-public class AbstractContent extends Document implements Cloneable, Uploadable {
+@javax.persistence.Entity
+@Table(name="doc_private",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
+)
+public class PrivateDocument extends AbstractDocument implements Comparable<PrivateDocument>, Uploadable {
 
     private static final long serialVersionUID = 1L;
     private byte[] content;
@@ -38,12 +28,23 @@ public class AbstractContent extends Document implements Cloneable, Uploadable {
     private transient MultipartFile file;
 
 	/** 
-	 * Default constructor.
+	 * Default constructor 
 	 */
-    public AbstractContent() {
+    public PrivateDocument() {
     	super();
-    	setMultipartFileContentType("text/html");
     }
+
+	/** 
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param docCode
+	 */
+    public PrivateDocument(Entity entity, String docCode) {
+    	super(entity, docCode);
+    }
+
+
 
     @Lob
     public byte[] getContent() {
@@ -96,18 +97,17 @@ public class AbstractContent extends Document implements Cloneable, Uploadable {
 		setDocFile(file.getOriginalFilename());
 	}
 	
-    @Override
+	/**
+	 * Sort by docCode.
+	 */
+	public int compareTo(PrivateDocument next) {
+		return getDocCode().compareTo(next.getDocCode());
+	}
+
+	@Override
     public boolean equals(Object other) {
-		 if ( !(other instanceof AbstractContent) ) return false;
+		 if ( !(other instanceof PrivateDocument) ) return false;
 		 return super.equals(other);
-    }
-    
-    /**
-     * Make clone() public.
-     */
-    @Override
-    public AbstractContent clone() throws CloneNotSupportedException {
-    	return (AbstractContent) super.clone();
     }
 
 }

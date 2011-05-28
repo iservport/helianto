@@ -17,10 +17,11 @@ package org.helianto.document.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.document.Role;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentTag;
+import org.helianto.document.PrivateDocument;
+import org.helianto.document.Role;
 import org.helianto.document.Serializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +48,14 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 	@Bean
 	public FilterDao<Document> documentDao() {
 		return getFilterDao(Document.class, "entity", "docCode");
+	}
+
+	/**
+	 * Private document data access.
+	 */
+	@Bean
+	public FilterDao<PrivateDocument> privateDocumentDao() {
+		return getFilterDao(PrivateDocument.class, "entity", "docCode");
 	}
 
 	/**

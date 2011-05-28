@@ -25,9 +25,14 @@ package org.helianto.document;
 public interface Uploadable {
 	
     /**
-     * <<Transient>> True if is a text editable document.
+     * <<Transient>> True if is a text document.
      */
-	public boolean isEditable();
+	public boolean isText();
+	
+    /**
+     * <<Transient>> True if is a text/html document.
+     */
+	public boolean isHtml();
 	
     /**
      * <<Transient>> True if is an image document.

@@ -44,6 +44,8 @@ public abstract class AbstractDocument implements TrunkEntity, Prioritizable {
     private String docName;
     private String docFile;
     private char priority;
+    private String encoding;
+    private String multipartFileContentType;
 
     /** 
      * Default constructor
@@ -53,6 +55,8 @@ public abstract class AbstractDocument implements TrunkEntity, Prioritizable {
     	setDocName("");
     	setDocFile("");
     	setPriority('0');
+    	setEncoding("ISO8859_1");
+    	setMultipartFileContentType("text/plain");
     }
 
     /** 
@@ -143,6 +147,55 @@ public abstract class AbstractDocument implements TrunkEntity, Prioritizable {
         this.priority = priority;
     }
     
+	@Column(length=32)
+	public String getEncoding() {
+		return this.encoding;
+	}
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
+	@Column(length=32)
+	public String getMultipartFileContentType() {
+		return multipartFileContentType;
+	}
+	public void setMultipartFileContentType(String multipartFileContentType) {
+		this.multipartFileContentType = multipartFileContentType;
+	}
+
+    /**
+     * True if {@link #afterInternalNumberSet(long)} starts with "text".
+     */
+    @Transient
+    public boolean isText() {
+    	if (getMultipartFileContentType().startsWith("text")) {
+    		return true;
+    	}
+    	return false;
+    }
+
+    /**
+     * True if {@link #afterInternalNumberSet(long)} starts with "text/html".
+     */
+    @Transient
+    public boolean isHtml() {
+    	if (getMultipartFileContentType().startsWith("text/html")) {
+    		return true;
+    	}
+    	return false;
+    }
+
+    /**
+     * True if {@link #afterInternalNumberSet(long)} starts with "image".
+     */
+    @Transient
+    public boolean isImage() {
+    	if (getMultipartFileContentType().startsWith("image")) {
+    		return true;
+    	}
+    	return false;
+    }
+
     /**
      * By default, a document can be changed.
      */

@@ -24,10 +24,10 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentTag;
+import org.helianto.document.PrivateDocument;
 import org.helianto.document.Role;
 import org.helianto.document.Serializer;
 import org.helianto.document.filter.SerializerFilterAdapter;
-import org.helianto.document.filter.classic.SerializerFilter;
 import org.helianto.document.test.AbstractDocumentDaoIntegrationTest;
 import org.helianto.document.test.DocumentTagTestSupport;
 import org.helianto.document.test.DocumentTestSupport;
@@ -44,6 +44,7 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	
 	@Resource BasicDao<DocumentAssociation> documentAssociationDao;
 	@Resource FilterDao<Document> documentDao;
+	@Resource FilterDao<PrivateDocument> privateDocumentDao;
 	@Resource FilterDao<Serializer> serializerDao;
 	@Resource BasicDao<DocumentTag> documentTagDao;
 	@Resource FilterDao<Role> roleDao;
@@ -60,8 +61,12 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 
 		Document document = DocumentTestSupport.create(Document.class, entity);
 		documentDao.saveOrUpdate(document);
-		assertEquals(document, documentDao.findUnique(document.getEntity(), document.getDocCode()));
-
+		assertEquals(document, documentDao.findUnique(entity, document.getDocCode()));
+		
+		PrivateDocument privateDocument = new PrivateDocument(entity, "PRIVATE");
+		privateDocumentDao.saveOrUpdate(privateDocument);
+		assertEquals(privateDocument, privateDocumentDao.findUnique(entity, "PRIVATE"));
+		
 		Serializer serializer = new Serializer(entity, "CODE");
 		serializerDao.saveOrUpdate(serializer);
 		assertEquals(serializer, serializerDao.findUnique(serializer.getEntity(), serializer.getBuilderCode()));

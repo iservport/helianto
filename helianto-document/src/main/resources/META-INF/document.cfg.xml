@@ -7,6 +7,7 @@
 		<mapping class="org.helianto.document.DocumentAssociation" />
 		<mapping class="org.helianto.document.Role" />
 		<mapping class="org.helianto.document.FunctionAssociation" />
+		<mapping class="org.helianto.document.PrivateDocument" />
 		<mapping class="org.helianto.document.Serializer" />
 		<mapping class="org.helianto.document.DocumentKey" />
 		<mapping class="org.helianto.document.DocumentTag" />

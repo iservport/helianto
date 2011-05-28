@@ -27,6 +27,7 @@ import org.helianto.core.base.AbstractKeyStringValue;
  * Preference associated to an entity.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @javax.persistence.Entity
 @Table(name="core_entitypref",
