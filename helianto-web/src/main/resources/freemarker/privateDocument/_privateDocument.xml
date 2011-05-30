@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+        
+	<secured attributes="ROLE_USER" />
+   
+	<persistence-context />
+
+	<input name="privateDocument"/>
+	
+	<on-start>
+	    <set name="flowScope.assign"   value="'assign'"/>
+	</on-start>
+
+	<view-state id="edit.view" view="/frame2" model="privateDocument">
+
+		<var name="uploadableFileHandler" class="org.helianto.web.action.impl.UploadableFileHandler" />
+		
+		<on-render>
+	    	<set name="viewScope.basePath" value="'privateDocument/'"/>
+			<set name="viewScope.sidebar"  value="'privateDocument_bar'" />
+			<set name="viewScope.template" value="'privateDocument_form'" />
+		</on-render>
+		
+		<transition on="uploadPrivateDocument" 
+					to="storePrivateDocument">
+				<evaluate expression="uploadableFileHandler.processFile(flowScope.content)" />
+			</transition>		
+
+		<transition on="storePrivateDocument" to="toCommit">
+			<evaluate expression="privateDocumentAction.store(flowScope)" />
+		</transition>
+		
+		<transition on="cancelForm" to="toReturn" bind="false"/>
+		
+	</view-state>
+
+	<end-state id="toCommit" commit="true"/>
+
+	<end-state id="toReturn" commit="true"/>
+
+
+</flow>

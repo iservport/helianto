@@ -6,6 +6,7 @@ import org.helianto.core.User;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.SimpleModel;
 import org.helianto.web.action.impl.IdentityActionImpl;
+import org.helianto.web.test.AbstractFlowTest;
 import org.junit.Test;
 import org.springframework.webflow.core.collection.LocalAttributeMap;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
@@ -18,8 +19,8 @@ import org.springframework.webflow.test.MockFlowBuilderContext;
 public class IdentityFlowTests extends AbstractFlowTest {
 	
 	@Override
-	protected String getRelativePath() {
-		return "identity/_identity.xml";
+	protected String getFlowName() {
+		return "_identity";
 	}
 
 	@Override

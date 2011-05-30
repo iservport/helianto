@@ -4,6 +4,7 @@ import org.easymock.classextension.EasyMock;
 import org.helianto.core.Identity;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.impl.IdentityActionImpl;
+import org.helianto.web.test.AbstractFlowTest;
 import org.junit.Test;
 import org.springframework.binding.mapping.Mapper;
 import org.springframework.binding.mapping.MappingResults;
@@ -20,9 +21,15 @@ import org.springframework.webflow.test.MockFlowBuilderContext;
  */
 public class UserAssociationCreationFlowTests extends AbstractFlowTest {
 	
+	/**
+	 * Base path can not be read from this class name.
+	 */
+	protected String getBasePath() {
+		return "userAssociation";
+	}
 	@Override
-	protected String getRelativePath() {
-		return "userAssociation/_userAssociationCreation.xml";
+	protected String getFlowName() {
+		return "_userAssociationCreation";
 	}
 
 	@Override
