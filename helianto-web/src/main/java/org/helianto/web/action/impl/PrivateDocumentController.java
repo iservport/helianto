@@ -33,9 +33,13 @@ public class PrivateDocumentController extends AbstractRenderController {
 	 * @param docCode
 	 * @param principal
 	 */
-	@RequestMapping(value = "/{docCode}", method = RequestMethod.GET)
+	@RequestMapping(value = "/private/{docCode}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> loadContentByCode(@PathVariable String docCode, Principal principal) {
+		if (principal==null) {
+			logger.warn("Null principal, unable to load private document with code: {}", docCode);
+			return null;
+		}
 		PrivateDocumentFilterAdapter filter = new PrivateDocumentFilterAdapter(extractUser(principal).getEntity(), docCode);
 		List<PrivateDocument> privateDocumentList = documentMgr.findPrivateDocuments(filter);
 		if (privateDocumentList==null || privateDocumentList.size()==0) {

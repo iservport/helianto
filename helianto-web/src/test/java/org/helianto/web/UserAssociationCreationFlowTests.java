@@ -25,13 +25,8 @@ public class UserAssociationCreationFlowTests extends AbstractFlowTest {
 	 * Base path can not be read from this class name.
 	 */
 	protected String getBasePath() {
-		return "userAssociation";
+		return "userAssociation/";
 	}
-	@Override
-	protected String getFlowName() {
-		return "_userAssociationCreation";
-	}
-
 	@Override
 	protected void configureFlowBuilderContext(MockFlowBuilderContext builderContext) {
 	    builderContext.registerBean("identityAction", identityAction);

@@ -1,13 +1,13 @@
 <div id="panel">
-	<h5>
+	<div class="toolbar">
+		<#if userGroup.userKey?lower_case=='user'>
+			<@secure "ROLE_USER_WRITE" ><@create "User" >+ User</@create></@secure>
+		</#if>
+		<@secure "ROLE_USER_WRITE" ><@create "UserGroup" >+ UserGroup</@create></@secure>
+	</div>
+	<p>
 		${userModel.pages['user'].listSize!"0"} user(s) found<#if userGroup?exists > in group <@anchor "showUserGroup">${userGroup.userKey}</@anchor></#if>.
-		<div class="toolbar">
-			<#if userGroup.userKey?lower_case=='user'>
-				<@secure "ROLE_USER_WRITE" ><@create "User" >+ User</@create></@secure>
-			</#if>
-			<@secure "ROLE_USER_WRITE" ><@create "UserGroup" >+ UserGroup</@create></@secure>
-		</div>
-	</h5>
+	</p>
 	<#if userGroup?exists>
 	<table>
 		<thead>

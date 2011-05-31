@@ -15,7 +15,7 @@ public class PrivateDocumentFlowTests extends AbstractPrivateDocumentFlowTest {
 		doEditStartTest();
 	}
 	
-	public void testStoreIdentity() {
+	public void testStorePrivateDocument() {
 	    SimpleModel<PrivateDocument> model = new SimpleModel<PrivateDocument>(new PrivateDocument(), new User());
 
 	    doPrepareStoreEvent(model);

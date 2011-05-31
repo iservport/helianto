@@ -8,8 +8,6 @@ import org.helianto.web.action.SimpleModel;
 import org.helianto.web.action.impl.IdentityActionImpl;
 import org.helianto.web.test.AbstractFlowTest;
 import org.junit.Test;
-import org.springframework.webflow.core.collection.LocalAttributeMap;
-import org.springframework.webflow.core.collection.MutableAttributeMap;
 import org.springframework.webflow.test.MockFlowBuilderContext;
 
 /**
@@ -19,27 +17,13 @@ import org.springframework.webflow.test.MockFlowBuilderContext;
 public class IdentityFlowTests extends AbstractFlowTest {
 	
 	@Override
-	protected String getFlowName() {
-		return "_identity";
-	}
-
-	@Override
 	protected void configureFlowBuilderContext(MockFlowBuilderContext builderContext) {
 	    builderContext.registerBean("identityAction", identityAction);
 	}
 	
 	@Test
 	public void testStart() {
-		MutableAttributeMap input = new LocalAttributeMap();
-	    
-	    startFlow(input, getContext());
-	    assertCurrentStateEquals("edit.view");
-	    
-	    LocalAttributeMap viewScope = (LocalAttributeMap) getRequiredFlowAttribute("viewScope");
-	    assertEquals("identity_bar", viewScope.get("sidebar"));
-	    assertEquals("identity_form", viewScope.get("template"));
-	    assertEquals("identity/", viewScope.get("basePath"));
-	    assertEquals("assign", viewScope.get("assign"));
+		doEditStartTest();
 	}
 	
 	public void testStoreIdentity() {

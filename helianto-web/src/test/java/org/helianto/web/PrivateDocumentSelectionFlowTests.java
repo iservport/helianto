@@ -18,12 +18,7 @@ public class PrivateDocumentSelectionFlowTests extends AbstractPrivateDocumentFl
 	 * Same base path as the superclass.
 	 */
 	protected String getBasePath() {
-		return "privateDocument";
-	}
-	
-	@Override
-	protected String getFlowSuffix() {
-		return "Selection";
+		return "privateDocument/";
 	}
 	
 	public void testStart() {

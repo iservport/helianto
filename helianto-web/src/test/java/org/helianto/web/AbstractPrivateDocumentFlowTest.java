@@ -13,11 +13,6 @@ import org.springframework.webflow.test.MockFlowBuilderContext;
 public class AbstractPrivateDocumentFlowTest extends AbstractFlowTest {
 
 	@Override
-	protected String getFlowName() {
-		return "_privateDocument";
-	}
-
-	@Override
 	protected void configureFlowBuilderContext(MockFlowBuilderContext builderContext) {
 		builderContext.registerBean("privateDocumentAction", privateDocumentAction);
 	}

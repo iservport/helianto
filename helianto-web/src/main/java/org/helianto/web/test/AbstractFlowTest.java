@@ -21,36 +21,39 @@ import org.springframework.webflow.test.execution.AbstractXmlFlowExecutionTests;
  */
 public abstract class AbstractFlowTest extends AbstractXmlFlowExecutionTests {
 	
+	/**
+	 * The flow  base path builder, initialized with "/freemarker/".
+	 */
 	protected StringBuilder getFlowBasePathBuilder() {
 		return new StringBuilder("/freemarker/");
 	}
 	
 	/**
-	 * The base path (after freemarker folder), defaults to the test class name
-	 * minus the FlowTests suffix.
+	 * The base path (after freemarker folder), defaults to $baseName+"/".
 	 */
 	protected String getBasePath() {
+		return new StringBuilder(getBaseName()).append("/").toString();
+	}
+	
+	/**
+	 * The base name, defaults to the test class name
+	 * minus the FlowTests suffix.
+	 */
+	protected String getBaseName() {
 		return new FlowTestNamingConventionStrategy().getConventionalName(getClass());
 	}
 	
 	/**
 	 * The base name, defaults to the base path.
 	 */
-	protected String getBaseName() {
-		return getBasePath();
-	}
-	
-	/**
-	 * The base name, defaults to the base path.
-	 */
 	protected String getBaseNameCapFirst() {
-		return new StringBuilder(getBasePath().substring(0, 1).toUpperCase())
-			.append(getBasePath().substring(1))
+		return new StringBuilder(getBaseName().substring(0, 1).toUpperCase())
+			.append(getBaseName().substring(1))
 			.toString();
 	}
 	
 	/**
-	 * The base name, defaults to the $baseName."Model".
+	 * The base name, defaults to the $baseName+"Model".
 	 */
 	protected String getModelName() {
 		return new StringBuilder(getBaseName()).append("Model").toString();
@@ -69,9 +72,11 @@ public abstract class AbstractFlowTest extends AbstractXmlFlowExecutionTests {
 	}
 
 	/**
-	 * The flow name.
+	 * The flow name, defaults to the "_"+$baseName.
 	 */
-	protected abstract String getFlowName();
+	protected String getFlowName() {
+		return new StringBuilder("_").append(getBaseName()).toString();
+	}
 
 	/**
 	 * The flow suffix.
@@ -81,11 +86,10 @@ public abstract class AbstractFlowTest extends AbstractXmlFlowExecutionTests {
 	}
 
 	/**
-	 * Override if relative path is different from $basePath.flowName.xml.
+	 * Override if relative path is different from $basePath+$flowName+"xml".
 	 */
 	protected String getRelativePath() {
 		return new StringBuilder(getBasePath())
-		.append("/")
 		.append(getFlowName())
 		.append(getFlowSuffix())
 		.append(".xml")
@@ -104,12 +108,15 @@ public abstract class AbstractFlowTest extends AbstractXmlFlowExecutionTests {
 	   };
 	}
 	
+	/**
+	 * Standard selection start test.
+	 */
 	protected void doSelectionStartTest() {
 		MutableAttributeMap input = new LocalAttributeMap();
 	    
 	    startFlow(input, getContext());
 	    assertCurrentStateEquals("selection.view");
-	    assertEquals(new StringBuilder(getBasePath()).append("/").toString(), getRequiredFlowAttribute("basePath"));
+	    assertEquals(new StringBuilder(getBasePath()).toString(), getRequiredFlowAttribute("basePath"));
 	    assertEquals("assign", getRequiredFlowAttribute("assign"));
 	    
 	    LocalAttributeMap viewScope = (LocalAttributeMap) getRequiredFlowAttribute("viewScope");
@@ -128,7 +135,7 @@ public abstract class AbstractFlowTest extends AbstractXmlFlowExecutionTests {
 	    
 	    assertEquals(standardViewNameBuilder("bar"), getViewAttribute("sidebar"));
 	    assertEquals(standardViewNameBuilder("form"), getViewAttribute("template"));
-	    assertEquals(new StringBuilder(getBasePath()).append("/").toString(), getViewAttribute("basePath"));
+	    assertEquals(getBasePath(), getViewAttribute("basePath"));
 	    if (getViewAttribute("assign")==null) {
 		    assertEquals("assign", getFlowAttribute("assign"));
 	    }
@@ -146,7 +153,8 @@ public abstract class AbstractFlowTest extends AbstractXmlFlowExecutionTests {
 	    setCurrentState("edit.view");
 	    getFlowScope().put(getBaseName(), model.getForm());
 	    getFlowScope().put(getModelName(), model);
-	    getContext().setEventId(new StringBuilder("store").append(getBaseNameCapFirst()).toString());
+	    String eventId = new StringBuilder("store").append(getBaseNameCapFirst()).toString();
+	    getContext().setEventId(eventId);
 	}
 
 	// locals

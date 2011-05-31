@@ -3,7 +3,7 @@
 		<@secure "ROLE_USER_WRITE" ><@create "PrivateDocument" >+ Document</@create></@secure>
 	</div>
 	<p>
-		${privateDocument.listSize!"0"} document(s) found.
+		${privateDocumentModel.listSize!"0"} document(s) found.
 	</p>
 	<table>
 		<thead>
@@ -13,7 +13,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		<#list privateDocument.list?if_exists as privateDocument >
+		<#list privateDocumentModel.list?if_exists as privateDocument >
 		<tr class="row${privateDocument_index%2}">
 		  <td ><@select "${privateDocument_index}", "privateDocument.">${privateDocument.id?c}</@select></td>
 		  <td >
