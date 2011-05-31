@@ -52,7 +52,7 @@ public abstract class AbstractRecordFilterAdapter <T extends Recordable> extends
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendResolution(mainCriteriaBuilder);
-		appendEqualFilter("complete", getFilter().getComplete(), true, mainCriteriaBuilder);
+		appendEqualFilter("complete", getForm().getComplete(), true, mainCriteriaBuilder);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public abstract class AbstractRecordFilterAdapter <T extends Recordable> extends
 	 * @param mainCriteriaBuilder
 	 */
 	protected void appendResolution(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("resolution", getFilter().getResolution(), mainCriteriaBuilder);
+		appendEqualFilter("resolution", getForm().getResolution(), mainCriteriaBuilder);
 	}
 
 }

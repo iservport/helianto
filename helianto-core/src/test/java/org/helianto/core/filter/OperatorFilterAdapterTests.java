@@ -19,15 +19,15 @@ public class OperatorFilterAdapterTests {
     
     @Test
     public void constructor() {
-    	assertSame(target, filter.getFilter());
+    	assertSame(target, filter.getForm());
     	assertTrue(filter.isUniqueName());
     	
     	filter = new OperatorFilterAdapter("DEFAULT");
-    	assertEquals("DEFAULT", filter.getFilter().getOperatorName());
+    	assertEquals("DEFAULT", filter.getForm().getOperatorName());
     	assertTrue(filter.isUniqueName());
     	
     	filter = new OperatorFilterAdapter("DEFAULT", false);
-    	assertEquals("DEFAULT", filter.getFilter().getOperatorName());
+    	assertEquals("DEFAULT", filter.getForm().getOperatorName());
     	assertFalse(filter.isUniqueName());
     }
 

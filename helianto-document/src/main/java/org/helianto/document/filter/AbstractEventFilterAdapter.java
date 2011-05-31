@@ -50,7 +50,7 @@ public abstract class AbstractEventFilterAdapter<T extends Event> extends Abstra
 	 * Filter to date.
 	 */
 	public Date getToDate() {
-		return getFilter().getIssueDate();
+		return getForm().getIssueDate();
 	}
 	
 }

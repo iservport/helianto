@@ -61,11 +61,11 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	 * Reset method.
 	 */
 	public void reset() { 
-		getFilter().setPartnerState(' ');
+		getForm().setPartnerState(' ');
 	}
 
 	public boolean isSelection() {
-		return getFilter().getEntityAlias().length()>0;
+		return getForm().getEntityAlias().length()>0;
 	}
 
 	/**
@@ -86,14 +86,14 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.entityAlias", getFilter().getEntityAlias(), mainCriteriaBuilder);
+		appendEqualFilter("privateEntity.entityAlias", getForm().getEntityAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("privateEntity.entityName", getFilter().getEntityName(), mainCriteriaBuilder);
-		appendEqualFilter("partnerState", getFilter().getPartnerState(), mainCriteriaBuilder);
-		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);
+		appendLikeFilter("privateEntity.entityName", getForm().getEntityName(), mainCriteriaBuilder);
+		appendEqualFilter("partnerState", getForm().getPartnerState(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getForm().getPriority(), mainCriteriaBuilder);
 		appendOrderBy("privateEntity.entityAlias", mainCriteriaBuilder);
 	}
 

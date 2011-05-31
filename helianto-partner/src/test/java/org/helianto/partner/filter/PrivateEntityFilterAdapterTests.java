@@ -35,8 +35,8 @@ public class PrivateEntityFilterAdapterTests {
 	public void constructor() {
     	Entity entity = EntityTestSupport.createEntity();
     	filter = new PrivateEntityFilterAdapter(entity, "ALIAS");
-		assertSame(entity, filter.getFilter().getEntity());
-		assertEquals("ALIAS", filter.getFilter().getEntityAlias());
+		assertSame(entity, filter.getForm().getEntity());
+		assertEquals("ALIAS", filter.getForm().getEntityAlias());
 	}
 	
     public static String C1 = "alias.entity.id = 0 ";

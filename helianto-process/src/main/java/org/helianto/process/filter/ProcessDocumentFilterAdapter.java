@@ -66,8 +66,8 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
      * Force filter to standards.
      */
     public void reset() {
-    	getFilter().setInheritanceType(' ');
-    	getFilter().setPriority(' ');
+    	getForm().setInheritanceType(' ');
+    	getForm().setPriority(' ');
     }
     
     @Override
@@ -95,19 +95,19 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 	
 	@Override
 	public boolean isSelection() {
-		return getFilter().getDocCode().length()>0;
+		return getForm().getDocCode().length()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("docCode", getFilter().getDocCode(), mainCriteriaBuilder);
+		appendEqualFilter("docCode", getForm().getDocCode(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("docName", getFilter().getDocName(), mainCriteriaBuilder);
-		appendEqualFilter("inheritanceType", getFilter().getInheritanceType(), mainCriteriaBuilder);
-		appendEqualFilter("priority", getFilter().getPriority(), mainCriteriaBuilder);
+		appendLikeFilter("docName", getForm().getDocName(), mainCriteriaBuilder);
+		appendEqualFilter("inheritanceType", getForm().getInheritanceType(), mainCriteriaBuilder);
+		appendEqualFilter("priority", getForm().getPriority(), mainCriteriaBuilder);
 		appendOrderBy("docCode", mainCriteriaBuilder);
 	}
 

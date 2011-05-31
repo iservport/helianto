@@ -42,8 +42,8 @@ public class ProcessAgreementFilterAdapter extends AbstractSequenceFilterAdapter
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
-		if (getFilter().getPartner()!=null) {
-			appendEqualFilter("partner.id", getFilter().getPartner().getId(), mainCriteriaBuilder);
+		if (getForm().getPartner()!=null) {
+			appendEqualFilter("partner.id", getForm().getPartner().getId(), mainCriteriaBuilder);
 		}
 	}
 

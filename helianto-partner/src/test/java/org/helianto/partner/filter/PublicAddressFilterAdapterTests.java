@@ -27,8 +27,8 @@ public class PublicAddressFilterAdapterTests {
 	public void constructor() {
 		Operator operator = new Operator("TEST");
 		filter = new PublicAddressFilterAdapter(operator, "POSTALCODE");
-		assertSame(operator, filter.getFilter().getOperator());
-		assertEquals("POSTALCODE", filter.getFilter().getPostalCode());
+		assertSame(operator, filter.getForm().getOperator());
+		assertEquals("POSTALCODE", filter.getForm().getPostalCode());
 	}
 	
 	@Test

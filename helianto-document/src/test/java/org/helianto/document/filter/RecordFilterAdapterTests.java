@@ -41,25 +41,25 @@ public class RecordFilterAdapterTests {
 	
 	@Test
 	public void selection() {
-		recordFilter.getFilter().setInternalNumber(1);
+		recordFilter.getForm().setInternalNumber(1);
 		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", recordFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void complete() {
-		recordFilter.getFilter().setComplete(50);
+		recordFilter.getForm().setComplete(50);
 		assertEquals("alias.entity.id = 1 AND alias.complete = 50 ", recordFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void completeZero() {
-		recordFilter.getFilter().setComplete(0);
+		recordFilter.getForm().setComplete(0);
 		assertEquals("alias.entity.id = 1 AND alias.complete = 0 ", recordFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void resolution() {
-		recordFilter.getFilter().setResolution('R');
+		recordFilter.getForm().setResolution('R');
 		assertEquals("alias.entity.id = 1 AND alias.resolution = 'R' ", recordFilter.createCriteriaAsString());
 	}
 	

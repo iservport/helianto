@@ -62,7 +62,7 @@ public abstract class AbstractControlFilterAdapter<T extends Controlable> extend
 	 */
 	@Override
 	public Date getToDate() {
-		return getFilter().getNextCheckDate();
+		return getForm().getNextCheckDate();
 	}
 	
 }

@@ -54,17 +54,17 @@ public class SerializerFilterAdapter<T extends AbstractSerializer<?>> extends Ab
 	public void reset() { }
 
 	public boolean isSelection() {
-		return getFilter().getBuilderCode().length()>0;
+		return getForm().getBuilderCode().length()>0;
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("contentType", getFilter().getContentType(), mainCriteriaBuilder);
+		appendEqualFilter("contentType", getForm().getContentType(), mainCriteriaBuilder);
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("builderCode", getFilter().getBuilderCode(), mainCriteriaBuilder);
+		appendEqualFilter("builderCode", getForm().getBuilderCode(), mainCriteriaBuilder);
 	}
 
 }

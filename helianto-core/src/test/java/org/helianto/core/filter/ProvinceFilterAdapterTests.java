@@ -31,12 +31,12 @@ public class ProvinceFilterAdapterTests  {
     
     @Test
     public void constructor() {
-		assertSame(target, filter.getFilter());
+		assertSame(target, filter.getForm());
 		
 		Operator operator = new Operator("OTHER");
 		filter = new ProvinceFilterAdapter(operator, "CODE");
-		assertSame(operator, filter.getFilter().getOperator());
-		assertEquals("CODE", filter.getFilter().getProvinceCode());
+		assertSame(operator, filter.getForm().getOperator());
+		assertEquals("CODE", filter.getForm().getProvinceCode());
 	}
 	
     public static String OB = "order by alias.provinceCode ";

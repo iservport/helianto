@@ -25,7 +25,7 @@ public class SequenceFilterAdapterTests {
 	
 	@Test
 	public void selection() {
-		sequenceFilter.getFilter().setInternalNumber(1);
+		sequenceFilter.getForm().setInternalNumber(1);
 		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", sequenceFilter.createCriteriaAsString());
 	}
 	

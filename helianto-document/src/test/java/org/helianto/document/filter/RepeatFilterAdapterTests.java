@@ -37,25 +37,25 @@ public class RepeatFilterAdapterTests {
 	
 	@Test
 	public void empty() {
-		repeatableFilter.getFilter().setIssueDate(null);
+		repeatableFilter.getForm().setIssueDate(null);
 		assertEquals("alias.entity.id = 1 ", repeatableFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void selection() {
-		repeatableFilter.getFilter().setInternalNumber(1);
+		repeatableFilter.getForm().setInternalNumber(1);
 		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", repeatableFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void trackingMode() {
-		repeatableFilter.getFilter().setTrackingMode(TrackingMode.NOT_TRACKED.getValue());
+		repeatableFilter.getForm().setTrackingMode(TrackingMode.NOT_TRACKED.getValue());
 		assertEquals("alias.entity.id = 1 AND alias.trackingMode = 'N' ", repeatableFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void frequency() {
-		repeatableFilter.getFilter().setFrequency(30);
+		repeatableFilter.getForm().setFrequency(30);
 		assertEquals("alias.entity.id = 1 AND alias.frequency = 30 AND alias.frequencyType = 5 ", repeatableFilter.createCriteriaAsString());
 	}
 	
@@ -72,7 +72,7 @@ public class RepeatFilterAdapterTests {
 			}
 		};
 		// clean filter
-		repeatableFilter.getFilter().setTrackingMode(' ');
+		repeatableFilter.getForm().setTrackingMode(' ');
 	}
 	
 	@SuppressWarnings("serial")

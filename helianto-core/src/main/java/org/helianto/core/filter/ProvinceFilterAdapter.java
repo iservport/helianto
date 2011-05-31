@@ -59,14 +59,14 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> i
 	 * Filter reset.
 	 */
 	public void reset() {
-		getFilter().setProvinceName("");
+		getForm().setProvinceName("");
 	}
 
 	/**
 	 * Selection criterion.
 	 */
 	public boolean isSelection() {
-		return getFilter().getProvinceCode().length()>0;
+		return getForm().getProvinceCode().length()>0;
 	}
 	
 	@Override
@@ -82,12 +82,12 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> i
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("provinceCode", getFilter().getProvinceCode(), mainCriteriaBuilder);
+		appendEqualFilter("provinceCode", getForm().getProvinceCode(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("provinceName", getFilter().getProvinceName(), mainCriteriaBuilder);
+		appendLikeFilter("provinceName", getForm().getProvinceName(), mainCriteriaBuilder);
 	}
 
 	/**

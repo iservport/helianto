@@ -31,12 +31,12 @@ public class KeyTypeFilterAdapterTests  {
     
     @Test
     public void constructor() {
-		assertSame(target, filter.getFilter());
+		assertSame(target, filter.getForm());
 		
 		Operator operator = new Operator("OTHER");
 		filter = new KeyTypeFilterAdapter(operator, "CODE");
-		assertSame(operator, filter.getFilter().getOperator());
-		assertEquals("CODE", filter.getFilter().getKeyCode());
+		assertSame(operator, filter.getForm().getOperator());
+		assertEquals("CODE", filter.getForm().getKeyCode());
 	}
 	
     public static String C0 = "alias.operator.id = 1 ";

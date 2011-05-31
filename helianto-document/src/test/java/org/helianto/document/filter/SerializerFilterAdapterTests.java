@@ -37,13 +37,13 @@ public class SerializerFilterAdapterTests {
 	
 	@Test
 	public void selection() {
-		filter.getFilter().setBuilderCode("CODE");
+		filter.getForm().setBuilderCode("CODE");
 		assertEquals("alias.entity.id = 0 AND alias.builderCode = 'CODE' ", filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void contentType() {
-		filter.getFilter().setContentType('X');
+		filter.getForm().setContentType('X');
 		assertEquals("alias.entity.id = 0 AND alias.contentType = 'X' ", filter.createCriteriaAsString());
 	}
 	
@@ -56,7 +56,7 @@ public class SerializerFilterAdapterTests {
 		target = new Serializer(entity, "");
 		filter = new SerializerFilterAdapter<Serializer>(target);
 		// clean filter
-//		repeatableFilter.getFilter().setTrackingMode(' ');
+//		repeatableFilter.getForm().setTrackingMode(' ');
 	}
 	
 }

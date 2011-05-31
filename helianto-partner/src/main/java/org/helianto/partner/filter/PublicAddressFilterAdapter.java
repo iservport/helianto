@@ -63,13 +63,13 @@ public class PublicAddressFilterAdapter extends AbstractRootFilterAdapter<Public
 	 */
 	@Override
 	public boolean isSelection() {
-		return getFilter().getPostalCode()!=null && getFilter().getPostalCode().length()>0;
+		return getForm().getPostalCode()!=null && getForm().getPostalCode().length()>0;
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getFilter().getProvince()!=null) {
-			appendEqualFilter("province.id", getFilter().getProvince().getId(), mainCriteriaBuilder);
+		if (getForm().getProvince()!=null) {
+			appendEqualFilter("province.id", getForm().getProvince().getId(), mainCriteriaBuilder);
 		}
 		appendEqualFilter("province.provinceCode", getProvinceCode(), mainCriteriaBuilder);
 		appendLikeFilter("address1", getAddressLike(), mainCriteriaBuilder);
@@ -77,7 +77,7 @@ public class PublicAddressFilterAdapter extends AbstractRootFilterAdapter<Public
 	
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("postalCode", getFilter().getPostalCode(), mainCriteriaBuilder);
+		appendEqualFilter("postalCode", getForm().getPostalCode(), mainCriteriaBuilder);
 	}
 
 	public void reset() {

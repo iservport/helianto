@@ -27,7 +27,7 @@ public class ProvinceActionImpl extends AbstractFilterAction<Province> {
 	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		PageModel<Province> model = getModel(attributes);
-		return new ProvinceFilterAdapter(model.getFilter());
+		return new ProvinceFilterAdapter(model.getForm());
 	}
 
 	@Override

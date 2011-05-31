@@ -44,8 +44,8 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
     }
     
     public void reset() {
-    	getFilter().setResolution(' ');
-    	getFilter().setNotificationOption(' ');
+    	getForm().setResolution(' ');
+    	getForm().setNotificationOption(' ');
     }
 
 	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
@@ -71,7 +71,7 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
-		appendEqualFilter("notificationOption", getFilter().getNotificationOption(), mainCriteriaBuilder);
+		appendEqualFilter("notificationOption", getForm().getNotificationOption(), mainCriteriaBuilder);
 	}
 	
 	/**

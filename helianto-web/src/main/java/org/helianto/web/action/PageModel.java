@@ -14,11 +14,9 @@ import org.helianto.core.filter.Listable;
 public class PageModel<F> implements FormModel<F> {
 
 	private static final long serialVersionUID = 1L;
-//	private User user;
 	private F form;
 	private String searchString;
 	private Map<String, Listable> pages;
-	private String pageName;
 	
 	/**
 	 * Construtor.
@@ -26,41 +24,6 @@ public class PageModel<F> implements FormModel<F> {
 	public PageModel() {
 		setPages(new HashMap<String, Listable>());
 	}
-	
-//	/**
-//	 * Construtor de usuário.
-//	 * 
-//	 * @param user
-//	 * @param pageNames
-//	 */
-//	public PageModel(User user, String... pageNames) {
-//		this();
-//		setUser(user);
-//		for (String p : pageNames) {
-//			getPages().put(p, new Page());
-//			setPageName(pageNames[0]);
-//		}
-//	}
-	
-//	/**
-//	 * User.
-//	 */
-//	public User getUser() {
-//		return user;
-//	}
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
-//	
-//	/**
-//	 * Convenience to retrieve entity.
-//	 */
-//	public Entity getEntity() {
-//		if (getUser()!=null) {
-//			return getUser().getEntity();
-//		}
-//		return null;
-//	}
 	
 	/**
 	 * Page names.
@@ -86,13 +49,6 @@ public class PageModel<F> implements FormModel<F> {
 		this.form = filter;
 	}
 	
-	/**
-	 * @deprecated used getForm().
-	 */
-	public F getFilter() {
-		return form;
-	}
-	
 	public String getSearchString() {
 		return searchString;
 	}
@@ -101,23 +57,22 @@ public class PageModel<F> implements FormModel<F> {
 	}
 	
 	/**
-	 * Current page name.
+	 * Read page.
+	 * 
+	 * @param pageName
 	 */
-	public String getPageName() {
-		return pageName;
-	}
-	public void setPageName(String pageName) {
-		this.pageName = pageName;
+	public Listable getPage(String pageName) {
+		return getPages().get(pageName);
 	}
 	
 	/**
-	 * Current page.
+	 * Write page.
+	 * 
+	 * @param pageName
+	 * @param page
 	 */
-	public Listable getPage() {
-		return getPages().get(getPageName());
-	}
-	public void setPage(Listable page) {
-		getPages().put(getPageName(), page);
+	public void addPage(String pageName, Listable page) {
+		getPages().put(pageName, page);
 	}
 
 }
