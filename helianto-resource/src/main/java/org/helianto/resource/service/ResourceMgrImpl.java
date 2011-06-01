@@ -71,6 +71,9 @@ public class ResourceMgrImpl implements ResourceMgr {
 		return resourceGroup;
     }
     
+	/**
+	 * @deprecated
+	 */
 	public ResourceGroup prepareResourceGroup(ResourceGroup resourceGroup) {
 		ResourceGroup managedResourceGroup = resourceGroupDao.merge(resourceGroup);
 		managedResourceGroup.setChildAssociationList(loadChildAssociationList(managedResourceGroup));
@@ -106,7 +109,8 @@ public class ResourceMgrImpl implements ResourceMgr {
 	}
 
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup) {
-    	return resourceGroupDao.merge(resourceGroup);
+    	resourceGroupDao.saveOrUpdate(resourceGroup);
+    	return resourceGroup;
     }
     
 	public void removeResourceAssociation(ResourceAssociation resourceAssociation, boolean removeOrphan) {
@@ -120,7 +124,8 @@ public class ResourceMgrImpl implements ResourceMgr {
     //
 
 	public ResourceAssociation storeResourceAssociation(ResourceAssociation resourceAssociation) {
-		return resourceAssociationDao.merge(resourceAssociation);
+		resourceAssociationDao.saveOrUpdate(resourceAssociation);
+		return resourceAssociation;
 	}
 	
 	//
@@ -138,7 +143,8 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
     
     public ResourceParameter storeResourceParameter(ResourceParameter resourceParameter) {
-    	return resourceParameterDao.merge(resourceParameter);
+    	resourceParameterDao.saveOrUpdate(resourceParameter);
+    	return resourceParameter;
     }
     
     //
@@ -152,7 +158,8 @@ public class ResourceMgrImpl implements ResourceMgr {
     }
 
     public ResourceParameterValue storeResourceParameterValue(ResourceParameterValue resourceParameterValue) {
-    	return resourceParameterValueDao.merge(resourceParameterValue);
+    	resourceParameterValueDao.saveOrUpdate(resourceParameterValue);
+    	return resourceParameterValue;
     }
     
     // collaborators
