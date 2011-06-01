@@ -63,17 +63,6 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     	setResourceCode(resourceCode);
     }
 
-    /** 
-     * Parent constructor.
-     * 
-     * @param parent
-     * @param resourceCode
-     */
-    public Resource(ResourceGroup parent, String resourceCode) {
-    	this(parent.getEntity(), resourceCode);
-    	getParentAssociations().add(new ResourceAssociation(parent, this));
-    }
-
     /**
      * <<Transient>> Make discriminator value available.
      */

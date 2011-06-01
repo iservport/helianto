@@ -159,7 +159,7 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
     /**
      * Set of child <code>ResourceAssociation</code>s.
      */
-    @OneToMany(mappedBy="parent")
+    @OneToMany(mappedBy="parent", cascade = {CascadeType.ALL})
     public Set<ResourceAssociation> getChildAssociations() {
     	return this.childAssociations;
     }   
@@ -177,7 +177,7 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
     /**
      * Set of parent <code>ResourceAssociation</code>s.
      */
-    @OneToMany(mappedBy="child", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy="child")
     public Set<ResourceAssociation> getParentAssociations() {
     	return this.parentAssociations;
     }   
