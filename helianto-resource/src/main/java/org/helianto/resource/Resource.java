@@ -47,8 +47,8 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     protected Resource() {
     	super();
     	setResourceType(' '); // delegate to service layer
-    	setResourceState(ResourceState.ACTIVE);
-    	setResourceClassification(ResourceClassification.ANY);
+    	setResourceStateAsEnum(ResourceState.ACTIVE);
+    	setResourceClassificationAsEnum(ResourceClassification.ANY);
     }
 
     /** 
@@ -102,7 +102,7 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     public void setResourceState(char resourceState) {
         this.resourceState = resourceState;
     }
-    public void setResourceState(ResourceState resourceState) {
+    public void setResourceStateAsEnum(ResourceState resourceState) {
         this.resourceState = resourceState.getValue();
     }
 
@@ -115,7 +115,7 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     public void setResourceClassification(char keyResource) {
         this.resourceClassification = keyResource;
     }
-    public void setResourceClassification(ResourceClassification resourceClassification) {
+    public void setResourceClassificationAsEnum(ResourceClassification resourceClassification) {
         this.resourceClassification = resourceClassification.getValue();
     }
     
