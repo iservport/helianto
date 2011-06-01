@@ -36,6 +36,9 @@ import org.springframework.stereotype.Service;
 @Service("processAgreementMgr")
 public class ProcessAgreementMgrImpl implements ProcessAgreementMgr {
 
+	/**
+	 * @deprecated
+	 */
 	public ProcessAgreement prepareAgreement(ProcessAgreement target) {
 		ProcessAgreement managedTarget = agreementDao.merge(target);
 		agreementDao.evict(managedTarget);
@@ -52,7 +55,9 @@ public class ProcessAgreementMgrImpl implements ProcessAgreementMgr {
 	
 	public ProcessAgreement storeAgreement(ProcessAgreement agreement) {
 		sequenceMgr.validateInternalNumber(agreement);
-		return agreementDao.merge(agreement);
+		agreementDao.saveOrUpdate(agreement);
+		agreementDao.flush();
+		return agreement;
 	}
 
 	// collabs
