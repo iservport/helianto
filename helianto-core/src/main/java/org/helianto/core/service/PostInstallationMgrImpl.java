@@ -65,7 +65,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		Service userService = installService(defaultOperator, "USER");
 		defaultOperator.getServiceMap().put("USER", userService);
-				
+		operatorDao.flush();
 		return defaultOperator;
 	}
 
@@ -123,7 +123,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		    	}
 			}
 		}
-		
+		provinceDao.flush();
 	}
 	
 	public KeyType installKey(Operator defaultOperator, String keyCode) {
@@ -138,7 +138,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			keyTypeDao.saveOrUpdate(keyType);
 		}
 		logger.debug("KeyType  AVAILABLE as {}.", keyType);
-		
+		keyTypeDao.flush();
 		return keyType;
 	}
 
@@ -154,7 +154,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			serviceDao.saveOrUpdate(service);
 		}
 		logger.debug("Sevice AVAILABLE as {}.", service);
-		
+		serviceDao.flush();
 		return service;
 	}
 	

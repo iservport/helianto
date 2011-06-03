@@ -62,7 +62,8 @@ public class InventoryMgrImpl implements InventoryMgr {
 	
 	public ProcessAgreement storeProcessAgreement(ProcessAgreement agreement) {
 		sequenceMgr.validateInternalNumber(agreement);
-		return agreementDao.merge(agreement);
+		agreementDao.saveOrUpdate(agreement);
+		return agreement;
 	}
 	
 	public List<Tax> findTaxes(Filter filter) {
