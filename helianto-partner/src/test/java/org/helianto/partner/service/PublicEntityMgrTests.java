@@ -85,6 +85,7 @@ public class PublicEntityMgrTests {
 		EasyMock.replay(postInstallationMgr);
 		
 		publicEntityDao.saveOrUpdate(publicEntity);
+		publicEntityDao.flush();
 		EasyMock.replay(publicEntityDao);
 		
 		assertEquals(publicEntity, publicEntityMgr.storePublicEntity(publicEntity));
@@ -98,6 +99,7 @@ public class PublicEntityMgrTests {
 		entity.setInstallDate(new Date());
 		
 		publicEntityDao.saveOrUpdate(publicEntity);
+		publicEntityDao.flush();
 		EasyMock.replay(publicEntityDao);
 		
 		assertEquals(publicEntity, publicEntityMgr.storePublicEntity(publicEntity));

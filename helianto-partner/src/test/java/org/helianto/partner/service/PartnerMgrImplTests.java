@@ -166,6 +166,7 @@ public class PartnerMgrImplTests {
 		
 		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(null);
 		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
+		partnerDao.flush();
 		EasyMock.replay(partnerDao);
 		
 		Customer customer = partnerMgr.installCustomer(entity, "NAME", partnerAddress, false);
@@ -191,6 +192,7 @@ public class PartnerMgrImplTests {
 		
 		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(null);
 		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
+		partnerDao.flush();
 		EasyMock.replay(partnerDao);
 		
 		Customer customer = partnerMgr.installCustomer(entity, "NAME", partnerAddress, false);
@@ -213,6 +215,7 @@ public class PartnerMgrImplTests {
 		
 		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(customer);
 		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
+		partnerDao.flush();
 		EasyMock.replay(partnerDao);
 		
 		assertSame(customer, partnerMgr.installCustomer(entity, "NAME", partnerAddress, false));
