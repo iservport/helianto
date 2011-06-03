@@ -168,6 +168,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 			partnerDao.saveOrUpdate(division);
 		}
 		logger.info("Default division is {} ", division);
+		partnerDao.flush();
 		return division;
 	}
 	
@@ -198,6 +199,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 			partnerDao.saveOrUpdate(customer);
 		}
 		logger.info("Default division is {} ", customer);
+		partnerDao.flush();
 		return customer;
 	}
 	
@@ -229,6 +231,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 				logger.warn("Unable to set key value {}", keyValueTuple);
 			}
 		}
+		partnerKeyDao.flush();
 	}
 	
     //- collaborators

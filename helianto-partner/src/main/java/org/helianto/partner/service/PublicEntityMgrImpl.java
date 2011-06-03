@@ -57,6 +57,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 			publicEntity.setEntity(postInstallationMgr.installEntity(publicEntity.getEntity()));
 		}
 		publicEntityDao.saveOrUpdate(publicEntity);
+		publicEntityDao.flush();
 		return publicEntity;
 	}
 	

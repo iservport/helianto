@@ -259,7 +259,7 @@ public class UserMgrImpl implements UserMgr {
 			userGroupDao.saveOrUpdate(userGroup);
 		}
 		logger.debug("UserGroup AVAILABLE as {}.", userGroup);
-		
+		userGroupDao.flush();
 		return userGroup;
 	}
 	
@@ -285,6 +285,7 @@ public class UserMgrImpl implements UserMgr {
 			userAssociationDao.saveOrUpdate(association);
 		}
 		logger.info("User {} available as part of association {}.", user, association);
+		userAssociationDao.flush();
 		return association;
 	}
 	
@@ -309,6 +310,7 @@ public class UserMgrImpl implements UserMgr {
 			userAssociationDao.saveOrUpdate(association);
 		}
 		logger.info("User {} available as part of association {}.", user, association);
+		userAssociationDao.flush();
 		return association;
 	}
 	
@@ -333,6 +335,7 @@ public class UserMgrImpl implements UserMgr {
 			// TODO make it INITIAL
 			credential.setCredentialState(ActivityState.ACTIVE);
 			credentialDao.saveOrUpdate(credential);
+			credentialDao.flush();
 		}
 		else {
 			logger.debug("Found existing credential for {}.", identity);
@@ -349,7 +352,7 @@ public class UserMgrImpl implements UserMgr {
 			userRoleDao.saveOrUpdate(userRole);
 		}
 		logger.debug("User role AVAILABLE as {}.", userRole);
-		
+		userRoleDao.flush();
 		return userRole;
 	}
 	

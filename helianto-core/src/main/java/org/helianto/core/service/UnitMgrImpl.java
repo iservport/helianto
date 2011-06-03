@@ -61,6 +61,7 @@ public class UnitMgrImpl implements UnitMgr {
     	unit.setUnitName(unitName);
     	unitDao.saveOrUpdate(unit);
     	logger.debug("Installed unit  {}", unit);
+    	unitDao.flush();
 		return unit;
 	}
 

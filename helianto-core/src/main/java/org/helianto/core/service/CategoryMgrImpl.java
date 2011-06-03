@@ -62,6 +62,7 @@ public class CategoryMgrImpl implements CategoryMgr {
     	category.setCategoryName(categoryName);
     	categoryDao.saveOrUpdate(category);
     	logger.debug("Category {} installed.", category);
+    	categoryDao.flush();
     	return category;
 	}
 
