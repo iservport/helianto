@@ -43,6 +43,7 @@ public class UnitMgrImpl implements UnitMgr {
 	public Unit storeUnit(Unit unit) {
 		unitDao.saveOrUpdate(unit);
     	logger.debug("Stored unit  {}", unit);
+    	unitDao.flush();
     	return unit;
 	}
 
