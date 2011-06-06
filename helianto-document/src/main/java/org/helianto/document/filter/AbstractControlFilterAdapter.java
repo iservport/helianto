@@ -20,14 +20,14 @@ import java.util.Date;
 
 import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
-import org.helianto.document.Controlable;
+import org.helianto.document.Controllable;
 
 /**
  * Base class to control filters.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractControlFilterAdapter<T extends Controlable> extends AbstractSequenceFilterAdapterDecorator<T> {
+public abstract class AbstractControlFilterAdapter<T extends Controllable> extends AbstractSequenceFilterAdapterDecorator<T> {
 
 	private static final long serialVersionUID = 1L;
 	

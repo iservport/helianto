@@ -39,7 +39,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Entity;
 import org.helianto.core.NaturalKeyInfo;
 import org.helianto.core.TrunkEntity;
-import org.helianto.document.Controlable;
+import org.helianto.document.Controllable;
 
 /**
  * <p>
@@ -68,7 +68,7 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
     private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
     private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
     //transient
-    private Controlable controlReference;
+    private Controllable controlReference;
 	private List<ResourceAssociation> childAssociationList;
     private List<ResourceAssociation> parentAssociationList;
 
@@ -196,10 +196,10 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
      * <<Transient>> Control reference.
      */
     @Transient
-    public Controlable getControlReference() {
+    public Controllable getControlReference() {
 		return controlReference;
 	}
-	public void setControlReference(Controlable controlReference) {
+	public void setControlReference(Controllable controlReference) {
 		this.controlReference = controlReference;
 	}
 

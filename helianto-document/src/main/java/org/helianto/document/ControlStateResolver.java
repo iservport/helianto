@@ -21,7 +21,7 @@ public class ControlStateResolver extends RepeatableStateResolver {
 	/**
 	 * Local resolver target.
 	 */
-	private Controlable getControl() {
+	private Controllable getControl() {
 		return getResolverTarget();
 	}
 

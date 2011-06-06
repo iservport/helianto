@@ -26,7 +26,7 @@ import javax.persistence.Transient;
 import org.helianto.core.Entity;
 import org.helianto.document.ControlState;
 import org.helianto.document.ControlStateResolver;
-import org.helianto.document.Controlable;
+import org.helianto.document.Controllable;
 import org.helianto.document.Resolution;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -37,7 +37,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractControl extends AbstractRepeatable implements Controlable {
+public abstract class AbstractControl extends AbstractRepeatable implements Controllable {
 
     private static final long serialVersionUID = 1L;
     private Entity entity;

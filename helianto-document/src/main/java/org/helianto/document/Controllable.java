@@ -25,7 +25,7 @@ import org.helianto.core.number.Sequenceable;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Controlable extends Sequenceable {
+public interface Controllable extends Sequenceable {
 
     /**
      * Date to be controlled.
