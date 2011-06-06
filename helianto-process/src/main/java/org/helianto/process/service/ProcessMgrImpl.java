@@ -77,6 +77,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
   		if (processDocument instanceof Sequenceable) {
   			sequenceMgr.validateInternalNumber((Sequenceable) processDocument);
   		}
+  		processDocumentDao.flush();
 		return processDocument;
 	}
 
@@ -146,16 +147,18 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
 
     public Setup storeSetup(Setup setup) {
-    	return setupDao.merge(setup);
+    	setupDao.saveOrUpdate(setup);
+    	setupDao.flush();
+    	return setup;
     }
 
 	public List<Setup> listSetups(Operation operation) {
-		Operation managedOperation = (Operation) processDocumentDao.merge(operation);
-		List<Setup> listSetups = new ArrayList<Setup>(managedOperation.getSetups());
+		processDocumentDao.saveOrUpdate(operation);
+		List<Setup> listSetups = new ArrayList<Setup>(operation.getSetups());
 	    if (logger.isDebugEnabled() && listSetups!=null) {
 	        logger.debug("Found {} setup(s)", listSetups.size());
 	    }
-	    processDocumentDao.evict(managedOperation);
+	    processDocumentDao.evict(operation);
 	    Collections.sort(listSetups);
 		return listSetups;
 	}
