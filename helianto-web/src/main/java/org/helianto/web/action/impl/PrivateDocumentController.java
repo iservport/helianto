@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author mauriciofernandesdecastro
  */
 @Controller
+@RequestMapping(value="/pd")
 public class PrivateDocumentController extends AbstractRenderController {
 
 	/**
@@ -33,7 +34,7 @@ public class PrivateDocumentController extends AbstractRenderController {
 	 * @param docCode
 	 * @param principal
 	 */
-	@RequestMapping(value = "/private/{docCode}", method = RequestMethod.GET)
+	@RequestMapping(value = "/code/{docCode}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> loadContentByCode(@PathVariable String docCode, Principal principal) {
 		if (principal==null) {

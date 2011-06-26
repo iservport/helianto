@@ -31,6 +31,14 @@
       http://www.springframework.org/schema/webflow-config 
       http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
 
+	<security:http auto-config="true" >
+		<security:form-login login-page="/a/login" default-target-url="/a/_authorizationSelection" always-use-default-target="true"/>
+		<security:access-denied-handler error-page="/a/unauthorized"/>
+		<security:logout logout-success-url="/a/_authorizationSelection"/>
+	</security:http>
+	
+    <context:component-scan base-package="org.helianto.*.controller,org.helianto.*.action.impl"/>
+
     <mvc:annotation-driven/>
                    
 	<!--
@@ -47,16 +55,12 @@
 		</property>
 	</bean>
 
-	<security:http auto-config="true" >
-		<security:form-login login-page="/helianto/login" />
-	</security:http>
-
-    <context:component-scan base-package="org.helianto.*.controller,org.helianto.*.action.impl"/>
-
     <import resource="classpath:/META-INF/spring/hibernate-context.xml"/>
     <import resource="classpath:/META-INF/spring/support.xml"/>
     <import resource="classpath:/META-INF/spring/core-context.xml"/>
     <import resource="classpath:/META-INF/spring/partner-context.xml"/>
+    <import resource="classpath:/META-INF/spring/document-context.xml"/>
+    <import resource="classpath:/META-INF/spring/message-context.xml"/>
     <import resource="classpath:/META-INF/spring/message-context.xml"/>
     <import resource="classpath:/META-INF/spring/security.xml"/>
     <import resource="classpath:/META-INF/spring/webmvc.xml"/>
