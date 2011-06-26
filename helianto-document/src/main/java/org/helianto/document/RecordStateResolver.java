@@ -5,7 +5,7 @@ package org.helianto.document;
  * 
  * @author mauriciofernandesdecastro
  */
-public class RecordStateResolver {
+public class RecordStateResolver implements StateResolver {
 	
 	private Object target;
 	
