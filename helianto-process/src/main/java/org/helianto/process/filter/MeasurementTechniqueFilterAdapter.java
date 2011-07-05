@@ -43,7 +43,7 @@ public class MeasurementTechniqueFilterAdapter<T extends MeasurementTechnique> e
 	
 	@Override
 	public boolean isSelection() {
-		return getForm().getMeasurementTechniqueCode().length()>0;
+		return getForm().getMeasurementTechniqueCode()!=null && getForm().getMeasurementTechniqueCode().length()>0;
 	}
 
 	@Override

@@ -42,9 +42,8 @@ public class CategoryMgrImpl implements CategoryMgr {
 	}
 
 	public Category storeCategory(Category category) {
-		Category managedCategory = categoryDao.merge(category);
-    	logger.debug("Stored category  "+managedCategory);
-    	return managedCategory;
+		categoryDao.saveOrUpdate(category);
+    	return category;
 	}
 
 	public void removeCategory(Category category) {

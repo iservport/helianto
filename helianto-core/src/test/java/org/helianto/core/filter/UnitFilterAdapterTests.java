@@ -32,6 +32,7 @@ public class UnitFilterAdapterTests {
     public static String C3 = "AND alias.unitCode = 'CODE' ";
     public static String C4 = "AND alias.category.id = 1 ";
     public static String C5 = "AND lower(alias.unitName) like '%name%' ";
+    public static String C6 = "alias.category.id = 100 ";
 
     @Test
     public void empty() {
@@ -64,15 +65,24 @@ public class UnitFilterAdapterTests {
         assertEquals(C1+C5, filter.createCriteriaAsString());
     }
     
+    @Test
+    public void parent() {
+        filter.setParent(parent);
+        parent.setId(100);
+        assertEquals(C6, filter.createCriteriaAsString());
+    }
+    
     private UnitFilterAdapter filter;
     private Unit form;
     private Entity entity;
+    private Category parent;
     
     @Before
     public void setUp() {
     	entity = new Entity(new Operator("DEFAULT"), "ALIAS");
     	form = new Unit(entity, "");
     	filter = new UnitFilterAdapter(form);
+    	parent = new Category(entity, CategoryGroup.NOT_DEFINED, "");
     }
 }
 

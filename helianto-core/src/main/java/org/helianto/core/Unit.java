@@ -32,7 +32,7 @@ import javax.persistence.UniqueConstraint;
  */
 @javax.persistence.Entity
 @Table(name="core_unit",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "unitCode"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"categoryId", "unitCode"})}
 )
 public class Unit implements TrunkEntity {
 

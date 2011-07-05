@@ -20,7 +20,6 @@ import java.util.Collection;
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
-import org.helianto.core.filter.ParentFilter;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.process.Characteristic;
 import org.helianto.process.ControlMethod;
@@ -35,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<ProcessDocument> implements ParentFilter {
+public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<ProcessDocument> {
 
     private static final long serialVersionUID = 1L;
 	private Class<? extends ProcessDocument> clazz;
@@ -158,7 +157,6 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 	/**
 	 * Parent
 	 */
-	@SuppressWarnings("unchecked")
 	public ProcessDocument getParent() {
 		return parent;
 	}

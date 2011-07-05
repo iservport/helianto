@@ -36,7 +36,9 @@ public abstract class AbstractTrunkFilterAdapter <F extends TrunkEntity> extends
 	 */
 	@Override
 	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getEntity()!=null) {
+		super.preProcessFilter(mainCriteriaBuilder);
+		if (getEntity()!=null && !hasParentCriterion()) {
+			mainCriteriaBuilder.appendAnd(hasPolimorphicCriterion());
 			appendEntityFilter(getEntity(), mainCriteriaBuilder);
 			logger.debug("Filter constraint set to {}.", getEntity());
 		}

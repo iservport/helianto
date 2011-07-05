@@ -55,10 +55,9 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	/**
 	 * Default model is of type <code>SimpleModel</code> embedding a form of type <T>.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected SimpleModel<?> doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new SimpleModel(doCreate(attributes, userDetails), userDetails.getUser());
+		return new SimpleModel<T>(doCreate(attributes, userDetails), userDetails.getUser());
 	}
 
 	/**

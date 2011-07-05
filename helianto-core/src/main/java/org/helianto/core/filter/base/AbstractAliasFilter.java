@@ -113,14 +113,29 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 * @param mainCriteriaBuilder
 	 */
 	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (this instanceof PolymorphicFilter<?> && ((PolymorphicFilter<?>) this).getClazz()!=null) {
+		if (hasPolimorphicCriterion()) {
 			mainCriteriaBuilder.appendAnd().append(((PolymorphicFilter<?>) this).getClazz());
 			logger.debug("Class restriction applied using {}.", ((PolymorphicFilter<?>) this).getClazz());
 		}
-		if (this instanceof ParentFilter && ((ParentFilter) this).getParentId()>0) {
+		if (hasParentCriterion()) {
+			mainCriteriaBuilder.appendAnd(hasPolimorphicCriterion());
 			appendEqualFilter(getParentName().append(".id").toString(), ((ParentFilter) this).getParentId(), mainCriteriaBuilder);
 			logger.debug("Parent restriction applied using {}.", ((ParentFilter) this).getParent());
 		}
+	}
+	
+	/**
+	 * True if there is a segment for polimorphic criterion.
+	 */
+	protected boolean hasPolimorphicCriterion() {
+		return this instanceof PolymorphicFilter<?> && ((PolymorphicFilter<?>) this).getClazz()!=null;
+	}
+	
+	/**
+	 * True if there is a segment for parent criterion.
+	 */
+	protected boolean hasParentCriterion() {
+		return this instanceof ParentFilter && ((ParentFilter) this).getParentId()>0;
 	}
 	
 	/**

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Category;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.CategoryFilter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.After;
@@ -38,7 +39,7 @@ public class CategoryMgrImplTests {
     
     @Test
     public void findCategories() {
-    	CategoryFilter categoryFilter = new CategoryFilter();
+    	Filter categoryFilter = new CategoryFilter();
     	List<Category> categoryList = new ArrayList<Category>();
     	
     	expect(categoryDao.find(categoryFilter)).andReturn(categoryList);
@@ -51,12 +52,11 @@ public class CategoryMgrImplTests {
     @Test
     public void storeCategory() {
     	Category category = new Category();
-    	Category managedCategory = new Category();
     	
-    	expect(categoryDao.merge(category)).andReturn(managedCategory);
+    	categoryDao.saveOrUpdate(category);
     	replay(categoryDao);
     	
-    	assertSame(managedCategory, categoryMgr.storeCategory(category));
+    	assertSame(category, categoryMgr.storeCategory(category));
     	verify(categoryDao);
     }
     
