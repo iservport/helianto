@@ -11,6 +11,7 @@
 		<mapping class="org.helianto.document.Serializer" />
 		<mapping class="org.helianto.document.DocumentKey" />
 		<mapping class="org.helianto.document.DocumentTag" />
+		<mapping class="org.helianto.document.LoginRequest" />
 	</session-factory>
 </hibernate-configuration>
 
