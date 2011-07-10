@@ -1,9 +1,11 @@
-package org.helianto.document;
+package org.helianto.core;
 
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
+import org.helianto.core.ControlStateResolver;
+import org.helianto.core.Controllable;
 import org.helianto.core.Entity;
 import org.junit.Test;
 
@@ -22,6 +24,9 @@ public class ControlStateResolverTests {
 			public long getInternalNumber() {return 0; }
 			public void setInternalNumber(long internalNumber) { }
 			public String getInternalNumberKey() { return null; }
+			public char getResolution() { return ' '; }
+			public int getComplete() { return 0; }
+			public void reset() { }
 		};
 		ControlStateResolver resolver = new ControlStateResolver(late);
 		assertTrue(resolver.isLate());
@@ -31,6 +36,9 @@ public class ControlStateResolverTests {
 			public long getInternalNumber() {return 0; }
 			public void setInternalNumber(long internalNumber) { }
 			public String getInternalNumberKey() { return null; }
+			public char getResolution() { return ' '; }
+			public int getComplete() { return 0; }
+			public void reset() { }
 		};
 		resolver = new ControlStateResolver(notLate);
 	}

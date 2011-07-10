@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.core;
 
 /**
  * Control resolution.

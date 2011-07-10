@@ -1,20 +1,23 @@
-package org.helianto.document;
+package org.helianto.core;
+
+import java.util.Date;
+
 
 /**
  * Helper class to resolve <code>AbstractRecord</code> state.
  * 
  * @author mauriciofernandesdecastro
  */
-public class RecordStateResolver implements StateResolver {
-	
+public class ControlStateResolver implements StateResolver {
+
 	private Object target;
 	
 	/**
-	 * Record constructor.
+	 * Control constructor.
 	 * 
-	 * @param record
+	 * @param control
 	 */
-	public RecordStateResolver(Object target) {
+	public ControlStateResolver(Object target) {
 		this.target = target;
 	}
 	
@@ -31,7 +34,7 @@ public class RecordStateResolver implements StateResolver {
 	/**
 	 * Local resolver target.
 	 */
-	private Recordable getRecord() {
+	private Controllable getControl() {
 		return getResolverTarget();
 	}
 
@@ -54,8 +57,8 @@ public class RecordStateResolver implements StateResolver {
      * </p>
      */
     public boolean isRunning() {
-    	if (getRecord().getResolution()==Resolution.PRELIMINARY.getValue()) return true;
-    	if (getRecord().getResolution()==Resolution.TODO.getValue()) return true;
+    	if (getControl().getResolution()==Resolution.PRELIMINARY.getValue()) return true;
+    	if (getControl().getResolution()==Resolution.TODO.getValue()) return true;
         return isSuspended();
     }
 
@@ -67,7 +70,7 @@ public class RecordStateResolver implements StateResolver {
      * </p>
      */
     public boolean isSuspended() {
-    	if (getRecord().getResolution()==Resolution.WAIT.getValue()) return true;
+    	if (getControl().getResolution()==Resolution.WAIT.getValue()) return true;
         return false;
     }
 
@@ -75,8 +78,18 @@ public class RecordStateResolver implements StateResolver {
      * True if complete is 100%.
      */
     public boolean isComplete() {
-    	if (getRecord().getComplete()==100) return true;
+    	if (getControl().getComplete()==100) return true;
         return false;
     }
 
+    /**
+     * True if next check date is past.
+     */
+    public boolean isLate() {
+    	if (getControl().getNextCheckDate()!=null && (new Date()).after(getControl().getNextCheckDate())) {
+    		return true;
+    	}
+    	return false;
+    }
+    
 }

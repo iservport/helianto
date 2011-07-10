@@ -1,4 +1,4 @@
-package org.helianto.document;
+package org.helianto.core;
 
 /**
  * Summarize methods to resolve state.

@@ -15,11 +15,17 @@
 
 package org.helianto.document.base;
 
+import java.util.Date;
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.helianto.document.RecordStateResolver;
-import org.helianto.document.Recordable;
-import org.helianto.document.Resolution;
+import org.helianto.core.ControlState;
+import org.helianto.core.ControlStateResolver;
+import org.helianto.core.Controllable;
+import org.helianto.core.Resolution;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Base class to represent a record.
@@ -31,17 +37,19 @@ import org.helianto.document.Resolution;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractRecord extends AbstractEvent implements Recordable {
+public abstract class AbstractRecord extends AbstractEvent implements Controllable {
 
     private static final long serialVersionUID = 1L;
     private int complete;
     private char resolution;
+    private Date nextCheckDate;
 
     /** 
      * Default constructor.
      */
     public AbstractRecord() {
     	this(Resolution.PRELIMINARY.getValue());
+    	setNextCheckDate(new Date());
     }
     
     /** 
@@ -51,8 +59,13 @@ public abstract class AbstractRecord extends AbstractEvent implements Recordable
      */
     public AbstractRecord(char resolution) {
     	super();
-        setResolution(resolution);
+    	setResolution(resolution);
+    }
+    
+    public void reset() {
+        setResolution(' ');
         setComplete(-1);
+        setNextCheckDate(null);
     }
     
     public char getResolution() {
@@ -75,14 +88,6 @@ public abstract class AbstractRecord extends AbstractEvent implements Recordable
     	return resolution;
     }
 
-    /**
-     * Resolve record status.
-     */
-    @Transient
-    public RecordStateResolver getState() {
-    	return new RecordStateResolver(this);
-    }
-    
     public int getComplete() {
     	return validateCompleteness(this.complete);
     }
@@ -95,6 +100,46 @@ public abstract class AbstractRecord extends AbstractEvent implements Recordable
      */
     protected int validateCompleteness(int complete) {
     	return complete;
+    }
+    
+    /**
+     * Date to be controlled.
+     */
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getNextCheckDate() {
+        return this.nextCheckDate;
+    }
+    public void setNextCheckDate(Date nextCheckDate) {
+        this.nextCheckDate = nextCheckDate;
+    }
+    
+    /**
+     * Resolve control status.
+     */
+    @Transient
+    public ControlStateResolver getState() {
+    	return new ControlStateResolver(this);
+    }
+
+    /**
+     * Evaluate the control state.
+     */
+    @Transient
+    public char getControlState() {
+    	Date now = new Date();
+    	if (getResolution()==Resolution.DONE.getValue()) {
+    		return ControlState.FINISHED.getValue();
+    	}
+		if (getResolution()==Resolution.CANCELLED.getValue()
+				|| getResolution()==Resolution.WAIT.getValue()) {
+			return ControlState.UNFINISHED.getValue();
+		}
+    	if (getNextCheckDate()==null) return ' ';
+    	if (getNextCheckDate().after(now)) {
+    		return ControlState.RUNNING.getValue();
+    	}
+    	return ControlState.LATE.getValue();
     }
     
 }

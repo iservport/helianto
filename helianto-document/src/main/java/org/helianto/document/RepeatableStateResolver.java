@@ -1,12 +1,14 @@
 package org.helianto.document;
 
+import org.helianto.core.ControlStateResolver;
+
 
 /**
  * Helper class to resolve <code>AbstractRecord</code> state.
  * 
  * @author mauriciofernandesdecastro
  */
-public class RepeatableStateResolver extends RecordStateResolver {
+public class RepeatableStateResolver extends ControlStateResolver {
 
 	/**
 	 * Control constructor.

@@ -15,20 +15,11 @@
 
 package org.helianto.document.base;
 
-import java.util.Date;
-
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
+import org.helianto.core.Controllable;
 import org.helianto.core.Entity;
-import org.helianto.document.ControlState;
-import org.helianto.document.ControlStateResolver;
-import org.helianto.document.Controllable;
-import org.helianto.document.Resolution;
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 /**
@@ -37,18 +28,16 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractControl extends AbstractRepeatable implements Controllable {
+public abstract class AbstractPrivateControl extends AbstractRepeatable implements Controllable {
 
     private static final long serialVersionUID = 1L;
     private Entity entity;
-    private Date nextCheckDate;
 
     /** 
      * Default constructor.
      */
-    public AbstractControl() {
+    public AbstractPrivateControl() {
     	super();
-    	setNextCheckDate(new Date());
     }
     
     /** 
@@ -57,7 +46,7 @@ public abstract class AbstractControl extends AbstractRepeatable implements Cont
      * @param entity
      * @param internalNumber
      */
-    public AbstractControl(Entity entity, long internalNumber) {
+    public AbstractPrivateControl(Entity entity, long internalNumber) {
     	this();
     	setEntity(entity);
     	setInternalNumber(internalNumber);
@@ -76,52 +65,12 @@ public abstract class AbstractControl extends AbstractRepeatable implements Cont
         this.entity = entity;
     }
 
-    /**
-     * Date to be controlled.
-     */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getNextCheckDate() {
-        return this.nextCheckDate;
-    }
-    public void setNextCheckDate(Date nextCheckDate) {
-        this.nextCheckDate = nextCheckDate;
-    }
-    
-    /**
-     * Resolve control status.
-     */
-    @Transient
-    public ControlStateResolver getState() {
-    	return new ControlStateResolver(this);
-    }
-
-    /**
-     * Evaluate the control state.
-     */
-    @Transient
-    public char getControlState() {
-    	Date now = new Date();
-    	if (getResolution()==Resolution.DONE.getValue()) {
-    		return ControlState.FINISHED.getValue();
-    	}
-		if (getResolution()==Resolution.CANCELLED.getValue()
-				|| getResolution()==Resolution.WAIT.getValue()) {
-			return ControlState.UNFINISHED.getValue();
-		}
-    	if (getNextCheckDate()==null) return ' ';
-    	if (getNextCheckDate().after(now)) {
-    		return ControlState.RUNNING.getValue();
-    	}
-    	return ControlState.LATE.getValue();
-    }
-    
     @Override
     public boolean equals(Object other) {
          if ( (this == other ) ) return true;
 		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof AbstractControl) ) return false;
-		 AbstractControl castOther = ( AbstractControl ) other; 
+		 if ( !(other instanceof AbstractPrivateControl) ) return false;
+		 AbstractPrivateControl castOther = ( AbstractPrivateControl ) other; 
          
 		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
              && (this.getInternalNumber()==castOther.getInternalNumber());

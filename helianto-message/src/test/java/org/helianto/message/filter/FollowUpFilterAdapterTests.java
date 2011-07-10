@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.base.AbstractControl;
+import org.helianto.document.base.AbstractPrivateControl;
 import org.helianto.message.AbstractFollowUp;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class FollowUpFilterAdapterTests {
 	@Test
 	public void parent() {
 		@SuppressWarnings("serial")
-		AbstractControl parent = new AbstractControl() {
+		AbstractPrivateControl parent = new AbstractPrivateControl() {
 			public String getInternalNumberKey() { return ""; }
 		};
 		parent.setId(1);

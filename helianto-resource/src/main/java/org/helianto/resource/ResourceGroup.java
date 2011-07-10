@@ -36,10 +36,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.Controllable;
 import org.helianto.core.Entity;
 import org.helianto.core.NaturalKeyInfo;
 import org.helianto.core.TrunkEntity;
-import org.helianto.document.Controllable;
 
 /**
  * <p>

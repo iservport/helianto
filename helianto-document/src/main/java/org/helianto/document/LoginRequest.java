@@ -29,6 +29,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.Controllable;
 import org.helianto.core.Entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -50,6 +51,8 @@ public class LoginRequest implements Controllable {
     private String principal;
     private String principalConfirmation;
     private Date issueDate;
+    private char resolution;
+    private int complete;
     private Date nextCheckDate;
 
     /** 
@@ -81,6 +84,12 @@ public class LoginRequest implements Controllable {
     	setPrincipal(principal);
     }
 
+    @Transient
+    public void reset() {
+    	setResolution(' ');
+    	setComplete(-1);
+    }
+    
     @Transient
     public String getInternalNumberKey() {
     	return "LOGINREQ";
@@ -192,6 +201,26 @@ public class LoginRequest implements Controllable {
 	}
     public void setIssueDate(Date issueDate) {
 		this.issueDate = issueDate;
+	}
+    
+    /**
+     * Resolution.
+     */
+    public char getResolution() {
+		return resolution;
+	}
+    public void setResolution(char resolution) {
+		this.resolution = resolution;
+	}
+    
+    /**
+     * Progress.
+     */
+    public int getComplete() {
+		return complete;
+	}
+    public void setComplete(int complete) {
+		this.complete = complete;
 	}
     
     /**

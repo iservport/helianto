@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.filter.base.AbstractControlFilterAdapter;
 import org.helianto.document.base.AbstractRecord;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +32,7 @@ import org.junit.Test;
  */
 public class RecordFilterAdapterTests {
 	
-	private AbstractRecordFilterAdapter<AbstractRecord> recordFilter;
+	private AbstractControlFilterAdapter<AbstractRecord> recordFilter;
 	private Entity entity;
 	
 	@Test
@@ -68,11 +69,10 @@ public class RecordFilterAdapterTests {
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
-		recordFilter = new AbstractRecordFilterAdapter<AbstractRecord>(new AbstractRecord(' ') {
+		recordFilter = new AbstractControlFilterAdapter<AbstractRecord>(new AbstractRecord() {
 			public String getInternalNumberKey() { return "KEY"; }
 			public Entity getEntity() { return entity; }
 			}) {
-			public void reset() { }
 			@Override
 			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { 
 				super.doFilter(mainCriteriaBuilder);

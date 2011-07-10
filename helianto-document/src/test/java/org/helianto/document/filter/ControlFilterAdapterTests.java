@@ -21,7 +21,7 @@ import java.util.Date;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.document.base.AbstractControl;
+import org.helianto.document.base.AbstractPrivateControl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ import org.junit.Test;
  */
 public class ControlFilterAdapterTests {
 	
-	private AbstractControlFilterAdapter<AbstractControl> controlFilter;
+	private AbstractControlFilterAdapter<AbstractPrivateControl> controlFilter;
 	private Entity entity;
 	
 	@Test
@@ -58,11 +58,10 @@ public class ControlFilterAdapterTests {
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
-		controlFilter = new AbstractControlFilterAdapter<AbstractControl>(new AbstractControl() {
+		controlFilter = new AbstractControlFilterAdapter<AbstractPrivateControl>(new AbstractPrivateControl() {
 			public String getInternalNumberKey() { return "KEY"; }
 			public Entity getEntity() { return entity; }
 			}) {
-			public void reset() { }
 		};
 	}
 	

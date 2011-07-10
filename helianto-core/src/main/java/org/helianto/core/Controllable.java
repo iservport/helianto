@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.document;
+package org.helianto.core;
 
 import java.util.Date;
 
@@ -28,8 +28,23 @@ import org.helianto.core.number.Sequenceable;
 public interface Controllable extends Sequenceable {
 
     /**
+     * Resolution.
+     */
+    public char getResolution();
+    
+    /**
+     * Percentual to indicate how much of the control is complete.
+     */
+    public int getComplete();
+    
+    /**
      * Date to be controlled.
      */
     public Date getNextCheckDate();
+    
+    /**
+     * Reset.
+     */
+    public void reset();
     
 }

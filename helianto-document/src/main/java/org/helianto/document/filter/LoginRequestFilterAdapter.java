@@ -32,8 +32,6 @@ public class LoginRequestFilterAdapter extends AbstractControlFilterAdapter<Logi
 		super(new LoginRequest(entity, internalNumber));
 	}
 
-	public void reset() { }
-	
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);

@@ -13,19 +13,19 @@
  * limitations under the License.
  */
 
-package org.helianto.document.filter;
+package org.helianto.core.filter.base;
 
+import java.util.Date;
+
+import org.helianto.core.Controllable;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractFilter;
-import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
-import org.helianto.document.Recordable;
 
 /**
- * Base class to filters that require a <code>Record</code>.
+ * Base class to filters that require a <code>Controllable</code> form.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractRecordFilterAdapter <T extends Recordable> extends AbstractSequenceFilterAdapterDecorator<T> {
+public abstract class AbstractControlFilterAdapter <T extends Controllable> extends AbstractSequenceFilterAdapterDecorator<T> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -34,8 +34,9 @@ public abstract class AbstractRecordFilterAdapter <T extends Recordable> extends
 	 * 
 	 * @param filter
 	 */
-	public AbstractRecordFilterAdapter(T filter) {
+	public AbstractControlFilterAdapter(T filter) {
 		super(filter);
+		reset();
 	}
 	
 	/**
@@ -44,8 +45,12 @@ public abstract class AbstractRecordFilterAdapter <T extends Recordable> extends
 	 * @param filter
 	 * @param decoratedFilter
 	 */
-	public AbstractRecordFilterAdapter(T filter, AbstractFilter decoratedFilter) {
+	public AbstractControlFilterAdapter(T filter, AbstractFilter decoratedFilter) {
 		super(filter, decoratedFilter);
+	}
+	
+	public void reset() {
+		getForm().reset();
 	}
 	
 	@Override
@@ -64,4 +69,19 @@ public abstract class AbstractRecordFilterAdapter <T extends Recordable> extends
 		appendEqualFilter("resolution", getForm().getResolution(), mainCriteriaBuilder);
 	}
 
+	/**
+	 * Field name.
+	 */
+	public String getDateFieldName() {
+		return "nextCheckDate";
+	}
+	
+	/**
+	 * Next check date.
+	 */
+	@Override
+	public Date getToDate() {
+		return getForm().getNextCheckDate();
+	}
+	
 }

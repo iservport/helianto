@@ -17,8 +17,8 @@ package org.helianto.message.filter;
 
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.document.base.AbstractControl;
-import org.helianto.document.filter.AbstractRecordFilterAdapter;
+import org.helianto.core.filter.base.AbstractControlFilterAdapter;
+import org.helianto.document.base.AbstractPrivateControl;
 import org.helianto.message.AbstractFollowUp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +28,10 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> extends AbstractRecordFilterAdapter<T> {
+public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> extends AbstractControlFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
-	private AbstractControl parent;
+	private AbstractPrivateControl parent;
 
     /** 
      * Default constructor.
@@ -40,14 +40,14 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
      */
     protected AbstractFollowUpFilterAdapter(T target) {
     	super(target);
-    	reset();
     }
     
+    @Override
     public void reset() {
-    	getForm().setResolution(' ');
+    	super.reset();
     	getForm().setNotificationOption(' ');
     }
-
+    
 	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendSegment(new StringBuilder(getControlFieldName()).append(".entity.id").toString(), "=").append(entity.getId());
     }
@@ -77,10 +77,10 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
 	/**
 	 * Parent filter.
 	 */
-	public AbstractControl getParent() {
+	public AbstractPrivateControl getParent() {
 		return parent;
 	}
-	public void setParent(AbstractControl parent) {
+	public void setParent(AbstractPrivateControl parent) {
 		this.parent = parent;
 	}
 	
