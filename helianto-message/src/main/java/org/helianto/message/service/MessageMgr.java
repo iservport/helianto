@@ -30,8 +30,19 @@ public interface MessageMgr {
     /**
      * Send a <code>Credential</code> confirmation mail using 
      * a <code>PasswordConfirmationMailForm</code>.
+     * @deprecated
      */
     public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
+            throws MessagingException;
+
+    /**
+     * Send a confirmation mail.
+     * 
+     * @param recipient
+     * @param sender
+     * @param messageBody
+     */
+    public void send(String recipient, String sender, String messageBody)
             throws MessagingException;
 
 }
