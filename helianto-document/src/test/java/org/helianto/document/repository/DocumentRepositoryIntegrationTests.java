@@ -24,7 +24,6 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentTag;
-import org.helianto.document.LoginRequest;
 import org.helianto.document.PrivateDocument;
 import org.helianto.document.Role;
 import org.helianto.document.Serializer;
@@ -49,7 +48,6 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	@Resource FilterDao<Serializer> serializerDao;
 	@Resource BasicDao<DocumentTag> documentTagDao;
 	@Resource FilterDao<Role> roleDao;
-	@Resource FilterDao<LoginRequest> loginRequestDao;
 
 	@Test
 	public void commit() {
@@ -84,9 +82,6 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 		roleDao.saveOrUpdate(role);
 		assertEquals(role, roleDao.findUnique(entity, "CODE"));
 		
-		LoginRequest loginRequest = new LoginRequest(entity, Long.MAX_VALUE);
-		loginRequestDao.saveOrUpdate(loginRequest);
-		assertEquals(loginRequest, loginRequestDao.findUnique(entity, Long.MAX_VALUE));
 	}
 	
 }

@@ -13,32 +13,32 @@
  * limitations under the License.
  */
 
-package org.helianto.document.service;
+package org.helianto.core.service;
 
 import java.util.List;
 
+import org.helianto.core.UserRequest;
 import org.helianto.core.filter.Filter;
-import org.helianto.document.LoginRequest;
 
 /**
- * Login request service interface.
+ * User request service interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface LoginRequestMgr {
+public interface UserRequestMgr {
 	
 	/**
-	 * Find a <code>LoginRequest</code> list.
+	 * Find a <code>UserRequest</code> list.
 	 * 
 	 * @param filter
 	 */
-	public List<LoginRequest> findLoginRequests(Filter filter);
+	public List<UserRequest> findUserRequests(Filter filter);
 	
 	/**
-	 * Store <code>LoginRequest</code>.
+	 * Store <code>UserRequest</code>.
 	 * 
-	 * @param loginRequest
+	 * @param userRequest
 	 */
-	public LoginRequest storeLoginRequest(LoginRequest loginRequest);
+	public UserRequest storeUserRequest(UserRequest userRequest);
 	
 }

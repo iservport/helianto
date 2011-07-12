@@ -1,12 +1,13 @@
-package org.helianto.document.filter;
+package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import org.helianto.core.Entity;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.LoginRequest;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserRequest;
+import org.helianto.core.filter.UserRequestFilterAdapter;
+import org.helianto.core.test.UserGroupTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ import org.junit.Test;
  * 
  * @author mauriciofernandesdecastro
  */
-public class LoginRequestFilterAdapterTests {
+public class UserRequestFilterAdapterTests {
 	
 	String OB = "order by alias.internalNumber ";
 	String C1 = "alias.entity.id = 0 ";
@@ -47,14 +48,14 @@ public class LoginRequestFilterAdapterTests {
 	
 	// locals
 	
-	private LoginRequest form;
-	private LoginRequestFilterAdapter filter;
+	private UserRequest form;
+	private UserRequestFilterAdapter filter;
 	
 	@Before
 	public void setUp() {
-		Entity entity = EntityTestSupport.createEntity();
-		form = new LoginRequest(entity, 0);
-		filter = new LoginRequestFilterAdapter(form);
+		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+		form = new UserRequest(userGroup, 0);
+		filter = new UserRequestFilterAdapter(form);
 	}
 
 }

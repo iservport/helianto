@@ -32,6 +32,7 @@ import org.helianto.core.Unit;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.UserRequest;
 import org.helianto.core.UserRole;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -189,4 +190,12 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 		return getFilterDao(UserRole.class, "userGroup", "service", "serviceExtension");
 	}
 
+	/**
+	 * User request data access.
+	 */
+	@Bean
+	public FilterDao<UserRequest> userRequestDao() {
+		return getFilterDao(UserRequest.class, "userGroup", "internalNumber");
+	}
+	
 }

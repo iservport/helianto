@@ -20,7 +20,6 @@ import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
 import org.helianto.document.DocumentTag;
-import org.helianto.document.LoginRequest;
 import org.helianto.document.PrivateDocument;
 import org.helianto.document.Role;
 import org.helianto.document.Serializer;
@@ -81,14 +80,6 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 	@Bean
 	public FilterDao<Role> roleDao() {
 		return getFilterDao(Role.class, "entity", "docCode");
-	}
-	
-	/**
-	 * Login request data access.
-	 */
-	@Bean
-	public FilterDao<LoginRequest> loginRequestDao() {
-		return getFilterDao(LoginRequest.class);
 	}
 	
 }

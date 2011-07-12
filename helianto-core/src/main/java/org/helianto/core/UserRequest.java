@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.core;
 
 import java.util.Date;
 
@@ -29,8 +29,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Controllable;
-import org.helianto.core.Entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -39,14 +37,14 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro              
  */
 @javax.persistence.Entity
-@Table(name="doc_request",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "internalNumber"})}
+@Table(name="core_userrequest",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"userGroupId", "internalNumber"})}
 )
-public class LoginRequest implements Controllable {
+public class UserRequest implements Controllable {
 
     private static final long serialVersionUID = 1L;
     private long id;
-    private Entity entity;
+    private UserGroup userGroup;
     private long internalNumber;
     private String principal;
     private String principalConfirmation;
@@ -58,29 +56,29 @@ public class LoginRequest implements Controllable {
     /** 
      * Default constructor.
      */
-    public LoginRequest() {
+    public UserRequest() {
     }
 
     /** 
      * Key constructor.
      * 
-     * @param entity
+     * @param userGroup
      * @param internalNumber
      */
-    public LoginRequest(Entity entity, long internalNumber) {
+    public UserRequest(UserGroup userGroup, long internalNumber) {
     	this();
-    	setEntity(entity);
+    	setUserGroup(userGroup);
     	setInternalNumber(internalNumber);
     }
 
     /** 
      * Principal constructor.
      * 
-     * @param entity
+     * @param userGroup
      * @param principal
      */
-    public LoginRequest(Entity entity, String principal) {
-    	this(entity, 0);
+    public UserRequest(UserGroup userGroup, String principal) {
+    	this(userGroup, 0);
     	setPrincipal(principal);
     }
 
@@ -107,12 +105,20 @@ public class LoginRequest implements Controllable {
     }
     
     @ManyToOne()
-    @JoinColumn(name="entityId")
-    public Entity getEntity() {
-		return entity;
+    @JoinColumn(name="userGroupId")
+    public UserGroup getUserGroup() {
+		return userGroup;
 	}
-    public void setEntity(Entity entity) {
-		this.entity = entity;
+    public void setUserGroup(UserGroup userGroup) {
+		this.userGroup = userGroup;
+	}
+    
+    @Transient
+    public Entity getEntity() {
+    	if (getUserGroup()!=null) {
+    		return getUserGroup().getEntity();
+    	}
+		return null;
 	}
     
     public long getInternalNumber() {
@@ -255,8 +261,8 @@ public class LoginRequest implements Controllable {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof LoginRequest) ) return false;
-         LoginRequest castOther = (LoginRequest) other; 
+         if ( !(other instanceof UserRequest) ) return false;
+         UserRequest castOther = (UserRequest) other; 
          
 		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
          	&& (this.getInternalNumber()==castOther.getInternalNumber());

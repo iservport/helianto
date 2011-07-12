@@ -1,15 +1,16 @@
-package org.helianto.document.filter;
+package org.helianto.core.filter;
 
-import org.helianto.core.Entity;
+import org.helianto.core.UserGroup;
+import org.helianto.core.UserRequest;
+import org.helianto.core.filter.base.AbstractControlFilterAdapter;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.document.LoginRequest;
 
 /**
  * Login request filter adapter.
  * 
  * @author mauriciofernandesdecastro
  */
-public class LoginRequestFilterAdapter extends AbstractControlFilterAdapter<LoginRequest> {
+public class UserRequestFilterAdapter extends AbstractControlFilterAdapter<UserRequest> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -18,18 +19,18 @@ public class LoginRequestFilterAdapter extends AbstractControlFilterAdapter<Logi
 	 * 
 	 * @param form
 	 */
-	public LoginRequestFilterAdapter(LoginRequest form) {
+	public UserRequestFilterAdapter(UserRequest form) {
 		super(form);
 	}
 
 	/**
 	 * Key constructor.
 	 * 
-	 * @param entity
+	 * @param userGroup
 	 * @param internalNumber
 	 */
-	public LoginRequestFilterAdapter(Entity entity, long internalNumber) {
-		super(new LoginRequest(entity, internalNumber));
+	public UserRequestFilterAdapter(UserGroup userGroup, long internalNumber) {
+		super(new UserRequest(userGroup, internalNumber));
 	}
 
 	@Override

@@ -38,6 +38,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.UserRequest;
 import org.helianto.core.UserRole;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
@@ -79,6 +80,7 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 	@Resource FilterDao<Server> serverDao;
 	@Resource FilterDao<UserRole> userRoleDao;
 	@Resource FilterDao<EntityPreference> entityPreferenceDao;	
+	@Resource FilterDao<UserRequest> userRequestDao;
 	
 	@Test
 	public void core() {
@@ -167,6 +169,9 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		entityPreferenceDao.saveOrUpdate(entityPreference);
 		assertEquals(entityPreference, entityPreferenceDao.findUnique(entityPreference.getEntity(), entityPreference.getKeyType()));
 
+		UserRequest loginRequest = new UserRequest(userGroup, Long.MAX_VALUE);
+		userRequestDao.saveOrUpdate(loginRequest);
+		assertEquals(loginRequest, userRequestDao.findUnique(userGroup, Long.MAX_VALUE));
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(CoreRepositoryIntegrationTests.class);
