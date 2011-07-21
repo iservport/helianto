@@ -54,13 +54,14 @@ public class MessageMgrImpl implements MessageMgr {
 		sender.send(mailMessageComposer.composeMessage("PASSWORD", mailForm));
 	}
     
-    public void send(String recipient, String sender, String messageBody)
+    public void send(String recipient, String sender, String subject, String htmlMessageBody)
     		throws MessagingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setTo(recipient);
 		helper.setFrom(sender);
-		helper.setSubject(messageBody);
+		helper.setSubject(subject);
+		helper.setText(htmlMessageBody, true);
 		mailSender.send(message);
 		logger.info("Sent passwordConfirmation to {}", recipient);
     }

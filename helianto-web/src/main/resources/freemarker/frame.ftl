@@ -3,7 +3,7 @@
  #
  # @author Mauricio Fernandes de Castro
  #-->
-<#import "/spring.ftl" as spring />
+<#import "spring.ftl" as spring />
 <#include "${import!\"/import\"}.ftl"/>
 <#include "${assign!\"/empty\"}.ftl"/>
 

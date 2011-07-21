@@ -158,6 +158,16 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 			logger.debug("Auto selected: {}.", itemList.get(0));
 			return "success";
 		}
+		return isNotAutoSelected(attributes, itemList);
+	}
+	
+	/**
+	 * Signal after internalFilter if list is not null and has more than one item.
+	 * 
+	 * @param attributes
+	 * @param itemList
+	 */
+	protected String isNotAutoSelected(MutableAttributeMap attributes, List<T> itemList) {
 		return "success";
 	}
 		

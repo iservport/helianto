@@ -25,5 +25,25 @@
 	<context:component-scan base-package="org.helianto.message.repository,org.helianto.message.mail,org.helianto.message.mail.composer,org.helianto.message.service"/>
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" />
+	
+	<bean id="freemarkerConfigurationFactoryBean" 
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean" >
+		<property name="preferFileSystemAccess" value="false"/>
+		<property name="templateLoaderPaths">
+			<list>
+				<value>classpath:/</value>
+				<value>classpath:freemarker/</value>
+				<value>/WEB-INF/classes/freemarker/</value>
+				<value>/WEB-INF/freemarker/</value>
+			</list>
+		</property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="default_encoding">ISO-8859-1</prop>
+				<prop key="number_format">computer</prop>
+				<prop key="whitespace_stripping">true</prop>
+			</props>
+		</property>
+	</bean>
    
 </beans>

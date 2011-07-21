@@ -40,9 +40,10 @@ public interface MessageMgr {
      * 
      * @param recipient
      * @param sender
-     * @param messageBody
+     * @param subject
+     * @param htmlMessageBody
      */
-    public void send(String recipient, String sender, String messageBody)
+    public void send(String recipient, String sender, String subject, String htmlMessageBody)
             throws MessagingException;
 
 }
