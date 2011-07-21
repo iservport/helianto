@@ -230,6 +230,17 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
 	public void setNature(String nature) {
 		this.nature = nature;
 	}
+	
+	@Transient
+	public String[] getNatureAsArray() {
+		if (getNature()!=null) {
+			return getNature().split(",");
+		}
+		return new String[] {};
+	}
+	public void setNatureAsArray(String[] natureArray) {
+		setNature(natureArray.toString().replace("[", "").replace("]", ""));
+	}
 
 	/**
      * Parent associations.

@@ -17,6 +17,7 @@ package org.helianto.core;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -52,6 +53,7 @@ public class UserRequest implements Controllable {
     private char resolution;
     private int complete;
     private Date nextCheckDate;
+    private String tempPassword;
 
     /** 
      * Default constructor.
@@ -104,13 +106,21 @@ public class UserRequest implements Controllable {
         this.id = id;
     }
     
-    @ManyToOne()
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="userGroupId")
     public UserGroup getUserGroup() {
 		return userGroup;
 	}
     public void setUserGroup(UserGroup userGroup) {
 		this.userGroup = userGroup;
+	}
+    
+    /**
+     * True if the property {@link #getUserGroup()} has the User instead of UserGroup.
+     */
+    @Transient
+    public boolean isConfirmed() {
+		return (getUserGroup() instanceof User);
 	}
     
     @Transient
@@ -239,6 +249,17 @@ public class UserRequest implements Controllable {
 	}
     public void setNextCheckDate(Date nextCheckDate) {
 		this.nextCheckDate = nextCheckDate;
+	}
+    
+    /**
+     * Temporary password.
+     */
+    @Column(length=48)
+    public String getTempPassword() {
+		return tempPassword;
+	}
+    public void setTempPassword(String tempPassword) {
+		this.tempPassword = tempPassword;
 	}
     
     /**

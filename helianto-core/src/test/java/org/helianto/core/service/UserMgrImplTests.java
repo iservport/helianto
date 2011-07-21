@@ -188,6 +188,7 @@ public class UserMgrImplTests {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	
     	userGroupDao.saveOrUpdate(userGroup);
+    	userGroupDao.flush();
     	replay(userGroupDao);
     	
     	assertSame(userGroup, userMgr.storeUserGroup(userGroup));

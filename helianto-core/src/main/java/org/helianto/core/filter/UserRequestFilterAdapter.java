@@ -37,6 +37,7 @@ public class UserRequestFilterAdapter extends AbstractControlFilterAdapter<UserR
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendLikeFilter("principal", getForm().getPrincipal(), mainCriteriaBuilder);
+		appendEqualFilter("tempPassword", getForm().getTempPassword(), mainCriteriaBuilder);
 	}
 	
 	@Override

@@ -22,6 +22,7 @@ public class UserRequestFilterAdapterTests {
 	String C2 = "AND alias.internalNumber = 100 ";
 	String C3 = "AND lower(alias.principal) like '%test@domain%' ";
 	String C4 = "AND (alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ";
+	String C5 = "alias.tempPassword = 'ABCD' ";
 	
 	@Test
 	public void empty() {
@@ -44,6 +45,13 @@ public class UserRequestFilterAdapterTests {
 	public void nextCheckDate() {
 		form.setNextCheckDate(new Date(1000L));
 		assertEquals(C1+C4+OB, filter.createCriteriaAsString());
+	}
+	
+	@Test
+	public void tempPassword() {
+		form.setUserGroup(null);
+		form.setTempPassword("ABCD");
+		assertEquals(C5+OB, filter.createCriteriaAsString());
 	}
 	
 	// locals

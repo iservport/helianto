@@ -27,6 +27,7 @@ public class UserRequestMgrImplTests {
 		UserRequest userRequest = new UserRequest();
 		
 		userRequestDao.saveOrUpdate(userRequest);
+		userRequestDao.flush();
 		EasyMock.replay(userRequestDao);
 		sequenceMgr.validateInternalNumber(userRequest);
 		EasyMock.replay(sequenceMgr);

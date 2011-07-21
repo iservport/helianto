@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
-        parent="_menu">
+        parent="_userShow">
 
 	<secured attributes="ROLE_ADMIN, ROLE_USER" />
 	
@@ -11,14 +11,6 @@
 
     <input name="filterOption" />
     
-	<on-start>
-		<set name="flowScope.basePath" value="'user/'" />
-		<set name="flowScope.assign"   value="'assign'" />
-		<evaluate expression="userModelAction.createModel(flowScope, currentUser.principal)" />
-	</on-start>
-
-    <!-- View 1 -->
-
 	<action-state id="userGroup.filter">
 		<evaluate expression="userGroupAction.filter(flowScope, currentUser.principal)" />
 		<transition on="success" to="filter" />
@@ -35,13 +27,18 @@
 			<set name="viewScope.group" value="'group'" />
 		</on-render>
 
+		<transition on="createUserGroup"
+		            to="userGroup.subflow" >
+				<evaluate expression="userGroupAction.create(flowScope, currentUser.principal)" />
+			</transition>
+		
 		<transition on="selectUserGroup"
 		            to="filter" >
 				<set name="flowScope.userGroup"  value="userModel.pages['userGroup'].item"/>
 			</transition>
 		
 		<transition on="showUserGroup"
-		            to="service.filter" />
+		            to="userGroupShow.subflow" />
 		
 		<transition on="selectUser" 
 		            to="userRole.filter" >
@@ -55,11 +52,6 @@
 		
 		<transition on="createUser"
 		            to="userAssociationCreation.subflow" />
-		
-		<transition on="createUserGroup"
-		            to="userGroup.subflow" >
-				<evaluate expression="userGroupAction.create(flowScope, currentUser.principal)" />
-			</transition>
 		
 		<transition on="toSelection"        to="toCommit"/>
 		
@@ -79,113 +71,10 @@
 		<transition on="toReturn" to="selection.view" />
 	</subflow-state>
 
-	<!--  View 2 -->
-	
-	<action-state id="userRole.filter">
-		<evaluate expression="userRoleAction.filter(flowScope, currentUser.principal)" />
-		<transition on="success" to="show.view" />
-	</action-state>
-	
-	<action-state id="service.filter">
-		<evaluate expression="serviceAction.filter(flowScope, currentUser.principal)" />
-		<transition on="success" to="userGroupRole.filter" />
-	</action-state>
-	
-	<action-state id="userGroupRole.filter">
-		<evaluate expression="userGroupRoleAction.filter(flowScope, currentUser.principal)" />
-		<transition on="success" to="group.view" />
-	</action-state>
-	
-	<view-state id="show.view" view="/frame2" model="userModel" >
-
-		<on-render>
-			<set name="viewScope.sidebar"  value="'user_bar'" />
-			<set name="viewScope.siderel"  value="'user_rel'" />
-			<set name="viewScope.template" value="'user'" />
-		</on-render>
-
-		<transition on="editUser"
-		            to="user.subflow" />
-		
-		<transition on="selectUserGroup"
-		            to="createUserGroupAssociation" >
-				<set name="flowScope.userGroup"  value="userModel.pages['userGroup'].item"/>
-			</transition>
-		
-		<transition on="selectUserRole"
-		            to="userRole.subflow" >
-				<set name="flowScope.userRole"  value="userModel.pages['userRole'].item"/>
-			</transition>
-		
-		<transition on="toSelection"        to="selection.view"/>
-		
-	</view-state>
-	
-	<action-state id="createUserGroupAssociation">
-		<evaluate expression="userGroupAssociationAction.create(flowScope, currentUser.principal)" />
-		<transition on="success"  to="userAssociation.subflow" />
-	</action-state>
-	
-	<subflow-state id="userAssociation.subflow" subflow="_userAssociation">
-		<input name="userAssociation" value="flowScope.userAssociation"/>
-		<transition on="toCommit" to="filter" />
+	<subflow-state id="userGroupShow.subflow" subflow="_userGroupShow">
+		<input name="userGroup" />
+		<transition on="toCommit" to="userGroup.filter" />
 		<transition on="toReturn" to="selection.view" />
-	</subflow-state>
-	
-	<subflow-state id="user.subflow" subflow="_user">
-		<input name="user" />
-		<transition on="toCommit" to="service.filter" />
-		<transition on="toReturn" to="show.view" />
-	</subflow-state>
-
-	<subflow-state id="userRole.subflow" subflow="_userRole">
-		<input name="userGroup" value="flowScope.user"/>
-		<input name="userRole"  value="flowScope.userRole"/>
-		<output name="userRole" value="flowScope.userGroupRole"/>
-		<transition on="toCommit" to="userRole.filter" />
-		<transition on="toReturn" to="group.view" />
-	</subflow-state>
-	
-	<!--  View 3 -->
-
-	<view-state id="group.view" view="/frame2" model="userModel">
-
-		<on-render>
-			<set name="viewScope.basePath" value="'userGroup/'" />
-			<set name="viewScope.template" value="'userGroup'" />
-			<set name="viewScope.sidebar"  value="'userGroup_bar'" />
-			<set name="viewScope.siderel"  value="'userGroup_rel'" />
-		</on-render>
-
-		<transition on="editUserGroup"
-		            to="userGroup.subflow" />
-		
-		<transition on="selectUserRole"
-		            to="userGroupRole.subflow" >
-				<set name="flowScope.userRole"  value="userModel.pages['userRole'].item"/>
-			</transition>
-		
-		<transition on="selectService"
-		            to="createUserGroupRole" >
-				<set name="flowScope.service"  value="userModel.pages['service'].item"/>
-			</transition>
-		
-		<transition on="toSelection"        to="selection.view"/>
-		
-	</view-state>
-	
-	<action-state id="createUserGroupRole">
-		<evaluate expression="userGroupRoleAction.create(flowScope, currentUser.principal)" />
-		<transition on="success"  to="userGroupRole.subflow" />
-	</action-state>
-	
-	<subflow-state id="userGroupRole.subflow" subflow="_userRole">
-		<input name="userGroup" value="flowScope.userGroup"/>
-		<input name="userRole"  value="flowScope.userRole"/>
-		<output name="userGroup" value="flowScope.userGroup"/>
-		<output name="userRole"  value="flowScope.userGroupRole"/>
-		<transition on="toCommit" to="service.filter" />
-		<transition on="toReturn" to="group.view" />
 	</subflow-state>
 
 	<end-state id="toCommit" commit="true" />

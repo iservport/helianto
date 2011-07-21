@@ -144,6 +144,7 @@ public class UserMgrImpl implements UserMgr {
 	public UserGroup storeUserGroup(UserGroup userGroup) {
     	if (!userGroup.isKeyEmpty()) {
         	userGroupDao.saveOrUpdate(userGroup);
+        	userGroupDao.flush();
             return userGroup;
     	}
 		throw new IllegalArgumentException("Unable to create user, null or invalid identity");

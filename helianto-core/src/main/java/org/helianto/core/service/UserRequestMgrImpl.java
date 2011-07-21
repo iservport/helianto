@@ -28,8 +28,9 @@ public class UserRequestMgrImpl implements UserRequestMgr {
 	}
 
 	public UserRequest storeUserRequest(UserRequest userRequest) {
-		userRequestDao.saveOrUpdate(userRequest);
 		sequenceMgr.validateInternalNumber(userRequest);
+		userRequestDao.saveOrUpdate(userRequest);
+		userRequestDao.flush();
 		return userRequest;
 	}
 	
