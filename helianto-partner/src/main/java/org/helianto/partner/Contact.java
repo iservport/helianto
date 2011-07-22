@@ -21,6 +21,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.helianto.core.AddressType;
 import org.helianto.core.Identity;
 
 /**

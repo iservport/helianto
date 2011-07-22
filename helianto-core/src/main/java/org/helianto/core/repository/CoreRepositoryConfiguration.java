@@ -24,6 +24,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
+import org.helianto.core.PersonalAddress;
 import org.helianto.core.Province;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
@@ -92,6 +93,14 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	@Bean
 	public FilterDao<Identity> identityDao() {
 		return getFilterDao(Identity.class, "principal");
+	}
+
+	/**
+	 * Personal address access.
+	 */
+	@Bean
+	public FilterDao<PersonalAddress> personalAddressDao() {
+		return getFilterDao(PersonalAddress.class, "identity", "addressType");
 	}
 
 	/**

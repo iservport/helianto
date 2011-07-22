@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class AbstractAddressTests {
+public class AddressTests {
 	
 	@SuppressWarnings("serial")
 	@Test

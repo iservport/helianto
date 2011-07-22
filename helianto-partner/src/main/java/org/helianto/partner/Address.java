@@ -26,6 +26,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.AddressType;
 import org.helianto.core.base.AbstractAddress;
 
 /**

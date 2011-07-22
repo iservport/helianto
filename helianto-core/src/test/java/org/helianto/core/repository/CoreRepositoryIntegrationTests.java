@@ -21,6 +21,7 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.AddressType;
 import org.helianto.core.Category;
 import org.helianto.core.Country;
 import org.helianto.core.Credential;
@@ -29,6 +30,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
+import org.helianto.core.PersonalAddress;
 import org.helianto.core.Province;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
@@ -77,6 +79,7 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 	@Resource FilterDao<Credential> credentialDao;
 	@Resource FilterDao<UserLog> userLogDao;
 	@Resource FilterDao<Identity> identityDao;
+	@Resource FilterDao<PersonalAddress> personalAddressDao;
 	@Resource FilterDao<Server> serverDao;
 	@Resource FilterDao<UserRole> userRoleDao;
 	@Resource FilterDao<EntityPreference> entityPreferenceDao;	
@@ -142,6 +145,10 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		Identity managedIdentity = identityDao.findUnique("principal");
 		assertEquals(identity, managedIdentity);
 		assertEquals(photo, managedIdentity.getPhoto());
+		
+		PersonalAddress personalAddress = new PersonalAddress(identity, AddressType.PERSONAL);
+		personalAddressDao.saveOrUpdate(personalAddress);
+		assertEquals(personalAddress, personalAddressDao.findUnique(identity, AddressType.PERSONAL.getValue()));
 		
 		User user = UserTestSupport.createUser(entity, identity);
 		userGroupDao.saveOrUpdate(user);

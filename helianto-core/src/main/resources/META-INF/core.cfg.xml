@@ -19,6 +19,7 @@
 		<mapping class="org.helianto.core.UserRole" />
 		<mapping class="org.helianto.core.Operator" />
 		<mapping class="org.helianto.core.Country" />
+		<mapping class="org.helianto.core.PersonalAddress" />
 		<mapping class="org.helianto.core.Province" />
 		<mapping class="org.helianto.core.City" />
 		<mapping class="org.helianto.core.Category" />

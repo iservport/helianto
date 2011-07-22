@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.core;
 
 /**
  * <code>AddressType</code> enumeration.
