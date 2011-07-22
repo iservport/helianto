@@ -1,4 +1,4 @@
-package org.helianto.partner.util;
+package org.helianto.core.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -6,7 +6,8 @@ import static org.junit.Assert.assertSame;
 import org.helianto.core.City;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.partner.base.AbstractAddress;
+import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.utils.AddressUtils;
 import org.junit.Before;
 import org.junit.Test;
 

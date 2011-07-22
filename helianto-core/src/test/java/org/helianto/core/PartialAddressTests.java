@@ -1,4 +1,4 @@
-package org.helianto.partner;
+package org.helianto.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -7,7 +7,7 @@ import static org.junit.Assert.assertSame;
 import org.helianto.core.City;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.partner.base.AbstractPartialAddress;
+import org.helianto.core.base.AbstractPartialAddress;
 import org.junit.Before;
 import org.junit.Test;
 

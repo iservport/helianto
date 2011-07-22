@@ -13,13 +13,13 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.base;
+package org.helianto.core.base;
 
 import javax.persistence.Column;
 import javax.persistence.Transient;
 
+import org.helianto.core.Addressee;
 import org.helianto.core.Province;
-import org.helianto.partner.Addressee;
 
 /**
  * Base class to instances having an Address.

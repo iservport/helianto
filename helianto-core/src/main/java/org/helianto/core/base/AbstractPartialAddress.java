@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.base;
+package org.helianto.core.base;
 
 import java.io.Serializable;
 

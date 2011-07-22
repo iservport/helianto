@@ -22,7 +22,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.RootEntity;
-import org.helianto.partner.base.AbstractAddress;
+import org.helianto.core.base.AbstractAddress;
 import org.helianto.partner.base.AbstractPhone;
 
 /**

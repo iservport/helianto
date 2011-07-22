@@ -33,7 +33,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.TrunkEntity;
-import org.helianto.partner.base.AbstractAddress;
+import org.helianto.core.base.AbstractAddress;
 import org.helianto.partner.base.AbstractPhone;
 /**
  * Only <code>PrivateEntity</code> instances may have rights to operate with the (owning) <code>Entity</code>.

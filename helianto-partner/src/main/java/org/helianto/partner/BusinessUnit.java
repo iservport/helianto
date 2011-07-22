@@ -1,5 +1,6 @@
 package org.helianto.partner;
 
+import org.helianto.core.Addressee;
 import org.helianto.partner.base.AbstractPhone;
 
 /**

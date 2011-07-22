@@ -21,12 +21,12 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.Province;
+import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.standalone.DefaultEntityInstaller;
 import org.helianto.core.standalone.NamespaceDefaults;
 import org.helianto.partner.Division;
-import org.helianto.partner.base.AbstractAddress;
 import org.helianto.partner.service.PartnerMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

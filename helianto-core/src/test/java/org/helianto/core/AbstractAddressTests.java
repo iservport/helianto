@@ -13,14 +13,14 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.partner.base.AbstractAddress;
+import org.helianto.core.base.AbstractAddress;
 import org.junit.Test;
 
 /**

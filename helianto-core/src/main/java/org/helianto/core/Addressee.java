@@ -1,6 +1,5 @@
-package org.helianto.partner;
+package org.helianto.core;
 
-import org.helianto.core.Province;
 
 /**
  * Classes implementing this interface represent an address.

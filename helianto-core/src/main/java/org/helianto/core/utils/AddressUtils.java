@@ -1,8 +1,7 @@
-package org.helianto.partner.util;
+package org.helianto.core.utils;
 
 import org.helianto.core.Province;
-import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.base.AbstractAddress;
+import org.helianto.core.base.AbstractAddress;
 
 /**
  * Helper class to handle addresses.
@@ -12,20 +11,20 @@ import org.helianto.partner.base.AbstractAddress;
 public class AddressUtils {
 
 	/**
-	 * Static convenience method to copy address to private entity.
+	 * Static convenience method to copy addresses.
 	 * 
 	 * @param fromAddress
-	 * @param privateEntity
+	 * @param toAddress
 	 */
-	public static void copyAddress(AbstractAddress fromAddress, PrivateEntity privateEntity) {
-		privateEntity.setAddress1(fromAddress.getAddress1());
-		privateEntity.setAddress2(fromAddress.getAddress2());
-		privateEntity.setAddress3(fromAddress.getAddress3());
-		privateEntity.setAddressDetail(fromAddress.getAddressDetail());
-		privateEntity.setAddressNumber(fromAddress.getAddressNumber());
-		privateEntity.setCityName(fromAddress.getCityName());
-		privateEntity.setPostalCode(fromAddress.getPostalCode());
-		privateEntity.setPostOfficeBox(fromAddress.getPostOfficeBox());
+	public static void copyAddress(AbstractAddress fromAddress, AbstractAddress toAddress) {
+		toAddress.setAddress1(fromAddress.getAddress1());
+		toAddress.setAddress2(fromAddress.getAddress2());
+		toAddress.setAddress3(fromAddress.getAddress3());
+		toAddress.setAddressDetail(fromAddress.getAddressDetail());
+		toAddress.setAddressNumber(fromAddress.getAddressNumber());
+		toAddress.setCityName(fromAddress.getCityName());
+		toAddress.setPostalCode(fromAddress.getPostalCode());
+		toAddress.setPostOfficeBox(fromAddress.getPostOfficeBox());
 	}
 	
 	/**

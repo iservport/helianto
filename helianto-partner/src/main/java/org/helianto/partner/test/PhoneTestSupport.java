@@ -3,11 +3,11 @@ package org.helianto.partner.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Address;
 import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.Phone;
-import org.helianto.partner.base.AbstractAddress;
 
 /**
  * Class to support <code>PhoneDao</code> tests.
