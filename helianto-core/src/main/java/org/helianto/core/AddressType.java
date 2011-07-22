@@ -23,12 +23,24 @@ package org.helianto.core;
 public enum AddressType {
 	
 	/**
-	 * 
+	 * Personal address.
 	 */
-	COLLECTION('C'),
-	DELIVERY('D'),
-	PERSONAL('P'),
-	RESTRICTED('R'),
+	PERSONAL('0'),
+	/**
+	 * Collection address.
+	 */
+	COLLECTION('1'),
+	/**
+	 * Delivery address.
+	 */
+	DELIVERY('2'),
+	/**
+	 * Restricted address.
+	 */
+	RESTRICTED('3'),
+	/**
+	 * Main address.
+	 */
 	MAIN('M');
 	
 	private char value;

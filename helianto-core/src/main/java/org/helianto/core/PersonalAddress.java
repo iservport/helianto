@@ -65,6 +65,13 @@ public class PersonalAddress extends AbstractAddress implements PersonalEntity {
 	}
 	
 	/**
+	 * Reset.
+	 */
+	public void reset() {
+		setAddressType(' ');
+	}
+	
+	/**
 	 * Identity.
 	 */
 	@ManyToOne(cascade=CascadeType.ALL)
@@ -86,7 +93,12 @@ public class PersonalAddress extends AbstractAddress implements PersonalEntity {
 		this.addressType = addressType;
 	}
 	public void setAddressTypeAsEnum(AddressType addressType) {
-		this.addressType = addressType.getValue();
+		if (addressType==null) {
+			this.addressType = ' ';
+		}
+		else {
+			this.addressType = addressType.getValue();
+		}
 	}
 	
 	/**
