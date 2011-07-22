@@ -16,18 +16,29 @@
 
 package org.helianto.core;
 
-import org.helianto.core.number.Sequenceable;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * Control interface.
+ * Verification interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Controllable extends Sequenceable, Verifiable {
+public interface Verifiable extends Serializable {
 
     /**
-     * Progress indicator as percentual.
+     * Resolution.
      */
-    public int getComplete();
+    public char getResolution();
+    
+    /**
+     * Date to be controlled.
+     */
+    public Date getNextCheckDate();
+    
+    /**
+     * Reset.
+     */
+    public void reset();
     
 }
