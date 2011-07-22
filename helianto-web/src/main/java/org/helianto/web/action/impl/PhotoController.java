@@ -3,7 +3,7 @@ package org.helianto.web.action.impl;
 import javax.annotation.Resource;
 
 import org.helianto.core.Identity;
-import org.helianto.core.service.UserMgr;
+import org.helianto.core.service.IdentityMgr;
 import org.helianto.web.action.AbstractRenderController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class PhotoController extends AbstractRenderController {
 	@RequestMapping(value = "/photo/{identityId}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> loadPhotoById(@PathVariable long identityId) {
-		Identity identity = userMgr.loadIdentity(identityId);
+		Identity identity = identityMgr.loadIdentity(identityId);
 		byte[] photo = identity.getPhoto();
 		if (photo!=null) {
 			logger.debug("Render photo from identity {}.", identity);
@@ -41,11 +41,11 @@ public class PhotoController extends AbstractRenderController {
 	
     // collabs
     
-    private UserMgr userMgr;
+    private IdentityMgr identityMgr;
     
     @Resource
-    public void setUserMgr(UserMgr userMgr) {
-		this.userMgr = userMgr;
+    public void setIdentityMgr(IdentityMgr identityMgr) {
+		this.identityMgr = identityMgr;
 	}
     
     

@@ -8,7 +8,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.IdentityFilterAdapter;
 import org.helianto.core.security.PublicUserDetails;
-import org.helianto.core.service.UserMgr;
+import org.helianto.core.service.IdentityMgr;
 import org.helianto.web.action.AbstractFilterAction;
 import org.helianto.web.action.SimpleModel;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 
 	@Override
 	protected List<Identity> doFilter(Filter filter) {
-		return userMgr.findIdentities(filter, null);
+		return identityMgr.findIdentities(filter, null);
 	}
 	
 	/**
@@ -58,16 +58,16 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 
 	@Override
 	protected Identity doStore(Identity target) {
-		return userMgr.storeIdentity(target);
+		return identityMgr.storeIdentity(target);
 	}
 	
 	// collabs
 	
-	private UserMgr userMgr;
+	private IdentityMgr identityMgr;
 	
 	@Resource
-	public void setUserMgr(UserMgr userMgr) {
-		this.userMgr = userMgr;
+	public void setIdentityMgr(IdentityMgr identityMgr) {
+		this.identityMgr = identityMgr;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(IdentityActionImpl.class);

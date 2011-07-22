@@ -16,7 +16,6 @@
 package org.helianto.core.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -25,9 +24,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
-import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.Entity;
 import org.helianto.core.EventType;
 import org.helianto.core.Identity;
@@ -55,79 +52,6 @@ import org.slf4j.LoggerFactory;
 @org.springframework.stereotype.Service("userMgr")
 public class UserMgrImpl implements UserMgr {
     
-    public Identity findIdentityByPrincipal(String principal) {
-        logger.debug("Finding unique with principal {}", principal);
-        return (Identity) identityDao.findUnique(principal);
-    }
-    
-    public Identity loadIdentity(long id) {
-    	Identity sample = new Identity();
-    	sample.setId(id);
-    	Identity identity = identityDao.load(sample);
-    	if (identity!=null && identity.getPhoto()!=null) {
-    		logger.debug("Identity {} photo size is {}.", identity, identity.getPhoto().length);
-    	}
-    	return identity;
-    }
-    
-    public byte[] loadIdentityPhoto(Identity identity) {
-    	if (identity!=null && identity.getPhoto()!=null) {
-    		logger.debug("Identity {} photo size is {}.", identity, identity.getPhoto().length);
-    		return identity.getPhoto();
-    	}
-    	logger.debug("Identity {} photo not available.", identity);
-    	return null;
-    }
-
-    public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions) {
-        List<Identity> identityList = (List<Identity>) identityDao.find(filter);
-        logger.debug("Found {} item(s).", identityList.size());
-        if (exclusions!=null) {
-            identityList.removeAll(exclusions);
-            logger.debug("Removed {} item(s)", exclusions.size());
-        }
-        return identityList ;
-    }
-
-    /**
-     * Store the given <code>Identity</code>.
-     * 
-     * @param identity
-     */
-	public Identity storeIdentity(Identity identity) {
-		identityDao.saveOrUpdate(identity);
-		return identity;
-	}
-	
-    /**
-     * Store the given <code>Identity</code>.
-     * 
-     * <p>
-     * This implementation also checks for a previous identity with the same 
-     * principal and raises an <code>DuplicateIdentityException</code> accordingly.
-     * Note that the persistence context (or Hibernate session) is not affected by the latter
-     * because no integrity violation exception is allowed.</p>
-     * 
-     * @param identity
-     * @param generate
-     */
-	public Identity storeIdentity(Identity identity, boolean generate) {
-		if (generate) {
-			int attemptCount = 0;
-			principalGenerationStrategy.generatePrincipal(identity, attemptCount);
-			if (identity.getId()==0) {
-				logger.debug("Identity with principal {} is likely new.", identity.getPrincipal());
-				Identity checkForPreviousIdentity = (Identity) identityDao.findUnique(identity.getPrincipal());
-				if (checkForPreviousIdentity!=null) {
-					logger.warn("Found previous identity with same principal as new indentity: {}, rejecting.", checkForPreviousIdentity);
-					throw new DuplicateIdentityException(checkForPreviousIdentity, "Found previous identity with same principal as new indentity");
-				}
-			}
-		}
-		identityDao.saveOrUpdate(identity);
-		return identity;
-	}
-	
     /**
 	 * Recurse into parent user groups to create a complete userRole List.
 	 */
@@ -167,7 +91,7 @@ public class UserMgrImpl implements UserMgr {
     		logger.debug("Looking for a candidate identity");
     		String principal = user.getUserKey();
     		logger.debug("Using principal {}", principal);
-    		Identity identity = identityDao.findUnique(principal);
+    		Identity identity = identityMgr.findIdentityByPrincipal(principal);
 //    		if (identity!=null) {
 //    			logger.debug("Identity found: {}", identity);
 //    			user.setIdentity(identity);
@@ -216,7 +140,7 @@ public class UserMgrImpl implements UserMgr {
 
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
     	if (parentAssociation.getChild() instanceof User) {
-        	Identity identity = identityDao.load(((User) parentAssociation.getChild()).getIdentity());
+        	Identity identity = identityMgr.loadIdentity(((User) parentAssociation.getChild()).getIdentity().getId());
         	((User) parentAssociation.getChild()).setIdentity(identity);
     	}
     	userAssociationDao.saveOrUpdate(parentAssociation);
@@ -269,7 +193,7 @@ public class UserMgrImpl implements UserMgr {
 		logger.info("Check user installation with 'principal={}' as member of {}.", principal, parent);
 		User user = (User) userGroupDao.findUnique(parent.getEntity(), principal);
 		if (user==null) {
-			Credential credential = installIdentity(principal);
+			Credential credential = identityMgr.installIdentity(principal);
 			user = new User(parent.getEntity(), credential);
 		}
 		
@@ -313,35 +237,6 @@ public class UserMgrImpl implements UserMgr {
 		logger.info("User {} available as part of association {}.", user, association);
 		userAssociationDao.flush();
 		return association;
-	}
-	
-	public Credential installIdentity(String principal) {
-		Identity identity = identityDao.findUnique(principal);
-		if (identity==null) {
-			logger.info("Will install identity for {}.", principal);
-			identity = new Identity(principal);
-			identityDao.saveOrUpdate(identity);
-		}
-		else {
-			logger.debug("Found existing identity for {}.", principal);
-		}
-		return installCredential(identity);
-	}
-	
-	public Credential installCredential(Identity identity) {
-		Credential credential = credentialDao.findUnique(identity);
-		if (credential==null) {
-			logger.info("Will install credential for {}.", identity);
-			credential = new Credential(identity);
-			// TODO make it INITIAL
-			credential.setCredentialState(ActivityState.ACTIVE);
-			credentialDao.saveOrUpdate(credential);
-			credentialDao.flush();
-		}
-		else {
-			logger.debug("Found existing credential for {}.", identity);
-		}
-		return credential;
 	}
 	
 	public UserRole installUserRole(UserGroup userGroup, Service service, String extension) {
@@ -422,14 +317,12 @@ public class UserMgrImpl implements UserMgr {
     //- collaborators
     
     private FilterDao<Entity> entityDao;
-    private FilterDao<Identity> identityDao;
-    private FilterDao<Credential> credentialDao;
     private FilterDao<UserGroup> userGroupDao;
     private FilterDao<UserAssociation> userAssociationDao;
     private FilterDao<UserRole> userRoleDao;
     private FilterDao<UserLog> userLogDao;
-    private PrincipalGenerationStrategy principalGenerationStrategy;
     private FilterDao<Province> provinceDao;
+	private IdentityMgr identityMgr;
 	
 
     @Resource(name="entityDao")
@@ -437,16 +330,6 @@ public class UserMgrImpl implements UserMgr {
         this.entityDao = entityDao;
     }
     
-    @Resource(name="identityDao")
-    public void setIdentityDao(FilterDao<Identity> identityDao) {
-        this.identityDao = identityDao;
-    }
-    
-    @Resource(name="credentialDao")
-    public void setCredentialDao(FilterDao<Credential> credentialDao) {
-		this.credentialDao = credentialDao;
-	}
-
     @Resource(name="userGroupDao")
 	public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
 		this.userGroupDao = userGroupDao;
@@ -467,15 +350,15 @@ public class UserMgrImpl implements UserMgr {
         this.userLogDao = userLogDao;
     }
     
-    @Resource
-	public void setPrincipalGenerationStrategy(PrincipalGenerationStrategy principalGenerationStrategy) {
-		this.principalGenerationStrategy = principalGenerationStrategy;
-	}
-
     @Resource(name="provinceDao")
     public void setProvinceDao(FilterDao<Province> provinceDao) {
         this.provinceDao = provinceDao;
     }
+    
+    @Resource
+    public void setIdentityMgr(IdentityMgr identityMgr) {
+		this.identityMgr = identityMgr;
+	}
 
     private static final Logger logger = LoggerFactory.getLogger(UserMgrImpl.class);
 

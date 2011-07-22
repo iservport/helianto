@@ -3,7 +3,7 @@ package org.helianto.web;
 import org.easymock.classextension.EasyMock;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
-import org.helianto.core.service.UserMgr;
+import org.helianto.core.service.IdentityMgr;
 import org.helianto.web.action.SimpleModel;
 import org.helianto.web.action.impl.IdentityActionImpl;
 import org.helianto.web.test.AbstractFlowTest;
@@ -36,8 +36,8 @@ public class IdentityFlowTests extends AbstractFlowTest {
 	    
 	    Identity identity = new Identity("");
 	    
-	    EasyMock.expect(userMgr.storeIdentity(identity)).andReturn(identity);
-	    EasyMock.replay(userMgr);
+	    EasyMock.expect(identityMgr.storeIdentity(identity)).andReturn(identity);
+	    EasyMock.replay(identityMgr);
 	    
 	    resumeFlow(getContext());
 
@@ -47,19 +47,19 @@ public class IdentityFlowTests extends AbstractFlowTest {
 	// locals
 	
 	private IdentityActionImpl identityAction;
-	private UserMgr userMgr;
+	private IdentityMgr identityMgr;
 	
 	@Override
 	protected void doSetup() {
 		identityAction = new IdentityActionImpl();
-		userMgr = EasyMock.createMock(UserMgr.class);
-		identityAction.setUserMgr(userMgr);
+		identityMgr = EasyMock.createMock(IdentityMgr.class);
+		identityAction.setIdentityMgr(identityMgr);
 		identityAction.setActionNamingConventionStrategy(createActionNamingConventionStrategy("identity"));
 	}
 	
 	@Override
 	protected void doTearDown() {
-		EasyMock.reset(userMgr);
+		EasyMock.reset(identityMgr);
 	}
 
 }

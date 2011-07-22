@@ -177,7 +177,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			return defaultEntity;
 		}
 		
-		Credential credential = userMgr.installIdentity(managerPrincipal);
+		Credential credential = identityMgr.installIdentity(managerPrincipal);
 
 		return installEntity(defaultEntity, credential);
 	}
@@ -191,7 +191,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			throw new IllegalArgumentException("Unable to install entity: a manager identity is required.");
 		}
 		entityDao.saveOrUpdate(entity);
-		Credential credential = userMgr.installCredential(entity.getManager());
+		Credential credential = identityMgr.installCredential(entity.getManager());
 		logger.debug("Clearing manager supplied with entity {} to avoid duplicate installation...", entity);
 		entity.setManager(null);
 		return installEntity(entity, credential);
@@ -302,6 +302,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	private BasicDao<UserGroup> userGroupDao;
 	private BasicDao<UserRole> userRoleDao;
 	private ProvinceResourceParserStrategy provinceResourceParserStrategy;
+	private IdentityMgr identityMgr;
 	private UserMgr userMgr;
 
 	@javax.annotation.Resource(name="operatorDao")
@@ -347,6 +348,11 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	@javax.annotation.Resource(name="userMgr")
 	public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;
+	}
+	
+	@javax.annotation.Resource(name="identityMgr")
+	public void setIdentityMgr(IdentityMgr identityMgr) {
+		this.identityMgr = identityMgr;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostInstallationMgrImpl.class);

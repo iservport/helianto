@@ -15,7 +15,6 @@
 
 package org.helianto.core.service;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -36,50 +35,6 @@ import org.helianto.core.filter.Filter;
  * @author Mauricio Fernandes de Castro
  */
 public interface UserMgr {
-	
-    /**
-     * Find <core>Identity</core> by principal.
-     * 
-     * @param principal
-     */
-    public Identity findIdentityByPrincipal(String principal);
-    
-    /**
-     * Load <core>Identity</core> by id.
-     * 
-     * @param id
-     */
-    public Identity loadIdentity(long id);
-    
-    /**
-     * Load the <core>Identity</core> photo.
-     * 
-     * @param identity
-     */
-    public byte[] loadIdentityPhoto(Identity identity);
-    
-    /**
-     * <p>Selects an <code>Identity</code> list.
-     * 
-     * @param filter
-     * @param exclusions list to be removed after selection
-     */
-    public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions);
-    
-    /**
-     * Store the given <code>Identity</code>.
-     * 
-     * @param identity
-     */
-    public Identity storeIdentity(Identity identity);
-    
-    /**
-     * Store the given <code>Identity</code>.
-     * 
-     * @param identity
-     * @param generate
-     */
-	public Identity storeIdentity(Identity identity, boolean generate);
 	
     /**
      * <p>List <code>UserGroup</code> by string criteria.</p>
@@ -117,20 +72,6 @@ public interface UserMgr {
      * @param accountNonExpired
      */
     public UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired);
-    
-    /**
-     * <p>Create <code>Credential</code> and <code>Identity</code>.</p>
-     * 
-     * @param principal
-     */
-    public Credential installIdentity(String principal);
-    
-    /**
-     * <p>Create <code>Credential</code>.</p>
-     * 
-     * @param identity
-     */
-    public Credential installCredential(Identity identity);
     
     /**
      * <p>Store <code>UserAssociation</code> and return a managed instance.</p>
