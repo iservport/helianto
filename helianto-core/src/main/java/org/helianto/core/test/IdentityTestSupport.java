@@ -47,7 +47,7 @@ public class IdentityTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             optionalAlias = DomainTestSupport.getNonRepeatableStringValue(testKey++, 20);
         }
-        Identity identity = Identity.identityFactory(principal, optionalAlias);
+        Identity identity = new Identity(principal, optionalAlias);
         return identity;
     }
 

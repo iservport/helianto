@@ -16,9 +16,14 @@
 package org.helianto.core;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Personal data, if any.
@@ -33,6 +38,7 @@ public class PersonalData implements Serializable {
     private String lastName;
     private char gender;
     private char appellation;
+    private Date birthDate;
 
     /** 
      * Default constructor.
@@ -101,5 +107,17 @@ public class PersonalData implements Serializable {
     public void setAppellationAsEnum(Appellation appellation) {
         this.appellation = appellation.getValue();
     }
+    
+    /**
+     * Birth date.
+     */
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getBirthDate() {
+		return birthDate;
+	}
+    public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
 
 }

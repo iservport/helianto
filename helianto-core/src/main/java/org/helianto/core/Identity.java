@@ -51,33 +51,6 @@ import javax.persistence.UniqueConstraint;
 })
 public class Identity implements java.io.Serializable {
 
-    /**
-     * <code>Identity</code> factory.
-     * 
-     * @param principal
-     */
-    public static Identity identityFactory(String principal) {
-        return identityFactory(principal, "");
-    }
-
-    /**
-     * <code>Identity</code> factory with current system date, <code>NOT_ADDRESSABLE</code>
-     * and flagged to be notified only <code>BY_REQUEST</code>.
-     *
-     * @param principal
-     * @param optionalAlias
-     * 
-     * @see IdentityType
-     * @see Notification
-     */
-    public static Identity identityFactory(String principal, String optionalAlias) {
-        Identity identity = new Identity();
-        
-        identity.setPrincipal(principal);
-        identity.setOptionalAlias(optionalAlias);
-        return identity;
-    }
-
     private static final long serialVersionUID = 1L;
     private long id;
     private String principal;

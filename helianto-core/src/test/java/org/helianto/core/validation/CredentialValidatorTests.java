@@ -162,7 +162,7 @@ public class CredentialValidatorTests {
     public void setUp() {
         Identity identity = new Identity();
         identity.setPrincipal("ABC");
-        credential = Credential.credentialFactory(identity, "empty");
+        credential = new Credential(identity, "empty");
         credentialValidator = new CredentialValidator();
         errors = new BindException(credential, "credential");
     }

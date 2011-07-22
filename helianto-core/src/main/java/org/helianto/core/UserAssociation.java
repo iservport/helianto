@@ -15,36 +15,53 @@
 
 package org.helianto.core;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.base.AbstractAssociation;
+import org.springframework.format.annotation.DateTimeFormat;
 /**
- * 				
- * <p>
- * A class to hold user and user groups associations.
- * </p>
- * @author Mauricio Fernandes de Castro
- * 		
+ * User group associations.
+ * 
+ * @author Mauricio Fernandes de Castro	
  */
 @javax.persistence.Entity
 @Table(name="core_userassoc", 
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name="type",
+    discriminatorType=DiscriminatorType.CHAR
+)
+@DiscriminatorValue("A")
 public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    private Date associationDate;
+    private char resolution;
 
     /** 
      * Default constructor.
      */
     public UserAssociation() {
     	super();
+    	setResolutionAsEnum(AssociationState.ACTIVE);
+    	setAssociationDate(new Date());
     }
 
     /** 
@@ -69,7 +86,7 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
     }
 
     /** 
-     * Child constructor.
+     * Key constructor.
      * 
      * @param parent
      * @param child
@@ -87,6 +104,12 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
      */
     public UserAssociation(UserGroup parent, Credential childCredential) {
     	this(parent, new User(parent.getEntity(), childCredential));
+    }
+    
+    @Transient
+    public void reset() {
+    	setResolution(' ');
+    	setAssociationDate(null);
     }
 
     /**
@@ -125,6 +148,31 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
     	}
     	throw new IllegalArgumentException("Natural key must not be null");
     }
+    
+    /**
+     * Association resolution.
+     */
+    public char getResolution() {
+		return resolution;
+	}
+    public void setResolution(char resolution) {
+		this.resolution = resolution;
+	}
+    public void setResolutionAsEnum(AssociationState associationState) {
+		this.resolution = associationState.getValue();
+	}
+    
+    /**
+     * Association date.
+     */
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getAssociationDate() {
+		return associationDate;
+	}
+    public void setAssociationDate(Date associationDate) {
+		this.associationDate = associationDate;
+	}
 
    /**
     * equals

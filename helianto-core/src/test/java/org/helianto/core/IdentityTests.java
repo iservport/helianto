@@ -24,18 +24,15 @@ public class IdentityTests {
     public void identityFactory() {
         String principal = DomainTestSupport.STRING_TEST_VALUE;
         
-        Identity identity = Identity.identityFactory(principal);
+        Identity identity = new Identity(principal);
         
         assertEquals(principal.toLowerCase(), identity.getPrincipal());
         
     }
     
-    /**
-     * Test <code>Identity</code> static factory method.
-     */
 	@Test
     public void identityFactoryFull() {
-        Identity identity = Identity.identityFactory("PRINCIPAL", "OPTIONAL_ALIAS");
+        Identity identity = new Identity("PRINCIPAL", "OPTIONAL_ALIAS");
         
         assertEquals("PRINCIPAL".toLowerCase(), identity.getPrincipal());
         assertEquals("OPTIONAL_ALIAS", identity.getOptionalAlias());
@@ -49,14 +46,11 @@ public class IdentityTests {
                 identity.getPersonalData().getGender());
     }
 
-    /**
-     * Test <code>Identity</code> equals() method.
-     */
 	@Test
     public void identityEquals() {
         String principal = DomainTestSupport.STRING_TEST_VALUE;
         
-        Identity identity = Identity.identityFactory(principal);
+        Identity identity = new Identity(principal);
         Identity copy = (Identity) DomainTestSupport.minimalEqualsTest(identity);
         
         copy.setPrincipal(null);
