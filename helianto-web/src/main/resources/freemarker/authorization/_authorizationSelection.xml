@@ -26,6 +26,10 @@
 
 	<view-state id="selection.view" view="/frame2"  model="authorizationModel" >
 
+		<on-render>
+			<set name="viewScope.group" value="'group'" />
+		</on-render>
+
 		<transition on="selectAuthorization" 
 					to="filter" >
 				<set name="flowScope.authorization"  value="authorizationModel.item"/>

@@ -1,16 +1,22 @@
-<h4>Current entity: ${currentUser.principal.entity.alias}</h4>
+<h2>${currentUser.principal.entity.alias}</h2>
 
 <#if authorizationModel.item?exists && authorizationModel.item.id!=currentUser.principal.user.id >
 <form method="POST">
 
-	<p>Authorize this entity:</p>
-	<p><@spring.formInput "authorizationModel.item.entity.alias", 'size="20" readonly="readonly"' /></p>
+	<@spring.formHiddenInput "authorizationModel.item.entity.alias" />
 	
 	<@perr/>
 	<input type="hidden" name="_eventId" value="authorize" />
-	<input type="submit" value="AUTHORIZE" />
+	<input type="submit" value="Switch to ${authorizationModel.item.entity.alias}" />
 	<@flowKey/>
 	
 </form>
+
+<p>To user:</p>
+<p>${authorization.userKey}</p>
+
+<p>Authorized since:</p>
+<p>${authorization.entity.installDate?date}</p>
+
 </#if>
 
