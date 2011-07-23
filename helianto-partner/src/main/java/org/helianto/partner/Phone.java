@@ -25,7 +25,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.partner.base.AbstractPhone;
+import org.helianto.core.PhoneType;
 /**
  * Phones are always related to an address.
  * 
@@ -35,7 +35,7 @@ import org.helianto.partner.base.AbstractPhone;
 @Table(name="prtnr_phone2",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "sequence"})}
 )
-public class Phone extends AbstractPhone {
+public class Phone extends org.helianto.core.Phone {
 
     private static final long serialVersionUID = 1L;
     private int id;

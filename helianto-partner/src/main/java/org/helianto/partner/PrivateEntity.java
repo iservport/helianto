@@ -34,7 +34,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.TrunkEntity;
 import org.helianto.core.base.AbstractAddress;
-import org.helianto.partner.base.AbstractPhone;
 /**
  * Only <code>PrivateEntity</code> instances may have rights to operate with the (owning) <code>Entity</code>.
  * 
@@ -50,7 +49,7 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
     private Entity entity;
     private String partnerAlias;
     private String partnerName;
-    private AbstractPhone mainPhone;
+    private Phone mainPhone;
     private String mainEmail;
     private String parsedContent;
     private Set<Partner> partners = new HashSet<Partner>(0);
@@ -68,7 +67,7 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
     	super();
     	setPartnerAlias("");
     	setPartnerName("");
-		setMainPhone(new AbstractPhone());
+		setMainPhone(new Phone());
 		setMainEmail("");
     }
 
@@ -166,10 +165,10 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
      * Main phone.
      */
     @Embedded
-    public AbstractPhone getMainPhone() {
+    public Phone getMainPhone() {
 		return mainPhone;
 	}
-    public void setMainPhone(AbstractPhone mainPhone) {
+    public void setMainPhone(Phone mainPhone) {
 		this.mainPhone = mainPhone;
 	}
     

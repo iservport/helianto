@@ -18,12 +18,12 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.helianto.core.Phone;
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.RootEntity;
 import org.helianto.core.base.AbstractAddress;
-import org.helianto.partner.base.AbstractPhone;
 
 /**
  * A registry for public entities.
@@ -47,7 +47,7 @@ public class PublicEntity extends AbstractAddress implements RootEntity, Busines
 	private String entityName;
 	private char publicEntityType;
 	private char publicEntityVisibility;
-    private AbstractPhone mainPhone;
+    private Phone mainPhone;
     private String mainEmail;
 	private Set<PublicEntityKey> publicEntityKeys = new HashSet<PublicEntityKey>();
 
@@ -58,7 +58,7 @@ public class PublicEntity extends AbstractAddress implements RootEntity, Busines
 		super();
 		setPublicEntityTypeEnum(PublicEntityType.NOT_INFORMED);
 		setPublicEntityVisibility(PublicEntityVisibility.REGISTERED);
-		setMainPhone(new AbstractPhone());
+		setMainPhone(new Phone());
 		setMainEmail("");
 	}
 
@@ -226,10 +226,10 @@ public class PublicEntity extends AbstractAddress implements RootEntity, Busines
      * Main phone.
      */
     @Embedded
-    public AbstractPhone getMainPhone() {
+    public Phone getMainPhone() {
 		return mainPhone;
 	}
-    public void setMainPhone(AbstractPhone mainPhone) {
+    public void setMainPhone(Phone mainPhone) {
 		this.mainPhone = mainPhone;
 	}
     

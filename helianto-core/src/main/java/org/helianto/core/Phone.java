@@ -13,18 +13,18 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.base;
+package org.helianto.core;
 
 import javax.persistence.Column;
 
-import org.helianto.partner.PhoneType;
 /**
  * Phone basic info.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public class AbstractPhone implements java.io.Serializable {
+@javax.persistence.Embeddable
+public class Phone implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private String phoneNumber;
@@ -34,7 +34,7 @@ public class AbstractPhone implements java.io.Serializable {
     /** 
      * Default constructor
      */
-    public AbstractPhone() {
+    public Phone() {
     	setPhoneNumber("");
     	setAreaCode("");
     	setPhoneTypeAsEnum(PhoneType.MAIN);

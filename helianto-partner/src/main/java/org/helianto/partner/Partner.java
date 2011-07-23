@@ -36,12 +36,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.Phone;
 import org.helianto.core.Addressee;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Province;
 import org.helianto.core.TrunkEntity;
-import org.helianto.partner.base.AbstractPhone;
 /**
  * Base class to represent the relationship between the organization and other entities.
  * 
@@ -259,7 +259,7 @@ public class Partner implements TrunkEntity, BusinessUnit {
     }
     
     @Transient
-    public AbstractPhone getMainPhone() {
+    public Phone getMainPhone() {
     	return this.getPrivateEntity().getMainPhone();
     }
 

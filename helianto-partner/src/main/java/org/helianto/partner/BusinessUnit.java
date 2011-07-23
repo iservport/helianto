@@ -1,7 +1,7 @@
 package org.helianto.partner;
 
+import org.helianto.core.Phone;
 import org.helianto.core.Addressee;
-import org.helianto.partner.base.AbstractPhone;
 
 /**
  * General business unit interface.
@@ -23,7 +23,7 @@ public interface BusinessUnit extends Addressee {
 	/**
 	 * Business main phone.
 	 */
-	public AbstractPhone getMainPhone();
+	public Phone getMainPhone();
 
 	/**
 	 * Business main email.
