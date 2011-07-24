@@ -229,8 +229,20 @@ public abstract class AbstractAction<T> implements Serializable {
 		return new PageModel<F>(form);
 	}
 	
+	/**
+	 * Subclasses may override this method if a <code>FormModel</code> is required.
+	 * 
+	 * <p>
+	 * Default behavior returns a new instance of <T>.
+	 * </p>
+	 * 
+	 * @param <F>
+	 * @param attributes
+	 * @param userDetails
+	 */
+	@SuppressWarnings("unchecked")
 	protected <F> F doCreateForm(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return null;
+		return (F) doCreate(attributes, userDetails);
 	}
 	
 	// convenience methods
