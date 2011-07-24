@@ -19,10 +19,20 @@ public class PageModel<F> implements FormModel<F> {
 	private Map<String, Listable> pages;
 	
 	/**
-	 * Construtor.
+	 * Default construtor.
 	 */
 	public PageModel() {
 		setPages(new HashMap<String, Listable>());
+	}
+	
+	/**
+	 * Form construtor.
+	 * 
+	 * @param form
+	 */
+	public PageModel(F form) {
+		this();
+		setForm(form);
 	}
 	
 	/**
@@ -45,8 +55,8 @@ public class PageModel<F> implements FormModel<F> {
 	public F getForm() {
 		return form;
 	}
-	public void setForm(F filter) {
-		this.form = filter;
+	public void setForm(F form) {
+		this.form = form;
 	}
 	
 	public String getSearchString() {
