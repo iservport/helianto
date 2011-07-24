@@ -15,6 +15,7 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * based flow.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 public abstract class AbstractModelAction<F> implements Serializable, ModelAction {
 	
