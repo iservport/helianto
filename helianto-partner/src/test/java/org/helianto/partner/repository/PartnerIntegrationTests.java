@@ -32,7 +32,7 @@ import org.helianto.partner.Laboratory;
 import org.helianto.partner.Manufacturer;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerKey;
-import org.helianto.partner.Phone;
+import org.helianto.partner.PartnerPhone;
 import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.PrivateEntityKey;
 import org.helianto.partner.PublicAddress;
@@ -56,16 +56,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
-	@Resource FilterDao<PublicEntity> publicEntityDao;
 	@Resource FilterDao<Account> accountDao;
-	@Resource FilterDao<PrivateEntity> privateEntityDao;
-	@Resource BasicDao<KeyType> keyTypeDao;
-	@Resource BasicDao<PrivateEntityKey> privateEntityKeyDao;
+	@Resource BasicDao<Address> addressDao;
 	@Resource FilterDao<Partner> partnerDao;
 	@Resource BasicDao<PartnerKey> partnerKeyDao;
-	@Resource BasicDao<Address> addressDao;
+	@Resource BasicDao<PartnerPhone> phoneDao;
+	@Resource FilterDao<PrivateEntity> privateEntityDao;
+	@Resource BasicDao<PrivateEntityKey> privateEntityKeyDao;
 	@Resource FilterDao<PublicAddress> publicAddressDao;
-	@Resource BasicDao<Phone> phoneDao;
+	@Resource FilterDao<PublicEntity> publicEntityDao;
+	@Resource BasicDao<KeyType> keyTypeDao;
 
 	@Test
 	public void partner() {

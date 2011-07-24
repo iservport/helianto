@@ -21,7 +21,7 @@ import org.helianto.partner.Account;
 import org.helianto.partner.Address;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerKey;
-import org.helianto.partner.Phone;
+import org.helianto.partner.PartnerPhone;
 import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.PrivateEntityKey;
 import org.helianto.partner.PublicAddress;
@@ -115,8 +115,8 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Phone data access.
 	 */
 	@Bean
-	public FilterDao<Phone> phoneDao() {
-		return getFilterDao(Phone.class, "address", "sequence");
+	public FilterDao<PartnerPhone> phoneDao() {
+		return getFilterDao(PartnerPhone.class, "address", "sequence");
 	}
 
 }

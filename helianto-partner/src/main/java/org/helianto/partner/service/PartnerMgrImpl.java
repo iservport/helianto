@@ -40,7 +40,7 @@ import org.helianto.partner.Division;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerState;
-import org.helianto.partner.Phone;
+import org.helianto.partner.PartnerPhone;
 import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.PrivateEntityKey;
 import org.slf4j.Logger;
@@ -133,11 +133,11 @@ public class PartnerMgrImpl implements PartnerMgr {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
-	public Phone storePhone(Phone phone) {
+	public PartnerPhone storePhone(PartnerPhone phone) {
 		return phoneDao.merge(phone);
 	}
 
-	public PrivateEntity removePhone(Phone phone) {
+	public PrivateEntity removePhone(PartnerPhone phone) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
@@ -219,7 +219,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 						logger.debug("Partner key {} already existing.", partnerKey);
 					}
 					else {
-						partnerKey = PartnerKey.partnerKeyFactory(partner, keyType);
+						partnerKey = new PartnerKey(partner, keyType);
 					}
 					partnerKey.setKeyValue(keyValue[1]);
 					partnerKeyDao.saveOrUpdate(partnerKey);
@@ -241,7 +241,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private BasicDao<Address> addressDao;
     private BasicDao<PartnerKey> partnerKeyDao;
     private BasicDao<Province> provinceDao;
-    private BasicDao<Phone> phoneDao;
+    private BasicDao<PartnerPhone> phoneDao;
 	private NamespaceMgr namespaceMgr;
 
     @Resource(name="privateEntityDao")
@@ -270,7 +270,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
     
     @Resource(name="phoneDao")
-    public void setPhoneDao(BasicDao<Phone> phoneDao) {
+    public void setPhoneDao(BasicDao<PartnerPhone> phoneDao) {
         this.phoneDao = phoneDao;
     }
     

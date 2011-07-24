@@ -24,7 +24,7 @@ public class AddressTests {
         PrivateEntity partnerRegistry = new PrivateEntity();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Address address = Address.addressFactory(partnerRegistry, sequence);
+        Address address = new Address(partnerRegistry, sequence);
         
         assertSame(partnerRegistry, address.getPartnerRegistry());
         assertEquals(sequence, address.getSequence());
@@ -41,7 +41,7 @@ public class AddressTests {
         PrivateEntity partnerRegistry = new PrivateEntity();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        Address address = Address.addressFactory(partnerRegistry, sequence);
+        Address address = new Address(partnerRegistry, sequence);
         Address copy = (Address) DomainTestSupport.minimalEqualsTest(address);
         
         copy.setPartnerRegistry(null);

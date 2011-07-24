@@ -23,7 +23,7 @@ public class PartnerKeyTests {
         Partner partner = new Partner();
         KeyType keyType = new KeyType();
         
-        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partner, keyType);
+        PartnerKey partnerKey = new PartnerKey(partner, keyType);
         
         assertSame(partner, partnerKey.getPartner());
         assertSame(keyType, partnerKey.getKeyType());
@@ -38,7 +38,7 @@ public class PartnerKeyTests {
         Partner partner = new Partner();
         KeyType keyType = new KeyType();
         
-        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partner, keyType);
+        PartnerKey partnerKey = new PartnerKey(partner, keyType);
         PartnerKey copy = (PartnerKey) DomainTestSupport.minimalEqualsTest(partnerKey);
         
         copy.setPartner(null);

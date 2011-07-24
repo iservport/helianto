@@ -32,6 +32,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
+import org.helianto.core.Phone;
 import org.helianto.core.TrunkEntity;
 import org.helianto.core.base.AbstractAddress;
 /**
@@ -55,7 +56,7 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
     private Set<Partner> partners = new HashSet<Partner>(0);
     private Set<Address> addresses = new HashSet<Address>(0);
     private Set<PrivateEntityKey> partnerRegistryKeys = new HashSet<PrivateEntityKey>(0);
-    private Set<Phone> phones = new HashSet<Phone>(0);
+    private Set<PartnerPhone> phones = new HashSet<PartnerPhone>(0);
     private @Transient List<Partner> partnerList;
     private @Transient List<Address> addressList;
     private @Transient List<PrivateEntityKey> partnerRegistryKeyList;
@@ -265,10 +266,10 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
      * Phones.
      */
     @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
-    public Set<Phone> getPhones() {
+    public Set<PartnerPhone> getPhones() {
         return this.phones;
     }
-    public void setPhones(Set<Phone> phones) {
+    public void setPhones(Set<PartnerPhone> phones) {
         this.phones = phones;
     }
 

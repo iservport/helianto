@@ -17,17 +17,20 @@ package org.helianto.partner;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.Phone;
 import org.helianto.core.PhoneType;
 /**
- * Phones are always related to an address.
+ * Private entity phones.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -35,19 +38,20 @@ import org.helianto.core.PhoneType;
 @Table(name="prtnr_phone2",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "sequence"})}
 )
-public class Phone extends org.helianto.core.Phone {
+public class PartnerPhone implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
     private PrivateEntity partnerRegistry;
     private int sequence;
+    private Phone phone;
     private String comment;
     private char privacyLevel;
 
     /** 
      * Default constructor
      */
-    public Phone() {
+    public PartnerPhone() {
     	this("");
     }
 
@@ -56,7 +60,7 @@ public class Phone extends org.helianto.core.Phone {
      * 
      * @param phoneNumber
      */
-    public Phone(String phoneNumber) {
+    public PartnerPhone(String phoneNumber) {
     	this("", phoneNumber);
     }
 
@@ -66,7 +70,7 @@ public class Phone extends org.helianto.core.Phone {
      * @param areaCode
      * @param phoneNumber
      */
-    public Phone(String areaCode, String phoneNumber) {
+    public PartnerPhone(String areaCode, String phoneNumber) {
     	this(areaCode, phoneNumber, PhoneType.MAIN);
     }
 
@@ -77,7 +81,8 @@ public class Phone extends org.helianto.core.Phone {
      * @param phoneNumber
      * @param phoneType
      */
-    public Phone(String areaCode, String phoneNumber, PhoneType phoneType) {
+    public PartnerPhone(String areaCode, String phoneNumber, PhoneType phoneType) {
+    	setPhone(new Phone());
     	setAreaCode(areaCode);
     	setPhoneNumber(phoneNumber);
     	setPhoneTypeAsEnum(phoneType);
@@ -114,6 +119,53 @@ public class Phone extends org.helianto.core.Phone {
     }
     public void setSequence(int sequence) {
         this.sequence = sequence;
+    }
+    
+    /**
+     * Phone.
+     */
+    @Embedded
+    public Phone getPhone() {
+		return phone;
+	}
+    public void setPhone(Phone phone) {
+		this.phone = phone;
+	}
+    
+    /**
+     * Phone number.
+     */
+    @Transient
+    public String getPhoneNumber() {
+        return getPhone().getPhoneNumber();
+    }
+    public void setPhoneNumber(String phoneNumber) {
+    	getPhone().setPhoneNumber(phoneNumber);
+    }
+
+    /**
+     * Area code.
+     */
+    @Transient
+    public String getAreaCode() {
+        return getPhone().getAreaCode();
+    }
+    public void setAreaCode(String areaCode) {
+    	getPhone().setAreaCode(areaCode);
+    }
+
+    /**
+     * Phone type.
+     */
+    @Transient
+    public char getPhoneType() {
+        return getPhone().getPhoneType();
+    }
+    public void setPhoneType(char phoneType) {
+    	getPhone().setPhoneType(phoneType);
+    }
+    public void setPhoneTypeAsEnum(PhoneType phoneType) {
+    	getPhone().setPhoneTypeAsEnum(phoneType);
     }
 
     /**
@@ -171,8 +223,8 @@ public class Phone extends org.helianto.core.Phone {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof Phone) ) return false;
-         Phone castOther = (Phone) other; 
+         if ( !(other instanceof PartnerPhone) ) return false;
+         PartnerPhone castOther = (PartnerPhone) other; 
          
          return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ))
              && ((this.getSequence()==castOther.getSequence()));

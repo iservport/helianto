@@ -43,19 +43,6 @@ public class PartnerKey extends AbstractKeyStringValue {
 		return getPartner();
 	}   
 
-    /**
-     * Factory method.
-     * 
-     * @param partnerRegistry
-     * @param keyType
-     */
-    public static PartnerKey partnerKeyFactory(Partner partner, KeyType keyType) {
-        PartnerKey partnerKey = new PartnerKey();
-        partnerKey.setPartner(partner);
-        partnerKey.setKeyType(keyType);
-        return partnerKey;
-    }
-
     private static final long serialVersionUID = 1L;
     private Partner partner;
 
@@ -64,6 +51,18 @@ public class PartnerKey extends AbstractKeyStringValue {
      */
     public PartnerKey() {
     	super();
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param partner
+     * @param keyType
+     */
+    public PartnerKey(Partner partner, KeyType keyType) {
+    	this();
+        setPartner(partner);
+        setKeyType(keyType);
     }
 
     /**

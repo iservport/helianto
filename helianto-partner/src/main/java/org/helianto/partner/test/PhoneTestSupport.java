@@ -7,7 +7,7 @@ import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.Address;
 import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.Phone;
+import org.helianto.partner.PartnerPhone;
 
 /**
  * Class to support <code>PhoneDao</code> tests.
@@ -23,7 +23,7 @@ public class PhoneTestSupport {
      * @param address optional Address 
      * @param sequence optional int 
      */
-    public static Phone createPhone(Object... args) {
+    public static PartnerPhone createPhone(Object... args) {
         AbstractAddress address;
         try {
             address = (Address) args[0];
@@ -36,7 +36,7 @@ public class PhoneTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             sequence = DomainTestSupport.getNonRepeatableIntValue(testKey++);
         }
-        Phone phone = new Phone();
+        PartnerPhone phone = new PartnerPhone();
         // TODO review phone
 //        phone.setPartnerRegistry((PartnerRegistry) address);
         phone.setSequence(sequence);
@@ -48,7 +48,7 @@ public class PhoneTestSupport {
      *
      * @param phoneListSize
      */
-    public static List<Phone> createPhoneList(int phoneListSize) {
+    public static List<PartnerPhone> createPhoneList(int phoneListSize) {
         return createPhoneList(phoneListSize, 1);
     }
 
@@ -58,7 +58,7 @@ public class PhoneTestSupport {
      * @param phoneListSize
      * @param addressListSize
      */
-    public static List<Phone> createPhoneList(int phoneListSize, int addressListSize) {
+    public static List<PartnerPhone> createPhoneList(int phoneListSize, int addressListSize) {
         List<Address> addressList = AddressTestSupport.createAddressList(addressListSize);
 
         return createPhoneList(phoneListSize, addressList);
@@ -70,8 +70,8 @@ public class PhoneTestSupport {
      * @param phoneListSize
      * @param addressList
      */
-    public static List<Phone> createPhoneList(int phoneListSize, List<Address> addressList) {
-        List<Phone> phoneList = new ArrayList<Phone>();
+    public static List<PartnerPhone> createPhoneList(int phoneListSize, List<Address> addressList) {
+        List<PartnerPhone> phoneList = new ArrayList<PartnerPhone>();
         for (Address address: addressList) {
 	        for (int i=0;i<phoneListSize;i++) {
     	        phoneList.add(createPhone(address));

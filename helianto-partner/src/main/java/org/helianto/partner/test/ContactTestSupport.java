@@ -43,7 +43,7 @@ public class ContactTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             identity = IdentityTestSupport.createIdentity();
         }
-        Contact contact = Contact.contactFactory(partnerAssociation, sequence, identity);
+        Contact contact = new Contact(partnerAssociation, sequence, identity);
         return contact;
     }
 

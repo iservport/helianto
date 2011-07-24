@@ -1,31 +1,34 @@
+<?xml version="1.0" ?>
 <!DOCTYPE hibernate-configuration PUBLIC
     "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
     "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+    
 <hibernate-configuration>
 	<session-factory>
 		<mapping class="org.helianto.core.Identity" />
-		<mapping class="org.helianto.core.Credential" />
-		<mapping class="org.helianto.core.PrivateKey" />
-		<mapping class="org.helianto.core.Entity" />
-		<mapping class="org.helianto.core.EntityPreference" />
-		<mapping class="org.helianto.core.InternalEnumerator" />
-		<mapping class="org.helianto.core.PublicEnumerator" />
-		<mapping class="org.helianto.core.Server" />
-		<mapping class="org.helianto.core.Service" />
-		<mapping class="org.helianto.core.UserAssociation" />
-		<mapping class="org.helianto.core.UserGroup" />
-		<mapping class="org.helianto.core.User" />
-		<mapping class="org.helianto.core.UserLog" />
-		<mapping class="org.helianto.core.UserRole" />
-		<mapping class="org.helianto.core.Operator" />
-		<mapping class="org.helianto.core.Country" />
-		<mapping class="org.helianto.core.PersonalAddress" />
-		<mapping class="org.helianto.core.Province" />
+		<mapping class="org.helianto.core.Phone"  />
+		<mapping class="org.helianto.core.Credential"  />
+		<mapping class="org.helianto.core.PrivateKey"  />
+		<mapping class="org.helianto.core.Entity"  />
+		<mapping class="org.helianto.core.EntityPreference"  />
+		<mapping class="org.helianto.core.InternalEnumerator"  />
+		<mapping class="org.helianto.core.PublicEnumerator"  />
+		<mapping class="org.helianto.core.Server"  />
+		<mapping class="org.helianto.core.Service"  />
+		<mapping class="org.helianto.core.UserAssociation"  />
+		<mapping class="org.helianto.core.UserGroup"  />
+		<mapping class="org.helianto.core.User"  />
+		<mapping class="org.helianto.core.UserLog"  />
+		<mapping class="org.helianto.core.UserRole"  />
+		<mapping class="org.helianto.core.Operator"  />
+		<mapping class="org.helianto.core.Country"  />
+		<mapping class="org.helianto.core.PersonalAddress"  />
+		<mapping class="org.helianto.core.Province"  />
 		<mapping class="org.helianto.core.City" />
-		<mapping class="org.helianto.core.Category" />
-		<mapping class="org.helianto.core.Unit" />
-		<mapping class="org.helianto.core.UserRequest" />
-		<mapping class="org.helianto.core.KeyType" />
+		<mapping class="org.helianto.core.Category"  />
+		<mapping class="org.helianto.core.Unit"  />
+		<mapping class="org.helianto.core.UserRequest"  />
+		<mapping class="org.helianto.core.KeyType"  />
 	</session-factory>
 </hibernate-configuration>
 

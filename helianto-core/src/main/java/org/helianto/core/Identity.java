@@ -15,19 +15,25 @@
 
 package org.helianto.core;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.SecondaryTables;
@@ -61,7 +67,7 @@ public class Identity implements java.io.Serializable {
     private char notification;
 	private byte[] photo;
     private String multipartFileContentType;
-
+    private List<Phone> phones = new ArrayList<Phone>();
     private Set<Credential> credentials = new HashSet<Credential>();
 
     /** 
@@ -239,17 +245,6 @@ public class Identity implements java.io.Serializable {
     }
     
     /**
-     * A set of credentials.
-     */
-    @OneToMany(mappedBy="identity")
-    public Set<Credential> getCredentials() {
-		return credentials;
-	}
-    public void setCredentials(Set<Credential> credentials) {
-		this.credentials = credentials;
-	}
-    
-    /**
      * Identity photo.
      */
     @Basic(fetch=FetchType.LAZY)
@@ -273,6 +268,30 @@ public class Identity implements java.io.Serializable {
 		this.multipartFileContentType = multipartFileContentType;
 	}
 
+    /**
+     * A set of credentials.
+     */
+    @OneToMany(mappedBy="identity")
+    public Set<Credential> getCredentials() {
+		return credentials;
+	}
+    public void setCredentials(Set<Credential> credentials) {
+		this.credentials = credentials;
+	}
+    
+    /**
+     * List of phones.
+     */
+    @ElementCollection
+    @CollectionTable(name = "core_phone", joinColumns = @JoinColumn(name = "phoneId"))
+    @OrderColumn
+    public List<Phone> getPhones() {
+		return phones;
+	}
+    public void setPhones(List<Phone> phones) {
+		this.phones = phones;
+	}
+    
     /**
      * toString
      * @return String

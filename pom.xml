@@ -199,6 +199,12 @@ Application-TraceLevels: ${application.traceLevels}
 			<name>SpringSource Enterprise Bundle Repository - External Library Releases</name>
 			<url>http://repository.springsource.com/maven/libraries/external</url>
 		</repository>
+		
+		<repository>
+            <id>JBoss Repo</id>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
+		
 	</repositories>	
 	<dependencies>
 		<!-- spring bundles -->
@@ -267,18 +273,19 @@ Application-TraceLevels: ${application.traceLevels}
 			<version>${spring.main.version}</version>
 		</dependency>
 		<!-- hibernate bundles -->
-		<dependency>
+		<!-- dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>org.hibernate.ejb-library</artifactId>
 			<type>libd</type>
 			<version>3.4.0.GA-A</version> 
-		</dependency>
+		</dependency -->
+		<!-- hibernate to use with jpa2 ???-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.5.3-Final</version>
+        </dependency>
 		<!-- javax bundles -->
-		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>com.springsource.javax.persistence</artifactId>
-			<version>2.0.0.Beta1</version>
-		</dependency>
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>com.springsource.javax.transaction</artifactId>

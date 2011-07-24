@@ -34,7 +34,7 @@ public class AddressTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             sequence = DomainTestSupport.getNonRepeatableIntValue(testKey++);
         }
-        Address address = Address.addressFactory(privateEntity, sequence);
+        Address address = new Address(privateEntity, sequence);
         return address;
     }
     

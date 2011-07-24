@@ -35,7 +35,7 @@ public class PartnerKeyTestSupport {
      * @param keyType  keyType 
      */
     public static PartnerKey createPartnerKey(Partner partner, KeyType keyType) {
-        PartnerKey partnerKey = PartnerKey.partnerKeyFactory(partner, keyType);
+        PartnerKey partnerKey = new PartnerKey(partner, keyType);
         return partnerKey;
     }
 

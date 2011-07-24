@@ -36,10 +36,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Phone;
 import org.helianto.core.Addressee;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
+import org.helianto.core.Phone;
 import org.helianto.core.Province;
 import org.helianto.core.TrunkEntity;
 /**
@@ -467,7 +467,7 @@ public class Partner implements TrunkEntity, BusinessUnit {
 	 */
 	@Transient
 	public boolean addKeyValuePair(KeyType keyType, String keyValue) {
-		PartnerKey partnerKey = PartnerKey.partnerKeyFactory(this, keyType);
+		PartnerKey partnerKey = new PartnerKey(this, keyType);
 		partnerKey.setKeyValue(keyValue);
 		return getPartnerKeys().add(partnerKey);
 	}
