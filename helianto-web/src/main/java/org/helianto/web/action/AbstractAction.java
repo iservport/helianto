@@ -186,12 +186,28 @@ public abstract class AbstractAction<T> implements Serializable {
 	public String createModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		Object model = doCreateModel(attributes, userDetails);
 		attributes.put(getModelName(), model);
-		logger.debug("Created {} with name {}.", model, getModelName());
+		logger.debug("Created model {} with name {}.", model, getModelName());
 		return "success";
 	}
 	
 	/**
-	 * Default model is of type <code>SimpleModel</code>.
+	 * Create a new FormModel in the attribute map.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 */
+	public String createFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		FormModel<?> formModel = getModel(attributes);
+		if (formModel==null) {
+			formModel = doCreateFormModel(attributes, userDetails);
+			attributes.put(getModelName(), formModel);
+			logger.debug("Created form model {} with name {}.", formModel, getModelName());
+		}
+		return "success";
+	}
+	
+	/**
+	 * Do create model of type <code>SimpleModel</code>.
 	 * 
 	 * @param attributes
 	 * @param userDetails
@@ -202,6 +218,21 @@ public abstract class AbstractAction<T> implements Serializable {
 		return new SimpleModel(form, userDetails.getUser());
 	}
 
+	/**
+	 * Do create model of type <code>FormModel</code>.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 */
+	protected <F> FormModel<F> doCreateFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		F form = doCreateForm(attributes, userDetails);
+		return new PageModel<F>(form);
+	}
+	
+	protected <F> F doCreateForm(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		return null;
+	}
+	
 	// convenience methods
 	
 	/**
