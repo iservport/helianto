@@ -131,31 +131,6 @@
 					<outputDirectory>dist</outputDirectory>
 				</configuration>
 			</plugin>
-			<!-- plugin>
-				<groupId>com.springsource.bundlor</groupId>
-				<artifactId>com.springsource.bundlor.maven</artifactId>
-				<version>1.0.0.BUILD-20090604.084525-64</version>
-				<configuration>
-					<manifestHeaders>
-<![CDATA[
-Bundle-ManifestVersion: 2
-Bundle-Version: 0.2.2
-Bundle-Vendor: The Helianto Project
-Application-TraceLevels: ${application.traceLevels}
-]]>
-					</manifestHeaders>
-					<failOnWarnings>false</failOnWarnings>
-				</configuration>
-				<executions>
-					<execution>
-						<id>bundlor</id>
-						<goals>
-							<goal>transform</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-				</executions>
-			</plugin-->
 		</plugins>
 	</build> 
 	<repositories>
@@ -243,13 +218,7 @@ Application-TraceLevels: ${application.traceLevels}
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>org.springframework.security.config</artifactId>
 		    <version>${spring.security.version}</version>
-		</dependency>		<!--  
-		<dependency>
-			<groupId>org.springframework.ws</groupId>
-			<artifactId>org.springframework.ws.java5</artifactId>
-			<version>1.5.9.A</version>
 		</dependency>
-		-->
 		<dependency>
 		    <groupId>org.springframework.ws</groupId>
 		    <artifactId>org.springframework.ws</artifactId>
