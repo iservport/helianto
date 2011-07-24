@@ -13,7 +13,6 @@ import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
-import org.helianto.web.action.SimpleModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -28,7 +27,7 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
 public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	protected User doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		return new User();
 	}
@@ -47,9 +46,7 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 		return (User) userMgr.storeUserGroup(target);
 	}
 	
-	public String authenticate(MutableAttributeMap attributes) {
-		SimpleModel<?> model = getModel(attributes);
-		User user = (User) model.getItem();
+	public String authorize(User user) {
 		if (user!=null) {
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
 			logger.debug("Ready to authorize user {} with roles {}.", user, roles);
