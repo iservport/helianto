@@ -35,9 +35,30 @@ public class Phone implements java.io.Serializable {
      * Default constructor
      */
     public Phone() {
-    	setPhoneNumber("");
-    	setAreaCode("");
-    	setPhoneTypeAsEnum(PhoneType.MAIN);
+    	this("", "");
+    }
+
+    /** 
+     * Phone constructor.
+     * 
+     * @param areaCode
+     * @param phoneNumber
+     */
+    public Phone(String areaCode, String phoneNumber) {
+    	this(phoneNumber, areaCode, PhoneType.MAIN);
+    }
+
+    /** 
+     * Phone type constructor.
+     * 
+     * @param areaCode
+     * @param phoneNumber
+     * @param phoneType
+     */
+    public Phone(String areaCode, String phoneNumber, PhoneType phoneType) {
+    	setPhoneNumber(phoneNumber);
+    	setAreaCode(areaCode);
+    	setPhoneTypeAsEnum(phoneType);
     }
 
     /**
