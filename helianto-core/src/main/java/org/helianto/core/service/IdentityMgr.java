@@ -21,6 +21,7 @@ import java.util.List;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalAddress;
+import org.helianto.core.Phone;
 import org.helianto.core.filter.Filter;
 
 /**
@@ -87,6 +88,14 @@ public interface IdentityMgr {
      * @param personalAddress
      */
     public PersonalAddress storePersonalAddress(PersonalAddress personalAddress);
+    
+    /**
+     * Store the given <code>Phone</code>.
+     * 
+     * @param identityPhone
+     * @param identity
+     */
+    public Identity storeIdentityPhone(Phone identityPhone, Identity identity);
     
     /**
      * <p>Create <code>Credential</code> and <code>Identity</code>.</p>

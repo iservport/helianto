@@ -22,11 +22,13 @@ package org.helianto.core;
  */
 public enum PhoneType {
 	
+    PERSONAL('P', true),
+    MOBILE('M', true),
+    HOME('P', true),
+    WORK('W', true),
     BRANCH('B', true),
     FAX('F', false),
-    MAIN('1', true),
-    MOBILE('M', true),
-    PERSONAL('P', true);
+    MAIN('1', true);
     
     private char value;
     private boolean voice;

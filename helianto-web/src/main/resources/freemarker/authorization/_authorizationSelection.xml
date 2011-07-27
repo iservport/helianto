@@ -5,34 +5,37 @@
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
         parent="_menu">
 
-	<secured attributes="ROLE_ADMIN, ROLE_USER" />
+	<secured attributes="ROLE_USER" />
 	
 	<persistence-context />
 	
 	<on-start>
-		<set name="conversationScope.basePath" value="'authorization/'" />
-		<set name="conversationScope.assign"   value="'assign'" />
-		<evaluate expression="authorizationAction.createModel(flowScope, currentUser.principal)" />
+		<set name="flowScope.basePath" value="'authorization/'" />
+		<set name="flowScope.assign"   value="'assign'" />
+		<set name="flowScope.identity" value="currentUser.principal.user.identity" />
+		<evaluate expression="authorizationAction.createFormModel(flowScope, currentUser.principal)" />
 	</on-start>
 
-	<!-- Filter section -->
-
+	<action-state id="personalAddress.filter">
+		<evaluate expression="personalAddressAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="filter" />
+	</action-state>
+	
 	<action-state id="filter">
 		<evaluate expression="authorizationAction.filter(flowScope, currentUser.principal)" />
 		<transition on="success" to="selection.view" />
 	</action-state>
 	
-	<!-- View section -->
-
 	<view-state id="selection.view" view="/frame2"  model="authorizationModel" >
 
 		<on-render>
 			<set name="viewScope.group" value="'group'" />
+			<set name="flowScope.identity" value="personalAddress.identity" />
 		</on-render>
 
 		<transition on="selectAuthorization" 
 					to="filter" >
-				<set name="flowScope.authorization"  value="authorizationModel.item"/>
+				<set name="flowScope.authorization"  value="authorizationModel.pages['authorization'].item"/>
 			</transition>
 		
 		<transition on="createAuthorization" 
@@ -40,13 +43,21 @@
 				<evaluate expression="entityAction.create(flowScope, currentUser.principal)" />
 			</transition>
 		
-		<transition on="authorize" >
-			<evaluate expression="authorizationAction.authenticate(flowScope)" />
+		<transition on="addPhone" 
+					to="selection.view" >
+			</transition>
+		
+		<transition on="removePhone" 
+					to="identityPhone.subflow" >
+				<evaluate expression="identityPhoneAction.create(flowScope, currentUser.principal)" />
+			</transition>
+		
+		<transition on="authorize" 
+		            to="personalAddress.filter" >
+			<evaluate expression="authorizationAction.authorize(flowScope.authorization)" />
 		</transition>
 		
 	</view-state>
-
-	<!-- Subflow section -->
 
 	<subflow-state id="user.subflow" subflow="_user">
 		<input name="user" />
@@ -59,5 +70,15 @@
 		<transition on="toCommit" to="filter" />
 		<transition on="toReturn" to="selection.view" />
 	</subflow-state>
+	
+	<subflow-state id="identityPhone.subflow" subflow="_phone">
+		<input name="phone" value="flowScope.identityPhone"/>
+		<transition on="toCommit" to="filter" >
+			<evaluate expression="identityPhoneAction.store(flowScope)" />
+		</transition>
+		<transition on="toReturn" to="selection.view" />
+	</subflow-state>
+	
+	
 	
 </flow>

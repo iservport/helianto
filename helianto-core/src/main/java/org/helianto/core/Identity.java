@@ -184,7 +184,7 @@ public class Identity implements java.io.Serializable {
     }
     
     /**
-     * <<Transient>> Safe identity name.
+     * <<Transient>> Safe identity name getter.
      */
     @Transient
     public String getIdentityName() {
@@ -195,6 +195,39 @@ public class Identity implements java.io.Serializable {
     	    .append(" ")
     	    .append(getPersonalData().getLastName()).toString();
     }
+    
+    /**
+     * <<Transient>> Safe gender getter.
+     */
+    @Transient
+    public char getGender() {
+    	if (getPersonalData()==null) {
+    		return Gender.NOT_SUPPLIED.getValue();
+    	}
+		return getPersonalData().getGender();
+	}
+    
+    /**
+     * <<Transient>> Safe appellation getter.
+     */
+    @Transient
+    public char getAppellation() {
+    	if (getPersonalData()==null) {
+    		return Appellation.NOT_SUPPLIED.getValue();
+    	}
+		return getPersonalData().getAppellation();
+	}
+    
+    /**
+     * <<Transient>> Safe birth date getter.
+     */
+    @Transient
+    public Date getBirthDate() {
+    	if (getPersonalData()==null) {
+    		return new Date(1000l);
+    	}
+		return getPersonalData().getBirthDate();
+	}
     
     /**
      * <<Transient>> Safe identity alias.
@@ -283,8 +316,8 @@ public class Identity implements java.io.Serializable {
      * List of phones.
      */
     @ElementCollection
-    @CollectionTable(name = "core_phone", joinColumns = @JoinColumn(name = "phoneId"))
-    @OrderColumn
+    @CollectionTable(name = "core_identityPhone", joinColumns = @JoinColumn(name = "identityId"))
+    @OrderColumn(name="sequence")
     public List<Phone> getPhones() {
 		return phones;
 	}

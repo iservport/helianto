@@ -47,12 +47,14 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	}
 	
 	public String authorize(User user) {
+		logger.debug("Ready to authorize user {}...", user);
 		if (user!=null) {
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
-			logger.debug("Ready to authorize user {} with roles {}.", user, roles);
 			securityMgr.authenticate(user, roles);
+			logger.debug("Authorized.");
+			return "success";
 		}
-		return "success";
+		throw new IllegalArgumentException("Unable to auhtorize null user.");
 	}
 	
 

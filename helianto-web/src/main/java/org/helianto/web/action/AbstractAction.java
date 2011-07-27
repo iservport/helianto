@@ -123,14 +123,24 @@ public abstract class AbstractAction<T> implements Serializable {
 		if (!hasTarget(attributes)) {
 			return "noTarget";
 		}
-		attributes.put(getTargetName(), doStore(getTarget(attributes)));
+		attributes.put(getTargetName(), doStore(attributes, getTarget(attributes)));
 		return "success";
+	}
+	
+	/**
+	 * Subclasses may override this to the actual target persistence.
+	 * 
+	 * @param attributes
+	 * @param target
+	 */
+	protected T doStore(MutableAttributeMap attributes, T target) {
+		return doStore(getTarget(attributes));
 	}
 	
 	/**
 	 * Subclasses must override this to assure the actual target persistence.
 	 * 
-	 * @param attributes
+	 * @param target
 	 */
 	protected abstract T doStore(T target);
 	

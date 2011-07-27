@@ -25,6 +25,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalAddress;
+import org.helianto.core.Phone;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -122,6 +123,13 @@ public class IdentityMgrImpl implements IdentityMgr {
 	public PersonalAddress storePersonalAddress(PersonalAddress personalAddress) {
 		personalAddressDao.saveOrUpdate(personalAddress);
 		return personalAddress;
+	}
+	
+	public Identity storeIdentityPhone(Phone identityPhone, Identity identity) {
+		identityDao.saveOrUpdate(identity);
+		identity.getPhones().add(identityPhone);
+		identityDao.flush();
+		return identity;
 	}
 	
 	public Credential installIdentity(String principal) {

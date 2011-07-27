@@ -4,7 +4,7 @@
 		<@secure "ROLE_ADMIN_MANAGER" ><@create "Authorization">+ Authorizing entity</@create></@secure>
 	</div>
 	<p>
-		${authorizationModel.listSize!"0"} authorization(s) found.
+		${authorizationModel.pages['authorization'].listSize!"0"} authorization(s) found.
 	</p>
 	
 	<div class="selectionList">
@@ -18,10 +18,10 @@
 			</tr>
 		</thead>
 		<tbody>
-		<#list authorizationModel.list?if_exists as authorization >
+		<#list authorizationModel.pages['authorization'].list?if_exists as authorization >
 			<tr class="row${authorization_index%2}">
-				<@select "${authorization_index}", "Authorization", "index", "", "Select authorization", "ROLE_ADMIN, ROLE_USER">${authorization.entity.id}</@select>
-				<@select "${authorization_index}", "Authorization", "index", "", "Select authorization", "ROLE_ADMIN, ROLE_USER">${authorization.entity.alias?if_exists}</@select>
+				<td><@selectModel "${authorization_index}", "Authorization", "index", "", "Select authorization", "ROLE_ADMIN, ROLE_USER">${authorization.entity.id}</@selectModel></td>
+				<td><@selectModel "${authorization_index}", "Authorization", "index", "", "Select authorization", "ROLE_ADMIN, ROLE_USER">${authorization.entity.alias?if_exists}</@selectModel></td>
 				<td>${authorization.userKey}</td>
 				<td>${authorization.entity.installDate?date}</td>
 			</tr>

@@ -22,13 +22,13 @@ import javax.persistence.Column;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@javax.persistence.MappedSuperclass
 @javax.persistence.Embeddable
 public class Phone implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private String phoneNumber;
     private String areaCode;
+    private String branch;
     private char phoneType;
 
     /** 
@@ -82,6 +82,17 @@ public class Phone implements java.io.Serializable {
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
     }
+    
+    /**
+     * Branch.
+     */
+    @Column(length=10)
+    public String getBranch() {
+		return branch;
+	}
+    public void setBranch(String branch) {
+		this.branch = branch;
+	}
 
     /**
      * Phone type.
@@ -104,9 +115,16 @@ public class Phone implements java.io.Serializable {
         StringBuffer buffer = new StringBuffer();
 
         buffer
+        .append("(")
         .append(getAreaCode())
-        .append(" ")
+        .append(") ")
         .append(getPhoneNumber());
+        
+        if (getBranch()!=null && getBranch().length()>0) {
+        	buffer
+        	.append(" - ")
+            .append(getBranch());
+        }
 
         return buffer.toString();
     }
