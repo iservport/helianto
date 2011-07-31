@@ -69,12 +69,11 @@ public class ResourceMgrImplTests {
 	@Test
 	public void storeResourceGroup() {
 		ResourceGroup resourceGroup = new ResourceGroup();
-		ResourceGroup managedResourceGroup = new ResourceGroup();
 		
-		expect(resourceGroupDao.merge(resourceGroup)).andReturn(managedResourceGroup);
+		resourceGroupDao.saveOrUpdate(resourceGroup);
 		replay(resourceGroupDao);
 		
-		assertSame(managedResourceGroup, resourceMgr.storeResourceGroup(resourceGroup));
+		assertSame(resourceGroup, resourceMgr.storeResourceGroup(resourceGroup));
 		verify(resourceGroupDao);
 	}
 	

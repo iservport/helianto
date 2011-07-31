@@ -17,7 +17,6 @@ package org.helianto.document.base;
 
 import java.io.IOException;
 
-import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
 
@@ -35,8 +34,6 @@ public class AbstractContent extends Document implements Cloneable, Uploadable {
 
     private static final long serialVersionUID = 1L;
     private byte[] content;
-    private String encoding;
-    private String multipartFileContentType;
     // transient
     private transient MultipartFile file;
 
@@ -45,52 +42,7 @@ public class AbstractContent extends Document implements Cloneable, Uploadable {
 	 */
     public AbstractContent() {
     	super();
-    	setEncoding("ISO8859_1");
     	setMultipartFileContentType("text/html");
-    }
-
-    /**
-     * True if {@link #afterInternalNumberSet(long)} starts with "text".
-     */
-    @Transient
-    public boolean isText() {
-    	if (getMultipartFileContentType().startsWith("text")) {
-    		return true;
-    	}
-    	return false;
-    }
-
-    /**
-     * True if {@link #afterInternalNumberSet(long)} starts with "text/html".
-     */
-    @Transient
-    public boolean isHtml() {
-    	if (getMultipartFileContentType().startsWith("text/html")) {
-    		return true;
-    	}
-    	return false;
-    }
-
-    /**
-     * @deprecated
-     */
-    @Transient
-    public boolean isEditable() {
-    	if (getMultipartFileContentType().startsWith("text")) {
-    		return true;
-    	}
-    	return false;
-    }
-
-    /**
-     * True if {@link #afterInternalNumberSet(long)} starts with "image".
-     */
-    @Transient
-    public boolean isImage() {
-    	if (getMultipartFileContentType().startsWith("image")) {
-    		return true;
-    	}
-    	return false;
     }
 
     @Lob
@@ -123,22 +75,6 @@ public class AbstractContent extends Document implements Cloneable, Uploadable {
     	return this.content.length;
     }
     
-	@Column(length=32)
-	public String getEncoding() {
-		return this.encoding;
-	}
-	public void setEncoding(String encoding) {
-		this.encoding = encoding;
-	}
-
-	@Column(length=32)
-	public String getMultipartFileContentType() {
-		return multipartFileContentType;
-	}
-	public void setMultipartFileContentType(String multipartFileContentType) {
-		this.multipartFileContentType = multipartFileContentType;
-	}
-
 	/**
 	 * <<Transient>> Convenience property to hold uploaded data.
 	 */

@@ -23,7 +23,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.User;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.ParentFilter;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
@@ -73,17 +72,17 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	}
 
   	public ProcessDocument storeProcessDocument(ProcessDocument processDocument) {
-  		ProcessDocument managedProcessDocument = 
-  			(ProcessDocument) processDocumentDao.merge(processDocument);
-  		if (managedProcessDocument instanceof Sequenceable) {
-  			sequenceMgr.validateInternalNumber((Sequenceable) managedProcessDocument);
+  		processDocumentDao.saveOrUpdate(processDocument);
+  		if (processDocument instanceof Sequenceable) {
+  			sequenceMgr.validateInternalNumber((Sequenceable) processDocument);
   		}
-		return managedProcessDocument;
+  		processDocumentDao.flush();
+		return processDocument;
 	}
 
 	public ProcessDocumentAssociation storeDocumentAssociation(ProcessDocumentAssociation documentAssociation) {
-		ProcessDocumentAssociation managedDocumentAssociation = processDocumentAssociationDao.merge(documentAssociation);
-		return managedDocumentAssociation;
+		processDocumentAssociationDao.saveOrUpdate(documentAssociation);
+		return documentAssociation;
 	}
 
 	public List<ProcessDocumentAssociation> findOperations(User user, Process process) {
@@ -103,7 +102,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 	 * @param filter
 	 * @param prefix
 	 */
-	protected String createProcessDocumentCriteriaAsString(ParentFilter filter, String prefix) {
+	protected String createProcessDocumentCriteriaAsString(ProcessDocumentFilterAdapter filter, String prefix) {
 		return new StringBuilder()
 			.append(prefix)
 			.append(".parent.id=")
@@ -147,16 +146,18 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     }
 
     public Setup storeSetup(Setup setup) {
-    	return setupDao.merge(setup);
+    	setupDao.saveOrUpdate(setup);
+    	setupDao.flush();
+    	return setup;
     }
 
 	public List<Setup> listSetups(Operation operation) {
-		Operation managedOperation = (Operation) processDocumentDao.merge(operation);
-		List<Setup> listSetups = new ArrayList<Setup>(managedOperation.getSetups());
+		processDocumentDao.saveOrUpdate(operation);
+		List<Setup> listSetups = new ArrayList<Setup>(operation.getSetups());
 	    if (logger.isDebugEnabled() && listSetups!=null) {
 	        logger.debug("Found {} setup(s)", listSetups.size());
 	    }
-	    processDocumentDao.evict(managedOperation);
+	    processDocumentDao.evict(operation);
 	    Collections.sort(listSetups);
 		return listSetups;
 	}

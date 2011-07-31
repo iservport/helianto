@@ -30,15 +30,15 @@ public class ResourceAssociationFilterAdapter extends AbstractFilterAdapter<Reso
 	 */
 	@Override
 	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getFilter().getParent()!=null) {
-			appendEqualFilter("parent.id", getFilter().getParent().getId(), mainCriteriaBuilder);
+		if (getForm().getParent()!=null) {
+			appendEqualFilter("parent.id", getForm().getParent().getId(), mainCriteriaBuilder);
 			setOrderByString("child.resourceCode");
-			logger.debug("Filter parent constraint set to {}.", getFilter().getParent());
+			logger.debug("Filter parent constraint set to {}.", getForm().getParent());
 		}
-		else if (getFilter().getChild()!=null) {
-			appendEqualFilter("child.id", getFilter().getChild().getId(), mainCriteriaBuilder);
+		else if (getForm().getChild()!=null) {
+			appendEqualFilter("child.id", getForm().getChild().getId(), mainCriteriaBuilder);
 			setOrderByString("parent.resourceCode");
-			logger.debug("Filter child constraint set to {}.", getFilter().getChild());
+			logger.debug("Filter child constraint set to {}.", getForm().getChild());
 		}
 	}
 
@@ -46,12 +46,12 @@ public class ResourceAssociationFilterAdapter extends AbstractFilterAdapter<Reso
 	
 	@Override
 	public boolean isSelection() {
-		return getFilter().getParent()!=null && getFilter().getChild()!=null;
+		return getForm().getParent()!=null && getForm().getChild()!=null;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("child.id", getFilter().getChild().getId(), mainCriteriaBuilder);
+		appendEqualFilter("child.id", getForm().getChild().getId(), mainCriteriaBuilder);
 	}
 
 	@Override

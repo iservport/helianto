@@ -78,14 +78,14 @@ public class SecurityMgrImplTests {
     
     @Test(expected=PasswordNotVerifiedException.class)
     public void storeCredentialNotVerified() {
-        Credential credential = Credential.credentialFactory("");
+        Credential credential = new Credential();
         
         securityMgr.storeCredential(credential);
     }
     
     @Test
     public void storeCredentialVerified() {
-        Credential credential = Credential.credentialFactory("PASSWORD");
+        Credential credential = new Credential("PRINCIPAL", "PASSWORD");
         credential.setVerifyPassword("PASSWORD");
         
         credentialDao.saveOrUpdate(credential);

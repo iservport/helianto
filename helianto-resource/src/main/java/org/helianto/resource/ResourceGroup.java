@@ -36,10 +36,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.Controllable;
 import org.helianto.core.Entity;
 import org.helianto.core.NaturalKeyInfo;
 import org.helianto.core.TrunkEntity;
-import org.helianto.document.Controlable;
 
 /**
  * <p>
@@ -68,7 +68,7 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
     private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
     private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
     //transient
-    private Controlable controlReference;
+    private Controllable controlReference;
 	private List<ResourceAssociation> childAssociationList;
     private List<ResourceAssociation> parentAssociationList;
 
@@ -159,7 +159,7 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
     /**
      * Set of child <code>ResourceAssociation</code>s.
      */
-    @OneToMany(mappedBy="parent")
+    @OneToMany(mappedBy="parent", cascade = {CascadeType.ALL})
     public Set<ResourceAssociation> getChildAssociations() {
     	return this.childAssociations;
     }   
@@ -177,7 +177,7 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
     /**
      * Set of parent <code>ResourceAssociation</code>s.
      */
-    @OneToMany(mappedBy="child", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy="child")
     public Set<ResourceAssociation> getParentAssociations() {
     	return this.parentAssociations;
     }   
@@ -196,10 +196,10 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
      * <<Transient>> Control reference.
      */
     @Transient
-    public Controlable getControlReference() {
+    public Controllable getControlReference() {
 		return controlReference;
 	}
-	public void setControlReference(Controlable controlReference) {
+	public void setControlReference(Controllable controlReference) {
 		this.controlReference = controlReference;
 	}
 

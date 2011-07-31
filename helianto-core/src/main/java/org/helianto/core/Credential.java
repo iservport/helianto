@@ -32,6 +32,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
+
+import org.springframework.format.annotation.DateTimeFormat;
 /**
  * Provides <code>Identity</code> with authentication information. 
  * 
@@ -42,28 +44,6 @@ import javax.persistence.Version;
     uniqueConstraints = {@UniqueConstraint(columnNames={"identityId"})}
 )
 public class Credential implements PersonalEntity {
-
-    /**
-     * Empty <code>Identity</code> <code>Credential</code> factory.
-     * 
-     * @param identity
-     */
-    public static Credential credentialFactory(String password) {
-        Identity identity = Identity.identityFactory("");
-        return credentialFactory(identity, password);
-    }
-
-    /**
-     * <code>Credential</code> factory.
-     * 
-     * @param identity
-     */
-    public static Credential credentialFactory(Identity identity, String password) {
-        Credential credential = new Credential();
-        credential.setIdentity(identity);
-        credential.setPassword(password);
-        return credential;
-    }
 
     private static final long serialVersionUID = 1L;
     public static final String ALLOWED_CHARS_IN_PASSWORD = 
@@ -91,7 +71,7 @@ public class Credential implements PersonalEntity {
         setCredentialState(ActivityState.SUSPENDED);
         setLastModified(new Date());
         setExpirationDate(getLastModified());
-        setEncription(Encription.PLAIN_PASSWORD);
+        setEncriptionAsEnum(Encription.PLAIN_PASSWORD);
         setPassword("inactive");
         setVerifyPassword("");
         setCurrentPassword("");
@@ -99,7 +79,7 @@ public class Credential implements PersonalEntity {
     }
 
     /** 
-     * Identity constructor.
+     * Key constructor.
      * 
      * @param identity
      */
@@ -213,6 +193,7 @@ public class Credential implements PersonalEntity {
     /**
      * Last modified.
      */
+    @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastModified() {
         return this.lastModified;
@@ -240,6 +221,7 @@ public class Credential implements PersonalEntity {
     /**
      * Expiration date.
      */
+    @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getExpirationDate() {
         return this.expirationDate;
@@ -281,7 +263,7 @@ public class Credential implements PersonalEntity {
     public void setEncription(char encription) {
         this.encription = encription;
     }
-    public void setEncription(Encription encription) {
+    public void setEncriptionAsEnum(Encription encription) {
         this.encription = encription.getValue();
     }
     

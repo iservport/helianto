@@ -46,11 +46,11 @@ public abstract class AbstractSequenceFilterAdapterDecorator <T extends Sequence
 	}
 	
 	@Override
-	public boolean isSelection() { return getFilter().getInternalNumber()>0; }
+	public boolean isSelection() { return getForm().getInternalNumber()>0; }
 	
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("internalNumber", getFilter().getInternalNumber(), mainCriteriaBuilder);
+		appendEqualFilter("internalNumber", getForm().getInternalNumber(), mainCriteriaBuilder);
 	}
 	
 	@Override

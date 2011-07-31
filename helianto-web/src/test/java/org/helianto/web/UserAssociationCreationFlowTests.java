@@ -2,8 +2,9 @@ package org.helianto.web;
 
 import org.easymock.classextension.EasyMock;
 import org.helianto.core.Identity;
-import org.helianto.core.service.UserMgr;
+import org.helianto.core.service.IdentityMgr;
 import org.helianto.web.action.impl.IdentityActionImpl;
+import org.helianto.web.test.AbstractFlowTest;
 import org.junit.Test;
 import org.springframework.binding.mapping.Mapper;
 import org.springframework.binding.mapping.MappingResults;
@@ -20,11 +21,12 @@ import org.springframework.webflow.test.MockFlowBuilderContext;
  */
 public class UserAssociationCreationFlowTests extends AbstractFlowTest {
 	
-	@Override
-	protected String getRelativePath() {
-		return "userAssociation/_userAssociationCreation.xml";
+	/**
+	 * Base path can not be read from this class name.
+	 */
+	protected String getBasePath() {
+		return "userAssociation/";
 	}
-
 	@Override
 	protected void configureFlowBuilderContext(MockFlowBuilderContext builderContext) {
 	    builderContext.registerBean("identityAction", identityAction);
@@ -115,21 +117,21 @@ public class UserAssociationCreationFlowTests extends AbstractFlowTest {
 	// locals
 	
 	private IdentityActionImpl identityAction;
-	private UserMgr userMgr;
+	private IdentityMgr identityMgr;
 	private Identity identity;
 	
 	@Override
 	protected void doSetup() {
 		identity = new Identity();
 		identityAction = new IdentityActionImpl();
-		userMgr = EasyMock.createMock(UserMgr.class);
-		identityAction.setUserMgr(userMgr);
+		identityMgr = EasyMock.createMock(IdentityMgr.class);
+		identityAction.setIdentityMgr(identityMgr);
 		identityAction.setActionNamingConventionStrategy(createActionNamingConventionStrategy("identity"));
 	}
 	
 	@Override
 	protected void doTearDown() {
-		EasyMock.reset(userMgr);
+		EasyMock.reset(identityMgr);
 	}
 
 }

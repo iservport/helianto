@@ -40,25 +40,25 @@ public class CountryFilterAdapter extends AbstractRootFilterAdapter<Country> {
 	 * Filter reset.
 	 */
 	public void reset() {
-		getFilter().setCountryCode("");
-		getFilter().setCountryName("");
+		getForm().setCountryCode("");
+		getForm().setCountryName("");
 	}
 
 	/**
 	 * Selection criterion.
 	 */
 	public boolean isSelection() {
-		return getFilter().getCountryCode().length()>0;
+		return getForm().getCountryCode().length()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("countryCode", getFilter().getCountryCode(), mainCriteriaBuilder);
+		appendEqualFilter("countryCode", getForm().getCountryCode(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("countryName", getFilter().getCountryName(), mainCriteriaBuilder);
+		appendLikeFilter("countryName", getForm().getCountryName(), mainCriteriaBuilder);
 	}
 
 }

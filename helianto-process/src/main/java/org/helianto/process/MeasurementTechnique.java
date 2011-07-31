@@ -29,6 +29,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.core.TrunkEntity;
 import org.helianto.core.Unit;
 
 /**
@@ -42,29 +43,7 @@ import org.helianto.core.Unit;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "measurementTechniqueCode"})}
 )
 @Inheritance(strategy = InheritanceType.JOINED)
-public class MeasurementTechnique implements java.io.Serializable {
-
-    /**
-     * <code>MeasurementTechnique</code> factory.
-     * 
-     * @param entity
-     * @param measurementTechniqueCode
-     */
-    public static MeasurementTechnique measurementTechniqueFactory(Entity entity, String measurementTechniqueCode) {
-        return measurementTechniqueFactory(MeasurementTechnique.class, entity, measurementTechniqueCode);
-    }
-
-    /**
-     * <code>MeasurementTechnique</code> factory.
-     * 
-     * @param unit
-     * @param measurementTechniqueCode
-     */
-    public static MeasurementTechnique measurementTechniqueFactory(Unit unit, String measurementTechniqueCode) {
-    	MeasurementTechnique measurementTechnique = measurementTechniqueFactory(MeasurementTechnique.class, unit.getEntity(), measurementTechniqueCode);
-    	measurementTechnique.setUnit(unit);
-    	return measurementTechnique;
-    }
+public class MeasurementTechnique implements TrunkEntity {
 
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -73,10 +52,39 @@ public class MeasurementTechnique implements java.io.Serializable {
     private String measurementTechniqueName;
     private Unit unit;
 
-    /** default constructor */
+    /**
+     * Default constructor.
+     */
     public MeasurementTechnique() {
+    	setMeasurementTechniqueName("");
     }
 
+    /**
+     * Key constructor.
+     * 
+     * @param entity
+     * @param measurementTechniqueCode
+     */
+    public MeasurementTechnique(Entity entity, String measurementTechniqueCode) {
+    	this();
+    	setEntity(entity);
+    	setMeasurementTechniqueCode(measurementTechniqueCode);
+    }
+
+    /**
+     * Unit constructor.
+     * 
+     * @param unit
+     * @param measurementTechniqueCode
+     */
+    public MeasurementTechnique(Unit unit, String measurementTechniqueCode) {
+    	this(unit.getEntity(), measurementTechniqueCode);
+    	setUnit(unit);
+    }
+
+    /**
+     * Primary key.
+     */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
@@ -140,24 +148,6 @@ public class MeasurementTechnique implements java.io.Serializable {
         this.measurementTechniqueName = measurementTechniqueName;
     }
     
-    /**
-     * <code>MeasurementTechnique</code> factory.
-     * 
-     * @param clazz
-     * @param measurementTechniqueCode
-     */
-    public static <T extends MeasurementTechnique> T measurementTechniqueFactory(Class<T> clazz, Entity entity, String measurementTechniqueCode) {
-        T measurementTechnique = null;
-        try {
-        	measurementTechnique = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create document of class "+clazz);
-        }
-        measurementTechnique.setEntity(entity);
-        measurementTechnique.setMeasurementTechniqueCode(measurementTechniqueCode);
-        return measurementTechnique;
-    }
-
     /**
      * toString
      * @return String

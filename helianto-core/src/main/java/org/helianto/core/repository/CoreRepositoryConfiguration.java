@@ -24,7 +24,11 @@ import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
+import org.helianto.core.PersonalAddress;
 import org.helianto.core.Province;
+import org.helianto.core.PublicAddress;
+import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntityKey;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
@@ -32,6 +36,7 @@ import org.helianto.core.Unit;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.UserRequest;
 import org.helianto.core.UserRole;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -91,6 +96,22 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	@Bean
 	public FilterDao<Identity> identityDao() {
 		return getFilterDao(Identity.class, "principal");
+	}
+
+	/**
+	 * Address database data access.
+	 */
+	@Bean
+	public FilterDao<PublicAddress> publicAddressDao() {
+		return getFilterDao(PublicAddress.class, "operator", "postalCode");
+	}
+
+	/**
+	 * Personal address access.
+	 */
+	@Bean
+	public FilterDao<PersonalAddress> personalAddressDao() {
+		return getFilterDao(PersonalAddress.class, "identity", "addressType");
 	}
 
 	/**
@@ -187,6 +208,30 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	@Bean
 	public FilterDao<UserRole> userRoleDao() {
 		return getFilterDao(UserRole.class, "userGroup", "service", "serviceExtension");
+	}
+
+	/**
+	 * User request data access.
+	 */
+	@Bean
+	public FilterDao<UserRequest> userRequestDao() {
+		return getFilterDao(UserRequest.class, "userGroup", "internalNumber");
+	}
+	
+	/**
+	 * Public entity data access.
+	 */
+	@Bean
+	public FilterDao<PublicEntity> publicEntityDao() {
+		return getFilterDao(PublicEntity.class, "operator", "entity", "class");
+	}
+
+	/**
+	 * Public entity key data access.
+	 */
+	@Bean
+	public FilterDao<PublicEntityKey> publicEntityKeyDao() {
+		return getFilterDao(PublicEntityKey.class, "publicEntity", "keyType");
 	}
 
 }

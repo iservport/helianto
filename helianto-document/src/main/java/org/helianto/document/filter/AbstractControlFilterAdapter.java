@@ -16,18 +16,16 @@
 package org.helianto.document.filter;
 
 
-import java.util.Date;
-
+import org.helianto.core.Controllable;
 import org.helianto.core.filter.base.AbstractFilter;
-import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
-import org.helianto.document.Controlable;
 
 /**
  * Base class to control filters.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-public abstract class AbstractControlFilterAdapter<T extends Controlable> extends AbstractSequenceFilterAdapterDecorator<T> {
+public abstract class AbstractControlFilterAdapter<T extends Controllable> extends org.helianto.core.filter.base.AbstractControlFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -48,21 +46,6 @@ public abstract class AbstractControlFilterAdapter<T extends Controlable> extend
 	 */
 	public AbstractControlFilterAdapter(T filter, AbstractFilter decoratedFilter) {
 		super(filter, decoratedFilter);
-	}
-	
-	/**
-	 * Field name.
-	 */
-	public String getDateFieldName() {
-		return "nextCheckDate";
-	}
-	
-	/**
-	 * Next check date.
-	 */
-	@Override
-	public Date getToDate() {
-		return getFilter().getNextCheckDate();
 	}
 	
 }

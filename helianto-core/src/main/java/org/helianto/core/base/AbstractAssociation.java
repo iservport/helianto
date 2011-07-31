@@ -35,24 +35,6 @@ import org.helianto.core.NaturalKeyInfo;
 @MappedSuperclass
 public abstract class AbstractAssociation<P, C> implements Association<P, C>, Serializable, NaturalKeyInfo, Comparable<AbstractAssociation<P,C>> {
 	
-    /**
-     * Internal factory method.
-     * 
-     * @param parent
-     * @param child
-     */
-    protected static <P, C> AbstractAssociation<P, C> associationFactory(Class<? extends AbstractAssociation<P, C>> clazz, P parent, C child) {
-    	AbstractAssociation<P, C> association;
-		try {
-			association = clazz.newInstance();
-	    	association.setChild(child);
-	    	association.setParent(parent);
-	        return association;
-		} catch (Exception e) {
-			throw new RuntimeException("Unable to create association", e);
-		}
-    }
-    
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private int version;

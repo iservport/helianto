@@ -26,6 +26,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.core.TrunkEntity;
 /**
  * Represents accounts.  
  * 
@@ -35,7 +36,7 @@ import org.helianto.core.Entity;
 @Table(name="prtnr_account",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "accountCode"})}
 )
-public class Account implements java.io.Serializable {
+public class Account implements TrunkEntity {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -77,7 +78,7 @@ public class Account implements java.io.Serializable {
     /**
      * Entity getter.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;

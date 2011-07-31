@@ -46,11 +46,11 @@ public abstract class AbstractNumberFilterAdapterDecorator <T extends Numerable>
 	}
 	
 	@Override
-	public boolean isSelection() { return getFilter().getPublicNumber()>0; }
+	public boolean isSelection() { return getForm().getPublicNumber()>0; }
 	
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("publicNumber", getFilter().getPublicNumber(), mainCriteriaBuilder);
+		appendEqualFilter("publicNumber", getForm().getPublicNumber(), mainCriteriaBuilder);
 	}
 	
 	@Override

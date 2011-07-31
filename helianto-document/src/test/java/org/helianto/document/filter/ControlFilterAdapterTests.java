@@ -21,7 +21,7 @@ import java.util.Date;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.document.base.AbstractControl;
+import org.helianto.document.base.AbstractPrivateControl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,24 +32,24 @@ import org.junit.Test;
  */
 public class ControlFilterAdapterTests {
 	
-	private AbstractControlFilterAdapter<AbstractControl> controlFilter;
+	private AbstractControlFilterAdapter<AbstractPrivateControl> controlFilter;
 	private Entity entity;
 	
 	@Test
 	public void empty() {
-		controlFilter.getFilter().setNextCheckDate(null);
+		controlFilter.getForm().setNextCheckDate(null);
 		assertEquals("alias.entity.id = 1 ", controlFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void selection() {
-		controlFilter.getFilter().setInternalNumber(1);
+		controlFilter.getForm().setInternalNumber(1);
 		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", controlFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void toNextCheckDate() {
-		controlFilter.getFilter().setNextCheckDate(new Date(1000l));
+		controlFilter.getForm().setNextCheckDate(new Date(1000l));
 		assertEquals("alias.entity.id = 1 AND (alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ", controlFilter.createCriteriaAsString());
 	}
 	
@@ -58,11 +58,10 @@ public class ControlFilterAdapterTests {
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
-		controlFilter = new AbstractControlFilterAdapter<AbstractControl>(new AbstractControl() {
+		controlFilter = new AbstractControlFilterAdapter<AbstractPrivateControl>(new AbstractPrivateControl() {
 			public String getInternalNumberKey() { return "KEY"; }
 			public Entity getEntity() { return entity; }
 			}) {
-			public void reset() { }
 		};
 	}
 	

@@ -27,9 +27,10 @@ import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
+public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> implements ParentFilter {
 	
 	private static final long serialVersionUID = 1L;
+	private Category parent;
 	private CategoryGroup categoryGroup;
 	
 	/**
@@ -84,6 +85,26 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> {
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
     	appendEqualFilter("unitCode", getForm().getUnitCode(), mainCriteriaBuilder);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Category getParent() {
+		return parent;
+	}
+	public void setParent(Category parent) {
+		this.parent = parent;
+	}
+	
+	public long getParentId() {
+		if (getParent()!=null) {
+			return getParent().getId();
+		}
+		return 0;
+	}
+	
+	@Override
+	protected StringBuilder getParentName() {
+		return new StringBuilder("category");
 	}
 
 	/**

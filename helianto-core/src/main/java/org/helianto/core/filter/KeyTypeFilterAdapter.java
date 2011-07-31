@@ -37,17 +37,17 @@ public class KeyTypeFilterAdapter extends AbstractRootFilterAdapter<KeyType> {
 	
 	@Override
 	public boolean isSelection() {
-		return getFilter().getKeyCode().length()>0;
+		return getForm().getKeyCode().length()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("keyCode", getFilter().getKeyCode(), mainCriteriaBuilder);		
+		appendEqualFilter("keyCode", getForm().getKeyCode(), mainCriteriaBuilder);		
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { 
-		appendLikeFilter("keyName", getFilter().getKeyName(), mainCriteriaBuilder);
+		appendLikeFilter("keyName", getForm().getKeyName(), mainCriteriaBuilder);
 	}
 	
 }

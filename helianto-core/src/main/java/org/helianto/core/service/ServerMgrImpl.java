@@ -56,7 +56,7 @@ public class ServerMgrImpl  implements ServerMgr {
     public Identity findOrCreateIdentity(String principal) {
         Identity identity = identityDao.findUnique(principal);
         if (identity==null) {
-            identity = Identity.identityFactory(principal, principal);
+            identity = new Identity(principal, principal);
             identityDao.persist(identity);
             logger.debug("Persisted {}", identity);
         } else {

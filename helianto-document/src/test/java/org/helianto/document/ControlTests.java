@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.base.AbstractControl;
+import org.helianto.document.base.AbstractPrivateControl;
 import org.junit.Test;
 
 /**
@@ -19,12 +19,12 @@ public class ControlTests {
 	@Test
 	public void equality() {
 		Entity entity = EntityTestSupport.createEntity();
-		AbstractControl control = new AbstractControl() {
+		AbstractPrivateControl control = new AbstractPrivateControl() {
 			public String getInternalNumberKey() { return "KEY"; }
 		};
 		assertFalse(control.equals(null));
 		
-		AbstractControl other = new AbstractControl() {
+		AbstractPrivateControl other = new AbstractPrivateControl() {
 			public String getInternalNumberKey() { return "KEY"; }
 		};
 		assertTrue(control.equals(other));

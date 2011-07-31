@@ -37,7 +37,7 @@ public class TaxFilterAdapter extends AbstractFilterAdapter<Tax> {
 	
 	@Override
 	public boolean isSelection() {
-		return getFilter().getKeyType()!=null;
+		return getForm().getKeyType()!=null;
 	}
 
 	public void reset() { }
@@ -45,14 +45,14 @@ public class TaxFilterAdapter extends AbstractFilterAdapter<Tax> {
 	@Override
 	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
-		if (getFilter().getProcessAgreement()!=null) {
-			appendEqualFilter("processAgreement.id", getFilter().getProcessAgreement().getId(), mainCriteriaBuilder);
+		if (getForm().getProcessAgreement()!=null) {
+			appendEqualFilter("processAgreement.id", getForm().getProcessAgreement().getId(), mainCriteriaBuilder);
 		}
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("keyType.id", getFilter().getKeyType().getId(), mainCriteriaBuilder);
+		appendEqualFilter("keyType.id", getForm().getKeyType().getId(), mainCriteriaBuilder);
 	}
 
 	@Override

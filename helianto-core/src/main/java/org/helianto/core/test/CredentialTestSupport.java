@@ -30,7 +30,7 @@ public class CredentialTestSupport {
         } catch(ArrayIndexOutOfBoundsException e) {
             identity = IdentityTestSupport.createIdentity();
         }
-        Credential credential = Credential.credentialFactory(identity, DomainTestSupport.getNonRepeatableStringValue(testKey, 20));
+        Credential credential = new Credential(identity, DomainTestSupport.getNonRepeatableStringValue(testKey, 20));
         return credential;
     }
 

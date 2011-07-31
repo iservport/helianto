@@ -6,17 +6,18 @@
 	<display-name>helianto-admin</display-name>
 	
     <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring/root-context.xml</param-value>
+    </context-param>
+    <context-param>
         <param-name>webAppRootKey</param-name>
         <param-value>helianto.root</param-value>
     </context-param>
     <context-param>
         <param-name>log4jConfigLocation</param-name>
-        <param-value>/WEB-INF/classes/log4j.xml</param-value>
+        <param-value>/WEB-INF/log4j.xml</param-value>
     </context-param>
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/helianto-app.xml</param-value>
-    </context-param>
+    
 	<listener>
 		<listener-class>
 			org.springframework.web.util.Log4jConfigListener</listener-class>
@@ -31,18 +32,22 @@
 		</listener-class>
 	</listener>
 
-	<!--
-			Dispatcher Servlet
-	-->
+	<!-- The front controller of this Spring Web application, responsible for handling all application requests -->
 	<servlet>
-		<servlet-name>helianto</servlet-name>
+		<servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<!-- Map all /a requests to the DispatcherServlet for handling -->
 	<servlet-mapping>
-		<servlet-name>helianto</servlet-name>
-		<url-pattern>/helianto/*</url-pattern>
+		<servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+		<url-pattern>/a/*</url-pattern>
 	</servlet-mapping>
+
 
 	<!-- 
 	    Serves static resource content from .jar files such as spring-js.jar 

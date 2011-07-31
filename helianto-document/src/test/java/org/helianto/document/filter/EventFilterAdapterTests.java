@@ -39,19 +39,19 @@ public class EventFilterAdapterTests {
 	
 	@Test
 	public void empty() {
-		eventFilter.getFilter().setIssueDate(null);
+		eventFilter.getForm().setIssueDate(null);
 		assertEquals("alias.entity.id = 1 ", eventFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void selection() {
-		eventFilter.getFilter().setInternalNumber(1);
+		eventFilter.getForm().setInternalNumber(1);
 		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", eventFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void toIssueDate() {
-		eventFilter.getFilter().setIssueDate(new Date(1000l));
+		eventFilter.getForm().setIssueDate(new Date(1000l));
 		assertEquals("alias.entity.id = 1 AND (alias.issueDate >= '1969-12-24 23:59:59' AND alias.issueDate < '1969-12-31 21:00:01' ) ", eventFilter.createCriteriaAsString());
 	}
 	

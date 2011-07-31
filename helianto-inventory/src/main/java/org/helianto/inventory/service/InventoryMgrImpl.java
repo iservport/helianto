@@ -62,7 +62,9 @@ public class InventoryMgrImpl implements InventoryMgr {
 	
 	public ProcessAgreement storeProcessAgreement(ProcessAgreement agreement) {
 		sequenceMgr.validateInternalNumber(agreement);
-		return agreementDao.merge(agreement);
+		agreementDao.saveOrUpdate(agreement);
+		agreementDao.flush();
+		return agreement;
 	}
 	
 	public List<Tax> findTaxes(Filter filter) {
@@ -75,6 +77,7 @@ public class InventoryMgrImpl implements InventoryMgr {
 	
 	public Tax storeTax(Tax tax) {
 		taxDao.saveOrUpdate(tax);
+		taxDao.flush();
 		return tax;
 	}
 

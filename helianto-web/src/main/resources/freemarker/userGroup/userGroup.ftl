@@ -1,7 +1,7 @@
 <div id="panel">
 
 	<div id="toolbar">
-		<@anchor "editUserGroup">Edit</@anchor> 
+		<@anchor "edit">Edit</@anchor> 
 		<@anchor "toSelection"><<</@anchor>
 	</div>
 

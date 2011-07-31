@@ -20,7 +20,9 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
+import org.helianto.core.AddressType;
 import org.helianto.core.Identity;
 
 /**
@@ -31,22 +33,6 @@ import org.helianto.core.Identity;
 @javax.persistence.Entity
 @DiscriminatorValue("C")
 public class Contact extends Address {
-
-    /**
-     * Factory method.
-     * 
-     * @param partnerRegistry
-     * @param sequence
-     * @param identity
-     */
-    public static Contact contactFactory(PrivateEntity partnerRegistry, int sequence, Identity identity) {
-        Contact contact = new Contact();
-        contact.setPartnerRegistry(partnerRegistry);
-        contact.setSequence(sequence);
-        contact.setIdentity(identity);
-        partnerRegistry.getAddresses().add(contact);
-        return contact;
-    }
 
 	private static final long serialVersionUID = 1L;
 	private Identity identity;
@@ -66,13 +52,33 @@ public class Contact extends Address {
     }
 
     /** 
-     * Preferred constructor.
+     * Key constructor.
      * 
      * @param partnerRegistry
+     * @param sequence
 	 */
-    public Contact(PrivateEntity partnerRegistry) {
+    public Contact(PrivateEntity partnerRegistry, int sequence) {
     	this();
     	setPartnerRegistry(partnerRegistry);
+    	setSequence(sequence);
+    }
+    
+    /** 
+     * Identity constructor.
+     * 
+     * @param partnerRegistry
+     * @param sequence
+     * @param identity
+	 */
+    public Contact(PrivateEntity partnerRegistry, int sequence, Identity identity) {
+    	this(partnerRegistry, sequence);
+    	setIdentity(identity);
+    }
+    
+    @Transient
+    public void reset() {
+        setAddressType(' ');
+        setPrivacyLevel(' ');
     }
     
     /**

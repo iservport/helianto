@@ -21,7 +21,7 @@ public class FilterAdapterTests {
 		
 		FirstFilter filter1 = new FirstFilter(user);
 		assertEquals("alias.alias = 'teste' AND alias.userState = 'A' ", filter1.createCriteriaAsString());
-		filter1.getFilter().setUserState('B');
+		filter1.getForm().setUserState('B');
 		assertEquals("alias.alias = 'teste' AND alias.userState = 'B' ", filter1.createCriteriaAsString());
 		SecondFilter filter2 = new SecondFilter(user);
 		assertEquals("alias.type = 'I' ", filter2.createCriteriaAsString());
@@ -47,8 +47,8 @@ public class FilterAdapterTests {
 
 		@Override
 		public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-			appendEqualFilter("alias", getFilter().getUserKey(), mainCriteriaBuilder);
-			appendEqualFilter("userState", getFilter().getUserState(), mainCriteriaBuilder);
+			appendEqualFilter("alias", getForm().getUserKey(), mainCriteriaBuilder);
+			appendEqualFilter("userState", getForm().getUserState(), mainCriteriaBuilder);
 			
 		}
 
@@ -74,7 +74,7 @@ public class FilterAdapterTests {
 
 		@Override
 		public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-			appendEqualFilter("type", getFilter().getUserType(), mainCriteriaBuilder);
+			appendEqualFilter("type", getForm().getUserType(), mainCriteriaBuilder);
 			
 		}
 

@@ -18,45 +18,36 @@ import org.junit.Test;
  */
 public class CredentialTests {
     
-    /**
-     * Test <code>Credential</code> static factory method.
-     */
 	@Test
-    public void credentialFactory() {
+    public void passwordConstructor() {
         Identity identity = new Identity();
         
-        Credential credential = Credential.credentialFactory(identity, "TEST");
+        Credential credential = new Credential(identity, "TEST");
         
         assertSame(identity, credential.getIdentity());
         assertSame("TEST", credential.getPassword());
         assertEquals("", credential.getVerifyPassword());
         assertFalse(credential.isPasswordDirty());
         assertNotNull(credential.getExpirationDate());
-        assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
+        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
         
     }
     
-    /**
-     * Test <code>Credential</code> static factory method.
-     */
 	@Test
-    public void credentialFactoryNoIdentity() {
-        Credential credential = Credential.credentialFactory("TEST");
+    public void principalConstructor() {
+        Credential credential = new Credential("PRINCIPAL", "TEST");
         
-        assertEquals("", credential.getIdentity().getPrincipal());
+        assertEquals("principal", credential.getIdentity().getPrincipal());
         assertSame("TEST", credential.getPassword());
         assertEquals("", credential.getVerifyPassword());
         assertFalse(credential.isPasswordDirty());
         assertNotNull(credential.getExpirationDate());
-        assertEquals(ActivityState.SUSPENDED.getValue(), credential.getCredentialState());
+        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
         assertEquals(Encription.PLAIN_PASSWORD.getValue(), credential.getEncription());
         
     }
     
-    /**
-     * Test <code>Credential</code> static factory method.
-     */
 	@Test
     public void passwordFactory() {
         String password = Credential.passwordFactory();
@@ -70,7 +61,7 @@ public class CredentialTests {
     
 	@Test
     public void credentialExpired() {
-    	Credential credential = Credential.credentialFactory("");
+    	Credential credential = new Credential();
     	assertNotNull(credential.getExpirationDate());
     	Date now = new Date();
     	credential.setExpirationDate(new Date(now.getTime()-1));
@@ -79,7 +70,7 @@ public class CredentialTests {
     
 	@Test
     public void credentialNeverExpires() {
-    	Credential credential = Credential.credentialFactory("");
+    	Credential credential = new Credential();
     	credential.setExpirationDate(null);
     	assertFalse(credential.isExpired());
     }
@@ -87,7 +78,7 @@ public class CredentialTests {
 	@Test
     public void credentialExpiredLongTimeAgo() {
     	Date expirationDate = new Date(1000);
-    	Credential credential = Credential.credentialFactory("");
+    	Credential credential = new Credential();
     	credential.setExpirationDate(expirationDate);
     	assertTrue(credential.isExpired());
     }
@@ -95,7 +86,7 @@ public class CredentialTests {
 	@Test
     public void credentialNotExpired() {
     	Date expirationDate = new Date(Long.MAX_VALUE);
-    	Credential credential = Credential.credentialFactory("");
+    	Credential credential = new Credential();
     	credential.setExpirationDate(expirationDate);
     	assertFalse(credential.isExpired());
     }
@@ -117,9 +108,6 @@ public class CredentialTests {
         assertFalse(credential.isPasswordDirty());
     }
     
-    /**
-     * Test <code>Credential</code> password verification.
-     */
 	@Test
     public void verifyPasswordError() {
         Credential credential = new Credential();
@@ -134,14 +122,11 @@ public class CredentialTests {
         assertTrue(credential.isPasswordDirty());
     }
     
-    /**
-     * Test <code>Credential</code> equals() method.
-     */
 	@Test
     public void credentialEquals() {
         Identity identity = new Identity();
         
-        Credential credential = Credential.credentialFactory(identity, "");
+        Credential credential = new Credential(identity, "");
         Credential copy = (Credential) DomainTestSupport.minimalEqualsTest(credential);
         
         copy.setIdentity(null);

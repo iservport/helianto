@@ -84,6 +84,7 @@ public class PostInstallationMgrImplTests {
 	private BasicDao<UserGroup> userGroupDao;
 	private BasicDao<UserRole> userRoleDao;
 	private ProvinceResourceParserStrategy provinceResourceParserStrategy;
+	private IdentityMgr identityMgr;
 	private UserMgr userMgr;
     
     @SuppressWarnings("unchecked")
@@ -97,6 +98,7 @@ public class PostInstallationMgrImplTests {
         userGroupDao = createMock(FilterDao.class);
         userRoleDao = createMock(FilterDao.class);
         provinceResourceParserStrategy = createMock(ProvinceResourceParserStrategy.class);
+        identityMgr = createMock(IdentityMgr.class);
         userMgr = createMock(UserMgr.class);
         postInstallationMgr = new PostInstallationMgrImpl();
         postInstallationMgr.setOperatorDao(operatorDao);
@@ -107,6 +109,7 @@ public class PostInstallationMgrImplTests {
         postInstallationMgr.setUserGroupDao(userGroupDao);
         postInstallationMgr.setUserRoleDao(userRoleDao);
         postInstallationMgr.setProvinceResourceParserStrategy(provinceResourceParserStrategy);
+        postInstallationMgr.setIdentityMgr(identityMgr);
         postInstallationMgr.setUserMgr(userMgr);
     }
     
@@ -120,6 +123,7 @@ public class PostInstallationMgrImplTests {
         reset(userGroupDao);
         reset(userRoleDao);
         reset(provinceResourceParserStrategy);
+        reset(identityMgr);
         reset(userMgr);
     }
     

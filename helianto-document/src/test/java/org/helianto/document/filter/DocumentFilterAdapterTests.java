@@ -29,47 +29,47 @@ public class DocumentFilterAdapterTests {
 	
 	@Test
 	public void select() {
-		target.setDocCode("CODE");
+		form.setDocCode("CODE");
 		assertEquals(C1+C2, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void docName() {
-		target.setDocName("NAME");
+		form.setDocName("NAME");
 		assertEquals(C1+C3+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void priority() {
-		target.setPriority('0');
+		form.setPriority('0');
 		assertEquals(C1+C4+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void builderCode() {
-		filter = new DocumentFilterAdapter<Document>(target);
+		filter = new DocumentFilterAdapter<Document>(form);
 		((DocumentFilterAdapter<?>) filter).setBuilderCode("CODE");
 		assertEquals(C1+C5+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void contentType() {
-		filter = new DocumentFilterAdapter<Document>(target);
+		filter = new DocumentFilterAdapter<Document>(form);
 		((DocumentFilterAdapter<?>) filter).setContentType('A');
 		assertEquals(C1+C6+OB, filter.createCriteriaAsString());
 	}
 	
 	// locals
 	
-	private Document target;
+	private Document form;
 	private AbstractDocumentFilterAdapter<Document> filter;
 	
 	@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 	@Before
 	public void setUp() {
 		Entity entity = EntityTestSupport.createEntity();
-		target = new Document(entity, "");
-		filter = new AbstractDocumentFilterAdapter(target) {
+		form = new Document(entity, "");
+		filter = new AbstractDocumentFilterAdapter(form) {
 		};
 	}
 

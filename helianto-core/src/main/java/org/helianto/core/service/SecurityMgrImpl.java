@@ -151,7 +151,6 @@ public class SecurityMgrImpl implements SecurityMgr {
 
     private FilterDao<Identity> identityDao;
     private FilterDao<UserGroup> userGroupDao;
-    private FilterDao<UserRole> userRoleDao;
     private FilterDao<Credential> credentialDao;
 
     @Resource(name="identityDao")
@@ -162,11 +161,6 @@ public class SecurityMgrImpl implements SecurityMgr {
     @Resource(name="userGroupDao")
     public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
 		this.userGroupDao = userGroupDao;
-	}
-
-    @Resource(name="userRoleDao")
-    public void setUserRoleDao(FilterDao<UserRole> userRoleDao) {
-		this.userRoleDao = userRoleDao;
 	}
 
     @Resource(name="credentialDao")

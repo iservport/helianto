@@ -24,9 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.Account;
-import org.helianto.partner.filter.classic.AccountFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class AccountMgrImplTests {
     
 	@Test
     public void findAccounts() {
-    	AccountFilter accountFilter = new AccountFilter();
+    	Filter accountFilter = new TestingFilter();
     	List<Account> accountList = new ArrayList<Account>();
     	
     	expect(accountDao.find(accountFilter)).andReturn(accountList);

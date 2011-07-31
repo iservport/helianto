@@ -21,6 +21,7 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.AddressType;
 import org.helianto.core.Category;
 import org.helianto.core.Country;
 import org.helianto.core.Credential;
@@ -29,7 +30,10 @@ import org.helianto.core.Identity;
 import org.helianto.core.InternalEnumerator;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
+import org.helianto.core.PersonalAddress;
 import org.helianto.core.Province;
+import org.helianto.core.PublicAddress;
+import org.helianto.core.PublicEntity;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
@@ -38,6 +42,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
+import org.helianto.core.UserRequest;
 import org.helianto.core.UserRole;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
@@ -76,9 +81,13 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 	@Resource FilterDao<Credential> credentialDao;
 	@Resource FilterDao<UserLog> userLogDao;
 	@Resource FilterDao<Identity> identityDao;
+	@Resource FilterDao<PublicAddress> publicAddressDao;
+	@Resource FilterDao<PersonalAddress> personalAddressDao;
 	@Resource FilterDao<Server> serverDao;
 	@Resource FilterDao<UserRole> userRoleDao;
 	@Resource FilterDao<EntityPreference> entityPreferenceDao;	
+	@Resource FilterDao<UserRequest> userRequestDao;
+	@Resource FilterDao<PublicEntity> publicEntityDao;
 	
 	@Test
 	public void core() {
@@ -141,6 +150,14 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		assertEquals(identity, managedIdentity);
 		assertEquals(photo, managedIdentity.getPhoto());
 		
+		PublicAddress publicAddress = new PublicAddress(entity.getOperator(), "POSTALCODE");
+		publicAddressDao.saveOrUpdate(publicAddress);
+		assertEquals(publicAddress, publicAddressDao.findUnique(entity.getOperator(), "POSTALCODE"));
+		
+		PersonalAddress personalAddress = new PersonalAddress(identity, AddressType.PERSONAL);
+		personalAddressDao.saveOrUpdate(personalAddress);
+		assertEquals(personalAddress, personalAddressDao.findUnique(identity, AddressType.PERSONAL.getValue()));
+		
 		User user = UserTestSupport.createUser(entity, identity);
 		userGroupDao.saveOrUpdate(user);
 		Date lastEvent = new Date();
@@ -166,6 +183,14 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		EntityPreference entityPreference = EntityPreference.entityPreferenceFactory(entity, keyType);
 		entityPreferenceDao.saveOrUpdate(entityPreference);
 		assertEquals(entityPreference, entityPreferenceDao.findUnique(entityPreference.getEntity(), entityPreference.getKeyType()));
+
+		UserRequest loginRequest = new UserRequest(userGroup, Long.MAX_VALUE);
+		userRequestDao.saveOrUpdate(loginRequest);
+		assertEquals(loginRequest, userRequestDao.findUnique(userGroup, Long.MAX_VALUE));
+		
+		PublicEntity publicEntity = new PublicEntity(entity);
+		publicEntityDao.saveOrUpdate(publicEntity);
+		assertEquals(publicEntity, publicEntityDao.findUnique(entity.getOperator(), entity, 'P'));
 
 	}
 	

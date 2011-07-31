@@ -15,19 +15,25 @@
 
 package org.helianto.core;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.SecondaryTables;
@@ -51,33 +57,6 @@ import javax.persistence.UniqueConstraint;
 })
 public class Identity implements java.io.Serializable {
 
-    /**
-     * <code>Identity</code> factory.
-     * 
-     * @param principal
-     */
-    public static Identity identityFactory(String principal) {
-        return identityFactory(principal, "");
-    }
-
-    /**
-     * <code>Identity</code> factory with current system date, <code>NOT_ADDRESSABLE</code>
-     * and flagged to be notified only <code>BY_REQUEST</code>.
-     *
-     * @param principal
-     * @param optionalAlias
-     * 
-     * @see IdentityType
-     * @see Notification
-     */
-    public static Identity identityFactory(String principal, String optionalAlias) {
-        Identity identity = new Identity();
-        
-        identity.setPrincipal(principal);
-        identity.setOptionalAlias(optionalAlias);
-        return identity;
-    }
-
     private static final long serialVersionUID = 1L;
     private long id;
     private String principal;
@@ -88,7 +67,8 @@ public class Identity implements java.io.Serializable {
     private char notification;
 	private byte[] photo;
     private String multipartFileContentType;
-
+    private List<Phone> phones = new ArrayList<Phone>();
+    private List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
     private Set<Credential> credentials = new HashSet<Credential>();
 
     /** 
@@ -205,7 +185,7 @@ public class Identity implements java.io.Serializable {
     }
     
     /**
-     * <<Transient>> Safe identity name.
+     * <<Transient>> Safe identity name getter.
      */
     @Transient
     public String getIdentityName() {
@@ -216,6 +196,39 @@ public class Identity implements java.io.Serializable {
     	    .append(" ")
     	    .append(getPersonalData().getLastName()).toString();
     }
+    
+    /**
+     * <<Transient>> Safe gender getter.
+     */
+    @Transient
+    public char getGender() {
+    	if (getPersonalData()==null) {
+    		return Gender.NOT_SUPPLIED.getValue();
+    	}
+		return getPersonalData().getGender();
+	}
+    
+    /**
+     * <<Transient>> Safe appellation getter.
+     */
+    @Transient
+    public char getAppellation() {
+    	if (getPersonalData()==null) {
+    		return Appellation.NOT_SUPPLIED.getValue();
+    	}
+		return getPersonalData().getAppellation();
+	}
+    
+    /**
+     * <<Transient>> Safe birth date getter.
+     */
+    @Transient
+    public Date getBirthDate() {
+    	if (getPersonalData()==null) {
+    		return new Date(1000l);
+    	}
+		return getPersonalData().getBirthDate();
+	}
     
     /**
      * <<Transient>> Safe identity alias.
@@ -266,17 +279,6 @@ public class Identity implements java.io.Serializable {
     }
     
     /**
-     * A set of credentials.
-     */
-    @OneToMany(mappedBy="identity")
-    public Set<Credential> getCredentials() {
-		return credentials;
-	}
-    public void setCredentials(Set<Credential> credentials) {
-		this.credentials = credentials;
-	}
-    
-    /**
      * Identity photo.
      */
     @Basic(fetch=FetchType.LAZY)
@@ -300,6 +302,43 @@ public class Identity implements java.io.Serializable {
 		this.multipartFileContentType = multipartFileContentType;
 	}
 
+    /**
+     * A set of credentials.
+     */
+    @OneToMany(mappedBy="identity")
+    public Set<Credential> getCredentials() {
+		return credentials;
+	}
+    public void setCredentials(Set<Credential> credentials) {
+		this.credentials = credentials;
+	}
+    
+    /**
+     * List of phones.
+     */
+    @ElementCollection
+    @CollectionTable(name = "core_identityPhone", joinColumns = @JoinColumn(name = "identityId"))
+    @OrderColumn(name="sequence")
+    public List<Phone> getPhones() {
+		return phones;
+	}
+    public void setPhones(List<Phone> phones) {
+		this.phones = phones;
+	}
+    
+    /**
+     * List of contact infos.
+     */
+    @ElementCollection
+    @CollectionTable(name = "core_identityContact", joinColumns = @JoinColumn(name = "identityId"))
+    @OrderColumn(name="sequence")
+    public List<ContactInfo> getContactInfos() {
+		return contactInfos;
+	}
+    public void setContactInfos(List<ContactInfo> contactInfos) {
+		this.contactInfos = contactInfos;
+	}
+    
     /**
      * toString
      * @return String

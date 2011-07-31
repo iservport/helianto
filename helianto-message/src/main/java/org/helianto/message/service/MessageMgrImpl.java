@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 import org.helianto.core.Server;
 import org.helianto.core.filter.ServerFilterAdapter;
@@ -30,17 +31,20 @@ import org.helianto.message.mail.compose.PasswordConfirmationMailForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 /**
  * Default <code>MessageMgr</code> interface implementation.
  *  
  * @author Mauricio Fernandes de Castro
- * @deprecated
  */
 @Service("messageMgr")
 public class MessageMgrImpl implements MessageMgr {
 
+	/**
+	 * @deprecated
+	 */
     public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
 	    throws MessagingException {
 		ServerFilterAdapter filter = new ServerFilterAdapter(new Server());
@@ -50,11 +54,24 @@ public class MessageMgrImpl implements MessageMgr {
 		sender.send(mailMessageComposer.composeMessage("PASSWORD", mailForm));
 	}
     
+    public void send(String recipient, String sender, String subject, String htmlMessageBody)
+    		throws MessagingException {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		helper.setTo(recipient);
+		helper.setFrom(sender);
+		helper.setSubject(subject);
+		helper.setText(htmlMessageBody, true);
+		mailSender.send(message);
+		logger.info("Sent passwordConfirmation to {}", recipient);
+    }
+    
     // collabs
 
     private FilterDao<Server> serverDao;
     private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
+    private JavaMailSender mailSender;
     
     @Resource(name="serverDao")
     public void setServerDao(FilterDao<Server> serverDao) {
@@ -72,6 +89,11 @@ public class MessageMgrImpl implements MessageMgr {
         this.mailMessageComposer = mailMessageComposer;
     }
 
+    @Resource(name="mailSender")
+    public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+	
     private final Logger logger = LoggerFactory.getLogger(MessageMgrImpl.class);
 
 }

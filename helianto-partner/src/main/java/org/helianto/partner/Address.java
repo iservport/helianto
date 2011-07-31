@@ -26,7 +26,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.partner.base.AbstractAddress;
+import org.helianto.core.AddressType;
+import org.helianto.core.base.AbstractAddress;
 
 /**
  * Address.
@@ -45,18 +46,6 @@ import org.helianto.partner.base.AbstractAddress;
 @DiscriminatorValue("A")
 public class Address extends AbstractAddress implements Comparable<Address> {
 
-    /**
-     * Factory method.
-     * 
-     * @param partnerRegistry
-     * @param sequence
-     */
-    public static Address addressFactory(PrivateEntity partnerRegistry, int sequence) {
-        Address address = new Address(partnerRegistry);
-        address.setSequence(sequence);
-        return address;
-    }
-
     private static final long serialVersionUID = 1L;
     private PrivateEntity partnerRegistry;
     private int sequence;
@@ -68,18 +57,25 @@ public class Address extends AbstractAddress implements Comparable<Address> {
 	 */
     public Address() {
         super();
-        setAddressType(AddressType.MAIN.getValue());
-        setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
+        setAddressTypeAsEnum(AddressType.MAIN);
+        setPrivacyLevelAsEnum(PrivacyLevel.PUBLIC);
     }
     
     /** 
-     * Preferred constructor.
+     * Key constructor.
      * 
      * @param partnerRegistry
 	 */
-    public Address(PrivateEntity partnerRegistry) {
+    public Address(PrivateEntity partnerRegistry, int sequence) {
     	this();
     	setPartnerRegistry(partnerRegistry);
+    	setSequence(sequence);
+    }
+    
+    @Transient
+    public void reset() {
+        setAddressType(' ');
+        setPrivacyLevel(' ');
     }
     
     /**
@@ -124,7 +120,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
     public void setAddressType(char addressType) {
         this.addressType = addressType;
     }
-    public void setAddressType(AddressType addressType) {
+    public void setAddressTypeAsEnum(AddressType addressType) {
         this.addressType = addressType.getValue();
     }
 
@@ -136,6 +132,9 @@ public class Address extends AbstractAddress implements Comparable<Address> {
     }
     public void setPrivacyLevel(char privacyLevel) {
         this.privacyLevel = privacyLevel;
+    }
+    public void setPrivacyLevelAsEnum(PrivacyLevel privacyLevel) {
+        this.privacyLevel = privacyLevel.getValue();
     }
 
     /**

@@ -54,7 +54,7 @@ public class MeasurementTechniqueTestSupport {
 	 * @param measurementTechniqueCode
 	 */
 	public static MeasurementTechnique createMeasurementTechnique(Entity entity, String measurementTechniqueCode) {
-		MeasurementTechnique sample =  MeasurementTechnique.measurementTechniqueFactory(entity, measurementTechniqueCode);
+		MeasurementTechnique sample =  new MeasurementTechnique(entity, measurementTechniqueCode);
 		return sample;
 	}
 

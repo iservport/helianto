@@ -54,17 +54,17 @@ public class PrivateEntityFilterAdapter extends AbstractTrunkFilterAdapter<Priva
 	public void reset() { }
 
 	public boolean isSelection() {
-		return getFilter().getEntityAlias().length()>0;
+		return getForm().getEntityAlias().length()>0;
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("entityName", getFilter().getEntityName(), mainCriteriaBuilder);
+		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("entityAlias",getFilter(). getEntityAlias(), mainCriteriaBuilder);
+		appendEqualFilter("entityAlias",getForm(). getEntityAlias(), mainCriteriaBuilder);
 	}
 
 }

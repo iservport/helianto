@@ -42,9 +42,8 @@ public class CategoryMgrImpl implements CategoryMgr {
 	}
 
 	public Category storeCategory(Category category) {
-		Category managedCategory = categoryDao.merge(category);
-    	logger.debug("Stored category  "+managedCategory);
-    	return managedCategory;
+		categoryDao.saveOrUpdate(category);
+    	return category;
 	}
 
 	public void removeCategory(Category category) {
@@ -62,6 +61,7 @@ public class CategoryMgrImpl implements CategoryMgr {
     	category.setCategoryName(categoryName);
     	categoryDao.saveOrUpdate(category);
     	logger.debug("Category {} installed.", category);
+    	categoryDao.flush();
     	return category;
 	}
 

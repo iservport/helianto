@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.filter.base.AbstractControlFilterAdapter;
 import org.helianto.document.base.AbstractRecord;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +32,7 @@ import org.junit.Test;
  */
 public class RecordFilterAdapterTests {
 	
-	private AbstractRecordFilterAdapter<AbstractRecord> recordFilter;
+	private AbstractControlFilterAdapter<AbstractRecord> recordFilter;
 	private Entity entity;
 	
 	@Test
@@ -41,25 +42,25 @@ public class RecordFilterAdapterTests {
 	
 	@Test
 	public void selection() {
-		recordFilter.getFilter().setInternalNumber(1);
+		recordFilter.getForm().setInternalNumber(1);
 		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", recordFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void complete() {
-		recordFilter.getFilter().setComplete(50);
+		recordFilter.getForm().setComplete(50);
 		assertEquals("alias.entity.id = 1 AND alias.complete = 50 ", recordFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void completeZero() {
-		recordFilter.getFilter().setComplete(0);
+		recordFilter.getForm().setComplete(0);
 		assertEquals("alias.entity.id = 1 AND alias.complete = 0 ", recordFilter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void resolution() {
-		recordFilter.getFilter().setResolution('R');
+		recordFilter.getForm().setResolution('R');
 		assertEquals("alias.entity.id = 1 AND alias.resolution = 'R' ", recordFilter.createCriteriaAsString());
 	}
 	
@@ -68,11 +69,10 @@ public class RecordFilterAdapterTests {
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
-		recordFilter = new AbstractRecordFilterAdapter<AbstractRecord>(new AbstractRecord(' ') {
+		recordFilter = new AbstractControlFilterAdapter<AbstractRecord>(new AbstractRecord() {
 			public String getInternalNumberKey() { return "KEY"; }
 			public Entity getEntity() { return entity; }
 			}) {
-			public void reset() { }
 			@Override
 			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { 
 				super.doFilter(mainCriteriaBuilder);

@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project ${project.version}</name>
-	<version>0.3.0-20110525</version>
+	<version>0.3.0-RELEASE</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -131,31 +131,6 @@
 					<outputDirectory>dist</outputDirectory>
 				</configuration>
 			</plugin>
-			<!-- plugin>
-				<groupId>com.springsource.bundlor</groupId>
-				<artifactId>com.springsource.bundlor.maven</artifactId>
-				<version>1.0.0.BUILD-20090604.084525-64</version>
-				<configuration>
-					<manifestHeaders>
-<![CDATA[
-Bundle-ManifestVersion: 2
-Bundle-Version: 0.2.2
-Bundle-Vendor: The Helianto Project
-Application-TraceLevels: ${application.traceLevels}
-]]>
-					</manifestHeaders>
-					<failOnWarnings>false</failOnWarnings>
-				</configuration>
-				<executions>
-					<execution>
-						<id>bundlor</id>
-						<goals>
-							<goal>transform</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-				</executions>
-			</plugin-->
 		</plugins>
 	</build> 
 	<repositories>
@@ -199,6 +174,12 @@ Application-TraceLevels: ${application.traceLevels}
 			<name>SpringSource Enterprise Bundle Repository - External Library Releases</name>
 			<url>http://repository.springsource.com/maven/libraries/external</url>
 		</repository>
+		
+		<repository>
+            <id>JBoss Repo</id>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
+		
 	</repositories>	
 	<dependencies>
 		<!-- spring bundles -->
@@ -237,13 +218,7 @@ Application-TraceLevels: ${application.traceLevels}
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>org.springframework.security.config</artifactId>
 		    <version>${spring.security.version}</version>
-		</dependency>		<!--  
-		<dependency>
-			<groupId>org.springframework.ws</groupId>
-			<artifactId>org.springframework.ws.java5</artifactId>
-			<version>1.5.9.A</version>
 		</dependency>
-		-->
 		<dependency>
 		    <groupId>org.springframework.ws</groupId>
 		    <artifactId>org.springframework.ws</artifactId>
@@ -267,18 +242,19 @@ Application-TraceLevels: ${application.traceLevels}
 			<version>${spring.main.version}</version>
 		</dependency>
 		<!-- hibernate bundles -->
-		<dependency>
+		<!-- dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>org.hibernate.ejb-library</artifactId>
 			<type>libd</type>
-			<version>3.4.0.GA</version> 
-		</dependency>
+			<version>3.4.0.GA-A</version> 
+		</dependency -->
+		<!-- hibernate to use with jpa2 ???-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.5.3-Final</version>
+        </dependency>
 		<!-- javax bundles -->
-		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>com.springsource.javax.persistence</artifactId>
-			<version>2.0.0</version>
-		</dependency>
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>com.springsource.javax.transaction</artifactId>

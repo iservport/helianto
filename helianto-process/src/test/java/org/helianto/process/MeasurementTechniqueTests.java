@@ -1,8 +1,6 @@
 package org.helianto.process;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Unit;
@@ -18,28 +16,13 @@ import org.junit.Test;
 public class MeasurementTechniqueTests {
     
     /**
-     * Test <code>MeasurementTechnique</code> static factory method.
-     */
-	@Test
-    public void measurementTechniqueFactoryClass() {
-    	Unit unit = new Unit();
-
-    	MeasurementTechnique measurementTechnique = MeasurementTechnique.measurementTechniqueFactory(unit, "CODE");
-
-        assertTrue(measurementTechnique instanceof MeasurementTechnique);
-		assertSame(unit, measurementTechnique.getUnit());
-        assertEquals("CODE", measurementTechnique.getMeasurementTechniqueCode());
-        
-    }
-    
-    /**
      * Test <code>MeasurementTechnique</code> equals() method.
      */
 	@Test
     public void measurementTechniqueEquals() {
     	Unit unit = new Unit();
 
-    	MeasurementTechnique measurementTechnique = MeasurementTechnique.measurementTechniqueFactory(unit, "CODE");
+    	MeasurementTechnique measurementTechnique = new MeasurementTechnique(unit, "CODE");
 
     	MeasurementTechnique copy = (MeasurementTechnique) DomainTestSupport.minimalEqualsTest(measurementTechnique);
         

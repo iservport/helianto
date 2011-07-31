@@ -20,6 +20,7 @@ import java.util.List;
 import org.helianto.core.NonUniqueResultException;
 import org.helianto.core.filter.Filter;
 import org.helianto.document.Document;
+import org.helianto.document.PrivateDocument;
 import org.helianto.document.Serializer;
 
 /**
@@ -44,11 +45,25 @@ public interface DocumentMgr {
 	public Document findDocument(Filter documentFilter) throws NonUniqueResultException;
 	
 	/**
-	 * Store <code>Document</code> in the datastore and return a managed instance.
+	 * Store <code>Document</code>.
 	 * 
 	 * @param document
 	 */
 	public Document storeDocument(Document document);
+	
+	/**
+	 * Find a <code>PrivateDocument</code> list.
+	 * 
+	 * @param privateDocumentFilter
+	 */
+	public List<PrivateDocument> findPrivateDocuments(Filter privateDocumentFilter);
+	
+	/**
+	 * Store <code>PrivateDocument</code>.
+	 * 
+	 * @param privateDocument
+	 */
+	public PrivateDocument storeDocument(PrivateDocument privateDocument);
 
 	/**
 	 * Remove the <code>Document</code> from the datastore.

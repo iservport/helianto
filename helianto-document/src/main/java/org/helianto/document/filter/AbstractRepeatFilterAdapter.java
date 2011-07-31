@@ -51,10 +51,10 @@ public abstract class AbstractRepeatFilterAdapter <T extends Repeatable> extends
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
-		appendEqualFilter("trackingMode", getFilter().getTrackingMode(), mainCriteriaBuilder);
-		appendEqualFilter("frequency", getFilter().getFrequency(), mainCriteriaBuilder);
-		if (getFilter().getFrequency()>0) {
-			appendEqualFilter("frequencyType", getFilter().getFrequencyType(), mainCriteriaBuilder);
+		appendEqualFilter("trackingMode", getForm().getTrackingMode(), mainCriteriaBuilder);
+		appendEqualFilter("frequency", getForm().getFrequency(), mainCriteriaBuilder);
+		if (getForm().getFrequency()>0) {
+			appendEqualFilter("frequencyType", getForm().getFrequencyType(), mainCriteriaBuilder);
 		}
 	}
 

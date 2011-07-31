@@ -38,7 +38,7 @@ public class ProcessDocumentFilterAdapterTests {
 		Entity entity = new Entity();
 		filter = new ProcessDocumentFilterAdapter(entity, "DOC_CODE");
 		assertSame(filter.getEntity(), entity);
-		assertEquals(filter.getFilter().getDocCode(), "DOC_CODE");
+		assertEquals(filter.getForm().getDocCode(), "DOC_CODE");
 	}
 	
 	

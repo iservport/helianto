@@ -27,22 +27,22 @@ import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.KeyTypeFilterAdapter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.NamespaceMgr;
+import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.Address;
 import org.helianto.partner.Customer;
 import org.helianto.partner.Division;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerState;
-import org.helianto.partner.Phone;
+import org.helianto.partner.PartnerPhone;
 import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.PrivateEntityKey;
-import org.helianto.partner.base.AbstractAddress;
-import org.helianto.partner.util.AddressUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -133,11 +133,11 @@ public class PartnerMgrImpl implements PartnerMgr {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
-	public Phone storePhone(Phone phone) {
+	public PartnerPhone storePhone(PartnerPhone phone) {
 		return phoneDao.merge(phone);
 	}
 
-	public PrivateEntity removePhone(Phone phone) {
+	public PrivateEntity removePhone(PartnerPhone phone) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
@@ -168,6 +168,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 			partnerDao.saveOrUpdate(division);
 		}
 		logger.info("Default division is {} ", division);
+		partnerDao.flush();
 		return division;
 	}
 	
@@ -198,6 +199,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 			partnerDao.saveOrUpdate(customer);
 		}
 		logger.info("Default division is {} ", customer);
+		partnerDao.flush();
 		return customer;
 	}
 	
@@ -217,7 +219,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 						logger.debug("Partner key {} already existing.", partnerKey);
 					}
 					else {
-						partnerKey = PartnerKey.partnerKeyFactory(partner, keyType);
+						partnerKey = new PartnerKey(partner, keyType);
 					}
 					partnerKey.setKeyValue(keyValue[1]);
 					partnerKeyDao.saveOrUpdate(partnerKey);
@@ -229,6 +231,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 				logger.warn("Unable to set key value {}", keyValueTuple);
 			}
 		}
+		partnerKeyDao.flush();
 	}
 	
     //- collaborators
@@ -238,7 +241,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private BasicDao<Address> addressDao;
     private BasicDao<PartnerKey> partnerKeyDao;
     private BasicDao<Province> provinceDao;
-    private BasicDao<Phone> phoneDao;
+    private BasicDao<PartnerPhone> phoneDao;
 	private NamespaceMgr namespaceMgr;
 
     @Resource(name="privateEntityDao")
@@ -267,7 +270,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
     
     @Resource(name="phoneDao")
-    public void setPhoneDao(BasicDao<Phone> phoneDao) {
+    public void setPhoneDao(BasicDao<PartnerPhone> phoneDao) {
         this.phoneDao = phoneDao;
     }
     

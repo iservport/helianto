@@ -55,10 +55,9 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	/**
 	 * Default model is of type <code>SimpleModel</code> embedding a form of type <T>.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected SimpleModel<?> doCreateModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new SimpleModel(doCreate(attributes, userDetails), userDetails.getUser());
+		return new SimpleModel<T>(doCreate(attributes, userDetails), userDetails.getUser());
 	}
 
 	/**
@@ -159,6 +158,16 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 			logger.debug("Auto selected: {}.", itemList.get(0));
 			return "success";
 		}
+		return isNotAutoSelected(attributes, itemList);
+	}
+	
+	/**
+	 * Signal after internalFilter if list is not null and has more than one item.
+	 * 
+	 * @param attributes
+	 * @param itemList
+	 */
+	protected String isNotAutoSelected(MutableAttributeMap attributes, List<T> itemList) {
 		return "success";
 	}
 		

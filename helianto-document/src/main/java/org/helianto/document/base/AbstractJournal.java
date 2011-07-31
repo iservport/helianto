@@ -30,7 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractJournal extends AbstractControl {
+public abstract class AbstractJournal extends AbstractPrivateControl {
 
     private static final long serialVersionUID = 1L;
     private Date actualStartDate;

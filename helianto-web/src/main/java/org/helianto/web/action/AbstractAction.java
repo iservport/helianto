@@ -123,14 +123,24 @@ public abstract class AbstractAction<T> implements Serializable {
 		if (!hasTarget(attributes)) {
 			return "noTarget";
 		}
-		attributes.put(getTargetName(), doStore(getTarget(attributes)));
+		attributes.put(getTargetName(), doStore(attributes, getTarget(attributes)));
 		return "success";
+	}
+	
+	/**
+	 * Subclasses may override this to the actual target persistence.
+	 * 
+	 * @param attributes
+	 * @param target
+	 */
+	protected T doStore(MutableAttributeMap attributes, T target) {
+		return doStore(getTarget(attributes));
 	}
 	
 	/**
 	 * Subclasses must override this to assure the actual target persistence.
 	 * 
-	 * @param attributes
+	 * @param target
 	 */
 	protected abstract T doStore(T target);
 	
@@ -186,12 +196,28 @@ public abstract class AbstractAction<T> implements Serializable {
 	public String createModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		Object model = doCreateModel(attributes, userDetails);
 		attributes.put(getModelName(), model);
-		logger.debug("Created {} with name {}.", model, getModelName());
+		logger.debug("Created model {} with name {}.", model, getModelName());
 		return "success";
 	}
 	
 	/**
-	 * Default model is of type <code>SimpleModel</code>.
+	 * Create a new FormModel in the attribute map.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 */
+	public String createFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		FormModel<?> formModel = getModel(attributes);
+		if (formModel==null) {
+			formModel = doCreateFormModel(attributes, userDetails);
+			attributes.put(getModelName(), formModel);
+			logger.debug("Created form model {} with name {}.", formModel, getModelName());
+		}
+		return "success";
+	}
+	
+	/**
+	 * Do create model of type <code>SimpleModel</code>.
 	 * 
 	 * @param attributes
 	 * @param userDetails
@@ -202,6 +228,33 @@ public abstract class AbstractAction<T> implements Serializable {
 		return new SimpleModel(form, userDetails.getUser());
 	}
 
+	/**
+	 * Do create model of type <code>FormModel</code>.
+	 * 
+	 * @param attributes
+	 * @param userDetails
+	 */
+	protected <F> FormModel<F> doCreateFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		F form = doCreateForm(attributes, userDetails);
+		return new PageModel<F>(form);
+	}
+	
+	/**
+	 * Subclasses may override this method if a <code>FormModel</code> is required.
+	 * 
+	 * <p>
+	 * Default behavior returns a new instance of <T>.
+	 * </p>
+	 * 
+	 * @param <F>
+	 * @param attributes
+	 * @param userDetails
+	 */
+	@SuppressWarnings("unchecked")
+	protected <F> F doCreateForm(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		return (F) doCreate(attributes, userDetails);
+	}
+	
 	// convenience methods
 	
 	/**

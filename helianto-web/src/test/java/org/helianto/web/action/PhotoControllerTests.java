@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.easymock.classextension.EasyMock;
 import org.helianto.core.Identity;
-import org.helianto.core.service.UserMgr;
+import org.helianto.core.service.IdentityMgr;
 import org.helianto.web.action.impl.PhotoController;
 import org.junit.After;
 import org.junit.Before;
@@ -27,12 +27,12 @@ public class PhotoControllerTests {
 		identity.setPhoto(photo);
 		identity.setMultipartFileContentType(MediaType.TEXT_PLAIN.toString());
 		
-		EasyMock.expect(userMgr.loadIdentity(1)).andReturn(identity);
+		EasyMock.expect(identityMgr.loadIdentity(1)).andReturn(identity);
 //		EasyMock.expect(userMgr.loadIdentityPhoto(identity)).andReturn(photo);
-		EasyMock.replay(userMgr);
+		EasyMock.replay(identityMgr);
 		
 		ResponseEntity<byte[]> response = photoController.loadPhotoById(1);
-		EasyMock.verify(userMgr);
+		EasyMock.verify(identityMgr);
 //		for (byte b: response.getBody()) {
 //			System.out.print((char) b);
 //		}
@@ -40,18 +40,18 @@ public class PhotoControllerTests {
 		
 	}
 	
-	private UserMgr userMgr;
+	private IdentityMgr identityMgr;
 	
 	@Before
 	public void setUp() {
 		photoController = new PhotoController();
-		userMgr = EasyMock.createMock(UserMgr.class);
-		photoController.setUserMgr(userMgr);
+		identityMgr = EasyMock.createMock(IdentityMgr.class);
+		photoController.setIdentityMgr(identityMgr);
 	}
 	
 	@After
 	public void tearDown() {
-		EasyMock.reset(userMgr);
+		EasyMock.reset(identityMgr);
 	}
 
 }

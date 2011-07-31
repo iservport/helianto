@@ -1,8 +1,13 @@
 package org.helianto.core;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Date;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
@@ -21,13 +26,27 @@ public class UserAssociationTests {
     public void constructor() {
         UserGroup parent = new UserGroup();
         UserGroup child = new UserGroup();
+        Date beginDate = new Date();
         
         UserAssociation userAssociation = new UserAssociation(parent, child);
+        Date endDate = new Date();
         
         assertSame(parent, userAssociation.getParent());
         assertSame(child, userAssociation.getChild());
         
+        assertEquals('A', userAssociation.getResolution());
+        assertNotNull(userAssociation.getAssociationDate());
+        assertFalse(userAssociation.getAssociationDate().before(beginDate));
+        assertFalse(userAssociation.getAssociationDate().after(endDate));
     }
+	
+	@Test
+	public void reset() {
+		UserAssociation userAssociation = new UserAssociation();
+		userAssociation.reset();
+		assertEquals(' ', userAssociation.getResolution());
+		assertNull(userAssociation.getAssociationDate());
+	}
     
     /**
      * Test <code>UserAssociation</code> equals() method.

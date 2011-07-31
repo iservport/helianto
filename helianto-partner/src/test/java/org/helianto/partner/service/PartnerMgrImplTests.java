@@ -28,12 +28,12 @@ import org.easymock.EasyMock;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.Customer;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.base.AbstractAddress;
 import org.helianto.partner.filter.classic.PartnerFilter;
 import org.helianto.partner.filter.classic.PrivateEntityFilter;
 import org.junit.After;
@@ -166,6 +166,7 @@ public class PartnerMgrImplTests {
 		
 		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(null);
 		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
+		partnerDao.flush();
 		EasyMock.replay(partnerDao);
 		
 		Customer customer = partnerMgr.installCustomer(entity, "NAME", partnerAddress, false);
@@ -191,6 +192,7 @@ public class PartnerMgrImplTests {
 		
 		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(null);
 		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
+		partnerDao.flush();
 		EasyMock.replay(partnerDao);
 		
 		Customer customer = partnerMgr.installCustomer(entity, "NAME", partnerAddress, false);
@@ -213,6 +215,7 @@ public class PartnerMgrImplTests {
 		
 		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(customer);
 		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
+		partnerDao.flush();
 		EasyMock.replay(partnerDao);
 		
 		assertSame(customer, partnerMgr.installCustomer(entity, "NAME", partnerAddress, false));

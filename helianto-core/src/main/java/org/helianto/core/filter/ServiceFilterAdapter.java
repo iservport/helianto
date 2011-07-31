@@ -50,14 +50,14 @@ public class ServiceFilterAdapter extends AbstractRootFilterAdapter<Service> {
     }
 
 	public boolean isSelection() {
-		return getFilter().getServiceName().length()>0;
+		return getForm().getServiceName().length()>0;
 	}
 
 	public void reset() { }
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("serviceName", getFilter().getServiceName(), mainCriteriaBuilder);
+		appendLikeFilter("serviceName", getForm().getServiceName(), mainCriteriaBuilder);
 	}
 
 	@Override
