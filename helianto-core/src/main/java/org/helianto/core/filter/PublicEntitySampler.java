@@ -1,7 +1,7 @@
-package org.helianto.partner.filter;
+package org.helianto.core.filter;
 
 import org.helianto.core.Entity;
-import org.helianto.partner.PublicEntity;
+import org.helianto.core.PublicEntity;
 
 /**
  * Simple extension to <code>PublicEntity</code> to act as a sample to

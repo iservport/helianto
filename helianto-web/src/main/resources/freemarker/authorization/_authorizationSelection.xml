@@ -43,13 +43,42 @@
 				<evaluate expression="entityAction.create(flowScope, currentUser.principal)" />
 			</transition>
 		
-		<transition on="addPhone" 
+		<transition on="createPersonalAddress"  
+					to="personalAddress.subflow" >
+				<evaluate expression="personalAddressAction.create(flowScope, currentUser.principal)" />
+			</transition>
+		
+		<transition on="editPersonalAddress"  
+					to="personalAddress.subflow" />
+		
+		<transition on="prevPersonalAddress"  
 					to="selection.view" >
+				<set name="flowScope.personalAddress"  value="authorizationModel.pages['personalAddress'].previous()"/>
+			</transition>
+		
+		<transition on="nextPersonalAddress"  
+					to="selection.view" >
+				<set name="flowScope.personalAddress"  value="authorizationModel.pages['personalAddress'].next()"/>
+			</transition>
+		
+		<transition on="addPhone"  
+					to="identityPhone.subflow" >
+				<evaluate expression="identityPhoneAction.create(flowScope, currentUser.principal)" />
 			</transition>
 		
 		<transition on="removePhone" 
-					to="identityPhone.subflow" >
-				<evaluate expression="identityPhoneAction.create(flowScope, currentUser.principal)" />
+					to="selection.view" >
+				<evaluate expression="identityPhoneAction.remove(flowScope, requestParameters)" />
+			</transition>
+		
+		<transition on="addContactInfo"  
+					to="identityContactInfo.subflow" >
+				<evaluate expression="identityContactInfoAction.create(flowScope, currentUser.principal)" />
+			</transition>
+		
+		<transition on="removeContactInfo" 
+					to="selection.view" >
+				<evaluate expression="identityContactInfoAction.remove(flowScope, requestParameters)" />
 			</transition>
 		
 		<transition on="authorize" 
@@ -71,6 +100,14 @@
 		<transition on="toReturn" to="selection.view" />
 	</subflow-state>
 	
+	<subflow-state id="personalAddress.subflow" subflow="_address">
+		<input name="address" value="flowScope.personalAddress"/>
+		<transition on="toCommit" to="personalAddress.filter"  >
+			<evaluate expression="personalAddressAction.store(flowScope)" />
+		</transition>
+		<transition on="toReturn" to="selection.view" />
+	</subflow-state>
+	
 	<subflow-state id="identityPhone.subflow" subflow="_phone">
 		<input name="phone" value="flowScope.identityPhone"/>
 		<transition on="toCommit" to="filter" >
@@ -79,6 +116,13 @@
 		<transition on="toReturn" to="selection.view" />
 	</subflow-state>
 	
+	<subflow-state id="identityContactInfo.subflow" subflow="_contactInfo">
+		<input name="contactInfo" value="flowScope.identityContactInfo"/>
+		<transition on="toCommit" to="filter" >
+			<evaluate expression="identityContactInfoAction.store(flowScope)" />
+		</transition>
+		<transition on="toReturn" to="selection.view" />
+	</subflow-state>
 	
 	
 </flow>

@@ -1,12 +1,12 @@
-package org.helianto.partner.filter;
+package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.partner.PublicAddress;
-import org.helianto.partner.filter.PublicAddressFilterAdapter;
+import org.helianto.core.PublicAddress;
+import org.helianto.core.filter.PublicAddressFilterAdapter;
 import org.junit.Before;
 import org.junit.Test;
 

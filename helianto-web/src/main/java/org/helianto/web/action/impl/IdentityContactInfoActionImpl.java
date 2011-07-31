@@ -2,8 +2,8 @@ package org.helianto.web.action.impl;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.ContactInfo;
 import org.helianto.core.Identity;
-import org.helianto.core.Phone;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.IdentityMgr;
 import org.helianto.web.action.AbstractAction;
@@ -14,27 +14,27 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
 import org.springframework.webflow.core.collection.ParameterMap;
 
 /**
- * Presentation logic to create a phone.
+ * Presentation logic to create a contact info.
  * 
  * @author mauriciofernandesdecastro
  */
-@Component("identityPhoneAction")
-public class IdentityPhoneActionImpl extends AbstractAction<Phone> {
+@Component("identityContactInfoAction")
+public class IdentityContactInfoActionImpl extends AbstractAction<ContactInfo> {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected Phone doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new Phone();
+	protected ContactInfo doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		return new ContactInfo();
 	}
 
 	@Override
-	protected Phone doStore(MutableAttributeMap attributes, Phone target) {
+	protected ContactInfo doStore(MutableAttributeMap attributes, ContactInfo target) {
 		Identity identity = (Identity) attributes.get("identity");
 		if (identity==null) {
-			throw new IllegalArgumentException("Unable to store phone: missing identity.");
+			throw new IllegalArgumentException("Unable to store contact info: missing identity.");
 		}
-		identityMgr.storeIdentityPhone(target, identity);
+		identityMgr.storeIdentityContactInfo(target, identity);
 		return null;
 	}
 	
@@ -42,18 +42,18 @@ public class IdentityPhoneActionImpl extends AbstractAction<Phone> {
 	public String remove(MutableAttributeMap attributes, ParameterMap parameters) {
 		Identity identity = (Identity) attributes.get("identity");
 		if (identity==null) {
-			throw new IllegalArgumentException("Unable to remove phone: missing identity.");
+			throw new IllegalArgumentException("Unable to remove contact info: missing identity.");
 		}
-		String[] removePhoneList = parameters.getArray("removePhoneList");
-		for (String removePhone: removePhoneList) {
-			logger.info("Removing {}...", identity.getPhones().get(Integer.parseInt(removePhone)));
-			identity.getPhones().remove(Integer.parseInt(removePhone));
+		String[] contactInfoList = parameters.getArray("contactInfoList");
+		for (String contactInfo: contactInfoList) {
+			logger.info("Removing {}...", identity.getPhones().get(Integer.parseInt(contactInfo)));
+			identity.getPhones().remove(Integer.parseInt(contactInfo));
 		}
 		return "success";
 	}
 
 	@Override
-	protected Phone doStore(Phone target) {
+	protected ContactInfo doStore(ContactInfo target) {
 		throw new IllegalArgumentException("Forbidden!");
 	}
 
@@ -66,6 +66,6 @@ public class IdentityPhoneActionImpl extends AbstractAction<Phone> {
 		this.identityMgr = identityMgr;
 	}
 	
-	private static final Logger logger = LoggerFactory.getLogger(IdentityPhoneActionImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(IdentityContactInfoActionImpl.class);
 	
 }

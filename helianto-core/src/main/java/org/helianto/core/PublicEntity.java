@@ -1,4 +1,4 @@
-package org.helianto.partner;
+package org.helianto.core;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,11 +18,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.Phone;
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.Operator;
-import org.helianto.core.RootEntity;
 import org.helianto.core.base.AbstractAddress;
 
 /**
@@ -31,7 +26,7 @@ import org.helianto.core.base.AbstractAddress;
  * @author mauriciofernandesdecastro
  */
 @javax.persistence.Entity
-@Table(name = "prtnr_public", uniqueConstraints = { @UniqueConstraint(columnNames = {
+@Table(name = "core_publicEntity", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"operatorId", "entityId", "type" }) })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)

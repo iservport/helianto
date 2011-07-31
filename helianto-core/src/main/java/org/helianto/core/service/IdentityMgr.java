@@ -18,6 +18,7 @@ package org.helianto.core.service;
 import java.util.Collection;
 import java.util.List;
 
+import org.helianto.core.ContactInfo;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalAddress;
@@ -96,6 +97,14 @@ public interface IdentityMgr {
      * @param identity
      */
     public Identity storeIdentityPhone(Phone identityPhone, Identity identity);
+    
+    /**
+     * Store the given <code>ContactInfo</code>.
+     * 
+     * @param contactInfo
+     * @param identity
+     */
+    public Identity storeIdentityContactInfo(ContactInfo contactInfo, Identity identity);
     
     /**
      * <p>Create <code>Credential</code> and <code>Identity</code>.</p>

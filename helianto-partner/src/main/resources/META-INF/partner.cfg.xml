@@ -11,9 +11,6 @@
 		<mapping class="org.helianto.partner.PartnerPhone" />
 		<mapping class="org.helianto.partner.PrivateEntity" />
 		<mapping class="org.helianto.partner.PrivateEntityKey" />
-		<mapping class="org.helianto.partner.PublicAddress" />
-		<mapping class="org.helianto.partner.PublicEntity" />
-		<mapping class="org.helianto.partner.PublicEntityKey" />
 
 		<mapping class="org.helianto.partner.Agent" />
 		<mapping class="org.helianto.partner.Customer" />

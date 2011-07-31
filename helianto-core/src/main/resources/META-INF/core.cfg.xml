@@ -26,6 +26,9 @@
 		<mapping class="org.helianto.core.Province"  />
 		<mapping class="org.helianto.core.City" />
 		<mapping class="org.helianto.core.Category"  />
+		<mapping class="org.helianto.core.PublicAddress" />
+		<mapping class="org.helianto.core.PublicEntity" />
+		<mapping class="org.helianto.core.PublicEntityKey" />
 		<mapping class="org.helianto.core.Unit"  />
 		<mapping class="org.helianto.core.UserRequest"  />
 		<mapping class="org.helianto.core.KeyType"  />

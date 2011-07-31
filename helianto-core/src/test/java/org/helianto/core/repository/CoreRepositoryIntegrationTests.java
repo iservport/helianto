@@ -32,6 +32,8 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.PersonalAddress;
 import org.helianto.core.Province;
+import org.helianto.core.PublicAddress;
+import org.helianto.core.PublicEntity;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
@@ -79,11 +81,13 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 	@Resource FilterDao<Credential> credentialDao;
 	@Resource FilterDao<UserLog> userLogDao;
 	@Resource FilterDao<Identity> identityDao;
+	@Resource FilterDao<PublicAddress> publicAddressDao;
 	@Resource FilterDao<PersonalAddress> personalAddressDao;
 	@Resource FilterDao<Server> serverDao;
 	@Resource FilterDao<UserRole> userRoleDao;
 	@Resource FilterDao<EntityPreference> entityPreferenceDao;	
 	@Resource FilterDao<UserRequest> userRequestDao;
+	@Resource FilterDao<PublicEntity> publicEntityDao;
 	
 	@Test
 	public void core() {
@@ -146,6 +150,10 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		assertEquals(identity, managedIdentity);
 		assertEquals(photo, managedIdentity.getPhoto());
 		
+		PublicAddress publicAddress = new PublicAddress(entity.getOperator(), "POSTALCODE");
+		publicAddressDao.saveOrUpdate(publicAddress);
+		assertEquals(publicAddress, publicAddressDao.findUnique(entity.getOperator(), "POSTALCODE"));
+		
 		PersonalAddress personalAddress = new PersonalAddress(identity, AddressType.PERSONAL);
 		personalAddressDao.saveOrUpdate(personalAddress);
 		assertEquals(personalAddress, personalAddressDao.findUnique(identity, AddressType.PERSONAL.getValue()));
@@ -179,6 +187,11 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		UserRequest loginRequest = new UserRequest(userGroup, Long.MAX_VALUE);
 		userRequestDao.saveOrUpdate(loginRequest);
 		assertEquals(loginRequest, userRequestDao.findUnique(userGroup, Long.MAX_VALUE));
+		
+		PublicEntity publicEntity = new PublicEntity(entity);
+		publicEntityDao.saveOrUpdate(publicEntity);
+		assertEquals(publicEntity, publicEntityDao.findUnique(entity.getOperator(), entity, 'P'));
+
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(CoreRepositoryIntegrationTests.class);

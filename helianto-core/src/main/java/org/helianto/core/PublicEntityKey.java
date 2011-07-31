@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.core;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,7 +21,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.KeyType;
 import org.helianto.core.base.AbstractKeyStringValue;
 /**
  * The content of a key associated to the public entity.
@@ -29,7 +28,7 @@ import org.helianto.core.base.AbstractKeyStringValue;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="prtnr_publicEntityKey",
+@Table(name="core_publicEntityKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"publicEntityId", "keyTypeId"})}
 )
 public class PublicEntityKey extends AbstractKeyStringValue {

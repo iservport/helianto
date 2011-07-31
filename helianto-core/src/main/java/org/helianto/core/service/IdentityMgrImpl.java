@@ -21,6 +21,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.ActivityState;
+import org.helianto.core.ContactInfo;
 import org.helianto.core.Credential;
 import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.Identity;
@@ -122,12 +123,20 @@ public class IdentityMgrImpl implements IdentityMgr {
 	
 	public PersonalAddress storePersonalAddress(PersonalAddress personalAddress) {
 		personalAddressDao.saveOrUpdate(personalAddress);
+		identityDao.flush();
 		return personalAddress;
 	}
 	
 	public Identity storeIdentityPhone(Phone identityPhone, Identity identity) {
 		identityDao.saveOrUpdate(identity);
 		identity.getPhones().add(identityPhone);
+		identityDao.flush();
+		return identity;
+	}
+	
+	public Identity storeIdentityContactInfo(ContactInfo contactInfo, Identity identity) {
+		identityDao.saveOrUpdate(identity);
+		identity.getContactInfos().add(contactInfo);
 		identityDao.flush();
 		return identity;
 	}

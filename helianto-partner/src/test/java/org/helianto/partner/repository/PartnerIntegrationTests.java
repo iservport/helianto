@@ -35,8 +35,6 @@ import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerPhone;
 import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.PrivateEntityKey;
-import org.helianto.partner.PublicAddress;
-import org.helianto.partner.PublicEntity;
 import org.helianto.partner.Supplier;
 import org.helianto.partner.TransportPartner;
 import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
@@ -63,16 +61,10 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	@Resource BasicDao<PartnerPhone> phoneDao;
 	@Resource FilterDao<PrivateEntity> privateEntityDao;
 	@Resource BasicDao<PrivateEntityKey> privateEntityKeyDao;
-	@Resource FilterDao<PublicAddress> publicAddressDao;
-	@Resource FilterDao<PublicEntity> publicEntityDao;
 	@Resource BasicDao<KeyType> keyTypeDao;
 
 	@Test
 	public void partner() {
-		PublicEntity publicEntity = new PublicEntity(entity);
-		assertEquals(publicEntityDao.merge(publicEntity), 
-				publicEntityDao.findUnique(publicEntity.getOperator(), publicEntity.getEntity(), 'P'));
-
 		Account account = new Account(entity, "CODE");
 		accountDao.saveOrUpdate(account);
 		assertEquals(account, accountDao.findUnique(entity, "CODE"));
@@ -115,10 +107,6 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		Address address = AddressTestSupport.createAddress(partnerRegistry);
 		assertEquals(addressDao.merge(address), addressDao.findUnique(address.getPartnerRegistry(), address.getSequence()));
 		
-		PublicAddress publicAddress = new PublicAddress(entity.getOperator(), "POSTALCODE");
-		publicAddressDao.saveOrUpdate(publicAddress);
-		assertEquals(publicAddress, publicAddressDao.findUnique(entity.getOperator(), "POSTALCODE"));
-
 	}
 
 }

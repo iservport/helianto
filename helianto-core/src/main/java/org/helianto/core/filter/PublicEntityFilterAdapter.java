@@ -1,9 +1,9 @@
-package org.helianto.partner.filter;
+package org.helianto.core.filter;
 
 import org.helianto.core.Entity;
+import org.helianto.core.PublicEntity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
-import org.helianto.partner.PublicEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

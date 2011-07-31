@@ -1,4 +1,4 @@
-package org.helianto.partner;
+package org.helianto.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
+import org.helianto.core.PublicEntity;
 import org.junit.Before;
 import org.junit.Test;
 

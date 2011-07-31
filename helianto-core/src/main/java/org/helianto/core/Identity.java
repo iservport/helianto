@@ -68,6 +68,7 @@ public class Identity implements java.io.Serializable {
 	private byte[] photo;
     private String multipartFileContentType;
     private List<Phone> phones = new ArrayList<Phone>();
+    private List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
     private Set<Credential> credentials = new HashSet<Credential>();
 
     /** 
@@ -323,6 +324,19 @@ public class Identity implements java.io.Serializable {
 	}
     public void setPhones(List<Phone> phones) {
 		this.phones = phones;
+	}
+    
+    /**
+     * List of contact infos.
+     */
+    @ElementCollection
+    @CollectionTable(name = "core_identityContact", joinColumns = @JoinColumn(name = "identityId"))
+    @OrderColumn(name="sequence")
+    public List<ContactInfo> getContactInfos() {
+		return contactInfos;
+	}
+    public void setContactInfos(List<ContactInfo> contactInfos) {
+		this.contactInfos = contactInfos;
 	}
     
     /**

@@ -39,6 +39,7 @@ public abstract class AbstractPartialAddress implements Serializable {
 
     private int id;
     private String address1;
+    private String addressClassifier;
     private String address2;
     private String postalCode;
     private Province province;
@@ -85,6 +86,17 @@ public abstract class AbstractPartialAddress implements Serializable {
     public void setAddress1(String address1) {
         this.address1 = address1;
     }
+    
+    /**
+     * Address classifier (like St, Av.)
+     */
+    @Column(length=10)
+    public String getAddressClassifier() {
+		return addressClassifier;
+	}
+    public void setAddressClassifier(String addressClassifier) {
+		this.addressClassifier = addressClassifier;
+	}
 
     /**
      * Address2.

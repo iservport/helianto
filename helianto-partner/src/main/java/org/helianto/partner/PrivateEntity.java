@@ -30,9 +30,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.BusinessUnit;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Phone;
+import org.helianto.core.PublicAddress;
 import org.helianto.core.TrunkEntity;
 import org.helianto.core.base.AbstractAddress;
 /**

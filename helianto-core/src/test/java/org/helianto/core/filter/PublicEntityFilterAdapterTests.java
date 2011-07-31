@@ -1,10 +1,12 @@
-package org.helianto.partner.filter;
+package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
+import org.helianto.core.PublicEntity;
+import org.helianto.core.filter.PublicEntityFilterAdapter;
+import org.helianto.core.filter.PublicEntitySampler;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.PublicEntity;
 import org.junit.Before;
 import org.junit.Test;
 

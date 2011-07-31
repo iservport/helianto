@@ -1,13 +1,10 @@
-package org.helianto.partner;
+package org.helianto.core;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
-import org.helianto.core.RootEntity;
 import org.helianto.core.base.AbstractPartialAddress;
 
 /**
@@ -16,7 +13,7 @@ import org.helianto.core.base.AbstractPartialAddress;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="prtnr_publicaddress",
+@Table(name="core_publicaddress",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "postalCode"})}
 )
 public class PublicAddress extends AbstractPartialAddress implements RootEntity {

@@ -26,6 +26,9 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.PersonalAddress;
 import org.helianto.core.Province;
+import org.helianto.core.PublicAddress;
+import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntityKey;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
@@ -93,6 +96,14 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	@Bean
 	public FilterDao<Identity> identityDao() {
 		return getFilterDao(Identity.class, "principal");
+	}
+
+	/**
+	 * Address database data access.
+	 */
+	@Bean
+	public FilterDao<PublicAddress> publicAddressDao() {
+		return getFilterDao(PublicAddress.class, "operator", "postalCode");
 	}
 
 	/**
@@ -207,4 +218,20 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 		return getFilterDao(UserRequest.class, "userGroup", "internalNumber");
 	}
 	
+	/**
+	 * Public entity data access.
+	 */
+	@Bean
+	public FilterDao<PublicEntity> publicEntityDao() {
+		return getFilterDao(PublicEntity.class, "operator", "entity", "class");
+	}
+
+	/**
+	 * Public entity key data access.
+	 */
+	@Bean
+	public FilterDao<PublicEntityKey> publicEntityKeyDao() {
+		return getFilterDao(PublicEntityKey.class, "publicEntity", "keyType");
+	}
+
 }

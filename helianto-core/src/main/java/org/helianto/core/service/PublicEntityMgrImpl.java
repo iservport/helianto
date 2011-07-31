@@ -1,4 +1,4 @@
-package org.helianto.partner.service;
+package org.helianto.core.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,13 +7,12 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.PublicAddress;
+import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntityKey;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.PostInstallationMgr;
-import org.helianto.partner.PublicAddress;
-import org.helianto.partner.PublicEntity;
-import org.helianto.partner.PublicEntityKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

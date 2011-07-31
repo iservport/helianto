@@ -13,15 +13,15 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.service;
+package org.helianto.core.service;
 
 import java.util.List;
 import java.util.Map;
 
+import org.helianto.core.PublicAddress;
+import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntityKey;
 import org.helianto.core.filter.Filter;
-import org.helianto.partner.PublicAddress;
-import org.helianto.partner.PublicEntity;
-import org.helianto.partner.PublicEntityKey;
 
 /**
  * Public entity service interface.

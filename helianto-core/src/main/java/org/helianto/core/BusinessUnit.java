@@ -1,7 +1,5 @@
-package org.helianto.partner;
+package org.helianto.core;
 
-import org.helianto.core.Phone;
-import org.helianto.core.Addressee;
 
 /**
  * General business unit interface.

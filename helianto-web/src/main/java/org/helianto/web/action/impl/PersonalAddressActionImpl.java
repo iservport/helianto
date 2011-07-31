@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.AddressType;
+import org.helianto.core.Identity;
 import org.helianto.core.PersonalAddress;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.PersonalAddressFilterAdapter;
@@ -41,7 +41,12 @@ public class PersonalAddressActionImpl extends AbstractFilterAction<PersonalAddr
 
 	@Override
 	protected PersonalAddress doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new PersonalAddress(userDetails.getUser().getIdentity(), AddressType.MAIN);
+		// must use flow scope identity
+		Identity identity = (Identity) attributes.get("identity");
+		if (identity==null) {
+			throw new IllegalArgumentException("Unable to create personal address: missing identity.");
+		}
+		return new PersonalAddress(identity, null);
 	}
 
 	@Override
