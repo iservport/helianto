@@ -85,10 +85,10 @@ public interface PostInstallationMgr {
 	public Service installService(Operator defaultOperator, String serviceName);
 
 	/**
-	 * Install an Entity, if does not exist.
+	 * Install an Entity, if one does not exist.
 	 * 
 	 * <p>
-	 * This method is used called from start up installers and its job is to provide at least one
+	 * This method is called from start up installers and its job is to provide at least one
 	 * default entity before user interaction.
 	 * </p>
 	 * 
@@ -96,11 +96,13 @@ public interface PostInstallationMgr {
 	 * @param entityAlias
 	 * @param managerPricipal
 	 * @param reinstall
+	 * 
+	 * @deprecated
 	 */
 	public Entity installEntity(Operator defaultOperator, String entityAlias, String managerPricipal, boolean reinstall);
 	
 	/**
-	 * Install a new Entity.
+	 * Install an Entity, if one does not exist.
 	 * 
 	 * <p>
 	 * This method is appropriate to requests coming from the presentation layer. The embedded
@@ -109,7 +111,8 @@ public interface PostInstallationMgr {
 	 * </p>
 	 * 
 	 * @param entity
+	 * @param reinstall
 	 */
-	public Entity installEntity(Entity entity);
+	public Entity installEntity(Entity entity, boolean reinstall);
 
 }

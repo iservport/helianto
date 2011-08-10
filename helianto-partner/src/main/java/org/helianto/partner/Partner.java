@@ -215,6 +215,11 @@ public class Partner implements TrunkEntity, BusinessUnit {
     }
     
     @Transient
+    public String getAddressClassifier() {
+        return this.getPrivateEntity().getAddressClassifier();
+    }
+    
+    @Transient
     public String getAddressNumber() {
     	return this.getPrivateEntity().getAddressNumber();
     }

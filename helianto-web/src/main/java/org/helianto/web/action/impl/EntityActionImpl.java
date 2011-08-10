@@ -33,7 +33,7 @@ public class EntityActionImpl extends AbstractAction<Entity> {
 	protected Entity doStore(Entity target) {
 		if (target.getManager()!=null) {
 			logger.debug("Installation required with manager {}.", target.getManager());
-			return postInstallationMgr.installEntity(target);
+			return postInstallationMgr.installEntity(target, false);
 		}
 		throw new IllegalArgumentException("Entity installation requires a transient manager!");
 	}

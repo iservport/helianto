@@ -158,6 +158,9 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		return service;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public Entity installEntity(Operator defaultOperator, String entityAlias, String managerPrincipal, boolean reinstall) {
 		operatorDao.saveOrUpdate(defaultOperator);
 		
@@ -179,25 +182,51 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		Credential credential = identityMgr.installIdentity(managerPrincipal);
 
-		return installEntity(defaultEntity, credential);
+		return installManager(defaultEntity, credential);
 	}
 	
-	public Entity installEntity(Entity entity) {
+	public Entity installEntity(Entity entity, boolean reinstall) {
+		Operator operator = entity.getOperator();
 		if (entity.getOperator()==null) {
 			throw new IllegalArgumentException("An opertor is required.");
 		}
-		logger.debug("Check new entity {} installation", entity);
-		if (entity.getManager()==null) {
-			throw new IllegalArgumentException("Unable to install entity: a manager identity is required.");
+		operatorDao.saveOrUpdate(operator);
+		String alias = entity.getAlias();		
+		
+		logger.debug("Check entity {} installation with 'reinstall={}'", alias, reinstall);
+		if (!reinstall) {
+			entity = entityDao.findUnique(operator, alias);
+		}
+
+		if (entity==null) {
+			logger.debug("Will install entity {} ...", alias);
+			entity = new Entity(operator, alias);
+			entityDao.saveOrUpdate(entity);
+		} 
+		else {
+			logger.debug("Entity AVAILABLE as {}.", entity);
+			return entity;
 		}
 		entityDao.saveOrUpdate(entity);
-		Credential credential = identityMgr.installCredential(entity.getManager());
-		logger.debug("Clearing manager supplied with entity {} to avoid duplicate installation...", entity);
-		entity.setManager(null);
-		return installEntity(entity, credential);
+		
+		// TODO remove 
+		if (entity.getManager()!=null) {
+			Credential credential = identityMgr.installCredential(entity.getManager());
+			logger.debug("Clearing manager supplied with entity {} to avoid duplicate installation...", entity);
+			entity.setManager(null);
+			return installManager(entity, credential);
+		}
+		return entity;
 	}
 	
-	protected Entity installEntity(Entity entity, Credential credential) {
+	/**
+	 * @deprecated
+	 * 
+	 * @param entity
+	 * @param credential
+	 * @return
+	 */
+	public Entity installManager(Entity entity, Credential credential) {
 		Operator operator = entity.getOperator();
 		
 		UserGroup adminGroup  = new UserGroup(entity, "ADMIN");
@@ -213,9 +242,11 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		adminGroup.getRoles().add(adminRole);
 		userRoleDao.saveOrUpdate(adminRole);
 		
-		UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
-		adminGroup.getChildAssociations().add(adminAssociation);
-		logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
+		if (credential!=null) {
+			UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
+			adminGroup.getChildAssociations().add(adminAssociation);
+			logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
+		}
 		userRoleDao.flush();
 		
 		UserGroup userGroup  = new UserGroup(entity, "USER");
@@ -230,14 +261,16 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		userGroup.getRoles().add(userRole);
 		userRoleDao.saveOrUpdate(userRole);
 		
-		UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
-		userGroup.getChildAssociations().add(userAssociation);
-		logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
+		if (credential!=null) {
+			UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
+			userGroup.getChildAssociations().add(userAssociation);
+			logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
+		}
 		userRoleDao.flush();
 		
 		entity.setInstallDate(new Date());
 		entityDao.flush();
-		logger.debug("Entity {} installation finished at {}.", userAssociation, entity.getInstallDate());
+		logger.debug("Entity {} installation finished at {}.", entity.getAlias(), entity.getInstallDate());
 
 		return entity;
 	}

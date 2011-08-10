@@ -80,7 +80,7 @@ public class PublicEntityMgrTests {
 		PublicEntity publicEntity = new PublicEntity(entity);
 		Entity installedEntity = new Entity();
 		
-		EasyMock.expect(postInstallationMgr.installEntity(entity)).andReturn(installedEntity);
+		EasyMock.expect(postInstallationMgr.installEntity(entity, false)).andReturn(installedEntity);
 		EasyMock.replay(postInstallationMgr);
 		
 		publicEntityDao.saveOrUpdate(publicEntity);

@@ -53,7 +53,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	public PublicEntity storePublicEntity(PublicEntity publicEntity) {
 		if (publicEntity.preProcessEntityInstallation()) {
 			// trigger entity installation
-			publicEntity.setEntity(postInstallationMgr.installEntity(publicEntity.getEntity()));
+			publicEntity.setEntity(postInstallationMgr.installEntity(publicEntity.getEntity(), false));
 		}
 		publicEntityDao.saveOrUpdate(publicEntity);
 		publicEntityDao.flush();

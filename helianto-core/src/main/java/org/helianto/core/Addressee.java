@@ -12,6 +12,11 @@ public interface Addressee {
      * The first segment of an address, usually representing a street, road, etc..
      */
     public String getAddress1();
+    
+    /**
+     * Address classifier (or blank), like St. (street), Rd. (road), etc..
+     */
+    public String getAddressClassifier();
 
     /**
      * Optional address street number.

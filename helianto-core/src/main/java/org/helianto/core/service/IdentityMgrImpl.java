@@ -21,6 +21,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.ActivityState;
+import org.helianto.core.AddressType;
 import org.helianto.core.ContactInfo;
 import org.helianto.core.Credential;
 import org.helianto.core.DuplicateIdentityException;
@@ -28,6 +29,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.PersonalAddress;
 import org.helianto.core.Phone;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.PersonalAddressFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -150,6 +152,12 @@ public class IdentityMgrImpl implements IdentityMgr {
 		}
 		else {
 			logger.debug("Found existing identity for {}.", principal);
+		}
+		PersonalAddress personalAddress = new PersonalAddress(identity, null);
+		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(new PersonalAddressFilterAdapter(personalAddress));
+		if (personalAddressList.size()==0) {
+			personalAddress.setAddressTypeAsEnum(AddressType.PERSONAL);
+			personalAddressDao.saveOrUpdate(personalAddress);
 		}
 		return installCredential(identity);
 	}
