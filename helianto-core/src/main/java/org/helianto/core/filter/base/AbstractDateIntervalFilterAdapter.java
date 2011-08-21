@@ -81,12 +81,7 @@ public abstract class AbstractDateIntervalFilterAdapter<T extends TrunkEntity> e
     
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getDateFieldName().length()>0) {
-			appendDateInterval(mainCriteriaBuilder, getDateFieldName(), getDateInterval()); 
-		}
-		else {
-			logger.debug("Date range filter disabled");
-		}
+		appendDateInterval(mainCriteriaBuilder); 
 	}
 	
 	/**
@@ -96,12 +91,21 @@ public abstract class AbstractDateIntervalFilterAdapter<T extends TrunkEntity> e
 		return this;
 	}
 	
+	public void appendDateInterval(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendDateInterval(mainCriteriaBuilder, getDateFieldName(), getDateInterval()); 
+	}
+	
 	public void appendDateInterval(OrmCriteriaBuilder mainCriteriaBuilder, String dateFieldName, DateInterval dateInterval) {
-		DateCriteriaBuilder dateCriteria = new DateCriteriaBuilder(mainCriteriaBuilder.getAlias(), dateFieldName);
-		dateCriteria.appendFromDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());	
-		dateCriteria.appendToDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());
-		if (dateCriteria.getSegmentCount()>0) {
-			mainCriteriaBuilder.appendAnd().append(dateCriteria);
+		if (getDateFieldName().length()==0) {
+			logger.debug("Date range filter disabled");
+		}
+		else {
+			DateCriteriaBuilder dateCriteria = new DateCriteriaBuilder(mainCriteriaBuilder.getAlias(), dateFieldName);
+			dateCriteria.appendFromDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());	
+			dateCriteria.appendToDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());
+			if (dateCriteria.getSegmentCount()>0) {
+				mainCriteriaBuilder.appendAnd().append(dateCriteria);
+			}
 		}
 	}
 

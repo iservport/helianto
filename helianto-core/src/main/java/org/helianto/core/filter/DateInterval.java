@@ -23,7 +23,7 @@ import java.util.Date;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface DateInterval {
+public interface DateInterval extends Interval {
 
     /**
      * Start date.
@@ -35,10 +35,4 @@ public interface DateInterval {
      */
     public Date getToDate();
     
-    /**
-     * Interval in days.
-     */
-    public int getInterval();
-
-
 }
