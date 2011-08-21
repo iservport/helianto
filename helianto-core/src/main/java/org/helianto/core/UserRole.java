@@ -115,7 +115,7 @@ public class UserRole  implements java.io.Serializable {
     /**
      * Service extension.
      */
-    @Column(length=48)
+    @Column(length=64)
     public String getServiceExtension() {
         return this.serviceExtension;
     }
