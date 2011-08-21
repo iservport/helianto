@@ -58,6 +58,17 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	}
 
 	/**
+	 * Partner class constructor.
+	 * 
+	 * @param partner
+	 * @param discriminator
+	 */
+	public PartnerFilterAdapter(Partner partner, char discriminator) {
+		this(partner);
+		setDiscriminator(discriminator);
+	}
+
+	/**
 	 * Reset method.
 	 */
 	public void reset() { 
