@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class MeasurementTechniqueFilterAdapter<T extends MeasurementTechnique> extends AbstractTrunkFilterAdapter<T> {
+public class MeasurementTechniqueFilterAdapter<T extends MeasurementTechniqueForm> extends AbstractTrunkFilterAdapter<T> {
 
     private static final long serialVersionUID = 1L;
 	private Class<? extends MeasurementTechnique> clazz;
