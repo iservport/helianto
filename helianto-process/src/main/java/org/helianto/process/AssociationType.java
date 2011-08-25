@@ -59,7 +59,7 @@ public enum AssociationType {
     private Class<ProcessDocument> childType;
     private boolean recommended;
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
 	private AssociationType(char value, Class parentType, Class childType, boolean recommended) {
         this.value = value;
         this.parentType = parentType;
@@ -82,8 +82,7 @@ public enum AssociationType {
      * @param parentType
      * @param childType
      */
-    @SuppressWarnings("unchecked")
-	public static AssociationType resolveAssociationType(Class parentType, Class childType) {
+	public static AssociationType resolveAssociationType(Class<?> parentType, Class<?> childType) {
     	for (AssociationType associationType: AssociationType.values()) {
     		if (associationType.parentType.equals(parentType) 
     				&& associationType.childType.equals(childType)) {
