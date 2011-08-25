@@ -1,11 +1,13 @@
 package org.helianto.process.filter;
 
+import org.helianto.core.TrunkEntity;
+
 /**
  * Measurement technique filter form interface.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface MeasurementTechniqueForm {
+public interface MeasurementTechniqueForm extends TrunkEntity {
 	
 	/**
 	 * Measurement technique code.

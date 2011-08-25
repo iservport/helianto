@@ -29,7 +29,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.core.TrunkEntity;
 import org.helianto.core.Unit;
 import org.helianto.process.filter.MeasurementTechniqueForm;
 
@@ -44,7 +43,7 @@ import org.helianto.process.filter.MeasurementTechniqueForm;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "measurementTechniqueCode"})}
 )
 @Inheritance(strategy = InheritanceType.JOINED)
-public class MeasurementTechnique implements TrunkEntity, MeasurementTechniqueForm {
+public class MeasurementTechnique implements MeasurementTechniqueForm {
 
 	private static final long serialVersionUID = 1L;
 	private int id;
