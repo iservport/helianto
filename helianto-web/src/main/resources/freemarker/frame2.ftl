@@ -131,6 +131,9 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
  # @param param - any aditional parameter, must start with '&',
  # @param title - to be shown as a hint.
  # @param role - the required role to allow selection.
+ #
+ # @deprecated 
+ # @see selectIndex
   -->
 <#macro selectModel targetIndex="0", name="${targetName}", indexName="index", param="", title="", role="ROLE_USER">
 <#if filterOption?if_exists='returnOption' >
@@ -145,6 +148,36 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
 		<#nested/>
 	</#if>
 	-->
+</#if>
+</#macro>
+
+<#--
+ # Macro to create a selection link to a FormModel , or a return link if filterOption 
+ # is enabled.
+ #
+ # The macro will automatically create a transition using the model variable 
+ # ${targetName}, either 'select${name}' or 'return${name}', 
+ # followed by '&pages['name'].index=${targetIndex}${param}' passed as macro parameters.
+ # The spring webflow ${flowExecutionUrl} is included.
+ # 
+ # The return option also creates extra [] around the link to distinguish it
+ # from selection.
+ #
+ # @param targetIndex - the index to select, defaults to zero,
+ # @param name - name to be used as key in the FormModel map, 
+ #               defaults to the current targetName from the model,
+ # @param transition - name to be prepended with 'select' or 'return' to create the eventId, 
+ #                     defaults to the current targetName from the model,
+ # @param indexName  - the name of the first parameter, defaults to 'index',
+ # @param title - to be shown as a hint.
+  -->
+<#macro selectIndex targetIndex="0", name="${targetName}", transition="${targetName}", indexName="index", title="" >
+<#if filterOption?if_exists='returnOption' >
+	[<a <#if title!="" >title="${title}"</#if> 
+	href="${flowExecutionUrl}&_eventId=return${transition?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>]
+<#else>
+		<a <#if title!="" >title="${title}"</#if> 
+		href="${flowExecutionUrl}&_eventId=select${transition?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>
 </#if>
 </#macro>
 
