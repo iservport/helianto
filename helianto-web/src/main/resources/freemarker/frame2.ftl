@@ -171,13 +171,13 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
  # @param indexName  - the name of the first parameter, defaults to 'index',
  # @param title - to be shown as a hint.
   -->
-<#macro selectIndex targetIndex="0", name="${targetName}", transition="${targetName}", indexName="index", title="" >
+<#macro selectIndex targetIndex="0", name="${targetName}", transition="${name}", indexName="index", title="" >
 <#if filterOption?if_exists='returnOption' >
 	[<a <#if title!="" >title="${title}"</#if> 
-	href="${flowExecutionUrl}&_eventId=return${transition?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>]
+	href="${flowExecutionUrl}&_eventId=return${transition?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}#${name}${targetIndex}"><#nested/></a>]
 <#else>
 		<a <#if title!="" >title="${title}"</#if> 
-		href="${flowExecutionUrl}&_eventId=select${transition?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}${param}#${name}${targetIndex}"><#nested/></a>
+		href="${flowExecutionUrl}&_eventId=select${transition?cap_first}&pages['${name?uncap_first}'].${indexName}=${targetIndex}#${name}${targetIndex}"><#nested/></a>
 </#if>
 </#macro>
 
