@@ -115,7 +115,7 @@ public class MeasurementTechnique implements MeasurementTechniqueForm {
     }
     @Transient
     public String getUnitCode() {
-    	if (this.unit==null) return "";
+    	if (this.unit==null) return "1";
     	return this.unit.getUnitCode();
     }
     public void setUnit(Unit unit) {
