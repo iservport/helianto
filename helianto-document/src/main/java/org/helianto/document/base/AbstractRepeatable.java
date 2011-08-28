@@ -59,6 +59,10 @@ public abstract class AbstractRepeatable extends AbstractRecord implements Repea
      * Tracking mode.
      */
     public char getTrackingMode() {
+    	return getInternalTrackingMode();
+    }
+    @Transient
+    protected char getInternalTrackingMode() {
     	return this.trackingMode;
     }
     public void setTrackingMode(char trackingMode) {
@@ -72,6 +76,10 @@ public abstract class AbstractRepeatable extends AbstractRecord implements Repea
      * Frequency.
      */
     public int getFrequency() {
+    	return getInternalFrequency();
+    }
+    @Transient
+    protected int getInternalFrequency() {
     	return this.frequency;
     }
     public void setFrequency(int frequency) {
