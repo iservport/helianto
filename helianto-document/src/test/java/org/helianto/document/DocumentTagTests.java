@@ -39,7 +39,7 @@ public class DocumentTagTests {
 	@Test
 	public void factory() {
 		Document document = new Document();
-		DocumentTag documentTag = DocumentTag.tagFactory(document);
+		DocumentTag documentTag = new DocumentTag(document, "");
 		assertSame(document, documentTag.getDocument());
 	}
 	

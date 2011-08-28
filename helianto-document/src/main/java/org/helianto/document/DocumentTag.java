@@ -48,31 +48,6 @@ import org.helianto.document.base.AbstractTag;
 @DiscriminatorValue("T")
 public class DocumentTag extends AbstractTag implements Serializable, Comparable<DocumentTag> {
 
-    /**
-     * <code>DocumentTag</code> generic factory.
-     * 
-     * @param document
-     */
-    protected static <T extends DocumentTag> T tagFactory(Class<T> clazz, Document document) {
-        T tag = AbstractTag.tagFactory(clazz, "");
-        try {
-            tag = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create tag of class "+clazz, e);
-        }
-        tag.setDocument(document);
-        return tag;
-    }
-
-    /**
-     * <code>DocumentTag</code> factory.
-     * 
-     * @param document
-     */
-    public static DocumentTag tagFactory(Document document) {
-        return DocumentTag.tagFactory(DocumentTag.class, document);
-    }
-
 	private static final long serialVersionUID = 1L;
 	private Document document;
 	
@@ -81,6 +56,18 @@ public class DocumentTag extends AbstractTag implements Serializable, Comparable
 	 */
 	public DocumentTag() {
 		super();
+	}
+
+	/**
+	 * Key constructor.
+	 * 
+	 * @param document
+	 * @param tagCode
+	 */
+	public DocumentTag(Document document, String tagCode) {
+		this();
+		setDocument(document);
+		setTagCode(tagCode);
 	}
 
 	/**

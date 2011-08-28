@@ -16,6 +16,8 @@
 
 package org.helianto.document.base;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,23 +31,7 @@ import javax.persistence.Transient;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractTag {
-
-    /**
-     * <code>AbstractTag</code> generic factory.
-     * 
-     * @param tagCode
-     */
-    protected static <T extends AbstractTag> T tagFactory(Class<T> clazz, String tagCode) {
-        T tag = null;
-        try {
-            tag = clazz.newInstance();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to create tag of class "+clazz, e);
-        }
-        tag.setTagCode(tagCode);
-        return tag;
-    }
+public abstract class AbstractTag implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -54,7 +40,9 @@ public abstract class AbstractTag {
     private String tagIcon;
     private char sequence;
     
-    /** default constructor */
+    /** 
+     * Default constructor
+     */
     public AbstractTag() {
     	super();
     	setTagName("");
