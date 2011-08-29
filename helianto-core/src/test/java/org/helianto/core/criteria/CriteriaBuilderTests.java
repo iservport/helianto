@@ -234,46 +234,6 @@ public class CriteriaBuilderTests  {
         assertEquals("",criteriaBuilder.getCriteriaAsString());
     }
     
-//    @Test
-//    public void appendRangeNoDate() {
-//    	DateRange filter = new UserBackedFilterStub();
-//    	filter.setFromDate(null);
-//    	filter.setToDate(null);
-//        criteriaBuilder.appendDateRange("field", filter);
-//        assertEquals("", criteriaBuilder.getCriteriaAsString());
-//    }
-//    
-//    @Test
-//    public void appendRangeFromDate() {
-//    	Date fromDate = new Date(0);
-//    	DateRange filter = new UserBackedFilterStub();
-//    	filter.setFromDate(fromDate);
-//    	filter.setToDate(null);
-//        criteriaBuilder.appendDateRange("field", filter);
-//        assertEquals("(PREFIX.field >= '1969-12-31 21:00:00' ) ", criteriaBuilder.getCriteriaAsString());
-//    }
-//    
-//    @Test
-//    public void appendRangeToDate() {
-//    	Date toDate = new Date(0);
-//    	DateRange filter = new UserBackedFilterStub();
-//    	filter.setFromDate(null);
-//    	filter.setToDate(toDate);
-//        criteriaBuilder.appendDateRange("field", filter);
-//        assertEquals("(PREFIX.field < '1969-12-31 21:00:00' ) ", criteriaBuilder.getCriteriaAsString());
-//    }
-//    
-//    @Test
-//    public void appendRangeFromDateToDate() {
-//    	Date fromDate = new Date(0);
-//    	Date toDate = new Date(1000000);
-//    	DateRange filter = new UserBackedFilterStub();
-//    	filter.setFromDate(fromDate);
-//    	filter.setToDate(toDate);
-//        criteriaBuilder.appendDateRange("field", filter);
-//        assertEquals("(PREFIX.field >= '1969-12-31 21:00:00' AND PREFIX.field < '1969-12-31 21:16:40' ) ", criteriaBuilder.getCriteriaAsString());
-//    }
-//    
     @Before
     public void setUp() {
         criteriaBuilder = new OrmCriteriaBuilder("PREFIX");

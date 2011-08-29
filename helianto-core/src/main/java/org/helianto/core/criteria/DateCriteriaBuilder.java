@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.helianto.core.filter.DateInterval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +63,15 @@ public class DateCriteriaBuilder extends OrmCriteriaBuilder {
     /**
      * Append from date range.
      * 
+     * @param dateInterval
+     */
+    public OrmCriteriaBuilder appendFromDateRange(DateInterval dateInterval) {
+    	return appendFromDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());
+	}
+
+    /**
+     * Append from date range.
+     * 
      * @param fromDate
      * @param toDate
      * @param interval
@@ -69,8 +79,8 @@ public class DateCriteriaBuilder extends OrmCriteriaBuilder {
     public OrmCriteriaBuilder appendFromDateRange(Date fromDate, Date toDate, int interval) {
         if (fromDate!=null) {
         	appendSegment(getDateFieldName(), ">=");
-        	if (interval<0 && toDate!=null) {
-        		append(newCalendar(toDate, interval).getTime());
+        	if (interval<0) {
+        		append(newCalendar(fromDate, interval).getTime());
         	}
         	else {
             	append(fromDate);
@@ -88,6 +98,15 @@ public class DateCriteriaBuilder extends OrmCriteriaBuilder {
     /**
      * Append to date range.
      * 
+     * @param dateInterval
+     */
+    public OrmCriteriaBuilder appendToDateRange(DateInterval dateInterval) {
+    	return appendToDateRange(dateInterval.getFromDate(), dateInterval.getToDate(), dateInterval.getInterval());
+	}
+
+    /**
+     * Append to date range.
+     * 
      * @param fromDate
      * @param toDate
      * @param interval
@@ -95,8 +114,8 @@ public class DateCriteriaBuilder extends OrmCriteriaBuilder {
     public OrmCriteriaBuilder appendToDateRange(Date fromDate, Date toDate, int interval) {
         if (toDate!=null) {
         	appendAnd(fromDate!=null).appendSegment(getDateFieldName(), "<");
-        	if (interval>0 && fromDate!=null) {
-        		append(newCalendar(fromDate, interval).getTime());
+        	if (interval>0) {
+        		append(newCalendar(toDate, interval).getTime());
         	}
         	else {
         		append(toDate);
