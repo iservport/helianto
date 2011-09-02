@@ -74,7 +74,6 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
     private char userState;
     private boolean accountNonExpired;
     private char createIdentity;
-    private String nature;
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
     private List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>();
@@ -220,28 +219,6 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
 		this.createIdentity = createIdentity.getValue();
 	}
 	
-    /**
-     * Group nature, as a keyword csv.
-     */
-    @Column(length=40)
-	public String getNature() {
-		return nature;
-	}
-	public void setNature(String nature) {
-		this.nature = nature;
-	}
-	
-	@Transient
-	public String[] getNatureAsArray() {
-		if (getNature()!=null) {
-			return getNature().split(",");
-		}
-		return new String[] {};
-	}
-	public void setNatureAsArray(String[] natureArray) {
-		setNature(natureArray.toString().replace("[", "").replace("]", ""));
-	}
-
 	/**
      * Parent associations.
      */
