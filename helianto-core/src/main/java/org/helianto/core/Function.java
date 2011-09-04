@@ -32,6 +32,9 @@ public class Function extends UserGroup {
 	private static final long serialVersionUID = 1L;
     private String functionName;
     private String nature;
+    private int minimalEducationRequirement;
+    private int minimalExperienceRequirement;
+    private boolean experienceOverEducationAcceptable = false;
 //	private Set<CompetenceRequirement> requirements = new HashSet<CompetenceRequirement>(0);
 
 	/** 
@@ -51,6 +54,23 @@ public class Function extends UserGroup {
     	this();
     	setEntity(entity);
     	setUserKey(userKey);
+    }
+    
+    @Transient
+    @Override
+    public char getDiscriminator() {
+    	return 'F';
+    }
+    
+    /**
+     * <<Transient>> Convenient to expose function code as the same as {@link #getUserKey()}.
+     */
+    @Transient
+    public String getFunctionCode() {
+    	if (getUserKey()!=null) {
+    		return getUserKey();
+    	}
+    	return "";
     }
     
     /**
@@ -84,6 +104,44 @@ public class Function extends UserGroup {
 	}
 	public void setNatureAsArray(String[] natureArray) {
 		setNature(natureArray.toString().replace("[", "").replace("]", ""));
+	}
+	
+	/**
+	 * Education minimal requirement.
+	 * 
+	 * <p>
+	 * Years spent on basic degree required as a minimum to perform the function.
+	 * </p>
+	 */
+	public int getMinimalEducationRequirement() {
+		return minimalEducationRequirement;
+	}
+	public void setMinimalEducationRequirement(int minimalEducationRequirement) {
+		this.minimalEducationRequirement = minimalEducationRequirement;
+	}
+	
+	/**
+	 * Experience minimal requirement.
+	 * 
+	 * <p>
+	 * Years of experience required as a minimum to perform the function.
+	 * </p>
+	 */
+	public int getMinimalExperienceRequirement() {
+		return minimalExperienceRequirement;
+	}
+	public void setMinimalExperienceRequirement(int minimalExperienceRequirement) {
+		this.minimalExperienceRequirement = minimalExperienceRequirement;
+	}
+	
+	/**
+	 * True if minimal experience can override minimal education.
+	 */
+	public boolean isExperienceOverEducationAcceptable() {
+		return experienceOverEducationAcceptable;
+	}
+	public void setExperienceOverEducationAcceptable(boolean experienceOverEducationAcceptable) {
+		this.experienceOverEducationAcceptable = experienceOverEducationAcceptable;
 	}
 
     /**
