@@ -70,10 +70,16 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
     private int id;
     private Entity entity;
     private String userKey;
+    private String userName;
     private Date lastEvent;
     private char userState;
     private boolean accountNonExpired;
     private char createIdentity;
+    private String nature;
+    // function fields
+    private int minimalEducationRequirement;
+    private int minimalExperienceRequirement;
+
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
     private List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>();
@@ -163,6 +169,25 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
     }
 
     /**
+     * User name.
+     */
+    @Column(length=64)
+	public String getUserName() {
+		return getInternalUserName();
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	/**
+	 * Defaults to userName field.
+	 */
+	@Transient
+	protected String getInternalUserName() {
+		return userName;
+	}
+	
+    /**
      * <<Transient>> Subclasses may override to customize userKey creation.
      */
     @Transient
@@ -217,6 +242,56 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
 	}
 	public void setCreateIdentity(CreateIdentity createIdentity) {
 		this.createIdentity = createIdentity.getValue();
+	}
+	
+    /**
+     * Group nature, as a keyword csv.
+     */
+    @Column(length=40)
+	public String getNature() {
+		return nature;
+	}
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
+	
+	@Transient
+	public String[] getNatureAsArray() {
+		if (getNature()!=null) {
+			return getNature().split(",");
+		}
+		return new String[] {};
+	}
+	public void setNatureAsArray(String[] natureArray) {
+		setNature(natureArray.toString().replace("[", "").replace("]", ""));
+	}
+	
+	/**
+	 * Education minimal requirement.
+	 * 
+	 * <p>
+	 * Years spent on basic degree required as a minimum to perform the function.
+	 * </p>
+	 */
+	public int getMinimalEducationRequirement() {
+		return minimalEducationRequirement;
+	}
+	public void setMinimalEducationRequirement(int minimalEducationRequirement) {
+		this.minimalEducationRequirement = minimalEducationRequirement;
+	}
+	
+	/**
+	 * Experience minimal requirement.
+	 * 
+	 * <p>
+	 * Years of experience required as a minimum to perform the function.
+	 * </p>
+	 */
+	public int getMinimalExperienceRequirement() {
+		return minimalExperienceRequirement;
+	}
+	public void setMinimalExperienceRequirement(int minimalExperienceRequirement) {
+		this.minimalExperienceRequirement = minimalExperienceRequirement;
 	}
 	
 	/**

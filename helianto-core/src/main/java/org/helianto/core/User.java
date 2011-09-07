@@ -145,7 +145,7 @@ public class User extends UserGroup implements PersonalEntity {
     }
     
     /**
-     * "<Transient>> User principal name.
+     * "<<Transient>> User principal name.
      */
     @Transient
     public String getUserPrincipalName() {
@@ -153,6 +153,15 @@ public class User extends UserGroup implements PersonalEntity {
     		return getIdentity().getPrincipalName();
     	}
         return "";
+    }
+    
+    /**
+     * "<<Transient>> Set user principal name as userName.
+     */
+    @Transient
+    @Override
+    protected String getInternalUserName() {
+    	return getUserPrincipalName();
     }
     /**
      * User principal domain.
