@@ -16,6 +16,7 @@
 package org.helianto.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -263,7 +264,7 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
 		return new String[] {};
 	}
 	public void setNatureAsArray(String[] natureArray) {
-		setNature(natureArray.toString().replace("[", "").replace("]", ""));
+		setNature(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
 	}
 	
 	/**
