@@ -16,53 +16,45 @@
 
 package org.helianto.core.filter;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Service;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
+import org.helianto.core.filter.form.ServiceForm;
 
 /**
  * Service filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
- * @see ServiceFormFilterAdapter
  */
-public class ServiceFilterAdapter extends AbstractRootFilterAdapter<Service> {
+public class ServiceFormFilterAdapter extends AbstractRootFilterAdapter<ServiceForm> {
 
 	private static final long serialVersionUID = 1L;
     
     /**
      * Default constructor.
      * 
-     * @param service
+     * @param form
      */
-    public ServiceFilterAdapter(Service service) {
-    	super(service);
-    }
-
-    /**
-     * Key constructor.
-     * 
-     * @param operator
-     * @param serviceName
-     */
-    public ServiceFilterAdapter(Operator operator, String serviceName) {
-    	super(new Service(operator, serviceName));
+    public ServiceFormFilterAdapter(ServiceForm form) {
+    	super(form);
     }
 
 	public boolean isSelection() {
-		return getForm().getServiceName().length()>0;
+		return getForm().getOperator()!=null 
+				&& getForm().getOperator().getId()>0
+				&& getForm().getServiceName()!=null 
+				&& getForm().getServiceName().length()>0;
 	}
 
 	public void reset() { }
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("serviceName", getForm().getServiceName(), mainCriteriaBuilder);
+		appendLikeFilter("serviceName", getForm().getServiceNameLike(), mainCriteriaBuilder);
 	}
 
 	@Override
-	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("serviceName", getForm().getServiceName(), mainCriteriaBuilder);
+	}
 
 }

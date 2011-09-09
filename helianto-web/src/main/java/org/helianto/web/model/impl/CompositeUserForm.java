@@ -1,0 +1,151 @@
+package org.helianto.web.model.impl;
+
+import java.util.Collection;
+import java.util.HashSet;
+
+import org.helianto.core.Entity;
+import org.helianto.core.Identity;
+import org.helianto.core.User;
+import org.helianto.core.UserGroup;
+import org.helianto.core.filter.form.UserGroupForm;
+
+/**
+ * Concrete user form.
+ * 
+ * @author mauriciofernandesdecastro
+ */
+public class CompositeUserForm implements UserGroupForm {
+
+    private static final long serialVersionUID = 1L;
+    private Class<? extends UserGroup> clazz;
+    private Entity entity;
+    private String userKey;
+    private UserGroup parent;
+    private String parentUserKey;
+    private char userState;
+    private char userType;
+    private Identity identity;
+	private Collection<Identity> exclusions;
+
+	/** 
+	 * Empty constructor.
+	 */
+    public CompositeUserForm() {
+    }
+    
+	/** 
+	 * Key constructor.
+	 * 
+	 * @param entity
+	 * @param userKey
+	 */
+    public CompositeUserForm(Entity entity, String userKey) {
+    	this();
+    	setEntity(entity);
+    	setUserKey(userKey);
+    }
+    
+	/** 
+	 * Entity constructor.
+	 * 
+	 * @param parent
+	 */
+    public CompositeUserForm(UserGroup parent) {
+    	this(parent.getEntity(), "");
+    	setParent(parent);
+    }
+    
+    public void reset() {
+    	setUserState(' ');
+    	setUserType(' ');
+    	setExclusions(new HashSet<Identity>(0));
+    }
+    
+    /**
+     * Entity.
+     */
+    public Entity getEntity() {
+		return entity;
+	}
+    public void setEntity(Entity entity) {
+		this.entity = entity;
+	}
+
+	public String getUserKey() {
+		return userKey;
+	}
+	public void setUserKey(String userKey) {
+		this.userKey = userKey;
+	}
+
+	public UserGroup getParent() {
+		return parent;
+	}
+	public void setParent(UserGroup parent) {
+		this.parent = parent;
+	}
+	
+	public String getParentUserKey() {
+		return parentUserKey;
+	}
+	public void setParentUserKey(String parentUserKey) {
+		this.parentUserKey = parentUserKey;
+	}
+
+    public char getUserType() {
+        return this.userType;
+    }
+    public void setUserType(char userType) {
+        this.userType = userType;
+    }
+
+    public char getUserState() {
+        return this.userState;
+    }
+    public void setUserState(char userState) {
+        this.userState = userState;
+    }
+    
+	public Class<? extends UserGroup> getClazz() {
+		return this.clazz;
+	}
+	public void setClazz(Class<? extends UserGroup> clazz) {
+		this.clazz = clazz;
+	}
+
+	public char getDiscriminator() {
+		if (clazz.equals(UserGroup.class)) {
+			return 'G'; 
+		}
+		if (clazz.equals(User.class)) {
+			return 'U'; 
+		}
+		return ' ';
+	}
+	public void setDiscriminator(char discriminator) {
+		if (discriminator=='G') {
+			clazz = UserGroup.class; 
+		}
+		else if (discriminator=='U') {
+			clazz = User.class; 
+		}
+		else {
+			clazz = null;
+		}
+	}
+	
+    public Identity getIdentity() {
+        return this.identity;
+    }
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
+    }
+    
+    public Collection<Identity> getExclusions() {
+        return exclusions;
+    }
+    public void setExclusions(Collection<Identity> exclusions) {
+        this.exclusions = exclusions;
+    }
+    
+}

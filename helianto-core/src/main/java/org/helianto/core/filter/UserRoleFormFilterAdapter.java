@@ -1,57 +1,40 @@
 package org.helianto.core.filter;
 
-import java.util.List;
-
-import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
+import org.helianto.core.filter.form.UserRoleForm;
 
 /**
  * User role filter adapter.
  * 
  * @author mauriciofernandesdecastro
- * @deprecated
- * @see UserRoleFormFilterAdapter
  */
-public class UserRoleFilterAdapter extends AbstractFilterAdapter<UserRole> {
+public class UserRoleFormFilterAdapter extends AbstractFilterAdapter<UserRoleForm> {
 
 	private static final long serialVersionUID = 1L;
-	private List<UserGroup> parentList;
 
 	/**
 	 * Default constructor.
 	 * 
 	 * @param filter
 	 */
-	public UserRoleFilterAdapter(UserRole filter) {
+	public UserRoleFormFilterAdapter(UserRoleForm filter) {
 		super(filter);
 	}
 
-	/**
-	 * Key constructor.
-	 * 
-     * @param user
-     * @param service
-     * @param serviceExtension
-	 */
-	public UserRoleFilterAdapter(UserGroup user, Service service, String serviceExtension) {
-		super(new UserRole(user, service, serviceExtension));
-	}
-
 	public void reset() { 
-		getForm().setActivityState(' ');
+		getForm().reset();
 	}
 	
 	@Override
 	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
-		if (getParentList()!=null && getParentList().size()>0) {
+		if (getForm().getParentList()!=null && getForm().getParentList().size()>0) {
 			mainCriteriaBuilder.appendAnd().appendSegment("userGroup.id", "in");
-			int[] parentIdArray = new int[getParentList().size()];
+			int[] parentIdArray = new int[getForm().getParentList().size()];
 			int i = 0;
-			for (UserGroup parent: getParentList()) {
+			for (UserGroup parent: getForm().getParentList()) {
 				parentIdArray[i++] = parent.getId();
 			}
 			mainCriteriaBuilder.append(parentIdArray);
@@ -75,7 +58,7 @@ public class UserRoleFilterAdapter extends AbstractFilterAdapter<UserRole> {
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getUserGroup()!=null) {
+		if (getForm().getUserGroup()!=null && (getForm().getParentList()==null || getForm().getParentList().isEmpty())) {
 			appendEqualFilter("userGroup.id", getForm().getUserGroup().getId(), mainCriteriaBuilder);
 		}
 		if (getForm().getService()!=null) {
@@ -85,14 +68,4 @@ public class UserRoleFilterAdapter extends AbstractFilterAdapter<UserRole> {
 		appendEqualFilter("activityState", getForm().getActivityState(), mainCriteriaBuilder);
 	}
 	
-	/**
-	 * List of parent user groups.
-	 */
-	public List<UserGroup> getParentList() {
-		return parentList;
-	}
-	public void setParentList(List<UserGroup> parentList) {
-		this.parentList = parentList;
-	}
-
 }

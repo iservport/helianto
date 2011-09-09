@@ -33,6 +33,8 @@ import org.slf4j.LoggerFactory;
  * Filter adapter to <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
+ * @see UserFormFilterAdapter
  */
 public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
 
