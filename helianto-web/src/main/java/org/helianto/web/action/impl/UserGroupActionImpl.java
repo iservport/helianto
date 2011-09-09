@@ -4,14 +4,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.UserFilterAdapter;
+import org.helianto.core.filter.UserFormFilterAdapter;
+import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
-import org.helianto.web.action.PageModel;
+import org.helianto.web.model.impl.UserModelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -27,30 +27,23 @@ public class UserGroupActionImpl extends AbstractFilterAction<UserGroup> {
 
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * Force the model name for this bean (and subclasses) as "user".
-	 * 
-	 * <p>
-	 * This is usually defined by the default naming convention.
-	 * </p>
-	 */
 	@Override
 	protected String getModelName() {
-		return "userModel";
+		return userModelBuilder.getModelName();
 	}
 
 	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		PageModel<User> model = getModel(attributes);
-		UserFilterAdapter filter = new UserFilterAdapter(model.getForm());
+		UserFormFilterAdapter filter = new UserFormFilterAdapter(userModelBuilder.getForm(attributes));
 		logger.debug("Created userGroupFilter {}.",filter);
 		return filter;
 	}
 	
 	@Override
 	protected List<UserGroup> doFilter(MutableAttributeMap attributes, Filter filter) {
-		((UserFilterAdapter) filter).setClazz(UserGroup.class);
-		((UserFilterAdapter) filter).setParent(null);
+		UserGroupForm form = userModelBuilder.getForm(attributes);
+		form.setClazz(UserGroup.class);
+		form.setParent(null);
 		logger.debug("Filter restricted to UserGroup.class");
 		return doFilter(filter);
 	}
@@ -74,10 +67,16 @@ public class UserGroupActionImpl extends AbstractFilterAction<UserGroup> {
 	// collabs
 	
 	private UserMgr userMgr;
-
+	protected UserModelBuilder userModelBuilder;
+	
 	@Resource
 	public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;
+	}
+
+	@Resource
+	public void setUserModelBuilder(UserModelBuilder userModelBuilder) {
+		this.userModelBuilder = userModelBuilder;
 	}
 
 	private final static Logger logger = LoggerFactory.getLogger(UserGroupActionImpl.class);

@@ -12,6 +12,8 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * User model action.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
+ * @see UserModelBuilder
  */
 @Component("userModelAction")
 public class UserModelActionImpl extends AbstractModelAction<User> {

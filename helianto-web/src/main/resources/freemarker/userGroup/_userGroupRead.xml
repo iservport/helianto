@@ -14,7 +14,7 @@
 	<on-start>
 		<set name="flowScope.basePath" value="'userGroup/'" />
 		<set name="flowScope.assign"   value="'assign'" />
-		<evaluate expression="userModelAction.createModel(flowScope, currentUser.principal)" />
+		<evaluate expression="userModelBuilder.createFormModel(flowScope, currentUser.principal)" />
 	</on-start>
 	
 	<action-state id="service.filter">

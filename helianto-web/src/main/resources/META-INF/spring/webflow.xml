@@ -74,4 +74,6 @@
 	 
 	 <bean id="modelActionNamingConventionStrategy" class="org.helianto.web.action.ModelActionNamingConventionStrategy" />
 	 
+	 <bean id="userModelBuilder" class="org.helianto.web.model.impl.UserModelBuilder" />
+	 
 </beans>

@@ -7,6 +7,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractAction;
+import org.helianto.web.model.impl.UserModelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class UserGroupAssociationActionImpl extends AbstractAction<UserAssociati
 	
 	@Override
 	protected String getModelName() {
-		return "userModel";
+		return userModelBuilder.getModelName();
 	}
 
 	@Override
@@ -61,12 +62,18 @@ public class UserGroupAssociationActionImpl extends AbstractAction<UserAssociati
 	// collabs
 	
 	protected UserMgr userMgr;
-
+	protected UserModelBuilder userModelBuilder;
+	
 	@Resource
 	public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;
 	}
-	
+
+	@Resource
+	public void setUserModelBuilder(UserModelBuilder userModelBuilder) {
+		this.userModelBuilder = userModelBuilder;
+	}
+
 	private final static Logger logger = LoggerFactory.getLogger(UserGroupAssociationActionImpl.class);
 
 }

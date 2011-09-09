@@ -1,31 +1,31 @@
 package org.helianto.web.model.impl;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.User;
+import org.helianto.core.Operator;
+import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
-import org.helianto.core.filter.form.UserGroupForm;
+import org.helianto.core.filter.form.AbstractUserForm;
+import org.helianto.core.filter.form.ServiceForm;
+import org.helianto.core.filter.form.UserRoleForm;
 
 /**
- * Concrete user form.
+ * Composite user form.
  * 
  * @author mauriciofernandesdecastro
  */
-public class CompositeUserForm implements UserGroupForm {
+public class CompositeUserForm extends AbstractUserForm implements UserRoleForm, ServiceForm {
 
     private static final long serialVersionUID = 1L;
-    private Class<? extends UserGroup> clazz;
-    private Entity entity;
-    private String userKey;
-    private UserGroup parent;
-    private String parentUserKey;
-    private char userState;
-    private char userType;
-    private Identity identity;
-	private Collection<Identity> exclusions;
+    private Operator operator;
+	private UserGroup userGroup;
+	private List<UserGroup> parentList;
+	private Service service;
+	private String serviceExtension;
+	private char activityState = ' ';
+    private String serviceName;
+    private String serviceNameLike;
 
 	/** 
 	 * Empty constructor.
@@ -55,97 +55,66 @@ public class CompositeUserForm implements UserGroupForm {
     	setParent(parent);
     }
     
-    public void reset() {
-    	setUserState(' ');
-    	setUserType(' ');
-    	setExclusions(new HashSet<Identity>(0));
-    }
-    
     /**
-     * Entity.
+     * If entity is not null, use the entity operator.
      */
-    public Entity getEntity() {
-		return entity;
+    public Operator getOperator() {
+    	if (getEntity()!=null) {
+    		this.operator = getEntity().getOperator();
+    	}
+		return operator;
 	}
-    public void setEntity(Entity entity) {
-		this.entity = entity;
+    public void setOperator(Operator operator) {
+		this.operator = operator;
+	}
+    
+	public UserGroup getUserGroup() {
+		return userGroup;
+	}
+	public void setUserGroup(UserGroup userGroup) {
+		this.userGroup = userGroup;
 	}
 
-	public String getUserKey() {
-		return userKey;
+	public List<UserGroup> getParentList() {
+		return parentList;
 	}
-	public void setUserKey(String userKey) {
-		this.userKey = userKey;
+	public void setParentList(List<UserGroup> parentList) {
+		this.parentList = parentList;
 	}
 
-	public UserGroup getParent() {
-		return parent;
+	public Service getService() {
+		return service;
 	}
-	public void setParent(UserGroup parent) {
-		this.parent = parent;
+	public void setService(Service service) {
+		this.service = service;
+	}
+
+	public String getServiceExtension() {
+		return serviceExtension;
+	}
+	public void setServiceExtension(String serviceExtension) {
+		this.serviceExtension = serviceExtension;
+	}
+
+	public char getActivityState() {
+		return activityState;
+	}
+	public void setActivityState(char activityState) {
+		this.activityState = activityState;
 	}
 	
-	public String getParentUserKey() {
-		return parentUserKey;
+	public String getServiceName() {
+		return serviceName;
 	}
-	public void setParentUserKey(String parentUserKey) {
-		this.parentUserKey = parentUserKey;
-	}
-
-    public char getUserType() {
-        return this.userType;
-    }
-    public void setUserType(char userType) {
-        this.userType = userType;
-    }
-
-    public char getUserState() {
-        return this.userState;
-    }
-    public void setUserState(char userState) {
-        this.userState = userState;
-    }
-    
-	public Class<? extends UserGroup> getClazz() {
-		return this.clazz;
-	}
-	public void setClazz(Class<? extends UserGroup> clazz) {
-		this.clazz = clazz;
-	}
-
-	public char getDiscriminator() {
-		if (clazz.equals(UserGroup.class)) {
-			return 'G'; 
-		}
-		if (clazz.equals(User.class)) {
-			return 'U'; 
-		}
-		return ' ';
-	}
-	public void setDiscriminator(char discriminator) {
-		if (discriminator=='G') {
-			clazz = UserGroup.class; 
-		}
-		else if (discriminator=='U') {
-			clazz = User.class; 
-		}
-		else {
-			clazz = null;
-		}
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
 	}
 	
-    public Identity getIdentity() {
-        return this.identity;
-    }
-    public void setIdentity(Identity identity) {
-        this.identity = identity;
-    }
-    
-    public Collection<Identity> getExclusions() {
-        return exclusions;
-    }
-    public void setExclusions(Collection<Identity> exclusions) {
-        this.exclusions = exclusions;
-    }
+	public String getServiceNameLike() {
+		return serviceNameLike;
+	}
+	public void setServiceNameLike(String serviceNameLike) {
+		this.serviceNameLike = serviceNameLike;
+	}
     
 }

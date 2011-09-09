@@ -1,10 +1,7 @@
 package org.helianto.web.model.impl;
 
-import org.helianto.core.Identity;
-import org.helianto.core.User;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.web.model.AbstractPageModelBuilder;
-import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
 /**
@@ -12,12 +9,12 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * 
  * @author mauriciofernandesdecastro
  */
-@Component("userModelBuilder")
-public class UserModelBuilder extends AbstractPageModelBuilder<User> {
+public class UserModelBuilder extends AbstractPageModelBuilder<CompositeUserForm> {
 
 	@Override
-	protected User doCreateForm(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new User(userDetails.getEntity(), (Identity) null);
+	protected CompositeUserForm doCreateForm(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		CompositeUserForm form = new CompositeUserForm(userDetails.getEntity(), "");
+		return form;
 	}
 
 }

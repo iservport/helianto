@@ -8,10 +8,12 @@ import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.UserRoleFilterAdapter;
+import org.helianto.core.filter.UserRoleFormFilterAdapter;
+import org.helianto.core.filter.form.UserRoleForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
+import org.helianto.web.model.impl.UserModelBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
@@ -27,9 +29,9 @@ public class UserGroupRoleActionImpl extends AbstractFilterAction<UserRole> {
 	
 	@Override
 	protected String getModelName() {
-		return "userModel";
+		return userModelBuilder.getModelName();
 	}
-	
+
 	@Override
 	protected String getTargetName() {
 		return "userRole";
@@ -37,7 +39,7 @@ public class UserGroupRoleActionImpl extends AbstractFilterAction<UserRole> {
 	
 	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new UserRoleFilterAdapter(new UserRole());
+		return new UserRoleFormFilterAdapter(userModelBuilder.getForm(attributes));
 	}
 	
 	@Override
@@ -45,7 +47,8 @@ public class UserGroupRoleActionImpl extends AbstractFilterAction<UserRole> {
 		UserGroup userGroup = getOwner(attributes);
 		List<UserGroup> parentList = userMgr.findParentChain(userGroup);
 		attributes.put("parentList", parentList);
-		((UserRoleFilterAdapter) filter).setParentList(parentList);
+		UserRoleForm form = userModelBuilder.getForm(attributes);
+		form.setParentList(parentList);
 		return doFilter(filter);
 	}
 	
@@ -85,10 +88,16 @@ public class UserGroupRoleActionImpl extends AbstractFilterAction<UserRole> {
 	// collabs
 	
 	private UserMgr userMgr;
+	protected UserModelBuilder userModelBuilder;
 	
 	@Resource
 	public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;
 	}
 
+	@Resource
+	public void setUserModelBuilder(UserModelBuilder userModelBuilder) {
+		this.userModelBuilder = userModelBuilder;
+	}
+	
 }

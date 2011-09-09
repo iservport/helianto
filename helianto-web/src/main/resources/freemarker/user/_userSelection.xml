@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
-        parent="_userShow">
+        parent="_userRead">
 
 	<secured attributes="ROLE_ADMIN, ROLE_USER" />
 	
@@ -38,7 +38,7 @@
 			</transition>
 		
 		<transition on="showUserGroup"
-		            to="userGroupShow.subflow" />
+		            to="userGroupRead.subflow" />
 		
 		<transition on="selectUser" 
 		            to="userRole.filter" >
@@ -71,7 +71,7 @@
 		<transition on="toReturn" to="selection.view" />
 	</subflow-state>
 
-	<subflow-state id="userGroupShow.subflow" subflow="_userGroupShow">
+	<subflow-state id="userGroupRead.subflow" subflow="_userGroupRead">
 		<input name="userGroup" />
 		<transition on="toCommit" to="userGroup.filter" />
 		<transition on="toReturn" to="selection.view" />

@@ -27,7 +27,7 @@ public abstract class AbstractPageModelBuilder<F> implements PageModelBuilder<F>
 		.append("Model").toString();
 	}
 
-	public PageModel<F> createFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+	public PageModel<? extends F> createFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		F form = doCreateForm(attributes, userDetails);
 		PageModel<F> model =  new PageModel<F>(form);
 		attributes.put(getModelName(), model);

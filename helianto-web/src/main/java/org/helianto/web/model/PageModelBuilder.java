@@ -21,8 +21,15 @@ public interface PageModelBuilder<F> extends ModelBuilder<F> {
 	 * @param attributes
 	 * @param userDetails
 	 */
-	public PageModel<F> createFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails);
+	public PageModel<? extends F> createFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails);
 	
+	/**
+	 * Add a page.
+	 * 
+	 * @param attributes
+	 * @param pageName
+	 * @param list
+	 */
 	public void addPage(MutableAttributeMap attributes, String pageName, List<?> list);
 	
 }

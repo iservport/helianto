@@ -24,7 +24,7 @@ public interface ModelBuilder<F> {
 	 * @param attributes
 	 * @param userDetails
 	 */
-	public FormModel<F> createFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails);
+	public FormModel<? extends F> createFormModel(MutableAttributeMap attributes, PublicUserDetails userDetails);
 	
 	/**
 	 * Get the form.
