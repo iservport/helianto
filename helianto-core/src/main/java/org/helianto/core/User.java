@@ -173,16 +173,6 @@ public class User extends UserGroup implements PersonalEntity {
     	}
         return "";
     }
-    /**
-     * UserName.
-     */
-    @Transient
-    public String getUserName() {
-    	if (getIdentity()!=null) {
-            return getIdentity().getIdentityName();
-    	}
-        return "";
-    }
 
     /**
      * UserType getter.
