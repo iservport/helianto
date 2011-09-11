@@ -2,6 +2,7 @@ package org.helianto.core.filter.form;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Identity;
@@ -20,6 +21,7 @@ public abstract class AbstractUserForm implements UserGroupForm {
     private Class<? extends UserGroup> clazz;
     private String userKey;
     private UserGroup parent;
+	private List<UserGroup> parentList;
     private String parentUserKey;
     private char userState = ' ';
     private char userType = ' ';
@@ -53,6 +55,13 @@ public abstract class AbstractUserForm implements UserGroupForm {
 		this.parent = parent;
 	}
 	
+	public List<UserGroup> getParentList() {
+		return parentList;
+	}
+	public void setParentList(List<UserGroup> parentList) {
+		this.parentList = parentList;
+	}
+
 	public String getParentUserKey() {
 		return parentUserKey;
 	}

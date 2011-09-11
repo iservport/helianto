@@ -123,6 +123,7 @@ public class UserFormFilterAdapterTests {
 		    private Class<? extends UserGroup> clazz;
 			private Collection<Identity> exclusions;
 		    private UserGroup parent;
+		    private List<UserGroup> parentList;
 		    
 		    public void reset() { }
 
@@ -137,6 +138,12 @@ public class UserFormFilterAdapterTests {
 			}
 			public void setParent(UserGroup parent) {
 				this.parent = parent;
+			}
+			public List<UserGroup> getParentList() {
+				return parentList;
+			}
+			public void setParentList(List<UserGroup> parentList) {
+				this.parentList = parentList;
 			}
 			public String getParentUserKey() {
 				return parentUserKey;
