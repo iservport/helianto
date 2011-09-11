@@ -49,8 +49,7 @@ public class UserRoleFormFilterAdapterTests {
     
     @Test
     public void select() {
-    	userGroup = new UserGroup(EntityTestSupport.createEntity(), "UG");
-    	userGroup.setId(1);
+    	form.setParent(userGroup);
     	service = new Service(OperatorTestSupport.createOperator(), "SERVICE");
     	service.setId(2);
     	serviceExtension = "EXT";
@@ -59,8 +58,6 @@ public class UserRoleFormFilterAdapterTests {
     
     @Test
     public void parentList() {
-    	userGroup = new UserGroup(EntityTestSupport.createEntity(), "UG");
-    	userGroup.setId(1);
     	UserGroup parentGroup = new UserGroup(userGroup.getEntity(), "PG");
     	parentGroup.setId(10);
     	List<UserGroup> parentList = new ArrayList<UserGroup>();
@@ -72,28 +69,33 @@ public class UserRoleFormFilterAdapterTests {
     
     @Test
     public void activityState() {
-    	userGroup = new UserGroup(EntityTestSupport.createEntity(), "UG");
-    	userGroup.setId(1);
+    	form.setParent(userGroup);
     	activityState = ActivityState.CANCELLED.getValue();
     	assertEquals(C0+C5, filter.createCriteriaAsString());
     }
     
     private UserRoleFormFilterAdapter filter;
     private UserRoleForm form;
+    private UserGroup userGroup;
     
-	private UserGroup userGroup;
 	private Service service;
 	private String serviceExtension;
 	private char activityState = ' ';
     
     @Before
     public void setUp() {
+    	userGroup = new UserGroup(EntityTestSupport.createEntity(), "UG");
+    	userGroup.setId(1);
+
     	form = new UserRoleForm() {
+    		private UserGroup parent;
     		private List<UserGroup> parentList;
+    		
+			public UserGroup getParent() { return parent; }
+			public void setParent(UserGroup parent) { this.parent = parent;}
 			public void reset() { }
 			public List<UserGroup> getParentList() { return parentList; }
 			public void setParentList(List<UserGroup> parentList) { this.parentList = parentList; }
-			public UserGroup getUserGroup() { return userGroup; }
 			public Service getService() { return service; }
 			public String getServiceExtension() { return serviceExtension; }
 			public char getActivityState() { return activityState; }

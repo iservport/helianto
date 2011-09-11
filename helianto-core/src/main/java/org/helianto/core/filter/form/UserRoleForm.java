@@ -9,13 +9,8 @@ import org.helianto.core.UserGroup;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface UserRoleForm extends ParentListForm<UserGroup>, Resettable {
+public interface UserRoleForm extends ParentForm<UserGroup>, ParentListForm<UserGroup>, Resettable {
 
-	/**
-	 * User group.
-	 */
-	public UserGroup getUserGroup();
-	
 	/**
 	 * Service.
 	 */

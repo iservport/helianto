@@ -43,7 +43,7 @@ public class UserRoleFormFilterAdapter extends AbstractFilterAdapter<UserRoleFor
 	
 	@Override
 	public boolean isSelection() {
-		return getForm().getUserGroup()!=null 
+		return getForm().getParent()!=null 
 		    && getForm().getService()!=null 
 		    && getForm().getServiceExtension()!=null 
 		    && getForm().getServiceExtension().length()>0;
@@ -51,15 +51,15 @@ public class UserRoleFormFilterAdapter extends AbstractFilterAdapter<UserRoleFor
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("userGroup.id", getForm().getUserGroup().getId(), mainCriteriaBuilder);
+		appendEqualFilter("userGroup.id", getForm().getParent().getId(), mainCriteriaBuilder);
 		appendEqualFilter("service.id", getForm().getService().getId(), mainCriteriaBuilder);
 		appendEqualFilter("serviceExtension", getForm().getServiceExtension(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getUserGroup()!=null && (getForm().getParentList()==null || getForm().getParentList().isEmpty())) {
-			appendEqualFilter("userGroup.id", getForm().getUserGroup().getId(), mainCriteriaBuilder);
+		if (getForm().getParent()!=null && (getForm().getParentList()==null || getForm().getParentList().isEmpty())) {
+			appendEqualFilter("userGroup.id", getForm().getParent().getId(), mainCriteriaBuilder);
 		}
 		if (getForm().getService()!=null) {
 			appendEqualFilter("service.id", getForm().getService().getId(), mainCriteriaBuilder);
