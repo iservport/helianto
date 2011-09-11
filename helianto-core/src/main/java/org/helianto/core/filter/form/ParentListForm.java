@@ -7,7 +7,7 @@ import java.util.List;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface ParentListForm<P> {
+public interface ParentListForm<P> extends ParentForm<P> {
 	
 	/**
 	 * Parent list.
