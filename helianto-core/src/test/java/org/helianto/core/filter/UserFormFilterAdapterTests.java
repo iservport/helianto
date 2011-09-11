@@ -88,15 +88,17 @@ public class UserFormFilterAdapterTests {
 	
 	@Test
 	public void identity() {
-		identity = new Identity("PRINCIPAL");
+		Identity identity = new Identity("PRINCIPAL");
 		identity.setId(1);
+		form.setIdentity(identity);
 		assertEquals(C0+C7+O0, filter.createCriteriaAsString());
 	}
 
 	@Test
 	public void parentIdentity() {
-		identity = new Identity("PRINCIPAL");
+		Identity identity = new Identity("PRINCIPAL");
 		identity.setId(1);
+		form.setIdentity(identity);
 		parentUserKey = "USER";
 		assertEquals(C0+C6+C7+O0, filter.createCriteriaAsString());
 	}
@@ -111,7 +113,6 @@ public class UserFormFilterAdapterTests {
     private String parentUserKey;
     private char userState = ' ';
     private char userType = ' ';
-    private Identity identity;
 
 	@SuppressWarnings("serial")
 	@Before
@@ -124,6 +125,7 @@ public class UserFormFilterAdapterTests {
 			private Collection<Identity> exclusions;
 		    private UserGroup parent;
 		    private List<UserGroup> parentList;
+		    private Identity identity;
 		    
 		    public void reset() { }
 
@@ -182,6 +184,9 @@ public class UserFormFilterAdapterTests {
 			}
 		    public Identity getIdentity() {
 		        return identity;
+		    }
+		    public void setIdentity(Identity identity) {
+		    	this.identity = identity;
 		    }
 		    public Collection<Identity> getExclusions() {
 		        return exclusions;
