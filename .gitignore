@@ -2,4 +2,6 @@ target
 dist
 */target
 */src/main/resources/META-INF/MANIFEST.MF
+.DS_Store
+*/.DS_Store
 
