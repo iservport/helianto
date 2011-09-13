@@ -113,7 +113,7 @@ public class UserMgrImplTests {
     	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(userGroup);
     	verify(userGroupDao);
     	
-    	assertSame(userGroup, expectedUserGroupList.get(0));
+    	assertEquals(0, expectedUserGroupList.size());
 	}
     
 	@Test
@@ -130,8 +130,7 @@ public class UserMgrImplTests {
     	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(user);
     	verify(userGroupDao);
     	
-    	assertSame(user, expectedUserGroupList.get(0));
-    	assertSame(userGroup, expectedUserGroupList.get(1));
+    	assertSame(userGroup, expectedUserGroupList.get(0));
 	}
     
 	@Test

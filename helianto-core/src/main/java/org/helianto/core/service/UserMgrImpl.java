@@ -156,7 +156,7 @@ public class UserMgrImpl implements UserMgr {
     	userGroupDao.saveOrUpdate(userGroup);
     	userGroupDao.refresh(userGroup);
     	List<UserGroup> parentList = new ArrayList<UserGroup>();
-    	parentList.add(userGroup);
+//    	parentList.add(userGroup);
     	if(userGroup.getParentAssociations()!=null) {
     		logger.debug("Parent list for {} has {} item(s).", userGroup,  userGroup.getParentAssociations().size());
     		for (UserAssociation association: userGroup.getParentAssociations()) {

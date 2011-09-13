@@ -185,7 +185,10 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
 	 */
 	@Transient
 	protected String getInternalUserName() {
-		return userName;
+		if (userName!=null && userName.length()>0) {
+			return userName;
+		}
+		return getUserKey();
 	}
 	
     /**
