@@ -42,13 +42,17 @@ public class UserGroupRoleActionImpl extends AbstractFilterAction<UserRole> {
 		return new UserRoleFormFilterAdapter(userModelBuilder.getForm(attributes));
 	}
 	
+	/**
+	 * Update form with a parent list where the first element is the owning userGroup (or user).
+	 */
 	@Override
 	protected List<UserRole> doFilter(MutableAttributeMap attributes, Filter filter) {
-		UserGroup userGroup = getOwner(attributes);
-		List<UserGroup> parentList = userMgr.findParentChain(userGroup);
-		attributes.put("parentList", parentList);
+//		List<UserGroup> parentList = new ArrayList<UserGroup>();
+//		parentList.add(getOwner(attributes));
 		UserRoleForm form = userModelBuilder.getForm(attributes);
-		form.setParentList(parentList);
+//		Collections.addAll(parentList, userModelBuilder.getList(attributes, "userParent").toArray(new UserGroup[0]));
+//		form.setParentList(parentList);
+		form.setParent(getOwner(attributes));
 		return doFilter(filter);
 	}
 	
@@ -87,7 +91,7 @@ public class UserGroupRoleActionImpl extends AbstractFilterAction<UserRole> {
 	
 	// collabs
 	
-	private UserMgr userMgr;
+	protected UserMgr userMgr;
 	protected UserModelBuilder userModelBuilder;
 	
 	@Resource

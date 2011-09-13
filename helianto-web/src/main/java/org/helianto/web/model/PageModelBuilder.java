@@ -32,4 +32,12 @@ public interface PageModelBuilder<F> extends ModelBuilder<F> {
 	 */
 	public void addPage(MutableAttributeMap attributes, String pageName, List<?> list);
 	
+	/**
+	 * Get list.
+	 * 
+	 * @param attributes
+	 * @param pageName
+	 */
+	public <L> List<L> getList(MutableAttributeMap attributes, String pageName);
+	
 }

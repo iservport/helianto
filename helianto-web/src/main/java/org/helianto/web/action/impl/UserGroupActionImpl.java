@@ -66,7 +66,7 @@ public class UserGroupActionImpl extends AbstractFilterAction<UserGroup> {
 	
 	// collabs
 	
-	private UserMgr userMgr;
+	protected UserMgr userMgr;
 	protected UserModelBuilder userModelBuilder;
 	
 	@Resource

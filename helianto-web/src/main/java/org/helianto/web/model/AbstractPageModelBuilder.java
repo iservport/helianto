@@ -1,9 +1,11 @@
 package org.helianto.web.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.filter.Listable;
 import org.helianto.core.filter.Page;
 import org.helianto.core.naming.NamingConventionStrategy;
 import org.helianto.core.security.PublicUserDetails;
@@ -68,6 +70,17 @@ public abstract class AbstractPageModelBuilder<F> implements PageModelBuilder<F>
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <L> List<L> getList(MutableAttributeMap attributes, String pageName) {
+		PageModel<F> model = getModel(attributes);
+		Listable page = model.getPage(pageName);
+		if (page!=null) {
+			return ((List<L>) page.getList());
+		}
+		logger.warn("Empty list!");
+		return new ArrayList<L>();
+	}
+
 	// collabs
 	
 	private NamingConventionStrategy modelBuilderNamingConventionStrategy;

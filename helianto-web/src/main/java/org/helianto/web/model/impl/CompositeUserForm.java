@@ -1,7 +1,5 @@
 package org.helianto.web.model.impl;
 
-import java.util.List;
-
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
@@ -20,7 +18,6 @@ public class CompositeUserForm extends AbstractUserForm implements UserRoleForm,
     private static final long serialVersionUID = 1L;
     private Operator operator;
 	private UserGroup userGroup;
-	private List<UserGroup> parentList;
 	private Service service;
 	private String serviceExtension;
 	private char activityState = ' ';
@@ -73,13 +70,6 @@ public class CompositeUserForm extends AbstractUserForm implements UserRoleForm,
 	}
 	public void setUserGroup(UserGroup userGroup) {
 		this.userGroup = userGroup;
-	}
-
-	public List<UserGroup> getParentList() {
-		return parentList;
-	}
-	public void setParentList(List<UserGroup> parentList) {
-		this.parentList = parentList;
 	}
 
 	public Service getService() {

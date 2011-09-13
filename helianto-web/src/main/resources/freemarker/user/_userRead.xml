@@ -17,6 +17,11 @@
 		<evaluate expression="userModelBuilder.createFormModel(flowScope, currentUser.principal)" />
 	</on-start>
 	
+	<action-state id="userParent.filter">
+		<evaluate expression="userParentAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="userRole.filter" />
+	</action-state>
+	
 	<action-state id="userRole.filter">
 		<evaluate expression="userRoleAction.filter(flowScope, currentUser.principal)" />
 		<transition on="success" to="show.view" />
@@ -54,7 +59,7 @@
 	
 	<subflow-state id="userAssociation.subflow" subflow="_userAssociation">
 		<input name="userAssociation" value="flowScope.userAssociation"/>
-		<transition on="toCommit" to="userRole.filter" />
+		<transition on="toCommit" to="userParent.filter" />
 		<transition on="toReturn" to="show.view" />
 	</subflow-state>
 	
@@ -68,7 +73,7 @@
 		<input name="userGroup" value="flowScope.user"/>
 		<input name="userRole"  value="flowScope.userRole"/>
 		<output name="userRole" value="flowScope.userGroupRole"/>
-		<transition on="toCommit" to="userRole.filter" />
+		<transition on="toCommit" to="userParent.filter" />
 		<transition on="toReturn" to="group.view" />
 	</subflow-state>
 	

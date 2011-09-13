@@ -19,6 +19,11 @@
 	
 	<action-state id="service.filter">
 		<evaluate expression="serviceAction.filter(flowScope, currentUser.principal)" />
+		<transition on="success" to="userGroupParent.filter" />
+	</action-state>
+	
+	<action-state id="userGroupParent.filter">
+		<evaluate expression="userParentAction.filter(flowScope, currentUser.principal)" />
 		<transition on="success" to="userGroupRole.filter" />
 	</action-state>
 	

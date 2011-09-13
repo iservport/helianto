@@ -41,7 +41,7 @@
 		            to="userGroupRead.subflow" />
 		
 		<transition on="selectUser" 
-		            to="userRole.filter" >
+		            to="userParent.filter" >
 				<set name="flowScope.user"  value="userModel.pages['user'].item"/>
 			</transition>
 		
