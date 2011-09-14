@@ -301,6 +301,14 @@ public class Identity implements java.io.Serializable {
     public void setMultipartFileContentType(String multipartFileContentType) {
 		this.multipartFileContentType = multipartFileContentType;
 	}
+    
+    /**
+     * Ture if the phot has the image type.
+     */
+    @Transient
+    public boolean isPhotoLoaded() {
+    	return getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("image");
+    }
 
     /**
      * A set of credentials.
