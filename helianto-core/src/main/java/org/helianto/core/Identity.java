@@ -15,6 +15,7 @@
 
 package org.helianto.core;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -42,6 +43,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * An uniquely identified actor.
@@ -310,6 +313,18 @@ public class Identity implements java.io.Serializable {
     	return getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("image");
     }
 
+	@Transient
+    private transient MultipartFile file;
+    
+	/**
+	 * <<Transient>> Convenience method to read uploaded data.
+	 */
+	@Transient
+	public void processFile() throws IOException {
+		setPhoto(file.getBytes());
+		setMultipartFileContentType(file.getContentType());
+	}
+	
     /**
      * A set of credentials.
      */
