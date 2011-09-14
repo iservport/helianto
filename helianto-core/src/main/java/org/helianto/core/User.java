@@ -161,6 +161,9 @@ public class User extends UserGroup implements PersonalEntity {
     @Transient
     @Override
     protected String getInternalUserName() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getIdentityName();
+    	}
     	return getUserPrincipalName();
     }
     /**
