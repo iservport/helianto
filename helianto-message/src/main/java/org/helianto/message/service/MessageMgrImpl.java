@@ -16,18 +16,11 @@
 
 package org.helianto.message.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.helianto.core.Server;
-import org.helianto.core.filter.ServerFilterAdapter;
-import org.helianto.core.repository.FilterDao;
-import org.helianto.message.mail.ConfigurableMailSenderFactory;
 import org.helianto.message.mail.compose.MailMessageComposer;
-import org.helianto.message.mail.compose.PasswordConfirmationMailForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -42,18 +35,6 @@ import org.springframework.stereotype.Service;
 @Service("messageMgr")
 public class MessageMgrImpl implements MessageMgr {
 
-	/**
-	 * @deprecated
-	 */
-    public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
-	    throws MessagingException {
-		ServerFilterAdapter filter = new ServerFilterAdapter(new Server());
-		filter.getForm().setOperator(mailForm.getOperator());
-		List<Server> serverList = (List<Server>) serverDao.find(filter);
-		JavaMailSender sender = configurableMailSenderFactory.create(serverList);
-		sender.send(mailMessageComposer.composeMessage("PASSWORD", mailForm));
-	}
-    
     public void send(String recipient, String sender, String subject, String htmlMessageBody)
     		throws MessagingException {
 		MimeMessage message = mailSender.createMimeMessage();
@@ -68,22 +49,9 @@ public class MessageMgrImpl implements MessageMgr {
     
     // collabs
 
-    private FilterDao<Server> serverDao;
-    private ConfigurableMailSenderFactory configurableMailSenderFactory;
     private MailMessageComposer mailMessageComposer;
     private JavaMailSender mailSender;
     
-    @Resource(name="serverDao")
-    public void setServerDao(FilterDao<Server> serverDao) {
-        this.serverDao = serverDao;
-    }
-
-//    @Resource
-    public void setConfigurableMailSenderFactory(
-            ConfigurableMailSenderFactory configurableMailSenderFactory) {
-        this.configurableMailSenderFactory = configurableMailSenderFactory;
-    }
-
     @Resource(name="basicMailMessageComposer")
     public void setMailMessageComposer(MailMessageComposer mailMessageComposer) {
         this.mailMessageComposer = mailMessageComposer;

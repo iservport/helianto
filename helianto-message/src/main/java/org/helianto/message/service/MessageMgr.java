@@ -18,22 +18,12 @@ package org.helianto.message.service;
 
 import javax.mail.MessagingException;
 
-import org.helianto.message.mail.compose.PasswordConfirmationMailForm;
-
 /**
  * Message service interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
 public interface MessageMgr {
-
-    /**
-     * Send a <code>Credential</code> confirmation mail using 
-     * a <code>PasswordConfirmationMailForm</code>.
-     * @deprecated
-     */
-    public void sendPasswordConfirmation(PasswordConfirmationMailForm mailForm)
-            throws MessagingException;
 
     /**
      * Send a confirmation mail.

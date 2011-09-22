@@ -24,7 +24,7 @@
                
 	<context:component-scan base-package="org.helianto.message.repository,org.helianto.message.mail,org.helianto.message.mail.composer,org.helianto.message.service"/>
 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" />
+   	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" />
 	
 	<bean id="freemarkerConfigurationFactoryBean" 
 		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean" >

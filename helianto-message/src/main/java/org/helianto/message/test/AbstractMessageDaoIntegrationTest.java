@@ -16,7 +16,6 @@
 package org.helianto.message.test;
 
 import org.helianto.document.test.AbstractDocumentDaoIntegrationTest;
-import org.helianto.partner.test.AbstractPartnerDaoIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
