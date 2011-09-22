@@ -17,44 +17,35 @@ package org.helianto.document.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.document.base.AbstractDocument;
+import org.helianto.document.form.DocumentForm;
 
 /**
- * Base to document filter adapters.
+ * Base to document form filter adapters.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
- * @see AbstractDocumentFormFilterAdapter
  */
-// TODO deprecate
-public abstract class AbstractDocumentFilterAdapter<T extends AbstractDocument> extends AbstractTrunkFilterAdapter<T> {
+public abstract class AbstractDocumentFormFilterAdapter<T extends DocumentForm> extends AbstractTrunkFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     
 	/**
 	 * Default constructor.
 	 * 
-	 * @param target
+	 * @param form
 	 */
-    public AbstractDocumentFilterAdapter(T target) {
-		super(target);
-		reset();
-		setOrderByString("docCode");
+    public AbstractDocumentFormFilterAdapter(T form) {
+		super(form);
 	}
     
-    /**
-     * Reset filter.
-     */
 	public void reset() {
-		getForm().setDocName("");
-		getForm().setPriority(' ');
+		getForm().reset();
 	}
 	
 	/**
 	 * True when filter must select a distinct document.
 	 */
 	public boolean isSelection() {
-		return getForm().getDocCode().length()>0;
+		return getForm().getDocCode()!=null && getForm().getDocCode().length()>0;
 	}
 
 	@Override
@@ -66,6 +57,11 @@ public abstract class AbstractDocumentFilterAdapter<T extends AbstractDocument> 
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("docName", getForm().getDocName(), mainCriteriaBuilder);
 		appendPriority(mainCriteriaBuilder);
+	}
+	
+	@Override
+	public String getOrderByString() {
+		return "docCode";
 	}
 	
 	/**

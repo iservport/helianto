@@ -9,7 +9,10 @@ import org.helianto.document.Document;
  * @author mauriciofernandesdecastro
  *
  * @param <T>
+ * @deprecated
+ * @see AbstractCustomDocumentFormFilterAdapter
  */
+// TODO deprecate
 public class DocumentFilterAdapter<T extends Document> extends AbstractDocumentFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;

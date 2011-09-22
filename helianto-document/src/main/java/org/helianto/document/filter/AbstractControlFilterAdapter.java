@@ -25,6 +25,7 @@ import org.helianto.core.filter.base.AbstractFilter;
  * @author Mauricio Fernandes de Castro
  * @deprecated
  */
+// TODO deprecate 
 public abstract class AbstractControlFilterAdapter<T extends Controllable> extends org.helianto.core.filter.base.AbstractControlFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;

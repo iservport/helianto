@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.Document;
+import org.helianto.document.form.AbstractDocumentForm;
+import org.helianto.document.form.DocumentForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,18 +13,16 @@ import org.junit.Test;
  * 
  * @author mauriciofernandesdecastro
  */
-public class DocumentFilterAdapterTests {
+public class DocumentFormFilterAdapterTests {
 	
 	String OB = "order by alias.docCode ";
-	String C1 = "alias.entity.id = 0 ";
+	String C1 = "alias.entity.id = 1 ";
 	String C2 = "AND alias.docCode = 'CODE' ";
 	String C3 = "AND lower(alias.docName) like '%name%' ";
 	String C4 = "AND alias.priority = '0' ";
-	String C5 = "AND alias.series.builderCode = 'CODE' ";
-	String C6 = "AND alias.series.contentType = 'A' ";
 	
 	@Test
-	public void empty() {
+	public void entity() {
 		assertEquals(C1+OB, filter.createCriteriaAsString());
 	}
 	
@@ -45,32 +44,19 @@ public class DocumentFilterAdapterTests {
 		assertEquals(C1+C4+OB, filter.createCriteriaAsString());
 	}
 	
-	@Test
-	public void builderCode() {
-		filter = new DocumentFilterAdapter<Document>(form);
-		((DocumentFilterAdapter<?>) filter).setBuilderCode("CODE");
-		assertEquals(C1+C5+OB, filter.createCriteriaAsString());
-	}
-	
-	@Test
-	public void contentType() {
-		filter = new DocumentFilterAdapter<Document>(form);
-		((DocumentFilterAdapter<?>) filter).setContentType('A');
-		assertEquals(C1+C6+OB, filter.createCriteriaAsString());
-	}
-	
 	// locals
 	
-	private Document form;
-	private AbstractDocumentFilterAdapter<Document> filter;
+	private AbstractDocumentForm form;
+	private AbstractDocumentFormFilterAdapter<DocumentForm> filter;
 	
-	@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
+	@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 	@Before
 	public void setUp() {
 		Entity entity = EntityTestSupport.createEntity();
-		form = new Document(entity, "");
-		filter = new AbstractDocumentFilterAdapter(form) {
-		};
+		entity.setId(1);
+		form = new AbstractDocumentForm() {};
+		form.setEntity(entity);
+		filter = new AbstractDocumentFormFilterAdapter(form) { };
 	}
 
 }
