@@ -20,16 +20,14 @@ import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.document.Serializer;
-import org.helianto.document.base.AbstractSerializer;
+import org.helianto.document.form.SerializerForm;
 
 /**
- * Serializer filter adapter.
+ * Serializer form filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
- * @see SerializerFormFilterAdapter
  */
-public class SerializerFilterAdapter<T extends AbstractSerializer<?>> extends AbstractTrunkFilterAdapter<T> {
+public class SerializerFormFilterAdapter<T extends SerializerForm> extends AbstractTrunkFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     
@@ -38,7 +36,7 @@ public class SerializerFilterAdapter<T extends AbstractSerializer<?>> extends Ab
      * 
      * @param serializer
      */
-    public SerializerFilterAdapter(T serializer) {
+    public SerializerFormFilterAdapter(T serializer) {
 		super(serializer);
     }
 
@@ -49,14 +47,16 @@ public class SerializerFilterAdapter<T extends AbstractSerializer<?>> extends Ab
      * @param builderCode
      */
     @SuppressWarnings("unchecked")
-	public SerializerFilterAdapter(Entity entity, String builderCode) {
+	public SerializerFormFilterAdapter(Entity entity, String builderCode) {
     	super((T) new Serializer(entity, builderCode));
     }
 
-	public void reset() { }
+	public void reset() { 
+		getForm().reset();
+	}
 
 	public boolean isSelection() {
-		return getForm().getBuilderCode().length()>0;
+		return getForm().getBuilderCode()!=null && getForm().getBuilderCode().length()>0;
 	}
 
 	@Override

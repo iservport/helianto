@@ -19,7 +19,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.Serializer;
+import org.helianto.document.form.AbstractCustomDocumentForm;
+import org.helianto.document.form.SerializerForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,35 +29,35 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class SerializerFilterAdapterTests {
+public class SerializerFormFilterAdapterTests {
 	
 	@Test
 	public void empty() {
-		assertEquals("alias.entity.id = 0 ", filter.createCriteriaAsString());
+		assertEquals("alias.entity.id = 1 ", filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void selection() {
-		filter.getForm().setBuilderCode("CODE");
-		assertEquals("alias.entity.id = 0 AND alias.builderCode = 'CODE' ", filter.createCriteriaAsString());
+		((AbstractCustomDocumentForm) form).setBuilderCode("CODE");
+		assertEquals("alias.entity.id = 1 AND alias.builderCode = 'CODE' ", filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void contentType() {
-		filter.getForm().setContentType('X');
-		assertEquals("alias.entity.id = 0 AND alias.contentType = 'X' ", filter.createCriteriaAsString());
+		((AbstractCustomDocumentForm) form).setContentType('X');
+		assertEquals("alias.entity.id = 1 AND alias.contentType = 'X' ", filter.createCriteriaAsString());
 	}
 	
-	private SerializerFilterAdapter<Serializer> filter;
-	private Serializer target;
+	private SerializerFormFilterAdapter<SerializerForm> filter;
+	private SerializerForm form;
 	
+	@SuppressWarnings("serial")
 	@Before
 	public void setUp() {
 		Entity entity = EntityTestSupport.createEntity();
-		target = new Serializer(entity, "");
-		filter = new SerializerFilterAdapter<Serializer>(target);
-		// clean filter
-//		repeatableFilter.getForm().setTrackingMode(' ');
+		entity.setId(1);
+		form = new AbstractCustomDocumentForm(entity) {};
+		filter = new SerializerFormFilterAdapter<SerializerForm>(form);
 	}
 	
 }
