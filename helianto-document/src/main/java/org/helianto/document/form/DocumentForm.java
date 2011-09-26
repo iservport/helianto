@@ -1,14 +1,16 @@
 package org.helianto.document.form;
 
+import org.helianto.core.Prioritizable;
 import org.helianto.core.Resettable;
 import org.helianto.core.TrunkEntity;
+import org.helianto.core.filter.form.SearchForm;
 
 /**
  * Document form.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface DocumentForm extends TrunkEntity, Resettable {
+public interface DocumentForm extends TrunkEntity, SearchForm, Prioritizable, Resettable {
 
 	/**
 	 * Document code.
@@ -19,10 +21,5 @@ public interface DocumentForm extends TrunkEntity, Resettable {
 	 * Document name.
 	 */
 	public String getDocName();
-
-	/**
-	 * Document priority.
-	 */
-	public char getPriority();
 
 }

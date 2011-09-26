@@ -1,5 +1,6 @@
 package org.helianto.document.form;
 
+import org.helianto.core.Entity;
 import org.helianto.document.Serializer;
 
 
@@ -14,6 +15,15 @@ public abstract class AbstractCustomDocumentForm extends AbstractDocumentForm im
 	private Serializer series;
 	private String builderCode;
 	private char contentType;
+	
+	public AbstractCustomDocumentForm() {
+		super();
+	}
+	
+	public AbstractCustomDocumentForm(Entity entity) {
+		this();
+		setEntity(entity);
+	}
 	
 	public void reset() {
 		super.reset();

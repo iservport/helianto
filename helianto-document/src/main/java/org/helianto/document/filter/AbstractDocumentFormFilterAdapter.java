@@ -55,6 +55,7 @@ public abstract class AbstractDocumentFormFilterAdapter<T extends DocumentForm> 
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("docCode", getForm().getSearchString(), mainCriteriaBuilder);
 		appendLikeFilter("docName", getForm().getDocName(), mainCriteriaBuilder);
 		appendPriority(mainCriteriaBuilder);
 	}

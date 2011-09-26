@@ -11,9 +11,27 @@ public abstract class AbstractDocumentForm implements DocumentForm {
 	
 	private static final long serialVersionUID = 1L;
 	private Entity entity;
+	private String searchString;
 	private String docCode;
 	private String docName;
 	private char priority;
+	
+	/**
+	 * Default constructor.
+	 */
+	public AbstractDocumentForm() {
+		reset();
+	}
+	
+	/**
+	 * Entity constructor.
+	 * 
+	 * @param entity
+	 */
+	public AbstractDocumentForm(Entity entity) {
+		this();
+		setEntity(entity);
+	}
 	
 	public void reset() {
 		setDocName("");
@@ -25,6 +43,13 @@ public abstract class AbstractDocumentForm implements DocumentForm {
 	}
 	public void setEntity(Entity entity) {
 		this.entity = entity;
+	}
+	
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
 	}
 	
 	public String getDocCode() {

@@ -7,21 +7,11 @@ import org.helianto.document.Serializer;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface CustomDocumentForm extends DocumentForm {
+public interface CustomDocumentForm extends DocumentForm, SerializerForm {
 	
 	/**
 	 * Series.
 	 */
 	public Serializer getSeries();
-
-	/**
-	 * Content type.
-	 */
-	public char getContentType();
-	
-	/**
-	 * Builder code.
-	 */
-	public String getBuilderCode();
 
 }
