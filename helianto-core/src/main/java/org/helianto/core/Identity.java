@@ -82,6 +82,7 @@ public class Identity implements java.io.Serializable {
         setCreated(new Date());
         setIdentityTypeAsEnum(IdentityType.EMAIL);
         setNotificationAsEnum(Notification.AUTOMATIC);
+        setPhoto(new byte[0]);
     }
 
     /** 
@@ -315,13 +316,24 @@ public class Identity implements java.io.Serializable {
 
 	@Transient
     private transient MultipartFile file;
+	
+	/**
+	 * <<Transient>> Required to allow for file upload.
+	 */
+	@Transient
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
     
 	/**
 	 * <<Transient>> Convenience method to read uploaded data.
 	 */
 	@Transient
 	public void processFile() throws IOException {
-		setPhoto(file.getBytes());
+		setPhoto(getFile().getBytes());
 		setMultipartFileContentType(file.getContentType());
 	}
 	
