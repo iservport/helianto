@@ -15,8 +15,11 @@
 
 package org.helianto.message;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import org.helianto.document.base.AbstractRecord;
 
@@ -30,6 +33,7 @@ public abstract class AbstractFollowUp extends AbstractRecord implements Compara
 
     private static final long serialVersionUID = 1L;
     private String followUpDesc;
+    private char decision;
     private char notificationOption;
 
     /** 
@@ -62,6 +66,50 @@ public abstract class AbstractFollowUp extends AbstractRecord implements Compara
     }
     public void setNotificationOptionAsEnum(NotificationOption notificationOption) {
     	this.notificationOption = notificationOption.getValue();
+    }
+    
+    /**
+     * Decison getter.
+     */
+    public char getDecision() {
+        return this.decision;
+    }
+    public void setDecision(char decision) {
+        this.decision = decision;
+    }
+    
+    /**
+     * Decision as enum.
+     */
+    @Transient
+    public ReviewDecision getDecisionAsEnum() {
+    	for (ReviewDecision d: ReviewDecision.values()) {
+    		if (d.getValue()==getDecision()) {
+    			return d;
+    		}
+    	}
+    	throw new IllegalArgumentException("Invalid decision.");
+    }
+    public void setDecisionAsEnum(ReviewDecision decision) {
+        this.decision = decision.getValue();
+    }
+    
+    /**
+     * The control target.
+     */
+    @Transient
+    public abstract ControlTarget getSubject(); 
+    
+    @Transient
+    public void update() {
+    	setResolutionAsEnum(getDecisionAsEnum().getNextResolution());
+    	getSubject().setResolution(getResolution());
+    }
+    
+    @Transient
+    public void update(Date nextCheckDate) {
+    	getSubject().setComplete(getComplete());
+    	getSubject().setNextCheckDate(nextCheckDate);
     }
     
     /**

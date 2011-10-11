@@ -6,6 +6,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.base.AbstractPrivateControl;
 import org.helianto.message.AbstractFollowUp;
+import org.helianto.message.ControlTarget;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,6 +52,7 @@ public class FollowUpFilterAdapterTests {
 		target = new AbstractFollowUp() {
 			public Entity getEntity() { return entity; }
 			public String getInternalNumberKey() { return "KEY"; }
+			public ControlTarget getSubject() { return null; }
 		};
 		filter = new AbstractFollowUpFilterAdapter<AbstractFollowUp>(target) { };
 	}
