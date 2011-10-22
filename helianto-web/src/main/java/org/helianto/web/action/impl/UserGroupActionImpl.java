@@ -5,8 +5,10 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.UserGroup;
+import org.helianto.core.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.UserFormFilterAdapter;
+import org.helianto.core.filter.form.AbstractUserForm;
 import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
@@ -34,18 +36,13 @@ public class UserGroupActionImpl extends AbstractFilterAction<UserGroup> {
 
 	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		UserFormFilterAdapter filter = new UserFormFilterAdapter(userModelBuilder.getForm(attributes));
-		logger.debug("Created userGroupFilter {}.",filter);
-		return filter;
-	}
-	
-	@Override
-	protected List<UserGroup> doFilter(MutableAttributeMap attributes, Filter filter) {
 		UserGroupForm form = userModelBuilder.getForm(attributes);
+		UserFormFilterAdapter filter = new UserFormFilterAdapter(form);
 		form.setClazz(UserGroup.class);
 		form.setParent(null);
-		logger.debug("Filter restricted to UserGroup.class");
-		return doFilter(filter);
+		((AbstractUserForm) form).setUserState(UserState.ACTIVE.getValue());
+		logger.debug("Created userGroupFilter {}.",filter);
+		return filter;
 	}
 	
 	@SuppressWarnings("unchecked")
