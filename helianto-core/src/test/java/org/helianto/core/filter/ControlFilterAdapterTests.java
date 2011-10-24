@@ -13,15 +13,17 @@
  * limitations under the License.
  */
 
-package org.helianto.document.filter;
+package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
+import org.helianto.core.Controllable;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.document.base.AbstractPrivateControl;
+import org.helianto.core.filter.base.AbstractControlFilterAdapter;
+import org.helianto.core.filter.form.AbstractSequenceableForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,13 +34,10 @@ import org.junit.Test;
  */
 public class ControlFilterAdapterTests {
 	
-	private AbstractControlFilterAdapter<AbstractPrivateControl> controlFilter;
-	private Entity entity;
-	
 	@Test
 	public void empty() {
-		controlFilter.getForm().setNextCheckDate(null);
-		assertEquals("alias.entity.id = 1 ", controlFilter.createCriteriaAsString());
+		controlFilter.getForm().setEntity(null);
+		assertEquals("", controlFilter.createCriteriaAsString());
 	}
 	
 	@Test
@@ -48,21 +47,41 @@ public class ControlFilterAdapterTests {
 	}
 	
 	@Test
+	public void resolution() {
+		resolution = 'P';
+		assertEquals("alias.entity.id = 1 AND alias.resolution = 'P' ", controlFilter.createCriteriaAsString());
+		resolution = 'N';
+		assertEquals("alias.entity.id = 1 AND alias.resolution IN  ('P', 'T') ", controlFilter.createCriteriaAsString());
+	}
+	
+	@Test
 	public void toNextCheckDate() {
-		controlFilter.getForm().setNextCheckDate(new Date(1000l));
+		nextCheckDate = new Date(1000l);
 		assertEquals("alias.entity.id = 1 AND (alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ", controlFilter.createCriteriaAsString());
 	}
+	
+	private AbstractControlFilterAdapter<ControlStub> controlFilter;
+	private Entity entity;
+	private char resolution = ' ';
+	private Date nextCheckDate;
+	private int complete = -1;
 	
 	@SuppressWarnings("serial")
 	@Before
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
-		controlFilter = new AbstractControlFilterAdapter<AbstractPrivateControl>(new AbstractPrivateControl() {
-			public String getInternalNumberKey() { return "KEY"; }
-			public Entity getEntity() { return entity; }
-			}) {
-		};
+		controlFilter = new AbstractControlFilterAdapter<ControlStub>(new ControlStub()) { };
+		controlFilter.getForm().setEntity(entity);
+	}
+	
+	@SuppressWarnings("serial")
+	private class ControlStub extends AbstractSequenceableForm implements Controllable {
+		public String getInternalNumberKey() { return "KEY"; }
+		public char getResolution() { return resolution; }
+		public Date getNextCheckDate() { return nextCheckDate; }
+		public int getComplete() { return complete; }
+		public void reset() { }
 	}
 	
 }

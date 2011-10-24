@@ -19,6 +19,8 @@ import java.util.Date;
 
 import org.helianto.core.Controllable;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class to filters that require a <code>Controllable</code> form.
@@ -66,7 +68,13 @@ public abstract class AbstractControlFilterAdapter <T extends Controllable> exte
 	 * @param mainCriteriaBuilder
 	 */
 	protected void appendResolution(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("resolution", getForm().getResolution(), mainCriteriaBuilder);
+		if (getForm().getResolution()=='N') {
+			mainCriteriaBuilder.appendAnd().appendSegment("resolution", "IN ").append("('P', 'T')");
+			logger.debug("Resolution constrained to not started.");
+		}
+		else {
+			appendEqualFilter("resolution", getForm().getResolution(), mainCriteriaBuilder);
+		}
 	}
 
 	/**
@@ -83,5 +91,7 @@ public abstract class AbstractControlFilterAdapter <T extends Controllable> exte
 	public Date getToDate() {
 		return getForm().getNextCheckDate();
 	}
+	
+	 private static Logger logger = LoggerFactory.getLogger(AbstractControlFilterAdapter.class);
 	
 }
