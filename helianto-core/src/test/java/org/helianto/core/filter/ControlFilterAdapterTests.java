@@ -60,6 +60,12 @@ public class ControlFilterAdapterTests {
 		assertEquals("alias.entity.id = 1 AND (alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ", controlFilter.createCriteriaAsString());
 	}
 	
+	@Test
+	public void complete() {
+		complete = 10;
+		assertEquals("alias.entity.id = 1 AND alias.complete = 10 ", controlFilter.createCriteriaAsString());
+	}
+	
 	private AbstractControlFilterAdapter<ControlStub> controlFilter;
 	private Entity entity;
 	private char resolution = ' ';
