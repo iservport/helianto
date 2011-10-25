@@ -425,5 +425,5 @@ public class OrmCriteriaBuilder extends SelectFromBuilder implements CriteriaBui
     public void addSegmentCount(int count) {
     	segmentCount += count;
     }
-
+    
 }

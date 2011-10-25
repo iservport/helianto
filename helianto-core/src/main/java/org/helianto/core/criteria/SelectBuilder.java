@@ -153,4 +153,9 @@ public class SelectBuilder {
         return this;
     }
     
+    @Override
+    public String toString() {
+    	return getAsString();
+    }
+
 }
