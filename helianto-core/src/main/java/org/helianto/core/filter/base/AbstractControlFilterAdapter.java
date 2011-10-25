@@ -32,23 +32,23 @@ public abstract class AbstractControlFilterAdapter <T extends Controllable> exte
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Filter constructor.
+	 * Form constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public AbstractControlFilterAdapter(T filter) {
-		super(filter);
+	public AbstractControlFilterAdapter(T form) {
+		super(form);
 		reset();
 	}
 	
 	/**
 	 * Decorator constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 * @param decoratedFilter
 	 */
-	public AbstractControlFilterAdapter(T filter, AbstractFilter decoratedFilter) {
-		super(filter, decoratedFilter);
+	public AbstractControlFilterAdapter(T form, AbstractFilter decoratedFilter) {
+		super(form, decoratedFilter);
 	}
 	
 	public void reset() {
