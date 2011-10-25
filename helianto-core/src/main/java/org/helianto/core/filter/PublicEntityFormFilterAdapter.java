@@ -8,14 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Public entity filter.
+ * Public entity form filter adapter.
  * 
  * @author mauriciofernandesdecastro
- * @deprecated
- * @see PublicEntityFormFilterAdapter
  */
-public class PublicEntityFilterAdapter extends AbstractRootFilterAdapter<PublicEntitySampler> {
+public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<PublicEntitySampler> {
 
+	// TODO complete this...
+	
 	private static final long serialVersionUID = 1L;
 	private Class<? extends PublicEntity> clazz;
 	
@@ -24,7 +24,7 @@ public class PublicEntityFilterAdapter extends AbstractRootFilterAdapter<PublicE
 	 * 
 	 * @param operator
 	 */
-	public PublicEntityFilterAdapter(PublicEntitySampler sample) {
+	public PublicEntityFormFilterAdapter(PublicEntitySampler sample) {
 		super(sample);
 		setOrderByString("entity.alias");
 		reset();
@@ -35,7 +35,7 @@ public class PublicEntityFilterAdapter extends AbstractRootFilterAdapter<PublicE
 	 * 
 	 * @param entity
 	 */
-	public PublicEntityFilterAdapter(Entity entity) {
+	public PublicEntityFormFilterAdapter(Entity entity) {
 		this(new PublicEntitySampler(entity));
 	}
 	
@@ -82,6 +82,6 @@ public class PublicEntityFilterAdapter extends AbstractRootFilterAdapter<PublicE
 		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
 	}
 	
-	private static final Logger logger  = LoggerFactory.getLogger(PublicEntityFilterAdapter.class);
+	private static final Logger logger  = LoggerFactory.getLogger(PublicEntityFormFilterAdapter.class);
 	
 }
