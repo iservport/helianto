@@ -25,7 +25,8 @@ public class EntityActionImpl extends AbstractAction<Entity> {
 	@PreAuthorize("hasRole('ROLE_ADMIN_MANAGER')")
 	@Override
 	protected Entity doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new Entity(userDetails.getUser());
+		Entity entity = new Entity(userDetails.getUser());
+		return entity;
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN_MANAGER')")
@@ -33,7 +34,7 @@ public class EntityActionImpl extends AbstractAction<Entity> {
 	protected Entity doStore(Entity target) {
 		if (target.getManager()!=null) {
 			logger.debug("Installation required with manager {}.", target.getManager());
-			return postInstallationMgr.installEntity(target, false);
+			return postInstallationMgr.installEntity(target, target.getManager());
 		}
 		throw new IllegalArgumentException("Entity installation requires a transient manager!");
 	}

@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
@@ -214,6 +215,36 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 			Credential credential = identityMgr.installCredential(entity.getManager());
 			logger.debug("Clearing manager supplied with entity {} to avoid duplicate installation...", entity);
 			entity.setManager(null);
+			return installManager(entity, credential);
+		}
+		return entity;
+	}
+	
+	public Entity installEntity(Entity entity, Identity manager) {
+		Operator operator = entity.getOperator();
+		if (entity.getOperator()==null) {
+			throw new IllegalArgumentException("An opertor is required.");
+		}
+		operatorDao.saveOrUpdate(operator);
+		String alias = entity.getAlias();		
+		
+		logger.debug("Check if is there already a current entity {} installation'", alias);
+		Entity current = entityDao.findUnique(operator, alias);
+
+		if (current==null) {
+			logger.debug("Will install entity {} ...", alias);
+			entity = new Entity(operator, alias);
+			entityDao.saveOrUpdate(entity);
+		} 
+		else {
+			logger.debug("Entity AVAILABLE as {}.", entity);
+			return current;
+		}
+		entityDao.saveOrUpdate(entity);
+		
+		// TODO remove 
+		if (manager!=null) {
+			Credential credential = identityMgr.installCredential(manager);
 			return installManager(entity, credential);
 		}
 		return entity;

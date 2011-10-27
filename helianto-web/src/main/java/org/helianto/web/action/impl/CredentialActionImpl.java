@@ -19,7 +19,7 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
 public class CredentialActionImpl extends AbstractAction<Credential> {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Override
 	protected Credential doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
 		Identity identity = (Identity) attributes.get("identity");
@@ -31,16 +31,16 @@ public class CredentialActionImpl extends AbstractAction<Credential> {
 
 	@Override
 	protected Credential doStore(Credential target) {
-		return securitMgr.storeCredential(target);
+		return securityMgr.storeCredential(target);
 	}
 
 	// collabs
 	
-	private SecurityMgr securitMgr;
+	private SecurityMgr securityMgr;
 	
 	@Resource
 	public void setSecurityMgr(SecurityMgr securitMgr) {
-		this.securitMgr = securitMgr;
+		this.securityMgr = securitMgr;
 	}
 	
 }

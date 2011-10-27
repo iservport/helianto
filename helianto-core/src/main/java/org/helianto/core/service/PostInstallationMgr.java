@@ -18,6 +18,7 @@ package org.helianto.core.service;
 import java.util.List;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Identity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
@@ -114,5 +115,13 @@ public interface PostInstallationMgr {
 	 * @param reinstall
 	 */
 	public Entity installEntity(Entity entity, boolean reinstall);
+
+	/**
+	 * Install an Entity, if one does not exist.
+	 * 
+	 * @param entity
+	 * @param manager
+	 */
+	public Entity installEntity(Entity entity, Identity manager);
 
 }

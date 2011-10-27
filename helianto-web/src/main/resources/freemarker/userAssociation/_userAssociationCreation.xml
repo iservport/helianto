@@ -32,10 +32,25 @@
 	<action-state id="filter">
 		<evaluate expression="identityAction.filter(flowScope, currentUser.principal)" />
 		<transition on="create" to="identity.subflow"  />
-		<transition on="use"    to="selection.view" >
+		<transition on="use"    to="show.view" >
 			<set name="flowScope.identity"  value="identityModel.item"/>
 		</transition>
 	</action-state>
+	
+	<view-state id="show.view" view="/frame2" model="identityModel">
+
+		<on-render>
+			<set name="viewScope.sidebar"  value="'identity_bar'" />
+			<set name="viewScope.template" value="'confirm'" />
+		</on-render>
+
+		<transition on="confirm" to="userAssociationCreate.subflow" >
+			<evaluate expression="securityMgr.findCredentialByIdentity(flowScope.identity)"  result="flowScope.credential"/>
+		</transition>
+		
+		<transition on="discard" to="selection.view" />
+		
+	</view-state>
 	
 	<!-- Subflow section -->
 
@@ -51,13 +66,14 @@
 	<subflow-state id="credential.subflow" subflow="_credential">
 		<input name="credential" />
 		<output name="credential" value="flowScope.credential"/>
-		<transition on="toCommit" to="userAssociation.subflow" >
-			<evaluate expression="userAssociationAction.create(flowScope, currentUser.principal)" />
-		</transition>
+		<transition on="toCommit" to="userAssociationCreate.subflow"  />
 		<transition on="toReturn" to="toReturn" />
 	</subflow-state>
 	
-	<subflow-state id="userAssociation.subflow" subflow="_userAssociation">
+	<subflow-state id="userAssociationCreate.subflow" subflow="_userAssociation">
+		<on-entry>
+			<evaluate expression="userAssociationAction.create(flowScope, currentUser.principal)" />
+		</on-entry>
 		<input name="userAssociation" value="flowScope.userAssociation"/>
 		<transition on="toCommit" to="toCommit" />
 		<transition on="toReturn" to="toReturn" />
