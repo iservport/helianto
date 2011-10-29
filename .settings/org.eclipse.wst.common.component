@@ -32,5 +32,9 @@
         <wb-resource deploy-path="/" source-path="/helianto-web/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-admin/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-admin/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/helianto-core/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/helianto-core/src/test/resources"/>
+        <wb-resource deploy-path="/" source-path="/helianto-web/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/helianto-web/src/test/resources"/>
     </wb-module>
 </project-modules>

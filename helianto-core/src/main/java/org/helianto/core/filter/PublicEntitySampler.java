@@ -8,6 +8,7 @@ import org.helianto.core.PublicEntity;
  * filter adapters.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 public class PublicEntitySampler extends PublicEntity {
 

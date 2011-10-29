@@ -1,9 +1,8 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.Entity;
-import org.helianto.core.PublicEntity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
+import org.helianto.core.filter.form.PublicEntityForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,46 +11,23 @@ import org.slf4j.LoggerFactory;
  * 
  * @author mauriciofernandesdecastro
  */
-public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<PublicEntitySampler> {
+public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<PublicEntityForm> {
 
-	// TODO complete this...
-	
 	private static final long serialVersionUID = 1L;
-	private Class<? extends PublicEntity> clazz;
 	
 	/**
 	 * Default constructor.
 	 * 
-	 * @param operator
+	 * @param form
 	 */
-	public PublicEntityFormFilterAdapter(PublicEntitySampler sample) {
-		super(sample);
+	public PublicEntityFormFilterAdapter(PublicEntityForm form) {
+		super(form);
 		setOrderByString("entity.alias");
 		reset();
 	}
 	
-	/**
-	 * Key constructor.
-	 * 
-	 * @param entity
-	 */
-	public PublicEntityFormFilterAdapter(Entity entity) {
-		this(new PublicEntitySampler(entity));
-	}
-	
 	public void reset() {
-		getForm().setEntityAlias("");
-		getForm().setPublicEntityType(' ');
-	}
-	
-	/**
-	 * Type filter.
-	 */
-	public Class<? extends PublicEntity> getClazz() {
-		return clazz;
-	}
-	public void setClazz(Class<? extends PublicEntity> clazz) {
-		this.clazz = clazz;
+		getForm().reset();
 	}
 	
 	/**
@@ -60,20 +36,20 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 	@Override
 	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.preProcessFilter(mainCriteriaBuilder);
-		if (getClazz()!=null) {
-			mainCriteriaBuilder.appendAnd().append(getClazz());
-			logger.debug("Added class {} restriction.", getClazz());
+		if (getForm().getClazz()!=null) {
+			mainCriteriaBuilder.appendAnd().append(getForm().getClazz());
+			logger.debug("Added class {} restriction.", getForm().getClazz());
 		}
 	}
 	
 	@Override
 	public boolean isSelection() {
-		return getForm().getEntityAlias().length()>0;
+		return getForm().getOperator()!=null && getForm().getEntity()!=null;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("entity.alias", getForm().getEntityAlias(), mainCriteriaBuilder);
+		appendEqualFilter("entity.id", getForm().getEntity().getId(), mainCriteriaBuilder);
 	}
 
 	@Override
