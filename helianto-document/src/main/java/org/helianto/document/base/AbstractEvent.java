@@ -30,8 +30,9 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.helianto.core.Identity;
+import org.helianto.core.Privacy;
+import org.helianto.core.PrivacyLevel;
 import org.helianto.document.Event;
-import org.helianto.document.PrivacyLevel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -47,7 +48,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 
 @javax.persistence.MappedSuperclass
-public abstract class AbstractEvent implements Event {
+public abstract class AbstractEvent implements Privacy, Event {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -63,7 +64,7 @@ public abstract class AbstractEvent implements Event {
      * Empty constructor
 	 */
     public AbstractEvent() {
-        setPrivacyLevel(PrivacyLevel.ZERO.getValue());
+        setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
         setIssueDate(new Date());
     }
     

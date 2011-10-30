@@ -6,6 +6,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.AddressType;
+import org.helianto.core.PrivacyLevel;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 

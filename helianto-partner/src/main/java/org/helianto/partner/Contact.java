@@ -15,7 +15,6 @@
 
 package org.helianto.partner;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
@@ -24,6 +23,8 @@ import javax.persistence.Transient;
 
 import org.helianto.core.AddressType;
 import org.helianto.core.Identity;
+import org.helianto.core.Privacy;
+import org.helianto.core.PrivacyLevel;
 
 /**
  * Contact
@@ -32,10 +33,10 @@ import org.helianto.core.Identity;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("C")
-public class Contact extends Address {
+public class Contact extends Address implements Privacy {
 
 	private static final long serialVersionUID = 1L;
-	private Identity identity;
+	private Identity owner;
     private String departament;
     private String jobReference;
     private int priority;
@@ -64,15 +65,15 @@ public class Contact extends Address {
     }
     
     /** 
-     * Identity constructor.
+     * Owner constructor.
      * 
      * @param partnerRegistry
      * @param sequence
-     * @param identity
+     * @param owner
 	 */
-    public Contact(PrivateEntity partnerRegistry, int sequence, Identity identity) {
+    public Contact(PrivateEntity partnerRegistry, int sequence, Identity owner) {
     	this(partnerRegistry, sequence);
-    	setIdentity(identity);
+    	setOwner(owner);
     }
     
     @Transient
@@ -82,16 +83,16 @@ public class Contact extends Address {
     }
     
     /**
-     * Identity getter.
+     * Owner.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
-    public Identity getIdentity() {
-        return this.identity;
-    }
-    public void setIdentity(Identity identity) {
-        this.identity = identity;
-    }
+    public Identity getOwner() {
+		return owner;
+	}
+    public void setOwner(Identity owner) {
+		this.owner = owner;
+	}
 
     /**
      * Departament.

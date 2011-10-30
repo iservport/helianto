@@ -25,11 +25,23 @@ public enum PrivacyLevel {
     /**
      * Public.
      */
-    PUBLIC('0'),
+    PUBLIC(' '),
+    /**
+     * Public, kept for compatibility with older versions.
+     */
+    LEGACY('0'),
     /**
      * Some restrictions apply.
      */
     RESTRICTED('1'),
+    /**
+     * Minor restrictions apply.
+     */
+    MINOR('2'),
+    /**
+     * Major restrictions apply.
+     */
+    MAJOR('3'),
     /**
      * Only personal.
      */

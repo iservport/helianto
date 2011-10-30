@@ -26,7 +26,7 @@ public class ContactTests {
         
         assertSame(partnerRegistry, contact.getPartnerRegistry());
         assertEquals(sequence, contact.getSequence());
-        assertSame(identity, contact.getIdentity());
+        assertSame(identity, contact.getOwner());
         
     }
     
