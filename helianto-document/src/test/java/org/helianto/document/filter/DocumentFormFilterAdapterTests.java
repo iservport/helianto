@@ -30,7 +30,7 @@ public class DocumentFormFilterAdapterTests {
 	@Test
 	public void search() {
 		form.setSearchString("SEARCH");
-		assertEquals(C1+C2+OB, filter.createCriteriaAsString());
+		assertEquals(C1+C2, filter.createCriteriaAsString());
 	}
 	
 	@Test

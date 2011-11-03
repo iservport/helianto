@@ -83,6 +83,11 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
         	doSelect(mainCriteriaBuilder);
         	reset();
         }
+        else if (isSearch()) {
+        	logger.debug("Filter in 'search' mode.");
+        	doSearch(mainCriteriaBuilder);
+        	reset();
+        }
         else {
         	logger.debug("Filter in 'filter' mode.");
         	doFilter(mainCriteriaBuilder);
@@ -100,6 +105,13 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * </p>
      */
 	public boolean isSelection() {
+		return false;
+	}
+	
+    /**
+     * If true, a search result is expected.
+     */
+	public boolean isSearch() {
 		return false;
 	}
 	
@@ -152,6 +164,14 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 * @param mainCriteriaBuilder
 	 */
 	protected abstract void doSelect(OrmCriteriaBuilder mainCriteriaBuilder);
+	
+	/**
+	 * Hook to the search processor.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	protected void doSearch(OrmCriteriaBuilder mainCriteriaBuilder) {
+	}
 	
 	/**
 	 * Hook to the filter processor.
