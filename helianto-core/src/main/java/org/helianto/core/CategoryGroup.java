@@ -10,7 +10,7 @@ public enum CategoryGroup {
 	/**
 	 * Not defined.
 	 */
-	NOT_DEFINED(' '),
+	NOT_DEFINED('N'),
 	/**
 	 * Document.
 	 */
