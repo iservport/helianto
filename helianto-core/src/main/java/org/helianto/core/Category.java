@@ -38,7 +38,7 @@ public class Category implements TrunkEntity {
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
-    private int categoryGroup;
+    private char categoryGroup;
     private String categoryCode;
     private String categoryName;
     private char priority;
@@ -47,7 +47,7 @@ public class Category implements TrunkEntity {
      * Default constructor
      */
     public Category() {
-    	setCategoryGroup(CategoryGroup.NOT_DEFINED);
+    	setCategoryGroupAsEnum(CategoryGroup.NOT_DEFINED);
     	setCategoryCode("");
     	setCategoryName("");
     	setPriority('0');
@@ -63,7 +63,7 @@ public class Category implements TrunkEntity {
     public  Category(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
     	this();
     	setEntity(entity);
-        setCategoryGroup(categoryGroup);
+        setCategoryGroupAsEnum(categoryGroup);
         setCategoryCode(categoryCode);
     }
 
@@ -90,13 +90,13 @@ public class Category implements TrunkEntity {
     /**
      * Group of categories.
      */
-	public int getCategoryGroup() {
+	public char getCategoryGroup() {
 		return categoryGroup;
 	}
-	public void setCategoryGroup(int categoryGroup) {
+	public void setCategoryGroup(char categoryGroup) {
 		this.categoryGroup = categoryGroup;
 	}
-	public void setCategoryGroup(CategoryGroup categoryGroup) {
+	public void setCategoryGroupAsEnum(CategoryGroup categoryGroup) {
 		this.categoryGroup = categoryGroup.getValue();
 	}
 

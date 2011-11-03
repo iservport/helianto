@@ -74,7 +74,7 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> implemen
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
     	if (getCategoryGroup()!=null) {
-        	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), true, mainCriteriaBuilder);
+        	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), mainCriteriaBuilder);
     	}
     	if (getForm().getCategory()!=null) {
         	appendEqualFilter("category.id", getForm().getCategory().getId(), mainCriteriaBuilder);

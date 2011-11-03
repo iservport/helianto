@@ -7,18 +7,34 @@ package org.helianto.core;
  */
 public enum CategoryGroup {
 	
-	NOT_DEFINED(-1),
-	UNIT(0),
-	INSTRUMENT(1),
-	STOCK(2);
+	/**
+	 * Not defined.
+	 */
+	NOT_DEFINED(' '),
+	/**
+	 * Document.
+	 */
+	DOCUMENT('D'),
+	/**
+	 * Unit.
+	 */
+	UNIT('U'),
+	/**
+	 * Instrument.
+	 */
+	INSTRUMENT('I'),
+	/**
+	 * Stock.
+	 */
+	STOCK('S');
 	
-	private CategoryGroup(int value) {
+	private CategoryGroup(char value) {
 		this.value = value;
 	}
 	
-	private int value;
+	private char value;
 	
-	public int getValue() {
+	public char getValue() {
 		return value;
 	}
 

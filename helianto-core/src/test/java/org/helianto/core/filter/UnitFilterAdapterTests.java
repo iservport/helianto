@@ -28,7 +28,7 @@ public class UnitFilterAdapterTests {
 	}
 
     public static String C1 = "alias.entity.id = 0 ";
-    public static String C2 = "AND alias.category.categoryGroup = 0 ";
+    public static String C2 = "AND alias.category.categoryGroup = 'U' ";
     public static String C3 = "AND alias.unitCode = 'CODE' ";
     public static String C4 = "AND alias.category.id = 1 ";
     public static String C5 = "AND lower(alias.unitName) like '%name%' ";

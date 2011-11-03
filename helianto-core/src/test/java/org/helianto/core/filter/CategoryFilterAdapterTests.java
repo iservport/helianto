@@ -29,7 +29,7 @@ import org.junit.Test;
  */
 public class CategoryFilterAdapterTests {
 	
-    public static String C1 = "alias.entity.id = 0 AND alias.categoryGroup = 0 ";
+    public static String C1 = "alias.entity.id = 0 AND alias.categoryGroup = 'U' ";
     public static String C2 = "AND alias.categoryCode = 'CODE' ";
     public static String C3 = "AND lower(alias.categoryName) like '%name_like%' ";
 

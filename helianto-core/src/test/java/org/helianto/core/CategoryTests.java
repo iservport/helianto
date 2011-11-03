@@ -44,22 +44,22 @@ public class CategoryTests {
         Category copy = (Category) DomainTestSupport.minimalEqualsTest(category);
         
         copy.setEntity(null);
-        copy.setCategoryGroup(-1);
+        copy.setCategoryGroup(' ');
         copy.setCategoryCode(categoryCode);
         assertFalse(category.equals(copy));
 
         copy.setEntity(entity);
-        copy.setCategoryGroup(categoryGroup);
+        copy.setCategoryGroupAsEnum(categoryGroup);
         copy.setCategoryCode(null);
         assertFalse(category.equals(copy));
 
         copy.setEntity(entity);
-        copy.setCategoryGroup(-1);
+        copy.setCategoryGroup(' ');
         copy.setCategoryCode(categoryCode);
         assertFalse(category.equals(copy));
 
         copy.setEntity(entity);
-        copy.setCategoryGroup(categoryGroup);
+        copy.setCategoryGroupAsEnum(categoryGroup);
         copy.setCategoryCode(categoryCode);
 
         assertTrue(category.equals(copy));
