@@ -15,58 +15,44 @@
 
 package org.helianto.core.filter;
 
-import org.helianto.core.Category;
-import org.helianto.core.CategoryGroup;
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.form.CategoryForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Category filter.
+ * Category form filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
- * @see CategoryFormFilterAdapter
  */
-public class CategoryFilterAdapter extends AbstractTrunkFilterAdapter<Category> {
+public class CategoryFormFilterAdapter extends AbstractTrunkFilterAdapter<CategoryForm> {
 
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Default constructor
 	 */
-	public CategoryFilterAdapter(Category category) {
+	public CategoryFormFilterAdapter(CategoryForm category) {
 		super(category);
 	}
 	
-	/**
-	 * Default constructor
-     * 
-     * @param entity
-     * @param categoryGroup
-     * @param categoryCode
-	 */
-	public CategoryFilterAdapter(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
-		super(new Category(entity, categoryGroup, categoryCode));
-	}
-	
 	public void reset() {
-		getForm().setCategoryCode("");
-		getForm().setCategoryName("");
+		getForm().reset();
 	}
 	
 	public boolean isSelection() {
-		return (getForm().getCategoryCode().length()>0);
+		return (getForm().getCategoryCode()!=null && getForm().getCategoryCode().length()>0);
 	}
 
 	@Override
 	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
         super.preProcessFilter(mainCriteriaBuilder);
         logger.debug("CategoryGroup is: '{}'", getForm().getCategoryGroup());
-        mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
-        .append(getForm().getCategoryGroup());
+        if (getForm().getCategoryGroup()!=' ') {
+            mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
+            	.append(getForm().getCategoryGroup());
+        }
 	}
 
 	@Override
@@ -81,6 +67,6 @@ public class CategoryFilterAdapter extends AbstractTrunkFilterAdapter<Category> 
 		appendLikeFilter("categoryName", getForm().getCategoryName(), (OrmCriteriaBuilder) mainCriteriaBuilder);
 	}
 
-    private static Logger logger = LoggerFactory.getLogger(CategoryFilterAdapter.class);
+    private static Logger logger = LoggerFactory.getLogger(CategoryFormFilterAdapter.class);
 
 }

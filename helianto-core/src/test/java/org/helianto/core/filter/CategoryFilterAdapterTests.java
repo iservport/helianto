@@ -17,8 +17,10 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
+import org.helianto.core.Entity;
+import org.helianto.core.filter.form.AbstractCategoryForm;
+import org.helianto.core.filter.form.CategoryForm;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,9 +31,10 @@ import org.junit.Test;
  */
 public class CategoryFilterAdapterTests {
 	
-    public static String C1 = "alias.entity.id = 0 AND alias.categoryGroup = 'U' ";
+    public static String C1 = "alias.entity.id = 1 ";
     public static String C2 = "AND alias.categoryCode = 'CODE' ";
     public static String C3 = "AND lower(alias.categoryName) like '%name_like%' ";
+    public static String C4 = "AND alias.categoryGroup = 'U' ";
 
     @Test
     public void select() {
@@ -39,24 +42,38 @@ public class CategoryFilterAdapterTests {
     }
     
     @Test
-    public void createCriteriaAsStringCategoryCode() {
-    	target.setCategoryCode("CODE");
+    public void categoryCode() {
+    	((AbstractCategoryForm) form).setCategoryCode("CODE");
         assertEquals(C1+C2, filter.createCriteriaAsString());
     }
     
     @Test
-    public void createCriteriaAsStringCategoryNameLike() {
-    	target.setCategoryName("NAME_LIKE");
+    public void categoryName() {
+    	((AbstractCategoryForm) form).setCategoryName("NAME_LIKE");
         assertEquals(C1+C3, filter.createCriteriaAsString());
     }
     
-    private CategoryFilterAdapter filter;
-    private Category target;
+    @Test
+    public void categoryGroup() {
+    	((AbstractCategoryForm) form).setCategoryGroup(CategoryGroup.UNIT.getValue());
+        assertEquals(C1+C4, filter.createCriteriaAsString());
+    }
     
-    @Before
+    private CategoryFormFilterAdapter filter;
+    private CategoryForm form;
+    
+    @SuppressWarnings("serial")
+	@Before
     public void setUp() {
-    	target = new Category(EntityTestSupport.createEntity(), CategoryGroup.UNIT, "");
-    	filter = new CategoryFilterAdapter(target);
+    	form = new AbstractCategoryForm() {
+    		@Override
+    		public Entity getEntity() {
+    			Entity entity = EntityTestSupport.createEntity();
+    			entity.setId(1);
+    			return entity;
+    		}
+    	};
+    	filter = new CategoryFormFilterAdapter(form);
     }
 
 }
