@@ -12,4 +12,9 @@ public interface SearchForm {
 	 */
 	public String getSearchString();
 
+	/**
+	 * Search list.
+	 */
+	public String getSearchList();
+
 }

@@ -12,6 +12,7 @@ public abstract class AbstractDocumentForm implements DocumentForm {
 	private static final long serialVersionUID = 1L;
 	private Entity entity;
 	private String searchString;
+	private String searchList;
 	private String docCode;
 	private String docName;
 	private char priority;
@@ -50,6 +51,13 @@ public abstract class AbstractDocumentForm implements DocumentForm {
 	}
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
+	}
+	
+	public String getSearchList() {
+		return searchList;
+	}
+	public void setSearchList(String searchList) {
+		this.searchList = searchList;
 	}
 	
 	public String getDocCode() {

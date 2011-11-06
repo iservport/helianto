@@ -52,7 +52,8 @@ public abstract class AbstractDocumentFormFilterAdapter<T extends DocumentForm> 
 	 * True when filter must search a document.
 	 */
 	public boolean isSearch() {
-		return getForm().getSearchString()!=null && getForm().getSearchString().length()>0;
+		return (getForm().getSearchString()!=null && getForm().getSearchString().length()>0)
+				|| (getForm().getSearchList()!=null && getForm().getSearchList().length()>0);
 	}
 
 	@Override
@@ -62,8 +63,22 @@ public abstract class AbstractDocumentFormFilterAdapter<T extends DocumentForm> 
 
 	@Override
 	public void doSearch(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("docCode", getForm().getSearchString(), mainCriteriaBuilder);
+		mainCriteriaBuilder.appendAnd().openParenthesis();
+		boolean connect = false;
+    	if (getForm().getSearchString()!=null && getForm().getSearchString().length()>0) {
+    		mainCriteriaBuilder.appendSegment("docCode", "like")
+            	.appendLike(getForm().getSearchString());
+    		mainCriteriaBuilder.appendOr().appendSegment("docName", "like")
+            	.appendLike(getForm().getSearchString());
+    		connect = true;
+        }
+    	if (getForm().getSearchList()!=null && getForm().getSearchList().length()>0) {
+    		mainCriteriaBuilder.appendOr(connect).appendSegment("docCode", "in")
+            	.openParenthesis().append(getForm().getSearchList()).closeParenthesis();
+        }
+    	mainCriteriaBuilder.closeParenthesis();
 	}
+
 	
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
