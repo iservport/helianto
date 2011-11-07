@@ -21,6 +21,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.helianto.core.Prioritizable;
+import org.helianto.document.Journal;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -30,19 +32,19 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractJournal extends AbstractPrivateControl {
+public abstract class AbstractJournal extends AbstractPrivateControl implements Journal, Prioritizable {
 
     private static final long serialVersionUID = 1L;
     private Date actualStartDate;
     private Date actualEndDate;
-    private int priority;
+    private char priority;
 
     /** 
      * Default constructor.
      */
     public AbstractJournal() {
     	super();
-        setPriority(0);
+        setPriority(' ');
     }
     
     /**
@@ -89,10 +91,10 @@ public abstract class AbstractJournal extends AbstractPrivateControl {
     /**
      * Priority.
      */
-    public int getPriority() {
+    public char getPriority() {
         return this.priority;
     }
-    public void setPriority(int priority) {
+    public void setPriority(char priority) {
         this.priority = priority;
     }
     

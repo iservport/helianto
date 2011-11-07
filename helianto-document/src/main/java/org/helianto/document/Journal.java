@@ -3,8 +3,6 @@ package org.helianto.document;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.helianto.core.Identity;
-
 /**
  * Journal interface.
  * 
@@ -20,6 +18,6 @@ public interface Journal extends Serializable {
     /**
      * Actual end date.
      */
-	public Identity getActualEndDate();
+	public Date getActualEndDate();
 
 }
