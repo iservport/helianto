@@ -15,17 +15,23 @@
 
 package org.helianto.core.number;
 
+import org.helianto.core.TrunkEntity;
 
 /**
  * Common Interface to entities having internalNumber.
  *  
  * @author Mauricio Fernandes de Castro
  */
-public interface Sequenceable extends Internal {
+public interface Internal extends TrunkEntity {
 	
 	/**
-	 * InternalNumber key.
+	 * InternalNumber getter.
 	 */
-	public String getInternalNumberKey();
+	public long getInternalNumber();
+
+	/**
+	 * InternalNumber setter.
+	 */
+	public void setInternalNumber(long internalNumber);
 
 }
