@@ -31,6 +31,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
+import org.helianto.core.number.Sequenceable;
 import org.helianto.document.base.AbstractPrivateControl;
 import org.helianto.process.DerivedProcessDocument;
 import org.helianto.process.ProcessDocument;
@@ -43,7 +44,7 @@ import org.helianto.process.ProcessDocument;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractRequirement extends AbstractPrivateControl {
+public abstract class AbstractRequirement extends AbstractPrivateControl implements Sequenceable {
 
     /**
      * Internal factory method.

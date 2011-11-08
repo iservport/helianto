@@ -9,10 +9,8 @@ import org.helianto.core.number.Sequenceable;
  * @author mauriciofernandesdecastro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractSequence extends AbstractTrunk implements Sequenceable {
+public abstract class AbstractSequence extends AbstractInternal implements Sequenceable {
 
-	private long internalNumber;
-	
 	/**
 	 * Key constructor.
 	 * 
@@ -20,20 +18,9 @@ public abstract class AbstractSequence extends AbstractTrunk implements Sequence
 	 * @param internalNumber
 	 */
 	protected AbstractSequence(Entity entity, long internalNumber) {
-		super(entity);
-		setInternalNumber(internalNumber);
+		super(entity, internalNumber);
 	}
 
-	/**
-	 * Internal number.
-	 */
-	public long getInternalNumber() {
-		return this.internalNumber;
-	}
-	public void setInternalNumber(long internalNumber) {
-		this.internalNumber = internalNumber;
-	}
-	
 	/**
 	 * The entity key.
 	 */

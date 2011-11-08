@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractControlFilterAdapter <T extends Controllable> extends AbstractSequenceFilterAdapterDecorator<T> {
+public abstract class AbstractControlFilterAdapter <T extends Controllable> extends AbstractInternalFilterAdapterDecorator<T> {
 
 	private static final long serialVersionUID = 1L;
 	

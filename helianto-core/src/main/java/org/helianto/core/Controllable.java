@@ -16,14 +16,14 @@
 
 package org.helianto.core;
 
-import org.helianto.core.number.Sequenceable;
+import org.helianto.core.number.Internal;
 
 /**
  * Control interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Controllable extends Sequenceable, Verifiable {
+public interface Controllable extends Internal, Verifiable {
 
     /**
      * Progress indicator as percentual.

@@ -30,6 +30,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.number.Sequenceable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -41,7 +42,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name="core_userrequest",
     uniqueConstraints = {@UniqueConstraint(columnNames={"userGroupId", "internalNumber"})}
 )
-public class UserRequest implements Controllable {
+public class UserRequest implements Sequenceable, Controllable {
 
     private static final long serialVersionUID = 1L;
     private long id;

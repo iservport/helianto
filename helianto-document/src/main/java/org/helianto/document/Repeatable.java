@@ -15,13 +15,13 @@
 
 package org.helianto.document;
 
-import org.helianto.core.number.Sequenceable;
+import org.helianto.core.number.Internal;
 
 /**
  * Repeatable interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Repeatable extends Sequenceable, Trackable {
+public interface Repeatable extends Internal, Trackable {
 
 }

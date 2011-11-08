@@ -17,7 +17,7 @@ package org.helianto.document.filter;
 
 import java.util.Date;
 
-import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
+import org.helianto.core.filter.base.AbstractInternalFilterAdapterDecorator;
 import org.helianto.document.Event;
 
 /**
@@ -25,7 +25,7 @@ import org.helianto.document.Event;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractEventFilterAdapter<T extends Event> extends AbstractSequenceFilterAdapterDecorator<T> {
+public abstract class AbstractEventFilterAdapter<T extends Event> extends AbstractInternalFilterAdapterDecorator<T> {
 
 	private static final long serialVersionUID = 1L;
 

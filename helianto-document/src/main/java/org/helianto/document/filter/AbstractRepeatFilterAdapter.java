@@ -17,7 +17,7 @@ package org.helianto.document.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilter;
-import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
+import org.helianto.core.filter.base.AbstractInternalFilterAdapterDecorator;
 import org.helianto.document.Repeatable;
 
 /**
@@ -25,7 +25,7 @@ import org.helianto.document.Repeatable;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractRepeatFilterAdapter <T extends Repeatable> extends AbstractSequenceFilterAdapterDecorator<T> {
+public abstract class AbstractRepeatFilterAdapter <T extends Repeatable> extends AbstractInternalFilterAdapterDecorator<T> {
 
 	private static final long serialVersionUID = 1L;
 	
