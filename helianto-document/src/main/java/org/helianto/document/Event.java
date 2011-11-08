@@ -3,14 +3,14 @@ package org.helianto.document;
 import java.util.Date;
 
 import org.helianto.core.Identity;
-import org.helianto.core.number.Sequenceable;
+import org.helianto.core.number.Internal;
 
 /**
  * Event interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Event extends Sequenceable {
+public interface Event extends Internal {
 	
     /**
      * Date issued.
