@@ -252,7 +252,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * @param criteriaBuilder
      */
     protected void appendEqualFilter(String fieldName, char fieldContent, OrmCriteriaBuilder criteriaBuilder) {
-    	if (fieldContent!=' ') {
+    	if (fieldContent!=0 && fieldContent!=' ' && fieldContent!='_') {
             criteriaBuilder.appendAnd().appendSegment(fieldName, "=")
             .append(fieldContent);
         }
