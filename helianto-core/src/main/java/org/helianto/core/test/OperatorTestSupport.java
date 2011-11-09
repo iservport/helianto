@@ -26,6 +26,12 @@ public class OperatorTestSupport {
 
     private static int testKey = 1;
 
+    public static Operator createOperator(int id) {
+        Operator operator = OperatorTestSupport.createOperator();
+        operator.setId(id);
+        return operator;
+    }
+
     public static Operator createOperator() {
         return OperatorTestSupport.createOperator(DomainTestSupport.getNonRepeatableStringValue(testKey++, 12));
     }

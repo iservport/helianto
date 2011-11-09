@@ -22,6 +22,17 @@ public class EntityTestSupport {
 
     /**
      * Test support method to create an <code>Entity</code>.
+     * 
+     * @param id
+     */
+    public static Entity createEntity(long id) {
+        Entity entity = EntityTestSupport.createEntity();
+        entity.setId(id);
+        return entity;
+    }
+
+    /**
+     * Test support method to create an <code>Entity</code>.
      */
     public static Entity createEntity() {
         Entity entity = EntityTestSupport.createEntity(OperatorTestSupport.createOperator());
