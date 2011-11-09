@@ -93,6 +93,13 @@ public class UserRoleFormFilterAdapterTests {
     		
 			public UserGroup getParent() { return parent; }
 			public void setParent(UserGroup parent) { this.parent = parent;}
+			public String getParentName() { return "userGroup"; }
+			public long getParentId() {
+				if (getParent()!=null) {
+					return getParent().getId();
+				}
+				return 0;
+			}
 			public void reset() { }
 			public List<UserGroup> getParentList() { return parentList; }
 			public void setParentList(List<UserGroup> parentList) { this.parentList = parentList; }

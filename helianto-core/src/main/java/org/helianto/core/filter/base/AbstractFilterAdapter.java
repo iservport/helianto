@@ -41,6 +41,27 @@ public abstract class AbstractFilterAdapter<F> extends AbstractFilter {
 		this.form = form;
 	}
 	
+	// TODO implement this later
+	
+//	/**
+//	 * True if the form is assignable from ParentForm.
+//	 */
+//	@Override
+//	protected boolean hasParentCriterion() {
+//		if (ParentForm.class.isAssignableFrom(getForm().getClass())) {
+//			return true;
+//		}
+//		return super.hasParentCriterion();
+//	}
+//		
+//	@Override
+//	public void preProcessParentFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+//		mainCriteriaBuilder.appendAnd(hasPolimorphicCriterion());
+//		appendEqualFilter(new StringBuilder(((ParentForm<?>) getForm()).getParentName()).append(".id").toString(), 
+//				((ParentForm<?>) getForm()).getParentId(), mainCriteriaBuilder);
+//	}
+	
+	
 	@Override
 	public boolean equals(Object other) {
         if ( (this == other ) ) return true;

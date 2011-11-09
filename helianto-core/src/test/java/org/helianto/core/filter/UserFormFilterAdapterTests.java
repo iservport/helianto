@@ -141,6 +141,13 @@ public class UserFormFilterAdapterTests {
 			public void setParent(UserGroup parent) {
 				this.parent = parent;
 			}
+			public String getParentName() { return "parent"; }
+			public long getParentId() {
+				if (getParent()!=null) {
+					return getParent().getId();
+				}
+				return 0;
+			}
 			public List<UserGroup> getParentList() {
 				return parentList;
 			}
@@ -194,6 +201,7 @@ public class UserFormFilterAdapterTests {
 		    public void setExclusions(Collection<Identity> exclusions) {
 		    	this.exclusions = exclusions;
 		    }
+
 		};
 		filter = new UserFormFilterAdapter(form);
 	}

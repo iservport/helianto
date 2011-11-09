@@ -31,6 +31,11 @@ public abstract class AbstractTrunkFilterAdapter <F extends TrunkEntity> extends
 		return getForm().getEntity();
 	}
 	
+	@Override
+	public boolean isSelection() {
+		return getForm().getEntity()!=null && getForm().getEntity().getId()>0;
+	}
+	
 	/**
 	 * Restrict selection to a given entity, if any. 
 	 */

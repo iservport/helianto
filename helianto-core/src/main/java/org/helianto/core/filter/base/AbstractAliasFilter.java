@@ -15,6 +15,7 @@
 
 package org.helianto.core.filter.base;
 
+
 import java.io.Serializable;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
@@ -125,15 +126,37 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 * @param mainCriteriaBuilder
 	 */
 	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = false;
 		if (hasPolimorphicCriterion()) {
-			mainCriteriaBuilder.appendAnd().append(((PolymorphicFilter<?>) this).getClazz());
-			logger.debug("Class restriction applied using {}.", ((PolymorphicFilter<?>) this).getClazz());
+			mainCriteriaBuilder.appendAnd(connect);
+			connect = true;
+			preProcessPolimorphicFilter(mainCriteriaBuilder);
 		}
 		if (hasParentCriterion()) {
-			mainCriteriaBuilder.appendAnd(hasPolimorphicCriterion());
-			appendEqualFilter(getParentName().append(".id").toString(), ((ParentFilter) this).getParentId(), mainCriteriaBuilder);
-			logger.debug("Parent restriction applied using {}.", ((ParentFilter) this).getParent());
+			mainCriteriaBuilder.appendAnd(connect);
+			connect = true;
+			preProcessParentFilter(mainCriteriaBuilder);
 		}
+	}
+	
+	/**
+	 * Polimorphic pre-processor.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	protected void preProcessPolimorphicFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.append(((PolymorphicFilter<?>) this).getClazz());
+		logger.debug("Class restriction applied using {}.", ((PolymorphicFilter<?>) this).getClazz());
+	}
+	
+	/**
+	 * Parent pre-processor.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	protected void preProcessParentFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter(getParentName().append(".id").toString(), ((ParentFilter) this).getParentId(), mainCriteriaBuilder);
+		logger.debug("Parent restriction applied using {}.", ((ParentFilter) this).getParent());
 	}
 	
 	/**
