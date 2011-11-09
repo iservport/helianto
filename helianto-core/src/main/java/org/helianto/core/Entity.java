@@ -94,6 +94,7 @@ public class Entity implements RootEntity {
     private Date installDate;
     private String properties;
     private Identity manager;
+    private String externalLogoUrl;
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     private List<UserGroup> userList;
 
@@ -228,6 +229,17 @@ public class Entity implements RootEntity {
 	}
     public void setManager(Identity manager) {
 		this.manager = manager;
+	}
+    
+    /**
+     * Link to an external logo (like http://mysite/img/log).
+     */
+	@Column(length=128)
+    public String getExternalLogoUrl() {
+		return externalLogoUrl;
+	}
+    public void setExternalLogoUrl(String externalLogoUrl) {
+		this.externalLogoUrl = externalLogoUrl;
 	}
 
     /**
