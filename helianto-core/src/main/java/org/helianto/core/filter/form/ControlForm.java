@@ -19,4 +19,13 @@ public interface ControlForm<C> {
 	 */
 	public void setControl(C control);
 
+	/**
+	 * The control filter name.
+	 */
+	public String getControlName();
+
+	/**
+	 * The control filter id field.
+	 */
+	public long getControlId();
 }

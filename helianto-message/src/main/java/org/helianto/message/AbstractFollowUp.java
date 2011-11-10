@@ -98,7 +98,7 @@ public abstract class AbstractFollowUp extends AbstractRecord implements Compara
      * The control target.
      */
     @Transient
-    public abstract ControlTarget getSubject(); 
+    public abstract ControlSource getSubject(); 
     
     @Transient
     public void update() {

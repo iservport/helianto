@@ -6,7 +6,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.base.AbstractPrivateControl;
 import org.helianto.message.AbstractFollowUp;
-import org.helianto.message.ControlTarget;
+import org.helianto.message.ControlSource;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,9 +34,7 @@ public class FollowUpFilterAdapterTests {
 	@Test
 	public void parent() {
 		@SuppressWarnings("serial")
-		AbstractPrivateControl parent = new AbstractPrivateControl() {
-			public String getInternalNumberKey() { return ""; }
-		};
+		AbstractPrivateControl parent = new AbstractPrivateControl() { };
 		parent.setId(1);
 		filter.setParent(parent);
 		assertEquals(C1+C3, filter.createCriteriaAsString());
@@ -51,8 +49,7 @@ public class FollowUpFilterAdapterTests {
 		final Entity entity = EntityTestSupport.createEntity();
 		target = new AbstractFollowUp() {
 			public Entity getEntity() { return entity; }
-			public String getInternalNumberKey() { return "KEY"; }
-			public ControlTarget getSubject() { return null; }
+			public ControlSource getSubject() { return null; }
 		};
 		filter = new AbstractFollowUpFilterAdapter<AbstractFollowUp>(target) { };
 	}

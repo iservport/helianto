@@ -6,11 +6,11 @@ import org.helianto.core.Controllable;
 import org.helianto.core.StateResolver;
 
 /**
- * Control target.
+ * Control source.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface ControlTarget extends Controllable {
+public interface ControlSource extends Controllable {
 	
 	/**
 	 * Resolution setter.
