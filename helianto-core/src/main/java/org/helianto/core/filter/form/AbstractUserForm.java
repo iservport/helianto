@@ -54,6 +54,16 @@ public abstract class AbstractUserForm implements UserGroupForm {
 	public void setParent(UserGroup parent) {
 		this.parent = parent;
 	}
+	public long getParentId() {
+		if (getParent()!=null) {
+			return getParent().getId();
+		}
+		return 0;
+	}
+
+	public String getParentName() {
+		return "userGroup";
+	}
 	
 	public List<UserGroup> getParentList() {
 		return parentList;
