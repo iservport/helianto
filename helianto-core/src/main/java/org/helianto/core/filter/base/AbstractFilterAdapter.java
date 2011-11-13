@@ -1,6 +1,8 @@
 package org.helianto.core.filter.base;
 
 import org.helianto.core.UserGroup;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.filter.form.TypeForm;
 
 
 /**
@@ -61,6 +63,23 @@ public abstract class AbstractFilterAdapter<F> extends AbstractFilter {
 //				((ParentForm<?>) getForm()).getParentId(), mainCriteriaBuilder);
 //	}
 	
+	
+	/**
+	 * True if the form is assignable from TypeForm.
+	 */
+	protected boolean hasPolimorphicCriterion() {
+		if (TypeForm.class.isAssignableFrom(getForm().getClass())) {
+			char type = ((TypeForm) getForm()).getType();
+			return type!=0 && type!=' ' && type!='_';
+		}
+		return false;
+	}
+		
+	@Override
+	public void preProcessPolimorphicFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("class", ((TypeForm) getForm()).getType(), mainCriteriaBuilder);
+		mainCriteriaBuilder.addSegmentCount(1);
+	}
 	
 	@Override
 	public boolean equals(Object other) {
