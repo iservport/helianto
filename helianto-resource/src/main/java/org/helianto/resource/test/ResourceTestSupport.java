@@ -17,7 +17,7 @@ package org.helianto.resource.test;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.resource.Resource;
+import org.helianto.resource.domain.Resource;
 
 /**
  * Test suport methods.

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.resource;
+package org.helianto.resource.domain;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,6 +40,7 @@ import org.helianto.core.Controllable;
 import org.helianto.core.Entity;
 import org.helianto.core.NaturalKeyInfo;
 import org.helianto.core.TrunkEntity;
+import org.helianto.resource.def.ResourceType;
 
 /**
  * <p>

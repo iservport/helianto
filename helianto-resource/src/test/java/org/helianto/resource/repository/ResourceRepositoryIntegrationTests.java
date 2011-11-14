@@ -19,10 +19,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.resource.ResourceAssociation;
-import org.helianto.resource.ResourceGroup;
-import org.helianto.resource.ResourceParameter;
-import org.helianto.resource.ResourceParameterValue;
+import org.helianto.resource.domain.ResourceAssociation;
+import org.helianto.resource.domain.ResourceGroup;
+import org.helianto.resource.domain.ResourceParameter;
+import org.helianto.resource.domain.ResourceParameterValue;
 import org.helianto.resource.test.AbstractResourceDaoIntegrationTest;
 import org.helianto.resource.test.ResourceGroupTestSupport;
 import org.helianto.resource.test.ResourceParameterTestSupport;

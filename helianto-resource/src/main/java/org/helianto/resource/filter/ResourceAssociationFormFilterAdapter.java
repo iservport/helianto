@@ -3,7 +3,7 @@ package org.helianto.resource.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
-import org.helianto.resource.domain.ResourceAssociation;
+import org.helianto.resource.form.ResourceAssociationForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,10 +11,8 @@ import org.slf4j.LoggerFactory;
  * Resource association filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
- * @see ResourceAssociationFormFilterAdapter
  */
-public class ResourceAssociationFilterAdapter extends AbstractFilterAdapter<ResourceAssociation> {
+public class ResourceAssociationFormFilterAdapter extends AbstractFilterAdapter<ResourceAssociationForm> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,7 +21,7 @@ public class ResourceAssociationFilterAdapter extends AbstractFilterAdapter<Reso
 	 * 
 	 * @param filter
 	 */
-	public ResourceAssociationFilterAdapter(ResourceAssociation filter) {
+	public ResourceAssociationFormFilterAdapter(ResourceAssociationForm filter) {
 		super(filter);
 	}
 	
@@ -59,6 +57,6 @@ public class ResourceAssociationFilterAdapter extends AbstractFilterAdapter<Reso
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
 	
-	private static Logger logger = LoggerFactory.getLogger(ResourceAssociationFilterAdapter.class);
+	private static Logger logger = LoggerFactory.getLogger(ResourceAssociationFormFilterAdapter.class);
 
 }

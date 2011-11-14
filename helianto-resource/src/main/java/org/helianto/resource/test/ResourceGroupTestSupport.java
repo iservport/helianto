@@ -21,7 +21,7 @@ import java.util.List;
 import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.resource.ResourceGroup;
+import org.helianto.resource.domain.ResourceGroup;
 
 /**
  * Test suport methods.

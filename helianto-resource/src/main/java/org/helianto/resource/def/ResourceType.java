@@ -1,7 +1,7 @@
 /* Copyright 2005 I Serv Consultoria Empresarial Ltda.
  */
 
-package org.helianto.resource;
+package org.helianto.resource.def;
 
 /**
  * The resource type enumeration.

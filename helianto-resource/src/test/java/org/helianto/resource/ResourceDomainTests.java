@@ -6,6 +6,10 @@ import java.math.BigDecimal;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Unit;
+import org.helianto.resource.def.ResourceType;
+import org.helianto.resource.domain.ResourceGroup;
+import org.helianto.resource.domain.ResourceParameter;
+import org.helianto.resource.domain.ResourceParameterValue;
 import org.junit.Test;
 
 public class ResourceDomainTests {

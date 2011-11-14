@@ -3,11 +3,11 @@
     "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<mapping class="org.helianto.resource.Resource" />
-		<mapping class="org.helianto.resource.ResourceAssociation" />
-		<mapping class="org.helianto.resource.ResourceGroup" />
-		<mapping class="org.helianto.resource.ResourceParameter" />
-		<mapping class="org.helianto.resource.ResourceParameterValue" />
+		<mapping class="org.helianto.resource.domain.Resource" />
+		<mapping class="org.helianto.resource.domain.ResourceAssociation" />
+		<mapping class="org.helianto.resource.domain.ResourceGroup" />
+		<mapping class="org.helianto.resource.domain.ResourceParameter" />
+		<mapping class="org.helianto.resource.domain.ResourceParameterValue" />
 	</session-factory>
 </hibernate-configuration>
 

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.resource;
+package org.helianto.resource.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;

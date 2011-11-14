@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.resource;
+package org.helianto.resource.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,6 +24,8 @@ import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
 import org.helianto.partner.Partner;
+import org.helianto.resource.def.ResourceClassification;
+import org.helianto.resource.def.ResourceState;
 
 /**			
  * A process resource.

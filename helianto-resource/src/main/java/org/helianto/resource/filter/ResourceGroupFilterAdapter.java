@@ -19,8 +19,8 @@ package org.helianto.resource.filter;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.resource.Resource;
-import org.helianto.resource.ResourceGroup;
+import org.helianto.resource.domain.Resource;
+import org.helianto.resource.domain.ResourceGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
  * Resource group filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
+ * @see ResourceGroupFormFilterAdapter
  */
 public class ResourceGroupFilterAdapter extends AbstractTrunkFilterAdapter<ResourceGroup>{
 

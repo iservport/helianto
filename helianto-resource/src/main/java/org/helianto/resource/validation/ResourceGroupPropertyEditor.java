@@ -15,7 +15,7 @@
 package org.helianto.resource.validation;
 
 import org.helianto.core.validation.AbstractSessionPropertyEditor;
-import org.helianto.resource.ResourceGroup;
+import org.helianto.resource.domain.ResourceGroup;
 import org.springframework.stereotype.Component;
 
 /**

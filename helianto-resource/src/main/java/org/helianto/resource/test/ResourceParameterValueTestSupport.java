@@ -15,9 +15,9 @@
 
 package org.helianto.resource.test;
 
-import org.helianto.resource.ResourceGroup;
-import org.helianto.resource.ResourceParameter;
-import org.helianto.resource.ResourceParameterValue;
+import org.helianto.resource.domain.ResourceGroup;
+import org.helianto.resource.domain.ResourceParameter;
+import org.helianto.resource.domain.ResourceParameterValue;
 
 /**
  * Test suport methods.
