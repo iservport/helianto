@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.resource.Resource;
-import org.helianto.resource.ResourceGroup;
+import org.helianto.resource.domain.Resource;
+import org.helianto.resource.domain.ResourceGroup;
 
 /**
  * Represents a <code>Setup</code>.

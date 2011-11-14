@@ -18,7 +18,7 @@ package org.helianto.process.test;
 
 import org.helianto.process.Operation;
 import org.helianto.process.Setup;
-import org.helianto.resource.ResourceGroup;
+import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.test.ResourceGroupTestSupport;
 
 /**

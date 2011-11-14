@@ -34,7 +34,7 @@ import org.helianto.process.test.OperationTestSupport;
 import org.helianto.process.test.ProcessDocumentAssociationTestSupport;
 import org.helianto.process.test.ProcessDocumentTestSupport;
 import org.helianto.process.test.SetupTestSupport;
-import org.helianto.resource.ResourceGroup;
+import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.test.ResourceGroupTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
