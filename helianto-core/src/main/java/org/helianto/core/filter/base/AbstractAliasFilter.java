@@ -309,6 +309,20 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
         }
     }
     
+    /**
+     * Case unsensitive start like appender.
+     * 
+     * @param fieldName
+     * @param fieldContent
+     * @param criteriaBuilder
+     */
+    protected void appendStartLikeFilter(String fieldName, String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
+    	if (fieldContent!=null && fieldContent.length()>0) {
+    		criteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
+            .appendStartLike(fieldContent.toLowerCase());
+        }
+    }
+    
     @Override
     public Object clone() throws CloneNotSupportedException {
     	return super.clone();
