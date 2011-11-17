@@ -23,8 +23,8 @@ import javax.persistence.Transient;
 
 import org.helianto.core.ControlState;
 import org.helianto.core.ControlStateResolver;
-import org.helianto.core.Controllable;
 import org.helianto.core.Resolution;
+import org.helianto.document.Record;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -37,7 +37,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractRecord extends AbstractEvent implements Controllable {
+public abstract class AbstractRecord extends AbstractEvent implements Record {
 
     private static final long serialVersionUID = 1L;
     private int complete;
