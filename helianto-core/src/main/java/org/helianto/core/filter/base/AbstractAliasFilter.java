@@ -137,6 +137,11 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 			connect = true;
 			preProcessParentFilter(mainCriteriaBuilder);
 		}
+		if (hasNavigableCriterion()) {
+			mainCriteriaBuilder.appendAnd(connect);
+			connect = true;
+			preProcessNavigableFilter(mainCriteriaBuilder);
+		}
 	}
 	
 	/**
@@ -160,6 +165,15 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	}
 	
 	/**
+	 * Navigable pre-processor.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	public void preProcessNavigableFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		// Delegate to subclasses, if needed
+	}
+	
+	/**
 	 * True if there is a segment for polimorphic criterion.
 	 */
 	protected boolean hasPolimorphicCriterion() {
@@ -171,6 +185,10 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 */
 	protected boolean hasParentCriterion() {
 		return this instanceof ParentFilter && ((ParentFilter) this).getParentId()>0;
+	}
+	
+	protected boolean hasNavigableCriterion() {
+		return false;
 	}
 	
 	/**

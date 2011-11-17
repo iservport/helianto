@@ -2,6 +2,7 @@ package org.helianto.core.filter.base;
 
 import org.helianto.core.UserGroup;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.filter.form.NavigableForm;
 import org.helianto.core.filter.form.TypeForm;
 
 
@@ -78,6 +79,28 @@ public abstract class AbstractFilterAdapter<F> extends AbstractFilter {
 	@Override
 	public void preProcessPolimorphicFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("class", ((TypeForm) getForm()).getType(), mainCriteriaBuilder);
+		mainCriteriaBuilder.addSegmentCount(1);
+	}
+	
+	/**
+	 * True if the form is assignable from NavigableForm.
+	 */
+	protected boolean hasNavigableCriterion() {
+		if (NavigableForm.class.isAssignableFrom(getForm().getClass())) {
+			String nodePath = ((NavigableForm) getForm()).getNodePath();
+			return nodePath!=null && nodePath.length()>0;
+		}
+		return false;
+	}
+		
+	@Override
+	public void preProcessNavigableFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		if (((NavigableForm) getForm()).isStrict()) {
+			appendEqualFilter("nodePath", ((NavigableForm) getForm()).getNodePath(), mainCriteriaBuilder);
+		} 
+		else {
+			appendStartLikeFilter("nodePath", ((NavigableForm) getForm()).getNodePath(), mainCriteriaBuilder);
+		}
 		mainCriteriaBuilder.addSegmentCount(1);
 	}
 	
