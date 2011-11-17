@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
+import org.helianto.core.filter.form.NavigableForm;
 import org.helianto.core.test.UserTestSupport;
 import org.junit.Test;
 
@@ -26,6 +27,27 @@ public class FilterAdapterTests {
 		SecondFilter filter2 = new SecondFilter(user);
 		assertEquals("alias.type = 'I' ", filter2.createCriteriaAsString());
 	}
+	
+	private boolean strict = true;
+	
+	@SuppressWarnings("serial")
+	@Test
+	public void navigable() {
+		NavigableForm form = new NavigableForm() {
+			public String getNodePath() { return "/A/B/"; }
+			public void setStrict(boolean strict) { }
+			public boolean isStrict() { return strict; }
+		};
+		Filter filter = new AbstractFilterAdapter<NavigableForm>(form) {
+			public void reset() { }
+			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
+			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
+		};
+		assertEquals("alias.nodePath = '/A/B/' ", filter.createCriteriaAsString());
+		strict = false;
+		assertEquals("lower(alias.nodePath) like '/a/b/%' ", filter.createCriteriaAsString());
+	}
+	
 
 	/** 
 	 * Test subclass
