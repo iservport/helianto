@@ -43,7 +43,7 @@ public class FilterAdapterTests {
 			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
 		};
-		assertEquals("alias.nodePath = '/A/B/' ", filter.createCriteriaAsString());
+		assertEquals("lower(alias.nodePath) = '/a/b/' ", filter.createCriteriaAsString());
 		strict = false;
 		assertEquals("lower(alias.nodePath) like '/a/b/%' ", filter.createCriteriaAsString());
 	}

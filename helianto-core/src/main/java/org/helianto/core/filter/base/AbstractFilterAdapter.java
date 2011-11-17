@@ -96,7 +96,7 @@ public abstract class AbstractFilterAdapter<F> extends AbstractFilter {
 	@Override
 	public void preProcessNavigableFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (((NavigableForm) getForm()).isStrict()) {
-			appendEqualFilter("nodePath", ((NavigableForm) getForm()).getNodePath(), mainCriteriaBuilder);
+			appendEqualLessCaseFilter("nodePath", ((NavigableForm) getForm()).getNodePath(), mainCriteriaBuilder);
 		} 
 		else {
 			appendStartLikeFilter("nodePath", ((NavigableForm) getForm()).getNodePath(), mainCriteriaBuilder);

@@ -253,6 +253,20 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
      * @param fieldContent
      * @param criteriaBuilder
      */
+    protected void appendEqualLessCaseFilter(String fieldName, String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
+    	if (fieldContent!=null && fieldContent.length()>0) {
+            criteriaBuilder.appendAnd().appendSegment(fieldName, "=", "lower")
+            .appendString(fieldContent.toLowerCase());
+        }
+    }
+    
+    /**
+     * Equal appender.
+     * 
+     * @param fieldName
+     * @param fieldContent
+     * @param criteriaBuilder
+     */
     protected void appendEqualFilter(String fieldName, int fieldContent, OrmCriteriaBuilder criteriaBuilder) {
     	appendEqualFilter(fieldName, fieldContent, false, criteriaBuilder);
     }
