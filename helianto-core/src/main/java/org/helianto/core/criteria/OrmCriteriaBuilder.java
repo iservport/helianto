@@ -236,7 +236,7 @@ public class OrmCriteriaBuilder extends SelectFromBuilder implements CriteriaBui
      * @param content
      */
     public OrmCriteriaBuilder appendStartLike(String content) {
-    	getInternalBuilder().append(content).append("%' ");
+    	getInternalBuilder().append("'").append(content).append("%' ");
         return this;
     }
 
