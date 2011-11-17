@@ -70,14 +70,17 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> i
 	}
 	
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
+			connect = true;
 		}
 		if (getParent()!=null) {
 			appendEqualFilter("parent.id", getParentId(), mainCriteriaBuilder);
+			connect = true;
 		}
+		return connect;
 	}
 
 	@Override

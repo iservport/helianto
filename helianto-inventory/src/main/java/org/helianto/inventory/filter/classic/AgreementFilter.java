@@ -46,10 +46,12 @@ public class AgreementFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getCustomer()!=null) {
 			appendEqualFilter("partner.id", getCustomer().getId(), mainCriteriaBuilder);
+			return true;
 		}
+		return false;
 	}
 	
 	@Override

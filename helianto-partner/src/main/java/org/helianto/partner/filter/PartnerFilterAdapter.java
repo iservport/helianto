@@ -88,11 +88,13 @@ public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	}
 
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
+			connect = true;
 		}
+		return connect;
 	}
 
 	@Override

@@ -64,11 +64,12 @@ public class CategoryFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
         // force to filter by group
         logger.debug("CategoryGroup is: '{}'", getCategoryGroup());
         mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
         .append(getCategoryGroup().getValue());
+        return true;
 	}
 
 	@Override

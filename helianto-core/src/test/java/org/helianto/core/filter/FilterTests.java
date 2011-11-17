@@ -177,9 +177,10 @@ public class FilterTests {
 		}
 		
 		@Override
-		public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-			super.preProcessFilter(mainCriteriaBuilder);
+		public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+			boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 			preProcessedCriteriaBuilder = mainCriteriaBuilder;
+			return connect;
 		}
 		
 		@Override protected void postProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {

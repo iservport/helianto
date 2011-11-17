@@ -79,10 +79,12 @@ public class UnitFilter extends AbstractUserBackedCriteriaFilter {
 	}
 
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
     	if (getCategoryGroup()!=null) {
         	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), mainCriteriaBuilder);
+        	return true;
     	}
+    	return false;
 	}
 
 	@Override

@@ -45,8 +45,8 @@ public class UserRoleFilterAdapter extends AbstractFilterAdapter<UserRole> {
 	}
 	
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getParentList()!=null && getParentList().size()>0) {
 			mainCriteriaBuilder.appendAnd().appendSegment("userGroup.id", "in");
 			int[] parentIdArray = new int[getParentList().size()];
@@ -55,7 +55,9 @@ public class UserRoleFilterAdapter extends AbstractFilterAdapter<UserRole> {
 				parentIdArray[i++] = parent.getId();
 			}
 			mainCriteriaBuilder.append(parentIdArray);
+			connect = true;
 		}
+		return connect;
 	}
 	
 	@Override

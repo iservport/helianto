@@ -35,11 +35,13 @@ public abstract class AbstractRootFilterAdapter<F extends RootEntity> extends Ab
 	 * Restrict selection to a given operator, if any. 
 	 */
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getOperator()!=null) {
 			appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
 			logger.debug("Filter constraint set to {}.", getOperator());
+			return true;
 		}
+		return false;
 	}
 	
 	private static final Logger logger  = LoggerFactory.getLogger(AbstractRootFilterAdapter.class);

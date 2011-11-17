@@ -125,7 +125,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 * @param filter
 	 * @param mainCriteriaBuilder
 	 */
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		boolean connect = false;
 		if (hasPolimorphicCriterion()) {
 			mainCriteriaBuilder.appendAnd(connect);
@@ -142,6 +142,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 			connect = true;
 			preProcessNavigableFilter(mainCriteriaBuilder);
 		}
+		return connect;
 	}
 	
 	/**

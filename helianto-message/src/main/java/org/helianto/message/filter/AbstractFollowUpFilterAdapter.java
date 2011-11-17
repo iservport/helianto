@@ -53,12 +53,14 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
     }
     
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getParent()!=null) {
 	        logger.debug("Parent control is: '{}'", getParent());
 			appendEqualFilter(new StringBuilder(getControlFieldName()).append(".id").toString(), getParent().getId(), mainCriteriaBuilder);
+			connect = true;
 		}
+		return connect;
 	}
 	
 	/**

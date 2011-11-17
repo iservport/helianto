@@ -20,8 +20,9 @@ public class SearchFilterTests {
 			public void reset() { }
 			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {}
 			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
-			@Override public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+			@Override public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 				mainCriteriaBuilder.appendSegment("uniqueField", "=").appendString("key");
+				return true;
 			}
 		};
 		SearchFilter filter = new SearchFilter(sourceFilter) {

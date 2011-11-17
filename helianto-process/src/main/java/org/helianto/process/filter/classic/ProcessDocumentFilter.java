@@ -72,11 +72,13 @@ public class ProcessDocumentFilter extends AbstractDocumentFilter implements Ser
 	}
 	
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (!getClazz().equals(ProcessDocument.class)) {
 	        logger.debug("Document class is: '{}'", getClazz());
 			mainCriteriaBuilder.appendAnd().append(getClazz());
+			return true;
 		}
+		return false;
 	}
 
 	@Override

@@ -29,17 +29,21 @@ public class ResourceAssociationFormFilterAdapter extends AbstractFilterAdapter<
 	 * Restrict selection to a given entity, if any. 
 	 */
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = false;
 		if (getForm().getParent()!=null) {
 			appendEqualFilter("parent.id", getForm().getParent().getId(), mainCriteriaBuilder);
 			setOrderByString("child.resourceCode");
 			logger.debug("Filter parent constraint set to {}.", getForm().getParent());
+			connect = true;
 		}
 		else if (getForm().getChild()!=null) {
 			appendEqualFilter("child.id", getForm().getChild().getId(), mainCriteriaBuilder);
 			setOrderByString("parent.resourceCode");
 			logger.debug("Filter child constraint set to {}.", getForm().getChild());
+			connect = true;
 		}
+		return connect;
 	}
 
 	public void reset() { }

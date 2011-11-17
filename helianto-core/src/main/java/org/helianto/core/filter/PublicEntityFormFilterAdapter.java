@@ -34,12 +34,14 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 	 * Restrict selection to a given operator, if any. 
 	 */
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getForm().getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getForm().getClazz());
 			logger.debug("Added class {} restriction.", getForm().getClazz());
+			connect = true;
 		}
+		return connect;
 	}
 	
 	@Override

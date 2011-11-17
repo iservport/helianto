@@ -121,10 +121,12 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 	}
 
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
+			return true;
 		}
+		return false;
 	}
 
 	@Override

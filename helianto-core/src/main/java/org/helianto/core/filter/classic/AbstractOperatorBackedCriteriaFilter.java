@@ -56,11 +56,13 @@ public abstract class AbstractOperatorBackedCriteriaFilter extends AbstractListF
 	 * Restrict selection to a given operator, if any. 
 	 */
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getOperator()!=null) {
 			appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
 			logger.debug("Will add '{}.operator.id = {}' to the beginning of any filter string", getObjectAlias(), operator.getId());
+			return true;
 		}
+		return false;
 	}
 	
 	private static final Logger logger  = LoggerFactory.getLogger(AbstractOperatorBackedCriteriaFilter.class);

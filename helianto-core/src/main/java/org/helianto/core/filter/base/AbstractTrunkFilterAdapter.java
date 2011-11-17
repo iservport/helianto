@@ -40,13 +40,15 @@ public abstract class AbstractTrunkFilterAdapter <F extends TrunkEntity> extends
 	 * Restrict selection to a given entity, if any. 
 	 */
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getEntity()!=null && !hasParentCriterion()) {
-			mainCriteriaBuilder.appendAnd(hasPolimorphicCriterion());
+			mainCriteriaBuilder.appendAnd(connect);
 			appendEntityFilter(getEntity(), mainCriteriaBuilder);
 			logger.debug("Filter constraint set to {}.", getEntity());
+			connect = true;
 		}
+		return connect;
 	}
 	
     /**

@@ -46,13 +46,15 @@ public class CategoryFormFilterAdapter extends AbstractTrunkFilterAdapter<Catego
 	}
 
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
         super.preProcessFilter(mainCriteriaBuilder);
         logger.debug("CategoryGroup is: '{}'", getForm().getCategoryGroup());
         if (getForm().getCategoryGroup()!=' ') {
             mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
             	.append(getForm().getCategoryGroup());
+            return true;
         }
+        return false;
 	}
 
 	@Override

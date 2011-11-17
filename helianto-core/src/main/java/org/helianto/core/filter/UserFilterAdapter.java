@@ -125,22 +125,27 @@ public class UserFilterAdapter extends AbstractTrunkFilterAdapter<UserGroup> {
 	}
 
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null) {
 			mainCriteriaBuilder.appendAnd().append(getClazz());
+			connect = true;
 		}
 		if (getParent()!=null) {
 			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.id =").append(getParent().getId());
 			mainCriteriaBuilder.addSegmentCount(1);
+			connect = true;
 		}
 		if (getParentUserKey()!=null && getParentUserKey().length()>0) {
 			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.userKey =").appendString(getParentUserKey());
 			mainCriteriaBuilder.addSegmentCount(1);
+			connect = true;
 		}
 		if (getIdentity()!=null && getIdentity().getId()>0) {
 			mainCriteriaBuilder.appendAnd().appendSegment("identity.id", "=").append(getIdentity().getId());
+			connect = true;
 		}
+		return connect;
 	}
 
 	@Override

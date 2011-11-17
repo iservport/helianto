@@ -13,12 +13,13 @@
  * limitations under the License.
  */
 
-package org.helianto.core.filter;
+package org.helianto.core.filter.classic;
 
 import org.helianto.core.Category;
 import org.helianto.core.CategoryGroup;
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.filter.CategoryFormFilterAdapter;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,11 +63,12 @@ public class CategoryFilterAdapter extends AbstractTrunkFilterAdapter<Category> 
 	}
 
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
         super.preProcessFilter(mainCriteriaBuilder);
         logger.debug("CategoryGroup is: '{}'", getForm().getCategoryGroup());
         mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
         .append(getForm().getCategoryGroup());
+        return true;
 	}
 
 	@Override

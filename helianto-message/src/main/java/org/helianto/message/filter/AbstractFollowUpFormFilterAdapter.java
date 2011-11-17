@@ -55,10 +55,12 @@ public abstract class AbstractFollowUpFormFilterAdapter<F extends FollowUpForm<C
 	}
 	
 	@Override
-	public final void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public final boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (hasControlCriterion()) {
 			preProcessControlFilter(mainCriteriaBuilder, getForm());
+			return true;
 		}
+		return false;
 	}
 	
 	protected void preProcessControlFilter(OrmCriteriaBuilder mainCriteriaBuilder, ControlForm<C> controlForm) {

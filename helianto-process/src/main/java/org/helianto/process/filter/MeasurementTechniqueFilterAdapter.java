@@ -33,12 +33,14 @@ public class MeasurementTechniqueFilterAdapter<T extends MeasurementTechniqueFor
     }
     
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null && !getClazz().equals(MeasurementTechnique.class)) {
 	        logger.debug("Measurement technique class is: '{}'", getClazz());
 			mainCriteriaBuilder.appendAnd().append(getClazz());
+			connect = true;
 		}
+		return connect;
 	}
 	
 	@Override

@@ -80,16 +80,19 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
     }
     	
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getClazz()!=null && !getClazz().equals(ProcessDocument.class)) {
 	        logger.debug("Document class is: '{}'", getClazz());
 			mainCriteriaBuilder.appendAnd().append(getClazz());
+			connect = true;
 		}
 		if (getParent()!=null) {
 	        logger.debug("Document parent is: '{}'", getParent());
 			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.id =").append(getParent().getId());
+			connect = true;
 		}
+		return connect;
 	}
 	
 	@Override

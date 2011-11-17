@@ -43,11 +43,13 @@ public class TaxFilterAdapter extends AbstractFilterAdapter<Tax> {
 	public void reset() { }
 	
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		super.preProcessFilter(mainCriteriaBuilder);
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
 		if (getForm().getProcessAgreement()!=null) {
 			appendEqualFilter("processAgreement.id", getForm().getProcessAgreement().getId(), mainCriteriaBuilder);
+			connect = true;
 		}
+		return connect;
 	}
 
 	@Override

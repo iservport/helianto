@@ -35,11 +35,13 @@ public abstract class AbstractPersonalFilterAdapter <F extends PersonalEntity> e
 	 * Restrict selection to a given identity, if any. 
 	 */
 	@Override
-	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (getIdentity()!=null) {
 			appendEqualFilter("identity.id", getIdentity().getId(), mainCriteriaBuilder);
 			logger.debug("Filter constraint set to {}.", getIdentity());
+			return true;
 		}
+		return false;
 	}
 	
 	private static final Logger logger  = LoggerFactory.getLogger(AbstractPersonalFilterAdapter.class);
