@@ -10,7 +10,7 @@ import org.junit.Test;
  * 
  * @author mauriciofernandesdecastro
  */
-public class SerarchFilterTests {
+public class SearchFilterTests {
 	
 	@SuppressWarnings("serial")
 	@Test
