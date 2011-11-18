@@ -12,4 +12,9 @@ public interface Navigable {
 	 */
 	public String getParentPath();
 
+	/**
+	 * Node path, typically transient.
+	 */
+	public String getCurrentPath();
+
 }

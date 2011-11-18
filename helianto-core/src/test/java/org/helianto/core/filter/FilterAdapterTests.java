@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.def.NavigationMode;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.core.filter.form.NavigableForm;
 import org.helianto.core.test.UserTestSupport;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -28,24 +30,32 @@ public class FilterAdapterTests {
 		assertEquals("alias.type = 'I' ", filter2.createCriteriaAsString());
 	}
 	
-	private boolean strict = true;
+	private NavigableForm form;
+	private NavigationMode navigatioMode = NavigationMode.IGNORE;
 	
 	@SuppressWarnings("serial")
 	@Test
 	public void navigable() {
-		NavigableForm form = new NavigableForm() {
-			public String getParentPath() { return "/A/B/"; }
-			public void setStrict(boolean strict) { }
-			public boolean isStrict() { return strict; }
-		};
 		Filter filter = new AbstractFilterAdapter<NavigableForm>(form) {
 			public void reset() { }
 			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
 		};
-		assertEquals("lower(alias.nodePath) = '/a/b/' ", filter.createCriteriaAsString());
-		strict = false;
-		assertEquals("lower(alias.nodePath) like '/a/b/%' ", filter.createCriteriaAsString());
+		assertEquals("", filter.createCriteriaAsString());
+		navigatioMode = NavigationMode.FETCH_SIBLINGS;
+		assertEquals("lower(alias.parentPath) = '/a/b/' ", filter.createCriteriaAsString());
+		navigatioMode = NavigationMode.FETCH_DESCENDANTS;
+		assertEquals("lower(alias.parentPath) like '/a/b/c/%' ", filter.createCriteriaAsString());
+	}
+	
+	@Before
+	public void setUp() {
+		form = new NavigableForm() {
+			public String getParentPath() { return "/A/B/"; }
+			public String getCurrentPath() { return "/A/B/C/"; }
+			public NavigationMode getNavigationMode() { return navigatioMode; }
+			public void setNavigationMode(NavigationMode navigationMode) {}
+		};
 	}
 	
 

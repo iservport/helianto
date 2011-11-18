@@ -1,6 +1,7 @@
 package org.helianto.core.filter.form;
 
 import org.helianto.core.Navigable;
+import org.helianto.core.def.NavigationMode;
 
 
 /**
@@ -11,16 +12,16 @@ import org.helianto.core.Navigable;
 public interface NavigableForm extends Navigable {
 	
     /**
-     * True if filter does not include descendants.
+     * Navigation mode.
      */
-	public boolean isStrict();
+	public NavigationMode getNavigationMode();
 	
 	/**
-	 * Strict is a R/W property.
+	 * Navigation mode is a R/W property.
 	 * 
-	 * @param strict
+	 * @param navigationMode
 	 */
-	public void setStrict(boolean strict);
+	public void setNavigationMode(NavigationMode navigationMode);
 	
 
 }

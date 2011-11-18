@@ -8,6 +8,11 @@ package org.helianto.core.def;
 public enum NavigationMode {
 	
 	/**
+	 * Ignore
+	 */
+	IGNORE,
+	
+	/**
 	 * Fetch siblings
 	 */
 	FETCH_SIBLINGS,

@@ -2,6 +2,7 @@ package org.helianto.core.filter.base;
 
 import org.helianto.core.UserGroup;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.def.NavigationMode;
 import org.helianto.core.filter.form.NavigableForm;
 import org.helianto.core.filter.form.TypeForm;
 
@@ -95,11 +96,14 @@ public abstract class AbstractFilterAdapter<F> extends AbstractFilter {
 		
 	@Override
 	public void preProcessNavigableFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (((NavigableForm) getForm()).isStrict()) {
-			appendEqualLessCaseFilter("nodePath", ((NavigableForm) getForm()).getParentPath(), mainCriteriaBuilder);
+		if (((NavigableForm) getForm()).getNavigationMode()==NavigationMode.FETCH_SIBLINGS) {
+			appendEqualLessCaseFilter("parentPath", ((NavigableForm) getForm()).getParentPath(), mainCriteriaBuilder);
 		} 
+		else if (((NavigableForm) getForm()).getNavigationMode().equals(NavigationMode.FETCH_DESCENDANTS)) {
+			appendStartLikeFilter("parentPath", ((NavigableForm) getForm()).getCurrentPath(), mainCriteriaBuilder);
+		}
 		else {
-			appendStartLikeFilter("nodePath", ((NavigableForm) getForm()).getParentPath(), mainCriteriaBuilder);
+			return;
 		}
 		mainCriteriaBuilder.addSegmentCount(1);
 	}
