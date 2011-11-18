@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.def;
 
 /**
  * Phone types.

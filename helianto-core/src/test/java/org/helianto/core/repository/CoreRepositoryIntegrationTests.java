@@ -21,7 +21,6 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.AddressType;
 import org.helianto.core.Category;
 import org.helianto.core.Country;
 import org.helianto.core.Credential;
@@ -44,6 +43,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRequest;
 import org.helianto.core.UserRole;
+import org.helianto.core.def.AddressType;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
 import org.helianto.core.test.CountryTestSupport;

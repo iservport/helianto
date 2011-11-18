@@ -41,6 +41,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
+import org.helianto.core.def.ActivityState;
+import org.helianto.core.def.UserState;
 /**
  * 			
  * An user account (or group) represents a set of roles within an <code>Entity</code>. 

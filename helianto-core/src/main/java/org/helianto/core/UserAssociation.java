@@ -33,6 +33,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.base.AbstractAssociation;
+import org.helianto.core.def.AssociationState;
 import org.springframework.format.annotation.DateTimeFormat;
 /**
  * User group associations.

@@ -13,33 +13,43 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
-
+package org.helianto.core.def;
 
 /**
- * Notification types.
+ * An enumeration to represent privacy levels.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum Notification {
-
+public enum PrivacyLevel {
+    
     /**
-     * Email notification is automatic.
+     * Public.
      */
-    AUTOMATIC('A'),
+    PUBLIC('0'),
     /**
-     * Email notification must be requested.
+     * Some restrictions apply.
      */
-    BY_REQUEST('R');
+    RESTRICTED('1'),
+    /**
+     * Minor restrictions apply.
+     */
+    MINOR('2'),
+    /**
+     * Major restrictions apply.
+     */
+    MAJOR('3'),
+    /**
+     * Only personal.
+     */
+    PERSONAL('9');
     
     private char value;
     
-    private Notification(char value) {
+    private PrivacyLevel(char value) {
         this.value = value;
     }
-    
     public char getValue() {
-        return value;
+        return this.value;
     }
 
 }

@@ -2,9 +2,9 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.AddressType;
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalAddress;
+import org.helianto.core.def.AddressType;
 import org.junit.Before;
 import org.junit.Test;
 

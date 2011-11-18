@@ -21,10 +21,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import org.helianto.core.AddressType;
 import org.helianto.core.Identity;
 import org.helianto.core.Privacy;
-import org.helianto.core.PrivacyLevel;
+import org.helianto.core.def.AddressType;
+import org.helianto.core.def.PrivacyLevel;
 
 /**
  * Contact

@@ -13,39 +13,44 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.def;
 
 /**
- * An enumeration to represent activity.
+ * <code>AddressType</code> enumeration.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum ActivityState {
-    
-    /**
-     * No restrictions to operate.
-     */
-    ACTIVE('A'),
-    /**
-     * No longer available.
-     */
-    CANCELLED('C'),
-    /**
-     * Not active yet.
-     */
-    INITIAL('I'),
-    /**
-     * Temporarilly not available.
-     */
-    SUSPENDED('S');
-    
-    private char value;
-    
-    private ActivityState(char value) {
-        this.value = value;
-    }
-    public char getValue() {
-        return this.value;
-    }
+public enum AddressType {
+	
+	/**
+	 * Personal address.
+	 */
+	PERSONAL('0'),
+	/**
+	 * Collection address.
+	 */
+	COLLECTION('1'),
+	/**
+	 * Delivery address.
+	 */
+	DELIVERY('2'),
+	/**
+	 * Restricted address.
+	 */
+	RESTRICTED('3'),
+	/**
+	 * Main address.
+	 */
+	MAIN('M');
+	
+	private char value;
+	
+	private AddressType(char value) {
+		this.value = value;
+	}
+	
+	public char getValue() {
+		return value;
+	}
 
 }

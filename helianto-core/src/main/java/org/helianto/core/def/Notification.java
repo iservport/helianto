@@ -13,44 +13,33 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.def;
+
 
 /**
- * <code>AddressType</code> enumeration.
+ * Notification types.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum AddressType {
-	
-	/**
-	 * Personal address.
-	 */
-	PERSONAL('0'),
-	/**
-	 * Collection address.
-	 */
-	COLLECTION('1'),
-	/**
-	 * Delivery address.
-	 */
-	DELIVERY('2'),
-	/**
-	 * Restricted address.
-	 */
-	RESTRICTED('3'),
-	/**
-	 * Main address.
-	 */
-	MAIN('M');
-	
-	private char value;
-	
-	private AddressType(char value) {
-		this.value = value;
-	}
-	
-	public char getValue() {
-		return value;
-	}
+public enum Notification {
+
+    /**
+     * Email notification is automatic.
+     */
+    AUTOMATIC('A'),
+    /**
+     * Email notification must be requested.
+     */
+    BY_REQUEST('R');
+    
+    private char value;
+    
+    private Notification(char value) {
+        this.value = value;
+    }
+    
+    public char getValue() {
+        return value;
+    }
 
 }

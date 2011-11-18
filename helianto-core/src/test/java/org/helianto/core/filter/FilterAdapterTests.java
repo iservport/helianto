@@ -34,7 +34,7 @@ public class FilterAdapterTests {
 	@Test
 	public void navigable() {
 		NavigableForm form = new NavigableForm() {
-			public String getNodePath() { return "/A/B/"; }
+			public String getParentPath() { return "/A/B/"; }
 			public void setStrict(boolean strict) { }
 			public boolean isStrict() { return strict; }
 		};

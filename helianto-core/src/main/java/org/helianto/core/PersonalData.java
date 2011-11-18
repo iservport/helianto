@@ -23,6 +23,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.helianto.core.def.Appellation;
+import org.helianto.core.def.Gender;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**

@@ -13,33 +13,26 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.def;
 
-/**
- * User states. 
+/** 
+ * Encription types.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum UserState {
+public enum Encription {
     
-	/**
-	 * Active.
-	 */
-    ACTIVE('A'),
     /**
-     * Inactive.
+     * Plain password.
      */
-    INACTIVE('I');
+    PLAIN_PASSWORD('P');
     
     private char value;
     
-    private UserState(char type) {
-        this.value = type;
+    private Encription(char value) {
+        this.value = value;
     }
     
-    /**
-     * Database value.
-     */
     public char getValue() {
         return value;
     }

@@ -26,7 +26,6 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
-import org.helianto.core.EventType;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
@@ -36,7 +35,8 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
-import org.helianto.core.UserState;
+import org.helianto.core.def.EventType;
+import org.helianto.core.def.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserFilterAdapter;

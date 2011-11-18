@@ -31,7 +31,7 @@ import javax.persistence.Version;
 
 import org.helianto.core.Identity;
 import org.helianto.core.Privacy;
-import org.helianto.core.PrivacyLevel;
+import org.helianto.core.def.PrivacyLevel;
 import org.helianto.document.Event;
 import org.springframework.format.annotation.DateTimeFormat;
 

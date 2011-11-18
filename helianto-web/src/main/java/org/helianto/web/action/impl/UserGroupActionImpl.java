@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserState;
+import org.helianto.core.def.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.UserFormFilterAdapter;
 import org.helianto.core.filter.form.AbstractUserForm;

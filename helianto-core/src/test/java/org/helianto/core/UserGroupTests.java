@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.helianto.core.def.UserState;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 

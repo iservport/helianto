@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
+import org.helianto.core.def.ActivityState;
+import org.helianto.core.def.Encription;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 

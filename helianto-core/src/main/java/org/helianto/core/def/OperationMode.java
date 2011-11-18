@@ -13,28 +13,39 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.def;
+
 
 /**
- * User types. 
+ * Modes of operation.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
  */
-public enum UserType {
-    
-	
-    ADMINISTRATOR('A'),
-    EXTERNAL('E'),
-    INTERNAL('I'),
-    MODERATOR('M');
+public enum OperationMode {
+
+    /**
+     * Inherit properties of a parent <code>Operator</code>
+     * and may have a more restricted range of operation.
+     */
+    DELEGATED('D'),
+    /**
+     * Appropriate for small installations where the notion
+     * of operator and the system itself are interchangeable.
+     */
+    LOCAL('L'),
+    /**
+     * Use in systems where different operators control different
+     * namespaces.
+     */
+    ENTERPRISE('E');
     
     private char value;
-    private UserType(char type) {
-        this.value = type;
+    
+    private OperationMode(char value) {
+        this.value = value;
     }
     public char getValue() {
-        return value;
+        return this.value;
     }
 
 }

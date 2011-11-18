@@ -13,29 +13,28 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
-
+package org.helianto.core.def;
 
 /**
- * Event types.
+ * User types. 
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-public enum EventType {
-
-    LOGIN_ATTEMPT(-1),
-    LOGIN(0),
-    CREATE(1),
-    UPDATE(2),
-    REMOVE(3);
+public enum UserType {
     
-    private int value;
+	
+    ADMINISTRATOR('A'),
+    EXTERNAL('E'),
+    INTERNAL('I'),
+    MODERATOR('M');
     
-    private EventType(int value) {
-        this.value = value;
+    private char value;
+    private UserType(char type) {
+        this.value = type;
     }
-    public int getValue() {
-        return this.value;
+    public char getValue() {
+        return value;
     }
 
 }

@@ -8,8 +8,8 @@ package org.helianto.core;
 public interface Navigable {
 	
 	/**
-	 * Node path.
+	 * Parent path.
 	 */
-	public String getNodePath();
+	public String getParentPath();
 
 }

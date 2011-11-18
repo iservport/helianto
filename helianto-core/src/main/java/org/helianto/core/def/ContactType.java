@@ -13,39 +13,28 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
-
+package org.helianto.core.def;
 
 /**
- * Modes of operation.
+ * Contact types.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum OperationMode {
-
-    /**
-     * Inherit properties of a parent <code>Operator</code>
-     * and may have a more restricted range of operation.
-     */
-    DELEGATED('D'),
-    /**
-     * Appropriate for small installations where the notion
-     * of operator and the system itself are interchangeable.
-     */
-    LOCAL('L'),
-    /**
-     * Use in systems where different operators control different
-     * namespaces.
-     */
-    ENTERPRISE('E');
+public enum ContactType {
+	
+    EMAIL('E'),
+    BLOG('B'),
+    TWEETER('M'),
+    OTHER('O');
     
     private char value;
-    
-    private OperationMode(char value) {
-        this.value = value;
-    }
-    public char getValue() {
-        return this.value;
+
+    private ContactType(char value) {
+        this.value= value;
     }
 
+    public char getValue() {
+        return value;
+    }
+    
 }

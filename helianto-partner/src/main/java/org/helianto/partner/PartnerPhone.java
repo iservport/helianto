@@ -28,7 +28,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Phone;
-import org.helianto.core.PhoneType;
+import org.helianto.core.def.PhoneType;
 /**
  * Private entity phones.
  * 

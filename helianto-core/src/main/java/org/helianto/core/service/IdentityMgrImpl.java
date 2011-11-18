@@ -20,14 +20,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.ActivityState;
-import org.helianto.core.AddressType;
 import org.helianto.core.ContactInfo;
 import org.helianto.core.Credential;
 import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalAddress;
 import org.helianto.core.Phone;
+import org.helianto.core.def.ActivityState;
+import org.helianto.core.def.AddressType;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.PersonalAddressFilterAdapter;
 import org.helianto.core.repository.FilterDao;

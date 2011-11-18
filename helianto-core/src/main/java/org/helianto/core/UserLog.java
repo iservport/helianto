@@ -26,6 +26,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+
+import org.helianto.core.def.EventType;
 /**
  * Represent the memory of main user actions, as
  * login, logout, and so forth.

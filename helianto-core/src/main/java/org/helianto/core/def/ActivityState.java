@@ -13,28 +13,39 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.def;
 
-/** 
- * Encription types.
+/**
+ * An enumeration to represent activity.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum Encription {
+public enum ActivityState {
     
     /**
-     * Plain password.
+     * No restrictions to operate.
      */
-    PLAIN_PASSWORD('P');
+    ACTIVE('A'),
+    /**
+     * No longer available.
+     */
+    CANCELLED('C'),
+    /**
+     * Not active yet.
+     */
+    INITIAL('I'),
+    /**
+     * Temporarilly not available.
+     */
+    SUSPENDED('S');
     
     private char value;
     
-    private Encription(char value) {
+    private ActivityState(char value) {
         this.value = value;
     }
-    
     public char getValue() {
-        return value;
+        return this.value;
     }
 
 }

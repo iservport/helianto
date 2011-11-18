@@ -13,28 +13,35 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.def;
 
 /**
- * Contact types.
+ * User states. 
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum ContactType {
-	
-    EMAIL('E'),
-    BLOG('B'),
-    TWEETER('M'),
-    OTHER('O');
+public enum UserState {
+    
+	/**
+	 * Active.
+	 */
+    ACTIVE('A'),
+    /**
+     * Inactive.
+     */
+    INACTIVE('I');
     
     private char value;
-
-    private ContactType(char value) {
-        this.value= value;
+    
+    private UserState(char type) {
+        this.value = type;
     }
-
+    
+    /**
+     * Database value.
+     */
     public char getValue() {
         return value;
     }
-    
+
 }

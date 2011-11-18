@@ -19,6 +19,8 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.def.PublicEntityType;
+import org.helianto.core.def.PublicEntityVisibility;
 
 /**
  * A registry for public entities.

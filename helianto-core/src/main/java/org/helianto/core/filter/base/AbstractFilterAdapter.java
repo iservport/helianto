@@ -87,7 +87,7 @@ public abstract class AbstractFilterAdapter<F> extends AbstractFilter {
 	 */
 	protected boolean hasNavigableCriterion() {
 		if (NavigableForm.class.isAssignableFrom(getForm().getClass())) {
-			String nodePath = ((NavigableForm) getForm()).getNodePath();
+			String nodePath = ((NavigableForm) getForm()).getParentPath();
 			return nodePath!=null && nodePath.length()>0;
 		}
 		return false;
@@ -96,10 +96,10 @@ public abstract class AbstractFilterAdapter<F> extends AbstractFilter {
 	@Override
 	public void preProcessNavigableFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		if (((NavigableForm) getForm()).isStrict()) {
-			appendEqualLessCaseFilter("nodePath", ((NavigableForm) getForm()).getNodePath(), mainCriteriaBuilder);
+			appendEqualLessCaseFilter("nodePath", ((NavigableForm) getForm()).getParentPath(), mainCriteriaBuilder);
 		} 
 		else {
-			appendStartLikeFilter("nodePath", ((NavigableForm) getForm()).getNodePath(), mainCriteriaBuilder);
+			appendStartLikeFilter("nodePath", ((NavigableForm) getForm()).getParentPath(), mainCriteriaBuilder);
 		}
 		mainCriteriaBuilder.addSegmentCount(1);
 	}

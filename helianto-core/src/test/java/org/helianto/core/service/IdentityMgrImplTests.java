@@ -27,11 +27,11 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
+import org.helianto.core.def.ActivityState;
 import org.helianto.core.filter.IdentityFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;

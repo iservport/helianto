@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.Province;
@@ -37,6 +36,7 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
+import org.helianto.core.def.ActivityState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.filter.UserFilterAdapter;

@@ -8,6 +8,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.def.AddressType;
 
 
 /**

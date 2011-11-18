@@ -20,10 +20,10 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.helianto.core.def.ActivityState;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Before;

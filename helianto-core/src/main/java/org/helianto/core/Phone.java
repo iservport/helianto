@@ -17,6 +17,8 @@ package org.helianto.core;
 
 import javax.persistence.Column;
 
+import org.helianto.core.def.PhoneType;
+
 /**
  * Phone basic info.
  * 

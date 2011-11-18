@@ -16,9 +16,9 @@
 package org.helianto.core.filter.classic;
 
 import org.helianto.core.Category;
-import org.helianto.core.CategoryGroup;
 import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.def.CategoryGroup;
 
 /**
  * Unit filter.

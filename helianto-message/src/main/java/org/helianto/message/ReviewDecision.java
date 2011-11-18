@@ -15,7 +15,7 @@
 
 package org.helianto.message;
 
-import org.helianto.core.Resolution;
+import org.helianto.core.def.Resolution;
 
 /**
  * Define <code>Review</code> decisions.

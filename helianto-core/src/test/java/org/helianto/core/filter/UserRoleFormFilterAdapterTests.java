@@ -20,9 +20,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.ActivityState;
 import org.helianto.core.Service;
 import org.helianto.core.UserGroup;
+import org.helianto.core.def.ActivityState;
 import org.helianto.core.filter.form.UserRoleForm;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;

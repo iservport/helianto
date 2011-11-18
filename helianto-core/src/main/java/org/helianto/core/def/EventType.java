@@ -13,27 +13,28 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.def;
 
 
 /**
- * Server types.
+ * Event types.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
  */
-public enum ServerType {
+public enum EventType {
 
-    HTTP_SERVER('H'),
-    POP3_SERVER('P'),
-    SMTP_SERVER('S');
+    LOGIN_ATTEMPT(-1),
+    LOGIN(0),
+    CREATE(1),
+    UPDATE(2),
+    REMOVE(3);
     
-    private char value;
+    private int value;
     
-    private ServerType(char value) {
+    private EventType(int value) {
         this.value = value;
     }
-    public char getValue() {
+    public int getValue() {
         return this.value;
     }
 

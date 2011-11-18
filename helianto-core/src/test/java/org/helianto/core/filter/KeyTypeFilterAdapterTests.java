@@ -18,8 +18,8 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import org.helianto.core.Operator;
 import org.helianto.core.KeyType;
+import org.helianto.core.Operator;
 import org.junit.Before;
 import org.junit.Test;
 

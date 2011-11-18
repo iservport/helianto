@@ -26,6 +26,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.def.ActivityState;
+
 /**
  * Roles represent the authorization given to access a service.
  * 

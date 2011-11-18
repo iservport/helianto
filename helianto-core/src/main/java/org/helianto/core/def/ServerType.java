@@ -13,39 +13,24 @@
  * limitations under the License.
  */
 
-package org.helianto.core;
+package org.helianto.core.def;
+
 
 /**
- * An enumeration to represent privacy levels.
+ * Server types.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-public enum PrivacyLevel {
-    
-    /**
-     * Public.
-     */
-    PUBLIC('0'),
-    /**
-     * Some restrictions apply.
-     */
-    RESTRICTED('1'),
-    /**
-     * Minor restrictions apply.
-     */
-    MINOR('2'),
-    /**
-     * Major restrictions apply.
-     */
-    MAJOR('3'),
-    /**
-     * Only personal.
-     */
-    PERSONAL('9');
+public enum ServerType {
+
+    HTTP_SERVER('H'),
+    POP3_SERVER('P'),
+    SMTP_SERVER('S');
     
     private char value;
     
-    private PrivacyLevel(char value) {
+    private ServerType(char value) {
         this.value = value;
     }
     public char getValue() {

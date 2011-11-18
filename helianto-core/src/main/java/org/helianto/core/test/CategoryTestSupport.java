@@ -18,9 +18,9 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.CategoryGroup;
 import org.helianto.core.Entity;
 import org.helianto.core.Category;
+import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 

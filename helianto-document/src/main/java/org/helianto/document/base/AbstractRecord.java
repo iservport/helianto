@@ -21,9 +21,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.helianto.core.ControlState;
 import org.helianto.core.ControlStateResolver;
-import org.helianto.core.Resolution;
+import org.helianto.core.def.ControlState;
+import org.helianto.core.def.Resolution;
 import org.helianto.document.Record;
 import org.springframework.format.annotation.DateTimeFormat;
 

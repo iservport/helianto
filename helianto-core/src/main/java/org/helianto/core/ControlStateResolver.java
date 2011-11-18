@@ -2,6 +2,8 @@ package org.helianto.core;
 
 import java.util.Date;
 
+import org.helianto.core.def.Resolution;
+
 
 /**
  * Helper class to resolve <code>AbstractRecord</code> state.

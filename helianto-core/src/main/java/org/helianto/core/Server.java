@@ -25,6 +25,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.def.ActivityState;
+import org.helianto.core.def.Encription;
+import org.helianto.core.def.ServerType;
+
 /**
  * A domain object to represent available servers to an <code>Operator</code>.
  * 
