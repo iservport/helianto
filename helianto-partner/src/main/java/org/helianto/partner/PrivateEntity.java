@@ -124,10 +124,21 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
      */
     @Column(length=20, name="partnerAlias")
     public String getEntityAlias() {
-        return this.partnerAlias;
+        return getInternalEntityAlias();
     }
     public void setEntityAlias(String partnerAlias) {
         this.partnerAlias = partnerAlias;
+    }
+    
+    /**
+     * Subclasses may override this to provide a different entityAlais.
+     */
+    @Transient
+    protected String getInternalEntityAlias() {
+    	if (getEntity()!=null) {
+    		return getEntity().getAlias();
+    	}
+    	return "";
     }
 
     /**
