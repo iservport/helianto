@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.service.SequenceMgrImpl;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 
@@ -30,6 +31,37 @@ public class PrivateEntityTests {
 		PrivateEntity privateEntity = new PrivateEntity(entity);
 		assertTrue(privateEntity instanceof AbstractAddress);
 		assertEquals(entity, privateEntity.getEntity());
+	}
+    
+	@Test
+	public void number() {
+		Entity entity = new Entity();
+		PrivateEntity privateEntity = new PrivateEntity(entity, "#");
+		privateEntity.setInternalNumber(10000);
+		assertEquals("10000", privateEntity.getEntityAlias());
+		// do not change again
+		privateEntity.setInternalNumber(2);
+		assertEquals("10000", privateEntity.getEntityAlias());
+	}
+    
+	@Test
+	public void force() {
+		Entity entity = new Entity();
+		PrivateEntity privateEntity = new PrivateEntity(entity, "");
+		privateEntity.setInternalNumber(10000);
+		assertEquals("", privateEntity.getEntityAlias());
+		// force false
+		privateEntity.forceToNumber(false);
+		assertEquals("", privateEntity.getEntityAlias());
+		// force true
+		privateEntity.forceToNumber(true);
+		SequenceMgrImpl sequenceMgr = new SequenceMgrImpl() {
+			@Override public long newInternalNumber(Entity entity, String internalNumberKey) {
+				return 200;
+			}
+		};
+		sequenceMgr.validateInternalNumber(privateEntity);
+		assertEquals("200", privateEntity.getEntityAlias());
 	}
     
     /**

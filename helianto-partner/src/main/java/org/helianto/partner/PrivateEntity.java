@@ -15,6 +15,7 @@
 
 package org.helianto.partner;
 
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,10 +36,11 @@ import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Phone;
 import org.helianto.core.PublicAddress;
-import org.helianto.core.TrunkEntity;
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.number.Sequenceable;
 /**
- * Only <code>PrivateEntity</code> instances may have rights to operate with the (owning) <code>Entity</code>.
+ * Partner registry, a common class to represent Customers, Suppliers and other parties that relate to the owning
+ * entity.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -46,11 +48,12 @@ import org.helianto.core.base.AbstractAddress;
 @Table(name="prtnr_registry",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "partnerAlias"})}
 )
-public class PrivateEntity extends AbstractAddress implements TrunkEntity, BusinessUnit {
+public class PrivateEntity extends AbstractAddress implements Sequenceable, BusinessUnit {
 
     private static final long serialVersionUID = 1L;
     private Entity entity;
     private String partnerAlias;
+    private long internalNumber;
     private String partnerName;
     private Phone mainPhone;
     private String mainEmail;
@@ -72,6 +75,7 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
     	setPartnerName("");
 		setMainPhone(new Phone());
 		setMainEmail("");
+		setInternalNumber(-1);
     }
 
     /** 
@@ -107,6 +111,11 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
         this.entity = entity;
     }
 
+    @Transient
+    public String getInternalNumberKey() {
+    	return "PRVTENT";
+    }
+    
     /**
      * PartnerAlias.
      * @deprecated use entityAlias instead.
@@ -131,14 +140,37 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
     }
     
     /**
-     * Subclasses may override this to provide a different entityAlais.
+     * Subclasses may override this to customize automatic generation for the
+     * entityAlias property (default behavior expects the user to provide a code).
+     * 
+     * <p>
+     * Default implementation allows the text key property entityAlias to
+     * be replaced by a numeric sequence if the property internalNumber
+     * is set to 0 (default is -1) and the special symbol '#' is initially 
+     * supplied as entityAlias.
+     * </p>
      */
     @Transient
     protected String getInternalEntityAlias() {
-    	if (getEntity()!=null) {
-    		return getEntity().getAlias();
+    	if (partnerAlias!=null && partnerAlias.startsWith("#") && getInternalNumber()>0) {
+    		partnerAlias = new DecimalFormat("0").format(getInternalNumber());
     	}
-    	return "";
+    	return partnerAlias;
+    }
+    
+    /**
+     * Convenience method to force initial conditions as required by the
+     * method {@link #getInternalEntityAlias()} above to generate entityAlias
+     * as a number sequence.
+     * 
+     * @param force
+     */
+    @Transient
+    public void forceToNumber(boolean force) {
+    	if (force) {
+        	setEntityAlias("#");
+        	setInternalNumber(0);
+    	}
     }
 
     /**
@@ -173,6 +205,13 @@ public class PrivateEntity extends AbstractAddress implements TrunkEntity, Busin
             return this.partnerName.substring(0, 20)+"...";
     	}
         return this.partnerName;
+    }
+    
+    public long getInternalNumber() {
+    	return internalNumber;
+    }
+    public void setInternalNumber(long internalNumber) {
+    	this.internalNumber = internalNumber;
     }
     
     /**

@@ -31,6 +31,7 @@ import org.helianto.core.Province;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.Customer;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PrivateEntity;
@@ -66,8 +67,12 @@ public class PartnerMgrImplTests {
     	privateEntityDao.saveOrUpdate(partnerRegistry);
     	replay(privateEntityDao);
 
+    	sequenceMgr.validateInternalNumber(partnerRegistry);
+    	replay(sequenceMgr);
+
     	assertSame(partnerRegistry, partnerMgr.storePrivateEntity(partnerRegistry));
     	verify(privateEntityDao);
+    	verify(sequenceMgr);
     }
     
 	@Test
@@ -226,6 +231,7 @@ public class PartnerMgrImplTests {
     private BasicDao<Province> provinceDao;
     private Province province;
     private AbstractAddress partnerAddress;
+	private SequenceMgr sequenceMgr;
     
     private Entity entity;
     
@@ -238,9 +244,11 @@ public class PartnerMgrImplTests {
         privateEntityDao = EasyMock.createMock(FilterDao.class);
         partnerDao = EasyMock.createMock(FilterDao.class);
         provinceDao = EasyMock.createMock(FilterDao.class);
+        sequenceMgr = EasyMock.createMock(SequenceMgr.class);
         partnerMgr.setPrivateEntityDao(privateEntityDao);
         partnerMgr.setPartnerDao(partnerDao);
         partnerMgr.setProvinceDao(provinceDao);
+        partnerMgr.setSequenceMgr(sequenceMgr);
         
 		province = new Province(entity.getOperator(), "CODE");
         partnerAddress = new AbstractAddress(province) {};
@@ -257,6 +265,7 @@ public class PartnerMgrImplTests {
     	EasyMock.reset(privateEntityDao);
     	EasyMock.reset(partnerDao);
     	EasyMock.reset(provinceDao);
+    	EasyMock.reset(sequenceMgr);
     }
 
 }

@@ -33,14 +33,15 @@ import org.helianto.core.filter.KeyTypeFilterAdapter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.NamespaceMgr;
+import org.helianto.core.service.SequenceMgr;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.Address;
 import org.helianto.partner.Customer;
 import org.helianto.partner.Division;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerKey;
-import org.helianto.partner.PartnerState;
 import org.helianto.partner.PartnerPhone;
+import org.helianto.partner.PartnerState;
 import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.PrivateEntityKey;
 import org.slf4j.Logger;
@@ -74,6 +75,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
 	public PrivateEntity storePrivateEntity(PrivateEntity privateEntity) {
 		privateEntityDao.saveOrUpdate(privateEntity);
+		sequenceMgr.validateInternalNumber(privateEntity);
 		return privateEntity;
 	}
 	
@@ -243,6 +245,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private BasicDao<Province> provinceDao;
     private BasicDao<PartnerPhone> phoneDao;
 	private NamespaceMgr namespaceMgr;
+	private SequenceMgr sequenceMgr;
 
     @Resource(name="privateEntityDao")
     public void setPrivateEntityDao(FilterDao<PrivateEntity> privateEntityDao) {
@@ -274,9 +277,14 @@ public class PartnerMgrImpl implements PartnerMgr {
         this.phoneDao = phoneDao;
     }
     
-	@javax.annotation.Resource(name="namespaceMgr")
+	@Resource(name="namespaceMgr")
 	public void setNamespaceMgr(NamespaceMgr namespaceMgr) {
 		this.namespaceMgr = namespaceMgr;
+	}
+	
+	@Resource(name="sequenceMgr")
+	public void setSequenceMgr(SequenceMgr sequenceMgr) {
+		this.sequenceMgr = sequenceMgr;
 	}
 	
     private Logger logger = LoggerFactory.getLogger(PartnerMgrImpl.class);
