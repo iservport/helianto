@@ -19,6 +19,8 @@ package org.helianto.core.repository.base;
 import java.util.Collection;
 
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.FormFilter;
+import org.helianto.core.filter.form.PageForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,12 +49,24 @@ public abstract class AbstractFilterDao<T> extends AbstractBasicDao<T> implement
 	}
 	
 	/**
-	 * Use the filter to create a where clause and delegate to
-	 * the superclass.
+	 * Use the filter to create a where clause and delegate to the superclass.
+	 * 
+	 * <p>
+	 * Starting on version 0.3.2, if the filter has a paging form, also provides paged data.
+	 * </p>
+	 * 
+	 * @param filter
 	 */
 	public Collection<T> find(Filter filter) {
 		String whereClause = filter.createCriteriaAsString();
-		return super.find(getSelectBuilder(filter), whereClause);
+		if (FormFilter.class.isAssignableFrom(filter.getClass()) 
+				&& ((FormFilter<?>) filter).getForm().getClass().isAssignableFrom(PageForm.class)) {
+			PageForm form = ((PageForm) ((FormFilter<?>) filter).getForm());
+	    	if (form.getMaxRows()>0) {
+	        	return super.find(form.getFirstRow(), form.getMaxRows(), getSelectBuilder(filter), whereClause, new Object[0]);
+	    	}
+		}
+		return super.find(getSelectBuilder(filter), whereClause, new Object[0]);
 	}
 
 	/**

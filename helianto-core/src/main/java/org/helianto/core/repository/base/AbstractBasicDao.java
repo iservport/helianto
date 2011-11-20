@@ -180,6 +180,14 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 		return whereClauseBuilder;
 	}
 	
+	/**
+	 * Actually calls the underlying persistence strategy after combining the supplied
+	 * select clause, where clause and parameter values.
+	 * 
+	 * @param selectClause
+	 * @param whereClause
+	 * @param values
+	 */
 	public Collection<T> find(StringBuilder selectClause, String whereClause, Object... values) {
         if (!whereClause.equals("")) {
         	selectClause.append("where ").append(whereClause);
@@ -187,6 +195,25 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
         String query = selectClause.toString();
         logger.debug("Query {}", query);
 		return (Collection<T>) getPersistenceStrategy().find(query, values);
+	}
+
+	/**
+	 * Actually calls the underlying persistence strategy after combining the supplied
+	 * select clause, where clause and parameter values, considering also the pagination data.
+	 * 
+	 * @param firstRow
+	 * @param maxRows
+	 * @param selectClause
+	 * @param whereClause
+	 * @param values
+	 */
+	public Collection<T> find(int firstRow, int maxRows, StringBuilder selectClause, String whereClause, Object... values) {
+        if (!whereClause.equals("")) {
+        	selectClause.append("where ").append(whereClause);
+        }
+        String query = selectClause.toString();
+        logger.debug("Starting {}, query {}", firstRow, query);
+		return (Collection<T>) getPersistenceStrategy().find(firstRow, maxRows, query, values);
 	}
 
 	// persistence strategy implementation
