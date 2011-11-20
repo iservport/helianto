@@ -191,6 +191,14 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 
 	// persistence strategy implementation
 
+	public Collection<T> find(int firstRow, String query, Object... values) {
+		return (Collection<T>) getPersistenceStrategy().find(firstRow, query, values);
+	}
+
+	public Collection<T> find(int firstRow, int maxRows, String query, Object... values) {
+		return (Collection<T>) getPersistenceStrategy().find(firstRow, maxRows, query, values);
+	}
+
 	public Collection<T> find(String query, Object... values) {
 		return (Collection<T>) getPersistenceStrategy().find(query, values);
 	}

@@ -39,6 +39,25 @@ public interface PersistenceStrategy<T> {
 	public Collection<T> find(String query, Object... values);
 
     /**
+     * Find by criteria (maxRows defaults to 10).
+     * 
+     * @param firstRow
+     * @param query
+     * @param values
+     */
+	public Collection<T> find(int firstRow, String query, Object... values);
+
+    /**
+     * Find by criteria.
+     * 
+     * @param firstRow
+     * @param maxRows
+     * @param query
+     * @param values
+     */
+	public Collection<T> find(int firstRow, int maxRows, String query, Object... values);
+
+    /**
      * Persist a managed object.
      * 
      * @param managedObject

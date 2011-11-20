@@ -46,8 +46,28 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public Collection<Object> find(String query, Object... values) {
+	public Collection find(int firstRow, String query, Object... values) {
+		return find(firstRow, 10, query, values);
+	}
+	
+	public Collection find(int firstRow, int maxRows, String query, Object... values) {
         Query result = this.sessionFactory.getCurrentSession().createQuery(query);
+        result.setFirstResult(firstRow);
+        result.setMaxResults(maxRows);
+		return find(result, values);
+	}
+
+	public Collection<Object> find(String query, Object... values) {
+        return find(this.sessionFactory.getCurrentSession().createQuery(query), values);
+	}
+	
+	/**
+	 * Convert values to ordinal parameters.
+	 * 
+	 * @param result
+	 * @param values
+	 */
+	protected Collection<Object> find(Query result, Object... values) {
         int i = 0;
         for (Object value: values) {
             result.setParameter(i++, value);
@@ -55,7 +75,19 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
         Collection<Object> resultList = result.list();
         logger.debug("Found {} item(s)", resultList.size());
         return resultList;
+		
 	}
+
+//	public Collection<Object> find(String query, Object... values) {
+//        Query result = this.sessionFactory.getCurrentSession().createQuery(query);
+//        int i = 0;
+//        for (Object value: values) {
+//            result.setParameter(i++, value);
+//        }
+//        Collection<Object> resultList = result.list();
+//        logger.debug("Found {} item(s)", resultList.size());
+//        return resultList;
+//	}
 
 	public Object merge(Object object) {
         logger.debug("Merging {}", object);
