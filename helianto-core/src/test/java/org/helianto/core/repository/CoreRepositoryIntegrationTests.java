@@ -190,7 +190,7 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		
 		PublicEntity publicEntity = new PublicEntity(entity);
 		publicEntityDao.saveOrUpdate(publicEntity);
-		assertEquals(publicEntity, publicEntityDao.findUnique(entity.getOperator(), entity, 'P'));
+		assertEquals(publicEntity, publicEntityDao.findUnique(entity, 'P'));
 
 	}
 	

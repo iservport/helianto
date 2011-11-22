@@ -28,8 +28,7 @@ import org.helianto.core.def.PublicEntityVisibility;
  * @author mauriciofernandesdecastro
  */
 @javax.persistence.Entity
-@Table(name = "core_publicEntity", uniqueConstraints = { @UniqueConstraint(columnNames = {
-		"operatorId", "entityId", "type" }) })
+@Table(name = "core_publicEntity", uniqueConstraints = { @UniqueConstraint(columnNames = {"entityId", "type" }) })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
@@ -37,7 +36,6 @@ public class PublicEntity extends AbstractAddress implements RootEntity, Busines
 
 	private static final long serialVersionUID = 1L;
 	private int version;
-	private Operator operator;
 	private Entity entity;
 	private String newEntityAlias;
 	private Identity newEntityManager;
@@ -60,22 +58,12 @@ public class PublicEntity extends AbstractAddress implements RootEntity, Busines
 	}
 
 	/**
-	 * Operator constructor.
-	 * 
-	 * @param operator
-	 */
-	public PublicEntity(Operator operator) {
-		this();
-		setOperator(operator);
-	}
-
-	/**
 	 * Entity constructor.
 	 * 
 	 * @param entity
 	 */
 	public PublicEntity(Entity entity) {
-		this(entity.getOperator());
+		this();
 		setEntity(entity);
 	}
 
@@ -93,13 +81,12 @@ public class PublicEntity extends AbstractAddress implements RootEntity, Busines
 	/**
 	 * Operator.
 	 */
-	@ManyToOne
-	@JoinColumn(name = "operatorId")
+	@Transient
 	public Operator getOperator() {
-		return operator;
-	}
-	public void setOperator(Operator operator) {
-		this.operator = operator;
+		if (getEntity()!=null) {
+			return getEntity().getOperator();
+		}
+		return null;
 	}
 
 	/**
