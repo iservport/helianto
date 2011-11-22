@@ -21,6 +21,7 @@ package org.helianto.core.filter;
  *  
  * @author Mauricio Fernandes de Castro
  */
+@SuppressWarnings("rawtypes")
 public interface ListFilter extends CriteriaFilter, Listable {
 	
 }
