@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.helianto.core.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ServiceFormFilterAdapter;
+import org.helianto.core.filter.form.CompositeUserForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.web.action.AbstractFilterAction;
@@ -28,10 +29,14 @@ public class ServiceActionImpl extends AbstractFilterAction<Service> {
 	protected String getModelName() {
 		return userModelBuilder.getModelName();
 	}
+	
+	protected CompositeUserForm getForm(MutableAttributeMap attributes) {
+		return userModelBuilder.getForm(attributes);
+	}
 
 	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new ServiceFormFilterAdapter(userModelBuilder.getForm(attributes));
+		return new ServiceFormFilterAdapter(getForm(attributes));
 	}
 	
 	@Override

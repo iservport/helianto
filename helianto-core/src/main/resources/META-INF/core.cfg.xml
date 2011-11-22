@@ -18,6 +18,7 @@
 		<mapping class="org.helianto.core.UserAssociation"  />
 		<mapping class="org.helianto.core.UserGroup"  />
 		<mapping class="org.helianto.core.User"  />
+		<mapping class="org.helianto.core.RootUser"  />
 		<mapping class="org.helianto.core.UserLog"  />
 		<mapping class="org.helianto.core.UserRole"  />
 		<mapping class="org.helianto.core.Operator"  />

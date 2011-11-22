@@ -1,76 +1,51 @@
-package org.helianto.web.model.impl;
+package org.helianto.core.filter.form;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.Service;
-import org.helianto.core.UserGroup;
-import org.helianto.core.filter.form.AbstractUserForm;
-import org.helianto.core.filter.form.ServiceForm;
-import org.helianto.core.filter.form.UserRoleForm;
 
 /**
  * Composite user form.
  * 
  * @author mauriciofernandesdecastro
  */
-public class CompositeUserForm extends AbstractUserForm implements UserRoleForm, ServiceForm {
+public class CompositeUserForm extends AbstractUserForm  implements UserRoleForm, ServiceForm {
 
-    private static final long serialVersionUID = 1L;
-    private Operator operator;
-	private UserGroup userGroup;
+	private static final long serialVersionUID = 1L;
 	private Service service;
 	private String serviceExtension;
 	private char activityState = ' ';
     private String serviceName;
     private String serviceNameLike;
-
-	/** 
-	 * Empty constructor.
-	 */
-    public CompositeUserForm() {
-    }
-    
-	/** 
-	 * Key constructor.
-	 * 
-	 * @param entity
-	 * @param userKey
-	 */
-    public CompositeUserForm(Entity entity, String userKey) {
-    	this();
-    	setEntity(entity);
-    	setUserKey(userKey);
-    }
-    
-	/** 
-	 * Entity constructor.
-	 * 
-	 * @param parent
-	 */
-    public CompositeUserForm(UserGroup parent) {
-    	this(parent.getEntity(), "");
-    	setParent(parent);
-    }
     
     /**
-     * If entity is not null, use the entity operator.
+     * Default constructor.
      */
-    public Operator getOperator() {
-    	if (getEntity()!=null) {
-    		this.operator = getEntity().getOperator();
-    	}
-		return operator;
-	}
-    public void setOperator(Operator operator) {
-		this.operator = operator;
+    public CompositeUserForm() {
+		super();
 	}
     
-	public UserGroup getUserGroup() {
-		return userGroup;
+    /**
+     * Entity constructor.
+     * 
+     * @param entity
+     */
+    public CompositeUserForm(Entity entity) {
+		this();
+		setEntity(entity);
 	}
-	public void setUserGroup(UserGroup userGroup) {
-		this.userGroup = userGroup;
-	}
+    
+    public void reset() { 
+    	setUserType(' ');
+    	setUserState(' ');
+    }
+    
+    public Operator getOperator() {
+    	if (getEntity()!=null) {
+    		return getEntity().getOperator();
+    	}
+    	return null;
+    }
 
 	public Service getService() {
 		return service;

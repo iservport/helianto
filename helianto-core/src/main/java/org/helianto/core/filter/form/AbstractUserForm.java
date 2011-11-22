@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
@@ -14,10 +13,9 @@ import org.helianto.core.UserGroup;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractUserForm implements UserGroupForm {
+public abstract class AbstractUserForm extends AbstractTrunkForm implements UserGroupForm {
 
     private static final long serialVersionUID = 1L;
-    private Entity entity;
     private Class<? extends UserGroup> clazz;
     private String userKey;
     private UserGroup parent;
@@ -27,20 +25,13 @@ public abstract class AbstractUserForm implements UserGroupForm {
     private char userType = ' ';
     private Identity identity;
 	private Collection<Identity> exclusions;
-
+	
     public void reset() {
     	setUserState(' ');
     	setUserType(' ');
     	setExclusions(new HashSet<Identity>(0));
     }
     
-    public Entity getEntity() {
-		return entity;
-	}
-    public void setEntity(Entity entity) {
-		this.entity = entity;
-	}
-
 	public String getUserKey() {
 		return userKey;
 	}
