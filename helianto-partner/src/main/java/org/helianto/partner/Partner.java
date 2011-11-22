@@ -36,7 +36,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.BusinessUnit;
+import org.helianto.core.BusinessAddress;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Phone;
@@ -66,7 +66,7 @@ import org.helianto.core.filter.form.AddressForm;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
-public class Partner implements TrunkEntity, BusinessUnit {
+public class Partner implements TrunkEntity, BusinessAddress {
 
     private static final long serialVersionUID = 1L;
     private int id;

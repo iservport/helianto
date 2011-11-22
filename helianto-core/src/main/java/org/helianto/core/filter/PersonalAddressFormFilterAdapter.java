@@ -33,12 +33,16 @@ public class PersonalAddressFormFilterAdapter extends AbstractPersonalFilterAdap
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("identity.id", getForm().getIdentity().getId(), mainCriteriaBuilder);
 		appendEqualFilter("addressType", getForm().getAddressType(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		
+		if (getForm().getIdentity()!=null && getForm().getIdentity().getId()>0) {
+			appendEqualFilter("identity.id", getForm().getIdentity().getId(), mainCriteriaBuilder);
+		}
+		appendLikeFilter("province.provinceName", getForm().getCityName(), mainCriteriaBuilder);
 	}
 	
 	@Override

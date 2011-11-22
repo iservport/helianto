@@ -2,6 +2,7 @@ package org.helianto.core.filter.form;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
+import org.helianto.core.Province;
 import org.helianto.core.Service;
 
 /**
@@ -18,6 +19,9 @@ public class CompositeUserForm extends AbstractUserForm implements UserRoleForm,
     private String serviceName;
     private String serviceNameLike;
 	private char addressType = ' ';
+    private String postalCode;
+    private Province province;
+    private String cityName;
     
     /**
      * Default constructor.
@@ -89,6 +93,27 @@ public class CompositeUserForm extends AbstractUserForm implements UserRoleForm,
 	}
 	public void setAddressType(char addressType) {
 		this.addressType = addressType;
+	}
+    
+    public String getPostalCode() {
+        return this.postalCode;
+    }
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public Province getProvince() {
+        return this.province;
+    }
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+    
+    public String getCityName() {
+		return cityName;
+	}
+    public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
     
 }

@@ -32,7 +32,7 @@ import org.helianto.core.def.PublicEntityVisibility;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
-public class PublicEntity extends AbstractAddress implements RootEntity, BusinessUnit {
+public class PublicEntity extends AbstractAddress implements RootEntity, BusinessAddress {
 
 	private static final long serialVersionUID = 1L;
 	private int version;

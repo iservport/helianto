@@ -18,8 +18,8 @@ package org.helianto.core.base;
 import javax.persistence.Column;
 import javax.persistence.Transient;
 
+import org.helianto.core.Address;
 import org.helianto.core.Province;
-import org.helianto.core.filter.form.AddressForm;
 
 /**
  * Base class to instances having an Address.
@@ -28,7 +28,7 @@ import org.helianto.core.filter.form.AddressForm;
  */
 @SuppressWarnings("serial")
 @javax.persistence.MappedSuperclass
-public abstract class AbstractAddress extends AbstractPartialAddress implements AddressForm {
+public abstract class AbstractAddress extends AbstractPartialAddress implements Address {
 
     private String addressNumber;
 	private String addressDetail;
