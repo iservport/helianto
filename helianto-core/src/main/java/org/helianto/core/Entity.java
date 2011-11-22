@@ -124,6 +124,7 @@ public class Entity implements RootEntity {
     public Entity(Operator operator, String alias) {
     	this(operator);
     	setAlias(alias);
+    	setInstallDate(new Date());
     }
 
     /** 

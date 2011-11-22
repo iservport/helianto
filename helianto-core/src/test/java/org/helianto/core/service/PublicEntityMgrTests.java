@@ -1,7 +1,6 @@
 package org.helianto.core.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,7 +77,7 @@ public class PublicEntityMgrTests {
 	@Test
 	public void storePublicEntityInstall() {
 		PublicEntity publicEntity = new PublicEntity(entity);
-		Entity installedEntity = new Entity();
+		Entity installedEntity = new Entity(entity.getOperator(), entity.getAlias());
 		
 		EasyMock.expect(postInstallationMgr.installEntity(entity, false)).andReturn(installedEntity);
 		EasyMock.replay(postInstallationMgr);
@@ -88,7 +87,7 @@ public class PublicEntityMgrTests {
 		EasyMock.replay(publicEntityDao);
 		
 		assertEquals(publicEntity, publicEntityMgr.storePublicEntity(publicEntity));
-		assertSame(installedEntity, publicEntity.getEntity());
+		assertEquals(installedEntity, publicEntity.getEntity());
 		EasyMock.verify(publicEntityDao);
 	}
 	

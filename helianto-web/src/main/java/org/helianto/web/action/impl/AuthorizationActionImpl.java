@@ -5,11 +5,14 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Entity;
+import org.helianto.core.PublicEntity;
 import org.helianto.core.User;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.security.PublicUserDetails;
+import org.helianto.core.service.PublicEntityMgr;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
@@ -57,11 +60,18 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 		throw new IllegalArgumentException("Unable to auhtorize null user.");
 	}
 	
+	public String makePublic(Entity entity) {
+		logger.debug("Ready to make {} public.", entity);
+		PublicEntity publicEntity = publicEntityMgr.storePublicEntity(new PublicEntity(entity));
+		logger.debug("Created {}.", publicEntity);
+		return "success";
+	}
 
 	// collabs
 	
 	protected UserMgr userMgr;
 	private SecurityMgr securityMgr;
+	private PublicEntityMgr publicEntityMgr;
 
 	@Resource
 	public void setUserMgr(UserMgr userMgr) {
@@ -71,6 +81,11 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	@Resource
 	public void setSecurityMgr(SecurityMgr securityMgr) {
 		this.securityMgr = securityMgr;
+	}
+	
+	@Resource
+	public void setPublicEntityMgr(PublicEntityMgr publicEntityMgr) {
+		this.publicEntityMgr = publicEntityMgr;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationActionImpl.class);
