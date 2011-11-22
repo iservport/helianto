@@ -240,7 +240,9 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param attributes
 	 * @param userDetails
 	 */
-	protected abstract Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails);
+	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		return null;
+	}
 
 	/**
 	 * Subclasses may override this to customize filter action.
