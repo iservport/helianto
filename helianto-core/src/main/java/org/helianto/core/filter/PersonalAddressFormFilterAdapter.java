@@ -1,19 +1,15 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.Identity;
-import org.helianto.core.PersonalAddress;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.def.AddressType;
 import org.helianto.core.filter.base.AbstractPersonalFilterAdapter;
+import org.helianto.core.filter.form.PersonalAddressForm;
 
 /**
- * Personal address filter adapter.
+ * Personal address form filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
- * @see PersonalAddressFormFilterAdapter
  */
-public class PersonalAddressFilterAdapter extends AbstractPersonalFilterAdapter<PersonalAddress> {
+public class PersonalAddressFormFilterAdapter extends AbstractPersonalFilterAdapter<PersonalAddressForm> {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -22,18 +18,8 @@ public class PersonalAddressFilterAdapter extends AbstractPersonalFilterAdapter<
 	 * 
 	 * @param form
 	 */
-	public PersonalAddressFilterAdapter(PersonalAddress form) {
+	public PersonalAddressFormFilterAdapter(PersonalAddressForm form) {
 		super(form);
-	}
-
-	/**
-	 * Key constructor.
-	 * 
-	 * @param identity
-	 * @param addressType
-	 */
-	public PersonalAddressFilterAdapter(Identity identity, AddressType addressType) {
-		super(new PersonalAddress(identity, addressType));
 	}
 
 	public void reset() {
@@ -42,7 +28,7 @@ public class PersonalAddressFilterAdapter extends AbstractPersonalFilterAdapter<
 	
 	@Override
 	public boolean isSelection() {
-		return getForm().getAddressType()!=' ';
+		return getForm().getIdentity()!=null && getForm().getIdentity().getId()>0 && getForm().getAddressType()!=' ';
 	}
 
 	@Override

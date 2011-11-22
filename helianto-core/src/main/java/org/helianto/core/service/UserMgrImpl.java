@@ -40,6 +40,8 @@ import org.helianto.core.def.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserFilterAdapter;
+import org.helianto.core.filter.UserFormFilterAdapter;
+import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +114,13 @@ public class UserMgrImpl implements UserMgr {
 		logger.debug("User identified with {}", user.getIdentity());
 		return user.getIdentity();
     }
+
+	public List<? extends UserGroup> findUsers(UserGroupForm form) {
+		UserFormFilterAdapter filter = new UserFormFilterAdapter(form);
+		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(filter);
+    	logger.debug("Found user list of size {}", userList.size());
+        return userList;
+	}
 
 	public List<? extends UserGroup> findUsers(Filter userFilter) {
 		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(userFilter);

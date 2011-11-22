@@ -28,6 +28,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.UserGroupForm;
 
 /**
  * Default user service layer interface for the core package.
@@ -40,8 +41,16 @@ public interface UserMgr {
      * <p>List <code>UserGroup</code> by string criteria.</p>
      * 
      * @param userFilter
+     * @deprecated
      */
     public List<? extends UserGroup> findUsers(Filter userFilter);
+    
+    /**
+     * <p>List <code>UserGroup</code> by string criteria.</p>
+     * 
+     * @param form
+     */
+    public List<? extends UserGroup> findUsers(UserGroupForm form);
     
     /**
      * Find users sharing the same identity.

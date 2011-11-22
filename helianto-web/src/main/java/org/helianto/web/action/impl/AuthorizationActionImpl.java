@@ -10,12 +10,15 @@ import org.helianto.core.PublicEntity;
 import org.helianto.core.User;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.UserFilterAdapter;
+import org.helianto.core.filter.UserFormFilterAdapter;
+import org.helianto.core.filter.form.CompositeUserForm;
+import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.PublicEntityMgr;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
 import org.helianto.web.action.AbstractFilterAction;
+import org.helianto.web.model.impl.UserModelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -31,18 +34,41 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	protected User doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new User();
+	@Override
+	protected String getModelName() {
+		return userModelBuilder.getModelName();
 	}
 	
+	protected CompositeUserForm getForm(MutableAttributeMap attributes) {
+		return userModelBuilder.getForm(attributes);
+	}
+
 	protected Filter doCreateFilter(MutableAttributeMap attributes,	PublicUserDetails userDetails) {
-		return new UserFilterAdapter("USER", userDetails.getUser().getIdentity());
+		return new UserFormFilterAdapter(getForm(attributes));
+	}
+	
+	@Override
+	protected List<User> doFilter(MutableAttributeMap attributes, Filter filter, PublicUserDetails userDetails) {
+		CompositeUserForm form = getForm(attributes);
+		form.setUserKey("USER");
+		form.setIdentity(userDetails.getUser().getIdentity());
+		return doFilter(form);
 	}
 	
 	protected List<User> doFilter(Filter filter) {
 		@SuppressWarnings("unchecked")
 		List<User> userList = (List<User>) userMgr.findUsers(filter);
 		return userList;
+	}
+	
+	protected List<User> doFilter(UserGroupForm form) {
+		@SuppressWarnings("unchecked")
+		List<User> userList = (List<User>) userMgr.findUsers(form);
+		return userList;
+	}
+	
+	protected User doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		return new User();
 	}
 	
 	protected User doStore(User target) {
@@ -69,10 +95,16 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 
 	// collabs
 	
+	protected UserModelBuilder userModelBuilder;
 	protected UserMgr userMgr;
 	private SecurityMgr securityMgr;
 	private PublicEntityMgr publicEntityMgr;
 
+	@Resource
+	public void setUserModelBuilder(UserModelBuilder userModelBuilder) {
+		this.userModelBuilder = userModelBuilder;
+	}
+	
 	@Resource
 	public void setUserMgr(UserMgr userMgr) {
 		this.userMgr = userMgr;

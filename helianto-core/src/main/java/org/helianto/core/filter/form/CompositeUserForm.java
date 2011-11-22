@@ -9,7 +9,7 @@ import org.helianto.core.Service;
  * 
  * @author mauriciofernandesdecastro
  */
-public class CompositeUserForm extends AbstractUserForm  implements UserRoleForm, ServiceForm {
+public class CompositeUserForm extends AbstractUserForm implements UserRoleForm, ServiceForm, PersonalAddressForm {
 
 	private static final long serialVersionUID = 1L;
 	private Service service;
@@ -17,6 +17,7 @@ public class CompositeUserForm extends AbstractUserForm  implements UserRoleForm
 	private char activityState = ' ';
     private String serviceName;
     private String serviceNameLike;
+	private char addressType = ' ';
     
     /**
      * Default constructor.
@@ -38,6 +39,7 @@ public class CompositeUserForm extends AbstractUserForm  implements UserRoleForm
     public void reset() { 
     	setUserType(' ');
     	setUserState(' ');
+    	setAddressType(' ');
     }
     
     public Operator getOperator() {
@@ -80,6 +82,13 @@ public class CompositeUserForm extends AbstractUserForm  implements UserRoleForm
 	}
 	public void setServiceNameLike(String serviceNameLike) {
 		this.serviceNameLike = serviceNameLike;
+	}
+
+	public char getAddressType() {
+		return addressType;
+	}
+	public void setAddressType(char addressType) {
+		this.addressType = addressType;
 	}
     
 }

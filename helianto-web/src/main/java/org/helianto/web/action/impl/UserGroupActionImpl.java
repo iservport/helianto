@@ -9,6 +9,7 @@ import org.helianto.core.def.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.UserFormFilterAdapter;
 import org.helianto.core.filter.form.AbstractUserForm;
+import org.helianto.core.filter.form.CompositeUserForm;
 import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
@@ -33,22 +34,36 @@ public class UserGroupActionImpl extends AbstractFilterAction<UserGroup> {
 	protected String getModelName() {
 		return userModelBuilder.getModelName();
 	}
+	
+	protected CompositeUserForm getForm(MutableAttributeMap attributes) {
+		return userModelBuilder.getForm(attributes);
+	}
 
 	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		UserGroupForm form = userModelBuilder.getForm(attributes);
-		UserFormFilterAdapter filter = new UserFormFilterAdapter(form);
+		UserFormFilterAdapter filter = new UserFormFilterAdapter(getForm(attributes));
+		return filter;
+	}
+	
+	@Override
+	protected List<UserGroup> doFilter(MutableAttributeMap attributes, Filter filter) {
+		CompositeUserForm form = getForm(attributes);
 		form.setClazz(UserGroup.class);
 		form.setParent(null);
 		((AbstractUserForm) form).setUserState(UserState.ACTIVE.getValue());
 		logger.debug("Created userGroupFilter {}.",filter);
-		return filter;
+		return doFilter(form);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	protected List<UserGroup> doFilter(Filter filter) {
 		return (List<UserGroup>) userMgr.findUsers(filter);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected List<UserGroup> doFilter(UserGroupForm form) {
+		return (List<UserGroup>) userMgr.findUsers(form);
 	}
 
 	@Override
