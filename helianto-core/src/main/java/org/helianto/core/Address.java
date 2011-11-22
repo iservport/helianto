@@ -1,12 +1,14 @@
 package org.helianto.core;
 
+import org.helianto.core.Province;
+
 
 /**
  * Classes implementing this interface represent an address.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface Addressee {
+public interface Address {
 
     /**
      * The first segment of an address, usually representing a street, road, etc..

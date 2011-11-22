@@ -35,7 +35,7 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.core.utils.AddressUtils;
-import org.helianto.partner.Address;
+import org.helianto.partner.PrivateAddress;
 import org.helianto.partner.Customer;
 import org.helianto.partner.Division;
 import org.helianto.partner.Partner;
@@ -67,7 +67,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	public PrivateEntity preparePrivateEntity(PrivateEntity privateEntity) {
 		PrivateEntity managedPartnerRegistry = privateEntityDao.merge(privateEntity);
 		managedPartnerRegistry.setPartnerList(new ArrayList<Partner>(managedPartnerRegistry.getPartners()));
-		managedPartnerRegistry.setAddressList(new ArrayList<Address>(managedPartnerRegistry.getAddresses()));
+		managedPartnerRegistry.setAddressList(new ArrayList<PrivateAddress>(managedPartnerRegistry.getAddresses()));
 		managedPartnerRegistry.setPartnerRegistryKeyList(new ArrayList<PrivateEntityKey>(managedPartnerRegistry.getPartnerRegistryKeys()));
 		privateEntityDao.evict(managedPartnerRegistry);
 		return managedPartnerRegistry;
@@ -107,12 +107,12 @@ public class PartnerMgrImpl implements PartnerMgr {
 		partnerDao.remove(partner);
 	}
 
-	public Address storeAddress(Address address) {
+	public PrivateAddress storeAddress(PrivateAddress address) {
 		addressDao.saveOrUpdate(address);
 		return address;
 	}
 
-	public PrivateEntity removeAddress(Address address) {
+	public PrivateEntity removeAddress(PrivateAddress address) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
@@ -240,7 +240,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     
     private FilterDao<PrivateEntity> privateEntityDao;
     private FilterDao<Partner> partnerDao;
-    private BasicDao<Address> addressDao;
+    private BasicDao<PrivateAddress> addressDao;
     private BasicDao<PartnerKey> partnerKeyDao;
     private BasicDao<Province> provinceDao;
     private BasicDao<PartnerPhone> phoneDao;
@@ -258,7 +258,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     }
 
     @Resource(name="addressDao")
-    public void setAddressDao(BasicDao<Address> addressDao) {
+    public void setAddressDao(BasicDao<PrivateAddress> addressDao) {
         this.addressDao = addressDao;
     }
 

@@ -21,7 +21,7 @@ import java.util.Map;
 import org.helianto.core.Entity;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.filter.Filter;
-import org.helianto.partner.Address;
+import org.helianto.partner.PrivateAddress;
 import org.helianto.partner.Customer;
 import org.helianto.partner.Division;
 import org.helianto.partner.Partner;
@@ -102,14 +102,14 @@ public interface PartnerMgr {
      * 
      * @param address
      */
-	public Address storeAddress(Address address);
+	public PrivateAddress storeAddress(PrivateAddress address);
 
     /**
      * Remove <code>Address</code> from the datastore.
      * 
      * @param address
      */
-	public PrivateEntity removeAddress(Address address);
+	public PrivateEntity removeAddress(PrivateAddress address);
 	
     /**
      * Load <code>PartnerKey</code> map keyed with the KeyCode.

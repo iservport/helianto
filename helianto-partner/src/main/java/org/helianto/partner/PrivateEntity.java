@@ -59,11 +59,11 @@ public class PrivateEntity extends AbstractAddress implements Sequenceable, Busi
     private String mainEmail;
     private String parsedContent;
     private Set<Partner> partners = new HashSet<Partner>(0);
-    private Set<Address> addresses = new HashSet<Address>(0);
+    private Set<PrivateAddress> addresses = new HashSet<PrivateAddress>(0);
     private Set<PrivateEntityKey> partnerRegistryKeys = new HashSet<PrivateEntityKey>(0);
     private Set<PartnerPhone> phones = new HashSet<PartnerPhone>(0);
     private @Transient List<Partner> partnerList;
-    private @Transient List<Address> addressList;
+    private @Transient List<PrivateAddress> addressList;
     private @Transient List<PrivateEntityKey> partnerRegistryKeyList;
 
     /** 
@@ -275,10 +275,10 @@ public class PrivateEntity extends AbstractAddress implements Sequenceable, Busi
     @OneToMany(mappedBy="partnerRegistry"
     	, cascade=CascadeType.ALL
     	, fetch=FetchType.EAGER)
-    public Set<Address> getAddresses() {
+    public Set<PrivateAddress> getAddresses() {
         return this.addresses;
     }
-    public void setAddresses(Set<Address> addresses) {
+    public void setAddresses(Set<PrivateAddress> addresses) {
         this.addresses = addresses;
     }
     
@@ -288,7 +288,7 @@ public class PrivateEntity extends AbstractAddress implements Sequenceable, Busi
      * @param address
      */
 	@Transient
-    public boolean addAddress(Address address) {
+    public boolean addAddress(PrivateAddress address) {
     	return getAddresses().add(address);
     }
 	
@@ -296,10 +296,10 @@ public class PrivateEntity extends AbstractAddress implements Sequenceable, Busi
      * <<Transient>> Convenience to hold ordered address list.
      */
 	@Transient
-    public List<Address> getAddressList() {
+    public List<PrivateAddress> getAddressList() {
     	return this.addressList;
     }
-    public void setAddressList(List<Address> addressList) {
+    public void setAddressList(List<PrivateAddress> addressList) {
         this.addressList = addressList;
     }
     

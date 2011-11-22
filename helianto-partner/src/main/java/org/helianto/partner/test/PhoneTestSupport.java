@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.Address;
+import org.helianto.partner.PrivateAddress;
 import org.helianto.partner.PrivateEntity;
 import org.helianto.partner.PartnerPhone;
 
@@ -26,7 +26,7 @@ public class PhoneTestSupport {
     public static PartnerPhone createPhone(Object... args) {
         AbstractAddress address;
         try {
-            address = (Address) args[0];
+            address = (PrivateAddress) args[0];
         } catch(ArrayIndexOutOfBoundsException e) {
             address = AddressTestSupport.createAddress();
         }
@@ -59,7 +59,7 @@ public class PhoneTestSupport {
      * @param addressListSize
      */
     public static List<PartnerPhone> createPhoneList(int phoneListSize, int addressListSize) {
-        List<Address> addressList = AddressTestSupport.createAddressList(addressListSize);
+        List<PrivateAddress> addressList = AddressTestSupport.createAddressList(addressListSize);
 
         return createPhoneList(phoneListSize, addressList);
     }
@@ -70,9 +70,9 @@ public class PhoneTestSupport {
      * @param phoneListSize
      * @param addressList
      */
-    public static List<PartnerPhone> createPhoneList(int phoneListSize, List<Address> addressList) {
+    public static List<PartnerPhone> createPhoneList(int phoneListSize, List<PrivateAddress> addressList) {
         List<PartnerPhone> phoneList = new ArrayList<PartnerPhone>();
-        for (Address address: addressList) {
+        for (PrivateAddress address: addressList) {
 	        for (int i=0;i<phoneListSize;i++) {
     	        phoneList.add(createPhone(address));
         	}

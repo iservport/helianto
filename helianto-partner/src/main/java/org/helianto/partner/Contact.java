@@ -33,7 +33,7 @@ import org.helianto.core.def.PrivacyLevel;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("C")
-public class Contact extends Address implements Privacy {
+public class Contact extends PrivateAddress implements Privacy {
 
 	private static final long serialVersionUID = 1L;
 	private Identity owner;
@@ -130,7 +130,7 @@ public class Contact extends Address implements Privacy {
      * equals
      */
     public boolean equals(Object other) {
-          if ( !(other instanceof Address) ) return false;
+          if ( !(other instanceof PrivateAddress) ) return false;
           return super.equals(other);
     }
 

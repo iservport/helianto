@@ -18,7 +18,7 @@ package org.helianto.partner.repository;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.partner.Account;
-import org.helianto.partner.Address;
+import org.helianto.partner.PrivateAddress;
 import org.helianto.partner.Partner;
 import org.helianto.partner.PartnerKey;
 import org.helianto.partner.PartnerPhone;
@@ -47,8 +47,8 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Address data access.
 	 */
 	@Bean
-	public FilterDao<Address> addressDao() {
-		return getFilterDao(Address.class, "partnerRegistry", "sequence");
+	public FilterDao<PrivateAddress> addressDao() {
+		return getFilterDao(PrivateAddress.class, "partnerRegistry", "sequence");
 	}
 
 	/**

@@ -36,13 +36,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Addressee;
 import org.helianto.core.BusinessUnit;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Phone;
 import org.helianto.core.Province;
 import org.helianto.core.TrunkEntity;
+import org.helianto.core.filter.form.AddressForm;
 /**
  * Base class to represent the relationship between the organization and other entities.
  * 
@@ -285,7 +285,7 @@ public class Partner implements TrunkEntity, BusinessUnit {
      * </p>
      */
     @Transient
-    protected Addressee getAddresse() {
+    protected AddressForm getAddresse() {
     	return getAddressee(-1);
     }
 
@@ -300,7 +300,7 @@ public class Partner implements TrunkEntity, BusinessUnit {
      * @param index
      */
     @Transient
-    protected Addressee getAddressee(int index) {
+    protected AddressForm getAddressee(int index) {
     	return getPrivateEntity();
     }
 
@@ -393,7 +393,7 @@ public class Partner implements TrunkEntity, BusinessUnit {
      * @param address
      */
 	@Transient
-    public boolean addAddress(Address address) {
+    public boolean addAddress(PrivateAddress address) {
     	return getPrivateEntity().getAddresses().add(address);
     }
 	

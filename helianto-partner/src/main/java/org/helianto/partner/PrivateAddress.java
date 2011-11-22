@@ -45,7 +45,7 @@ import org.helianto.core.def.PrivacyLevel;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class Address extends AbstractAddress implements Comparable<Address> {
+public class PrivateAddress extends AbstractAddress implements Comparable<PrivateAddress> {
 
     private static final long serialVersionUID = 1L;
     private PrivateEntity partnerRegistry;
@@ -56,7 +56,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
     /** 
      * Empty constructor.
 	 */
-    public Address() {
+    public PrivateAddress() {
         super();
         setAddressTypeAsEnum(AddressType.MAIN);
         setPrivacyLevelAsEnum(PrivacyLevel.PUBLIC);
@@ -67,7 +67,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
      * 
      * @param partnerRegistry
 	 */
-    public Address(PrivateEntity partnerRegistry, int sequence) {
+    public PrivateAddress(PrivateEntity partnerRegistry, int sequence) {
     	this();
     	setPartnerRegistry(partnerRegistry);
     	setSequence(sequence);
@@ -141,7 +141,7 @@ public class Address extends AbstractAddress implements Comparable<Address> {
     /**
      * Compare by sequence.
      */
-    public int compareTo(Address next) {
+    public int compareTo(PrivateAddress next) {
     	return this.getSequence() - next.getSequence();
     }   
 
@@ -166,8 +166,8 @@ public class Address extends AbstractAddress implements Comparable<Address> {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof Address) ) return false;
-         Address castOther = (Address) other; 
+         if ( !(other instanceof PrivateAddress) ) return false;
+         PrivateAddress castOther = (PrivateAddress) other; 
          
          return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ))
              && ((this.getSequence()==castOther.getSequence()));

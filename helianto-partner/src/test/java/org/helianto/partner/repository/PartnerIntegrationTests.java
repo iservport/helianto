@@ -24,7 +24,7 @@ import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.partner.Account;
-import org.helianto.partner.Address;
+import org.helianto.partner.PrivateAddress;
 import org.helianto.partner.Agent;
 import org.helianto.partner.Customer;
 import org.helianto.partner.Division;
@@ -55,7 +55,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	
 	@Resource FilterDao<Account> accountDao;
-	@Resource BasicDao<Address> addressDao;
+	@Resource BasicDao<PrivateAddress> addressDao;
 	@Resource FilterDao<Partner> partnerDao;
 	@Resource BasicDao<PartnerKey> partnerKeyDao;
 	@Resource BasicDao<PartnerPhone> phoneDao;
@@ -104,7 +104,7 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		PartnerKey partnerKey = PartnerKeyTestSupport.createPartnerKey(partner, keyType);
 		assertEquals(partnerKeyDao.merge(partnerKey), partnerKeyDao.findUnique(partnerKey.getPartner(), partnerKey.getKeyType()));
 
-		Address address = AddressTestSupport.createAddress(partnerRegistry);
+		PrivateAddress address = AddressTestSupport.createAddress(partnerRegistry);
 		assertEquals(addressDao.merge(address), addressDao.findUnique(address.getPartnerRegistry(), address.getSequence()));
 		
 	}
