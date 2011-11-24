@@ -2,8 +2,9 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Operator;
+import org.helianto.core.filter.form.CompositeEntityForm;
+import org.helianto.core.filter.form.EntityForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,19 +24,19 @@ public class EntityFilterTests {
     
     @Test
     public void select() {
-    	form.setAlias("ENTITY");
+    	((CompositeEntityForm) form).setEntityAlias("ENTITY");
         assertEquals(C1+C2, filter.createCriteriaAsString());
     }
     
-    private EntityFilterAdapter filter;
-    private Entity form;
+    private EntityFormFilterAdapter filter;
+    private EntityForm form;
     
     @Before
     public void setUp() {
     	Operator operator = new Operator("DEFAULT");
     	operator.setId(1);
-    	form = new Entity(operator, "");
-    	filter = new EntityFilterAdapter(form);
+    	form = new CompositeEntityForm(operator);
+    	filter = new EntityFormFilterAdapter(form);
     }
     
 }

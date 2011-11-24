@@ -16,73 +16,52 @@
 
 package org.helianto.core.filter;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
+import org.helianto.core.filter.form.EntityForm;
 
 /**
  * Entity filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
- * @see EntityFormFilterAdapter
  */
-public class EntityFilterAdapter extends AbstractRootFilterAdapter<Entity> {
+public class EntityFormFilterAdapter extends AbstractRootFilterAdapter<EntityForm> {
 	
 	private static final long serialVersionUID = 1L;
-	private String entityAliasLike;
 
 	/**
 	 * Default constructor.
 	 * 
-	 * @param entity
+	 * @param form
 	 */
-	public EntityFilterAdapter(Entity entity) {
-		super(entity);
-		setOrderByString("alias");
-		reset();
-	}
-
-	/**
-	 * Key constructor.
-	 * 
-	 * @param operator
-	 * @param alias
-	 */
-	public EntityFilterAdapter(Operator operator, String alias) {
-		this(new Entity(operator, alias));
-	}
-
-	/**
-	 * Entity alias like filter.
-	 */
-	public String getEntityAliasLike() {
-		return entityAliasLike;
-	}
-	public void setEntityAliasLike(String entityAliasLike) {
-		this.entityAliasLike = entityAliasLike;
+	public EntityFormFilterAdapter(EntityForm form) {
+		super(form);
 	}
 
 	/**
 	 * Reset.
 	 */
 	public void reset() {
-		setEntityAliasLike("");
+		getForm().reset();
 	}
 
 	public boolean isSelection() {
-		return getForm().getAlias().length()>0;
+		return getForm().getOperator()!=null && getForm().getOperator().getId()>0 && getForm().getEntityAlias().length()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("alias", getForm().getAlias(), mainCriteriaBuilder);
+		appendEqualFilter("alias", getForm().getEntityAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("alias", getEntityAliasLike(), mainCriteriaBuilder);
+		appendLikeFilter("alias", getForm().getEntityAliasLike(), mainCriteriaBuilder);
+	}
+	
+	@Override
+	public String getOrderByString() {
+		return "alias";
 	}
 
 }
