@@ -8,6 +8,8 @@ import org.helianto.core.PublicEntity;
  * Base class to PublicEntityForm interface.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
+ * @see CompositeEntityForm
  */
 public abstract class AbstractPublicEntityForm implements PublicEntityForm {
 	
