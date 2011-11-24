@@ -29,7 +29,11 @@ import org.helianto.core.Phone;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.def.AddressType;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.IdentityFormFilterAdapter;
 import org.helianto.core.filter.PersonalAddressFilterAdapter;
+import org.helianto.core.filter.PersonalAddressFormFilterAdapter;
+import org.helianto.core.filter.form.IdentityForm;
+import org.helianto.core.filter.form.PersonalAddressForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,6 +80,17 @@ public class IdentityMgrImpl implements IdentityMgr {
         return identityList ;
     }
 
+    public List<Identity> findIdentities(IdentityForm form) {
+    	IdentityFormFilterAdapter filter = new IdentityFormFilterAdapter(form);
+        List<Identity> identityList = (List<Identity>) identityDao.find(filter);
+        logger.debug("Found {} item(s).", identityList.size());
+        if (form.getExclusions()!=null) {
+            identityList.removeAll(form.getExclusions());
+            logger.debug("Removed {} item(s)", form.getExclusions().size());
+        }
+        return identityList ;
+    }
+
     /**
      * Store the given <code>Identity</code>.
      * 
@@ -116,6 +131,15 @@ public class IdentityMgrImpl implements IdentityMgr {
 	}
 	
 	public List<PersonalAddress> findPersonalAddresses(Filter filter) {
+		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(filter);
+		if (personalAddressList!=null) {
+			logger.debug("Found {} personal addresses.", personalAddressList.size());
+		}
+		return personalAddressList;
+	}
+	
+	public List<PersonalAddress> findPersonalAddresses(PersonalAddressForm form) {
+		PersonalAddressFormFilterAdapter filter = new PersonalAddressFormFilterAdapter(form);
 		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(filter);
 		if (personalAddressList!=null) {
 			logger.debug("Found {} personal addresses.", personalAddressList.size());

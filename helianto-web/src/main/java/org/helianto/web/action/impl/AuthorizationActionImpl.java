@@ -50,7 +50,8 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	@Override
 	protected List<User> doFilter(MutableAttributeMap attributes, Filter filter, PublicUserDetails userDetails) {
 		CompositeUserForm form = getForm(attributes);
-		form.setUserKey("USER");
+		form.setParentUserKey("USER");
+		form.setEntity(null);
 		form.setIdentity(userDetails.getUser().getIdentity());
 		return doFilter(form);
 	}

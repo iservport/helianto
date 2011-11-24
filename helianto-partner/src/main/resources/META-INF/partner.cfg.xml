@@ -4,11 +4,11 @@
 <hibernate-configuration>
 	<session-factory>
 		<mapping class="org.helianto.partner.Account" />
-		<mapping class="org.helianto.partner.Address" />
 		<mapping class="org.helianto.partner.Contact" />
 		<mapping class="org.helianto.partner.Partner" />
 		<mapping class="org.helianto.partner.PartnerKey" />
 		<mapping class="org.helianto.partner.PartnerPhone" />
+		<mapping class="org.helianto.partner.PrivateAddress" />
 		<mapping class="org.helianto.partner.PrivateEntity" />
 		<mapping class="org.helianto.partner.PrivateEntityKey" />
 

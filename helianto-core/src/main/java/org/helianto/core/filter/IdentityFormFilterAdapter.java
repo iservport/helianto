@@ -1,37 +1,25 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.Identity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
+import org.helianto.core.filter.form.IdentityForm;
 
 /**
- * Identity filter adapter.
+ * Identity form filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
  */
-public class IdentityFilterAdapter extends AbstractFilterAdapter<Identity>{
+public class IdentityFormFilterAdapter extends AbstractFilterAdapter<IdentityForm>{
 	
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Default constructor.
 	 * 
-	 * @param operator
+	 * @param form
 	 */
-	public IdentityFilterAdapter(Identity identity) {
-		super(identity);
-		reset();
-	}
-
-	/**
-	 * Key constructor.
-	 * 
-	 * @param principal
-	 */
-	public IdentityFilterAdapter(String principal) {
-		this(new Identity(principal));
-		reset();
+	public IdentityFormFilterAdapter(IdentityForm form) {
+		super(form);
 	}
 
 	public void reset() {
@@ -49,7 +37,7 @@ public class IdentityFilterAdapter extends AbstractFilterAdapter<Identity>{
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("personalData.firstName", getForm().getPersonalData().getFirstName(), mainCriteriaBuilder);
+		appendLikeFilter("personalData.firstName", getForm().getFirstName(), mainCriteriaBuilder);
 	}
 
 }

@@ -7,10 +7,13 @@ import javax.annotation.Resource;
 import org.helianto.core.Identity;
 import org.helianto.core.PersonalAddress;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.PersonalAddressFilterAdapter;
+import org.helianto.core.filter.PersonalAddressFormFilterAdapter;
+import org.helianto.core.filter.form.CompositeUserForm;
+import org.helianto.core.filter.form.PersonalAddressForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.IdentityMgr;
 import org.helianto.web.action.AbstractFilterAction;
+import org.helianto.web.model.impl.UserModelBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 
@@ -26,17 +29,32 @@ public class PersonalAddressActionImpl extends AbstractFilterAction<PersonalAddr
 	
 	@Override
 	protected String getModelName() {
-		return "authorizationModel";
+		return userModelBuilder.getModelName();
+	}
+	
+	protected CompositeUserForm getForm(MutableAttributeMap attributes) {
+		return userModelBuilder.getForm(attributes);
 	}
 
 	@Override
 	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new PersonalAddressFilterAdapter(new PersonalAddress(userDetails.getUser().getIdentity(), null));
+		return new PersonalAddressFormFilterAdapter(getForm(attributes));
+	}
+
+	@Override
+	protected List<PersonalAddress> doFilter(MutableAttributeMap attributes, Filter filter, PublicUserDetails userDetails) {
+		CompositeUserForm form = getForm(attributes);
+		form.setIdentity(userDetails.getUser().getIdentity());
+		return identityMgr.findPersonalAddresses(form);
 	}
 
 	@Override
 	protected List<PersonalAddress> doFilter(Filter filter) {
 		return identityMgr.findPersonalAddresses(filter);
+	}
+
+	protected List<PersonalAddress> doFilter(PersonalAddressForm form) {
+		return identityMgr.findPersonalAddresses(form);
 	}
 
 	@Override
@@ -57,10 +75,16 @@ public class PersonalAddressActionImpl extends AbstractFilterAction<PersonalAddr
 	// collabs
 	
 	private IdentityMgr identityMgr;
+	private UserModelBuilder userModelBuilder;
 	
 	@Resource
 	public void setIdentityMgr(IdentityMgr identityMgr) {
 		this.identityMgr = identityMgr;
+	}
+	
+	@Resource
+	public void setUserModelBuilder(UserModelBuilder userModelBuilder) {
+		this.userModelBuilder = userModelBuilder;
 	}
 
 

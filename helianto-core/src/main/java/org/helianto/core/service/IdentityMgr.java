@@ -24,6 +24,8 @@ import org.helianto.core.Identity;
 import org.helianto.core.PersonalAddress;
 import org.helianto.core.Phone;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.IdentityForm;
+import org.helianto.core.filter.form.PersonalAddressForm;
 
 /**
  * Default identity service layer interface for the core package.
@@ -58,8 +60,16 @@ public interface IdentityMgr {
      * 
      * @param filter
      * @param exclusions list to be removed after selection
+     * @deprecated
      */
     public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions);
+    
+    /**
+     * <p>Selects an <code>Identity</code> list.
+     * 
+     * @param form
+     */
+    public List<Identity> findIdentities(IdentityForm form);
     
     /**
      * Store the given <code>Identity</code>.
@@ -80,8 +90,16 @@ public interface IdentityMgr {
      * Find a <code>PersonalAddress</code> list.
      * 
      * @param filter
+     * @deprecated
      */
     public List<PersonalAddress> findPersonalAddresses(Filter filter);
+    
+    /**
+     * Find a <code>PersonalAddress</code> list.
+     * 
+     * @param form
+     */
+    public List<PersonalAddress> findPersonalAddresses(PersonalAddressForm form);
     
     /**
      * Store the given <code>PersonalAddress</code>.

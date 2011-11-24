@@ -254,7 +254,7 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
     /**
      * Group nature, as a keyword csv.
      */
-    @Column(length=40)
+    @Column(length=128)
 	public String getNature() {
 		return nature;
 	}
