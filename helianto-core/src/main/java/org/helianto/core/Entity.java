@@ -15,6 +15,7 @@
 
 package org.helianto.core;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -92,6 +93,7 @@ public class Entity implements RootEntity {
     private Operator operator;
     private String alias;
     private Date installDate;
+    private String nature;
     private String properties;
     private Identity manager;
     private String externalLogoUrl;
@@ -206,6 +208,32 @@ public class Entity implements RootEntity {
 		return getInstallDate()!=null;
 	}
 	
+	/**
+	 * Entity nature.
+	 * 
+	 * <p>
+	 * A list of comma separeted literals matching to public entity discriminators. The service layer
+	 * must control the life cycle of such public entities following the literals on this string.</p>
+	 */
+	@Column(length=128)
+	public String getNature() {
+		return nature;
+	}
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
+	
+	@Transient
+	public String[] getNatureAsArray() {
+		if (getNature()!=null && getNature().length()>1) {
+			return getNature().split(",");
+		}
+		return new String[] {};
+	}
+	public void setNatureAsArray(String[] natureArray) {
+		setNature(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
+	}
+
 	/**
 	 * Custom properties.
 	 */
