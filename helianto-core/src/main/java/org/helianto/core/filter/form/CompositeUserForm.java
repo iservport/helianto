@@ -4,13 +4,24 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.Service;
+import org.helianto.core.UserGroup;
 
 /**
  * Composite user form.
  * 
  * @author mauriciofernandesdecastro
  */
-public class CompositeUserForm extends AbstractUserForm implements UserRoleForm, ServiceForm, PersonalAddressForm {
+public class CompositeUserForm 
+
+	extends AbstractUserForm 
+	
+	implements 
+	  UserRoleForm
+	, ServiceForm
+	, PersonalAddressForm
+	, Cloneable
+	
+{
 
 	private static final long serialVersionUID = 1L;
 	private Service service;
@@ -115,5 +126,20 @@ public class CompositeUserForm extends AbstractUserForm implements UserRoleForm,
     public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
+    
+    /**
+     * Helper method to clone the form and set a parent.
+     * 
+     * @param parent
+     */
+    protected CompositeUserForm clone(UserGroup parent) {
+    	try {
+    		CompositeUserForm form = (CompositeUserForm) super.clone();
+    		form.setParent(parent);
+    		return form;
+		} catch (CloneNotSupportedException e) {
+			throw new UnsupportedOperationException("Unable to clone CompositeUserForm.");
+		}
+    }
     
 }

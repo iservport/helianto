@@ -9,7 +9,14 @@ import org.helianto.core.PublicEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public class CompositeEntityForm implements EntityForm {
+public class CompositeEntityForm 
+
+	implements 
+	  EntityForm
+	, PublicEntityForm
+	, Cloneable
+	
+{
 
 	private static final long serialVersionUID = 1L;
 	private Operator operator;
@@ -100,4 +107,21 @@ public class CompositeEntityForm implements EntityForm {
 	public void setEntityAliasLike(String entityAliasLike) {
 		this.entityAliasLike = entityAliasLike;
 	}
+	
+    /**
+     * Helper method to clone the form and set a parent.
+     * 
+     * @param parent
+     */
+    protected CompositeEntityForm clone(Entity entity) {
+    	try {
+    		CompositeEntityForm form = (CompositeEntityForm) super.clone();
+    		form.setEntity(entity);
+    		return form;
+		} catch (CloneNotSupportedException e) {
+			throw new UnsupportedOperationException("Unable to clone CompositeEntityForm.");
+		}
+    }
+    
+
 }
