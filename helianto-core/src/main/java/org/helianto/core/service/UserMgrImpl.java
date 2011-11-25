@@ -29,6 +29,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.PublicEntity;
 import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
@@ -41,6 +42,7 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.filter.UserFormFilterAdapter;
+import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -67,13 +69,29 @@ public class UserMgrImpl implements UserMgr {
 		return localRoles;
 	}
 
+	/**
+	 * This implementation is able to detect if the owning entity has changed its nature and
+	 * will create a public entity accordingly.
+	 */
 	public UserGroup storeUserGroup(UserGroup userGroup) {
-    	if (!userGroup.isKeyEmpty()) {
-        	userGroupDao.saveOrUpdate(userGroup);
-        	userGroupDao.flush();
-            return userGroup;
+    	if (userGroup.isKeyEmpty()) {
+    		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     	}
-		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
+    	userGroupDao.saveOrUpdate(userGroup);
+    	if (userGroup.getEntity().getNatureAsArray().length>0) {
+    		// Needs a public entity record!
+    		logger.debug("Looking for existing public entity");
+    		CompositeEntityForm form = new CompositeEntityForm();
+    		List<? extends PublicEntity> publicEntities = publicEntityMgr.findPublicEntities(form);
+    		if (publicEntities!=null && publicEntities.size()==0) {
+    			logger.debug("Creating public entity ...");
+    			PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());
+    			publicEntityMgr.storePublicEntity(publicEntity);
+    			logger.debug("Created {}.", publicEntity);
+    		}
+    	}
+    	userGroupDao.flush();
+        return userGroup;
     }
     
     /**
@@ -332,6 +350,7 @@ public class UserMgrImpl implements UserMgr {
     private FilterDao<UserLog> userLogDao;
     private FilterDao<Province> provinceDao;
 	private IdentityMgr identityMgr;
+	private PublicEntityMgr publicEntityMgr;
 	
 
     @Resource(name="entityDao")
@@ -367,6 +386,11 @@ public class UserMgrImpl implements UserMgr {
     @Resource
     public void setIdentityMgr(IdentityMgr identityMgr) {
 		this.identityMgr = identityMgr;
+	}
+    
+    @Resource
+    public void setPublicEntityMgr(PublicEntityMgr publicEntityMgr) {
+		this.publicEntityMgr = publicEntityMgr;
 	}
 
     private static final Logger logger = LoggerFactory.getLogger(UserMgrImpl.class);

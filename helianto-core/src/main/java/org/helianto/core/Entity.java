@@ -106,6 +106,9 @@ public class Entity implements RootEntity {
      */
     public Entity() {
     	setAlias("");
+    	setNature("");
+    	setProperties("");
+    	setExternalLogoUrl("");
     }
 
     /** 
@@ -223,10 +226,41 @@ public class Entity implements RootEntity {
 		this.nature = nature;
 	}
 	
+	/**
+	 * Set nature if it does not exist.
+	 * 
+	 * @param nature
+	 */
+	@Transient
+	public void setNatureIfDoesNotExist(char nature) {
+		if (getNature()==null) {
+			setNature(Character.toString(nature));
+		}
+		else if (getNature().indexOf(nature)==-1) {
+			if (getNatureAsArray().length>0) {
+				setNature(getNature().concat(","));
+			}
+			setNature(getNature().concat(Character.toString(nature)));
+		}
+	}
+	
+	/**
+	 * True if nature already exists.
+	 * 
+	 * @param nature
+	 */
+	@Transient
+	public boolean hasNature(char nature) {
+		return (getNature()!=null && getNature().indexOf(nature)>0);
+	}
+	
+	/**
+	 * Nature as array.
+	 */
 	@Transient
 	public String[] getNatureAsArray() {
-		if (getNature()!=null && getNature().length()>1) {
-			return getNature().split(",");
+		if (getNature()!=null && getNature().trim().length()>0) {
+			return getNature().replaceAll(" ", "").split(",");
 		}
 		return new String[] {};
 	}

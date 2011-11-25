@@ -28,9 +28,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.easymock.EasyMock;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.Province;
+import org.helianto.core.PublicEntity;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
@@ -39,7 +41,7 @@ import org.helianto.core.UserRole;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
-import org.helianto.core.filter.UserFilterAdapter;
+import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
@@ -64,7 +66,7 @@ public class UserMgrImplTests {
     
 	@Test
     public void findUsers() {
-    	UserFilterAdapter userFilter = new UserFilterAdapter(new User());
+    	Filter userFilter = new TestingFilter();
     	List<UserGroup> userList = new ArrayList<UserGroup>();
     	
     	expect(userGroupDao.find(userFilter)).andReturn(userList);
@@ -97,6 +99,26 @@ public class UserMgrImplTests {
     	userGroupDao.saveOrUpdate(userGroup);
     	userGroupDao.flush();
     	replay(userGroupDao);
+    	
+    	assertSame(userGroup, userMgr.storeUserGroup(userGroup));
+    	verify(userGroupDao);
+    }
+	
+	@Test
+    public void publicEntity() {
+    	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+    	userGroup.getEntity().setNature("S, E");
+		List<? extends PublicEntity> publicEntities = new ArrayList<PublicEntity>();
+    	PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());
+    	
+    	userGroupDao.saveOrUpdate(userGroup);
+    	userGroupDao.flush();
+    	replay(userGroupDao);
+    	    	
+		EasyMock.expect(publicEntityMgr.findPublicEntities(isA(CompositeEntityForm.class)));
+		EasyMock.expectLastCall().andReturn(publicEntities);
+    	EasyMock.expect(publicEntityMgr.storePublicEntity(EasyMock.eq(publicEntity))).andReturn(publicEntity);
+    	replay(publicEntityMgr);
     	
     	assertSame(userGroup, userMgr.storeUserGroup(userGroup));
     	verify(userGroupDao);
@@ -198,6 +220,7 @@ public class UserMgrImplTests {
     private FilterDao<UserLog> userLogDao;
     private FilterDao<UserRole> userRoleDao;
 	private IdentityMgr identityMgr;
+	private PublicEntityMgr publicEntityMgr;
     
     @SuppressWarnings("unchecked")
 	@Before
@@ -214,6 +237,9 @@ public class UserMgrImplTests {
 		userRoleDao = createMock(FilterDao.class);
 		userMgr.setUserRoleDao(userRoleDao);
 		identityMgr = createMock(IdentityMgr.class);
+		userMgr.setIdentityMgr(identityMgr);
+		publicEntityMgr = createMock(PublicEntityMgr.class);
+		userMgr.setPublicEntityMgr(publicEntityMgr);
     }
     
     @After
@@ -224,6 +250,7 @@ public class UserMgrImplTests {
         reset(userLogDao);
 		reset(userRoleDao);
         reset(identityMgr);
+        reset(publicEntityMgr);
     }
     
 }

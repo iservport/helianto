@@ -22,6 +22,7 @@ import org.helianto.core.PublicAddress;
 import org.helianto.core.PublicEntity;
 import org.helianto.core.PublicEntityKey;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.PublicEntityForm;
 
 /**
  * Public entity service interface.
@@ -55,8 +56,16 @@ public interface PublicEntityMgr {
      * Find <code>PublicEntity</code> list.
      * 
      * @param publicEntityFilter
+     * @deprecated
      */
 	public List<? extends PublicEntity> findPublicEntities(Filter publicEntityFilter);
+	
+	/**
+     * Find <code>PublicEntity</code> list.
+     * 
+     * @param form
+     */
+	public List<? extends PublicEntity> findPublicEntities(PublicEntityForm form);
 	
     /**
      * Write <code>PublicEntity</code> to the datastore.

@@ -11,6 +11,8 @@ import org.helianto.core.PublicAddress;
 import org.helianto.core.PublicEntity;
 import org.helianto.core.PublicEntityKey;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.PublicEntityFormFilterAdapter;
+import org.helianto.core.filter.form.PublicEntityForm;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -44,6 +46,15 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	
 	public List<? extends PublicEntity> findPublicEntities(Filter publicEntityFilter) {
 		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(publicEntityFilter);
+		if (publicEntitiyList!=null) {
+			logger.debug("Found {} public entities.", publicEntitiyList.size());
+		}
+		return publicEntitiyList;
+	}
+	
+	public List<? extends PublicEntity> findPublicEntities(PublicEntityForm form) {
+		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(form);
+		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(filter);
 		if (publicEntitiyList!=null) {
 			logger.debug("Found {} public entities.", publicEntitiyList.size());
 		}
