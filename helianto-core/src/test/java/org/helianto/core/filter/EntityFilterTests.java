@@ -15,7 +15,7 @@ public class EntityFilterTests {
 
     public static String ORDER = "order by alias.alias ";
     public static String C1 = "alias.operator.id = 1 ";
-    public static String C2 = "AND alias.alias = 'ENTITY' ";
+    public static String C2 = "alias.alias = 'ENTITY' ";
 
     @Test
     public void empty() {
@@ -25,7 +25,14 @@ public class EntityFilterTests {
     @Test
     public void select() {
     	((CompositeEntityForm) form).setEntityAlias("ENTITY");
-        assertEquals(C1+C2, filter.createCriteriaAsString());
+        assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void alias() {
+    	((CompositeEntityForm) form).setEntityAlias("ENTITY");
+    	((CompositeEntityForm) form).setOperator(null);
+        assertEquals(C2+ORDER, filter.createCriteriaAsString());
     }
     
     private EntityFormFilterAdapter filter;
