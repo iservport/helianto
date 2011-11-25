@@ -75,29 +75,11 @@ public class PublicEntityMgrTests {
 	}
 	
 	@Test
-	public void storePublicEntityInstall() {
-		PublicEntity publicEntity = new PublicEntity(entity);
-		Entity installedEntity = new Entity(entity.getOperator(), entity.getAlias());
-		
-		EasyMock.expect(postInstallationMgr.installEntity(entity, false)).andReturn(installedEntity);
-		EasyMock.replay(postInstallationMgr);
-		
-		publicEntityDao.saveOrUpdate(publicEntity);
-		publicEntityDao.flush();
-		EasyMock.replay(publicEntityDao);
-		
-		assertEquals(publicEntity, publicEntityMgr.storePublicEntity(publicEntity));
-		assertEquals(installedEntity, publicEntity.getEntity());
-		EasyMock.verify(publicEntityDao);
-	}
-	
-	@Test
 	public void storePublicEntity() {
 		PublicEntity publicEntity = new PublicEntity(entity);
 		entity.setInstallDate(new Date());
 		
 		publicEntityDao.saveOrUpdate(publicEntity);
-		publicEntityDao.flush();
 		EasyMock.replay(publicEntityDao);
 		
 		assertEquals(publicEntity, publicEntityMgr.storePublicEntity(publicEntity));
@@ -123,7 +105,6 @@ public class PublicEntityMgrTests {
 	private Entity entity;
 	private FilterDao<PublicAddress> publicAddressDao;
 	private FilterDao<PublicEntity> publicEntityDao;
-	private PostInstallationMgr postInstallationMgr;
 	
 	@SuppressWarnings("unchecked")
 	@Before
@@ -135,15 +116,12 @@ public class PublicEntityMgrTests {
 		((PublicEntityMgrImpl) publicEntityMgr).setPublicAddressDao(publicAddressDao);
 		publicEntityDao = EasyMock.createMock(FilterDao.class);
 		((PublicEntityMgrImpl) publicEntityMgr).setPublicEntityDao(publicEntityDao);
-		postInstallationMgr = EasyMock.createMock(PostInstallationMgr.class);
-		((PublicEntityMgrImpl) publicEntityMgr).setPostInstallationMgr(postInstallationMgr);
 	}
 	
 	@After
 	public void tearDown() {
 		EasyMock.reset(publicAddressDao);
 		EasyMock.reset(publicEntityDao);
-		EasyMock.reset(postInstallationMgr);
 	}
 
 }

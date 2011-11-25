@@ -7,11 +7,13 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Entity;
 import org.helianto.core.PublicAddress;
 import org.helianto.core.PublicEntity;
 import org.helianto.core.PublicEntityKey;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.PublicEntityFormFilterAdapter;
+import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.core.filter.form.PublicEntityForm;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
@@ -61,13 +63,27 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return publicEntitiyList;
 	}
 	
+	public PublicEntity installPublicEntity(Entity entity) {
+		PublicEntity publicEntity = null;
+    	if (entity.getNatureAsArray().length>0) {
+    		logger.debug("Looking for existing public entity");
+    		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(new CompositeEntityForm(entity));
+    		List<? extends PublicEntity> publicEntities = (List<PublicEntity>) publicEntityDao.find(filter);
+    		if (publicEntities!=null && publicEntities.size()==0) {
+    			logger.debug("Installing public entity ...");
+    			publicEntity = new PublicEntity(entity);
+    			publicEntityDao.saveOrUpdate(publicEntity);
+    			logger.debug("Installed {}.", publicEntity);
+    		}
+    	}
+    	else {
+    		logger.warn("Public entity not installed: need to set up entity nature first.");
+    	}
+		return publicEntity;
+	}
+	
 	public PublicEntity storePublicEntity(PublicEntity publicEntity) {
-		if (publicEntity.preProcessEntityInstallation()) {
-			// trigger entity installation
-			publicEntity.setEntity(postInstallationMgr.installEntity(publicEntity.getEntity(), false));
-		}
 		publicEntityDao.saveOrUpdate(publicEntity);
-		publicEntityDao.flush();
 		return publicEntity;
 	}
 	
@@ -99,7 +115,6 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	private FilterDao<PublicAddress> publicAddressDao;
 	private FilterDao<PublicEntity> publicEntityDao;
 	private BasicDao<PublicEntityKey> publicEntityKeyDao;
-	private PostInstallationMgr postInstallationMgr;
 	
 	@Resource(name="publicAddressDao")
 	public void setPublicAddressDao(FilterDao<PublicAddress> publicAddressDao) {
@@ -114,11 +129,6 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	@Resource(name="publicEntityKeyDao")
 	public void setPublicEntityKeyDao(BasicDao<PublicEntityKey> publicEntityKeyDao) {
 		this.publicEntityKeyDao = publicEntityKeyDao;
-	}
-	
-	@Resource
-	public void setPostInstallationMgr(PostInstallationMgr postInstallationMgr) {
-		this.postInstallationMgr = postInstallationMgr;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(PublicEntityMgrImpl.class);

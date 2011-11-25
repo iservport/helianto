@@ -18,6 +18,7 @@ package org.helianto.core.service;
 import java.util.List;
 import java.util.Map;
 
+import org.helianto.core.Entity;
 import org.helianto.core.PublicAddress;
 import org.helianto.core.PublicEntity;
 import org.helianto.core.PublicEntityKey;
@@ -67,13 +68,15 @@ public interface PublicEntityMgr {
      */
 	public List<? extends PublicEntity> findPublicEntities(PublicEntityForm form);
 	
+	/**
+     * Install <code>PublicEntity</code>.
+     * 
+     * @param entity
+     */
+	public PublicEntity installPublicEntity(Entity entity);
+	
     /**
      * Write <code>PublicEntity</code> to the datastore.
-     * 
-     * <p>
-     * Should be able to detect if the associated <code>Entity</code> is
-     * already installed and trigger installation accordingly.
-     * </p>
      * 
      * @param publicEntity
      */

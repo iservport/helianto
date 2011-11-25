@@ -41,7 +41,6 @@ import org.helianto.core.UserRole;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
-import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
@@ -108,15 +107,13 @@ public class UserMgrImplTests {
     public void publicEntity() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	userGroup.getEntity().setNature("S, E");
-		List<? extends PublicEntity> publicEntities = new ArrayList<PublicEntity>();
     	PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());
     	
     	userGroupDao.saveOrUpdate(userGroup);
     	userGroupDao.flush();
     	replay(userGroupDao);
     	    	
-		EasyMock.expect(publicEntityMgr.findPublicEntities(isA(CompositeEntityForm.class)));
-		EasyMock.expectLastCall().andReturn(publicEntities);
+		EasyMock.expect(publicEntityMgr.installPublicEntity(userGroup.getEntity())).andReturn(publicEntity);
     	EasyMock.expect(publicEntityMgr.storePublicEntity(EasyMock.eq(publicEntity))).andReturn(publicEntity);
     	replay(publicEntityMgr);
     	

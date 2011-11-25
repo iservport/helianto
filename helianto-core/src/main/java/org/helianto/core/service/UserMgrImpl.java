@@ -29,7 +29,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.core.PublicEntity;
 import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
@@ -42,7 +41,6 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.filter.UserFormFilterAdapter;
-import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -78,17 +76,7 @@ public class UserMgrImpl implements UserMgr {
     		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     	}
     	userGroupDao.saveOrUpdate(userGroup);
-    	if (userGroup.getEntity().getNatureAsArray().length>0) {
-    		logger.debug("Looking for existing public entity");
-    		List<? extends PublicEntity> publicEntities = 
-    				publicEntityMgr.findPublicEntities(new CompositeEntityForm(userGroup.getEntity()));
-    		if (publicEntities!=null && publicEntities.size()==0) {
-    			logger.debug("Creating public entity ...");
-    			PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());
-    			publicEntityMgr.storePublicEntity(publicEntity);
-    			logger.debug("Created {}.", publicEntity);
-    		}
-    	}
+    	publicEntityMgr.installPublicEntity(userGroup.getEntity());
     	userGroupDao.flush();
         return userGroup;
     }
