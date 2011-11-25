@@ -35,7 +35,7 @@ public class CompositeEntityForm
 	}
 	
 	/**
-	 * Alias constructor.
+	 * Entity constructor.
 	 * 
 	 * @param alias
 	 */

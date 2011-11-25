@@ -81,7 +81,7 @@ public class UserMgrImpl implements UserMgr {
     	if (userGroup.getEntity().getNatureAsArray().length>0) {
     		logger.debug("Looking for existing public entity");
     		List<? extends PublicEntity> publicEntities = 
-    				publicEntityMgr.findPublicEntities(new CompositeEntityForm(userGroup.getEntity().getAlias()));
+    				publicEntityMgr.findPublicEntities(new CompositeEntityForm(userGroup.getEntity()));
     		if (publicEntities!=null && publicEntities.size()==0) {
     			logger.debug("Creating public entity ...");
     			PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());

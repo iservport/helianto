@@ -22,8 +22,6 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 	 */
 	public PublicEntityFormFilterAdapter(PublicEntityForm form) {
 		super(form);
-		setOrderByString("entity.alias");
-		reset();
 	}
 	
 	public void reset() {
@@ -56,8 +54,16 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		if (getForm().getOperator()==null && getForm().getEntity()!=null) {
+			appendEqualFilter("entity.id", getForm().getEntity().getId(), mainCriteriaBuilder);
+		}
 		appendEqualFilter("publicEntityType", getForm().getPublicEntityType(), mainCriteriaBuilder);
 		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
+	}
+	
+	@Override
+	public String getOrderByString() {
+		return "entity.alias";
 	}
 	
 	private static final Logger logger  = LoggerFactory.getLogger(PublicEntityFormFilterAdapter.class);
