@@ -251,7 +251,7 @@ public class Entity implements RootEntity {
 	 */
 	@Transient
 	public boolean hasNature(char nature) {
-		return (getNature()!=null && getNature().indexOf(nature)>0);
+		return (getNature()!=null && getNature().indexOf(nature)>=0);
 	}
 	
 	/**
