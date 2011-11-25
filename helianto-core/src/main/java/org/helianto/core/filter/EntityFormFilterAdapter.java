@@ -56,6 +56,9 @@ public class EntityFormFilterAdapter extends AbstractRootFilterAdapter<EntityFor
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		if (getForm().getOperator()==null) {
+			appendEqualFilter("alias", getForm().getEntityAlias(), mainCriteriaBuilder);
+		}
 		appendLikeFilter("alias", getForm().getEntityAliasLike(), mainCriteriaBuilder);
 	}
 	
