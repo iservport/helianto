@@ -79,10 +79,9 @@ public class UserMgrImpl implements UserMgr {
     	}
     	userGroupDao.saveOrUpdate(userGroup);
     	if (userGroup.getEntity().getNatureAsArray().length>0) {
-    		// Needs a public entity record!
     		logger.debug("Looking for existing public entity");
-    		CompositeEntityForm form = new CompositeEntityForm();
-    		List<? extends PublicEntity> publicEntities = publicEntityMgr.findPublicEntities(form);
+    		List<? extends PublicEntity> publicEntities = 
+    				publicEntityMgr.findPublicEntities(new CompositeEntityForm(userGroup.getEntity().getAlias()));
     		if (publicEntities!=null && publicEntities.size()==0) {
     			logger.debug("Creating public entity ...");
     			PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());

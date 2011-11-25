@@ -31,7 +31,16 @@ public class CompositeEntityForm
 	 * Default constructor.
 	 */
 	public CompositeEntityForm() {
-		setEntityAlias("");
+		this("");
+	}
+	
+	/**
+	 * Alias constructor.
+	 * 
+	 * @param alias
+	 */
+	public CompositeEntityForm(String alias) {
+		setEntityAlias(alias);
 	}
 	
 	/**
