@@ -69,6 +69,13 @@ public interface PublicEntityMgr {
 	public List<? extends PublicEntity> findPublicEntities(PublicEntityForm form);
 	
 	/**
+     * Find <code>PublicEntity</code>.
+     * 
+     * @param entity
+     */
+	public PublicEntity findPublicEntity(Entity entity);
+	
+	/**
      * Install <code>PublicEntity</code>.
      * 
      * @param entity

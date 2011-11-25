@@ -63,6 +63,16 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return publicEntitiyList;
 	}
 	
+	public PublicEntity findPublicEntity(Entity entity) {
+		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(new CompositeEntityForm(entity));
+		List<? extends PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(filter);
+		if (publicEntitiyList!=null && publicEntitiyList.size()>0) {
+			logger.debug("Found {}.", publicEntitiyList.get(0));
+			return publicEntitiyList.get(0);
+		}
+		return null;
+	}
+	
 	public PublicEntity installPublicEntity(Entity entity) {
 		PublicEntity publicEntity = null;
     	if (entity.getNatureAsArray().length>0) {

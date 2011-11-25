@@ -17,7 +17,7 @@ import org.junit.Test;
 public class PublicEntityFormFilterAdapterTests {
 
     public static String OB = "order by alias.entity.alias ";
-    public static String C1 = "alias.operator.id = 1 ";
+    public static String C1 = "alias.entity.operator.id = 1 ";
     public static String C2 = "alias.entity.id = 2 ";
     public static String C3 = "AND alias.class=PublicEntity ";
     public static String C4 = "AND lower(alias.entityName) like '%name%' ";

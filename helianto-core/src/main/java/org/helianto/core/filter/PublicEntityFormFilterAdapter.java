@@ -42,6 +42,16 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 		return connect;
 	}
 	
+	/**
+	 * Operator pre-processor.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	public void preProcessOperatorFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("entity.operator.id", getOperator().getId(), mainCriteriaBuilder);
+		logger.debug("Filter constraint set to {}.", getOperator());
+	}
+	
 	@Override
 	public boolean isSelection() {
 		return getForm().getOperator()!=null && getForm().getEntity()!=null;

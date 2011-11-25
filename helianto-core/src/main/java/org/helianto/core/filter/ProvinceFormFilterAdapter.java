@@ -16,40 +16,26 @@
 
 package org.helianto.core.filter;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
+import org.helianto.core.filter.form.ProvinceForm;
 
 /**
  * Province filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
- * @see ProvinceFormFilterAdapter
  */
-public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> implements ParentFilter {
+public class ProvinceFormFilterAdapter extends AbstractRootFilterAdapter<ProvinceForm> {
 	
 	private static final long serialVersionUID = 1L;
-	private Class<? extends Province> clazz;
-	private Province parent;
-	private char discriminator;
 	
 	/**
 	 * Default constructor.
-	 */
-	public ProvinceFilterAdapter(Province province) {
-		super(province);
-	}
-	
-	/**
-	 * Province code constructor.
 	 * 
-	 * @param operator
-	 * @param provinceCode
+	 * @param form
 	 */
-	public ProvinceFilterAdapter(Operator operator, String provinceCode) {
-		this(new Province(operator,  provinceCode));
+	public ProvinceFormFilterAdapter(ProvinceForm form) {
+		super(form);
 	}
 	
 	@Override
@@ -61,25 +47,24 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> i
 	 * Filter reset.
 	 */
 	public void reset() {
-		getForm().setProvinceName("");
+		getForm().reset();
 	}
 
 	/**
 	 * Selection criterion.
 	 */
 	public boolean isSelection() {
-		return getForm().getProvinceCode().length()>0;
+		return getForm().getOperator()!=null 
+				&& getForm().getOperator().getId()>0
+				&& getForm().getProvinceCode()!=null 
+				&& getForm().getProvinceCode().length()>0;
 	}
 	
 	@Override
 	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
-		if (getClazz()!=null) {
-			mainCriteriaBuilder.appendAnd().append(getClazz());
-			connect = true;
-		}
-		if (getParent()!=null) {
-			appendEqualFilter("parent.id", getParentId(), mainCriteriaBuilder);
+		if (getForm().getParentProvince()!=null && getForm().getParentProvince().getId()>0) {
+			appendEqualFilter("parent.id", getForm().getParentProvince().getId(), mainCriteriaBuilder);
 			connect = true;
 		}
 		return connect;
@@ -93,44 +78,6 @@ public class ProvinceFilterAdapter extends AbstractRootFilterAdapter<Province> i
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("provinceName", getForm().getProvinceName(), mainCriteriaBuilder);
-	}
-
-	/**
-	 * Class filter.
-	 */
-	public Class<? extends Province> getClazz() {
-		return this.clazz;
-	}
-	public void setClazz(Class<? extends Province> clazz) {
-		this.clazz = clazz;
-	}
-	
-	/**
-	 * Parent filter.
-	 */
-	@SuppressWarnings("unchecked")
-	public Province getParent() {
-		return parent;
-	}
-	public void setParent(Province parent) {
-		this.parent = parent;
-	}
-	
-	public long getParentId() {
-		if (getParent()!=null) {
-			return getParent().getId();
-		}
-		return 0;
-	}
-	
-	/**
-	 * Discriminator filter.
-	 */
-	public char getDiscriminator() {
-		return this.discriminator; 
-	}
-	public void setDiscriminator(char discriminator) {
-		this.discriminator = discriminator;
 	}
 
 }

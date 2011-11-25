@@ -36,12 +36,29 @@ public abstract class AbstractRootFilterAdapter<F extends RootEntity> extends Ab
 	 */
 	@Override
 	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getOperator()!=null) {
-			appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
-			logger.debug("Filter constraint set to {}.", getOperator());
-			return true;
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
+		if (hasOperatorCriterion()) {
+			preProcessOperatorFilter(mainCriteriaBuilder);
+			connect = true;
 		}
-		return false;
+		return connect;
+	}
+	
+	/**
+	 * Operator pre-processor.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	public void preProcessOperatorFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
+		logger.debug("Filter constraint set to {}.", getOperator());
+	}
+	
+	/**
+	 * True if there is a segment for operator criterion.
+	 */
+	protected boolean hasOperatorCriterion() {
+		return getOperator()!=null;
 	}
 	
 	private static final Logger logger  = LoggerFactory.getLogger(AbstractRootFilterAdapter.class);

@@ -16,10 +16,11 @@
 package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.filter.form.CompositeOperatorForm;
+import org.helianto.core.filter.form.ProvinceForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,67 +28,57 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProvinceFilterAdapterTests  {
+public class ProvinceFormFilterAdapterTests  {
     
-    @Test
-    public void constructor() {
-		assertSame(target, filter.getForm());
-		
-		Operator operator = new Operator("OTHER");
-		filter = new ProvinceFilterAdapter(operator, "CODE");
-		assertSame(operator, filter.getForm().getOperator());
-		assertEquals("CODE", filter.getForm().getProvinceCode());
-	}
-	
     public static String OB = "order by alias.provinceCode ";
     public static String C0 = "alias.operator.id = 1 ";
-    public static String C1 = "AND alias.class=Province ";
+    public static String C1 = "alias.class = 'C' AND ";
     public static String C2 = "AND alias.provinceCode = 'CODE' ";
     public static String C3 = "AND lower(alias.provinceName) like '%name_like%' ";
     public static String C4 = "AND alias.parent.id = 1 ";
 
     @Test
-    public void empty() {
+    public void operator() {
         assertEquals(C0+OB, filter.createCriteriaAsString());
     }
     
     @Test
-    public void clazz() {
-    	filter.setClazz(Province.class);
-        assertEquals(C0+C1+OB, filter.createCriteriaAsString());
+    public void type() {
+    	form.setType('C');
+        assertEquals(C1+C0+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
-    	target.setProvinceCode("CODE");
+    	((CompositeOperatorForm) form).setProvinceCode("CODE");
         assertEquals(C0+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void filter() {
-    	target.setProvinceName("NAME_LIKE");
+    	((CompositeOperatorForm) form).setProvinceName("NAME_LIKE");
         assertEquals(C0+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void parent() {
-    	Province parent = new Province(target.getOperator(), "PARENT");
+    	Province parent = new Province(form.getOperator(), "PARENT");
     	parent.setId(1);
-    	filter.setParent(parent);
+    	((CompositeOperatorForm) form).setParentProvince(parent);
         assertEquals(C0+C4+OB, filter.createCriteriaAsString());
     }
     
     // collabs
     
-    private ProvinceFilterAdapter filter;
-    private Province target;
+    private ProvinceFormFilterAdapter filter;
+    private ProvinceForm form;
     
     @Before
     public void setUp() {
     	Operator operator = new Operator("DEFAULT");
     	operator.setId(1);
-    	target = new Province(operator, "");
-    	filter = new ProvinceFilterAdapter(target);
+    	form = new CompositeOperatorForm(operator);
+    	filter = new ProvinceFormFilterAdapter(form);
     }
     
 }
