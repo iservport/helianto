@@ -82,12 +82,12 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
         if (isSelection()) {
         	logger.debug("Filter in 'selection' mode.");
         	doSelect(mainCriteriaBuilder);
-        	reset();
+        	postSelection();
         }
         else if (isSearch()) {
         	logger.debug("Filter in 'search' mode.");
         	doSearch(mainCriteriaBuilder);
-        	reset();
+        	postSearch();
         }
         else {
         	logger.debug("Filter in 'filter' mode.");
@@ -109,11 +109,25 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 		return false;
 	}
 	
+	/**
+	 * Called after {@link #doSelect(OrmCriteriaBuilder)}
+	 */
+	protected void postSelection() {
+		
+	}
+	
     /**
      * If true, a search result is expected.
      */
 	public boolean isSearch() {
 		return false;
+	}
+	
+	/**
+	 * Called after {@link #doSearch(OrmCriteriaBuilder)
+	 */
+	protected void postSearch() {
+		
 	}
 	
 	// processors

@@ -7,6 +7,7 @@ import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.base.AbstractPrivateControl;
 import org.helianto.message.AbstractFollowUp;
 import org.helianto.message.ControlSource;
+import org.helianto.message.form.AbstractFollowUpForm;
 import org.helianto.message.form.FollowUpForm;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,26 +48,19 @@ public class FollowUpFormFilterAdapterTests {
 		Entity entity = EntityTestSupport.createEntity(1);
 		ControlSourceStub controlSource = new ControlSourceStub() { };
 		form = new FollowUpFormStub(controlSource);
+		((FollowUpFormStub) form).setEntity(entity);
 		filter = new AbstractFollowUpFormFilterAdapter<FollowUpFormStub, ControlSourceStub>((FollowUpFormStub) form) { };
 		((AbstractFollowUp) form).setNotificationOption(' ');
+		form.reset();
 	}
 	
 	@SuppressWarnings("serial")
-	private class FollowUpFormStub extends AbstractFollowUp implements FollowUpForm<ControlSourceStub>{
-		
-		private Entity entity;
-		private ControlSourceStub controlSource;
-		
+	private class FollowUpFormStub extends AbstractFollowUpForm<ControlSourceStub>{
+				
 		public FollowUpFormStub(ControlSourceStub controlSource) {
-			setControl(controlSource);
+			super(controlSource);
 		}
 		
-		public Entity getEntity() { return entity; }
-		public ControlSource getSubject() { return controlSource; }
-		public ControlSourceStub getControl() { return controlSource; }
-		public void setControl(ControlSourceStub controlTarget) {
-			this.controlSource = controlTarget;
-		}
 		public String getControlName() { return "control"; }
 		public long getControlId() { return 10; }
 	}

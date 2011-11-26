@@ -18,6 +18,15 @@ public class UserGroupTestSupport {
     /**
      * Test support method to create a <code>UserGroup</code>.
      */
+    public static UserGroup createUserGroup(int id) {
+    	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+    	userGroup.setId(id);
+    	return userGroup;
+    }
+
+    /**
+     * Test support method to create a <code>UserGroup</code>.
+     */
     public static UserGroup createUserGroup() {
         return UserGroupTestSupport.createUserGroup(EntityTestSupport.createEntity());
     }

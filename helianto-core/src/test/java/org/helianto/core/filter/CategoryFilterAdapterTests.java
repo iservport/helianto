@@ -73,6 +73,7 @@ public class CategoryFilterAdapterTests {
     			return entity;
     		}
     	};
+    	form.reset();
     	filter = new CategoryFormFilterAdapter(form);
     }
 

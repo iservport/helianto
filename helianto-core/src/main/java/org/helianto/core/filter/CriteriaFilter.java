@@ -34,9 +34,4 @@ public interface CriteriaFilter<B extends CriteriaBuilder> extends Filter {
 	 */
 	public String createCriteriaAsString(B criteriaBuilder);
 
-	/**
-	 * Reset filter.
-	 */
-    public void reset();
-	
 }

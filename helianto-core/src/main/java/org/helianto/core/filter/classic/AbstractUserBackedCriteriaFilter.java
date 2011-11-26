@@ -39,7 +39,6 @@ public abstract class AbstractUserBackedCriteriaFilter extends AbstractEntityBac
     	try {
     		T userBackedFilter = clazz.newInstance();
     		userBackedFilter.setUser(user);
-    		userBackedFilter.reset();
     		return userBackedFilter;
     	}
     	catch (Exception e) {

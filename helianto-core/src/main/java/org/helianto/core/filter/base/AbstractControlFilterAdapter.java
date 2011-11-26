@@ -38,7 +38,6 @@ public abstract class AbstractControlFilterAdapter <T extends Controllable> exte
 	 */
 	public AbstractControlFilterAdapter(T form) {
 		super(form);
-		reset();
 	}
 	
 	/**

@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.Date;
 
 import org.helianto.core.UserGroup;
-import org.helianto.core.UserRequest;
-import org.helianto.core.filter.UserRequestFilterAdapter;
+import org.helianto.core.filter.form.CompositeIdentityForm;
+import org.helianto.core.filter.form.UserRequestForm;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,52 +18,54 @@ import org.junit.Test;
 public class UserRequestFilterAdapterTests {
 	
 	String OB = "order by alias.internalNumber ";
-	String C1 = "alias.entity.id = 0 ";
+	String C1 = "alias.userGroup.id = 1 ";
 	String C2 = "AND alias.internalNumber = 100 ";
-	String C3 = "AND lower(alias.principal) like '%test@domain%' ";
-	String C4 = "AND (alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ";
+	String C3 = "lower(alias.principal) like '%test@domain%' ";
+	String C4 = "(alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ";
 	String C5 = "alias.tempPassword = 'ABCD' ";
 	
 	@Test
 	public void empty() {
-		assertEquals(C1+OB, filter.createCriteriaAsString());
+		assertEquals(OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void select() {
+		((CompositeIdentityForm) form).setUserGroup(userGroup);
 		form.setInternalNumber(100);
 		assertEquals(C1+C2, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void docName() {
-		form.setPrincipal("TEST@domain");
-		assertEquals(C1+C3+OB, filter.createCriteriaAsString());
+		((CompositeIdentityForm) form).setPrincipal("TEST@domain");
+		assertEquals(C3+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void nextCheckDate() {
-		form.setNextCheckDate(new Date(1000L));
-		assertEquals(C1+C4+OB, filter.createCriteriaAsString());
+		((CompositeIdentityForm) form).setNextCheckDate(new Date(1000L));
+		assertEquals(C4+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void tempPassword() {
-		form.setUserGroup(null);
-		form.setTempPassword("ABCD");
+		((CompositeIdentityForm) form).setTempPassword("ABCD");
 		assertEquals(C5+OB, filter.createCriteriaAsString());
 	}
 	
 	// locals
 	
-	private UserRequest form;
-	private UserRequestFilterAdapter filter;
+	private UserRequestForm form;
+	private UserRequestFormFilterAdapter filter;
+	private UserGroup userGroup;
 	
 	@Before
 	public void setUp() {
-		UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-		form = new UserRequest(userGroup, 0);
-		filter = new UserRequestFilterAdapter(form);
+		userGroup = UserGroupTestSupport.createUserGroup(1);
+		form = new CompositeIdentityForm("");
+		filter = new UserRequestFormFilterAdapter(form);
+		form.reset();
 	}
 
 }

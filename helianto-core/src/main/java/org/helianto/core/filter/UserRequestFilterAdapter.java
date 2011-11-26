@@ -9,6 +9,8 @@ import org.helianto.core.criteria.OrmCriteriaBuilder;
  * Login request filter adapter.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
+ * @see UserRequestFormFilterAdapter
  */
 public class UserRequestFilterAdapter extends AbstractControlFilterAdapter<UserRequest> {
 

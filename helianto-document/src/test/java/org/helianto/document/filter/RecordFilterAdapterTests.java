@@ -32,9 +32,6 @@ import org.junit.Test;
  */
 public class RecordFilterAdapterTests {
 	
-	private AbstractControlFilterAdapter<AbstractRecord> recordFilter;
-	private Entity entity;
-	
 	@Test
 	public void empty() {
 		assertEquals("alias.entity.id = 1 ", recordFilter.createCriteriaAsString());
@@ -64,13 +61,17 @@ public class RecordFilterAdapterTests {
 		assertEquals("alias.entity.id = 1 AND alias.resolution = 'R' ", recordFilter.createCriteriaAsString());
 	}
 	
+	// locals
+	
+	private AbstractControlFilterAdapter<AbstractRecord> recordFilter;
+	private Entity entity;
+	
 	@SuppressWarnings("serial")
 	@Before
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
 		recordFilter = new AbstractControlFilterAdapter<AbstractRecord>(new AbstractRecord() {
-			public String getInternalNumberKey() { return "KEY"; }
 			public Entity getEntity() { return entity; }
 			}) {
 			@Override
@@ -78,6 +79,7 @@ public class RecordFilterAdapterTests {
 				super.doFilter(mainCriteriaBuilder);
 			}
 		};
+		recordFilter.reset();
 	}
 	
 }

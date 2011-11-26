@@ -32,7 +32,7 @@ public class IdentityFormFilterAdapter extends AbstractFilterAdapter<IdentityFor
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("principal", getForm().getPrincipal(), mainCriteriaBuilder);
+		appendEqualLessCaseFilter("principal", getForm().getPrincipal(), mainCriteriaBuilder);
 	}
 
 	@Override

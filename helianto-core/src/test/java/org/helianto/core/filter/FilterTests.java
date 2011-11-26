@@ -1,7 +1,6 @@
 package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -22,7 +21,7 @@ public class FilterTests {
 	
 	private FilterStub filter;
 	private OrmCriteriaBuilder createdCriteriaBuilder, preProcessedCriteriaBuilder, selectionCriteriaBuilder, filterCriteriaBuilder, postProcessedCriteriaBuilder;
-	private boolean selection, reset;
+	private boolean selection;
 	private String orderBy = "";
 	
 	@Test
@@ -70,7 +69,6 @@ public class FilterTests {
 		assertEquals("", filter.createCriteriaAsString());
 		assertSame(createdCriteriaBuilder, preProcessedCriteriaBuilder);
 		assertSame(createdCriteriaBuilder, selectionCriteriaBuilder);
-		assertTrue(reset);
 		assertEquals("FILTER", filterCriteriaBuilder.getAlias());
 	}
 	
@@ -80,7 +78,6 @@ public class FilterTests {
 		assertEquals("", filter.createCriteriaAsString());
 		assertSame(createdCriteriaBuilder, preProcessedCriteriaBuilder);
 		assertEquals("SELECTION", selectionCriteriaBuilder.getAlias());
-		assertFalse(reset);
 		assertSame(createdCriteriaBuilder, filterCriteriaBuilder);
 		assertSame(postProcessedCriteriaBuilder, preProcessedCriteriaBuilder);
 	}
@@ -92,7 +89,6 @@ public class FilterTests {
 		assertEquals("order by TEST_ALIAS.ORDER ", filter.createCriteriaAsString());
 		assertSame(createdCriteriaBuilder, preProcessedCriteriaBuilder);
 		assertEquals("SELECTION", selectionCriteriaBuilder.getAlias());
-		assertFalse(reset);
 		assertSame(createdCriteriaBuilder, filterCriteriaBuilder);
 		assertSame(postProcessedCriteriaBuilder, preProcessedCriteriaBuilder);
 	}
@@ -229,8 +225,6 @@ public class FilterTests {
 		}
 		
 		@Override public boolean isSelection() { return selection; }
-		
-		public void reset() { reset = true; }
 		
 		@Override public String getOrderByString() { return orderBy; }
 

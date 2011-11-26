@@ -29,7 +29,6 @@ public abstract class AbstractFilterAdapter<F> extends AbstractFilter implements
 	 */
 	public AbstractFilterAdapter(F form) {
 		this.form = form;
-		reset();
 	}
 
 	/**

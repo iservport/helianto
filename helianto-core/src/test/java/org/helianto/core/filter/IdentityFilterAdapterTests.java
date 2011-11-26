@@ -18,7 +18,8 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Identity;
+import org.helianto.core.filter.form.CompositeIdentityForm;
+import org.helianto.core.filter.form.IdentityForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +30,7 @@ import org.junit.Test;
 public class IdentityFilterAdapterTests {
 
     public static String C1 = "";
-    public static String C2 = "alias.principal = 'principal' ";
+    public static String C2 = "lower(alias.principal) = 'principal' ";
     public static String C3 = "lower(alias.personalData.firstName) like '%first%' ";
 
     @Test
@@ -39,22 +40,22 @@ public class IdentityFilterAdapterTests {
     
     @Test
     public void select() {
-    	form.setPrincipal("PRINCIPAL");
+    	((CompositeIdentityForm) form).setPrincipal("PRINCIPAL");
         assertEquals(C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void filter() {
-    	form.getPersonalData().setFirstName("FIRST");
+    	((CompositeIdentityForm) form).setFirstName("FIRST");
         assertEquals(C1+C3, filter.createCriteriaAsString());
     }
     
-    private IdentityFilterAdapter filter;
-    private Identity form;
+    private IdentityFormFilterAdapter filter;
+    private IdentityForm form;
     
     @Before
     public void setUp() {
-    	form = new Identity("");
-    	filter = new IdentityFilterAdapter(form);
+    	form = new CompositeIdentityForm("");
+    	filter = new IdentityFormFilterAdapter(form);
     }
 }
