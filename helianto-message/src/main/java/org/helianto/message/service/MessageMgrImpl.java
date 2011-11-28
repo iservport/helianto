@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,16 +36,24 @@ import org.springframework.stereotype.Service;
 @Service("messageMgr")
 public class MessageMgrImpl implements MessageMgr {
 
-    public void send(String recipient, String sender, String subject, String htmlMessageBody)
-    		throws MessagingException {
-		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-		helper.setTo(recipient);
-		helper.setFrom(sender);
-		helper.setSubject(subject);
-		helper.setText(htmlMessageBody, true);
-		mailSender.send(message);
-		logger.info("Sent passwordConfirmation to {}", recipient);
+    public void send(String recipient, String sender, String subject, String htmlMessageBody) {
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			helper.setTo(recipient);
+			helper.setFrom(sender);
+			helper.setSubject(subject);
+			helper.setText(htmlMessageBody, true);
+			mailSender.send(message);
+			logger.info("Sent passwordConfirmation to {}", recipient);
+		} catch (MessagingException e) {
+			throw new RuntimeException("Failed to send message.", e);
+		}
+    }
+    
+    @Scheduled(fixedRate=3600000) // one hour
+    public void heartBeat() {
+    	send("mauricio@iservport.com", "mauricio@iservport.com", "Execution control test", "<html><body><p>Running.</p></body></html>");
     }
     
     // collabs

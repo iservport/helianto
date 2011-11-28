@@ -16,7 +16,6 @@
 
 package org.helianto.message.service;
 
-import javax.mail.MessagingException;
 
 /**
  * Message service interface.
@@ -33,7 +32,11 @@ public interface MessageMgr {
      * @param subject
      * @param htmlMessageBody
      */
-    public void send(String recipient, String sender, String subject, String htmlMessageBody)
-            throws MessagingException;
+    public void send(String recipient, String sender, String subject, String htmlMessageBody);
+    
+    /**
+     * Heart beat.
+     */
+    public void heartBeat();
 
 }
