@@ -64,7 +64,6 @@ public class EventFilterAdapterTests {
 			public String getInternalNumberKey() { return "KEY"; }
 			public Entity getEntity() { return entity; }
 			}) {
-			public void reset() { }
 			@Override
 			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { 
 				super.doFilter(mainCriteriaBuilder);
