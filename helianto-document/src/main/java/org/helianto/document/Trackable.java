@@ -25,13 +25,6 @@ import java.util.Calendar;
 public interface Trackable {
 
     /**
-     * Tracking mode.
-     * 
-     * @see {@link TrackingMode}
-     */
-    public char getTrackingMode();
-    
-    /**
      * Frequency.
      */
     public int getFrequency();
