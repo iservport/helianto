@@ -55,7 +55,6 @@ public abstract class AbstractEvent implements Privacy, Event {
     private int id;
     private Integer version;
     private Entity entity;
-    private long internalNumber;
     private Identity owner;
     private Date issueDate;
     private char privacyLevel;
@@ -111,16 +110,6 @@ public abstract class AbstractEvent implements Privacy, Event {
     }
     public void setEntity(Entity entity) {
         this.entity = entity;
-    }
-
-    /**
-     * <<NaturalKey>> Internal number.
-     */
-    public long getInternalNumber() {
-        return this.internalNumber;
-    }
-    public void setInternalNumber(long internalNumber) {
-        this.internalNumber = internalNumber;
     }
 
     /**
@@ -186,45 +175,6 @@ public abstract class AbstractEvent implements Privacy, Event {
 		this.interval = interval;
 	}
     
-//    protected Format format(TemporalType temporalType) {
-//    	switch (temporalType) {
-//    	case TIMESTAMP: 
-//    		return SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, getLocale());
-//    	case DATE: 
-//    		return SimpleDateFormat.getDateInstance(DateFormat.SHORT, getLocale());
-//    	case TIME: 
-//    		return SimpleDateFormat.getTimeInstance(DateFormat.SHORT, getLocale());
-//    	}
-//        return null;
-//    }
-
-    /**
-     * toString
-     * @return String
-     */
-    @Override
-    public String toString() {
-    	StringBuffer buffer = new StringBuffer();
-    	buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-    	buffer.append("internalNumber").append("='").append(getInternalNumber()).append("' ");			
-    	buffer.append("]");
-    	return buffer.toString();
-     }
-
-    public String toStringShort() {
-    	StringBuffer buffer = new StringBuffer();
-    	buffer.append("#").append(getId()).append(" [");
-    	buffer.append(getInternalNumber()).append("] ");			
-    	return buffer.toString();
-     }
-
-    @Override
-    public int hashCode() {
-         int result = 17;
-         result = 37 * result + (int) this.getInternalNumber();
-         return result;
-   }
-
 }
 
 

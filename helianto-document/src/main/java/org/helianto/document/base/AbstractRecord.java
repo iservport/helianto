@@ -37,9 +37,16 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractRecord extends AbstractEvent implements Record {
+public abstract class AbstractRecord 
+
+	extends AbstractEvent 
+	
+	implements Record 
+
+{
 
     private static final long serialVersionUID = 1L;
+    private long internalNumber;
     private int complete;
     private char resolution;
     private Date nextCheckDate;
@@ -68,6 +75,16 @@ public abstract class AbstractRecord extends AbstractEvent implements Record {
         setNextCheckDate(null);
     }
     
+    /**
+     * <<NaturalKey>> Internal number.
+     */
+    public long getInternalNumber() {
+        return this.internalNumber;
+    }
+    public void setInternalNumber(long internalNumber) {
+        this.internalNumber = internalNumber;
+    }
+
     public char getResolution() {
         return validateResolution(this.resolution);
     }
@@ -142,6 +159,44 @@ public abstract class AbstractRecord extends AbstractEvent implements Record {
     	return ControlState.LATE.getValue();
     }
     
+    /**
+     * toString
+     * @return String
+     */
+    @Override
+    public String toString() {
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+    	buffer.append("internalNumber").append("='").append(getInternalNumber()).append("' ");			
+    	buffer.append("]");
+    	return buffer.toString();
+     }
+
+    public String toStringShort() {
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append("#").append(getId()).append(" [");
+    	buffer.append(getInternalNumber()).append("] ");			
+    	return buffer.toString();
+     }
+
+    @Override
+    public int hashCode() {
+         int result = 17;
+         result = 37 * result + (int) this.getInternalNumber();
+         return result;
+   }
+
+    @Override
+    public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof AbstractRecord) ) return false;
+		 AbstractRecord castOther = ( AbstractRecord ) other; 
+         
+		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
+             && (this.getInternalNumber()==castOther.getInternalNumber());
+    }
+   
 }
 
 
