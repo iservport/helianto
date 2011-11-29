@@ -52,7 +52,7 @@ public class MessageMgrImpl implements MessageMgr {
     }
     
     @Scheduled(fixedRate=3600000) // one hour
-    public void heartBeat() {
+    public void findHourly() {
     	send("mauricio@iservport.com", "mauricio@iservport.com", "Execution control test", "<html><body><p>Running.</p></body></html>");
     }
     

@@ -35,8 +35,8 @@ public interface MessageMgr {
     public void send(String recipient, String sender, String subject, String htmlMessageBody);
     
     /**
-     * Heart beat.
+     * Notify hourly.
      */
-    public void heartBeat();
+    public void findHourly();
 
 }
