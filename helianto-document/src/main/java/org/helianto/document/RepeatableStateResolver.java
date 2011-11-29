@@ -30,7 +30,7 @@ public class RepeatableStateResolver extends ControlStateResolver {
      * True if a next check is required if active.
      */
     public boolean isRepeatable() {
-    	if (getControl().getTrackingMode()==TrackingMode.CONTINUOUS.getValue()) {
+    	if (getControl().getFrequency()>0) {
     		return true;
     	}
     	return false;
