@@ -98,6 +98,17 @@ public abstract class AbstractRepeatable extends AbstractRecord implements Repea
         this.frequencyType = frequencyType;
     }
    
+    @Override
+    public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof AbstractRepeatable) ) return false;
+		 AbstractRepeatable castOther = ( AbstractRepeatable ) other; 
+         
+		 return ( (this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ) )
+             && (this.getInternalNumber()==castOther.getInternalNumber());
+    }
+   
 }
 
 

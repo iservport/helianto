@@ -38,11 +38,17 @@ public abstract class AbstractRecordFilterAdapter <T extends Record> extends Abs
 	 */
 	public AbstractRecordFilterAdapter(T form) {
 		super(form);
-		reset();
 	}
 	
-	public void reset() {
-		getForm().reset();
+	@Override
+	public boolean isSelection() {
+		return super.isSelection() && getForm().getInternalNumber()>0;
+	}
+	
+	@Override
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("entity", getForm().getEntity().getId(), mainCriteriaBuilder);
+		appendEqualFilter("internalNumber", getForm().getInternalNumber(), mainCriteriaBuilder);		
 	}
 	
 	@Override

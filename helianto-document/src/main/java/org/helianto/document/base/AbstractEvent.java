@@ -29,6 +29,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Privacy;
 import org.helianto.core.def.PrivacyLevel;
@@ -53,6 +54,7 @@ public abstract class AbstractEvent implements Privacy, Event {
     private static final long serialVersionUID = 1L;
     private int id;
     private Integer version;
+    private Entity entity;
     private long internalNumber;
     private Identity owner;
     private Date issueDate;
@@ -98,6 +100,19 @@ public abstract class AbstractEvent implements Privacy, Event {
         this.version = version;
     }
     
+    /**
+     * <<NaturalKey>> Entity owning the control.
+     * @see {@link Entity}
+     */
+    @ManyToOne
+    @JoinColumn(name="entityId", nullable=true)
+    public Entity getEntity() {
+        return this.entity;
+    }
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
     /**
      * <<NaturalKey>> Internal number.
      */

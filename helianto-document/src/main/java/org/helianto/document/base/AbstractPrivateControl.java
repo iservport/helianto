@@ -15,9 +15,6 @@
 
 package org.helianto.document.base;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import org.helianto.core.Controllable;
 import org.helianto.core.Entity;
 
@@ -26,12 +23,12 @@ import org.helianto.core.Entity;
  * Base class to entity records that control a date.
  *  
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @javax.persistence.MappedSuperclass
 public abstract class AbstractPrivateControl extends AbstractRepeatable implements Controllable {
 
     private static final long serialVersionUID = 1L;
-    private Entity entity;
 
     /** 
      * Default constructor.
@@ -52,19 +49,6 @@ public abstract class AbstractPrivateControl extends AbstractRepeatable implemen
     	setInternalNumber(internalNumber);
     }
     
-    /**
-     * <<NaturalKey>> Entity owning the control.
-     * @see {@link Entity}
-     */
-    @ManyToOne
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
     @Override
     public boolean equals(Object other) {
          if ( (this == other ) ) return true;

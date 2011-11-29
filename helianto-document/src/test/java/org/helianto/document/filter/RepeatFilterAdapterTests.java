@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.document.TrackingMode;
 import org.helianto.document.base.AbstractRepeatable;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,12 +47,6 @@ public class RepeatFilterAdapterTests {
 	}
 	
 	@Test
-	public void trackingMode() {
-		repeatableFilter.getForm().setTrackingMode(TrackingMode.NOT_TRACKED.getValue());
-		assertEquals("alias.entity.id = 1 AND alias.trackingMode = 'N' ", repeatableFilter.createCriteriaAsString());
-	}
-	
-	@Test
 	public void frequency() {
 		repeatableFilter.getForm().setFrequency(30);
 		assertEquals("alias.entity.id = 1 AND alias.frequency = 30 AND alias.frequencyType = 5 ", repeatableFilter.createCriteriaAsString());
@@ -65,7 +58,6 @@ public class RepeatFilterAdapterTests {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
 		repeatableFilter = new AbstractRepeatFilterAdapter<AbstractRepeatable>(new RepeatableStub()) {
-			public void reset() { }
 			@Override
 			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { 
 				super.doFilter(mainCriteriaBuilder);

@@ -54,7 +54,6 @@ import org.helianto.partner.Partner;
 public class CashFlow extends AbstractRecord implements Comparable<CashFlow> {
 
 	private static final long serialVersionUID = 1L;
-	private Entity entity;
 	private Partner partner;
     private Date dueDate;
     private BigDecimal amount;
@@ -90,18 +89,6 @@ public class CashFlow extends AbstractRecord implements Comparable<CashFlow> {
 	public CashFlow(Partner partner) {
 		this(partner.getPrivateEntity().getEntity());
 		setPartner(partner);
-	}
-	
-	/**
-	 * Owning entity
-	 */
-	@ManyToOne
-	@JoinColumn(name="entityId")
-	public Entity getEntity() {
-		return entity;
-	}
-	public void setEntity(Entity entity) {
-		this.entity = entity;
 	}
 	
 	/**
