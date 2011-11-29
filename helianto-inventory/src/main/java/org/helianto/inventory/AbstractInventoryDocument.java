@@ -41,8 +41,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 
     private static final long serialVersionUID = 1L;
     private InventoryTransaction inventoryTransaction;
-    private Date issueDate;
-	private Date shipmentDate;
+ 	private Date shipmentDate;
 	private char blockingState;
 	
 	/**
@@ -107,17 +106,6 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 		throw new IllegalArgumentException("Unable to add movement to transaction");
 	}
 
-	/**
-	 * Issue date.
-	 */
-	@Temporal(TemporalType.DATE)
-    public Date getIssueDate() {
-		return issueDate;
-	}
-	public void setIssueDate(Date issueDate) {
-		this.issueDate = issueDate;
-	}
-	
 	/**
 	 * Shipment date.
 	 */

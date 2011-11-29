@@ -16,31 +16,30 @@
 package org.helianto.document.base;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Prioritizable;
-import org.helianto.core.TrunkEntity;
+import org.helianto.document.Documentable;
 /**
  * Base class to represent a <code>Document</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractDocument implements TrunkEntity, Prioritizable {
+public abstract class AbstractDocument 
+
+	extends AbstractEvent
+
+	implements 
+	  Documentable
+	, Prioritizable 
+
+{
 
     private static final long serialVersionUID = 1L;
-    private int id;
-    private Entity entity;
     private String docCode;
-    private int version;
     private String docName;
     private String docFile;
     private char priority;
@@ -79,26 +78,6 @@ public abstract class AbstractDocument implements TrunkEntity, Prioritizable {
     	setMultipartFileContentType("text/plain");
     }
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Entity.
-     */
-    @ManyToOne
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
     /**
      * Document code.
      */
@@ -108,17 +87,6 @@ public abstract class AbstractDocument implements TrunkEntity, Prioritizable {
     }
     public void setDocCode(String docCode) {
         this.docCode = docCode;
-    }
-
-    /**
-     * Version (database record version).
-     */
-    @Version
-    public int getVersion() {
-        return this.version;
-    }
-    public void setVersion(int version) {
-        this.version = version;
     }
 
     /**

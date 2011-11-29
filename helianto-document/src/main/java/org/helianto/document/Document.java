@@ -39,7 +39,15 @@ import org.helianto.document.base.AbstractCustomDocument;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Document extends AbstractCustomDocument implements Comparable<Document> {
+public class Document 
+
+	extends AbstractCustomDocument 
+	
+	implements 
+	  Event
+	, Comparable<Document> 
+
+{
 
     private static final long serialVersionUID = 1L;
     private Set<DocumentKey> documentKeys = new HashSet<DocumentKey>(0);

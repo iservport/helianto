@@ -64,7 +64,6 @@ public class RepeatFilterAdapterTests {
 			}
 		};
 		// clean filter
-		repeatableFilter.getForm().setTrackingMode(' ');
 	}
 	
 	@SuppressWarnings("serial")
