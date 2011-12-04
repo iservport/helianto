@@ -16,29 +16,19 @@
 
 package org.helianto.core;
 
-import java.io.Serializable;
 import java.util.Date;
+
 
 /**
  * Verification interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Verifiable extends Serializable {
+public interface Verifiable extends Resolvable {
 
-    /**
-     * Resolution.
-     */
-    public char getResolution();
-    
     /**
      * Date to be controlled.
      */
     public Date getNextCheckDate();
-    
-    /**
-     * Reset.
-     */
-    public void reset();
     
 }
