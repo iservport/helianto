@@ -43,6 +43,10 @@
         <property name="contentType" value="text/html;charset=ISO-8859-1" />
 	</bean>
 
+	<bean id="tilesViewResolver" class="org.springframework.js.ajax.AjaxUrlBasedViewResolver">
+	    <property name="viewClass" value="org.springframework.webflow.mvc.view.FlowAjaxTilesView"/>
+	</bean>
+
     <!-- Maps requests to @Controllers based on @RequestMapping("path") annotation values
 		 If no annotation-based path mapping is found, Spring MVC proceeds to the next HandlerMapping. -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">

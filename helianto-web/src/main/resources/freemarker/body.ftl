@@ -3,6 +3,8 @@
  #
  # @author Mauricio Fernandes de Castro
  #-->
+<body class="tundra">
+	
 <div class="container">
 	<#if bodyscript?exists ><#include "${bodyscript!\"/empty\"}.ftl"/></#if>
 	<#-- top container -->
@@ -46,4 +48,7 @@
 		</td>
 	</tr>
 	</table> <!-- end of bodyTable -->
+	
 </div><!-- End of container -->
+
+</body><!-- End of body -->

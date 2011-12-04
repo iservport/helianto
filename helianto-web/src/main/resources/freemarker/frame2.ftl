@@ -13,9 +13,7 @@
 		<#include "${head!\"/head\"}.ftl"/>
 		<#include "${script!\"/script\"}.ftl"/>
 	</head>
-	<body class="tundra">
-		<#include "body.ftl" />
-	</body>
+	<#include "${body!\"/body\"}.ftl" />
 </html>
 
 <#--
