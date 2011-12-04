@@ -50,10 +50,6 @@ public abstract class AbstractControlFilterAdapter <T extends Controllable> exte
 		super(form, decoratedFilter);
 	}
 	
-	public void reset() {
-		getForm().reset();
-	}
-	
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);

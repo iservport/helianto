@@ -34,36 +34,37 @@ public class RecordFilterAdapterTests {
 	
 	@Test
 	public void empty() {
-		assertEquals("alias.entity.id = 1 ", recordFilter.createCriteriaAsString());
+		assertEquals("alias.entity.id = 1 ", filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void selection() {
-		recordFilter.getForm().setInternalNumber(1);
-		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", recordFilter.createCriteriaAsString());
+		filter.getForm().setInternalNumber(1);
+		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void complete() {
-		recordFilter.getForm().setComplete(50);
-		assertEquals("alias.entity.id = 1 AND alias.complete = 50 ", recordFilter.createCriteriaAsString());
+		filter.getForm().setComplete(50);
+		assertEquals("alias.entity.id = 1 AND alias.complete = 50 ", filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void completeZero() {
-		recordFilter.getForm().setComplete(0);
-		assertEquals("alias.entity.id = 1 AND alias.complete = 0 ", recordFilter.createCriteriaAsString());
+		filter.getForm().setComplete(0);
+		assertEquals("alias.entity.id = 1 AND alias.complete = 0 ", filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void resolution() {
-		recordFilter.getForm().setResolution('R');
-		assertEquals("alias.entity.id = 1 AND alias.resolution = 'R' ", recordFilter.createCriteriaAsString());
+		filter.getForm().setResolution('R');
+		assertEquals("alias.entity.id = 1 AND alias.resolution = 'R' ", filter.createCriteriaAsString());
 	}
 	
 	// locals
 	
-	private AbstractControlFilterAdapter<AbstractRecord> recordFilter;
+	private AbstractControlFilterAdapter<AbstractRecord> filter;
+	private AbstractRecord form;
 	private Entity entity;
 	
 	@SuppressWarnings("serial")
@@ -71,15 +72,18 @@ public class RecordFilterAdapterTests {
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
-		recordFilter = new AbstractControlFilterAdapter<AbstractRecord>(new AbstractRecord() {
+		form = new AbstractRecord() {
 			public Entity getEntity() { return entity; }
-			}) {
+		};
+		filter = new AbstractControlFilterAdapter<AbstractRecord>(form) {
 			@Override
 			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { 
 				super.doFilter(mainCriteriaBuilder);
 			}
 		};
-		recordFilter.reset();
+		((AbstractRecord) form).setComplete(-1);
+		((AbstractRecord) form).setNextCheckDate(null);
+		((AbstractRecord) form).setResolution(' ');
 	}
 	
 }

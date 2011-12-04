@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Date;
 
 import org.helianto.core.UserGroup;
+import org.helianto.core.filter.form.AbstractControllable;
 import org.helianto.core.filter.form.CompositeIdentityForm;
 import org.helianto.core.filter.form.UserRequestForm;
 import org.helianto.core.test.UserGroupTestSupport;
@@ -65,7 +66,7 @@ public class UserRequestFilterAdapterTests {
 		userGroup = UserGroupTestSupport.createUserGroup(1);
 		form = new CompositeIdentityForm("");
 		filter = new UserRequestFormFilterAdapter(form);
-		form.reset();
+		((AbstractControllable) form).setComplete(-1);
 	}
 
 }

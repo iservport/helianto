@@ -42,12 +42,6 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
     	super(target);
     }
     
-    @Override
-    public void reset() {
-    	super.reset();
-    	getForm().setNotificationOption(' ');
-    }
-    
 	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
 		mainCriteriaBuilder.appendSegment(new StringBuilder(getControlFieldName()).append(".entity.id").toString(), "=").append(entity.getId());
     }

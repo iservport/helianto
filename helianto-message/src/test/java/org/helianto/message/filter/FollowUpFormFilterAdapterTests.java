@@ -51,7 +51,9 @@ public class FollowUpFormFilterAdapterTests {
 		((FollowUpFormStub) form).setEntity(entity);
 		filter = new AbstractFollowUpFormFilterAdapter<FollowUpFormStub, ControlSourceStub>((FollowUpFormStub) form) { };
 		((AbstractFollowUp) form).setNotificationOption(' ');
-		form.reset();
+		((AbstractFollowUp) form).setNextCheckDate(null);
+		((AbstractFollowUp) form).setResolution(' ');
+		((AbstractFollowUp) form).setComplete(-1);
 	}
 	
 	@SuppressWarnings("serial")
