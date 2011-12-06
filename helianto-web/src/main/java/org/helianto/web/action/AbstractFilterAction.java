@@ -152,20 +152,93 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param itemList
 	 */
 	protected String internalFilter(MutableAttributeMap attributes, List<T> itemList) {
+		if (itemList!=null) {
+			if (itemList.size()==0) {
+				return emptyList(attributes, itemList);
+			}
+			else if (itemList.size()==1) {
+				return autoSelect(attributes, itemList);
+			}
+			else {
+				return fullList(attributes, itemList);
+			}
+		}
+		return nullList(attributes);
+	}
+	
+	/**
+	 * Empty list case.
+	 * 
+	 * <p>
+	 * Default implementation returns success.
+	 * </p>
+	 * 
+	 * @param attributes
+	 * @param itemList
+	 */
+	protected String emptyList(MutableAttributeMap attributes, List<T> itemList) {
+		return "success";
+	}
+	
+	/**
+	 * Single entry list case, triggering auto-select.
+	 * 
+	 * @param attributes
+	 * @param itemList
+	 */
+	protected String autoSelect(MutableAttributeMap attributes, List<T> itemList) {
 		@SuppressWarnings("unchecked") T target = (T) attributes.get(getTargetName());
-		if (target==null && itemList!=null && itemList.size()>0) {
+		if (target!=null) {
 			attributes.put(getTargetName(), itemList.get(0));
 			logger.debug("Auto selected: {}.", itemList.get(0));
-			return "success";
 		}
+		return "success";
+	}
+	
+	/**
+	 * Several entries list case.
+	 * 
+	 * <p>
+	 * Default implementation delegates to (deprecated) {@link #isNotAutoSelected(MutableAttributeMap, List)}
+	 * method, that also defaults to success.
+	 * </p>
+	 * 
+	 * @param attributes
+	 * @param itemList
+	 */
+	protected String fullList(MutableAttributeMap attributes, List<T> itemList) {
 		return isNotAutoSelected(attributes, itemList);
 	}
+	
+	/**
+	 * Null list case.
+	 * 
+	 * <p>
+	 * Default implementation returns success.
+	 * </p>
+	 *
+	 * @param attributes
+	 */
+	protected String nullList(MutableAttributeMap attributes) {
+		return "success";
+	}
+	
+//	protected String internalFilter(MutableAttributeMap attributes, List<T> itemList) {
+//		@SuppressWarnings("unchecked") T target = (T) attributes.get(getTargetName());
+//		if (target==null && itemList!=null && itemList.size()>0) {
+//			attributes.put(getTargetName(), itemList.get(0));
+//			logger.debug("Auto selected: {}.", itemList.get(0));
+//			return "success";
+//		}
+//		return isNotAutoSelected(attributes, itemList);
+//	}
 	
 	/**
 	 * Signal after internalFilter if list is not null and has more than one item.
 	 * 
 	 * @param attributes
 	 * @param itemList
+	 * @deprecated
 	 */
 	protected String isNotAutoSelected(MutableAttributeMap attributes, List<T> itemList) {
 		return "success";
