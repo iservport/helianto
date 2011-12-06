@@ -30,16 +30,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
  * Base class to represent a record.
  *  
- * <p>
- * Records are events that hold resolution information.
- * </p>
- * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
 public abstract class AbstractRecord 
 
-	extends AbstractEvent 
+	extends AbstractOccurrence 
 	
 	implements Record 
 
@@ -48,7 +44,6 @@ public abstract class AbstractRecord
     private static final long serialVersionUID = 1L;
     private long internalNumber;
     private int complete;
-    private char resolution;
     private Date nextCheckDate;
 
     /** 
@@ -85,19 +80,6 @@ public abstract class AbstractRecord
         this.internalNumber = internalNumber;
     }
 
-    public char getResolution() {
-        return validateResolution(this.resolution);
-    }
-    public void setResolution(char resolution) {
-        this.resolution = resolution;
-    }
-    public void setResolution(String resolution) {
-        this.resolution = resolution.charAt(0);
-    }
-    public void setResolutionAsEnum(Resolution resolution) {
-        this.resolution = resolution.getValue();
-    }
-    
     /**
      * Do the actual resolution validation.
      */

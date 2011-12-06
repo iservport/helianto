@@ -8,6 +8,6 @@ import org.helianto.core.number.Internal;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Record extends Internal, Event, Controllable {
+public interface Record extends Internal, Occurrence, Controllable {
 
 }
