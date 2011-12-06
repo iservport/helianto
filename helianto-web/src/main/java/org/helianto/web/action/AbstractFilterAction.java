@@ -158,7 +158,7 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 				return emptyList(attributes, itemList);
 			}
 			else if (itemList.size()==1) {
-				return autoSelect(attributes, itemList);
+				return oneItemList(attributes, itemList);
 			}
 			else {
 				return fullList(attributes, itemList);
@@ -182,33 +182,47 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	}
 	
 	/**
+	 * One item list case.
+	 * 
+	 * <p>
+	 * Default implementation calls auto selection and returns success.
+	 * </p>
+	 * 
+	 * @param attributes
+	 * @param itemList
+	 */
+	protected String oneItemList(MutableAttributeMap attributes, List<T> itemList) {
+		autoSelect(attributes, itemList);
+		return "success";
+	}
+	
+	/**
 	 * Single entry list case, triggering auto-select.
 	 * 
 	 * @param attributes
 	 * @param itemList
 	 */
-	protected String autoSelect(MutableAttributeMap attributes, List<T> itemList) {
+	protected void autoSelect(MutableAttributeMap attributes, List<T> itemList) {
 		@SuppressWarnings("unchecked") T target = (T) attributes.get(getTargetName());
 		if (target!=null) {
 			attributes.put(getTargetName(), itemList.get(0));
 			logger.debug("Auto selected: {}.", itemList.get(0));
 		}
-		return "success";
 	}
 	
 	/**
 	 * Several entries list case.
 	 * 
 	 * <p>
-	 * Default implementation delegates to (deprecated) {@link #isNotAutoSelected(MutableAttributeMap, List)}
-	 * method, that also defaults to success.
+	 * Default implementation calls auto selection and returns success.
 	 * </p>
 	 * 
 	 * @param attributes
 	 * @param itemList
 	 */
 	protected String fullList(MutableAttributeMap attributes, List<T> itemList) {
-		return isNotAutoSelected(attributes, itemList);
+		autoSelect(attributes, itemList);
+		return "success";
 	}
 	
 	/**
