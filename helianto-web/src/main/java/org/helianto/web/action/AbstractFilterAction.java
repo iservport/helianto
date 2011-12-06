@@ -15,6 +15,7 @@
 
 package org.helianto.web.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.filter.Filter;
@@ -220,6 +221,7 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * @param attributes
 	 */
 	protected String nullList(MutableAttributeMap attributes) {
+		put(attributes, new ArrayList<T>());
 		return "success";
 	}
 	
