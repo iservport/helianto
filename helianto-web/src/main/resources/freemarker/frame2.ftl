@@ -5,13 +5,13 @@
  #-->
 <#import "spring.ftl" as spring />
 <#include "${import!\"/import\"}.ftl"/>
-<#include "${basePath!\"\"}${assign!\"assign\"}.ftl"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<#include "${head!\"/head\"}.ftl"/>
 		<#include "${script!\"/script\"}.ftl"/>
+		<#include "${basePath!\"\"}${assign!\"assign\"}.ftl"/>
 	</head>
 	<#include "${body!\"/body\"}.ftl" />
 </html>
