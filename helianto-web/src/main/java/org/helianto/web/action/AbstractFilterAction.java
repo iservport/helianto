@@ -204,9 +204,12 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 */
 	protected void autoSelect(MutableAttributeMap attributes, List<T> itemList) {
 		@SuppressWarnings("unchecked") T target = (T) attributes.get(getTargetName());
-		if (target!=null) {
+		if (target==null) {
 			attributes.put(getTargetName(), itemList.get(0));
 			logger.debug("Auto selected: {}.", itemList.get(0));
+		}
+		else {
+			logger.warn("Unable to uto select, target is not null: {}.", target);
 		}
 	}
 	
