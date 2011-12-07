@@ -35,6 +35,8 @@ public abstract class AbstractPlan extends AbstractJournal implements Plan {
     private static final long serialVersionUID = 1L;
     private Date scheduledStartDate;
     private Date scheduledEndDate;
+    private long scheduledDuration;
+
 
     /** 
      * Default constructor.
@@ -62,6 +64,15 @@ public abstract class AbstractPlan extends AbstractJournal implements Plan {
         this.scheduledEndDate = scheduledEndDate;
     }
 
+    /**
+     * Duração programada em mili-segundos.
+     */
+    public long getScheduledDuration() {
+        return this.scheduledDuration;
+    }
+    public void setScheduledDuration(long scheduledDuration) {
+        this.scheduledDuration = scheduledDuration;
+    }
 }
 
 
