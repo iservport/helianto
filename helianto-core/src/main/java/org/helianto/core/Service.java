@@ -15,6 +15,8 @@
 
 package org.helianto.core;
 
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 /**
  * A service made available in a name space (operator).
@@ -38,6 +41,7 @@ public class Service implements RootEntity {
     private int id;
     private Operator operator;
     private String serviceName;
+    private String serviceExtensions;
 
     /** 
      * Empty constructor.
@@ -91,7 +95,32 @@ public class Service implements RootEntity {
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }
+    
+    /**
+     * Comma separated list of applicable service extension codes.
+     */
+    @Column(length=64)
+    public String getServiceExtensions() {
+		return serviceExtensions;
+	}
+    public void setServiceExtensions(String serviceExtensions) {
+		this.serviceExtensions = serviceExtensions;
+	}
 
+    /**
+     * Array of applicable service extension codes.
+     */
+	@Transient
+	public String[] getServiceExtensionsAsArray() {
+		if (getServiceExtensions()!=null) {
+			return getServiceExtensions().replace(" ", "").split(",");
+		}
+		return new String[] {};
+	}
+	public void setServiceExtensionsAsArray(String[] natureArray) {
+		setServiceExtensions(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
+	}
+	
     /**
      * toString
      * @return String
