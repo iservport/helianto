@@ -12,8 +12,10 @@ import org.helianto.core.PublicAddress;
 import org.helianto.core.PublicEntity;
 import org.helianto.core.PublicEntityKey;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.PublicAddressFormFilterAdapter;
 import org.helianto.core.filter.PublicEntityFormFilterAdapter;
 import org.helianto.core.filter.form.CompositeEntityForm;
+import org.helianto.core.filter.form.PublicAddressForm;
 import org.helianto.core.filter.form.PublicEntityForm;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
@@ -29,6 +31,15 @@ import org.springframework.stereotype.Service;
 @Service("publicEntityMgr")
 public class PublicEntityMgrImpl implements PublicEntityMgr {
 
+	public List<PublicAddress> findPublicAddress(PublicAddressForm form) {
+		Filter filter = new PublicAddressFormFilterAdapter(form);
+		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressDao.find(filter);
+		if (publicAddressList!=null) {
+			logger.debug("Found {} public addresses.", publicAddressList.size());
+		}
+		return publicAddressList;
+	}
+	
 	public List<PublicAddress> findPublicAddress(Filter filter) {
 		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressDao.find(filter);
 		if (publicAddressList!=null) {

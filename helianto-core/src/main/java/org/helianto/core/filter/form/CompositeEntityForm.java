@@ -2,6 +2,7 @@ package org.helianto.core.filter.form;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
+import org.helianto.core.Province;
 import org.helianto.core.PublicEntity;
 
 /**
@@ -14,6 +15,7 @@ public class CompositeEntityForm
 	implements 
 	  EntityForm
 	, PublicEntityForm
+	, PublicAddressForm
 	, Cloneable
 	
 {
@@ -26,6 +28,9 @@ public class CompositeEntityForm
 	private String entityAlias;
 	private String entityAliasLike;
 	private char publicEntityType;
+	private Province province;
+	private String provinceCode;
+	private String postalCode;
 	
 	/**
 	 * Default constructor.
@@ -115,6 +120,27 @@ public class CompositeEntityForm
 	}
 	public void setEntityAliasLike(String entityAliasLike) {
 		this.entityAliasLike = entityAliasLike;
+	}
+	
+	public Province getProvince() {
+		return province;
+	}
+	public void setProvince(Province province) {
+		this.province = province;
+	}
+	
+	public String getProvinceCode() {
+		return provinceCode;
+	}
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
+	}
+	
+	public String getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
 	}
 	
     /**

@@ -23,6 +23,7 @@ import org.helianto.core.PublicAddress;
 import org.helianto.core.PublicEntity;
 import org.helianto.core.PublicEntityKey;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.PublicAddressForm;
 import org.helianto.core.filter.form.PublicEntityForm;
 
 /**
@@ -35,7 +36,15 @@ public interface PublicEntityMgr {
 	/**
      * Find <code>PublicAddress</code> list.
      * 
+     * @param form
+     */
+	public List<PublicAddress> findPublicAddress(PublicAddressForm form);
+	
+	/**
+     * Find <code>PublicAddress</code> list.
+     * 
      * @param filter
+     * @deprecated
      */
 	public List<PublicAddress> findPublicAddress(Filter filter);
 	

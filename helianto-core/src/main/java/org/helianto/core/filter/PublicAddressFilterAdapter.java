@@ -9,6 +9,8 @@ import org.helianto.core.filter.base.AbstractRootFilterAdapter;
  * Public address adapter database filter.
  * 
  * @author Maurício Fernandes de Castro
+ * @deprecated
+ * @see PublicAddressFormFilterAdapter
  */
 public class PublicAddressFilterAdapter extends AbstractRootFilterAdapter<PublicAddress> {
 
