@@ -6,9 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.partner.domain.Manufacturer;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.nature.Manufacturer;
 import org.junit.Test;
 
 /**

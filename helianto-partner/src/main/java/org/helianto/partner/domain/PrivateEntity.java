@@ -16,6 +16,7 @@
 package org.helianto.partner.domain;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,6 +69,7 @@ public class PrivateEntity
     private String partnerName;
     private Phone mainPhone;
     private String mainEmail;
+    private String nature;
     private String parsedContent;
     private Set<Partner> partners = new HashSet<Partner>(0);
     private Set<PrivateAddress> addresses = new HashSet<PrivateAddress>(0);
@@ -245,6 +247,28 @@ public class PrivateEntity
 	}
     public void setMainEmail(String mainEmail) {
 		this.mainEmail = mainEmail;
+	}
+    
+    /**
+     * Private entity nature determining Partners to be maintained as aggregates, as a keyword csv.
+     */
+    @Column(length=128)
+	public String getNature() {
+		return nature;
+	}
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
+	
+	@Transient
+	public String[] getNatureAsArray() {
+		if (getNature()!=null && getNature().length()>0) {
+			return getNature().replace(" ", "").split(",");
+		}
+		return new String[] {};
+	}
+	public void setNatureAsArray(String[] natureArray) {
+		setNature(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
 	}
     
     /**

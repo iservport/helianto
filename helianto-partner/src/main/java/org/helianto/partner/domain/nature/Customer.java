@@ -13,29 +13,31 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.domain;
+package org.helianto.partner.domain.nature;
 
 import javax.persistence.DiscriminatorValue;
 
 import org.helianto.core.Entity;
+import org.helianto.partner.domain.Partner;
+import org.helianto.partner.domain.PrivateEntity;
 
 
 /**
- * Represents a relationship to an Agent, like a sales representative. 
- * 
+ * <p>
+ * Represents a relationship to a Customer. 
+ * </p>
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@DiscriminatorValue("A")
-public class Agent extends Partner implements java.io.Serializable {
+@DiscriminatorValue("C")
+public class Customer extends Partner implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
-    private float agentComission;
 
-	/**
-	 *  Empty constructor
-	 */
-    public Agent() {
+    /**
+     * Default constructor.
+     */
+    public Customer() {
     	super();
     }
 
@@ -44,7 +46,7 @@ public class Agent extends Partner implements java.io.Serializable {
      * 
      * @param partnerRegistry
      */
-    public Agent(PrivateEntity partnerRegistry) {
+    public Customer(PrivateEntity partnerRegistry) {
     	this();
     	setPrivateEntity(partnerRegistry);
     }
@@ -55,9 +57,22 @@ public class Agent extends Partner implements java.io.Serializable {
      * @param entity
      * @param partnerAlias
      */
-    public Agent(Entity entity, String partnerAlias) {
+    public Customer(Entity entity, String partnerAlias) {
     	this();
     	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
+    }
+
+    /**
+     * Entity constructor.
+     * 
+	 * <p>
+	 * Create a backing {@link PrivateEntity} and associate a new Customer to it.
+	 * </p>
+	 * 
+     * @param entity
+     */
+    public Customer(Entity entity) {
+    	this(new PrivateEntity(entity));
     }
 
     /**
@@ -69,28 +84,18 @@ public class Agent extends Partner implements java.io.Serializable {
 	 * 
      * @param partner
      */
-    public Agent(Partner partner) {
+    public Customer(Partner partner) {
     	this(partner.getPrivateEntity());
-    	if (partner.getClass().isAssignableFrom(getClass())) {
+    	if (partner instanceof Customer) {
     		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
     	}
-    }
-
-    /**
-     * Agent comission.
-     */
-    public float getAgentComission() {
-        return agentComission;
-    }
-    public void setAgentComission(float agentComission) {
-        this.agentComission = agentComission;
     }
 
    /**
     * equals
     */
    public boolean equals(Object other) {
-         if ( !(other instanceof Agent) ) return false;
+         if ( !(other instanceof Customer) ) return false;
          return super.equals(other);
    }
    

@@ -18,13 +18,13 @@ package org.helianto.partner.filter;
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.partner.domain.Agent;
-import org.helianto.partner.domain.Customer;
-import org.helianto.partner.domain.Division;
-import org.helianto.partner.domain.Laboratory;
-import org.helianto.partner.domain.Manufacturer;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.Supplier;
+import org.helianto.partner.domain.nature.Agent;
+import org.helianto.partner.domain.nature.Customer;
+import org.helianto.partner.domain.nature.Division;
+import org.helianto.partner.domain.nature.Laboratory;
+import org.helianto.partner.domain.nature.Manufacturer;
+import org.helianto.partner.domain.nature.Supplier;
 
 /**
  * Partner filter adapter.

@@ -54,6 +54,25 @@ public class PrivateEntityFormFilterAdapter extends AbstractTrunkFilterAdapter<P
 			appendEqualFilter("province.id", getForm().getProvince().getId(), mainCriteriaBuilder);
 		}
 		appendLikeFilter("cityName", getForm().getCityName(), mainCriteriaBuilder);
+		appendLocateFilter("nature", getForm().getPartnerType(), mainCriteriaBuilder);
 	}
 
+    /**
+     * Locate appender.
+     * 
+     * @param fieldName
+     * @param fieldContent
+     * @param criteriaBuilder
+     */
+    protected void appendLocateFilter(String fieldName, char fieldContent, OrmCriteriaBuilder criteriaBuilder) {
+    	if (fieldContent!=0 && fieldContent!=' ' && fieldContent!='_') {
+    		criteriaBuilder.appendAnd().append("locate(")
+    		.appendWithPrefix(fieldName);
+    		criteriaBuilder.append(",")
+            .append(getForm().getPartnerType())
+    		.append(") != 0");
+    		criteriaBuilder.addSegmentCount(1);
+        }
+    }
+    
 }

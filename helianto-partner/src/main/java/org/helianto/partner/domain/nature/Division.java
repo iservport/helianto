@@ -13,30 +13,34 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.domain;
+package org.helianto.partner.domain.nature;
 
 import javax.persistence.DiscriminatorValue;
 
 import org.helianto.core.Entity;
+import org.helianto.partner.DivisionType;
+import org.helianto.partner.domain.Partner;
+import org.helianto.partner.domain.PrivateEntity;
 
 
 /**
- * <p>
- * Represents a relationship to a Laboratory. 
- * </p>
+ * Represents a division inside a organization. 
+ * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@DiscriminatorValue("L")
-public class Laboratory extends Partner implements java.io.Serializable {
+@DiscriminatorValue("D")
+public class Division extends Partner implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    private char divisionType;
 
-    /**
+	/**
      * Default constructor.
      */
-    public Laboratory() {
+    public Division() {
     	super();
+		setDivisionType(DivisionType.HEADQUARTER);
     }
 
 	/**
@@ -44,7 +48,7 @@ public class Laboratory extends Partner implements java.io.Serializable {
      * 
      * @param partnerRegistry
      */
-    public Laboratory(PrivateEntity partnerRegistry) {
+    public Division(PrivateEntity partnerRegistry) {
     	this();
     	setPrivateEntity(partnerRegistry);
     }
@@ -55,7 +59,7 @@ public class Laboratory extends Partner implements java.io.Serializable {
      * @param entity
      * @param partnerAlias
      */
-    public Laboratory(Entity entity, String partnerAlias) {
+    public Division(Entity entity, String partnerAlias) {
     	this();
     	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
@@ -69,18 +73,31 @@ public class Laboratory extends Partner implements java.io.Serializable {
 	 * 
      * @param partner
      */
-    public Laboratory(Partner partner) {
+    public Division(Partner partner) {
     	this(partner.getPrivateEntity());
     	if (partner.getClass().isAssignableFrom(getClass())) {
     		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
     	}
     }
 
+	/**
+     * Division type.
+     */
+    public char getDivisionType() {
+		return divisionType;
+	}
+	public void setDivisionType(char divisionType) {
+		this.divisionType = divisionType;
+	}
+	public void setDivisionType(DivisionType divisionType) {
+		this.divisionType = divisionType.getValue();
+	}
+
    /**
     * equals
     */
    public boolean equals(Object other) {
-         if ( !(other instanceof Laboratory) ) return false;
+         if ( !(other instanceof Division) ) return false;
          return super.equals(other);
    }
    

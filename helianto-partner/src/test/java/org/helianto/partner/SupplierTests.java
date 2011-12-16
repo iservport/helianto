@@ -8,7 +8,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
-import org.helianto.partner.domain.Supplier;
+import org.helianto.partner.domain.nature.Supplier;
 import org.junit.Test;
 
 /**

@@ -12,13 +12,14 @@
 		<mapping class="org.helianto.partner.domain.PrivateEntity" />
 		<mapping class="org.helianto.partner.domain.PrivateEntityKey" />
 
-		<mapping class="org.helianto.partner.domain.Agent" />
-		<mapping class="org.helianto.partner.domain.Customer" />
-		<mapping class="org.helianto.partner.domain.Division" />
-		<mapping class="org.helianto.partner.domain.Laboratory" />
-		<mapping class="org.helianto.partner.domain.Manufacturer" />
-		<mapping class="org.helianto.partner.domain.Supplier" />
-		<mapping class="org.helianto.partner.domain.TransportPartner" />
+		<mapping class="org.helianto.partner.domain.nature.Agent" />
+		<mapping class="org.helianto.partner.domain.nature.Customer" />
+		<mapping class="org.helianto.partner.domain.nature.Division" />
+		<mapping class="org.helianto.partner.domain.nature.EducationPartner" />
+		<mapping class="org.helianto.partner.domain.nature.Laboratory" />
+		<mapping class="org.helianto.partner.domain.nature.Manufacturer" />
+		<mapping class="org.helianto.partner.domain.nature.Supplier" />
+		<mapping class="org.helianto.partner.domain.nature.TransportPartner" />
 	</session-factory>
 </hibernate-configuration>
 

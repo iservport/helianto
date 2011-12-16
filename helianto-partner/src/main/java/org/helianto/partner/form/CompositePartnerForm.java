@@ -23,6 +23,7 @@ public class CompositePartnerForm
 	private String postalCode;
 	private Province province;
 	private String cityName;
+	private char partnerType;
 	
 	/**
 	 * Entity constructor.
@@ -59,6 +60,13 @@ public class CompositePartnerForm
 	}
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+	
+	public char getPartnerType() {
+		return partnerType;
+	}
+	public void setPartnerType(char partnerType) {
+		this.partnerType = partnerType;
 	}
 	
 }

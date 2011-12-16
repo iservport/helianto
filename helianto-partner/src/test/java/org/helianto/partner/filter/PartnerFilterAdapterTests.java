@@ -20,9 +20,9 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.partner.PartnerState;
-import org.helianto.partner.domain.Customer;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.nature.Customer;
 import org.junit.Before;
 import org.junit.Test;
 

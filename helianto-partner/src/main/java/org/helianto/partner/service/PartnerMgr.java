@@ -21,12 +21,12 @@ import java.util.Map;
 import org.helianto.core.Entity;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.filter.Filter;
-import org.helianto.partner.domain.Customer;
-import org.helianto.partner.domain.Division;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PrivateAddress;
 import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.nature.Customer;
+import org.helianto.partner.domain.nature.Division;
 
 /**
  * Default service layer interface for the partner package.

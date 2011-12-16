@@ -13,11 +13,13 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.domain;
+package org.helianto.partner.domain.nature;
 
 import javax.persistence.DiscriminatorValue;
 
 import org.helianto.core.Entity;
+import org.helianto.partner.domain.Partner;
+import org.helianto.partner.domain.PrivateEntity;
 
 /**
  * <p>

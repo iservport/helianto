@@ -17,9 +17,22 @@ public interface PrivateEntityForm
 	, PrivateAlias 
 
 {
+	
 	/**
 	 * Private entity name.
 	 */
 	String getEntityName();
+	
+	/**
+	 * Partner type.
+	 */
+	char getPartnerType();
+	
+	/**
+	 * Partner type as R/W property.
+	 * 
+	 * @param partnerType
+	 */
+	void setPartnerType(char partnerType);
 	
 }
