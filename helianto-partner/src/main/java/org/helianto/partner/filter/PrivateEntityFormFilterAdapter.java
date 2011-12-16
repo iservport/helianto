@@ -15,58 +15,45 @@
 
 package org.helianto.partner.filter;
 
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.form.PrivateEntityForm;
 
 /**
  * Partner registry filter adapter.
  * 
  * @author Maurício Fernandes de Castro
- * @deprecated
- * @see PrivateEntityFormFilterAdapter
  */
-public class PrivateEntityFilterAdapter extends AbstractTrunkFilterAdapter<PrivateEntity> {
+public class PrivateEntityFormFilterAdapter extends AbstractTrunkFilterAdapter<PrivateEntityForm> {
 	
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Default constructor.
 	 * 
-	 * @param privateEntity
+	 * @param form
 	 */
-	public PrivateEntityFilterAdapter(PrivateEntity privateEntity) {
-		super(privateEntity);
+	public PrivateEntityFormFilterAdapter(PrivateEntityForm form) {
+		super(form);
 	}
-
-	/**
-	 * Key constructor.
-	 * 
-	 * @param entity
-	 * @param partnerAlias
-	 */
-	public PrivateEntityFilterAdapter(Entity entity, String partnerAlias) {
-		this(new PrivateEntity(entity, partnerAlias));
-	}
-
-	/**
-	 * Reset method.
-	 */
-	public void reset() { }
 
 	public boolean isSelection() {
-		return getForm().getEntityAlias().length()>0;
-	}
-
-	@Override
-	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
+		return super.isSelection() && getForm().getEntityAlias()!=null && getForm().getEntityAlias().length()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("entityAlias",getForm(). getEntityAlias(), mainCriteriaBuilder);
+	}
+
+	@Override
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
+		appendStartLikeFilter("postalCode", getForm().getPostalCode(), mainCriteriaBuilder);
+		if (getForm().getProvince()!=null) {
+			appendEqualFilter("province.id", getForm().getProvince().getId(), mainCriteriaBuilder);
+		}
+		appendLikeFilter("cityName", getForm().getCityName(), mainCriteriaBuilder);
 	}
 
 }

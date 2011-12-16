@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.Partner;
-import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.domain.Partner;
+import org.helianto.partner.domain.PrivateEntity;
 
 /**
  * Class to support <code>PartnerDao</code> tests.

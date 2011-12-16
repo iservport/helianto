@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.partner.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,6 +27,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
 import org.helianto.core.TrunkEntity;
+import org.helianto.partner.AccountType;
 /**
  * Represents accounts.  
  * 

@@ -7,7 +7,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 
-import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity;
 
 /**
  * Class to support <code>PrivateEntity</code> tests.

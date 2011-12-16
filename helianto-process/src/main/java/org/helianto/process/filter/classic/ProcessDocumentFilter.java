@@ -23,7 +23,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.PolymorphicFilter;
 import org.helianto.document.filter.classic.AbstractDocumentFilter;
-import org.helianto.partner.Partner;
+import org.helianto.partner.domain.Partner;
 import org.helianto.process.Characteristic;
 import org.helianto.process.ControlMethod;
 import org.helianto.process.Operation;

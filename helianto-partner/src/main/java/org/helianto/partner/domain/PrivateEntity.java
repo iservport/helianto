@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.partner.domain;
 
 import java.text.DecimalFormat;
 import java.util.HashSet;
@@ -38,17 +38,28 @@ import org.helianto.core.Phone;
 import org.helianto.core.PublicAddress;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.number.Sequenceable;
+
 /**
  * Partner registry, a common class to represent Customers, Suppliers and other parties that relate to the owning
  * entity.
  * 
  * @author Mauricio Fernandes de Castro
  */
+
 @javax.persistence.Entity
 @Table(name="prtnr_registry",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "partnerAlias"})}
 )
-public class PrivateEntity extends AbstractAddress implements Sequenceable, BusinessAddress {
+
+public class PrivateEntity 
+
+	extends AbstractAddress 
+	
+	implements 
+	  Sequenceable
+	, BusinessAddress 
+
+{
 
     private static final long serialVersionUID = 1L;
     private Entity entity;

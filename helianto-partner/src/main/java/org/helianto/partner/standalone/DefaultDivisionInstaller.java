@@ -26,7 +26,7 @@ import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.standalone.DefaultEntityInstaller;
 import org.helianto.core.standalone.NamespaceDefaults;
-import org.helianto.partner.Division;
+import org.helianto.partner.domain.Division;
 import org.helianto.partner.service.PartnerMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -6,8 +6,8 @@ import java.util.List;
 import org.helianto.core.Identity;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.Contact;
-import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.domain.Contact;
+import org.helianto.partner.domain.PrivateEntity;
 
 /**
  * Class to support <code>ContactDao</code> tests.

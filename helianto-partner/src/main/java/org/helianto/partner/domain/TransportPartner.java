@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.partner.domain;
 
 import javax.persistence.DiscriminatorValue;
 
@@ -21,20 +21,20 @@ import org.helianto.core.Entity;
 
 /**
  * <p>
- * Represents a relationship to a Supplier. 
+ * Represents a relationship to a transportation partner. 
  * </p>
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@DiscriminatorValue("S")
-public class Supplier extends Partner implements java.io.Serializable {
+@DiscriminatorValue("T")
+public class TransportPartner extends Supplier {
 
     private static final long serialVersionUID = 1L;
 
-	/**
+    /**
      * Default constructor.
      */
-    public Supplier() {
+    public TransportPartner() {
     	super();
     }
 
@@ -43,7 +43,7 @@ public class Supplier extends Partner implements java.io.Serializable {
      * 
      * @param partnerRegistry
      */
-    public Supplier(PrivateEntity partnerRegistry) {
+    public TransportPartner(PrivateEntity partnerRegistry) {
     	this();
     	setPrivateEntity(partnerRegistry);
     }
@@ -54,7 +54,7 @@ public class Supplier extends Partner implements java.io.Serializable {
      * @param entity
      * @param partnerAlias
      */
-    public Supplier(Entity entity, String partnerAlias) {
+    public TransportPartner(Entity entity, String partnerAlias) {
     	this();
     	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
@@ -68,7 +68,7 @@ public class Supplier extends Partner implements java.io.Serializable {
 	 * 
      * @param partner
      */
-    public Supplier(Partner partner) {
+    public TransportPartner(Partner partner) {
     	this(partner.getPrivateEntity());
     	if (partner.getClass().isAssignableFrom(getClass())) {
     		throw new IllegalArgumentException("Not allowed to create a partner from this source.");
@@ -79,7 +79,7 @@ public class Supplier extends Partner implements java.io.Serializable {
     * equals
     */
    public boolean equals(Object other) {
-         if ( !(other instanceof Supplier) ) return false;
+         if ( !(other instanceof TransportPartner) ) return false;
          return super.equals(other);
    }
    

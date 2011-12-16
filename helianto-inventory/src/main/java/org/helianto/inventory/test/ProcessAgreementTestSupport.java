@@ -6,7 +6,7 @@ import org.helianto.core.Identity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.inventory.ProcessAgreement;
-import org.helianto.partner.Partner;
+import org.helianto.partner.domain.Partner;
 import org.helianto.partner.test.PartnerTestSupport;
 
 /**

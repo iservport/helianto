@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.partner.Account;
+import org.helianto.partner.domain.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

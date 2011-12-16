@@ -16,12 +16,12 @@
 package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 import org.helianto.core.Entity;
+import org.helianto.core.Operator;
+import org.helianto.core.Province;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.filter.PrivateEntityFilterAdapter;
+import org.helianto.partner.form.CompositePartnerForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,17 +31,12 @@ import org.junit.Test;
  */
 public class PrivateEntityFilterAdapterTests {
 	
-    @Test
-	public void constructor() {
-    	Entity entity = EntityTestSupport.createEntity();
-    	filter = new PrivateEntityFilterAdapter(entity, "ALIAS");
-		assertSame(entity, filter.getForm().getEntity());
-		assertEquals("ALIAS", filter.getForm().getEntityAlias());
-	}
-	
-    public static String C1 = "alias.entity.id = 0 ";
+    public static String C1 = "alias.entity.id = 1 ";
     public static String C2 = "AND alias.entityAlias = 'ALIAS' ";
     public static String C3 = "AND lower(alias.entityName) like '%name%' ";
+    public static String C4 = "AND lower(alias.postalCode) like '12345%' ";
+    public static String C5 = "AND alias.province.id = 10 ";
+    public static String C6 = "AND lower(alias.cityName) like '%name%' ";
 
     @Test
     public void empty() {
@@ -50,24 +45,44 @@ public class PrivateEntityFilterAdapterTests {
     
     @Test
     public void select() {
-    	sample.setPartnerAlias("ALIAS");
+    	((CompositePartnerForm) form).setEntityAlias("ALIAS");
         assertEquals(C1+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void name() {
-        sample.setPartnerName("NAME");
+        ((CompositePartnerForm) form).setEntityName("NAME");
         assertEquals(C1+C3, filter.createCriteriaAsString());
     }
     
-    private PrivateEntityFilterAdapter filter;
-    private PrivateEntity sample;
+    @Test
+    public void postalCode() {
+        ((CompositePartnerForm) form).setPostalCode("12345");
+        assertEquals(C1+C4, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void province() {
+    	Province province = new Province(new Operator("DEFAULT"), "PROV");
+    	province.setId(10);
+        ((CompositePartnerForm) form).setProvince(province);
+        assertEquals(C1+C5, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void city() {
+        ((CompositePartnerForm) form).setCityName("NAME");
+        assertEquals(C1+C6, filter.createCriteriaAsString());
+    }
+    
+    private PrivateEntityFormFilterAdapter filter;
+    private CompositePartnerForm form;
     
     @Before
     public void setUp() {
-    	Entity entity = EntityTestSupport.createEntity();
-    	sample = new PrivateEntity(entity, "");
-    	filter = new PrivateEntityFilterAdapter(sample);
+    	Entity entity = EntityTestSupport.createEntity(1);
+    	form = new CompositePartnerForm(entity);
+    	filter = new PrivateEntityFormFilterAdapter(form);
     }
 	
 }

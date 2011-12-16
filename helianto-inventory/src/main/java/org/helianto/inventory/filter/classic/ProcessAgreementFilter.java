@@ -16,7 +16,7 @@
 package org.helianto.inventory.filter.classic;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.partner.Partner;
+import org.helianto.partner.domain.Partner;
 
 /**
  * 

@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 import org.helianto.core.def.AddressType;
 import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.test.DomainTestSupport;
+import org.helianto.partner.domain.PrivateAddress;
+import org.helianto.partner.domain.PrivateEntity;
 import org.junit.Test;
 
 /**

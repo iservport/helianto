@@ -5,6 +5,8 @@ import static org.junit.Assert.assertSame;
 
 import org.helianto.core.Identity;
 import org.helianto.core.test.DomainTestSupport;
+import org.helianto.partner.domain.Contact;
+import org.helianto.partner.domain.PrivateEntity;
 import org.junit.Test;
 
 /**

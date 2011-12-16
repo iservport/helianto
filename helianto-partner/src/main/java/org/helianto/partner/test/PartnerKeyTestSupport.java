@@ -2,8 +2,8 @@ package org.helianto.partner.test;
 
 import org.helianto.core.KeyType;
 import org.helianto.core.test.KeyTypeTestSupport;
-import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerKey;
+import org.helianto.partner.domain.Partner;
+import org.helianto.partner.domain.PartnerKey;
 
 /**
  * Class to support <code>PartnerKey</code> tests.

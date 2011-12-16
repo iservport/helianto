@@ -30,7 +30,7 @@ import org.helianto.inventory.ProcessAgreement;
 import org.helianto.inventory.ProcessRequirement;
 import org.helianto.inventory.Tax;
 import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
-import org.helianto.partner.Partner;
+import org.helianto.partner.domain.Partner;
 import org.helianto.partner.test.PartnerTestSupport;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.test.ProcessDocumentTestSupport;

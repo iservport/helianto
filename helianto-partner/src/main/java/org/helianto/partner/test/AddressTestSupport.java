@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.PrivateAddress;
-import org.helianto.partner.PrivateEntity;
+import org.helianto.partner.domain.PrivateAddress;
+import org.helianto.partner.domain.PrivateEntity;
 
 /**
  * Class to support <code>Address</code> tests.

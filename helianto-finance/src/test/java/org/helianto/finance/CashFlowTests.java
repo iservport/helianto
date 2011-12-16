@@ -24,7 +24,7 @@ import java.util.Date;
 
 import org.helianto.core.Entity;
 import org.helianto.document.base.AbstractRecord;
-import org.helianto.partner.Partner;
+import org.helianto.partner.domain.Partner;
 import org.helianto.partner.test.PartnerTestSupport;
 import org.junit.Test;
 

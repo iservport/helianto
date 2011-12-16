@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.PrivateAddress;
-import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.PartnerPhone;
+import org.helianto.partner.domain.PartnerPhone;
+import org.helianto.partner.domain.PrivateAddress;
+import org.helianto.partner.domain.PrivateEntity;
 
 /**
  * Class to support <code>PhoneDao</code> tests.

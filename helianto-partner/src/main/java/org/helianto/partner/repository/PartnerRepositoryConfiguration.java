@@ -17,13 +17,13 @@ package org.helianto.partner.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.partner.Account;
-import org.helianto.partner.PrivateAddress;
-import org.helianto.partner.Partner;
-import org.helianto.partner.PartnerKey;
-import org.helianto.partner.PartnerPhone;
-import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.PrivateEntityKey;
+import org.helianto.partner.domain.Account;
+import org.helianto.partner.domain.Partner;
+import org.helianto.partner.domain.PartnerKey;
+import org.helianto.partner.domain.PartnerPhone;
+import org.helianto.partner.domain.PrivateAddress;
+import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntityKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.partner.domain;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

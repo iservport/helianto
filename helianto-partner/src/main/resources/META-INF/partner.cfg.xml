@@ -3,22 +3,22 @@
     "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<mapping class="org.helianto.partner.Account" />
-		<mapping class="org.helianto.partner.Contact" />
-		<mapping class="org.helianto.partner.Partner" />
-		<mapping class="org.helianto.partner.PartnerKey" />
-		<mapping class="org.helianto.partner.PartnerPhone" />
-		<mapping class="org.helianto.partner.PrivateAddress" />
-		<mapping class="org.helianto.partner.PrivateEntity" />
-		<mapping class="org.helianto.partner.PrivateEntityKey" />
+		<mapping class="org.helianto.partner.domain.Account" />
+		<mapping class="org.helianto.partner.domain.Contact" />
+		<mapping class="org.helianto.partner.domain.Partner" />
+		<mapping class="org.helianto.partner.domain.PartnerKey" />
+		<mapping class="org.helianto.partner.domain.PartnerPhone" />
+		<mapping class="org.helianto.partner.domain.PrivateAddress" />
+		<mapping class="org.helianto.partner.domain.PrivateEntity" />
+		<mapping class="org.helianto.partner.domain.PrivateEntityKey" />
 
-		<mapping class="org.helianto.partner.Agent" />
-		<mapping class="org.helianto.partner.Customer" />
-		<mapping class="org.helianto.partner.Division" />
-		<mapping class="org.helianto.partner.Laboratory" />
-		<mapping class="org.helianto.partner.Manufacturer" />
-		<mapping class="org.helianto.partner.Supplier" />
-		<mapping class="org.helianto.partner.TransportPartner" />
+		<mapping class="org.helianto.partner.domain.Agent" />
+		<mapping class="org.helianto.partner.domain.Customer" />
+		<mapping class="org.helianto.partner.domain.Division" />
+		<mapping class="org.helianto.partner.domain.Laboratory" />
+		<mapping class="org.helianto.partner.domain.Manufacturer" />
+		<mapping class="org.helianto.partner.domain.Supplier" />
+		<mapping class="org.helianto.partner.domain.TransportPartner" />
 	</session-factory>
 </hibernate-configuration>
 

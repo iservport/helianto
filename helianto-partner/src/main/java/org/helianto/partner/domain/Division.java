@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.partner.domain;
 
 import javax.persistence.DiscriminatorValue;
 
 import org.helianto.core.Entity;
+import org.helianto.partner.DivisionType;
 
 
 /**

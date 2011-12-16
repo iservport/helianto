@@ -8,6 +8,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.service.SequenceMgrImpl;
 import org.helianto.core.test.DomainTestSupport;
+import org.helianto.partner.domain.PrivateEntity;
 import org.junit.Test;
 
 /**

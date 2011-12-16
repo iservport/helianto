@@ -17,7 +17,7 @@
 package org.helianto.partner.standalone;
 
 import org.helianto.core.standalone.NamespaceDefaults;
-import org.helianto.partner.Division;
+import org.helianto.partner.domain.Division;
 
 /**
  * Extends <code>NamespaceDefaults</code> to hold additional defaults in a context bean to hide 

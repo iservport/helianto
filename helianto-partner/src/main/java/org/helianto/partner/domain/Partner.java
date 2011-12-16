@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner;
+package org.helianto.partner.domain;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,6 +43,7 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Phone;
 import org.helianto.core.Province;
 import org.helianto.core.TrunkEntity;
+import org.helianto.partner.PartnerState;
 /**
  * Base class to represent the relationship between the organization and other entities.
  * 

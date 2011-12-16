@@ -32,7 +32,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
-import org.helianto.partner.Partner;
+import org.helianto.partner.domain.Partner;
 
 /**
  * Represents invoices.

@@ -2,8 +2,8 @@ package org.helianto.partner.test;
 
 import org.helianto.core.KeyType;
 import org.helianto.core.test.KeyTypeTestSupport;
-import org.helianto.partner.PrivateEntity;
-import org.helianto.partner.PrivateEntityKey;
+import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntityKey;
 
 /**
  * Class to support <code>PartnerKeyDao</code> tests.

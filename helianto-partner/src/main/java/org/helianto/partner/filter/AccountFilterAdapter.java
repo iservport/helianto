@@ -18,7 +18,7 @@ package org.helianto.partner.filter;
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.partner.Account;
+import org.helianto.partner.domain.Account;
 
 /**
  * Account filter adapter.

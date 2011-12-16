@@ -26,7 +26,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
 import org.helianto.core.number.Sequenceable;
-import org.helianto.partner.Partner;
+import org.helianto.partner.domain.Partner;
 
 /**
  * Represents a <code>Process</code>.
