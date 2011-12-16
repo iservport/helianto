@@ -44,6 +44,10 @@ import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.domain.nature.Division;
+import org.helianto.partner.filter.PartnerFormFilterAdapter;
+import org.helianto.partner.filter.PrivateEntityFormFilterAdapter;
+import org.helianto.partner.form.PartnerForm;
+import org.helianto.partner.form.PrivateEntityForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -56,6 +60,18 @@ import org.springframework.stereotype.Service;
 @Service("partnerMgr")
 public class PartnerMgrImpl implements PartnerMgr {
 
+	public List<PrivateEntity> findPrivateEntities(PrivateEntityForm form) {
+		PrivateEntityFormFilterAdapter filter = new PrivateEntityFormFilterAdapter(form);
+		List<PrivateEntity> privateEntityList = (List<PrivateEntity>) privateEntityDao.find(filter);
+    	if (logger.isDebugEnabled() && privateEntityList!=null) {
+    		logger.debug("Found partner registry list of size {}", privateEntityList.size());
+    	}
+		return privateEntityList;
+	}
+
+	/**
+	 * @deprecated
+	 */
 	public List<PrivateEntity> findPrivateEntities(Filter privateEntityFilter) {
 		List<PrivateEntity> privateEntityList = (List<PrivateEntity>) privateEntityDao.find(privateEntityFilter);
     	if (logger.isDebugEnabled() && privateEntityList!=null) {
@@ -83,6 +99,15 @@ public class PartnerMgrImpl implements PartnerMgr {
     	privateEntityDao.remove(privateEntity);
     }
 
+	public List<? extends Partner> findPartners(PartnerForm form) {
+		PartnerFormFilterAdapter filter = new PartnerFormFilterAdapter(form);
+		List<Partner> partnerList = (List<Partner>) partnerDao.find(filter);
+    	if (logger.isDebugEnabled() && partnerList!=null) {
+    		logger.debug("Found partner list of size {}", partnerList.size());
+    	}
+		return partnerList;
+	}
+	
 	public List<? extends Partner> findPartners(Filter partnerFilter) {
 		List<Partner> partnerList = (List<Partner>) partnerDao.find(partnerFilter);
     	if (logger.isDebugEnabled() && partnerList!=null) {

@@ -27,6 +27,8 @@ import org.helianto.partner.domain.PrivateAddress;
 import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.domain.nature.Division;
+import org.helianto.partner.form.PartnerForm;
+import org.helianto.partner.form.PrivateEntityForm;
 
 /**
  * Default service layer interface for the partner package.
@@ -35,10 +37,18 @@ import org.helianto.partner.domain.nature.Division;
  */
 public interface PartnerMgr {
 
-    /**
+	/**
+     * Find <code>PrivateEntity</code>.
+     * 
+     * @param form
+     */
+	public List<PrivateEntity> findPrivateEntities(PrivateEntityForm form);
+	
+	/**
      * Find <code>PrivateEntity</code>.
      * 
      * @param privateEntityFilter
+     * @deprecated
      */
 	public List<PrivateEntity> findPrivateEntities(Filter privateEntityFilter);
 	
@@ -63,6 +73,13 @@ public interface PartnerMgr {
      */
     public void removePrivateEntity(PrivateEntity privateEntity);
 
+    /**
+     * Find <code>Partner</code>.
+     * 
+     * @param form
+     */
+	public List<? extends Partner> findPartners(PartnerForm form);
+	
     /**
      * Find <code>Partner</code>.
      * 
