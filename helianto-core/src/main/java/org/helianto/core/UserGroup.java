@@ -264,8 +264,8 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
 	
 	@Transient
 	public String[] getNatureAsArray() {
-		if (getNature()!=null) {
-			return getNature().split(",");
+		if (getNature()!=null && getNature().length()>0) {
+			return getNature().replace(" ", "").split(",");
 		}
 		return new String[] {};
 	}
