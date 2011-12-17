@@ -30,6 +30,8 @@ import org.helianto.core.Province;
 import org.helianto.core.Service;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.ProvinceFormFilterAdapter;
+import org.helianto.core.filter.form.ProvinceForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +57,18 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return operator;
 	}
 
+	public List<Province> findProvinces(ProvinceForm form) {
+		Filter filter = new ProvinceFormFilterAdapter(form);
+    	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
+    	if (provinceList!=null && provinceList.size()>0) {
+        	logger.debug("Found province list of size {}", provinceList.size());
+    	}
+    	return provinceList;
+	}
+
+	/**
+	 * @deprecated
+	 */
 	public List<Province> findProvinces(Filter filter) {
     	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
     	if (provinceList!=null && provinceList.size()>0) {
