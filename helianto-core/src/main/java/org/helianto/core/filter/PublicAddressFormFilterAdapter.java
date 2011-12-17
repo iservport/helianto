@@ -40,6 +40,14 @@ public class PublicAddressFormFilterAdapter extends AbstractRootFilterAdapter<Pu
 //		appendLikeFilter("address1", getAddressLike(), mainCriteriaBuilder);
 	}
 	
+	/**
+	 * Avoid wrong creation of polymorphic criterion.
+	 */
+	@Override
+	protected boolean hasPolimorphicCriterion() {
+		return false;
+	}
+	
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("postalCode", getForm().getPostalCode(), mainCriteriaBuilder);

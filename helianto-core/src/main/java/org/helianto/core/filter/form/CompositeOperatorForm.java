@@ -9,13 +9,23 @@ import org.helianto.core.Province;
  * @author mauriciofernandesdecastro
  *
  */
-public class CompositeOperatorForm extends AbstractRootForm implements ProvinceForm {
+public class CompositeOperatorForm 
+
+	extends AbstractRootForm 
+	
+	implements 
+	  ProvinceForm
+	, PublicAddressForm
+
+{
 
 	private static final long serialVersionUID = 1L;
 	private char type;
+    private Province province;
     private Province parentProvince;
     private String provinceCode;
     private String provinceName;
+	private String postalCode;
     
     /**
      * Operator constructor.
@@ -38,6 +48,13 @@ public class CompositeOperatorForm extends AbstractRootForm implements ProvinceF
 		this.type = type;
 	}
     
+	public Province getProvince() {
+		return province;
+	}
+	public void setProvince(Province province) {
+		this.province = province;
+	}
+	
 	public Province getParentProvince() {
 		return parentProvince;
 	}
@@ -58,4 +75,12 @@ public class CompositeOperatorForm extends AbstractRootForm implements ProvinceF
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName;
     }
+    
+	public String getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+	
 }
