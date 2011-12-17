@@ -46,6 +46,32 @@ public class PrivateEntityFormFilterAdapter extends AbstractTrunkFilterAdapter<P
 		appendEqualFilter("entityAlias",getForm(). getEntityAlias(), mainCriteriaBuilder);
 	}
 
+	/**
+	 * True when filter must search a private entity by alias or name.
+	 */
+	public boolean isSearch() {
+		return (getForm().getSearchString()!=null && getForm().getSearchString().length()>0)
+				|| (getForm().getSearchList()!=null && getForm().getSearchList().length()>0);
+	}
+
+	@Override
+	public void doSearch(OrmCriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.appendAnd().openParenthesis();
+		boolean connect = false;
+    	if (getForm().getSearchString()!=null && getForm().getSearchString().length()>0) {
+    		mainCriteriaBuilder.appendSegment("entityAlias", "like", "lower")
+            	.appendLike(getForm().getSearchString().toLowerCase());
+    		mainCriteriaBuilder.appendOr().appendSegment("entityName", "like", "lower")
+            	.appendLike(getForm().getSearchString().toLowerCase());
+    		connect = true;
+        }
+    	if (getForm().getSearchList()!=null && getForm().getSearchList().length()>0) {
+    		mainCriteriaBuilder.appendOr(connect).appendSegment("entityAlias", "in")
+            	.openParenthesis().append(getForm().getSearchList()).closeParenthesis();
+        }
+    	mainCriteriaBuilder.closeParenthesis();
+	}
+
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);

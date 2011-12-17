@@ -24,6 +24,9 @@ public class CompositePartnerForm
 	private Province province;
 	private String cityName;
 	private char partnerType;
+	private String searchString;
+	private char searchMode;
+	private String searchList;
 	
 	/**
 	 * Entity constructor.
@@ -67,6 +70,27 @@ public class CompositePartnerForm
 	}
 	public void setPartnerType(char partnerType) {
 		this.partnerType = partnerType;
+	}
+	
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
+	
+	public char getSearchMode() {
+		return searchMode;
+	}
+	public void setSearchMode(char searchMode) {
+		this.searchMode = searchMode;
+	}
+	
+	public String getSearchList() {
+		return searchList;
+	}
+	public void setSearchList(String searchList) {
+		this.searchList = searchList;
 	}
 	
 }

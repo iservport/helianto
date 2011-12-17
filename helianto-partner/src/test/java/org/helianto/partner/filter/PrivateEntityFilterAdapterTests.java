@@ -38,6 +38,7 @@ public class PrivateEntityFilterAdapterTests {
     public static String C5 = "AND alias.province.id = 10 ";
     public static String C6 = "AND lower(alias.cityName) like '%name%' ";
     public static String C7 = "AND locate( alias.nature , 'X' ) != 0 ";
+    public static String C8 = "AND (lower(alias.entityAlias) like '%token%' OR lower(alias.entityName) like '%token%' ) ";
 
     @Test
     public void empty() {
@@ -80,6 +81,12 @@ public class PrivateEntityFilterAdapterTests {
     public void nature() {
     	form.setPartnerType('X');
         assertEquals(C1+C7, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void search() {
+    	form.setSearchString("TOKEN");
+        assertEquals(C1+C8, filter.createCriteriaAsString());
     }
     
     private PrivateEntityFormFilterAdapter filter;

@@ -391,6 +391,7 @@ public class PrivateEntity
 	 */
 	public void setPublicAddress(PublicAddress publicAddress) {
 		if (publicAddress!=null) {
+			setAddressClassifier(publicAddress.getAddressClassifier());
 			setAddress1(publicAddress.getAddress1());
 			setAddress2(publicAddress.getAddress2());
 			setPostalCode(publicAddress.getPostalCode());
