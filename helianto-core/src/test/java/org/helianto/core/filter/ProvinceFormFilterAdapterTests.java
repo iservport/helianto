@@ -34,8 +34,10 @@ public class ProvinceFormFilterAdapterTests  {
     public static String C0 = "alias.operator.id = 1 ";
     public static String C1 = "alias.class = 'C' AND ";
     public static String C2 = "AND alias.provinceCode = 'CODE' ";
-    public static String C3 = "AND lower(alias.provinceName) like '%name_like%' ";
-    public static String C4 = "AND alias.parent.id = 1 ";
+    public static String C3 = "AND (lower(alias.provinceCode) like 'name_like%' " +
+    		                  "OR lower(alias.provinceName) like '%name_like%' ) ";
+    public static String C4 = "AND alias.parent.provinceCode = 'XX' ";
+    public static String C5 = "AND alias.parent.id = 1 ";
 
     @Test
     public void operator() {
@@ -55,9 +57,15 @@ public class ProvinceFormFilterAdapterTests  {
     }
     
     @Test
-    public void filter() {
-    	((CompositeOperatorForm) form).setProvinceName("NAME_LIKE");
+    public void search() {
+    	form.setSearchString("NAME_LIKE");
         assertEquals(C0+C3+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void stateCode() {
+    	((CompositeOperatorForm) form).setStateCode("XX");
+        assertEquals(C0+C4+OB, filter.createCriteriaAsString());
     }
     
     @Test
@@ -65,7 +73,7 @@ public class ProvinceFormFilterAdapterTests  {
     	Province parent = new Province(form.getOperator(), "PARENT");
     	parent.setId(1);
     	((CompositeOperatorForm) form).setParentProvince(parent);
-        assertEquals(C0+C4+OB, filter.createCriteriaAsString());
+        assertEquals(C0+C5+OB, filter.createCriteriaAsString());
     }
     
     // collabs

@@ -24,7 +24,8 @@ public class CompositeOperatorForm
     private Province province;
     private Province parentProvince;
     private String provinceCode;
-    private String provinceName;
+    private String stateCode;
+    private String cityCode;
 	private String postalCode;
     
     /**
@@ -69,12 +70,19 @@ public class CompositeOperatorForm
         this.provinceCode = provinceCode;
     }
     
-    public String getProvinceName() {
-        return this.provinceName;
-    }
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
-    }
+    public String getStateCode() {
+		return stateCode;
+	}
+    public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
+	}
+    
+    public String getCityCode() {
+		return cityCode;
+	}
+    public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
     
 	public String getPostalCode() {
 		return postalCode;

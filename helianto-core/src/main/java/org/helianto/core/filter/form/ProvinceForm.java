@@ -1,7 +1,6 @@
 package org.helianto.core.filter.form;
 
 import org.helianto.core.Province;
-import org.helianto.core.Resettable;
 import org.helianto.core.RootEntity;
 
 /**
@@ -9,7 +8,14 @@ import org.helianto.core.RootEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface ProvinceForm extends RootEntity, TypeForm, Resettable {
+public interface ProvinceForm 
+
+	extends 
+	  RootEntity
+	, TypeForm 
+	, SearchForm
+
+{
 	
 	/**
 	 * Parent province.
@@ -22,8 +28,13 @@ public interface ProvinceForm extends RootEntity, TypeForm, Resettable {
 	String getProvinceCode();
 	
 	/**
-	 * Province name.
+	 * State code.
 	 */
-	String getProvinceName();
-
+	String getStateCode();
+	
+	/**
+	 * City code.
+	 */
+	String getCityCode();
+	
 }

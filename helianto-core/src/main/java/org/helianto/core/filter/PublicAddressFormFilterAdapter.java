@@ -36,7 +36,9 @@ public class PublicAddressFormFilterAdapter extends AbstractRootFilterAdapter<Pu
 		if (getForm().getProvince()!=null) {
 			appendEqualFilter("province.id", getForm().getProvince().getId(), mainCriteriaBuilder);
 		}
-		appendEqualFilter("province.provinceCode", getForm().getProvinceCode(), mainCriteriaBuilder);
+		else {
+			appendEqualFilter("province.provinceCode", getForm().getProvinceCode(), mainCriteriaBuilder);
+		}
 //		appendLikeFilter("address1", getAddressLike(), mainCriteriaBuilder);
 	}
 	

@@ -43,11 +43,14 @@ public class ProvinceFormFilterAdapter extends AbstractRootFilterAdapter<Provinc
 		return "provinceCode";
 	}
 	
-	/**
-	 * Filter reset.
-	 */
-	public void reset() {
-		getForm().reset();
+	@Override
+	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
+		if (getForm().getParentProvince()!=null && getForm().getParentProvince().getId()>0) {
+			appendEqualFilter("parent.id", getForm().getParentProvince().getId(), mainCriteriaBuilder);
+			connect = true;
+		}
+		return connect;
 	}
 
 	/**
@@ -61,23 +64,31 @@ public class ProvinceFormFilterAdapter extends AbstractRootFilterAdapter<Provinc
 	}
 	
 	@Override
-	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
-		if (getForm().getParentProvince()!=null && getForm().getParentProvince().getId()>0) {
-			appendEqualFilter("parent.id", getForm().getParentProvince().getId(), mainCriteriaBuilder);
-			connect = true;
-		}
-		return connect;
-	}
-
-	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("provinceCode", getForm().getProvinceCode(), mainCriteriaBuilder);
 	}
+	
+	@Override
+	public boolean isSearch() {
+		return getForm().getSearchString()!=null && getForm().getSearchString().length()>0;
+	}
 
 	@Override
+	protected void doSearch(OrmCriteriaBuilder mainCriteriaBuilder) {
+		OrmCriteriaBuilder searchCriteriaBuilder = new OrmCriteriaBuilder(getObjectAlias());
+		searchCriteriaBuilder.appendSegment("provinceCode", "like", "lower")
+			.appendStartLike(getForm().getSearchString().toLowerCase());
+		searchCriteriaBuilder.appendOr().appendSegment("provinceName", "like", "lower")
+			.appendLike(getForm().getSearchString().toLowerCase());
+		mainCriteriaBuilder.appendAnd().append(searchCriteriaBuilder);
+		if (getOrderByString().length()>0) {
+    		appendOrderBy(getOrderByString(), (OrmCriteriaBuilder) mainCriteriaBuilder);
+    	}
+	}
+	
+	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendLikeFilter("provinceName", getForm().getProvinceName(), mainCriteriaBuilder);
+		appendEqualFilter("parent.provinceCode", getForm().getStateCode(), mainCriteriaBuilder);
 	}
 
 }
