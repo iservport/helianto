@@ -38,6 +38,7 @@ import org.helianto.core.KeyType;
 import org.helianto.core.Phone;
 import org.helianto.core.PublicAddress;
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.def.PhoneType;
 import org.helianto.core.number.Sequenceable;
 
 /**
@@ -201,7 +202,7 @@ public class PrivateEntity
     /**
      * Entity name.
      */
-    @Column(length=64, name="partnerName")
+    @Column(length=128, name="partnerName")
     public String getEntityName() {
         return this.partnerName;
     }
@@ -237,6 +238,79 @@ public class PrivateEntity
     public void setMainPhone(Phone mainPhone) {
 		this.mainPhone = mainPhone;
 	}
+    
+    // delegate phone
+    
+    /**
+     * Phone number.
+     */
+    @Transient
+    public String getPhoneNumber() {
+    	if (getMainPhone()!=null) {
+    		return getMainPhone().getPhoneNumber();
+    	}
+        return "";
+    }
+    public void setPhoneNumber(String phoneNumber) {
+    	if (getMainPhone()!=null) {
+    		getMainPhone().setPhoneNumber(phoneNumber);
+    	}
+    }
+
+    /**
+     * Area code.
+     */
+    @Transient
+    public String getAreaCode() {
+    	if (getMainPhone()!=null) {
+    		return getMainPhone().getAreaCode();
+    	}
+        return "";
+    }
+    public void setAreaCode(String areaCode) {
+    	if (getMainPhone()!=null) {
+    		getMainPhone().setAreaCode(areaCode);
+    	}
+    }
+    
+    /**
+     * Branch.
+     */
+    @Transient
+    public String getBranch() {
+    	if (getMainPhone()!=null) {
+    		return getMainPhone().getBranch();
+    	}
+        return "";
+	}
+    public void setBranch(String branch) {
+    	if (getMainPhone()!=null) {
+    		getMainPhone().setBranch(branch);
+    	}
+	}
+
+    /**
+     * Phone type.
+     */
+    @Transient
+    public char getPhoneType() {
+    	if (getMainPhone()!=null) {
+    		return getMainPhone().getPhoneType();
+    	}
+        return PhoneType.MAIN.getValue();
+    }
+    public void setPhoneType(char phoneType) {
+    	if (getMainPhone()!=null) {
+    		getMainPhone().setPhoneType(phoneType);
+    	}
+    }
+    public void setPhoneTypeAsEnum(PhoneType phoneType) {
+    	if (getMainPhone()!=null) {
+    		getMainPhone().setPhoneTypeAsEnum(phoneType);
+    	}
+    }
+
+
     
     /**
      * Main e-mail.
