@@ -15,16 +15,8 @@
 
 package org.helianto.partner.filter;
 
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.nature.Agent;
-import org.helianto.partner.domain.nature.Customer;
-import org.helianto.partner.domain.nature.Division;
-import org.helianto.partner.domain.nature.Laboratory;
-import org.helianto.partner.domain.nature.Manufacturer;
-import org.helianto.partner.domain.nature.Supplier;
+import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.partner.form.PartnerForm;
 
 /**
@@ -32,10 +24,9 @@ import org.helianto.partner.form.PartnerForm;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PartnerFormFilterAdapter extends AbstractTrunkFilterAdapter<PartnerForm> {
+public class PartnerFormFilterAdapter extends AbstractFilterAdapter<PartnerForm> {
 	
 	private static final long serialVersionUID = 1L;
-	private Class<? extends Partner> clazz;
 	
 	/**
 	 * Default constructor.
@@ -47,22 +38,14 @@ public class PartnerFormFilterAdapter extends AbstractTrunkFilterAdapter<Partner
 	}
 	
 	public boolean isSelection() {
-		return super.isSelection() && getForm().getEntityAlias().length()>0;
-	}
-
-	/**
-	 * Read entity from the associated partner registry.
-	 */
-	@Override
-	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.entity.id", entity.getId(), mainCriteriaBuilder);
+		return getForm().getParent()!=null && getForm().getParent().getId()>0 && getForm().getPartnerType()>0;
 	}
 
 	@Override
 	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
-		if (getClazz()!=null) {
-			mainCriteriaBuilder.appendAnd().append(getClazz());
+		if (getForm().getPartnerType()>0) {
+			appendEqualFilter("class", getForm().getPartnerType(), mainCriteriaBuilder);
 			connect = true;
 		}
 		return connect;
@@ -70,74 +53,20 @@ public class PartnerFormFilterAdapter extends AbstractTrunkFilterAdapter<Partner
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.entityAlias", getForm().getEntityAlias(), mainCriteriaBuilder);
+		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendLikeFilter("privateEntity.entityAlias", getForm().getEntityAlias(), mainCriteriaBuilder);
 		appendLikeFilter("privateEntity.entityName", getForm().getEntityName(), mainCriteriaBuilder);
 		appendEqualFilter("partnerState", getForm().getPartnerState(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getForm().getPriority(), mainCriteriaBuilder);
-		appendOrderBy("privateEntity.entityAlias", mainCriteriaBuilder);
-	}
-
-	/**
-	 * Subclass
-	 */
-	public Class<? extends Partner> getClazz() {
-		return clazz;
-	}
-	public void setClazz(Class<? extends Partner> clazz) {
-		this.clazz = clazz;
 	}
 	
-	public char getDiscriminator() {
-		if (clazz==null) {
-			return ' '; 
-		}
-		if (clazz.equals(Agent.class)) {
-			return 'A'; 
-		}
-		if (clazz.equals(Customer.class)) {
-			return 'C'; 
-		}
-		if (clazz.equals(Division.class)) {
-			return 'D'; 
-		}
-		if (clazz.equals(Manufacturer.class)) {
-			return 'M'; 
-		}
-		if (clazz.equals(Laboratory.class)) {
-			return 'L'; 
-		}
-		if (clazz.equals(Supplier.class)) {
-			return 'S'; 
-		}
-		return ' ';
-	}
-
-	public void setDiscriminator(char discriminator) {
-		if (discriminator=='A') {
-			clazz = Agent.class; 
-		}
-		if (discriminator=='C') {
-			clazz = Customer.class; 
-		}
-		if (discriminator=='D') {
-			clazz = Division.class; 
-		}
-		if (discriminator=='M') {
-			clazz = Manufacturer.class; 
-		}
-		if (discriminator=='L') {
-			clazz = Laboratory.class; 
-		}
-		if (discriminator=='S') {
-			clazz = Supplier.class; 
-		}
-		if (discriminator==' ') {
-			clazz = null; 
-		}
+	@Override
+	public String getOrderByString() {
+		return "privateEntity.entityAlias";
 	}
 
 }

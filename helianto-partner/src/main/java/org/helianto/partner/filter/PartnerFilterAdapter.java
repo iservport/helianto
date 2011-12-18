@@ -30,6 +30,8 @@ import org.helianto.partner.domain.nature.Supplier;
  * Partner filter adapter.
  * 
  * @author Maurício Fernandes de Castro
+ * @deprecated
+ * @see PartnerFormFilterAdapter
  */
 public class PartnerFilterAdapter extends AbstractTrunkFilterAdapter<Partner> {
 	

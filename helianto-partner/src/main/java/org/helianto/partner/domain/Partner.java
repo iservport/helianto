@@ -67,11 +67,18 @@ import org.helianto.partner.PartnerState;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
-public class Partner implements TrunkEntity, BusinessAddress {
+
+public class Partner 
+
+	implements 
+	  TrunkEntity
+	, BusinessAddress 
+
+{
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private PrivateEntity partnerRegistry;
+    private PrivateEntity privateEntity;
     private String newEntityAlias;
     private Account account;
     private char priority;
@@ -137,7 +144,7 @@ public class Partner implements TrunkEntity, BusinessAddress {
     }
 
     /**
-     * PartnerRegistry.
+     * Private entity.
      * 
      * <p>
      * Never null.
@@ -146,13 +153,13 @@ public class Partner implements TrunkEntity, BusinessAddress {
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
-    	if (this.partnerRegistry==null) {
-    		this.partnerRegistry = new PrivateEntity();
+    	if (this.privateEntity==null) {
+    		this.privateEntity = new PrivateEntity();
     	}
-        return this.partnerRegistry;
+        return this.privateEntity;
     }
-    public void setPrivateEntity(PrivateEntity partnerRegistry) {
-        this.partnerRegistry = partnerRegistry;
+    public void setPrivateEntity(PrivateEntity privateEntity) {
+        this.privateEntity = privateEntity;
     }
     
 	/**

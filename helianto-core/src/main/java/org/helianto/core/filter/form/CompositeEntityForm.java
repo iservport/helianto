@@ -12,6 +12,8 @@ import org.helianto.core.PublicEntity;
  */
 public class CompositeEntityForm 
 
+	extends AbstractTrunkForm
+
 	implements 
 	  EntityForm
 	, PublicEntityForm
@@ -22,7 +24,6 @@ public class CompositeEntityForm
 
 	private static final long serialVersionUID = 1L;
 	private Operator operator;
-	private Entity entity;
 	private Class<? extends PublicEntity> clazz;
 	private String entityName;
 	private String entityAlias;
@@ -78,13 +79,6 @@ public class CompositeEntityForm
 	}
 	public void setOperator(Operator operator) {
 		this.operator = operator;
-	}
-	
-	public Entity getEntity() {
-		return entity;
-	}
-	public void setEntity(Entity entity) {
-		this.entity = entity;
 	}
 	
 	public Class<? extends PublicEntity> getClazz() {

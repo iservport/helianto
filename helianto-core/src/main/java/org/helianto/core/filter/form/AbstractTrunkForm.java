@@ -8,7 +8,13 @@ import org.helianto.core.TrunkEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractTrunkForm implements TrunkEntity {
+public abstract class AbstractTrunkForm 
+
+	extends AbstractSearchForm
+	
+	implements TrunkEntity 
+
+{
 
 	private static final long serialVersionUID = 1L;
 	private Entity entity;

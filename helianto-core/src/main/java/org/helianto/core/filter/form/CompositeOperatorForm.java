@@ -16,6 +16,7 @@ public class CompositeOperatorForm
 	implements 
 	  ProvinceForm
 	, PublicAddressForm
+	, Cloneable
 
 {
 
@@ -89,6 +90,11 @@ public class CompositeOperatorForm
 	}
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 	
 }

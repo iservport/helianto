@@ -13,7 +13,13 @@ import org.helianto.core.UserGroup;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractUserForm extends AbstractTrunkForm implements UserGroupForm {
+public abstract class AbstractUserForm 
+
+	extends AbstractTrunkForm 
+	
+	implements UserGroupForm 
+
+{
 
     private static final long serialVersionUID = 1L;
     private Class<? extends UserGroup> clazz;
