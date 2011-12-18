@@ -58,6 +58,7 @@ public class PartnerFormFilterAdapter extends AbstractFilterAdapter<PartnerForm>
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("privateEntity.id", getForm().getParentId(), mainCriteriaBuilder);
 		appendLikeFilter("privateEntity.entityAlias", getForm().getEntityAlias(), mainCriteriaBuilder);
 		appendLikeFilter("privateEntity.entityName", getForm().getEntityName(), mainCriteriaBuilder);
 		appendEqualFilter("partnerState", getForm().getPartnerState(), mainCriteriaBuilder);

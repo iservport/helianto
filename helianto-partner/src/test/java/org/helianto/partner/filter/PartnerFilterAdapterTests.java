@@ -46,8 +46,15 @@ public class PartnerFilterAdapterTests {
     
     @Test
     public void select() {
+    	form.getParent().setId(10);
         ((CompositePartnerForm) form).setPartnerType('C');
         assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void parent() {
+    	form.getParent().setId(10);
+        assertEquals(C2+OB, filter.createCriteriaAsString());
     }
     
     @Test
@@ -81,7 +88,6 @@ public class PartnerFilterAdapterTests {
     public void setUp() {
     	Entity entity = EntityTestSupport.createEntity(1);
     	PrivateEntity privateEntity = new PrivateEntity(entity, "");
-    	privateEntity.setId(10);
     	form = new CompositePartnerForm(privateEntity);
     	filter = new PartnerFormFilterAdapter(form);
     }
