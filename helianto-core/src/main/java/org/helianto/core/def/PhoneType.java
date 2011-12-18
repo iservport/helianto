@@ -24,7 +24,7 @@ public enum PhoneType {
 	
     PERSONAL('P', true),
     MOBILE('M', true),
-    HOME('P', true),
+    HOME('H', true),
     WORK('W', true),
     BRANCH('B', true),
     FAX('F', false),
