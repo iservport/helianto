@@ -60,7 +60,7 @@ public class Contact extends PrivateAddress implements Privacy {
 	 */
     public Contact(PrivateEntity partnerRegistry, int sequence) {
     	this();
-    	setPartnerRegistry(partnerRegistry);
+    	setPrivateEntity(partnerRegistry);
     	setSequence(sequence);
     }
     

@@ -29,7 +29,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
 import org.helianto.core.base.AbstractAddress;
-import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.domain.Partner;
@@ -228,7 +227,7 @@ public class PartnerMgrImplTests {
 
     private FilterDao<PrivateEntity> privateEntityDao;
     private FilterDao<Partner> partnerDao;
-    private BasicDao<Province> provinceDao;
+    private FilterDao<Province> provinceDao;
     private Province province;
     private AbstractAddress partnerAddress;
 	private SequenceMgr sequenceMgr;

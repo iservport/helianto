@@ -1,6 +1,7 @@
 package org.helianto.partner.form;
 
 import org.helianto.core.Entity;
+import org.helianto.core.KeyType;
 import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.partner.domain.PrivateEntity;
 
@@ -16,6 +17,8 @@ public class CompositePartnerForm
 	implements 
 	  PrivateEntityForm
 	, PartnerForm
+	, PrivateAddressForm
+	, PrivateEntityKeyForm
 	  
 {
 
@@ -26,6 +29,9 @@ public class CompositePartnerForm
 	private char partnerType;
 	private char priority;
 	private char partnerState;
+	private int sequence;
+    private KeyType keyType;
+    private String keyValue;
 	
 	/**
 	 * Entity constructor.
@@ -97,6 +103,27 @@ public class CompositePartnerForm
 	}
 	public void setPartnerState(char partnerState) {
 		this.partnerState = partnerState;
+	}
+	
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+	
+	public KeyType getKeyType() {
+		return keyType;
+	}
+	public void setKeyType(KeyType keyType) {
+		this.keyType = keyType;
+	}
+	
+	public String getKeyValue() {
+		return keyValue;
+	}
+	public void setKeyValue(String keyValue) {
+		this.keyValue = keyValue;
 	}
 	
 	/**

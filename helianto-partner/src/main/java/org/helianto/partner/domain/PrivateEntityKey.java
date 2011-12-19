@@ -15,16 +15,14 @@
 
 package org.helianto.partner.domain;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.KeyType;
+import org.helianto.core.base.AbstractKeyStringValue;
 /**
  * Represents the relationship between the organization and other entities.  
  * 
@@ -35,13 +33,10 @@ import org.helianto.core.KeyType;
 @Table(name="prtnr_partnerRegistryKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "keyTypeId"})}
 )
-public class PrivateEntityKey implements java.io.Serializable {
+public class PrivateEntityKey extends AbstractKeyStringValue {
 
     private static final long serialVersionUID = 1L;
-    private int id;
     private PrivateEntity privateEntity;
-    private KeyType keyType;
-    private String keyValue;
 
     /** 
      * Default constructor.
@@ -84,17 +79,6 @@ public class PrivateEntityKey implements java.io.Serializable {
     }
 
     /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
      * Partner registry.
      */
     @ManyToOne
@@ -105,43 +89,11 @@ public class PrivateEntityKey implements java.io.Serializable {
     public void setPrivateEntity(PrivateEntity privateEntity) {
         this.privateEntity = privateEntity;
     }
-
-    /**
-     * Key type.
-     */
-    @ManyToOne
-    @JoinColumn(name="keyTypeId", nullable=true)
-    public KeyType getKeyType() {
-        return this.keyType;
-    }
-    public void setKeyType(KeyType keyType) {
-        this.keyType = keyType;
-    }
-
-    /**
-     * Key value.
-     */
-    @Column(length=20)
-    public String getKeyValue() {
-        return this.keyValue;
-    }
-    public void setKeyValue(String keyValue) {
-        this.keyValue = keyValue;
-    }
-
-    /**
-     * toString
-     * @return String
-     */
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("privateEntity").append("='").append(getPrivateEntity()).append("' ");
-        buffer.append("keyType").append("='").append(getKeyType()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
+    
+    @Transient
+    @Override
+    protected Object getKeyOwner() {
+    	return getPrivateEntity();
     }
 
    /**
@@ -161,10 +113,7 @@ public class PrivateEntityKey implements java.io.Serializable {
     * hashCode
     */
    public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getPrivateEntity() == null ? 0 : this.getPrivateEntity().hashCode() );
-         result = 37 * result + ( getKeyType() == null ? 0 : this.getKeyType().hashCode() );
-         return result;
+         return super.hashCode();
    }   
 
 }

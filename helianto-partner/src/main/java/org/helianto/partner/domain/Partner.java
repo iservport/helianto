@@ -93,9 +93,9 @@ public class Partner
 	 */
     public Partner() {
     	setNewEntityAlias("");
-        setPartnerState(PartnerState.IDLE.getValue());
+        setPartnerState(PartnerState.ACTIVE.getValue());
         setPriority('0');
-        setTaxClass(' ');
+        setTaxClass('3');
     }
 
 	/**
@@ -436,7 +436,7 @@ public class Partner
     public void setPartnerState(char partnerState) {
         this.partnerState = partnerState;
     }
-    public void setPartnerState(PartnerState partnerState) {
+    public void setPartnerStateAsEnum(PartnerState partnerState) {
         this.partnerState = partnerState.getValue();
     }
     

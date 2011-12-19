@@ -41,21 +41,21 @@ public class AddressTests {
      */
 	@Test
     public void addressEquals() {
-        PrivateEntity partnerRegistry = new PrivateEntity();
+        PrivateEntity privateEntity = new PrivateEntity();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
-        PrivateAddress address = new PrivateAddress(partnerRegistry, sequence);
+        PrivateAddress address = new PrivateAddress(privateEntity, sequence);
         PrivateAddress copy = (PrivateAddress) DomainTestSupport.minimalEqualsTest(address);
         
-        copy.setPartnerRegistry(null);
+        copy.setPrivateEntity(null);
         copy.setSequence(sequence);
         assertFalse(address.equals(copy));
 
-        copy.setPartnerRegistry(partnerRegistry);
+        copy.setPrivateEntity(privateEntity);
         copy.setSequence(0);
         assertFalse(address.equals(copy));
 
-        copy.setPartnerRegistry(partnerRegistry);
+        copy.setPrivateEntity(privateEntity);
         copy.setSequence(sequence);
 
         assertTrue(address.equals(copy));

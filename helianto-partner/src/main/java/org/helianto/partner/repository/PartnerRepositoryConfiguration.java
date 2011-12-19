@@ -48,7 +48,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 */
 	@Bean
 	public FilterDao<PrivateAddress> addressDao() {
-		return getFilterDao(PrivateAddress.class, "partnerRegistry", "sequence");
+		return getFilterDao(PrivateAddress.class, "privateEntity", "sequence");
 	}
 
 	/**

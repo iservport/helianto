@@ -25,10 +25,13 @@ import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PrivateAddress;
 import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.domain.nature.Division;
 import org.helianto.partner.form.PartnerForm;
+import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
+import org.helianto.partner.form.PrivateEntityKeyForm;
 
 /**
  * Default service layer interface for the partner package.
@@ -84,6 +87,7 @@ public interface PartnerMgr {
      * Find <code>Partner</code>.
      * 
      * @param partnerFilter
+     * @deprecated
      */
 	public List<? extends Partner> findPartners(Filter partnerFilter);
 	
@@ -114,20 +118,6 @@ public interface PartnerMgr {
      */
 	public void removePartner(Partner partner);
 
-    /**
-     * Write <code>Address</code> to the datastore.
-     * 
-     * @param address
-     */
-	public PrivateAddress storeAddress(PrivateAddress address);
-
-    /**
-     * Remove <code>Address</code> from the datastore.
-     * 
-     * @param address
-     */
-	public PrivateEntity removeAddress(PrivateAddress address);
-	
     /**
      * Load <code>PartnerKey</code> map keyed with the KeyCode.
      * 
@@ -176,5 +166,42 @@ public interface PartnerMgr {
      * @param partner
      */
 	public void installPartnerKeys(String[] keyValues, Partner partner);
+	
+	/**
+     * Find <code>PrivateAddress</code>.
+     * 
+     * @param form
+     */
+	public List<PrivateAddress> findPrivateAddresses(PrivateAddressForm form);
+	
+    /**
+     * Write <code>Address</code> to the datastore.
+     * 
+     * @param address
+     */
+	public PrivateAddress storePrivateAddress(PrivateAddress address);
+
+    /**
+     * Remove <code>Address</code> from the datastore.
+     * 
+     * @param address
+     */
+	public PrivateEntity removePrivateAddress(PrivateAddress address);
+	
+	/**
+     * Find <code>PrivateEntityKey</code>.
+     * 
+     * @param form
+     */
+	public List<PrivateEntityKey> findPrivateEntityKeys(PrivateEntityKeyForm form);
+	
+    /**
+     * Write <code>PrivateEntityKey</code> to the datastore.
+     * 
+     * @param privateEntityKey
+     */
+	public PrivateEntityKey storePrivateEntityKey(PrivateEntityKey privateEntityKey);
+
+
 	
 }

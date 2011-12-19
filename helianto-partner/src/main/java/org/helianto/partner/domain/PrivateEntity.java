@@ -359,7 +359,7 @@ public class PrivateEntity
     /**
      * Partners.
      */
-    @OneToMany(mappedBy="privateEntity", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="privateEntity")
     public Set<Partner> getPartners() {
         return this.partners;
     }
@@ -381,9 +381,7 @@ public class PrivateEntity
     /**
      * Addresses.
      */
-    @OneToMany(mappedBy="partnerRegistry"
-    	, cascade=CascadeType.ALL
-    	, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="privateEntity")
     public Set<PrivateAddress> getAddresses() {
         return this.addresses;
     }

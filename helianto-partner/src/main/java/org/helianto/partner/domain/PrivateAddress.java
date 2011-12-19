@@ -48,7 +48,7 @@ import org.helianto.core.def.PrivacyLevel;
 public class PrivateAddress extends AbstractAddress implements Comparable<PrivateAddress> {
 
     private static final long serialVersionUID = 1L;
-    private PrivateEntity partnerRegistry;
+    private PrivateEntity privateEntity;
     private int sequence;
     private char addressType;
     private char privacyLevel;
@@ -65,11 +65,11 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
     /** 
      * Key constructor.
      * 
-     * @param partnerRegistry
+     * @param privateEntity
 	 */
-    public PrivateAddress(PrivateEntity partnerRegistry, int sequence) {
+    public PrivateAddress(PrivateEntity privateEntity, int sequence) {
     	this();
-    	setPartnerRegistry(partnerRegistry);
+    	setPrivateEntity(privateEntity);
     	setSequence(sequence);
     }
     
@@ -80,27 +80,36 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
     }
     
     /**
-     * Partner registry.
+     * Partner registry (old name).
+     */
+    @Transient
+    public PrivateEntity getPartnerRegistry() {
+        return this.privateEntity;
+    }
+    
+    /**
+     * Private entity.
      */
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PrivateEntity getPartnerRegistry() {
-        return this.partnerRegistry;
+    public PrivateEntity getPrivateEntity() {
+        return this.privateEntity;
     }
-    @Transient
-    public String getPartnerAlias() {
-    	if (this.partnerRegistry==null) return "";
-    	return this.partnerRegistry.getPartnerAlias();
-    }
-    @Transient
-    public String getPartnerName() {
-    	if (this.partnerRegistry==null) return "";
-    	return this.partnerRegistry.getPartnerName();
-    }
-    public void setPartnerRegistry(PrivateEntity partnerRegistry) {
-        this.partnerRegistry = partnerRegistry;
+    public void setPrivateEntity(PrivateEntity privateEntity) {
+        this.privateEntity = privateEntity;
     }
 
+    @Transient
+    public String getEntityAlias() {
+    	if (getPrivateEntity()==null) return "";
+    	return getPrivateEntity().getEntityAlias();
+    }
+    
+    @Transient
+    public String getEntityName() {
+    	if (getPrivateEntity()==null) return "";
+    	return getPrivateEntity().getEntityName();
+    }
 
     /**
      * Sequence.
