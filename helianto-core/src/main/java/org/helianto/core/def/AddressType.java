@@ -25,19 +25,19 @@ public enum AddressType {
 	/**
 	 * Personal address.
 	 */
-	PERSONAL('0'),
+	PERSONAL('P'),
 	/**
 	 * Collection address.
 	 */
-	COLLECTION('1'),
+	COLLECTION('C'),
 	/**
 	 * Delivery address.
 	 */
-	DELIVERY('2'),
+	DELIVERY('D'),
 	/**
 	 * Restricted address.
 	 */
-	RESTRICTED('3'),
+	RESTRICTED('R'),
 	/**
 	 * Main address.
 	 */
