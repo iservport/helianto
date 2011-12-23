@@ -60,6 +60,7 @@ public class PersonalData implements Serializable {
         setLastName(lastName);
         setGenderAsEnum(Gender.NOT_SUPPLIED);
         setAppellationAsEnum(Appellation.NOT_SUPPLIED);
+        setBirthDate(new Date(0l));
     }
 
     /**
