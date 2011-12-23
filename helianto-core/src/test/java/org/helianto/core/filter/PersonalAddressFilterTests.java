@@ -15,7 +15,7 @@ public class PersonalAddressFilterTests {
 
     public static String ORDER = "order by alias.addressType ";
     public static String C1 = "alias.identity.id = 1 ";
-    public static String C2 = "AND alias.addressType = '1' ";
+    public static String C2 = "AND alias.addressType = 'C' ";
 
     @Test
     public void empty() {

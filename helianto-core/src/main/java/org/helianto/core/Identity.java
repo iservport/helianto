@@ -47,6 +47,9 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.Notification;
+import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -235,6 +238,28 @@ public class Identity implements java.io.Serializable {
     		return new Date(1000l);
     	}
 		return getPersonalData().getBirthDate();
+	}
+    
+    /**
+     * <<Transient>> Safe age getter.
+     */
+    @Transient
+    public int getAge() {
+		return getAge(new Date());
+	}
+    
+    /**
+     * <<Transient>> Safe age getter.
+     * 
+     * @param date
+     */
+    @Transient
+    protected int getAge(Date date) {
+    	if (getPersonalData()!=null && getPersonalData().getBirthDate()!=null) {
+    		DateMidnight birthdate = new DateMidnight(getPersonalData().getBirthDate());
+    		return Years.yearsBetween(birthdate, new DateTime(date)).getYears();
+    	}
+		return -1;
 	}
     
     /**
