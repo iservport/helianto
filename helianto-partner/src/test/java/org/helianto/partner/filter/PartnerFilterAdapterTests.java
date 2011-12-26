@@ -32,23 +32,26 @@ import org.junit.Test;
 public class PartnerFilterAdapterTests {
 	
     public static String OB = "order by alias.privateEntity.entityAlias ";
+    public static String C0 = "alias.privateEntity.entity.id = 1 ";
     public static String C1 = "alias.class = 'C' ";
     public static String C2 = "alias.privateEntity.id = 10 ";
     public static String C3 = "lower(alias.privateEntity.entityAlias) like '%partner%' ";
     public static String C4 = "lower(alias.privateEntity.entityName) like '%name%' ";
     public static String C5 = "alias.partnerState = 'A' ";
     public static String C6 = "alias.priority = '1' ";
+    public static String C7 = "alias.class = 'C' ";
+    public static String C8 = "alias.privateEntity.entity.id = 2 ";
 
     @Test
     public void empty() {
-        assertEquals(OB, filter.createCriteriaAsString());
+        assertEquals(C0+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
     	form.getParent().setId(10);
         ((CompositePartnerForm) form).setPartnerType('C');
-        assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
+        assertEquals(C2+"AND "+C1, filter.createCriteriaAsString());
     }
     
     @Test
@@ -60,25 +63,40 @@ public class PartnerFilterAdapterTests {
     @Test
     public void entityAlias() {
     	form.setEntityAlias("PARTNER");
-        assertEquals(C3+OB, filter.createCriteriaAsString());
+        assertEquals(C0+"AND "+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void name() {
     	form.setEntityName("NAME");
-        assertEquals(C4+OB, filter.createCriteriaAsString());
+        assertEquals(C0+"AND "+C4+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void partnerState() {
         form.setPartnerState(PartnerState.ACTIVE.getValue());
-        assertEquals(C5+OB, filter.createCriteriaAsString());
+        assertEquals(C0+"AND "+C5+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void priority() {
         form.setPriority('1');
-        assertEquals(C6+OB, filter.createCriteriaAsString());
+        assertEquals(C0+"AND "+C6+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void type() {
+        form.setPartnerType('C');
+        assertEquals(C0+"AND "+C7+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void entity() {
+    	Entity entity = EntityTestSupport.createEntity(2);
+    	form = new CompositePartnerForm(entity);
+    	form.setParent(null);
+    	filter = new PartnerFormFilterAdapter(form);
+        assertEquals(C8+OB, filter.createCriteriaAsString());
     }
     
     private PartnerFormFilterAdapter filter;
@@ -91,4 +109,5 @@ public class PartnerFilterAdapterTests {
     	form = new CompositePartnerForm(privateEntity);
     	filter = new PartnerFormFilterAdapter(form);
     }
+    
 }

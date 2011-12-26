@@ -39,6 +39,7 @@ public class CompositePartnerForm
 	 * @param entity
 	 */
 	public CompositePartnerForm(Entity entity) {
+		super();
 		setEntity(entity);
 	}
 	

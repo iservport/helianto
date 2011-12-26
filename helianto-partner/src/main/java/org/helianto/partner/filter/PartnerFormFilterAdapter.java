@@ -15,8 +15,9 @@
 
 package org.helianto.partner.filter;
 
+import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractFilterAdapter;
+import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.partner.form.PartnerForm;
 
 /**
@@ -24,7 +25,7 @@ import org.helianto.partner.form.PartnerForm;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PartnerFormFilterAdapter extends AbstractFilterAdapter<PartnerForm> {
+public class PartnerFormFilterAdapter extends AbstractTrunkFilterAdapter<PartnerForm> {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -37,10 +38,23 @@ public class PartnerFormFilterAdapter extends AbstractFilterAdapter<PartnerForm>
 		super(form);
 	}
 	
-	public boolean isSelection() {
-		return getForm().getParent()!=null && getForm().getParent().getId()>0 && getForm().getPartnerType()>0;
+	@Override
+	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.appendSegment("privateEntity.entity.id", "=").append(entity.getId());	}
+	
+	protected boolean hasParentCriterion() {
+		return getForm().getParent()!=null && getForm().getParent().getId()>0;
+	}
+	
+	@Override
+	protected void preProcessParentFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
 	}
 
+	public boolean isSelection() {
+		return hasParentCriterion() && getForm().getPartnerType()>0;
+	}
+	
 	@Override
 	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
@@ -53,12 +67,11 @@ public class PartnerFormFilterAdapter extends AbstractFilterAdapter<PartnerForm>
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
+		// not required, resolved during pre-processing
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.id", getForm().getParentId(), mainCriteriaBuilder);
 		appendLikeFilter("privateEntity.entityAlias", getForm().getEntityAlias(), mainCriteriaBuilder);
 		appendLikeFilter("privateEntity.entityName", getForm().getEntityName(), mainCriteriaBuilder);
 		appendEqualFilter("partnerState", getForm().getPartnerState(), mainCriteriaBuilder);
