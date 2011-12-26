@@ -6,7 +6,9 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.helianto.core.def.UserState;
 import org.helianto.core.test.DomainTestSupport;
@@ -77,6 +79,22 @@ public class UserGroupTests {
 
         assertTrue(userGroup.equals(copy));
     }
+	
+	@Test
+	public void programmable() {
+		Entity entity = new Entity();
+		
+		Programmable userGroup = new UserGroup(entity, "userKey");
+		((UserGroup) userGroup).setScriptItems("'CODE1', 'CODE2'");
+		assertEquals(2, userGroup.getScriptItemsAsArray().length);
+		assertEquals("'CODE1'", userGroup.getScriptItemsAsArray()[0]);
+		assertEquals("'CODE2'", userGroup.getScriptItemsAsArray()[1]);
+		
+		List<String> scriptList = Arrays.asList(new String[] { "Script 1 content", "Script 2 content" });
+		((UserGroup) userGroup).setScriptList(scriptList);
+		assertTrue(userGroup.getScriptList().contains("Script 1 content"));
+		assertTrue(userGroup.getScriptList().contains("Script 2 content"));
+	}
 
 }
     

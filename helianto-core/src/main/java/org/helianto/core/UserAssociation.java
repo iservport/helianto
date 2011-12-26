@@ -18,6 +18,7 @@ package org.helianto.core;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -50,11 +51,18 @@ import org.springframework.format.annotation.DateTimeFormat;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> implements java.io.Serializable {
+public class UserAssociation 
+
+	extends AbstractAssociation<UserGroup, UserGroup> 
+	
+	implements java.io.Serializable 
+
+{
 
     private static final long serialVersionUID = 1L;
     private Date associationDate;
     private char resolution;
+    private String parsedContent;
 
     /** 
      * Default constructor.
@@ -173,6 +181,28 @@ public class UserAssociation extends AbstractAssociation<UserGroup, UserGroup> i
 	}
     public void setAssociationDate(Date associationDate) {
 		this.associationDate = associationDate;
+	}
+
+    /**
+     * Parsed content.
+     */
+    @Column(length=512)
+    public String getParsedContent() {
+		return parsedContent;
+	}
+    public void setParsedContent(String parsedContent) {
+		this.parsedContent = parsedContent;
+	}
+    
+	@Transient
+	public String[] getParsedContentAsArray() {
+		if (getParsedContent()!=null) {
+			return getParsedContent().split(",");
+		}
+		return new String[] {};
+	}
+	public void setParsedContentAsArray(String[] parsedContentArray) {
+		setParsedContent(parsedContentArray.toString().replace("[", "").replace("]", ""));
 	}
 
    /**

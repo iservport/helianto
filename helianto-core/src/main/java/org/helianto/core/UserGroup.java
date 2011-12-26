@@ -60,7 +60,16 @@ import org.helianto.core.def.UserState;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("G")
-public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKeyInfo {
+
+public class UserGroup 
+
+	implements 
+	  TrunkEntity
+	, Comparable<UserGroup>
+	, NaturalKeyInfo
+	, Programmable
+
+{
 	
 	/**
 	 * <<Transient>> Exposes the discriminator.
@@ -80,9 +89,9 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
     private boolean accountNonExpired;
     private char createIdentity;
     private String nature;
-    // function fields
     private int minimalEducationRequirement;
     private int minimalExperienceRequirement;
+    private String scriptItems;
 
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
@@ -300,6 +309,59 @@ public class UserGroup implements TrunkEntity, Comparable<UserGroup>, NaturalKey
 	public void setMinimalExperienceRequirement(int minimalExperienceRequirement) {
 		this.minimalExperienceRequirement = minimalExperienceRequirement;
 	}
+	
+    /**
+     * Key-value pair list of scripts, separated by comma.
+     */
+    @Column(length=255)
+    public String getScriptItems() {
+		return scriptItems;
+	}
+    public void setScriptItems(String scriptItems) {
+		this.scriptItems = scriptItems;
+	}
+    
+    /**
+     * <<Transient>> Key-value pair list of scripts converted to array.
+     */
+    @Transient
+    public String[] getScriptItemsAsArray() {
+		if (getScriptItems()!=null) {
+			return getScriptItems().replace(" ", "").split(",");
+		}
+		return new String[] {};
+	}
+	public void setScriptItemsAsArray(String[] scriptItemsArray) {
+		setScriptItems(scriptItemsArray.toString().replace("[", "").replace("]", ""));
+	}
+	
+	/*
+	 * Transient field to hold actual script list.
+	 */
+	private List<String> scriptList = new ArrayList<String>();
+    
+    /**
+     * <<Transient>> Script list, likely to be loaded at runtime.
+     */
+    @Transient
+    public List<String> getScriptList() {
+    	return scriptList;
+    }
+    public void setScriptList(List<String> scriptList) {
+		this.scriptList = scriptList;
+	}
+    
+    /**
+     * Adiciona conteúdo de um script à lista.
+     * 
+     * @param scriptContent
+     */
+    public void addScriptContent(String scriptContent) {
+    	getScriptList().add(scriptContent);
+	}
+    
+    
+
 	
 	/**
      * Parent associations.
