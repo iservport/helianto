@@ -29,6 +29,7 @@ import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.form.UserGroupForm;
+import org.helianto.core.filter.form.UserRoleForm;
 
 /**
  * Default user service layer interface for the core package.
@@ -117,8 +118,17 @@ public interface UserMgr {
 	 * Find <code>UserRole</code>(s).
 	 * 
 	 * @param userRoleFilter
+	 * @deprecated
+	 * @see #findUserRoles(UserRoleForm)
 	 */
 	public List<UserRole> findUserRoles(Filter userRoleFilter);
+	
+	/**
+	 * Find <code>UserRole</code>(s).
+	 * 
+	 * @param form
+	 */
+	public List<UserRole> findUserRoles(UserRoleForm form);
 	
 	/**
 	 * Install an UserRole, if does not exist.

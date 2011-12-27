@@ -28,6 +28,7 @@ public abstract class AbstractUserForm
 	private List<UserGroup> parentList;
     private String parentUserKey;
     private char userState = ' ';
+    private char userGroupType = ' ';
     private char userType = ' ';
     private Identity identity;
 	private Collection<Identity> exclusions;
@@ -75,6 +76,13 @@ public abstract class AbstractUserForm
 	public void setParentUserKey(String parentUserKey) {
 		this.parentUserKey = parentUserKey;
 	}
+
+    public char getUserGroupType() {
+        return this.userGroupType;
+    }
+    public void setUserGroupType(char userGroupType) {
+        this.userGroupType = userGroupType;
+    }
 
     public char getUserType() {
         return this.userType;

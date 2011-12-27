@@ -41,7 +41,9 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.filter.UserFormFilterAdapter;
+import org.helianto.core.filter.UserRoleFormFilterAdapter;
 import org.helianto.core.filter.form.UserGroupForm;
+import org.helianto.core.filter.form.UserRoleForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -172,9 +174,11 @@ public class UserMgrImpl implements UserMgr {
     	List<UserGroup> parentList = new ArrayList<UserGroup>();
 //    	parentList.add(userGroup);
     	if(userGroup.getParentAssociations()!=null) {
-    		logger.debug("Parent list for {} has {} item(s).", userGroup,  userGroup.getParentAssociations().size());
     		for (UserAssociation association: userGroup.getParentAssociations()) {
-    			parentList.add(association.getParent());
+    			if (association.getParent()!=null) {
+        			parentList.add(association.getParent());
+            		logger.debug("{} is child of {}.", userGroup,  association.getParent());
+    			}
     		}
     	}
     	else {
@@ -289,6 +293,15 @@ public class UserMgrImpl implements UserMgr {
     }
     
 	public List<UserRole> findUserRoles(Filter filter) {
+		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
+    	if (userRoleList!=null && userRoleList.size()>0) {
+    		logger.debug("Loaded user role list of size {}", userRoleList.size());
+    	}
+    	return userRoleList;
+	}
+
+	public List<UserRole> findUserRoles(UserRoleForm form) {
+		Filter filter = new UserRoleFormFilterAdapter(form);
 		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
     	if (userRoleList!=null && userRoleList.size()>0) {
     		logger.debug("Loaded user role list of size {}", userRoleList.size());

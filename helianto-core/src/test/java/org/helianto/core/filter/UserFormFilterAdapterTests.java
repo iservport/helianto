@@ -28,7 +28,7 @@ public class UserFormFilterAdapterTests {
 	static String C1 = "AND alias.userKey = 'USERKEY' ";
 	static String C2 = "AND alias.userState = 'A' ";
 	static String C3 = "AND alias.identity.id not in (  1 ,  2 ) ";
-	static String C4 = "AND alias.class=UserGroup ";
+	static String C4 = "AND alias.class = 'G' ";
 	static String C5 = "AND parentAssociations.parent.id = 100 ";
 	static String C6 = "AND parentAssociations.parent.userKey = 'USER' ";
 	static String C7 = "AND alias.identity.id = 1 ";
@@ -64,8 +64,8 @@ public class UserFormFilterAdapterTests {
 	}
 
 	@Test
-	public void clazz() {
-		form.setClazz(UserGroup.class);
+	public void userGroupType() {
+		form.setUserGroupType('G');
 		assertEquals(C0+C4+O0, filter.createCriteriaAsString());
 	}
 

@@ -132,7 +132,7 @@ public class CompositeUserForm
      * 
      * @param parent
      */
-    protected CompositeUserForm clone(UserGroup parent) {
+    public CompositeUserForm clone(UserGroup parent) {
     	try {
     		CompositeUserForm form = (CompositeUserForm) super.clone();
     		form.setParent(parent);

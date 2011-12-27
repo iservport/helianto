@@ -5,7 +5,7 @@ import java.util.List;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.form.UserGroupForm;
+import org.helianto.core.filter.form.CompositeUserForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +24,14 @@ public class UserActionImpl extends UserGroupActionImpl {
 	
 	@Override
 	protected List<UserGroup> doFilter(MutableAttributeMap attributes, Filter filter) {
-		UserGroupForm form = userModelBuilder.getForm(attributes);
-		form.setClazz(User.class);
 		UserGroup parent = (UserGroup) attributes.get("userGroup", UserGroup.class);
+		CompositeUserForm form = getForm(attributes);
+		form.setUserGroupType('U');
 		if (parent!=null) {
-			form.setParent(parent);
+			form = form.clone(parent);
+			logger.debug("Filter restricted to descendants of {}.", parent);
 		}
-		logger.debug("Filter restricted to descendants of {}.", parent);
-		return doFilter(filter);
+		return doFilter(form);
 	}
 	
 	@Override
@@ -40,4 +40,5 @@ public class UserActionImpl extends UserGroupActionImpl {
 	}
 
 	private final static Logger logger = LoggerFactory.getLogger(UserActionImpl.class);
+	
 }

@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -377,7 +376,7 @@ public class UserGroup
     /**
      * Child associations.
      */
-    @OneToMany(mappedBy="parent", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy="parent")
     public Set<UserAssociation> getChildAssociations() {
         return this.childAssociations;
     }

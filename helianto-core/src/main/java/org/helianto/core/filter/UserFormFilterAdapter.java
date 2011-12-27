@@ -29,7 +29,11 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserFormFilterAdapter extends AbstractTrunkFilterAdapter<UserGroupForm> {
+public class UserFormFilterAdapter 
+
+	extends AbstractTrunkFilterAdapter<UserGroupForm> 
+
+{
 
     private static final long serialVersionUID = 1L;
     private boolean orderByLastEventDesc = false;
@@ -41,14 +45,6 @@ public class UserFormFilterAdapter extends AbstractTrunkFilterAdapter<UserGroupF
      */
     public UserFormFilterAdapter(UserGroupForm form) {
     	super(form);
-    	reset();
-    }
-    
-    /**
-     * Force filter to standards.
-     */
-    public void reset() {
-    	getForm().reset();
     }
     
     /**
@@ -72,8 +68,9 @@ public class UserFormFilterAdapter extends AbstractTrunkFilterAdapter<UserGroupF
 	@Override
 	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
-		if (getForm().getClazz()!=null) {
-			mainCriteriaBuilder.appendAnd().append(getForm().getClazz());
+		if (getForm().getUserGroupType()!=0 && getForm().getUserGroupType()!=' ' && getForm().getUserGroupType()!='_') {
+			mainCriteriaBuilder.appendAnd().appendSegment("class", "=").append(getForm().getUserGroupType());
+			mainCriteriaBuilder.addSegmentCount(1);
 			connect = true;
 		}
 		if (getForm().getParent()!=null) {

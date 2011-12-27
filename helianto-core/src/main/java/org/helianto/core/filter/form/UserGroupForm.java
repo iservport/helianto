@@ -10,7 +10,16 @@ import org.helianto.core.UserGroup;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface UserGroupForm extends TrunkEntity, DiscriminatorForm<UserGroup>, ParentListForm<UserGroup>, PersonalForm, ExclusionForm<Identity>, Resettable {
+public interface UserGroupForm 
+
+	extends 
+	  TrunkEntity
+	, ParentListForm<UserGroup>
+	, PersonalForm
+	, ExclusionForm<Identity>
+	, Resettable 
+
+{
 	
 	/**
 	 * User key.
@@ -21,6 +30,18 @@ public interface UserGroupForm extends TrunkEntity, DiscriminatorForm<UserGroup>
 	 * User state.
 	 */
 	public char getUserState();
+	
+	/**
+     * User group type.
+     */
+    public char getUserGroupType();
+	
+	/**
+     * User group type setter.
+     * 
+     * @param userGroupType
+     */
+    public void setUserGroupType(char userGroupType);
 	
 	/**
      * User type.
