@@ -43,7 +43,6 @@ public class PersonalFilterTests {
 		identity.setId(1);
 		Person person = new Person();
 		personFilter = new AbstractPersonalFilterAdapter<Person>(person) {
-			public void reset() { }
 			@Override
 			public boolean isSelection() { return keyField.length()>0; };
 			@Override

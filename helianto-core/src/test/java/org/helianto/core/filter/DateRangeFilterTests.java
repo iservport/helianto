@@ -73,7 +73,6 @@ public class DateRangeFilterTests {
 			public String getDateFieldName() { return "fieldName"; };
 			public java.util.Date getFromDate() { return fromDate; };
 			public java.util.Date getToDate() { return toDate; };
-			public void reset() { }
 			@Override
 			public boolean isSelection() { return false; };
 			@Override

@@ -37,7 +37,6 @@ public class FilterAdapterTests {
 	@Test
 	public void navigable() {
 		Filter filter = new AbstractFilterAdapter<NavigableForm>(form) {
-			public void reset() { }
 			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
 		};

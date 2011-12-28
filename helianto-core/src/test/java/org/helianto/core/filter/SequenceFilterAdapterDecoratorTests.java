@@ -23,7 +23,6 @@ public class SequenceFilterAdapterDecoratorTests {
 	public void decorated() {
 		AbstractSequenceFilterAdapterDecorator<AbstractSequence> decoratedFilter = 
 			new AbstractSequenceFilterAdapterDecorator<AbstractSequence>(new AbstractSequence(entity, 0) {}) {
-			public void reset() { }
 			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 				super.doFilter(mainCriteriaBuilder);
 				appendEqualFilter("field1", "value1", mainCriteriaBuilder);
@@ -31,7 +30,6 @@ public class SequenceFilterAdapterDecoratorTests {
 		};
 		AbstractSequenceFilterAdapterDecorator<AbstractSequence> sequenceFilter = 
 			new AbstractSequenceFilterAdapterDecorator<AbstractSequence>(new AbstractSequence(entity, 0) {}, decoratedFilter) {
-			public void reset() { }
 			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 				super.doFilter(mainCriteriaBuilder);
 				appendEqualFilter("field2", "value2", mainCriteriaBuilder);

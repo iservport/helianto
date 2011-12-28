@@ -87,7 +87,6 @@ public class ControlFilterAdapterTests {
 		public char getResolution() { return resolution; }
 		public Date getNextCheckDate() { return nextCheckDate; }
 		public int getComplete() { return complete; }
-		public void reset() { }
 	}
 	
 }

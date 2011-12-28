@@ -47,7 +47,6 @@ public class UserBackedFilterTests {
 		User user = new User(entity, new Identity("PRINCIPAL"));
 		Trunk trunk = new Trunk();
 		userFilter = new AbstractUserFilterAdapter<Trunk>(trunk, user) {
-			public void reset() { }
 			@Override
 			public boolean isSelection() { return keyField.length()>0; };
 			@Override

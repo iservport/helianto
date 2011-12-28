@@ -35,7 +35,6 @@ public class SequenceFilterAdapterTests {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
 		sequenceFilter = new AbstractSequenceFilterAdapterDecorator<AbstractSequence>(new AbstractSequence(entity, 0) {}) {
-			public void reset() { }
 		};
 	}
 	

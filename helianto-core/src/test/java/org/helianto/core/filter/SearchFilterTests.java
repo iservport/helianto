@@ -17,7 +17,6 @@ public class SearchFilterTests {
 	public void filter() {
 		AbstractFilter sourceFilter = new AbstractFilter() {
 			@Override public String createSelectAsString() { return "SELECT STRING"; }
-			public void reset() { }
 			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {}
 			@Override public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			@Override public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {

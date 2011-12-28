@@ -111,7 +111,6 @@ public class ListFilterTests {
 			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			@Override
 			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
-			public void reset() { }
 		};
 		filter.setList(list);
 	}

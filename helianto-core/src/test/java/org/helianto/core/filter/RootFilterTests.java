@@ -42,7 +42,6 @@ public class RootFilterTests {
 		operator = new Operator("DEFAULT");
 		operator.setId(1);
 		rootFilter = new AbstractRootFilterAdapter<AbstractRoot>(new AbstractRoot(operator) {}) {
-			public void reset() { }
 			@Override
 			public boolean isSelection() { return keyField.length()>0; };
 			@Override

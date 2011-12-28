@@ -43,7 +43,6 @@ public class TrunkFilterTests {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
 		trunkFilter = new AbstractTrunkFilterAdapter<AbstractTrunk>(new AbstractTrunk(entity) {}) {
-			public void reset() { }
 			@Override
 			public boolean isSelection() { return keyField.length()>0; };
 			@Override
