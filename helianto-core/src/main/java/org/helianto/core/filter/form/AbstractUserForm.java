@@ -52,7 +52,7 @@ public abstract class AbstractUserForm
 	public void setParent(UserGroup parent) {
 		this.parent = parent;
 	}
-	public long getParentId() {
+	public int getParentId() {
 		if (getParent()!=null) {
 			return getParent().getId();
 		}

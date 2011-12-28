@@ -2,7 +2,6 @@ package org.helianto.resource.form;
 
 import org.helianto.core.Entity;
 import org.helianto.document.base.AbstractPrivateControl;
-import org.helianto.resource.domain.ResourceAssociation;
 import org.helianto.resource.domain.ResourceGroup;
 
 /**
@@ -59,7 +58,7 @@ public class CompositeResourceForm extends AbstractPrivateControl implements Res
 	public void setParent(ResourceGroup parent) {
 		this.parent = parent;
 	}
-	public long getParentId() {
+	public int getParentId() {
 		if (getParent()!=null) {
 			return getParent().getId();
 		}

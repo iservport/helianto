@@ -16,6 +16,17 @@ public class UserTestSupport {
 	
     /**
      * Test support method to create a <code>User</code>.
+     * 
+     * @param id
+     */
+	public static User createUser(int id) {
+		User user = UserTestSupport.createUser();
+		user.setId(id);
+		return user;
+	}
+
+    /**
+     * Test support method to create a <code>User</code>.
      */
 	public static User createUser() {
 		return createUser(EntityTestSupport.createEntity());
@@ -23,6 +34,7 @@ public class UserTestSupport {
 
     /**
      * Test support method to create a <code>User</code>.
+     * 
      * @param entity optional Entity 
      */
 	public static User createUser(Entity entity) {

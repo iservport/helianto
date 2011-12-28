@@ -28,6 +28,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.AssociationForm;
 import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.filter.form.UserRoleForm;
 
@@ -71,8 +72,16 @@ public interface UserMgr {
      * Find user associations.
      * 
      * @param userAssociationFilter
+     * @deprecated
      */
     public List<UserAssociation> findUserAssociations(Filter userAssociationFilter);
+    
+    /**
+     * Find user associations.
+     * 
+     * @param userAssociationFilter
+     */
+    public List<UserAssociation> findUserAssociations(AssociationForm form);
     
     /**
      * <p>Create <code>UserAssociation</code> with a new credential.</p>

@@ -16,7 +16,8 @@ public class CompositeUserForm
 	extends AbstractUserForm 
 	
 	implements 
-	  UserRoleForm
+	  AssociationForm
+	, UserRoleForm
 	, ServiceForm
 	, PersonalAddressForm
 	, Cloneable
@@ -24,6 +25,7 @@ public class CompositeUserForm
 {
 
 	private static final long serialVersionUID = 1L;
+	private int childId;
 	private Service service;
 	private String serviceExtension;
 	private char activityState = ' ';
@@ -63,6 +65,13 @@ public class CompositeUserForm
     	}
     	return null;
     }
+    
+    public int getChildId() {
+		return childId;
+	}
+    public void setChildId(int childId) {
+		this.childId = childId;
+	}
 
 	public Service getService() {
 		return service;

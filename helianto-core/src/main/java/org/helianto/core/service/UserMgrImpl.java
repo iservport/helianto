@@ -39,9 +39,11 @@ import org.helianto.core.def.EventType;
 import org.helianto.core.def.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
+import org.helianto.core.filter.UserAssociationFormFilterAdapter;
 import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.filter.UserFormFilterAdapter;
 import org.helianto.core.filter.UserRoleFormFilterAdapter;
+import org.helianto.core.filter.form.AssociationForm;
 import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.filter.form.UserRoleForm;
 import org.helianto.core.repository.FilterDao;
@@ -148,8 +150,18 @@ public class UserMgrImpl implements UserMgr {
         return null;
     }
 
+    /**
+     * @deprecated
+     */
 	public List<UserAssociation> findUserAssociations(Filter userAssociationFilter) {
 		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationDao.find(userAssociationFilter);
+    	logger.debug("Found user association list of size {}", userAssociationList.size());
+        return userAssociationList;
+	}
+
+	public List<UserAssociation> findUserAssociations(AssociationForm form) {
+		Filter filter = new UserAssociationFormFilterAdapter(form);
+		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationDao.find(filter);
     	logger.debug("Found user association list of size {}", userAssociationList.size());
         return userAssociationList;
 	}

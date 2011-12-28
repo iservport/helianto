@@ -27,5 +27,5 @@ public interface ParentForm<P> {
 	/**
 	 * The parent filter id field.
 	 */
-	public long getParentId();
+	public int getParentId();
 }
