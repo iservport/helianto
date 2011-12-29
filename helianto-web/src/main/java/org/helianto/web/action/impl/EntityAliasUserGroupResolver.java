@@ -40,8 +40,6 @@ public class EntityAliasUserGroupResolver implements UserGroupResolver {
 			
 			private static final long serialVersionUID = 1L;
 
-			public void reset() { }
-			
 			@Override
 			protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 			
