@@ -1,11 +1,13 @@
 package org.helianto.core.filter.form;
 
+import java.io.Serializable;
+
 /**
  * Association form.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface AssociationForm {
+public interface AssociationForm extends Serializable {
 
 	/**
 	 * Parent id.

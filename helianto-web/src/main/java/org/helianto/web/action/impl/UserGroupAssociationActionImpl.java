@@ -1,12 +1,17 @@
 package org.helianto.web.action.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.AssociationForm;
+import org.helianto.core.filter.form.CompositeUserForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.UserMgr;
-import org.helianto.web.action.AbstractAction;
+import org.helianto.web.action.AbstractFilterAction;
 import org.helianto.web.model.impl.UserModelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +25,7 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * @author Mauricio Fernandes de Castro
  */
 @Component("userGroupAssociationAction")
-public class UserGroupAssociationActionImpl extends AbstractAction<UserAssociation> {
+public class UserGroupAssociationActionImpl extends AbstractFilterAction<UserAssociation> {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -31,6 +36,33 @@ public class UserGroupAssociationActionImpl extends AbstractAction<UserAssociati
 
 	@Override
 	protected String getTargetName() { return "userAssociation"; }
+	
+	/**
+	 * Helper method to retrieve form.
+	 * 
+	 * @param attributes
+	 */
+	protected CompositeUserForm getForm(MutableAttributeMap attributes) {
+		return userModelBuilder.getForm(attributes);
+	}
+	
+	protected List<UserAssociation> doFilter(MutableAttributeMap attributes, Filter filter) {
+		UserGroup parent = (UserGroup) attributes.getRequired("userGroup");
+		CompositeUserForm form = getForm(attributes).clone(parent);
+		return doFilter(form);
+	}
+
+	/**
+	 * @deprecated
+	 */
+	@Override
+	protected List<UserAssociation> doFilter(Filter filter) {
+		throw new IllegalArgumentException("Programmer error: use doFilter(form).");
+	}
+
+	protected List<UserAssociation> doFilter(AssociationForm form) {
+		return userMgr.findUserAssociations(form);
+	}
 
 	@Override
 	protected UserAssociation doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
