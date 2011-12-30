@@ -87,6 +87,7 @@ public class UserGroup
     private char userState;
     private boolean accountNonExpired;
     private char createIdentity;
+    private String userDesc;
     private String nature;
     private int minimalEducationRequirement;
     private int minimalExperienceRequirement;
@@ -279,6 +280,17 @@ public class UserGroup
 	}
 	public void setNatureAsArray(String[] natureArray) {
 		setNature(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
+	}
+	
+	/**
+	 * User or group description.
+	 */
+	@Column(length=512)
+	public String getUserDesc() {
+		return userDesc;
+	}
+	public void setUserDesc(String userDesc) {
+		this.userDesc = userDesc;
 	}
 	
 	/**

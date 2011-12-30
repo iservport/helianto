@@ -167,10 +167,10 @@ public class UserMgrImpl implements UserMgr {
 	}
 
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
-    	if (parentAssociation.getChild() instanceof User) {
-        	Identity identity = identityMgr.loadIdentity(((User) parentAssociation.getChild()).getIdentity().getId());
-        	((User) parentAssociation.getChild()).setIdentity(identity);
-    	}
+//    	if (parentAssociation.getChild() instanceof User) {
+//        	Identity identity = identityMgr.loadIdentity(((User) parentAssociation.getChild()).getIdentity().getId());
+//        	((User) parentAssociation.getChild()).setIdentity(identity);
+//    	}
     	userAssociationDao.saveOrUpdate(parentAssociation);
     	return parentAssociation;
     }
