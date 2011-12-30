@@ -15,6 +15,9 @@
 
 package org.helianto.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.CategoryGroup;
@@ -35,7 +39,13 @@ import org.helianto.core.def.CategoryGroup;
 @Table(name="core_category",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "categoryGroup", "categoryCode"})}
 )
-public class Category implements TrunkEntity {
+public class Category 
+
+	implements 
+	  TrunkEntity
+	, Programmable
+
+{
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -44,6 +54,7 @@ public class Category implements TrunkEntity {
     private String categoryCode;
     private String categoryName;
     private char priority;
+    private String scriptItems;
 
     /** 
      * Default constructor
@@ -132,6 +143,56 @@ public class Category implements TrunkEntity {
 	}
 	public void setPriority(char priority) {
 		this.priority = priority;
+	}
+
+    /**
+     * Key-value pair list of scripts, separated by comma.
+     */
+    @Column(length=255)
+    public String getScriptItems() {
+		return scriptItems;
+	}
+    public void setScriptItems(String scriptItems) {
+		this.scriptItems = scriptItems;
+	}
+    
+    /**
+     * <<Transient>> Key-value pair list of scripts converted to array.
+     */
+    @Transient
+    public String[] getScriptItemsAsArray() {
+		if (getScriptItems()!=null) {
+			return getScriptItems().replace(" ", "").split(",");
+		}
+		return new String[] {};
+	}
+	public void setScriptItemsAsArray(String[] scriptItemsArray) {
+		setScriptItems(scriptItemsArray.toString().replace("[", "").replace("]", ""));
+	}
+	
+	/*
+	 * Transient field to hold actual script list.
+	 */
+	private List<String> scriptList = new ArrayList<String>();
+    
+    /**
+     * <<Transient>> Script list, likely to be loaded at runtime.
+     */
+    @Transient
+    public List<String> getScriptList() {
+    	return scriptList;
+    }
+    public void setScriptList(List<String> scriptList) {
+		this.scriptList = scriptList;
+	}
+    
+    /**
+     * Adiciona conteúdo de um script à lista.
+     * 
+     * @param scriptContent
+     */
+    public void addScriptContent(String scriptContent) {
+    	getScriptList().add(scriptContent);
 	}
 
     /**
