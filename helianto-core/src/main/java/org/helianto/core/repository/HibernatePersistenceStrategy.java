@@ -116,6 +116,11 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
 		return this.sessionFactory.getCurrentSession().load(clazz, id);
 	}
 	
+	public Object get(Class clazz, Serializable id) {
+		logger.debug("Object id id {}", id);
+		return this.sessionFactory.getCurrentSession().get(clazz, id);
+	}
+	
 	public void saveOrUpdate(Object managedObject) {
         logger.debug("Saving (or updating) {}", managedObject);
         this.sessionFactory.getCurrentSession().saveOrUpdate(managedObject);
