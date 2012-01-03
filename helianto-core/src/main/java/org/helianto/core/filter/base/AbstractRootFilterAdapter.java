@@ -44,6 +44,10 @@ public abstract class AbstractRootFilterAdapter<F extends RootEntity> extends Ab
 		return connect;
 	}
 	
+	public boolean isSelection() {
+		return getOperator()!=null && getOperator().getId()>0;
+	}
+	
 	/**
 	 * Operator pre-processor.
 	 * 
