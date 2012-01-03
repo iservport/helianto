@@ -133,7 +133,7 @@ public class UserAssociation
     /**
      * Child user group.
      */
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="childId", nullable=true)
     public UserGroup getChild() {
         return this.child;
