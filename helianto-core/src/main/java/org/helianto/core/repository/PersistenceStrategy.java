@@ -80,6 +80,14 @@ public interface PersistenceStrategy<T> {
     public T load(Class<? extends T> clazz, Serializable id);
     
     /**
+     * Operation to get a managed object.
+     * 
+     * @param clazz
+     * @param id
+     */
+    public T get(Class<? extends T> clazz, Serializable id);
+    
+    /**
      * Hiberante operation to save or update a managed object.
      * 
      * @param managedObject

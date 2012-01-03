@@ -93,6 +93,11 @@ public class JpaPersistenceStrategy implements PersistenceStrategy {
 		logger.debug("Object id id {}", id);
 		return this.em.getReference(clazz, id);
 	}
+	
+	public Object get(Class clazz, Serializable id) {
+		logger.debug("Object id id {}", id);
+		return this.em.getReference(clazz, id);
+	}
 
 	public void saveOrUpdate(Object managedObject) {
         throw new IllegalArgumentException("Illegal with JPA, use Hibernate instead...");

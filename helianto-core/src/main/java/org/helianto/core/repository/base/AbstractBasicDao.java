@@ -246,6 +246,10 @@ public abstract class AbstractBasicDao<T> implements BasicDao<T> {
 		return (T) getPersistenceStrategy().load(clazz, id);
 	}
 
+	public T get(Class<? extends T> clazz, Serializable id) {
+		return (T) getPersistenceStrategy().get(clazz, id);
+	}
+
 	public void saveOrUpdate(T managedObject) {
         getPersistenceStrategy().saveOrUpdate(managedObject);
 	}
