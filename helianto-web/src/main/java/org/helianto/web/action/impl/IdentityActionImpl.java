@@ -6,11 +6,11 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Identity;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.IdentityFilterAdapter;
+import org.helianto.core.filter.form.CompositeUserForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.service.IdentityMgr;
 import org.helianto.web.action.AbstractFilterAction;
-import org.helianto.web.action.SimpleModel;
+import org.helianto.web.model.impl.UserModelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,15 +26,28 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 
 	private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("unchecked")
 	@Override
-	protected Filter doCreateFilter(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		return new IdentityFilterAdapter(((SimpleModel<Identity>) getModel(attributes)).getForm());
+	protected String getModelName() {
+		return userModelBuilder.getModelName();
+	}
+	
+	protected CompositeUserForm getForm(MutableAttributeMap attributes) {
+		return userModelBuilder.getForm(attributes);
 	}
 
+	protected List<Identity> doFilter(CompositeUserForm form) {
+		return identityMgr.findIdentities(form);
+	}
+	
+	@Override
+	protected List<Identity> doFilter(MutableAttributeMap attributes, Filter filter) {
+		CompositeUserForm form = getForm(attributes);
+		return doFilter(form);
+	}
+	
 	@Override
 	protected List<Identity> doFilter(Filter filter) {
-		return identityMgr.findIdentities(filter, null);
+		throw new IllegalArgumentException("Use doFilter(form)!");
 	}
 	
 	/**
@@ -64,10 +77,16 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 	// collabs
 	
 	private IdentityMgr identityMgr;
+	protected UserModelBuilder userModelBuilder;
 	
 	@Resource
 	public void setIdentityMgr(IdentityMgr identityMgr) {
 		this.identityMgr = identityMgr;
+	}
+	
+	@Resource
+	public void setUserModelBuilder(UserModelBuilder userModelBuilder) {
+		this.userModelBuilder = userModelBuilder;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(IdentityActionImpl.class);

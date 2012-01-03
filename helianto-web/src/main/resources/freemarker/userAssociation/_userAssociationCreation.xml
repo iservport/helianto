@@ -14,7 +14,7 @@
 	<on-start>
 		<set name="flowScope.basePath" value="'identity/'" />
 		<set name="flowScope.assign"   value="'assign'" />
-		<evaluate expression="identityAction.createModel(flowScope, currentUser.principal)" />
+		<evaluate expression="userModelBuilder.createFormModel(flowScope, currentUser.principal)" />
 		<evaluate expression="identityAction.create(flowScope, currentUser.principal)" />
 	</on-start>
 

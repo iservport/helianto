@@ -4,6 +4,7 @@ import org.easymock.classextension.EasyMock;
 import org.helianto.core.Identity;
 import org.helianto.core.service.IdentityMgr;
 import org.helianto.web.action.impl.IdentityActionImpl;
+import org.helianto.web.model.impl.UserModelBuilder;
 import org.helianto.web.test.AbstractFlowTest;
 import org.junit.Test;
 import org.springframework.binding.mapping.Mapper;
@@ -30,6 +31,7 @@ public class UserAssociationCreationFlowTests extends AbstractFlowTest {
 	@Override
 	protected void configureFlowBuilderContext(MockFlowBuilderContext builderContext) {
 	    builderContext.registerBean("identityAction", identityAction);
+	    builderContext.registerBean("userModelBuilder", userModelBuilder);
 	}
 	
 	@Test
@@ -119,6 +121,7 @@ public class UserAssociationCreationFlowTests extends AbstractFlowTest {
 	private IdentityActionImpl identityAction;
 	private IdentityMgr identityMgr;
 	private Identity identity;
+	private UserModelBuilder userModelBuilder;
 	
 	@Override
 	protected void doSetup() {
@@ -126,6 +129,12 @@ public class UserAssociationCreationFlowTests extends AbstractFlowTest {
 		identityAction = new IdentityActionImpl();
 		identityMgr = EasyMock.createMock(IdentityMgr.class);
 		identityAction.setIdentityMgr(identityMgr);
+		userModelBuilder = new UserModelBuilder() {
+			public String getModelName() {
+				return "userModel";
+			}
+		};
+		identityAction.setUserModelBuilder(userModelBuilder);
 		identityAction.setActionNamingConventionStrategy(createActionNamingConventionStrategy("identity"));
 	}
 	
