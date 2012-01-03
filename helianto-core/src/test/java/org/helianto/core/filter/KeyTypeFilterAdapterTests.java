@@ -16,10 +16,9 @@
 package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
-import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
+import org.helianto.core.filter.form.CompositeEntityForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,16 +28,6 @@ import org.junit.Test;
  */
 public class KeyTypeFilterAdapterTests  {
     
-    @Test
-    public void constructor() {
-		assertSame(target, filter.getForm());
-		
-		Operator operator = new Operator("OTHER");
-		filter = new KeyTypeFilterAdapter(operator, "CODE");
-		assertSame(operator, filter.getForm().getOperator());
-		assertEquals("CODE", filter.getForm().getKeyCode());
-	}
-	
     public static String C0 = "alias.operator.id = 1 ";
     public static String C1 = "AND alias.keyCode = 'CODE' ";
     public static String C2 = "AND lower(alias.keyName) like '%name_like%' ";
@@ -50,27 +39,27 @@ public class KeyTypeFilterAdapterTests  {
     
     @Test
     public void select() {
-    	target.setKeyCode("CODE");
+    	form.setKeyCode("CODE");
         assertEquals(C0+C1, filter.createCriteriaAsString());
     }
     
     @Test
     public void filter() {
-    	target.setKeyName("NAME_LIKE");
+    	form.setKeyName("NAME_LIKE");
         assertEquals(C0+C2, filter.createCriteriaAsString());
     }
     
     // collabs
     
-    private KeyTypeFilterAdapter filter;
-    private KeyType target;
+    private KeyTypeFormFilterAdapter filter;
+    private CompositeEntityForm form;
     
     @Before
     public void setUp() {
     	Operator operator = new Operator("DEFAULT");
     	operator.setId(1);
-    	target = new KeyType(operator, "");
-    	filter = new KeyTypeFilterAdapter(target);
+    	form = new CompositeEntityForm(operator);
+    	filter = new KeyTypeFormFilterAdapter(form);
     }
     
 }

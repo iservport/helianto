@@ -1,45 +1,30 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
+import org.helianto.core.filter.form.KeyTypeForm;
 
 /**
- * Key type filter adapter.
+ * Key type form filter adapter.
  * 
  * @author mauriciofernandesdecastro
- * @deprecated
- * @see KeyTypeFormFilterAdapter
  */
-public class KeyTypeFilterAdapter extends AbstractRootFilterAdapter<KeyType> {
+public class KeyTypeFormFilterAdapter extends AbstractRootFilterAdapter<KeyTypeForm> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Default constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public KeyTypeFilterAdapter(KeyType filter) {
-		super(filter);
+	public KeyTypeFormFilterAdapter(KeyTypeForm form) {
+		super(form);
 	}
 
-	/**
-	 * Key constructor.
-	 * 
-	 * @param operator
-	 * @param keyCode
-	 */
-	public KeyTypeFilterAdapter(Operator operator, String keyCode) {
-		super(new KeyType(operator, keyCode));
-	}
-
-	public void reset() { }
-	
 	@Override
 	public boolean isSelection() {
-		return getForm().getKeyCode().length()>0;
+		return super.isSelection() && getForm().getKeyCode()!=null && getForm().getKeyCode().length()>0;
 	}
 
 	@Override
