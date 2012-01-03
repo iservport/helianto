@@ -19,6 +19,7 @@ public class CompositePartnerForm
 	, PartnerForm
 	, PrivateAddressForm
 	, PrivateEntityKeyForm
+	, PartnerPhoneForm
 	  
 {
 
@@ -32,6 +33,8 @@ public class CompositePartnerForm
 	private int sequence;
     private KeyType keyType;
     private String keyValue;
+    private String areaCode;
+    private char phoneType;
 	
 	/**
 	 * Entity constructor.
@@ -125,6 +128,20 @@ public class CompositePartnerForm
 	}
 	public void setKeyValue(String keyValue) {
 		this.keyValue = keyValue;
+	}
+	
+	public String getAreaCode() {
+		return areaCode;
+	}
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+	
+	public char getPhoneType() {
+		return phoneType;
+	}
+	public void setPhoneType(char phoneType) {
+		this.phoneType = phoneType;
 	}
 	
 	/**

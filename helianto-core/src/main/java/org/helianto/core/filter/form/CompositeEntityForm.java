@@ -18,6 +18,7 @@ public class CompositeEntityForm
 	  EntityForm
 	, PublicEntityForm
 	, PublicAddressForm
+	, KeyTypeForm
 	, Cloneable
 	
 {
@@ -32,6 +33,8 @@ public class CompositeEntityForm
 	private Province province;
 	private String provinceCode;
 	private String postalCode;
+	private String keyCode;
+	private String keyName;
 	
 	/**
 	 * Default constructor.
@@ -135,6 +138,20 @@ public class CompositeEntityForm
 	}
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+	
+	public String getKeyCode() {
+		return keyCode;
+	}
+	public void setKeyCode(String keyCode) {
+		this.keyCode = keyCode;
+	}
+	
+	public String getKeyName() {
+		return keyName;
+	}
+	public void setKeyName(String keyName) {
+		this.keyName = keyName;
 	}
 	
     /**

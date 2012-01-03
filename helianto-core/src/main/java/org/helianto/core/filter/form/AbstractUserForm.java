@@ -17,7 +17,9 @@ public abstract class AbstractUserForm
 
 	extends AbstractTrunkForm 
 	
-	implements UserGroupForm 
+	implements 
+	  IdentityForm
+	, UserGroupForm 
 
 {
 
@@ -31,6 +33,8 @@ public abstract class AbstractUserForm
     private char userGroupType = ' ';
     private char userType = ' ';
     private Identity identity;
+    private String principal;
+    private String firstName;
 	private Collection<Identity> exclusions;
 	
     public void reset() {
@@ -132,6 +136,19 @@ public abstract class AbstractUserForm
     public void setIdentity(Identity identity) {
         this.identity = identity;
     }
+    
+    public String getPrincipal() {
+		return principal;
+	}
+    public void setPrincipal(String principal) {
+		this.principal = principal;
+	}
+    public String getFirstName() {
+		return firstName;
+	}
+    public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
     
     public Collection<Identity> getExclusions() {
         return exclusions;
