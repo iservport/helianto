@@ -26,6 +26,7 @@ import org.helianto.core.Province;
 import org.helianto.core.Service;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.KeyTypeForm;
 import org.helianto.core.filter.form.ProvinceForm;
 
 /**
@@ -103,8 +104,16 @@ public interface NamespaceMgr {
      * Find <code>KeyType</code>(s).
      * 
      * @param keyTypeFilter
+     * @deprecated
      */
 	public List<KeyType> findKeyTypes(Filter keyTypeFilter);
+
+    /**
+     * Find <code>KeyType</code>(s).
+     * 
+     * @param form
+     */
+	public List<KeyType> findKeyTypes(KeyTypeForm form);
 
     /**
      * Store <code>KeyType</code> to the data store.

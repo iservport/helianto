@@ -54,6 +54,7 @@ import org.helianto.partner.filter.PrivateAddressFormFilterAdapter;
 import org.helianto.partner.filter.PrivateEntityFormFilterAdapter;
 import org.helianto.partner.filter.PrivateEntityKeyFormFilterAdapter;
 import org.helianto.partner.form.PartnerForm;
+import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
 import org.helianto.partner.form.PrivateEntityKeyForm;
@@ -230,12 +231,17 @@ public class PartnerMgrImpl implements PartnerMgr {
 	public PrivateEntity removePartnerKey(PartnerKey partnerKey) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
+	
+	public List<PartnerPhone> findPartnerPhones(PartnerPhoneForm form) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	public PartnerPhone storePhone(PartnerPhone phone) {
+	public PartnerPhone storePartnerPhone(PartnerPhone phone) {
 		return phoneDao.merge(phone);
 	}
 
-	public PrivateEntity removePhone(PartnerPhone phone) {
+	public PrivateEntity removePartnerPhone(PartnerPhone phone) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 

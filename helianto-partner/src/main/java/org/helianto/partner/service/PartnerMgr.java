@@ -23,12 +23,14 @@ import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.filter.Filter;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerKey;
+import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateAddress;
 import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.domain.nature.Division;
 import org.helianto.partner.form.PartnerForm;
+import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
 import org.helianto.partner.form.PrivateEntityKeyForm;
@@ -138,6 +140,10 @@ public interface PartnerMgr {
      * @param partnerKey
      */
 	public PrivateEntity removePartnerKey(PartnerKey partnerKey);
+	
+	public List<PartnerPhone> findPartnerPhones(PartnerPhoneForm form);
+
+	public PartnerPhone storePartnerPhone(PartnerPhone phone);
 
     /**
      * Convenience to install a division.

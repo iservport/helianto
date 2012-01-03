@@ -30,7 +30,9 @@ import org.helianto.core.Province;
 import org.helianto.core.Service;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.KeyTypeFormFilterAdapter;
 import org.helianto.core.filter.ProvinceFormFilterAdapter;
+import org.helianto.core.filter.form.KeyTypeForm;
 import org.helianto.core.filter.form.ProvinceForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
@@ -95,6 +97,18 @@ public class NamespaceMgrImpl implements NamespaceMgr {
 		return entity;
 	}
 
+	public List<KeyType> findKeyTypes(KeyTypeForm form) {
+		Filter filter = new KeyTypeFormFilterAdapter(form);
+		List<KeyType> keyTypeList = (List<KeyType>) keyTypeDao.find(filter);
+    	if (keyTypeList!=null && keyTypeList.size()>0) {
+        	logger.debug("Found key type list of size {}", keyTypeList.size());
+    	}
+    	return keyTypeList;
+	}
+
+	/**
+	 * @deprecated
+	 */
 	public List<KeyType> findKeyTypes(Filter filter) {
 		List<KeyType> keyTypeList = (List<KeyType>) keyTypeDao.find(filter);
     	if (keyTypeList!=null && keyTypeList.size()>0) {
