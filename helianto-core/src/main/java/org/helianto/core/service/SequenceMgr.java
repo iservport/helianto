@@ -47,7 +47,7 @@ public interface SequenceMgr {
 	 * @param operator
 	 * @param publicNumberKey
 	 */
-	public long newPublicNumber(Operator operator, String publicNumberKey);
+	public long findNewPublicNumber(Operator operator, String publicNumberKey);
 	
 	/**
 	 * Find an internal number from a sequence named after a given internal 

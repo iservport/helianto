@@ -53,7 +53,7 @@ public class SequenceMgrImpl implements SequenceMgr {
         }
 	}
 	
-    public long newPublicNumber(Operator operator, String publicNumberKey) {
+    public long findNewPublicNumber(Operator operator, String publicNumberKey) {
     	PublicEnumerator enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
         if (enumerator!=null) {
             long lastNumber = enumerator.getLastNumber();
@@ -105,7 +105,7 @@ public class SequenceMgrImpl implements SequenceMgr {
     
 	public void validatePublicNumber(Numerable numerable) {
         if (numerable.getPublicNumber()==0) {
-            long publicNumber = newPublicNumber(numerable.getOperator(), numerable.getPublicNumberKey());
+            long publicNumber = findNewPublicNumber(numerable.getOperator(), numerable.getPublicNumberKey());
             numerable.setPublicNumber(publicNumber);
             logger.debug("Created public key for new {} {}", numerable.getPublicNumberKey(), numerable.getPublicNumber());
         }
