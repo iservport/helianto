@@ -1,8 +1,9 @@
 package org.helianto.core;
 
-import java.util.Date;
-
 import org.helianto.core.def.Resolution;
+import org.joda.time.DateMidnight;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -55,13 +56,12 @@ public class SimpleStateResolver implements StateResolver {
      * True if the resolution indicates state RUNNIG.
      * 
      * <p>
-     * Default implementation returns true if Resolution.TODO or {@link #isSuspended()}.
+     * Default implementation returns true if Resolution.TODO.
      * </p>
      */
     public boolean isRunning() {
-    	if (getControl().getResolution()==Resolution.PRELIMINARY.getValue()) return true;
     	if (getControl().getResolution()==Resolution.TODO.getValue()) return true;
-        return isSuspended();
+        return false;
     }
 
     /**
@@ -85,13 +85,20 @@ public class SimpleStateResolver implements StateResolver {
     }
 
     /**
-     * True if next check date is past.
+     * True if next check date is past tonight before midnight.
      */
     public boolean isLate() {
-    	if (getControl().getNextCheckDate()!=null && (new Date()).after(getControl().getNextCheckDate())) {
+    	DateMidnight tonight = new DateMidnight().plusDays(1).minus(1000);
+    	if (getControl().getNextCheckDate()==null) {
+    		logger.warn("Control {} nextCheckDate is null.", getControl());
+    	}
+    	else if (tonight.isAfter(getControl().getNextCheckDate().getTime())) {
+    		logger.warn("Control {} is late (after {}).", getControl(), tonight);
     		return true;
     	}
     	return false;
     }
+    
+    private static final Logger logger = LoggerFactory.getLogger(SimpleStateResolver.class);
     
 }
