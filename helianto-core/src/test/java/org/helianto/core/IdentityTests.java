@@ -41,7 +41,7 @@ public class IdentityTests {
         assertEquals("OPTIONAL_ALIAS", identity.getOptionalAlias());
         assertNotNull(identity.getCreated());
         assertTrue(identity.getCreated() instanceof Date);
-        assertEquals(IdentityType.EMAIL .getValue(), identity.getIdentityType());
+        assertEquals(IdentityType.PERSONAL_EMAIL .getValue(), identity.getIdentityType());
         assertEquals(Notification.AUTOMATIC.getValue(), identity.getNotification());
         assertEquals(Appellation.NOT_SUPPLIED.getValue(),
                 identity.getPersonalData().getAppellation());

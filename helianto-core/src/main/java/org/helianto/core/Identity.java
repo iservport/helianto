@@ -86,7 +86,7 @@ public class Identity implements java.io.Serializable {
     public Identity() {
         setPersonalData(new PersonalData());
         setCreated(new Date());
-        setIdentityTypeAsEnum(IdentityType.EMAIL);
+        setIdentityTypeAsEnum(IdentityType.PERSONAL_EMAIL);
         setNotificationAsEnum(Notification.AUTOMATIC);
         setPhoto(new byte[0]);
     }
