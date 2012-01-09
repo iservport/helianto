@@ -25,6 +25,7 @@ import org.helianto.resource.domain.ResourceAssociation;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.domain.ResourceParameter;
 import org.helianto.resource.domain.ResourceParameterValue;
+import org.helianto.resource.form.ResourceGroupForm;
 
 /**
  * <code>ResourceMgr</code> interface.
@@ -44,8 +45,16 @@ public interface ResourceMgr {
      * Find <tt>ResourceGroup</tt>s using filter.
      * 
      * @param resourceGroupFilter
+     * @deprecated
      */
     public List<ResourceGroup> findResourceGroups(Filter resourceGroupFilter);
+    
+    /**
+     * Find <tt>ResourceGroup</tt>s using filter.
+     * 
+     * @param form
+     */
+    public List<ResourceGroup> findResourceGroups(ResourceGroupForm form);
     
     /**
      * Find <tt>ResourceAssociation</tt>s using filter.

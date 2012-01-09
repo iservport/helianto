@@ -1,7 +1,7 @@
 package org.helianto.resource.form;
 
 import org.helianto.core.Entity;
-import org.helianto.document.base.AbstractPrivateControl;
+import org.helianto.core.filter.form.AbstractControllable;
 import org.helianto.resource.domain.ResourceGroup;
 
 /**
@@ -9,7 +9,15 @@ import org.helianto.resource.domain.ResourceGroup;
  * 
  * @author mauriciofernandesdecastro
  */
-public class CompositeResourceForm extends AbstractPrivateControl implements ResourceGroupForm {
+public class CompositeResourceForm 
+
+	extends AbstractControllable 
+	
+	implements 
+	  ResourceGroupForm
+	, Cloneable
+
+{
 
 	private static final long serialVersionUID = 1L;
 	private char type;
@@ -106,6 +114,49 @@ public class CompositeResourceForm extends AbstractPrivateControl implements Res
 	}
 	public void setResourceType(char resourceType) {
 		this.resourceType = resourceType;
+	}
+	
+	/**
+	 * Create a clone and set its parent.
+	 * 
+	 * @param parent
+	 */
+	public CompositeResourceForm clone(ResourceGroup parent) {
+		try {
+			CompositeResourceForm form = (CompositeResourceForm) clone();
+			form.setParent(parent);
+			return form;
+		} catch (CloneNotSupportedException e) {
+			throw new UnsupportedOperationException("Unable to create clone.");
+		}
+	}
+
+	/**
+	 * Create a clone and set its parent.
+	 * 
+	 * @param parent
+	 * @param resourceType
+	 */
+	public CompositeResourceForm clone(ResourceGroup parent, char resourceType) {
+		CompositeResourceForm form = (CompositeResourceForm) clone(parent);
+		form.setResourceType(resourceType);
+		return form;
+	}
+
+	/**
+	 * Create a clone and set its child.
+	 * 
+	 * @param child
+	 * @param resourceType
+	 */
+	public CompositeResourceForm cloneChild(ResourceGroup child) {
+		try {
+			CompositeResourceForm form = (CompositeResourceForm) clone();
+			form.setChild(child);
+			return form;
+		} catch (CloneNotSupportedException e) {
+			throw new UnsupportedOperationException("Unable to create clone.");
+		}
 	}
 
 }

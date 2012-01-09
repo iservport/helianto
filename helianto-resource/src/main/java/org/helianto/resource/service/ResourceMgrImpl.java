@@ -31,6 +31,8 @@ import org.helianto.resource.domain.ResourceAssociation;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.domain.ResourceParameter;
 import org.helianto.resource.domain.ResourceParameterValue;
+import org.helianto.resource.filter.ResourceGroupFormFilterAdapter;
+import org.helianto.resource.form.ResourceGroupForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,18 @@ public class ResourceMgrImpl implements ResourceMgr {
     	return resourceTree;
     }
 
+	public List<ResourceGroup> findResourceGroups(ResourceGroupForm form) {
+		Filter filter = new ResourceGroupFormFilterAdapter(form);
+		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(filter);
+		if (logger.isDebugEnabled() && resourceGroupList!=null) {
+			logger.debug("Found resource group list of size {}", resourceGroupList.size());
+		}
+		return resourceGroupList;
+	}
+    
+	/**
+	 * @deprecated
+	 */
 	public List<ResourceGroup> findResourceGroups(Filter resourceGroupFilter) {
 		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(resourceGroupFilter);
 		if (logger.isDebugEnabled() && resourceGroupList!=null) {
