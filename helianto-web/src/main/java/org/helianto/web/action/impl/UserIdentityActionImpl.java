@@ -18,19 +18,19 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * 
  * @author mauriciofernandesdecastro
  */
-@Component("userAction")
-public class UserActionImpl extends UserGroupActionImpl {
+@Component("userIdentityAction")
+public class UserIdentityActionImpl extends UserActionImpl {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Override
-	protected List<UserGroup> doFilter(MutableAttributeMap attributes, Filter filter) {
-		UserGroup parent = (UserGroup) attributes.get("userGroup", UserGroup.class);
+	protected List<UserGroup> doFilter(MutableAttributeMap attributes, Filter filter, PublicUserDetails userDetails) {
+		Identity identity = (Identity) attributes.get("identity");
 		CompositeUserForm form = getForm(attributes);
-		form.setUserGroupType('U');
-		if (parent!=null) {
-			form = form.clone(parent);
-			logger.debug("Filter restricted to descendants of {}.", parent);
+		if (identity!=null) {
+			form = form.clone(identity);
+			form.setEntity(userDetails.getEntity());
+			logger.debug("Filter restricted to identity {} and entity {}.", identity, userDetails.getEntity());
 		}
 		return doFilter(form);
 	}
@@ -49,6 +49,6 @@ public class UserActionImpl extends UserGroupActionImpl {
 		throw new IllegalArgumentException("An identity is required to create an user.");
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(UserActionImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(UserIdentityActionImpl.class);
 	
 }

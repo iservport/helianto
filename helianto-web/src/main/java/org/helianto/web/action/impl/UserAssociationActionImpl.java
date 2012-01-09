@@ -32,14 +32,18 @@ public class UserAssociationActionImpl extends UserGroupAssociationActionImpl {
 		if (parent==null) {
 			throw new IllegalArgumentException("An user group is required in scope before association creation.");			
 		}
-		Credential credential = (Credential) attributes.get("credential");
-		if (credential==null) {
-			throw new IllegalArgumentException("A credential is required in scope before association creation.");			
+		User child = (User) attributes.get("user");
+		if (child!=null) {
+		    return new UserAssociation(parent, child);
 		}
-		UserGroup child = new User(parent, credential);
-		child.setAccountNonExpired(true);
-		logger.debug("Association has {} and {}.", parent, child);
-	    return new UserAssociation(parent, child);
+		Credential credential = (Credential) attributes.get("credential");
+		if (credential!=null) {
+			child = new User(parent, credential);
+			child.setAccountNonExpired(true);
+			logger.debug("Association has {} and {}.", parent, child);
+		    return new UserAssociation(parent, child);
+		}
+		return new UserAssociation(parent);
 	}
 	
 	

@@ -47,9 +47,10 @@ public class UserGroupActionImpl extends AbstractFilterAction<UserGroup> {
 	
 	@Override
 	protected List<UserGroup> doFilter(MutableAttributeMap attributes, Filter filter) {
-		CompositeUserForm form = getForm(attributes).clone(null);
+		CompositeUserForm form = getForm(attributes).clone((UserGroup) null);
 		((AbstractUserForm) form).setUserGroupType('G');
 		((AbstractUserForm) form).setUserState(UserState.ACTIVE.getValue());
+		logger.debug("Filter restricted to active users.");
 		return doFilter(form);
 	}
 	

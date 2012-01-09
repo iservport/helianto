@@ -20,6 +20,7 @@ public abstract class AbstractUserForm
 	implements 
 	  IdentityForm
 	, UserGroupForm 
+	, ContactGroupForm 
 
 {
 
@@ -157,4 +158,19 @@ public abstract class AbstractUserForm
         this.exclusions = exclusions;
     }
 
+    /**
+     * Helper method to clone the form and set an identity.
+     * 
+     * @param identity
+     */
+    public CompositeUserForm clone(Identity identity) {
+    	try {
+    		CompositeUserForm form = (CompositeUserForm) super.clone();
+    		form.setIdentity(identity);
+    		return form;
+		} catch (CloneNotSupportedException e) {
+			throw new UnsupportedOperationException("Unable to clone CompositeUserForm.");
+		}
+    }
+    
 }
