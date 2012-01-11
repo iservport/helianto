@@ -26,6 +26,8 @@ import org.helianto.core.service.SequenceMgr;
 import org.helianto.document.Document;
 import org.helianto.document.PrivateDocument;
 import org.helianto.document.Serializer;
+import org.helianto.document.filter.SerializerFormFilterAdapter;
+import org.helianto.document.form.SerializerForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -102,6 +104,15 @@ public class DocumentMgrImpl implements DocumentMgr {
 	
 	public List<? extends Serializer> findSerializers(Filter serializerFilter) {
     	List<Serializer> serializerList = (List<Serializer>) serializerDao.find(serializerFilter);
+    	if (logger.isDebugEnabled() && serializerList!=null) {
+    		logger.debug("Found serializer list of size {}", serializerList.size());
+    	}
+    	return serializerList;
+	}
+	
+	public List<? extends Serializer> findSerializers(SerializerForm form) {
+		Filter filter = new SerializerFormFilterAdapter<SerializerForm>(form);
+    	List<Serializer> serializerList = (List<Serializer>) serializerDao.find(filter);
     	if (logger.isDebugEnabled() && serializerList!=null) {
     		logger.debug("Found serializer list of size {}", serializerList.size());
     	}

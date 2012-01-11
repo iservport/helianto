@@ -22,6 +22,7 @@ import org.helianto.core.filter.Filter;
 import org.helianto.document.Document;
 import org.helianto.document.PrivateDocument;
 import org.helianto.document.Serializer;
+import org.helianto.document.form.SerializerForm;
 
 /**
  * Document service interface.
@@ -83,7 +84,15 @@ public interface DocumentMgr {
 	 * Find a <code>Serializer</code> list.
 	 * 
 	 * @param serializerFilter
+	 * @deprecated
 	 */
 	public List<? extends Serializer> findSerializers(Filter serializerFilter);
+	
+	/**
+	 * Find a <code>Serializer</code> list.
+	 * 
+	 * @param serializerFilter
+	 */
+	public List<? extends Serializer> findSerializers(SerializerForm form);
 	
 }
