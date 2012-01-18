@@ -2,7 +2,6 @@ package org.helianto.core.filter.form;
 
 import org.helianto.core.Identity;
 import org.helianto.core.Resettable;
-import org.helianto.core.TrunkEntity;
 import org.helianto.core.UserGroup;
 
 /**
@@ -13,23 +12,13 @@ import org.helianto.core.UserGroup;
 public interface UserGroupForm 
 
 	extends 
-	  TrunkEntity
+	  UserForm
 	, ParentListForm<UserGroup>
 	, PersonalForm
 	, ExclusionForm<Identity>
 	, Resettable 
 
 {
-	
-	/**
-	 * User key.
-	 */
-	public String getUserKey();
-	
-	/**
-	 * User state.
-	 */
-	public char getUserState();
 	
 	/**
      * User group type.

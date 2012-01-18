@@ -53,6 +53,16 @@ public class CompositeUserForm
 		setEntity(entity);
 	}
     
+    /**
+     * Parent constructor.
+     * 
+     * @param entity
+     */
+    public CompositeUserForm(UserGroup parent) {
+		this();
+		setParent(parent);
+	}
+    
     public void reset() { 
     	setUserType(' ');
     	setUserState(' ');
