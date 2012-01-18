@@ -1,4 +1,4 @@
-package org.helianto.partner;
+package org.helianto.partner.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
