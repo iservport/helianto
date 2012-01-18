@@ -19,9 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.helianto.core.Entity;
+import org.helianto.core.UserGroup;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.filter.Filter;
+import org.helianto.partner.domain.ContactGroup;
 import org.helianto.partner.domain.Partner;
+import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateAddress;
@@ -29,6 +32,8 @@ import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.domain.nature.Division;
+import org.helianto.partner.form.ContactGroupForm;
+import org.helianto.partner.form.PartnerCategoryForm;
 import org.helianto.partner.form.PartnerForm;
 import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
@@ -57,13 +62,6 @@ public interface PartnerMgr {
      */
 	public List<PrivateEntity> findPrivateEntities(Filter privateEntityFilter);
 	
-    /**
-     * Prepare <code>PrivateEntity</code> to the application layer.
-     * 
-     * @param privateEntity
-     */
-    public PrivateEntity preparePrivateEntity(PrivateEntity privateEntity);
-
     /**
      * Write <code>PrivateEntity</code> to the datastore.
      * 
@@ -141,8 +139,18 @@ public interface PartnerMgr {
      */
 	public PrivateEntity removePartnerKey(PartnerKey partnerKey);
 	
+    /**
+     * Find <code>PartnerPhone</code>.
+     * 
+     * @param partnerFilter
+     */
 	public List<PartnerPhone> findPartnerPhones(PartnerPhoneForm form);
 
+    /**
+     * Write <code>PartnerPhone</code> to the datastore.
+     * 
+     * @param partnerKey
+     */
 	public PartnerPhone storePartnerPhone(PartnerPhone phone);
 
     /**
@@ -207,7 +215,34 @@ public interface PartnerMgr {
      * @param privateEntityKey
      */
 	public PrivateEntityKey storePrivateEntityKey(PrivateEntityKey privateEntityKey);
+	
+	/**
+     * Find <code>ContactGroup</code>.
+     * 
+     * @param form
+     */
+	public List<? extends UserGroup> findContactGroups(ContactGroupForm form);
+	
+    /**
+     * Write <code>ContactGroup</code> to the datastore.
+     * 
+     * @param privateEntityKey
+     */
+	public ContactGroup storeContactGroup(ContactGroup contactGroup);
 
+    /**
+     * Find <code>PartnerCategory</code>.
+     * 
+     * @param partnerFilter
+     */
+	public List<PartnerCategory> findPartnerCategories(PartnerCategoryForm form);
+
+    /**
+     * Write <code>PartnerCategory</code> to the datastore.
+     * 
+     * @param partnerCategory
+     */
+	public PartnerCategory storePartnerCategory(PartnerCategory partnerCategory);
 
 	
 }

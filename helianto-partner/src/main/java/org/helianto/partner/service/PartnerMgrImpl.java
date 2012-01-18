@@ -15,7 +15,6 @@
 
 package org.helianto.partner.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.UserGroup;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.KeyTypeFilterAdapter;
@@ -35,7 +35,9 @@ import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.PartnerState;
+import org.helianto.partner.domain.ContactGroup;
 import org.helianto.partner.domain.Partner;
+import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateAddress;
@@ -49,10 +51,15 @@ import org.helianto.partner.domain.nature.Laboratory;
 import org.helianto.partner.domain.nature.Manufacturer;
 import org.helianto.partner.domain.nature.Supplier;
 import org.helianto.partner.domain.nature.TransportPartner;
+import org.helianto.partner.filter.ContactGroupFormFilterAdapter;
+import org.helianto.partner.filter.PartnerCategoryFormFilterAdapter;
 import org.helianto.partner.filter.PartnerFormFilterAdapter;
+import org.helianto.partner.filter.PartnerPhoneFormFilterAdapter;
 import org.helianto.partner.filter.PrivateAddressFormFilterAdapter;
 import org.helianto.partner.filter.PrivateEntityFormFilterAdapter;
 import org.helianto.partner.filter.PrivateEntityKeyFormFilterAdapter;
+import org.helianto.partner.form.ContactGroupForm;
+import org.helianto.partner.form.PartnerCategoryForm;
 import org.helianto.partner.form.PartnerForm;
 import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
@@ -90,15 +97,6 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return privateEntityList;
 	}
 
-	public PrivateEntity preparePrivateEntity(PrivateEntity privateEntity) {
-		PrivateEntity managedPartnerRegistry = privateEntityDao.merge(privateEntity);
-		managedPartnerRegistry.setPartnerList(new ArrayList<Partner>(managedPartnerRegistry.getPartners()));
-		managedPartnerRegistry.setAddressList(new ArrayList<PrivateAddress>(managedPartnerRegistry.getAddresses()));
-		managedPartnerRegistry.setPartnerRegistryKeyList(new ArrayList<PrivateEntityKey>(managedPartnerRegistry.getPartnerRegistryKeys()));
-		privateEntityDao.evict(managedPartnerRegistry);
-		return managedPartnerRegistry;
-	}
-	
 	public PrivateEntity storePrivateEntity(PrivateEntity privateEntity) {
 		privateEntityDao.saveOrUpdate(privateEntity);
 		sequenceMgr.validateInternalNumber(privateEntity);
@@ -233,12 +231,17 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 	
 	public List<PartnerPhone> findPartnerPhones(PartnerPhoneForm form) {
-		// TODO Auto-generated method stub
-		return null;
+		PartnerPhoneFormFilterAdapter filter = new PartnerPhoneFormFilterAdapter(form);
+		List<PartnerPhone> partnerPhoneList = (List<PartnerPhone>) partnerPhoneDao.find(filter);
+    	if (logger.isDebugEnabled() && partnerPhoneList!=null) {
+    		logger.debug("Found partner phone list of size {}", partnerPhoneList.size());
+    	}
+		return partnerPhoneList;
 	}
 
 	public PartnerPhone storePartnerPhone(PartnerPhone phone) {
-		return phoneDao.merge(phone);
+		partnerPhoneDao.saveOrUpdate(phone);
+		return phone;
 	}
 
 	public PrivateEntity removePartnerPhone(PartnerPhone phone) {
@@ -369,6 +372,34 @@ public class PartnerMgrImpl implements PartnerMgr {
 		privateEntityKeyDao.saveOrUpdate(privateEntityKey);
 		return privateEntityKey;
 	}
+	
+	public List<PartnerCategory> findPartnerCategories(PartnerCategoryForm form) {
+		PartnerCategoryFormFilterAdapter filter = new PartnerCategoryFormFilterAdapter(form);
+		List<PartnerCategory> partnerCategoryList = (List<PartnerCategory>) partnerCategoryDao.find(filter);
+    	if (logger.isDebugEnabled() && partnerCategoryList!=null) {
+    		logger.debug("Found partner category list of size {}", partnerCategoryList.size());
+    	}
+		return partnerCategoryList;
+	}
+
+	public PartnerCategory storePartnerCategory(PartnerCategory partnerCategory) {
+		partnerCategoryDao.saveOrUpdate(partnerCategory);
+		return partnerCategory;
+	}
+
+	public List<? extends UserGroup> findContactGroups(ContactGroupForm form) {
+		Filter filter = new ContactGroupFormFilterAdapter(form);
+		List<? extends UserGroup> contactGroupList = (List<? extends UserGroup>) userGroupDao.find(filter);
+    	if (logger.isDebugEnabled() && contactGroupList!=null) {
+    		logger.debug("Found contact group list of size {}", contactGroupList.size());
+    	}
+		return contactGroupList;
+	}
+	
+	public ContactGroup storeContactGroup(ContactGroup contactGroup) {
+		userGroupDao.saveOrUpdate(contactGroup);
+		return contactGroup;
+	}
 
     //- collaborators
     
@@ -378,7 +409,9 @@ public class PartnerMgrImpl implements PartnerMgr {
     private FilterDao<PrivateEntityKey> privateEntityKeyDao;
     private FilterDao<PartnerKey> partnerKeyDao;
     private FilterDao<Province> provinceDao;
-    private FilterDao<PartnerPhone> phoneDao;
+    private FilterDao<PartnerPhone> partnerPhoneDao;
+    private FilterDao<PartnerCategory> partnerCategoryDao;
+    private FilterDao<UserGroup> userGroupDao;
 	private NamespaceMgr namespaceMgr;
 	private SequenceMgr sequenceMgr;
 
@@ -412,10 +445,20 @@ public class PartnerMgrImpl implements PartnerMgr {
 		this.provinceDao = provinceDao;
 	}
     
-    @Resource(name="phoneDao")
-    public void setPhoneDao(FilterDao<PartnerPhone> phoneDao) {
-        this.phoneDao = phoneDao;
-    }
+    @Resource(name="partnerPhoneDao")
+    public void setPartnerPhoneDao(FilterDao<PartnerPhone> partnerPhoneDao) {
+		this.partnerPhoneDao = partnerPhoneDao;
+	}
+    
+    @Resource(name="partnerCategoryDao")
+    public void setPartnerCategoryDao(FilterDao<PartnerCategory> partnerCategoryDao) {
+		this.partnerCategoryDao = partnerCategoryDao;
+	}
+    
+    @Resource(name="userGroupDao")
+    public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
+		this.userGroupDao = userGroupDao;
+	}
     
 	@Resource(name="namespaceMgr")
 	public void setNamespaceMgr(NamespaceMgr namespaceMgr) {
