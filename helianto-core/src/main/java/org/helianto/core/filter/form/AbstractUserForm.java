@@ -20,7 +20,6 @@ public abstract class AbstractUserForm
 	implements 
 	  IdentityForm
 	, UserGroupForm 
-	, ContactGroupForm 
 
 {
 
