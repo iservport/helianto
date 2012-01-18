@@ -18,13 +18,11 @@ package org.helianto.partner.domain;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -76,9 +74,7 @@ public class PrivateEntity
     private Set<PrivateAddress> addresses = new HashSet<PrivateAddress>(0);
     private Set<PrivateEntityKey> partnerRegistryKeys = new HashSet<PrivateEntityKey>(0);
     private Set<PartnerPhone> phones = new HashSet<PartnerPhone>(0);
-    private @Transient List<Partner> partnerList;
-    private @Transient List<PrivateAddress> addressList;
-    private @Transient List<PrivateEntityKey> partnerRegistryKeyList;
+    private Set<ContactGroup> contactGroups = new HashSet<ContactGroup>(0);
 
     /** 
      * Empty constructor.
@@ -368,17 +364,6 @@ public class PrivateEntity
     }
 
     /**
-     * <<Transient>> Convenience to hold ordered partner list.
-     */
-	@Transient
-    public List<Partner> getPartnerList() {
-    	return this.partnerList;
-    }
-    public void setPartnerList(List<Partner> partnerList) {
-        this.partnerList = partnerList;
-    }
-    
-    /**
      * Addresses.
      */
     @OneToMany(mappedBy="privateEntity")
@@ -400,17 +385,6 @@ public class PrivateEntity
     }
 	
     /**
-     * <<Transient>> Convenience to hold ordered address list.
-     */
-	@Transient
-    public List<PrivateAddress> getAddressList() {
-    	return this.addressList;
-    }
-    public void setAddressList(List<PrivateAddress> addressList) {
-        this.addressList = addressList;
-    }
-    
-    /**
      * Partner registry keys.
      */
     @OneToMany(mappedBy="privateEntity", cascade=CascadeType.ALL)
@@ -424,13 +398,24 @@ public class PrivateEntity
     /**
      * Phones.
      */
-    @OneToMany(mappedBy="partnerRegistry", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="privateEntity")
     public Set<PartnerPhone> getPhones() {
         return this.phones;
     }
     public void setPhones(Set<PartnerPhone> phones) {
         this.phones = phones;
     }
+    
+    /**
+     * Contact groups.
+     */
+    @OneToMany(mappedBy="privateEntity")
+    public Set<ContactGroup> getContactGroups() {
+		return contactGroups;
+	}
+    public void setContactGroups(Set<ContactGroup> contactGroups) {
+		this.contactGroups = contactGroups;
+	}
 
 	/**
 	 * Convenience to add a key type-value pair to the registry.
@@ -445,17 +430,6 @@ public class PrivateEntity
 		return getPartnerRegistryKeys().add(partnerRegistryKey);
 	}
 
-    /**
-     * <<Transient>> Convenience to hold ordered partner key list.
-     */
-	@Transient
-    public List<PrivateEntityKey> getPartnerRegistryKeyList() {
-    	return this.partnerRegistryKeyList;
-    }
-    public void setPartnerRegistryKeyList(List<PrivateEntityKey> partnerRegistryKeyList) {
-        this.partnerRegistryKeyList = partnerRegistryKeyList;
-    }
-    
 	/**
 	 * Update fields provided by <code>PublicAddress</code>.
 	 * 
