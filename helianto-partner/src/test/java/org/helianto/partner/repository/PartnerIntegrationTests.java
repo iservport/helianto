@@ -19,12 +19,15 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Category;
 import org.helianto.core.KeyType;
+import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.partner.domain.Account;
 import org.helianto.partner.domain.Partner;
+import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateAddress;
@@ -58,10 +61,12 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	@Resource BasicDao<PrivateAddress> addressDao;
 	@Resource FilterDao<Partner> partnerDao;
 	@Resource BasicDao<PartnerKey> partnerKeyDao;
-	@Resource BasicDao<PartnerPhone> phoneDao;
+	@Resource BasicDao<PartnerPhone> partnerPhoneDao;
 	@Resource FilterDao<PrivateEntity> privateEntityDao;
-	@Resource BasicDao<PrivateEntityKey> privateEntityKeyDao;
-	@Resource BasicDao<KeyType> keyTypeDao;
+	@Resource FilterDao<PartnerCategory> partnerCategoryDao;
+	@Resource FilterDao<Category> categoryDao;
+	@Resource FilterDao<PrivateEntityKey> privateEntityKeyDao;
+	@Resource FilterDao<KeyType> keyTypeDao;
 
 	@Test
 	public void partner() {
@@ -77,35 +82,54 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		privateEntityKeyDao.saveOrUpdate(partnerRegistryKey);
 		assertEquals(partnerRegistryKey, privateEntityKeyDao.findUnique(partnerRegistryKey.getPrivateEntity(), partnerRegistryKey.getKeyType()));
 
+		PartnerPhone partnerPhone = new PartnerPhone(partnerRegistry, 100);
+		partnerPhoneDao.saveOrUpdate(partnerPhone);
+		assertEquals(partnerPhone, partnerPhoneDao.findUnique(partnerPhone.getPrivateEntity(), 100));
+
 		Partner partner = partnerDao.merge(PartnerTestSupport.createPartner(partnerRegistry));
 		assertEquals(partner, partnerDao.findUnique(partner.getPrivateEntity(), 'P'));
 
 		Agent agent = new Agent(partnerRegistry);
-		assertEquals(partnerDao.merge(agent), partnerDao.findUnique(agent.getPrivateEntity(), 'A'));
+		partnerDao.saveOrUpdate(agent);
+		assertEquals(agent, partnerDao.findUnique(agent.getPrivateEntity(), 'A'));
 
 		Customer customer = new Customer(partnerRegistry);
-		assertEquals(partnerDao.merge(customer), partnerDao.findUnique(customer.getPrivateEntity(), 'C'));
+		partnerDao.saveOrUpdate(customer);
+		assertEquals(customer, partnerDao.findUnique(customer.getPrivateEntity(), 'C'));
 
 		Division division = new Division(partnerRegistry);
-		assertEquals(partnerDao.merge(division), partnerDao.findUnique(division.getPrivateEntity(), 'D'));
+		partnerDao.saveOrUpdate(division);
+		assertEquals(division, partnerDao.findUnique(division.getPrivateEntity(), 'D'));
 
 		Laboratory laboratory = new Laboratory(partnerRegistry);
-		assertEquals(partnerDao.merge(laboratory), partnerDao.findUnique(laboratory.getPrivateEntity(), 'L'));
+		partnerDao.saveOrUpdate(laboratory);
+		assertEquals(laboratory, partnerDao.findUnique(laboratory.getPrivateEntity(), 'L'));
 
 		Manufacturer manufacturer = new Manufacturer(partnerRegistry);
-		assertEquals(partnerDao.merge(manufacturer), partnerDao.findUnique(manufacturer.getPrivateEntity(), 'M'));
+		partnerDao.saveOrUpdate(manufacturer);
+		assertEquals(manufacturer, partnerDao.findUnique(manufacturer.getPrivateEntity(), 'M'));
 
 		Supplier supplier = new Supplier(partnerRegistry);
-		assertEquals(partnerDao.merge(supplier), partnerDao.findUnique(supplier.getPrivateEntity(), 'S'));
+		partnerDao.saveOrUpdate(supplier);
+		assertEquals(supplier, partnerDao.findUnique(supplier.getPrivateEntity(), 'S'));
 
 		TransportPartner transport = new TransportPartner(partnerRegistry);
-		assertEquals(partnerDao.merge(transport), partnerDao.findUnique(transport.getPrivateEntity(), 'T'));
+		partnerDao.saveOrUpdate(transport);
+		assertEquals(transport, partnerDao.findUnique(transport.getPrivateEntity(), 'T'));
 
 		PartnerKey partnerKey = PartnerKeyTestSupport.createPartnerKey(partner, keyType);
-		assertEquals(partnerKeyDao.merge(partnerKey), partnerKeyDao.findUnique(partnerKey.getPartner(), partnerKey.getKeyType()));
+		partnerKeyDao.saveOrUpdate(partnerKey);
+		assertEquals(partnerKey, partnerKeyDao.findUnique(partnerKey.getPartner(), partnerKey.getKeyType()));
+
+		Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "CATEGORY");
+		categoryDao.saveOrUpdate(category);
+		PartnerCategory partnerCategory =  new PartnerCategory(partner, category);
+		partnerCategoryDao.saveOrUpdate(partnerCategory);
+		assertEquals(partnerCategory, partnerCategoryDao.findUnique(partner, category));
 
 		PrivateAddress address = AddressTestSupport.createAddress(partnerRegistry);
-		assertEquals(addressDao.merge(address), addressDao.findUnique(address.getPartnerRegistry(), address.getSequence()));
+		addressDao.saveOrUpdate(address);
+		assertEquals(address, addressDao.findUnique(address.getPartnerRegistry(), address.getSequence()));
 		
 	}
 

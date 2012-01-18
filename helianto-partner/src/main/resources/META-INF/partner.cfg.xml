@@ -6,11 +6,13 @@
 		<mapping class="org.helianto.partner.domain.Account" />
 		<mapping class="org.helianto.partner.domain.Contact" />
 		<mapping class="org.helianto.partner.domain.Partner" />
+		<mapping class="org.helianto.partner.domain.PartnerCategory" />
 		<mapping class="org.helianto.partner.domain.PartnerKey" />
 		<mapping class="org.helianto.partner.domain.PartnerPhone" />
 		<mapping class="org.helianto.partner.domain.PrivateAddress" />
 		<mapping class="org.helianto.partner.domain.PrivateEntity" />
 		<mapping class="org.helianto.partner.domain.PrivateEntityKey" />
+		<mapping class="org.helianto.partner.domain.ContactGroup" />
 
 		<mapping class="org.helianto.partner.domain.nature.Agent" />
 		<mapping class="org.helianto.partner.domain.nature.Customer" />
