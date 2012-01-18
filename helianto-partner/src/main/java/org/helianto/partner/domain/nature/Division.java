@@ -16,6 +16,7 @@
 package org.helianto.partner.domain.nature;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
 import org.helianto.partner.DivisionType;
@@ -34,6 +35,14 @@ public class Division extends Partner implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private char divisionType;
+
+    /**
+     * <<Transient>> Discriminator.
+     */
+    @Transient
+    public char getDiscriminator() {
+    	return 'D';
+    }
 
 	/**
      * Default constructor.

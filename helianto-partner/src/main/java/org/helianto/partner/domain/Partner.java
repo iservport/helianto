@@ -15,9 +15,7 @@
 
 package org.helianto.partner.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -85,8 +83,14 @@ public class Partner
     private char partnerState;
     private char taxClass;
     private Set<PartnerKey> partnerKeys = new HashSet<PartnerKey>(0);
-    // transient
-    private List<PartnerKey> partnerKeyList = new ArrayList<PartnerKey>(0);
+    
+    /**
+     * <<Transient>> Discriminator.
+     */
+    @Transient
+    public char getDiscriminator() {
+    	return 'P';
+    }
 
 	/**
 	 *  Empty constructor
@@ -461,16 +465,16 @@ public class Partner
 		this.partnerKeys = partnerKeys;
 	}
 	
-	/**
-	 * <<Transient>> Partner key list.
-	 */
-	@Transient
-	public List<PartnerKey> getPartnerKeyList() {
-		return partnerKeyList;
-	}
-	public void setPartnerKeyList(List<PartnerKey> partnerKeyList) {
-		this.partnerKeyList = partnerKeyList;
-	}
+//	/**
+//	 * <<Transient>> Partner key list.
+//	 */
+//	@Transient
+//	public List<PartnerKey> getPartnerKeyList() {
+//		return partnerKeyList;
+//	}
+//	public void setPartnerKeyList(List<PartnerKey> partnerKeyList) {
+//		this.partnerKeyList = partnerKeyList;
+//	}
 
 	/**
 	 * Convenience to add a key type-value pair to the partner.

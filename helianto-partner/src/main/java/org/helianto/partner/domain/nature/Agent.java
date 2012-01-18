@@ -16,6 +16,7 @@
 package org.helianto.partner.domain.nature;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
 import org.helianto.partner.domain.Partner;
@@ -33,6 +34,14 @@ public class Agent extends Partner implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private float agentComission;
+
+    /**
+     * <<Transient>> Discriminator.
+     */
+    @Transient
+    public char getDiscriminator() {
+    	return 'A';
+    }
 
 	/**
 	 *  Empty constructor
