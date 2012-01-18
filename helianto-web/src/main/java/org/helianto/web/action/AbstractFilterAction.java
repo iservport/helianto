@@ -369,8 +369,11 @@ public abstract class AbstractFilterAction<T> extends AbstractAction<T> {
 	 * Hook to the actual filter action.
 	 * 
 	 * @param filter
+	 * @deprecated
 	 */
-	protected abstract List<T> doFilter(Filter filter);
+	 protected List<T> doFilter(Filter filter) {
+	       throw new UnsupportedOperationException("Prefer doFilter(form)!");
+	 }
 
 	/**
 	 * True if the attribute map has a not null filter.
