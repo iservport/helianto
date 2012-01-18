@@ -39,9 +39,17 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 		return identityMgr.findIdentities(form);
 	}
 	
+	/**
+	 * Auto inject principal in filter if present in scope.
+	 */
 	@Override
 	protected List<Identity> doFilter(MutableAttributeMap attributes, Filter filter) {
 		CompositeUserForm form = getForm(attributes);
+		String principal = attributes.getRequiredString("principal");
+		if (principal!=null && principal.length()>0) {
+			form.setPrincipal(principal);
+			logger.debug("Indentity filter constrained by principall {}., principal");
+		}
 		return doFilter(form);
 	}
 	
