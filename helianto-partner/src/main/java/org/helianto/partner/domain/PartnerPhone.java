@@ -15,7 +15,6 @@
 
 package org.helianto.partner.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
@@ -29,6 +28,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Phone;
 import org.helianto.core.def.PhoneType;
+import org.helianto.core.def.PrivacyLevel;
 /**
  * Private entity phones.
  * 
@@ -53,6 +53,18 @@ public class PartnerPhone implements java.io.Serializable {
      */
     public PartnerPhone() {
     	this("");
+    }
+
+    /** 
+     * Key constructor.
+     * 
+     * @param privateEntity
+     * @param sequence
+     */
+    public PartnerPhone(PrivateEntity privateEntity, int sequence) {
+    	this();
+    	setPrivateEntity(privateEntity);
+    	setSequence(sequence);
     }
 
     /** 
@@ -86,6 +98,7 @@ public class PartnerPhone implements java.io.Serializable {
     	setAreaCode(areaCode);
     	setPhoneNumber(phoneNumber);
     	setPhoneTypeAsEnum(phoneType);
+    	setPrivacyLevelAsEnum(PrivacyLevel.PUBLIC);
     }
 
     /**
@@ -100,10 +113,22 @@ public class PartnerPhone implements java.io.Serializable {
     }
 
     /**
-     * Partner registry.
+     * Private entity.
      */
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
+    public PrivateEntity getPrivateEntity() {
+		return partnerRegistry;
+	}
+    public void setPrivateEntity(PrivateEntity partnerRegistry) {
+		this.partnerRegistry = partnerRegistry;
+	}
+
+    /**
+     * Old name to private entity, kept for legacy.
+     * @deprecated
+     */
+    @Transient
     public PrivateEntity getPartnerRegistry() {
 		return partnerRegistry;
 	}
@@ -169,6 +194,17 @@ public class PartnerPhone implements java.io.Serializable {
     }
 
     /**
+     * Branch.
+     */
+    @Transient
+    public String getBranch() {
+        return getPhone().getBranch();
+    }
+    public void setBranch(String branch) {
+    	getPhone().setBranch(branch);
+    }
+
+    /**
      * Comment.
      */
     @Column(length=20)
@@ -187,6 +223,9 @@ public class PartnerPhone implements java.io.Serializable {
     }
     public void setPrivacyLevel(char privacyLevel) {
         this.privacyLevel = privacyLevel;
+    }
+    public void setPrivacyLevelAsEnum(PrivacyLevel privacyLevel) {
+        this.privacyLevel = privacyLevel.getValue();
     }
 
     /**
@@ -226,7 +265,7 @@ public class PartnerPhone implements java.io.Serializable {
          if ( !(other instanceof PartnerPhone) ) return false;
          PartnerPhone castOther = (PartnerPhone) other; 
          
-         return ((this.getPartnerRegistry()==castOther.getPartnerRegistry()) || ( this.getPartnerRegistry()!=null && castOther.getPartnerRegistry()!=null && this.getPartnerRegistry().equals(castOther.getPartnerRegistry()) ))
+         return ((this.getPrivateEntity()==castOther.getPrivateEntity()) || ( this.getPrivateEntity()!=null && castOther.getPrivateEntity()!=null && this.getPrivateEntity().equals(castOther.getPrivateEntity()) ))
              && ((this.getSequence()==castOther.getSequence()));
    }
    
@@ -235,7 +274,7 @@ public class PartnerPhone implements java.io.Serializable {
     */
    public int hashCode() {
          int result = 17;
-         result = 37 * result + ( getPartnerRegistry() == null ? 0 : this.getPartnerRegistry().hashCode() );
+         result = 37 * result + ( getPrivateEntity() == null ? 0 : this.getPrivateEntity().hashCode() );
          result = 37 * result + (int) this.getSequence();
          return result;
    }   
