@@ -1,8 +1,11 @@
 package org.helianto.partner.form;
 
+import org.helianto.core.Category;
 import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.filter.form.CompositeEntityForm;
+import org.helianto.core.filter.form.KeyTypeForm;
+import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
 
 /**
@@ -20,6 +23,9 @@ public class CompositePartnerForm
 	, PrivateAddressForm
 	, PrivateEntityKeyForm
 	, PartnerPhoneForm
+	, KeyTypeForm
+	, PartnerCategoryForm
+	, ContactGroupForm
 	  
 {
 
@@ -35,6 +41,10 @@ public class CompositePartnerForm
     private String keyValue;
     private String areaCode;
     private char phoneType;
+    private Partner partner;
+    private Category category;
+    private String userKey;
+    private char userState;
 	
 	/**
 	 * Entity constructor.
@@ -54,6 +64,16 @@ public class CompositePartnerForm
 	public CompositePartnerForm(PrivateEntity parent) {
 		this(parent.getEntity());
 		setParent(parent);
+	}
+	
+	/**
+	 * Partner constructor.
+	 * 
+	 * @param partner
+	 */
+	public CompositePartnerForm(Partner partner) {
+		this(partner.getEntity());
+		setPartner(partner);
 	}
 	
 	public char getAddressType() {
@@ -142,6 +162,34 @@ public class CompositePartnerForm
 	}
 	public void setPhoneType(char phoneType) {
 		this.phoneType = phoneType;
+	}
+	
+	public Partner getPartner() {
+		return partner;
+	}
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+	
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	public String getUserKey() {
+		return userKey;
+	}
+	public void setUserKey(String userKey) {
+		this.userKey = userKey;
+	}
+	
+	public char getUserState() {
+		return userState;
+	}
+	public void setUserState(char userState) {
+		this.userState = userState;
 	}
 	
 	/**
