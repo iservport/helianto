@@ -83,6 +83,7 @@ public class Partner
     private char partnerState;
     private char taxClass;
     private Set<PartnerKey> partnerKeys = new HashSet<PartnerKey>(0);
+    private Set<PartnerCategory> partnerCategories = new HashSet<PartnerCategory>(0);
     
     /**
      * <<Transient>> Discriminator.
@@ -457,7 +458,7 @@ public class Partner
     /**
      * Partner keys.
      */
-    @OneToMany(mappedBy="partner", cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy="partner")
     public Set<PartnerKey> getPartnerKeys() {
 		return partnerKeys;
 	}
@@ -465,17 +466,17 @@ public class Partner
 		this.partnerKeys = partnerKeys;
 	}
 	
-//	/**
-//	 * <<Transient>> Partner key list.
-//	 */
-//	@Transient
-//	public List<PartnerKey> getPartnerKeyList() {
-//		return partnerKeyList;
-//	}
-//	public void setPartnerKeyList(List<PartnerKey> partnerKeyList) {
-//		this.partnerKeyList = partnerKeyList;
-//	}
-
+    /**
+     * Partner categories.
+     */
+    @OneToMany(mappedBy="partner")
+	public Set<PartnerCategory> getPartnerCategories() {
+		return partnerCategories;
+	}
+	public void setPartnerCategories(Set<PartnerCategory> partnerCategories) {
+		this.partnerCategories = partnerCategories;
+	}
+	
 	/**
 	 * Convenience to add a key type-value pair to the partner.
 	 * 
