@@ -20,8 +20,8 @@ import java.io.IOException;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
 
+import org.helianto.core.def.Uploadable;
 import org.helianto.document.Document;
-import org.helianto.document.Uploadable;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

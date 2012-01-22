@@ -13,7 +13,9 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.core.def;
+
+import java.io.Serializable;
 
 
 /**
@@ -22,7 +24,7 @@ package org.helianto.document;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Uploadable {
+public interface Uploadable extends Serializable {
 	
     /**
      * <<Transient>> True if is a text document.
