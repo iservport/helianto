@@ -37,7 +37,9 @@ public class ContactGroupFormFilterAdapter extends AbstractFilterAdapter<Contact
 	
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
+		if (getForm().getParent()!=null) {
+			appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
+		}
 	}
 	
 	@Override

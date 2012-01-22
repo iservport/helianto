@@ -36,6 +36,7 @@ public class PartnerCategoryFilterAdapterTests {
     public static String OB = "order by alias.category.categoryCode ";
     public static String C1 = "alias.partner.id = 10 ";
     public static String C2 = "alias.category.id = 20 ";
+    public static String C3 = "alias.partner.privateEntity.id = 100 ";
 
     @Test
     public void empty() {
@@ -61,14 +62,22 @@ public class PartnerCategoryFilterAdapterTests {
         assertEquals(C2+OB, filter.createCriteriaAsString());
     }
     
+    @Test
+    public void parent() {
+    	parent.setId(100);
+    	form.setParent(parent);
+        assertEquals(C3+OB, filter.createCriteriaAsString());
+    }
+    
     private PartnerCategoryFormFilterAdapter filter;
     private CompositePartnerForm form;
+    private PrivateEntity parent;
     
     @Before
     public void setUp() {
     	Entity entity = EntityTestSupport.createEntity(1);
-    	PrivateEntity privateEntity = new PrivateEntity(entity, "PRIVATE_ENTITY");
-    	Customer customer = new Customer(privateEntity);
+    	parent = new PrivateEntity(entity, "PRIVATE_ENTITY");
+    	Customer customer = new Customer(parent);
     	Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "CATEGORY");
     	form = new CompositePartnerForm(customer);
     	form.setCategory(category);
