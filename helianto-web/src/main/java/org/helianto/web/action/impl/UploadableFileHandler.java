@@ -3,7 +3,7 @@ package org.helianto.web.action.impl;
 import java.io.IOException;
 import java.io.Serializable;
 
-import org.helianto.document.Uploadable;
+import org.helianto.core.def.Uploadable;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.def.Uploadable;
 import org.helianto.document.PrivateDocument;
-import org.helianto.document.Uploadable;
 import org.helianto.document.filter.PrivateDocumentFilterAdapter;
 import org.helianto.document.service.DocumentMgr;
 import org.helianto.web.action.AbstractRenderController;
