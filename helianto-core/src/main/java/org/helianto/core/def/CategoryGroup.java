@@ -26,7 +26,15 @@ public enum CategoryGroup {
 	/**
 	 * Stock.
 	 */
-	STOCK('S');
+	STOCK('S'),
+	/**
+	 * Product.
+	 */
+	PRODUCT('P'),
+	/**
+	 * Service.
+	 */
+	SERVICE('E');
 	
 	private CategoryGroup(char value) {
 		this.value = value;
