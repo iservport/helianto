@@ -15,18 +15,23 @@
 
 package org.helianto.partner.domain;
 
-import java.io.Serializable;
+import java.io.IOException;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.Category;
+import org.helianto.core.def.Uploadable;
+import org.springframework.web.multipart.MultipartFile;
 /**
  * The category associated to the partner.
  * 
@@ -36,13 +41,16 @@ import org.helianto.core.Category;
 @Table(name="prtnr_category",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerId", "categoryId"})}
 )
-public class PartnerCategory implements Serializable {
+public class PartnerCategory implements Uploadable {
 
     private static final long serialVersionUID = 1L;
     private int id;
     private int version;
     private Partner partner;
     private Category category;
+    private byte[] content;
+    private String encoding;
+    private String multipartFileContentType;
 
     /** 
      * Default constructor.
@@ -58,9 +66,18 @@ public class PartnerCategory implements Serializable {
      * @param category
      */
     public PartnerCategory(Partner partner, Category category) {
+    	this(partner);
+        setCategory(category);
+    }
+
+    /** 
+     * Form constructor.
+     * 
+     * @param partner
+     */
+    public PartnerCategory(Partner partner) {
     	this();
         setPartner(partner);
-        setCategory(category);
     }
 
     /**
@@ -105,6 +122,112 @@ public class PartnerCategory implements Serializable {
     public void setCategory(Category category) {
 		this.category = category;
 	}
+    
+    /**
+     * Partner category content.
+     */
+    @Lob
+    public byte[] getContent() {
+        return this.content;
+    }
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
+    public void setContent(String content) {
+    	this.content = content.getBytes();
+    }
+    
+    /**
+     * Helper method to get text content as String.
+     */
+    @Transient
+    public String getContentAsString() {
+    	if (getContent()!=null && isText()) {
+    		return new String(getContent());
+    	}
+    	return "";
+    }
+    public void setContentAsString(String contentAsString) {
+		setContent(contentAsString);
+	}
+    
+    @Transient
+    public int getContentSize() {
+    	return this.content.length;
+    }
+    
+	@Column(length=32)
+	public String getEncoding() {
+		return this.encoding;
+	}
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
+	@Column(length=32)
+	public String getMultipartFileContentType() {
+		return multipartFileContentType;
+	}
+	public void setMultipartFileContentType(String multipartFileContentType) {
+		this.multipartFileContentType = multipartFileContentType;
+	}
+	
+    // transient
+    private transient MultipartFile file;
+    
+	/**
+	 * <<Transient>> Convenience property to hold uploaded data.
+	 */
+	@Transient
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	
+	/**
+	 * <<Transient>> Convenience method to read uploaded data.
+	 */
+	@Transient
+	public void processFile() throws IOException {
+		setContent(file.getBytes());
+		setMultipartFileContentType(file.getContentType());
+	}
+
+    /**
+     * True if {@link #afterInternalNumberSet(long)} starts with "text".
+     */
+    @Transient
+    public boolean isText() {
+    	if (getMultipartFileContentType().startsWith("text")) {
+    		return true;
+    	}
+    	return false;
+    }
+
+    /**
+     * True if {@link #afterInternalNumberSet(long)} starts with "text/html".
+     */
+    @Transient
+    public boolean isHtml() {
+    	if (getMultipartFileContentType().startsWith("text/html")) {
+    		return true;
+    	}
+    	return false;
+    }
+
+    /**
+     * True if {@link #afterInternalNumberSet(long)} starts with "image".
+     */
+    @Transient
+    public boolean isImage() {
+    	if (getMultipartFileContentType().startsWith("image")) {
+    		return true;
+    	}
+    	return false;
+    }
+
 
     /**
      * equals
