@@ -48,7 +48,7 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 		String principal = attributes.getRequiredString("principal");
 		if (principal!=null && principal.length()>0) {
 			form.setPrincipal(principal);
-			logger.debug("Indentity filter constrained by principall {}., principal");
+			logger.debug("Indentity filter constrained by principall {}.", principal);
 		}
 		return doFilter(form);
 	}
@@ -74,6 +74,11 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 
 	@Override
 	protected Identity doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
+		String principal = attributes.getString("principal");
+		if (principal!=null && principal.length()>0) {
+			logger.debug("Indentity created with principall {}.", principal);
+			return new Identity(principal);
+		}
 		return new Identity("");
 	}
 
