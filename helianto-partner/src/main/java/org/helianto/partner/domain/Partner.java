@@ -18,7 +18,6 @@ package org.helianto.partner.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -155,7 +154,7 @@ public class Partner
      * Never null.
      * </p>
      */
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
     	if (this.privateEntity==null) {
@@ -413,7 +412,7 @@ public class Partner
     /**
      * Account.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="accountId", nullable=true)
     public Account getAccount() {
         return this.account;

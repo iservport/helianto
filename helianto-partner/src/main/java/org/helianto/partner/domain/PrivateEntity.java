@@ -35,6 +35,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
 import org.helianto.core.Phone;
 import org.helianto.core.PublicAddress;
+import org.helianto.core.PublicEntity;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.def.PhoneType;
 import org.helianto.core.number.Sequenceable;
@@ -63,6 +64,7 @@ public class PrivateEntity
 
     private static final long serialVersionUID = 1L;
     private Entity entity;
+    private PublicEntity publicEntity;
     private String partnerAlias;
     private long internalNumber;
     private String partnerName;
@@ -138,11 +140,16 @@ public class PrivateEntity
         setEntityAlias(partnerAlias);
     }
 
-    /**
-     * Entity alias.
+    /** 
+     * Entity alias, copied from public entity if not null.
+     * 
+     * @see #getInternalEntityAlias()
      */
     @Column(length=20, name="partnerAlias")
     public String getEntityAlias() {
+    	if (getPublicEntity()!=null) {
+    		return getPublicEntity().getEntityAlias();
+    	}
         return getInternalEntityAlias();
     }
     public void setEntityAlias(String partnerAlias) {
@@ -177,12 +184,27 @@ public class PrivateEntity
      */
     @Transient
     public void forceToNumber(boolean force) {
+    	if (getPublicEntity()!=null) {
+    		throw new UnsupportedOperationException("Linked entity key must not be forced to a number.");
+    	}
     	if (force) {
         	setEntityAlias("#");
         	setInternalNumber(0);
     	}
     }
 
+    /**
+     * Public entity.
+     */
+    @ManyToOne
+    @JoinColumn(name="publicEntityId", nullable=true)
+    public PublicEntity getPublicEntity() {
+        return this.publicEntity;
+    }
+    public void setPublicEntity(PublicEntity publicEntity) {
+        this.publicEntity = publicEntity;
+    }
+    
     /**
      * PartnerName.
      * @deprecated use entityName instead.
@@ -200,6 +222,9 @@ public class PrivateEntity
      */
     @Column(length=128, name="partnerName")
     public String getEntityName() {
+    	if (getPublicEntity()!=null) {
+    		return getPublicEntity().getEntityName();
+    	}
         return this.partnerName;
     }
     public void setEntityName(String partnerName) {
@@ -211,10 +236,10 @@ public class PrivateEntity
      */
     @Transient
     public String getPartnerShortName() {
-    	if (this.partnerName.length() > 20) {
-            return this.partnerName.substring(0, 20)+"...";
+    	if (getEntityName().length() > 20) {
+            return getEntityName().substring(0, 20)+"...";
     	}
-        return this.partnerName;
+        return getEntityName();
     }
     
     public long getInternalNumber() {
@@ -229,6 +254,9 @@ public class PrivateEntity
      */
     @Embedded
     public Phone getMainPhone() {
+    	if (getPublicEntity()!=null) {
+    		return getPublicEntity().getMainPhone();
+    	}
 		return mainPhone;
 	}
     public void setMainPhone(Phone mainPhone) {
@@ -248,7 +276,7 @@ public class PrivateEntity
         return "";
     }
     public void setPhoneNumber(String phoneNumber) {
-    	if (getMainPhone()!=null) {
+    	if (getPublicEntity()==null && getMainPhone()!=null) {
     		getMainPhone().setPhoneNumber(phoneNumber);
     	}
     }
@@ -264,7 +292,7 @@ public class PrivateEntity
         return "";
     }
     public void setAreaCode(String areaCode) {
-    	if (getMainPhone()!=null) {
+    	if (getPublicEntity()==null && getMainPhone()!=null) {
     		getMainPhone().setAreaCode(areaCode);
     	}
     }
@@ -280,7 +308,7 @@ public class PrivateEntity
         return "";
 	}
     public void setBranch(String branch) {
-    	if (getMainPhone()!=null) {
+    	if (getPublicEntity()==null && getMainPhone()!=null) {
     		getMainPhone().setBranch(branch);
     	}
 	}
@@ -296,12 +324,12 @@ public class PrivateEntity
         return PhoneType.MAIN.getValue();
     }
     public void setPhoneType(char phoneType) {
-    	if (getMainPhone()!=null) {
+    	if (getPublicEntity()==null && getMainPhone()!=null) {
     		getMainPhone().setPhoneType(phoneType);
     	}
     }
     public void setPhoneTypeAsEnum(PhoneType phoneType) {
-    	if (getMainPhone()!=null) {
+    	if (getPublicEntity()==null && getMainPhone()!=null) {
     		getMainPhone().setPhoneTypeAsEnum(phoneType);
     	}
     }
@@ -313,6 +341,9 @@ public class PrivateEntity
      */
     @Column(length=40)
     public String getMainEmail() {
+    	if (getPublicEntity()!=null) {
+    		return getPublicEntity().getMainEmail();
+    	}
 		return mainEmail;
 	}
     public void setMainEmail(String mainEmail) {
