@@ -3,7 +3,6 @@ package org.helianto.web.action.impl;
 import java.util.List;
 
 import org.helianto.core.Identity;
-import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.form.CompositeUserForm;
@@ -39,16 +38,6 @@ public class UserIdentityActionImpl extends UserActionImpl {
 		return "empty";
 	}
 	
-	@Override
-	protected User doCreate(MutableAttributeMap attributes, PublicUserDetails userDetails) {
-		Identity identity = (Identity) attributes.get("identity");
-		if (identity!=null) {
-			User user = new User(userDetails.getEntity(), identity);
-			return user;
-		}
-		throw new IllegalArgumentException("An identity is required to create an user.");
-	}
-
 	private final static Logger logger = LoggerFactory.getLogger(UserIdentityActionImpl.class);
 	
 }
