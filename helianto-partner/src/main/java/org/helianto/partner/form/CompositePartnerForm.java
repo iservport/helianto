@@ -6,7 +6,7 @@ import org.helianto.core.KeyType;
 import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.core.filter.form.KeyTypeForm;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 
 /**
  * Composite partner form.
@@ -32,7 +32,7 @@ public class CompositePartnerForm
 	private static final long serialVersionUID = 1L;
 	private char addressType;
 	private String cityName;
-	private PrivateEntity parent;
+	private PrivateEntity2 parent;
 	private char partnerType;
 	private char priority;
 	private char partnerState;
@@ -61,7 +61,7 @@ public class CompositePartnerForm
 	 * 
 	 * @param parent
 	 */
-	public CompositePartnerForm(PrivateEntity parent) {
+	public CompositePartnerForm(PrivateEntity2 parent) {
 		this(parent.getEntity());
 		setParent(parent);
 	}
@@ -90,10 +90,10 @@ public class CompositePartnerForm
 		this.cityName = cityName;
 	}
 	
-	public PrivateEntity getParent() {
+	public PrivateEntity2 getParent() {
 		return parent;
 	}
-	public void setParent(PrivateEntity parent) {
+	public void setParent(PrivateEntity2 parent) {
 		this.parent = parent;
 	}
 	
@@ -197,7 +197,7 @@ public class CompositePartnerForm
 	 * 
 	 * @param parent
 	 */
-	public CompositePartnerForm clone(PrivateEntity parent) {
+	public CompositePartnerForm clone(PrivateEntity2 parent) {
 		try {
 			CompositePartnerForm form = (CompositePartnerForm) super.clone();
 			form.setParent(parent);

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.KeyType;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.PrivateEntityKey;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class PrivateEntityKeyTests {
     
 	@Test
     public void constructor() {
-        PrivateEntity partnerRegistry = new PrivateEntity();
+        PrivateEntity2 partnerRegistry = new PrivateEntity2();
         KeyType keyType = new KeyType();
         
         PrivateEntityKey partnerRegistryKey = new PrivateEntityKey(partnerRegistry, keyType);
@@ -31,7 +31,7 @@ public class PrivateEntityKeyTests {
     
 	@Test
     public void equality() {
-        PrivateEntity partnerRegistry = new PrivateEntity();
+        PrivateEntity2 partnerRegistry = new PrivateEntity2();
         KeyType keyType = new KeyType();
         
         PrivateEntityKey partnerRegistryKey = new PrivateEntityKey(partnerRegistry, keyType);

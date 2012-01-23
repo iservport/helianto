@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
-import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntity2;
 import org.helianto.core.User;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
@@ -89,7 +89,7 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	
 	public String makePublic(Entity entity) {
 		logger.debug("Ready to make {} public.", entity);
-		PublicEntity publicEntity = publicEntityMgr.storePublicEntity(new PublicEntity(entity));
+		PublicEntity2 publicEntity = publicEntityMgr.storePublicEntity(new PublicEntity2(entity));
 		logger.debug("Created {}.", publicEntity);
 		return "success";
 	}

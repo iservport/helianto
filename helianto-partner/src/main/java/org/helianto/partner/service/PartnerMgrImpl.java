@@ -41,7 +41,7 @@ import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateAddress;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.nature.Agent;
 import org.helianto.partner.domain.nature.Customer;
@@ -77,9 +77,9 @@ import org.springframework.stereotype.Service;
 @Service("partnerMgr")
 public class PartnerMgrImpl implements PartnerMgr {
 
-	public List<PrivateEntity> findPrivateEntities(PrivateEntityForm form) {
+	public List<PrivateEntity2> findPrivateEntities(PrivateEntityForm form) {
 		PrivateEntityFormFilterAdapter filter = new PrivateEntityFormFilterAdapter(form);
-		List<PrivateEntity> privateEntityList = (List<PrivateEntity>) privateEntityDao.find(filter);
+		List<PrivateEntity2> privateEntityList = (List<PrivateEntity2>) privateEntityDao.find(filter);
     	if (logger.isDebugEnabled() && privateEntityList!=null) {
     		logger.debug("Found private entity list of size {}", privateEntityList.size());
     	}
@@ -89,15 +89,15 @@ public class PartnerMgrImpl implements PartnerMgr {
 	/**
 	 * @deprecated
 	 */
-	public List<PrivateEntity> findPrivateEntities(Filter privateEntityFilter) {
-		List<PrivateEntity> privateEntityList = (List<PrivateEntity>) privateEntityDao.find(privateEntityFilter);
+	public List<PrivateEntity2> findPrivateEntities(Filter privateEntityFilter) {
+		List<PrivateEntity2> privateEntityList = (List<PrivateEntity2>) privateEntityDao.find(privateEntityFilter);
     	if (logger.isDebugEnabled() && privateEntityList!=null) {
     		logger.debug("Found private entity list of size {}", privateEntityList.size());
     	}
 		return privateEntityList;
 	}
 
-	public PrivateEntity storePrivateEntity(PrivateEntity privateEntity) {
+	public PrivateEntity2 storePrivateEntity(PrivateEntity2 privateEntity) {
 		privateEntityDao.saveOrUpdate(privateEntity);
 		sequenceMgr.validateInternalNumber(privateEntity);
 		Set<Partner> partners = privateEntity.getPartners();
@@ -174,7 +174,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return create;
 	}
 	
-    public void removePrivateEntity(PrivateEntity privateEntity) {
+    public void removePrivateEntity(PrivateEntity2 privateEntity) {
     	privateEntityDao.remove(privateEntity);
     }
 
@@ -226,7 +226,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerKey;
 	}
 
-	public PrivateEntity removePartnerKey(PartnerKey partnerKey) {
+	public PrivateEntity2 removePartnerKey(PartnerKey partnerKey) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
@@ -244,18 +244,18 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return phone;
 	}
 
-	public PrivateEntity removePartnerPhone(PartnerPhone phone) {
+	public PrivateEntity2 removePartnerPhone(PartnerPhone phone) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
-	public Division installDivision(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall) {
+	public Division installDivision(Entity entity, String entityName, AbstractAddress partnerAddress, boolean reinstall) {
 		String partnerAlias = entity.getAlias();
-		PrivateEntity privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
+		PrivateEntity2 privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
 		Division division = null;
 		if (privateEntity==null) {
 			logger.info("Creating private entity for {}.", partnerAlias);
-			privateEntity = new PrivateEntity(entity, partnerAlias);
-			privateEntity.setPartnerName(partnerName);
+			privateEntity = new PrivateEntity2(entity, partnerAlias);
+			privateEntity.setEntityName(entityName);
 			AddressUtils.copyAddress(partnerAddress, privateEntity);
 			Province province = provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode());
 			if (province==null) {
@@ -279,14 +279,14 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return division;
 	}
 	
-	public Customer installCustomer(Entity entity, String partnerName, AbstractAddress partnerAddress, boolean reinstall) {
+	public Customer installCustomer(Entity entity, String entityName, AbstractAddress partnerAddress, boolean reinstall) {
 		String partnerAlias = entity.getAlias();
-		PrivateEntity privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
+		PrivateEntity2 privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
 		Customer customer = null;
 		if (privateEntity==null) {
 			logger.info("Creating private entity for {}.", partnerAlias);
-			privateEntity = new PrivateEntity(entity, partnerAlias);
-			privateEntity.setPartnerName(partnerName);
+			privateEntity = new PrivateEntity2(entity, partnerAlias);
+			privateEntity.setEntityName(entityName);
 			AddressUtils.copyAddress(partnerAddress, privateEntity);
 			Province province = provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode());
 			if (province==null) {
@@ -355,7 +355,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return address;
 	}
 
-	public PrivateEntity removePrivateAddress(PrivateAddress address) {
+	public PrivateEntity2 removePrivateAddress(PrivateAddress address) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
@@ -403,7 +403,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 
     //- collaborators
     
-    private FilterDao<PrivateEntity> privateEntityDao;
+    private FilterDao<PrivateEntity2> privateEntityDao;
     private FilterDao<Partner> partnerDao;
     private FilterDao<PrivateAddress> addressDao;
     private FilterDao<PrivateEntityKey> privateEntityKeyDao;
@@ -416,7 +416,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	private SequenceMgr sequenceMgr;
 
     @Resource(name="privateEntityDao")
-    public void setPrivateEntityDao(FilterDao<PrivateEntity> privateEntityDao) {
+    public void setPrivateEntityDao(FilterDao<PrivateEntity2> privateEntityDao) {
         this.privateEntityDao = privateEntityDao;
     }
 

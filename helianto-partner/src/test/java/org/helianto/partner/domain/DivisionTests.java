@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.domain.nature.Division;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class DivisionTests {
 	@Test
 	public void partner() {
 		Entity entity = new Entity();
-		PrivateEntity registry = new PrivateEntity(entity);
+		PrivateEntity2 registry = new PrivateEntity2(entity);
 		Partner customer = new Customer(registry);
 		Division division = new Division(customer);
 		assertSame(registry, division.getPrivateEntity());
@@ -31,7 +31,7 @@ public class DivisionTests {
 	@Test(expected=IllegalArgumentException.class)
 	public void partnerError() {
 		Entity entity = new Entity();
-		PrivateEntity registry = new PrivateEntity(entity);
+		PrivateEntity2 registry = new PrivateEntity2(entity);
 		Partner other = new Division(registry);
 		Division division = new Division(other);
 		assertSame(registry, division.getPrivateEntity());
@@ -40,7 +40,7 @@ public class DivisionTests {
 	@Test
     public void equality() {
 		Entity entity = new Entity(new Operator("DEFAULT"));
-        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
+        PrivateEntity2 partnerRegistry = new PrivateEntity2(entity, "TEST");
         
         Division division = new Division();
         Division other = new Division();

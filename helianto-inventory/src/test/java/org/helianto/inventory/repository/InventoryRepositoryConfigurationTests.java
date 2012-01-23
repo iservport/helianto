@@ -31,7 +31,7 @@ import org.helianto.inventory.ProcessRequirement;
 import org.helianto.inventory.Tax;
 import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.test.ProcessDocumentTestSupport;
 import org.junit.Test;
@@ -46,7 +46,7 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 
 	@Resource FilterDao<KeyType> keyTypeDao;
 	@Resource FilterDao<ProcessDocument> processDocumentDao;
-	@Resource FilterDao<PrivateEntity> privateEntityDao;
+	@Resource FilterDao<PrivateEntity2> privateEntityDao;
 	@Resource FilterDao<Partner> partnerDao;
 	@Resource FilterDao<Card> cardDao;
 	@Resource FilterDao<CardSet> cardSetDao;
@@ -86,7 +86,7 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 		processRequirementDao.saveOrUpdate(processRequirement);
 		assertEquals(processRequirement, processRequirementDao.findUnique(entity, Long.MAX_VALUE));
 
-		PrivateEntity privateEntity = new PrivateEntity(entity, "ENTITY");
+		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "ENTITY");
 		privateEntityDao.saveOrUpdate(privateEntity);
 		Partner partner = new Partner(privateEntity);
 		partnerDao.saveOrUpdate(partner);

@@ -2,7 +2,7 @@ package org.helianto.core.filter.form;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntity2;
 
 /**
  * Base class to PublicEntityForm interface.
@@ -16,7 +16,7 @@ public abstract class AbstractPublicEntityForm implements PublicEntityForm {
 	private static final long serialVersionUID = 1L;
 	private Operator operator;
 	private Entity entity;
-	private Class<? extends PublicEntity> clazz;
+	private Class<? extends PublicEntity2> clazz;
 	private String entityName;
 	private char publicEntityType;
 	
@@ -45,10 +45,10 @@ public abstract class AbstractPublicEntityForm implements PublicEntityForm {
 		this.entity = entity;
 	}
 	
-	public Class<? extends PublicEntity> getClazz() {
+	public Class<? extends PublicEntity2> getClazz() {
 		return clazz;
 	}
-	public void setClazz(Class<? extends PublicEntity> clazz) {
+	public void setClazz(Class<? extends PublicEntity2> clazz) {
 		this.clazz = clazz;
 	}
 	

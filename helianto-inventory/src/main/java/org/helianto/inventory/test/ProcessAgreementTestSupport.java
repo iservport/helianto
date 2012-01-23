@@ -7,7 +7,6 @@ import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.inventory.ProcessAgreement;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.test.PartnerTestSupport;
 
 /**
  * Class to support <code>ProcessAgreement</code> tests.
@@ -24,7 +23,7 @@ public class ProcessAgreementTestSupport {
      * Test support method to create a <code>Agreement</code>.
      */
     public static ProcessAgreement createProcessAgreement() {
-    	return createProcessAgreement(PartnerTestSupport.createPartner());
+    	return createProcessAgreement(new Partner());
     }
     
     /**

@@ -23,7 +23,7 @@ import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateAddress;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.PrivateEntityKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -72,8 +72,8 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 * Private entity data access.
 	 */
 	@Bean
-	public FilterDao<PrivateEntity> privateEntityDao() {
-		return getFilterDao(PrivateEntity.class, "entity", "entityAlias");
+	public FilterDao<PrivateEntity2> privateEntityDao() {
+		return getFilterDao(PrivateEntity2.class, "entity", "entityAlias");
 	}
 
 	/**

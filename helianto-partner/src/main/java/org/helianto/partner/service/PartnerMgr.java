@@ -28,7 +28,7 @@ import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateAddress;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.domain.nature.Division;
@@ -52,7 +52,7 @@ public interface PartnerMgr {
      * 
      * @param form
      */
-	public List<PrivateEntity> findPrivateEntities(PrivateEntityForm form);
+	public List<PrivateEntity2> findPrivateEntities(PrivateEntityForm form);
 	
 	/**
      * Find <code>PrivateEntity</code>.
@@ -60,21 +60,21 @@ public interface PartnerMgr {
      * @param privateEntityFilter
      * @deprecated
      */
-	public List<PrivateEntity> findPrivateEntities(Filter privateEntityFilter);
+	public List<PrivateEntity2> findPrivateEntities(Filter privateEntityFilter);
 	
     /**
      * Write <code>PrivateEntity</code> to the datastore.
      * 
      * @param privateEntity
      */
-    public PrivateEntity storePrivateEntity(PrivateEntity privateEntity);
+    public PrivateEntity2 storePrivateEntity(PrivateEntity2 privateEntity);
 
     /**
      * Remove <code>PrivateEntity</code> from the datastore.
      * 
      * @param privateEntity
      */
-    public void removePrivateEntity(PrivateEntity privateEntity);
+    public void removePrivateEntity(PrivateEntity2 privateEntity);
 
     /**
      * Find <code>Partner</code>.
@@ -137,7 +137,7 @@ public interface PartnerMgr {
      * 
      * @param partnerKey
      */
-	public PrivateEntity removePartnerKey(PartnerKey partnerKey);
+	public PrivateEntity2 removePartnerKey(PartnerKey partnerKey);
 	
     /**
      * Find <code>PartnerPhone</code>.
@@ -200,7 +200,7 @@ public interface PartnerMgr {
      * 
      * @param address
      */
-	public PrivateEntity removePrivateAddress(PrivateAddress address);
+	public PrivateEntity2 removePrivateAddress(PrivateAddress address);
 	
 	/**
      * Find <code>PrivateEntityKey</code>.

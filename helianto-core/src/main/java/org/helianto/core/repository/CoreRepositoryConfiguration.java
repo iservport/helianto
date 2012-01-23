@@ -27,7 +27,7 @@ import org.helianto.core.Operator;
 import org.helianto.core.PersonalAddress;
 import org.helianto.core.Province;
 import org.helianto.core.PublicAddress;
-import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntity2;
 import org.helianto.core.PublicEntityKey;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
@@ -222,8 +222,8 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Public entity data access.
 	 */
 	@Bean
-	public FilterDao<PublicEntity> publicEntityDao() {
-		return getFilterDao(PublicEntity.class, "entity", "class");
+	public FilterDao<PublicEntity2> publicEntityDao() {
+		return getFilterDao(PublicEntity2.class, "entity", "entityAlias");
 	}
 
 	/**

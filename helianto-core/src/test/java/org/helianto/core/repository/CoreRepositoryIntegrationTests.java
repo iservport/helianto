@@ -32,7 +32,7 @@ import org.helianto.core.Operator;
 import org.helianto.core.PersonalAddress;
 import org.helianto.core.Province;
 import org.helianto.core.PublicAddress;
-import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntity2;
 import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
 import org.helianto.core.Service;
@@ -87,7 +87,7 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 	@Resource FilterDao<UserRole> userRoleDao;
 	@Resource FilterDao<EntityPreference> entityPreferenceDao;	
 	@Resource FilterDao<UserRequest> userRequestDao;
-	@Resource FilterDao<PublicEntity> publicEntityDao;
+	@Resource FilterDao<PublicEntity2> publicEntityDao;
 	
 	@Test
 	public void core() {
@@ -188,9 +188,9 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		userRequestDao.saveOrUpdate(loginRequest);
 		assertEquals(loginRequest, userRequestDao.findUnique(userGroup, Long.MAX_VALUE));
 		
-		PublicEntity publicEntity = new PublicEntity(entity);
+		PublicEntity2 publicEntity = new PublicEntity2(entity);
 		publicEntityDao.saveOrUpdate(publicEntity);
-		assertEquals(publicEntity, publicEntityDao.findUnique(entity, 'P'));
+		assertEquals(publicEntity, publicEntityDao.findUnique(entity, entity.getAlias()));
 
 	}
 	

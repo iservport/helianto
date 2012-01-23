@@ -9,7 +9,7 @@ import org.helianto.core.def.AddressType;
 import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.domain.PrivateAddress;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.junit.Test;
 
 /**
@@ -24,7 +24,7 @@ public class AddressTests {
      */
 	@Test
     public void addressFactory() {
-        PrivateEntity partnerRegistry = new PrivateEntity();
+        PrivateEntity2 partnerRegistry = new PrivateEntity2();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
         PrivateAddress address = new PrivateAddress(partnerRegistry, sequence);
@@ -41,7 +41,7 @@ public class AddressTests {
      */
 	@Test
     public void addressEquals() {
-        PrivateEntity privateEntity = new PrivateEntity();
+        PrivateEntity2 privateEntity = new PrivateEntity2();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         
         PrivateAddress address = new PrivateAddress(privateEntity, sequence);

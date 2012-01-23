@@ -10,7 +10,7 @@ import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerCategory;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.junit.Test;
 
 /**
@@ -21,7 +21,7 @@ public class PartnerCategoryTests {
 	@Test
     public void testPartnerKeyEquals() {
 		Entity entity = EntityTestSupport.createEntity();
-        PrivateEntity privateEntity = new PrivateEntity(entity);
+        PrivateEntity2 privateEntity = new PrivateEntity2(entity);
         Partner partner = new Partner(privateEntity);
         Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "");
         

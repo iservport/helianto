@@ -25,7 +25,6 @@ import java.util.Date;
 import org.helianto.core.Entity;
 import org.helianto.document.base.AbstractRecord;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.test.PartnerTestSupport;
 import org.junit.Test;
 
 /**
@@ -50,7 +49,7 @@ public class CashFlowTests {
 	@Test
 	public void constructorPartner() {
 		Entity entity = new Entity();
-		Partner partner = PartnerTestSupport.createPartner(entity);
+		Partner partner = new Partner(entity);
 		CashFlow cashFlow = new CashFlow(partner);
 		assertSame(entity, cashFlow.getEntity());
 		assertSame(partner, cashFlow.getPartner());

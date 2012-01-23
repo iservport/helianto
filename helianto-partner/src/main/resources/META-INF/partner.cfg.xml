@@ -10,7 +10,7 @@
 		<mapping class="org.helianto.partner.domain.PartnerKey" />
 		<mapping class="org.helianto.partner.domain.PartnerPhone" />
 		<mapping class="org.helianto.partner.domain.PrivateAddress" />
-		<mapping class="org.helianto.partner.domain.PrivateEntity" />
+		<mapping class="org.helianto.partner.domain.PrivateEntity2" />
 		<mapping class="org.helianto.partner.domain.PrivateEntityKey" />
 		<mapping class="org.helianto.partner.domain.ContactGroup" />
 

@@ -1,7 +1,7 @@
 package org.helianto.partner.form;
 
 import org.helianto.core.filter.form.UserForm;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 
 /**
  * Contact group form interface.
@@ -16,6 +16,6 @@ public interface ContactGroupForm
 	/**
 	 * Private entity.
 	 */
-	PrivateEntity getParent();
+	PrivateEntity2 getParent();
 
 }

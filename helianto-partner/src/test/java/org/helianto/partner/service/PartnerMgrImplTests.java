@@ -32,7 +32,7 @@ import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.filter.classic.PartnerFilter;
 import org.helianto.partner.filter.classic.PrivateEntityFilter;
@@ -50,7 +50,7 @@ public class PartnerMgrImplTests {
 	@Test
     public void findPrivateEntities() {
     	PrivateEntityFilter partnerRegistryFilter = new PrivateEntityFilter();
-    	List<PrivateEntity> partnerRegistryList = new ArrayList<PrivateEntity>();
+    	List<PrivateEntity2> partnerRegistryList = new ArrayList<PrivateEntity2>();
     	
     	expect(privateEntityDao.find(partnerRegistryFilter)).andReturn(partnerRegistryList);
     	replay(privateEntityDao);
@@ -61,7 +61,7 @@ public class PartnerMgrImplTests {
     
 	@Test
     public void storePartnerRegistry() {
-    	PrivateEntity partnerRegistry = new PrivateEntity();
+    	PrivateEntity2 partnerRegistry = new PrivateEntity2();
     	
     	privateEntityDao.saveOrUpdate(partnerRegistry);
     	replay(privateEntityDao);
@@ -76,7 +76,7 @@ public class PartnerMgrImplTests {
     
 	@Test
     public void removePartnerRegistry() {
-    	PrivateEntity partnerRegistry = new PrivateEntity();
+    	PrivateEntity2 partnerRegistry = new PrivateEntity2();
     	
     	privateEntityDao.remove(partnerRegistry);
     	replay(privateEntityDao);
@@ -159,10 +159,10 @@ public class PartnerMgrImplTests {
 
 	@Test
 	public void installCustomerCase1() {
-		PrivateEntity privateEntity = new PrivateEntity(entity, "ALIAS");
+		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "ALIAS");
 
 		EasyMock.expect(privateEntityDao.findUnique(entity, "ALIAS")).andReturn(null);
-		privateEntityDao.saveOrUpdate(EasyMock.isA(PrivateEntity.class));
+		privateEntityDao.saveOrUpdate(EasyMock.isA(PrivateEntity2.class));
 		EasyMock.replay(privateEntityDao);
 		
 		EasyMock.expect(provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
@@ -185,7 +185,7 @@ public class PartnerMgrImplTests {
 
 	@Test
 	public void installCustomerCase2() {
-		PrivateEntity privateEntity = new PrivateEntity(entity, "ALIAS");
+		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "ALIAS");
 
 		EasyMock.expect(privateEntityDao.findUnique(entity, "ALIAS")).andReturn(privateEntity);
 		privateEntityDao.saveOrUpdate(privateEntity);
@@ -206,7 +206,7 @@ public class PartnerMgrImplTests {
 
 	@Test
 	public void installCustomerCase3() {
-		PrivateEntity privateEntity = new PrivateEntity(entity, "ALIAS");
+		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "ALIAS");
 
 		EasyMock.expect(privateEntityDao.findUnique(entity, "ALIAS")).andReturn(privateEntity);
 		privateEntityDao.saveOrUpdate(privateEntity);
@@ -225,7 +225,7 @@ public class PartnerMgrImplTests {
 		assertSame(customer, partnerMgr.installCustomer(entity, "NAME", partnerAddress, false));
 	}
 
-    private FilterDao<PrivateEntity> privateEntityDao;
+    private FilterDao<PrivateEntity2> privateEntityDao;
     private FilterDao<Partner> partnerDao;
     private FilterDao<Province> provinceDao;
     private Province province;

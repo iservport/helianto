@@ -98,7 +98,7 @@ public class Entity implements RootEntity {
     private Identity manager;
     private String externalLogoUrl;
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
-    private Set<PublicEntity> publicEntities = new HashSet<PublicEntity>(0);
+    private Set<PublicEntity2> publicEntities = new HashSet<PublicEntity2>(0);
     private List<UserGroup> userList;
 
     /** 
@@ -321,10 +321,10 @@ public class Entity implements RootEntity {
      * Public entity set.
      */
     @OneToMany(mappedBy="entity")
-	public Set<PublicEntity> getPublicEntities() {
+	public Set<PublicEntity2> getPublicEntities() {
 		return publicEntities;
 	}
-	public void setPublicEntities(Set<PublicEntity> publicEntities) {
+	public void setPublicEntities(Set<PublicEntity2> publicEntities) {
 		this.publicEntities = publicEntities;
 	}
 	

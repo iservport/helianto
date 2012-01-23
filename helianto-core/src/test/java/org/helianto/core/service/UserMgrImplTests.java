@@ -32,7 +32,7 @@ import org.easymock.EasyMock;
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.Province;
-import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntity2;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
@@ -107,7 +107,7 @@ public class UserMgrImplTests {
     public void publicEntity() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	userGroup.getEntity().setNature("S, E");
-    	PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());
+    	PublicEntity2 publicEntity = new PublicEntity2(userGroup.getEntity());
     	
     	userGroupDao.saveOrUpdate(userGroup);
     	userGroupDao.flush();

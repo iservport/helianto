@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Entity;
 import org.helianto.core.PublicAddress;
-import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntity2;
 import org.helianto.core.PublicEntityKey;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.PublicAddressFormFilterAdapter;
@@ -57,26 +57,26 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		publicAddressDao.remove(publicAddress);
 	}
 	
-	public List<? extends PublicEntity> findPublicEntities(Filter publicEntityFilter) {
-		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(publicEntityFilter);
+	public List<? extends PublicEntity2> findPublicEntities(Filter publicEntityFilter) {
+		List<PublicEntity2> publicEntitiyList = (List<PublicEntity2>) publicEntityDao.find(publicEntityFilter);
 		if (publicEntitiyList!=null) {
 			logger.debug("Found {} public entities.", publicEntitiyList.size());
 		}
 		return publicEntitiyList;
 	}
 	
-	public List<? extends PublicEntity> findPublicEntities(PublicEntityForm form) {
+	public List<? extends PublicEntity2> findPublicEntities(PublicEntityForm form) {
 		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(form);
-		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(filter);
+		List<PublicEntity2> publicEntitiyList = (List<PublicEntity2>) publicEntityDao.find(filter);
 		if (publicEntitiyList!=null) {
 			logger.debug("Found {} public entities.", publicEntitiyList.size());
 		}
 		return publicEntitiyList;
 	}
 	
-	public PublicEntity findPublicEntity(Entity entity) {
+	public PublicEntity2 findPublicEntity(Entity entity) {
 		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(new CompositeEntityForm(entity));
-		List<? extends PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(filter);
+		List<? extends PublicEntity2> publicEntitiyList = (List<PublicEntity2>) publicEntityDao.find(filter);
 		if (publicEntitiyList!=null && publicEntitiyList.size()>0) {
 			logger.debug("Found {}.", publicEntitiyList.get(0));
 			return publicEntitiyList.get(0);
@@ -84,15 +84,15 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return null;
 	}
 	
-	public PublicEntity installPublicEntity(Entity entity) {
-		PublicEntity publicEntity = null;
+	public PublicEntity2 installPublicEntity(Entity entity) {
+		PublicEntity2 publicEntity = null;
     	if (entity.getNatureAsArray().length>0) {
     		logger.debug("Looking for existing public entity");
     		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(new CompositeEntityForm(entity));
-    		List<? extends PublicEntity> publicEntities = (List<PublicEntity>) publicEntityDao.find(filter);
+    		List<? extends PublicEntity2> publicEntities = (List<PublicEntity2>) publicEntityDao.find(filter);
     		if (publicEntities!=null && publicEntities.size()==0) {
     			logger.debug("Installing public entity ...");
-    			publicEntity = new PublicEntity(entity);
+    			publicEntity = new PublicEntity2(entity);
     			publicEntityDao.saveOrUpdate(publicEntity);
     			logger.debug("Installed {}.", publicEntity);
     		}
@@ -103,16 +103,16 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return publicEntity;
 	}
 	
-	public PublicEntity storePublicEntity(PublicEntity publicEntity) {
+	public PublicEntity2 storePublicEntity(PublicEntity2 publicEntity) {
 		publicEntityDao.saveOrUpdate(publicEntity);
 		return publicEntity;
 	}
 	
-	public void removePublicEntity(PublicEntity publicEntity) {
+	public void removePublicEntity(PublicEntity2 publicEntity) {
 		publicEntityDao.remove(publicEntity);
 	}
 	
-	public Map<String, PublicEntityKey> loadPublicEntityKeyMap(PublicEntity publicEntity) {
+	public Map<String, PublicEntityKey> loadPublicEntityKeyMap(PublicEntity2 publicEntity) {
 		publicEntityDao.saveOrUpdate(publicEntity);
 		Map<String, PublicEntityKey> publicEntityKeyMap = new HashMap<String, PublicEntityKey>();
 		Set<PublicEntityKey> publicEntityKeys = publicEntity.getPublicEntityKeys();
@@ -134,7 +134,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	// collabs
 	
 	private FilterDao<PublicAddress> publicAddressDao;
-	private FilterDao<PublicEntity> publicEntityDao;
+	private FilterDao<PublicEntity2> publicEntityDao;
 	private BasicDao<PublicEntityKey> publicEntityKeyDao;
 	
 	@Resource(name="publicAddressDao")
@@ -143,7 +143,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	}
 	
 	@Resource(name="publicEntityDao")
-	public void setPublicEntityDao(FilterDao<PublicEntity> publicEntityDao) {
+	public void setPublicEntityDao(FilterDao<PublicEntity2> publicEntityDao) {
 		this.publicEntityDao = publicEntityDao;
 	}
 	

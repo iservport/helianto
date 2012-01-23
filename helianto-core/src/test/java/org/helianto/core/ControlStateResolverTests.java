@@ -23,10 +23,8 @@ public class ControlStateResolverTests {
 			public Entity getEntity() { return null; }
 			public long getInternalNumber() {return 0; }
 			public void setInternalNumber(long internalNumber) { }
-			public String getInternalNumberKey() { return null; }
 			public char getResolution() { return ' '; }
 			public int getComplete() { return 0; }
-			public void reset() { }
 		};
 		ControlStateResolver resolver = new ControlStateResolver(late);
 		assertTrue(resolver.isLate());
@@ -35,10 +33,8 @@ public class ControlStateResolverTests {
 			public Entity getEntity() { return null; }
 			public long getInternalNumber() {return 0; }
 			public void setInternalNumber(long internalNumber) { }
-			public String getInternalNumberKey() { return null; }
 			public char getResolution() { return ' '; }
 			public int getComplete() { return 0; }
-			public void reset() { }
 		};
 		resolver = new ControlStateResolver(notLate);
 	}

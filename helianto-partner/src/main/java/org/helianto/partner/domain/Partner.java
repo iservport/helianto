@@ -75,7 +75,7 @@ public class Partner
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private PrivateEntity privateEntity;
+    private PrivateEntity2 privateEntity;
     private String newEntityAlias;
     private Account account;
     private char priority;
@@ -107,7 +107,7 @@ public class Partner
      * 
      * @param partnerRegistry
      */
-    public Partner(PrivateEntity partnerRegistry) {
+    public Partner(PrivateEntity2 partnerRegistry) {
     	this();
     	setPrivateEntity(partnerRegistry);
     }
@@ -120,7 +120,7 @@ public class Partner
      */
     public Partner(Entity entity, String partnerAlias) {
     	this();
-    	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
+    	setPrivateEntity(new PrivateEntity2(entity, partnerAlias));
     }
 
     /**
@@ -133,7 +133,7 @@ public class Partner
      * @param entity
      */
     public Partner(Entity entity) {
-    	this(new PrivateEntity(entity));
+    	this(new PrivateEntity2(entity));
     }
 
     /**
@@ -156,13 +156,13 @@ public class Partner
      */
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PrivateEntity getPrivateEntity() {
+    public PrivateEntity2 getPrivateEntity() {
     	if (this.privateEntity==null) {
-    		this.privateEntity = new PrivateEntity();
+    		this.privateEntity = new PrivateEntity2();
     	}
         return this.privateEntity;
     }
-    public void setPrivateEntity(PrivateEntity privateEntity) {
+    public void setPrivateEntity(PrivateEntity2 privateEntity) {
         this.privateEntity = privateEntity;
     }
     

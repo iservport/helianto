@@ -8,11 +8,11 @@ import org.helianto.core.Entity;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.service.SequenceMgrImpl;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.junit.Test;
 
 /**
- * <code>PrivateEntity</code> domain tests.
+ * <code>PrivateEntity2</code> domain tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -20,42 +20,36 @@ public class PrivateEntityTests {
     
 	@Test
 	public void constructor() {
-		PrivateEntity privateEntity = new PrivateEntity();
+		PrivateEntity2 privateEntity = new PrivateEntity2();
 		assertTrue(privateEntity instanceof AbstractAddress);
-		assertEquals("", privateEntity.getPartnerAlias());
-		assertEquals("", privateEntity.getPartnerName());
+		assertEquals("", privateEntity.getEntityAlias());
+		assertEquals("", privateEntity.getEntityName());
 	}
     
 	@Test
 	public void constructorEntity() {
 		Entity entity = new Entity();
-		PrivateEntity privateEntity = new PrivateEntity(entity);
+		PrivateEntity2 privateEntity = new PrivateEntity2(entity);
 		assertTrue(privateEntity instanceof AbstractAddress);
 		assertEquals(entity, privateEntity.getEntity());
 	}
     
-	@Test
-	public void number() {
-		Entity entity = new Entity();
-		PrivateEntity privateEntity = new PrivateEntity(entity, "#");
-		privateEntity.setInternalNumber(10000);
-		assertEquals("10000", privateEntity.getEntityAlias());
-		// do not change again
-		privateEntity.setInternalNumber(2);
-		assertEquals("10000", privateEntity.getEntityAlias());
-	}
-    
+//	@Test
+//	public void number() {
+//		Entity entity = new Entity();
+//		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "#");
+//		privateEntity.setInternalNumber(10000);
+//		assertEquals("10000", privateEntity.getEntityAlias());
+//		// do not change again
+//		privateEntity.setInternalNumber(2);
+//		assertEquals("10000", privateEntity.getEntityAlias());
+//	}
+//    
 	@Test
 	public void force() {
 		Entity entity = new Entity();
-		PrivateEntity privateEntity = new PrivateEntity(entity, "");
-		privateEntity.setInternalNumber(10000);
-		assertEquals("", privateEntity.getEntityAlias());
-		// force false
-		privateEntity.forceToNumber(false);
-		assertEquals("", privateEntity.getEntityAlias());
-		// force true
-		privateEntity.forceToNumber(true);
+		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "ENTITY");
+		privateEntity.setAutoNumber(true);
 		SequenceMgrImpl sequenceMgr = new SequenceMgrImpl() {
 			@Override public long newInternalNumber(Entity entity, String internalNumberKey) {
 				return 200;
@@ -73,19 +67,19 @@ public class PrivateEntityTests {
         Entity entity = new Entity();
         String partnerAlias = DomainTestSupport.STRING_TEST_VALUE;
         
-        PrivateEntity privateEntity = new PrivateEntity(entity, partnerAlias);
-        PrivateEntity copy = (PrivateEntity) DomainTestSupport.minimalEqualsTest(privateEntity);
+        PrivateEntity2 privateEntity = new PrivateEntity2(entity, partnerAlias);
+        PrivateEntity2 copy = (PrivateEntity2) DomainTestSupport.minimalEqualsTest(privateEntity);
         
         copy.setEntity(null);
-        copy.setPartnerAlias(partnerAlias);
+        copy.setEntityAlias(partnerAlias);
         assertFalse(privateEntity.equals(copy));
 
         copy.setEntity(entity);
-        copy.setPartnerAlias(null);
+        copy.setEntityAlias(null);
         assertFalse(privateEntity.equals(copy));
 
         copy.setEntity(entity);
-        copy.setPartnerAlias(partnerAlias);
+        copy.setEntityAlias(partnerAlias);
 
         assertTrue(privateEntity.equals(copy));
     }

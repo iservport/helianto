@@ -2,9 +2,11 @@ package org.helianto.inventory;
 
 import static org.junit.Assert.assertEquals;
 
+import org.helianto.core.Entity;
 import org.helianto.core.KeyType;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.inventory.filter.TaxFilterAdapter;
-import org.helianto.partner.test.PartnerTestSupport;
+import org.helianto.partner.domain.Partner;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,9 +56,10 @@ public class TaxFilterAdapterTests {
 	public void setUp() {
 		target = new Tax();
 		filter = new TaxFilterAdapter(target);
-		processAgreement = new ProcessAgreement(PartnerTestSupport.createPartner());
+		Entity entity = EntityTestSupport.createEntity();
+		processAgreement = new ProcessAgreement(new Partner(entity, "PARTNER"));
 		processAgreement.setId(1);
-		keyType = new KeyType(processAgreement.getEntity().getOperator(), "KEYCODE");
+		keyType = new KeyType(entity.getOperator(), "KEYCODE");
 		keyType.setId(2);
 	}
 

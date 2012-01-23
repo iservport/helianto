@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntity2;
 import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.core.filter.form.PublicEntityForm;
 import org.helianto.core.test.EntityTestSupport;
@@ -19,7 +19,7 @@ public class PublicEntityFormFilterAdapterTests {
     public static String OB = "order by alias.entity.alias ";
     public static String C1 = "alias.entity.operator.id = 1 ";
     public static String C2 = "alias.entity.id = 2 ";
-    public static String C3 = "AND alias.class=PublicEntity ";
+    public static String C3 = "AND alias.class=PublicEntity2 ";
     public static String C4 = "AND lower(alias.entityName) like '%name%' ";
     public static String C5 = "AND alias.publicEntityType = 'X' ";
 
@@ -44,7 +44,7 @@ public class PublicEntityFormFilterAdapterTests {
     
     @Test
     public void filterClazz() {
-        form.setClazz(PublicEntity.class);
+        form.setClazz(PublicEntity2.class);
         assertEquals(C1+C3+OB, filter.createCriteriaAsString());
     }
     

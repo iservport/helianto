@@ -6,7 +6,7 @@ import static org.junit.Assert.assertSame;
 import org.helianto.core.Identity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.partner.domain.Contact;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.junit.Test;
 
 /**
@@ -20,7 +20,7 @@ public class ContactTests {
      */
 	@Test
     public void constructor() {
-        PrivateEntity partnerRegistry = new PrivateEntity();
+        PrivateEntity2 partnerRegistry = new PrivateEntity2();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         Identity identity = new Identity();
         

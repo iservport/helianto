@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 import org.junit.Test;
 
 /**
@@ -24,7 +24,7 @@ public class PartnerTests {
 	@Test
     public void testPartnerEquals() {
 		Entity entity = new Entity(new Operator("DEFAULT"));
-        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
+        PrivateEntity2 partnerRegistry = new PrivateEntity2(entity, "TEST");
         
         Partner partner = new Partner();
         Partner other = new Partner();

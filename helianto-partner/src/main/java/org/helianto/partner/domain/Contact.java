@@ -58,7 +58,7 @@ public class Contact extends PrivateAddress implements Privacy {
      * @param partnerRegistry
      * @param sequence
 	 */
-    public Contact(PrivateEntity partnerRegistry, int sequence) {
+    public Contact(PrivateEntity2 partnerRegistry, int sequence) {
     	this();
     	setPrivateEntity(partnerRegistry);
     	setSequence(sequence);
@@ -71,7 +71,7 @@ public class Contact extends PrivateAddress implements Privacy {
      * @param sequence
      * @param owner
 	 */
-    public Contact(PrivateEntity partnerRegistry, int sequence, Identity owner) {
+    public Contact(PrivateEntity2 partnerRegistry, int sequence, Identity owner) {
     	this(partnerRegistry, sequence);
     	setOwner(owner);
     }

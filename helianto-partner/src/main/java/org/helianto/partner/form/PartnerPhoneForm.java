@@ -1,7 +1,7 @@
 package org.helianto.partner.form;
 
 import org.helianto.core.filter.form.ParentForm;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntity2;
 
 /**
  * Classes implementing this interface represent a partner phone.
@@ -11,7 +11,7 @@ import org.helianto.partner.domain.PrivateEntity;
 public interface PartnerPhoneForm 
 
 	extends 
-	  ParentForm<PrivateEntity>
+	  ParentForm<PrivateEntity2>
 	
 {
 	/**

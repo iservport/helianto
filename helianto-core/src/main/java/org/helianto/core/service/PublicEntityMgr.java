@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.helianto.core.Entity;
 import org.helianto.core.PublicAddress;
-import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntity2;
 import org.helianto.core.PublicEntityKey;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.form.PublicAddressForm;
@@ -68,49 +68,49 @@ public interface PublicEntityMgr {
      * @param publicEntityFilter
      * @deprecated
      */
-	public List<? extends PublicEntity> findPublicEntities(Filter publicEntityFilter);
+	public List<? extends PublicEntity2> findPublicEntities(Filter publicEntityFilter);
 	
 	/**
      * Find <code>PublicEntity</code> list.
      * 
      * @param form
      */
-	public List<? extends PublicEntity> findPublicEntities(PublicEntityForm form);
+	public List<? extends PublicEntity2> findPublicEntities(PublicEntityForm form);
 	
 	/**
      * Find <code>PublicEntity</code>.
      * 
      * @param entity
      */
-	public PublicEntity findPublicEntity(Entity entity);
+	public PublicEntity2 findPublicEntity(Entity entity);
 	
 	/**
      * Install <code>PublicEntity</code>.
      * 
      * @param entity
      */
-	public PublicEntity installPublicEntity(Entity entity);
+	public PublicEntity2 installPublicEntity(Entity entity);
 	
     /**
      * Write <code>PublicEntity</code> to the datastore.
      * 
      * @param publicEntity
      */
-    public PublicEntity storePublicEntity(PublicEntity publicEntity);
+    public PublicEntity2 storePublicEntity(PublicEntity2 publicEntity);
 
     /**
      * Remove <code>PublicEntity</code> from the datastore.
      * 
      * @param publicEntity
      */
-    public void removePublicEntity(PublicEntity publicEntity);
+    public void removePublicEntity(PublicEntity2 publicEntity);
 
     /**
      * Load <code>PublicEntityKey</code> map keyed with the KeyCode.
      * 
      * @param publicEntity
      */
-	public Map<String, PublicEntityKey> loadPublicEntityKeyMap(PublicEntity publicEntity);
+	public Map<String, PublicEntityKey> loadPublicEntityKeyMap(PublicEntity2 publicEntity);
 	
     /**
      * Write <code>PublicEntityKey</code> to the datastore.

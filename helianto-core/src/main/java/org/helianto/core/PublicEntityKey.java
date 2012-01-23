@@ -43,7 +43,7 @@ public class PublicEntityKey extends AbstractKeyStringValue {
 	}   
 
     private static final long serialVersionUID = 1L;
-    private PublicEntity publicEntity;
+    private PublicEntity2 publicEntity;
 
     /** 
      * Default constructor.
@@ -57,7 +57,7 @@ public class PublicEntityKey extends AbstractKeyStringValue {
      * 
      * @param publicEntity
      */
-    public PublicEntityKey(PublicEntity publicEntity) {
+    public PublicEntityKey(PublicEntity2 publicEntity) {
     	this();
     	setPublicEntity(publicEntity);
     }
@@ -68,7 +68,7 @@ public class PublicEntityKey extends AbstractKeyStringValue {
      * @param publicEntity
      * @param keyType
      */
-    public PublicEntityKey(PublicEntity publicEntity, KeyType keyType) {
+    public PublicEntityKey(PublicEntity2 publicEntity, KeyType keyType) {
     	this(publicEntity);
     	setKeyType(keyType);
     }
@@ -80,7 +80,7 @@ public class PublicEntityKey extends AbstractKeyStringValue {
      * @param keyType
      * @param keyValue
      */
-    public PublicEntityKey(PublicEntity publicEntity, KeyType keyType, String keyValue) {
+    public PublicEntityKey(PublicEntity2 publicEntity, KeyType keyType, String keyValue) {
     	this(publicEntity, keyType);
     	setKeyValue(keyValue);
     }
@@ -90,10 +90,10 @@ public class PublicEntityKey extends AbstractKeyStringValue {
      */
     @ManyToOne
     @JoinColumn(name="publicEntityId", nullable=true)
-    public PublicEntity getPublicEntity() {
+    public PublicEntity2 getPublicEntity() {
 		return publicEntity;
 	}
-    public void setPublicEntity(PublicEntity publicEntity) {
+    public void setPublicEntity(PublicEntity2 publicEntity) {
 		this.publicEntity = publicEntity;
 	}
 

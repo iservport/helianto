@@ -19,19 +19,19 @@ public class PublicEntityTests {
 	
 	@Test
 	public void constructor() {
-		assertTrue(new PublicEntity() instanceof Serializable);
+		assertTrue(new PublicEntity2() instanceof Serializable);
 	}
 
 	@Test
 	public void entityConstructor() {
-		PublicEntity publicEntity = new PublicEntity(entity);
+		PublicEntity2 publicEntity = new PublicEntity2(entity);
 		assertSame(entity, publicEntity.getEntity());
 	}
 	
 	@Test
 	public void equality() {
-		PublicEntity publicEntity = new PublicEntity();
-		PublicEntity other = new PublicEntity();
+		PublicEntity2 publicEntity = new PublicEntity2();
+		PublicEntity2 other = new PublicEntity2();
 		
 		assertTrue(publicEntity.equals(other));
 		publicEntity.setEntity(entity);
@@ -43,13 +43,11 @@ public class PublicEntityTests {
 		assertFalse(publicEntity.equals(other));
 	}
 	
-	private PublicEntity publicEntity;
 	private Entity entity;
 	
 	@Before
 	public void setUp() {
 		entity = EntityTestSupport.createEntity(1);
-		publicEntity = new PublicEntity(entity);
 	}
 
 }

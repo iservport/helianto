@@ -10,7 +10,7 @@ import org.easymock.classextension.EasyMock;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.PublicAddress;
-import org.helianto.core.PublicEntity;
+import org.helianto.core.PublicEntity2;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;
@@ -65,7 +65,7 @@ public class PublicEntityMgrTests {
 	@Test
 	public void findPublicEntities() {
 		Filter filter = new TestingFilter();
-		List<PublicEntity> publicEntityList = new ArrayList<PublicEntity>();
+		List<PublicEntity2> publicEntityList = new ArrayList<PublicEntity2>();
 		
 		EasyMock.expect(publicEntityDao.find(filter)).andReturn(publicEntityList);
 		EasyMock.replay(publicEntityDao);
@@ -76,7 +76,7 @@ public class PublicEntityMgrTests {
 	
 	@Test
 	public void storePublicEntity() {
-		PublicEntity publicEntity = new PublicEntity(entity);
+		PublicEntity2 publicEntity = new PublicEntity2(entity);
 		entity.setInstallDate(new Date());
 		
 		publicEntityDao.saveOrUpdate(publicEntity);
@@ -88,7 +88,7 @@ public class PublicEntityMgrTests {
 	
 	@Test
 	public void removePublicEntity() {
-		PublicEntity publicEntity = new PublicEntity(entity);
+		PublicEntity2 publicEntity = new PublicEntity2(entity);
 		
 		publicEntityDao.remove(publicEntity);
 		EasyMock.replay(publicEntityDao);
@@ -104,7 +104,7 @@ public class PublicEntityMgrTests {
 	private Operator operator;
 	private Entity entity;
 	private FilterDao<PublicAddress> publicAddressDao;
-	private FilterDao<PublicEntity> publicEntityDao;
+	private FilterDao<PublicEntity2> publicEntityDao;
 	
 	@SuppressWarnings("unchecked")
 	@Before
