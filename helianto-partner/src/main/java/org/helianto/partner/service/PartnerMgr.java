@@ -52,15 +52,7 @@ public interface PartnerMgr {
      * 
      * @param form
      */
-	public List<PrivateEntity2> findPrivateEntities(PrivateEntityForm form);
-	
-	/**
-     * Find <code>PrivateEntity</code>.
-     * 
-     * @param privateEntityFilter
-     * @deprecated
-     */
-	public List<PrivateEntity2> findPrivateEntities(Filter privateEntityFilter);
+	public List<? extends PrivateEntity2> findPrivateEntities(PrivateEntityForm form);
 	
     /**
      * Write <code>PrivateEntity</code> to the datastore.

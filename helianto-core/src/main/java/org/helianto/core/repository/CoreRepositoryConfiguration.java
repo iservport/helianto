@@ -223,7 +223,7 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 */
 	@Bean
 	public FilterDao<PublicEntity2> publicEntityDao() {
-		return getFilterDao(PublicEntity2.class, "entity", "entityAlias");
+		return getFilterDao(PublicEntity2.class, "entity", "entityAlias", "class");
 	}
 
 	/**

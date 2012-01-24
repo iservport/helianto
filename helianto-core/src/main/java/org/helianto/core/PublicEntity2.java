@@ -29,7 +29,7 @@ import org.helianto.core.def.PhoneType;
  */
 @javax.persistence.Entity
 @Table(name = "core_public"
-	, uniqueConstraints = { @UniqueConstraint(columnNames = {"entityId", "entityAlias"}) })
+	, uniqueConstraints = { @UniqueConstraint(columnNames = {"entityId", "entityAlias", "type"}) })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")

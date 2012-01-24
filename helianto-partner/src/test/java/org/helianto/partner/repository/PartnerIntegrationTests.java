@@ -70,7 +70,7 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 
 		PrivateEntity2 partnerRegistry = new PrivateEntity2(entity, "ENTITYALIAS");
 		privateEntityDao.saveOrUpdate(partnerRegistry);
-		assertEquals(partnerRegistry, privateEntityDao.findUnique(entity, "ENTITYALIAS"));
+		assertEquals(partnerRegistry, privateEntityDao.findUnique(entity, "ENTITYALIAS", "R"));
 
 		KeyType keyType = new KeyType(entity.getOperator(), "KEYCODE");
 		keyTypeDao.saveOrUpdate(keyType);

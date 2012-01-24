@@ -73,7 +73,7 @@ public class PartnerRepositoryConfiguration extends AbstractRepositoryConfigurat
 	 */
 	@Bean
 	public FilterDao<PrivateEntity2> privateEntityDao() {
-		return getFilterDao(PrivateEntity2.class, "entity", "entityAlias");
+		return getFilterDao(PrivateEntity2.class, "entity", "entityAlias", "class");
 	}
 
 	/**
