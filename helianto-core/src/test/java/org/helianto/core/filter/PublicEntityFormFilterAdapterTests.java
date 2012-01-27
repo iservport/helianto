@@ -20,7 +20,8 @@ public class PublicEntityFormFilterAdapterTests {
     public static String C2 = "alias.entity.id = 2 ";
     public static String C3 = "alias.entityAlias = 'ALIAS' ";
     public static String C4 = "alias.class = 'P' ";
-    public static String C5 = "lower(alias.entityName) like '%name%' ";
+    public static String C5 = "alias.class = 'R' ";
+    public static String C6 = "lower(alias.entityName) like '%name%' ";
 
     @Test
     public void operator() {
@@ -49,9 +50,18 @@ public class PublicEntityFormFilterAdapterTests {
     }
     
     @Test
+    public void typeNonPublic() {
+    	((CompositeEntityForm) form).setEntity(entity);
+        form.setType('R');
+        assertEquals(C5+"AND "+C2+OB, filter.createCriteriaAsString());
+        form.setType('P');
+        assertEquals(C4+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
     public void name() {
     	((CompositeEntityForm) form).setEntityName("NAME");
-        assertEquals(C5+OB, filter.createCriteriaAsString());
+        assertEquals(C6+OB, filter.createCriteriaAsString());
     }
     
     private PublicEntityFormFilterAdapter filter;
@@ -62,8 +72,7 @@ public class PublicEntityFormFilterAdapterTests {
     
  	@Before
     public void setUp() {
-    	entity = EntityTestSupport.createEntity();
-    	entity.setId(2); // just because a zero here will prevent the filter to fire!
+    	entity = EntityTestSupport.createEntity(2); 
     	operator = entity.getOperator();
     	form = new CompositeEntityForm(operator);
     	filter = new PublicEntityFormFilterAdapter(form);

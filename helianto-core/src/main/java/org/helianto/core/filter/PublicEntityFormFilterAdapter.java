@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<PublicEntityForm> {
 
 	private static final long serialVersionUID = 1L;
+	private static final String NON_PUBLIC_TYPES = "R";
 	
 	/**
 	 * Default constructor.
@@ -50,7 +51,7 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getOperator()==null && getForm().getEntity()!=null) {
+		if (getForm().getEntity()!=null && (getForm().getOperator()==null | NON_PUBLIC_TYPES.indexOf(getForm().getType())>=0)) {
 			appendEqualFilter("entity.id", getForm().getEntity().getId(), mainCriteriaBuilder);
 		}
 		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
