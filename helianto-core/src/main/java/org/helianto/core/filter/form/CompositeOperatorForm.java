@@ -22,6 +22,7 @@ public class CompositeOperatorForm
 
 	private static final long serialVersionUID = 1L;
 	private char type;
+	private String operatorName;
     private Province province;
     private Province parentProvince;
     private String provinceCode;
@@ -39,15 +40,18 @@ public class CompositeOperatorForm
 		setOperator(operator);
 	}
     
-    public void reset() {
-    	setType(' ');
-    }
-
     public char getType() {
 		return type;
 	}
     public void setType(char type) {
 		this.type = type;
+	}
+    
+    public String getOperatorName() {
+		return operatorName;
+	}
+    public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
 	}
     
 	public Province getProvince() {

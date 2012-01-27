@@ -88,6 +88,7 @@ public class ProvinceFormFilterAdapter extends AbstractRootFilterAdapter<Provinc
 	
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("operator.operatorName", getForm().getOperatorName(), mainCriteriaBuilder);
 		appendEqualFilter("parent.provinceCode", getForm().getStateCode(), mainCriteriaBuilder);
 	}
 

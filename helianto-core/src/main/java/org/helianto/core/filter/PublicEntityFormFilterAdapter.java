@@ -24,24 +24,6 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 		super(form);
 	}
 	
-	public void reset() {
-		getForm().reset();
-	}
-	
-	/**
-	 * Restrict selection to a given operator, if any. 
-	 */
-	@Override
-	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
-		if (getForm().getClazz()!=null) {
-			mainCriteriaBuilder.appendAnd().append(getForm().getClazz());
-			logger.debug("Added class {} restriction.", getForm().getClazz());
-			connect = true;
-		}
-		return connect;
-	}
-	
 	/**
 	 * Operator pre-processor.
 	 * 
@@ -54,12 +36,16 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 	
 	@Override
 	public boolean isSelection() {
-		return getForm().getOperator()!=null && getForm().getEntity()!=null;
+		return getForm().getEntity()!=null
+				&& getForm().getEntity().getId()>0
+				&& getForm().getEntityAlias()!=null
+				&& getForm().getEntityAlias().length()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("entity.id", getForm().getEntity().getId(), mainCriteriaBuilder);
+		appendEqualFilter("entityAlias", getForm().getEntityAlias(), mainCriteriaBuilder);
 	}
 
 	@Override
@@ -67,7 +53,6 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 		if (getForm().getOperator()==null && getForm().getEntity()!=null) {
 			appendEqualFilter("entity.id", getForm().getEntity().getId(), mainCriteriaBuilder);
 		}
-		appendEqualFilter("publicEntityType", getForm().getPublicEntityType(), mainCriteriaBuilder);
 		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
 	}
 	

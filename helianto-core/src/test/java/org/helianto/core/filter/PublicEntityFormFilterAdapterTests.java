@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
-import org.helianto.core.PublicEntity2;
 import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.core.filter.form.PublicEntityForm;
 import org.helianto.core.test.EntityTestSupport;
@@ -19,20 +18,21 @@ public class PublicEntityFormFilterAdapterTests {
     public static String OB = "order by alias.entity.alias ";
     public static String C1 = "alias.entity.operator.id = 1 ";
     public static String C2 = "alias.entity.id = 2 ";
-    public static String C3 = "AND alias.class=PublicEntity2 ";
-    public static String C4 = "AND lower(alias.entityName) like '%name%' ";
-    public static String C5 = "AND alias.publicEntityType = 'X' ";
+    public static String C3 = "alias.entityAlias = 'ALIAS' ";
+    public static String C4 = "alias.class = 'P' ";
+    public static String C5 = "lower(alias.entityName) like '%name%' ";
 
     @Test
     public void operator() {
+    	operator.setId(1); // just because a zero here will prevent the filter to fire!
         assertEquals(C1+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
-    	((CompositeEntityForm) form).setOperator(operator);
     	((CompositeEntityForm) form).setEntity(entity);
-        assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
+    	((CompositeEntityForm) form).setEntityAlias("ALIAS");
+        assertEquals(C2+"AND "+C3, filter.createCriteriaAsString());
     }
     
     @Test
@@ -43,21 +43,15 @@ public class PublicEntityFormFilterAdapterTests {
     }
     
     @Test
-    public void filterClazz() {
-        form.setClazz(PublicEntity2.class);
-        assertEquals(C1+C3+OB, filter.createCriteriaAsString());
+    public void type() {
+        form.setType('P');
+        assertEquals(C4+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void name() {
     	((CompositeEntityForm) form).setEntityName("NAME");
-        assertEquals(C1+C4+OB, filter.createCriteriaAsString());
-    }
-    
-    @Test
-    public void type() {
-    	((CompositeEntityForm) form).setPublicEntityType('X');
-        assertEquals(C1+C5+OB, filter.createCriteriaAsString());
+        assertEquals(C5+OB, filter.createCriteriaAsString());
     }
     
     private PublicEntityFormFilterAdapter filter;
@@ -71,7 +65,6 @@ public class PublicEntityFormFilterAdapterTests {
     	entity = EntityTestSupport.createEntity();
     	entity.setId(2); // just because a zero here will prevent the filter to fire!
     	operator = entity.getOperator();
-    	operator.setId(1); // just because a zero here will prevent the filter to fire!
     	form = new CompositeEntityForm(operator);
     	filter = new PublicEntityFormFilterAdapter(form);
     }

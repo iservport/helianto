@@ -37,4 +37,9 @@ public interface ProvinceForm
 	 */
 	String getCityCode();
 	
+	/**
+	 * Operator name.
+	 */
+	String getOperatorName();
+	
 }

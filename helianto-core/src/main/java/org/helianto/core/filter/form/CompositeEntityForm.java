@@ -3,7 +3,6 @@ package org.helianto.core.filter.form;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
-import org.helianto.core.PublicEntity2;
 
 /**
  * Composite entity form.
@@ -25,7 +24,7 @@ public class CompositeEntityForm
 
 	private static final long serialVersionUID = 1L;
 	private Operator operator;
-	private Class<? extends PublicEntity2> clazz;
+	private char type;
 	private String entityName;
 	private String entityAlias;
 	private String entityAliasLike;
@@ -84,11 +83,11 @@ public class CompositeEntityForm
 		this.operator = operator;
 	}
 	
-	public Class<? extends PublicEntity2> getClazz() {
-		return clazz;
+	public char getType() {
+		return type;
 	}
-	public void setClazz(Class<? extends PublicEntity2> clazz) {
-		this.clazz = clazz;
+	public void setType(char type) {
+		this.type = type;
 	}
 	
 	public String getEntityName() {

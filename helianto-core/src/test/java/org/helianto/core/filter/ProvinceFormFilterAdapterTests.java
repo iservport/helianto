@@ -38,6 +38,7 @@ public class ProvinceFormFilterAdapterTests  {
     		                  "OR lower(alias.provinceName) like '%name_like%' ) ";
     public static String C4 = "AND alias.parent.provinceCode = 'XX' ";
     public static String C5 = "AND alias.parent.id = 1 ";
+    public static String C6 = "AND alias.operator.operatorName = 'OPERATOR' ";
 
     @Test
     public void operator() {
@@ -74,6 +75,12 @@ public class ProvinceFormFilterAdapterTests  {
     	parent.setId(1);
     	((CompositeOperatorForm) form).setParentProvince(parent);
         assertEquals(C0+C5+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void operatorName() {
+    	((CompositeOperatorForm) form).setOperatorName("OPERATOR");
+        assertEquals(C0+C6+OB, filter.createCriteriaAsString());
     }
     
     // collabs

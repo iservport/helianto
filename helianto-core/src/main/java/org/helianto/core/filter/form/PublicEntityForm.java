@@ -1,6 +1,5 @@
 package org.helianto.core.filter.form;
 
-import org.helianto.core.PublicEntity2;
 import org.helianto.core.Resettable;
 import org.helianto.core.RootEntity;
 import org.helianto.core.TrunkEntity;
@@ -10,16 +9,16 @@ import org.helianto.core.TrunkEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface PublicEntityForm extends ClassForm<PublicEntity2>, TrunkEntity, RootEntity, Resettable {
+public interface PublicEntityForm extends TypeForm, TrunkEntity, RootEntity, Resettable {
+	
+	/**
+	 * Entity alias.
+	 */
+	public String getEntityAlias();
 	
 	/**
 	 * Entity name.
 	 */
 	public String getEntityName();
 	
-	/**
-	 * Public entity type.
-	 */
-	public char getPublicEntityType();
-
 }
