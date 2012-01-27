@@ -19,6 +19,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,12 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.def.Appellation;
+import org.helianto.core.def.Gender;
 import org.helianto.core.number.Sequenceable;
+import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -50,6 +56,7 @@ public class UserRequest implements Sequenceable, Controllable {
     private long internalNumber;
     private String principal;
     private String principalConfirmation;
+    private PersonalData personalData;
     private Date issueDate;
     private char resolution;
     private int complete;
@@ -60,6 +67,7 @@ public class UserRequest implements Sequenceable, Controllable {
      * Default constructor.
      */
     public UserRequest() {
+        setPersonalData(new PersonalData());
     }
 
     /** 
@@ -202,11 +210,100 @@ public class UserRequest implements Sequenceable, Controllable {
      */
     @Transient
     public boolean validatePrincipal() {
-    	if (getPrincipal()!=null && getPrincipalConfirmation()!=null) {
-    		return getPrincipal().equals(getPrincipalConfirmation());
+    	return validatePrincipal(getPrincipalConfirmation());
+    }
+    
+    /**
+     * True if principal and principal confirmation are equal.
+     * 
+     * @param principalConfirmation
+     */
+    @Transient
+    public boolean validatePrincipal(String principalConfirmation) {
+    	if (getPrincipal()!=null && principalConfirmation!=null) {
+    		return getPrincipal().equals(principalConfirmation);
     	}
     	return false;
     }
+    
+    /**
+     * PersonalData getter.
+     */
+    @Embedded
+    public PersonalData getPersonalData() {
+        return this.personalData;
+    }
+    public void setPersonalData(PersonalData personalData) {
+        this.personalData = personalData;
+    }
+    
+    /**
+     * <<Transient>> Safe identity name getter.
+     */
+    @Transient
+    public String getIdentityName() {
+    	if (getPersonalData()!=null) {
+        	return new StringBuilder(getPersonalData().getFirstName())
+    	    .append(" ")
+    	    .append(getPersonalData().getLastName()).toString();
+    	}
+    	return "";
+    }
+    
+    /**
+     * <<Transient>> Safe gender getter.
+     */
+    @Transient
+    public char getGender() {
+    	if (getPersonalData()!=null) {
+    		return getPersonalData().getGender();
+    	}
+		return Gender.NOT_SUPPLIED.getValue();
+	}
+    
+    /**
+     * <<Transient>> Safe appellation getter.
+     */
+    @Transient
+    public char getAppellation() {
+    	if (getPersonalData()!=null) {
+    		return getPersonalData().getAppellation();
+    	}
+		return Appellation.NOT_SUPPLIED.getValue();
+	}
+    
+    /**
+     * <<Transient>> Safe birth date getter.
+     */
+    @Transient
+    public Date getBirthDate() {
+    	if (getPersonalData()!=null) {
+    		return getPersonalData().getBirthDate();
+    	}
+		return new Date(1000l);
+	}
+    
+    /**
+     * <<Transient>> Safe age getter.
+     */
+    @Transient
+    public int getAge() {
+		return getAge(new Date());
+	}
+    
+    /**
+     * <<Transient>> Safe age getter.
+     * 
+     * @param date
+     */
+    @Transient
+    protected int getAge(Date date) {
+    	if (getPersonalData()!=null && getPersonalData().getBirthDate()!=null) {
+    		DateMidnight birthdate = new DateMidnight(getPersonalData().getBirthDate());
+    		return Years.yearsBetween(birthdate, new DateTime(date)).getYears();
+    	}
+		return -1;
+	}
     
     /**
      * Issue date.
