@@ -9,7 +9,7 @@ import java.util.List;
 import org.easymock.classextension.EasyMock;
 import org.helianto.core.UserGroup;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.service.UserMgr;
+import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,35 +27,36 @@ public class EntityAliasUserGroupResolverTests {
 		userGroupList.add(userGroup);
 		
 		
-		userMgr.findUsers(EasyMock.isA(Filter.class));
+		userGroupDao.find(EasyMock.isA(Filter.class));
 		EasyMock.expectLastCall().andReturn(userGroupList);
-		EasyMock.replay(userMgr);
+		EasyMock.replay(userGroupDao);
 		
 		assertSame(userGroup, resolver.resolveUserGroup("ALIAS"));
-		EasyMock.verify(userMgr);
+		EasyMock.verify(userGroupDao);
 		
 	}
 	
 	@Test
 	public void createFilter() {
-		Filter filter = resolver.createUserFilter("ALIAS");
+		Filter filter = resolver.new UserGroupAliasFilter("ALIAS");
 		
 		assertEquals("alias.entity.alias = 'ALIAS' AND alias.userKey = 'USER' ", filter.createCriteriaAsString());
 	}
 	
 	private EntityAliasUserGroupResolver resolver;
-	private UserMgr userMgr;
+	private FilterDao<UserGroup> userGroupDao;
 	
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		resolver = new EntityAliasUserGroupResolver();
-		userMgr = EasyMock.createMock(UserMgr.class);
-		resolver.setUserMgr(userMgr);
+		userGroupDao = EasyMock.createMock(FilterDao.class);
+		resolver.setUserGroupDao(userGroupDao);
 	}
 	
 	@After
 	public void tearDown() {
-		EasyMock.reset(userMgr);
+		EasyMock.reset(userGroupDao);
 	}
 
 }

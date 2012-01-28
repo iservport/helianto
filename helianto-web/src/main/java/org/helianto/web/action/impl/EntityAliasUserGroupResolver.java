@@ -6,9 +6,8 @@ import javax.annotation.Resource;
 
 import org.helianto.core.UserGroup;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.base.AbstractFilter;
-import org.helianto.core.service.UserMgr;
+import org.helianto.core.repository.FilterDao;
 import org.helianto.web.action.UserGroupResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +20,7 @@ import org.slf4j.LoggerFactory;
 public class EntityAliasUserGroupResolver implements UserGroupResolver {
 
 	public UserGroup resolveUserGroup(String entityAlias) {
-		@SuppressWarnings("unchecked")
-		List<UserGroup> userGroupList = (List<UserGroup>) userMgr.findUsers(createUserFilter(entityAlias));
+		List<UserGroup> userGroupList = (List<UserGroup>) userGroupDao.find(new UserGroupAliasFilter(entityAlias));
 		if (userGroupList!=null && userGroupList.size()>0) {
 			return userGroupList.get(0);
 		}
@@ -31,34 +29,42 @@ public class EntityAliasUserGroupResolver implements UserGroupResolver {
 	}
 	
 	/**
-	 * Create a simple filter to resolve user group.
+	 * User Group filter inner class.
 	 * 
-	 * @param entityAlias
+	 * @author mauriciofernandesdecastro
 	 */
-	protected Filter createUserFilter(final String entityAlias) {
-		Filter userFilter = new AbstractFilter() {
-			
-			private static final long serialVersionUID = 1L;
+	protected class UserGroupAliasFilter extends AbstractFilter {
+		
+		private static final long serialVersionUID = 1L;
+		private String entityAlias;
+		
+		/**
+		 * Constructor.
+		 * 
+		 * @param entityAlias
+		 */
+		UserGroupAliasFilter(String entityAlias) {
+			super();
+			this.entityAlias = entityAlias;
+		}
 
-			@Override
-			protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
-			
-			@Override
-			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-				appendEqualFilter("entity.alias", entityAlias, mainCriteriaBuilder);
-				appendEqualFilter("userKey", "USER", mainCriteriaBuilder);
-			}
-		};
-		return userFilter;
+		@Override
+		protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
+		
+		@Override
+		public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+			appendEqualFilter("entity.alias", entityAlias, mainCriteriaBuilder);
+			appendEqualFilter("userKey", "USER", mainCriteriaBuilder);
+		}
 	}
 	
 	// collabs
 	
-	private UserMgr userMgr;
+	private FilterDao<UserGroup> userGroupDao;
 	
 	@Resource
-	public void setUserMgr(UserMgr userMgr) {
-		this.userMgr = userMgr;
+	public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
+		this.userGroupDao = userGroupDao;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(EntityAliasUserGroupResolver.class);

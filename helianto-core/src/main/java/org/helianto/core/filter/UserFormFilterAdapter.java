@@ -62,7 +62,7 @@ public class UserFormFilterAdapter
 	
 
 	public boolean isSelection() {
-		return getForm().getUserKey()!=null && getForm().getUserKey().length()>0;
+		return super.isSelection() && getForm().getUserKey()!=null && getForm().getUserKey().length()>0;
 	}
 
 	@Override
