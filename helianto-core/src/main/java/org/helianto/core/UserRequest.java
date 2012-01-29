@@ -33,6 +33,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
+import org.helianto.core.def.Resolution;
 import org.helianto.core.number.Sequenceable;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -48,7 +49,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name="core_userrequest",
     uniqueConstraints = {@UniqueConstraint(columnNames={"userGroupId", "internalNumber"})}
 )
-public class UserRequest implements Sequenceable, Controllable {
+public class UserRequest 
+
+	implements  
+	  Sequenceable
+	, Controllable 
+
+{
 
     private static final long serialVersionUID = 1L;
     private long id;
@@ -68,6 +75,8 @@ public class UserRequest implements Sequenceable, Controllable {
      */
     public UserRequest() {
         setPersonalData(new PersonalData());
+        setResolutionAsEnum(Resolution.TODO);
+        setIssueDate(new Date());
     }
 
     /** 
@@ -325,6 +334,9 @@ public class UserRequest implements Sequenceable, Controllable {
 	}
     public void setResolution(char resolution) {
 		this.resolution = resolution;
+	}
+    public void setResolutionAsEnum(Resolution resolution) {
+		this.resolution = resolution.getValue();
 	}
     
     /**
