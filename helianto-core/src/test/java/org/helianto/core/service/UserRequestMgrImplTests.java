@@ -8,10 +8,9 @@ import java.util.List;
 import org.easymock.classextension.EasyMock;
 import org.helianto.core.UserRequest;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.TestingFilter;
+import org.helianto.core.filter.form.CompositeIdentityForm;
+import org.helianto.core.filter.form.UserRequestForm;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.UserRequestMgrImpl;
-import org.helianto.core.service.SequenceMgr;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,12 +39,12 @@ public class UserRequestMgrImplTests {
 	@Test
 	public void find() {
 		List<UserRequest> userRequestList = new ArrayList<UserRequest>();
-		Filter filter = new TestingFilter();
+		UserRequestForm form = new CompositeIdentityForm("TESTE");
 		
-		EasyMock.expect(userRequestDao.find(filter)).andReturn(userRequestList);
+		EasyMock.expect(userRequestDao.find(EasyMock.isA(Filter.class))).andReturn(userRequestList);
 		EasyMock.replay(userRequestDao);
 		
-		assertSame(userRequestList, loginRequestMgr.findUserRequests(filter));
+		assertSame(userRequestList, loginRequestMgr.findUserRequests(form));
 		EasyMock.verify(userRequestDao);
 	}
 	

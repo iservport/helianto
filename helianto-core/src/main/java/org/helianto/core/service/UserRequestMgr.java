@@ -18,7 +18,7 @@ package org.helianto.core.service;
 import java.util.List;
 
 import org.helianto.core.UserRequest;
-import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.UserRequestForm;
 
 /**
  * User request service interface.
@@ -30,9 +30,9 @@ public interface UserRequestMgr {
 	/**
 	 * Find a <code>UserRequest</code> list.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public List<UserRequest> findUserRequests(Filter filter);
+	public List<UserRequest> findUserRequests(UserRequestForm form);
 	
 	/**
 	 * Store <code>UserRequest</code>.
