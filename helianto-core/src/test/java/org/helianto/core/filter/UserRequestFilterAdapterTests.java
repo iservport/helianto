@@ -19,8 +19,9 @@ import org.junit.Test;
 public class UserRequestFilterAdapterTests {
 	
 	String OB = "order by alias.internalNumber ";
+	String C0 = "alias.entity.id = 0 ";
 	String C1 = "alias.userGroup.id = 1 ";
-	String C2 = "AND alias.internalNumber = 100 ";
+	String C2 = "alias.internalNumber = 100 ";
 	String C3 = "lower(alias.principal) like '%test@domain%' ";
 	String C4 = "(alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ";
 	String C5 = "alias.tempPassword = 'ABCD' ";
@@ -34,7 +35,7 @@ public class UserRequestFilterAdapterTests {
 	public void select() {
 		((CompositeIdentityForm) form).setUserGroup(userGroup);
 		form.setInternalNumber(100);
-		assertEquals(C1+C2, filter.createCriteriaAsString());
+		assertEquals(C0+"AND "+C1+"AND "+C2, filter.createCriteriaAsString());
 	}
 	
 	@Test

@@ -1,5 +1,6 @@
 package org.helianto.core.filter;
 
+import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractControlFilterAdapter;
 import org.helianto.core.filter.form.UserRequestForm;
@@ -20,6 +21,16 @@ public class UserRequestFormFilterAdapter extends AbstractControlFilterAdapter<U
 	 */
 	public UserRequestFormFilterAdapter(UserRequestForm form) {
 		super(form);
+	}
+	
+	/**
+	 * The entity.
+	 */
+	public Entity getEntity() {
+		if (getForm().getUserGroup()!=null) {
+			return getForm().getUserGroup().getEntity();
+		}
+		return super.getEntity();
 	}
 	
 	@Override
