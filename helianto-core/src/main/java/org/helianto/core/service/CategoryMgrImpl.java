@@ -22,7 +22,9 @@ import javax.annotation.Resource;
 import org.helianto.core.Category;
 import org.helianto.core.Entity;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.filter.CategoryFormFilterAdapter;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.CategoryForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,13 @@ import org.slf4j.LoggerFactory;
 @org.springframework.stereotype.Service("categoryMgr")
 public class CategoryMgrImpl implements CategoryMgr {
     
+	public List<Category> findCategories(CategoryForm form) {
+		CategoryFormFilterAdapter filter = new CategoryFormFilterAdapter(form);
+    	List<Category> categoryList = (List<Category>) categoryDao.find(filter);
+    	logger.debug("Found category list of size {}", categoryList.size());
+    	return categoryList;
+	}
+
 	public List<Category> findCategories(Filter categoryFilter) {
     	List<Category> categoryList = (List<Category>) categoryDao.find(categoryFilter);
     	logger.debug("Found category list of size {}", categoryList.size());
@@ -75,6 +84,5 @@ public class CategoryMgrImpl implements CategoryMgr {
     }
 
     private final Logger logger = LoggerFactory.getLogger(CategoryMgrImpl.class);
-
 
 }

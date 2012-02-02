@@ -40,7 +40,7 @@ public class MessageMgrImpl implements MessageMgr {
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-			helper.setTo(recipient);
+			helper.setTo(recipient.split(","));
 			helper.setFrom(sender);
 			helper.setSubject(subject);
 			helper.setText(htmlMessageBody, true);

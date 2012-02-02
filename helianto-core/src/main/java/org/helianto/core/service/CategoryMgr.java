@@ -21,6 +21,7 @@ import org.helianto.core.Category;
 import org.helianto.core.Entity;
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.form.CategoryForm;
 
 /**
  * Service interface to categories.
@@ -33,8 +34,16 @@ public interface CategoryMgr {
 	 * List categories.
 	 * 
 	 * @param categoryFilter
+	 * @deprecated
 	 */
 	public List<Category> findCategories(Filter categoryFilter);
+
+	/**
+	 * List categories.
+	 * 
+	 * @param form
+	 */
+	public List<Category> findCategories(CategoryForm form);
 
 	/**
 	 * Store category.
