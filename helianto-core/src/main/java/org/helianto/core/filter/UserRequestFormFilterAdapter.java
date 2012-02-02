@@ -34,6 +34,11 @@ public class UserRequestFormFilterAdapter extends AbstractControlFilterAdapter<U
 	}
 	
 	@Override
+	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.appendSegment("userGroup.entity.id", "=").append(entity.getId());
+	}
+	
+	@Override
 	public boolean isSelection() {
 		return getForm().getUserGroup()!=null 
 				&& getForm().getUserGroup().getId()>0

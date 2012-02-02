@@ -19,7 +19,7 @@ import org.junit.Test;
 public class UserRequestFilterAdapterTests {
 	
 	String OB = "order by alias.internalNumber ";
-	String C0 = "alias.entity.id = 0 ";
+	String C0 = "alias.userGroup.entity.id = 0 ";
 	String C1 = "alias.userGroup.id = 1 ";
 	String C2 = "alias.internalNumber = 100 ";
 	String C3 = "lower(alias.principal) like '%test@domain%' ";
