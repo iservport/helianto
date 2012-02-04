@@ -16,6 +16,8 @@
 
 package org.helianto.message.service;
 
+import java.util.Arrays;
+
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -36,6 +38,9 @@ import org.springframework.stereotype.Service;
 @Service("messageMgr")
 public class MessageMgrImpl implements MessageMgr {
 
+	/**
+	 * @deprecated
+	 */
     public void send(String recipient, String sender, String subject, String htmlMessageBody) {
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -46,6 +51,21 @@ public class MessageMgrImpl implements MessageMgr {
 			helper.setText(htmlMessageBody, true);
 			mailSender.send(message);
 			logger.info("Sent passwordConfirmation to {}", recipient);
+		} catch (MessagingException e) {
+			throw new RuntimeException("Failed to send message.", e);
+		}
+    }
+    
+    public void send(String[] recipients, String sender, String subject, String htmlMessageBody) {
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			helper.setTo(recipients);
+			helper.setFrom(sender);
+			helper.setSubject(subject);
+			helper.setText(htmlMessageBody, true);
+			mailSender.send(message);
+			logger.info("Sent passwordConfirmation to {}", Arrays.toString(recipients));
 		} catch (MessagingException e) {
 			throw new RuntimeException("Failed to send message.", e);
 		}

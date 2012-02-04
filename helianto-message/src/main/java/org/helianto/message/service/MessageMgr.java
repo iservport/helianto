@@ -31,8 +31,19 @@ public interface MessageMgr {
      * @param sender
      * @param subject
      * @param htmlMessageBody
+     * @deprecated
      */
     public void send(String recipient, String sender, String subject, String htmlMessageBody);
+    
+    /**
+     * Send a confirmation mail.
+     * 
+     * @param recipient
+     * @param sender
+     * @param subject
+     * @param htmlMessageBody
+     */
+    public void send(String[] recipients, String sender, String subject, String htmlMessageBody);
     
     /**
      * Notify hourly.
