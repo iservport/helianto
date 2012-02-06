@@ -26,6 +26,7 @@ import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.User;
+import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.def.ActivityState;
 import org.slf4j.Logger;
@@ -35,32 +36,16 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * Models core user information retieved by
- * {@link org.acegisecurity.userdetails.UserDetailsService} as an adapter class
- * to keep coupling from the Acegi-security package as narrow as possible.
+ * Models core user information retrieved by
+ * {@link org.springframework.security.core.userdetails.UserDetailsService} as an adapter class
+ * to {@link org.helianto.core.User}.
  * 
  * <p>
- * A new <code>UserAdapter</code> must be created from a single
- * {@link org.helianto.core.User}. As a group of <code>User</code>s may be
- * connected by a common <code>Credential</code> it is desirable to switch
- * <code>User</code>s inside the group at runtime as no new authentication is
- * be required (same credential). This is is a design choice made to allow
- * multiple entities to share the same set of credentials and still keep
- * individual sets of authorities.
- * </p>
- * 
- * <p>
- * Service layer code should retrieve <code>UserAdapter</code> through the
- * {@link org.helianto.core.security.PublicUserDetails} or
- * {@link org.helianto.core.security.PublicUserDetailsSwitcher} interfaces to
- * prevent unintended access to the embedded <code>User</code> and
- * <code>Credential</code> instances. A convenient static methods
- * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsFromSecurityContext}
- * and
- * {@link org.helianto.core.security.AbstractUserAdapter#retrievePublicUserDetailsSwitcherFromSecurityContext}
- * are supplied to perform this task. <code>PublicUserDetailsSwitcher</code>
- * provides a method to switch the current <code>User</code> based on an
- * <code>Entity</code> selection.
+ * A new <code>UserDetailsAdapter</code> may be created from a single
+ * {@link org.helianto.core.User} and the correspondent credential to be expected 
+ * during authentication. A new <code>UserDetailsAdapter</code> may also be created from
+ * a group with no credential specified, where the authentication is then considered 
+ * to be anonymous.
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
@@ -74,12 +59,12 @@ public class UserDetailsAdapter implements
     private List<GrantedAuthority> authorities;
 
     /**
-     * Default constructor
+     * Package default constructor
      */
-    public UserDetailsAdapter() {}
+    UserDetailsAdapter() {}
     
     /**
-     * Credential constructor.
+     * User constructor.
      * 
      * @param user
      * @param credential
@@ -90,6 +75,33 @@ public class UserDetailsAdapter implements
         logger.info("Secured user: {}", user);
         this.credential = credential;
         grantAuthorities(roles, user);
+    }
+    
+    /**
+     * Anonymous constructor.
+     * 
+     * @param user
+     */
+    public UserDetailsAdapter(UserGroup userGroup) {
+        this();
+        this.user = isAnonymousUserValid(userGroup);
+        logger.info("Anonymous user for entity: {}", user.getEntity());
+    }
+    
+    /**
+     * Not null if anonymous user is valid.
+     * 
+     * <p>
+     * Default implementation accepts only the special group USER.
+     * </p>
+     * 
+     * @param user
+     */
+    protected User isAnonymousUserValid(UserGroup userGroup) {
+    	if (userGroup!=null && userGroup.getUserKey().toUpperCase().equals("USER")) {
+        	return (User) userGroup;
+    	}
+    	return null;
     }
     
     /**
@@ -143,18 +155,35 @@ public class UserDetailsAdapter implements
         }
         return sb.toString();
     }
+    
+    /**
+     * True if user is not null but credential is not specified.
+     */
+    protected boolean isAnonymous() {
+    	return (getUser()!=null && getCredential()==null);
+    }
 
     public boolean isAccountNonExpired() {
+    	if (isAnonymous()) {
+    		return true;
+    	}
         // TODO calculate account (User) expiration
         return user.isAccountNonExpired();
     }
 
     public boolean isAccountNonLocked() {
+    	if (isAnonymous()) {
+    		return true;
+    	}
         if (user.getUserState()==ActivityState.ACTIVE.getValue()) {
             return true;
         }
         return false;
     }
+    
+    private Credential getCredential() {
+		return credential;
+	}
 
     public boolean isCredentialsNonExpired() {
     	// delegate to the application
@@ -162,8 +191,11 @@ public class UserDetailsAdapter implements
     }
 
     public boolean isEnabled() {
+    	if (isAnonymous()) {
+    		return true;
+    	}
         // TODO replace auto-enable
-        char state = credential.getCredentialState();
+        char state = getCredential().getCredentialState();
         if (state==ActivityState.ACTIVE.getValue() || 
                 state==ActivityState.INITIAL.getValue()) {
             return true;
@@ -172,13 +204,19 @@ public class UserDetailsAdapter implements
     }
 
     public String getPassword() {
-    	if (credential!=null) {
+    	if (isAnonymous()) {
+    		return "";
+    	}
+    	if (getCredential()!=null) {
     		return credential.getPassword();
     	}
         return "";
      }
 
     public String getUsername() {
+    	if (isAnonymous()) { 
+    		return "anonymous";
+    	}
         return user.getIdentity().getPrincipal();
     }
     
