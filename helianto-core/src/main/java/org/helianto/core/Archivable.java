@@ -1,5 +1,7 @@
 package org.helianto.core;
 
+import java.util.Date;
+
 /**
  * Archive interface.
  * 
@@ -11,5 +13,10 @@ public interface Archivable {
 	 * Archive type.
 	 */
 	char getArchive();
+	
+	/**
+	 * Archive date.
+	 */
+	Date getArchiveDate();
 
 }
