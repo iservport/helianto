@@ -9,21 +9,21 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Interface para planos.
+ * Plan interface.
  * 
  * @author mauriciofernandesdecastro
  */
 public interface Plan extends Serializable {
 
     /**
-     * Data programada para início.
+     * Scheduled start date.
      */
     @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getScheduledStartDate();
     
     /**
-     * Data programada para fim.
+     *Scheduled end date.
      */
     @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
