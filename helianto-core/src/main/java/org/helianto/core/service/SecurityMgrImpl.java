@@ -137,7 +137,10 @@ public class SecurityMgrImpl implements SecurityMgr {
 //	}
 	
 	public void authenticate(User user, Set<UserRole> roles) {
-		UserDetails userDetails = new UserDetailsAdapter(user, null, roles);
+		authenticate(new UserDetailsAdapter(user, null, roles));
+	}
+	
+	public void authenticate(UserDetailsAdapter userDetails) {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "any", userDetails.getAuthorities());   //   PreAuthenticatedAuthenticationToken(aPrincipal, aCredentials, anAuthorities);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		logger.debug("Authenticated {}.", authentication);

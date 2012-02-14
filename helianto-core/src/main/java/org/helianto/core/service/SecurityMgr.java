@@ -24,6 +24,7 @@ import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.security.SecureUserDetails;
+import org.helianto.core.security.UserDetailsAdapter;
 
 /**
  * Default security service layer interface for the core package.
@@ -35,12 +36,12 @@ public interface SecurityMgr {
     /**
      * Find <core>Credential</core> by <core>Identity</core>.
      */
-	public Credential findCredentialByIdentity(Identity identity);
+	Credential findCredentialByIdentity(Identity identity);
 	
     /**
      * Find <core>Credential</core> by principal.
      */
-	public Credential findCredentialByPrincipal(String principal);
+	Credential findCredentialByPrincipal(String principal);
 	
     /**
      * Store the given <code>Credential</code> and return a managed object.
@@ -48,7 +49,7 @@ public interface SecurityMgr {
      * @param identity
      * @exception PasswordNotVerifiedException
      */
-    public Credential storeCredential(Credential credential) 
+    Credential storeCredential(Credential credential) 
         throws PasswordNotVerifiedException;
     
     /**
@@ -56,7 +57,7 @@ public interface SecurityMgr {
      * 
      * @param identity
      */
-    public void storeCredential(SecureUserDetails secureUser);
+    void storeCredential(SecureUserDetails secureUser);
     
     /**
      * Find user roles by user group.
@@ -64,7 +65,7 @@ public interface SecurityMgr {
      * @param userGroup
      * @param recursively
      */
-    public Set<UserRole> findRoles(UserGroup userGroup, boolean recursively);
+    Set<UserRole> findRoles(UserGroup userGroup, boolean recursively);
     
     /**
      * Used to authenticate a known <code>User</code> with a set of <code>UserRole</code>s.
@@ -72,11 +73,18 @@ public interface SecurityMgr {
      * @param user
      * @param roles
      */
-    public void authenticate(User user, Set<UserRole> roles);
+    void authenticate(User user, Set<UserRole> roles);
+    
+    /**
+     * Used to authenticate an instance of <code>UserDetailsAdapter</code>s.
+     * 
+     * @param userDetails
+     */
+    void authenticate(UserDetailsAdapter userDetails);
 	
     /**
      * Clear the current authentication.
      */
-	public void clearAuthentication();
+	void clearAuthentication();
     
 }
