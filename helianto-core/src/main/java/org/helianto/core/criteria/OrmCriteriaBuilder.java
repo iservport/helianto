@@ -20,7 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import com.springsource.util.common.StringUtils;
+import org.springframework.util.StringUtils;
+
 
 
 /**
