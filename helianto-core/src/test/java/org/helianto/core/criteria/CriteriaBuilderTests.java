@@ -163,6 +163,30 @@ public class CriteriaBuilderTests  {
     }
     
     @Test
+    public void stringArrayAppenderNullOrEmpty() {
+        assertTrue(criteriaBuilder.append(null, true) instanceof OrmCriteriaBuilder);
+        assertEquals("", criteriaBuilder.getCriteriaAsString());
+        
+    	String[] keys = new String[] {};
+        assertTrue(criteriaBuilder.append(keys, true) instanceof OrmCriteriaBuilder);
+        assertEquals("", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    @Test
+    public void stringArrayAppenderSingle() {
+    	String[] keys = new String[] {"teste"};
+        assertTrue(criteriaBuilder.append(keys, false) instanceof OrmCriteriaBuilder);
+        assertEquals("'teste' ", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    @Test
+    public void stringArrayAppender() {
+    	String[] keys = new String[] {"test1", "test2"};
+        assertTrue(criteriaBuilder.append(keys, true) instanceof OrmCriteriaBuilder);
+        assertEquals("('test1','test2') ", criteriaBuilder.getCriteriaAsString());
+    }
+    
+    @Test
     public void longAppender() {
         assertTrue(criteriaBuilder.append(Long.MAX_VALUE) instanceof OrmCriteriaBuilder);
         assertEquals("9223372036854775807 ",criteriaBuilder.getCriteriaAsString());

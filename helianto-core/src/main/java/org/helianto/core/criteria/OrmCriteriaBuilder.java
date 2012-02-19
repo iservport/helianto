@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
+import com.springsource.util.common.StringUtils;
+
 
 /**
  * Build an EJB-QL string criteria, appropriate to be appended
@@ -259,6 +261,26 @@ public class OrmCriteriaBuilder extends SelectFromBuilder implements CriteriaBui
     public OrmCriteriaBuilder append(int[] content) {
     	if (content.length>0) {
     		getInternalBuilder().append(Arrays.toString(content).replace("[", "(").replace("]", ")"))
+            .append(" ");
+    	}
+        return this;
+    }
+
+    /**
+     * String array appender.
+     * 
+     * @param content
+     * @param encloseWithParenthesis
+     */
+    public OrmCriteriaBuilder append(String[] content, boolean encloseWithParenthesis) {
+    	if (content!=null && content.length>0) {
+    		String contentArray = new StringBuilder(encloseWithParenthesis ? "(" : "")
+    		.append("'")
+    		.append(StringUtils.arrayToDelimitedString(content, "','"))
+    		.append("'")
+    		.append(encloseWithParenthesis ? ")" : "")
+    		.toString();
+    		getInternalBuilder().append(contentArray)
             .append(" ");
     	}
         return this;
