@@ -1,0 +1,52 @@
+package org.helianto.message.sender;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Set;
+
+import org.helianto.core.Identity;
+import org.helianto.message.AbstractMessageAdapter;
+
+/**
+ * SendGrid web api message adapter.
+ * 
+ * @author mauriciofernandesdecastro
+ */
+public class SendGridMessageAdapter extends AbstractMessageAdapter<String> {
+	
+	/**
+	 * Message constructor.
+	 * 
+	 * @param apiUser
+	 * @param apiKey
+	 */
+	public SendGridMessageAdapter() {
+		super();
+	}
+	
+	@Override
+	public String getMessage() {
+		StringBuilder messageBuilder = new StringBuilder(super.getMessage());
+		Set<Identity> validRecipients = getRecipients();
+		for (Identity recipient: validRecipients) {
+			messageBuilder.append("&to[]=").append(recipient.getPrincipal());
+			messageBuilder.append("&toName[]=").append(recipient.getIdentityName().trim());
+		}
+		try {
+			messageBuilder.append("&subject=").append(URLEncoder.encode(getSubject(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalArgumentException("Unable to create mail subject.", e);
+		}
+		try {
+			messageBuilder.append("&text=").append(URLEncoder.encode(getText(), "UTF-8"));
+			if (getHtml()!=null && !getHtml().isEmpty()) {
+				messageBuilder.append("&html=").append(URLEncoder.encode(getHtml(), "UTF-8"));
+			}
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalArgumentException("Unable to create mail content.", e);
+		}
+		messageBuilder.append("&from=").append(getFrom());
+		return messageBuilder.toString();
+	}
+	
+}
