@@ -296,6 +296,14 @@ public class Identity implements java.io.Serializable {
     public void setIdentityTypeAsEnum(IdentityType identityType) {
         this.identityType = identityType.getValue();
     }
+    
+    /**
+     * True if can receive email.
+     */
+    @Transient
+    public boolean isAddressable() {
+		return IdentityType.isAddressable(getIdentityType());
+	}
 
     /**
      * Notification getter.

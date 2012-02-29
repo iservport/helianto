@@ -29,17 +29,17 @@ public enum IdentityType {
     /**
      * Requires an organization email as principal.
      */
-    ORGANIZATIONAL_EMAIL('O'),
+    ORGANIZATIONAL_EMAIL('O', true),
     /**
      * Requires a personal email as principal.
      */
-    PERSONAL_EMAIL('P'),
+    PERSONAL_EMAIL('P', true),
     // The following new types will replace the previous
     // old ones in future releases
     /**
      * The principal is any user supplied e-mail.
      */
-    EMAIL('E'),
+    EMAIL('E', true),
     /**
      * The principal is a plain identity.
      */
@@ -50,12 +50,43 @@ public enum IdentityType {
     SYSTEM_GENERATED('S');
     
     private char value;
+    private boolean addressable;
     
     private IdentityType(char value) {
-        this.value = value;
+        this(value, false);
     }
+    
+    private IdentityType(char value, boolean addressable) {
+        this.value = value;
+        this.addressable = addressable;
+    }
+    
+    /**
+     * Identity type value.
+     */
     public char getValue() {
         return this.value;
+    }
+    
+    /**
+     * True if can be used to send email.
+     */
+    public boolean isAddressable() {
+    	return this.addressable;
+    }
+    
+    /**
+     * True if can be used to send email.
+     * 
+     * @param value
+     */
+    public static boolean isAddressable(char value) {
+    	for (IdentityType identityType: values()) {
+    		if (value==identityType.getValue() && identityType.isAddressable()) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
 }
