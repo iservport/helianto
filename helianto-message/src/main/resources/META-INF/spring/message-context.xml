@@ -32,9 +32,32 @@
 	<task:executor id="taskExecutor" pool-size="1"/>
 	
 	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
-
-   	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" />
 	
+	<bean id="mailSender" class="org.helianto.message.sender.TestingMailSender" />
+
+	<!-- 
+	 ! Uncomment to provide Java Mail Smtp sender
+	
+   	<bean id="mailSender" class="org.helianto.message.sender.SmtpMailSender" >
+   		<property name="javaMailSender">
+   			<bean class="org.springframework.mail.javamail.JavaMailSender"> 
+				<property name="host" value="yourHost"/>
+				<property name="port" value="yourPort"/>
+    		</bean>
+    	</property>
+   	</bean>
+	 -->
+	 
+	<!-- 
+	 ! Uncomment to provide SendGrid Web API sender
+	
+   	<bean id="mailSender" class="org.helianto.message.sender.SendGridWebMailSender" >
+   		<property name="targetURL" value="https://sendgrid.com/api"/>
+   		<property name="apiUser" value="yourUser"/>
+   		<property name="apiKey" value="yourKey"/>
+   	</bean>
+	 -->
+	 
 	<bean id="freemarkerConfigurationFactoryBean" 
 		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean" >
 		<property name="preferFileSystemAccess" value="false"/>

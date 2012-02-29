@@ -16,6 +16,8 @@
 
 package org.helianto.message.service;
 
+import org.helianto.message.MessageAdapter;
+
 
 /**
  * Message service interface.
@@ -25,25 +27,11 @@ package org.helianto.message.service;
 public interface MessageMgr {
 
     /**
-     * Send a confirmation mail.
+     * Send a message.
      * 
-     * @param recipient
-     * @param sender
-     * @param subject
-     * @param htmlMessageBody
-     * @deprecated
+     * @param messageAdapter
      */
-    public void send(String recipient, String sender, String subject, String htmlMessageBody);
-    
-    /**
-     * Send a confirmation mail.
-     * 
-     * @param recipient
-     * @param sender
-     * @param subject
-     * @param htmlMessageBody
-     */
-    public void send(String[] recipients, String sender, String subject, String htmlMessageBody);
+    public void send(MessageAdapter<?> messageAdapter);
     
     /**
      * Notify hourly.

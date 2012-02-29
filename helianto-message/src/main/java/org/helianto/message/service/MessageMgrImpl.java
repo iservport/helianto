@@ -16,81 +16,43 @@
 
 package org.helianto.message.service;
 
-import java.util.Arrays;
-
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
-import org.helianto.message.mail.compose.MailMessageComposer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.helianto.message.MessageAdapter;
+import org.helianto.message.MessageSender;
 import org.springframework.stereotype.Service;
 
 /**
- * Default <code>MessageMgr</code> interface implementation.
+ * Default <code>MessageMgr</code> implementation.
  *  
  * @author Mauricio Fernandes de Castro
  */
 @Service("messageMgr")
 public class MessageMgrImpl implements MessageMgr {
 
-	/**
-	 * @deprecated
-	 */
-    public void send(String recipient, String sender, String subject, String htmlMessageBody) {
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-			helper.setTo(recipient.split(","));
-			helper.setFrom(sender);
-			helper.setSubject(subject);
-			helper.setText(htmlMessageBody, true);
-			mailSender.send(message);
-			logger.info("Sent passwordConfirmation to {}", recipient);
-		} catch (MessagingException e) {
-			throw new RuntimeException("Failed to send message.", e);
-		}
+//    public void send(MessageAdapter message) {
+//		JavaMailMessage javaMailMessage = new JavaMailMessage(javaMailSender.createMimeMessage());
+//		javaMailSender.send(javaMailMessage.getMimeMessage());
+//		logger.info("Sent {}.", javaMailMessage.getSubject());
+//    }
+    
+    public void send(MessageAdapter<?> message) {
+    	messageSender.prepareMessage(message);
+		messageSender.sendMessage(message);
     }
     
-    public void send(String[] recipients, String sender, String subject, String htmlMessageBody) {
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-			helper.setTo(recipients);
-			helper.setFrom(sender);
-			helper.setSubject(subject);
-			helper.setText(htmlMessageBody, true);
-			mailSender.send(message);
-			logger.info("Sent passwordConfirmation to {}", Arrays.toString(recipients));
-		} catch (MessagingException e) {
-			throw new RuntimeException("Failed to send message.", e);
-		}
-    }
-    
-    @Scheduled(fixedRate=3600000) // one hour
+//    @Scheduled(fixedRate=3600000) // one hour
     public void findHourly() {
-    	send("mauricio@iservport.com", "mauricio@iservport.com", "Execution control test", "<html><body><p>Running.</p></body></html>");
+//    	send("mauricio@iservport.com", "mauricio@iservport.com", "Execution control test", "<html><body><p>Running.</p></body></html>");
     }
     
     // collabs
 
-    private MailMessageComposer mailMessageComposer;
-    private JavaMailSender mailSender;
+    private MessageSender messageSender;
     
-    @Resource(name="basicMailMessageComposer")
-    public void setMailMessageComposer(MailMessageComposer mailMessageComposer) {
-        this.mailMessageComposer = mailMessageComposer;
-    }
-
-    @Resource(name="mailSender")
-    public void setMailSender(JavaMailSender mailSender) {
-		this.mailSender = mailSender;
+    @Resource
+    public void setMessageSender(MessageSender messageSender) {
+		this.messageSender = messageSender;
 	}
-	
-    private final Logger logger = LoggerFactory.getLogger(MessageMgrImpl.class);
-
+    
 }
