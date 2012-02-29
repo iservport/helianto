@@ -69,6 +69,7 @@ public class UserRequest
     private int complete;
     private Date nextCheckDate;
     private String tempPassword;
+    private String postalCode;
 
     /** 
      * Default constructor.
@@ -371,6 +372,17 @@ public class UserRequest
     public void setTempPassword(String tempPassword) {
 		this.tempPassword = tempPassword;
 	}
+    
+    /**
+     * Postal code.
+     */
+    @Column(length=10)
+    public String getPostalCode() {
+        return this.postalCode;
+    }
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
     
     /**
      * toString
