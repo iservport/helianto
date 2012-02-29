@@ -50,11 +50,17 @@ import org.springframework.security.core.userdetails.UserDetails;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class UserDetailsAdapter implements
-        Serializable, UserDetails, PublicUserDetails {
+public class UserDetailsAdapter
+
+	implements
+      Serializable
+    , UserDetails
+    , PublicUserDetails
+    
+{
 
 	private static final long serialVersionUID = 1L;
-    private User user;
+    private UserGroup user;
     private Credential credential;
     private List<GrantedAuthority> authorities;
 
@@ -97,9 +103,9 @@ public class UserDetailsAdapter implements
      * 
      * @param user
      */
-    protected User isAnonymousUserValid(UserGroup userGroup) {
+    protected UserGroup isAnonymousUserValid(UserGroup userGroup) {
     	if (userGroup!=null && userGroup.getUserKey().toUpperCase().equals("USER")) {
-        	return (User) userGroup;
+        	return userGroup;
     	}
     	return null;
     }
@@ -157,10 +163,10 @@ public class UserDetailsAdapter implements
     }
     
     /**
-     * True if user is not null but credential is not specified.
+     * True if user is not instance of class User.
      */
     protected boolean isAnonymous() {
-    	return (getUser()!=null && getCredential()==null);
+    	return !(user instanceof User);
     }
 
     public boolean isAccountNonExpired() {
@@ -217,15 +223,21 @@ public class UserDetailsAdapter implements
     	if (isAnonymous()) { 
     		return "anonymous";
     	}
-        return user.getIdentity().getPrincipal();
+        return ((User) user).getIdentity().getPrincipal();
     }
     
     public User getUser() {
-        return user;
+    	if (isAnonymous()) { 
+    		return null;
+    	}
+        return (User) user;
     }
     
     public Entity getEntity() {
-    	return getUser().getEntity();
+    	if (user==null) { 
+    		return null;
+    	}
+    	return user.getEntity();
     }
     
     public Operator getOperator() {
