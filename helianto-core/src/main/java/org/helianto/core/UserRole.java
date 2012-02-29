@@ -115,14 +115,27 @@ public class UserRole  implements java.io.Serializable {
     }
     
     /**
-     * Service extension.
+     * Service extension list of comma separated values.
      */
+    // TODO change name to getServiceExtensions() (append "s" to current method name).
     @Column(length=64)
     public String getServiceExtension() {
         return this.serviceExtension;
     }
     public void setServiceExtension(String serviceExtension) {
         this.serviceExtension = serviceExtension;
+    }
+    
+    /**
+     * Service extensions as array.
+     */
+    @Transient
+    // TODO change name to getServiceExtensionAsArray() (insert "s" into current method name).
+    public String[] getServiceExtensionAsArray() {
+    	if (getServiceExtension()!=null && getServiceExtension().replace(" ", "").length()>0) {
+        	return getServiceExtension().replace(" ", "").split(",");
+    	}
+    	return new  String[] { };
     }
     
     /**
