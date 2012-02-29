@@ -41,7 +41,7 @@ public class PrivateDocumentController extends AbstractRenderController {
 			logger.warn("Null principal, unable to load private document with code: {}", docCode);
 			return null;
 		}
-		PrivateDocumentFilterAdapter filter = new PrivateDocumentFilterAdapter(extractUser(principal).getEntity(), docCode);
+		PrivateDocumentFilterAdapter filter = new PrivateDocumentFilterAdapter(extractEntity(principal), docCode);
 		List<PrivateDocument> privateDocumentList = documentMgr.findPrivateDocuments(filter);
 		if (privateDocumentList==null || privateDocumentList.size()==0) {
 			logger.warn("Private document not found.");
