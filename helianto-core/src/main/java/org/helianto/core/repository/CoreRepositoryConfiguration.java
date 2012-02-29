@@ -51,6 +51,11 @@ import org.springframework.context.annotation.Configuration;
 public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration {
 	
 	/**
+	 * Default constructor.
+	 */
+	public CoreRepositoryConfiguration() { }
+	
+	/**
 	 * Category data access.
 	 */
 	@Bean
