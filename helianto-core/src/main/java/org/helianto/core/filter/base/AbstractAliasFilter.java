@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractAliasFilter implements Serializable, CriteriaFilter<OrmCriteriaBuilder>, Cloneable {
 	
     private String objectAlias;
+    private OrmCriteriaBuilder mainCriteriaBuilder;
     
     /**
      * Default constructor.
@@ -61,19 +62,36 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 		this.objectAlias = objectAlias;
 	}
     
+    /**
+     * The main criteria builder.
+     */
+    public OrmCriteriaBuilder getMainCriteriaBuilder() {
+		return mainCriteriaBuilder;
+	}
+    public void setMainCriteriaBuilder(OrmCriteriaBuilder mainCriteriaBuilder) {
+		this.mainCriteriaBuilder = mainCriteriaBuilder;
+	}
+    
     public String createSelectAsString() {
     	return null;
     }
     
 	/**
-	 * Delegate criteria creation to a builder.
+	 * Delegate criteria creation to a chain of criteria builder processors.
+	 * 
+	 * <p>
+	 * If this filter has an embedded criteria builder, use it, otherwise create a new one,
+	 * </p> 
 	 */
 	public String createCriteriaAsString() {
+		if (getMainCriteriaBuilder()!=null) {
+			return createCriteriaAsString(getMainCriteriaBuilder());
+		}
         return createCriteriaAsString(new OrmCriteriaBuilder(getObjectAlias()));
     }
 	
 	/**
-	 * Delegate criteria creation to a chain of processors.
+	 * Delegate criteria creation to a chain of criteria builder processors.
 	 * 
 	 * @param mainCriteriaBuilder
 	 */
