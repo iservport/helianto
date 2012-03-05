@@ -45,6 +45,7 @@ public abstract class AbstractDocument
     private char priority;
     private String encoding;
     private String multipartFileContentType;
+    private String referenceList;
 
     /** 
      * Default constructor
@@ -189,6 +190,28 @@ public abstract class AbstractDocument
     	throw new IllegalArgumentException("Natural key must not be null");
     }
 
+    /**
+     * Reference list of comma separated values.
+     */
+    @Column(length=1024)
+    public String getReferenceList() {
+		return referenceList;
+	}
+    public void setReferenceList(String referenceList) {
+		this.referenceList = referenceList;
+	}
+    
+    /**
+     * References as array.
+     */
+    @Transient
+    public String[] getReferencesAsArray() {
+    	if (getReferenceList()!=null && getReferenceList().replace(" ", "").length()>0) {
+        	return getReferenceList().replace(" ", "").split(",");
+    	}
+    	return new  String[] { };
+    }
+    
     /**
      * toString
      * @return String

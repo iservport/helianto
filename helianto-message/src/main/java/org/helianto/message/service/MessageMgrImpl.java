@@ -16,10 +16,25 @@
 
 package org.helianto.message.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
+import org.helianto.core.Identity;
+import org.helianto.core.User;
+import org.helianto.core.UserGroup;
+import org.helianto.core.repository.FilterDao;
 import org.helianto.message.MessageAdapter;
 import org.helianto.message.MessageSender;
+import org.helianto.message.sender.SendGridMessageAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 /**
@@ -41,18 +56,51 @@ public class MessageMgrImpl implements MessageMgr {
 		messageSender.sendMessage(message);
     }
     
-//    @Scheduled(fixedRate=3600000) // one hour
+    @Scheduled(fixedRate=3600000) // one hour
     public void findHourly() {
-//    	send("mauricio@iservport.com", "mauricio@iservport.com", "Execution control test", "<html><body><p>Running.</p></body></html>");
+    	logger.info("Hourly scheduler triggered at {}.", new Date());
+    	MessageAdapter<String> hourlyMessage = new SendGridMessageAdapter();
+    	String query = "select distinct child from User child " +
+    			"join child.parentAssociations parents " +
+    			"where lower(parents.parent.userKey) like 'admin' ";
+    	Collection<UserGroup> adminList = userGroupDao.find(query, new Object[0]);
+    	Map<Identity, List<UserGroup>> adminMap = new HashMap<Identity, List<UserGroup>>();
+    	for (UserGroup admin: adminList) {
+    		Identity identity = ((User) admin).getIdentity();
+    		if (adminMap.containsKey(identity)) {
+    			adminMap.get(identity).add(admin);
+    		}
+    		else {
+    			if (identity.isAddressable()) {
+        			List<UserGroup> userList = new ArrayList<UserGroup>();
+        			userList.add(admin);
+        			adminMap.put(identity, userList);
+    			}
+    		}
+    	}
+    	hourlyMessage.setTo(adminMap.keySet());
+       	hourlyMessage.setFrom(adminMap.keySet().iterator().next());
+      	hourlyMessage.setSubject("System status");
+      	hourlyMessage.setText("System is running");
+      	hourlyMessage.setHtml("<html><body><p>Running.</p></body></html>");
+      	send(hourlyMessage);
     }
     
     // collabs
 
     private MessageSender messageSender;
+    private FilterDao<UserGroup> userGroupDao;
     
     @Resource
     public void setMessageSender(MessageSender messageSender) {
 		this.messageSender = messageSender;
 	}
+    
+    @Resource(name="userGroupDao")
+    public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
+		this.userGroupDao = userGroupDao;
+	}
+    
+    private static final Logger logger = LoggerFactory.getLogger(MessageMgrImpl.class);
     
 }

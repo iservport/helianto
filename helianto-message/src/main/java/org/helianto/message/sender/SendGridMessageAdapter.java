@@ -28,11 +28,11 @@ public class SendGridMessageAdapter extends AbstractMessageAdapter<String> {
 	public String getMessage() {
 		StringBuilder messageBuilder = new StringBuilder(super.getMessage());
 		Set<Identity> validRecipients = getRecipients();
-		for (Identity recipient: validRecipients) {
-			messageBuilder.append("&to[]=").append(recipient.getPrincipal());
-			messageBuilder.append("&toName[]=").append(recipient.getIdentityName().trim());
-		}
 		try {
+			for (Identity recipient: validRecipients) {
+				messageBuilder.append("&to[]=").append(recipient.getPrincipal());
+				messageBuilder.append("&toName[]=").append(URLEncoder.encode(recipient.getIdentityName().trim(), "UTF-8"));
+			}
 			messageBuilder.append("&subject=").append(URLEncoder.encode(getSubject(), "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			throw new IllegalArgumentException("Unable to create mail subject.", e);
@@ -45,7 +45,7 @@ public class SendGridMessageAdapter extends AbstractMessageAdapter<String> {
 		} catch (UnsupportedEncodingException e) {
 			throw new IllegalArgumentException("Unable to create mail content.", e);
 		}
-		messageBuilder.append("&from=").append(getFrom());
+		messageBuilder.append("&from=").append(getFrom().getPrincipal());
 		return messageBuilder.toString();
 	}
 	

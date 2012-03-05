@@ -370,3 +370,19 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
         })); 
     </script>
 </#macro>
+
+<#--
+ * message (copied from spring.ftl)
+ *
+ * Macro to translate a message code into a message.
+ -->
+<#macro message code>${springMacroRequestContext.getMessage(code)}</#macro>
+
+<#--
+ * messageText (copied from spring.ftl)
+ *
+ * Macro to translate a message code into a message,
+ * using the given default text if no message found.
+ -->
+<#macro messageText code, text>${springMacroRequestContext.getMessage(code, text)}</#macro>
+

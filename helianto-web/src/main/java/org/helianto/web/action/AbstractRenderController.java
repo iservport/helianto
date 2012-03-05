@@ -2,6 +2,7 @@ package org.helianto.web.action;
 
 import java.security.Principal;
 
+import org.helianto.core.Entity;
 import org.helianto.core.User;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.slf4j.Logger;
@@ -45,6 +46,15 @@ public class AbstractRenderController {
 	 */
 	protected User extractUser(Principal authenticatedObject) {
 		return ((UserDetailsAdapter) ((Authentication) authenticatedObject).getPrincipal()).getUser();
+	}
+
+	/**
+	 * Convenience to extract the entity from the authenticated object.
+	 * 
+	 * @param authenticatedObject
+	 */
+	protected Entity extractEntity(Principal authenticatedObject) {
+		return ((UserDetailsAdapter) ((Authentication) authenticatedObject).getPrincipal()).getEntity();
 	}
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractRenderController.class);

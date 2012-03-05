@@ -35,7 +35,7 @@ public class SendGridWebMailSender implements MessageSender {
 		StringBuilder messageBuilder = new StringBuilder();
 		messageBuilder.append("api_user=").append(getApiUser());
 		messageBuilder.append("&api_key=").append(getApiKey());
-		messageAdapter.setMessage(messageBuilder.append(messageAdapter.getMessage()).toString());
+		messageAdapter.setMessage(messageBuilder.toString());
 	}
 	
 	public String sendMessage(MessageAdapter<?> messageAdapter) {

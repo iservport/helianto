@@ -16,6 +16,7 @@
 
 package org.helianto.document;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -88,4 +89,23 @@ public class DocumentTests {
 		assertFalse(document.equals(ancestor));
 	}
 	
+	@Test
+	public void references() {
+		Entity entity = EntityTestSupport.createEntity();
+		Document document = new Document(entity, "CODE");
+		assertArrayEquals(document.getReferencesAsArray(), new String[]{});
+		
+		document.setReferenceList("");
+		assertArrayEquals(document.getReferencesAsArray(), new String[]{});
+		
+		document.setReferenceList(" ");
+		assertArrayEquals(document.getReferencesAsArray(), new String[]{});
+		
+		document.setReferenceList(" a");
+		assertArrayEquals(document.getReferencesAsArray(), new String[]{"a"});
+		
+		document.setReferenceList(" a , b ");
+		assertArrayEquals(document.getReferencesAsArray(), new String[]{"a", "b"});
+	}
+
 }
