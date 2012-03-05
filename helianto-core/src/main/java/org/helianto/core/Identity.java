@@ -84,11 +84,7 @@ public class Identity implements java.io.Serializable {
      * Default constructor.
      */
     public Identity() {
-        setPersonalData(new PersonalData());
-        setCreated(new Date());
-        setIdentityTypeAsEnum(IdentityType.PERSONAL_EMAIL);
-        setNotificationAsEnum(Notification.AUTOMATIC);
-        setPhoto(new byte[0]);
+        this("");
     }
 
     /** 
@@ -97,9 +93,7 @@ public class Identity implements java.io.Serializable {
      * @param principal
      */
     public Identity(String principal) {
-    	this();
-    	setPrincipal(principal);
-    	setOptionalAlias(getPrincipalName());
+    	this(principal, "");
     }
 
     /** 
@@ -109,9 +103,24 @@ public class Identity implements java.io.Serializable {
      * @param optionalAlias
      */
     public Identity(String principal, String optionalAlias) {
-    	this();
+    	this(principal, optionalAlias, new PersonalData());
+    }
+
+    /** 
+     * Principal and optional alias constructor.
+     * 
+     * @param principal
+     * @param optionalAlias
+     * @param personalData
+     */
+    public Identity(String principal, String optionalAlias, PersonalData personalData) {
     	setPrincipal(principal);
     	setOptionalAlias(optionalAlias);
+        setPersonalData(personalData);
+        setCreated(new Date());
+        setIdentityTypeAsEnum(IdentityType.PERSONAL_EMAIL);
+        setNotificationAsEnum(Notification.AUTOMATIC);
+        setPhoto(new byte[0]);
     }
 
     /**
