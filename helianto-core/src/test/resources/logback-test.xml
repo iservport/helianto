@@ -9,21 +9,21 @@
   </appender>
 
 
-  <logger name="org.helianto" level="DEBUG"/>
+  <logger name="org.helianto" level="OFF"/>
   <logger name="org.helianto.core.test.DomainTestSupport" level="OFF"/>
   <logger name="org.springframework.beans.factory.config" level="OFF"/>
   <logger name="org.springframework.core" level="OFF"/>
   <logger name="org.springframework.context" level="OFF"/>
-  <logger name="org.springframework.beans" level="INFO"/>
-  <logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="DEBUG"/>
-  <logger name="org.springframework.transaction" level="DEBUG"/>
-  <logger name="org.springframework.orm" level="DEBUG"/>
-  <logger name="org.springframework.security" level="DEBUG"/>
+  <logger name="org.springframework.beans" level="OFF"/>
+  <logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="OFF"/>
+  <logger name="org.springframework.transaction" level="OFF"/>
+  <logger name="org.springframework.orm" level="OFF"/>
+  <logger name="org.springframework.security" level="OFF"/>
   <logger name="org.hibernate" level="OFF"/>
-  <logger name="org.hibernate.SQL" level="DEBUG"/>
-  <logger name="org.hibernate.jdbc" level="DEBUG"/>
+  <logger name="org.hibernate.SQL" level="OFF"/>
+  <logger name="org.hibernate.jdbc" level="OFF"/>
   <logger name="org.hibernate.jdbc.AbstractBatcher" level="OFF"/>
-  <logger name="org.hibernate.impl" level="DEBUG"/>
+  <logger name="org.hibernate.impl" level="OFF"/>
   <logger name="org.aopalliance" level="OFF"/>
 
   <root level="INFO">          

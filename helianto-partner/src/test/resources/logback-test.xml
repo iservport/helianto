@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration debug="true">
+<configuration debug="false">
 
-  <logger name="org.helianto.partner" level="DEBUG"/>
+  <logger name="org.helianto.partner" level="OFF"/>
 
 </configuration>
 

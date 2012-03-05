@@ -28,6 +28,7 @@
 				<value>bundles/notification</value>
 				<value>bundles/credential</value>
 				<value>messages</value>
+				<value>../messages</value>
 			</list>
 		</property>
 	</bean>

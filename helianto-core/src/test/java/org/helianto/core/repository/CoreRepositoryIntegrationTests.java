@@ -68,26 +68,26 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 
-	@Resource FilterDao<KeyType> keyTypeDao;
-	@Resource FilterDao<Country> countryDao;
-	@Resource FilterDao<Service> serviceDao;
-	@Resource FilterDao<Province> provinceDao;
-	@Resource FilterDao<Category> categoryDao;
-	@Resource FilterDao<InternalEnumerator> internalEnumeratorDao;
-	@Resource FilterDao<PublicEnumerator> publicEnumeratorDao;
-	@Resource FilterDao<Unit> unitDao;
-	@Resource FilterDao<UserAssociation> userAssociationDao;
-	@Resource FilterDao<UserGroup> userGroupDao;
-	@Resource FilterDao<Credential> credentialDao;
-	@Resource FilterDao<UserLog> userLogDao;
-	@Resource FilterDao<Identity> identityDao;
-	@Resource FilterDao<PublicAddress> publicAddressDao;
-	@Resource FilterDao<PersonalAddress> personalAddressDao;
-	@Resource FilterDao<Server> serverDao;
-	@Resource FilterDao<UserRole> userRoleDao;
-	@Resource FilterDao<EntityPreference> entityPreferenceDao;	
-	@Resource FilterDao<UserRequest> userRequestDao;
-	@Resource FilterDao<PublicEntity2> publicEntityDao;
+	private FilterDao<KeyType> keyTypeDao;
+	private FilterDao<Country> countryDao;
+	private FilterDao<Service> serviceDao;
+	private FilterDao<Province> provinceDao;
+	private FilterDao<Category> categoryDao;
+	private FilterDao<InternalEnumerator> internalEnumeratorDao;
+	private FilterDao<PublicEnumerator> publicEnumeratorDao;
+	private FilterDao<Unit> unitDao;
+	private FilterDao<UserAssociation> userAssociationDao;
+	private FilterDao<UserGroup> userGroupDao;
+	private FilterDao<Credential> credentialDao;
+	private FilterDao<UserLog> userLogDao;
+	private FilterDao<Identity> identityDao;
+	private FilterDao<PublicAddress> publicAddressDao;
+	private FilterDao<PersonalAddress> personalAddressDao;
+	private FilterDao<Server> serverDao;
+	private FilterDao<UserRole> userRoleDao;
+	private FilterDao<EntityPreference> entityPreferenceDao;	
+	private FilterDao<UserRequest> userRequestDao;
+	private FilterDao<PublicEntity2> publicEntityDao;
 	
 	@Test
 	public void core() {
@@ -192,6 +192,91 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		publicEntityDao.saveOrUpdate(publicEntity);
 		assertEquals(publicEntity, publicEntityDao.findUnique(entity, entity.getAlias(), "P"));
 
+	}
+	
+	@Resource public void setKeyTypeDao(FilterDao<KeyType> keyTypeDao) {
+		this.keyTypeDao = keyTypeDao;
+	}
+	
+	@Resource public void setCountryDao(FilterDao<Country> countryDao) {
+		this.countryDao = countryDao;
+	}
+	
+	@Resource public void setServiceDao(FilterDao<Service> serviceDao) {
+		this.serviceDao = serviceDao;
+	}
+	
+	@Resource public void setProvinceDao(FilterDao<Province> provinceDao) {
+		this.provinceDao = provinceDao;
+	}
+	
+	@Resource public void setCategoryDao(FilterDao<Category> categoryDao) {
+		this.categoryDao = categoryDao;
+	}
+	
+	@Resource public void setInternalEnumeratorDao(
+			FilterDao<InternalEnumerator> internalEnumeratorDao) {
+		this.internalEnumeratorDao = internalEnumeratorDao;
+	}
+	
+	@Resource public void setPublicEnumeratorDao(
+			FilterDao<PublicEnumerator> publicEnumeratorDao) {
+		this.publicEnumeratorDao = publicEnumeratorDao;
+	}
+	
+	@Resource public void setUnitDao(FilterDao<Unit> unitDao) {
+		this.unitDao = unitDao;
+	}
+	
+	@Resource public void setUserAssociationDao(
+			FilterDao<UserAssociation> userAssociationDao) {
+		this.userAssociationDao = userAssociationDao;
+	}
+	
+	@Resource public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
+		this.userGroupDao = userGroupDao;
+	}
+	
+	@Resource public void setCredentialDao(FilterDao<Credential> credentialDao) {
+		this.credentialDao = credentialDao;
+	}
+	
+	@Resource public void setUserLogDao(FilterDao<UserLog> userLogDao) {
+		this.userLogDao = userLogDao;
+	}
+	
+	@Resource public void setIdentityDao(FilterDao<Identity> identityDao) {
+		this.identityDao = identityDao;
+	}
+	
+	@Resource public void setPublicAddressDao(FilterDao<PublicAddress> publicAddressDao) {
+		this.publicAddressDao = publicAddressDao;
+	}
+	
+	@Resource public void setPersonalAddressDao(
+			FilterDao<PersonalAddress> personalAddressDao) {
+		this.personalAddressDao = personalAddressDao;
+	}
+	
+	@Resource public void setServerDao(FilterDao<Server> serverDao) {
+		this.serverDao = serverDao;
+	}
+	
+	@Resource public void setUserRoleDao(FilterDao<UserRole> userRoleDao) {
+		this.userRoleDao = userRoleDao;
+	}
+	
+	@Resource public void setEntityPreferenceDao(
+			FilterDao<EntityPreference> entityPreferenceDao) {
+		this.entityPreferenceDao = entityPreferenceDao;
+	}
+	
+	@Resource public void setUserRequestDao(FilterDao<UserRequest> userRequestDao) {
+		this.userRequestDao = userRequestDao;
+	}
+	
+	@Resource public void setPublicEntityDao(FilterDao<PublicEntity2> publicEntityDao) {
+		this.publicEntityDao = publicEntityDao;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(CoreRepositoryIntegrationTests.class);
