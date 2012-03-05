@@ -70,6 +70,7 @@ public class UserRequest
     private Date nextCheckDate;
     private String tempPassword;
     private String postalCode;
+    private String promotionCode;
 
     /** 
      * Default constructor.
@@ -316,6 +317,14 @@ public class UserRequest
 	}
     
     /**
+     * <<Transient>> Call back to create an <code>Identity</code> from user request daa.
+     */
+    @Transient
+    public Identity createIdentity() {
+    	return new Identity(getPrincipal(), "", getPersonalData());
+    }
+    
+    /**
      * Issue date.
      */
     @Temporal(TemporalType.TIMESTAMP)
@@ -383,6 +392,17 @@ public class UserRequest
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
+    
+    /**
+     * Promotion code.
+     */
+    @Column(length=10)
+    public String getPromotionCode() {
+		return promotionCode;
+	}
+    public void setPromotionCode(String promotionCode) {
+		this.promotionCode = promotionCode;
+	}
     
     /**
      * toString

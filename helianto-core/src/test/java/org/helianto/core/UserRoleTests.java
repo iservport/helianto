@@ -1,5 +1,6 @@
 package org.helianto.core;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -53,5 +54,25 @@ public class UserRoleTests  {
         copy.setService(userRole.getService());
         assertTrue(userRole.equals(copy));
     }
+	
+	@Test
+	public void extension() {
+		UserGroup userGroup = new UserGroup();
+		Service service = new Service();
+		UserRole userRole = new UserRole(userGroup, service, null);
+		assertArrayEquals(userRole.getServiceExtensionAsArray(), new String[]{});
+		
+		userRole.setServiceExtension("");
+		assertArrayEquals(userRole.getServiceExtensionAsArray(), new String[]{});
+		
+		userRole.setServiceExtension(" ");
+		assertArrayEquals(userRole.getServiceExtensionAsArray(), new String[]{});
+		
+		userRole.setServiceExtension(" a");
+		assertArrayEquals(userRole.getServiceExtensionAsArray(), new String[]{"a"});
+		
+		userRole.setServiceExtension(" a , b ");
+		assertArrayEquals(userRole.getServiceExtensionAsArray(), new String[]{"a", "b"});
+	}
 
 }
