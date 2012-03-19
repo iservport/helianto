@@ -32,6 +32,7 @@ public class UserFormFilterAdapterTests {
 	static String C5 = "AND parentAssociations.parent.id = 100 ";
 	static String C6 = "AND parentAssociations.parent.userKey = 'USER' ";
 	static String C7 = "AND alias.identity.id = 1 ";
+	static String C8 = "alias.userKey = 'USERKEY' ";
 	
 	@Test
 	public void empty() {
@@ -100,6 +101,13 @@ public class UserFormFilterAdapterTests {
 		form.setIdentity(identity);
 		((CompositeUserForm) form).setParentUserKey("USER");
 		assertEquals(C0+C6+C7+O0, filter.createCriteriaAsString());
+	}
+
+	@Test
+	public void userKey() {
+		form = new CompositeUserForm("USERKEY");
+		filter = new UserFormFilterAdapter(form);
+		assertEquals(C8+O0, filter.createCriteriaAsString());
 	}
 
 	// collabs

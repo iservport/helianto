@@ -63,6 +63,16 @@ public class CompositeUserForm
 		setParent(parent);
 	}
     
+    /**
+     * User key constructor.
+     * 
+     * @param userKey
+     */
+    public CompositeUserForm(String userKey) {
+		this();
+		setUserKey(userKey);
+	}
+    
     public void reset() { 
     	setUserType(' ');
     	setUserState(' ');
