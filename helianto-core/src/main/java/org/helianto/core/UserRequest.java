@@ -71,6 +71,7 @@ public class UserRequest
     private String tempPassword;
     private String postalCode;
     private String promotionCode;
+    private String localeString;
 
     /** 
      * Default constructor.
@@ -402,6 +403,17 @@ public class UserRequest
 	}
     public void setPromotionCode(String promotionCode) {
 		this.promotionCode = promotionCode;
+	}
+    
+    /**
+     * Locale string (ex. en, pt, pt_BR).
+     */
+    @Column(length=12)
+    public String getLocaleString() {
+		return localeString;
+	}
+    public void setLocaleString(String localeString) {
+		this.localeString = localeString;
 	}
     
     /**
