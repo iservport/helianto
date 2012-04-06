@@ -226,11 +226,26 @@ public class UserDetailsAdapter
         return ((User) user).getIdentity().getPrincipal();
     }
     
+    /**
+     * If the authentication is not anonymous, return the user, otherwise return null.
+     */
     public User getUser() {
     	if (isAnonymous()) { 
     		return null;
     	}
         return (User) user;
+    }
+    
+    /**
+     * If the authentication is anonymous, return it as an UserGroup.
+     * 
+     * @throws IllegalArgumentException if the authentication is not anonymous.
+     */
+    public UserGroup getAnonymousUser() throws IllegalArgumentException {
+    	if (isAnonymous()) { 
+    		return user;
+    	}
+        throw new IllegalArgumentException("Not allowed: user is not anonymous.");
     }
     
     public Entity getEntity() {
