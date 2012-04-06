@@ -22,6 +22,16 @@ public interface IdentityForm {
 	public String getFirstName();
 	
 	/**
+	 * Identity last name.
+	 */
+	public String getLastName();
+	
+	/**
+	 * Identity name or principal.
+	 */
+	public String getNameLike();
+	
+	/**
 	 * Exclusions.
 	 */
 	public Collection<Identity> getExclusions();

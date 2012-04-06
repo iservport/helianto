@@ -35,6 +35,8 @@ public abstract class AbstractUserForm
     private Identity identity;
     private String principal;
     private String firstName;
+    private String lastName;
+    private String nameLike;
 	private Collection<Identity> exclusions;
 	
     public void reset() {
@@ -150,6 +152,20 @@ public abstract class AbstractUserForm
 		this.firstName = firstName;
 	}
     
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getNameLike() {
+		return nameLike;
+	}
+	public void setNameLike(String nameLike) {
+		this.nameLike = nameLike;
+	}
+	
     public Collection<Identity> getExclusions() {
         return exclusions;
     }

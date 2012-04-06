@@ -38,6 +38,40 @@ public class IdentityFormFilterAdapter extends AbstractFilterAdapter<IdentityFor
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("personalData.firstName", getForm().getFirstName(), mainCriteriaBuilder);
+		appendLikeFilter("personalData.lastName", getForm().getLastName(), mainCriteriaBuilder);
+		appendNameLikeFilter(mainCriteriaBuilder);
+	}
+	
+	/**
+	 * Case insensitive search for name or principal.
+	 * 
+	 * <p>
+	 * The name is split and searched for in fields 'firstName' and 'lastName'
+	 * unless it constains '@', when 'principal' used for searching.
+	 * 
+	 * @param mainCriteriaBuilder
+	 */
+	protected void appendNameLikeFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		if (getForm().getNameLike()==null) {
+			return;
+		}
+		OrmCriteriaBuilder nameCriteria = new OrmCriteriaBuilder(mainCriteriaBuilder.getAlias());
+		String[] names = getForm().getNameLike().split(" ");
+		for (String name: names) {
+			if (name.contains("@")) {
+				nameCriteria.appendOr()
+				.appendSegment("personalData.principal", "like", "lower")
+				.appendLike(name.trim().toLowerCase());
+			}
+			else {
+				nameCriteria.appendOr()
+				.appendSegment("personalData.firstName", "like", "lower")
+				.appendLike(name.trim().toLowerCase()).appendOr()
+				.appendSegment("personalData.lastName", "like", "lower")
+				.appendLike(name.trim().toLowerCase());
+			}
+		}
+		mainCriteriaBuilder.append(nameCriteria);
 	}
 
 }

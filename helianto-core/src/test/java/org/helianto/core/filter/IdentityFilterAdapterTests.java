@@ -32,6 +32,16 @@ public class IdentityFilterAdapterTests {
     public static String C1 = "";
     public static String C2 = "lower(alias.principal) = 'principal' ";
     public static String C3 = "lower(alias.personalData.firstName) like '%first%' ";
+    public static String C4 = "lower(alias.personalData.lastName) like '%last%' ";
+    public static String C5 = "(" +
+    		"lower(alias.personalData.firstName) like '%one%' " +
+    		"OR lower(alias.personalData.lastName) like '%one%' " +
+    		"OR lower(alias.personalData.firstName) like '%two%' " +
+    		"OR lower(alias.personalData.lastName) like '%two%' " +
+    		") ";
+    public static String C6 = "(" +
+    		"lower(alias.personalData.principal) like '%one@two%' " +
+    		") ";
 
     @Test
     public void empty() {
@@ -45,9 +55,23 @@ public class IdentityFilterAdapterTests {
     }
     
     @Test
-    public void filter() {
+    public void first() {
     	((CompositeIdentityForm) form).setFirstName("FIRST");
         assertEquals(C1+C3, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void last() {
+    	((CompositeIdentityForm) form).setLastName("Last");
+        assertEquals(C1+C4, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void nameLike() {
+    	((CompositeIdentityForm) form).setNameLike("One Two");
+        assertEquals(C1+C5, filter.createCriteriaAsString());
+    	((CompositeIdentityForm) form).setNameLike("One@Two");
+        assertEquals(C1+C6, filter.createCriteriaAsString());
     }
     
     private IdentityFormFilterAdapter filter;
