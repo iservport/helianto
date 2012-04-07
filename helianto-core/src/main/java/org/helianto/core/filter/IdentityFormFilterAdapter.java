@@ -40,6 +40,9 @@ public class IdentityFormFilterAdapter extends AbstractFilterAdapter<IdentityFor
 		appendLikeFilter("personalData.firstName", getForm().getFirstName(), mainCriteriaBuilder);
 		appendLikeFilter("personalData.lastName", getForm().getLastName(), mainCriteriaBuilder);
 		appendNameLikeFilter(mainCriteriaBuilder);
+		appendEqualFilter("personalData.gender", getForm().getGender(), mainCriteriaBuilder);
+		appendEqualFilter("identityType", getForm().getIdentityType(), mainCriteriaBuilder);
+		appendEqualFilter("notification", getForm().getNotification(), mainCriteriaBuilder);
 	}
 	
 	/**

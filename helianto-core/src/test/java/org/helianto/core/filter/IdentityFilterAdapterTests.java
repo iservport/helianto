@@ -18,6 +18,9 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
+import org.helianto.core.IdentityType;
+import org.helianto.core.def.Gender;
+import org.helianto.core.def.Notification;
 import org.helianto.core.filter.form.CompositeIdentityForm;
 import org.helianto.core.filter.form.IdentityForm;
 import org.junit.Before;
@@ -42,6 +45,9 @@ public class IdentityFilterAdapterTests {
     public static String C6 = "(" +
     		"lower(alias.personalData.principal) like '%one@two%' " +
     		") ";
+    public static String C7 = "alias.personalData.gender = 'F' ";
+    public static String C8 = "alias.identityType = 'P' ";
+    public static String C9 = "alias.notification = 'R' ";
 
     @Test
     public void empty() {
@@ -72,6 +78,24 @@ public class IdentityFilterAdapterTests {
         assertEquals(C1+C5, filter.createCriteriaAsString());
     	((CompositeIdentityForm) form).setNameLike("One@Two");
         assertEquals(C1+C6, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void gender() {
+    	((CompositeIdentityForm) form).setGender(Gender.FEMALE.getValue());
+        assertEquals(C1+C7, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void identityType() {
+    	((CompositeIdentityForm) form).setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
+        assertEquals(C1+C8, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void notification() {
+    	((CompositeIdentityForm) form).setNotification(Notification.BY_REQUEST.getValue());
+        assertEquals(C1+C9, filter.createCriteriaAsString());
     }
     
     private IdentityFormFilterAdapter filter;
