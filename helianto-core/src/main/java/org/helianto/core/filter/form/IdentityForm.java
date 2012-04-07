@@ -32,6 +32,21 @@ public interface IdentityForm {
 	public String getNameLike();
 	
 	/**
+	 * Gender.
+	 */
+	public char getGender();
+	
+	/**
+	 * Identity type.
+	 */
+	public char getIdentityType();
+	
+	/**
+	 * Notification.
+	 */
+	public char getNotification();
+	
+	/**
 	 * Exclusions.
 	 */
 	public Collection<Identity> getExclusions();

@@ -29,6 +29,9 @@ public class CompositeIdentityForm
 	private String firstName;
 	private String lastName;
 	private String nameLike;
+	private char gender;
+	private char identityType;
+	private char notification;
 	private Collection<Identity> exclusions;
 	
 	/**
@@ -80,6 +83,27 @@ public class CompositeIdentityForm
 	}
 	public void setNameLike(String nameLike) {
 		this.nameLike = nameLike;
+	}
+	
+	public char getGender() {
+		return gender;
+	}
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+	
+	public char getIdentityType() {
+		return identityType;
+	}
+	public void setIdentityType(char identityType) {
+		this.identityType = identityType;
+	}
+	
+	public char getNotification() {
+		return notification;
+	}
+	public void setNotification(char notification) {
+		this.notification = notification;
 	}
 	
 	public Collection<Identity> getExclusions() {
