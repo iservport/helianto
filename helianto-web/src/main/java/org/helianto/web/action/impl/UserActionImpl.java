@@ -17,8 +17,8 @@ import org.springframework.webflow.core.collection.MutableAttributeMap;
  * Presentation logic to manage users.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
-@Component("userAction")
 public class UserActionImpl extends UserGroupActionImpl {
 
 	private static final long serialVersionUID = 1L;
