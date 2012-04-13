@@ -23,7 +23,6 @@ import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 
 /**
@@ -35,13 +34,24 @@ public interface SecurityMgr {
 	
     /**
      * Find <core>Credential</core> by <core>Identity</core>.
+     * 
+     * @param identity
      */
 	Credential findCredentialByIdentity(Identity identity);
 	
     /**
      * Find <core>Credential</core> by principal.
+     * 
+     * @param principal
      */
 	Credential findCredentialByPrincipal(String principal);
+	
+    /**
+     * Re-attach <core>Credential</core> to a session.
+     * 
+     * @param credential
+     */
+	Credential loadCredential(Credential credential);
 	
     /**
      * Store the given <code>Credential</code> and return a managed object.

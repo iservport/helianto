@@ -56,6 +56,10 @@ public class SecurityMgrImpl implements SecurityMgr {
 		logger.debug("Found {}", identity);
 		return credentialDao.findUnique(identity);
 	}
+	
+	public Credential loadCredential(Credential credential) {
+		return credentialDao.load(credential);
+	}
 
 	public Credential storeCredential(Credential credential) throws PasswordNotVerifiedException {
 		if (credential.isPasswordVerified()) {
