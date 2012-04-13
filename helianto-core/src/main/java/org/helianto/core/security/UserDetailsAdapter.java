@@ -56,6 +56,7 @@ public class UserDetailsAdapter
       Serializable
     , UserDetails
     , PublicUserDetails
+    , SecureUserDetails
     
 {
 
@@ -187,7 +188,7 @@ public class UserDetailsAdapter
         return false;
     }
     
-    private Credential getCredential() {
+    public Credential getCredential() {
 		return credential;
 	}
 
