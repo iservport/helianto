@@ -31,14 +31,12 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.security.SecureUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 /**
@@ -67,12 +65,6 @@ public class SecurityMgrImpl implements SecurityMgr {
 		throw new PasswordNotVerifiedException();
 	}
 
-	public void storeCredential(SecureUserDetails secureUser) {
-		Credential credential = secureUser.getCredential();
-		credentialDao.saveOrUpdate(secureUser.getCredential());
-		secureUser.setCredential(credential);
-	}
-	
 	protected Collection<UserRole> loadAndValidateRoles(User user) {
     	// role list
 		List<UserRole> roleList = new ArrayList<UserRole>(recurseUserRoles(user.getRoles(), user.getParentAssociations()));

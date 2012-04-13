@@ -53,13 +53,6 @@ public interface SecurityMgr {
         throws PasswordNotVerifiedException;
     
     /**
-     * Store the given <code>Credential</code> and update the secure user.
-     * 
-     * @param identity
-     */
-    void storeCredential(SecureUserDetails secureUser);
-    
-    /**
      * Find user roles by user group.
      * 
      * @param userGroup
