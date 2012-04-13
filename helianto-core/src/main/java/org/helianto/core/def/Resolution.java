@@ -15,6 +15,7 @@
 
 package org.helianto.core.def;
 
+
 /**
  * Control resolution.
  * 
@@ -83,6 +84,11 @@ public enum Resolution {
         return this.open;
     }
     
+    /**
+     * Resolution assigned char value.
+     * 
+     * @param value
+     */
     public static Resolution getValue(char value) {
     	for (Resolution resolution: values()) {
     		if (resolution.getValue()==value) {
@@ -90,6 +96,32 @@ public enum Resolution {
     		}
     	}
     	return null;
+    }
+
+    /**
+     * Array of started resolution values.
+     */
+    public static char[] getStartedResolutions() {
+    	String result = "";
+    	for (Resolution resolution: values()) {
+    		if (resolution.hasStarted()) {
+    			result += resolution.getValue();
+    		}
+    	}
+    	return result.toCharArray();
+    }
+
+    /**
+     * Array of open resolution values.
+     */
+    public static char[] getOpenResolutions() {
+    	String result = "";
+    	for (Resolution resolution: values()) {
+    		if (resolution.isOpen()) {
+    			result += resolution.getValue();
+    		}
+    	}
+    	return result.toCharArray();
     }
 
 }
