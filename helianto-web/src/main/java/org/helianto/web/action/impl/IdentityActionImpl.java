@@ -45,7 +45,7 @@ public class IdentityActionImpl extends AbstractFilterAction<Identity> {
 	@Override
 	protected List<Identity> doFilter(MutableAttributeMap attributes, Filter filter) {
 		CompositeUserForm form = getForm(attributes);
-		String principal = attributes.getRequiredString("principal");
+		String principal = attributes.getString("principal");
 		if (principal!=null && principal.length()>0) {
 			form.setPrincipal(principal);
 			logger.debug("Indentity filter constrained by principall {}.", principal);
