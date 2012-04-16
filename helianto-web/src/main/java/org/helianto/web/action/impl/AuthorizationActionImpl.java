@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.Credential;
 import org.helianto.core.Entity;
 import org.helianto.core.PublicEntity2;
 import org.helianto.core.User;
@@ -14,6 +15,7 @@ import org.helianto.core.filter.UserFormFilterAdapter;
 import org.helianto.core.filter.form.CompositeUserForm;
 import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.security.PublicUserDetails;
+import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.core.service.PublicEntityMgr;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.core.service.UserMgr;
@@ -76,15 +78,21 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 		return (User) userMgr.storeUserGroup(target);
 	}
 	
-	public String authorize(User user) {
-		logger.debug("Ready to authorize user {}...", user);
+	public String authorize(User user, Credential credential) {
+		logger.debug("Ready to authorize user {} with current credential...", user);
 		if (user!=null) {
+			if (user.getIdentity()!=credential.getIdentity()) {
+				throw new IllegalArgumentException("Unable to auhtorize different identity.");
+			}
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
-			securityMgr.authenticate(user, roles);
+			UserDetailsAdapter userDetails = new UserDetailsAdapter(user, credential, roles);
+			securityMgr.authenticate(userDetails);
 			logger.debug("Authorized.");
 			return "success";
 		}
-		throw new IllegalArgumentException("Unable to auhtorize null user.");
+		else {
+			throw new IllegalArgumentException("Unable to auhtorize null user.");
+		}
 	}
 	
 	public String makePublic(Entity entity) {

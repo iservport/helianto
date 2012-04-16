@@ -75,6 +75,7 @@ public interface SecurityMgr {
      * 
      * @param user
      * @param roles
+     * @deprecated 
      */
     void authenticate(User user, Set<UserRole> roles);
     
