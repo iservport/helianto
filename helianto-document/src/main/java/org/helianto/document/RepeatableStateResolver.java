@@ -1,6 +1,6 @@
 package org.helianto.document;
 
-import org.helianto.core.ControlStateResolver;
+import org.helianto.core.SimpleStateResolver;
 
 
 /**
@@ -8,7 +8,7 @@ import org.helianto.core.ControlStateResolver;
  * 
  * @author mauriciofernandesdecastro
  */
-public class RepeatableStateResolver extends ControlStateResolver {
+public class RepeatableStateResolver extends SimpleStateResolver {
 
 	/**
 	 * Control constructor.

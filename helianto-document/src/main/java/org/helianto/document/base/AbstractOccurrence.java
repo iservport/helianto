@@ -17,7 +17,7 @@ package org.helianto.document.base;
 
 import javax.persistence.Transient;
 
-import org.helianto.core.ControlStateResolver;
+import org.helianto.core.SimpleStateResolver;
 import org.helianto.core.def.ControlState;
 import org.helianto.core.def.Resolution;
 import org.helianto.document.Occurrence;
@@ -86,8 +86,8 @@ public abstract class AbstractOccurrence
      * Resolve control status.
      */
     @Transient
-    public ControlStateResolver getState() {
-    	return new ControlStateResolver(this);
+    public SimpleStateResolver getState() {
+    	return new SimpleStateResolver(this);
     }
 
     /**

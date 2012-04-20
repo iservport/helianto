@@ -4,16 +4,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
-import org.helianto.core.ControlStateResolver;
-import org.helianto.core.Controllable;
-import org.helianto.core.Entity;
 import org.junit.Test;
 
 /**
  * 
  * @author mauriciofernandesdecastro
  */
-public class ControlStateResolverTests {
+public class SimpleStateResolverTests {
 	
 	@SuppressWarnings("serial")
 	@Test
@@ -26,7 +23,7 @@ public class ControlStateResolverTests {
 			public char getResolution() { return ' '; }
 			public int getComplete() { return 0; }
 		};
-		ControlStateResolver resolver = new ControlStateResolver(late);
+		SimpleStateResolver resolver = new SimpleStateResolver(late);
 		assertTrue(resolver.isLate());
 		Controllable notLate = new Controllable() {
 			public Date getNextCheckDate() { return new Date(new Date().getTime()+1000000L); }
@@ -36,7 +33,7 @@ public class ControlStateResolverTests {
 			public char getResolution() { return ' '; }
 			public int getComplete() { return 0; }
 		};
-		resolver = new ControlStateResolver(notLate);
+		resolver = new SimpleStateResolver(notLate);
 	}
 	
 

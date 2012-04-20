@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.base.AbstractPrivateControl;
+import org.helianto.document.base.AbstractRepeatable;
 import org.helianto.message.AbstractFollowUp;
 import org.helianto.message.ControlSource;
 import org.helianto.message.form.AbstractFollowUpForm;
@@ -68,6 +68,6 @@ public class FollowUpFormFilterAdapterTests {
 	}
 	
 	@SuppressWarnings("serial")
-	private class ControlSourceStub extends AbstractPrivateControl implements ControlSource { }
+	private class ControlSourceStub extends AbstractRepeatable implements ControlSource { }
 
 }

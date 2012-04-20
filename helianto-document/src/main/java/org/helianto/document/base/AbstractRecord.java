@@ -21,7 +21,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.helianto.core.ControlStateResolver;
 import org.helianto.core.def.ControlState;
 import org.helianto.core.def.Resolution;
 import org.helianto.document.Record;
@@ -113,14 +112,6 @@ public abstract class AbstractRecord
         this.nextCheckDate = nextCheckDate;
     }
     
-    /**
-     * Resolve control status.
-     */
-    @Transient
-    public ControlStateResolver getState() {
-    	return new ControlStateResolver(this);
-    }
-
     /**
      * Evaluate the control state.
      */
