@@ -334,7 +334,7 @@ href="${flowExecutionUrl}&_eventId=${event}&target_index=${targetIndex}${param}"
         	widgetType : 'dijit.form.DateTextBox', 
         	widgetAttrs : {
         		required: false, 
-        		value : dojo.date.locale.parse('${spring.stringStatusValue}', {selector : 'date', datePattern : 'dd/MM/yy'}), 
+        		<#--value : dojo.date.locale.parse('${spring.stringStatusValue}', {selector : 'date', datePattern : 'dd/MM/yy'}),--> 
         		displayedValue : '${spring.stringStatusValue}',
         		serialize : function(d, options){
 					return dojo.date.locale.format(d, {selector : 'date', datePattern : 'MM/dd/yy'});

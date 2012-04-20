@@ -63,7 +63,7 @@ public class IdentityFormFilterAdapter extends AbstractFilterAdapter<IdentityFor
 		for (String name: names) {
 			if (name.contains("@")) {
 				nameCriteria.appendOr()
-				.appendSegment("personalData.principal", "like", "lower")
+				.appendSegment("principal", "like", "lower")
 				.appendLike(name.trim().toLowerCase());
 			}
 			else {

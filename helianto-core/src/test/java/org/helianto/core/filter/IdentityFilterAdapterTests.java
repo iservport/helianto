@@ -43,7 +43,7 @@ public class IdentityFilterAdapterTests {
     		"OR lower(alias.personalData.lastName) like '%two%' " +
     		") ";
     public static String C6 = "(" +
-    		"lower(alias.personalData.principal) like '%one@two%' " +
+    		"lower(alias.principal) like '%one@two%' " +
     		") ";
     public static String C7 = "alias.personalData.gender = 'F' ";
     public static String C8 = "alias.identityType = 'P' ";

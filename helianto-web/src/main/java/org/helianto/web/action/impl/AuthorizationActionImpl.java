@@ -80,8 +80,8 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	
 	public String authorize(User user, Credential credential) {
 		logger.debug("Ready to authorize user {} with current credential...", user);
-		if (user!=null) {
-			if (user.getIdentity()!=credential.getIdentity()) {
+		if (user!=null && credential!=null) {
+			if (user.getIdentity().getId()!=credential.getIdentity().getId()) {
 				throw new IllegalArgumentException("Unable to auhtorize different identity.");
 			}
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
