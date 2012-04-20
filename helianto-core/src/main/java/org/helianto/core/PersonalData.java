@@ -41,6 +41,10 @@ public class PersonalData implements Serializable {
     private char gender;
     private char appellation;
     private Date birthDate;
+    private String personalIdentityNumber_1;
+    private char personalIdentityType_1;
+    private String personalIdentityNumber_2;
+    private char personalIdentityType_2;
 
     /** 
      * Default constructor.
@@ -61,6 +65,10 @@ public class PersonalData implements Serializable {
         setGenderAsEnum(Gender.NOT_SUPPLIED);
         setAppellationAsEnum(Appellation.NOT_SUPPLIED);
         setBirthDate(new Date(0l));
+        setPersonalIdentityNumber_1("");
+        setPersonalIdentityType_1(PersonalIdentityType.NOT_REQUIRED);
+        setPersonalIdentityNumber_2("");
+        setPersonalIdentityType_2(PersonalIdentityType.NOT_REQUIRED);
     }
 
     /**
@@ -121,6 +129,56 @@ public class PersonalData implements Serializable {
 	}
     public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+    
+    /**
+     * First personal identity number.
+     */
+    @Column(length=20, name="PIN_1") 
+    public String getPersonalIdentityNumber_1() {
+		return personalIdentityNumber_1;
+	}
+    public void setPersonalIdentityNumber_1(String personalIdentityNumber_1) {
+		this.personalIdentityNumber_1 = personalIdentityNumber_1;
+	}
+    
+    /**
+     * First personal identity type.
+     */
+    @Column(name="PIT_1") 
+    public char getPersonalIdentityType_1() {
+		return personalIdentityType_1;
+	}
+    public void setPersonalIdentityType_1(char personalIdentityType_1) {
+		this.personalIdentityType_1 = personalIdentityType_1;
+	}
+    public void setPersonalIdentityType_1(PersonalIdentityType personalIdentityType) {
+		this.personalIdentityType_1 = personalIdentityType.getValue();
+	}
+
+    /**
+     * Second personal identity number.
+     */
+    @Column(length=20, name="PIN_2") 
+    public String getPersonalIdentityNumber_2() {
+		return personalIdentityNumber_2;
+	}
+    public void setPersonalIdentityNumber_2(String personalIdentityNumber_2) {
+		this.personalIdentityNumber_2 = personalIdentityNumber_2;
+	}
+    
+    /**
+     * Personal document type.
+     */
+    @Column(name="PIT_2") 
+    public char getPersonalIdentityType_2() {
+		return personalIdentityType_2;
+	}
+    public void setPersonalIdentityType_2(char personalIdentityType_2) {
+		this.personalIdentityType_2 = personalIdentityType_2;
+	}
+    public void setPersonalIdentityType_2(PersonalIdentityType personalIdentityType) {
+		this.personalIdentityType_2 = personalIdentityType.getValue();
 	}
 
 }
