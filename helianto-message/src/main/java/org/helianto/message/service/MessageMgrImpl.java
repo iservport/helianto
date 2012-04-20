@@ -56,7 +56,7 @@ public class MessageMgrImpl implements MessageMgr {
 		messageSender.sendMessage(message);
     }
     
-    @Scheduled(fixedRate=3600000) // one hour
+    @Scheduled(cron="0 0 * * * *") // (fixedRate=3600000) // one hour
     public void findHourly() {
     	logger.info("Hourly scheduler triggered at {}.", new Date());
     	MessageAdapter<String> hourlyMessage = new SendGridMessageAdapter();
