@@ -12,7 +12,9 @@ import org.helianto.core.User;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.UserFormFilterAdapter;
+import org.helianto.core.filter.form.CompositeEntityForm;
 import org.helianto.core.filter.form.CompositeUserForm;
+import org.helianto.core.filter.form.PublicEntityForm;
 import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -100,6 +102,23 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 		PublicEntity2 publicEntity = publicEntityMgr.storePublicEntity(new PublicEntity2(entity));
 		logger.debug("Created {}.", publicEntity);
 		return "success";
+	}
+	
+	/**
+	 * Find a public profile, or create one, if does not exist.
+	 * 
+	 * @param entity
+	 */
+	@SuppressWarnings("unchecked")
+	public PublicEntity2 findPublicProfile(Entity entity) {
+		PublicEntityForm form = new CompositeEntityForm(entity);
+		List<PublicEntity2> publicEntityList = (List<PublicEntity2>) publicEntityMgr.findPublicEntities(form);
+		if (publicEntityList!=null && publicEntityList.size()>0) {
+			return publicEntityList.get(0);
+		}
+		PublicEntity2 publicEntity = publicEntityMgr.storePublicEntity(new PublicEntity2(entity));
+		logger.debug("Created {}.", publicEntity);
+		return publicEntity;
 	}
 
 	// collabs
