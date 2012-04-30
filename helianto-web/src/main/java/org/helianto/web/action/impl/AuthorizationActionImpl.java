@@ -112,12 +112,14 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 	@SuppressWarnings("unchecked")
 	public PublicEntity2 findPublicProfile(Entity entity) {
 		PublicEntityForm form = new CompositeEntityForm(entity);
+		form.setType('P');
 		List<PublicEntity2> publicEntityList = (List<PublicEntity2>) publicEntityMgr.findPublicEntities(form);
 		if (publicEntityList!=null && publicEntityList.size()>0) {
+			logger.info("Found {}.", publicEntityList.get(0));
 			return publicEntityList.get(0);
 		}
 		PublicEntity2 publicEntity = publicEntityMgr.storePublicEntity(new PublicEntity2(entity));
-		logger.debug("Created {}.", publicEntity);
+		logger.info("Created {}.", publicEntity);
 		return publicEntity;
 	}
 
