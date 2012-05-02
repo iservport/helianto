@@ -36,5 +36,8 @@
         <wb-resource deploy-path="/" source-path="/helianto-core/src/test/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-web/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-web/src/test/resources"/>
+        <wb-resource deploy-path="/" source-path="/license/src/main/java"/>
+        <wb-resource deploy-path="/" source-path="/license/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/license/src/test/java"/>
     </wb-module>
 </project-modules>
