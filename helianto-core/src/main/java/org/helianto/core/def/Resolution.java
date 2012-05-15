@@ -123,5 +123,24 @@ public enum Resolution {
     	}
     	return result.toCharArray();
     }
-
+    
+    /**
+     * Array of open resolution values listed as a comma separated value string.
+     */
+    public static String getOpenResolutionsAsCsv() {
+    	char[] open = Resolution.getOpenResolutions();
+    	StringBuilder sb = new StringBuilder();
+    	for (int i = 0; i < open.length; i++) {
+    		if (i == 0) {
+    			sb.append("'");
+    		}
+    		if (i > 0) {
+    			sb.append(",'");
+    		}
+    		sb.append(open[i]);
+    		sb.append("'");
+    	}
+    	return sb.toString();
+    }
+    
 }
