@@ -44,6 +44,7 @@ public class UserRole  implements java.io.Serializable {
     private UserGroup userGroup;
     private Service service;
     private String serviceExtension;
+    private String partnershipExtension;
     private char activityState;
 
     /** 
@@ -144,6 +145,32 @@ public class UserRole  implements java.io.Serializable {
     @Transient
     public String getUserRoleName() {
         return "ROLE_"+service.getServiceName().toUpperCase()+"_"+serviceExtension;
+    }
+    
+    /**
+     * Partnership extension list of comma separated values.
+     * 
+     * Indicates what types of partnership are allowed by this role. E.g.:
+     * C,S means customers and suppliers, while C,L,M means customers, laboratories and
+     * manufacturers.
+     */
+    @Column(length=64)
+    public String getPartnershipExtension() {
+		return partnershipExtension;
+	}
+    public void setPartnershipExtension(String partnershipExtension) {
+		this.partnershipExtension = partnershipExtension;
+	}
+    
+    /**
+     * Partnership extensions as array.
+     */
+    @Transient
+    public String[] getPartnershipExtensionAsArray() {
+    	if (getPartnershipExtension()!=null && getPartnershipExtension().replace(" ", "").length()>0) {
+        	return getPartnershipExtension().replace(" ", "").split(",");
+    	}
+    	return new  String[] { };
     }
     
     /**
