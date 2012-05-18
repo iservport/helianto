@@ -51,7 +51,6 @@ public class Document
 
     private static final long serialVersionUID = 1L;
     private Set<DocumentKey> documentKeys = new HashSet<DocumentKey>(0);
-    private Set<DocumentTag> documentTags = new HashSet<DocumentTag>(0);
     private Set<DocumentAssociation> parents = new HashSet<DocumentAssociation>(0);
     private Set<DocumentAssociation> children = new HashSet<DocumentAssociation>(0);
 
@@ -81,17 +80,6 @@ public class Document
     }
     public void setDocumentKeys(Set<DocumentKey> documentKeys) {
         this.documentKeys = documentKeys;
-    }
-    
-    /**
-     * Document tags.
-     */
-    @OneToMany(mappedBy="document", cascade={CascadeType.ALL})
-    public Set<DocumentTag> getDocumentTags() {
-        return this.documentTags;
-    }
-    public void setDocumentTags(Set<DocumentTag> documentTags) {
-        this.documentTags = documentTags;
     }
     
     /**

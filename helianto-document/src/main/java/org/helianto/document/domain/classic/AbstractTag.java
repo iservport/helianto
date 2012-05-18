@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.document.base;
+package org.helianto.document.domain.classic;
 
 import java.io.Serializable;
 
@@ -29,6 +29,7 @@ import javax.persistence.Transient;
  * Add information, in most cases visual, to some other domain class.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated tag will be only a string.
  */
 @MappedSuperclass
 public abstract class AbstractTag implements Serializable {

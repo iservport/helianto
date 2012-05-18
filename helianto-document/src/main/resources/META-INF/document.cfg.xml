@@ -10,7 +10,7 @@
 		<mapping class="org.helianto.document.PrivateDocument" />
 		<mapping class="org.helianto.document.Serializer" />
 		<mapping class="org.helianto.document.DocumentKey" />
-		<mapping class="org.helianto.document.DocumentTag" />
+		<mapping class="org.helianto.document.domain.classic.DocumentTag" />
 	</session-factory>
 </hibernate-configuration>
 

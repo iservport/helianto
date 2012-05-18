@@ -19,10 +19,10 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.document.Document;
 import org.helianto.document.DocumentAssociation;
-import org.helianto.document.DocumentTag;
 import org.helianto.document.PrivateDocument;
 import org.helianto.document.Role;
 import org.helianto.document.Serializer;
+import org.helianto.document.domain.classic.DocumentTag;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

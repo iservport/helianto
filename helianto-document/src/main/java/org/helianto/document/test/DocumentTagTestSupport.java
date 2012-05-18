@@ -16,7 +16,7 @@
 package org.helianto.document.test;
 
 import org.helianto.document.Document;
-import org.helianto.document.DocumentTag;
+import org.helianto.document.domain.classic.DocumentTag;
 
 /**
  * Document tag test support.

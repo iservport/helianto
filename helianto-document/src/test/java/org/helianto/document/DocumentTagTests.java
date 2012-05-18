@@ -20,7 +20,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.document.base.AbstractTag;
+import org.helianto.document.domain.classic.AbstractTag;
+import org.helianto.document.domain.classic.DocumentTag;
 import org.junit.Test;
 
 

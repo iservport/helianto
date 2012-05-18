@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.document;
+package org.helianto.document.domain.classic;
 
 import java.io.Serializable;
 
@@ -29,12 +29,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.document.base.AbstractTag;
+import org.helianto.document.Document;
 
 /**
  * Tags applicable to documents.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated tag will be only a string
  */
 @javax.persistence.Entity
 @Table(name="doc_tag",
