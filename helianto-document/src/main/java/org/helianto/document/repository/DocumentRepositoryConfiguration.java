@@ -17,12 +17,12 @@ package org.helianto.document.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.document.Document;
-import org.helianto.document.DocumentAssociation;
-import org.helianto.document.PrivateDocument;
-import org.helianto.document.Role;
-import org.helianto.document.Serializer;
+import org.helianto.document.domain.Document;
+import org.helianto.document.domain.DocumentAssociation;
+import org.helianto.document.domain.DocumentFolder;
+import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.domain.classic.DocumentTag;
+import org.helianto.document.domain.classic.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -60,10 +60,19 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 
 	/**
 	 * Serializer data access.
+	 * @deprecated see document folder
 	 */
 	@Bean
-	public FilterDao<Serializer> serializerDao() {
-		return getFilterDao(Serializer.class, "entity", "builderCode");
+	public FilterDao<DocumentFolder> serializerDao() {
+		return getFilterDao(DocumentFolder.class, "entity", "folderCode");
+	}
+
+	/**
+	 * Document folder data access.
+	 */
+	@Bean
+	public FilterDao<DocumentFolder> documentFolderDao() {
+		return getFilterDao(DocumentFolder.class, "entity", "folderCode");
 	}
 
 	/**

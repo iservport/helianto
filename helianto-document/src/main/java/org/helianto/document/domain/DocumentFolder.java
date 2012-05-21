@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.domain;
 
 import java.util.List;
 
@@ -44,7 +44,11 @@ import org.helianto.document.base.AbstractSerializer;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("B")
-public class Serializer extends AbstractSerializer<Document> {
+public class DocumentFolder 
+
+	extends AbstractSerializer<Document> 
+
+{
 
 	private static final long serialVersionUID = 1L;
     // transient
@@ -53,7 +57,7 @@ public class Serializer extends AbstractSerializer<Document> {
     /** 
      * Default constructor.
      */
-    public Serializer() {
+    public DocumentFolder() {
     	this(null, "");
     }
 
@@ -63,10 +67,10 @@ public class Serializer extends AbstractSerializer<Document> {
      * @param entity
      * @param builderCode
      */
-    public Serializer(Entity entity, String builderCode) {
+    public DocumentFolder(Entity entity, String builderCode) {
     	super(entity, builderCode);
     	setNumberPattern("0000");
-    	setBuilderName("");
+    	setFolderName("");
     	setContentType(' ');
     }
 
@@ -86,7 +90,7 @@ public class Serializer extends AbstractSerializer<Document> {
     */
    @Override
    public boolean equals(Object other) {
-         if ( !(other instanceof Serializer) ) return false;
+         if ( !(other instanceof DocumentFolder) ) return false;
          return super.equals(other);
    }
    

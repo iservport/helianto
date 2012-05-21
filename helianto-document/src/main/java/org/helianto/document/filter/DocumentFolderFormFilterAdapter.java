@@ -19,15 +19,15 @@ package org.helianto.document.filter;
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.document.Serializer;
-import org.helianto.document.form.SerializerForm;
+import org.helianto.document.domain.DocumentFolder;
+import org.helianto.document.form.DocumentFolderForm;
 
 /**
  * Serializer form filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class SerializerFormFilterAdapter<T extends SerializerForm> extends AbstractTrunkFilterAdapter<T> {
+public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm> extends AbstractTrunkFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     
@@ -36,7 +36,7 @@ public class SerializerFormFilterAdapter<T extends SerializerForm> extends Abstr
      * 
      * @param serializer
      */
-    public SerializerFormFilterAdapter(T serializer) {
+    public DocumentFolderFormFilterAdapter(T serializer) {
 		super(serializer);
     }
 
@@ -47,8 +47,8 @@ public class SerializerFormFilterAdapter<T extends SerializerForm> extends Abstr
      * @param builderCode
      */
     @SuppressWarnings("unchecked")
-	public SerializerFormFilterAdapter(Entity entity, String builderCode) {
-    	super((T) new Serializer(entity, builderCode));
+	public DocumentFolderFormFilterAdapter(Entity entity, String builderCode) {
+    	super((T) new DocumentFolder(entity, builderCode));
     }
 
 	public void reset() { 
@@ -56,7 +56,7 @@ public class SerializerFormFilterAdapter<T extends SerializerForm> extends Abstr
 	}
 
 	public boolean isSelection() {
-		return getForm().getBuilderCode()!=null && getForm().getBuilderCode().length()>0;
+		return getForm().getFolderCode()!=null && getForm().getFolderCode().length()>0;
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class SerializerFormFilterAdapter<T extends SerializerForm> extends Abstr
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("builderCode", getForm().getBuilderCode(), mainCriteriaBuilder);
+		appendEqualFilter("folderCode", getForm().getFolderCode(), mainCriteriaBuilder);
 	}
 
 }

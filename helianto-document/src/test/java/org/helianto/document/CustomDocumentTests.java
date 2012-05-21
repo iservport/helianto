@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.document.base.AbstractCustomDocument;
+import org.helianto.document.domain.DocumentFolder;
 import org.junit.Test;
 
 /**
@@ -15,7 +16,7 @@ public class CustomDocumentTests {
 	
 	@Test
 	public void custom() {
-		Serializer serializer = new Serializer(new Entity(new Operator("DEFAULT"), "ALIAS"), "CODE");
+		DocumentFolder serializer = new DocumentFolder(new Entity(new Operator("DEFAULT"), "ALIAS"), "CODE");
 		AbstractCustomDocument customDocument = new AbstractCustomDocument() {
 			private static final long serialVersionUID = 1L;
 		};

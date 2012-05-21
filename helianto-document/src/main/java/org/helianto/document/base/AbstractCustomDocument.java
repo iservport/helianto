@@ -24,7 +24,7 @@ import javax.persistence.Transient;
 import org.helianto.core.Entity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.document.Customizable;
-import org.helianto.document.Serializer;
+import org.helianto.document.domain.DocumentFolder;
 
 /**
  * Extends <code>AbstractDocument</code> to control how docCode
@@ -36,7 +36,7 @@ import org.helianto.document.Serializer;
 public abstract class AbstractCustomDocument extends AbstractDocument implements Customizable {
 
 	private static final long serialVersionUID = 1L;
-	private Serializer series;
+	private DocumentFolder series;
 	private long internalNumber;
 	
 	/**
@@ -61,7 +61,7 @@ public abstract class AbstractCustomDocument extends AbstractDocument implements
 	 */
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="serializerId")
-	public Serializer getSeries() {
+	public DocumentFolder getSeries() {
 		return series;
 	}
 	/**
@@ -69,7 +69,7 @@ public abstract class AbstractCustomDocument extends AbstractDocument implements
 	 * 
 	 * @param serializer
 	 */
-	public void setSeries(Serializer series) {
+	public void setSeries(DocumentFolder series) {
 		this.series = series;
 		if (series!=null) {
 			super.setEntity(series.getEntity());
@@ -81,7 +81,7 @@ public abstract class AbstractCustomDocument extends AbstractDocument implements
 	 */
 	@Transient
 	public StringBuilder getPrefix() {
-		return new StringBuilder(getSeries().getBuilderCode());
+		return new StringBuilder(getSeries().getFolderCode());
 	}
 
 	/**

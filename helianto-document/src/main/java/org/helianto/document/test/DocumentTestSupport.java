@@ -17,7 +17,7 @@ package org.helianto.document.test;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.Document;
+import org.helianto.document.domain.Document;
 
 /**
  * Document test support.

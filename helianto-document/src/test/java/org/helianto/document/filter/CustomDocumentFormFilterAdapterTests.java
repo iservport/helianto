@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.Serializer;
+import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.form.AbstractCustomDocumentForm;
 import org.helianto.document.form.CustomDocumentForm;
 import org.junit.Before;
@@ -56,14 +56,14 @@ public class CustomDocumentFormFilterAdapterTests {
 	
 	private AbstractCustomDocumentForm form;
 	private AbstractCustomDocumentFormFilterAdapter<CustomDocumentForm> filter;
-	private Serializer series;
+	private DocumentFolder series;
 	
 	@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 	@Before
 	public void setUp() {
 		Entity entity = EntityTestSupport.createEntity();
 		entity.setId(1);
-		series = new Serializer(entity, "SERIES");
+		series = new DocumentFolder(entity, "SERIES");
 		series.setId(2);
 		form = new AbstractCustomDocumentForm() {};
 		form.setEntity(entity);

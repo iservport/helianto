@@ -2,7 +2,7 @@ package org.helianto.document.filter;
 
 import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.document.PrivateDocument;
+import org.helianto.document.domain.PrivateDocument;
 
 /**
  * Private document filter adapter.

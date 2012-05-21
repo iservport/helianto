@@ -13,44 +13,35 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.def;
 
 /**
- * Tracking modes.
+ * Change authorization.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum TrackingMode {
-    
+public enum ChangeAuthorization {
+
     /**
-     * Not tracked.
+     * Protect against changes.
      */
-    NOT_TRACKED('N'),
+    DENY('D'),
     /**
-     * Continuous.
+     * Allow changes on current version.
      */
-    CONTINUOUS('C'),
+    ALLOW_TO_EDIT_VERSION('E'),
     /**
-     * End only.
+     * Allow to add new version.
      */
-    END_ONLY('E');
+    ALLOW_TO_ADD_VERSION('A');
     
     private char value;
     
-    private TrackingMode(char value) {
+    private ChangeAuthorization(char value) {
         this.value = value;
     }
-    
     public char getValue() {
         return this.value;
-    }
-    public static TrackingMode getValue(char value) {
-    	for (TrackingMode delayTracker: values()) {
-    		if (delayTracker.getValue()==value) {
-    			return delayTracker;
-    		}
-    	}
-    	return null;
     }
 
 }

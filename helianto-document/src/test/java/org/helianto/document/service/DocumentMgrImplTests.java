@@ -26,9 +26,9 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
-import org.helianto.document.Document;
-import org.helianto.document.PrivateDocument;
-import org.helianto.document.Serializer;
+import org.helianto.document.domain.Document;
+import org.helianto.document.domain.DocumentFolder;
+import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.filter.classic.DocumentFilter;
 import org.helianto.document.filter.classic.SerializerFilter;
 import org.junit.After;
@@ -59,7 +59,7 @@ public class DocumentMgrImplTests {
 	@Test
 	public void storeDocument() {
 		Document document= new Document();
-		document.setSeries(new Serializer());
+		document.setSeries(new DocumentFolder());
 		
 		documentDao.saveOrUpdate(document);
 		documentDao.flush();
@@ -121,7 +121,7 @@ public class DocumentMgrImplTests {
 	
 	@Test
 	public void storeDocumentCodeBuilder() {
-		Serializer serializer = new Serializer();
+		DocumentFolder serializer = new DocumentFolder();
 		
 		serializerDao.saveOrUpdate(serializer);
 		EasyMock.replay(serializerDao);
@@ -132,7 +132,7 @@ public class DocumentMgrImplTests {
 	
 	@Test
 	public void findDocumentCodeBuilders() {
-		List<Serializer> serializerList = new ArrayList<Serializer>();
+		List<DocumentFolder> serializerList = new ArrayList<DocumentFolder>();
 		SerializerFilter serializerFilter = new SerializerFilter();
 		
 		EasyMock.expect(serializerDao.find(serializerFilter)).andReturn(serializerList);
@@ -147,7 +147,7 @@ public class DocumentMgrImplTests {
 	private DocumentMgrImpl documentMgr;
 	private FilterDao<Document> documentDao;
 	private FilterDao<PrivateDocument> privateDocumentDao;
-	private FilterDao<Serializer> serializerDao;
+	private FilterDao<DocumentFolder> serializerDao;
 	private SequenceMgr sequenceMgr;
 	
 	@SuppressWarnings("unchecked")

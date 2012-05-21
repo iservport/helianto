@@ -8,7 +8,7 @@ import org.helianto.core.TrunkEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface SerializerForm extends TrunkEntity, Resettable {
+public interface DocumentFolderForm extends TrunkEntity, Resettable {
 
 	/**
 	 * Content type.
@@ -18,6 +18,6 @@ public interface SerializerForm extends TrunkEntity, Resettable {
 	/**
 	 * Builder code.
 	 */
-	public String getBuilderCode();
+	public String getFolderCode();
 
 }

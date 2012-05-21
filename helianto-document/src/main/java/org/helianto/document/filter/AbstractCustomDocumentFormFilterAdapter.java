@@ -43,7 +43,7 @@ public class AbstractCustomDocumentFormFilterAdapter<T extends CustomDocumentFor
 			appendEqualFilter("series.id", getForm().getSeries().getId(), mainCriteriaBuilder);
 		}
 		appendEqualFilter("series.contentType", getForm().getContentType(), mainCriteriaBuilder);
-		appendEqualFilter("series.builderCode", getForm().getBuilderCode(), mainCriteriaBuilder);
+		appendEqualFilter("series.builderCode", getForm().getFolderCode(), mainCriteriaBuilder);
 	}
 	
 }

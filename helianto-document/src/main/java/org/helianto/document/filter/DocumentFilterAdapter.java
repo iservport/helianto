@@ -1,7 +1,7 @@
 package org.helianto.document.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.document.Document;
+import org.helianto.document.domain.Document;
 
 /**
  * Document filter adapter.

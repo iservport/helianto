@@ -13,14 +13,14 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.base;
 
 import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.helianto.document.base.AbstractJournal;
+import org.helianto.document.Plan;
 import org.springframework.format.annotation.DateTimeFormat;
 
 

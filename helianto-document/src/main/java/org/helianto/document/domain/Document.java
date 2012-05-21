@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.domain;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +26,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Entity;
+import org.helianto.document.Event;
 import org.helianto.document.base.AbstractCustomDocument;
 
 
@@ -50,7 +51,6 @@ public class Document
 {
 
     private static final long serialVersionUID = 1L;
-    private Set<DocumentKey> documentKeys = new HashSet<DocumentKey>(0);
     private Set<DocumentAssociation> parents = new HashSet<DocumentAssociation>(0);
     private Set<DocumentAssociation> children = new HashSet<DocumentAssociation>(0);
 
@@ -71,17 +71,6 @@ public class Document
     	super(entity, docCode);
     }
 
-    /**
-     * Document keys.
-     */
-    @OneToMany(mappedBy="document", cascade={CascadeType.ALL})
-    public Set<DocumentKey> getDocumentKeys() {
-        return this.documentKeys;
-    }
-    public void setDocumentKeys(Set<DocumentKey> documentKeys) {
-        this.documentKeys = documentKeys;
-    }
-    
     /**
      * Parent document associations.
      */

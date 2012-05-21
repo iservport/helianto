@@ -29,7 +29,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.document.Document;
+import org.helianto.document.domain.Document;
 
 /**
  * Tags applicable to documents.

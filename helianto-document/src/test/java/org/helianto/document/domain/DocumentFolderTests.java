@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.document.domain.DocumentFolder;
 import org.junit.Test;
 
 
@@ -30,40 +31,40 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DocumentCodeBuilderTests {
+public class DocumentFolderTests {
 	
 	@Test
 	public void constructor() {
-		Serializer docBuilder = new Serializer();
+		DocumentFolder docBuilder = new DocumentFolder();
 		assertTrue(docBuilder instanceof Serializable);
 	}
 	
 	@Test
 	public void builderEquals() {
-		Serializer docBuilder = new Serializer();
+		DocumentFolder docBuilder = new DocumentFolder();
 		assertFalse(docBuilder.equals(null));
-		Serializer other = new Serializer();
+		DocumentFolder other = new DocumentFolder();
 		assertTrue(docBuilder.equals(other));
 		
 		Entity entity = EntityTestSupport.createEntity();
 		docBuilder.setEntity(entity);
-		docBuilder.setBuilderCode("CODE");
+		docBuilder.setFolderCode("CODE");
 
 		assertFalse(docBuilder.equals(other));
 		other.setEntity(entity);
 		assertFalse(docBuilder.equals(other));
-		other.setBuilderCode("CODE");
+		other.setFolderCode("CODE");
 		assertTrue(docBuilder.equals(other));
 		assertEquals(docBuilder.hashCode(), other.hashCode());
 		docBuilder.setEntity(new Entity());
 		assertFalse(docBuilder.equals(other));
-		docBuilder.setBuilderCode("AAA");
+		docBuilder.setFolderCode("AAA");
 		assertFalse(docBuilder.equals(other));		
 	}
 	
 	@Test
 	public void build() {
-		Serializer docBuilder = new Serializer();
+		DocumentFolder docBuilder = new DocumentFolder();
 		docBuilder.setNumberPattern("ABC000");
 		assertEquals("ABC001", docBuilder.buildCode(1));
 		docBuilder.setNumberPattern("0000/'09'");

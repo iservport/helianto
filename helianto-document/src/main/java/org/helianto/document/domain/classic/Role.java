@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.domain.classic;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +35,7 @@ import org.helianto.document.base.AbstractDocument;
  * Base class to roles.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see UserGroup
  */
 @javax.persistence.Entity
 @Table(name="doc_function",

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.form.AbstractCustomDocumentForm;
-import org.helianto.document.form.SerializerForm;
+import org.helianto.document.form.DocumentFolderForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ import org.junit.Test;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class SerializerFormFilterAdapterTests {
+public class DocumentFolderFormFilterAdapterTests {
 	
 	@Test
 	public void empty() {
@@ -39,7 +39,7 @@ public class SerializerFormFilterAdapterTests {
 	@Test
 	public void selection() {
 		((AbstractCustomDocumentForm) form).setBuilderCode("CODE");
-		assertEquals("alias.entity.id = 1 AND alias.builderCode = 'CODE' ", filter.createCriteriaAsString());
+		assertEquals("alias.entity.id = 1 AND alias.folderCode = 'CODE' ", filter.createCriteriaAsString());
 	}
 	
 	@Test
@@ -48,8 +48,8 @@ public class SerializerFormFilterAdapterTests {
 		assertEquals("alias.entity.id = 1 AND alias.contentType = 'X' ", filter.createCriteriaAsString());
 	}
 	
-	private SerializerFormFilterAdapter<SerializerForm> filter;
-	private SerializerForm form;
+	private DocumentFolderFormFilterAdapter<DocumentFolderForm> filter;
+	private DocumentFolderForm form;
 	
 	@SuppressWarnings("serial")
 	@Before
@@ -57,7 +57,7 @@ public class SerializerFormFilterAdapterTests {
 		Entity entity = EntityTestSupport.createEntity();
 		entity.setId(1);
 		form = new AbstractCustomDocumentForm(entity) {};
-		filter = new SerializerFormFilterAdapter<SerializerForm>(form);
+		filter = new DocumentFolderFormFilterAdapter<DocumentFolderForm>(form);
 	}
 	
 }

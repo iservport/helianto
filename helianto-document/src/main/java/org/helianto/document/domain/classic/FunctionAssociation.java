@@ -13,10 +13,13 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
+package org.helianto.document.domain.classic;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -25,35 +28,40 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.base.AbstractAssociation;
 
-
 /**
- * Document parent-child associations.
+ * Function parent-child associations.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="doc_assoc",
+@Table(name="doc_funcassoc",
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
-public class DocumentAssociation extends AbstractAssociation<Document, Document> {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name="type",
+    discriminatorType=DiscriminatorType.CHAR
+)
+@DiscriminatorValue("A")
+public class FunctionAssociation extends AbstractAssociation<Role, Role> {
 
     private static final long serialVersionUID = 1L;
     
     /**
-     * Associated parent document.
+     * Associated parent function.
      */
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="parentId", nullable=true)
-	public Document getParent() {
+	public Role getParent() {
 		return parent;
 	}
     
     /**
-     * Associated child document.
+     * Associated child function.
      */
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="childId", nullable=true)
-	public Document getChild() {
+	public Role getChild() {
 		return child;
 	}
 

@@ -1,4 +1,4 @@
-package org.helianto.document;
+package org.helianto.document.domain;
 
 import java.io.IOException;
 

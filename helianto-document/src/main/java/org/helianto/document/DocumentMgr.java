@@ -13,16 +13,16 @@
  * limitations under the License.
  */
 
-package org.helianto.document.service;
+package org.helianto.document;
 
 import java.util.List;
 
 import org.helianto.core.NonUniqueResultException;
 import org.helianto.core.filter.Filter;
-import org.helianto.document.Document;
-import org.helianto.document.PrivateDocument;
-import org.helianto.document.Serializer;
-import org.helianto.document.form.SerializerForm;
+import org.helianto.document.domain.Document;
+import org.helianto.document.domain.DocumentFolder;
+import org.helianto.document.domain.PrivateDocument;
+import org.helianto.document.form.DocumentFolderForm;
 
 /**
  * Document service interface.
@@ -78,7 +78,7 @@ public interface DocumentMgr {
 	 * 
 	 * @param serializer
 	 */
-	public Serializer storeSerializer(Serializer serializer);
+	public DocumentFolder storeSerializer(DocumentFolder serializer);
 
 	/**
 	 * Find a <code>Serializer</code> list.
@@ -86,13 +86,13 @@ public interface DocumentMgr {
 	 * @param serializerFilter
 	 * @deprecated
 	 */
-	public List<? extends Serializer> findSerializers(Filter serializerFilter);
+	public List<? extends DocumentFolder> findSerializers(Filter serializerFilter);
 	
 	/**
 	 * Find a <code>Serializer</code> list.
 	 * 
 	 * @param serializerFilter
 	 */
-	public List<? extends Serializer> findSerializers(SerializerForm form);
+	public List<? extends DocumentFolder> findSerializers(DocumentFolderForm form);
 	
 }

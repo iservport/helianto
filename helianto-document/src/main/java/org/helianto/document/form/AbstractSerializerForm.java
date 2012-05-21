@@ -7,7 +7,7 @@ import org.helianto.core.Entity;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractSerializerForm implements SerializerForm {
+public abstract class AbstractSerializerForm implements DocumentFolderForm {
 	
 	private static final long serialVersionUID = 1L;
 	private Entity entity;
@@ -58,7 +58,7 @@ public abstract class AbstractSerializerForm implements SerializerForm {
 		this.contentType = contentType;
 	}
 	
-	public String getBuilderCode() {
+	public String getFolderCode() {
 		return builderCode;
 	}
 	public void setBuilderCode(String builderCode) {

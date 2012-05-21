@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.document;
+package org.helianto.document.domain;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -26,6 +26,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.base.AbstractCustomDocument;
 import org.helianto.document.base.AbstractDocument;
+import org.helianto.document.domain.Document;
 import org.junit.Test;
 
 

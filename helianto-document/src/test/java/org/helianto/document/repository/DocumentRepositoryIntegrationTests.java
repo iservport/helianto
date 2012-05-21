@@ -21,15 +21,11 @@ import javax.annotation.Resource;
 
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.document.Document;
-import org.helianto.document.DocumentAssociation;
-import org.helianto.document.PrivateDocument;
-import org.helianto.document.Role;
-import org.helianto.document.Serializer;
-import org.helianto.document.domain.classic.DocumentTag;
-import org.helianto.document.filter.SerializerFilterAdapter;
+import org.helianto.document.domain.Document;
+import org.helianto.document.domain.DocumentAssociation;
+import org.helianto.document.domain.DocumentFolder;
+import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.test.AbstractDocumentDaoIntegrationTest;
-import org.helianto.document.test.DocumentTagTestSupport;
 import org.helianto.document.test.DocumentTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,9 +41,7 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 	@Resource BasicDao<DocumentAssociation> documentAssociationDao;
 	@Resource FilterDao<Document> documentDao;
 	@Resource FilterDao<PrivateDocument> privateDocumentDao;
-	@Resource FilterDao<Serializer> serializerDao;
-	@Resource BasicDao<DocumentTag> documentTagDao;
-	@Resource FilterDao<Role> roleDao;
+	@Resource FilterDao<DocumentFolder> documentFolderDao;
 
 	@Test
 	public void commit() {
@@ -67,21 +61,10 @@ public class DocumentRepositoryIntegrationTests extends AbstractDocumentDaoInteg
 		privateDocumentDao.saveOrUpdate(privateDocument);
 		assertEquals(privateDocument, privateDocumentDao.findUnique(entity, "PRIVATE"));
 		
-		Serializer serializer = new Serializer(entity, "CODE");
-		serializerDao.saveOrUpdate(serializer);
-		assertEquals(serializer, serializerDao.findUnique(serializer.getEntity(), serializer.getBuilderCode()));
-		@SuppressWarnings("rawtypes")
-		SerializerFilterAdapter serializerFilter = new SerializerFilterAdapter(entity, "CODE");
-		serializerFilter.setObjectAlias("serializer");
-		assertEquals(serializer, serializerDao.find(serializerFilter).iterator().next());
+		DocumentFolder serializer = new DocumentFolder(entity, "CODE");
+		documentFolderDao.saveOrUpdate(serializer);
+		assertEquals(serializer, documentFolderDao.findUnique(serializer.getEntity(), serializer.getFolderCode()));
 
-		DocumentTag documentTag = DocumentTagTestSupport.create(DocumentTag.class, document);
-		assertEquals(documentTagDao.merge(documentTag), documentTagDao.findUnique(documentTag.getDocument(), documentTag.getTagCode()));
-
-		Role role = new Role(entity, "CODE");
-		roleDao.saveOrUpdate(role);
-		assertEquals(role, roleDao.findUnique(entity, "CODE"));
-		
 	}
 	
 }

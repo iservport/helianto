@@ -20,6 +20,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.Entity;
 import org.helianto.document.base.AbstractDocument;
+import org.helianto.document.domain.classic.FunctionAssociation;
+import org.helianto.document.domain.classic.Role;
 import org.junit.Test;
 
 

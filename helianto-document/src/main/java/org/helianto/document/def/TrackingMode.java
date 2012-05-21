@@ -13,36 +13,44 @@
  * limitations under the License.
  */
 
-package org.helianto.document;
-
-import static org.junit.Assert.*;
-
-import org.helianto.core.base.AbstractAssociation;
-import org.junit.Test;
-
+package org.helianto.document.def;
 
 /**
+ * Tracking modes.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class FunctionAssociationTests {
-	
-	@Test
-	public void constructor() {
-		FunctionAssociation assoc = new FunctionAssociation();
-		assertTrue(assoc instanceof AbstractAssociation);
-	}
-	
-	@SuppressWarnings("serial")
-	@Test
-	public void association() {
-		Role parent = new Role() {};
-		Role child  = new Role() {};
-		FunctionAssociation assoc = new FunctionAssociation();
-		assoc.setParent(parent);
-		assoc.setChild(child);
-		assertSame(parent, assoc.getParent());
-		assertSame(child, assoc.getChild());
-	}
+public enum TrackingMode {
+    
+    /**
+     * Not tracked.
+     */
+    NOT_TRACKED('N'),
+    /**
+     * Continuous.
+     */
+    CONTINUOUS('C'),
+    /**
+     * End only.
+     */
+    END_ONLY('E');
+    
+    private char value;
+    
+    private TrackingMode(char value) {
+        this.value = value;
+    }
+    
+    public char getValue() {
+        return this.value;
+    }
+    public static TrackingMode getValue(char value) {
+    	for (TrackingMode delayTracker: values()) {
+    		if (delayTracker.getValue()==value) {
+    			return delayTracker;
+    		}
+    	}
+    	return null;
+    }
 
 }

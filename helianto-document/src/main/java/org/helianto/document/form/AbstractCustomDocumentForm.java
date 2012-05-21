@@ -1,7 +1,7 @@
 package org.helianto.document.form;
 
 import org.helianto.core.Entity;
-import org.helianto.document.Serializer;
+import org.helianto.document.domain.DocumentFolder;
 
 
 /**
@@ -12,7 +12,7 @@ import org.helianto.document.Serializer;
 public abstract class AbstractCustomDocumentForm extends AbstractDocumentForm implements CustomDocumentForm {
 	
 	private static final long serialVersionUID = 1L;
-	private Serializer series;
+	private DocumentFolder series;
 	private String builderCode;
 	private char contentType;
 	
@@ -30,14 +30,14 @@ public abstract class AbstractCustomDocumentForm extends AbstractDocumentForm im
 		setContentType(' ');
 	}
 	
-	public Serializer getSeries() {
+	public DocumentFolder getSeries() {
 		return series;
 	}
-	public void setSeries(Serializer series) {
+	public void setSeries(DocumentFolder series) {
 		this.series = series;
 	}
 	
-	public String getBuilderCode() {
+	public String getFolderCode() {
 		return builderCode;
 	}
 	public void setBuilderCode(String builderCode) {

@@ -22,7 +22,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import org.helianto.core.number.Sequenceable;
-import org.helianto.document.Serializer;
+import org.helianto.document.domain.DocumentFolder;
 
 /**
  * Extends <code>AbstractDocument</code> to control how docCode
@@ -35,7 +35,7 @@ import org.helianto.document.Serializer;
 public class AbstractNumberedDocument extends AbstractDocument implements Sequenceable {
 
 	private static final long serialVersionUID = 1L;
-	private Serializer documentCodeBuilder;
+	private DocumentFolder documentCodeBuilder;
 	private long internalNumber;
 	
 	/**
@@ -50,10 +50,10 @@ public class AbstractNumberedDocument extends AbstractDocument implements Sequen
 	 */
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="documentCodeBuilderId")
-	public Serializer getDocumentCodeBuilder() {
+	public DocumentFolder getDocumentCodeBuilder() {
 		return documentCodeBuilder;
 	}
-	public void setDocumentCodeBuilder(Serializer documentCodeBuilder) {
+	public void setDocumentCodeBuilder(DocumentFolder documentCodeBuilder) {
 		this.documentCodeBuilder = documentCodeBuilder;
 	}
 
@@ -63,7 +63,7 @@ public class AbstractNumberedDocument extends AbstractDocument implements Sequen
 	@Transient
 	public final String getInternalNumberKey() {
 		return new StringBuilder(getInternalDocCodeKey())
-		.append(getDocumentCodeBuilder().getBuilderCode())
+		.append(getDocumentCodeBuilder().getFolderCode())
 		.toString();
 	}
 	

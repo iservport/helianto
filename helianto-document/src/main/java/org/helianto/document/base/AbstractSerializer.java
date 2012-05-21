@@ -19,16 +19,9 @@ import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 import org.helianto.core.Entity;
 import org.helianto.document.Customizable;
@@ -40,15 +33,16 @@ import org.helianto.document.Customizer;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractSerializer<D extends Customizable> implements Customizer {
+public abstract class AbstractSerializer<D extends Customizable> 
+
+	extends AbstractFolder
+
+	implements Customizer 
+
+{
 
 	private static final long serialVersionUID = 1L;
-    private int id;
-    private Entity entity;
-    private int version;
-	private String builderCode;
 	private String numberPattern;
-	private String builderName;
     private char contentType;
     private Set<D> documents = new HashSet<D>();
     
@@ -56,68 +50,12 @@ public abstract class AbstractSerializer<D extends Customizable> implements Cust
      * Key constructor.
      * 
      * @param entity
-     * @param builderCode
+     * @param folderCode
      */
-    public AbstractSerializer(Entity entity, String builderCode) {
-    	super();
-    	setEntity(entity);
-    	setBuilderCode(builderCode);
+    public AbstractSerializer(Entity entity, String folderCode) {
+    	super(entity, folderCode);
     	setNumberPattern("0000");
-    	setBuilderName("");
     	setContentType(' ');
-    }
-
-    /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Version (database record version).
-     */
-    @Version
-    public int getVersion() {
-        return this.version;
-    }
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    /**
-     * <<NaturalKey>> Entity.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
-    /**
-     * <<NaturalKey>> Code used to distinguish the builder.
-     */
-    @Column(length=24)
-    public String getBuilderCode() {
-        return getInternalBuilderCode();
-    }
-    public void setBuilderCode(String builderCode) {
-        this.builderCode = builderCode;
-    }
-    
-    /**
-     * Sublcasses may change the way a builder code is retrieved.
-     */
-    @Transient
-    protected String getInternalBuilderCode() {
-        return this.builderCode;
     }
 
     /**
@@ -137,25 +75,6 @@ public abstract class AbstractSerializer<D extends Customizable> implements Cust
 		this.numberPattern = numberPattern;
 	}
 	
-	/**
-	 * Builder name.
-	 */
-    @Column(length=128)
-	public String getBuilderName() {
-		return getInternalBuilderName();
-	}
-	public void setBuilderName(String builderName) {
-		this.builderName = builderName;
-	}
-	
-    /**
-     * Sublcasses may change the way a builder code is retrieved.
-     */
-    @Transient
-    protected String getInternalBuilderName() {
-    	return builderName;
-    }
-
     /**
      * Build the code.
      */
@@ -194,46 +113,11 @@ public abstract class AbstractSerializer<D extends Customizable> implements Cust
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("builderCode").append("='").append(getBuilderCode()).append("' ");
+        buffer.append("folderCode").append("='").append(getFolderCode()).append("' ");
         buffer.append("numberPattern").append("='").append(getNumberPattern()).append("' ");
         buffer.append("]");
       
         return buffer.toString();
     }
-
-   /**
-    * equals
-    */
-   @Override
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof AbstractSerializer) ) return false;
-         @SuppressWarnings("unchecked")
-		AbstractSerializer<D> castOther = (AbstractSerializer<D>) other; 
-         
-         return ( ( this.getEntity()==castOther.getEntity()) 
-        		    || ( this.getEntity()!=null 
-        			     && castOther.getEntity()!=null 
-        			     && this.getEntity().equals(castOther.getEntity()
-        			   ) 
-        		))
-             && ( ( this.getBuilderCode()==castOther.getBuilderCode()) 
-            	    || ( this.getBuilderCode()!=null 
-            	    	 && castOther.getBuilderCode()!=null 
-            	    	 && this.getBuilderCode().equals(castOther.getBuilderCode()
-            	    	)
-            	));
-   }
-   
-   /**
-    * hashCode
-    */
-   @Override
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getBuilderCode() == null ? 0 : this.getBuilderCode().hashCode() );
-         return result;
-   }   
 
 }

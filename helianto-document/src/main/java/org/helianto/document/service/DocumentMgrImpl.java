@@ -23,11 +23,12 @@ import org.helianto.core.NonUniqueResultException;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
-import org.helianto.document.Document;
-import org.helianto.document.PrivateDocument;
-import org.helianto.document.Serializer;
-import org.helianto.document.filter.SerializerFormFilterAdapter;
-import org.helianto.document.form.SerializerForm;
+import org.helianto.document.DocumentMgr;
+import org.helianto.document.domain.Document;
+import org.helianto.document.domain.DocumentFolder;
+import org.helianto.document.domain.PrivateDocument;
+import org.helianto.document.filter.DocumentFolderFormFilterAdapter;
+import org.helianto.document.form.DocumentFolderForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -97,22 +98,22 @@ public class DocumentMgrImpl implements DocumentMgr {
     	logger.info("Removed document "+document);
 	}
 	
-	public Serializer storeSerializer(Serializer serializer) {
+	public DocumentFolder storeSerializer(DocumentFolder serializer) {
 		serializerDao.saveOrUpdate(serializer);
 		return serializer;
 	}
 	
-	public List<? extends Serializer> findSerializers(Filter serializerFilter) {
-    	List<Serializer> serializerList = (List<Serializer>) serializerDao.find(serializerFilter);
+	public List<? extends DocumentFolder> findSerializers(Filter serializerFilter) {
+    	List<DocumentFolder> serializerList = (List<DocumentFolder>) serializerDao.find(serializerFilter);
     	if (logger.isDebugEnabled() && serializerList!=null) {
     		logger.debug("Found serializer list of size {}", serializerList.size());
     	}
     	return serializerList;
 	}
 	
-	public List<? extends Serializer> findSerializers(SerializerForm form) {
-		Filter filter = new SerializerFormFilterAdapter<SerializerForm>(form);
-    	List<Serializer> serializerList = (List<Serializer>) serializerDao.find(filter);
+	public List<? extends DocumentFolder> findSerializers(DocumentFolderForm form) {
+		Filter filter = new DocumentFolderFormFilterAdapter<DocumentFolderForm>(form);
+    	List<DocumentFolder> serializerList = (List<DocumentFolder>) serializerDao.find(filter);
     	if (logger.isDebugEnabled() && serializerList!=null) {
     		logger.debug("Found serializer list of size {}", serializerList.size());
     	}
@@ -123,7 +124,7 @@ public class DocumentMgrImpl implements DocumentMgr {
 	
 	private FilterDao<Document> documentDao;
 	private FilterDao<PrivateDocument> privateDocumentDao;
-	private FilterDao<Serializer> serializerDao;
+	private FilterDao<DocumentFolder> serializerDao;
 	private SequenceMgr sequenceMgr;
 	
 	@Resource(name="documentDao")
@@ -137,7 +138,7 @@ public class DocumentMgrImpl implements DocumentMgr {
 	}
 	
 	@Resource(name="serializerDao")
-	public void setSerializerDao(FilterDao<Serializer> serializerDao) {
+	public void setSerializerDao(FilterDao<DocumentFolder> serializerDao) {
 		this.serializerDao = serializerDao;
 	}
 	
