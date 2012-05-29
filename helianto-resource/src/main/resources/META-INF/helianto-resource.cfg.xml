@@ -5,6 +5,7 @@
 	<session-factory>
 		<mapping class="org.helianto.resource.domain.Resource" />
 		<mapping class="org.helianto.resource.domain.ResourceAssociation" />
+		<mapping class="org.helianto.resource.domain.ResourceFolder" />
 		<mapping class="org.helianto.resource.domain.ResourceGroup" />
 		<mapping class="org.helianto.resource.domain.ResourceParameter" />
 		<mapping class="org.helianto.resource.domain.ResourceParameterValue" />

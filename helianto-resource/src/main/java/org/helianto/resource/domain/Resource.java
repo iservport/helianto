@@ -23,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
+import org.helianto.document.Customizable;
 import org.helianto.partner.domain.Partner;
 import org.helianto.resource.def.ResourceClassification;
 import org.helianto.resource.def.ResourceState;
@@ -34,9 +35,18 @@ import org.helianto.resource.def.ResourceState;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("R")
-public class Resource extends ResourceGroup implements java.io.Serializable {
+public class Resource 
+
+	extends ResourceGroup 
+	
+	implements java.io.Serializable
+	, Customizable
+	
+{
 
     private static final long serialVersionUID = 1L;
+    private ResourceFolder series;
+    private long internalNumber;
     private String serialNumber;
     private char resourceState;
     private char resourceClassification;
@@ -81,6 +91,27 @@ public class Resource extends ResourceGroup implements java.io.Serializable {
     	setResourceCode(resourceCode);
     	setResourceType(parent.getResourceType());
     }
+    
+    @Transient
+    public String getInternalNumberKey() {
+    	return "RESOURCE";
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="seriesId", nullable=true)
+    public ResourceFolder getSeries() {
+    	return this.series;
+    }
+    public void setSeries(ResourceFolder series) {
+		this.series = series;
+	}
+    
+    public long getInternalNumber() {
+		return internalNumber;
+	}
+    public void setInternalNumber(long internalNumber) {
+		this.internalNumber = internalNumber;
+	}
 
     /**
      * <<Transient>> Make discriminator value available.
