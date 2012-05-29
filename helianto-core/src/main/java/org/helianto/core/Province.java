@@ -198,12 +198,7 @@ public class Province  implements RootEntity, Comparable<Province> {
      * @return String
      */
      public String toString() {
-	  StringBuffer buffer = new StringBuffer();
-
-      buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-      buffer.append("code").append("='").append(getProvinceCode()).append("' ");			
-      buffer.append("]");
-      return buffer.toString();
+      return getProvinceCode();
      }
 
    public boolean equals(Object other) {

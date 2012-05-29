@@ -85,6 +85,24 @@ public class City extends Province {
 		 return super.equals(other);
    }
    
+   /**
+    * toString
+    * @return String
+    */
+   public String toString() {
+	   if (getParent()!=null) {
+	       StringBuffer buffer = new StringBuffer();
+
+	       buffer
+	       .append(getCityName())
+	       .append(", ")
+	       .append(getParent().toString());
+	       return buffer.toString();
+	   }
+
+       return getCityName();
+   }
+
 }
 
 
