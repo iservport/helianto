@@ -4,7 +4,7 @@ import org.helianto.core.number.Sequenceable;
 
 /**
  * Extends <code>Sequenceable</code> to create
- * custom codes for documents.
+ * custom codes based on <code>Customizers</code>.
  * 
  * @author mauriciofernandesdecastro
  */

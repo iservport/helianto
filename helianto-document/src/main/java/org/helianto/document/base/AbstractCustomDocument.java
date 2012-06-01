@@ -33,7 +33,13 @@ import org.helianto.document.domain.DocumentFolder;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractCustomDocument extends AbstractDocument implements Customizable {
+public abstract class AbstractCustomDocument 
+
+	extends AbstractDocument 
+	
+	implements Customizable 
+	
+{
 
 	private static final long serialVersionUID = 1L;
 	private DocumentFolder series;

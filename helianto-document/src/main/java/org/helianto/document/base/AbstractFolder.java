@@ -46,6 +46,7 @@ public abstract class AbstractFolder
     private int version;
 	private String folderCode;
 	private String folderName;
+	private String folderDecorationUrl;
     
     /** 
      * Empty constructor.
@@ -56,6 +57,7 @@ public abstract class AbstractFolder
     public AbstractFolder() {
     	super();
     	setFolderName("");
+		setFolderDecorationUrl("");
     }
 
     /** 
@@ -114,7 +116,7 @@ public abstract class AbstractFolder
     }
     
     /**
-     * Sublcasses may change the way a builder code is retrieved.
+     * Sublcasses may change the way a folder code is retrieved.
      */
     @Transient
     protected String getInternalBuilderCode() {
@@ -131,12 +133,31 @@ public abstract class AbstractFolder
 	}
 	
     /**
-     * Sublcasses may change the way a builder code is retrieved.
+     * Sublcasses may change the way a folder name is retrieved.
      */
     @Transient
     protected String getInternalBuilderName() {
     	return folderName;
     }
+    
+    @Column(length=64)
+    public String getFolderDecorationUrl() {
+		return folderDecorationUrl;
+	}
+    public void setFolderDecorationUrl(String folderDecorationUrl) {
+		this.folderDecorationUrl = folderDecorationUrl;
+	}
+    
+    /**
+     * True if {@link #getFolderDecorationUrl()} is not empty.
+     */
+    @Transient
+    public boolean isFolderDecorated() {
+		if (getFolderDecorationUrl()!=null && getFolderDecorationUrl().length()>0) {
+			return true;
+		}
+		return false;
+	}
 
     /**
      * toString
