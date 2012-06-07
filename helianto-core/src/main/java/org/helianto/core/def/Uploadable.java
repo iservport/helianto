@@ -15,7 +15,6 @@
 
 package org.helianto.core.def;
 
-import java.io.Serializable;
 
 
 /**
@@ -24,17 +23,7 @@ import java.io.Serializable;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Uploadable extends Serializable {
-	
-    /**
-     * <<Transient>> True if is a text document.
-     */
-	public boolean isText();
-	
-    /**
-     * <<Transient>> True if is a text/html document.
-     */
-	public boolean isHtml();
+public interface Uploadable extends HumanReadable {
 	
     /**
      * <<Transient>> True if is an image document.
@@ -54,30 +43,10 @@ public interface Uploadable extends Serializable {
     public void setContent(byte[] content);
     
     /**
-     * <<Transient>> Content as String.
-     */
-    public String getContentAsString();
-    
-    /**
-     * Content as String setter.
-     */
-    public void setContentAsString(String contentAsString);
-    
-    /**
      * <<Transient>> Content size.
      */
     public int getContentSize();
     
-    /**
-     * Codificação dos caracteres, quando texto.
-     */
-	public String getEncoding() ;
-	
-    /**
-     * Content encoding.
-     */
-	public void setEncoding(String encoding);
-
     /**
      * Content type, like text/plain, text/html, etc.
      */
