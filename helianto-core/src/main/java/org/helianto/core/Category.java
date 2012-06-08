@@ -28,6 +28,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.base.AbstractHumanReadable;
 import org.helianto.core.def.CategoryGroup;
 
 /**
@@ -40,6 +41,8 @@ import org.helianto.core.def.CategoryGroup;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "categoryGroup", "categoryCode"})}
 )
 public class Category 
+
+	extends AbstractHumanReadable
 
 	implements 
 	  TrunkEntity
@@ -60,6 +63,7 @@ public class Category
      * Default constructor
      */
     public Category() {
+    	super();
     	setCategoryGroupAsEnum(CategoryGroup.NOT_DEFINED);
     	setCategoryCode("");
     	setCategoryName("");
@@ -161,7 +165,7 @@ public class Category
      */
     @Transient
     public String[] getScriptItemsAsArray() {
-		if (getScriptItems()!=null) {
+		if (getScriptItems()!=null && getScriptItems().trim().length()>0) {
 			return getScriptItems().replace(" ", "").split(",");
 		}
 		return new String[] {};
