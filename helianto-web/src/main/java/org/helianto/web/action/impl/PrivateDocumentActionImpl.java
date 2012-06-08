@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 
 import org.helianto.core.filter.Filter;
 import org.helianto.core.security.PublicUserDetails;
-import org.helianto.document.PrivateDocument;
+import org.helianto.document.DocumentMgr;
+import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.filter.PrivateDocumentFilterAdapter;
-import org.helianto.document.service.DocumentMgr;
 import org.helianto.web.action.AbstractFilterAction;
 import org.springframework.stereotype.Component;
 import org.springframework.webflow.core.collection.MutableAttributeMap;

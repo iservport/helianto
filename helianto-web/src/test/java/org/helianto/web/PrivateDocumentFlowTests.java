@@ -2,7 +2,7 @@ package org.helianto.web;
 
 import org.easymock.classextension.EasyMock;
 import org.helianto.core.User;
-import org.helianto.document.PrivateDocument;
+import org.helianto.document.domain.PrivateDocument;
 import org.helianto.web.action.SimpleModel;
 
 /**

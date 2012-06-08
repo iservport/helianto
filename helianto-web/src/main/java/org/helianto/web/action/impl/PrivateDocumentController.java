@@ -6,9 +6,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.def.Uploadable;
-import org.helianto.document.PrivateDocument;
+import org.helianto.document.DocumentMgr;
+import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.filter.PrivateDocumentFilterAdapter;
-import org.helianto.document.service.DocumentMgr;
 import org.helianto.web.action.AbstractRenderController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -12,5 +12,20 @@ public interface DocumentCustomizable
 	, Documentable 
 
 {
+	
+	/**
+	 * Custom (optional) prefix.
+	 */
+	String getCustomPrefix();
+	
+	/**
+	 * True if custom prefix is not empty.
+	 */
+	boolean isCustomPrefixValid();
+	
+	/**
+	 * Custom (optional) suffix.
+	 */
+	String getSuffix();
 
 }

@@ -37,7 +37,7 @@ public class PrivateEntityFilterAdapterTests {
     public static String C4 = "AND lower(alias.postalCode) like '12345%' ";
     public static String C5 = "AND alias.province.id = 10 ";
     public static String C6 = "AND lower(alias.cityName) like '%name%' ";
-    public static String C7 = "AND locate( alias.nature , 'X' ) != 0 ";
+    public static String C7 = "AND locate( 'X' , alias.nature ) != 0 ";
     public static String C8 = "AND (lower(alias.entityAlias) like '%token%' OR lower(alias.entityName) like '%token%' ) ";
 
     @Test

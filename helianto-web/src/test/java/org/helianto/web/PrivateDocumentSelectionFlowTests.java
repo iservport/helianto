@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.classextension.EasyMock;
-import org.helianto.document.PrivateDocument;
+import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.filter.PrivateDocumentFilterAdapter;
 import org.helianto.web.action.SimpleModel;
 

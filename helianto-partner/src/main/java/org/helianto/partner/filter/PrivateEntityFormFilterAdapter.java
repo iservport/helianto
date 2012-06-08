@@ -93,9 +93,9 @@ public class PrivateEntityFormFilterAdapter extends AbstractTrunkFilterAdapter<P
     protected void appendLocateFilter(String fieldName, char fieldContent, OrmCriteriaBuilder criteriaBuilder) {
     	if (fieldContent!=0 && fieldContent!=' ' && fieldContent!='_') {
     		criteriaBuilder.appendAnd().append("locate(")
-    		.appendWithPrefix(fieldName);
-    		criteriaBuilder.append(",")
-            .append(getForm().getPartnerType())
+    		.append(getForm().getPartnerType())
+    		.append(",")
+            .appendWithPrefix(fieldName)
     		.append(") != 0");
     		criteriaBuilder.addSegmentCount(1);
         }

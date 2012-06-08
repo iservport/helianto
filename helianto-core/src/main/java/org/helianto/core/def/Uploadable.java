@@ -28,35 +28,23 @@ public interface Uploadable extends HumanReadable {
     /**
      * <<Transient>> True if is an image document.
      */
-	public boolean isImage();
+	boolean isImage();
 
     /**
      * Content.
      */
-    public byte[] getContent();
+    byte[] getContent();
     
     /**
      * Content setter.
      * 
      * @param content
      */
-    public void setContent(byte[] content);
+    void setContent(byte[] content);
     
     /**
      * <<Transient>> Content size.
      */
-    public int getContentSize();
+    int getContentSize();
     
-    /**
-     * Content type, like text/plain, text/html, etc.
-     */
-	public String getMultipartFileContentType();
-	
-	/**
-	 * Content type setter.
-	 * 
-	 * @param multipartFileContentType
-	 */
-	public void setMultipartFileContentType(String multipartFileContentType);
-
 }

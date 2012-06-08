@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -54,6 +55,7 @@ public class User extends UserGroup implements PersonalEntity {
 
     private static final long serialVersionUID = 1L;
     private Identity identity;
+    private String initials;
     private char userType;
     private char privacyLevel;
 	private Set<UserLog> userLogs = new HashSet<UserLog>(0);
@@ -178,6 +180,17 @@ public class User extends UserGroup implements PersonalEntity {
     	}
         return "";
     }
+    
+    /**
+     * User initials (optional), like JFK, etc..
+     */
+    @Column(length=4)
+    public String getInitials() {
+		return initials;
+	}
+    public void setInitials(String initials) {
+		this.initials = initials;
+	}
 
     /**
      * UserType getter.

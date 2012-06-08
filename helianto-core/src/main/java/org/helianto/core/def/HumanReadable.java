@@ -12,26 +12,31 @@ public interface HumanReadable extends Serializable {
     /**
      * <<Transient>> True if is a text document.
      */
-	public boolean isText();
+	boolean isText();
 	
     /**
      * <<Transient>> True if is a text/html document.
      */
-	public boolean isHtml();
+	boolean isHtml();
 	
     /**
      * <<Transient>> Content as String.
      */
-    public String getContentAsString();
+    String getContentAsString();
     
     /**
      * Content as String setter.
      */
-    public void setContentAsString(String contentAsString);
+    void setContentAsString(String contentAsString);
     
     /**
      * Codificação dos caracteres, quando texto.
      */
-	public String getEncoding() ;
+	String getEncoding() ;
+	
+    /**
+     * Content type, like text/plain, text/html, etc.
+     */
+	String getMultipartFileContentType();
 	
 }
