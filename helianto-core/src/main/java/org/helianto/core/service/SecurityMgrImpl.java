@@ -149,7 +149,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 	
 	public PublicUserDetails findAuthenticatedUser() {
 		try {
-			return (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication();
+			return (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		} catch(Exception e) {
 			throw new IllegalArgumentException("Unable to find authenticated user.", e);
 		}

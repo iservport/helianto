@@ -20,15 +20,28 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Identity;
 import org.helianto.core.PasswordNotVerifiedException;
+import org.helianto.core.Service;
+import org.helianto.core.User;
+import org.helianto.core.UserRole;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.security.PublicUserDetails;
+import org.helianto.core.security.UserDetailsAdapter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -93,6 +106,30 @@ public class SecurityMgrImplTests {
         
         assertSame(credential, securityMgr.storeCredential(credential));
         verify(credentialDao);
+    }
+    
+    @Test
+    public void authentication() {
+    	User user = new User();
+    	Identity identity = new Identity();
+    	identity.setId(100);
+    	user.setIdentity(identity);
+    	Set<UserRole> roles = new HashSet<UserRole>();
+    	roles.add(new UserRole(user, new Service(), "TEST"));
+    	securityMgr.authenticate(user, roles);
+    	PublicUserDetails authenticatedUserDetails = securityMgr.findAuthenticatedUser();
+    	assertSame(user, authenticatedUserDetails.getUser());
+//    	for (GrantedAuthority auth: ((UserDetailsAdapter) authenticatedUserDetails).getAuthorities()) {
+//		System.out.println(auth);
+//	}
+    	List<String> authorityList = new ArrayList<String>();
+    	for (GrantedAuthority auth: ((UserDetailsAdapter) authenticatedUserDetails).getAuthorities()) {
+    		authorityList.add(auth.getAuthority());
+    	}
+    	assertEquals(3, authorityList.size());
+    	assertTrue(authorityList.contains("ROLE_USER"));
+    	assertTrue(authorityList.contains("ROLE_USER_TEST"));
+    	assertTrue(authorityList.contains("ROLE_SELF_ID_100"));
     }
     
     //~ collaborators
