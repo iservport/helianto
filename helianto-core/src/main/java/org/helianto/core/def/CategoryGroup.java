@@ -34,7 +34,15 @@ public enum CategoryGroup {
 	/**
 	 * Service.
 	 */
-	SERVICE('E');
+	SERVICE('E'),
+	/**
+	 * Planning.
+	 */
+	PLANNING('R'),
+	/**
+	 * Competence.
+	 */
+	COMPETENCE('C');
 	
 	private CategoryGroup(char value) {
 		this.value = value;
