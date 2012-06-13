@@ -31,6 +31,7 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,6 +145,14 @@ public class SecurityMgrImpl implements SecurityMgr {
 	
 	public void clearAuthentication() {
 		SecurityContextHolder.clearContext();
+	}
+	
+	public PublicUserDetails findAuthenticatedUser() {
+		try {
+			return (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication();
+		} catch(Exception e) {
+			throw new IllegalArgumentException("Unable to find authenticated user.", e);
+		}
 	}
     
     // collabs

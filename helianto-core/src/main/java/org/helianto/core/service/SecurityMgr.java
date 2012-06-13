@@ -23,6 +23,7 @@ import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
+import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 
 /**
@@ -90,5 +91,10 @@ public interface SecurityMgr {
      * Clear the current authentication.
      */
 	void clearAuthentication();
+	
+	/**
+	 * Find the authenticated user.
+	 */
+	PublicUserDetails findAuthenticatedUser();
     
 }
