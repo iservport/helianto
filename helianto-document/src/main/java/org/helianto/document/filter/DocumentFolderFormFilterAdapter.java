@@ -51,10 +51,6 @@ public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm> exten
     	super((T) new DocumentFolder(entity, builderCode));
     }
 
-	public void reset() { 
-		getForm().reset();
-	}
-
 	public boolean isSelection() {
 		return getForm().getFolderCode()!=null && getForm().getFolderCode().length()>0;
 	}
@@ -69,4 +65,9 @@ public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm> exten
 		appendEqualFilter("folderCode", getForm().getFolderCode(), mainCriteriaBuilder);
 	}
 
+	@Override
+	public String getOrderByString() {
+		return "priority,folderCode";
+	}
+	
 }

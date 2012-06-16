@@ -31,21 +31,26 @@ import org.junit.Test;
  */
 public class DocumentFolderFormFilterAdapterTests {
 	
+	private String OB = "order by alias.priority ,  alias.folderCode ";
+	private String C1 = "alias.entity.id = 1 ";
+	private String C2 = "AND alias.folderCode = 'CODE' ";
+	private String C3 = "AND alias.contentType = 'X' ";
+	
 	@Test
 	public void empty() {
-		assertEquals("alias.entity.id = 1 ", filter.createCriteriaAsString());
+		assertEquals(C1+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void selection() {
 		((AbstractCustomDocumentForm) form).setBuilderCode("CODE");
-		assertEquals("alias.entity.id = 1 AND alias.folderCode = 'CODE' ", filter.createCriteriaAsString());
+		assertEquals(C1+C2, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void contentType() {
 		((AbstractCustomDocumentForm) form).setContentType('X');
-		assertEquals("alias.entity.id = 1 AND alias.contentType = 'X' ", filter.createCriteriaAsString());
+		assertEquals(C1+C3+OB, filter.createCriteriaAsString());
 	}
 	
 	private DocumentFolderFormFilterAdapter<DocumentFolderForm> filter;
