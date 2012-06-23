@@ -55,6 +55,7 @@ public class Category
     private Entity entity;
     private char categoryGroup;
     private String categoryCode;
+    private String categoryLabel;
     private String categoryName;
     private char priority;
     private String scriptItems;
@@ -66,6 +67,7 @@ public class Category
     	super();
     	setCategoryGroupAsEnum(CategoryGroup.NOT_DEFINED);
     	setCategoryCode("");
+    	setCategoryLabel("");
     	setCategoryName("");
     	setPriority('0');
     }
@@ -127,6 +129,17 @@ public class Category
     public void setCategoryCode(String categoryCode) {
         this.categoryCode = categoryCode;
     }
+    
+    /**
+     * Category label.
+     */
+    @Column(length=32)
+    public String getCategoryLabel() {
+		return categoryLabel;
+	}
+    public void setCategoryLabel(String categoryLabel) {
+		this.categoryLabel = categoryLabel;
+	}
 
     /**
      * Category name.
