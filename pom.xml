@@ -375,8 +375,8 @@
 		<!-- ui bundles -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
-			<artifactId>com.springsource.freemarker</artifactId>
-			<version>2.3.15</version>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.18</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.webflow</groupId>
