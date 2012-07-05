@@ -89,23 +89,6 @@ public interface PostInstallationMgr {
 	 * Install an Entity, if one does not exist.
 	 * 
 	 * <p>
-	 * This method is called from start up installers and its job is to provide at least one
-	 * default entity before user interaction.
-	 * </p>
-	 * 
-	 * @param defaultOperator
-	 * @param entityAlias
-	 * @param managerPricipal
-	 * @param reinstall
-	 * 
-	 * @deprecated
-	 */
-	public Entity installEntity(Operator defaultOperator, String entityAlias, String managerPricipal, boolean reinstall);
-	
-	/**
-	 * Install an Entity, if one does not exist.
-	 * 
-	 * <p>
 	 * This method is appropriate to requests coming from the presentation layer. The embedded
 	 * manager identity is required and used as a signal to perform the full installation routine.
 	 * To simply update the given entity, please use {@link NamespaceMgr#storeEntity(Entity)}.

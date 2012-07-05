@@ -159,40 +159,13 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		return service;
 	}
 	
-	/**
-	 * @deprecated
-	 */
-	public Entity installEntity(Operator defaultOperator, String entityAlias, String managerPrincipal, boolean reinstall) {
-		operatorDao.saveOrUpdate(defaultOperator);
-		
-		logger.debug("Check entity {} installation with 'reinstall={}'", entityAlias, reinstall);
-		Entity defaultEntity = null;
-		if (!reinstall) {
-			defaultEntity = entityDao.findUnique(defaultOperator, entityAlias);
-		}
-
-		if (defaultEntity==null) {
-			logger.debug("Will install entity {} ...", entityAlias);
-			defaultEntity = new Entity(defaultOperator, entityAlias);
-			entityDao.saveOrUpdate(defaultEntity);
-		} 
-		else {
-			logger.debug("Entity AVAILABLE as {}.", defaultEntity);
-			return defaultEntity;
-		}
-		
-		Credential credential = identityMgr.installIdentity(managerPrincipal);
-
-		return installManager(defaultEntity, credential);
-	}
-	
 	public Entity installEntity(Entity entity, boolean reinstall) {
 		Operator operator = entity.getOperator();
 		if (entity.getOperator()==null) {
 			throw new IllegalArgumentException("An opertor is required.");
 		}
 		operatorDao.saveOrUpdate(operator);
-		String alias = entity.getAlias();		
+		String alias = entity.getAlias();
 		
 		logger.debug("Check entity {} installation with 'reinstall={}'", alias, reinstall);
 		if (!reinstall) {
@@ -210,13 +183,6 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		}
 		entityDao.saveOrUpdate(entity);
 		
-		// TODO remove 
-		if (entity.getManager()!=null) {
-			Credential credential = identityMgr.installCredential(entity.getManager());
-			logger.debug("Clearing manager supplied with entity {} to avoid duplicate installation...", entity);
-			entity.setManager(null);
-			return installManager(entity, credential);
-		}
 		return entity;
 	}
 	
