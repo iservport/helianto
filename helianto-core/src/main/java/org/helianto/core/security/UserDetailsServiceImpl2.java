@@ -1,5 +1,6 @@
 package org.helianto.core.security;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -39,8 +40,9 @@ public class UserDetailsServiceImpl2 implements UserDetailsService {
 		logger.debug("Found {} user(s) matching {}.", userList.size(), username);
 		if (userList!=null && userList.size()>0) {
 			User user = userSelectorStrategy.selectUser(userList);
+			user.setLastEvent(new Date());
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
-			return new UserDetailsAdapter(user, credential, roles);
+			return new UserDetailsAdapter((User) userMgr.storeUserGroup(user), credential, roles);
 		}
 		throw new UsernameNotFoundException("Unable to find any user for "+username);
 	}
