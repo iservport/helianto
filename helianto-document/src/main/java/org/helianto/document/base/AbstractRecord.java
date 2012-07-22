@@ -106,10 +106,17 @@ public abstract class AbstractRecord
     @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getNextCheckDate() {
-        return this.nextCheckDate;
+        return validateNextCheckDate(this.nextCheckDate);
     }
     public void setNextCheckDate(Date nextCheckDate) {
         this.nextCheckDate = nextCheckDate;
+    }
+    
+    /**
+     * Give subclasses a chance to validate next check date.
+     */
+    protected Date validateNextCheckDate(Date nextCheckDate) {
+    	return nextCheckDate;
     }
     
     /**
