@@ -1,5 +1,6 @@
 package org.helianto.web.action.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -86,6 +87,8 @@ public class AuthorizationActionImpl extends AbstractFilterAction<User> {
 			if (user.getIdentity().getId()!=credential.getIdentity().getId()) {
 				throw new IllegalArgumentException("Unable to auhtorize different identity.");
 			}
+			user.setLastEvent(new Date());
+			user = (User) userMgr.storeUserGroup(user);
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
 			UserDetailsAdapter userDetails = new UserDetailsAdapter(user, credential, roles);
 			securityMgr.authenticate(userDetails);
