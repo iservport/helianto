@@ -22,6 +22,8 @@ package org.helianto.core.def;
  * @author Mauricio Fernandes de Castro
  */
 public enum Resolution {
+	
+	/* C D I N P R T U W */
     
     /**
      * Issued.
@@ -47,6 +49,10 @@ public enum Resolution {
      * No further control action required.
      */
     DONE('D', true, true, false),
+    /**
+     * Repeat.
+     */
+    REPEAT('R', true, false, false),
     /**
      * Cancellled (once started).
      */
