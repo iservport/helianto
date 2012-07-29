@@ -44,6 +44,11 @@ public interface Listable {
 	public Object getItem();
 	
 	/**
+	 * Current item setter.
+	 */
+	public void setItem(Object item);
+	
+	/**
 	 * Increase index by one, if has next, to return the next item.
 	 */
 	public Object next();

@@ -92,14 +92,21 @@ public class Page implements Serializable, Listable {
 		return hasContents() && getIndex() < getListSize() - 1;
 	}
 	
-	/**
-	 * Current item.
-	 */
 	public Object getItem() {
 		if (hasContents() && !isClear()) {
 			return getList().get(getIndex());
 		}
 		return null;
+	}
+	
+	public void setItem(Object item) {
+		int i = 0;
+		for (Object o: getList()) {
+			if (o.equals(item)) {
+				setIndex(i);
+			}
+			i++;
+		}
 	}
 	
 	/**
