@@ -6,8 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.domain.ResourceParameter;
-import org.helianto.resource.domain.ResourceParameterValue;
+import org.helianto.resource.domain.classic.ResourceParameter;
+import org.helianto.resource.domain.classic.ResourceParameterValue;
 import org.junit.Test;
 
 

@@ -17,10 +17,10 @@ package org.helianto.resource.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.resource.domain.ResourceAssociation;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.domain.ResourceParameter;
-import org.helianto.resource.domain.ResourceParameterValue;
+import org.helianto.resource.domain.classic.ResourceAssociation;
+import org.helianto.resource.domain.classic.ResourceParameter;
+import org.helianto.resource.domain.classic.ResourceParameterValue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.helianto.core.repository.FilterDao;
-import org.helianto.resource.domain.ResourceAssociation;
 import org.helianto.resource.domain.ResourceGroup;
+import org.helianto.resource.domain.classic.ResourceAssociation;
 import org.helianto.resource.filter.ResourceGroupFilterAdapter;
 import org.helianto.resource.service.ResourceMgrImpl;
 import org.junit.After;

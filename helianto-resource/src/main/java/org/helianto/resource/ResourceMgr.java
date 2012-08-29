@@ -21,10 +21,10 @@ import org.helianto.core.Entity;
 import org.helianto.core.Node;
 import org.helianto.core.filter.Filter;
 import org.helianto.resource.domain.Resource;
-import org.helianto.resource.domain.ResourceAssociation;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.domain.ResourceParameter;
-import org.helianto.resource.domain.ResourceParameterValue;
+import org.helianto.resource.domain.classic.ResourceAssociation;
+import org.helianto.resource.domain.classic.ResourceParameter;
+import org.helianto.resource.domain.classic.ResourceParameterValue;
 import org.helianto.resource.form.ResourceGroupForm;
 
 /**

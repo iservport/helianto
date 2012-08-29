@@ -41,6 +41,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.NaturalKeyInfo;
 import org.helianto.core.TrunkEntity;
 import org.helianto.resource.def.ResourceType;
+import org.helianto.resource.domain.classic.ResourceAssociation;
 
 /**
  * <p>

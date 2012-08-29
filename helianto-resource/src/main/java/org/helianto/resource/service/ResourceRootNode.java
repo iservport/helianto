@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.helianto.core.Node;
-import org.helianto.resource.domain.ResourceAssociation;
 import org.helianto.resource.domain.ResourceGroup;
+import org.helianto.resource.domain.classic.ResourceAssociation;
 
 /**
  * Implement <code>Node</code> interface to provide a resource 

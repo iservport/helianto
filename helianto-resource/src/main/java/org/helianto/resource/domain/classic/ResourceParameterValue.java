@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.resource.domain;
+package org.helianto.resource.domain.classic;
 
 import java.math.BigDecimal;
 
@@ -25,6 +25,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import org.helianto.resource.domain.ResourceGroup;
 
 /**
  * <p>

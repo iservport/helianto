@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.resource.domain;
+package org.helianto.resource.domain.classic;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
@@ -27,6 +27,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.base.AbstractAssociation;
+import org.helianto.resource.domain.ResourceGroup;
 
 /**
  * Enable <tt>Resource</tt>s and <tt>ResourceGroup</tt>s to associate 

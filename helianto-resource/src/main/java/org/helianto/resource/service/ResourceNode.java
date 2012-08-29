@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.helianto.core.Node;
 import org.helianto.core.base.AbstractNode;
-import org.helianto.resource.domain.ResourceAssociation;
+import org.helianto.resource.domain.classic.ResourceAssociation;
 
 /**
  * Implement <code>Node</code> interface to provide a resource tree.

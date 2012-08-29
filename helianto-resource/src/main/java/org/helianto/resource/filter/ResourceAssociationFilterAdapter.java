@@ -3,7 +3,7 @@ package org.helianto.resource.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
-import org.helianto.resource.domain.ResourceAssociation;
+import org.helianto.resource.domain.classic.ResourceAssociation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
