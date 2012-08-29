@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
+import org.helianto.core.base.AbstractFolder;
 import org.helianto.document.Customizable;
 import org.helianto.document.Customizer;
 

@@ -1,6 +1,5 @@
-package org.helianto.document;
+package org.helianto.core;
 
-import org.helianto.core.TrunkEntity;
 
 /**
  * Interface to domain classes that represent a folder.

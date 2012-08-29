@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document.base;
+package org.helianto.core.base;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.helianto.core.Entity;
-import org.helianto.document.Folder;
+import org.helianto.core.Folder;
 
 /**
  * Base class to represent a folder.

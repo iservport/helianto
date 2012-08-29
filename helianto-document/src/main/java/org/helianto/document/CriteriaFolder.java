@@ -1,5 +1,7 @@
 package org.helianto.document;
 
+import org.helianto.core.Folder;
+
 
 /**
  * Interface to domain classes that represent criteria folders.
