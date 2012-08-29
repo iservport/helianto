@@ -28,9 +28,15 @@ import javax.annotation.Resource;
 import org.helianto.core.Identity;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
+import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.service.SequenceMgr;
 import org.helianto.message.MessageAdapter;
+import org.helianto.message.MessageMgr;
 import org.helianto.message.MessageSender;
+import org.helianto.message.domain.NotificationEvent;
+import org.helianto.message.filter.NotificationEventFormFilterAdapter;
+import org.helianto.message.form.NotificationEventForm;
 import org.helianto.message.sender.SendGridMessageAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,10 +92,25 @@ public class MessageMgrImpl implements MessageMgr {
       	send(hourlyMessage);
     }
     
+    public List<NotificationEvent> findNotificationEvents(NotificationEventForm form) {
+    	Filter filter = new NotificationEventFormFilterAdapter(form);
+    	List<NotificationEvent> notificationEventList = (List<NotificationEvent>) notificationEventDao.find(filter);
+		return notificationEventList;
+    	
+    }
+    
+    public NotificationEvent storeNotificationEvent(NotificationEvent target) {
+    	sequenceMgr.validateInternalNumber(target);
+    	notificationEventDao.saveOrUpdate(target);
+    	return target;
+    }
+    
     // collabs
 
     private MessageSender messageSender;
     private FilterDao<UserGroup> userGroupDao;
+    private FilterDao<NotificationEvent> notificationEventDao;
+    private SequenceMgr sequenceMgr;
     
     @Resource
     public void setMessageSender(MessageSender messageSender) {
@@ -99,6 +120,16 @@ public class MessageMgrImpl implements MessageMgr {
     @Resource(name="userGroupDao")
     public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
 		this.userGroupDao = userGroupDao;
+	}
+    
+    @Resource(name="notificationEventDao")
+    public void setNotificationEventDao(FilterDao<NotificationEvent> notificationEventDao) {
+		this.notificationEventDao = notificationEventDao;
+	}
+    
+    @Resource
+    public void setSequenceMgr(SequenceMgr sequenceMgr) {
+		this.sequenceMgr = sequenceMgr;
 	}
     
     private static final Logger logger = LoggerFactory.getLogger(MessageMgrImpl.class);

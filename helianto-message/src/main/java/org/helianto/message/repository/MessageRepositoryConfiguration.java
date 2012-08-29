@@ -17,7 +17,7 @@ package org.helianto.message.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.message.ServiceEvent;
+import org.helianto.message.domain.NotificationEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,11 +30,11 @@ import org.springframework.context.annotation.Configuration;
 public class MessageRepositoryConfiguration extends AbstractRepositoryConfiguration {
 
 	/**
-	 * Card data access.
+	 * Notification event data access.
 	 */
 	@Bean
-	public FilterDao<ServiceEvent> serviceEventDao() {
-		return getFilterDao(ServiceEvent.class, "service", "eventCode");
+	public FilterDao<NotificationEvent> notificationEventDao() {
+		return getFilterDao(NotificationEvent.class);
 	}
 
 }

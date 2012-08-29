@@ -14,9 +14,13 @@
  */
 
 
-package org.helianto.message.service;
+package org.helianto.message;
 
-import org.helianto.message.MessageAdapter;
+import java.util.List;
+
+import org.helianto.message.domain.NotificationEvent;
+import org.helianto.message.form.NotificationEventForm;
+
 
 
 /**
@@ -31,11 +35,25 @@ public interface MessageMgr {
      * 
      * @param messageAdapter
      */
-    public void send(MessageAdapter<?> messageAdapter);
+    void send(MessageAdapter<?> messageAdapter);
     
     /**
      * Notify hourly.
      */
-    public void findHourly();
+    void findHourly();
+    
+    /**
+     * Find notification events.
+     * 
+     * @param form
+     */
+    List<NotificationEvent> findNotificationEvents(NotificationEventForm form);
+    
+    /**
+     * Store a notification event.
+     * 
+     * @param target
+     */
+    NotificationEvent storeNotificationEvent(NotificationEvent target);
 
 }

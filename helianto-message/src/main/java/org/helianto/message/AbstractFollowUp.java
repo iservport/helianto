@@ -22,6 +22,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import org.helianto.document.base.AbstractRecord;
+import org.helianto.message.def.NotificationOption;
+import org.helianto.message.def.ReviewDecision;
 
 /**
  * Base class to follow up.

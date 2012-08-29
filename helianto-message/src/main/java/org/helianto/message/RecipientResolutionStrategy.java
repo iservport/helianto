@@ -1,4 +1,4 @@
-package org.helianto.message.service;
+package org.helianto.message;
 
 import org.helianto.core.UserGroup;
 

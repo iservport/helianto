@@ -1,4 +1,4 @@
-package org.helianto.message;
+package org.helianto.message.domain;
 
 import java.io.Serializable;
 
@@ -24,6 +24,7 @@ import org.helianto.core.Service;
  * </p>
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 @javax.persistence.Entity
 @Table(name="msg_event",

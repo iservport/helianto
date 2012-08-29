@@ -9,6 +9,7 @@ import java.util.List;
 import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
+import org.helianto.message.RecipientResolutionStrategy;
 import org.junit.Test;
 
 /**

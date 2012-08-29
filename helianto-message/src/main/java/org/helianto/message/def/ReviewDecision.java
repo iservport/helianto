@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.message;
+package org.helianto.message.def;
 
 import org.helianto.core.def.Resolution;
 

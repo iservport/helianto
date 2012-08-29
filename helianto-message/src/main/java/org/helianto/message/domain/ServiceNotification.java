@@ -1,4 +1,4 @@
-package org.helianto.message;
+package org.helianto.message.domain;
 
 import java.io.Serializable;
 
@@ -13,10 +13,12 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.Service;
+import org.helianto.message.def.NotificationAddressType;
 
 /**
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 @javax.persistence.Entity
 @Table(name="msg_address",

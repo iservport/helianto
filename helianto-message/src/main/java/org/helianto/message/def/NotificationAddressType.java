@@ -1,4 +1,4 @@
-package org.helianto.message;
+package org.helianto.message.def;
 
 /**
  * Define notification types.
