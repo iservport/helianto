@@ -23,7 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import org.helianto.core.Entity;
-import org.helianto.document.Customizable;
+import org.helianto.core.number.Sequenceable;
 import org.helianto.partner.domain.Partner;
 import org.helianto.resource.def.ResourceClassification;
 import org.helianto.resource.def.ResourceState;
@@ -39,8 +39,7 @@ public class Resource
 
 	extends ResourceGroup 
 	
-	implements java.io.Serializable
-	, Customizable
+	implements Sequenceable
 	
 {
 
@@ -97,12 +96,20 @@ public class Resource
     	return "RESOURCE";
     }
     
-    @ManyToOne
-    @JoinColumn(name="seriesId", nullable=true)
+    @Transient
     public ResourceFolder getSeries() {
     	return this.series;
     }
     public void setSeries(ResourceFolder series) {
+		this.series = series;
+	}
+    
+    @ManyToOne
+    @JoinColumn(name="seriesId", nullable=true)
+    public ResourceFolder getResourceFolder() {
+    	return this.series;
+    }
+    public void setResourceFolder(ResourceFolder series) {
 		this.series = series;
 	}
     
