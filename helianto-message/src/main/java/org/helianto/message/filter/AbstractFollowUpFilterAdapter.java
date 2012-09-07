@@ -19,6 +19,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractControlFilterAdapter;
 import org.helianto.document.base.AbstractPrivateControl;
+import org.helianto.document.base.AbstractRepeatable;
 import org.helianto.message.AbstractFollowUp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> extends AbstractControlFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
-	private AbstractPrivateControl parent;
+	private AbstractRepeatable parent;
 
     /** 
      * Default constructor.
@@ -73,10 +74,10 @@ public abstract class AbstractFollowUpFilterAdapter<T extends AbstractFollowUp> 
 	/**
 	 * Parent filter.
 	 */
-	public AbstractPrivateControl getParent() {
+	public AbstractRepeatable getParent() {
 		return parent;
 	}
-	public void setParent(AbstractPrivateControl parent) {
+	public void setParent(AbstractRepeatable parent) {
 		this.parent = parent;
 	}
 	
