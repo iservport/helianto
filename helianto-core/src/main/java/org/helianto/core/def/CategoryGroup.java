@@ -24,6 +24,10 @@ public enum CategoryGroup {
 	 */
 	INSTRUMENT('I'),
 	/**
+	 * Maintenance.
+	 */
+	MAINTENANCE('M'),
+	/**
 	 * Stock.
 	 */
 	STOCK('S'),
