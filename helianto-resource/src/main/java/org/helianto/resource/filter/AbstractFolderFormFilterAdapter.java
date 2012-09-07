@@ -2,18 +2,18 @@ package org.helianto.resource.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.resource.form.ResourceFolderForm;
+import org.helianto.core.filter.form.FolderForm;
 
 /**
- * Resource folder form filter adapter.
+ * Abstract folder form filter adapter.
  * 
  * @author mauriciofernandesdecastro
  */
-public class ResourceFolderFormFilterAdapter extends AbstractTrunkFilterAdapter<ResourceFolderForm> {
+public abstract class AbstractFolderFormFilterAdapter<F extends FolderForm> extends AbstractTrunkFilterAdapter<F> {
 
 	private static final long serialVersionUID = 1L;
 
-	public ResourceFolderFormFilterAdapter(ResourceFolderForm form) {
+	public AbstractFolderFormFilterAdapter(F form) {
 		super(form);
 	}
 	
@@ -27,11 +27,6 @@ public class ResourceFolderFormFilterAdapter extends AbstractTrunkFilterAdapter<
 		appendEqualFilter("folderCode", getForm().getFolderCode(), mainCriteriaBuilder);
 	}
 
-	@Override
-	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("resourceType", getForm().getResourceType(), mainCriteriaBuilder);
-	}
-	
 	@Override
 	public String getOrderByString() {
 		return "folderCode ASC";

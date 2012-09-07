@@ -44,7 +44,6 @@ public class Resource
 {
 
     private static final long serialVersionUID = 1L;
-    private ResourceFolder series;
     private long internalNumber;
     private String serialNumber;
     private char resourceState;
@@ -95,23 +94,6 @@ public class Resource
     public String getInternalNumberKey() {
     	return "RESOURCE";
     }
-    
-    @Transient
-    public ResourceFolder getSeries() {
-    	return this.series;
-    }
-    public void setSeries(ResourceFolder series) {
-		this.series = series;
-	}
-    
-    @ManyToOne
-    @JoinColumn(name="seriesId", nullable=true)
-    public ResourceFolder getResourceFolder() {
-    	return this.series;
-    }
-    public void setResourceFolder(ResourceFolder series) {
-		this.series = series;
-	}
     
     public long getInternalNumber() {
 		return internalNumber;

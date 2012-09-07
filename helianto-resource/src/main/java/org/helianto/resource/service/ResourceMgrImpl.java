@@ -20,17 +20,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Node;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.SequenceMgr;
 import org.helianto.resource.ResourceMgr;
 import org.helianto.resource.def.ResourceType;
 import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.domain.classic.ResourceAssociation;
-import org.helianto.resource.domain.classic.ResourceParameter;
-import org.helianto.resource.domain.classic.ResourceParameterValue;
 import org.helianto.resource.filter.ResourceGroupFormFilterAdapter;
 import org.helianto.resource.form.ResourceGroupForm;
 import org.slf4j.Logger;
@@ -45,27 +41,9 @@ import org.springframework.stereotype.Service;
 @Service("resourceMgr")
 public class ResourceMgrImpl implements ResourceMgr {
 	
-    public List<Node> prepareTree(Filter resourceGroupFilter) {
-    	List<ResourceGroup> resourceGroupList = findResourceGroups(resourceGroupFilter);
-    	ResourceRootNode root = new ResourceRootNode(resourceGroupList);
-    	List<Node> resourceTree = sequenceMgr.prepareTree(root);
-    	return resourceTree;
-    }
-
 	public List<ResourceGroup> findResourceGroups(ResourceGroupForm form) {
 		Filter filter = new ResourceGroupFormFilterAdapter(form);
 		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(filter);
-		if (logger.isDebugEnabled() && resourceGroupList!=null) {
-			logger.debug("Found resource group list of size {}", resourceGroupList.size());
-		}
-		return resourceGroupList;
-	}
-    
-	/**
-	 * @deprecated
-	 */
-	public List<ResourceGroup> findResourceGroups(Filter resourceGroupFilter) {
-		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(resourceGroupFilter);
 		if (logger.isDebugEnabled() && resourceGroupList!=null) {
 			logger.debug("Found resource group list of size {}", resourceGroupList.size());
 		}
@@ -143,47 +121,10 @@ public class ResourceMgrImpl implements ResourceMgr {
 		return resourceAssociation;
 	}
 	
-	//
-
-    public ResourceParameter createResourceParameter(Entity entity) {
-        return ResourceParameter.resourceParameterFactory(entity, "");
-    }
-
-    public ResourceParameter createResourceParameter(Entity entity, String parameterCode) {
-        return ResourceParameter.resourceParameterFactory(entity, parameterCode);
-    }
-
-    public ResourceParameter createResourceParameter(ResourceParameter parent, String parameterCode) {
-        return ResourceParameter.resourceParameterFactory(parent, parameterCode);
-    }
-    
-    public ResourceParameter storeResourceParameter(ResourceParameter resourceParameter) {
-    	resourceParameterDao.saveOrUpdate(resourceParameter);
-    	return resourceParameter;
-    }
-    
-    //
-    
-    public ResourceParameterValue createParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
-        return ResourceParameterValue.resourceParameterValueFactory(resourceGroup, resourceParameter);
-    }
-
-    public ResourceParameterValue createSuppressedParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter) {
-        return ResourceParameterValue.resourceParameterValueFactory(resourceGroup, resourceParameter);
-    }
-
-    public ResourceParameterValue storeResourceParameterValue(ResourceParameterValue resourceParameterValue) {
-    	resourceParameterValueDao.saveOrUpdate(resourceParameterValue);
-    	return resourceParameterValue;
-    }
-    
     // collaborators
 
     private FilterDao<ResourceGroup> resourceGroupDao;
     private FilterDao<ResourceAssociation> resourceAssociationDao;
-    private FilterDao<ResourceParameter> resourceParameterDao;
-    private FilterDao<ResourceParameterValue> resourceParameterValueDao;
-    private SequenceMgr sequenceMgr;
     
     @javax.annotation.Resource(name="resourceGroupDao")
     public void setResourceGroupDao(FilterDao<ResourceGroup> resourceGroupDao) {
@@ -193,21 +134,6 @@ public class ResourceMgrImpl implements ResourceMgr {
     @javax.annotation.Resource(name="resourceAssociationDao")
     public void setResourceAssociationDao(FilterDao<ResourceAssociation> resourceAssociationDao) {
         this.resourceAssociationDao = resourceAssociationDao;
-    }
-
-    @javax.annotation.Resource(name="resourceParameterDao")
-    public void setResourceParameterDao(FilterDao<ResourceParameter> resourceParameterDao) {
-        this.resourceParameterDao = resourceParameterDao;
-    }
-
-    @javax.annotation.Resource(name="resourceParameterValueDao")
-    public void setResourceParameterValueDao(FilterDao<ResourceParameterValue> resourceParameterValueDao) {
-        this.resourceParameterValueDao = resourceParameterValueDao;
-    }
-
-    @javax.annotation.Resource
-    public void setSequenceMgr(SequenceMgr sequenceMgr) {
-        this.sequenceMgr = sequenceMgr;
     }
 
 	static final Logger logger = LoggerFactory.getLogger(ResourceMgrImpl.class);

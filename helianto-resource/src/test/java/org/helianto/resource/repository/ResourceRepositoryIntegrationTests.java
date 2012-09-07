@@ -21,12 +21,8 @@ import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.domain.classic.ResourceAssociation;
-import org.helianto.resource.domain.classic.ResourceParameter;
-import org.helianto.resource.domain.classic.ResourceParameterValue;
 import org.helianto.resource.test.AbstractResourceDaoIntegrationTest;
 import org.helianto.resource.test.ResourceGroupTestSupport;
-import org.helianto.resource.test.ResourceParameterTestSupport;
-import org.helianto.resource.test.ResourceParameterValueTestSupport;
 import org.helianto.resource.test.ResourceTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,8 +37,6 @@ public class ResourceRepositoryIntegrationTests extends AbstractResourceDaoInteg
 
 	@javax.annotation.Resource BasicDao<ResourceAssociation> resourceAssociationDao;
 	@javax.annotation.Resource FilterDao<ResourceGroup> resourceGroupDao;
-	@javax.annotation.Resource FilterDao<ResourceParameter> resourceParameterDao;
-	@javax.annotation.Resource BasicDao<ResourceParameterValue> resourceParameterValueDao;
 	
 	@Test
 	public void resource() {
@@ -55,11 +49,6 @@ public class ResourceRepositoryIntegrationTests extends AbstractResourceDaoInteg
 		resourceAssociation.setChild(ResourceTestSupport.createResource(entity));
 		assertEquals(resourceAssociationDao.merge(resourceAssociation), resourceAssociationDao.findUnique(resourceAssociation.getParent(), resourceAssociation.getChild()));
 
-		ResourceParameter resourceParameter = ResourceParameterTestSupport.createResourceParameter(entity);
-		assertEquals(resourceParameterDao.merge(resourceParameter), resourceParameterDao.findUnique(resourceParameter.getEntity(), resourceParameter.getParameterCode()));
-
-		ResourceParameterValue resourceParameterValue = ResourceParameterValueTestSupport.createResourceParameterValue(parent, resourceParameter);
-		assertEquals(resourceParameterValueDao.merge(resourceParameterValue), resourceParameterValueDao.findUnique(resourceParameterValue.getResource(), resourceParameterValue.getParameter()));
 	}
 
 }

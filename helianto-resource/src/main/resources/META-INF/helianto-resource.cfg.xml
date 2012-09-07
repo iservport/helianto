@@ -5,10 +5,7 @@
 	<session-factory>
 		<mapping class="org.helianto.resource.domain.Resource" />
 		<mapping class="org.helianto.resource.domain.classic.ResourceAssociation" />
-		<mapping class="org.helianto.resource.domain.ResourceFolder" />
 		<mapping class="org.helianto.resource.domain.ResourceGroup" />
-		<mapping class="org.helianto.resource.domain.classic.ResourceParameter" />
-		<mapping class="org.helianto.resource.domain.classic.ResourceParameterValue" />
 	</session-factory>
 </hibernate-configuration>
 

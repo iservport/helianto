@@ -15,7 +15,6 @@ public class CompositeResourceForm
 	
 	implements 
 	  ResourceGroupForm
-	, ResourceFolderForm
 	, Cloneable
 
 {
@@ -24,7 +23,6 @@ public class CompositeResourceForm
 	private char type;
 	private ResourceGroup parent;
 	private ResourceGroup child;
-	private String folderCode;
 	private String resourceCode;
 	private String resourceName;
 	private char resourceType;
@@ -96,13 +94,6 @@ public class CompositeResourceForm
 		return "childAssociation.child";
 	}
 	
-	public String getFolderCode() {
-		return folderCode;
-	}
-	public void setFolderCode(String folderCode) {
-		this.folderCode = folderCode;
-	}
-
 	public String getResourceCode() {
 		return resourceCode;
 	}

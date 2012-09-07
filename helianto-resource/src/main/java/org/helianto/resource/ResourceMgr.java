@@ -18,36 +18,18 @@ package org.helianto.resource;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.Node;
 import org.helianto.core.filter.Filter;
 import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.domain.classic.ResourceAssociation;
-import org.helianto.resource.domain.classic.ResourceParameter;
-import org.helianto.resource.domain.classic.ResourceParameterValue;
 import org.helianto.resource.form.ResourceGroupForm;
 
 /**
- * <code>ResourceMgr</code> interface.
+ * Resource service interface.
  * 
  * @author Mauricio Fernandes de Castro
  */
 public interface ResourceMgr {
-    
-	/**
-	 * Create a managed resource tree.
-	 * 
-	 * @param resourceGroupFilter
-	 */
-	public List<Node> prepareTree(Filter resourceGroupFilter);
-	
-    /**
-     * Find <tt>ResourceGroup</tt>s using filter.
-     * 
-     * @param resourceGroupFilter
-     * @deprecated
-     */
-    public List<ResourceGroup> findResourceGroups(Filter resourceGroupFilter);
     
     /**
      * Find <tt>ResourceGroup</tt>s using filter.
@@ -86,11 +68,6 @@ public interface ResourceMgr {
     public ResourceAssociation storeResourceAssociation(ResourceAssociation resourceAssociation);
     
     /**
-     * Load lazy collections, if any. 
-     */
-    public ResourceGroup prepareResourceGroup(ResourceGroup resourceGroup);
-    
-    /**
      * Remove a <tt>ResourceAssociation</tt> from its <tt>ResourceGroup</tt>.
      * 
      * @param resourceAssociation
@@ -104,53 +81,5 @@ public interface ResourceMgr {
      * @param resource
      */
     public void removeResource(Resource resource);
-    
-    /**
-     * <p>
-     * Create a <code>ResourceParameter</code>.
-     * </p>  
-     */
-    public ResourceParameter createResourceParameter(Entity entity);
-
-    /**
-     * <p>
-     * Create a <code>ResourceParameter</code>.
-     * </p>  
-     */
-    public ResourceParameter createResourceParameter(Entity entity, String parameterCode);
-
-    /**
-     * <p>
-     * Create a <code>ResourceParameter</code> with a parent <code>ResourceParameter</code>.
-     * </p>  
-     */
-    public ResourceParameter createResourceParameter(ResourceParameter parent, String parameterCode);
-    
-    /**
-     * <p>
-     * Delegates to {@link ResourceDao#persistResourceParameter(ResourceParameter)}.
-     * </p>  
-     */
-    public ResourceParameter storeResourceParameter(ResourceParameter resourceParameter);
-    
-    /**
-     * <p>
-     * Create a <code>ParameterValue</code>.
-     * </p>  
-     */
-    public ResourceParameterValue createParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter);
-
-    /**
-     * <p>
-     * Create a suppressed <code>ParameterValue</code> to hide the occurrence of the 
-     * same parameter in any parent <code>ResourceGroup</code>.
-     * </p>  
-     */
-    public ResourceParameterValue createSuppressedParameterValue(ResourceGroup resourceGroup, ResourceParameter resourceParameter);
-
-    /**
-     * Store a parameter value. 
-     */
-    public ResourceParameterValue storeResourceParameterValue(ResourceParameterValue resourceParameterValue);
     
 }
