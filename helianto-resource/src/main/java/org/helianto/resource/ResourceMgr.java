@@ -18,10 +18,8 @@ package org.helianto.resource;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.core.filter.Filter;
 import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.domain.classic.ResourceAssociation;
 import org.helianto.resource.form.ResourceGroupForm;
 
 /**
@@ -37,13 +35,6 @@ public interface ResourceMgr {
      * @param form
      */
     public List<ResourceGroup> findResourceGroups(ResourceGroupForm form);
-    
-    /**
-     * Find <tt>ResourceAssociation</tt>s using filter.
-     * 
-     * @param resourceAssociationFilter
-     */
-    public List<ResourceAssociation> findResourceAssociations(Filter resourceAssociationFilter);
     
 	/**
      * <p>
@@ -62,19 +53,6 @@ public interface ResourceMgr {
      */
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup);
     
-    /**
-     * Store <tt>ResourceAssociation</tt>.  
-     */
-    public ResourceAssociation storeResourceAssociation(ResourceAssociation resourceAssociation);
-    
-    /**
-     * Remove a <tt>ResourceAssociation</tt> from its <tt>ResourceGroup</tt>.
-     * 
-     * @param resourceAssociation
-     * @param removeOrphan
-     */
-	public void removeResourceAssociation(ResourceAssociation resourceAssociation, boolean removeOrphan);
-
     /**
      * Remove a <tt>Resource</tt>.
      * 

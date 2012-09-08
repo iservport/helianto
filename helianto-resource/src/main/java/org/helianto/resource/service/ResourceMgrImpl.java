@@ -15,8 +15,6 @@
 
 package org.helianto.resource.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.helianto.core.Entity;
@@ -26,7 +24,6 @@ import org.helianto.resource.ResourceMgr;
 import org.helianto.resource.def.ResourceType;
 import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.domain.classic.ResourceAssociation;
 import org.helianto.resource.filter.ResourceGroupFormFilterAdapter;
 import org.helianto.resource.form.ResourceGroupForm;
 import org.slf4j.Logger;
@@ -50,90 +47,28 @@ public class ResourceMgrImpl implements ResourceMgr {
 		return resourceGroupList;
 	}
     
-	public List<ResourceAssociation> findResourceAssociations(Filter resourceAssociationFilter) {
-		List<ResourceAssociation> resourceAssociationList = (List<ResourceAssociation>) resourceAssociationDao.find(resourceAssociationFilter);
-		if (logger.isDebugEnabled() && resourceAssociationList!=null) {
-			logger.debug("Found resource association list of size {}", resourceAssociationList.size());
-		}
-		return resourceAssociationList;
-	}
-    
 	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
 		ResourceGroup resourceGroup = new ResourceGroup(entity, rootEquipentCode);
 		resourceGroup.setResourceTypeAsEnum(ResourceType.EQUIPMENT);
 		return resourceGroup;
     }
     
-	/**
-	 * @deprecated
-	 */
-	public ResourceGroup prepareResourceGroup(ResourceGroup resourceGroup) {
-		ResourceGroup managedResourceGroup = resourceGroupDao.merge(resourceGroup);
-		managedResourceGroup.setChildAssociationList(loadChildAssociationList(managedResourceGroup));
-		managedResourceGroup.setParentAssociationList(loadParentAssociationList(managedResourceGroup));
-		resourceGroupDao.evict(resourceGroup);
-		return managedResourceGroup;
-	}
-	
-	protected final List<ResourceAssociation> loadChildAssociationList(ResourceGroup resourceGroup) {
-    	List<ResourceAssociation> childAssociationList = new ArrayList<ResourceAssociation>();
-    	childAssociationList.addAll(resourceGroup.getChildAssociations());
-    	Collections.sort(childAssociationList);
-    	if (logger.isDebugEnabled()) {
-    		logger.debug("Loaded {} child association(s).", childAssociationList.size());
-    	}
-    	return childAssociationList;
-	}
-
-	protected final List<ResourceAssociation> loadParentAssociationList(ResourceGroup resourceGroup) {
-    	List<ResourceAssociation> parentAssociationList = new ArrayList<ResourceAssociation>();
-    	for (ResourceAssociation parentAssociation: resourceGroup.getParentAssociations()) {
-    		ResourceGroup parent = parentAssociation.getParent();
-        	if (logger.isDebugEnabled() && parent!=null) {
-        		logger.debug("Loading parent {} from {}", parent.getResourceCode(), resourceGroup.getResourceCode());
-        	}
-        	parentAssociationList.add(parentAssociation);
-    	}
-    	Collections.sort(parentAssociationList);
-    	if (logger.isDebugEnabled() && parentAssociationList!=null) {
-    		logger.debug("Loaded {} parent association(s).", parentAssociationList.size());
-    	}
-    	return parentAssociationList;
-	}
-
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup) {
     	resourceGroupDao.saveOrUpdate(resourceGroup);
     	return resourceGroup;
     }
     
-	public void removeResourceAssociation(ResourceAssociation resourceAssociation, boolean removeOrphan) {
-		// TODO remove resource association
-	}
-
 	public void removeResource(Resource resource) {
 		// TODO remove resource
 	}
 
-    //
-
-	public ResourceAssociation storeResourceAssociation(ResourceAssociation resourceAssociation) {
-		resourceAssociationDao.saveOrUpdate(resourceAssociation);
-		return resourceAssociation;
-	}
-	
     // collaborators
 
     private FilterDao<ResourceGroup> resourceGroupDao;
-    private FilterDao<ResourceAssociation> resourceAssociationDao;
     
     @javax.annotation.Resource(name="resourceGroupDao")
     public void setResourceGroupDao(FilterDao<ResourceGroup> resourceGroupDao) {
         this.resourceGroupDao = resourceGroupDao;
-    }
-
-    @javax.annotation.Resource(name="resourceAssociationDao")
-    public void setResourceAssociationDao(FilterDao<ResourceAssociation> resourceAssociationDao) {
-        this.resourceAssociationDao = resourceAssociationDao;
     }
 
 	static final Logger logger = LoggerFactory.getLogger(ResourceMgrImpl.class);

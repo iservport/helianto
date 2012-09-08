@@ -15,10 +15,6 @@
 
 package org.helianto.resource.domain;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -31,7 +27,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -41,7 +36,6 @@ import org.helianto.core.Entity;
 import org.helianto.core.Navigable;
 import org.helianto.core.TrunkEntity;
 import org.helianto.resource.def.ResourceType;
-import org.helianto.resource.domain.classic.ResourceAssociation;
 
 /**
  * <p>
@@ -74,17 +68,12 @@ public class ResourceGroup
     private String resourceName;
     private String parentPath;
     private char resourceType;
-    private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
-    private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
-    //transient
-    private Controllable controlReference;
-	private List<ResourceAssociation> childAssociationList;
-    private List<ResourceAssociation> parentAssociationList;
 
     /** 
      * Default constructor.
      */
     public ResourceGroup() {
+    	super();
     	setResourceTypeAsEnum(ResourceType.EQUIPMENT);
     	setResourceCode("");
     	setResourceName("");
@@ -191,42 +180,9 @@ public class ResourceGroup
         this.resourceType = resourceType.getValue();
     }
     
-    /**
-     * Set of child <code>ResourceAssociation</code>s.
-     */
-    @OneToMany(mappedBy="parent", cascade = {CascadeType.ALL})
-    public Set<ResourceAssociation> getChildAssociations() {
-    	return this.childAssociations;
-    }   
-    public void setChildAssociations(Set<ResourceAssociation> childAssociations) {
-    	this.childAssociations = childAssociations;
-    }
-    @Transient
-    public List<ResourceAssociation> getChildAssociationList() {
-    	return this.childAssociationList;
-    }
-    public void setChildAssociationList(List<ResourceAssociation> childAssociationList) {
-    	this.childAssociationList = childAssociationList;
-    }
-
-    /**
-     * Set of parent <code>ResourceAssociation</code>s.
-     */
-    @OneToMany(mappedBy="child")
-    public Set<ResourceAssociation> getParentAssociations() {
-    	return this.parentAssociations;
-    }   
-    public void setParentAssociations(Set<ResourceAssociation> parentAssociations) {
-    	this.parentAssociations = parentAssociations;
-    }
-    @Transient
-    public List<ResourceAssociation> getParentAssociationList() {
-    	return this.parentAssociationList;
-    }
-    public void setParentAssociationList(List<ResourceAssociation> parentAssociationList) {
-    	this.parentAssociationList = parentAssociationList;
-    }
-
+    //transient
+    private Controllable controlReference;
+    
     /**
      * <<Transient>> Control reference.
      */

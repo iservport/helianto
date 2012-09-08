@@ -18,7 +18,6 @@ package org.helianto.resource.repository;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.domain.classic.ResourceAssociation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,14 +29,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ResourceRepositoryConfiguration extends AbstractRepositoryConfiguration {
 	
-	/**
-	 * Resource association data access.
-	 */
-	@Bean
-	public FilterDao<ResourceAssociation> resourceAssociationDao() {
-		return getFilterDao(ResourceAssociation.class, "parent", "child");
-	}
-
 	/**
 	 * Resource group data access.
 	 */

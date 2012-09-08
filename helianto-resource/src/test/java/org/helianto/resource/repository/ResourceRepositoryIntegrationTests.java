@@ -17,13 +17,10 @@ package org.helianto.resource.repository;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.domain.classic.ResourceAssociation;
 import org.helianto.resource.test.AbstractResourceDaoIntegrationTest;
-import org.helianto.resource.test.ResourceGroupTestSupport;
-import org.helianto.resource.test.ResourceTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,19 +32,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ResourceRepositoryIntegrationTests extends AbstractResourceDaoIntegrationTest {
 
-	@javax.annotation.Resource BasicDao<ResourceAssociation> resourceAssociationDao;
 	@javax.annotation.Resource FilterDao<ResourceGroup> resourceGroupDao;
 	
 	@Test
 	public void resource() {
 		
-		ResourceGroup parent = resourceGroupDao.merge(ResourceGroupTestSupport.createResourceGroup(entity));
-		assertEquals(parent, resourceGroupDao.findUnique(parent.getEntity(), parent.getResourceCode()));
+		ResourceGroup resourceGroup = new ResourceGroup(entity, "GROUPCODE");
+		resourceGroupDao.saveOrUpdate(resourceGroup);
+		assertEquals(resourceGroup, resourceGroupDao.findUnique(entity, "GROUPCODE"));
 
-		ResourceAssociation resourceAssociation = new ResourceAssociation();
-		resourceAssociation.setParent(parent);
-		resourceAssociation.setChild(ResourceTestSupport.createResource(entity));
-		assertEquals(resourceAssociationDao.merge(resourceAssociation), resourceAssociationDao.findUnique(resourceAssociation.getParent(), resourceAssociation.getChild()));
+		Resource resource = new Resource(entity, "CODE");
+		resourceGroupDao.saveOrUpdate(resource);
+		assertEquals(resource, resourceGroupDao.findUnique(entity, "CODE"));
 
 	}
 

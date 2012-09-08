@@ -8,16 +8,13 @@ import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.easymock.EasyMock;
 import org.helianto.core.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.domain.classic.ResourceAssociation;
 import org.helianto.resource.form.CompositeResourceForm;
 import org.helianto.resource.form.ResourceGroupForm;
 import org.junit.After;
@@ -38,35 +35,6 @@ public class ResourceMgrImplTests {
 		replay(resourceGroupDao);
 		
 		assertSame(resourceGroupList, resourceMgr.findResourceGroups(form));
-		verify(resourceGroupDao);
-	}
-	
-	@SuppressWarnings("serial")
-	@Test
-	public void prepareResourceGroup() {
-		ResourceGroup resourceGroup = new ResourceGroup();
-		final Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>();
-		ResourceAssociation child = new ResourceAssociation();
-		childAssociations.add(child);
-		final Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>();
-		ResourceAssociation parent = new ResourceAssociation();
-		parentAssociations.add(parent);
-		ResourceGroup managedResourceGroup = new ResourceGroup() {
-			@Override public Set<ResourceAssociation> getChildAssociations() {
-				return childAssociations;
-			}
-			@Override public Set<ResourceAssociation> getParentAssociations() {
-				return parentAssociations;
-			}
-		};
-		
-		expect(resourceGroupDao.merge(resourceGroup)).andReturn(managedResourceGroup);
-		resourceGroupDao.evict(resourceGroup);
-		replay(resourceGroupDao);
-		
-		assertSame(managedResourceGroup, resourceMgr.prepareResourceGroup(resourceGroup));
-		assertSame(child, managedResourceGroup.getChildAssociationList().get(0));
-		assertSame(parent, managedResourceGroup.getParentAssociationList().get(0));
 		verify(resourceGroupDao);
 	}
 	
