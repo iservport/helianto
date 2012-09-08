@@ -19,7 +19,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.inventory.test.InventoryTestSupport;
+import org.helianto.core.Entity;
+import org.helianto.core.test.EntityTestSupport;
 import org.junit.Test;
 
 
@@ -37,6 +38,7 @@ public class ShipmentTests {
 
 	@Test
 	public void shipmentEquals() {
+		Entity entity = EntityTestSupport.createEntity();
 		Shipment shipment = new Shipment();
 		Shipment other = new Shipment();
 		
@@ -44,7 +46,7 @@ public class ShipmentTests {
 		assertTrue(shipment.equals(other));
 		
 		InventoryTransaction inventoryTransaction = new InventoryTransaction();
-		Inventory inventory = InventoryTestSupport.create();
+		Inventory inventory = new Inventory(entity, 0);
 
 		shipment.setInventoryTransaction(inventoryTransaction);
 		shipment.setInventory(inventory);

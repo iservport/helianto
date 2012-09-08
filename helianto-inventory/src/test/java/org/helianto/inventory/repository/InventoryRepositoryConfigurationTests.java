@@ -33,7 +33,6 @@ import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.process.ProcessDocument;
-import org.helianto.process.test.ProcessDocumentTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,7 +58,7 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 
 	@Test
 	public void inventory() {
-		ProcessDocument processDocument = ProcessDocumentTestSupport.createProcessDocument(entity);
+		ProcessDocument processDocument = new ProcessDocument(entity, "CODE");
 		processDocumentDao.saveOrUpdate(processDocument);
 
 		CardSet cardSet = new CardSet(processDocument, 100L);

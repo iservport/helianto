@@ -6,7 +6,7 @@ import org.helianto.core.User;
 import org.helianto.core.test.UserTestSupport;
 import org.helianto.inventory.CardType;
 import org.helianto.inventory.filter.classic.CardSetFilter;
-import org.helianto.process.test.ProcessTestSupport;
+import org.helianto.process.Process;
 import org.junit.Before;
 import org.junit.Test;
 /**
@@ -39,7 +39,7 @@ public class CardSetFilterTests {
     
     @Test
     public void filterProcess() {
-        filter.setProcess(ProcessTestSupport.createProcess());
+        filter.setProcess(new Process());
         filter.getProcess().setId(1);
         assertEquals(C0+C3+OB, filter.createCriteriaAsString(false));
     }
