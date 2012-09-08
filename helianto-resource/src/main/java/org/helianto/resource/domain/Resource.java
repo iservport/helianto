@@ -44,6 +44,7 @@ public class Resource
 {
 
     private static final long serialVersionUID = 1L;
+    private ResourceGroup resourceGroup;
     private long internalNumber;
     private String serialNumber;
     private char resourceState;
@@ -85,6 +86,7 @@ public class Resource
      */
     public Resource(ResourceGroup parent, String resourceCode) {
     	this();
+    	setResourceGroup(parent);
     	setEntity(parent.getEntity());
     	setResourceCode(resourceCode);
     	setResourceType(parent.getResourceType());
@@ -93,6 +95,26 @@ public class Resource
     @Transient
     public String getInternalNumberKey() {
     	return "RESOURCE";
+    }
+    
+    /**
+     * Resource group.
+     */
+    @ManyToOne
+    @JoinColumn(name="resourceGroupId", nullable=true)
+    public ResourceGroup getResourceGroup() {
+		return resourceGroup;
+	}
+    public void setResourceGroup(ResourceGroup resourceGroup) {
+		this.resourceGroup = resourceGroup;
+	}
+    
+    @Transient
+    protected String getInternalParentPath(String parentPath) {
+    	if (getResourceGroup()!=null) {
+    		getResourceGroup().getCurrentPath();
+    	}
+    	return super.getInternalParentPath(parentPath);
     }
     
     public long getInternalNumber() {

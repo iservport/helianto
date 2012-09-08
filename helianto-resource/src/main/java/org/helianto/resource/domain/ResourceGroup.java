@@ -38,7 +38,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Controllable;
 import org.helianto.core.Entity;
-import org.helianto.core.NaturalKeyInfo;
+import org.helianto.core.Navigable;
 import org.helianto.core.TrunkEntity;
 import org.helianto.resource.def.ResourceType;
 import org.helianto.resource.domain.classic.ResourceAssociation;
@@ -59,13 +59,20 @@ import org.helianto.resource.domain.classic.ResourceAssociation;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("G")
-public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<ResourceGroup> {
+public class ResourceGroup 
+
+	implements TrunkEntity
+	, Navigable
+	, Comparable<ResourceGroup> 
+
+{
 
 	private static final long serialVersionUID = 1L;
 	private int id;
     private Entity entity;
     private String resourceCode;
     private String resourceName;
+    private String parentPath;
     private char resourceType;
     private Set<ResourceAssociation> childAssociations = new HashSet<ResourceAssociation>(0);
     private Set<ResourceAssociation> parentAssociations = new HashSet<ResourceAssociation>(0);
@@ -145,6 +152,32 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
         this.resourceName = resourceName;
     }
     
+    @Column(length=64)
+    public String getParentPath() {
+		return getInternalParentPath(parentPath);
+	}
+    public void setParentPath(String parentPath) {
+		this.parentPath = parentPath;
+	}
+    
+    /**
+     * Subclasses overriding this method may have a parent path other than "/".
+     * 
+     * @param parentPath
+     */
+    @Transient
+    protected String getInternalParentPath(String parentPath) {
+    	return "/";
+    }
+    
+    @Transient
+    public String getCurrentPath() {
+    	if (getParentPath()!=null) {
+    		return new StringBuilder(getParentPath()).append(getResourceCode()).append("/").toString();
+    	}
+    	return "/";
+    }
+
     /**
      * Resource type.
      */
@@ -210,17 +243,6 @@ public class ResourceGroup implements TrunkEntity, NaturalKeyInfo, Comparable<Re
     		return getResourceCode().compareTo(other.getResourceCode());
     	}
     	return 0;
-    }
-
-    /**
-     * Natural key info.
-     */
-    @Transient
-    public boolean isKeyEmpty() {
-    	if (this.getResourceCode()!=null) {
-    		return getResourceCode().length()==0;
-    	}
-    	throw new IllegalArgumentException("Natural key must not be null");
     }
 
     /**
