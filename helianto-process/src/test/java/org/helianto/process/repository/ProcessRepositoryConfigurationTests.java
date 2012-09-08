@@ -21,21 +21,12 @@ import javax.annotation.Resource;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.process.Cause;
-import org.helianto.process.Characteristic;
 import org.helianto.process.MeasurementTechnique;
-import org.helianto.process.Operation;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Setup;
 import org.helianto.process.test.AbstractProcessDaoIntegrationTest;
-import org.helianto.process.test.CharacteristicTestSupport;
-import org.helianto.process.test.MeasurementTechniqueTestSupport;
-import org.helianto.process.test.OperationTestSupport;
-import org.helianto.process.test.ProcessDocumentAssociationTestSupport;
-import org.helianto.process.test.ProcessDocumentTestSupport;
-import org.helianto.process.test.SetupTestSupport;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.test.ResourceGroupTestSupport;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,10 +49,10 @@ public class ProcessRepositoryConfigurationTests extends AbstractProcessDaoInteg
 		Cause cause = new Cause(entity, Long.MAX_VALUE);
 		assertEquals(causeDao.merge(cause), causeDao.findUnique(entity, Long.MAX_VALUE));
 
-		MeasurementTechnique measurementTechnique = MeasurementTechniqueTestSupport.createMeasurementTechnique(entity);
+		MeasurementTechnique measurementTechnique = new MeasurementTechnique(entity, "CODE");
 		assertEquals(measurementTechniqueDao.merge(measurementTechnique), measurementTechniqueDao.findUnique(measurementTechnique.getEntity(), measurementTechnique.getMeasurementTechniqueCode()));
 
-		ProcessDocument processDocument = ProcessDocumentTestSupport.createProcessDocument(entity);
+		ProcessDocument processDocument = new ProcessDocument(entity, "DOCCODE");
 		processDocumentDao.saveOrUpdate(processDocument);
 		assertEquals(processDocument, processDocumentDao.findUnique(processDocument.getEntity(), processDocument.getDocCode()));
 
