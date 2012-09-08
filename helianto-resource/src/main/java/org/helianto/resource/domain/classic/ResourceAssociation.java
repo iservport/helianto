@@ -128,7 +128,7 @@ public class ResourceAssociation extends AbstractAssociation<ResourceGroup, Reso
     @Transient
     public boolean isKeyEmpty() {
     	if (this.getChild()!=null) {
-    		return this.getChild().isKeyEmpty();
+    		return this.getChild().getResourceCode()!=null;
     	}
     	throw new IllegalArgumentException("Natural key must not be null");
     }
