@@ -5,6 +5,7 @@ import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.def.NavigationMode;
 import org.helianto.core.filter.FormFilter;
 import org.helianto.core.filter.form.NavigableForm;
+import org.helianto.core.filter.form.SearchForm;
 import org.helianto.core.filter.form.TypeForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,6 +114,38 @@ public abstract class AbstractFilterAdapter<F> extends AbstractFilter implements
 			return;
 		}
 		mainCriteriaBuilder.addSegmentCount(1);
+	}
+	
+	/**
+	 * Convenience to get the form as SearchForm, if possible.
+	 */
+	protected SearchForm getSearchForm() {
+		if (getForm() instanceof SearchForm) {
+			return (SearchForm) getForm();
+		}
+		return null;
+	}
+	
+	@Override
+	public boolean isSearch() {
+		if (getSearchForm()!=null) {
+			return getSearchForm().getSearchString()!=null 
+				&& getSearchForm().getSearchString().length()>0;
+		}
+		return false;
+	}
+	
+	/**
+	 * Array of words to search in fields.
+	 */
+	@Override
+	protected String[] getSearchWords() {
+		if (getSearchForm()!=null) {
+			if (getSearchForm().getSearchString()!=null) {
+				return getSearchForm().getSearchString().split(" ");
+			}
+		}
+		return new String[0];
 	}
 	
 	@Override

@@ -31,13 +31,13 @@ public class DocumentFormFilterAdapterTests {
 	@Test
 	public void search() {
 		form.setSearchString("SEARCH");
-		assertEquals(C1+C2, filter.createCriteriaAsString());
+		assertEquals(C1+C2+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void searchList() {
 		form.setSearchList("'AAA', 'BBB'");
-		assertEquals(C1+C3, filter.createCriteriaAsString());
+		assertEquals(C1+C3+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test

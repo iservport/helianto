@@ -17,12 +17,8 @@
 package org.helianto.resource.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.form.ResourceGroupForm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Resource group form filter adapter.
@@ -35,46 +31,17 @@ public class ResourceGroupFormFilterAdapter extends AbstractTrunkFilterAdapter<R
 	
 	/**
 	 * Default constructor.
+	 * 
+	 * @param form
 	 */
-	public ResourceGroupFormFilterAdapter(ResourceGroupForm resourceGroup) {
-		super(resourceGroup);
+	public ResourceGroupFormFilterAdapter(ResourceGroupForm form) {
+		super(form);
 		
 	}
 	
-	/**
-	 * Reset.
-	 */
-	public void reset() { 
-		getForm().reset();
-	}
-
 	public boolean isSelection() {
 		return super.isSelection() && getForm().getResourceCode()!=null && getForm().getResourceCode().length()>0;
 	}
-
-	@Override
-	public String createSelectAsString() {
-		SelectFromBuilder builder = new SelectFromBuilder(ResourceGroup.class, getObjectAlias());
-		builder.createSelectFrom();
-		if (getForm().getParent()!=null) {
-	        logger.debug("Parent resource group is: '{}'", getForm().getParent());
-	        builder.appendInnerJoin("parentAssociations", "parentAssociation");
-		}
-		if (getForm().getChild()!=null) {
-	        logger.debug("Child resource group is: '{}'", getForm().getParent());
-	        builder.appendInnerJoin("childAssociations", "childAssociation");
-		}
-		return builder.getAsString();
-	}
-	
-//	@Override
-//	public void preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-//		super.preProcessFilter(mainCriteriaBuilder);
-//		if (getForm().getClazz()!=null) {
-//	        logger.debug("Resource group class is: '{}'", getForm().getClazz());
-//			mainCriteriaBuilder.appendAnd().append(getForm().getClazz());
-//		}
-//	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
@@ -83,16 +50,19 @@ public class ResourceGroupFormFilterAdapter extends AbstractTrunkFilterAdapter<R
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getParent()!=null) {
-			mainCriteriaBuilder.appendAnd().append("parentAssociation.parent.id =").append(getForm().getParent().getId());
-			mainCriteriaBuilder.addSegmentCount(1);
+		if (getForm().getResourceGroupId()>0) {
+			appendEqualFilter("resourceGroup.id", getForm().getResourceGroupId(), mainCriteriaBuilder);
 		}
-		if (getForm().getChild()!=null) {
-			mainCriteriaBuilder.appendAnd().append("childAssociation.child.id =").append(getForm().getChild().getId());
-			mainCriteriaBuilder.addSegmentCount(1);
-		}
-		appendLikeFilter("resourceName", getForm().getResourceName(), mainCriteriaBuilder);
 		appendEqualFilter("resourceType", getForm().getResourceType(), mainCriteriaBuilder);
+	}
+	
+	@Override
+	public boolean isSearch() {
+		return super.isSearch() && getForm().getSearchMode()=='R';
+	}
+	
+	protected String[] getFieldNames() {
+		return new String[] {"resourceCode" , "resourceName" };
 	}
 	
 	@Override
@@ -100,6 +70,4 @@ public class ResourceGroupFormFilterAdapter extends AbstractTrunkFilterAdapter<R
 		return "resourceCode";
 	}
 
-	private static Logger logger = LoggerFactory.getLogger(ResourceGroupFormFilterAdapter.class);
-	
 }

@@ -21,10 +21,15 @@ public class ResourceGroupFormFilterAdapterTests {
     public static String C0 = "alias.entity.id = 1 ";
     public static String C1 = "alias.class = 'R' AND ";
     public static String C2 = "AND alias.resourceCode = 'CODE' ";
-    public static String C3 = "AND lower(alias.resourceName) like '%name%' ";
+//    public static String C3 = "AND lower(alias.resourceName) like '%name%' ";
     public static String C4 = "AND alias.resourceType = 'F' ";
-    public static String C5 = "AND parentAssociation.parent.id = 1 ";
-    public static String C6 = "AND childAssociation.child.id = 1 ";
+    public static String C5 = "AND alias.resourceGroup.id = 1 ";
+    public static String C6 = "AND (" +
+  		"(lower(alias.resourceCode) like '%name%' ) " +
+  		"OR (lower(alias.resourceName) like '%name%' ) ) ";
+    public static String C7 = "AND (" +
+  		"(lower(alias.resourceCode) like '%name%' AND lower(alias.resourceCode) like '%other%' ) " +
+  		"OR (lower(alias.resourceName) like '%name%' AND lower(alias.resourceName) like '%other%' ) ) ";
 
     @Test
     public void empty() {
@@ -32,7 +37,7 @@ public class ResourceGroupFormFilterAdapterTests {
     }
     
     @Test
-    public void filterClazz() {
+    public void type() {
         form.setType('R');
         assertEquals(C1+C0+OB, filter.createCriteriaAsString());
     }
@@ -41,12 +46,6 @@ public class ResourceGroupFormFilterAdapterTests {
     public void select() {
     	((CompositeResourceForm) form).setResourceCode("CODE");
         assertEquals(C0+C2, filter.createCriteriaAsString());
-    }
-    
-    @Test
-    public void resourceName() {
-    	((CompositeResourceForm) form).setResourceName("NAME");
-        assertEquals(C0+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
@@ -59,18 +58,22 @@ public class ResourceGroupFormFilterAdapterTests {
     public void parent() {
     	ResourceGroup parent = new ResourceGroup(form.getEntity(), "PARENT");
     	parent.setId(1);
-    	form.setParent(parent);
-        assertEquals("select alias from ResourceGroup alias inner join alias.parentAssociations as parentAssociation ", filter.createSelectAsString());
+    	((CompositeResourceForm) form).setResourceGroup(parent);
         assertEquals(C0+C5+OB, filter.createCriteriaAsString());
     }
     
     @Test
-    public void child() {
-    	ResourceGroup child = new ResourceGroup(form.getEntity(), "CHILD");
-    	child.setId(1);
-    	((CompositeResourceForm) form).setChild(child);
-        assertEquals("select alias from ResourceGroup alias inner join alias.childAssociations as childAssociation ", filter.createSelectAsString());
+    public void searchName() {
+    	((CompositeResourceForm) form).setSearchMode('R');
+    	((CompositeResourceForm) form).setSearchString("NAME");
         assertEquals(C0+C6+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void searchNames() {
+    	((CompositeResourceForm) form).setSearchMode('R');
+    	((CompositeResourceForm) form).setSearchString("NAME OTHER");
+        assertEquals(C0+C7+OB, filter.createCriteriaAsString());
     }
     
     private ResourceGroupFormFilterAdapter filter;

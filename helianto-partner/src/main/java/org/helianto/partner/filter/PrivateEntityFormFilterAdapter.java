@@ -101,4 +101,9 @@ public class PrivateEntityFormFilterAdapter extends AbstractTrunkFilterAdapter<P
         }
     }
     
+    @Override
+    public String getOrderByString() {
+    	return "entityAlias";
+    }
+    
 }

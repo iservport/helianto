@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("serial")
 public abstract class AbstractFilter extends AbstractAliasFilter {
 	
-    private String orderByString = "";
     private List<String> orderByList =  new ArrayList<String>();
     
     /**
@@ -89,16 +88,6 @@ public abstract class AbstractFilter extends AbstractAliasFilter {
      */
     public boolean removeOrderByString(String orderByString) {
 		return this.orderByList.remove(orderByString);
-	}
-    
-    /**
-     * Result set ordering.
-	 */
-	public String getOrderByString() {
-		return this.orderByString;
-	}
-    public void setOrderByString(String orderByString) {
-		this.orderByString = orderByString;
 	}
     
     /**

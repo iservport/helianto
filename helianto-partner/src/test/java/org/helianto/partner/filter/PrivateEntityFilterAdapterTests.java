@@ -31,6 +31,7 @@ import org.junit.Test;
  */
 public class PrivateEntityFilterAdapterTests {
 	
+    public static String OB = "order by alias.entityAlias ";
     public static String C1 = "alias.entity.id = 1 ";
     public static String C2 = "AND alias.entityAlias = 'ALIAS' ";
     public static String C3 = "AND lower(alias.entityName) like '%name%' ";
@@ -42,7 +43,7 @@ public class PrivateEntityFilterAdapterTests {
 
     @Test
     public void empty() {
-        assertEquals(C1, filter.createCriteriaAsString());
+        assertEquals(C1+OB, filter.createCriteriaAsString());
     }
     
     @Test
@@ -54,13 +55,13 @@ public class PrivateEntityFilterAdapterTests {
     @Test
     public void name() {
         ((CompositePartnerForm) form).setEntityName("NAME");
-        assertEquals(C1+C3, filter.createCriteriaAsString());
+        assertEquals(C1+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void postalCode() {
         ((CompositePartnerForm) form).setPostalCode("12345");
-        assertEquals(C1+C4, filter.createCriteriaAsString());
+        assertEquals(C1+C4+OB, filter.createCriteriaAsString());
     }
     
     @Test
@@ -68,25 +69,25 @@ public class PrivateEntityFilterAdapterTests {
     	Province province = new Province(new Operator("DEFAULT"), "PROV");
     	province.setId(10);
         ((CompositePartnerForm) form).setProvince(province);
-        assertEquals(C1+C5, filter.createCriteriaAsString());
+        assertEquals(C1+C5+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void city() {
         ((CompositePartnerForm) form).setCityName("NAME");
-        assertEquals(C1+C6, filter.createCriteriaAsString());
+        assertEquals(C1+C6+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void nature() {
     	form.setPartnerType('X');
-        assertEquals(C1+C7, filter.createCriteriaAsString());
+        assertEquals(C1+C7+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void search() {
     	form.setSearchString("TOKEN");
-        assertEquals(C1+C8, filter.createCriteriaAsString());
+        assertEquals(C1+C8+OB, filter.createCriteriaAsString());
     }
     
     private PrivateEntityFormFilterAdapter filter;

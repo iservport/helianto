@@ -1,6 +1,7 @@
 package org.helianto.resource.form;
 
 import org.helianto.core.TrunkEntity;
+import org.helianto.core.filter.form.SearchForm;
 import org.helianto.core.filter.form.TypeForm;
 
 /**
@@ -8,21 +9,27 @@ import org.helianto.core.filter.form.TypeForm;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface ResourceGroupForm extends TrunkEntity, TypeForm, ResourceAssociationForm {
+public interface ResourceGroupForm 
+
+	extends TrunkEntity
+	, TypeForm
+	, SearchForm 
+
+{
 	
+	/**
+	 * Resource group filter.
+	 */
+	int getResourceGroupId();
+
 	/**
 	 * Resource code filter.
 	 */
-	public String getResourceCode();
+	String getResourceCode();
 
 	/**
-	 * Resource name filter.
+	 * Resource type filter.
 	 */
-	public String getResourceName();
-	
-	/**
-	 * Resource name filter.
-	 */
-	public char getResourceType();
+	char getResourceType();
 
 }

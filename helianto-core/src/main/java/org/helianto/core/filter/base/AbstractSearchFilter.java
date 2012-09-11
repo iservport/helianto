@@ -6,6 +6,7 @@ import org.helianto.core.criteria.OrmCriteriaBuilder;
  * Extends <code>AbstractAliasFilter</code> to provide search string functionality.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 public abstract class AbstractSearchFilter extends AbstractAliasFilter {
 	

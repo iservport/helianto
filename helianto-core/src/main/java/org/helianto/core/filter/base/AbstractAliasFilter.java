@@ -31,10 +31,17 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractAliasFilter implements Serializable, CriteriaFilter<OrmCriteriaBuilder>, Cloneable {
+public abstract class AbstractAliasFilter 
+
+	implements Serializable
+	, CriteriaFilter<OrmCriteriaBuilder>
+	, Cloneable 
+
+{
 	
     private String objectAlias;
     private OrmCriteriaBuilder mainCriteriaBuilder;
+    private String orderByString = "";
     
     /**
      * Default constructor.
@@ -105,7 +112,7 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
         else if (isSearch()) {
         	logger.debug("Filter in 'search' mode.");
         	doSearch(mainCriteriaBuilder);
-        	postSearch();
+        	postSearch(mainCriteriaBuilder);
         }
         else {
         	logger.debug("Filter in 'filter' mode.");
@@ -144,8 +151,10 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	/**
 	 * Called after {@link #doSearch(OrmCriteriaBuilder)
 	 */
-	protected void postSearch() {
-		
+	protected void postSearch(OrmCriteriaBuilder mainCriteriaBuilder) {
+		if (getOrderByString()!=null) {
+			mainCriteriaBuilder.appendOrderBy(getOrderByString());
+		}
 	}
 	
 	// processors
@@ -245,6 +254,34 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
 	 * @param mainCriteriaBuilder
 	 */
 	protected void doSearch(OrmCriteriaBuilder mainCriteriaBuilder) {
+		String[] searchWords = getSearchWords();
+		String[] fieldNames = getFieldNames();
+		OrmCriteriaBuilder searchCriteriaBuilder = new OrmCriteriaBuilder(mainCriteriaBuilder.getAlias());
+		for (String fieldName: fieldNames) {
+			OrmCriteriaBuilder fieldCriteriaBuilder = new OrmCriteriaBuilder(mainCriteriaBuilder.getAlias());
+			for (String fieldContent: searchWords) {
+		    	if (fieldContent!=null && fieldContent.length()>0) {
+		    		fieldCriteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
+		            .appendLike(fieldContent.toLowerCase());
+		        }
+			}
+			searchCriteriaBuilder.appendOr().append(fieldCriteriaBuilder);
+		}
+		mainCriteriaBuilder.appendAnd().append(searchCriteriaBuilder);
+	}
+	
+	/**
+	 * Array of field names to be searched.
+	 */
+	protected String[] getFieldNames() {
+		return new String[0];
+	}
+	
+	/**
+	 * Array of words to search in fields.
+	 */
+	protected String[] getSearchWords() {
+		return new String[0];
 	}
 	
 	/**
@@ -387,6 +424,16 @@ public abstract class AbstractAliasFilter implements Serializable, CriteriaFilte
             .appendStartLike(fieldContent.toLowerCase());
         }
     }
+    
+    /**
+     * Result set ordering.
+	 */
+	public String getOrderByString() {
+		return this.orderByString;
+	}
+    public void setOrderByString(String orderByString) {
+		this.orderByString = orderByString;
+	}
     
     @Override
     public Object clone() throws CloneNotSupportedException {

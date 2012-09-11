@@ -21,10 +21,8 @@ public class CompositeResourceForm
 
 	private static final long serialVersionUID = 1L;
 	private char type;
-	private ResourceGroup parent;
-	private ResourceGroup child;
+	private ResourceGroup resourceGroup;
 	private String resourceCode;
-	private String resourceName;
 	private char resourceType;
 	
 	/**
@@ -40,11 +38,11 @@ public class CompositeResourceForm
 	/**
 	 * Parent constructor.
 	 * 
-	 * @param parent
+	 * @param resourceGroup
 	 */
-	public CompositeResourceForm(ResourceGroup parent) {
-		this(parent.getEntity());
-		setParent(parent);
+	public CompositeResourceForm(ResourceGroup resourceGroup) {
+		this(resourceGroup.getEntity());
+		setResourceGroup(resourceGroup);
 	}
 	
 	@Override
@@ -60,38 +58,18 @@ public class CompositeResourceForm
 		this.type = type;
 	}
 	
-	public ResourceGroup getParent() {
-		return parent;
+	public ResourceGroup getResourceGroup() {
+		return resourceGroup;
 	}
-	public void setParent(ResourceGroup parent) {
-		this.parent = parent;
+	public void setResourceGroup(ResourceGroup parent) {
+		this.resourceGroup = parent;
 	}
-	public int getParentId() {
-		if (getParent()!=null) {
-			return getParent().getId();
+	
+	public int getResourceGroupId() {
+		if (getResourceGroup()!=null) {
+			return getResourceGroup().getId();
 		}
 		return 0;
-	}
-	
-	public String getParentName() {
-		return "parentAssociation.parent";
-	}
-	
-	public ResourceGroup getChild() {
-		return child;
-	}
-	public void setChild(ResourceGroup child) {
-		this.child = child;
-	}
-	public long getChildId() {
-		if (getChild()!=null) {
-			return getChild().getId();
-		}
-		return 0;
-	}
-	
-	public String getChildName() {
-		return "childAssociation.child";
 	}
 	
 	public String getResourceCode() {
@@ -99,13 +77,6 @@ public class CompositeResourceForm
 	}
 	public void setResourceCode(String resourceCode) {
 		this.resourceCode = resourceCode;
-	}
-	
-	public String getResourceName() {
-		return resourceName;
-	}
-	public void setResourceName(String resourceName) {
-		this.resourceName = resourceName;
 	}
 	
 	public char getResourceType() {
@@ -123,7 +94,7 @@ public class CompositeResourceForm
 	public CompositeResourceForm clone(ResourceGroup parent) {
 		try {
 			CompositeResourceForm form = (CompositeResourceForm) clone();
-			form.setParent(parent);
+			form.setResourceGroup(parent);
 			return form;
 		} catch (CloneNotSupportedException e) {
 			throw new UnsupportedOperationException("Unable to create clone.");
@@ -140,22 +111,6 @@ public class CompositeResourceForm
 		CompositeResourceForm form = (CompositeResourceForm) clone(parent);
 		form.setResourceType(resourceType);
 		return form;
-	}
-
-	/**
-	 * Create a clone and set its child.
-	 * 
-	 * @param child
-	 * @param resourceType
-	 */
-	public CompositeResourceForm cloneChild(ResourceGroup child) {
-		try {
-			CompositeResourceForm form = (CompositeResourceForm) clone();
-			form.setChild(child);
-			return form;
-		} catch (CloneNotSupportedException e) {
-			throw new UnsupportedOperationException("Unable to create clone.");
-		}
 	}
 
 }

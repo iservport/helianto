@@ -81,9 +81,6 @@ public class ProvinceFormFilterAdapter extends AbstractRootFilterAdapter<Provinc
 		searchCriteriaBuilder.appendOr().appendSegment("provinceName", "like", "lower")
 			.appendLike(getForm().getSearchString().toLowerCase());
 		mainCriteriaBuilder.appendAnd().append(searchCriteriaBuilder);
-		if (getOrderByString().length()>0) {
-    		appendOrderBy(getOrderByString(), (OrmCriteriaBuilder) mainCriteriaBuilder);
-    	}
 	}
 	
 	@Override
