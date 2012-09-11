@@ -35,10 +35,6 @@
 			<module>helianto-process</module>
 			<module>helianto-inventory</module>
 			<module>helianto-message</module>
-			<module>helianto-web</module>
-		<!-- 
-			<module>archetype1</module>
-		-->
 	</modules>
 	
 	<inceptionYear>2005</inceptionYear>
