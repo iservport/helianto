@@ -14,14 +14,10 @@ public interface ResourceGroupForm
 	extends TrunkEntity
 	, TypeForm
 	, SearchForm 
+	, ResourceGroupMasterForm
 
 {
 	
-	/**
-	 * Resource group filter.
-	 */
-	int getResourceGroupId();
-
 	/**
 	 * Resource code filter.
 	 */
