@@ -11,7 +11,11 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractTrunkFilterAdapter <F extends TrunkEntity> extends AbstractFilterAdapter<F> {
+public abstract class AbstractTrunkFilterAdapter <F extends TrunkEntity> 
+
+	extends AbstractFilterAdapter<F> 
+
+{
 
 	private static final long serialVersionUID = 1L;
 

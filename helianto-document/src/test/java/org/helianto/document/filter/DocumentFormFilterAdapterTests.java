@@ -17,8 +17,9 @@ public class DocumentFormFilterAdapterTests {
 	
 	String OB = "order by alias.docCode ";
 	String C1 = "alias.entity.id = 1 ";
-	String C2 = "AND (alias.docCode like '%SEARCH%' OR alias.docName like '%SEARCH%' ) ";
-	String C3 = "AND (alias.docCode in ('AAA', 'BBB' ) ) ";
+	String C2 = "AND ((lower(alias.docCode) like '%search%' ) OR (lower(alias.docName) like '%search%' ) ) ";
+	String C3 = "AND ((lower(alias.docCode) like '%word1%' AND lower(alias.docCode) like '%word2%' ) " +
+			"OR (lower(alias.docName) like '%word1%' AND lower(alias.docName) like '%word2%' ) ) ";
 	String C4 = "AND alias.docCode = 'CODE' ";
 	String C5 = "AND lower(alias.docName) like '%name%' ";
 	String C6 = "AND alias.priority = '0' ";
@@ -35,8 +36,8 @@ public class DocumentFormFilterAdapterTests {
 	}
 	
 	@Test
-	public void searchList() {
-		form.setSearchList("'AAA', 'BBB'");
+	public void multiple() {
+		form.setSearchString("WORD1 WORD2");
 		assertEquals(C1+C3+OB, filter.createCriteriaAsString());
 	}
 	

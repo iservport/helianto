@@ -30,7 +30,11 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractFilter extends AbstractAliasFilter {
+public abstract class AbstractFilter 
+
+	extends AbstractAliasFilter 
+
+{
 	
     private List<String> orderByList =  new ArrayList<String>();
     
@@ -103,43 +107,8 @@ public abstract class AbstractFilter extends AbstractAliasFilter {
 		return false;
 	}
     
-	/**
-	 * Delegate criteria creation to a builder.
-	 */
-    @Override
-	public String createCriteriaAsString() {
-        return createCriteriaAsString(new OrmCriteriaBuilder(getObjectAlias()));
-    }
-	
-	// processors
-	
-	/**
-	 * Hook to the filter post-processor.
-	 * 
-	 * @param mainCriteriaBuilder
-	 */
-    @Override
-	protected void postProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-    	if (getOrderByString().length()>0) {
-    		appendOrderBy(getOrderByString(), (OrmCriteriaBuilder) mainCriteriaBuilder);
-    	}
-	}
-		
 	// appenders
 	
-    /**
-     * Base order by segment.
-     * 
-     * @param fieldContent
-     * @param criteriaBuilder
-     */
-    protected void appendOrderBy(String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
-    	String[] fieldNames = fieldContent.split(",");
-    	if (fieldNames.length>0) {
-    		criteriaBuilder.appendOrderBy(fieldNames);
-        }
-    }
-    
     /**
      * Priority range appender.
      * 

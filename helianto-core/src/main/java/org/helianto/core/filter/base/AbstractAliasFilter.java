@@ -152,9 +152,7 @@ public abstract class AbstractAliasFilter
 	 * Called after {@link #doSearch(OrmCriteriaBuilder)
 	 */
 	protected void postSearch(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getOrderByString()!=null) {
-			mainCriteriaBuilder.appendOrderBy(getOrderByString());
-		}
+		appendOrderBy(getOrderByString(), (OrmCriteriaBuilder) mainCriteriaBuilder);
 	}
 	
 	// processors
@@ -297,6 +295,7 @@ public abstract class AbstractAliasFilter
 	 * @param mainCriteriaBuilder
 	 */
 	protected void postProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendOrderBy(getOrderByString(), (OrmCriteriaBuilder) mainCriteriaBuilder);
 	}
 		
 	// appenders
@@ -423,6 +422,21 @@ public abstract class AbstractAliasFilter
     		criteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
             .appendStartLike(fieldContent.toLowerCase());
         }
+    }
+    
+    /**
+     * Base order by segment.
+     * 
+     * @param fieldContent
+     * @param criteriaBuilder
+     */
+    protected void appendOrderBy(String fieldContent, OrmCriteriaBuilder criteriaBuilder) {
+    	if (fieldContent!=null && fieldContent.length()>0) {
+        	String[] fieldNames = fieldContent.split(",");
+        	if (fieldNames.length>0) {
+        		criteriaBuilder.appendOrderBy(fieldNames);
+            }
+    	}
     }
     
     /**

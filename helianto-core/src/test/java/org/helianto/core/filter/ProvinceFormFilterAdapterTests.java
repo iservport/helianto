@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.Operator;
 import org.helianto.core.Province;
+import org.helianto.core.filter.form.AbstractSearchForm;
 import org.helianto.core.filter.form.CompositeOperatorForm;
 import org.helianto.core.filter.form.ProvinceForm;
 import org.junit.Before;
@@ -59,7 +60,7 @@ public class ProvinceFormFilterAdapterTests  {
     
     @Test
     public void search() {
-    	form.setSearchString("NAME_LIKE");
+    	((AbstractSearchForm) form).setSearchString("NAME_LIKE");
         assertEquals(C0+C3+OB, filter.createCriteriaAsString());
     }
     
