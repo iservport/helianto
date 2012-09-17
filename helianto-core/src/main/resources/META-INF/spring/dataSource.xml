@@ -51,5 +51,16 @@
             </props>
         </property>
     </bean>
-	
+	<!-- 
+	Check this later
+	<property name="autoCommitOnClose"> <value>true</value></property>
+	<property name="idleConnectionTestPeriod"><value>15</value> </property>
+	<property name="maxIdleTime"> <value>15</value> </property>
+	</bean
+	<param name="validationQuery" value="SELECT 1" />
+	<param name="testOnBorrow" value="true" />	
+	jdbc:mysql://127.0.0.1:3306/databasename?autoReconnect=true
+	<property name="hibernate.c3p0.preferredTestQuery">select 1</property>  
+    <property name="hibernate.c3p0.testConnectionOnCheckout">true</property>  
+	-->
 </beans>
