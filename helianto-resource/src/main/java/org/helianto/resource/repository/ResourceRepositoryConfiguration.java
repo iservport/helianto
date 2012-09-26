@@ -17,6 +17,7 @@ package org.helianto.resource.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
+import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,14 @@ public class ResourceRepositoryConfiguration extends AbstractRepositoryConfigura
 	@Bean
 	public FilterDao<ResourceGroup> resourceGroupDao() {
 		return getFilterDao(ResourceGroup.class, "entity", "resourceCode");
+	}
+
+	/**
+	 * Resource data access.
+	 */
+	@Bean
+	public FilterDao<Resource> resourceDao() {
+		return getFilterDao(Resource.class, "entity", "resourceCode");
 	}
 
 }

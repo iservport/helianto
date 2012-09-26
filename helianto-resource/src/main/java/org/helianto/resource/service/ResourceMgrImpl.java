@@ -25,6 +25,7 @@ import org.helianto.resource.def.ResourceType;
 import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.filter.ResourceGroupFormFilterAdapter;
+import org.helianto.resource.form.ResourceForm;
 import org.helianto.resource.form.ResourceGroupForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,15 @@ public class ResourceMgrImpl implements ResourceMgr {
 	public List<ResourceGroup> findResourceGroups(ResourceGroupForm form) {
 		Filter filter = new ResourceGroupFormFilterAdapter(form);
 		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(filter);
+		if (logger.isDebugEnabled() && resourceGroupList!=null) {
+			logger.debug("Found resource group list of size {}", resourceGroupList.size());
+		}
+		return resourceGroupList;
+	}
+    
+	public List<Resource> findResources(ResourceForm form) {
+		Filter filter = new ResourceGroupFormFilterAdapter(form);
+		List<Resource> resourceGroupList = (List<Resource>) resourceDao.find(filter);
 		if (logger.isDebugEnabled() && resourceGroupList!=null) {
 			logger.debug("Found resource group list of size {}", resourceGroupList.size());
 		}
@@ -65,10 +75,16 @@ public class ResourceMgrImpl implements ResourceMgr {
     // collaborators
 
     private FilterDao<ResourceGroup> resourceGroupDao;
+    private FilterDao<Resource> resourceDao;
     
     @javax.annotation.Resource(name="resourceGroupDao")
     public void setResourceGroupDao(FilterDao<ResourceGroup> resourceGroupDao) {
         this.resourceGroupDao = resourceGroupDao;
+    }
+
+    @javax.annotation.Resource(name="resourceDao")
+    public void setResourceDao(FilterDao<Resource> resourceDao) {
+        this.resourceDao = resourceDao;
     }
 
 	static final Logger logger = LoggerFactory.getLogger(ResourceMgrImpl.class);

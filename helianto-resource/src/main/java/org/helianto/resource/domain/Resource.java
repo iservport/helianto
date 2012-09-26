@@ -58,6 +58,7 @@ public class Resource
     protected Resource() {
     	super();
     	setResourceType(' '); // delegate to service layer
+    	setSerialNumber("");
     	setResourceStateAsEnum(ResourceState.ACTIVE);
     	setResourceClassificationAsEnum(ResourceClassification.ANY);
     }

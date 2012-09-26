@@ -14,7 +14,7 @@ public class CompositeResourceForm
 	extends AbstractControllable 
 	
 	implements 
-	  ResourceGroupForm
+	  ResourceForm
 	, Cloneable
 
 {
@@ -24,6 +24,7 @@ public class CompositeResourceForm
 	private ResourceGroup resourceGroup;
 	private String resourceCode;
 	private char resourceType;
+	private String serialNumber;
 	
 	/**
 	 * Entity constructor.
@@ -84,6 +85,13 @@ public class CompositeResourceForm
 	}
 	public void setResourceType(char resourceType) {
 		this.resourceType = resourceType;
+	}
+	
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
 	}
 	
 	/**
