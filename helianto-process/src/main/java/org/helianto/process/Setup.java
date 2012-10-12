@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
+
 
 /**
  * Represents a <code>Setup</code>.
@@ -97,14 +97,7 @@ public class Setup  implements java.io.Serializable, Comparable<Setup> {
     	}
     	return "";
     }
-    @Transient
-    public boolean isGroup() {
-    	if(getResource()!=null && !(getResource() instanceof Resource)) {
-    		return true;
-    	}
-    	return false;
-    }
-    
+
     /**
      * Priority.
      */

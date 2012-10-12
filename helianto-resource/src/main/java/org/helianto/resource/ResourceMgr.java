@@ -18,9 +18,7 @@ package org.helianto.resource;
 import java.util.List;
 
 import org.helianto.core.Entity;
-import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.form.ResourceForm;
 import org.helianto.resource.form.ResourceGroupForm;
 
 /**
@@ -36,13 +34,6 @@ public interface ResourceMgr {
      * @param form
      */
     public List<ResourceGroup> findResourceGroups(ResourceGroupForm form);
-    
-    /**
-     * Find <tt>Resource</tt>s using filter.
-     * 
-     * @param form
-     */
-    public List<Resource> findResources(ResourceForm form);
     
 	/**
      * <p>
@@ -60,12 +51,5 @@ public interface ResourceMgr {
      * </p>  
      */
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup);
-    
-    /**
-     * Remove a <tt>Resource</tt>.
-     * 
-     * @param resource
-     */
-    public void removeResource(Resource resource);
     
 }

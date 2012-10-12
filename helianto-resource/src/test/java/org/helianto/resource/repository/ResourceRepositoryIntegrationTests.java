@@ -18,11 +18,11 @@ package org.helianto.resource.repository;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.repository.FilterDao;
-import org.helianto.resource.domain.Resource;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.test.AbstractResourceDaoIntegrationTest;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
+
 
 
 /**
@@ -40,10 +40,6 @@ public class ResourceRepositoryIntegrationTests extends AbstractResourceDaoInteg
 		ResourceGroup resourceGroup = new ResourceGroup(entity, "GROUPCODE");
 		resourceGroupDao.saveOrUpdate(resourceGroup);
 		assertEquals(resourceGroup, resourceGroupDao.findUnique(entity, "GROUPCODE"));
-
-		Resource resource = new Resource(entity, "CODE");
-		resourceGroupDao.saveOrUpdate(resource);
-		assertEquals(resource, resourceGroupDao.findUnique(entity, "CODE"));
 
 	}
 

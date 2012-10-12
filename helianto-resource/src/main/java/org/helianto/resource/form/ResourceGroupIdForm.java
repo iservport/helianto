@@ -5,7 +5,7 @@ package org.helianto.resource.form;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface ResourceGroupMasterForm {
+public interface ResourceGroupIdForm {
 
 	/**
 	 * Resource group id filter.

@@ -14,7 +14,7 @@ public interface ResourceGroupForm
 	extends TrunkEntity
 	, TypeForm
 	, SearchForm 
-	, ResourceGroupMasterForm
+	, ResourceGroupIdForm
 
 {
 	
