@@ -33,6 +33,7 @@ import org.helianto.core.Entity;
 import org.helianto.core.Identity;
 import org.helianto.core.Privacy;
 import org.helianto.core.def.PrivacyLevel;
+import org.helianto.core.def.Resolution;
 import org.helianto.document.Event;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -57,6 +58,7 @@ public abstract class AbstractEvent implements Privacy, Event {
     private Entity entity;
     private Identity owner;
     private Date issueDate;
+    private char resolution;
     private char privacyLevel;
     // transient, convenience for filters
     private int interval;
@@ -150,6 +152,29 @@ public abstract class AbstractEvent implements Privacy, Event {
 	public void setOwner(Identity owner) {
 		this.owner = owner;
 	}   
+
+    public char getResolution() {
+        return validateResolution(this.resolution);
+    }
+    public void setResolution(char resolution) {
+        this.resolution = resolution;
+    }
+    public void setResolution(Character resolution) {
+        this.resolution = resolution==null ? 0 : resolution;
+    }
+    public void setResolution(String resolution) {
+        setResolution(resolution.charAt(0));
+    }
+    public void setResolutionAsEnum(Resolution resolution) {
+    	setResolution(resolution.getValue());
+    }
+    
+    /**
+     * Do the actual resolution validation.
+     */
+    protected char validateResolution(char resolution) {
+    	return resolution;
+    }
 
     /**
      * Privacy level.

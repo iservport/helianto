@@ -29,6 +29,7 @@ import org.helianto.document.Occurrence;
  * Occurrences are events that hold resolution information.
  * </p>
  * 
+ * @deprecated
  * @author Mauricio Fernandes de Castro
  */
 
@@ -43,7 +44,6 @@ public abstract class AbstractOccurrence
 {
 
     private static final long serialVersionUID = 1L;
-    private char resolution;
 
     /** 
      * Default constructor.
@@ -62,26 +62,6 @@ public abstract class AbstractOccurrence
     	setResolution(resolution);
     }
     
-    public char getResolution() {
-        return validateResolution(this.resolution);
-    }
-    public void setResolution(char resolution) {
-        this.resolution = resolution;
-    }
-    public void setResolution(String resolution) {
-        this.resolution = resolution.charAt(0);
-    }
-    public void setResolutionAsEnum(Resolution resolution) {
-        this.resolution = resolution.getValue();
-    }
-    
-    /**
-     * Do the actual resolution validation.
-     */
-    protected char validateResolution(char resolution) {
-    	return resolution;
-    }
-
     /**
      * Resolve control status.
      */
