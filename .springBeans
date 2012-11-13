@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[2.8.1.201111220115-RELEASE]]></pluginVersion>
+	<pluginVersion><![CDATA[3.0.0.201208090952-RELEASE]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
@@ -16,15 +16,12 @@
 		<config>helianto-document/src/main/resources/META-INF/spring/document-context.xml</config>
 		<config>helianto-finance/src/main/resources/META-INF/spring/helianto-finance-context.xml</config>
 		<config>helianto-resource/src/main/resources/META-INF/spring/helianto-resource-context.xml</config>
-		<config>helianto-web/src/main/resources/META-INF/spring/freemarker.xml</config>
 		<config>helianto-inventory/src/main/resources/META-INF/spring/helianto-inventory-context.xml</config>
 		<config>helianto-message/src/main/resources/META-INF/spring/message-context.xml</config>
 		<config>helianto-process/src/main/resources/META-INF/spring/process-context.xml</config>
 		<config>helianto-admin/src/main/webapps/WEB-INF/spring/root-context.xml</config>
 		<config>helianto-admin/src/main/webapps/WEB-INF/spring/appServlet/servlet-context.xml</config>
 		<config>helianto-core/target/classes/META-INF/spring/support.xml</config>
-		<config>helianto-web/src/main/resources/META-INF/spring/webflow.xml</config>
-		<config>helianto-web/src/main/resources/META-INF/spring/webmvc.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

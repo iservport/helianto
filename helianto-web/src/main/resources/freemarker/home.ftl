@@ -1,1 +1,0 @@
-<@anchor "toHome">Home</@anchor>
