@@ -16,6 +16,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.user.UserMgr;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

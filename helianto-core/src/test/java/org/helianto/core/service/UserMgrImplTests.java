@@ -46,6 +46,7 @@ import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
+import org.helianto.user.service.UserMgrImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

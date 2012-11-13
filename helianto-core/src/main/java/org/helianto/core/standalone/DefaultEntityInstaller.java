@@ -27,7 +27,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.service.IdentityMgr;
 import org.helianto.core.service.PostInstallationMgr;
-import org.helianto.core.service.UserMgr;
+import org.helianto.user.UserMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;

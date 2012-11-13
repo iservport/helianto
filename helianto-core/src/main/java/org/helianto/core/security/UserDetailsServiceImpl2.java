@@ -12,7 +12,7 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.service.SecurityMgr;
-import org.helianto.core.service.UserMgr;
+import org.helianto.user.UserMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;

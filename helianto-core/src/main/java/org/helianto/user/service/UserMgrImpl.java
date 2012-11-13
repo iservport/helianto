@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.user.service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +47,9 @@ import org.helianto.core.filter.form.AssociationForm;
 import org.helianto.core.filter.form.UserGroupForm;
 import org.helianto.core.filter.form.UserRoleForm;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.service.IdentityMgr;
+import org.helianto.core.service.PublicEntityMgr;
+import org.helianto.user.UserMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

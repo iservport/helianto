@@ -31,6 +31,7 @@ import org.helianto.core.UserAssociation;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
 import org.helianto.core.repository.BasicDao;
+import org.helianto.user.UserMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;

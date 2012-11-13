@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.user;
 
 import java.util.Date;
 import java.util.List;
