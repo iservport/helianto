@@ -14,9 +14,7 @@ import org.helianto.partner.domain.PrivateEntity2;
  * @author mauriciofernandesdecastro
  */
 public class CompositePartnerForm
-
 	extends CompositeEntityForm
-	
 	implements 
 	  PrivateEntityForm
 	, PartnerForm
@@ -43,6 +41,7 @@ public class CompositePartnerForm
     private char phoneType;
     private Partner partner;
     private Category category;
+    private int userGroupParentId;
     private String userKey;
     private char userState;
 	
@@ -176,6 +175,13 @@ public class CompositePartnerForm
 	}
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	
+	public int getUserGroupParentId() {
+		return userGroupParentId;
+	}
+	public void setUserGroupParentId(int userGroupParentId) {
+		this.userGroupParentId = userGroupParentId;
 	}
 	
 	public String getUserKey() {

@@ -29,8 +29,8 @@ import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.form.AssociationForm;
-import org.helianto.core.filter.form.UserGroupForm;
-import org.helianto.core.filter.form.UserRoleForm;
+import org.helianto.user.form.UserGroupForm;
+import org.helianto.user.form.UserRoleForm;
 
 /**
  * Default user service layer interface for the core package.
@@ -39,14 +39,6 @@ import org.helianto.core.filter.form.UserRoleForm;
  */
 public interface UserMgr {
 	
-    /**
-     * <p>List <code>UserGroup</code> by string criteria.</p>
-     * 
-     * @param userFilter
-     * @deprecated
-     */
-    public List<? extends UserGroup> findUsers(Filter userFilter);
-    
     /**
      * <p>List <code>UserGroup</code> by string criteria.</p>
      * 
@@ -67,14 +59,6 @@ public interface UserMgr {
      * @param userGroup
      */
     public UserGroup storeUserGroup(UserGroup userGroup);
-    
-    /**
-     * Find user associations.
-     * 
-     * @param userAssociationFilter
-     * @deprecated
-     */
-    public List<UserAssociation> findUserAssociations(Filter userAssociationFilter);
     
     /**
      * Find user associations.

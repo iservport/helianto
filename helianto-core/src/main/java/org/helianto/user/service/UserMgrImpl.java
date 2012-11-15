@@ -40,16 +40,16 @@ import org.helianto.core.def.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserAssociationFormFilterAdapter;
-import org.helianto.core.filter.UserFilterAdapter;
-import org.helianto.core.filter.UserFormFilterAdapter;
-import org.helianto.core.filter.UserRoleFormFilterAdapter;
 import org.helianto.core.filter.form.AssociationForm;
-import org.helianto.core.filter.form.UserGroupForm;
-import org.helianto.core.filter.form.UserRoleForm;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.IdentityMgr;
 import org.helianto.core.service.PublicEntityMgr;
 import org.helianto.user.UserMgr;
+import org.helianto.user.filter.UserFormFilterAdapter;
+import org.helianto.user.filter.UserRoleFormFilterAdapter;
+import org.helianto.user.form.CompositeUserForm;
+import org.helianto.user.form.UserGroupForm;
+import org.helianto.user.form.UserRoleForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,26 +141,17 @@ public class UserMgrImpl implements UserMgr {
 	}
 
     public List<? extends UserGroup> findUsers(Identity identity) {
-    	UserFilterAdapter userFilter = new UserFilterAdapter(new User());
-    	userFilter.setIdentity(identity);
-    	userFilter.getForm().setUserState(UserState.ACTIVE.getValue());
-        logger.debug("Filter users having state {}", userFilter.getForm().getUserState());
+    	CompositeUserForm form = new CompositeUserForm();
+		form.setIdentity(identity);
+		form.setUserState(UserState.ACTIVE.getValue());
+        logger.debug("Filter users having state {}", form.getUserState());
         try {
-    		return findUsers(userFilter);
+    		return findUsers(new UserFormFilterAdapter(form));
         } catch (Exception e) {
         	logger.warn("Unable to find users ", e);
         }
         return null;
     }
-
-    /**
-     * @deprecated
-     */
-	public List<UserAssociation> findUserAssociations(Filter userAssociationFilter) {
-		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationDao.find(userAssociationFilter);
-    	logger.debug("Found user association list of size {}", userAssociationList.size());
-        return userAssociationList;
-	}
 
 	public List<UserAssociation> findUserAssociations(AssociationForm form) {
 		Filter filter = new UserAssociationFormFilterAdapter(form);

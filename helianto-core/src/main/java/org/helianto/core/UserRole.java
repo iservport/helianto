@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,7 +36,8 @@ import org.helianto.core.def.ActivityState;
 @Table(name="core_userrole",
     uniqueConstraints = {@UniqueConstraint(columnNames={"userId", "serviceId", "serviceExtension"})}
 )
-public class UserRole  implements java.io.Serializable {
+public class UserRole 
+	implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private long id;
@@ -83,7 +83,7 @@ public class UserRole  implements java.io.Serializable {
     /**
      * User group.
      */
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="userId", nullable=true)
     public UserGroup getUserGroup() {
         return this.userGroup;

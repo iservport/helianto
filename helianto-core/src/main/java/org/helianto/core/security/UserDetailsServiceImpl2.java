@@ -10,9 +10,9 @@ import org.helianto.core.Credential;
 import org.helianto.core.User;
 import org.helianto.core.UserGroup;
 import org.helianto.core.UserRole;
-import org.helianto.core.filter.UserFilterAdapter;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.user.UserMgr;
+import org.helianto.user.form.CompositeUserForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -33,10 +33,8 @@ public class UserDetailsServiceImpl2 implements UserDetailsService {
 		if (credential==null) {
 			throw new UsernameNotFoundException("Unable to find credential for "+username);
 		}
-		UserFilterAdapter filter = new UserFilterAdapter(new User());
-		filter.setUserKey(username);
 		@SuppressWarnings("unchecked")
-		List<UserGroup> userList = (List<UserGroup>) userMgr.findUsers(filter);
+		List<UserGroup> userList = (List<UserGroup>) userMgr.findUsers(new CompositeUserForm(username));
 		logger.debug("Found {} user(s) matching {}.", userList.size(), username);
 		if (userList!=null && userList.size()>0) {
 			User user = userSelectorStrategy.selectUser(userList);

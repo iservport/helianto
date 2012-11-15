@@ -7,7 +7,8 @@ import java.io.Serializable;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface AssociationForm extends Serializable {
+public interface AssociationForm 
+	extends Serializable {
 
 	/**
 	 * Parent id.
