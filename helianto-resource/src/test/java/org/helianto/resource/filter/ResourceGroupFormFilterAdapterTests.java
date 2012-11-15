@@ -25,11 +25,13 @@ public class ResourceGroupFormFilterAdapterTests {
     public static String C4 = "AND alias.resourceType = 'F' ";
     public static String C5 = "AND alias.resourceGroup.id = 1 ";
     public static String C6 = "AND (" +
-  		"(lower(alias.resourceCode) like '%name%' ) " +
-  		"OR (lower(alias.resourceName) like '%name%' ) ) ";
+  		"(lower(alias.resourceCode) like '%name%' ) OR " +
+  		"(lower(alias.resourceName) like '%name%' ) " +
+  		") ";
     public static String C7 = "AND (" +
-  		"(lower(alias.resourceCode) like '%name%' AND lower(alias.resourceCode) like '%other%' ) " +
-  		"OR (lower(alias.resourceName) like '%name%' AND lower(alias.resourceName) like '%other%' ) ) ";
+  		"(lower(alias.resourceCode) like '%name%' OR lower(alias.resourceCode) like '%other%' ) OR " +
+  		"(lower(alias.resourceName) like '%name%' OR lower(alias.resourceName) like '%other%' ) " +
+  		") ";
 
     @Test
     public void empty() {

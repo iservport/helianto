@@ -40,8 +40,10 @@ public class PrivateEntityFilterAdapterTests {
     public static String C6 = "AND lower(alias.cityName) like '%name%' ";
     public static String C7 = "AND locate( 'X' , alias.nature ) != 0 ";
     public static String C8 = "AND ((lower(alias.entityAlias) like '%token%' ) OR (lower(alias.entityName) like '%token%' ) ) ";
-    public static String C9 = "AND ((lower(alias.entityAlias) like '%word1%' AND lower(alias.entityAlias) like '%word2%' ) " +
-    		"OR (lower(alias.entityName) like '%word1%' AND lower(alias.entityName) like '%word2%' ) ) ";
+    public static String C9 = "AND (" +
+    		"(lower(alias.entityAlias) like '%word1%' OR lower(alias.entityAlias) like '%word2%' ) OR " +
+    		"(lower(alias.entityName) like '%word1%' OR lower(alias.entityName) like '%word2%' ) " +
+    		") ";
 
     @Test
     public void empty() {

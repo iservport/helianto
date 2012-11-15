@@ -34,6 +34,13 @@ public class UserFormFilterAdapterTests {
 	static String C6 = "AND parentAssociations.parent.userKey = 'USER' ";
 	static String C7 = "AND alias.identity.id = 1 ";
 	static String C8 = "alias.userKey = 'USERKEY' ";
+	static String C9 = "AND ((lower(alias.principal) like '%principal@domain%' ) ) ";
+	static String C10 = "AND (" +
+			"(lower(alias.principal) like '%first%' OR lower(alias.principal) like '%last%' ) OR " +
+			"(lower(alias.optionalAlias) like '%first%' OR lower(alias.optionalAlias) like '%last%' ) OR " +
+			"(lower(alias.firstName) like '%first%' OR lower(alias.firstName) like '%last%' ) OR " +
+			"(lower(alias.lastName) like '%first%' OR lower(alias.lastName) like '%last%' ) " +
+			") ";
 	
 	@Test
 	public void empty() {
@@ -107,6 +114,26 @@ public class UserFormFilterAdapterTests {
 		Mockito.when(form.getEntity()).thenReturn(null);
 		Mockito.when(form.getUserKey()).thenReturn("USERKEY");
 		assertEquals(C8+O0, filter.createCriteriaAsString());
+	}
+
+	@Test
+	public void searchNone() {
+		Mockito.when(form.getSearchString()).thenReturn("");
+		assertEquals(C0+O0, filter.createCriteriaAsString());
+	}
+
+	@Test
+	public void searchPrincipal() {
+		Mockito.when(form.getSearchString()).thenReturn("principal@domain");
+		Mockito.when(form.getSearchMode()).thenReturn('P');
+		assertEquals(C0+C9+O0, filter.createCriteriaAsString());
+	}
+
+	@Test
+	public void searchName() {
+		Mockito.when(form.getSearchString()).thenReturn("First Last");
+		Mockito.when(form.getSearchMode()).thenReturn('A');
+		assertEquals(C0+C10+O0, filter.createCriteriaAsString());
 	}
 
 	// collabs

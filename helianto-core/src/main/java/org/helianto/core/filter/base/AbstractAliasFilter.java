@@ -259,7 +259,7 @@ public abstract class AbstractAliasFilter
 			OrmCriteriaBuilder fieldCriteriaBuilder = new OrmCriteriaBuilder(mainCriteriaBuilder.getAlias());
 			for (String fieldContent: searchWords) {
 		    	if (fieldContent!=null && fieldContent.length()>0) {
-		    		fieldCriteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
+		    		fieldCriteriaBuilder.appendOr().appendSegment(fieldName, "like", "lower")
 		            .appendLike(fieldContent.toLowerCase());
 		        }
 			}

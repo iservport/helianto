@@ -58,10 +58,6 @@ public class UserFormFilterAdapter
 	}
 	
 
-	public boolean isSelection() {
-		return super.isSelection() && getForm().getUserKey()!=null && getForm().getUserKey().length()>0;
-	}
-	
 	@Override
 	protected boolean hasParentCriterion() {
 		return getForm().getUserGroupParentId()>0;
@@ -93,6 +89,10 @@ public class UserFormFilterAdapter
 		return connect;
 	}
 
+	public boolean isSelection() {
+		return super.isSelection() && getForm().getUserKey()!=null && getForm().getUserKey().length()>0;
+	}
+	
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("userKey", getForm().getUserKey(), (OrmCriteriaBuilder) mainCriteriaBuilder);
@@ -103,6 +103,21 @@ public class UserFormFilterAdapter
 		appendEqualFilter("userKey", getForm().getUserKey(), mainCriteriaBuilder);
 		appendEqualFilter("userState", getForm().getUserState(), mainCriteriaBuilder);
         appendExclusionsFilter( mainCriteriaBuilder);
+	}
+	
+	@Override
+	public boolean isSearch() {
+		return getForm().getSearchString()!=null 
+				&& getForm().getSearchString().length()>0
+				&& getForm().getSearchMode()!=' ';
+	}
+	
+	@Override
+	protected String[] getFieldNames() {
+		if (getForm().getSearchMode()=='P') {
+			return new String[] { "principal" };
+		}
+		return new String[] { "principal", "optionalAlias", "firstName", "lastName" };
 	}
 	
 	@Override
