@@ -28,7 +28,7 @@
 	<!--
 		Scan this packages for annotated beans.
 	-->
-	<context:component-scan base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.core.validation"/>
+	<context:component-scan base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.user.service"/>
 	
 	<!-- Added with 0.3-->
 	
@@ -88,11 +88,12 @@
         <aop:pointcut id="servicePointcut" expression="execution(* *..*Mgr*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
     </aop:config>
-    
+    <!-- 
     <aop:config>
         <aop:pointcut id="repositoryPointcut" expression="execution(* *..*RepositoryConfiguration.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="repositoryPointcut" />
     </aop:config>
+    -->
     
     <aop:config>
         <aop:pointcut id="controllerPointcut" expression="execution(* *..*Controller*.*(..))" />
