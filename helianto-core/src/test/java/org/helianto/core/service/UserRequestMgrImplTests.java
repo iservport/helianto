@@ -5,7 +5,7 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.easymock.classextension.EasyMock;
+import org.easymock.EasyMock;
 import org.helianto.core.UserRequest;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.form.CompositeIdentityForm;

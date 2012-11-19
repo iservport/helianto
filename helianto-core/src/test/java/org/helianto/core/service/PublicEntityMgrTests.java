@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.easymock.classextension.EasyMock;
+import org.easymock.EasyMock;
 import org.helianto.core.Entity;
 import org.helianto.core.Operator;
 import org.helianto.core.PublicAddress;

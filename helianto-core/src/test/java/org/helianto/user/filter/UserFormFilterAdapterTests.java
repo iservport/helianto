@@ -34,12 +34,12 @@ public class UserFormFilterAdapterTests {
 	static String C6 = "AND parentAssociations.parent.userKey = 'USER' ";
 	static String C7 = "AND alias.identity.id = 1 ";
 	static String C8 = "alias.userKey = 'USERKEY' ";
-	static String C9 = "AND ((lower(alias.principal) like '%principal@domain%' ) ) ";
+	static String C9 = "AND ((lower(alias.identity.principal) like '%principal@domain%' ) ) ";
 	static String C10 = "AND (" +
-			"(lower(alias.principal) like '%first%' OR lower(alias.principal) like '%last%' ) OR " +
-			"(lower(alias.optionalAlias) like '%first%' OR lower(alias.optionalAlias) like '%last%' ) OR " +
-			"(lower(alias.firstName) like '%first%' OR lower(alias.firstName) like '%last%' ) OR " +
-			"(lower(alias.lastName) like '%first%' OR lower(alias.lastName) like '%last%' ) " +
+			"(lower(alias.identity.principal) like '%first%' OR lower(alias.identity.principal) like '%last%' ) OR " +
+			"(lower(alias.identity.optionalAlias) like '%first%' OR lower(alias.identity.optionalAlias) like '%last%' ) OR " +
+			"(lower(alias.identity.personalData.firstName) like '%first%' OR lower(alias.identity.personalData.firstName) like '%last%' ) OR " +
+			"(lower(alias.identity.personalData.lastName) like '%first%' OR lower(alias.identity.personalData.lastName) like '%last%' ) " +
 			") ";
 	
 	@Test

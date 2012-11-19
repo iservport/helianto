@@ -16,14 +16,9 @@
 
 package org.helianto.core.standalone;
 
-import static org.junit.Assert.assertSame;
-
-import org.easymock.classextension.EasyMock;
-import org.helianto.core.Entity;
+import org.easymock.EasyMock;
 import org.helianto.core.Operator;
 import org.helianto.core.service.PostInstallationMgr;
-import org.helianto.core.standalone.DefaultEntityInstaller;
-import org.helianto.core.standalone.NamespaceDefaults;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.After;
 import org.junit.Before;
