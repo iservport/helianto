@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.helianto.core.Credential;
 import org.helianto.core.Entity;
-import org.helianto.core.Identity;
 import org.helianto.core.Service;
 import org.helianto.core.User;
 import org.helianto.core.UserAssociation;
@@ -47,12 +46,19 @@ public interface UserMgr {
     public List<? extends UserGroup> findUsers(UserGroupForm form);
     
     /**
-     * Find users sharing the same identity.
+     * Find users sharing the same user key.
      * 
-     * @param identity
+     * @param userKey
      */
-    public List<? extends UserGroup> findUsers(Identity identity);
+    public List<? extends UserGroup> findUsers(String userKey);
 
+//    /**
+//     * Find users sharing the same identity.
+//     * 
+//     * @param identity
+//     */
+//    public List<? extends UserGroup> findUsers(Identity identity);
+//
     /**
      * <p>Store <code>UserGroup</code> and return a managed instance.</p>
      * 

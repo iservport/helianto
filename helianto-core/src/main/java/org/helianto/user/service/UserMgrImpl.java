@@ -36,7 +36,6 @@ import org.helianto.core.UserGroup;
 import org.helianto.core.UserLog;
 import org.helianto.core.UserRole;
 import org.helianto.core.def.EventType;
-import org.helianto.core.def.UserState;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserAssociationFormFilterAdapter;
@@ -47,11 +46,11 @@ import org.helianto.core.service.PublicEntityMgr;
 import org.helianto.user.UserMgr;
 import org.helianto.user.filter.UserFormFilterAdapter;
 import org.helianto.user.filter.UserRoleFormFilterAdapter;
-import org.helianto.user.form.CompositeUserForm;
 import org.helianto.user.form.UserGroupForm;
 import org.helianto.user.form.UserRoleForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Default <code>UserMgr</code> implementation.
@@ -59,7 +58,8 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 @org.springframework.stereotype.Service("userMgr")
-public class UserMgrImpl implements UserMgr {
+public class UserMgrImpl 
+	implements UserMgr {
     
     /**
 	 * Recurse into parent user groups to create a complete userRole List.
@@ -134,25 +134,26 @@ public class UserMgrImpl implements UserMgr {
         return userList;
 	}
 
-	public List<? extends UserGroup> findUsers(Filter userFilter) {
-		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(userFilter);
+	public List<? extends UserGroup> findUsers(String userKey) {
+		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(
+				"select user from User user where user.userKey = ? ", userKey);
     	logger.debug("Found user list of size {}", userList.size());
         return userList;
 	}
 
-    public List<? extends UserGroup> findUsers(Identity identity) {
-    	CompositeUserForm form = new CompositeUserForm();
-		form.setIdentity(identity);
-		form.setUserState(UserState.ACTIVE.getValue());
-        logger.debug("Filter users having state {}", form.getUserState());
-        try {
-    		return findUsers(new UserFormFilterAdapter(form));
-        } catch (Exception e) {
-        	logger.warn("Unable to find users ", e);
-        }
-        return null;
-    }
-
+//    public List<? extends UserGroup> findUsers(Identity identity) {
+//    	CompositeUserForm form = new CompositeUserForm();
+//		form.setIdentity(identity);
+//		form.setUserState(UserState.ACTIVE.getValue());
+//        logger.debug("Filter users having state {}", form.getUserState());
+//        try {
+//    		return findUsers(new UserFormFilterAdapter(form));
+//        } catch (Exception e) {
+//        	logger.warn("Unable to find users ", e);
+//        }
+//        return null;
+//    }
+//
 	public List<UserAssociation> findUserAssociations(AssociationForm form) {
 		Filter filter = new UserAssociationFormFilterAdapter(form);
 		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationDao.find(filter);

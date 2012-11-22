@@ -46,6 +46,8 @@ import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
+import org.helianto.user.filter.UserFormFilterAdapter;
+import org.helianto.user.form.UserGroupForm;
 import org.helianto.user.service.UserMgrImpl;
 import org.junit.After;
 import org.junit.Before;
@@ -66,13 +68,13 @@ public class UserMgrImplTests {
     
 	@Test
     public void findUsers() {
-    	Filter userFilter = new TestingFilter();
     	List<UserGroup> userList = new ArrayList<UserGroup>();
+    	UserGroupForm form = EasyMock.createMock(UserGroupForm.class);
     	
-    	expect(userGroupDao.find(userFilter)).andReturn(userList);
+    	expect(userGroupDao.find(EasyMock.isA(UserFormFilterAdapter.class))).andReturn(userList);
     	replay(userGroupDao);
     	
-    	assertSame(userList, userMgr.findUsers(userFilter));
+    	assertSame(userList, userMgr.findUsers(form));
     	verify(userGroupDao);
     }
     
