@@ -19,9 +19,9 @@ package org.helianto.core.standalone;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
-import org.helianto.core.Service;
+import org.helianto.core.domain.KeyType;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Service;
 import org.helianto.core.service.PostInstallationMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

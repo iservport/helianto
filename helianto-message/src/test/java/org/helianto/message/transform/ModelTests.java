@@ -21,7 +21,7 @@ import static org.junit.Assert.assertSame;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.helianto.core.Identity;
+import org.helianto.core.domain.Identity;
 import org.junit.Test;
 
 /**

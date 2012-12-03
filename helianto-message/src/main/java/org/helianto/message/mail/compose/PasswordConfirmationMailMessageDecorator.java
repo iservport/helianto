@@ -15,7 +15,7 @@
 
 package org.helianto.message.mail.compose;
 
-import org.helianto.core.Credential;
+import org.helianto.core.domain.Credential;
 
 /**
  * Decorates the mail message preparator with a password

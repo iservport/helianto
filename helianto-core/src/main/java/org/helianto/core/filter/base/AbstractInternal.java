@@ -1,6 +1,6 @@
 package org.helianto.core.filter.base;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Internal;
 
 /**

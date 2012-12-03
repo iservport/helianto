@@ -15,11 +15,11 @@
 
 package org.helianto.core.service;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.Operator;
 import org.helianto.core.Server;
-import org.helianto.core.User;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Operator;
+import org.helianto.user.domain.User;
 
 /**
  * Default base service layer interface for the core package.

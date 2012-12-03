@@ -19,8 +19,8 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Prioritizable;
+import org.helianto.core.domain.Entity;
 import org.helianto.document.Documentable;
 /**
  * Base class to represent a <code>Document</code>.

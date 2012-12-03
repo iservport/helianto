@@ -30,7 +30,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 
 /**				
  * A class to represent document revision releases.

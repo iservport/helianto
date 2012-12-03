@@ -15,7 +15,7 @@
 
 package org.helianto.core.number;
 
-import org.helianto.core.RootEntity;
+import org.helianto.core.domain.type.RootEntity;
 
 /**
  * Common Interface to entities having publicNumber.

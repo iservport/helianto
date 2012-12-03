@@ -1,6 +1,6 @@
 package org.helianto.core;
 
-import org.helianto.core.Province;
+import org.helianto.core.domain.Province;
 
 
 /**

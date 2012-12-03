@@ -1,6 +1,6 @@
 package org.helianto.message;
 
-import org.helianto.core.UserGroup;
+import org.helianto.user.domain.UserGroup;
 
 /**
  * A strategy to resolve recipients.

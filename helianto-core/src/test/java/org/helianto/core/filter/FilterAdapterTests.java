@@ -2,12 +2,12 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.def.NavigationMode;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.core.filter.form.NavigableForm;
 import org.helianto.core.test.UserTestSupport;
+import org.helianto.user.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 

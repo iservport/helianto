@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
+import org.helianto.core.domain.Entity;
 import org.junit.Test;
 
 /**

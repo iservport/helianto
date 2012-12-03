@@ -20,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.Date;
 
 import org.helianto.core.Controllable;
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.filter.base.AbstractControlFilterAdapter;
 import org.helianto.core.filter.form.AbstractSequenceableForm;
 import org.junit.Before;

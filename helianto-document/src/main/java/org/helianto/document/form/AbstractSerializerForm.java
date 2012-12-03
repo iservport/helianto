@@ -1,6 +1,6 @@
 package org.helianto.document.form;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 
 /**
  * Abstract serializer form.

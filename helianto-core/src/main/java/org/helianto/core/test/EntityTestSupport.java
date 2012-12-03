@@ -5,10 +5,10 @@ import java.util.List;
 
 
 
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.test.OperatorTestSupport;
 
-import org.helianto.core.Entity;
 
 /**
  * Class to support <code>EntityDao</code> tests.

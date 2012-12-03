@@ -1,6 +1,6 @@
 package org.helianto.core.filter.form;
 
-import org.helianto.core.UserGroup;
+import org.helianto.user.domain.UserGroup;
 
 /**
  * A simple <code>AssociationForm</code> implementation.

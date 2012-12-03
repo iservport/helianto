@@ -1,10 +1,10 @@
 package org.helianto.partner.form;
 
-import org.helianto.core.Category;
-import org.helianto.core.Entity;
-import org.helianto.core.KeyType;
-import org.helianto.core.filter.form.CompositeEntityForm;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.KeyType;
 import org.helianto.core.filter.form.KeyTypeForm;
+import org.helianto.core.form.CompositeEntityForm;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
 

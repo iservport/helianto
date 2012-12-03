@@ -5,6 +5,8 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.base.AbstractKeyStringValue;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.KeyType;
 import org.junit.Test;
 
 /**

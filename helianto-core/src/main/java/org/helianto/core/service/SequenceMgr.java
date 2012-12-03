@@ -17,9 +17,9 @@ package org.helianto.core.service;
 
 import java.util.List;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Node;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.number.Numerable;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.number.Verifiable;

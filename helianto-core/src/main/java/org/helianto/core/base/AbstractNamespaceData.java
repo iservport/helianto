@@ -23,8 +23,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
-import org.helianto.core.Operator;
-import org.helianto.core.RootEntity;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.type.RootEntity;
 
 /**
  * Base class to namespace data.

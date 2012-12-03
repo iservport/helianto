@@ -19,9 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Node;
-import org.helianto.core.User;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.repository.BasicDao;
@@ -35,6 +34,7 @@ import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Setup;
 import org.helianto.process.filter.ProcessDocumentFilterAdapter;
+import org.helianto.user.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

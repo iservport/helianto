@@ -19,6 +19,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Transient;
 
 import org.helianto.core.def.UserType;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
 /**
  * The root user account.
  * 

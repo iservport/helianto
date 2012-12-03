@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.classic.AbstractEntityBackedFilter;
 import org.helianto.process.InheritanceType;
 import org.helianto.process.Operation;

@@ -15,11 +15,11 @@
 
 package org.helianto.user.filter;
 
-import org.helianto.core.Identity;
-import org.helianto.core.UserGroup;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.user.domain.UserGroup;
 import org.helianto.user.form.UserGroupForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

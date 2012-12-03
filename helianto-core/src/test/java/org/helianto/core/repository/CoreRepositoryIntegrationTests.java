@@ -21,29 +21,23 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Category;
-import org.helianto.core.Country;
-import org.helianto.core.Credential;
 import org.helianto.core.EntityPreference;
-import org.helianto.core.Identity;
-import org.helianto.core.InternalEnumerator;
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
-import org.helianto.core.PersonalAddress;
-import org.helianto.core.Province;
-import org.helianto.core.PublicAddress;
-import org.helianto.core.PublicEntity2;
-import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
-import org.helianto.core.Service;
-import org.helianto.core.Unit;
-import org.helianto.core.User;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
-import org.helianto.core.UserRequest;
-import org.helianto.core.UserRole;
 import org.helianto.core.def.AddressType;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Country;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.KeyType;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.PersonalAddress;
+import org.helianto.core.domain.PrivateSequence;
+import org.helianto.core.domain.Province;
+import org.helianto.core.domain.PublicAddress;
+import org.helianto.core.domain.PublicEntity;
+import org.helianto.core.domain.PublicSequence;
+import org.helianto.core.domain.Service;
+import org.helianto.core.domain.Unit;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
 import org.helianto.core.test.CategoryTestSupport;
 import org.helianto.core.test.CountryTestSupport;
@@ -56,6 +50,12 @@ import org.helianto.core.test.UnitTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserLog;
+import org.helianto.user.domain.UserRequest;
+import org.helianto.user.domain.UserRole;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,15 +66,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Transactional
-public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
+public class CoreRepositoryIntegrationTests 
+	extends AbstractDaoIntegrationTest {
 
 	private FilterDao<KeyType> keyTypeDao;
 	private FilterDao<Country> countryDao;
 	private FilterDao<Service> serviceDao;
 	private FilterDao<Province> provinceDao;
 	private FilterDao<Category> categoryDao;
-	private FilterDao<InternalEnumerator> internalEnumeratorDao;
-	private FilterDao<PublicEnumerator> publicEnumeratorDao;
+	private FilterDao<PrivateSequence> internalEnumeratorDao;
+	private FilterDao<PublicSequence> publicEnumeratorDao;
 	private FilterDao<Unit> unitDao;
 	private FilterDao<UserAssociation> userAssociationDao;
 	private FilterDao<UserGroup> userGroupDao;
@@ -87,7 +88,7 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 	private FilterDao<UserRole> userRoleDao;
 	private FilterDao<EntityPreference> entityPreferenceDao;	
 	private FilterDao<UserRequest> userRequestDao;
-	private FilterDao<PublicEntity2> publicEntityDao;
+	private FilterDao<PublicEntity> publicEntityDao;
 	
 	@Test
 	public void core() {
@@ -119,11 +120,11 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		categoryDao.saveOrUpdate(category);
 		assertEquals(category, categoryDao.findUnique(category.getEntity(), category.getCategoryGroup(), category.getCategoryCode()));
 
-		InternalEnumerator internalEnumerator = InternalEnumeratorTestSupport.createInternalEnumerator(entity);
+		PrivateSequence internalEnumerator = InternalEnumeratorTestSupport.createInternalEnumerator(entity);
 		internalEnumeratorDao.saveOrUpdate(internalEnumerator);
 		assertEquals(internalEnumerator, internalEnumeratorDao.findUnique(internalEnumerator.getEntity(), internalEnumerator.getTypeName()));
 
-		PublicEnumerator publicEnumerator = new PublicEnumerator(operator, "TEST");
+		PublicSequence publicEnumerator = new PublicSequence(operator, "TEST");
 		publicEnumeratorDao.saveOrUpdate(publicEnumerator);
 		assertEquals(publicEnumerator, publicEnumeratorDao.findUnique(operator, "TEST"));
 
@@ -188,7 +189,7 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		userRequestDao.saveOrUpdate(loginRequest);
 		assertEquals(loginRequest, userRequestDao.findUnique(userGroup, Long.MAX_VALUE));
 		
-		PublicEntity2 publicEntity = new PublicEntity2(entity);
+		PublicEntity publicEntity = new PublicEntity(entity);
 		publicEntityDao.saveOrUpdate(publicEntity);
 		assertEquals(publicEntity, publicEntityDao.findUnique(entity, entity.getAlias(), "P"));
 
@@ -215,12 +216,12 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 	}
 	
 	@Resource public void setInternalEnumeratorDao(
-			FilterDao<InternalEnumerator> internalEnumeratorDao) {
+			FilterDao<PrivateSequence> internalEnumeratorDao) {
 		this.internalEnumeratorDao = internalEnumeratorDao;
 	}
 	
 	@Resource public void setPublicEnumeratorDao(
-			FilterDao<PublicEnumerator> publicEnumeratorDao) {
+			FilterDao<PublicSequence> publicEnumeratorDao) {
 		this.publicEnumeratorDao = publicEnumeratorDao;
 	}
 	
@@ -275,7 +276,7 @@ public class CoreRepositoryIntegrationTests extends AbstractDaoIntegrationTest {
 		this.userRequestDao = userRequestDao;
 	}
 	
-	@Resource public void setPublicEntityDao(FilterDao<PublicEntity2> publicEntityDao) {
+	@Resource public void setPublicEntityDao(FilterDao<PublicEntity> publicEntityDao) {
 		this.publicEntityDao = publicEntityDao;
 	}
 	

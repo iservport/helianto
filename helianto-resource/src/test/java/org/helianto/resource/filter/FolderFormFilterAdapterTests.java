@@ -2,8 +2,8 @@ package org.helianto.resource.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.form.AbstractTrunkForm;
 import org.helianto.core.filter.form.FolderForm;
 import org.helianto.core.test.EntityTestSupport;

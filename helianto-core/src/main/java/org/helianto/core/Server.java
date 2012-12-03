@@ -28,6 +28,9 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.def.Encription;
 import org.helianto.core.def.ServerType;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.type.RootEntity;
 
 /**
  * A domain object to represent available servers to an <code>Operator</code>.

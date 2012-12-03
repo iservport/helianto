@@ -32,7 +32,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 /**
  * <p>

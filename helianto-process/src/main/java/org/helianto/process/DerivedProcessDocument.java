@@ -28,7 +28,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 /**
  * Makes a process document able to inherit associations from ancestors.  
  * <p>

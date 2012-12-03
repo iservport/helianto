@@ -2,7 +2,7 @@ package org.helianto.message.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.base.AbstractRepeatable;
 import org.helianto.message.AbstractFollowUp;

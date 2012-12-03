@@ -1,8 +1,8 @@
 package org.helianto.core.filter.form;
 
 import org.helianto.core.Resettable;
-import org.helianto.core.RootEntity;
 import org.helianto.core.TrunkEntity;
+import org.helianto.core.domain.type.RootEntity;
 
 /**
  * Public entity form interface.

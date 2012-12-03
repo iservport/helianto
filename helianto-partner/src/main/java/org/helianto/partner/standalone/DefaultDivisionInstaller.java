@@ -20,10 +20,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Province;
+import org.helianto.core.ContextMgr;
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.domain.Province;
 import org.helianto.core.filter.ProvinceFilterAdapter;
-import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.standalone.DefaultEntityInstaller;
 import org.helianto.core.standalone.NamespaceDefaults;
 import org.helianto.partner.domain.nature.Division;
@@ -124,7 +124,7 @@ public class DefaultDivisionInstaller implements InitializingBean {
 	// collabs
 	protected NamespaceDefaults namespace;
 	private DefaultEntityInstaller defaultEntityInstaller;
-	private NamespaceMgr namespaceMgr;
+	private ContextMgr namespaceMgr;
 	private PartnerMgr partnerMgr; 
 
 	@Resource
@@ -138,7 +138,7 @@ public class DefaultDivisionInstaller implements InitializingBean {
 	}
 
 	@javax.annotation.Resource(name="namespaceMgr")
-	public void setNamespaceMgr(NamespaceMgr namespaceMgr) {
+	public void setNamespaceMgr(ContextMgr namespaceMgr) {
 		this.namespaceMgr = namespaceMgr;
 	}
 	

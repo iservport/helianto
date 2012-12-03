@@ -15,9 +15,9 @@
 
 package org.helianto.core.security;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
-import org.helianto.core.User;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
+import org.helianto.user.domain.User;
 
 /**
  * An interface to reveal public user details.

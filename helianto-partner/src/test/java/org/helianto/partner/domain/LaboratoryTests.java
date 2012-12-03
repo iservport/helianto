@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.nature.Laboratory;

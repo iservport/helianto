@@ -22,7 +22,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.base.AbstractCustomDocument;
 import org.helianto.document.base.AbstractDocument;

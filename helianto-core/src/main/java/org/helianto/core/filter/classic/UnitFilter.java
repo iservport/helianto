@@ -15,10 +15,10 @@
 
 package org.helianto.core.filter.classic;
 
-import org.helianto.core.Category;
-import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.Category;
+import org.helianto.user.domain.User;
 
 /**
  * Unit filter.

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Service;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Service;
 
 public class OperatorTestSupport {
 

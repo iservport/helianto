@@ -22,7 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.helianto.core.Unit;
+import org.helianto.core.domain.Unit;
 
 
 /**

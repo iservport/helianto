@@ -25,8 +25,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import org.helianto.core.City;
-import org.helianto.core.Province;
+import org.helianto.core.domain.City;
+import org.helianto.core.domain.Province;
 
 /**
  * Base class to instances having a partial Address.

@@ -18,7 +18,7 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Identity;
+import org.helianto.core.domain.Identity;
 
 /**
  * Class to support <code>IdentityDao</code> tests.

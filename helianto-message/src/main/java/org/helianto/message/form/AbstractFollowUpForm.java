@@ -1,6 +1,6 @@
 package org.helianto.message.form;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.message.AbstractFollowUp;
 import org.helianto.message.ControlSource;
 

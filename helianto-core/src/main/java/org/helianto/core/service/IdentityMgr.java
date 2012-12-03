@@ -18,11 +18,11 @@ package org.helianto.core.service;
 import java.util.Collection;
 import java.util.List;
 
-import org.helianto.core.ContactInfo;
-import org.helianto.core.Credential;
-import org.helianto.core.Identity;
-import org.helianto.core.PersonalAddress;
-import org.helianto.core.Phone;
+import org.helianto.core.domain.ContactInfo;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.PersonalAddress;
+import org.helianto.core.domain.Phone;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.form.IdentityForm;
 import org.helianto.core.filter.form.PersonalAddressForm;

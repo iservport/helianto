@@ -1,6 +1,6 @@
 package org.helianto.core.filter.form;
 
-import org.helianto.core.KeyType;
+import org.helianto.core.domain.KeyType;
 
 /**
  * Key form interface.

@@ -18,8 +18,8 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Service;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Service;
 
 /**
  * Class to support <code>ServiceDao</code> tests.

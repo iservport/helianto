@@ -2,9 +2,9 @@ package org.helianto.core.filter.form;
 
 import java.util.Collection;
 
-import org.helianto.core.Identity;
 import org.helianto.core.Resettable;
-import org.helianto.core.UserGroup;
+import org.helianto.core.domain.Identity;
+import org.helianto.user.domain.UserGroup;
 
 /**
  * Composite identity form.

@@ -17,10 +17,10 @@ package org.helianto.core.standalone;
 
 import java.util.Map;
 
-import org.helianto.core.Entity;
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
-import org.helianto.core.Service;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.KeyType;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Service;
 
 
 /**

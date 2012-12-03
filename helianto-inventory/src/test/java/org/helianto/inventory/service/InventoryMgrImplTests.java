@@ -10,7 +10,7 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;

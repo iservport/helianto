@@ -2,8 +2,8 @@ package org.helianto.document;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
 import org.helianto.document.base.AbstractCustomDocument;
 import org.helianto.document.domain.DocumentFolder;
 import org.junit.Test;

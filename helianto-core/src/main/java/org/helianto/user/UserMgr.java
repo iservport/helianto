@@ -18,16 +18,16 @@ package org.helianto.user;
 import java.util.Date;
 import java.util.List;
 
-import org.helianto.core.Credential;
-import org.helianto.core.Entity;
-import org.helianto.core.Service;
-import org.helianto.core.User;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
-import org.helianto.core.UserRole;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.form.AssociationForm;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserLog;
+import org.helianto.user.domain.UserRole;
 import org.helianto.user.form.UserGroupForm;
 import org.helianto.user.form.UserRoleForm;
 

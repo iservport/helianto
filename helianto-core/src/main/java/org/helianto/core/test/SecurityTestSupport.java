@@ -17,10 +17,10 @@ package org.helianto.core.test;
 
 import java.util.HashSet;
 
-import org.helianto.core.Credential;
-import org.helianto.core.User;
-import org.helianto.core.UserRole;
+import org.helianto.core.domain.Credential;
 import org.helianto.core.security.UserDetailsAdapter;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserRole;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -19,7 +19,7 @@ import javax.persistence.Column;
 import javax.persistence.Transient;
 
 import org.helianto.core.Address;
-import org.helianto.core.Province;
+import org.helianto.core.domain.Province;
 
 /**
  * Base class to instances having an Address.

@@ -1,7 +1,7 @@
 package org.helianto.core.filter.form;
 
-import org.helianto.core.Operator;
-import org.helianto.core.RootEntity;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.type.RootEntity;
 
 /**
  * Base class to root (aggregated to Operator) forms.

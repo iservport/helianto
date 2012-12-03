@@ -17,11 +17,11 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Province;
 import org.helianto.core.filter.form.AbstractSearchForm;
-import org.helianto.core.filter.form.CompositeOperatorForm;
-import org.helianto.core.filter.form.ProvinceForm;
+import org.helianto.core.form.CompositeContextForm;
+import org.helianto.core.form.ProvinceForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,7 +54,7 @@ public class ProvinceFormFilterAdapterTests  {
     
     @Test
     public void select() {
-    	((CompositeOperatorForm) form).setProvinceCode("CODE");
+    	((CompositeContextForm) form).setProvinceCode("CODE");
         assertEquals(C0+C2, filter.createCriteriaAsString());
     }
     
@@ -66,7 +66,7 @@ public class ProvinceFormFilterAdapterTests  {
     
     @Test
     public void stateCode() {
-    	((CompositeOperatorForm) form).setStateCode("XX");
+    	((CompositeContextForm) form).setStateCode("XX");
         assertEquals(C0+C4+OB, filter.createCriteriaAsString());
     }
     
@@ -74,13 +74,13 @@ public class ProvinceFormFilterAdapterTests  {
     public void parent() {
     	Province parent = new Province(form.getOperator(), "PARENT");
     	parent.setId(1);
-    	((CompositeOperatorForm) form).setParentProvince(parent);
+    	((CompositeContextForm) form).setParentProvince(parent);
         assertEquals(C0+C5+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void operatorName() {
-    	((CompositeOperatorForm) form).setOperatorName("OPERATOR");
+    	((CompositeContextForm) form).setOperatorName("OPERATOR");
         assertEquals(C0+C6+OB, filter.createCriteriaAsString());
     }
     
@@ -93,7 +93,7 @@ public class ProvinceFormFilterAdapterTests  {
     public void setUp() {
     	Operator operator = new Operator("DEFAULT");
     	operator.setId(1);
-    	form = new CompositeOperatorForm(operator);
+    	form = new CompositeContextForm(operator);
     	filter = new ProvinceFormFilterAdapter(form);
     }
     

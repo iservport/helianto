@@ -17,9 +17,9 @@ package org.helianto.user.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.UserGroup;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.user.domain.UserGroup;
 import org.helianto.user.form.UserRoleForm;
 import org.junit.After;
 import org.junit.Before;

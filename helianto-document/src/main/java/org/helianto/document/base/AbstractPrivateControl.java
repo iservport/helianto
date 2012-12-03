@@ -16,7 +16,7 @@
 package org.helianto.document.base;
 
 import org.helianto.core.Controllable;
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 
 
 /**

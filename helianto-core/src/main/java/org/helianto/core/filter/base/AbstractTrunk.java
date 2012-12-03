@@ -1,7 +1,7 @@
 package org.helianto.core.filter.base;
 
-import org.helianto.core.Entity;
 import org.helianto.core.TrunkEntity;
+import org.helianto.core.domain.Entity;
 
 /**
  * Base class to implement <code>RootEntity</code>.

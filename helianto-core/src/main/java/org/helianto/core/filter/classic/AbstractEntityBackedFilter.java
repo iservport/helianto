@@ -15,8 +15,8 @@
 
 package org.helianto.core.filter.classic;
 
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractListFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

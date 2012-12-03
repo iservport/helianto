@@ -18,9 +18,9 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Service;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
+import org.helianto.core.domain.Service;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserRole;
 
 /**
  * Class to support <code>UserRoleDao</code> tests.

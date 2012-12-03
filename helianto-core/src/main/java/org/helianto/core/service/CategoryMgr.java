@@ -17,9 +17,9 @@ package org.helianto.core.service;
 
 import java.util.List;
 
-import org.helianto.core.Category;
-import org.helianto.core.Entity;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.form.CategoryForm;
 

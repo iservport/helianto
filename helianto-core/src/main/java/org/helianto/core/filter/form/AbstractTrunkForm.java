@@ -1,7 +1,7 @@
 package org.helianto.core.filter.form;
 
-import org.helianto.core.Entity;
 import org.helianto.core.TrunkEntity;
+import org.helianto.core.domain.Entity;
 
 /**
  * Base class to trunk (aggregated to Entity) forms.

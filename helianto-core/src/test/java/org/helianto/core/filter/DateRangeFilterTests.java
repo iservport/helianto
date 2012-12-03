@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
 import org.helianto.core.TrunkEntity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.filter.base.AbstractDateIntervalFilterAdapter;
 import org.junit.Before;
 import org.junit.Test;

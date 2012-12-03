@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.KeyType;
+import org.helianto.core.domain.KeyType;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;

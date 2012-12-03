@@ -15,30 +15,30 @@
 
 package org.helianto.core.repository;
 
-import org.helianto.core.Category;
-import org.helianto.core.Country;
-import org.helianto.core.Credential;
-import org.helianto.core.Entity;
 import org.helianto.core.EntityPreference;
-import org.helianto.core.Identity;
-import org.helianto.core.InternalEnumerator;
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
-import org.helianto.core.PersonalAddress;
-import org.helianto.core.Province;
-import org.helianto.core.PublicAddress;
-import org.helianto.core.PublicEntity2;
-import org.helianto.core.PublicEntityKey;
-import org.helianto.core.PublicEnumerator;
 import org.helianto.core.Server;
-import org.helianto.core.Service;
-import org.helianto.core.Unit;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
-import org.helianto.core.UserRequest;
-import org.helianto.core.UserRole;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Country;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.KeyType;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.PersonalAddress;
+import org.helianto.core.domain.PrivateSequence;
+import org.helianto.core.domain.Province;
+import org.helianto.core.domain.PublicAddress;
+import org.helianto.core.domain.PublicEntity;
+import org.helianto.core.domain.PublicEntityKey;
+import org.helianto.core.domain.PublicSequence;
+import org.helianto.core.domain.Service;
+import org.helianto.core.domain.Unit;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserLog;
+import org.helianto.user.domain.UserRequest;
+import org.helianto.user.domain.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -123,16 +123,16 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Internal enumerator data access.
 	 */
 	@Bean
-	public FilterDao<InternalEnumerator> internalEnumeratorDao() {
-		return getFilterDao(InternalEnumerator.class, "entity", "typeName");
+	public FilterDao<PrivateSequence> internalEnumeratorDao() {
+		return getFilterDao(PrivateSequence.class, "entity", "typeName");
 	}
 
 	/**
 	 * Public enumerator data access.
 	 */
 	@Bean
-	public FilterDao<PublicEnumerator> publicEnumeratorDao() {
-		return getFilterDao(PublicEnumerator.class, "operator", "typeName");
+	public FilterDao<PublicSequence> publicEnumeratorDao() {
+		return getFilterDao(PublicSequence.class, "operator", "typeName");
 	}
 
 	/**
@@ -227,8 +227,8 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	 * Public entity data access.
 	 */
 	@Bean
-	public FilterDao<PublicEntity2> publicEntityDao() {
-		return getFilterDao(PublicEntity2.class, "entity", "entityAlias", "class");
+	public FilterDao<PublicEntity> publicEntityDao() {
+		return getFilterDao(PublicEntity.class, "entity", "entityAlias", "class");
 	}
 
 	/**

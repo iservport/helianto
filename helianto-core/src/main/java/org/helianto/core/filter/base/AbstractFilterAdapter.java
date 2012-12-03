@@ -1,12 +1,12 @@
 package org.helianto.core.filter.base;
 
-import org.helianto.core.UserGroup;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.def.NavigationMode;
 import org.helianto.core.filter.FormFilter;
 import org.helianto.core.filter.form.NavigableForm;
 import org.helianto.core.filter.form.SearchForm;
 import org.helianto.core.filter.form.TypeForm;
+import org.helianto.user.domain.UserGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

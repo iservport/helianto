@@ -18,7 +18,7 @@ package org.helianto.process.filter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.InheritanceType;
 import org.helianto.process.Operation;

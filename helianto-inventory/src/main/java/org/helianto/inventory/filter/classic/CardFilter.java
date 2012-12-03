@@ -2,10 +2,10 @@ package org.helianto.inventory.filter.classic;
 
 import javax.persistence.Transient;
 
-import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 import org.helianto.process.Process;
+import org.helianto.user.domain.User;
 
 public class CardFilter extends AbstractUserBackedCriteriaFilter {
 	

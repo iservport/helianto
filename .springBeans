@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[3.0.0.201208090952-RELEASE]]></pluginVersion>
+	<pluginVersion><![CDATA[3.1.0.201210040510-RELEASE]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
@@ -9,9 +9,7 @@
 	<configs>
 		<config>helianto-core/src/main/resources/META-INF/spring/core-context.xml</config>
 		<config>helianto-core/src/main/resources/META-INF/spring/dataSource.xml</config>
-		<config>helianto-core/src/main/resources/META-INF/spring/hibernate-context.xml</config>
 		<config>helianto-core/src/main/resources/META-INF/spring/security.xml</config>
-		<config>helianto-core/src/main/resources/META-INF/spring/support.xml</config>
 		<config>helianto-partner/src/main/resources/META-INF/spring/partner-context.xml</config>
 		<config>helianto-document/src/main/resources/META-INF/spring/document-context.xml</config>
 		<config>helianto-finance/src/main/resources/META-INF/spring/helianto-finance-context.xml</config>
@@ -21,7 +19,6 @@
 		<config>helianto-process/src/main/resources/META-INF/spring/process-context.xml</config>
 		<config>helianto-admin/src/main/webapps/WEB-INF/spring/root-context.xml</config>
 		<config>helianto-admin/src/main/webapps/WEB-INF/spring/appServlet/servlet-context.xml</config>
-		<config>helianto-core/target/classes/META-INF/spring/support.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

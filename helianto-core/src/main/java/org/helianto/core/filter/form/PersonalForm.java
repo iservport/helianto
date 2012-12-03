@@ -1,6 +1,6 @@
 package org.helianto.core.filter.form;
 
-import org.helianto.core.Identity;
+import org.helianto.core.domain.Identity;
 
 /**
  * Personal form interface.

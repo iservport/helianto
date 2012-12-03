@@ -17,7 +17,7 @@ package org.helianto.resource.service;
 
 import java.util.List;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.ResourceMgr;

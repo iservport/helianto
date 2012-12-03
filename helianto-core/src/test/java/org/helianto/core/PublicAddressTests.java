@@ -7,9 +7,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
-import org.helianto.core.PublicAddress;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Province;
+import org.helianto.core.domain.PublicAddress;
 import org.junit.Test;
 
 /**

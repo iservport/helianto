@@ -20,9 +20,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
-import org.helianto.core.Entity;
 import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.def.Resolution;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.base.AbstractJournal;
 import org.junit.Before;

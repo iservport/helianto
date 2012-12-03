@@ -17,7 +17,7 @@
 package org.helianto.core.standalone;
 
 import org.easymock.EasyMock;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.service.PostInstallationMgr;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.After;

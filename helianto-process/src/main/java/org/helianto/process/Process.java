@@ -24,7 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.partner.domain.Partner;
 

@@ -1,7 +1,7 @@
 package org.helianto.core.filter.form;
 
-import org.helianto.core.Province;
-import org.helianto.core.RootEntity;
+import org.helianto.core.domain.Province;
+import org.helianto.core.domain.type.RootEntity;
 
 /**
  * Public Address form interface.

@@ -1,6 +1,6 @@
 package org.helianto.resource.form;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.form.AbstractControllable;
 import org.helianto.resource.domain.ResourceGroup;
 

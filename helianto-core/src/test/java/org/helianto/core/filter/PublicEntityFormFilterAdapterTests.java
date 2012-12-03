@@ -2,10 +2,10 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
-import org.helianto.core.filter.form.CompositeEntityForm;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.filter.form.PublicEntityForm;
+import org.helianto.core.form.CompositeEntityForm;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;

@@ -2,8 +2,8 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Operator;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.filter.base.AbstractRoot;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 import org.junit.Before;

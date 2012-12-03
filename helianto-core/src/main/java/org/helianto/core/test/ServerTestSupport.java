@@ -18,11 +18,11 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Credential;
-import org.helianto.core.Operator;
 import org.helianto.core.Server;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.def.ServerType;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Operator;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class ServerTestSupport {

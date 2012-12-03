@@ -20,9 +20,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import org.easymock.EasyMock;
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
-import org.helianto.core.Service;
+import org.helianto.core.domain.KeyType;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Service;
 import org.helianto.core.service.PostInstallationMgr;
 import org.junit.After;
 import org.junit.Before;

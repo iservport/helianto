@@ -1,7 +1,7 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.Identity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
 
 /**

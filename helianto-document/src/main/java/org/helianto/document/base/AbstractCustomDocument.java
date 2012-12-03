@@ -21,7 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.document.Customizable;
 import org.helianto.document.domain.DocumentFolder;

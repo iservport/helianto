@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.domain.DocumentFolder;
 import org.junit.Test;

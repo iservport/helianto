@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
 import org.helianto.core.def.UserState;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.user.filter.UserFormFilterAdapter;
 import org.helianto.user.form.UserGroupForm;

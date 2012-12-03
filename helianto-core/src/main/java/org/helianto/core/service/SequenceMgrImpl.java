@@ -19,11 +19,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Entity;
-import org.helianto.core.InternalEnumerator;
 import org.helianto.core.Node;
-import org.helianto.core.Operator;
-import org.helianto.core.PublicEnumerator;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.PrivateSequence;
+import org.helianto.core.domain.PublicSequence;
 import org.helianto.core.number.DigitGenerationStrategy;
 import org.helianto.core.number.Numerable;
 import org.helianto.core.number.Sequenceable;
@@ -42,11 +42,11 @@ import org.springframework.stereotype.Service;
 public class SequenceMgrImpl implements SequenceMgr {
 	
 	public long findOrCreatePublicNumber(Operator operator, String publicNumberKey) {
-		PublicEnumerator enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
+		PublicSequence enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
 		if (enumerator!=null) {
 			return enumerator.getLastNumber();
 		} else  {
-            enumerator = new PublicEnumerator(operator, publicNumberKey);
+            enumerator = new PublicSequence(operator, publicNumberKey);
             publicEnumeratorDao.saveOrUpdate(enumerator);
             logger.debug("Created PublicEnumerator: {}", enumerator);
             return 1;
@@ -54,7 +54,7 @@ public class SequenceMgrImpl implements SequenceMgr {
 	}
 	
     public long findNewPublicNumber(Operator operator, String publicNumberKey) {
-    	PublicEnumerator enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
+    	PublicSequence enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
         if (enumerator!=null) {
             long lastNumber = enumerator.getLastNumber();
             enumerator.setLastNumber(lastNumber+1);
@@ -62,7 +62,7 @@ public class SequenceMgrImpl implements SequenceMgr {
             logger.debug("Incremented existing PublicEnumerator: {}", enumerator);
             return lastNumber;
         } else  {
-            enumerator = new PublicEnumerator();
+            enumerator = new PublicSequence();
             enumerator.setOperator(operator);
             enumerator.setTypeName(publicNumberKey);
             enumerator.setLastNumber(2);    
@@ -73,11 +73,11 @@ public class SequenceMgrImpl implements SequenceMgr {
     }
     
 	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey) {
-		InternalEnumerator enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
+		PrivateSequence enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
 		if (enumerator!=null) {
 			return enumerator.getLastNumber();
 		} else  {
-            enumerator = new InternalEnumerator(entity, internalNumberKey);
+            enumerator = new PrivateSequence(entity, internalNumberKey);
             internalEnumeratorDao.saveOrUpdate(enumerator);
             logger.debug("Created InternalEnumerator: {}", enumerator);
             return 1;
@@ -85,7 +85,7 @@ public class SequenceMgrImpl implements SequenceMgr {
 	}
 	
     public long newInternalNumber(Entity entity, String internalNumberKey) {
-        InternalEnumerator enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
+        PrivateSequence enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
         if (enumerator!=null) {
             long lastNumber = enumerator.getLastNumber();
             enumerator.setLastNumber(lastNumber+1);
@@ -93,7 +93,7 @@ public class SequenceMgrImpl implements SequenceMgr {
             logger.debug("Incremented existing InternalEnumerator: {}", enumerator);
             return lastNumber;
         } else  {
-            enumerator = new InternalEnumerator();
+            enumerator = new PrivateSequence();
             enumerator.setEntity(entity);
             enumerator.setTypeName(internalNumberKey);
             enumerator.setLastNumber(2);    
@@ -146,18 +146,18 @@ public class SequenceMgrImpl implements SequenceMgr {
 
     // collabs 
     
-	private BasicDao<PublicEnumerator> publicEnumeratorDao;
-	private BasicDao<InternalEnumerator> internalEnumeratorDao;
+	private BasicDao<PublicSequence> publicEnumeratorDao;
+	private BasicDao<PrivateSequence> internalEnumeratorDao;
 	private DigitGenerationStrategy digitGenerationStrategy;
 	private TreeBuilder treeBuilder;
 	
     @Resource(name="publicEnumeratorDao")
-	public void setPublicEnumeratorDao( BasicDao<PublicEnumerator> publicEnumeratorDao) {
+	public void setPublicEnumeratorDao( BasicDao<PublicSequence> publicEnumeratorDao) {
 		this.publicEnumeratorDao = publicEnumeratorDao;
 	}
 
     @Resource(name="internalEnumeratorDao")
-    public void setInternalEnumeratorDao(BasicDao<InternalEnumerator> internalEnumeratorDao) {
+    public void setInternalEnumeratorDao(BasicDao<PrivateSequence> internalEnumeratorDao) {
         this.internalEnumeratorDao = internalEnumeratorDao;
     }
     

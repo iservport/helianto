@@ -15,7 +15,7 @@
 
 package org.helianto.core.security;
 
-import org.helianto.core.Credential;
+import org.helianto.core.domain.Credential;
 
 /**
  * An interface to access sensible <code>User</code> data.

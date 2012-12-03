@@ -2,8 +2,8 @@ package org.helianto.core.security;
 
 import java.util.List;
 
-import org.helianto.core.User;
-import org.helianto.core.UserGroup;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

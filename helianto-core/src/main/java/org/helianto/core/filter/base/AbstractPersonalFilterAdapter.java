@@ -1,8 +1,8 @@
 package org.helianto.core.filter.base;
 
-import org.helianto.core.Identity;
 import org.helianto.core.PersonalEntity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Identity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

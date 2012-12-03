@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;

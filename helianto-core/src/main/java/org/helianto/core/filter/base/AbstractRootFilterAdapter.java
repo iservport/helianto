@@ -1,8 +1,8 @@
 package org.helianto.core.filter.base;
 
-import org.helianto.core.Operator;
-import org.helianto.core.RootEntity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.type.RootEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

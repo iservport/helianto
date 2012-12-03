@@ -2,13 +2,13 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.Operator;
 import org.helianto.core.TrunkEntity;
-import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.filter.base.AbstractUserFilterAdapter;
+import org.helianto.user.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package org.helianto.core.filter.form;
 
 import org.helianto.core.Controllable;
-import org.helianto.core.UserGroup;
+import org.helianto.user.domain.UserGroup;
 
 /**
  * User request form.

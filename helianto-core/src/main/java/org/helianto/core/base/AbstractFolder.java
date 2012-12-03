@@ -25,8 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Folder;
+import org.helianto.core.domain.Entity;
 
 /**
  * Base class to represent a folder.

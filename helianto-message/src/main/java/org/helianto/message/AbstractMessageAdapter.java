@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.helianto.core.Identity;
+import org.helianto.core.domain.Identity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Operator;
 import org.junit.Before;
 import org.junit.Test;
 

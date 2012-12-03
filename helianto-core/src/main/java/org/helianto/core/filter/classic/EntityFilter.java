@@ -16,8 +16,8 @@
 
 package org.helianto.core.filter.classic;
 
-import org.helianto.core.Operator;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Operator;
 
 /**
  * Entity filter.

@@ -22,8 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.KeyType;
 import org.helianto.core.base.AbstractKeyStringValue;
+import org.helianto.core.domain.KeyType;
 /**
  * The content of a key associated to the process document.
  * 

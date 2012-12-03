@@ -1,7 +1,7 @@
 package org.helianto.core.utils;
 
-import org.helianto.core.Province;
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.domain.Province;
 
 /**
  * Helper class to handle addresses.

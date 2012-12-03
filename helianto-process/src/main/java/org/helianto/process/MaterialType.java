@@ -25,8 +25,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Unit;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Unit;
 
 /**
  * Represent a material type.

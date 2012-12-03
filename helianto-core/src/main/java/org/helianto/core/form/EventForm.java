@@ -2,8 +2,8 @@ package org.helianto.core.form;
 
 import java.util.Date;
 
-import org.helianto.core.Identity;
 import org.helianto.core.TrunkEntity;
+import org.helianto.core.domain.Identity;
 
 
 /**

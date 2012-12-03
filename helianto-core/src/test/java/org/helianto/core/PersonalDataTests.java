@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
+import org.helianto.core.domain.PersonalData;
 import org.junit.Test;
 
 /**

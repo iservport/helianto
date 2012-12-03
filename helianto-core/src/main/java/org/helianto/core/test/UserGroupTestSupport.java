@@ -3,8 +3,8 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Entity;
-import org.helianto.core.UserGroup;
+import org.helianto.core.domain.Entity;
+import org.helianto.user.domain.UserGroup;
 
 /**
  * Class to support <code>UserGroupDao</code> tests.

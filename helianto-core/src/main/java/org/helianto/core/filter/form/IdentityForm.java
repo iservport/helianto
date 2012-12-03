@@ -2,7 +2,7 @@ package org.helianto.core.filter.form;
 
 import java.util.Collection;
 
-import org.helianto.core.Identity;
+import org.helianto.core.domain.Identity;
 
 /**
  * Identity form.

@@ -17,9 +17,9 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Category;
-import org.helianto.core.Entity;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.nature.Customer;

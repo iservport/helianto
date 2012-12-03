@@ -22,13 +22,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.helianto.core.Credential;
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
-import org.helianto.core.User;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
 import org.helianto.core.def.ActivityState;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,11 +38,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  * Models core user information retrieved by
  * {@link org.springframework.security.core.userdetails.UserDetailsService} as an adapter class
- * to {@link org.helianto.core.User}.
+ * to {@link org.helianto.user.domain.User}.
  * 
  * <p>
  * A new <code>UserDetailsAdapter</code> may be created from a single
- * {@link org.helianto.core.User} and the correspondent credential to be expected 
+ * {@link org.helianto.user.domain.User} and the correspondent credential to be expected 
  * during authentication. A new <code>UserDetailsAdapter</code> may also be created from
  * a group with no credential specified, where the authentication is then considered 
  * to be anonymous.

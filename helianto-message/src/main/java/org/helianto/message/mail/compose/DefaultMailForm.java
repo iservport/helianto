@@ -18,9 +18,9 @@ package org.helianto.message.mail.compose;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Operator;
 
 /**
  * A base class to all forms to be submitted as mail forms.

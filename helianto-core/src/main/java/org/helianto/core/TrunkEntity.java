@@ -18,6 +18,8 @@ package org.helianto.core;
 
 import java.io.Serializable;
 
+import org.helianto.core.domain.Entity;
+
 /**
  * To be implemented by any entity directly related to an <code>Entity</code>.
  * 

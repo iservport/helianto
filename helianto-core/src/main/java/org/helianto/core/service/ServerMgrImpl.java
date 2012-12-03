@@ -20,18 +20,18 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.Operator;
 import org.helianto.core.Server;
-import org.helianto.core.Service;
-import org.helianto.core.User;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Service;
 import org.helianto.core.filter.ServerFilterAdapter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -3,8 +3,8 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.KeyType;
+import org.helianto.core.domain.Operator;
 
 /**
  * Class to support <code>KeyTypeDao</code> tests.

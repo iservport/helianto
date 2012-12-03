@@ -6,12 +6,12 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Credential;
-import org.helianto.core.User;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
+import org.helianto.core.domain.Credential;
 import org.helianto.core.service.SecurityMgr;
 import org.helianto.user.UserMgr;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;

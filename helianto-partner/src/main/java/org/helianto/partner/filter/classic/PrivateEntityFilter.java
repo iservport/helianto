@@ -17,10 +17,10 @@ package org.helianto.partner.filter.classic;
 
 import java.io.Serializable;
 
-import org.helianto.core.Entity;
-import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
+import org.helianto.user.domain.User;
 
 /**
  * Partner registry filter.

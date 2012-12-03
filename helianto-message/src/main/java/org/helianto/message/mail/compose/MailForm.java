@@ -17,8 +17,8 @@ package org.helianto.message.mail.compose;
 
 import java.util.Set;
 
-import org.helianto.core.Identity;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Operator;
 
 /**
  * Common interface to all mail forms.

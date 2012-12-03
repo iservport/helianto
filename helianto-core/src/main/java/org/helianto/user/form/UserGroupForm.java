@@ -1,6 +1,6 @@
 package org.helianto.user.form;
 
-import org.helianto.core.Identity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.form.ExclusionForm;
 import org.helianto.core.filter.form.PersonalForm;
 

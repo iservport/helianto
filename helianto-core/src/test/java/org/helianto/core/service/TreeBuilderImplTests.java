@@ -22,9 +22,9 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Identity;
 import org.helianto.core.Node;
 import org.helianto.core.base.AbstractNode;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.test.IdentityTestSupport;
 import org.junit.Before;
 import org.junit.Test;

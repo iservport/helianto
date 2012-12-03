@@ -17,9 +17,8 @@ package org.helianto.process.service;
 
 import java.util.List;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Node;
-import org.helianto.core.User;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.partner.service.PartnerMgr;
 import org.helianto.process.Operation;
@@ -27,6 +26,7 @@ import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
 import org.helianto.process.ProcessDocumentAssociation;
 import org.helianto.process.Setup;
+import org.helianto.user.domain.User;
 
 /**
  * <code>ProcessMgr</code> interface.

@@ -11,7 +11,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.def.UserState;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.DomainTestSupport;
+import org.helianto.user.domain.UserGroup;
 import org.junit.Test;
 
 /**

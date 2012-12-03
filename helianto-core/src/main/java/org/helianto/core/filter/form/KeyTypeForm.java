@@ -1,6 +1,6 @@
 package org.helianto.core.filter.form;
 
-import org.helianto.core.RootEntity;
+import org.helianto.core.domain.type.RootEntity;
 
 /**
  * Key type form interface.

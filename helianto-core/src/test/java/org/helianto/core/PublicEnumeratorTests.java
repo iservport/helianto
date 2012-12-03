@@ -3,6 +3,8 @@ package org.helianto.core;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.PublicSequence;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 
@@ -18,8 +20,8 @@ public class PublicEnumeratorTests {
         Operator operator = new Operator("TEST");
         String typeName = DomainTestSupport.STRING_TEST_VALUE;
         
-        PublicEnumerator publicEnumerator = new PublicEnumerator(operator, typeName);
-        PublicEnumerator copy = (PublicEnumerator) DomainTestSupport.minimalEqualsTest(publicEnumerator);
+        PublicSequence publicEnumerator = new PublicSequence(operator, typeName);
+        PublicSequence copy = (PublicSequence) DomainTestSupport.minimalEqualsTest(publicEnumerator);
         
         copy.setOperator(null);
         copy.setTypeName(typeName);

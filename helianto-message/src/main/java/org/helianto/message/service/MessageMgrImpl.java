@@ -25,9 +25,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Identity;
-import org.helianto.core.User;
-import org.helianto.core.UserGroup;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
@@ -38,6 +36,8 @@ import org.helianto.message.domain.NotificationEvent;
 import org.helianto.message.filter.NotificationEventFormFilterAdapter;
 import org.helianto.message.form.NotificationEventForm;
 import org.helianto.message.sender.SendGridMessageAdapter;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;

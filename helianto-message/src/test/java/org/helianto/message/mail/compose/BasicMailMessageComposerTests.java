@@ -21,10 +21,10 @@ import static org.junit.Assert.assertSame;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.helianto.core.Credential;
-import org.helianto.core.Identity;
 import org.helianto.core.IdentityType;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Before;
