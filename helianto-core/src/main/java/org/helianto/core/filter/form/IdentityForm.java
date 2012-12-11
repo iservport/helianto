@@ -9,7 +9,8 @@ import org.helianto.core.domain.Identity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface IdentityForm {
+public interface IdentityForm 
+	extends SearchForm {
 	
 	/**
 	 * Identity principal.
@@ -25,11 +26,6 @@ public interface IdentityForm {
 	 * Identity last name.
 	 */
 	public String getLastName();
-	
-	/**
-	 * Identity name or principal.
-	 */
-	public String getNameLike();
 	
 	/**
 	 * Gender.
