@@ -32,7 +32,7 @@ import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.KeyTypeFormFilterAdapter;
 import org.helianto.core.filter.ProvinceFormFilterAdapter;
-import org.helianto.core.filter.form.KeyTypeForm;
+import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.user.domain.UserRole;

@@ -2,8 +2,6 @@ package org.helianto.core.form;
 
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
-import org.helianto.core.filter.form.AbstractRootForm;
-import org.helianto.core.filter.form.PublicAddressForm;
 
 /**
  * Composite operator form.

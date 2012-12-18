@@ -29,9 +29,9 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Programmable;
-import org.helianto.core.TrunkEntity;
 import org.helianto.core.base.AbstractHumanReadable;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.type.TrunkEntity;
 
 /**
  * Categories.  
@@ -43,9 +43,7 @@ import org.helianto.core.def.CategoryGroup;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "categoryGroup", "categoryCode"})}
 )
 public class Category 
-
 	extends AbstractHumanReadable
-
 	implements 
 	  TrunkEntity
 	, Programmable

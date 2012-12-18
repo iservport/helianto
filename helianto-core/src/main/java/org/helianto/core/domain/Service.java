@@ -101,7 +101,7 @@ public class Service implements RootEntity {
     /**
      * Comma separated list of applicable service extension codes.
      */
-    @Column(length=64)
+    @Column(length=72)
     public String getServiceExtensions() {
 		return serviceExtensions;
 	}

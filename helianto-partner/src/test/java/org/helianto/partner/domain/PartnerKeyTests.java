@@ -6,8 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PartnerKey;
 import org.junit.Test;
 
 /**

@@ -17,7 +17,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.core.filter.form.CategoryForm;
+import org.helianto.core.form.CategoryForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

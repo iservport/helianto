@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.IdentityType;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.Notification;
-import org.helianto.core.filter.form.IdentityForm;
+import org.helianto.core.form.IdentityForm;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -20,7 +20,7 @@ import java.util.Collection;
 
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.FormFilter;
-import org.helianto.core.filter.form.PageForm;
+import org.helianto.core.form.PageForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

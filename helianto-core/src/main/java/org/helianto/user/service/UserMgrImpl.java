@@ -34,7 +34,7 @@ import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserAssociationFormFilterAdapter;
-import org.helianto.core.filter.form.AssociationForm;
+import org.helianto.core.form.AssociationForm;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.IdentityMgr;
 import org.helianto.core.service.PublicEntityMgr;

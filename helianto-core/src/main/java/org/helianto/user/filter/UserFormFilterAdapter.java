@@ -102,6 +102,7 @@ public class UserFormFilterAdapter
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("userKey", getForm().getUserKey(), mainCriteriaBuilder);
 		appendEqualFilter("userState", getForm().getUserState(), mainCriteriaBuilder);
+		appendInArray("id", stringArrayConverter(getForm().getUserIdArray()), mainCriteriaBuilder);
         appendExclusionsFilter( mainCriteriaBuilder);
 	}
 	

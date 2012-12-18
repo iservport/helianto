@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.UserRequestFormFilterAdapter;
-import org.helianto.core.filter.form.UserRequestForm;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.user.domain.UserRequest;
+import org.helianto.user.form.UserRequestForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

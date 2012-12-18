@@ -1,5 +1,7 @@
 package org.helianto.core.filter;
 
+import org.helianto.core.form.ParentForm;
+
 /**
  * Interface to filters including a parent field.
  * 

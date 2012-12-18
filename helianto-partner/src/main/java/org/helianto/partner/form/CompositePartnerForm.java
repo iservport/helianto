@@ -3,8 +3,8 @@ package org.helianto.partner.form;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
-import org.helianto.core.filter.form.KeyTypeForm;
 import org.helianto.core.form.CompositeEntityForm;
+import org.helianto.core.form.KeyTypeForm;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
 
@@ -44,6 +44,7 @@ public class CompositePartnerForm
     private int userGroupParentId;
     private String userKey;
     private char userState;
+	private String[] userIdArray;
 	
 	/**
 	 * Entity constructor.
@@ -198,6 +199,13 @@ public class CompositePartnerForm
 		this.userState = userState;
 	}
 	
+	public String[] getUserIdArray() {
+		return userIdArray;
+	}
+	public void setUserIdArray(String[] userIdArray) {
+		this.userIdArray = userIdArray;
+	}
+	
 	/**
 	 * Clone the form and set a new parent.
 	 * 
@@ -212,5 +220,5 @@ public class CompositePartnerForm
 			throw new IllegalArgumentException("Unable to clone CompositePartnerForm.");
 		}
 	}
-	
+
 }

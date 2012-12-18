@@ -119,6 +119,11 @@ public class UserRequest
     public String getInternalNumberKey() {
     	return "LOGINREQ";
     }
+    
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
 
     /**
      * Primary key.

@@ -25,8 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.helianto.core.Folder;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.type.FolderEntity;
 
 /**
  * Base class to represent a folder.
@@ -36,7 +36,7 @@ import org.helianto.core.domain.Entity;
 @javax.persistence.MappedSuperclass
 public abstract class AbstractFolder
 
-	implements Folder
+	implements FolderEntity
 
 {
 

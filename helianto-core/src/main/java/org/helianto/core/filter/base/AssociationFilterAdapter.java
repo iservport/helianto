@@ -1,7 +1,7 @@
 package org.helianto.core.filter.base;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.form.AssociationForm;
+import org.helianto.core.form.AssociationForm;
 
 /**
  * Association form filter adapter.

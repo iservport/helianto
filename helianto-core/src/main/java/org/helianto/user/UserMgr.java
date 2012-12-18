@@ -22,7 +22,7 @@ import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.form.AssociationForm;
+import org.helianto.core.form.AssociationForm;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;

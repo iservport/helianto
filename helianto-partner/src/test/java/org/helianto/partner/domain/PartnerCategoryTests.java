@@ -8,9 +8,6 @@ import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PartnerCategory;
-import org.helianto.partner.domain.PrivateEntity2;
 import org.junit.Test;
 
 /**

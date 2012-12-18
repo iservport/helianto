@@ -78,6 +78,11 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
 		return "PROC";
 	}
  
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     /**
      * Partner, if exists.
      */

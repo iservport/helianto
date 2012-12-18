@@ -23,8 +23,8 @@ import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.domain.PublicEntityKey;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.form.PublicAddressForm;
-import org.helianto.core.filter.form.PublicEntityForm;
+import org.helianto.core.form.PublicAddressForm;
+import org.helianto.core.form.PublicEntityForm;
 
 /**
  * Public entity service interface.

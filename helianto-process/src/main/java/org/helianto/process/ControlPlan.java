@@ -72,6 +72,11 @@ public class ControlPlan extends AbstractDocument implements Sequenceable {
 		return "CTRLPLN";
 	}
     
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     /**
      * Phase.
      */

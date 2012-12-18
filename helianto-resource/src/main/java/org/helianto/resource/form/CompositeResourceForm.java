@@ -1,7 +1,7 @@
 package org.helianto.resource.form;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.form.AbstractControllable;
+import org.helianto.core.form.AbstractControllable;
 import org.helianto.resource.domain.ResourceGroup;
 
 /**
@@ -45,12 +45,6 @@ public class CompositeResourceForm
 		setResourceGroup(resourceGroup);
 	}
 	
-	@Override
-	public void reset() {
-		super.reset();
-		setResourceType(' ');
-	}
-
 	public char getType() {
 		return type;
 	}

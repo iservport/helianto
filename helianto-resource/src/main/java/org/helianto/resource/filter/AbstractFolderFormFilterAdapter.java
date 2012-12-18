@@ -2,7 +2,7 @@ package org.helianto.resource.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.core.filter.form.FolderForm;
+import org.helianto.core.form.FolderForm;
 
 /**
  * Abstract folder form filter adapter.

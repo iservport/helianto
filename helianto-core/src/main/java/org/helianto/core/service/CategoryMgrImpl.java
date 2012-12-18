@@ -24,7 +24,7 @@ import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.CategoryFormFilterAdapter;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.form.CategoryForm;
+import org.helianto.core.form.CategoryForm;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

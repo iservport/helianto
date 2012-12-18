@@ -18,7 +18,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
-import org.helianto.core.filter.form.EntityForm;
+import org.helianto.core.form.EntityForm;
 
 /**
  * Entity filter adapter.

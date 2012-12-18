@@ -1,7 +1,7 @@
 package org.helianto.user.form;
 
-import org.helianto.core.TrunkEntity;
-import org.helianto.core.filter.form.SearchForm;
+import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.form.SearchForm;
 
 /**
  * User form interface.
@@ -22,5 +22,10 @@ public interface UserForm
 	 * User state.
 	 */
 	public char getUserState();
-			
+	
+	/**
+	 * User id array.
+	 */
+	public String[] getUserIdArray();
+	
 }

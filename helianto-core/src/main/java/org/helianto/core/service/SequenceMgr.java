@@ -20,6 +20,8 @@ import java.util.List;
 import org.helianto.core.Node;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.PrivateSequence;
+import org.helianto.core.form.PrivateSequenceForm;
 import org.helianto.core.number.Numerable;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.number.Verifiable;
@@ -38,7 +40,7 @@ public interface SequenceMgr {
 	 * @param operator
 	 * @param publicNumberKey
 	 */
-	public long findOrCreatePublicNumber(Operator operator, String publicNumberKey);
+	long findOrCreatePublicNumber(Operator operator, String publicNumberKey);
 	
 	/**
 	 * Create a new public number from a sequence named after a given public 
@@ -47,7 +49,17 @@ public interface SequenceMgr {
 	 * @param operator
 	 * @param publicNumberKey
 	 */
-	public long findNewPublicNumber(Operator operator, String publicNumberKey);
+	long findNewPublicNumber(Operator operator, String publicNumberKey);
+	
+	/**
+	 * Find an internal number from a sequence named after a given internal 
+	 * number key.
+	 * 
+	 * @param entity
+	 * @param internalNumberKey
+	 * @param startNumber
+	 */
+	long findOrCreateInternalNumber(Entity entity, String internalNumberKey, int startNumber);
 	
 	/**
 	 * Find an internal number from a sequence named after a given internal 
@@ -56,16 +68,40 @@ public interface SequenceMgr {
 	 * @param entity
 	 * @param internalNumberKey
 	 */
-	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey);
+	long findOrCreateInternalNumber(Entity entity, String internalNumberKey);
+	
+	/**
+	 * Find private sequences.
+	 * 
+	 * @param form
+	 */
+	List<PrivateSequence> findPrivateSequences(PrivateSequenceForm form);
+	
+	/**
+	 * Store private sequences.
+	 * 
+	 * @param privateSequence
+	 */
+	PrivateSequence storePrivateSequence(PrivateSequence privateSequence);
 	
 	/**
 	 * Create a new internal number from a sequence named after a given internal 
-	 * number key. If the sequence does not exist, start a new one.
+	 * number key. If the sequence does not exist, start a new one from startNumber.
+	 * 
+	 * @param entity
+	 * @param internalNumberKey
+	 * @param startNumber
+	 */
+	long newInternalNumber(Entity entity, String internalNumberKey, int startNumber);
+	
+	/**
+	 * Create a new internal number from a sequence named after a given internal 
+	 * number key. If the sequence does not exist, start a new one from 1.
 	 * 
 	 * @param entity
 	 * @param internalNumberKey
 	 */
-	public long newInternalNumber(Entity entity, String internalNumberKey);
+	long newInternalNumber(Entity entity, String internalNumberKey);
 	
 	/**
 	 * Inspect the <code>publicNumber</code> attribute of any class
@@ -75,7 +111,7 @@ public interface SequenceMgr {
 	 * 
 	 * @param sequenceable
 	 */
-	public void validatePublicNumber(Numerable numerable);
+	void validatePublicNumber(Numerable numerable);
 	
 	/**
 	 * Inspect the <code>internalNumber</code> attribute of any class
@@ -85,7 +121,7 @@ public interface SequenceMgr {
 	 * 
 	 * @param sequenceable
 	 */
-	public void validateInternalNumber(Sequenceable sequenceable);
+	void validateInternalNumber(Sequenceable sequenceable);
 	
 	/**
 	 * Use reflection to inspect the <code>verifiable</code> parameter and, if it implements
@@ -93,13 +129,13 @@ public interface SequenceMgr {
 	 * 
 	 * @param verifiable
 	 */
-	public void generateVerificationDigit(Verifiable verifiable);
+	void generateVerificationDigit(Verifiable verifiable);
 	
 	/**
 	 * Create a tree.
 	 * 
 	 * @param root
 	 */
-	public List<Node> prepareTree(Node root);
+	List<Node> prepareTree(Node root);
 	
 }

@@ -19,9 +19,9 @@ package org.helianto.core.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.helianto.core.Node;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

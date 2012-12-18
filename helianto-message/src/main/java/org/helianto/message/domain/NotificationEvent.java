@@ -74,6 +74,11 @@ public class NotificationEvent
     	return "NOTIF";
     }
     
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     public long getInternalNumber() {
 		return internalNumber;
 	}

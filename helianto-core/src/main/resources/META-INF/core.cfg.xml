@@ -29,7 +29,6 @@
 		<mapping class="org.helianto.core.domain.Service"  />
 		<mapping class="org.helianto.core.domain.Unit"  />
 
-		<mapping class="org.helianto.core.EntityPreference"  />
 		<mapping class="org.helianto.core.Server"  />
 		<mapping class="org.helianto.core.RootUser"  />
 

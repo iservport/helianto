@@ -66,6 +66,11 @@ public class Inventory extends AbstractRequirement {
 		return "INVENT";
 	}
 
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
 	/**
 	 * Default constructor.
 	 */

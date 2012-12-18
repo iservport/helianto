@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
-import org.helianto.core.filter.form.AbstractSearchForm;
+import org.helianto.core.form.AbstractSearchForm;
 import org.helianto.core.form.CompositeContextForm;
 import org.helianto.core.form.ProvinceForm;
 import org.junit.Before;

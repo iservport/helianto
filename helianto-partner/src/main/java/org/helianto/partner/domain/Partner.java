@@ -35,11 +35,11 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Address;
 import org.helianto.core.BusinessAddress;
-import org.helianto.core.TrunkEntity;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Phone;
 import org.helianto.core.domain.Province;
+import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.partner.PartnerState;
 /**
  * Base class to represent the relationship between the organization and other entities.

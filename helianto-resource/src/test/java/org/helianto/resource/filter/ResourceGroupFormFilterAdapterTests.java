@@ -6,7 +6,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.resource.def.ResourceType;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.filter.ResourceGroupFormFilterAdapter;
 import org.helianto.resource.form.CompositeResourceForm;
 import org.helianto.resource.form.ResourceGroupForm;
 import org.junit.Before;

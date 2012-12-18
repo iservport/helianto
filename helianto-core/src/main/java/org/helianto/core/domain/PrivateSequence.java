@@ -20,8 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.TrunkEntity;
 import org.helianto.core.base.AbstractEnumerator;
+import org.helianto.core.domain.type.TrunkEntity;
 /**
  * A class to hold last value for internal number lists.
  * 
@@ -31,7 +31,9 @@ import org.helianto.core.base.AbstractEnumerator;
 @Table(name="core_internalenum",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "typeName"})}
 )
-public class PrivateSequence extends AbstractEnumerator implements TrunkEntity {
+public class PrivateSequence 
+	extends AbstractEnumerator 
+	implements TrunkEntity {
 
     private static final long serialVersionUID = 1L;
     private Entity entity;
@@ -62,6 +64,32 @@ public class PrivateSequence extends AbstractEnumerator implements TrunkEntity {
     public PrivateSequence(Entity entity, String typeName) {
     	this(entity);
     	setTypeName(typeName);
+    	parseTypeName(this);
+    }
+    
+    /**
+     * Utility method to allow type name to carry sequence generation information.
+     * 
+     * <p>
+     * Default implementation accepts the pattern ${internalNumberKey}:${startNumber}.
+     * </p>
+     * 
+     * @param privateSequence
+     */
+    public static void parseTypeName(PrivateSequence privateSequence) {
+    	if (privateSequence!=null && privateSequence.getTypeName()!=null) {
+        	String[] segments = privateSequence.getTypeName().replace(" ",  "").split(":");
+    		if (segments.length>1) {
+    			privateSequence.setTypeName(segments[0]);
+    			try {
+    				int startNumber = Integer.parseInt(segments[1]);
+    				privateSequence.setStartNumber(startNumber);
+    			}
+    			catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    		}
+    	}
     }
 
     /**

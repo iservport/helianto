@@ -18,7 +18,7 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Operator;
-import org.helianto.core.filter.form.ServiceForm;
+import org.helianto.core.form.ServiceForm;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Before;
 import org.junit.Test;

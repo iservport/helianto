@@ -1,8 +1,8 @@
 package org.helianto.user.form;
 
 import org.helianto.core.domain.Identity;
-import org.helianto.core.filter.form.ExclusionForm;
-import org.helianto.core.filter.form.PersonalForm;
+import org.helianto.core.form.ExclusionForm;
+import org.helianto.core.form.PersonalForm;
 
 /**
  * User group form interface.
@@ -36,6 +36,5 @@ public interface UserGroupForm
 	 * Parent user key.
 	 */
 	public String getParentUserKey();
-	
 
 }

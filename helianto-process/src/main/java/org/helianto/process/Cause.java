@@ -64,6 +64,11 @@ public class Cause implements java.io.Serializable, Sequenceable {
     	return "CAUSE";
     }
 
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     /** 
      * Default constructor.
      */

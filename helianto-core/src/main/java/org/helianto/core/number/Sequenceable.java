@@ -26,6 +26,11 @@ public interface Sequenceable extends Internal {
 	/**
 	 * InternalNumber key.
 	 */
-	public String getInternalNumberKey();
+	String getInternalNumberKey();
+	
+	/**
+	 * The sequence start number.
+	 */
+	int getStartNumber();
 
 }

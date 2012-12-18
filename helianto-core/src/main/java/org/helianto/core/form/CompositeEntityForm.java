@@ -3,11 +3,6 @@ package org.helianto.core.form;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
-import org.helianto.core.filter.form.AbstractTrunkForm;
-import org.helianto.core.filter.form.EntityForm;
-import org.helianto.core.filter.form.KeyTypeForm;
-import org.helianto.core.filter.form.PublicAddressForm;
-import org.helianto.core.filter.form.PublicEntityForm;
 
 /**
  * Composite entity form.
@@ -15,9 +10,7 @@ import org.helianto.core.filter.form.PublicEntityForm;
  * @author mauriciofernandesdecastro
  */
 public class CompositeEntityForm 
-
 	extends AbstractTrunkForm
-
 	implements 
 	  EntityForm
 	, PublicEntityForm
@@ -74,6 +67,17 @@ public class CompositeEntityForm
 	public CompositeEntityForm(Entity entity) {
 		this();
 		setEntity(entity);
+	}
+	
+	/**
+	 * Key code constructor.
+	 * 
+	 * @param operator
+	 * @param keyCode
+	 */
+	public CompositeEntityForm(Operator operator, String keyCode) {
+		this(operator);
+		setKeyCode(keyCode);
 	}
 	
 	public void reset() {

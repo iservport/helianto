@@ -9,7 +9,6 @@ import org.helianto.core.def.UserState;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.user.filter.UserFormFilterAdapter;
 import org.helianto.user.form.UserGroupForm;
 import org.junit.After;
 import org.junit.Before;

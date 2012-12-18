@@ -6,7 +6,6 @@ import java.util.Date;
 
 import org.helianto.core.filter.classic.DateFilterMode;
 import org.helianto.core.test.UserTestSupport;
-import org.helianto.inventory.filter.classic.ProcessRequirementFilter;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -145,6 +145,12 @@ public class CardSet implements java.io.Serializable, Sequenceable {
 	public String getInternalNumberKey() {
 		return "CARDSET";
 	}
+    
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     @Transient
     public String getCardSetLabel() {
     	return new StringBuilder()

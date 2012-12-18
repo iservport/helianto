@@ -69,6 +69,11 @@ public class Picking implements Serializable, Sequenceable {
 		return "PICKING";
 	}
     
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     /**
      * Constructor.
      */

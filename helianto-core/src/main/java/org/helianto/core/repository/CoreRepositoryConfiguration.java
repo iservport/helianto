@@ -15,7 +15,6 @@
 
 package org.helianto.core.repository;
 
-import org.helianto.core.EntityPreference;
 import org.helianto.core.Server;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Country;
@@ -85,14 +84,6 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	@Bean
 	public FilterDao<Entity> entityDao() {
 		return getFilterDao(Entity.class, "operator", "alias");
-	}
-
-	/**
-	 * Entity preference data access.
-	 */
-	@Bean
-	public FilterDao<EntityPreference> entityPreferenceDao() {
-		return getFilterDao(EntityPreference.class, "entity", "keyType");
 	}
 
 	/**

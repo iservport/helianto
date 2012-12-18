@@ -27,7 +27,6 @@ import org.helianto.process.InheritanceType;
 import org.helianto.process.Operation;
 import org.helianto.process.Process;
 import org.helianto.process.ProcessDocument;
-import org.helianto.process.filter.classic.ProcessDocumentFilter;
 import org.junit.Before;
 import org.junit.Test;
 

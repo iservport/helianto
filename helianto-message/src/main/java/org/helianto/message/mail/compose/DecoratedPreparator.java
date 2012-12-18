@@ -21,9 +21,9 @@ import java.util.Set;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.helianto.core.domain.Identity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.helianto.core.domain.Identity;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 

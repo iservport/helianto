@@ -77,6 +77,11 @@ public class Operation extends DerivedProcessDocument implements Sequenceable {
 		return "OPER";
 	}
  
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     /**
      * Operation type.
      */

@@ -1,7 +1,7 @@
 package org.helianto.partner.form;
 
-import org.helianto.core.filter.form.KeyStringForm;
-import org.helianto.core.filter.form.ParentForm;
+import org.helianto.core.form.KeyStringForm;
+import org.helianto.core.form.ParentForm;
 import org.helianto.partner.domain.PrivateEntity2;
 
 /**

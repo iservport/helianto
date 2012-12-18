@@ -21,7 +21,6 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.EntityPreference;
 import org.helianto.core.Server;
 import org.helianto.core.def.AddressType;
 import org.helianto.core.domain.Category;
@@ -86,7 +85,6 @@ public class CoreRepositoryIntegrationTests
 	private FilterDao<PersonalAddress> personalAddressDao;
 	private FilterDao<Server> serverDao;
 	private FilterDao<UserRole> userRoleDao;
-	private FilterDao<EntityPreference> entityPreferenceDao;	
 	private FilterDao<UserRequest> userRequestDao;
 	private FilterDao<PublicEntity> publicEntityDao;
 	
@@ -181,10 +179,6 @@ public class CoreRepositoryIntegrationTests
 		userRoleDao.saveOrUpdate(userRole);
 		assertEquals(userRole, userRoleDao.findUnique(userRole.getUserGroup(), userRole.getService(), userRole.getServiceExtension()));
 
-		EntityPreference entityPreference = EntityPreference.entityPreferenceFactory(entity, keyType);
-		entityPreferenceDao.saveOrUpdate(entityPreference);
-		assertEquals(entityPreference, entityPreferenceDao.findUnique(entityPreference.getEntity(), entityPreference.getKeyType()));
-
 		UserRequest loginRequest = new UserRequest(userGroup, Long.MAX_VALUE);
 		userRequestDao.saveOrUpdate(loginRequest);
 		assertEquals(loginRequest, userRequestDao.findUnique(userGroup, Long.MAX_VALUE));
@@ -265,11 +259,6 @@ public class CoreRepositoryIntegrationTests
 	
 	@Resource public void setUserRoleDao(FilterDao<UserRole> userRoleDao) {
 		this.userRoleDao = userRoleDao;
-	}
-	
-	@Resource public void setEntityPreferenceDao(
-			FilterDao<EntityPreference> entityPreferenceDao) {
-		this.entityPreferenceDao = entityPreferenceDao;
 	}
 	
 	@Resource public void setUserRequestDao(FilterDao<UserRequest> userRequestDao) {

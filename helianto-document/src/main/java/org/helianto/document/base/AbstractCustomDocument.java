@@ -34,9 +34,7 @@ import org.helianto.document.domain.DocumentFolder;
  */
 @MappedSuperclass
 public abstract class AbstractCustomDocument 
-
 	extends AbstractDocument 
-	
 	implements Customizable 
 	
 {
@@ -98,6 +96,11 @@ public abstract class AbstractCustomDocument
 		return getPrefix().toString();
 	}
 	
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
 	/**
 	 * Required by {@link Sequenceable}.
 	 */

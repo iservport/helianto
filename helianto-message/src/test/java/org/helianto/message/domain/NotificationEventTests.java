@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.message.domain.NotificationEvent;
 import org.junit.Test;
 
 /**

@@ -3,7 +3,7 @@ package org.helianto.partner.form;
 import java.io.Serializable;
 
 import org.helianto.core.domain.Category;
-import org.helianto.core.filter.form.ParentForm;
+import org.helianto.core.form.ParentForm;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
 

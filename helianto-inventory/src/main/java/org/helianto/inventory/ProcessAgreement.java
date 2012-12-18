@@ -105,6 +105,11 @@ public class ProcessAgreement extends AbstractRequirement {
 		return "AGREEM";
 	}
 
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     /**
      * Customer or supplier.
      */

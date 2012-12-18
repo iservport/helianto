@@ -51,6 +51,11 @@ public class ProcessRequirement extends AbstractRequirement {
 		return "PROCREQ";
 	}
 	
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
 	/**
 	 * Empty constructor.
 	 */

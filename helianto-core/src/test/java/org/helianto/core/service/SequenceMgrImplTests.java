@@ -23,6 +23,8 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
 
+import javax.persistence.Transient;
+
 import org.easymock.EasyMock;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
@@ -33,6 +35,7 @@ import org.helianto.core.number.Numerable;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.number.Verifiable;
 import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -204,7 +207,7 @@ public class SequenceMgrImplTests {
     
     
     
-    private BasicDao<PrivateSequence> internalEnumeratorDao;
+    private FilterDao<PrivateSequence> internalEnumeratorDao;
     private BasicDao<PublicSequence> publicEnumeratorDao;
     private DigitGenerationStrategy digitGenerationStrategy;
     
@@ -212,7 +215,7 @@ public class SequenceMgrImplTests {
 	@Before
     public void setUp() {
         sequenceMgr = new SequenceMgrImpl();
-        internalEnumeratorDao = createMock(BasicDao.class);
+        internalEnumeratorDao = createMock(FilterDao.class);
         publicEnumeratorDao = createMock(BasicDao.class);
         digitGenerationStrategy = createMock(DigitGenerationStrategy.class);
         sequenceMgr.setInternalEnumeratorDao(internalEnumeratorDao);
@@ -257,6 +260,12 @@ public class SequenceMgrImplTests {
 		public Entity getEntity() {
 			return entity;
 		}
+		
+	    @Transient
+	    public int getStartNumber() {
+	    	return 1;
+	    }
+
 
 		public void setInternalNumber(long internalNumber) {
 			this.internalNumber = internalNumber;
@@ -280,6 +289,11 @@ public class SequenceMgrImplTests {
 		public Entity getEntity() {
 			return entity;
 		}
+
+	    @Transient
+	    public int getStartNumber() {
+	    	return 1;
+	    }
 
 		public void setInternalNumber(long internalNumber) {
 			this.internalNumber = internalNumber;

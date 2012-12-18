@@ -47,62 +47,6 @@
 	-->
 	<context:component-scan base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.user.service"/>
 	
-	<!-- 
-	 ! HIBERNATE PROFILE
-	 -->
-	<beans profile="hibernate">
-	
-		<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" >
-		    <property name="dataSource" ref="dataSource" />
-			<property name="configLocations" 
-				value="classpath*:/META-INF/*.cfg.xml"/>		
-			<property name="hibernateProperties">
-				<props>
-					<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
-					<prop key="hibernate.hbm2ddl.auto">update</prop>
-					<prop key="hibernate.show_sql">false</prop>
-				</props>
-			</property>
-			<property name="eventListeners">
-				<map>
-					<entry key="merge">
-						<bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"/>
-					</entry>
-				</map>
-			</property>
-		</bean>	
-		
-		<bean id="persistenceStrategy" class="org.helianto.core.repository.HibernatePersistenceStrategy" />
-
-	</beans>
-	
-	<!-- 
-	 ! JPA PROFILE
-	 -->
-	<beans profile="jpa">
-	
-	    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-	        <property name="dataSource" ref="dataSource"/>
-	        <property name="loadTimeWeaver">
-	            <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
-	        </property>
-	        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-	        <property name="packagesToScan" value="*.domain" />
-	    </bean>
-	 
-		<bean id="jpaVendorAdapter" 
-		    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
-			<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
-			<property name="generateDdl" value="true" />
-		</bean>
-			
-	</beans>
-	
-	<!-- 
-	 ! COMMON PROFILE
-	 -->
-	<beans profile="hibernate,jpa">
-	
 		<!-- 
 	        Required to let presentation layer (possibly with the aid of Spring Web Flow) manage 
 	        the PersistenceContext...
@@ -209,6 +153,62 @@
 			</property>
 		</bean>
 		
+		<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" >
+		    <property name="dataSource" ref="dataSource" />
+			<property name="configLocations" 
+				value="classpath*:/META-INF/*.cfg.xml"/>		
+			<property name="hibernateProperties">
+				<props>
+					<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+					<prop key="hibernate.hbm2ddl.auto">update</prop>
+					<prop key="hibernate.show_sql">false</prop>
+				</props>
+			</property>
+			<property name="eventListeners">
+				<map>
+					<entry key="merge">
+						<bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"/>
+					</entry>
+				</map>
+			</property>
+		</bean>	
+		
+		<bean id="persistenceStrategy" class="org.helianto.core.repository.HibernatePersistenceStrategy" />
+
+	    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	        <property name="dataSource" ref="dataSource"/>
+	        <property name="loadTimeWeaver">
+	            <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+	        </property>
+	        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+	        <property name="packagesToScan" value="*.domain" />
+	    </bean>
+	 
+		<bean id="jpaVendorAdapter" 
+		    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
+			<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+			<property name="generateDdl" value="true" />
+		</bean>
+			
+	<!-- 
+	 ! HIBERNATE PROFILE
+	 -->
+	<beans profile="hibernate">
+	
+	</beans>
+	
+	<!-- 
+	 ! JPA PROFILE
+	 -->
+	<beans profile="jpa">
+	
+	</beans>
+	
+	<!-- 
+	 ! COMMON PROFILE
+	 -->
+	<beans profile="hibernate,jpa">
+	
 	</beans>
 	
 </beans>

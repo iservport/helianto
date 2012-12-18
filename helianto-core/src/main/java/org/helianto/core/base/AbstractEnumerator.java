@@ -34,12 +34,14 @@ public abstract class AbstractEnumerator implements java.io.Serializable {
     private int version;
     private String typeName;
     private long lastNumber;
+    private int startNumber;
 
     /**
      * Empty constructor.
      */
     public AbstractEnumerator() {
     	setLastNumber(1L);
+    	setStartNumber(1);
     }
 
     /**
@@ -84,6 +86,16 @@ public abstract class AbstractEnumerator implements java.io.Serializable {
     public void setLastNumber(long lastNumber) {
         this.lastNumber = lastNumber;
     }
+    
+    /**
+     * Start number.
+     */
+    public int getStartNumber() {
+		return startNumber;
+	}
+    public void setStartNumber(int startNumber) {
+		this.startNumber = startNumber;
+	}
 
     /**
      * toString

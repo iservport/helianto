@@ -21,9 +21,9 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.hibernate.Query;
 
 /**
  * Hibernate implementation for <code>PersistenceStrategy</code>.

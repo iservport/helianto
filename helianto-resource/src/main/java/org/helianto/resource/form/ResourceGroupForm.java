@@ -1,8 +1,8 @@
 package org.helianto.resource.form;
 
-import org.helianto.core.TrunkEntity;
-import org.helianto.core.filter.form.SearchForm;
-import org.helianto.core.filter.form.TypeForm;
+import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.form.SearchForm;
+import org.helianto.core.form.TypeForm;
 
 /**
  * Resource and subclasses form.

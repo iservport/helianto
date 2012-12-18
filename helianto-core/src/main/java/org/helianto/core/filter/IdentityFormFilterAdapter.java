@@ -2,7 +2,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
-import org.helianto.core.filter.form.IdentityForm;
+import org.helianto.core.form.IdentityForm;
 
 /**
  * Identity form filter adapter.

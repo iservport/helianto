@@ -2,8 +2,8 @@ package org.helianto.document.form;
 
 import org.helianto.core.Prioritizable;
 import org.helianto.core.Resettable;
-import org.helianto.core.TrunkEntity;
-import org.helianto.core.filter.form.SearchForm;
+import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.form.SearchForm;
 
 /**
  * Document form.

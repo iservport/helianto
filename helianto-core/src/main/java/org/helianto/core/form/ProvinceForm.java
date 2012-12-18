@@ -2,8 +2,6 @@ package org.helianto.core.form;
 
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.type.RootEntity;
-import org.helianto.core.filter.form.SearchForm;
-import org.helianto.core.filter.form.TypeForm;
 
 /**
  * Province form.
@@ -16,6 +14,7 @@ public interface ProvinceForm
 	  RootEntity
 	, TypeForm 
 	, SearchForm
+	, OperatorForm
 
 {
 	
@@ -38,10 +37,5 @@ public interface ProvinceForm
 	 * City code.
 	 */
 	String getCityCode();
-	
-	/**
-	 * Operator name.
-	 */
-	String getOperatorName();
 	
 }

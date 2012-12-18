@@ -1,8 +1,8 @@
 package org.helianto.partner.form;
 
-import org.helianto.core.TrunkEntity;
-import org.helianto.core.filter.form.AddressForm;
-import org.helianto.core.filter.form.SearchForm;
+import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.form.AddressForm;
+import org.helianto.core.form.SearchForm;
 import org.helianto.partner.PrivateAlias;
 
 /**

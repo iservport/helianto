@@ -24,8 +24,8 @@ import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.domain.Phone;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.form.IdentityForm;
-import org.helianto.core.filter.form.PersonalAddressForm;
+import org.helianto.core.form.IdentityForm;
+import org.helianto.core.form.PersonalAddressForm;
 
 /**
  * Default identity service layer interface for the core package.

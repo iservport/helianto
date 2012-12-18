@@ -1,7 +1,7 @@
 package org.helianto.core.filter.base;
 
-import org.helianto.core.TrunkEntity;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.type.TrunkEntity;
 
 /**
  * Base class to implement <code>RootEntity</code>.
@@ -9,7 +9,8 @@ import org.helianto.core.domain.Entity;
  * @author mauriciofernandesdecastro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractTrunk implements TrunkEntity {
+public abstract class AbstractTrunk 
+	implements TrunkEntity {
 	
 	private Entity entity;
 	

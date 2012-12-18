@@ -23,7 +23,6 @@ import org.helianto.core.test.EntityTestSupport;
 import org.helianto.process.InheritanceType;
 import org.helianto.process.Operation;
 import org.helianto.process.ProcessDocument;
-import org.helianto.process.filter.ProcessDocumentFilterAdapter;
 import org.junit.Before;
 import org.junit.Test;
 

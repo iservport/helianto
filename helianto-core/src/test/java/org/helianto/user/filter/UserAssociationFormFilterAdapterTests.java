@@ -3,7 +3,7 @@ package org.helianto.user.filter;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.filter.UserAssociationFormFilterAdapter;
-import org.helianto.core.filter.form.AssociationForm;
+import org.helianto.core.form.AssociationForm;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

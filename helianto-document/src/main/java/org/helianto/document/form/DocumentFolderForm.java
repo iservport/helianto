@@ -1,7 +1,7 @@
 package org.helianto.document.form;
 
 import org.helianto.core.Resettable;
-import org.helianto.core.filter.form.FolderForm;
+import org.helianto.core.form.FolderForm;
 
 /**
  * Serializer form.

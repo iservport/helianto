@@ -22,14 +22,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.helianto.core.BusinessAddress;
-import org.helianto.core.def.PhoneType;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Phone;
 import org.helianto.core.domain.PublicEntity;
@@ -130,6 +128,11 @@ public class PrivateEntity2
     	return "PRVTENT";
     }
     
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
 //    /**
 //     * PartnerAlias.
 //     * @deprecated use entityAlias instead.

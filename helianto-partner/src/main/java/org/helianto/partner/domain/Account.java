@@ -25,8 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.TrunkEntity;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.partner.AccountType;
 /**
  * Represents accounts.  

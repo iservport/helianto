@@ -3,8 +3,8 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Operator;
-import org.helianto.core.filter.form.EntityForm;
 import org.helianto.core.form.CompositeEntityForm;
+import org.helianto.core.form.EntityForm;
 import org.junit.Before;
 import org.junit.Test;
 

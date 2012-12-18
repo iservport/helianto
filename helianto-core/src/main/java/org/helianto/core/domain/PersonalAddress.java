@@ -7,9 +7,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.PersonalEntity;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.def.AddressType;
+import org.helianto.core.form.PersonalForm;
 
 
 /**
@@ -21,7 +21,7 @@ import org.helianto.core.def.AddressType;
 @Table(name = "core_address"
 	,uniqueConstraints = { @UniqueConstraint(columnNames = {"identityId", "addressType" })
 })
-public class PersonalAddress extends AbstractAddress implements PersonalEntity {
+public class PersonalAddress extends AbstractAddress implements PersonalForm {
 
 	private static final long serialVersionUID = 1L;
 	private int version;

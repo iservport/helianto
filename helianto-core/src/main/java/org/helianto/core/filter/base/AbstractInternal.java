@@ -9,7 +9,9 @@ import org.helianto.core.number.Internal;
  * @author mauriciofernandesdecastro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractInternal extends AbstractTrunk implements Internal {
+public abstract class AbstractInternal 
+	extends AbstractTrunk 
+	implements Internal {
 
 	private long internalNumber;
 	

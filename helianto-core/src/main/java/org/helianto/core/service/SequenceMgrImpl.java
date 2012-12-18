@@ -24,11 +24,15 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.PrivateSequence;
 import org.helianto.core.domain.PublicSequence;
+import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.PrivateSequenceFilterAdapter;
+import org.helianto.core.form.PrivateSequenceForm;
 import org.helianto.core.number.DigitGenerationStrategy;
 import org.helianto.core.number.Numerable;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.number.Verifiable;
 import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -42,65 +46,84 @@ import org.springframework.stereotype.Service;
 public class SequenceMgrImpl implements SequenceMgr {
 	
 	public long findOrCreatePublicNumber(Operator operator, String publicNumberKey) {
-		PublicSequence enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
-		if (enumerator!=null) {
-			return enumerator.getLastNumber();
+		PublicSequence publicSequence = publicEnumeratorDao.findUnique(operator, publicNumberKey);
+		if (publicSequence!=null) {
+			return publicSequence.getLastNumber();
 		} else  {
-            enumerator = new PublicSequence(operator, publicNumberKey);
-            publicEnumeratorDao.saveOrUpdate(enumerator);
-            logger.debug("Created PublicEnumerator: {}", enumerator);
+            publicSequence = new PublicSequence(operator, publicNumberKey);
+            publicEnumeratorDao.saveOrUpdate(publicSequence);
+            logger.debug("Created PublicSequence: {}", publicSequence);
             return 1;
         }
 	}
 	
     public long findNewPublicNumber(Operator operator, String publicNumberKey) {
-    	PublicSequence enumerator = publicEnumeratorDao.findUnique(operator, publicNumberKey);
-        if (enumerator!=null) {
-            long lastNumber = enumerator.getLastNumber();
-            enumerator.setLastNumber(lastNumber+1);
-            publicEnumeratorDao.saveOrUpdate(enumerator);
-            logger.debug("Incremented existing PublicEnumerator: {}", enumerator);
+    	PublicSequence publicSequence = publicEnumeratorDao.findUnique(operator, publicNumberKey);
+        if (publicSequence!=null) {
+            long lastNumber = publicSequence.getLastNumber();
+            publicSequence.setLastNumber(lastNumber+1);
+            publicEnumeratorDao.saveOrUpdate(publicSequence);
+            logger.debug("Incremented existing PublicSequence: {}", publicSequence);
             return lastNumber;
         } else  {
-            enumerator = new PublicSequence();
-            enumerator.setOperator(operator);
-            enumerator.setTypeName(publicNumberKey);
-            enumerator.setLastNumber(2);    
-            publicEnumeratorDao.saveOrUpdate(enumerator);
-            logger.debug("Created PublicEnumerator: {}", enumerator);
+            publicSequence = new PublicSequence();
+            publicSequence.setOperator(operator);
+            publicSequence.setTypeName(publicNumberKey);
+            publicSequence.setLastNumber(2);    
+            publicEnumeratorDao.saveOrUpdate(publicSequence);
+            logger.debug("Created PublicSequence: {}", publicSequence);
             return 1;
         }
     }
     
-	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey) {
-		PrivateSequence enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
-		if (enumerator!=null) {
-			return enumerator.getLastNumber();
+	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey, int startNumber) {
+		PrivateSequence privateSequence = internalEnumeratorDao.findUnique(entity, internalNumberKey);
+		if (privateSequence!=null) {
+			return privateSequence.getLastNumber();
 		} else  {
-            enumerator = new PrivateSequence(entity, internalNumberKey);
-            internalEnumeratorDao.saveOrUpdate(enumerator);
-            logger.debug("Created InternalEnumerator: {}", enumerator);
-            return 1;
+            privateSequence = new PrivateSequence(entity, internalNumberKey);
+            internalEnumeratorDao.saveOrUpdate(privateSequence);
+            logger.debug("Created PrivateSequence: {}", privateSequence);
+            return startNumber;
+        }
+    }
+    
+	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey) {
+		return findOrCreateInternalNumber(entity, internalNumberKey, 1);
+	}
+	
+	public List<PrivateSequence> findPrivateSequences(PrivateSequenceForm form) {
+		Filter filter = new PrivateSequenceFilterAdapter(form);
+		List<PrivateSequence> privateSequenceList = (List<PrivateSequence>) internalEnumeratorDao.find(filter);
+		return privateSequenceList;
+	}
+	
+	public PrivateSequence storePrivateSequence(PrivateSequence privateSequence) {
+		internalEnumeratorDao.saveOrUpdate(privateSequence);
+		return privateSequence;
+	}
+	
+    public long newInternalNumber(Entity entity, String internalNumberKey, int startNumber) {
+        PrivateSequence privateSequence = internalEnumeratorDao.findUnique(entity, internalNumberKey);
+        if (privateSequence!=null) {
+            long lastNumber = privateSequence.getLastNumber();
+            privateSequence.setLastNumber(lastNumber+1);
+            internalEnumeratorDao.saveOrUpdate(privateSequence);
+            logger.debug("Incremented existing PrivateSequence: {}", privateSequence);
+            return lastNumber;
+        } else  {
+            privateSequence = new PrivateSequence();
+            privateSequence.setEntity(entity);
+            privateSequence.setTypeName(internalNumberKey);
+            privateSequence.setLastNumber(startNumber+1);    
+            internalEnumeratorDao.saveOrUpdate(privateSequence);
+            logger.debug("Created PrivateSequence: {}", privateSequence);
+            return startNumber;
         }
 	}
 	
     public long newInternalNumber(Entity entity, String internalNumberKey) {
-        PrivateSequence enumerator = internalEnumeratorDao.findUnique(entity, internalNumberKey);
-        if (enumerator!=null) {
-            long lastNumber = enumerator.getLastNumber();
-            enumerator.setLastNumber(lastNumber+1);
-            internalEnumeratorDao.saveOrUpdate(enumerator);
-            logger.debug("Incremented existing InternalEnumerator: {}", enumerator);
-            return lastNumber;
-        } else  {
-            enumerator = new PrivateSequence();
-            enumerator.setEntity(entity);
-            enumerator.setTypeName(internalNumberKey);
-            enumerator.setLastNumber(2);    
-            internalEnumeratorDao.saveOrUpdate(enumerator);
-            logger.debug("Created InternalEnumerator: {}", enumerator);
-            return 1;
-        }
+    	return newInternalNumber(entity, internalNumberKey, 1);
     }
     
 	public void validatePublicNumber(Numerable numerable) {
@@ -115,13 +138,13 @@ public class SequenceMgrImpl implements SequenceMgr {
 	}
 	
 	public void validateInternalNumber(Sequenceable sequenceable) {
-        if (sequenceable.getInternalNumber()==0) {
-            long internalNumber = newInternalNumber(sequenceable.getEntity(), sequenceable.getInternalNumberKey());
-            sequenceable.setInternalNumber(internalNumber);
-            logger.debug("Created internal key for new {} {}", sequenceable.getInternalNumberKey(), sequenceable.getInternalNumber());
+        if (sequenceable.getInternalNumber() >= sequenceable.getStartNumber()) {
+            logger.debug("InternalNumber already up to date, not generated");
         }
         else {
-            logger.debug("InternalNumber not generated");
+            long internalNumber = newInternalNumber(sequenceable.getEntity(), sequenceable.getInternalNumberKey(), sequenceable.getStartNumber());
+            sequenceable.setInternalNumber(internalNumber);
+            logger.debug("Created internal key for new {} {}", sequenceable.getInternalNumberKey(), sequenceable.getInternalNumber());
         }
 	}
 	
@@ -147,17 +170,17 @@ public class SequenceMgrImpl implements SequenceMgr {
     // collabs 
     
 	private BasicDao<PublicSequence> publicEnumeratorDao;
-	private BasicDao<PrivateSequence> internalEnumeratorDao;
+	private FilterDao<PrivateSequence> internalEnumeratorDao;
 	private DigitGenerationStrategy digitGenerationStrategy;
 	private TreeBuilder treeBuilder;
 	
     @Resource(name="publicEnumeratorDao")
-	public void setPublicEnumeratorDao( BasicDao<PublicSequence> publicEnumeratorDao) {
+	public void setPublicEnumeratorDao(BasicDao<PublicSequence> publicEnumeratorDao) {
 		this.publicEnumeratorDao = publicEnumeratorDao;
 	}
 
     @Resource(name="internalEnumeratorDao")
-    public void setInternalEnumeratorDao(BasicDao<PrivateSequence> internalEnumeratorDao) {
+    public void setInternalEnumeratorDao(FilterDao<PrivateSequence> internalEnumeratorDao) {
         this.internalEnumeratorDao = internalEnumeratorDao;
     }
     
