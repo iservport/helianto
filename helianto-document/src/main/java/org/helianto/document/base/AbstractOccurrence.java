@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.SimpleStateResolver;
 import org.helianto.core.def.ControlState;
-import org.helianto.core.def.Resolution;
+import org.helianto.core.def.ResolutionExtended;
 import org.helianto.document.Occurrence;
 
 /**
@@ -49,7 +49,7 @@ public abstract class AbstractOccurrence
      * Default constructor.
      */
     public AbstractOccurrence() {
-    	this(Resolution.PRELIMINARY.getValue());
+    	this(ResolutionExtended.PRELIMINARY.getValue());
     }
     
     /** 
@@ -75,11 +75,11 @@ public abstract class AbstractOccurrence
      */
     @Transient
     public char getControlState() {
-    	if (getResolution()==Resolution.DONE.getValue()) {
+    	if (getResolution()==ResolutionExtended.DONE.getValue()) {
     		return ControlState.FINISHED.getValue();
     	}
-		if (getResolution()==Resolution.CANCELLED.getValue()
-				|| getResolution()==Resolution.WAIT.getValue()) {
+		if (getResolution()==ResolutionExtended.CANCELLED.getValue()
+				|| getResolution()==ResolutionExtended.WAIT.getValue()) {
 			return ControlState.UNFINISHED.getValue();
 		}
     	return ControlState.LATE.getValue();

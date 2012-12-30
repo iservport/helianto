@@ -20,31 +20,57 @@ package org.helianto.core.def;
  * Control resolution.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
+ * @see Resolution
  */
-public enum Resolution {
+public enum ResolutionExtended {
 	
+	/* C D I N P R T U W */
+    
+    /**
+     * Issued.
+     */
+    ISSUED('I', false, false, false),
+    /**
+     * Not yet published.
+     */
+    NOT_PUBLISHED('N', false, false, false),
     /**
      * Not started.
      */
-    PRELIMINARY('P', 1, false, false, false),
+    PRELIMINARY('P', false, false, true),
     /**
      * Work in progress.
      */
-    TODO('T', 2, true, false, true),
+    TODO('T', true, false, true),
+    /**
+     * Suspended.
+     */
+    WAIT('W', true, false, true),
     /**
      * No further control action required.
      */
-    DONE('D', 3, true, true, false);
+    DONE('D', true, true, false),
+    /**
+     * Repeat.
+     */
+    REPEAT('R', true, false, false),
+    /**
+     * Cancellled (once started).
+     */
+    CANCELLED('C', true, false, false),
+    /**
+     * Cancelled (but never started).
+     */
+    UNFOUNDED('U', false, false, false);
     
     private char value;
-    private int order;
     private boolean started;
     private boolean ended;
     private boolean open;
     
-    private Resolution(char value, int order, boolean started, boolean ended, boolean open) {
+    private ResolutionExtended(char value, boolean started, boolean ended, boolean open) {
         this.value = value;
-        this.order = order;
         this.started = started;
         this.ended = ended;
         this.open = open;
@@ -53,10 +79,6 @@ public enum Resolution {
     public final char getValue() {
         return this.value;
     }
-    
-    public int getOrder() {
-		return order;
-	}
 
     public boolean hasStarted() {
         return this.started;
@@ -75,8 +97,8 @@ public enum Resolution {
      * 
      * @param value
      */
-    public static Resolution getValue(char value) {
-    	for (Resolution resolution: values()) {
+    public static ResolutionExtended getValue(char value) {
+    	for (ResolutionExtended resolution: values()) {
     		if (resolution.getValue()==value) {
     			return resolution;
     		}
@@ -89,7 +111,7 @@ public enum Resolution {
      */
     public static char[] getStartedResolutions() {
     	String result = "";
-    	for (Resolution resolution: values()) {
+    	for (ResolutionExtended resolution: values()) {
     		if (resolution.hasStarted()) {
     			result += resolution.getValue();
     		}
@@ -102,7 +124,7 @@ public enum Resolution {
      */
     public static char[] getOpenResolutions() {
     	String result = "";
-    	for (Resolution resolution: values()) {
+    	for (ResolutionExtended resolution: values()) {
     		if (resolution.isOpen()) {
     			result += resolution.getValue();
     		}

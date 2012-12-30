@@ -34,7 +34,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Controllable;
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
-import org.helianto.core.def.Resolution;
+import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalData;
@@ -82,7 +82,7 @@ public class UserRequest
      */
     public UserRequest() {
         setPersonalData(new PersonalData());
-        setResolutionAsEnum(Resolution.TODO);
+        setResolutionAsEnum(ResolutionExtended.TODO);
         setIssueDate(new Date());
     }
 
@@ -355,7 +355,7 @@ public class UserRequest
     public void setResolution(char resolution) {
 		this.resolution = resolution;
 	}
-    public void setResolutionAsEnum(Resolution resolution) {
+    public void setResolutionAsEnum(ResolutionExtended resolution) {
 		this.resolution = resolution.getValue();
 	}
     

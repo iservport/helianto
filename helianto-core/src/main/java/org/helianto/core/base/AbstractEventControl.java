@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.helianto.core.def.ControlState;
-import org.helianto.core.def.Resolution;
+import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.form.ControlForm;
 import org.helianto.core.form.ProgressForm;
 import org.helianto.core.number.Internal;
@@ -53,7 +53,7 @@ public abstract class AbstractEventControl
      * Default constructor.
      */
     public AbstractEventControl() {
-    	this(Resolution.PRELIMINARY.getValue());
+    	this(ResolutionExtended.PRELIMINARY.getValue());
     	setNextCheckDate(new Date());
     }
     
@@ -102,11 +102,11 @@ public abstract class AbstractEventControl
     @Transient
     public char getControlState() {
     	Date now = new Date();
-    	if (getResolution()==Resolution.DONE.getValue()) {
+    	if (getResolution()==ResolutionExtended.DONE.getValue()) {
     		return ControlState.FINISHED.getValue();
     	}
-		if (getResolution()==Resolution.CANCELLED.getValue()
-				|| getResolution()==Resolution.WAIT.getValue()) {
+		if (getResolution()==ResolutionExtended.CANCELLED.getValue()
+				|| getResolution()==ResolutionExtended.WAIT.getValue()) {
 			return ControlState.UNFINISHED.getValue();
 		}
     	if (getNextCheckDate()==null) return ' ';

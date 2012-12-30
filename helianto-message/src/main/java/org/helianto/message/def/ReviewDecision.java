@@ -15,7 +15,7 @@
 
 package org.helianto.message.def;
 
-import org.helianto.core.def.Resolution;
+import org.helianto.core.def.ResolutionExtended;
 
 /**
  * Define <code>Review</code> decisions.
@@ -27,56 +27,56 @@ public enum ReviewDecision {
     /**
      * Justify.
      */
-	JUSTIFY('J', Resolution.UNFOUNDED),
+	JUSTIFY('J', ResolutionExtended.UNFOUNDED),
     /**
      * Start.
      */
-	START('S', Resolution.TODO),
+	START('S', ResolutionExtended.TODO),
     /**
      * Stage (before actually start).
      */
-	STAGE('A', Resolution.PRELIMINARY),
+	STAGE('A', ResolutionExtended.PRELIMINARY),
     /**
      * Suspend if running.
      */
-	SUSPEND('W', Resolution.WAIT),
+	SUSPEND('W', ResolutionExtended.WAIT),
     /**
      * Continue.
      */
-	CONTINUE('G', Resolution.TODO),
+	CONTINUE('G', ResolutionExtended.TODO),
     /**
      * RESCHEDULE if waiting.
      */
-	RESCHEDULE('E', Resolution.TODO),
+	RESCHEDULE('E', ResolutionExtended.TODO),
     /**
      * CLOSE and keep the progress as it is, if active.
      */
-	CLOSE('C', Resolution.DONE),
+	CLOSE('C', ResolutionExtended.DONE),
     /**
      * FINISH to force to 100% and close if active.
      */
-	FINISH('F', Resolution.DONE),
+	FINISH('F', ResolutionExtended.DONE),
     /**
      * CANCEL .
      */
-	CANCEL('X', Resolution.CANCELLED),
+	CANCEL('X', ResolutionExtended.CANCELLED),
     /**
      * REOPEN if not active.
      */
-	REOPEN('R', Resolution.TODO),
+	REOPEN('R', ResolutionExtended.TODO),
     /**
      * Reassess if unfounded.
      */
-	REASSESS('B', Resolution.ISSUED),
+	REASSESS('B', ResolutionExtended.ISSUED),
     /**
      * Revert if cancelled.
      */
-	REVERT('V', Resolution.TODO);
+	REVERT('V', ResolutionExtended.TODO);
     
     private char value;
-    private Resolution nextResolution;
+    private ResolutionExtended nextResolution;
     
-    private ReviewDecision(char value, Resolution nextResolution) {
+    private ReviewDecision(char value, ResolutionExtended nextResolution) {
         this.value = value;
         this.nextResolution = nextResolution;
     }
@@ -85,7 +85,7 @@ public enum ReviewDecision {
         return this.value;
     }
     
-    public Resolution getNextResolution() {
+    public ResolutionExtended getNextResolution() {
 		return nextResolution;
 	}
 
