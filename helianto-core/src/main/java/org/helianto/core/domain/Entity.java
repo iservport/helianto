@@ -43,6 +43,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.domain.type.RootEntity;
+import org.helianto.core.utils.StringListUtils;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -280,6 +281,17 @@ public class Entity implements RootEntity {
 	}
 	public void setProperties(String properties) {
 		this.properties = properties;
+	}
+	
+    /**
+     * <<Transient>> Key-value pair list of properties converted to array.
+     */
+    @Transient
+    public String[] getPropertiesAsArray() {
+    	return StringListUtils.stringToArray(getProperties());
+	}
+	public void setPropertiesAsArray(String[] propertiesArray) {
+		setProperties(StringListUtils.arrayToString(propertiesArray));
 	}
 	
     /**
