@@ -32,6 +32,7 @@ import org.helianto.core.Programmable;
 import org.helianto.core.base.AbstractHumanReadable;
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.utils.StringListUtils;
 
 /**
  * Categories.  
@@ -59,6 +60,7 @@ public class Category
     private String categoryName;
     private char priority;
     private String scriptItems;
+    private String properties;
 
     /** 
      * Default constructor
@@ -178,13 +180,10 @@ public class Category
      */
     @Transient
     public String[] getScriptItemsAsArray() {
-		if (getScriptItems()!=null && getScriptItems().trim().length()>0) {
-			return getScriptItems().replace(" ", "").split(",");
-		}
-		return new String[] {};
+    	return StringListUtils.stringToArray(getScriptItems());
 	}
 	public void setScriptItemsAsArray(String[] scriptItemsArray) {
-		setScriptItems(scriptItemsArray.toString().replace("[", "").replace("]", ""));
+		setScriptItems(StringListUtils.arrayToString(scriptItemsArray));
 	}
 	
 	/*
@@ -212,6 +211,28 @@ public class Category
     	getScriptList().add(scriptContent);
 	}
 
+	/**
+	 * Custom properties.
+	 */
+	@Column(length=128)
+	public String getProperties() {
+		return properties;
+	}
+	public void setProperties(String properties) {
+		this.properties = properties;
+	}
+	
+    /**
+     * <<Transient>> Key-value pair list of properties converted to array.
+     */
+    @Transient
+    public String[] getPropertiesAsArray() {
+    	return StringListUtils.stringToArray(getProperties());
+	}
+	public void setPropertiesAsArray(String[] propertiesArray) {
+		setProperties(StringListUtils.arrayToString(propertiesArray));
+	}
+	
     /**
      * toString
      * @return String
