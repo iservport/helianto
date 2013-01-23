@@ -42,6 +42,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.helianto.core.def.ActivityState;
 import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.utils.StringListUtils;
 import org.helianto.user.domain.User;
@@ -101,6 +102,7 @@ public class Entity implements RootEntity {
     private String properties;
     private Identity manager;
     private String externalLogoUrl;
+    private char activityState;
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     private Set<PublicEntity> publicEntities = new HashSet<PublicEntity>(0);
     private List<UserGroup> userList;
@@ -319,6 +321,19 @@ public class Entity implements RootEntity {
 	}
     public void setExternalLogoUrl(String externalLogoUrl) {
 		this.externalLogoUrl = externalLogoUrl;
+	}
+    
+    /**
+     * Activity state.
+     */
+    public char getActivityState() {
+		return activityState;
+	}
+    public void setActivityState(char activityState) {
+		this.activityState = activityState;
+	}
+    public void setActivityStateAsEnum(ActivityState activityState) {
+		this.activityState = activityState.getValue();
 	}
 
     /**

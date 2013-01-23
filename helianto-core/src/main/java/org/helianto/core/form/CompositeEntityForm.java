@@ -32,6 +32,8 @@ public class CompositeEntityForm
 	private String postalCode;
 	private String keyCode;
 	private String keyName;
+	private char activityState;
+	private char nature;
 	
 	/**
 	 * Default constructor.
@@ -160,6 +162,20 @@ public class CompositeEntityForm
 	}
 	public void setKeyName(String keyName) {
 		this.keyName = keyName;
+	}
+	
+	public char getActivityState() {
+		return activityState;
+	}
+	public void setActivityState(char activityState) {
+		this.activityState = activityState;
+	}
+	
+	public char getNature() {
+		return nature;
+	}
+	public void setNature(char nature) {
+		this.nature = nature;
 	}
 	
     /**

@@ -60,6 +60,10 @@ public class EntityFormFilterAdapter extends AbstractRootFilterAdapter<EntityFor
 			appendEqualFilter("alias", getForm().getEntityAlias(), mainCriteriaBuilder);
 		}
 		appendLikeFilter("alias", getForm().getEntityAliasLike(), mainCriteriaBuilder);
+		appendEqualFilter("activityState", getForm().getActivityState(), mainCriteriaBuilder);
+		if (getForm().getNature()!=0) {
+			appendLikeFilter("nature", Character.toString(getForm().getNature()), mainCriteriaBuilder);
+		}
 	}
 	
 	@Override

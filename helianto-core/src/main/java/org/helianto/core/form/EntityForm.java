@@ -13,12 +13,22 @@ public interface EntityForm extends RootEntity, Resettable {
 	/**
 	 * Entity alias.
 	 */
-	public String getEntityAlias();
+	String getEntityAlias();
 
 	/**
 	 * Entity alias like filter.
 	 */
-	public String getEntityAliasLike();
+	String getEntityAliasLike();
+	
+	/**
+	 * Activity state filter.
+	 */
+	char getActivityState();
+	
+	/**
+	 * Nature filter.
+	 */
+	char getNature();
 	
 	
 }
