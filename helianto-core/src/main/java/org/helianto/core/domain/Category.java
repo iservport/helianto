@@ -17,6 +17,7 @@ package org.helianto.core.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -29,6 +30,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Programmable;
+import org.helianto.core.PropertyMappable;
 import org.helianto.core.base.AbstractHumanReadable;
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.type.TrunkEntity;
@@ -47,6 +49,7 @@ public class Category
 	extends AbstractHumanReadable
 	implements 
 	  TrunkEntity
+	, PropertyMappable
 	, Programmable
 
 {
@@ -222,15 +225,9 @@ public class Category
 		this.properties = properties;
 	}
 	
-    /**
-     * <<Transient>> Key-value pair list of properties converted to array.
-     */
     @Transient
-    public String[] getPropertiesAsArray() {
-    	return StringListUtils.stringToArray(getProperties());
-	}
-	public void setPropertiesAsArray(String[] propertiesArray) {
-		setProperties(StringListUtils.arrayToString(propertiesArray));
+	public Map<String, Object> getPropertiesAsMap() {
+		return StringListUtils.propertiesToMap(getProperties());
 	}
 	
     /**

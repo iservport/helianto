@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -42,6 +43,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.helianto.core.PropertyMappable;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.utils.StringListUtils;
@@ -90,7 +92,9 @@ import org.springframework.format.annotation.DateTimeFormat;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("0")
-public class Entity implements RootEntity {
+public class Entity 
+	implements RootEntity 
+	, PropertyMappable {
 
     private static final long serialVersionUID = 1L;
     private long id;
@@ -285,15 +289,12 @@ public class Entity implements RootEntity {
 		this.properties = properties;
 	}
 	
-    /**
-     * <<Transient>> Key-value pair list of properties converted to array.
-     */
     @Transient
-    public String[] getPropertiesAsArray() {
-    	return StringListUtils.stringToArray(getProperties());
+	public Map<String, Object> getPropertiesAsMap() {
+		return StringListUtils.propertiesToMap(getProperties());
 	}
-	public void setPropertiesAsArray(String[] propertiesArray) {
-		setProperties(StringListUtils.arrayToString(propertiesArray));
+	public void setPropertiesAsMap(Map<String, Object> propertyMap) {
+		setProperties(StringListUtils.mapToProperties(propertyMap));
 	}
 	
     /**
