@@ -15,15 +15,8 @@
 
 package org.helianto.core.base;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.FolderEntity;
@@ -35,15 +28,12 @@ import org.helianto.core.domain.type.FolderEntity;
  */
 @javax.persistence.MappedSuperclass
 public abstract class AbstractFolder
-
+	extends AbstractTrunkEntity
 	implements FolderEntity
 
 {
 
 	private static final long serialVersionUID = 1L;
-    private int id;
-    private Entity entity;
-    private int version;
 	private String folderCode;
 	private String folderName;
 	private String folderDecorationUrl;
@@ -70,40 +60,6 @@ public abstract class AbstractFolder
     	this();
     	setEntity(entity);
     	setFolderCode(folderCode);
-    }
-
-    /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Version (database record version).
-     */
-    @Version
-    public int getVersion() {
-        return this.version;
-    }
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    /**
-     * <<NaturalKey>> Entity.
-     */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
     }
 
     // TODO rename in table

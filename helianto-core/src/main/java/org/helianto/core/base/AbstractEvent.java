@@ -19,19 +19,14 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.persistence.CascadeType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.def.ResolutionExtended;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.form.EventForm;
 import org.helianto.core.form.PrivacyForm;
@@ -51,12 +46,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @javax.persistence.MappedSuperclass
 public abstract class AbstractEvent 
+	extends AbstractTrunkEntity
 	implements PrivacyForm, EventForm {
 
     private static final long serialVersionUID = 1L;
-    private int id;
-    private Integer version;
-    private Entity entity;
     private Identity owner;
     private Date issueDate;
     private char resolution;
@@ -78,41 +71,6 @@ public abstract class AbstractEvent
     @Transient
     public Locale getLocale() {
     	return Locale.getDefault();
-    }
-
-    /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Version.
-     */
-    @Version
-    public Integer getVersion() {
-        return this.version;
-    }
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-    
-    /**
-     * <<NaturalKey>> Entity owning the control.
-     * @see {@link Entity}
-     */
-    @ManyToOne
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
     }
 
     /**
