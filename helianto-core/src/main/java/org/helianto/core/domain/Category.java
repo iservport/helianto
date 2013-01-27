@@ -62,8 +62,11 @@ public class Category
     private String categoryLabel;
     private String categoryName;
     private char priority;
+    private String customStyle;
+    private String customWorkflowRoles;
+    private String customProperties;
+    private String partnerFilterPattern;
     private String scriptItems;
-    private String properties;
 
     /** 
      * Default constructor
@@ -166,7 +169,109 @@ public class Category
 	public void setPriority(char priority) {
 		this.priority = priority;
 	}
+	
+    /**
+     * Style to be applied.
+     * 
+     * <p>
+     * Classes reading this property are free to parse the content as 
+     * a file name, a set of css rules or any other method of choice to
+     * apply style. Limited to 255 characters.
+     * </p>
+     */
+    @Column(length=255)
+	public String getCustomStyle() {
+		return customStyle;
+	}
+	public void setCustomStyle(String customStyle) {
+		this.customStyle = customStyle;
+	}
+	
+    /**
+     * List of workflow roles.
+     * 
+     * <p>
+     * A csv list of significant role names to be sequentially read in 
+     * a workflow. Limited to 255 characters.
+     * </p>
+     */
+    @Column(length=255)
+	public String getCustomWorkflowRoles() {
+		return customWorkflowRoles;
+	}
+	public void setCustomWorkflowRoles(String customWorkflowRoles) {
+		this.customWorkflowRoles = customWorkflowRoles;
+	}
 
+    /**
+     * <<Transient>> List of workflow roles converted to array.
+     */
+    @Transient
+    public String[] getCustomWorkflowRolesAsArray() {
+    	return StringListUtils.stringToArray(getCustomWorkflowRoles());
+	}
+    public void setWorkflowRolesAsArray(String[] workflowRolesArray) {
+    	setCustomWorkflowRoles(StringListUtils.arrayToString(workflowRolesArray));
+	}
+    
+    /**
+     * <<Transient>> True if there is at least one workflow role defined.
+     */
+    @Transient
+    public boolean isWorkflowEnabled() {
+    	return getCustomWorkflowRolesAsArray().length >0;
+	}
+    
+    /**
+     * <<Transient>> Last workflow index, i.e., last index from workflow roles array.
+     */
+    @Transient
+    public int getLastWorkflowIndex() {
+    	return getCustomWorkflowRolesAsArray().length - 1;
+	}
+    
+	/**
+	 * Custom properties.
+	 */
+	@Column(length=128)
+	public String getCustomProperties() {
+		return customProperties;
+	}
+	public void setCustomProperties(String customProperties) {
+		this.customProperties = customProperties;
+	}
+	
+    @Transient
+	public Map<String, Object> getCustomPropertiesAsMap() {
+		return StringListUtils.propertiesToMap(getCustomProperties());
+	}
+	
+    /**
+     * Partner (if any) filter pattern.
+     * 
+     * <p>
+     * Partners are not included in helianto-core module, but for simplicity,
+     * a method to help filter partners is included here. It is intended to be
+     * used if a partner selection is required. This field may provide a csv list 
+     * of partner discriminators to narrow the choices.
+     * </p>
+     */
+    @Column(length=20)
+    public String getPartnerFilterPattern() {
+		return partnerFilterPattern;
+	}
+    public void setPartnerFilterPattern(String partnerFilterPattern) {
+		this.partnerFilterPattern = partnerFilterPattern;
+	}
+    
+    /**
+     * <<Transient>> Partner (if any) filter pattern converted to array.
+     */
+    @Transient
+    public String[] getPartnerFilterPatternAsArray() {
+		return StringListUtils.stringToArray(getPartnerFilterPattern());
+	}
+    
     /**
      * Key-value pair list of scripts, separated by comma.
      */
@@ -214,22 +319,6 @@ public class Category
     	getScriptList().add(scriptContent);
 	}
 
-	/**
-	 * Custom properties.
-	 */
-	@Column(length=128)
-	public String getProperties() {
-		return properties;
-	}
-	public void setProperties(String properties) {
-		this.properties = properties;
-	}
-	
-    @Transient
-	public Map<String, Object> getPropertiesAsMap() {
-		return StringListUtils.propertiesToMap(getProperties());
-	}
-	
     /**
      * toString
      * @return String

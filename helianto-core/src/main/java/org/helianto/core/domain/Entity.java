@@ -15,7 +15,6 @@
 
 package org.helianto.core.domain;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -103,7 +102,8 @@ public class Entity
     private String alias;
     private Date installDate;
     private String nature;
-    private String properties;
+    private String customStyle;
+    private String customProperties;
     private Identity manager;
     private String externalLogoUrl;
     private char activityState;
@@ -117,7 +117,8 @@ public class Entity
     public Entity() {
     	setAlias("");
     	setNature("");
-    	setProperties("");
+    	setCustomStyle("");
+    	setCustomProperties("");
     	setExternalLogoUrl("");
     }
 
@@ -269,32 +270,37 @@ public class Entity
 	 */
 	@Transient
 	public String[] getNatureAsArray() {
-		if (getNature()!=null && getNature().trim().length()>0) {
-			return getNature().replaceAll(" ", "").split(",");
-		}
-		return new String[] {};
+		return StringListUtils.stringToArray(getNature());
 	}
 	public void setNatureAsArray(String[] natureArray) {
-		setNature(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
+		setNature(StringListUtils.arrayToString(natureArray));
 	}
-
+	
 	/**
-	 * Custom properties.
+	 * Custom style.
 	 */
 	@Column(length=128)
-	public String getProperties() {
-		return properties;
+	public String getCustomStyle() {
+		return customStyle;
 	}
-	public void setProperties(String properties) {
-		this.properties = properties;
+	public void setCustomStyle(String customStyle) {
+		this.customStyle = customStyle;
+	}
+
+	@Column(length=128)
+	public String getCustomProperties() {
+		return customProperties;
+	}
+	public void setCustomProperties(String customProperties) {
+		this.customProperties = customProperties;
 	}
 	
     @Transient
-	public Map<String, Object> getPropertiesAsMap() {
-		return StringListUtils.propertiesToMap(getProperties());
+	public Map<String, Object> getCustomPropertiesAsMap() {
+		return StringListUtils.propertiesToMap(getCustomProperties());
 	}
 	public void setPropertiesAsMap(Map<String, Object> propertyMap) {
-		setProperties(StringListUtils.mapToProperties(propertyMap));
+		setCustomProperties(StringListUtils.mapToProperties(propertyMap));
 	}
 	
     /**
