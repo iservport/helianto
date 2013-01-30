@@ -16,6 +16,7 @@
 package org.helianto.core.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -230,6 +231,20 @@ public class Category
     	return getCustomWorkflowRolesAsArray().length - 1;
 	}
     
+    /**
+     * <<Transient>> List of workflow roles converted to map.
+     */
+    @Transient
+    public Map<String, String> getCustomWorkflowRolesAsMap() {
+		Map<String, String> workflowRolesMap = new HashMap<String, String>();
+    	if (isWorkflowEnabled()) {
+    		for (int i=0; i<getCustomWorkflowRolesAsArray().length; i++) {
+    			workflowRolesMap.put(String.valueOf(i), getCustomWorkflowRolesAsArray()[i]);
+    		}
+    	}
+    	return workflowRolesMap;
+	}
+
 	/**
 	 * Custom properties.
 	 */

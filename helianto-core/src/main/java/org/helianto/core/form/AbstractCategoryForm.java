@@ -5,6 +5,7 @@ package org.helianto.core.form;
  * Base class to category forms.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 public class AbstractCategoryForm extends AbstractTrunkForm implements CategoryForm {
 	
