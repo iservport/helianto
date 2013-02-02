@@ -11,11 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.form.CompositeResourceForm;
 import org.helianto.resource.form.ResourceGroupForm;
 import org.junit.After;
 import org.junit.Before;
@@ -29,10 +27,11 @@ public class ResourceMgrImplTests {
 	@Test
 	public void findResourceGroups() {
 		List<ResourceGroup> resourceGroupList = new ArrayList<ResourceGroup>();
-		ResourceGroupForm form = new CompositeResourceForm(new Entity());
+		ResourceGroupForm form = EasyMock.createMock(ResourceGroupForm.class);
 		
 		expect(resourceGroupDao.find(EasyMock.isA(Filter.class))).andReturn(resourceGroupList);
 		replay(resourceGroupDao);
+		replay(form);
 		
 		assertSame(resourceGroupList, resourceMgr.findResourceGroups(form));
 		verify(resourceGroupDao);

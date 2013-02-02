@@ -4,6 +4,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Common string list operations.
  * 
@@ -36,21 +41,42 @@ public class StringListUtils {
 	}
 	
 	/**
-	 * Convert string of comma separated properties to a map.
+	 * Convert string of comma separated properties or JSON to a map.
+	 * 
+	 * <p>
+	 * if the first character in properties is "{", this method 
+	 * attempts to map the remaining content as JSON.
+	 * </p>
 	 * 
 	 * @param properties
 	 */
 	public static Map<String, Object> propertiesToMap(String properties) {
     	Map<String, Object> propertyMap = new HashMap<String, Object>();
-		for (String property: StringListUtils.stringToArray(properties)) {
-			String[] pair = property.split("=");
-			if (pair.length==1) {
-				propertyMap.put(pair[0], null);
-			}
-			if (pair.length==2) {
-				propertyMap.put(pair[0], pair[1]);
-			}
-		}
+    	if (properties!=null) {
+    		if (properties.startsWith("{")) {
+    			logger.debug("Mapping properties as JSON.");
+    			ObjectMapper mapper = new ObjectMapper();
+    			try {
+    				propertyMap = mapper.readValue(properties.getBytes(), 
+    						new TypeReference<Map<String, Object>>() {});
+    			} catch (Exception e) {
+    				logger.error("Unable to map properties, {}.", e.getMessage());
+    				propertyMap.put("error", e.getMessage());
+    			}
+    		}
+    		else {
+    			logger.debug("Mapping properties as key/value pairs.");
+    			for (String property: StringListUtils.stringToArray(properties)) {
+    				String[] pair = property.split("=");
+    				if (pair.length==1) {
+    					propertyMap.put(pair[0], null);
+    				}
+    				if (pair.length==2) {
+    					propertyMap.put(pair[0], pair[1]);
+    				}
+    			}
+    		}
+    	}
 		return propertyMap;
 	}
 
@@ -80,5 +106,7 @@ public class StringListUtils {
 		}
 		return propertyBuilder.toString();
 	}
+	
+	private static final Logger logger = LoggerFactory.getLogger(StringListUtils.class);
 	
 }

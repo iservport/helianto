@@ -248,7 +248,7 @@ public class Category
 	/**
 	 * Custom properties.
 	 */
-	@Column(length=128)
+	@Column(length=512)
 	public String getCustomProperties() {
 		return customProperties;
 	}

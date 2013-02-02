@@ -179,6 +179,12 @@
 			<artifactId>com.springsource.javax.annotation</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+	    <!-- jackson-->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.9</version>
+		</dependency>
 		<!-- db bundles -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
