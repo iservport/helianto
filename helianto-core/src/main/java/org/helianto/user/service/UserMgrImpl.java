@@ -136,7 +136,7 @@ public class UserMgrImpl
 
 	public List<? extends UserGroup> findUsers(String userKey) {
 		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(
-				"select user from User user where user.userKey = ? ", userKey);
+				"select user from User user where user.userKey = ? order by lastEvent DESC", userKey);
     	logger.debug("Found user list of size {}", userList.size());
         return userList;
 	}
