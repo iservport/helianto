@@ -20,7 +20,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import org.helianto.core.Prioritizable;
+import org.helianto.core.def.ReferenceEnabled;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.utils.StringListUtils;
 import org.helianto.document.Documentable;
 /**
  * Base class to represent a <code>Document</code>.
@@ -29,11 +31,10 @@ import org.helianto.document.Documentable;
  */
 @MappedSuperclass
 public abstract class AbstractDocument 
-
 	extends AbstractEvent
-
 	implements 
 	  Documentable
+	, ReferenceEnabled
 	, Prioritizable 
 
 {
@@ -42,6 +43,7 @@ public abstract class AbstractDocument
     private String docCode;
     private String docName;
     private String docFile;
+    private String docAbstract;
     private char priority;
     private String encoding;
     private String multipartFileContentType;
@@ -111,6 +113,17 @@ public abstract class AbstractDocument
     public void setDocFile(String docFile) {
         this.docFile = docFile;
     }
+
+    /**
+     * Document abstract.
+     */
+    @Column(length=2048)
+    public String getDocAbstract() {
+		return docAbstract;
+	}
+    public void setDocAbstract(String docAbstract) {
+		this.docAbstract = docAbstract;
+	}
 
     /**
      * Priority.
@@ -206,10 +219,10 @@ public abstract class AbstractDocument
      */
     @Transient
     public String[] getReferencesAsArray() {
-    	if (getReferenceList()!=null && getReferenceList().replace(" ", "").length()>0) {
-        	return getReferenceList().replace(" ", "").split(",");
-    	}
-    	return new  String[] { };
+    	return StringListUtils.stringToArray(getReferenceList());
+    }
+    public void setReferencesAsArray(String[] referenceListAsArray) {
+    	setReferenceList(StringListUtils.arrayToString(referenceListAsArray));
     }
     
     /**
