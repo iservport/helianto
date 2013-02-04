@@ -47,7 +47,7 @@ public abstract class AbstractJournal
      */
     public AbstractJournal() {
     	super();
-        setPriority(' ');
+        setPriority('0');
     }
     
     /**
