@@ -34,6 +34,7 @@ import org.helianto.core.Programmable;
 import org.helianto.core.PropertyMappable;
 import org.helianto.core.base.AbstractHumanReadable;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.def.ReferenceEnabled;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.utils.StringListUtils;
 
@@ -50,6 +51,7 @@ public class Category
 	extends AbstractHumanReadable
 	implements 
 	  TrunkEntity
+	, ReferenceEnabled
 	, PropertyMappable
 	, Programmable
 
@@ -63,6 +65,7 @@ public class Category
     private String categoryLabel;
     private String categoryName;
     private char priority;
+    private String referenceList;
     private String customStyle;
     private String customWorkflowRoles;
     private String customProperties;
@@ -171,6 +174,28 @@ public class Category
 		this.priority = priority;
 	}
 	
+    /**
+     * Reference list of comma separated values.
+     */
+    @Column(length=1024)
+    public String getReferenceList() {
+		return referenceList;
+	}
+    public void setReferenceList(String referenceList) {
+		this.referenceList = referenceList;
+	}
+    
+    /**
+     * References as array.
+     */
+    @Transient
+    public String[] getReferencesAsArray() {
+    	return StringListUtils.stringToArray(getReferenceList());
+    }
+    public void setReferencesAsArray(String[] referenceListAsArray) {
+    	setReferenceList(StringListUtils.arrayToString(referenceListAsArray));
+    }
+    
     /**
      * Style to be applied.
      * 
