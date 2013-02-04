@@ -38,6 +38,7 @@ public class UserDetailsServiceImpl2 implements UserDetailsService {
 		if (userList!=null && userList.size()>0) {
 			User user = userSelectorStrategy.selectUser(userList);
 			user.setLastEvent(new Date());
+			userMgr.storeUserGroup(user);
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
 			return new UserDetailsAdapter((User) userMgr.storeUserGroup(user), credential, roles);
 		}
