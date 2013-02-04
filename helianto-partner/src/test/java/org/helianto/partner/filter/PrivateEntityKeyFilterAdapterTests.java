@@ -22,7 +22,6 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.domain.PrivateEntity2;
-import org.helianto.partner.form.CompositePartnerForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,7 +46,7 @@ public class PrivateEntityKeyFilterAdapterTests {
     	form.getParent().setId(10);
     	KeyType keyType = new KeyType(new Operator("DEFAULT"), "KEYTYPE");
     	keyType.setId(30);
-        ((CompositePartnerForm) form).setKeyType(keyType);
+        ((CompositeTestPartnerForm) form).setKeyType(keyType);
         assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
     }
     
@@ -59,18 +58,18 @@ public class PrivateEntityKeyFilterAdapterTests {
     
     @Test
     public void keyValue() {
-    	((CompositePartnerForm) form).setKeyValue("VALUE");
+    	((CompositeTestPartnerForm) form).setKeyValue("VALUE");
         assertEquals(C3+OB, filter.createCriteriaAsString());
     }
     
     private PrivateEntityKeyFormFilterAdapter filter;
-    private CompositePartnerForm form;
+    private CompositeTestPartnerForm form;
     
     @Before
     public void setUp() {
     	Entity entity = EntityTestSupport.createEntity(1);
     	PrivateEntity2 privateEntity = new PrivateEntity2(entity, "");
-    	form = new CompositePartnerForm(privateEntity);
+    	form = new CompositeTestPartnerForm(privateEntity);
     	filter = new PrivateEntityKeyFormFilterAdapter(form);
     }
 }

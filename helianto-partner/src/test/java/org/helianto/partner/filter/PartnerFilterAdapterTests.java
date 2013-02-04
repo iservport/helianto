@@ -21,7 +21,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.PartnerState;
 import org.helianto.partner.domain.PrivateEntity2;
-import org.helianto.partner.form.CompositePartnerForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,7 +49,7 @@ public class PartnerFilterAdapterTests {
     @Test
     public void select() {
     	form.getParent().setId(10);
-        ((CompositePartnerForm) form).setPartnerType('C');
+        ((CompositeTestPartnerForm) form).setPartnerType('C');
         assertEquals(C2+"AND "+C1, filter.createCriteriaAsString());
     }
     
@@ -93,20 +92,20 @@ public class PartnerFilterAdapterTests {
     @Test
     public void entity() {
     	Entity entity = EntityTestSupport.createEntity(2);
-    	form = new CompositePartnerForm(entity);
+    	form = new CompositeTestPartnerForm(entity);
     	form.setParent(null);
     	filter = new PartnerFormFilterAdapter(form);
         assertEquals(C8+OB, filter.createCriteriaAsString());
     }
     
     private PartnerFormFilterAdapter filter;
-    private CompositePartnerForm form;
+    private CompositeTestPartnerForm form;
     
     @Before
     public void setUp() {
     	Entity entity = EntityTestSupport.createEntity(1);
     	PrivateEntity2 privateEntity = new PrivateEntity2(entity, "");
-    	form = new CompositePartnerForm(privateEntity);
+    	form = new CompositeTestPartnerForm(privateEntity);
     	filter = new PartnerFormFilterAdapter(form);
     }
     

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.def.ActivityState;
 import org.helianto.core.def.UserState;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
@@ -24,9 +25,11 @@ public class UserFormFilterAdapterTests {
 	static String S1 = "select alias from UserGroup alias ";
 	static String S2 = "inner join alias.parentAssociations as parentAssociations ";
 	static String O0 = "order by alias.userKey ";
+	static String O1 = "order by alias.lastEvent DESC ";
 	static String C0 = "alias.entity.id = 10 ";
 	static String C1 = "AND alias.userKey = 'USERKEY' ";
 	static String C2 = "AND alias.userState = 'A' ";
+	static String C2a = "AND alias.entity.activityState = 'A' ";
 	static String C3 = "AND alias.identity.id not in (  1 ,  2 ) ";
 	static String C4 = "AND alias.class = 'G' ";
 	static String C5 = "parentAssociations.parent.id = 100 ";
@@ -47,6 +50,12 @@ public class UserFormFilterAdapterTests {
 	}
 
 	@Test
+	public void lastEventOrder() {
+		Mockito.when(form.getUserOrderBy()).thenReturn('L');
+		assertEquals(C0+O1, filter.createCriteriaAsString());
+	}
+
+	@Test
 	public void select() {
 		Mockito.when(form.getUserKey()).thenReturn("USERKEY");
 		assertEquals(C0+C1, filter.createCriteriaAsString());
@@ -56,6 +65,12 @@ public class UserFormFilterAdapterTests {
 	public void userState() {
 		Mockito.when(form.getUserState()).thenReturn(UserState.ACTIVE.getValue());
 		assertEquals(C0+C2+O0, filter.createCriteriaAsString());
+	}
+
+	@Test
+	public void entityActivityState() {
+		Mockito.when(form.getEntityActivityState()).thenReturn(ActivityState.ACTIVE.getValue());
+		assertEquals(C0+C2a+O0, filter.createCriteriaAsString());
 	}
 
 	@Test

@@ -1,4 +1,4 @@
-package org.helianto.partner.form;
+package org.helianto.partner.filter;
 
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
@@ -7,13 +7,20 @@ import org.helianto.core.form.CompositeEntityForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.form.ContactGroupForm;
+import org.helianto.partner.form.PartnerCategoryForm;
+import org.helianto.partner.form.PartnerForm;
+import org.helianto.partner.form.PartnerPhoneForm;
+import org.helianto.partner.form.PrivateAddressForm;
+import org.helianto.partner.form.PrivateEntityForm;
+import org.helianto.partner.form.PrivateEntityKeyForm;
 
 /**
  * Composite partner form.
  * 
  * @author mauriciofernandesdecastro
  */
-public class CompositePartnerForm
+public class CompositeTestPartnerForm
 	extends CompositeEntityForm
 	implements 
 	  PrivateEntityForm
@@ -44,14 +51,16 @@ public class CompositePartnerForm
     private int userGroupParentId;
     private String userKey;
     private char userState;
+    private char entityActivityState;
 	private String[] userIdArray;
+    private char userOrderBy;
 	
 	/**
 	 * Entity constructor.
 	 * 
 	 * @param entity
 	 */
-	public CompositePartnerForm(Entity entity) {
+	public CompositeTestPartnerForm(Entity entity) {
 		super();
 		setEntity(entity);
 	}
@@ -61,7 +70,7 @@ public class CompositePartnerForm
 	 * 
 	 * @param parent
 	 */
-	public CompositePartnerForm(PrivateEntity2 parent) {
+	public CompositeTestPartnerForm(PrivateEntity2 parent) {
 		this(parent.getEntity());
 		setParent(parent);
 	}
@@ -71,7 +80,7 @@ public class CompositePartnerForm
 	 * 
 	 * @param partner
 	 */
-	public CompositePartnerForm(Partner partner) {
+	public CompositeTestPartnerForm(Partner partner) {
 		this(partner.getEntity());
 		setPartner(partner);
 	}
@@ -199,6 +208,13 @@ public class CompositePartnerForm
 		this.userState = userState;
 	}
 	
+	public char getEntityActivityState() {
+		return entityActivityState;
+	}
+	public void setEntityActivityState(char entityActivityState) {
+		this.entityActivityState = entityActivityState;
+	}
+	
 	public String[] getUserIdArray() {
 		return userIdArray;
 	}
@@ -206,14 +222,21 @@ public class CompositePartnerForm
 		this.userIdArray = userIdArray;
 	}
 	
+	public char getUserOrderBy() {
+		return userOrderBy;
+	}
+	public void setUserOrderBy(char userOrderBy) {
+		this.userOrderBy = userOrderBy;
+	}
+	
 	/**
 	 * Clone the form and set a new parent.
 	 * 
 	 * @param parent
 	 */
-	public CompositePartnerForm clone(PrivateEntity2 parent) {
+	public CompositeTestPartnerForm clone(PrivateEntity2 parent) {
 		try {
-			CompositePartnerForm form = (CompositePartnerForm) super.clone();
+			CompositeTestPartnerForm form = (CompositeTestPartnerForm) super.clone();
 			form.setParent(parent);
 			return form;
 		} catch (CloneNotSupportedException e) {
