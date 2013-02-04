@@ -57,7 +57,7 @@ public class StringListUtils {
     			logger.debug("Mapping properties as JSON.");
     			ObjectMapper mapper = new ObjectMapper();
     			try {
-    				propertyMap = mapper.readValue(properties.getBytes(), 
+    				propertyMap = mapper.readValue(properties, 
     						new TypeReference<Map<String, Object>>() {});
     			} catch (Exception e) {
     				logger.error("Unable to map properties, {}.", e.getMessage());

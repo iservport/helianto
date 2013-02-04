@@ -100,6 +100,13 @@ public class StringUtilsTests {
 		assertEquals("key", entry.getKey());
 		assertEquals("1", entry.getValue());
 		
+		p1 = "{ \"key\":\"ã\" }";
+		propertyMap = StringListUtils.propertiesToMap(p1);
+		assertEquals(1, propertyMap.size());
+		entry = propertyMap.entrySet().iterator().next();
+		assertEquals("key", entry.getKey());
+		assertEquals("ã", entry.getValue());
+		
 		p1 = "{ \"key1\":\"1\", \"key2\":\"2\" }";
 		propertyMap = StringListUtils.propertiesToMap(p1);
 		assertEquals(2, propertyMap.size());
