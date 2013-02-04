@@ -33,7 +33,6 @@ public class UserFormFilterAdapter
 	extends AbstractTrunkFilterAdapter<UserGroupForm> {
 
     private static final long serialVersionUID = 1L;
-    private boolean orderByLastEventDesc = false;
     
     /**
      * Default constructor.
@@ -102,6 +101,7 @@ public class UserFormFilterAdapter
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("userKey", getForm().getUserKey(), mainCriteriaBuilder);
 		appendEqualFilter("userState", getForm().getUserState(), mainCriteriaBuilder);
+		appendEqualFilter("entity.activityState", getForm().getEntityActivityState(), mainCriteriaBuilder);
 		appendInArray("id", stringArrayConverter(getForm().getUserIdArray()), mainCriteriaBuilder);
         appendExclusionsFilter( mainCriteriaBuilder);
 	}
@@ -123,7 +123,7 @@ public class UserFormFilterAdapter
 	
 	@Override
 	public String getOrderByString() {
-		if (isOrderByLastEventDesc()) {
+		if (getForm().getUserOrderBy()=='L') {
 			return "lastEvent DESC";
 		}
 		else {
@@ -154,16 +154,6 @@ public class UserFormFilterAdapter
        }
     }
     
-    /**
-     * True if order by last event is required.
-     */
-    public boolean isOrderByLastEventDesc() {
-		return orderByLastEventDesc;
-	}
-	public void setOrderByLastEventDesc(boolean orderByLastEventDesc) {
-		this.orderByLastEventDesc = orderByLastEventDesc;
-	}
-
     private static Logger logger = LoggerFactory.getLogger(UserFormFilterAdapter.class);
 
 }

@@ -18,23 +18,23 @@ public interface UserGroupForm
 	/**
      * User group type.
      */
-    public char getUserGroupType();
+    char getUserGroupType();
 	
 	/**
      * User group type setter.
      * 
      * @param userGroupType
      */
-    public void setUserGroupType(char userGroupType);
+    void setUserGroupType(char userGroupType);
 	
 	/**
      * User type.
      */
-    public char getUserType();
+    char getUserType();
 	
 	/**
 	 * Parent user key.
 	 */
-	public String getParentUserKey();
+	String getParentUserKey();
 
 }

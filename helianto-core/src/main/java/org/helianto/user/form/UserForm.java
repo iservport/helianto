@@ -16,16 +16,26 @@ public interface UserForm
 	/**
 	 * User key.
 	 */
-	public String getUserKey();
+	String getUserKey();
 	
 	/**
 	 * User state.
 	 */
-	public char getUserState();
+	char getUserState();
+	
+	/**
+	 * User entity activity state.
+	 */
+	char getEntityActivityState();
 	
 	/**
 	 * User id array.
 	 */
-	public String[] getUserIdArray();
+	String[] getUserIdArray();
+	
+	/**
+	 * User order filter.
+	 */
+	char getUserOrderBy();
 	
 }
