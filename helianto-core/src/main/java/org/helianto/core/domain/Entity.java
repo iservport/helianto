@@ -102,6 +102,7 @@ public class Entity
     private String alias;
     private Date installDate;
     private String nature;
+    private String customColors;
     private String customStyle;
     private String customProperties;
     private Identity manager;
@@ -238,7 +239,7 @@ public class Entity
 	}
 	
 	/**
-	 * Set nature if it does not exist.
+	 * <<Transient>> Set nature if it does not exist.
 	 * 
 	 * @param nature
 	 */
@@ -256,7 +257,7 @@ public class Entity
 	}
 	
 	/**
-	 * True if nature already exists.
+	 * <<Transient>> True if nature already exists.
 	 * 
 	 * @param nature
 	 */
@@ -266,7 +267,7 @@ public class Entity
 	}
 	
 	/**
-	 * Nature as array.
+	 * <<Transient>> Nature as array.
 	 */
 	@Transient
 	public String[] getNatureAsArray() {
@@ -274,6 +275,32 @@ public class Entity
 	}
 	public void setNatureAsArray(String[] natureArray) {
 		setNature(StringListUtils.arrayToString(natureArray));
+	}
+	
+	/**
+	 * Custom colors.
+	 * 
+	 * <p>
+	 * Up to 6 colors in the hex format #rrggbb,#rrggbb, etc.
+	 * </p>
+	 */
+	@Column(length=48)
+	public String getCustomColors() {
+		return customColors;
+	}
+	public void setCustomColors(String customColors) {
+		this.customColors = customColors;
+	}
+
+	/**
+	 * <<Transient>> Colors as array.
+	 */
+	@Transient
+	public String[] getCustomColorsAsArray() {
+		return StringListUtils.stringToArray(getCustomColors());
+	}
+	public void setCustomColorsAsArray(String[] customColorsArray) {
+		setCustomColors(StringListUtils.arrayToString(customColorsArray));
 	}
 	
 	/**
