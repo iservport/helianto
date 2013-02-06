@@ -41,7 +41,7 @@ public class JournalTests {
     	assertEquals("SUMMARY", journal.getSummary());
     	assertEquals(ResolutionExtended.PRELIMINARY.getValue(), journal.getResolution());
     	assertEquals(PrivacyLevel.PUBLIC.getValue(), journal.getPrivacyLevel());
-    	assertEquals(' ', journal.getPriority());
+    	assertEquals('0', journal.getPriority());
 		assertTrue(journal.getNextCheckDate() instanceof Date);
 	}
 
