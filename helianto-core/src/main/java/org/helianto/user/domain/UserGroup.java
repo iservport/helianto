@@ -16,7 +16,6 @@
 package org.helianto.user.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -49,6 +48,7 @@ import org.helianto.core.def.UserState;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.utils.StringListUtils;
 /**
  * 			
  * An user account (or group) represents a set of roles within an <code>Entity</code>. 
@@ -277,15 +277,23 @@ public class UserGroup
 		this.nature = nature;
 	}
 	
+	/**
+	 * <<Transient>> Nature as array.
+	 */
 	@Transient
 	public String[] getNatureAsArray() {
-		if (getNature()!=null && getNature().length()>0) {
-			return getNature().replace(" ", "").split(",");
-		}
-		return new String[] {};
+		return StringListUtils.stringToArray(getNature());
 	}
 	public void setNatureAsArray(String[] natureArray) {
-		setNature(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
+		setNature(StringListUtils.arrayToString(natureArray));
+	}
+	
+	/**
+	 * <<Transient>> Convenience to read custom colors as array from entity.
+	 */
+	@Transient
+	public String[] getCustomColorsAsArray() {
+		return getEntity().getCustomColorsAsArray();
 	}
 	
 	/**

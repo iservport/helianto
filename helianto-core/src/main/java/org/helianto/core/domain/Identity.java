@@ -205,6 +205,28 @@ public class Identity implements java.io.Serializable {
     }
     
     /**
+     * <<Transient>> Safe identity first name getter.
+     */
+    @Transient
+    public String getIdentityFirstName() {
+    	if (getPersonalData()!=null) {
+    		return getPersonalData().getFirstName();
+    	}
+    	return "";
+    }
+    
+    /**
+     * <<Transient>> Safe identity last name getter.
+     */
+    @Transient
+    public String getIdentityLastName() {
+    	if (getPersonalData()!=null) {
+    		return getPersonalData().getLastName();
+    	}
+    	return "";
+    }
+    
+    /**
      * <<Transient>> Safe identity name getter.
      */
     @Transient

@@ -15,6 +15,7 @@
 
 package org.helianto.user.domain;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +28,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.helianto.core.PersonalEntity;
+import org.helianto.core.def.Appellation;
+import org.helianto.core.def.Gender;
 import org.helianto.core.def.UserType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
@@ -142,7 +145,7 @@ public class User extends UserGroup implements PersonalEntity {
     }
     
     /**
-     * User principal.
+     * <<Transient>> Safe user principal.
      */
     @Transient
     public String getUserPrincipal() {
@@ -153,7 +156,7 @@ public class User extends UserGroup implements PersonalEntity {
     }
     
     /**
-     * "<<Transient>> User principal name.
+     * "<<Transient>> Safe user principal name.
      */
     @Transient
     public String getUserPrincipalName() {
@@ -164,7 +167,7 @@ public class User extends UserGroup implements PersonalEntity {
     }
     
     /**
-     * "<<Transient>> Set user principal name as userName.
+     * <<Transient>> Internal user full name.
      */
     @Transient
     @Override
@@ -174,8 +177,9 @@ public class User extends UserGroup implements PersonalEntity {
     	}
     	return getUserPrincipalName();
     }
+    
     /**
-     * User principal domain.
+     * <<Transient>> Safe user principal domain.
      */
     @Transient
     public String getUserPrincipalDomain() {
@@ -183,6 +187,61 @@ public class User extends UserGroup implements PersonalEntity {
     		return getIdentity().getPrincipalDomain();
     	}
         return "";
+    }
+    
+    /**
+     * <<Transient>> Safe user first name.
+     */
+    @Transient
+    public String getUserFirstName() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getIdentityFirstName();
+    	}
+        return "";
+    }
+    
+    /**
+     * <<Transient>> Safe user last name.
+     */
+    @Transient
+    public String getUserLastName() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getIdentityLastName();
+    	}
+        return "";
+    }
+    
+    /**
+     * <<Transient>> Safe user gender.
+     */
+    @Transient
+    public char getUserGender() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getGender();
+    	}
+        return Gender.NOT_SUPPLIED.getValue();
+    }
+    
+    /**
+     * <<Transient>> Safe user appellation.
+     */
+    @Transient
+    public char getUserAppelation() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getAppellation();
+    	}
+        return Appellation.NOT_SUPPLIED.getValue();
+    }
+    
+    /**
+     * <<Transient>> Safe user birth date.
+     */
+    @Transient
+    public Date getUserBirthDate() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getBirthDate();
+    	}
+        return new Date();
     }
     
     /**
