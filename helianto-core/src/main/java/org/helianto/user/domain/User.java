@@ -190,6 +190,17 @@ public class User extends UserGroup implements PersonalEntity {
     }
     
     /**
+     * <<Transient>> Safe user optional alias.
+     */
+    @Transient
+    public String getUserOptionalAlias() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getOptionalAlias();
+    	}
+        return "";
+    }
+    
+    /**
      * <<Transient>> Safe user first name.
      */
     @Transient
