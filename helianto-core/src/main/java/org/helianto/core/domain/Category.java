@@ -257,14 +257,19 @@ public class Category
 	}
     
     /**
-     * <<Transient>> List of workflow roles converted to map.
+     * <<Transient>> List of work flow roles converted to map.
+     * 
+     * <p>
+     * Map indexes are created as 1-based. This allows for a 0 stage work flow phase 
+     * to be prepended.
+     * </p>
      */
     @Transient
     public Map<String, String> getCustomWorkflowRolesAsMap() {
 		Map<String, String> workflowRolesMap = new HashMap<String, String>();
     	if (isWorkflowEnabled()) {
     		for (int i=0; i<getCustomWorkflowRolesAsArray().length; i++) {
-    			workflowRolesMap.put(String.valueOf(i), getCustomWorkflowRolesAsArray()[i]);
+    			workflowRolesMap.put(String.valueOf(i+1), getCustomWorkflowRolesAsArray()[i]);
     		}
     	}
     	return workflowRolesMap;
