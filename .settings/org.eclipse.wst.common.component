@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="1.5.0">
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="helianto">
         <wb-resource deploy-path="/" source-path="/helianto-core/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-core/src/main/resources"/>
@@ -21,7 +20,6 @@
         <wb-resource deploy-path="/" source-path="/helianto-process/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-process/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-process/src/test/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-process/src/test/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-inventory/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-inventory/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-inventory/src/test/java"/>
