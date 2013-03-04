@@ -15,16 +15,17 @@
 
 package org.helianto.core.filter.base;
 
-import org.helianto.core.Entity;
-import org.helianto.core.TrunkEntity;
-import org.helianto.core.User;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.user.domain.User;
 
 /**
  * Base class to filters that requires an <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractUserFilterAdapter<T extends TrunkEntity> extends AbstractTrunkFilterAdapter<T>  {
+public abstract class AbstractUserFilterAdapter<T extends TrunkEntity> 
+	extends AbstractTrunkFilterAdapter<T>  {
 	
 	private static final long serialVersionUID = 1L;
 	private User user;

@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.helianto.core.Prioritizable;
+import org.helianto.core.base.AbstractEventControl;
 import org.helianto.document.Journal;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,7 +33,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractJournal extends AbstractPrivateControl implements Journal, Prioritizable {
+public abstract class AbstractJournal 
+	extends AbstractEventControl 
+	implements Journal, Prioritizable {
 
     private static final long serialVersionUID = 1L;
     private Date actualStartDate;
@@ -44,7 +47,7 @@ public abstract class AbstractJournal extends AbstractPrivateControl implements 
      */
     public AbstractJournal() {
     	super();
-        setPriority(' ');
+        setPriority('0');
     }
     
     /**
@@ -59,10 +62,19 @@ public abstract class AbstractJournal extends AbstractPrivateControl implements 
     @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getActualStartDate() {
-        return this.actualStartDate;
+        return internalActualStartDate();
     }
     public void setActualStartDate(Date actualStartDate) {
         this.actualStartDate = actualStartDate;
+    }
+    
+    /**
+     * Convenience to allow subclasses to change how actual start 
+     * date is handled.
+     */
+    @Transient
+    protected Date internalActualStartDate() {
+    	return this.actualStartDate;
     }
 
     /**
@@ -71,10 +83,19 @@ public abstract class AbstractJournal extends AbstractPrivateControl implements 
     @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getActualEndDate() {
-        return this.actualEndDate;
+        return internalActualEndDate();
     }
     public void setActualEndDate(Date actualEndDate) {
         this.actualEndDate = actualEndDate;
+    }
+
+    /**
+     * Convenience to allow subclasses to change how actual end 
+     * date is handled.
+     */
+    @Transient
+    protected Date internalActualEndDate() {
+    	return this.actualEndDate;
     }
 
     /**

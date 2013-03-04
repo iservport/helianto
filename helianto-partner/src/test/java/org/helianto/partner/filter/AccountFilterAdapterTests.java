@@ -3,11 +3,10 @@ package org.helianto.partner.filter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.AccountType;
 import org.helianto.partner.domain.Account;
-import org.helianto.partner.filter.AccountFilterAdapter;
 import org.junit.Before;
 import org.junit.Test;
 /**

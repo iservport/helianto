@@ -5,12 +5,12 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.easymock.classextension.EasyMock;
-import org.helianto.core.UserRequest;
+import org.easymock.EasyMock;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.form.CompositeIdentityForm;
-import org.helianto.core.filter.form.UserRequestForm;
+import org.helianto.core.form.CompositeIdentityForm;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.user.domain.UserRequest;
+import org.helianto.user.form.UserRequestForm;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

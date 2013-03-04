@@ -2,7 +2,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractPersonalFilterAdapter;
-import org.helianto.core.filter.form.PersonalAddressForm;
+import org.helianto.core.form.PersonalAddressForm;
 
 /**
  * Personal address form filter adapter.

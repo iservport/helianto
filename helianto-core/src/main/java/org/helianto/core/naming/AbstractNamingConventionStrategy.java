@@ -1,5 +1,7 @@
 package org.helianto.core.naming;
 
+import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,8 +11,10 @@ import org.slf4j.LoggerFactory;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractNamingConventionStrategy implements NamingConventionStrategy {
+public abstract class AbstractNamingConventionStrategy 
+	implements Serializable, NamingConventionStrategy {
 	
+	private static final long serialVersionUID = 1L;
 	private boolean isConvertToLowerCase = false;
 	
 	/**

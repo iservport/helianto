@@ -2,7 +2,7 @@ package org.helianto.core.security;
 
 import java.security.Principal;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 
 /**
  * A strategy to resolve <code>PublicUserDetails</code> from some authenticated principal.

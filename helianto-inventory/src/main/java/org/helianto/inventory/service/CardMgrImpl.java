@@ -20,7 +20,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;

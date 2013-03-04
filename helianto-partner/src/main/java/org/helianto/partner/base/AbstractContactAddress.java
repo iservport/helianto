@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 
 /**
  * Base class to instances having a contact address.

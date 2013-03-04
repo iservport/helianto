@@ -18,7 +18,7 @@ package org.helianto.partner.domain.nature;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Transient;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
 

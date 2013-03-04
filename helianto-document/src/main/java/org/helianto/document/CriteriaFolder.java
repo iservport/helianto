@@ -1,6 +1,7 @@
 package org.helianto.document;
 
-import org.helianto.core.Folder;
+import org.helianto.core.domain.type.FolderEntity;
+
 
 
 /**
@@ -13,7 +14,7 @@ import org.helianto.core.Folder;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface CriteriaFolder extends Folder {
+public interface CriteriaFolder extends FolderEntity {
 	
 	/**
 	 * Criteria used to select contained objects.

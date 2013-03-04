@@ -17,7 +17,7 @@ package org.helianto.resource;
 
 import java.util.List;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.form.ResourceGroupForm;
 

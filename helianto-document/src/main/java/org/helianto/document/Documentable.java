@@ -1,6 +1,6 @@
 package org.helianto.document;
 
-import org.helianto.core.TrunkEntity;
+import org.helianto.core.domain.type.TrunkEntity;
 
 /**
  * Interface to represent documents in general

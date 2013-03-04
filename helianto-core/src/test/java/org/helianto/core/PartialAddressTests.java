@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
-import org.helianto.core.City;
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
 import org.helianto.core.base.AbstractPartialAddress;
+import org.helianto.core.domain.City;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Province;
 import org.junit.Before;
 import org.junit.Test;
 

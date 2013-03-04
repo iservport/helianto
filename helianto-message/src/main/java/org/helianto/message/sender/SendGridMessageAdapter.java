@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Set;
 
-import org.helianto.core.Identity;
+import org.helianto.core.domain.Identity;
 import org.helianto.message.AbstractMessageAdapter;
 
 /**

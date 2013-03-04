@@ -1,5 +1,7 @@
 package org.helianto.process;
 
+import org.helianto.process.domain.ProcessDocument;
+
 /**
  * Simple test class extending Document
  */

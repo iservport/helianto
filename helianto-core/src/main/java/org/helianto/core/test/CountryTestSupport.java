@@ -15,8 +15,8 @@
 
 package org.helianto.core.test;
 
-import org.helianto.core.Country;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Country;
+import org.helianto.core.domain.Operator;
 
 /**
  * Country test support.

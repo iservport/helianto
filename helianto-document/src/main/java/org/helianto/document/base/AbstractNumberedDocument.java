@@ -72,6 +72,11 @@ public class AbstractNumberedDocument extends AbstractDocument implements Sequen
 		return "NDOC_";
 	}
 
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
 	/**
 	 * The internal number.
 	 */

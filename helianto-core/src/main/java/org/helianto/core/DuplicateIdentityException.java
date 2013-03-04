@@ -16,6 +16,8 @@
 
 package org.helianto.core;
 
+import org.helianto.core.domain.Identity;
+
 /**
  * Fired if the same principal has already been persisted before.
  *  

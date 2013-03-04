@@ -2,15 +2,14 @@ package org.helianto.resource.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.resource.def.ResourceType;
-import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.filter.ResourceGroupFormFilterAdapter;
-import org.helianto.resource.form.CompositeResourceForm;
 import org.helianto.resource.form.ResourceGroupForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -25,11 +24,13 @@ public class ResourceGroupFormFilterAdapterTests {
     public static String C4 = "AND alias.resourceType = 'F' ";
     public static String C5 = "AND alias.resourceGroup.id = 1 ";
     public static String C6 = "AND (" +
-  		"(lower(alias.resourceCode) like '%name%' ) " +
-  		"OR (lower(alias.resourceName) like '%name%' ) ) ";
+  		"(lower(alias.resourceCode) like '%name%' ) OR " +
+  		"(lower(alias.resourceName) like '%name%' ) " +
+  		") ";
     public static String C7 = "AND (" +
-  		"(lower(alias.resourceCode) like '%name%' AND lower(alias.resourceCode) like '%other%' ) " +
-  		"OR (lower(alias.resourceName) like '%name%' AND lower(alias.resourceName) like '%other%' ) ) ";
+  		"(lower(alias.resourceCode) like '%name%' OR lower(alias.resourceCode) like '%other%' ) OR " +
+  		"(lower(alias.resourceName) like '%name%' OR lower(alias.resourceName) like '%other%' ) " +
+  		") ";
 
     @Test
     public void empty() {
@@ -38,41 +39,39 @@ public class ResourceGroupFormFilterAdapterTests {
     
     @Test
     public void type() {
-        form.setType('R');
+    	Mockito.when(form.getType()).thenReturn('R');
         assertEquals(C1+C0+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
-    	((CompositeResourceForm) form).setResourceCode("CODE");
+    	Mockito.when(form.getResourceCode()).thenReturn("CODE");
         assertEquals(C0+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void resourceType() {
-    	((CompositeResourceForm) form).setResourceType(ResourceType.FIXTURE.getValue());
+    	Mockito.when(form.getResourceType()).thenReturn(ResourceType.FIXTURE.getValue());
         assertEquals(C0+C4+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void parent() {
-    	ResourceGroup parent = new ResourceGroup(form.getEntity(), "PARENT");
-    	parent.setId(1);
-    	((CompositeResourceForm) form).setResourceGroup(parent);
+    	Mockito.when(form.getResourceGroupId()).thenReturn(1);
         assertEquals(C0+C5+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void searchName() {
-    	((CompositeResourceForm) form).setSearchMode('R');
-    	((CompositeResourceForm) form).setSearchString("NAME");
+    	Mockito.when(form.getSearchMode()).thenReturn('R');
+    	Mockito.when(form.getSearchString()).thenReturn("NAME");
         assertEquals(C0+C6+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void searchNames() {
-    	((CompositeResourceForm) form).setSearchMode('R');
-    	((CompositeResourceForm) form).setSearchString("NAME OTHER");
+    	Mockito.when(form.getSearchMode()).thenReturn('R');
+    	Mockito.when(form.getSearchString()).thenReturn("NAME OTHER");
         assertEquals(C0+C7+OB, filter.createCriteriaAsString());
     }
     
@@ -82,8 +81,14 @@ public class ResourceGroupFormFilterAdapterTests {
     @Before
     public void setUp() {
     	Entity entity = EntityTestSupport.createEntity(1);
-    	form = new CompositeResourceForm(entity);
+    	form = Mockito.mock(ResourceGroupForm.class);
+    	Mockito.when(form.getEntity()).thenReturn(entity);
     	filter = new ResourceGroupFormFilterAdapter(form);
+    }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
     }
 }
 

@@ -1,9 +1,9 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRequest;
-import org.helianto.core.filter.base.AbstractControlFilterAdapter;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.filter.base.AbstractControlFilterAdapter;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserRequest;
 
 /**
  * Login request filter adapter.

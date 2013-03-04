@@ -1,6 +1,8 @@
 package org.helianto.core.filter.base;
 
-import org.helianto.core.Entity;
+import javax.persistence.Transient;
+
+import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 
 /**
@@ -9,7 +11,9 @@ import org.helianto.core.number.Sequenceable;
  * @author mauriciofernandesdecastro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractSequence extends AbstractInternal implements Sequenceable {
+public abstract class AbstractSequence 
+	extends AbstractInternal 
+	implements Sequenceable {
 
 	/**
 	 * Key constructor.
@@ -21,10 +25,13 @@ public abstract class AbstractSequence extends AbstractInternal implements Seque
 		super(entity, internalNumber);
 	}
 
-	/**
-	 * The entity key.
-	 */
+	@Transient
 	public String getInternalNumberKey() { 
 		return "KEY";
+	}
+	
+	@Transient
+	public int getStartNumber() {
+		return 1;
 	}
 }

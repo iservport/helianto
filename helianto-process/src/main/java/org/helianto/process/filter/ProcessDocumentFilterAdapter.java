@@ -17,15 +17,15 @@ package org.helianto.process.filter;
 
 import java.util.Collection;
 
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.process.Characteristic;
-import org.helianto.process.ControlMethod;
-import org.helianto.process.Operation;
-import org.helianto.process.Process;
-import org.helianto.process.ProcessDocument;
+import org.helianto.process.domain.Characteristic;
+import org.helianto.process.domain.ControlMethod;
+import org.helianto.process.domain.Operation;
+import org.helianto.process.domain.Process;
+import org.helianto.process.domain.ProcessDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

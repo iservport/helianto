@@ -22,16 +22,15 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Entity;
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
-import org.helianto.core.UserGroup;
+import org.helianto.core.ContextMgr;
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.KeyType;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Province;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.KeyTypeFilterAdapter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.NamespaceMgr;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.PartnerState;
@@ -65,6 +64,7 @@ import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
 import org.helianto.partner.form.PrivateEntityKeyForm;
+import org.helianto.user.domain.UserGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -412,7 +412,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private FilterDao<PartnerPhone> partnerPhoneDao;
     private FilterDao<PartnerCategory> partnerCategoryDao;
     private FilterDao<UserGroup> userGroupDao;
-	private NamespaceMgr namespaceMgr;
+	private ContextMgr namespaceMgr;
 	private SequenceMgr sequenceMgr;
 
     @Resource(name="privateEntityDao")
@@ -461,7 +461,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
     
 	@Resource(name="namespaceMgr")
-	public void setNamespaceMgr(NamespaceMgr namespaceMgr) {
+	public void setNamespaceMgr(ContextMgr namespaceMgr) {
 		this.namespaceMgr = namespaceMgr;
 	}
 	

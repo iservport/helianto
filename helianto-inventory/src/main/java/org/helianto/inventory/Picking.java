@@ -34,7 +34,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 
 /**
@@ -69,6 +69,11 @@ public class Picking implements Serializable, Sequenceable {
 		return "PICKING";
 	}
     
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     /**
      * Constructor.
      */

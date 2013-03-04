@@ -6,13 +6,12 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Credential;
-import org.helianto.core.User;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
-import org.helianto.core.filter.UserFilterAdapter;
+import org.helianto.core.domain.Credential;
 import org.helianto.core.service.SecurityMgr;
-import org.helianto.core.service.UserMgr;
+import org.helianto.user.UserMgr;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -33,14 +32,13 @@ public class UserDetailsServiceImpl2 implements UserDetailsService {
 		if (credential==null) {
 			throw new UsernameNotFoundException("Unable to find credential for "+username);
 		}
-		UserFilterAdapter filter = new UserFilterAdapter(new User());
-		filter.setUserKey(username);
 		@SuppressWarnings("unchecked")
-		List<UserGroup> userList = (List<UserGroup>) userMgr.findUsers(filter);
+		List<UserGroup> userList = (List<UserGroup>) userMgr.findUsers(username);
 		logger.debug("Found {} user(s) matching {}.", userList.size(), username);
 		if (userList!=null && userList.size()>0) {
 			User user = userSelectorStrategy.selectUser(userList);
 			user.setLastEvent(new Date());
+			userMgr.storeUserGroup(user);
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
 			return new UserDetailsAdapter((User) userMgr.storeUserGroup(user), credential, roles);
 		}

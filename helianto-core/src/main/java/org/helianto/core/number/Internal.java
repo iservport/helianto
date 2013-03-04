@@ -15,7 +15,7 @@
 
 package org.helianto.core.number;
 
-import org.helianto.core.TrunkEntity;
+import org.helianto.core.domain.type.TrunkEntity;
 
 /**
  * Common Interface to entities having internalNumber.

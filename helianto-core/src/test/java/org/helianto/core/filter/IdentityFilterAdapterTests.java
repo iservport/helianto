@@ -21,10 +21,11 @@ import static org.junit.Assert.assertEquals;
 import org.helianto.core.IdentityType;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.Notification;
-import org.helianto.core.filter.form.CompositeIdentityForm;
-import org.helianto.core.filter.form.IdentityForm;
+import org.helianto.core.form.IdentityForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -37,13 +38,17 @@ public class IdentityFilterAdapterTests {
     public static String C3 = "lower(alias.personalData.firstName) like '%first%' ";
     public static String C4 = "lower(alias.personalData.lastName) like '%last%' ";
     public static String C5 = "(" +
-    		"lower(alias.personalData.firstName) like '%one%' " +
-    		"OR lower(alias.personalData.lastName) like '%one%' " +
-    		"OR lower(alias.personalData.firstName) like '%two%' " +
-    		"OR lower(alias.personalData.lastName) like '%two%' " +
+    		"(lower(alias.principal) like '%one%' " +
+    		"OR lower(alias.principal) like '%two%' ) " +
+    		"OR (lower(alias.optionalAlias) like '%one%' " +
+    		"OR lower(alias.optionalAlias) like '%two%' ) " +
+    		"OR (lower(alias.personalData.firstName) like '%one%' " +
+    		"OR lower(alias.personalData.firstName) like '%two%' ) " +
+    		"OR (lower(alias.personalData.lastName) like '%one%' " +
+    		"OR lower(alias.personalData.lastName) like '%two%' ) " +
     		") ";
     public static String C6 = "(" +
-    		"lower(alias.principal) like '%one@two%' " +
+    		"(lower(alias.principal) like '%one@two%' ) " +
     		") ";
     public static String C7 = "alias.personalData.gender = 'F' ";
     public static String C8 = "alias.identityType = 'P' ";
@@ -56,45 +61,45 @@ public class IdentityFilterAdapterTests {
     
     @Test
     public void select() {
-    	((CompositeIdentityForm) form).setPrincipal("PRINCIPAL");
+    	Mockito.when(form.getPrincipal()).thenReturn("PRINCIPAL");
         assertEquals(C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void first() {
-    	((CompositeIdentityForm) form).setFirstName("FIRST");
+    	Mockito.when(form.getFirstName()).thenReturn("FIRST");
         assertEquals(C1+C3, filter.createCriteriaAsString());
     }
     
     @Test
     public void last() {
-    	((CompositeIdentityForm) form).setLastName("Last");
+    	Mockito.when(form.getLastName()).thenReturn("Last");
         assertEquals(C1+C4, filter.createCriteriaAsString());
     }
     
     @Test
-    public void nameLike() {
-    	((CompositeIdentityForm) form).setNameLike("One Two");
+    public void search() {
+    	Mockito.when(form.getSearchString()).thenReturn("One Two");
         assertEquals(C1+C5, filter.createCriteriaAsString());
-    	((CompositeIdentityForm) form).setNameLike("One@Two");
+    	Mockito.when(form.getSearchString()).thenReturn("One@Two");
         assertEquals(C1+C6, filter.createCriteriaAsString());
     }
     
     @Test
     public void gender() {
-    	((CompositeIdentityForm) form).setGender(Gender.FEMALE.getValue());
+    	Mockito.when(form.getGender()).thenReturn(Gender.FEMALE.getValue());
         assertEquals(C1+C7, filter.createCriteriaAsString());
     }
     
     @Test
     public void identityType() {
-    	((CompositeIdentityForm) form).setIdentityType(IdentityType.PERSONAL_EMAIL.getValue());
+    	Mockito.when(form.getIdentityType()).thenReturn(IdentityType.PERSONAL_EMAIL.getValue());
         assertEquals(C1+C8, filter.createCriteriaAsString());
     }
     
     @Test
     public void notification() {
-    	((CompositeIdentityForm) form).setNotification(Notification.BY_REQUEST.getValue());
+    	Mockito.when(form.getNotification()).thenReturn(Notification.BY_REQUEST.getValue());
         assertEquals(C1+C9, filter.createCriteriaAsString());
     }
     
@@ -103,7 +108,13 @@ public class IdentityFilterAdapterTests {
     
     @Before
     public void setUp() {
-    	form = new CompositeIdentityForm("");
+    	form = Mockito.mock(IdentityForm.class);
     	filter = new IdentityFormFilterAdapter(form);
     }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
+    }
+    
 }

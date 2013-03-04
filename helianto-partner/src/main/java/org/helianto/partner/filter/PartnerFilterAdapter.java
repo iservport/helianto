@@ -15,8 +15,8 @@
 
 package org.helianto.partner.filter;
 
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.nature.Agent;

@@ -16,128 +16,199 @@
 		-->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" 
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+    	http://www.springframework.org/schema/data/jpa
+    	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+    	http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<description>Persistence and transaction definition.</description>
+
+	<import resource="dataSource.xml"/>
+	
+	<bean id="hibernateExceptionTranslator" class="org.springframework.orm.hibernate4.HibernateExceptionTranslator"/>
+	
+	<jpa:repositories base-package="org.helianto.core.repository" 
+		factory-class="org.helianto.core.data.FilterRepositoryFactoryBean"/>
                
 	<!--
 		Scan this packages for annotated beans.
 	-->
-	<context:component-scan base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.core.validation"/>
+	<context:component-scan base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.user.service"/>
 	
-	<!-- Added with 0.3-->
+		<!-- 
+	        Required to let presentation layer (possibly with the aid of Spring Web Flow) manage 
+	        the PersistenceContext...
+	        @see http://sourceforge.net/projects/hibernate-swf/
+	     -->
+	    <tx:advice id="txAdvice" transaction-manager="transactionManager" >
+	        <tx:attributes>
+	            <tx:method name="commit*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	            <tx:method name="load*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	            <tx:method name="create*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	            <tx:method name="prepare*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	            
+	            <tx:method name="fin*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	            <tx:method name="merg*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	            <tx:method name="pers*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	            <tx:method name="remov*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	
+	            <tx:method name="store*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	            <tx:method name="install*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	            <!-- This "*" pattern must appear last or else the other patterns will never match -->
+	            <tx:method name="*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
+	          </tx:attributes>
+	    </tx:advice>
+	
+		<!-- 
+		    Required to apply transactions to service and installation APIs
+		 -->
+	    <aop:config>
+	        <aop:pointcut id="servicePointcut" expression="execution(* *..*Mgr*.*(..))" />
+	        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
+	    </aop:config>
+	    <!-- 
+	    <aop:config>
+	        <aop:pointcut id="repositoryPointcut" expression="execution(* *..*RepositoryConfiguration.*(..))" />
+	        <aop:advisor advice-ref="txAdvice" pointcut-ref="repositoryPointcut" />
+	    </aop:config>
+	    -->
+	    
+	    <aop:config>
+	        <aop:pointcut id="controllerPointcut" expression="execution(* *..*Controller*.*(..))" />
+	        <aop:advisor advice-ref="txAdvice" pointcut-ref="controllerPointcut" />
+	    </aop:config>
+	    
+	    <aop:config>
+	        <aop:pointcut id="testPointcut" expression="execution(* *..*IntegrationTest*.*(..))" />
+	        <aop:advisor advice-ref="txAdvice" pointcut-ref="testPointcut" />
+	    </aop:config>
+	    
+	    <!-- Can't declare annotation-driven AND tx:advice to instruct Spring to perform declarative 
+	         transaction management automatically on annotated classes.
+	         [...]
+	    <tx:annotation-driven transaction-manager="transactionManager" />
+	     -->
+	     
+		<!-- 
+		    Transaction manager for Hibernate 
+	    -->
+		<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" >
+			<property name="sessionFactory" ref="sessionFactory" />
+		</bean>
+	
+		<!-- 
+			Naming convention strategies.
+		 -->
+		 <bean id="defaultNamingConventionStrategy" class="org.helianto.core.naming.DefaultNamingConventionStrategy" />
+		 
+		 <bean id="filterNamingConventionStrategy" class="org.helianto.core.filter.FilterNamingConventionStrategy" />
+		 
+		<!-- 
+			Namespace defaults holder.
+		 -->
+		 <bean id="namespace" class="org.helianto.core.standalone.NamespaceDefaults" />
+		 
+		 <!--
+			Setup default operator in namespace defaults holder. A recommended practice is to use 
+			META-INF/helianto.properties to setup additional properties like requiredKeyTypeList and
+			requiredServiceList.
+		  -->
+		 <bean id="operatorInstaller" class="org.helianto.core.standalone.DefaultOperatorInstaller">
+		 	<property name="defaultOperatorName" value="DEFAULT" />
+		 	<property name="namespace" ref="namespace" />
+		 </bean>
+		
+		 <!--
+			Setup default entity in namespace defaults holder.
+		  -->
+		 <bean id="entityInstaller" class="org.helianto.core.standalone.DefaultEntityInstaller">
+		 	<property name="defaultEntityAlias" value="DEFAULT" />
+		 	<property name="namespace" ref="namespace" />
+		 </bean>
+		 
+		<!-- 
+			Messages
+		-->
+		<bean id="messageSource"
+			class="org.springframework.context.support.ResourceBundleMessageSource">
+			<property name="basenames">
+				<list>
+					<value>bundles/notification</value>
+					<value>bundles/credential</value>
+					<value>messages</value>
+					<value>../messages</value>
+				</list>
+			</property>
+		</bean>
+		
+		<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" >
+		    <property name="dataSource" ref="dataSource" />
+			<property name="configLocations" 
+				value="classpath*:/META-INF/*.cfg.xml"/>		
+			<property name="hibernateProperties">
+				<props>
+					<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+					<prop key="hibernate.hbm2ddl.auto">update</prop>
+					<prop key="hibernate.show_sql">false</prop>
+				</props>
+			</property>
+			<property name="eventListeners">
+				<map>
+					<entry key="merge">
+						<bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"/>
+					</entry>
+				</map>
+			</property>
+		</bean>	
+		
+		<bean id="persistenceStrategy" class="org.helianto.core.repository.HibernatePersistenceStrategy" />
+
+	    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	        <property name="dataSource" ref="dataSource"/>
+	        <property name="loadTimeWeaver">
+	            <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+	        </property>
+	        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+	        <property name="packagesToScan" value="*.domain" />
+	    </bean>
+	 
+		<bean id="jpaVendorAdapter" 
+		    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
+			<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+			<property name="generateDdl" value="true" />
+		</bean>
+			
+	<!-- 
+	 ! HIBERNATE PROFILE
+	 -->
+	<beans profile="hibernate">
+	
+	</beans>
 	
 	<!-- 
-        Required to let presentation layer (possibly with the aid of Spring Web Flow) manage 
-        the PersistenceContext...
-        @see http://sourceforge.net/projects/hibernate-swf/
-     -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager" >
-        <tx:attributes>
-        <!--
-            Comments below were originally written by Jim Alexander having Spring Web Flow 
-            in mind, but may be useful even if another mechanism other than a flow
-            provides a long unit of work. I kept the terms SWF and flow for simplicity.
-            [...]
-            There are several overall principals of implementing an extended 
-            PersistenceContext. [...]  
-             - WebFlow will manage the PersistenceContext. 
-             - SWF will create a new Hibernate SessionImpl when a new flow begins and will 
-               only close the session when webflow transitions into an end-state with 
-               commit="true" <end-state commit="true" >
-             - A typical WebFlow state-transition will bind the current request-thread 
-               to WebFlow's existing SessionImpl. When the state-transition is complete, 
-               WebFlow will not close the session.
-             - After given SWF state-transition has re-bound to the SessionImpl, WebFlow 
-               will [ call ] the service-API. The AOP TransactionInterceptor will request 
-               a new transaction from the existing thread-bound SessionImpl. After the
-               service-API call returns, AOP will commit the transaction but the SessionImpl 
-               will remain open. 
-             - WebFlow will only extend the PersistenceContext across multiple state 
-               transitions if [at least]: 
-                    1) transaction type = readonly (readonly="true") [...] 
-                    2) tx propagation: SUPPORTS (not REQUIRED ! ! !) [...]
-					[...]
-         -->
-            <tx:method name="commit*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="load*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="create*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="prepare*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            
-            <tx:method name="fin*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="merg*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="pers*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="remov*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-
-            <tx:method name="store*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <tx:method name="install*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-            <!-- This "*" pattern must appear last or else the other patterns will never match -->
-            <tx:method name="*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-          </tx:attributes>
-    </tx:advice>
-
-	<!-- 
-	    Required to apply transactions to service and installation APIs
+	 ! JPA PROFILE
 	 -->
-    <aop:config>
-        <aop:pointcut id="servicePointcut" expression="execution(* *..*Mgr*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
-    </aop:config>
-    
-    <aop:config>
-        <aop:pointcut id="repositoryPointcut" expression="execution(* *..*RepositoryConfiguration.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="repositoryPointcut" />
-    </aop:config>
-    
-    <aop:config>
-        <aop:pointcut id="controllerPointcut" expression="execution(* *..*Controller*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="controllerPointcut" />
-    </aop:config>
-    
-    <aop:config>
-        <aop:pointcut id="testPointcut" expression="execution(* *..*IntegrationTest*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="testPointcut" />
-    </aop:config>
-    
-    <!-- Can't declare annotation-driven AND tx:advice to instruct Spring to perform declarative 
-         transaction management automatically on annotated classes.
-         [...]
-    <tx:annotation-driven transaction-manager="transactionManager" />
-     -->
-
-	<!-- 
-		Naming convention strategies.
-	 -->
-	 <bean id="defaultNamingConventionStrategy" class="org.helianto.core.naming.DefaultNamingConventionStrategy" />
-	 
-	 <bean id="filterNamingConventionStrategy" class="org.helianto.core.filter.FilterNamingConventionStrategy" />
-	 
-	<!-- 
-		Namespace defaults holder.
-	 -->
-	 <bean id="namespace" class="org.helianto.core.standalone.NamespaceDefaults" />
-	 
-	 <!--
-		Setup default operator in namespace defaults holder. A recommended practice is to use 
-		META-INF/helianto.properties to setup additional properties like requiredKeyTypeList and
-		requiredServiceList.
-	  -->
-	 <bean id="operatorInstaller" class="org.helianto.core.standalone.DefaultOperatorInstaller">
-	 	<property name="defaultOperatorName" value="DEFAULT" />
-	 	<property name="namespace" ref="namespace" />
-	 </bean>
+	<beans profile="jpa">
 	
-	 <!--
-		Setup default entity in namespace defaults holder.
-	  -->
-	 <bean id="entityInstaller" class="org.helianto.core.standalone.DefaultEntityInstaller">
-	 	<property name="defaultEntityAlias" value="DEFAULT" />
-	 	<property name="namespace" ref="namespace" />
-	 </bean>
+	</beans>
+	
+	<!-- 
+	 ! COMMON PROFILE
+	 -->
+	<beans profile="hibernate,jpa">
+	
+	</beans>
 	
 </beans>

@@ -17,7 +17,7 @@ package org.helianto.core.filter.base;
 
 import java.util.List;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

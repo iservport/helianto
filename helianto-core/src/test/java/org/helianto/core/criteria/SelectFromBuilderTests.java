@@ -2,8 +2,8 @@ package org.helianto.core.criteria;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
-import org.helianto.core.User;
+import org.helianto.core.domain.Entity;
+import org.helianto.user.domain.User;
 import org.junit.Test;
 
 /**

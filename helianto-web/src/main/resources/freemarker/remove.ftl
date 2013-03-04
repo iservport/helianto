@@ -1,1 +1,0 @@
-<@secure "ROLE_USER_DEL"><@remove /></@secure>

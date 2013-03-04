@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.List;
 
-import org.helianto.core.Credential;
-import org.helianto.core.User;
-import org.helianto.core.UserGroup;
+import org.helianto.core.domain.Credential;
 import org.helianto.message.RecipientResolutionStrategy;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
 import org.junit.Test;
 
 /**

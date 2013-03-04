@@ -2,7 +2,7 @@ package org.helianto.core.security;
 
 import java.security.Principal;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.springframework.security.core.Authentication;
 
 /**

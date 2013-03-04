@@ -18,9 +18,9 @@ package org.helianto.core.filter.base;
 
 import java.util.Date;
 
-import org.helianto.core.TrunkEntity;
-import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.DateCriteriaBuilder;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.filter.DateInterval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractDateIntervalFilterAdapter<T extends TrunkEntity> extends AbstractTrunkFilterAdapter<T> implements DateInterval {
+public abstract class AbstractDateIntervalFilterAdapter<T extends TrunkEntity> 
+	extends AbstractTrunkFilterAdapter<T> 
+	implements DateInterval {
 
 	private static final long serialVersionUID = 1L;
     private int interval = -7;

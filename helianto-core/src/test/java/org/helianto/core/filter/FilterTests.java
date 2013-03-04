@@ -6,9 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.core.Entity;
 import org.helianto.core.Prioritizable;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;

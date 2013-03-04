@@ -17,8 +17,8 @@ package org.helianto.core.service;
 
 import java.util.List;
 
-import org.helianto.core.UserRequest;
-import org.helianto.core.filter.form.UserRequestForm;
+import org.helianto.user.domain.UserRequest;
+import org.helianto.user.form.UserRequestForm;
 
 /**
  * User request service interface.

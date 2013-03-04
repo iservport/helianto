@@ -3,7 +3,7 @@ package org.helianto.core.def;
 import java.io.Serializable;
 
 /**
- * A ser implementado por classes que podem ter texto lido por humanos.
+ * Classes implementing this should have human readable content.
  * 
  * @author Mauricio Fernandes de Castro
  */

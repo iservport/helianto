@@ -18,16 +18,16 @@ package org.helianto.core.standalone;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Credential;
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
-import org.helianto.core.Service;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Service;
 import org.helianto.core.service.IdentityMgr;
 import org.helianto.core.service.PostInstallationMgr;
-import org.helianto.core.service.UserMgr;
+import org.helianto.user.UserMgr;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;

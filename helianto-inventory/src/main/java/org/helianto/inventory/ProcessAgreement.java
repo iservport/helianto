@@ -34,7 +34,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.Partner;
 
 
@@ -104,6 +104,11 @@ public class ProcessAgreement extends AbstractRequirement {
 	public String getInternalNumberKey() {
 		return "AGREEM";
 	}
+
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
 
     /**
      * Customer or supplier.

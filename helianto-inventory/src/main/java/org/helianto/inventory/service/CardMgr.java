@@ -18,7 +18,7 @@ package org.helianto.inventory.service;
 
 import java.util.List;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;

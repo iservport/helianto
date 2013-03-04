@@ -18,12 +18,11 @@ package org.helianto.process.filter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.process.InheritanceType;
-import org.helianto.process.Operation;
-import org.helianto.process.ProcessDocument;
-import org.helianto.process.filter.ProcessDocumentFilterAdapter;
+import org.helianto.process.def.InheritanceType;
+import org.helianto.process.domain.Operation;
+import org.helianto.process.domain.ProcessDocument;
 import org.junit.Before;
 import org.junit.Test;
 

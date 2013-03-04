@@ -2,13 +2,13 @@ package org.helianto.document.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.domain.DocumentFolder;
-import org.helianto.document.form.AbstractCustomDocumentForm;
 import org.helianto.document.form.CustomDocumentForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -30,44 +30,45 @@ public class CustomDocumentFormFilterAdapterTests {
 	
 	@Test
 	public void select() {
-		form.setDocCode("CODE");
+		Mockito.when(form.getDocCode()).thenReturn("CODE");
 		assertEquals(C1+C2, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void series() {
-		form.setSeries(series);
+		Mockito.when(form.getFolderId()).thenReturn(2);
 		assertEquals(C1+C3+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void builderCode() {
-		form.setBuilderCode("CODE");
+		Mockito.when(form.getFolderCode()).thenReturn("CODE");
 		assertEquals(C1+C4+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void contentType() {
-		form.setContentType('A');
+		Mockito.when(form.getContentType()).thenReturn('A');
 		assertEquals(C1+C5+OB, filter.createCriteriaAsString());
 	}
 	
 	// locals
 	
-	private AbstractCustomDocumentForm form;
+	private CustomDocumentForm form;
 	private AbstractCustomDocumentFormFilterAdapter<CustomDocumentForm> filter;
-	private DocumentFolder series;
 	
 	@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 	@Before
 	public void setUp() {
-		Entity entity = EntityTestSupport.createEntity();
-		entity.setId(1);
-		series = new DocumentFolder(entity, "SERIES");
-		series.setId(2);
-		form = new AbstractCustomDocumentForm() {};
-		form.setEntity(entity);
+		Entity entity = EntityTestSupport.createEntity(1);
+		form = Mockito.mock(CustomDocumentForm.class);
+		Mockito.when(form.getEntity()).thenReturn(entity);
 		filter = new AbstractCustomDocumentFormFilterAdapter(form) { };
+	}
+	
+	@After
+	public void tearDown() {
+		Mockito.reset(form);
 	}
 
 }

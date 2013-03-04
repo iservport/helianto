@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project ${project.version}</name>
-	<version>0.3.7.RELEASE</version>
+	<version>0.3.7.2.SNAPSHOT</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -57,11 +57,232 @@
 	</licenses>
 
 	<properties>
-		
-		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<spring.main.version>3.0.7.RELEASE</spring.main.version>
-		<spring.security.version>3.1.2.RELEASE</spring.security.version>
+		<maven.test.failure.ignore>false</maven.test.failure.ignore>
+		<spring.framework.version>3.1.3.RELEASE</spring.framework.version>
+		<org.aspectj.version>1.6.11</org.aspectj.version>
+		<spring.data.version>1.2.0.RELEASE</spring.data.version>
+		<spring.security.version>3.1.3.RELEASE</spring.security.version>
+		<org.slf4j.version>1.6.2</org.slf4j.version>
 	</properties>
+	
+	<dependencies>
+		<!-- spring bundles -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.framework.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.framework.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring.data.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+		
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.framework.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<!-- hibernate bundles -->
+		<!-- dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>org.hibernate.ejb-library</artifactId>
+			<type>libd</type>
+			<version>3.4.0.GA-A</version> 
+		</dependency -->
+		<!-- hibernate to use with jpa2 ???-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.5.3-Final</version>
+        </dependency>
+		<!-- javax bundles -->
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>com.springsource.javax.transaction</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>com.springsource.javax.mail</artifactId>
+			<version>1.4.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>com.springsource.javax.annotation</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	    <!-- jackson-->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.9</version>
+		</dependency>
+		<!-- db bundles -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>com.springsource.org.hsqldb</artifactId>
+			<version>1.8.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mchange.c3p0</groupId>
+			<artifactId>com.springsource.com.mchange.v2.c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- 
+	    <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>runtime</scope>
+		</dependency>
+		-->
+		<!-- test bundles -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.easymock</groupId>
+		    <artifactId>easymock</artifactId>
+		    <version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.0</version>
+		</dependency>
+		<!-- ui bundles -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.18</version>
+		</dependency>
+		<!-- Joda time -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.1</version>
+		</dependency>
+    </dependencies>
+
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
@@ -86,9 +307,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.4.3</version>
 				<configuration>
+					<!-- 
 					<junitArtifactName>org.junit:com.springsource.org.junit</junitArtifactName>
+					-->
 					<testFailureIgnore>false</testFailureIgnore>
 					<includes>
 						<include>**/*Tests.class</include>
@@ -184,210 +406,6 @@
         </repository>
 		
 	</repositories>	
-	<dependencies>
-		<!-- spring bundles -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.spring-library</artifactId>
-			<type>libd</type>
-			<version>${spring.main.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>org.springframework.web.portlet</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-		        <exclusion>
-		           <groupId>commons-logging</groupId>
-		           <artifactId>commons-logging</artifactId>
-		        </exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.test</artifactId>
-			<version>${spring.main.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>${spring.security.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.commons</groupId>
-					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${spring.security.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.commons</groupId>
-					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-config</artifactId>
-		    <version>${spring.security.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.commons</groupId>
-					<artifactId>com.springsource.org.apache.commons.logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework.ws</groupId>
-		    <artifactId>org.springframework.ws</artifactId>
-		    <version>2.0.0.RELEASE</version>
-		</dependency>
-        <!-- aspectJ bundles -->
-		<dependency>
-		    <groupId>org.aspectj</groupId>
-		    <artifactId>org.aspectj-library</artifactId>
-			<type>libd</type>
-			<version>1.6.2.RELEASE</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>org.springframework.instrument</artifactId>
-			<version>${spring.main.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>org.springframework.aspects</artifactId>
-			<version>${spring.main.version}</version>
-		</dependency>
-		<!-- hibernate bundles -->
-		<!-- dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>org.hibernate.ejb-library</artifactId>
-			<type>libd</type>
-			<version>3.4.0.GA-A</version> 
-		</dependency -->
-		<!-- hibernate to use with jpa2 ???-->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.5.3-Final</version>
-        </dependency>
-		<!-- javax bundles -->
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>com.springsource.javax.transaction</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>com.springsource.javax.mail</artifactId>
-			<version>1.4.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.activation</groupId>
-			<artifactId>activation</artifactId>
-			<version>1.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>com.springsource.javax.annotation</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<!-- db bundles -->
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>com.springsource.org.hsqldb</artifactId>
-			<version>1.8.0.9</version>
-		</dependency>
-		<dependency>
-			<groupId>com.mchange.c3p0</groupId>
-			<artifactId>com.springsource.com.mchange.v2.c3p0</artifactId>
-			<version>0.9.1.2</version>
-		</dependency>
-		<!-- logging bundles -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>com.springsource.ch.qos.logback.classic</artifactId>
-			<version>0.9.15</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>com.springsource.ch.qos.logback.core</artifactId>
-			<version>0.9.15</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.5.10</version>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- 
-	    <dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
-			<scope>runtime</scope>
-		</dependency>
-		-->
-		<!-- test bundles -->
-		<dependency>
-			<groupId>org.junit</groupId>
-			<artifactId>com.springsource.org.junit</artifactId>
-			<version>4.7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>com.springsource.org.easymock</artifactId>
-			<version>2.5.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>com.springsource.org.easymock.classextension</artifactId>
-			<version>2.3.0</version>
-		</dependency>
-		<!-- ui bundles -->
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.18</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework.webflow</groupId>
-		    <artifactId>org.springframework.webflow-library</artifactId>
-		    <type>libd</type>
-		    <version>2.3.0.RELEASE</version>
-		</dependency>
-		<!-- database -->
-		<!-- Joda time -->
-		<dependency>
-			<groupId>org.joda</groupId>
-			<artifactId>com.springsource.org.joda.time</artifactId>
-			<version>1.6.0</version>
-		</dependency>
-    </dependencies>
 	<!-- 
 		!   Reporting
 		!-->

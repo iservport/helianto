@@ -17,15 +17,15 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
-
-import org.helianto.core.Controllable;
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
-import org.helianto.core.filter.base.AbstractControlFilterAdapter;
-import org.helianto.core.filter.form.AbstractSequenceableForm;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.filter.base.AbstractEventControlInternalFilterAdapter;
+import org.helianto.core.form.EventControlInternalForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 
 /**
@@ -36,57 +36,45 @@ public class ControlFilterAdapterTests {
 	
 	@Test
 	public void empty() {
-		controlFilter.getForm().setEntity(null);
-		assertEquals("", controlFilter.createCriteriaAsString());
+		assertEquals("alias.entity.id = 1 ", filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void selection() {
-		controlFilter.getForm().setInternalNumber(1);
-		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", controlFilter.createCriteriaAsString());
+		Mockito.when(filter.getForm().getInternalNumber()).thenReturn(1L);
+		assertEquals("alias.entity.id = 1 AND alias.internalNumber = 1 ", filter.createCriteriaAsString());
 	}
 	
 	@Test
-	public void resolution() {
-		resolution = 'P';
-		assertEquals("alias.entity.id = 1 AND alias.resolution = 'P' ", controlFilter.createCriteriaAsString());
-		resolution = 'N';
-		assertEquals("alias.entity.id = 1 AND alias.resolution IN  ('P', 'T') ", controlFilter.createCriteriaAsString());
+	public void frequency() {
+		Mockito.when(filter.getForm().getFrequency()).thenReturn(30);
+		assertEquals("alias.entity.id = 1 AND alias.frequency = 30 ", filter.createCriteriaAsString());
 	}
 	
-	@Test
-	public void toNextCheckDate() {
-		nextCheckDate = new Date(1000l);
-		assertEquals("alias.entity.id = 1 AND (alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ", controlFilter.createCriteriaAsString());
-	}
+	// locals
 	
-	@Test
-	public void complete() {
-		complete = 10;
-		assertEquals("alias.entity.id = 1 AND alias.complete = 10 ", controlFilter.createCriteriaAsString());
-	}
-	
-	private AbstractControlFilterAdapter<ControlStub> controlFilter;
+	private AbstractEventControlInternalFilterAdapter<EventControlInternalForm> filter;
+	private EventControlInternalForm form;
 	private Entity entity;
-	private char resolution = ' ';
-	private Date nextCheckDate;
-	private int complete = -1;
 	
 	@SuppressWarnings("serial")
 	@Before
 	public void setUp() {
 		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
 		entity.setId(1);
-		controlFilter = new AbstractControlFilterAdapter<ControlStub>(new ControlStub()) { };
-		controlFilter.getForm().setEntity(entity);
+		form = Mockito.mock(EventControlInternalForm.class);
+		filter = new AbstractEventControlInternalFilterAdapter<EventControlInternalForm>(form) {
+			@Override
+			public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { 
+				super.doFilter(mainCriteriaBuilder);
+			}
+		};
+		Mockito.when(filter.getForm().getEntity()).thenReturn(entity);
 	}
 	
-	@SuppressWarnings("serial")
-	private class ControlStub extends AbstractSequenceableForm implements Controllable {
-		public String getInternalNumberKey() { return "KEY"; }
-		public char getResolution() { return resolution; }
-		public Date getNextCheckDate() { return nextCheckDate; }
-		public int getComplete() { return complete; }
+	@After
+	public void tearDown() {
+		Mockito.reset(form);
 	}
 	
 }

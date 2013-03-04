@@ -23,16 +23,19 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
 
+import javax.persistence.Transient;
+
 import org.easymock.EasyMock;
-import org.helianto.core.Entity;
-import org.helianto.core.InternalEnumerator;
-import org.helianto.core.Operator;
-import org.helianto.core.PublicEnumerator;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.PrivateSequence;
+import org.helianto.core.domain.PublicSequence;
 import org.helianto.core.number.DigitGenerationStrategy;
 import org.helianto.core.number.Numerable;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.number.Verifiable;
 import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,7 +52,7 @@ public class SequenceMgrImplTests {
     
     @Test
     public void findOrCreatePublicNumber() {
-    	PublicEnumerator enumerator = new PublicEnumerator();
+    	PublicSequence enumerator = new PublicSequence();
     	enumerator.setLastNumber(1000);
     	
     	expect(publicEnumeratorDao.findUnique(operator, "PUBLIC")).andReturn(enumerator);
@@ -62,7 +65,7 @@ public class SequenceMgrImplTests {
     @Test
     public void findOrCreatePublicNumberNull() {
     	expect(publicEnumeratorDao.findUnique(operator, "PUBLIC")).andReturn(null);
-    	publicEnumeratorDao.saveOrUpdate(EasyMock.isA(PublicEnumerator.class));
+    	publicEnumeratorDao.saveOrUpdate(EasyMock.isA(PublicSequence.class));
     	replay(publicEnumeratorDao);
     	
     	assertEquals(1, sequenceMgr.findOrCreatePublicNumber(operator, "PUBLIC"));
@@ -72,7 +75,7 @@ public class SequenceMgrImplTests {
     @Test
     public void validatePublicNumberZeroNotNull() {
     	Numerable numerable = new NumerableStub();
-    	PublicEnumerator enumerator = new PublicEnumerator();
+    	PublicSequence enumerator = new PublicSequence();
     	enumerator.setLastNumber(1000);
     	
     	expect(publicEnumeratorDao.findUnique(operator, "PUBLIC")).andReturn(enumerator);
@@ -87,7 +90,7 @@ public class SequenceMgrImplTests {
     
     @Test
     public void findOrCreateInternalNumber() {
-    	InternalEnumerator enumerator = new InternalEnumerator();
+    	PrivateSequence enumerator = new PrivateSequence();
     	enumerator.setLastNumber(1000);
     	
     	expect(internalEnumeratorDao.findUnique(entity, "INTERNAL")).andReturn(enumerator);
@@ -100,7 +103,7 @@ public class SequenceMgrImplTests {
     @Test
     public void findOrCreateInternalNumberNull() {
     	expect(internalEnumeratorDao.findUnique(entity, "INTERNAL")).andReturn(null);
-    	internalEnumeratorDao.saveOrUpdate(EasyMock.isA(InternalEnumerator.class));
+    	internalEnumeratorDao.saveOrUpdate(EasyMock.isA(PrivateSequence.class));
     	replay(internalEnumeratorDao);
     	
     	assertEquals(1, sequenceMgr.findOrCreateInternalNumber(entity, "INTERNAL"));
@@ -110,7 +113,7 @@ public class SequenceMgrImplTests {
     @Test
     public void validateInternalNumberZeroNotNull() {
     	Sequenceable sequenceable = new SequenceableStub();
-    	InternalEnumerator enumerator = new InternalEnumerator();
+    	PrivateSequence enumerator = new PrivateSequence();
     	enumerator.setLastNumber(1000);
     	
     	expect(internalEnumeratorDao.findUnique(entity, "INTERNAL")).andReturn(enumerator);
@@ -159,10 +162,10 @@ public class SequenceMgrImplTests {
     @Test
     public void validatePublicNumberNull() {
     	Numerable numerable = new NumerableStub();
-    	PublicEnumerator enumerator = null;
+    	PublicSequence enumerator = null;
     	
     	expect(publicEnumeratorDao.findUnique(operator, "PUBLIC")).andReturn(enumerator);
-    	publicEnumeratorDao.saveOrUpdate(isA(PublicEnumerator.class));
+    	publicEnumeratorDao.saveOrUpdate(isA(PublicSequence.class));
     	replay(publicEnumeratorDao);
     	
     	sequenceMgr.validatePublicNumber(numerable);
@@ -176,10 +179,10 @@ public class SequenceMgrImplTests {
     @Test
     public void validateInternalNumberNull() {
     	Sequenceable sequenceable = new SequenceableStub();
-    	InternalEnumerator enumerator = null;
+    	PrivateSequence enumerator = null;
     	
     	expect(internalEnumeratorDao.findUnique(entity, "INTERNAL")).andReturn(enumerator);
-    	internalEnumeratorDao.saveOrUpdate(isA(InternalEnumerator.class));
+    	internalEnumeratorDao.saveOrUpdate(isA(PrivateSequence.class));
     	replay(internalEnumeratorDao);
     	
     	sequenceMgr.validateInternalNumber(sequenceable);
@@ -204,15 +207,15 @@ public class SequenceMgrImplTests {
     
     
     
-    private BasicDao<InternalEnumerator> internalEnumeratorDao;
-    private BasicDao<PublicEnumerator> publicEnumeratorDao;
+    private FilterDao<PrivateSequence> internalEnumeratorDao;
+    private BasicDao<PublicSequence> publicEnumeratorDao;
     private DigitGenerationStrategy digitGenerationStrategy;
     
     @SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         sequenceMgr = new SequenceMgrImpl();
-        internalEnumeratorDao = createMock(BasicDao.class);
+        internalEnumeratorDao = createMock(FilterDao.class);
         publicEnumeratorDao = createMock(BasicDao.class);
         digitGenerationStrategy = createMock(DigitGenerationStrategy.class);
         sequenceMgr.setInternalEnumeratorDao(internalEnumeratorDao);
@@ -257,6 +260,12 @@ public class SequenceMgrImplTests {
 		public Entity getEntity() {
 			return entity;
 		}
+		
+	    @Transient
+	    public int getStartNumber() {
+	    	return 1;
+	    }
+
 
 		public void setInternalNumber(long internalNumber) {
 			this.internalNumber = internalNumber;
@@ -280,6 +289,11 @@ public class SequenceMgrImplTests {
 		public Entity getEntity() {
 			return entity;
 		}
+
+	    @Transient
+	    public int getStartNumber() {
+	    	return 1;
+	    }
 
 		public void setInternalNumber(long internalNumber) {
 			this.internalNumber = internalNumber;

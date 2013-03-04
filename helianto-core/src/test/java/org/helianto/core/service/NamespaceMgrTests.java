@@ -26,11 +26,11 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Entity;
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
-import org.helianto.core.Service;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.KeyType;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Province;
+import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;
@@ -181,7 +181,7 @@ public class NamespaceMgrTests {
 //		verify(operatorDao);
 //	}
 	
-	private NamespaceMgrImpl namespaceMgr;
+	private ContextMgrImpl namespaceMgr;
 	private FilterDao<Operator> operatorDao;
 	private FilterDao<Province> provinceDao;
 	private FilterDao<Entity> entityDao;
@@ -192,7 +192,7 @@ public class NamespaceMgrTests {
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
-		namespaceMgr = new NamespaceMgrImpl();
+		namespaceMgr = new ContextMgrImpl();
 		operatorDao = createMock(FilterDao.class);
 		namespaceMgr.setOperatorDao(operatorDao);
 		provinceDao = createMock(FilterDao.class);

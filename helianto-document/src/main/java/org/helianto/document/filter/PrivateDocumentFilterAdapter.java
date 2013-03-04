@@ -1,7 +1,7 @@
 package org.helianto.document.filter;
 
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.document.domain.PrivateDocument;
 
 /**

@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.KeyType;
+import org.helianto.core.domain.KeyType;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.inventory.Card;
 import org.helianto.inventory.CardSet;
@@ -32,7 +32,7 @@ import org.helianto.inventory.Tax;
 import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
-import org.helianto.process.ProcessDocument;
+import org.helianto.process.domain.ProcessDocument;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 

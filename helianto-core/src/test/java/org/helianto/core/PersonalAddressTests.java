@@ -6,6 +6,8 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.def.AddressType;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.PersonalAddress;
 import org.junit.Test;
 
 /**

@@ -19,6 +19,8 @@ package org.helianto.core;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.helianto.user.domain.User;
+
 /**
  * A class to hold <code>User</code> and its last login.
  * 

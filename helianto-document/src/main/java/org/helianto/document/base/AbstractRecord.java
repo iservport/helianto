@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.helianto.core.def.ControlState;
-import org.helianto.core.def.Resolution;
+import org.helianto.core.def.ResolutionExtended;
 import org.helianto.document.Record;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -49,7 +49,7 @@ public abstract class AbstractRecord
      * Default constructor.
      */
     public AbstractRecord() {
-    	this(Resolution.PRELIMINARY.getValue());
+    	this(ResolutionExtended.PRELIMINARY.getValue());
     	setNextCheckDate(new Date());
     }
     
@@ -125,11 +125,11 @@ public abstract class AbstractRecord
     @Transient
     public char getControlState() {
     	Date now = new Date();
-    	if (getResolution()==Resolution.DONE.getValue()) {
+    	if (getResolution()==ResolutionExtended.DONE.getValue()) {
     		return ControlState.FINISHED.getValue();
     	}
-		if (getResolution()==Resolution.CANCELLED.getValue()
-				|| getResolution()==Resolution.WAIT.getValue()) {
+		if (getResolution()==ResolutionExtended.CANCELLED.getValue()
+				|| getResolution()==ResolutionExtended.WAIT.getValue()) {
 			return ControlState.UNFINISHED.getValue();
 		}
     	if (getNextCheckDate()==null) return ' ';

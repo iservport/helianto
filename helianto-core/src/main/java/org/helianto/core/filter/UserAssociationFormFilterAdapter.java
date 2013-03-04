@@ -1,7 +1,7 @@
 package org.helianto.core.filter;
 
 import org.helianto.core.filter.base.AssociationFilterAdapter;
-import org.helianto.core.filter.form.AssociationForm;
+import org.helianto.core.form.AssociationForm;
 
 /**
  * User association form filter adapter.

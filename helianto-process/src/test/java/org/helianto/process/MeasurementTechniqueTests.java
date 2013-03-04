@@ -3,8 +3,9 @@ package org.helianto.process;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.Unit;
+import org.helianto.core.domain.Unit;
 import org.helianto.core.test.DomainTestSupport;
+import org.helianto.process.domain.MeasurementTechnique;
 import org.junit.Test;
 
 

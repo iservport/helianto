@@ -3,6 +3,8 @@ package org.helianto.core;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
 import org.junit.Test;
 
 /**

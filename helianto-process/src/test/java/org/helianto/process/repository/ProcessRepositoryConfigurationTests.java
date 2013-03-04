@@ -20,11 +20,11 @@ import static org.junit.Assert.assertEquals;
 import javax.annotation.Resource;
 
 import org.helianto.core.repository.FilterDao;
-import org.helianto.process.Cause;
-import org.helianto.process.MeasurementTechnique;
-import org.helianto.process.ProcessDocument;
-import org.helianto.process.ProcessDocumentAssociation;
-import org.helianto.process.Setup;
+import org.helianto.process.domain.MeasurementTechnique;
+import org.helianto.process.domain.ProcessDocument;
+import org.helianto.process.domain.ProcessDocumentAssociation;
+import org.helianto.process.domain.Setup;
+import org.helianto.process.domain.classic.Cause;
 import org.helianto.process.test.AbstractProcessDaoIntegrationTest;
 import org.helianto.resource.domain.ResourceGroup;
 import org.junit.Test;

@@ -15,7 +15,7 @@
 
 package org.helianto.core.filter.classic;
 
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.filter.ListFilter;
 
 /**

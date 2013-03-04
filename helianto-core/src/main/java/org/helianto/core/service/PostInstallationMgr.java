@@ -17,12 +17,13 @@ package org.helianto.core.service;
 
 import java.util.List;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.KeyType;
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
-import org.helianto.core.Service;
+import org.helianto.core.ContextMgr;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.KeyType;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Province;
+import org.helianto.core.domain.Service;
 import org.springframework.core.io.Resource;
 
 /**
@@ -91,7 +92,7 @@ public interface PostInstallationMgr {
 	 * <p>
 	 * This method is appropriate to requests coming from the presentation layer. The embedded
 	 * manager identity is required and used as a signal to perform the full installation routine.
-	 * To simply update the given entity, please use {@link NamespaceMgr#storeEntity(Entity)}.
+	 * To simply update the given entity, please use {@link ContextMgr#storeEntity(Entity)}.
 	 * </p>
 	 * 
 	 * @param entity

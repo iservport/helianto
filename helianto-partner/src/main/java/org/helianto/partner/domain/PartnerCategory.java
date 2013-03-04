@@ -29,8 +29,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.Category;
 import org.helianto.core.def.Uploadable;
+import org.helianto.core.domain.Category;
 import org.springframework.web.multipart.MultipartFile;
 /**
  * The category associated to the partner.

@@ -29,16 +29,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.easymock.EasyMock;
-import org.helianto.core.Credential;
-import org.helianto.core.Identity;
-import org.helianto.core.Province;
-import org.helianto.core.PublicEntity2;
-import org.helianto.core.User;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserLog;
-import org.helianto.core.UserRole;
 import org.helianto.core.def.ActivityState;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Province;
+import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;
@@ -46,6 +41,14 @@ import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserLog;
+import org.helianto.user.domain.UserRole;
+import org.helianto.user.filter.UserFormFilterAdapter;
+import org.helianto.user.form.UserGroupForm;
+import org.helianto.user.service.UserMgrImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,13 +68,13 @@ public class UserMgrImplTests {
     
 	@Test
     public void findUsers() {
-    	Filter userFilter = new TestingFilter();
     	List<UserGroup> userList = new ArrayList<UserGroup>();
+    	UserGroupForm form = EasyMock.createMock(UserGroupForm.class);
     	
-    	expect(userGroupDao.find(userFilter)).andReturn(userList);
+    	expect(userGroupDao.find(EasyMock.isA(UserFormFilterAdapter.class))).andReturn(userList);
     	replay(userGroupDao);
     	
-    	assertSame(userList, userMgr.findUsers(userFilter));
+    	assertSame(userList, userMgr.findUsers(form));
     	verify(userGroupDao);
     }
     
@@ -107,7 +110,7 @@ public class UserMgrImplTests {
     public void publicEntity() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	userGroup.getEntity().setNature("S, E");
-    	PublicEntity2 publicEntity = new PublicEntity2(userGroup.getEntity());
+    	PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());
     	
     	userGroupDao.saveOrUpdate(userGroup);
     	userGroupDao.flush();

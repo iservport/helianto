@@ -259,7 +259,7 @@ public abstract class AbstractAliasFilter
 			OrmCriteriaBuilder fieldCriteriaBuilder = new OrmCriteriaBuilder(mainCriteriaBuilder.getAlias());
 			for (String fieldContent: searchWords) {
 		    	if (fieldContent!=null && fieldContent.length()>0) {
-		    		fieldCriteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
+		    		fieldCriteriaBuilder.appendOr().appendSegment(fieldName, "like", "lower")
 		            .appendLike(fieldContent.toLowerCase());
 		        }
 			}
@@ -397,7 +397,7 @@ public abstract class AbstractAliasFilter
     }
     
     /**
-     * Case unsensitive like appender.
+     * Case insensitive like appender.
      * 
      * @param fieldName
      * @param fieldContent
@@ -411,7 +411,7 @@ public abstract class AbstractAliasFilter
     }
     
     /**
-     * Case unsensitive start like appender.
+     * Case insensitive start like appender.
      * 
      * @param fieldName
      * @param fieldContent
@@ -422,6 +422,48 @@ public abstract class AbstractAliasFilter
     		criteriaBuilder.appendAnd().appendSegment(fieldName, "like", "lower")
             .appendStartLike(fieldContent.toLowerCase());
         }
+    }
+    
+    /**
+     * Integer array in appender.
+     * 
+     * @param fieldName
+     * @param fieldContent
+     * @param criteriaBuilder
+     */
+    protected void appendInArray(String fieldName, int[] fieldContent, OrmCriteriaBuilder criteriaBuilder) {
+    	if (fieldContent!=null && fieldContent.length>0) {
+    		criteriaBuilder.appendAnd().appendSegment(fieldName, "in")
+            .append(fieldContent);
+        }
+    }
+    
+    /**
+     * Helper method to convert a string array into an integer array.
+     * 
+     * <p>
+     * May be used if a parameter array is received as string array and needs to be converted before 
+     * {@link #appendInArray(String, int[], OrmCriteriaBuilder)} is called.
+     * </p>
+     * 
+     * @param fieldContent
+     */
+    public static int[] stringArrayConverter(String[] fieldContent) {
+    	if (fieldContent==null) {
+        	return new int[0];
+        }
+    	int[] integerArray = new int[fieldContent.length];
+    	String toParse = "";
+    	try {
+    		for (int i=0; i<integerArray.length; i++) {
+    			toParse = fieldContent[i];
+    			integerArray[i] = Integer.parseInt(toParse);
+    		}
+    	}
+    	catch (Exception e) {
+    		logger.warn("Unable to parse {} as integer.", toParse);
+    	}
+    	return integerArray;
     }
     
     /**

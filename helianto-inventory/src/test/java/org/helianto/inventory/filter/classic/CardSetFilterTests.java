@@ -2,11 +2,10 @@ package org.helianto.inventory.filter.classic;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.User;
 import org.helianto.core.test.UserTestSupport;
 import org.helianto.inventory.CardType;
-import org.helianto.inventory.filter.classic.CardSetFilter;
-import org.helianto.process.Process;
+import org.helianto.process.domain.Process;
+import org.helianto.user.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 /**

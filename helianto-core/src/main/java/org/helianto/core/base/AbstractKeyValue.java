@@ -23,7 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.helianto.core.KeyType;
+import org.helianto.core.domain.KeyType;
 /**
  * Subclasses overriding this may hold the content of a key to 
  * be associated to an owner.

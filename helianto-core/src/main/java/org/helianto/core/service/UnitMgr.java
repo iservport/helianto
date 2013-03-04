@@ -17,8 +17,8 @@ package org.helianto.core.service;
 
 import java.util.List;
 
-import org.helianto.core.Category;
-import org.helianto.core.Unit;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Unit;
 import org.helianto.core.filter.Filter;
 
 /**

@@ -10,6 +10,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Date;
 
 import org.helianto.core.test.DomainTestSupport;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
 import org.junit.Test;
 
 /**

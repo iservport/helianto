@@ -19,9 +19,9 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Category;
-import org.helianto.core.KeyType;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.KeyType;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.domain.Account;

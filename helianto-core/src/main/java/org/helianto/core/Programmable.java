@@ -2,6 +2,8 @@ package org.helianto.core;
 
 import java.util.List;
 
+import org.helianto.core.domain.type.TrunkEntity;
+
 
 /**
  * Interface to classes defining a script array.

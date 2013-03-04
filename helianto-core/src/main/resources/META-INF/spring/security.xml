@@ -28,7 +28,7 @@
 	
 	<bean id="publicUserDetailsExtractor" class="org.helianto.core.security.SpringSecurityPublicUserDetailsExtractor" />
 	
-	<security:authentication-manager>
+	<security:authentication-manager id="authenticationManager">
 		<security:authentication-provider user-service-ref="userDetailsService"/>
 	</security:authentication-manager>
 	

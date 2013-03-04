@@ -17,13 +17,12 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Category;
-import org.helianto.core.Entity;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.nature.Customer;
-import org.helianto.partner.form.CompositePartnerForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,7 +69,7 @@ public class PartnerCategoryFilterAdapterTests {
     }
     
     private PartnerCategoryFormFilterAdapter filter;
-    private CompositePartnerForm form;
+    private CompositeTestPartnerForm form;
     private PrivateEntity2 parent;
     
     @Before
@@ -79,7 +78,7 @@ public class PartnerCategoryFilterAdapterTests {
     	parent = new PrivateEntity2(entity, "PRIVATE_ENTITY");
     	Customer customer = new Customer(parent);
     	Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "CATEGORY");
-    	form = new CompositePartnerForm(customer);
+    	form = new CompositeTestPartnerForm(customer);
     	form.setCategory(category);
     	filter = new PartnerCategoryFormFilterAdapter(form);
     }

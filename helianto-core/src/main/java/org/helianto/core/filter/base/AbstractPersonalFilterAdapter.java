@@ -1,8 +1,8 @@
 package org.helianto.core.filter.base;
 
-import org.helianto.core.Identity;
-import org.helianto.core.PersonalEntity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.form.PersonalForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractPersonalFilterAdapter <F extends PersonalEntity> extends AbstractFilterAdapter<F> {
+public abstract class AbstractPersonalFilterAdapter <F extends PersonalForm> extends AbstractFilterAdapter<F> {
 
 	private static final long serialVersionUID = 1L;
 

@@ -1,1 +1,0 @@
-<@anchor "toSelection">Selection</@anchor>

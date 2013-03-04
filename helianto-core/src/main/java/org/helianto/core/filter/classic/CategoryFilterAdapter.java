@@ -15,10 +15,10 @@
 
 package org.helianto.core.filter.classic;
 
-import org.helianto.core.Category;
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.CategoryFormFilterAdapter;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.slf4j.Logger;

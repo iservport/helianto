@@ -3,12 +3,9 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Identity;
 
-
-import org.helianto.core.Identity;
-import org.helianto.core.test.IdentityTestSupport;
-
-import org.helianto.core.Credential;
 
 /**
  * Class to support <code>CredentialDao</code> tests.

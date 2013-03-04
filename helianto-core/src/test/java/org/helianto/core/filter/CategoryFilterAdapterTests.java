@@ -17,10 +17,10 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
 import org.helianto.core.def.CategoryGroup;
-import org.helianto.core.filter.form.AbstractCategoryForm;
-import org.helianto.core.filter.form.CategoryForm;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.form.AbstractCategoryForm;
+import org.helianto.core.form.CategoryForm;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;

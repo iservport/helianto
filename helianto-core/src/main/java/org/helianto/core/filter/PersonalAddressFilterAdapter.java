@@ -1,9 +1,9 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.Identity;
-import org.helianto.core.PersonalAddress;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.def.AddressType;
+import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.filter.base.AbstractPersonalFilterAdapter;
 
 /**

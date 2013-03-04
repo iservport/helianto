@@ -58,6 +58,11 @@ public class GrossRequirement extends AbstractRequirement {
 		return "GROSSREQ";
 	}
 
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     /**
      * equals
      */

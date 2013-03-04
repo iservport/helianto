@@ -3,10 +3,10 @@ package org.helianto.message.service;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.helianto.core.User;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
 import org.helianto.message.RecipientResolutionStrategy;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

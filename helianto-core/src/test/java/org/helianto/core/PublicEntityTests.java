@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,19 +21,19 @@ public class PublicEntityTests {
 	
 	@Test
 	public void constructor() {
-		assertTrue(new PublicEntity2() instanceof Serializable);
+		assertTrue(new PublicEntity() instanceof Serializable);
 	}
 
 	@Test
 	public void entityConstructor() {
-		PublicEntity2 publicEntity = new PublicEntity2(entity);
+		PublicEntity publicEntity = new PublicEntity(entity);
 		assertSame(entity, publicEntity.getEntity());
 	}
 	
 	@Test
 	public void equality() {
-		PublicEntity2 publicEntity = new PublicEntity2();
-		PublicEntity2 other = new PublicEntity2();
+		PublicEntity publicEntity = new PublicEntity();
+		PublicEntity other = new PublicEntity();
 		
 		assertTrue(publicEntity.equals(other));
 		publicEntity.setEntity(entity);

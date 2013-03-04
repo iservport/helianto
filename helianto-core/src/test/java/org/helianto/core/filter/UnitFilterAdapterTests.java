@@ -3,11 +3,11 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import org.helianto.core.Category;
-import org.helianto.core.Entity;
-import org.helianto.core.Operator;
-import org.helianto.core.Unit;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Unit;
 import org.helianto.core.test.CategoryTestSupport;
 import org.junit.Before;
 import org.junit.Test;

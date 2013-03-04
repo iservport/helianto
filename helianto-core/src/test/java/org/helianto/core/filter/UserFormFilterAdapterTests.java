@@ -5,15 +5,16 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.UserGroup;
 import org.helianto.core.def.UserState;
-import org.helianto.core.filter.form.CompositeUserForm;
-import org.helianto.core.filter.form.UserGroupForm;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.user.filter.UserFormFilterAdapter;
+import org.helianto.user.form.UserGroupForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -29,10 +30,11 @@ public class UserFormFilterAdapterTests {
 	static String C2 = "AND alias.userState = 'A' ";
 	static String C3 = "AND alias.identity.id not in (  1 ,  2 ) ";
 	static String C4 = "AND alias.class = 'G' ";
-	static String C5 = "AND parentAssociations.parent.id = 100 ";
+	static String C5 = "parentAssociations.parent.id = 100 ";
 	static String C6 = "AND parentAssociations.parent.userKey = 'USER' ";
 	static String C7 = "AND alias.identity.id = 1 ";
 	static String C8 = "alias.userKey = 'USERKEY' ";
+	static String C9 = "AND alias.id in (1, 2, 3) ";
 	
 	@Test
 	public void empty() {
@@ -41,13 +43,13 @@ public class UserFormFilterAdapterTests {
 
 	@Test
 	public void select() {
-		((CompositeUserForm) form).setUserKey("USERKEY");
+		Mockito.when(form.getUserKey()).thenReturn("USERKEY");
 		assertEquals(C0+C1, filter.createCriteriaAsString());
 	}
 
 	@Test
 	public void userState() {
-		((CompositeUserForm) form).setUserState(UserState.ACTIVE.getValue());
+		Mockito.when(form.getUserState()).thenReturn(UserState.ACTIVE.getValue());
 		assertEquals(C0+C2+O0, filter.createCriteriaAsString());
 	}
 
@@ -60,28 +62,26 @@ public class UserFormFilterAdapterTests {
 		Identity i2 = new Identity("2");
 		i2.setId(2);
 		exclusions.add(i2);
-		form.setExclusions(exclusions);
+		Mockito.when(form.getExclusions()).thenReturn(exclusions);
 		assertEquals(C0+C3+O0, filter.createCriteriaAsString());
 	}
 
 	@Test
 	public void userGroupType() {
-		form.setUserGroupType('G');
+		Mockito.when(form.getUserGroupType()).thenReturn('G');
 		assertEquals(C0+C4+O0, filter.createCriteriaAsString());
 	}
 
 	@Test
 	public void parent() {
-		UserGroup parent = new UserGroup(form.getEntity(), "PARENT");
-		parent.setId(100);
-		form.setParent(parent);
+		Mockito.when(form.getUserGroupParentId()).thenReturn(100);
 		assertEquals(S1+S2, filter.createSelectAsString());
-		assertEquals(C0+C5+O0, filter.createCriteriaAsString());
+		assertEquals(C5+O0, filter.createCriteriaAsString());
 	}
 
 	@Test
 	public void parentUserKey() {
-		((CompositeUserForm) form).setParentUserKey("USER");
+		Mockito.when(form.getParentUserKey()).thenReturn("USER");
 		assertEquals(S1+S2, filter.createSelectAsString());
 		assertEquals(C0+C6+O0, filter.createCriteriaAsString());
 	}
@@ -90,7 +90,7 @@ public class UserFormFilterAdapterTests {
 	public void identity() {
 		Identity identity = new Identity("PRINCIPAL");
 		identity.setId(1);
-		form.setIdentity(identity);
+		Mockito.when(form.getIdentity()).thenReturn(identity);
 		assertEquals(C0+C7+O0, filter.createCriteriaAsString());
 	}
 
@@ -98,16 +98,24 @@ public class UserFormFilterAdapterTests {
 	public void parentIdentity() {
 		Identity identity = new Identity("PRINCIPAL");
 		identity.setId(1);
-		form.setIdentity(identity);
-		((CompositeUserForm) form).setParentUserKey("USER");
+		Mockito.when(form.getIdentity()).thenReturn(identity);
+		Mockito.when(form.getParentUserKey()).thenReturn("USER");
 		assertEquals(C0+C6+C7+O0, filter.createCriteriaAsString());
 	}
 
 	@Test
 	public void userKey() {
-		form = new CompositeUserForm("USERKEY");
+		Mockito.when(form.getUserKey()).thenReturn("USERKEY");
+		Mockito.when(form.getEntity()).thenReturn(null);
 		filter = new UserFormFilterAdapter(form);
 		assertEquals(C8+O0, filter.createCriteriaAsString());
+	}
+
+	@Test
+	public void intArray() {
+		Mockito.when(form.getUserIdArray()).thenReturn(new int[] { 1, 2, 3 });
+		filter = new UserFormFilterAdapter(form);
+		assertEquals(C0+C9+O0, filter.createCriteriaAsString());
 	}
 
 	// collabs
@@ -120,7 +128,13 @@ public class UserFormFilterAdapterTests {
 	@Before
 	public void setUp() {
 		entity = EntityTestSupport.createEntity(10);
-		form = new CompositeUserForm(entity);
+		form = Mockito.mock(UserGroupForm.class);
 		filter = new UserFormFilterAdapter(form);
+		Mockito.when(form.getEntity()).thenReturn(entity);
+	}
+	
+	@After
+	public void tearDown() {
+		Mockito.reset(form);
 	}
 }

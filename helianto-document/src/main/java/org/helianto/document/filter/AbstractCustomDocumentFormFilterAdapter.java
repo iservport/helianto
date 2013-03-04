@@ -23,7 +23,8 @@ import org.helianto.document.form.CustomDocumentForm;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class AbstractCustomDocumentFormFilterAdapter<T extends CustomDocumentForm> extends AbstractDocumentFormFilterAdapter<T> {
+public class AbstractCustomDocumentFormFilterAdapter<T extends CustomDocumentForm> 
+	extends AbstractDocumentFormFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     
@@ -39,8 +40,8 @@ public class AbstractCustomDocumentFormFilterAdapter<T extends CustomDocumentFor
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
-		if (getForm().getSeries()!=null) {
-			appendEqualFilter("series.id", getForm().getSeries().getId(), mainCriteriaBuilder);
+		if (getForm().getFolderId()>0) {
+			appendEqualFilter("series.id", getForm().getFolderId(), mainCriteriaBuilder);
 		}
 		appendEqualFilter("series.contentType", getForm().getContentType(), mainCriteriaBuilder);
 		appendEqualFilter("series.builderCode", getForm().getFolderCode(), mainCriteriaBuilder);

@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
-import org.helianto.process.Process;
+import org.helianto.process.domain.Process;
 
 /**
  * Filter to <code>User</code>.

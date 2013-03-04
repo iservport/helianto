@@ -2,7 +2,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
-import org.helianto.core.filter.form.IdentityForm;
+import org.helianto.core.form.IdentityForm;
 
 /**
  * Identity form filter adapter.
@@ -39,42 +39,24 @@ public class IdentityFormFilterAdapter extends AbstractFilterAdapter<IdentityFor
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendLikeFilter("personalData.firstName", getForm().getFirstName(), mainCriteriaBuilder);
 		appendLikeFilter("personalData.lastName", getForm().getLastName(), mainCriteriaBuilder);
-		appendNameLikeFilter(mainCriteriaBuilder);
 		appendEqualFilter("personalData.gender", getForm().getGender(), mainCriteriaBuilder);
 		appendEqualFilter("identityType", getForm().getIdentityType(), mainCriteriaBuilder);
 		appendEqualFilter("notification", getForm().getNotification(), mainCriteriaBuilder);
 	}
 	
-	/**
-	 * Case insensitive search for name or principal.
-	 * 
-	 * <p>
-	 * The name is split and searched for in fields 'firstName' and 'lastName'
-	 * unless it constains '@', when 'principal' used for searching.
-	 * 
-	 * @param mainCriteriaBuilder
-	 */
-	protected void appendNameLikeFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getNameLike()==null) {
-			return;
-		}
-		OrmCriteriaBuilder nameCriteria = new OrmCriteriaBuilder(mainCriteriaBuilder.getAlias());
-		String[] names = getForm().getNameLike().split(" ");
-		for (String name: names) {
-			if (name.contains("@")) {
-				nameCriteria.appendOr()
-				.appendSegment("principal", "like", "lower")
-				.appendLike(name.trim().toLowerCase());
-			}
-			else {
-				nameCriteria.appendOr()
-				.appendSegment("personalData.firstName", "like", "lower")
-				.appendLike(name.trim().toLowerCase()).appendOr()
-				.appendSegment("personalData.lastName", "like", "lower")
-				.appendLike(name.trim().toLowerCase());
-			}
-		}
-		mainCriteriaBuilder.append(nameCriteria);
+	@Override
+	public boolean isSearch() {
+		return getForm().getSearchString()!=null 
+				&& getForm().getSearchString().length()>0
+				&& getForm().getSearchMode()!=' ';
 	}
-
+	
+	@Override
+	protected String[] getFieldNames() {
+		if (getForm().getSearchString().contains("@")) {
+			return new String[] { "principal" };
+		}
+		return new String[] { "principal", "optionalAlias", "personalData.firstName", "personalData.lastName" };
+	}
+	
 }

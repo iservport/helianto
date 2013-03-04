@@ -18,9 +18,8 @@ package org.helianto.partner.service;
 import java.util.List;
 import java.util.Map;
 
-import org.helianto.core.Entity;
-import org.helianto.core.UserGroup;
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.partner.domain.ContactGroup;
 import org.helianto.partner.domain.Partner;
@@ -39,6 +38,7 @@ import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
 import org.helianto.partner.form.PrivateEntityKeyForm;
+import org.helianto.user.domain.UserGroup;
 
 /**
  * Default service layer interface for the partner package.

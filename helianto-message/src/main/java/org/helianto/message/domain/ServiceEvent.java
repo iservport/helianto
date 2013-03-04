@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.Service;
+import org.helianto.core.domain.Service;
 
 /**
  * Define notification events per service.

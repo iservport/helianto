@@ -26,7 +26,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Entity;
+import org.helianto.core.domain.Entity;
 import org.helianto.document.base.AbstractSerializer;
 
 /**
@@ -45,10 +45,7 @@ import org.helianto.document.base.AbstractSerializer;
 )
 @DiscriminatorValue("B")
 public class DocumentFolder 
-
-	extends AbstractSerializer<Document> 
-
-{
+	extends AbstractSerializer<Document> {
 
 	private static final long serialVersionUID = 1L;
     // transient

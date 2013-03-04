@@ -1,10 +1,10 @@
 package org.helianto.inventory.filter.classic;
 
-import org.helianto.core.Entity;
-import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.document.filter.classic.AbstractControlFilter;
 import org.helianto.inventory.ProcessRequirement;
+import org.helianto.user.domain.User;
 
 
 /**

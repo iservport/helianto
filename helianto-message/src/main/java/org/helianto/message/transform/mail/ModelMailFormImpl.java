@@ -15,7 +15,7 @@
 
 package org.helianto.message.transform.mail;
 
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Operator;
 import org.helianto.message.mail.compose.DefaultMailForm;
 import org.helianto.message.transform.Model;
 

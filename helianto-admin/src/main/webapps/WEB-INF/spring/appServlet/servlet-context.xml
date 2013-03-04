@@ -24,17 +24,6 @@
                
     <context:component-scan base-package="org.helianto.*.controller,org.helianto.*.action.impl"/>
 
-    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
-        <property name="order" value="2" />
-        <property name="flowRegistry" ref="flowRegistry" />
-    </bean>
-
-    <!-- Dispatches requests mapped to flows to FlowHandler implementations -->
-    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
-        <property name="flowExecutor" ref="flowExecutor"/>
-        <property name="flowExecutor.executionRepository.alwaysGenerateNewNextKey" value="false"/>
-    </bean>
-    
 	<mvc:view-controller path="/" view-name="_authorizationSelection" />
 	
 </beans>

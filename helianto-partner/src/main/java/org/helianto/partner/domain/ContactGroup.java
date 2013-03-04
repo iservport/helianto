@@ -20,8 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import org.helianto.core.Entity;
-import org.helianto.core.UserGroup;
+import org.helianto.core.domain.Entity;
+import org.helianto.user.domain.UserGroup;
 /**
  * A contact group.
  * 

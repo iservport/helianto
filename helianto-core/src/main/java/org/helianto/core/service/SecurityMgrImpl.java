@@ -23,16 +23,16 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Credential;
-import org.helianto.core.Identity;
 import org.helianto.core.PasswordNotVerifiedException;
-import org.helianto.core.User;
-import org.helianto.core.UserAssociation;
-import org.helianto.core.UserGroup;
-import org.helianto.core.UserRole;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
+import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserAssociation;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

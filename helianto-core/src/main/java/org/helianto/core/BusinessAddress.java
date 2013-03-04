@@ -1,5 +1,7 @@
 package org.helianto.core;
 
+import org.helianto.core.domain.Phone;
+
 
 
 /**

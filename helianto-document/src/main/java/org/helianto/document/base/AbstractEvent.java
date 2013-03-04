@@ -29,11 +29,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
 import org.helianto.core.Privacy;
 import org.helianto.core.def.PrivacyLevel;
-import org.helianto.core.def.Resolution;
+import org.helianto.core.def.ResolutionExtended;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.document.Event;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -165,7 +165,7 @@ public abstract class AbstractEvent implements Privacy, Event {
     public void setResolution(String resolution) {
         setResolution(resolution.charAt(0));
     }
-    public void setResolutionAsEnum(Resolution resolution) {
+    public void setResolutionAsEnum(ResolutionExtended resolution) {
     	setResolution(resolution.getValue());
     }
     

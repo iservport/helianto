@@ -20,9 +20,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
-import org.helianto.core.Entity;
 import org.helianto.core.def.PrivacyLevel;
-import org.helianto.core.def.Resolution;
+import org.helianto.core.def.ResolutionExtended;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.base.AbstractJournal;
 import org.junit.Before;
@@ -39,9 +39,9 @@ public class JournalTests {
 		Date issueDate = new Date();
 		journal.setIssueDate(issueDate);
     	assertEquals("SUMMARY", journal.getSummary());
-    	assertEquals(Resolution.PRELIMINARY.getValue(), journal.getResolution());
+    	assertEquals(ResolutionExtended.PRELIMINARY.getValue(), journal.getResolution());
     	assertEquals(PrivacyLevel.PUBLIC.getValue(), journal.getPrivacyLevel());
-    	assertEquals(' ', journal.getPriority());
+    	assertEquals('0', journal.getPriority());
 		assertTrue(journal.getNextCheckDate() instanceof Date);
 	}
 

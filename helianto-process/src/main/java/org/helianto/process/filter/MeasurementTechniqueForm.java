@@ -1,6 +1,6 @@
 package org.helianto.process.filter;
 
-import org.helianto.core.TrunkEntity;
+import org.helianto.core.domain.type.TrunkEntity;
 
 /**
  * Measurement technique filter form interface.

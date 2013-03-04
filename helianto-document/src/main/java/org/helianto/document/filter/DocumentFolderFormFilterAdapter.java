@@ -16,8 +16,8 @@
 
 package org.helianto.document.filter;
 
-import org.helianto.core.Entity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.form.DocumentFolderForm;
@@ -27,7 +27,8 @@ import org.helianto.document.form.DocumentFolderForm;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm> extends AbstractTrunkFilterAdapter<T> {
+public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm> 
+	extends AbstractTrunkFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     

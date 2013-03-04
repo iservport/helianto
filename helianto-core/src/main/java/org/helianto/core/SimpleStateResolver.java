@@ -1,6 +1,6 @@
 package org.helianto.core;
 
-import org.helianto.core.def.Resolution;
+import org.helianto.core.def.ResolutionExtended;
 import org.joda.time.DateMidnight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +60,7 @@ public class SimpleStateResolver implements StateResolver {
      * </p>
      */
     public boolean isRunning() {
-    	if (getControl().getResolution()==Resolution.TODO.getValue()) return true;
+    	if (getControl().getResolution()==ResolutionExtended.TODO.getValue()) return true;
         return false;
     }
 
@@ -72,7 +72,7 @@ public class SimpleStateResolver implements StateResolver {
      * </p>
      */
     public boolean isSuspended() {
-    	if (getControl().getResolution()==Resolution.WAIT.getValue()) return true;
+    	if (getControl().getResolution()==ResolutionExtended.WAIT.getValue()) return true;
         return false;
     }
 
@@ -80,7 +80,7 @@ public class SimpleStateResolver implements StateResolver {
      * True if the resolution is DONE.
      */
     public boolean isComplete() {
-    	if (getControl().getResolution()==Resolution.DONE.getValue()) return true;
+    	if (getControl().getResolution()==ResolutionExtended.DONE.getValue()) return true;
         return false;
     }
 

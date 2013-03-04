@@ -18,7 +18,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
-import org.helianto.core.filter.form.EntityForm;
+import org.helianto.core.form.EntityForm;
 
 /**
  * Entity filter adapter.
@@ -60,6 +60,10 @@ public class EntityFormFilterAdapter extends AbstractRootFilterAdapter<EntityFor
 			appendEqualFilter("alias", getForm().getEntityAlias(), mainCriteriaBuilder);
 		}
 		appendLikeFilter("alias", getForm().getEntityAliasLike(), mainCriteriaBuilder);
+		appendEqualFilter("activityState", getForm().getActivityState(), mainCriteriaBuilder);
+		if (getForm().getNature()!=0) {
+			appendLikeFilter("nature", Character.toString(getForm().getNature()), mainCriteriaBuilder);
+		}
 	}
 	
 	@Override

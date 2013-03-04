@@ -15,7 +15,7 @@
 
 package org.helianto.core.filter.classic;
 
-import org.helianto.core.User;
+import org.helianto.user.domain.User;
 
 /**
  * Interface to <code>User</code> backed filters.

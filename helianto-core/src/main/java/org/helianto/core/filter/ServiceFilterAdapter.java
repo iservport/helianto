@@ -16,9 +16,9 @@
 
 package org.helianto.core.filter;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Service;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Service;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 
 /**

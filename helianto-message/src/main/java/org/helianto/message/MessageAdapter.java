@@ -3,7 +3,7 @@ package org.helianto.message;
 import java.util.Date;
 import java.util.Set;
 
-import org.helianto.core.Identity;
+import org.helianto.core.domain.Identity;
 
 /**
  * Message adapter interface.

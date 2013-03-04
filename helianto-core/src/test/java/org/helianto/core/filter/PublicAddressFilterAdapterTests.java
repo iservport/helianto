@@ -2,9 +2,9 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Operator;
-import org.helianto.core.Province;
-import org.helianto.core.filter.form.CompositeEntityForm;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Province;
+import org.helianto.core.form.CompositeEntityForm;
 import org.junit.Before;
 import org.junit.Test;
 

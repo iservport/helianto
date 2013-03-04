@@ -22,17 +22,15 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.helianto.core.BusinessAddress;
-import org.helianto.core.Entity;
-import org.helianto.core.Phone;
-import org.helianto.core.PublicEntity2;
-import org.helianto.core.def.PhoneType;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Phone;
+import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.number.Sequenceable;
 
 /**
@@ -47,7 +45,7 @@ import org.helianto.core.number.Sequenceable;
 
 public class PrivateEntity2 
 
-	extends PublicEntity2 
+	extends PublicEntity 
 	
 	implements 
 	  Sequenceable
@@ -65,7 +63,7 @@ public class PrivateEntity2
 
     private static final long serialVersionUID = 1L;
 //    private Entity entity; superclasse
-    private PublicEntity2 publicEntity;
+    private PublicEntity publicEntity;
     private boolean autoNumber = false;
 //    private String partnerAlias; superclasse
     private long internalNumber;
@@ -130,6 +128,11 @@ public class PrivateEntity2
     	return "PRVTENT";
     }
     
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
 //    /**
 //     * PartnerAlias.
 //     * @deprecated use entityAlias instead.
@@ -192,10 +195,10 @@ public class PrivateEntity2
      */
     @ManyToOne
     @JoinColumn(name="publicEntityId", nullable=true)
-    public PublicEntity2 getPublicEntity() {
+    public PublicEntity getPublicEntity() {
         return this.publicEntity;
     }
-    public void setPublicEntity(PublicEntity2 publicEntity) {
+    public void setPublicEntity(PublicEntity publicEntity) {
         this.publicEntity = publicEntity;
     }
     

@@ -2,7 +2,7 @@ package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
-import org.helianto.core.filter.form.KeyTypeForm;
+import org.helianto.core.form.KeyTypeForm;
 
 /**
  * Key type form filter adapter.

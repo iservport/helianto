@@ -15,11 +15,11 @@
 
 package org.helianto.core.filter;
 
-import org.helianto.core.Category;
-import org.helianto.core.Entity;
-import org.helianto.core.Unit;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Unit;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 
 /**

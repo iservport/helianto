@@ -23,52 +23,28 @@ package org.helianto.core.def;
  */
 public enum Resolution {
 	
-	/* C D I N P R T U W */
-    
-    /**
-     * Issued.
-     */
-    ISSUED('I', false, false, false),
-    /**
-     * Not yet published.
-     */
-    NOT_PUBLISHED('N', false, false, false),
     /**
      * Not started.
      */
-    PRELIMINARY('P', false, false, true),
+    PRELIMINARY('P', 1, false, false, false),
     /**
      * Work in progress.
      */
-    TODO('T', true, false, true),
-    /**
-     * Suspended.
-     */
-    WAIT('W', true, false, true),
+    TODO('T', 2, true, false, true),
     /**
      * No further control action required.
      */
-    DONE('D', true, true, false),
-    /**
-     * Repeat.
-     */
-    REPEAT('R', true, false, false),
-    /**
-     * Cancellled (once started).
-     */
-    CANCELLED('C', true, false, false),
-    /**
-     * Cancelled (but never started).
-     */
-    UNFOUNDED('U', false, false, false);
+    DONE('D', 3, true, true, false);
     
     private char value;
+    private int order;
     private boolean started;
     private boolean ended;
     private boolean open;
     
-    private Resolution(char value, boolean started, boolean ended, boolean open) {
+    private Resolution(char value, int order, boolean started, boolean ended, boolean open) {
         this.value = value;
+        this.order = order;
         this.started = started;
         this.ended = ended;
         this.open = open;
@@ -77,6 +53,10 @@ public enum Resolution {
     public final char getValue() {
         return this.value;
     }
+    
+    public int getOrder() {
+		return order;
+	}
 
     public boolean hasStarted() {
         return this.started;
@@ -134,7 +114,7 @@ public enum Resolution {
      * Array of open resolution values listed as a comma separated value string.
      */
     public static String getOpenResolutionsAsCsv() {
-    	char[] open = Resolution.getOpenResolutions();
+    	char[] open = ResolutionExtended.getOpenResolutions();
     	StringBuilder sb = new StringBuilder();
     	for (int i = 0; i < open.length; i++) {
     		if (i == 0) {

@@ -17,9 +17,8 @@ package org.helianto.partner.filter.classic;
 
 import java.io.Serializable;
 
-import org.helianto.core.Entity;
-import org.helianto.core.User;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 import org.helianto.core.filter.classic.PolymorphicFilter;
 import org.helianto.partner.domain.Partner;
@@ -29,6 +28,7 @@ import org.helianto.partner.domain.nature.Division;
 import org.helianto.partner.domain.nature.Laboratory;
 import org.helianto.partner.domain.nature.Manufacturer;
 import org.helianto.partner.domain.nature.Supplier;
+import org.helianto.user.domain.User;
 
 /**
  * Partner filter.

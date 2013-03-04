@@ -2,8 +2,8 @@ package org.helianto.inventory;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Entity;
-import org.helianto.core.KeyType;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.KeyType;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.inventory.filter.TaxFilterAdapter;
 import org.helianto.partner.domain.Partner;

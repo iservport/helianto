@@ -17,11 +17,11 @@ package org.helianto.process.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.process.Cause;
-import org.helianto.process.MeasurementTechnique;
-import org.helianto.process.ProcessDocument;
-import org.helianto.process.ProcessDocumentAssociation;
-import org.helianto.process.Setup;
+import org.helianto.process.domain.MeasurementTechnique;
+import org.helianto.process.domain.ProcessDocument;
+import org.helianto.process.domain.ProcessDocumentAssociation;
+import org.helianto.process.domain.Setup;
+import org.helianto.process.domain.classic.Cause;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -3,10 +3,9 @@ package org.helianto.resource.domain;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Unit;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Unit;
 import org.helianto.resource.def.ResourceType;
-import org.helianto.resource.domain.ResourceGroup;
 import org.junit.Test;
 
 public class ResourceDomainTests {

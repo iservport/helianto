@@ -1,7 +1,7 @@
 package org.helianto.partner.form;
 
-import org.helianto.core.filter.form.UserForm;
 import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.user.form.UserForm;
 
 /**
  * Contact group form interface.
@@ -9,10 +9,8 @@ import org.helianto.partner.domain.PrivateEntity2;
  * @author mauriciofernandesdecastro
  */
 public interface ContactGroupForm 
-
-	extends UserForm 
+	extends UserForm {
 	
-{
 	/**
 	 * Private entity.
 	 */

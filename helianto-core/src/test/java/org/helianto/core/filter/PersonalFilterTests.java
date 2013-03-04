@@ -2,10 +2,10 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.Identity;
-import org.helianto.core.PersonalEntity;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.base.AbstractPersonalFilterAdapter;
+import org.helianto.core.form.PersonalForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +62,7 @@ public class PersonalFilterTests {
 	 * @author mauriciofernandesdecastro
 	 */
 	@SuppressWarnings("serial")
-	class Person implements PersonalEntity {
+	class Person implements PersonalForm {
 		public Identity getIdentity() { return identity; }
 	}
 

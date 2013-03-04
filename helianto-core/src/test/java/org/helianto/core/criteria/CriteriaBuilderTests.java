@@ -21,9 +21,9 @@ import static org.junit.Assert.assertTrue;
 import java.text.DateFormat;
 import java.util.Date;
 
-import org.helianto.core.User;
 import org.helianto.core.filter.classic.AbstractDateRangeFilter;
 import org.helianto.core.test.SecurityTestSupport;
+import org.helianto.user.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 

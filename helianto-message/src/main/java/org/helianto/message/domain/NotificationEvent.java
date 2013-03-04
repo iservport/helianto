@@ -6,9 +6,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
 import org.helianto.core.def.Uploadable;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.document.base.AbstractEvent;
 
@@ -74,6 +74,11 @@ public class NotificationEvent
     	return "NOTIF";
     }
     
+    @Transient
+    public int getStartNumber() {
+    	return 1;
+    }
+
     public long getInternalNumber() {
 		return internalNumber;
 	}

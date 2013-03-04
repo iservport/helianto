@@ -3,9 +3,9 @@ package org.helianto.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Entity;
-import org.helianto.core.Identity;
-import org.helianto.core.User;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
+import org.helianto.user.domain.User;
 
 /**
  * Class to support <code>UserDao</code> tests.

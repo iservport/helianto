@@ -32,9 +32,9 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Controllable;
-import org.helianto.core.Entity;
 import org.helianto.core.Navigable;
-import org.helianto.core.TrunkEntity;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.resource.def.ResourceType;
 
 /**

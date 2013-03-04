@@ -17,8 +17,8 @@ package org.helianto.message.mail.compose;
 
 import static org.junit.Assert.assertSame;
 
-import org.helianto.core.Credential;
-import org.helianto.core.Operator;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Test;

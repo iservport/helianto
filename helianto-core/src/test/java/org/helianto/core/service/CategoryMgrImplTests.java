@@ -25,7 +25,7 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Category;
+import org.helianto.core.domain.Category;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.CategoryFilter;
 import org.helianto.core.repository.FilterDao;

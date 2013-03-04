@@ -25,7 +25,7 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.Unit;
+import org.helianto.core.domain.Unit;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;

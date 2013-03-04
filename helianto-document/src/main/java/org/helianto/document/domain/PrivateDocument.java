@@ -7,8 +7,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Entity;
 import org.helianto.core.def.Uploadable;
+import org.helianto.core.domain.Entity;
 import org.helianto.document.base.AbstractDocument;
 import org.springframework.web.multipart.MultipartFile;
 
