@@ -16,7 +16,6 @@
 
 package org.helianto.bootstrap.config;
 
-import org.easymock.classextension.EasyMock;
 import org.helianto.bootstrap.ContextInstallationMgr;
 import org.helianto.core.domain.Operator;
 import org.junit.After;

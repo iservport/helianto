@@ -6,6 +6,7 @@ import java.util.HashSet;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.form.AbstractTrunkForm;
 import org.helianto.core.form.IdentityForm;
+import org.helianto.core.form.IdentityIdForm;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
 
@@ -21,14 +22,16 @@ public abstract class AbstractUserForm
 	
 	implements 
 	  IdentityForm
+	, IdentityIdForm
 	, UserGroupForm 
+	, UserGroupIdForm 
 
 {
 
     private static final long serialVersionUID = 1L;
     private Class<? extends UserGroup> clazz;
     private String userKey;
-    private UserGroup userGroupParent;
+    private UserGroup userGroup;
     private String parentUserKey;
     private char userState = ' ';
     private char userGroupType = ' ';
@@ -56,15 +59,22 @@ public abstract class AbstractUserForm
 		this.userKey = userKey;
 	}
 
-	public UserGroup getUserGroupParent() {
-		return userGroupParent;
+	public UserGroup getUserGroup() {
+		return userGroup;
 	}
-	public void setUserGroupParent(UserGroup userGroupParent) {
-		this.userGroupParent = userGroupParent;
+	public void setUserGroup(UserGroup userGroup) {
+		this.userGroup = userGroup;
 	}
 	public int getUserGroupParentId() {
-		if (getUserGroupParent()!=null) {
-			return getUserGroupParent().getId();
+		if (getUserGroup()!=null) {
+			return getUserGroup().getId();
+		}
+		return 0;
+	}
+
+	public int getUserGroupId() {
+		if (getUserGroup()!=null) {
+			return getUserGroup().getId();
 		}
 		return 0;
 	}
@@ -130,6 +140,13 @@ public abstract class AbstractUserForm
     }
     public void setIdentity(Identity identity) {
         this.identity = identity;
+    }
+    
+    public long getIdentityId() {
+    	if (getIdentity()!=null) {
+    		getIdentity().getId();
+    	}
+    	return 0;
     }
     
     public String getPrincipal() {

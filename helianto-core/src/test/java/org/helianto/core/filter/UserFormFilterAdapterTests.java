@@ -113,7 +113,7 @@ public class UserFormFilterAdapterTests {
 
 	@Test
 	public void intArray() {
-		Mockito.when(form.getUserIdArray()).thenReturn(new String[] { "1", "2", "3" });
+		Mockito.when(form.getUserIdArray()).thenReturn(new int[] { 1, 2, 3 });
 		filter = new UserFormFilterAdapter(form);
 		assertEquals(C0+C9+O0, filter.createCriteriaAsString());
 	}

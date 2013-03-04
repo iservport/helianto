@@ -29,8 +29,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
-import org.helianto.process.DerivedProcessDocument;
-import org.helianto.process.ProcessDocument;
+import org.helianto.process.domain.DerivedProcessDocument;
+import org.helianto.process.domain.ProcessDocument;
 
 /**
  * Represents a range of cards.

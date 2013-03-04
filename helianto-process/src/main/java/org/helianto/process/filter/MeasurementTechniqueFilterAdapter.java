@@ -2,7 +2,7 @@ package org.helianto.process.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.process.MeasurementTechnique;
+import org.helianto.process.domain.MeasurementTechnique;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

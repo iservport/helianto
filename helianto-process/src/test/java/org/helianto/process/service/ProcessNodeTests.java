@@ -24,11 +24,11 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.helianto.core.Node;
-import org.helianto.process.AssociationType;
-import org.helianto.process.Operation;
-import org.helianto.process.Process;
-import org.helianto.process.ProcessDocument;
-import org.helianto.process.ProcessDocumentAssociation;
+import org.helianto.process.def.AssociationType;
+import org.helianto.process.domain.Operation;
+import org.helianto.process.domain.Process;
+import org.helianto.process.domain.ProcessDocument;
+import org.helianto.process.domain.ProcessDocumentAssociation;
 import org.junit.Before;
 import org.junit.Test;
 

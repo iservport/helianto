@@ -22,8 +22,6 @@ import static org.junit.Assert.assertSame;
 import org.easymock.EasyMock;
 import org.helianto.bootstrap.ContextInstallationMgr;
 import org.helianto.bootstrap.ServiceInstallationMgr;
-import org.helianto.bootstrap.config.DefaultOperatorInstaller;
-import org.helianto.bootstrap.config.ContextDefaults;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Service;

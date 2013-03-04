@@ -18,7 +18,7 @@ package org.helianto.inventory.filter.classic;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
 import org.helianto.partner.domain.Partner;
-import org.helianto.process.ProcessDocument;
+import org.helianto.process.domain.ProcessDocument;
 import org.helianto.user.domain.User;
 
 public class AgreementFilter extends AbstractUserBackedCriteriaFilter {

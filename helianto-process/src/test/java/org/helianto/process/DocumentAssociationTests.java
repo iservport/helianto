@@ -11,6 +11,11 @@ import java.util.List;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.DomainTestSupport;
+import org.helianto.process.def.AssociationType;
+import org.helianto.process.domain.Operation;
+import org.helianto.process.domain.Process;
+import org.helianto.process.domain.ProcessDocument;
+import org.helianto.process.domain.ProcessDocumentAssociation;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

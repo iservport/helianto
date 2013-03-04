@@ -8,11 +8,13 @@ import org.helianto.core.form.FolderForm;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface DocumentFolderForm extends FolderForm, Resettable {
+public interface DocumentFolderForm 
+	extends FolderForm
+	, Resettable {
 
 	/**
 	 * Content type.
 	 */
 	public char getContentType();
-	
+
 }

@@ -24,11 +24,11 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.classic.PolymorphicFilter;
 import org.helianto.document.filter.classic.AbstractDocumentFilter;
 import org.helianto.partner.domain.Partner;
-import org.helianto.process.Characteristic;
-import org.helianto.process.ControlMethod;
-import org.helianto.process.Operation;
-import org.helianto.process.Process;
-import org.helianto.process.ProcessDocument;
+import org.helianto.process.domain.Characteristic;
+import org.helianto.process.domain.ControlMethod;
+import org.helianto.process.domain.Operation;
+import org.helianto.process.domain.Process;
+import org.helianto.process.domain.ProcessDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

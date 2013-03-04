@@ -17,7 +17,7 @@ package org.helianto.inventory.filter.classic;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.document.filter.classic.AbstractControlFilter;
-import org.helianto.process.ProcessDocument;
+import org.helianto.process.domain.ProcessDocument;
 
 /**
  * Base requirement filter.

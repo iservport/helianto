@@ -27,7 +27,8 @@ import org.helianto.document.form.DocumentFolderForm;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm> extends AbstractTrunkFilterAdapter<T> {
+public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm> 
+	extends AbstractTrunkFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     

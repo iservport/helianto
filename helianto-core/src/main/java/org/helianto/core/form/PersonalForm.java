@@ -24,6 +24,7 @@ import org.helianto.core.domain.Identity;
  * To be implemented by any entity directly related to an <code>Identity</code>.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated prefer IdentityIdForm
  */
 public interface PersonalForm extends Serializable {
 	

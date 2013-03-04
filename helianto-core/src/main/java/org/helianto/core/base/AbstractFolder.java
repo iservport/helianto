@@ -29,9 +29,7 @@ import org.helianto.core.domain.type.FolderEntity;
 @javax.persistence.MappedSuperclass
 public abstract class AbstractFolder
 	extends AbstractTrunkEntity
-	implements FolderEntity
-
-{
+	implements FolderEntity {
 
 	private static final long serialVersionUID = 1L;
 	private String folderCode;

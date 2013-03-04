@@ -31,7 +31,7 @@ public interface UserForm
 	/**
 	 * User id array.
 	 */
-	String[] getUserIdArray();
+	int[] getUserIdArray();
 	
 	/**
 	 * User order filter.

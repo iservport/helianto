@@ -45,10 +45,7 @@ import org.helianto.document.base.AbstractSerializer;
 )
 @DiscriminatorValue("B")
 public class DocumentFolder 
-
-	extends AbstractSerializer<Document> 
-
-{
+	extends AbstractSerializer<Document> {
 
 	private static final long serialVersionUID = 1L;
     // transient

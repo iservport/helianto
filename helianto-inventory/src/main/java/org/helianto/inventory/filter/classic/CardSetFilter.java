@@ -5,7 +5,7 @@ import javax.persistence.Transient;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.classic.AbstractUserBackedCriteriaFilter;
-import org.helianto.process.Process;
+import org.helianto.process.domain.Process;
 import org.helianto.user.domain.User;
 
 /**

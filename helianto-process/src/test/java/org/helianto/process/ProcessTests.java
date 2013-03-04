@@ -23,6 +23,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.process.domain.DerivedProcessDocument;
+import org.helianto.process.domain.Process;
 import org.junit.Test;
 
 /**

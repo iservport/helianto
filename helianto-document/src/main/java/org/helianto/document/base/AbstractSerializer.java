@@ -35,12 +35,8 @@ import org.helianto.document.Customizer;
  */
 @javax.persistence.MappedSuperclass
 public abstract class AbstractSerializer<D extends Customizable> 
-
 	extends AbstractFolder
-
-	implements Customizer 
-
-{
+	implements Customizer {
 
 	private static final long serialVersionUID = 1L;
 	private String numberPattern;

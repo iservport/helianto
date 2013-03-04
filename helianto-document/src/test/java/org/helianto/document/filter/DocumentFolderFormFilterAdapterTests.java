@@ -19,10 +19,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.form.AbstractCustomDocumentForm;
 import org.helianto.document.form.DocumentFolderForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 
 /**
@@ -43,26 +44,30 @@ public class DocumentFolderFormFilterAdapterTests {
 	
 	@Test
 	public void selection() {
-		((AbstractCustomDocumentForm) form).setBuilderCode("CODE");
+		Mockito.when(form.getFolderCode()).thenReturn("CODE");
 		assertEquals(C1+C2, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void contentType() {
-		((AbstractCustomDocumentForm) form).setContentType('X');
+		Mockito.when(form.getContentType()).thenReturn('X');
 		assertEquals(C1+C3+OB, filter.createCriteriaAsString());
 	}
 	
 	private DocumentFolderFormFilterAdapter<DocumentFolderForm> filter;
 	private DocumentFolderForm form;
 	
-	@SuppressWarnings("serial")
 	@Before
 	public void setUp() {
-		Entity entity = EntityTestSupport.createEntity();
-		entity.setId(1);
-		form = new AbstractCustomDocumentForm(entity) {};
+		Entity entity = EntityTestSupport.createEntity(1);
+		form = Mockito.mock(DocumentFolderForm.class);
+		Mockito.when(form.getEntity()).thenReturn(entity);
 		filter = new DocumentFolderFormFilterAdapter<DocumentFolderForm>(form);
+	}
+	
+	@After
+	public void tearDown() {
+		Mockito.reset(form);
 	}
 	
 }

@@ -52,7 +52,7 @@ public class CompositeTestPartnerForm
     private String userKey;
     private char userState;
     private char entityActivityState;
-	private String[] userIdArray;
+	private int[] userIdArray;
     private char userOrderBy;
 	
 	/**
@@ -215,10 +215,10 @@ public class CompositeTestPartnerForm
 		this.entityActivityState = entityActivityState;
 	}
 	
-	public String[] getUserIdArray() {
+	public int[] getUserIdArray() {
 		return userIdArray;
 	}
-	public void setUserIdArray(String[] userIdArray) {
+	public void setUserIdArray(int[] userIdArray) {
 		this.userIdArray = userIdArray;
 	}
 	

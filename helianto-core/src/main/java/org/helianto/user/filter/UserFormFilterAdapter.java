@@ -102,7 +102,7 @@ public class UserFormFilterAdapter
 		appendEqualFilter("userKey", getForm().getUserKey(), mainCriteriaBuilder);
 		appendEqualFilter("userState", getForm().getUserState(), mainCriteriaBuilder);
 		appendEqualFilter("entity.activityState", getForm().getEntityActivityState(), mainCriteriaBuilder);
-		appendInArray("id", stringArrayConverter(getForm().getUserIdArray()), mainCriteriaBuilder);
+		appendInArray("id", getForm().getUserIdArray(), mainCriteriaBuilder);
         appendExclusionsFilter( mainCriteriaBuilder);
 	}
 	

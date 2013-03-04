@@ -27,7 +27,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.process.ProcessDocument;
+import org.helianto.process.domain.ProcessDocument;
 
 /**
  * Cards are companions to transactions.

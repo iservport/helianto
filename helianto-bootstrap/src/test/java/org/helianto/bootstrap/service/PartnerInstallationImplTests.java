@@ -20,17 +20,14 @@ import static org.junit.Assert.assertSame;
 
 import org.easymock.EasyMock;
 import org.helianto.core.ContextMgr;
-import org.helianto.core.SequenceMgr;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.PublicEntityRepository;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.domain.nature.Customer;
-import org.helianto.partner.repository.PartnerKeyRepository;
-import org.helianto.partner.repository.PartnerRepository;
 import org.junit.After;
 import org.junit.Before;
 

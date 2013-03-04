@@ -32,7 +32,7 @@ import org.helianto.inventory.Tax;
 import org.helianto.inventory.test.AbstractInventoryDaoIntegrationTest;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
-import org.helianto.process.ProcessDocument;
+import org.helianto.process.domain.ProcessDocument;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 

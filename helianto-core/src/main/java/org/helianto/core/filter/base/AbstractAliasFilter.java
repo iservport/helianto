@@ -448,7 +448,7 @@ public abstract class AbstractAliasFilter
      * 
      * @param fieldContent
      */
-    protected int[] stringArrayConverter(String[] fieldContent) {
+    public static int[] stringArrayConverter(String[] fieldContent) {
     	if (fieldContent==null) {
         	return new int[0];
         }

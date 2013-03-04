@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.process.MeasurementTechnique;
+import org.helianto.process.domain.MeasurementTechnique;
 import org.junit.Before;
 import org.junit.Test;
 /**

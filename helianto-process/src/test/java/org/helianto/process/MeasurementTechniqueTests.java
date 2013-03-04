@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.domain.Unit;
 import org.helianto.core.test.DomainTestSupport;
+import org.helianto.process.domain.MeasurementTechnique;
 import org.junit.Test;
 
 

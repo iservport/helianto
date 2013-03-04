@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
-import org.helianto.core.IdentityMgr;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.repository.OperatorRepository;
 import org.helianto.core.repository.ProvinceRepository;
+import org.helianto.core.service.IdentityMgr;
 import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
 import org.helianto.user.UserMgr;
 import org.junit.After;

@@ -15,15 +15,11 @@
 
 package org.helianto.bootstrap;
 
-import java.util.List;
-
+import org.helianto.core.ContextMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
-import org.springframework.core.io.Resource;
 
 /**
  * Service installation tasks.
