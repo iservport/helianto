@@ -7,7 +7,8 @@ import org.helianto.core.domain.Entity;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractDocumentForm implements DocumentForm {
+public abstract class AbstractDocumentForm 
+	implements DocumentForm {
 	
 	private static final long serialVersionUID = 1L;
 	private Entity entity;

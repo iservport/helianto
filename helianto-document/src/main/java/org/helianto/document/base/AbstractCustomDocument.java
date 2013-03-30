@@ -80,6 +80,17 @@ public abstract class AbstractCustomDocument
 		}
 	}
 	
+    /**
+     * <<Transient>> Convenience to rename field series to folder.
+     */
+    @Transient
+    public DocumentFolder getFolder() {
+		return getSeries();
+	}
+    public void setFolder(DocumentFolder folder) {
+		setSeries(folder);
+	}
+    
 	/**
 	 * Subclasses may override this method to change how the prefix is created.
 	 */

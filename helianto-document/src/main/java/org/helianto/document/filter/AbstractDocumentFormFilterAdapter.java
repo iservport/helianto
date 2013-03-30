@@ -16,7 +16,7 @@
 package org.helianto.document.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.base.AbstractDateIntervalFilterAdapter;
 import org.helianto.document.form.DocumentForm;
 
 /**
@@ -25,10 +25,7 @@ import org.helianto.document.form.DocumentForm;
  * @author Mauricio Fernandes de Castro
  */
 public abstract class AbstractDocumentFormFilterAdapter<T extends DocumentForm> 
-
-	extends AbstractTrunkFilterAdapter<T> 
-
-{
+	extends AbstractDateIntervalFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     
@@ -60,6 +57,7 @@ public abstract class AbstractDocumentFormFilterAdapter<T extends DocumentForm>
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		super.doFilter(mainCriteriaBuilder);
 		appendLikeFilter("docName", getForm().getDocName(), mainCriteriaBuilder);
 		appendPriority(mainCriteriaBuilder);
 	}
