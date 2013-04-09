@@ -145,11 +145,19 @@ public abstract class AbstractDocument
 
 	@Column(length=32)
 	public String getMultipartFileContentType() {
-		return multipartFileContentType;
+		return internalMultipartFileContentType(multipartFileContentType);
 	}
 	public void setMultipartFileContentType(String multipartFileContentType) {
 		this.multipartFileContentType = multipartFileContentType;
 	}
+
+    /**
+     * Allow subclasses to override how multipartFileContentType is determined.
+     */
+    @Transient
+    protected String internalMultipartFileContentType(String multipartFileContentType) {
+    	return multipartFileContentType;
+    }
 
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "text".
@@ -193,7 +201,7 @@ public abstract class AbstractDocument
     }
 
     /**
-     * Natural key info.
+     * True if docCode is empty.
      */
     @Transient
     public boolean isKeyEmpty() {

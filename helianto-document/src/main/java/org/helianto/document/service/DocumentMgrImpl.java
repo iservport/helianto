@@ -28,7 +28,9 @@ import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.filter.DocumentFolderFormFilterAdapter;
+import org.helianto.document.filter.PrivateDocumentFilterAdapter;
 import org.helianto.document.form.DocumentFolderForm;
+import org.helianto.document.form.PrivateDocumentForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,8 @@ import org.springframework.stereotype.Service;
  * @author Mauricio Fernandes de Castro
  */
 @Service("documentMgr")
-public class DocumentMgrImpl implements DocumentMgr {
+public class DocumentMgrImpl 
+	implements DocumentMgr {
 
 	public Document storeDocument(Document document) {
 		if (document.isLocked()) {
@@ -53,15 +56,6 @@ public class DocumentMgrImpl implements DocumentMgr {
 		return document;
 	}
 	
-	public PrivateDocument storeDocument(PrivateDocument privateDocument) {
-		if (privateDocument.isLocked()) {
-			throw new IllegalArgumentException("Tried to change a locked private document.");
-		}
-		privateDocumentDao.saveOrUpdate(privateDocument);
-		privateDocumentDao.flush();
-		return privateDocument;
-	}
-	
 	public List<? extends Document> findDocuments(Filter documentFilter) {
     	List<? extends Document> documentList = (List<? extends Document>) documentDao.find(documentFilter);
     	if (logger.isDebugEnabled() && documentList!=null) {
@@ -70,12 +64,18 @@ public class DocumentMgrImpl implements DocumentMgr {
     	return documentList;
 	}
 	
-	public List<PrivateDocument> findPrivateDocuments(Filter privateDocumentFilter) {
+	public List<PrivateDocument> findPrivateDocuments(PrivateDocumentForm form) {
+		Filter privateDocumentFilter = new PrivateDocumentFilterAdapter(form);
     	List<PrivateDocument> privateDocumentList = (List<PrivateDocument>) privateDocumentDao.find(privateDocumentFilter);
     	if (logger.isDebugEnabled() && privateDocumentList!=null) {
     		logger.debug("Found private document list of size {}", privateDocumentList.size());
     	}
     	return privateDocumentList;
+	}
+	
+	public PrivateDocument storePrivateDocument(PrivateDocument privateDocument) {
+		privateDocumentDao.saveOrUpdate(privateDocument);
+		return privateDocument;
 	}
 	
 	public Document findDocument(Filter documentFilter) throws NonUniqueResultException {

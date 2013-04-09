@@ -10,7 +10,11 @@ import org.helianto.core.form.SearchForm;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface DocumentForm extends TrunkEntity, SearchForm, Prioritizable, Resettable {
+public interface DocumentForm 
+	extends TrunkEntity
+	, SearchForm
+	, Prioritizable
+	, Resettable {
 
 	/**
 	 * Document code.

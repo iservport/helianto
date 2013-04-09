@@ -61,13 +61,4 @@ public class DocumentFolderTests {
 		assertFalse(docBuilder.equals(other));		
 	}
 	
-	@Test
-	public void build() {
-		DocumentFolder docBuilder = new DocumentFolder();
-		docBuilder.setNumberPattern("ABC000");
-		assertEquals("ABC001", docBuilder.buildCode(1));
-		docBuilder.setNumberPattern("0000/'09'");
-		assertEquals("0001/09", docBuilder.buildCode(1));
-	}
-
 }

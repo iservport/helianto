@@ -42,8 +42,7 @@ import org.helianto.document.base.AbstractCustomDocument;
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Document 
 	extends AbstractCustomDocument 
-	implements 
-	  Event
+	implements Event
 	, Comparable<Document> 
 
 {

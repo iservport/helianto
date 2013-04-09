@@ -23,6 +23,7 @@ import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.form.DocumentFolderForm;
+import org.helianto.document.form.PrivateDocumentForm;
 
 /**
  * Document service interface.
@@ -36,49 +37,49 @@ public interface DocumentMgr {
 	 * 
 	 * @param documentFilter
 	 */
-	public List<? extends Document> findDocuments(Filter documentFilter);
+	List<? extends Document> findDocuments(Filter documentFilter);
 	
 	/**
 	 * Find a <code>Document</code>.
 	 * 
 	 * @param documentFilter
 	 */
-	public Document findDocument(Filter documentFilter) throws NonUniqueResultException;
+	Document findDocument(Filter documentFilter) throws NonUniqueResultException;
 	
 	/**
 	 * Store <code>Document</code>.
 	 * 
 	 * @param document
 	 */
-	public Document storeDocument(Document document);
+	Document storeDocument(Document document);
 	
 	/**
 	 * Find a <code>PrivateDocument</code> list.
 	 * 
-	 * @param privateDocumentFilter
+	 * @param form
 	 */
-	public List<PrivateDocument> findPrivateDocuments(Filter privateDocumentFilter);
+	List<PrivateDocument> findPrivateDocuments(PrivateDocumentForm form);
 	
 	/**
 	 * Store <code>PrivateDocument</code>.
 	 * 
 	 * @param privateDocument
 	 */
-	public PrivateDocument storeDocument(PrivateDocument privateDocument);
-
+	PrivateDocument storePrivateDocument(PrivateDocument privateDocument);
+	
 	/**
 	 * Remove the <code>Document</code> from the datastore.
 	 * 
 	 * @param document
 	 */
-	public void removeDocument(Document document);
+	void removeDocument(Document document);
 
 	/**
 	 * Store a <code>Serializer</code>.
 	 * 
 	 * @param serializer
 	 */
-	public DocumentFolder storeSerializer(DocumentFolder serializer);
+	DocumentFolder storeSerializer(DocumentFolder serializer);
 
 	/**
 	 * Find a <code>Serializer</code> list.
@@ -86,13 +87,13 @@ public interface DocumentMgr {
 	 * @param serializerFilter
 	 * @deprecated
 	 */
-	public List<? extends DocumentFolder> findSerializers(Filter serializerFilter);
+	List<? extends DocumentFolder> findSerializers(Filter serializerFilter);
 	
 	/**
 	 * Find a <code>Serializer</code> list.
 	 * 
 	 * @param serializerFilter
 	 */
-	public List<? extends DocumentFolder> findSerializers(DocumentFolderForm form);
+	List<? extends DocumentFolder> findSerializers(DocumentFolderForm form);
 	
 }

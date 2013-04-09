@@ -15,18 +15,14 @@
 
 package org.helianto.document.base;
 
-import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.helianto.core.base.AbstractFolder;
 import org.helianto.core.domain.Entity;
-import org.helianto.document.Customizable;
-import org.helianto.document.Customizer;
 
 /**
  * Base class to wrap a number pattern to be used to generate a sequence of documents.
@@ -34,9 +30,8 @@ import org.helianto.document.Customizer;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractSerializer<D extends Customizable> 
-	extends AbstractFolder
-	implements Customizer {
+public abstract class AbstractSerializer<D> 
+	extends AbstractFolder {
 
 	private static final long serialVersionUID = 1L;
 	private String numberPattern;
@@ -72,14 +67,6 @@ public abstract class AbstractSerializer<D extends Customizable>
 		this.numberPattern = numberPattern;
 	}
 	
-    /**
-     * Build the code.
-     */
-	@Transient
-	public String buildCode(long internalNumber) {
-		return new DecimalFormat(getNumberPattern()).format(internalNumber);
-	}
-
     /**
      * Content type.
      */

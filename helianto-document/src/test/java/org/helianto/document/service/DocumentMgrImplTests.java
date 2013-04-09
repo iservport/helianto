@@ -22,8 +22,6 @@ import java.util.List;
 
 import org.easymock.EasyMock;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.SequenceMgr;
 import org.helianto.document.domain.Document;
@@ -77,10 +75,9 @@ public class DocumentMgrImplTests {
 		PrivateDocument privateDocument= new PrivateDocument();
 		
 		privateDocumentDao.saveOrUpdate(privateDocument);
-		privateDocumentDao.flush();
 		EasyMock.replay(privateDocumentDao);
 		
-		assertSame(privateDocument, documentMgr.storeDocument(privateDocument));
+		assertSame(privateDocument, documentMgr.storePrivateDocument(privateDocument));
 		EasyMock.verify(privateDocumentDao);
 	}
 	
@@ -96,17 +93,17 @@ public class DocumentMgrImplTests {
 		EasyMock.verify(documentDao);
 	}
 	
-	@Test
-	public void findPrivateDocuments() {
-		List<PrivateDocument> documentList = new ArrayList<PrivateDocument>();
-		Filter filter = new TestingFilter();
-		
-		EasyMock.expect(privateDocumentDao.find(filter)).andReturn(documentList);
-		EasyMock.replay(privateDocumentDao);
-		
-		assertSame(documentList, documentMgr.findPrivateDocuments(filter));
-		EasyMock.verify(privateDocumentDao);
-	}
+//	@Test
+//	public void findPrivateDocuments() {
+//		List<PrivateDocument> documentList = new ArrayList<PrivateDocument>();
+//		Filter filter = new TestingFilter();
+//		
+//		EasyMock.expect(privateDocumentDao.find(filter)).andReturn(documentList);
+//		EasyMock.replay(privateDocumentDao);
+//		
+//		assertSame(documentList, documentMgr.findPrivateDocuments(filter));
+//		EasyMock.verify(privateDocumentDao);
+//	}
 	
 	@Test
 	public void removeDocument() {

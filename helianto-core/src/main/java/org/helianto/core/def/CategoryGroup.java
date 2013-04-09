@@ -42,6 +42,10 @@ public enum CategoryGroup {
 	/**
 	 * Planning.
 	 */
+	REQUEST('Q'),
+	/**
+	 * Planning.
+	 */
 	PLANNING('R'),
 	/**
 	 * Competence.

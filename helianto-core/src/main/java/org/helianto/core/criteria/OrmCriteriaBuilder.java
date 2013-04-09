@@ -36,9 +36,9 @@ import org.springframework.util.StringUtils;
  */
 public class OrmCriteriaBuilder extends SelectFromBuilder implements CriteriaBuilder {
 
-    static String DEFAULT_SQL_CONVERSION_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    static String DEFAULT_AND_CONNECTOR = "AND ";
-    static String DEFAULT_OR_CONNECTOR = "OR ";
+    public static String DEFAULT_SQL_CONVERSION_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static String DEFAULT_AND_CONNECTOR = "AND ";
+    public static String DEFAULT_OR_CONNECTOR = "OR ";
 
     private String connector = DEFAULT_AND_CONNECTOR;
     private DateFormat formatter;
@@ -423,10 +423,13 @@ public class OrmCriteriaBuilder extends SelectFromBuilder implements CriteriaBui
     //- property getters
 
     /**
-     * Connector getter
+     * Connector, default is "AND".
      */
     public String getConnector() {
         return connector;
+    }
+    public void setConnector(String connector) {
+    	this.connector = connector;
     }
 
     /**

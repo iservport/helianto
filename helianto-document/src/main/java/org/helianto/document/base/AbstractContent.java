@@ -30,7 +30,9 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public class AbstractContent extends Document implements Cloneable, Uploadable {
+public class AbstractContent 
+	extends Document 
+	implements Cloneable, Uploadable {
 
     private static final long serialVersionUID = 1L;
     private byte[] content;
@@ -61,7 +63,7 @@ public class AbstractContent extends Document implements Cloneable, Uploadable {
      */
     @Transient
     public String getContentAsString() {
-    	if (getContent()!=null && isText()) {
+    	if (getContent()!=null) {
     		return new String(getContent());
     	}
     	return "";

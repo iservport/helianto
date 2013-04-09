@@ -9,7 +9,9 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.Uploadable;
 import org.helianto.core.domain.Entity;
+import org.helianto.document.DocumentContentType;
 import org.helianto.document.base.AbstractDocument;
+import org.helianto.user.domain.User;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -21,7 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Table(name="doc_private",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "docCode"})}
 )
-public class PrivateDocument extends AbstractDocument implements Comparable<PrivateDocument>, Uploadable {
+public class PrivateDocument 
+	extends AbstractDocument 
+	implements Comparable<PrivateDocument>
+	, Uploadable {
 
     private static final long serialVersionUID = 1L;
     private byte[] content;
@@ -48,7 +53,16 @@ public class PrivateDocument extends AbstractDocument implements Comparable<Priv
     	setContentType(' ');
     }
 
-
+	/** 
+	 * Form constructor.
+	 * 
+	 * @param user
+	 */
+    public PrivateDocument(User user) {
+    	super(user.getEntity(), "");
+    	setOwner(user.getIdentity());
+    	setResolution('D');
+    }
 
     @Lob
     public byte[] getContent() {
@@ -89,7 +103,27 @@ public class PrivateDocument extends AbstractDocument implements Comparable<Priv
 	public void setContentType(char contentType) {
 		this.contentType = contentType;
 	}
+	public void setContentTypeAsEnum(DocumentContentType contentType) {
+		this.contentType = contentType.getValue();
+	}
 	
+    /**
+     * Allow subclasses to override how multipartFileContentType is determined.
+     */
+    @Transient
+    protected String internalMultipartFileContentType(String multipartFileContentType) {
+    	if (getContentType()==DocumentContentType.TEXT.getValue()) {
+    		return DocumentContentType.TEXT.getMultipartFileContentType();
+    	}
+    	if (getContentType()==DocumentContentType.HTML.getValue()) {
+    		return DocumentContentType.HTML.getMultipartFileContentType();
+    	}
+    	if (getContentType()==DocumentContentType.CSS.getValue()) {
+    		return DocumentContentType.CSS.getMultipartFileContentType();
+    	}
+    	return multipartFileContentType;
+    }
+
 	/**
 	 * <<Transient>> Convenience property to hold uploaded data.
 	 */
