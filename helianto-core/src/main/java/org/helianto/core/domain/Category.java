@@ -61,16 +61,17 @@ public class Category
     private int id;
     private Entity entity;
     private char categoryGroup;
-    private String categoryCode;
-    private String categoryLabel;
-    private String categoryName;
-    private char priority;
-    private String referenceList;
-    private String customStyle;
-    private String customWorkflowRoles;
-    private String customProperties;
-    private String partnerFilterPattern;
-    private String scriptItems;
+    private String categoryCode = "";
+    private String categoryLabel = "";
+    private String categoryName = "";
+    private char priority = '0';
+    private String referenceList = "";
+    private String customStyle = "";
+    private String customWorkflowRoles = "";
+    private String customProperties = "";
+    private String customNumberPattern = "";
+    private String partnerFilterPattern = "";
+    private String scriptItems = "";
 
     /** 
      * Default constructor
@@ -78,10 +79,6 @@ public class Category
     public Category() {
     	super();
     	setCategoryGroupAsEnum(CategoryGroup.NOT_DEFINED);
-    	setCategoryCode("");
-    	setCategoryLabel("");
-    	setCategoryName("");
-    	setPriority('0');
     }
     
     /** 
@@ -289,6 +286,17 @@ public class Category
     @Transient
 	public Map<String, Object> getCustomPropertiesAsMap() {
 		return StringListUtils.propertiesToMap(getCustomProperties());
+	}
+    
+	/**
+	 * Custom pattern to be applied at code generation.
+	 */
+	@Column(length=12)
+    public String getCustomNumberPattern() {
+		return customNumberPattern;
+	}
+    public void setCustomNumberPattern(String customNumberPattern) {
+		this.customNumberPattern = customNumberPattern;
 	}
 	
     /**
