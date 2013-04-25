@@ -23,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.document.domain.DocumentFolder;
@@ -41,6 +42,7 @@ public abstract class AbstractCustomDocument
 	private static final long serialVersionUID = 1L;
 	private DocumentFolder series;
 	private long internalNumber;
+    private Category category;
 	
 	/**
 	 * Default constructor.
@@ -189,6 +191,31 @@ public abstract class AbstractCustomDocument
 		}
 	}
 
+    /**
+     * Category.
+     * @see {@link Category}
+     */
+    @ManyToOne
+    @JoinColumn(name="categoryId", nullable=true)
+    public Category getCategory() {
+		return getInternalCategory(category);
+	}
+    public void setCategory(Category category) {
+		this.category = category;
+	}
+    
+	/**
+	 * <<Transient>> Optionally delegate to subclasses a method to replace the private field.
+	 * 
+	 * <p>
+	 * Default implementation does not replace the private field.
+	 * </p>
+	 */
+	@Transient
+	protected Category getInternalCategory(Category category) {
+		return category;
+	}
+	
 	@Override
     public boolean equals(Object other) {
 		 if ( !(other instanceof AbstractCustomDocument) ) return false;

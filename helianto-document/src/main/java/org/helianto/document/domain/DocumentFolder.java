@@ -15,17 +15,18 @@
 
 package org.helianto.document.domain;
 
-import java.util.List;
-
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.base.AbstractSerializer;
 
@@ -48,9 +49,8 @@ public class DocumentFolder
 	extends AbstractSerializer<Document> {
 
 	private static final long serialVersionUID = 1L;
-    // transient
-    private List<Document> documentList;
-    
+    private Category category;
+
     /** 
      * Default constructor.
      */
@@ -71,15 +71,37 @@ public class DocumentFolder
     	setContentType(' ');
     }
 
+    /**
+     * Category.
+     * @see {@link Category}
+     */
+    @ManyToOne
+    @JoinColumn(name="categoryId", nullable=true)
+    public Category getCategory() {
+		return getInternalCategory(category);
+	}
+    public void setCategory(Category category) {
+		this.category = category;
+	}
+    
 	/**
-	 * <<Transient>> Document list.
+	 * <<Transient>> Optionally delegate to subclasses a method to replace the private field.
+	 * 
+	 * <p>
+	 * Default implementation does not replace the private field.
+	 * </p>
 	 */
 	@Transient
-	public List<Document> getDocumentList() {
-		return documentList;
+	protected Category getInternalCategory(Category category) {
+		return category;
 	}
-	public void setDocumentList(List<Document> documentList) {
-		this.documentList = documentList;
+	
+	/**
+	 * <<Transient>> True if category is not null.
+	 */
+	@Transient
+	protected boolean isCategoryEnabled() {
+		return getCategory()!=null;
 	}
 	
    /**

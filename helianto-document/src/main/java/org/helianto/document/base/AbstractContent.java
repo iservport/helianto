@@ -32,13 +32,12 @@ import org.springframework.web.multipart.MultipartFile;
 @javax.persistence.MappedSuperclass
 public class AbstractContent 
 	extends Document 
-	implements Cloneable, Uploadable {
+	implements Cloneable
+	, Uploadable {
 
     private static final long serialVersionUID = 1L;
     private byte[] content;
-    // transient
-    private transient MultipartFile file;
-
+    
 	/** 
 	 * Default constructor.
 	 */
@@ -77,6 +76,9 @@ public class AbstractContent
     	return this.content.length;
     }
     
+    // transient
+    private transient MultipartFile file;
+
 	/**
 	 * <<Transient>> Convenience property to hold uploaded data.
 	 */
