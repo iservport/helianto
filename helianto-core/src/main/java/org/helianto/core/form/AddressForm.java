@@ -1,6 +1,5 @@
 package org.helianto.core.form;
 
-import org.helianto.core.Resettable;
 import org.helianto.core.domain.type.LocationEntity;
 
 
@@ -9,7 +8,7 @@ import org.helianto.core.domain.type.LocationEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface AddressForm extends LocationEntity, Resettable {
+public interface AddressForm extends LocationEntity {
 
 	/**
 	 * Address type.

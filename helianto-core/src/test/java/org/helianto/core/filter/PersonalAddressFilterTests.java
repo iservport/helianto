@@ -3,10 +3,11 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.def.AddressType;
-import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.PersonalAddress;
+import org.helianto.core.form.PersonalAddressForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -19,25 +20,29 @@ public class PersonalAddressFilterTests {
 
     @Test
     public void empty() {
+    	Mockito.when(form.getIdentityId()).thenReturn(0l);
         assertEquals(ORDER, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
-    	identity.setId(1);
-    	form.setAddressTypeAsEnum(AddressType.COLLECTION);
+    	Mockito.when(form.getAddressType()).thenReturn(AddressType.COLLECTION.getValue());
         assertEquals(C1+C2, filter.createCriteriaAsString());
     }
     
-    private PersonalAddressFilterAdapter filter;
-    private Identity identity;
-    private PersonalAddress form;
+    private PersonalAddressFormFilterAdapter filter;
+    private PersonalAddressForm form;
     
     @Before
     public void setUp() {
-    	identity = new Identity("PRINCIPAL");
-    	form = new PersonalAddress(identity, null);
-    	filter = new PersonalAddressFilterAdapter(form);
+    	form = Mockito.mock(PersonalAddressForm.class);
+    	filter = new PersonalAddressFormFilterAdapter(form);
+    	Mockito.when(form.getIdentityId()).thenReturn(1l);
+    }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
     }
     
 }

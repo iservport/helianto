@@ -19,12 +19,8 @@ import org.slf4j.LoggerFactory;
  * @param <F>
  */
 public abstract class AbstractFilterAdapter<F> 
-
 	extends AbstractFilter 
-	
-	implements FormFilter<F> 
-
-{
+	implements FormFilter<F> {
 	
 	private static final long serialVersionUID = 1L;
 	private F form; 

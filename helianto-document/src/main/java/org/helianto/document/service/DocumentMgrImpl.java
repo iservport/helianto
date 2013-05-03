@@ -20,9 +20,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.NonUniqueResultException;
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.SequenceMgr;
 import org.helianto.document.DocumentMgr;
 import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;

@@ -19,9 +19,11 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
-import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,26 +41,19 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
 	public HibernatePersistenceStrategy() {		
 	}
 
-	/**
-	 * Session factory constructor.
-	 */
-	public HibernatePersistenceStrategy(org.hibernate.SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
 	public Collection find(int firstRow, String query, Object... values) {
 		return find(firstRow, 10, query, values);
 	}
 	
 	public Collection find(int firstRow, int maxRows, String query, Object... values) {
-        Query result = this.sessionFactory.getCurrentSession().createQuery(query);
+        Query result = getCurrentSession().createQuery(query);
         result.setFirstResult(firstRow);
         result.setMaxResults(maxRows);
 		return find(result, values);
 	}
 
 	public Collection<Object> find(String query, Object... values) {
-        return find(this.sessionFactory.getCurrentSession().createQuery(query), values);
+        return find(getCurrentSession().createQuery(query), values);
 	}
 	
 	/**
@@ -91,12 +86,12 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
 
 	public Object merge(Object object) {
         logger.debug("Merging {}", object);
-		return this.sessionFactory.getCurrentSession().merge(object);
+		return getCurrentSession().merge(object);
 	}
 
 	public void persist(Object managedObject) {
         logger.debug("Persisting {}", managedObject);
-        this.sessionFactory.getCurrentSession().persist(managedObject);
+        getCurrentSession().persist(managedObject);
 	}
 	
 	public Object load(Object managedObject) {
@@ -113,55 +108,70 @@ public class HibernatePersistenceStrategy implements PersistenceStrategy {
 	
 	public Object load(Class clazz, Serializable id) {
 		logger.debug("Object id id {}", id);
-		return this.sessionFactory.getCurrentSession().load(clazz, id);
+		return getCurrentSession().load(clazz, id);
 	}
 	
 	public Object get(Class clazz, Serializable id) {
 		logger.debug("Object id id {}", id);
-		return this.sessionFactory.getCurrentSession().get(clazz, id);
+		return getCurrentSession().get(clazz, id);
 	}
 	
 	public void saveOrUpdate(Object managedObject) {
         logger.debug("Saving (or updating) {}", managedObject);
-        this.sessionFactory.getCurrentSession().saveOrUpdate(managedObject);
+        getCurrentSession().saveOrUpdate(managedObject);
 	}
 
 	public void remove(Object object) {
         logger.debug("Removing {}", object);
-		this.sessionFactory.getCurrentSession().delete(object);
+		getCurrentSession().delete(object);
 	}
 
 	public void evict(Object object) {
         logger.debug("Evicting {}", object);
-		this.sessionFactory.getCurrentSession().evict(object);
+		getCurrentSession().evict(object);
 	}
 	
 	public void refresh(Object object) {
-		this.sessionFactory.getCurrentSession().refresh(object);
+		getCurrentSession().refresh(object);
 	}
 	
 	public void flush() {
         logger.debug("Flushing session");
-		this.sessionFactory.getCurrentSession().flush();
+		getCurrentSession().flush();
 	}
 	
 	public void clear() {
         logger.debug("Clearing session");
-		this.sessionFactory.getCurrentSession().clear();
+		getCurrentSession().clear();
 	}
 
+//	// collabs
+//    
+//    private org.hibernate.SessionFactory sessionFactory;
+//    
+//    /**
+//     * Spring will inject a managed Hibernate Session into this field.
+//     */
+//    @Resource(name="sessionFactory")
+//	public void setSessionFactory(org.hibernate.SessionFactory sessionFactory) {
+//		this.sessionFactory = sessionFactory;
+//	}
+//
+//	@Deprecated
+//	protected Session getCurrentSession()  {
+//		return sessionFactory.getCurrentSession();
+//	}    
+//  
 	// collabs
     
-    private org.hibernate.SessionFactory sessionFactory;
-    
-    /**
-     * Spring will inject a managed Hibernate Session into this field.
-     */
-    @Resource(name="sessionFactory")
-	public void setSessionFactory(org.hibernate.SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+    @PersistenceContext
+    private EntityManager entityManager;
 
+    @Deprecated
+    protected Session getCurrentSession()  {
+    	return entityManager.unwrap(Session.class);
+    }    
+    
     private static final Logger logger = LoggerFactory.getLogger(HibernatePersistenceStrategy.class);
 
 }

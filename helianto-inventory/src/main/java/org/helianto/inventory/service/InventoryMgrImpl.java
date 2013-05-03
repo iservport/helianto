@@ -20,12 +20,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.SequenceMgr;
-import org.helianto.inventory.ProcessAgreement;
-import org.helianto.inventory.ProcessRequirement;
-import org.helianto.inventory.Tax;
+import org.helianto.inventory.domain.ProcessAgreement;
+import org.helianto.inventory.domain.ProcessRequirement;
+import org.helianto.inventory.domain.Tax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

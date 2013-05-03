@@ -52,18 +52,26 @@ public class Country implements RootEntity {
     private static final long serialVersionUID = 1L;
     private int id;
     private Operator operator;
-    private String countryCode;
-    private String countryName;
+    private String countryCode = "";
+    private String countryName = "";
 
-    /** default constructor */
+    /** 
+     * Default constructor.
+     */
     public Country() {
-        this("");
+        super();
     }
 
-    /** Code constructor */
-    public Country(String countryCode) {
+    /** 
+     * Key constructor.
+     * 
+     * @param operator
+     * @param countryCode
+     */
+    public Country(Operator operator, String countryCode) {
+    	this();
+    	setOperator(operator);
         setCountryCode(countryCode);
-        setCountryName("");
     }
 
     /**

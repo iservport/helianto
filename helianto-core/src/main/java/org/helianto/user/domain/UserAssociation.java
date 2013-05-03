@@ -52,9 +52,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 )
 @DiscriminatorValue("A")
 public class UserAssociation 
-
 	extends AbstractAssociation<UserGroup, UserGroup> 
-	
 	implements java.io.Serializable 
 
 {

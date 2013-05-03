@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.UnitMgr;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Unit;
 import org.helianto.core.filter.Filter;
@@ -58,9 +59,7 @@ public class UnitMgrImpl implements UnitMgr {
         	logger.debug("Found existing unit  {}", unit);
     		return unit;
     	}
-    	unit = new Unit(category, unitCode);
-    	unit.setUnitName(unitName);
-    	unitDao.saveOrUpdate(unit);
+    	unit = unitDao.merge(new Unit(category, unitCode, unitName));
     	logger.debug("Installed unit  {}", unit);
     	unitDao.flush();
 		return unit;

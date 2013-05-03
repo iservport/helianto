@@ -69,7 +69,19 @@ public class Unit implements TrunkEntity {
     }
 
     /**
-     * Convenience constructor.
+     * Name constructor.
+     * 
+     * @param entity
+     * @param unitCode
+     * @param unitName
+     */
+    public Unit(Entity entity, String unitCode, String unitName) {
+    	this(entity, unitCode);
+    	setUnitName(unitName);
+    }
+
+    /**
+     * Category constructor.
      * 
      * @param category
      * @param unitCode
@@ -77,6 +89,18 @@ public class Unit implements TrunkEntity {
     public Unit(Category category, String unitCode) {
     	this(category.getEntity(), unitCode);
     	setCategory(category);
+    }
+
+    /**
+     * Name constructor.
+     * 
+     * @param category
+     * @param unitCode
+     * @param unitName
+     */
+    public Unit(Category category, String unitCode, String unitName) {
+    	this(category, unitCode);
+    	setUnitName(unitName);
     }
 
     /**
@@ -122,7 +146,7 @@ public class Unit implements TrunkEntity {
     /**
      * UnitCode getter.
      */
-    @Column(length=12)
+    @Column(length=20)
     public String getUnitCode() {
         return this.unitCode;
     }

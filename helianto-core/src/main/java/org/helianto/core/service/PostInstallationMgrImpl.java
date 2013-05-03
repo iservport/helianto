@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.helianto.core.IdentityMgr;
+import org.helianto.core.PostInstallationMgr;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
@@ -36,6 +38,7 @@ import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
+import org.springframework.util.Assert;
 
 /**
  * Default implementation for <code>PostInstallation</code>.
@@ -58,8 +61,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		}
 		if (defaultOperator==null) {
 			logger.debug("Will install operator {} ...", defaultOperatorName); 
-			defaultOperator = new Operator(defaultOperatorName, Locale.getDefault());
-			operatorDao.saveOrUpdate(defaultOperator);
+			defaultOperator = operatorDao.merge(new Operator(defaultOperatorName, Locale.getDefault()));
 		}
 		logger.debug("Default operator AVAILABLE as {}.", defaultOperator);
 		
@@ -137,8 +139,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		KeyType keyType = keyTypeDao.findUnique(defaultOperator, keyCode);
 		if (keyType==null) {
 			logger.debug("Will install key code {} ...", keyCode); 
-			keyType = new KeyType(defaultOperator, keyCode);
-			keyTypeDao.saveOrUpdate(keyType);
+			keyType = keyTypeDao.merge(new KeyType(defaultOperator, keyCode));
 		}
 		logger.debug("KeyType  AVAILABLE as {}.", keyType);
 		keyTypeDao.flush();
@@ -147,14 +148,16 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 
 	public Service installService(Operator defaultOperator, String serviceName) {
 		
-		operatorDao.saveOrUpdate(defaultOperator);
+		serviceDao.flush();
+		Assert.notNull(defaultOperator);
+//		operatorDao.refresh(defaultOperator);
 		
 		logger.debug("Check service {} installation ...", serviceName);
 		Service service = serviceDao.findUnique(defaultOperator, serviceName);
 		if (service==null) {
+			operatorDao.flush();
 			logger.debug("Will install service {} ...", serviceName);
-			service = new Service(defaultOperator, serviceName);
-			serviceDao.saveOrUpdate(service);
+			service = serviceDao.merge(new Service(defaultOperator, serviceName));
 		}
 		logger.debug("Sevice AVAILABLE as {}.", service);
 		serviceDao.flush();
@@ -176,8 +179,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 
 		if (entity==null) {
 			logger.debug("Will install entity {} ...", alias);
-			entity = new Entity(operator, alias);
-			entityDao.saveOrUpdate(entity);
+			entity = entityDao.merge(new Entity(operator, alias));
 		} 
 		else {
 			logger.debug("Entity AVAILABLE as {}.", entity);
@@ -201,8 +203,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 
 		if (current==null) {
 			logger.debug("Will install entity {} ...", alias);
-			entity = new Entity(operator, alias);
-			entityDao.saveOrUpdate(entity);
+			entity = entityDao.merge(new Entity(operator, alias));
 		} 
 		else {
 			logger.debug("Entity AVAILABLE as {}.", entity);

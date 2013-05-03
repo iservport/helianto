@@ -20,6 +20,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.Node;
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.PrivateSequence;

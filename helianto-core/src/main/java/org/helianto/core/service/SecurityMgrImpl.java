@@ -24,6 +24,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.helianto.core.PasswordNotVerifiedException;
+import org.helianto.core.SecurityMgr;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.repository.FilterDao;

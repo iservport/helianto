@@ -31,10 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractFilter 
-
-	extends AbstractAliasFilter 
-
-{
+	extends AbstractAliasFilter {
 	
     private List<String> orderByList =  new ArrayList<String>();
     

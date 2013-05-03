@@ -24,6 +24,8 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.IdentityMgr;
+import org.helianto.core.PublicEntityMgr;
 import org.helianto.core.def.EventType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
@@ -36,8 +38,6 @@ import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserAssociationFormFilterAdapter;
 import org.helianto.core.form.AssociationForm;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.IdentityMgr;
-import org.helianto.core.service.PublicEntityMgr;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
@@ -212,8 +212,7 @@ public class UserMgrImpl
 		}
 		if (userGroup==null) {
 			logger.debug("Will install user (group) {} ...", userGroupName);
-			userGroup = new UserGroup(defaultEntity, userGroupName);
-			userGroupDao.saveOrUpdate(userGroup);
+			userGroup = userGroupDao.merge(new UserGroup(defaultEntity, userGroupName));
 		}
 		logger.debug("UserGroup AVAILABLE as {}.", userGroup);
 		userGroupDao.flush();
@@ -238,8 +237,7 @@ public class UserMgrImpl
 		UserAssociation association = userAssociationDao.findUnique(parent, user);
 		if(association==null) {
 			logger.info("Will install user association for user group {} and {}.", parent, user);
-			association = new UserAssociation(parent, user);
-			userAssociationDao.saveOrUpdate(association);
+			association = userAssociationDao.merge(new UserAssociation(parent, user));
 		}
 		logger.info("User {} available as part of association {}.", user, association);
 		userAssociationDao.flush();
@@ -251,20 +249,20 @@ public class UserMgrImpl
 		logger.info("Check user installation with 'principal={}' as member of {}.", credential.getPrincipal(), parent);
 		User user = (User) userGroupDao.findUnique(parent.getEntity(), credential.getPrincipal());
 		if (user==null) {
-			user = new User(parent.getEntity(), credential);
+			user = (User) userGroupDao.merge(new User(parent.getEntity(), credential));
 		}
 		
 		user.setAccountNonExpired(true);
+		userGroupDao.flush();
 		logger.warn("User {} set to {} expired.", user, accountNonExpired ? "non" : "");
 
-		userGroupDao.saveOrUpdate(user);
+		
 		logger.info("User AVAILABLE as {}.", user);
 		
 		UserAssociation association = userAssociationDao.findUnique(parent, user);
 		if(association==null) {
 			logger.info("Will install user association for user group {} and {}.", parent, user);
-			association = new UserAssociation(parent, user);
-			userAssociationDao.saveOrUpdate(association);
+			association = userAssociationDao.merge(new UserAssociation(parent, user));
 		}
 		logger.info("User {} available as part of association {}.", user, association);
 		userAssociationDao.flush();
@@ -275,9 +273,8 @@ public class UserMgrImpl
 		
 		UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
 		if (userRole==null) {
-			userRole = new UserRole(userGroup, service, extension);
 			logger.debug("Will install required user role {} for user group {} ...", userRole, userGroup);
-			userRoleDao.saveOrUpdate(userRole);
+			userRole = userRoleDao.merge(new UserRole(userGroup, service, extension));
 		}
 		logger.debug("User role AVAILABLE as {}.", userRole);
 		userRoleDao.flush();

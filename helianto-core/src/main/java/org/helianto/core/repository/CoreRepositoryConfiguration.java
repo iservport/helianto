@@ -15,7 +15,6 @@
 
 package org.helianto.core.repository;
 
-import org.helianto.core.Server;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Country;
 import org.helianto.core.domain.Credential;
@@ -30,6 +29,7 @@ import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.domain.PublicEntityKey;
 import org.helianto.core.domain.PublicSequence;
+import org.helianto.core.domain.Server;
 import org.helianto.core.domain.Service;
 import org.helianto.core.domain.Unit;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;

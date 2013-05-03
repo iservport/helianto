@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.CategoryMgr;
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
@@ -66,9 +67,7 @@ public class CategoryMgrImpl implements CategoryMgr {
         	logger.debug("Found category {}", category);
     		return category;
     	}
-    	category = new Category(entity, categoryGroup, categoryCode);
-    	category.setCategoryName(categoryName);
-    	categoryDao.saveOrUpdate(category);
+    	category = categoryDao.merge(new Category(entity, categoryGroup, categoryCode, categoryName));
     	logger.debug("Category {} installed.", category);
     	categoryDao.flush();
     	return category;

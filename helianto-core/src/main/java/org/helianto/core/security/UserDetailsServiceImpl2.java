@@ -6,8 +6,8 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.SecurityMgr;
 import org.helianto.core.domain.Credential;
-import org.helianto.core.service.SecurityMgr;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;

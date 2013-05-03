@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.SequenceMgr;
 import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.domain.PrivateDocument;

@@ -22,26 +22,19 @@ public class PersonalAddressFormFilterAdapter extends AbstractPersonalFilterAdap
 		super(form);
 	}
 
-	public void reset() {
-		getForm().reset();
-	}
-	
 	@Override
 	public boolean isSelection() {
-		return getForm().getIdentity()!=null && getForm().getIdentity().getId()>0 && getForm().getAddressType()!=' ';
+		return getForm().getIdentityId()>0 && getForm().getAddressType()!=' ';
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("identity.id", getForm().getIdentity().getId(), mainCriteriaBuilder);
 		appendEqualFilter("addressType", getForm().getAddressType(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getIdentity()!=null && getForm().getIdentity().getId()>0) {
-			appendEqualFilter("identity.id", getForm().getIdentity().getId(), mainCriteriaBuilder);
-		}
+		doSelect(mainCriteriaBuilder);
 		appendLikeFilter("province.provinceName", getForm().getCityName(), mainCriteriaBuilder);
 	}
 	

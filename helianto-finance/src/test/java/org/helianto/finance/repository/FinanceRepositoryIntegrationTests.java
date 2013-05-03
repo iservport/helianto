@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 import javax.annotation.Resource;
 
 import org.helianto.core.repository.FilterDao;
-import org.helianto.finance.CashFlow;
+import org.helianto.finance.domain.CashFlow;
 import org.helianto.finance.test.AbstractFinanceDaoIntegrationTest;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;

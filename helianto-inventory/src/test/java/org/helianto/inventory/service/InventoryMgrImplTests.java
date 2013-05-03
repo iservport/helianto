@@ -10,12 +10,12 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.SequenceMgr;
-import org.helianto.inventory.ProcessAgreement;
-import org.helianto.inventory.ProcessRequirement;
+import org.helianto.inventory.domain.ProcessAgreement;
+import org.helianto.inventory.domain.ProcessRequirement;
 import org.helianto.inventory.filter.classic.ProcessRequirementFilter;
 import org.junit.After;
 import org.junit.Before;

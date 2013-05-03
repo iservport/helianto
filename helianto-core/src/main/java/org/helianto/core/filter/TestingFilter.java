@@ -7,9 +7,27 @@ package org.helianto.core.filter;
  * @author mauriciofernandesdecastro
  */
 public class TestingFilter implements Filter {
+	
+	private String whereClause;
+	
+	/**
+	 * Default constructor.
+	 */
+	public TestingFilter() {
+		this("TESTFILTER");
+	}
+
+	/**
+	 * Where clause constructor.
+	 * 
+	 * @param whereClause
+	 */
+	public TestingFilter(String whereClause) {
+		this.whereClause = whereClause;
+	}
 
 	public String createCriteriaAsString() {
-		return "TESTFILTER";
+		return whereClause;
 	}
 
 	public String getObjectAlias() {

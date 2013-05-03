@@ -21,7 +21,6 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.Server;
 import org.helianto.core.def.AddressType;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Country;
@@ -35,6 +34,7 @@ import org.helianto.core.domain.Province;
 import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.domain.PublicSequence;
+import org.helianto.core.domain.Server;
 import org.helianto.core.domain.Service;
 import org.helianto.core.domain.Unit;
 import org.helianto.core.test.AbstractDaoIntegrationTest;
@@ -58,6 +58,7 @@ import org.helianto.user.domain.UserRole;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -65,6 +66,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Transactional
+@ContextConfiguration(locations={
+	"classpath:/META-INF/spring/core-install-context.xml"})
 public class CoreRepositoryIntegrationTests 
 	extends AbstractDaoIntegrationTest {
 
@@ -185,7 +188,7 @@ public class CoreRepositoryIntegrationTests
 		
 		PublicEntity publicEntity = new PublicEntity(entity);
 		publicEntityDao.saveOrUpdate(publicEntity);
-		assertEquals(publicEntity, publicEntityDao.findUnique(entity, entity.getAlias(), "P"));
+		assertEquals(publicEntity, publicEntityDao.findUnique(entity, entity.getAlias(), 'P'));
 
 	}
 	

@@ -32,7 +32,7 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.TestingFilter;
+import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.KeyTypeTestSupport;

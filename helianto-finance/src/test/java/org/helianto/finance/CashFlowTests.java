@@ -24,6 +24,7 @@ import java.util.Date;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.document.base.AbstractRecord;
+import org.helianto.finance.domain.CashFlow;
 import org.helianto.partner.domain.Partner;
 import org.junit.Test;
 

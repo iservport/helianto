@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.SequenceMgr;
+import org.helianto.core.UserRequestMgr;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.UserRequestFormFilterAdapter;
 import org.helianto.core.repository.FilterDao;

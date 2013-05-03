@@ -32,12 +32,9 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractAliasFilter 
-
 	implements Serializable
 	, CriteriaFilter<OrmCriteriaBuilder>
-	, Cloneable 
-
-{
+	, Cloneable {
 	
     private String objectAlias;
     private OrmCriteriaBuilder mainCriteriaBuilder;

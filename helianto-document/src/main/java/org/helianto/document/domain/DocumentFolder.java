@@ -100,7 +100,7 @@ public class DocumentFolder
 	 * <<Transient>> True if category is not null.
 	 */
 	@Transient
-	protected boolean isCategoryEnabled() {
+	public boolean isCategoryEnabled() {
 		return getCategory()!=null;
 	}
 	

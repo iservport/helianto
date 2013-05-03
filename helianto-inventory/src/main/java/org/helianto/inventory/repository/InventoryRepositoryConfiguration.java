@@ -17,14 +17,14 @@ package org.helianto.inventory.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.inventory.Card;
-import org.helianto.inventory.CardSet;
-import org.helianto.inventory.Inventory;
-import org.helianto.inventory.Movement;
-import org.helianto.inventory.Picking;
-import org.helianto.inventory.ProcessAgreement;
-import org.helianto.inventory.ProcessRequirement;
-import org.helianto.inventory.Tax;
+import org.helianto.inventory.domain.Card;
+import org.helianto.inventory.domain.CardSet;
+import org.helianto.inventory.domain.Inventory;
+import org.helianto.inventory.domain.Movement;
+import org.helianto.inventory.domain.Picking;
+import org.helianto.inventory.domain.ProcessAgreement;
+import org.helianto.inventory.domain.ProcessRequirement;
+import org.helianto.inventory.domain.Tax;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

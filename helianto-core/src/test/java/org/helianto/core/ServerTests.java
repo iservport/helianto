@@ -10,6 +10,7 @@ import org.helianto.core.def.Encription;
 import org.helianto.core.def.ServerType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Server;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 

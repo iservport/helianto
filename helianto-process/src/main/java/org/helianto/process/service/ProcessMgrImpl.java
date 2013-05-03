@@ -20,12 +20,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.helianto.core.Node;
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.SequenceMgr;
 import org.helianto.partner.service.PartnerMgrImpl;
 import org.helianto.process.ProcessMgr;
 import org.helianto.process.def.AssociationType;

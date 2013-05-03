@@ -104,6 +104,18 @@ public class Credential implements PersonalEntity {
     }
 
     /** 
+     * Activity state constructor.
+     * 
+     * @param identity
+     * @param activityState
+     */
+    public Credential(Identity identity, char activityState) {
+    	this(identity);
+        setPassword("");
+        setCredentialState(activityState);
+    }
+
+    /** 
      * Principal constructor.
      * 
      * @param principal

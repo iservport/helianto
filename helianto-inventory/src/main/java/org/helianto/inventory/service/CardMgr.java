@@ -20,9 +20,9 @@ import java.util.List;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
-import org.helianto.inventory.Card;
-import org.helianto.inventory.CardSet;
 import org.helianto.inventory.InvalidCardException;
+import org.helianto.inventory.domain.Card;
+import org.helianto.inventory.domain.CardSet;
 
 
 /**

@@ -7,12 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.easymock.EasyMock;
+import org.helianto.core.PublicEntityMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.TestingFilter;
+import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;

@@ -18,9 +18,9 @@ package org.helianto.inventory.service;
 import java.util.List;
 
 import org.helianto.core.filter.Filter;
-import org.helianto.inventory.ProcessAgreement;
-import org.helianto.inventory.ProcessRequirement;
-import org.helianto.inventory.Tax;
+import org.helianto.inventory.domain.ProcessAgreement;
+import org.helianto.inventory.domain.ProcessRequirement;
+import org.helianto.inventory.domain.Tax;
 
 /**
  * Inventory service interface.

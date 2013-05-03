@@ -21,6 +21,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.DuplicateIdentityException;
+import org.helianto.core.IdentityMgr;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.def.AddressType;
 import org.helianto.core.domain.ContactInfo;
@@ -28,9 +29,9 @@ import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.domain.Phone;
+import org.helianto.core.domain.Province;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.IdentityFormFilterAdapter;
-import org.helianto.core.filter.PersonalAddressFilterAdapter;
 import org.helianto.core.filter.PersonalAddressFormFilterAdapter;
 import org.helianto.core.form.IdentityForm;
 import org.helianto.core.form.PersonalAddressForm;
@@ -172,16 +173,27 @@ public class IdentityMgrImpl implements IdentityMgr {
 		Identity identity = identityDao.findUnique(principal);
 		if (identity==null) {
 			logger.info("Will install identity for {}.", principal);
-			identity = new Identity(principal);
-			identityDao.saveOrUpdate(identity);
+			identity = identityDao.merge(new Identity(principal));
 		}
 		else {
 			logger.debug("Found existing identity for {}.", principal);
 		}
-		PersonalAddress personalAddress = new PersonalAddress(identity, null);
-		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(new PersonalAddressFilterAdapter(personalAddress));
+		personalAddressDao.flush();
+		PersonalAddress personalAddress = new PersonalAddress(identity, AddressType.PERSONAL);
+		final long identityId = identity.getId();
+		PersonalAddressForm form = new PersonalAddressForm() {
+			
+			public Province getProvince() { return null;}
+			public String getPostalCode() { return ""; }
+			public String getCityName()   { return ""; }
+			public char getAddressType()  { return 0; }
+			
+			public long getIdentityId() {
+				return identityId;
+			}
+		};
+		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(new PersonalAddressFormFilterAdapter(form));
 		if (personalAddressList.size()==0) {
-			personalAddress.setAddressTypeAsEnum(AddressType.PERSONAL);
 			personalAddressDao.saveOrUpdate(personalAddress);
 		}
 		return installCredential(identity);
@@ -191,10 +203,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 		Credential credential = credentialDao.findUnique(identity);
 		if (credential==null) {
 			logger.info("Will install credential for {}.", identity);
-			credential = new Credential(identity);
-			// TODO make it INITIAL
-			credential.setCredentialState(ActivityState.ACTIVE);
-			credentialDao.saveOrUpdate(credential);
+			credential = credentialDao.merge(new Credential(identity, ActivityState.ACTIVE.getValue()));
 			credentialDao.flush();
 		}
 		else {

@@ -1,17 +1,15 @@
 package org.helianto.core.filter.base;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.domain.Identity;
-import org.helianto.core.form.PersonalForm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.helianto.core.form.IdentityIdForm;
 
 /**
  * Base class to filters that require an <code>Identity</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractPersonalFilterAdapter <F extends PersonalForm> extends AbstractFilterAdapter<F> {
+public abstract class AbstractPersonalFilterAdapter <F extends IdentityIdForm> 
+	extends AbstractFilterAdapter<F> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,25 +23,15 @@ public abstract class AbstractPersonalFilterAdapter <F extends PersonalForm> ext
 	}
 	
 	/**
-	 * The identity.
-	 */
-	public Identity getIdentity() {
-		return getForm().getIdentity();
-	}
-
-	/**
 	 * Restrict selection to a given identity, if any. 
 	 */
 	@Override
 	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getIdentity()!=null) {
-			appendEqualFilter("identity.id", getIdentity().getId(), mainCriteriaBuilder);
-			logger.debug("Filter constraint set to {}.", getIdentity());
+		if (getForm().getIdentityId()>0) {
+			appendEqualFilter("identity.id", getForm().getIdentityId(), mainCriteriaBuilder);
 			return true;
 		}
 		return false;
 	}
-	
-	private static final Logger logger  = LoggerFactory.getLogger(AbstractPersonalFilterAdapter.class);
 	
 }

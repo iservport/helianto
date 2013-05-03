@@ -16,6 +16,8 @@
 
 package org.helianto.inventory;
 
+import org.helianto.inventory.domain.Card;
+
 
 
 /**

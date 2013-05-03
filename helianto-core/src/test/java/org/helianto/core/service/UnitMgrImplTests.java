@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.helianto.core.domain.Unit;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.TestingFilter;
+import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.junit.After;
 import org.junit.Before;

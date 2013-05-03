@@ -25,10 +25,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.SequenceMgr;
 import org.helianto.message.MessageAdapter;
 import org.helianto.message.MessageMgr;
 import org.helianto.message.MessageSender;

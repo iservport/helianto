@@ -6,6 +6,6 @@ package org.helianto.core.form;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface PersonalAddressForm extends PersonalForm, AddressForm {
+public interface PersonalAddressForm extends IdentityIdForm, AddressForm {
 	
 }

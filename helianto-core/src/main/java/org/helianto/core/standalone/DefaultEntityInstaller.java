@@ -18,12 +18,12 @@ package org.helianto.core.standalone;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.IdentityMgr;
+import org.helianto.core.PostInstallationMgr;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Service;
-import org.helianto.core.service.IdentityMgr;
-import org.helianto.core.service.PostInstallationMgr;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
@@ -31,6 +31,7 @@ import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Convenient to install the default entity if the namespace does not 
@@ -38,6 +39,7 @@ import org.springframework.beans.factory.InitializingBean;
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Transactional
 public class DefaultEntityInstaller implements InitializingBean {
 	
 	private String defaultEntityAlias = "DEFAULT";

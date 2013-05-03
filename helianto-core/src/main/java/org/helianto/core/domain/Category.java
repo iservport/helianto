@@ -95,6 +95,19 @@ public class Category
         setCategoryCode(categoryCode);
     }
 
+    /** 
+     * Name constructor
+     * 
+     * @param entity
+     * @param categoryGroup
+     * @param categoryCode
+     * @param categoryName
+     */
+    public  Category(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName) {
+    	this(entity, categoryGroup, categoryCode);
+    	setCategoryName(categoryName);
+    }
+
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;

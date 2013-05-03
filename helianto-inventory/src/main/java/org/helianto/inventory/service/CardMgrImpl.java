@@ -20,14 +20,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.SequenceMgr;
-import org.helianto.inventory.Card;
-import org.helianto.inventory.CardSet;
 import org.helianto.inventory.InvalidCardException;
+import org.helianto.inventory.domain.Card;
+import org.helianto.inventory.domain.CardSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

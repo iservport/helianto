@@ -19,21 +19,23 @@ package org.helianto.core.standalone;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.helianto.core.PostInstallationMgr;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Service;
-import org.helianto.core.service.PostInstallationMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Convenient to install the default operator if the namespace does not require multiple operators.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@Transactional
 public class DefaultOperatorInstaller implements InitializingBean {
 	
 	private String defaultOperatorName = "DEFAULT";

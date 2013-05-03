@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.helianto.core.PublicEntityMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
@@ -92,8 +93,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
     		List<? extends PublicEntity> publicEntities = (List<PublicEntity>) publicEntityDao.find(filter);
     		if (publicEntities!=null && publicEntities.size()==0) {
     			logger.debug("Installing public entity ...");
-    			publicEntity = new PublicEntity(entity);
-    			publicEntityDao.saveOrUpdate(publicEntity);
+    			publicEntity = publicEntityDao.merge(new PublicEntity(entity));
     			logger.debug("Installed {}.", publicEntity);
     		}
     	}

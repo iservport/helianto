@@ -19,7 +19,7 @@ package org.helianto.inventory.service;
 import java.util.List;
 
 import org.helianto.core.filter.Filter;
-import org.helianto.inventory.ProcessAgreement;
+import org.helianto.inventory.domain.ProcessAgreement;
 
 
 /**

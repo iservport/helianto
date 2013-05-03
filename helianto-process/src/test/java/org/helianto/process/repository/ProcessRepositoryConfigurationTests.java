@@ -37,7 +37,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProcessRepositoryConfigurationTests extends AbstractProcessDaoIntegrationTest {
 
-	@Resource FilterDao<Cause> causeDao;
 	@Resource FilterDao<MeasurementTechnique> measurementTechniqueDao;
 	@Resource FilterDao<ProcessDocumentAssociation> processDocumentAssociationDao;
 	@Resource FilterDao<ProcessDocument> processDocumentDao;
@@ -46,11 +45,8 @@ public class ProcessRepositoryConfigurationTests extends AbstractProcessDaoInteg
 
 	@Test
 	public void process() {
-		Cause cause = new Cause(entity, Long.MAX_VALUE);
-		assertEquals(causeDao.merge(cause), causeDao.findUnique(entity, Long.MAX_VALUE));
-
 		MeasurementTechnique measurementTechnique = new MeasurementTechnique(entity, "CODE");
-		assertEquals(measurementTechniqueDao.merge(measurementTechnique), measurementTechniqueDao.findUnique(measurementTechnique.getEntity(), measurementTechnique.getMeasurementTechniqueCode()));
+		assertEquals(measurementTechniqueDao.merge(measurementTechnique), measurementTechniqueDao.findUnique(entity, "CODE"));
 
 		ProcessDocument processDocument = new ProcessDocument(entity, "DOCCODE");
 		processDocumentDao.saveOrUpdate(processDocument);

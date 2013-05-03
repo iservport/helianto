@@ -23,6 +23,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.helianto.core.ContextMgr;
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
@@ -31,7 +32,6 @@ import org.helianto.core.domain.Province;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.KeyTypeFilterAdapter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.service.SequenceMgr;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.PartnerState;
 import org.helianto.partner.domain.ContactGroup;

@@ -18,7 +18,7 @@ package org.helianto.finance.service;
 import java.util.List;
 
 import org.helianto.core.filter.Filter;
-import org.helianto.finance.CashFlow;
+import org.helianto.finance.domain.CashFlow;
 import org.springframework.security.access.annotation.Secured;
 
 /**

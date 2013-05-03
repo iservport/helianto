@@ -17,7 +17,7 @@ package org.helianto.inventory.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
-import org.helianto.inventory.ProcessAgreement;
+import org.helianto.inventory.domain.ProcessAgreement;
 
 /**
  * Process agreement filter adapter.

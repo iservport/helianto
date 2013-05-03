@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
+import org.helianto.core.SequenceMgr;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.form.CompositeIdentityForm;
 import org.helianto.core.repository.FilterDao;

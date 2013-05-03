@@ -17,7 +17,7 @@ package org.helianto.finance.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.finance.CashFlow;
+import org.helianto.finance.domain.CashFlow;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

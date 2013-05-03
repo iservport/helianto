@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.easymock.EasyMock;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.TestingFilter;
+import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.domain.Account;
 import org.junit.After;

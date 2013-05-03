@@ -1,8 +1,8 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.Server;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Server;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 
 /**
