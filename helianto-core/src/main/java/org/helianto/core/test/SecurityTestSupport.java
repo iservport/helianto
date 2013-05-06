@@ -38,7 +38,7 @@ public class SecurityTestSupport {
     }
     
     public static Authentication createAuthentication(User user) {
-        Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
+        Credential credential = new Credential(user.getIdentity());
         UserDetailsAdapter secureUser = new UserDetailsAdapter(user, credential, new HashSet<UserRole>());
     	return new LocalTestingAuthenticationToken(secureUser);
     }

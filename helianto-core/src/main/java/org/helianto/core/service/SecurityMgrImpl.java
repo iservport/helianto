@@ -27,6 +27,7 @@ import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.SecurityMgr;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -50,23 +51,22 @@ import org.springframework.stereotype.Service;
 public class SecurityMgrImpl implements SecurityMgr {
     
 	public Credential findCredentialByIdentity(Identity identity) {
-		return credentialDao.findUnique(identity);
+		return credentialRepository.findByIdentity(identity);
 	}
 
 	public Credential findCredentialByPrincipal(String principal) {
 		Identity identity = identityDao.findUnique(principal);
 		logger.debug("Found {}", identity);
-		return credentialDao.findUnique(identity);
+		return credentialRepository.findByIdentity(identity);
 	}
 	
 	public Credential loadCredential(Credential credential) {
-		return credentialDao.load(credential);
+		return credentialRepository.findOne(credential.getId());
 	}
 
 	public Credential storeCredential(Credential credential) throws PasswordNotVerifiedException {
 		if (credential.isPasswordVerified()) {
-	        credentialDao.saveOrUpdate(credential);
-	        return credential;
+	        return credentialRepository.saveAndFlush(credential);
 		}
 		throw new PasswordNotVerifiedException();
 	}
@@ -160,7 +160,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 
     private FilterDao<Identity> identityDao;
     private FilterDao<UserGroup> userGroupDao;
-    private FilterDao<Credential> credentialDao;
+    private CredentialRepository credentialRepository;
 
     @Resource(name="identityDao")
     public void setIdentityDao(FilterDao<Identity> identityDao) {
@@ -172,10 +172,10 @@ public class SecurityMgrImpl implements SecurityMgr {
 		this.userGroupDao = userGroupDao;
 	}
 
-    @Resource(name="credentialDao")
-    public void setCredentialDao(FilterDao<Credential> credentialDao) {
-        this.credentialDao = credentialDao;
-    }
+    @Resource
+    public void setCredentialRepository(CredentialRepository credentialRepository) {
+		this.credentialRepository = credentialRepository;
+	}
 
     private final static Logger logger = LoggerFactory.getLogger(SecurityMgrImpl.class);
 

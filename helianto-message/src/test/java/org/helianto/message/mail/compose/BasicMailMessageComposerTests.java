@@ -25,7 +25,6 @@ import org.helianto.core.IdentityType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +47,7 @@ public class BasicMailMessageComposerTests {
         PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm();
         Operator operator = OperatorTestSupport.createOperator();
         mailForm.setOperator(operator);
-        Credential credential = CredentialTestSupport.createCredential();
+        Credential credential = new Credential(new Identity("PRINCIPAL"));
         credential.getIdentity().setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
         Set<Identity> identities = new HashSet<Identity>();
         identities.add(credential.getIdentity());

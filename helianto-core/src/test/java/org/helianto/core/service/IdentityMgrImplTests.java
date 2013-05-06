@@ -32,9 +32,9 @@ import org.helianto.core.def.ActivityState;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.IdentityFilterAdapter;
+import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.strategy.PrincipalGenerationStrategy;
-import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.helianto.user.domain.User;
@@ -138,14 +138,15 @@ public class IdentityMgrImplTests {
 	@Test
     public void userState() {
         User user = UserTestSupport.createUser();
-        Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
+        Credential credential = new Credential(user.getIdentity());
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
-        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
+        assertEquals(ActivityState.ACTIVE.getValue(), credential.getCredentialState());
     }
     
     private IdentityMgrImpl identityMgr;
     
     private FilterDao<Identity> identityDao;
+    private CredentialRepository credentialRepository;
     private PrincipalGenerationStrategy principalGenerationStrategy;
 
     
@@ -157,10 +158,13 @@ public class IdentityMgrImplTests {
         identityMgr.setIdentityDao(identityDao);
         principalGenerationStrategy = createMock(PrincipalGenerationStrategy.class);
         identityMgr.setPrincipalGenerationStrategy(principalGenerationStrategy);
+        credentialRepository = createMock(CredentialRepository.class);
+        identityMgr.setCredentialRepository(credentialRepository);
     }
     
     @After
     public void tearDown() {
+        reset(credentialRepository);
         reset(identityDao);
         reset(principalGenerationStrategy);
     }

@@ -58,7 +58,7 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	@Resource BasicDao<PartnerPhone> partnerPhoneDao;
 	@Resource FilterDao<PrivateEntity2> privateEntityDao;
 	@Resource FilterDao<PartnerCategory> partnerCategoryDao;
-	@Resource FilterDao<Category> categoryDao;
+//	@Resource FilterDao<Category> categoryDao;
 	@Resource FilterDao<PrivateEntityKey> privateEntityKeyDao;
 	@Resource FilterDao<KeyType> keyTypeDao;
 
@@ -119,11 +119,11 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		partnerKeyDao.saveOrUpdate(partnerKey);
 		assertEquals(partnerKey, partnerKeyDao.findUnique(partnerKey.getPartner(), partnerKey.getKeyType()));
 
-		Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "CATEGORY");
-		categoryDao.saveOrUpdate(category);
-		PartnerCategory partnerCategory =  new PartnerCategory(partner, category);
-		partnerCategoryDao.saveOrUpdate(partnerCategory);
-		assertEquals(partnerCategory, partnerCategoryDao.findUnique(partner, category));
+//		Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "CATEGORY");
+//		categoryDao.saveOrUpdate(category);
+//		PartnerCategory partnerCategory =  new PartnerCategory(partner, category);
+//		partnerCategoryDao.saveOrUpdate(partnerCategory);
+//		assertEquals(partnerCategory, partnerCategoryDao.findUnique(partner, category));
 
 		PrivateAddress address =  new PrivateAddress(partnerRegistry, 100);
 		addressDao.saveOrUpdate(address);

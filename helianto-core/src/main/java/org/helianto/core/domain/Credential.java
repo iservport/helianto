@@ -52,33 +52,29 @@ public class Credential implements PersonalEntity {
     public static final String ALLOWED_CHARS_IN_PASSWORD = 
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%_";
     public static final int DEFAULT_PASSWORD_SIZE = 8;
+    
     private long id;
     private Identity identity;
     private int version;
-    private String password;
-    private char credentialState;
+    private String password = "inactive";
+    private char credentialState = ActivityState.ACTIVE.getValue();
     private Date lastModified;
     private Date expirationDate;
-    private char encription;
+    private char encription = Encription.PLAIN_PASSWORD.getValue();
+    
     //transient fields
-    private String currentPassword;
-    private String newPassword;
-    private String verifyPassword;
-    private boolean passwordDirty;
+    private String currentPassword = "";
+    private String newPassword = "";
+    private String verifyPassword = "";
+    private boolean passwordDirty = false;
 
 
     /** 
      * Default constructor.
      */
     public Credential() {
-        setCredentialState(ActivityState.SUSPENDED);
         setLastModified(new Date());
         setExpirationDate(getLastModified());
-        setEncriptionAsEnum(Encription.PLAIN_PASSWORD);
-        setPassword("inactive");
-        setVerifyPassword("");
-        setCurrentPassword("");
-        setPasswordDirty(false);
     }
 
     /** 

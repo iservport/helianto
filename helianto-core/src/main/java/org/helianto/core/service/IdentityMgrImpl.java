@@ -35,6 +35,7 @@ import org.helianto.core.filter.IdentityFormFilterAdapter;
 import org.helianto.core.filter.PersonalAddressFormFilterAdapter;
 import org.helianto.core.form.IdentityForm;
 import org.helianto.core.form.PersonalAddressForm;
+import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.strategy.PrincipalGenerationStrategy;
 import org.slf4j.Logger;
@@ -200,11 +201,10 @@ public class IdentityMgrImpl implements IdentityMgr {
 	}
 	
 	public Credential installCredential(Identity identity) {
-		Credential credential = credentialDao.findUnique(identity);
+		Credential credential = credentialRepository.findByIdentity(identity);
 		if (credential==null) {
 			logger.info("Will install credential for {}.", identity);
-			credential = credentialDao.merge(new Credential(identity, ActivityState.ACTIVE.getValue()));
-			credentialDao.flush();
+			credential = credentialRepository.saveAndFlush(new Credential(identity, ActivityState.ACTIVE.getValue()));
 		}
 		else {
 			logger.debug("Found existing credential for {}.", identity);
@@ -215,7 +215,7 @@ public class IdentityMgrImpl implements IdentityMgr {
     //- collaborators
     
     private FilterDao<Identity> identityDao;
-    private FilterDao<Credential> credentialDao;
+    private CredentialRepository credentialRepository;
     private FilterDao<PersonalAddress> personalAddressDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
 	
@@ -225,9 +225,9 @@ public class IdentityMgrImpl implements IdentityMgr {
         this.identityDao = identityDao;
     }
     
-    @Resource(name="credentialDao")
-    public void setCredentialDao(FilterDao<Credential> credentialDao) {
-		this.credentialDao = credentialDao;
+    @Resource
+    public void setCredentialRepository(CredentialRepository credentialRepository) {
+		this.credentialRepository = credentialRepository;
 	}
     
     @Resource(name="personalAddressDao")

@@ -28,11 +28,15 @@ import java.util.List;
 import org.helianto.core.domain.Category;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.CategoryFilter;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.CategoryRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 
+ * @author mauriciofernandesdecastro
+ */
 public class CategoryMgrImplTests {
     
     private CategoryMgrImpl categoryMgr;
@@ -42,37 +46,36 @@ public class CategoryMgrImplTests {
     	Filter categoryFilter = new CategoryFilter();
     	List<Category> categoryList = new ArrayList<Category>();
     	
-    	expect(categoryDao.find(categoryFilter)).andReturn(categoryList);
-    	replay(categoryDao);
+    	expect(categoryRepository.find(categoryFilter)).andReturn(categoryList);
+    	replay(categoryRepository);
     	
     	assertSame(categoryList, categoryMgr.findCategories(categoryFilter));
-    	verify(categoryDao);
+    	verify(categoryRepository);
     }
     
     @Test
     public void storeCategory() {
     	Category category = new Category();
     	
-    	categoryDao.saveOrUpdate(category);
-    	replay(categoryDao);
+    	expect(categoryRepository.saveAndFlush(category)).andReturn(category);
+    	replay(categoryRepository);
     	
     	assertSame(category, categoryMgr.storeCategory(category));
-    	verify(categoryDao);
+    	verify(categoryRepository);
     }
     
-    private FilterDao<Category> categoryDao;
+    private CategoryRepository categoryRepository;
     
-    @SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         categoryMgr = new CategoryMgrImpl();
-        categoryDao = createMock(FilterDao.class);
-        categoryMgr.setCategoryDao(categoryDao);
+        categoryRepository = createMock(CategoryRepository.class);
+        categoryMgr.setCategoryRepository(categoryRepository);
     }
     
     @After
     public void tearDown() {
-        reset(categoryDao);
+        reset(categoryRepository);
     }
     
 }

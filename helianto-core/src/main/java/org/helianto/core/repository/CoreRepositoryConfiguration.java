@@ -55,30 +55,6 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	public CoreRepositoryConfiguration() { }
 	
 	/**
-	 * Category data access.
-	 */
-	@Bean
-	public FilterDao<Category> categoryDao() {
-		return getFilterDao(Category.class, "entity", "categoryGroup", "categoryCode");
-	}
-
-	/**
-	 * Country data access.
-	 */
-	@Bean
-	public FilterDao<Country> countryDao() {
-		return getFilterDao(Country.class, "operator", "countryCode");
-	}
-
-	/**
-	 * Credential data access.
-	 */
-	@Bean
-	public FilterDao<Credential> credentialDao() {
-		return getFilterDao(Credential.class, "identity");
-	}
-
-	/**
 	 * Entity data access.
 	 */
 	@Bean

@@ -31,15 +31,12 @@ import java.util.List;
 import org.easymock.EasyMock;
 import org.helianto.core.IdentityMgr;
 import org.helianto.core.PublicEntityMgr;
-import org.helianto.core.def.ActivityState;
-import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.repository.FilterDao;
-import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
@@ -59,14 +56,6 @@ import org.junit.Test;
  * @author Mauricio Fernandes de Castro
  */
 public class UserMgrImplTests {
-    
-	@Test
-    public void userState() {
-        User user = UserTestSupport.createUser();
-        Credential credential = CredentialTestSupport.createCredential(user.getIdentity());
-        assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
-        assertEquals(ActivityState.INITIAL.getValue(), credential.getCredentialState());
-    }
     
 	@Test
     public void findUsers() {

@@ -26,7 +26,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.CategoryFormFilterAdapter;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.form.CategoryForm;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.CategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,19 +40,19 @@ public class CategoryMgrImpl implements CategoryMgr {
     
 	public List<Category> findCategories(CategoryForm form) {
 		CategoryFormFilterAdapter filter = new CategoryFormFilterAdapter(form);
-    	List<Category> categoryList = (List<Category>) categoryDao.find(filter);
+    	List<Category> categoryList = (List<Category>) categoryRepository.find(filter);
     	logger.debug("Found category list of size {}", categoryList.size());
     	return categoryList;
 	}
 
 	public List<Category> findCategories(Filter categoryFilter) {
-    	List<Category> categoryList = (List<Category>) categoryDao.find(categoryFilter);
+    	List<Category> categoryList = (List<Category>) categoryRepository.find(categoryFilter);
     	logger.debug("Found category list of size {}", categoryList.size());
     	return categoryList;
 	}
 
 	public Category storeCategory(Category category) {
-		categoryDao.saveOrUpdate(category);
+		categoryRepository.saveAndFlush(category);
     	return category;
 	}
 
@@ -62,25 +62,24 @@ public class CategoryMgrImpl implements CategoryMgr {
 	}
 	
 	public Category installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName) {
-    	Category category = categoryDao.findUnique(entity, categoryGroup, categoryCode);
+    	Category category = categoryRepository.findByEntityAndCategoryGroupAndCategoryCode(entity, categoryGroup.getValue(), categoryCode);
     	if (category!=null) {
         	logger.debug("Found category {}", category);
     		return category;
     	}
-    	category = categoryDao.merge(new Category(entity, categoryGroup, categoryCode, categoryName));
+    	category = categoryRepository.saveAndFlush(new Category(entity, categoryGroup, categoryCode, categoryName));
     	logger.debug("Category {} installed.", category);
-    	categoryDao.flush();
     	return category;
 	}
 
 
     //- collabs
-    private FilterDao<Category> categoryDao;
+    private CategoryRepository categoryRepository;
     
-    @Resource(name="categoryDao")
-    public void setCategoryDao(FilterDao<Category> categoryDao) {
-        this.categoryDao = categoryDao;
-    }
+    @Resource
+    public void setCategoryRepository(CategoryRepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
+	}
 
     private final Logger logger = LoggerFactory.getLogger(CategoryMgrImpl.class);
 

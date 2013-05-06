@@ -19,7 +19,6 @@ import static org.junit.Assert.assertSame;
 
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.test.CredentialTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Test;
 
@@ -27,7 +26,7 @@ public class PasswordConfirmationMailFormTests {
 
     @Test
     public void mailForm() {
-        Credential credential = CredentialTestSupport.createCredential();
+        Credential credential = new Credential();
         PasswordConfirmationMailForm mailForm = new PasswordConfirmationMailForm();
         mailForm.setCredential(credential);
         assertSame(credential, mailForm.getCredential());
