@@ -31,6 +31,7 @@ import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.UserAssociation;
@@ -148,19 +149,16 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 
 	public Service installService(Operator defaultOperator, String serviceName) {
 		
-		serviceDao.flush();
+		serviceRepository.flush();
 		Assert.notNull(defaultOperator);
-//		operatorDao.refresh(defaultOperator);
 		
 		logger.debug("Check service {} installation ...", serviceName);
-		Service service = serviceDao.findUnique(defaultOperator, serviceName);
+		Service service = serviceRepository.findByOperatorAndServiceName(defaultOperator, serviceName);
 		if (service==null) {
-			operatorDao.flush();
 			logger.debug("Will install service {} ...", serviceName);
-			service = serviceDao.merge(new Service(defaultOperator, serviceName));
+			service = serviceRepository.saveAndFlush(new Service(defaultOperator, serviceName));
 		}
 		logger.debug("Sevice AVAILABLE as {}.", service);
-		serviceDao.flush();
 		return service;
 	}
 	
@@ -330,7 +328,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	private BasicDao<Operator> operatorDao;
 	private BasicDao<Province> provinceDao;
 	private KeyTypeRepository keyTypeRepository;
-	private BasicDao<Service> serviceDao;
+	private ServiceRepository serviceRepository;
 	private BasicDao<Entity> entityDao;
 	private BasicDao<UserGroup> userGroupDao;
 	private BasicDao<UserRole> userRoleDao;
@@ -353,9 +351,9 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		this.keyTypeRepository = keyTypeRepository;
 	}
 	
-	@javax.annotation.Resource(name="serviceDao")
-	public void setServiceDao(BasicDao<Service> serviceDao) {
-		this.serviceDao = serviceDao;
+	@javax.annotation.Resource
+	public void setServiceRepository(ServiceRepository serviceRepository) {
+		this.serviceRepository = serviceRepository;
 	}
 
 	@javax.annotation.Resource(name="entityDao")

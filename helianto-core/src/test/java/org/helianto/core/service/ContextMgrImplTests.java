@@ -33,10 +33,13 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.ServiceFormFilterAdapter;
 import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.form.KeyTypeForm;
+import org.helianto.core.form.ServiceForm;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.After;
@@ -143,26 +146,38 @@ public class ContextMgrImplTests {
 	}
 	
 	@Test
-	public void findServices() {
+	public void findServicesByOperator() {
+		Operator operator = new Operator("DEFAULT");
 		List<Service> serviceList = new ArrayList<Service>();
-		Filter filter = new TestingFilter();
 		
-		expect(serviceDao.find(filter)).andReturn(serviceList);
-		replay(serviceDao);
+		expect(serviceRepository.findByOperator(operator)).andReturn(serviceList);
+		replay(serviceRepository);
 		
-		assertSame(serviceList , contextMgr.findServices(filter));
-		verify(serviceDao);
+		assertSame(serviceList , contextMgr.findServices(operator));
+		verify(serviceRepository);
+	}
+	
+	@Test
+	public void findServicesByForm() {
+		List<Service> serviceList = new ArrayList<Service>();
+		ServiceForm form = createMock(ServiceForm.class);
+		
+		expect(serviceRepository.find(isA(ServiceFormFilterAdapter.class))).andReturn(serviceList);
+		replay(serviceRepository);
+		
+		assertSame(serviceList , contextMgr.findServices(form));
+		verify(serviceRepository);
 	}
 	
 	@Test
 	public void storeService() {
 		Service service = new Service(OperatorTestSupport.createOperator(), "NAME");
 		
-		serviceDao.saveOrUpdate(service);
-		replay(serviceDao);
+		expect(serviceRepository.saveAndFlush(service)).andReturn(service);
+		replay(serviceRepository);
 		
 		assertSame(service , contextMgr.storeService(service));
-		verify(serviceDao);
+		verify(serviceRepository);
 	}
 	
 //	@Test
@@ -188,7 +203,7 @@ public class ContextMgrImplTests {
 	private FilterDao<Province> provinceDao;
 	private FilterDao<Entity> entityDao;
 	private KeyTypeRepository keyTypeRepository;
-	private FilterDao<Service> serviceDao;
+	private ServiceRepository serviceRepository;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -203,8 +218,8 @@ public class ContextMgrImplTests {
 		contextMgr.setEntityDao(entityDao);
 		keyTypeRepository = createMock(KeyTypeRepository.class);
 		contextMgr.setKeyTypeRepository(keyTypeRepository);
-		serviceDao = createMock(FilterDao.class);
-		contextMgr.setServiceDao(serviceDao);
+		serviceRepository = createMock(ServiceRepository.class);
+		contextMgr.setServiceRepository(serviceRepository);
 	}
 	
 	@After
@@ -213,7 +228,7 @@ public class ContextMgrImplTests {
 		reset(provinceDao);
 		reset(entityDao);
 		reset(keyTypeRepository);
-		reset(serviceDao);
+		reset(serviceRepository);
 	}
 
 }

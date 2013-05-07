@@ -27,6 +27,7 @@ import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
+import org.helianto.core.form.ServiceForm;
 import org.helianto.user.domain.UserRole;
 
 /**
@@ -124,9 +125,16 @@ public interface ContextMgr {
     /**
      * Find <code>Service</code>(s).
      * 
-     * @param serviceFilter
+     * @param operator
      */
-	List<Service> findServices(Filter serviceFilter);
+	List<Service> findServices(Operator operator);
+
+    /**
+     * Find <code>Service</code>(s).
+     * 
+     * @param form
+     */
+	List<Service> findServices(ServiceForm form);
 
     /**
      * Store <code>Service</code> to the data store.

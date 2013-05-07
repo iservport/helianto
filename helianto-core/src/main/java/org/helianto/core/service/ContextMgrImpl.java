@@ -32,10 +32,13 @@ import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.KeyTypeFormFilterAdapter;
 import org.helianto.core.filter.ProvinceFormFilterAdapter;
+import org.helianto.core.filter.ServiceFormFilterAdapter;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
+import org.helianto.core.form.ServiceForm;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.ServiceRepository;
 import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,17 +124,16 @@ public class ContextMgrImpl
 		return keyTypeRepository.saveAndFlush(keyType);
 	}
 
-	public List<Service> findServices(Filter filter) {
-		List<Service> serviceList = (List<Service>) serviceDao.find(filter);
-    	if (serviceList!=null && serviceList.size()>0) {
-    		logger.debug("Loaded user list of size {}", serviceList.size());
-    	}
-    	return serviceList;
+	public List<Service> findServices(Operator operator) {
+    	return (List<Service>) serviceRepository.findByOperator(operator);
+	}
+
+	public List<Service> findServices(ServiceForm form) {
+    	return (List<Service>) serviceRepository.find(new ServiceFormFilterAdapter(form));
 	}
 
 	public Service storeService(Service service) {
-		serviceDao.saveOrUpdate(service);
-		return service;
+		return serviceRepository.saveAndFlush(service);
 	}
 
 	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole) {
@@ -160,7 +162,7 @@ public class ContextMgrImpl
 	private FilterDao<Province> provinceDao;
 	private FilterDao<Entity> entityDao;
 	private KeyTypeRepository keyTypeRepository;
-	private FilterDao<Service> serviceDao;
+	private ServiceRepository serviceRepository;
 	
 	@Resource(name="operatorDao")
 	public void setOperatorDao(FilterDao<Operator> operatorDao) {
@@ -182,10 +184,10 @@ public class ContextMgrImpl
 		this.keyTypeRepository = keyTypeRepository;
 	}
     
-    @Resource(name="serviceDao")
-    public void setServiceDao(FilterDao<Service> serviceDao) {
-        this.serviceDao = serviceDao;
-    }
+    @Resource
+    public void setServiceRepository(ServiceRepository serviceRepository) {
+		this.serviceRepository = serviceRepository;
+	}
     
     private final Logger logger = LoggerFactory.getLogger(CategoryMgrImpl.class);
 

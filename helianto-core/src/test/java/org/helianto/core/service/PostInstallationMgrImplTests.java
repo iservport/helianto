@@ -1,10 +1,10 @@
 package org.helianto.core.service;
 
 import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.verify;
+import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import org.helianto.core.domain.Service;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.UserGroup;
@@ -117,12 +118,27 @@ public class PostInstallationMgrImplTests {
 
 	}
 	
+	@Test
+	public void installServiceNull() {
+		Operator operator = new Operator("DEFAULT");
+		Service service = new Service(operator, "CODE");
+		
+		serviceRepository.flush();
+		expect(serviceRepository.findByOperatorAndServiceName(operator, "CODE")).andReturn(null);
+		expect(serviceRepository.saveAndFlush(service)).andReturn(service);
+		replay(serviceRepository);
+		
+		assertSame(service, postInstallationMgr.installService(operator, "CODE"));
+		verify(serviceRepository);
+
+	}
+	
 	// collabs
 	
 	private BasicDao<Operator> operatorDao;
 	private BasicDao<Province> provinceDao;
 	private KeyTypeRepository keyTypeRepository;
-	private BasicDao<Service> serviceDao;
+	private ServiceRepository serviceRepository;
 	private BasicDao<Entity> entityDao;
 	private BasicDao<UserGroup> userGroupDao;
 	private BasicDao<UserRole> userRoleDao;
@@ -136,7 +152,7 @@ public class PostInstallationMgrImplTests {
         operatorDao = createMock(FilterDao.class);
         provinceDao = createMock(FilterDao.class);
         keyTypeRepository = createMock(KeyTypeRepository.class);
-        serviceDao = createMock(FilterDao.class);
+        serviceRepository = createMock(ServiceRepository.class);
         entityDao = createMock(FilterDao.class);
         userGroupDao = createMock(FilterDao.class);
         userRoleDao = createMock(FilterDao.class);
@@ -147,7 +163,7 @@ public class PostInstallationMgrImplTests {
         postInstallationMgr.setOperatorDao(operatorDao);
         postInstallationMgr.setProvinceDao(provinceDao);
         postInstallationMgr.setKeyTypeRepository(keyTypeRepository);
-        postInstallationMgr.setServiceDao(serviceDao);
+        postInstallationMgr.setServiceRepository(serviceRepository);
         postInstallationMgr.setEntityDao(entityDao);
         postInstallationMgr.setUserGroupDao(userGroupDao);
         postInstallationMgr.setUserRoleDao(userRoleDao);
@@ -161,7 +177,7 @@ public class PostInstallationMgrImplTests {
         reset(operatorDao);
         reset(provinceDao);
         reset(keyTypeRepository);
-        reset(serviceDao);
+        reset(serviceRepository);
         reset(entityDao);
         reset(userGroupDao);
         reset(userRoleDao);

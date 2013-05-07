@@ -123,14 +123,6 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	}
 
 	/**
-	 * Service data access.
-	 */
-	@Bean
-	public FilterDao<Service> serviceDao() {
-		return getFilterDao(Service.class, "operator", "serviceName");
-	}
-
-	/**
 	 * Unit data access.
 	 */
 	@Bean

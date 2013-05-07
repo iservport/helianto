@@ -1,6 +1,7 @@
 package org.helianto.core.repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Operator;
@@ -20,5 +21,12 @@ public interface ServiceRepository extends FilterRepository<Service, Serializabl
 	 * @param serviceName
 	 */
 	Service findByOperatorAndServiceName(Operator operator, String serviceName);
+	
+	/**
+	 * Find by operator.
+	 * 
+	 * @param operator
+	 */
+	List<Service> findByOperator(Operator operator);
 	
 }

@@ -38,7 +38,6 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.UserGroupTestSupport;
-import org.helianto.core.test.UserRoleTestSupport;
 import org.helianto.core.test.UserTestSupport;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
@@ -191,7 +190,7 @@ public class UserMgrImplTests {
 	
 	@Test
 	public void storeUserRole() {
-		UserRole userRole = UserRoleTestSupport.createUserRole();
+		UserRole userRole = new UserRole();
 		
 		userRoleDao.saveOrUpdate(userRole);
 		userRoleDao.flush();
