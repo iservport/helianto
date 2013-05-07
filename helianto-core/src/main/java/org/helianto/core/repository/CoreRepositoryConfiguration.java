@@ -15,12 +15,8 @@
 
 package org.helianto.core.repository;
 
-import org.helianto.core.domain.Category;
-import org.helianto.core.domain.Country;
-import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.domain.PrivateSequence;
@@ -100,14 +96,6 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	@Bean
 	public FilterDao<PublicSequence> publicEnumeratorDao() {
 		return getFilterDao(PublicSequence.class, "operator", "typeName");
-	}
-
-	/**
-	 * Key type data access.
-	 */
-	@Bean
-	public FilterDao<KeyType> keyTypeDao() {
-		return getFilterDao(KeyType.class, "operator", "keyCode");
 	}
 
 	/**

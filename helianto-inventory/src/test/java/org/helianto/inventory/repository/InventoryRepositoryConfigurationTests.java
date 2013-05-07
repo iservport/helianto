@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.inventory.domain.Card;
 import org.helianto.inventory.domain.CardSet;
 import org.helianto.inventory.domain.Inventory;
@@ -43,7 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoIntegrationTest {
 
-	@Resource FilterDao<KeyType> keyTypeDao;
+	@Resource KeyTypeRepository keyTypeRepository;
 	@Resource FilterDao<ProcessDocument> processDocumentDao;
 	@Resource FilterDao<PrivateEntity2> privateEntityDao;
 	@Resource FilterDao<Partner> partnerDao;
@@ -93,8 +94,7 @@ public class InventoryRepositoryConfigurationTests extends AbstractInventoryDaoI
 		agreementDao.saveOrUpdate(processAgreement);
 		assertEquals(processAgreement, agreementDao.findUnique(processAgreement.getEntity(), processAgreement.getInternalNumber()));
 
-		KeyType keyType = new KeyType(entity.getOperator(), "KEYTYPE");
-		keyTypeDao.saveOrUpdate(keyType);
+		KeyType keyType = keyTypeRepository.save(new KeyType(entity.getOperator(), "KEYTYPE"));
 		Tax tax = new Tax(processAgreement, keyType);
 		taxDao.saveOrUpdate(tax);
 		assertEquals(tax, taxDao.findUnique(processAgreement, keyType));

@@ -56,89 +56,88 @@ public interface ContextMgr {
      * 
      * @param operatorFilter
      */
-    public List<Operator> findOperators(Filter operatorFilter);
+    List<Operator> findOperators(Filter operatorFilter);
 
     /**
      * Store <code>Operator</code>.
      * 
      * @param operator
      */
-    public Operator storeOperator(Operator operator);
+    Operator storeOperator(Operator operator);
 
     /**
      * Find <code>Province</code>s.
      * 
      * @param form
      */
-	public List<Province> findProvinces(ProvinceForm form);
+	List<Province> findProvinces(ProvinceForm form);
 	
     /**
      * Find <code>Province</code>s.
      * 
      * @param filter
      */
-	public List<Province> findProvinces(Filter filter);
+	List<Province> findProvinces(Filter filter);
 	
     /**
      * Store <code>Province</code> to the data store.
      * 
      * @param province
      */
-	public Province storeProvince(Province province);
+	Province storeProvince(Province province);
 	
     /**
      * Find <code>Entity</code>(ies).
      * 
      * @param filter
      */
-	public List<Entity> findEntities(Filter filter);
+	List<Entity> findEntities(Filter filter);
 
     /**
      * Store <code>Entity</code> to the data store.
      * 
      * @param entity
      */
-	public Entity storeEntity(Entity entity);
+	Entity storeEntity(Entity entity);
 
     /**
      * Find <code>KeyType</code>(s).
      * 
-     * @param keyTypeFilter
-     * @deprecated
+     * @param operator
      */
-	public List<KeyType> findKeyTypes(Filter keyTypeFilter);
-
+	List<KeyType> findKeyTypes(Operator operator);
+	
     /**
      * Find <code>KeyType</code>(s).
      * 
      * @param form
      */
-	public List<KeyType> findKeyTypes(KeyTypeForm form);
+	List<KeyType> findKeyTypes(KeyTypeForm form);
 
     /**
      * Store <code>KeyType</code> to the data store.
      * 
      * @param keyType
      */
-	public KeyType storeKeyType(KeyType keyType);
+	KeyType storeKeyType(KeyType keyType);
 
     /**
      * Find <code>Service</code>(s).
      * 
      * @param serviceFilter
      */
-	public List<Service> findServices(Filter serviceFilter);
+	List<Service> findServices(Filter serviceFilter);
 
     /**
      * Store <code>Service</code> to the data store.
      * 
      * @param service
      */
-	public Service storeService(Service service);
+	Service storeService(Service service);
 
     /**
 	 * Load a service name map.
 	 */
-	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole);
+	Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole);
 
 }

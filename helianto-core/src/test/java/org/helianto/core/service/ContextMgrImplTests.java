@@ -18,6 +18,7 @@ package org.helianto.core.service;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
@@ -33,9 +34,10 @@ import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.TestingFilter;
+import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.core.test.KeyTypeTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.After;
 import org.junit.Before;
@@ -45,7 +47,7 @@ import org.junit.Test;
 /**
  * @author Mauricio Fernandes de Castro
  */
-public class NamespaceMgrTests {
+public class ContextMgrImplTests {
 	
 	@Test
 	public void findOperators() {
@@ -55,7 +57,7 @@ public class NamespaceMgrTests {
 		expect(operatorDao.find(filter)).andReturn(operatorList);
 		replay(operatorDao);
 		
-		assertSame(operatorList , namespaceMgr.findOperators(filter));
+		assertSame(operatorList , contextMgr.findOperators(filter));
 		verify(operatorDao);
 	}
 	
@@ -66,7 +68,7 @@ public class NamespaceMgrTests {
 		operatorDao.saveOrUpdate(operator);
 		replay(operatorDao);
 		
-		assertSame(operator , namespaceMgr.storeOperator(operator));
+		assertSame(operator , contextMgr.storeOperator(operator));
 		verify(operatorDao);
 	}
 	
@@ -78,7 +80,7 @@ public class NamespaceMgrTests {
 		expect(provinceDao.find(filter)).andReturn(provinceList);
 		replay(provinceDao);
 		
-		assertSame(provinceList , namespaceMgr.findProvinces(filter));
+		assertSame(provinceList , contextMgr.findProvinces(filter));
 		verify(provinceDao);
 	}
 	
@@ -90,7 +92,7 @@ public class NamespaceMgrTests {
 		expect(provinceDao.merge(province)).andReturn(managedProvince);
 		replay(provinceDao);
 		
-		assertSame(managedProvince , namespaceMgr.storeProvince(province));
+		assertSame(managedProvince , contextMgr.storeProvince(province));
 		verify(provinceDao);
 	}
 	
@@ -102,7 +104,7 @@ public class NamespaceMgrTests {
 		expect(entityDao.find(filter)).andReturn(entityList);
 		replay(entityDao);
 		
-		assertSame(entityList , namespaceMgr.findEntities(filter));
+		assertSame(entityList , contextMgr.findEntities(filter));
 		verify(entityDao);
 	}
 	
@@ -113,31 +115,31 @@ public class NamespaceMgrTests {
 		entityDao.saveOrUpdate(entity);
 		replay(entityDao);
 		
-		assertSame(entity , namespaceMgr.storeEntity(entity));
+		assertSame(entity , contextMgr.storeEntity(entity));
 		verify(entityDao);
 	}
 	
 	@Test
 	public void findKeyTypes() {
 		List<KeyType> keyTypeList = new ArrayList<KeyType>();
-		Filter filter = new TestingFilter();
+		KeyTypeForm form = createMock(KeyTypeForm.class);
 		
-		expect(keyTypeDao.find(filter)).andReturn(keyTypeList);
-		replay(keyTypeDao);
+		expect(keyTypeRepository.find(isA(Filter.class))).andReturn(keyTypeList);
+		replay(keyTypeRepository);
 		
-		assertSame(keyTypeList , namespaceMgr.findKeyTypes(filter));
-		verify(keyTypeDao);
+		assertSame(keyTypeList , contextMgr.findKeyTypes(form));
+		verify(keyTypeRepository);
 	}
 	
 	@Test
 	public void storeKeyType() {
-		KeyType keyType = KeyTypeTestSupport.createKeyType();
+		KeyType keyType = new KeyType(new Operator("DEFAULT"), "CODE");
 		
-		keyTypeDao.saveOrUpdate(keyType);
-		replay(keyTypeDao);
+		expect(keyTypeRepository.saveAndFlush(keyType)).andReturn(keyType);
+		replay(keyTypeRepository);
 		
-		assertSame(keyType , namespaceMgr.storeKeyType(keyType));
-		verify(keyTypeDao);
+		assertSame(keyType , contextMgr.storeKeyType(keyType));
+		verify(keyTypeRepository);
 	}
 	
 	@Test
@@ -148,7 +150,7 @@ public class NamespaceMgrTests {
 		expect(serviceDao.find(filter)).andReturn(serviceList);
 		replay(serviceDao);
 		
-		assertSame(serviceList , namespaceMgr.findServices(filter));
+		assertSame(serviceList , contextMgr.findServices(filter));
 		verify(serviceDao);
 	}
 	
@@ -159,7 +161,7 @@ public class NamespaceMgrTests {
 		serviceDao.saveOrUpdate(service);
 		replay(serviceDao);
 		
-		assertSame(service , namespaceMgr.storeService(service));
+		assertSame(service , contextMgr.storeService(service));
 		verify(serviceDao);
 	}
 	
@@ -181,28 +183,28 @@ public class NamespaceMgrTests {
 //		verify(operatorDao);
 //	}
 	
-	private ContextMgrImpl namespaceMgr;
+	private ContextMgrImpl contextMgr;
 	private FilterDao<Operator> operatorDao;
 	private FilterDao<Province> provinceDao;
 	private FilterDao<Entity> entityDao;
-	private FilterDao<KeyType> keyTypeDao;
+	private KeyTypeRepository keyTypeRepository;
 	private FilterDao<Service> serviceDao;
 	
 	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
-		namespaceMgr = new ContextMgrImpl();
+		contextMgr = new ContextMgrImpl();
 		operatorDao = createMock(FilterDao.class);
-		namespaceMgr.setOperatorDao(operatorDao);
+		contextMgr.setOperatorDao(operatorDao);
 		provinceDao = createMock(FilterDao.class);
-		namespaceMgr.setProvinceDao(provinceDao);
+		contextMgr.setProvinceDao(provinceDao);
 		entityDao = createMock(FilterDao.class);
-		namespaceMgr.setEntityDao(entityDao);
-		keyTypeDao = createMock(FilterDao.class);
-		namespaceMgr.setKeyTypeDao(keyTypeDao);
+		contextMgr.setEntityDao(entityDao);
+		keyTypeRepository = createMock(KeyTypeRepository.class);
+		contextMgr.setKeyTypeRepository(keyTypeRepository);
 		serviceDao = createMock(FilterDao.class);
-		namespaceMgr.setServiceDao(serviceDao);
+		contextMgr.setServiceDao(serviceDao);
 	}
 	
 	@After
@@ -210,7 +212,7 @@ public class NamespaceMgrTests {
 		reset(operatorDao);
 		reset(provinceDao);
 		reset(entityDao);
-		reset(keyTypeDao);
+		reset(keyTypeRepository);
 		reset(serviceDao);
 	}
 

@@ -19,11 +19,10 @@ import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.def.CategoryGroup;
-import org.helianto.core.domain.Category;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.partner.domain.Account;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerCategory;
@@ -60,7 +59,7 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 	@Resource FilterDao<PartnerCategory> partnerCategoryDao;
 //	@Resource FilterDao<Category> categoryDao;
 	@Resource FilterDao<PrivateEntityKey> privateEntityKeyDao;
-	@Resource FilterDao<KeyType> keyTypeDao;
+	@Resource KeyTypeRepository keyTypeRepository;
 
 	@Test
 	public void partner() {
@@ -72,8 +71,7 @@ public class PartnerIntegrationTests extends AbstractPartnerDaoIntegrationTest {
 		privateEntityDao.saveOrUpdate(partnerRegistry);
 		assertEquals(partnerRegistry, privateEntityDao.findUnique(entity, "ENTITYALIAS", 'R'));
 
-		KeyType keyType = new KeyType(entity.getOperator(), "KEYCODE");
-		keyTypeDao.saveOrUpdate(keyType);
+		KeyType keyType = keyTypeRepository.save(new KeyType(entity.getOperator(), "KEYCODE"));
 		
 		PrivateEntityKey partnerRegistryKey = new PrivateEntityKey(partnerRegistry, keyType);
 		privateEntityKeyDao.saveOrUpdate(partnerRegistryKey);

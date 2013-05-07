@@ -35,17 +35,19 @@ import org.helianto.core.filter.ProvinceFormFilterAdapter;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <code>NamespaceMgr</code> default implementation.
+ * <code>ContextMgr</code> default implementation.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @org.springframework.stereotype.Service("namespaceMgr")
-public class ContextMgrImpl implements ContextMgr {
+public class ContextMgrImpl 
+	implements ContextMgr {
 
 	public List<Operator> findOperators(Filter operatorFilter) {
 		List<Operator> operatorList = (List<Operator>) operatorDao.find(operatorFilter);
@@ -98,20 +100,17 @@ public class ContextMgrImpl implements ContextMgr {
 		return entity;
 	}
 
-	public List<KeyType> findKeyTypes(KeyTypeForm form) {
-		Filter filter = new KeyTypeFormFilterAdapter(form);
-		List<KeyType> keyTypeList = (List<KeyType>) keyTypeDao.find(filter);
+	public List<KeyType> findKeyTypes(Operator operator) {
+		List<KeyType> keyTypeList = (List<KeyType>) keyTypeRepository.findByOperator(operator);
     	if (keyTypeList!=null && keyTypeList.size()>0) {
         	logger.debug("Found key type list of size {}", keyTypeList.size());
     	}
     	return keyTypeList;
 	}
 
-	/**
-	 * @deprecated
-	 */
-	public List<KeyType> findKeyTypes(Filter filter) {
-		List<KeyType> keyTypeList = (List<KeyType>) keyTypeDao.find(filter);
+	public List<KeyType> findKeyTypes(KeyTypeForm form) {
+		Filter filter = new KeyTypeFormFilterAdapter(form);
+		List<KeyType> keyTypeList = (List<KeyType>) keyTypeRepository.find(filter);
     	if (keyTypeList!=null && keyTypeList.size()>0) {
         	logger.debug("Found key type list of size {}", keyTypeList.size());
     	}
@@ -119,8 +118,7 @@ public class ContextMgrImpl implements ContextMgr {
 	}
 
 	public KeyType storeKeyType(KeyType keyType) {
-		keyTypeDao.saveOrUpdate(keyType);
-		return keyType;
+		return keyTypeRepository.saveAndFlush(keyType);
 	}
 
 	public List<Service> findServices(Filter filter) {
@@ -161,7 +159,7 @@ public class ContextMgrImpl implements ContextMgr {
 	private FilterDao<Operator> operatorDao;
 	private FilterDao<Province> provinceDao;
 	private FilterDao<Entity> entityDao;
-	private FilterDao<KeyType> keyTypeDao;
+	private KeyTypeRepository keyTypeRepository;
 	private FilterDao<Service> serviceDao;
 	
 	@Resource(name="operatorDao")
@@ -179,10 +177,10 @@ public class ContextMgrImpl implements ContextMgr {
         this.entityDao = entityDao;
     }
     
-    @Resource(name="keyTypeDao")
-    public void setKeyTypeDao(FilterDao<KeyType> keyTypeDao) {
-        this.keyTypeDao = keyTypeDao;
-    }
+    @Resource
+    public void setKeyTypeRepository(KeyTypeRepository keyTypeRepository) {
+		this.keyTypeRepository = keyTypeRepository;
+	}
     
     @Resource(name="serviceDao")
     public void setServiceDao(FilterDao<Service> serviceDao) {

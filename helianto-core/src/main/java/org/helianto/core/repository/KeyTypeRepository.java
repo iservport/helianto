@@ -1,6 +1,7 @@
 package org.helianto.core.repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.KeyType;
@@ -20,5 +21,12 @@ public interface KeyTypeRepository extends FilterRepository<KeyType, Serializabl
 	 * @param keyCode
 	 */
 	KeyType findByOperatorAndKeyCode(Operator operator, String keyCode);
+	
+	/**
+	 * Find by operator.
+	 * 
+	 * @param operator
+	 */
+	List<KeyType> findByOperator(Operator operator);
 	
 }

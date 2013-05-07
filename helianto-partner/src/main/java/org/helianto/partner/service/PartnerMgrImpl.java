@@ -313,7 +313,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	public void installPartnerKeys(String[] keyValues, Partner partner) {
 		logger.debug("Ready to install key value pairs {} to {}", keyValues, partner);
 		Operator operator = partner.getPrivateEntity().getEntity().getOperator();
-		List<KeyType> keyTypes = namespaceMgr.findKeyTypes(new KeyTypeFilterAdapter(operator, ""));
+		List<KeyType> keyTypes = contextMgr.findKeyTypes(operator);
 		Map<String, PartnerKey> partnerKeyMap = loadPartnerKeyMap(partner);
 		for (String keyValueTuple: keyValues) {
 			String[] keyValue = keyValueTuple.split(":");
@@ -412,7 +412,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private FilterDao<PartnerPhone> partnerPhoneDao;
     private FilterDao<PartnerCategory> partnerCategoryDao;
     private FilterDao<UserGroup> userGroupDao;
-	private ContextMgr namespaceMgr;
+	private ContextMgr contextMgr;
 	private SequenceMgr sequenceMgr;
 
     @Resource(name="privateEntityDao")
@@ -461,8 +461,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
     
 	@Resource(name="namespaceMgr")
-	public void setNamespaceMgr(ContextMgr namespaceMgr) {
-		this.namespaceMgr = namespaceMgr;
+	public void setContextMgr(ContextMgr contextMgr) {
+		this.contextMgr = contextMgr;
 	}
 	
 	@Resource(name="sequenceMgr")

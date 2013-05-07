@@ -35,7 +35,6 @@ public class CoreRepositoryIntegrationTests
 //	private FilterDao<Country> countryDao;
 //	private FilterDao<Credential> credentialDao;
 //	private FilterDao<Identity> identityDao;
-//	private FilterDao<KeyType> keyTypeDao;
 //	private FilterDao<PersonalAddress> personalAddressDao;
 //	private FilterDao<PrivateSequence> internalEnumeratorDao; //privateSequence
 //	private FilterDao<PublicSequence> publicEnumeratorDao; //publicSequence
@@ -58,11 +57,6 @@ public class CoreRepositoryIntegrationTests
 
 //		assertEquals(operator, getOperatorDao().findUnique(operator.getOperatorName()));
 //		
-//		logger.debug("Ready to persist keyType.");
-//		KeyType keyType = KeyTypeTestSupport.createKeyType(operator);
-//		keyTypeDao.saveOrUpdate(keyType);
-//		assertEquals(keyType, keyTypeDao.findUnique(keyType.getOperator(), keyType.getKeyCode()));
-//
 //		logger.debug("Ready to persist country.");
 //		Country country = CountryTestSupport.createCountry(operator);
 //		countryDao.saveOrUpdate(country);
