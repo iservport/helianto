@@ -1,7 +1,11 @@
 package org.helianto.core.service;
 
 import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.verify;
 import static org.easymock.EasyMock.reset;
+import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,7 @@ import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.UserGroup;
@@ -77,11 +82,46 @@ public class PostInstallationMgrImplTests {
 //		
 //	}
 	
+	@Test
+	public void installKey() {
+		Operator operator = new Operator("DEFAULT");
+		KeyType keyType = new KeyType(operator, "CODE");
+		
+		operatorDao.saveOrUpdate(operator);
+		replay(operatorDao);
+		
+		expect(keyTypeRepository.findByOperatorAndKeyCode(operator, "CODE")).andReturn(keyType);
+		replay(keyTypeRepository);
+		
+		assertSame(keyType, postInstallationMgr.installKey(operator, "CODE"));
+		verify(operatorDao);
+		verify(keyTypeRepository);
+
+	}
+	
+	@Test
+	public void installKeyNull() {
+		Operator operator = new Operator("DEFAULT");
+		KeyType keyType = new KeyType(operator, "CODE");
+		
+		operatorDao.saveOrUpdate(operator);
+		replay(operatorDao);
+		
+		expect(keyTypeRepository.findByOperatorAndKeyCode(operator, "CODE")).andReturn(null);
+		expect(keyTypeRepository.saveAndFlush(new KeyType(operator, "CODE"))).andReturn(keyType);
+		replay(keyTypeRepository);
+		
+		assertSame(keyType, postInstallationMgr.installKey(operator, "CODE"));
+		verify(operatorDao);
+		verify(keyTypeRepository);
+
+	}
+	
 	// collabs
 	
 	private BasicDao<Operator> operatorDao;
 	private BasicDao<Province> provinceDao;
-	private BasicDao<KeyType> keyTypeDao;
+	private KeyTypeRepository keyTypeRepository;
 	private BasicDao<Service> serviceDao;
 	private BasicDao<Entity> entityDao;
 	private BasicDao<UserGroup> userGroupDao;
@@ -95,7 +135,7 @@ public class PostInstallationMgrImplTests {
     public void setUp() {
         operatorDao = createMock(FilterDao.class);
         provinceDao = createMock(FilterDao.class);
-        keyTypeDao = createMock(FilterDao.class);
+        keyTypeRepository = createMock(KeyTypeRepository.class);
         serviceDao = createMock(FilterDao.class);
         entityDao = createMock(FilterDao.class);
         userGroupDao = createMock(FilterDao.class);
@@ -106,7 +146,7 @@ public class PostInstallationMgrImplTests {
         postInstallationMgr = new PostInstallationMgrImpl();
         postInstallationMgr.setOperatorDao(operatorDao);
         postInstallationMgr.setProvinceDao(provinceDao);
-        postInstallationMgr.setKeyTypeDao(keyTypeDao);
+        postInstallationMgr.setKeyTypeRepository(keyTypeRepository);
         postInstallationMgr.setServiceDao(serviceDao);
         postInstallationMgr.setEntityDao(entityDao);
         postInstallationMgr.setUserGroupDao(userGroupDao);
@@ -120,7 +160,7 @@ public class PostInstallationMgrImplTests {
     public void tearDown() {
         reset(operatorDao);
         reset(provinceDao);
-        reset(keyTypeDao);
+        reset(keyTypeRepository);
         reset(serviceDao);
         reset(entityDao);
         reset(userGroupDao);

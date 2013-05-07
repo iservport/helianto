@@ -30,6 +30,7 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.UserAssociation;
@@ -136,13 +137,12 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		operatorDao.saveOrUpdate(defaultOperator);
 		
 		logger.debug("Check key code {} installation ...", keyCode);
-		KeyType keyType = keyTypeDao.findUnique(defaultOperator, keyCode);
+		KeyType keyType = keyTypeRepository.findByOperatorAndKeyCode(defaultOperator, keyCode);
 		if (keyType==null) {
 			logger.debug("Will install key code {} ...", keyCode); 
-			keyType = keyTypeDao.merge(new KeyType(defaultOperator, keyCode));
+			keyType = keyTypeRepository.saveAndFlush(new KeyType(defaultOperator, keyCode));
 		}
 		logger.debug("KeyType  AVAILABLE as {}.", keyType);
-		keyTypeDao.flush();
 		return keyType;
 	}
 
@@ -329,7 +329,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	
 	private BasicDao<Operator> operatorDao;
 	private BasicDao<Province> provinceDao;
-	private BasicDao<KeyType> keyTypeDao;
+	private KeyTypeRepository keyTypeRepository;
 	private BasicDao<Service> serviceDao;
 	private BasicDao<Entity> entityDao;
 	private BasicDao<UserGroup> userGroupDao;
@@ -348,9 +348,9 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		this.provinceDao = provinceDao;
 	}
 	
-	@javax.annotation.Resource(name="keyTypeDao")
-	public void setKeyTypeDao(BasicDao<KeyType> keyTypeDao) {
-		this.keyTypeDao = keyTypeDao;
+	@javax.annotation.Resource
+	public void setKeyTypeRepository(KeyTypeRepository keyTypeRepository) {
+		this.keyTypeRepository = keyTypeRepository;
 	}
 	
 	@javax.annotation.Resource(name="serviceDao")
