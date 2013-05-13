@@ -24,18 +24,23 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.helianto.core.ContextMgr;
+import org.helianto.core.SequenceMgr;
+import org.helianto.core.domain.ContextEvent;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
+import org.helianto.core.filter.ContextEventFilterAdapter;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.KeyTypeFormFilterAdapter;
 import org.helianto.core.filter.ProvinceFormFilterAdapter;
 import org.helianto.core.filter.ServiceFormFilterAdapter;
+import org.helianto.core.form.ContextEventForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
+import org.helianto.core.repository.ContextEventRepository;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.repository.ServiceRepository;
@@ -136,6 +141,20 @@ public class ContextMgrImpl
 		return serviceRepository.saveAndFlush(service);
 	}
 
+	public List<ContextEvent> findContextEvents(ContextEventForm form) {
+		Filter filter = new ContextEventFilterAdapter(form);
+		List<ContextEvent> contextEventList = (List<ContextEvent>) contextEventRepository.find(filter);
+    	if (contextEventList!=null && contextEventList.size()>0) {
+        	logger.debug("Found context event list of size {}", contextEventList.size());
+    	}
+    	return contextEventList;
+	}
+
+	public ContextEvent storeContextEvent(ContextEvent contextEvent) {
+		sequenceMgr.validatePublicNumber(contextEvent);
+		return contextEventRepository.saveAndFlush(contextEvent);
+	}
+
 	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole) {
 		Operator managedOperator = operatorDao.merge(operator);
 		Map<String, String> serviceNameMap = new HashMap<String, String>();
@@ -163,6 +182,8 @@ public class ContextMgrImpl
 	private FilterDao<Entity> entityDao;
 	private KeyTypeRepository keyTypeRepository;
 	private ServiceRepository serviceRepository;
+	private ContextEventRepository contextEventRepository;
+	private SequenceMgr sequenceMgr;
 	
 	@Resource(name="operatorDao")
 	public void setOperatorDao(FilterDao<Operator> operatorDao) {
@@ -187,6 +208,16 @@ public class ContextMgrImpl
     @Resource
     public void setServiceRepository(ServiceRepository serviceRepository) {
 		this.serviceRepository = serviceRepository;
+	}
+    
+    @Resource
+    public void setContextEventRepository(ContextEventRepository contextEventRepository) {
+		this.contextEventRepository = contextEventRepository;
+	}
+    
+    @Resource
+    public void setSequenceMgr(SequenceMgr sequenceMgr) {
+		this.sequenceMgr = sequenceMgr;
 	}
     
     private final Logger logger = LoggerFactory.getLogger(CategoryMgrImpl.class);

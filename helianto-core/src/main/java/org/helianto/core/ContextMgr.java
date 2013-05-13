@@ -19,12 +19,14 @@ package org.helianto.core;
 import java.util.List;
 import java.util.Map;
 
+import org.helianto.core.domain.ContextEvent;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.form.ContextEventForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
@@ -142,6 +144,20 @@ public interface ContextMgr {
      * @param service
      */
 	Service storeService(Service service);
+	
+    /**
+     * Find <code>ContextEvent</code>(s).
+     * 
+     * @param form
+     */
+	List<ContextEvent> findContextEvents(ContextEventForm form);
+	
+    /**
+     * Store <code>Service</code> to the data store.
+     * 
+     * @param service
+     */
+	ContextEvent storeContextEvent(ContextEvent contextEvent);
 
     /**
 	 * Load a service name map.
