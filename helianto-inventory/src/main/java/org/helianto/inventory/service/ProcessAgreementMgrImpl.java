@@ -27,6 +27,7 @@ import org.helianto.inventory.domain.ProcessAgreement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default <code>ProcessAgreementMgr</code> interface implementation.
@@ -39,12 +40,14 @@ public class ProcessAgreementMgrImpl implements ProcessAgreementMgr {
 	/**
 	 * @deprecated
 	 */
+	@Transactional
 	public ProcessAgreement prepareAgreement(ProcessAgreement target) {
 		ProcessAgreement managedTarget = agreementDao.merge(target);
 		agreementDao.evict(managedTarget);
 		return managedTarget;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<ProcessAgreement> findAgreements(Filter agreementFilter) {
     	List<ProcessAgreement> agreementList = (List<ProcessAgreement>) agreementDao.find(agreementFilter);
     	if (logger.isDebugEnabled() && agreementList!=null) {
@@ -53,6 +56,7 @@ public class ProcessAgreementMgrImpl implements ProcessAgreementMgr {
     	return agreementList;
 	}
 	
+	@Transactional
 	public ProcessAgreement storeAgreement(ProcessAgreement agreement) {
 		sequenceMgr.validateInternalNumber(agreement);
 		agreementDao.saveOrUpdate(agreement);

@@ -29,6 +29,7 @@ import org.helianto.core.form.CategoryForm;
 import org.helianto.core.repository.CategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation to category interface.
@@ -38,6 +39,7 @@ import org.slf4j.LoggerFactory;
 @org.springframework.stereotype.Service("categoryMgr")
 public class CategoryMgrImpl implements CategoryMgr {
     
+	@Transactional(readOnly=true)
 	public List<Category> findCategories(CategoryForm form) {
 		CategoryFormFilterAdapter filter = new CategoryFormFilterAdapter(form);
     	List<Category> categoryList = (List<Category>) categoryRepository.find(filter);
@@ -45,12 +47,14 @@ public class CategoryMgrImpl implements CategoryMgr {
     	return categoryList;
 	}
 
+	@Transactional(readOnly=true)
 	public List<Category> findCategories(Filter categoryFilter) {
     	List<Category> categoryList = (List<Category>) categoryRepository.find(categoryFilter);
     	logger.debug("Found category list of size {}", categoryList.size());
     	return categoryList;
 	}
 
+	@Transactional
 	public Category storeCategory(Category category) {
 		categoryRepository.saveAndFlush(category);
     	return category;
@@ -61,6 +65,7 @@ public class CategoryMgrImpl implements CategoryMgr {
 		
 	}
 	
+	@Transactional
 	public Category installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName) {
     	Category category = categoryRepository.findByEntityAndCategoryGroupAndCategoryCode(entity, categoryGroup.getValue(), categoryCode);
     	if (category!=null) {

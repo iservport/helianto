@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.easymock.EasyMock;
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
@@ -38,6 +39,7 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
 import org.junit.After;
 import org.junit.Before;
@@ -115,7 +117,11 @@ public class SecurityMgrImplTests {
     	user.setIdentity(identity);
     	Set<UserRole> roles = new HashSet<UserRole>();
     	roles.add(new UserRole(user, new Service(), "TEST"));
-    	securityMgr.authenticate(user, roles);
+    	
+        userGroupDao.refresh(user);
+        replay(userGroupDao);
+
+        securityMgr.authenticate(user, roles);
     	PublicUserDetails authenticatedUserDetails = securityMgr.findAuthenticatedUser();
     	assertSame(user, authenticatedUserDetails.getUser());
 //    	for (GrantedAuthority auth: ((UserDetailsAdapter) authenticatedUserDetails).getAuthorities()) {
@@ -133,6 +139,7 @@ public class SecurityMgrImplTests {
     
     //~ collaborators
     
+	private FilterDao<UserGroup> userGroupDao;
 	private FilterDao<Identity> identityDao;
     private CredentialRepository credentialRepository;
     
@@ -142,7 +149,9 @@ public class SecurityMgrImplTests {
 	@Before
     public void setUp() {
         securityMgr = new SecurityMgrImpl();
+        userGroupDao = createMock(FilterDao.class);
         identityDao = createMock(FilterDao.class);
+        securityMgr.setUserGroupDao(userGroupDao);
         securityMgr.setIdentityDao(identityDao);
         credentialRepository = createMock(CredentialRepository.class);
         securityMgr.setCredentialRepository(credentialRepository);
@@ -150,6 +159,7 @@ public class SecurityMgrImplTests {
     
     @After
     public void tearDown() {
+        reset(userGroupDao);
         reset(identityDao);
         reset(credentialRepository);
     }

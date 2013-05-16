@@ -28,6 +28,7 @@ import org.helianto.resource.form.ResourceGroupForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>ResourceMgr</code> interface.
@@ -37,6 +38,7 @@ import org.springframework.stereotype.Service;
 @Service("resourceMgr")
 public class ResourceMgrImpl implements ResourceMgr {
 	
+	@Transactional(readOnly=true)
 	public List<ResourceGroup> findResourceGroups(ResourceGroupForm form) {
 		Filter filter = new ResourceGroupFormFilterAdapter(form);
 		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(filter);
@@ -46,12 +48,14 @@ public class ResourceMgrImpl implements ResourceMgr {
 		return resourceGroupList;
 	}
     
+	@Transactional
 	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
 		ResourceGroup resourceGroup = new ResourceGroup(entity, rootEquipentCode);
 		resourceGroup.setResourceTypeAsEnum(ResourceType.EQUIPMENT);
 		return resourceGroup;
     }
     
+	@Transactional
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup) {
     	resourceGroupDao.saveOrUpdate(resourceGroup);
     	return resourceGroup;

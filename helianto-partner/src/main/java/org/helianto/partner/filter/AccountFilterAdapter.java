@@ -16,16 +16,16 @@
 package org.helianto.partner.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.partner.domain.Account;
+import org.helianto.partner.form.AccountForm;
 
 /**
  * Account filter adapter.
  * 
  * @author Maurício Fernandes de Castro
  */
-public class AccountFilterAdapter extends AbstractTrunkFilterAdapter<Account> {
+public class AccountFilterAdapter 
+	extends AbstractTrunkFilterAdapter<AccountForm> {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -34,30 +34,12 @@ public class AccountFilterAdapter extends AbstractTrunkFilterAdapter<Account> {
 	 * 
 	 * @param form
 	 */
-	public AccountFilterAdapter(Account form) {
+	public AccountFilterAdapter(AccountForm form) {
 		super(form);
-		reset();
 	}
 	
-	/**
-	 * Key constructor.
-	 * 
-	 * @param entity
-	 * @param accountCode
-	 */
-	public AccountFilterAdapter(Entity entity, String accountCode) {
-		this(new Account(entity, accountCode));
-	}
-
-	/**
-	 * Reset method.
-	 */
-	public void reset() { 
-		getForm().setAccountType(' ');
-	}
-
 	public boolean isSelection() {
-		return getForm().getAccountCode().length()>0;
+		return getForm().getAccountCode()!=null && getForm().getAccountCode().length()>0;
 	}
 
 	@Override

@@ -22,10 +22,14 @@ import javax.annotation.Resource;
 
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.partner.AccountMgr;
 import org.helianto.partner.domain.Account;
+import org.helianto.partner.filter.AccountFilterAdapter;
+import org.helianto.partner.form.AccountForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default account service interface implementation.
@@ -33,20 +37,25 @@ import org.springframework.stereotype.Service;
  * @author Mauricio Fernandes de Castro
  */
 @Service("accountMgr")
-public class AccountMgrImpl implements AccountMgr {
+public class AccountMgrImpl 
+	implements AccountMgr {
 
-	public List<Account> findAccounts(Filter accountFilter) {
-		List<Account> accountList = (List<Account>) accountDao.find(accountFilter);
+	@Transactional(readOnly=true)
+	public List<Account> findAccounts(AccountForm form) {
+		Filter filter = new AccountFilterAdapter(form);
+		List<Account> accountList = (List<Account>) accountDao.find(filter);
     	if (logger.isDebugEnabled() && accountList!=null) {
     		logger.debug("Found account list of size {}", accountList.size());
     	}
 		return accountList;
 	}
 
+	@Transactional
 	public Account storeAccount(Account account) {
 		return accountDao.merge(account);
 	}
 	
+	@Transactional
     public void removeAccount(Account account) {
     	accountDao.remove(account);
     }

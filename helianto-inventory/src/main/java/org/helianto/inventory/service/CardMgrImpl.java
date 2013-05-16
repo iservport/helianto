@@ -31,6 +31,7 @@ import org.helianto.inventory.domain.CardSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -41,6 +42,7 @@ import org.springframework.stereotype.Service;
 @Service("cardMgr")
 public class CardMgrImpl implements CardMgr {
 
+	@Transactional(readOnly=true)
 	public List<CardSet> findCardSets(Filter cardSetFilter) {
     	List<CardSet> cardSetList = (List<CardSet>) cardSetDao.find(cardSetFilter);
     	if (logger.isDebugEnabled() && cardSetList!=null) {
@@ -49,11 +51,13 @@ public class CardMgrImpl implements CardMgr {
     	return cardSetList;
 	}
 
+	@Transactional
 	public CardSet storeCardSet(CardSet cardSet) {
 		sequenceMgr.validateInternalNumber(cardSet);
 		return cardSetDao.merge(cardSet);
 	}
 
+	@Transactional(readOnly=true)
 	public Card findCard(Entity entity, String cardLabel, boolean createIfNecessary) throws InvalidCardException {
 		long cardSetNumber = CardSet.getInternalNumber(cardLabel);
     	logger.debug("Card set number {}", cardSetNumber);

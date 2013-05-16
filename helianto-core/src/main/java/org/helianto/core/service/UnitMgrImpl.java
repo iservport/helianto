@@ -26,6 +26,7 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation to unit service interface.
@@ -35,12 +36,14 @@ import org.slf4j.LoggerFactory;
 @org.springframework.stereotype.Service("unitMgr")
 public class UnitMgrImpl implements UnitMgr {
 	
+	@Transactional(readOnly=true)
 	public List<Unit> findUnits(Filter unitFilter) {
     	List<Unit> unitList = (List<Unit>) unitDao.find(unitFilter);
     	logger.debug("Found unit list of size {}", unitList.size());
     	return unitList;
 	}
 
+	@Transactional
 	public Unit storeUnit(Unit unit) {
 		unitDao.saveOrUpdate(unit);
     	logger.debug("Stored unit  {}", unit);
@@ -48,11 +51,13 @@ public class UnitMgrImpl implements UnitMgr {
     	return unit;
 	}
 
+	@Transactional
 	public void removeUnit(Unit unit) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Transactional
 	public Unit installUnit(Category category, String unitCode, String unitName) {
 		Unit unit = unitDao.findUnique(category.getEntity(), unitCode);
     	if (unit!=null) {

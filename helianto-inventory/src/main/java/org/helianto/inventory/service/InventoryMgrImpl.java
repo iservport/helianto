@@ -29,6 +29,7 @@ import org.helianto.inventory.domain.Tax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default <code>ProcessAgreementMgr</code> interface implementation.
@@ -38,6 +39,7 @@ import org.springframework.stereotype.Service;
 @Service("inventoryMgr")
 public class InventoryMgrImpl implements InventoryMgr {
 
+	@Transactional(readOnly=true)
 	public List<ProcessRequirement> findProcessRequirements(Filter filter) {
     	List<ProcessRequirement> requirementList = (List<ProcessRequirement>) processRequirementDao.find(filter);
     	if (logger.isDebugEnabled() && requirementList!=null) {
@@ -46,12 +48,14 @@ public class InventoryMgrImpl implements InventoryMgr {
     	return requirementList;
 	}
 	
+	@Transactional
 	public ProcessRequirement storeProcessRequirement(ProcessRequirement requirement) {
 		sequenceMgr.validateInternalNumber(requirement);
 		processRequirementDao.saveOrUpdate(requirement);
 		return requirement;
 	}
 
+	@Transactional(readOnly=true)
 	public List<ProcessAgreement> findProcessAgreement(Filter agreementFilter) {
     	List<ProcessAgreement> agreementList = (List<ProcessAgreement>) agreementDao.find(agreementFilter);
     	if (logger.isDebugEnabled() && agreementList!=null) {
@@ -60,6 +64,7 @@ public class InventoryMgrImpl implements InventoryMgr {
     	return agreementList;
 	}
 	
+	@Transactional
 	public ProcessAgreement storeProcessAgreement(ProcessAgreement agreement) {
 		sequenceMgr.validateInternalNumber(agreement);
 		agreementDao.saveOrUpdate(agreement);
@@ -67,6 +72,7 @@ public class InventoryMgrImpl implements InventoryMgr {
 		return agreement;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<Tax> findTaxes(Filter filter) {
     	List<Tax> taxList = (List<Tax>) taxDao.find(filter);
     	if (logger.isDebugEnabled() && taxList!=null) {
@@ -75,6 +81,7 @@ public class InventoryMgrImpl implements InventoryMgr {
     	return taxList;
 	}
 	
+	@Transactional
 	public Tax storeTax(Tax tax) {
 		taxDao.saveOrUpdate(tax);
 		taxDao.flush();

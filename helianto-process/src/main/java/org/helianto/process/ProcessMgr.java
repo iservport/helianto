@@ -20,7 +20,7 @@ import java.util.List;
 import org.helianto.core.Node;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
-import org.helianto.partner.service.PartnerMgr;
+import org.helianto.partner.PartnerMgr;
 import org.helianto.process.domain.Operation;
 import org.helianto.process.domain.Process;
 import org.helianto.process.domain.ProcessDocument;

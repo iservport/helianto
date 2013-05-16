@@ -42,6 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default <code>MessageMgr</code> implementation.
@@ -92,6 +93,7 @@ public class MessageMgrImpl implements MessageMgr {
       	send(hourlyMessage);
     }
     
+	@Transactional(readOnly=true)
     public List<NotificationEvent> findNotificationEvents(NotificationEventForm form) {
     	Filter filter = new NotificationEventFormFilterAdapter(form);
     	List<NotificationEvent> notificationEventList = (List<NotificationEvent>) notificationEventDao.find(filter);
@@ -99,6 +101,7 @@ public class MessageMgrImpl implements MessageMgr {
     	
     }
     
+	@Transactional
     public NotificationEvent storeNotificationEvent(NotificationEvent target) {
     	sequenceMgr.validateInternalNumber(target);
     	notificationEventDao.saveOrUpdate(target);

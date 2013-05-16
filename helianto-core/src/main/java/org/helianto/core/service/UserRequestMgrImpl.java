@@ -14,6 +14,7 @@ import org.helianto.user.form.UserRequestForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * User request service interface implementation.
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 @Service("userRequestMgr")
 public class UserRequestMgrImpl implements UserRequestMgr {
 
+	@Transactional(readOnly=true)
 	public List<UserRequest> findUserRequests(UserRequestForm form) {
 		Filter filter = new UserRequestFormFilterAdapter(form);
 		List<UserRequest> userRequestList = (List<UserRequest>) userRequestDao.find(filter);
@@ -32,6 +34,7 @@ public class UserRequestMgrImpl implements UserRequestMgr {
 		return userRequestList;
 	}
 
+	@Transactional
 	public UserRequest storeUserRequest(UserRequest userRequest) {
 		sequenceMgr.validateInternalNumber(userRequest);
 		userRequestDao.saveOrUpdate(userRequest);

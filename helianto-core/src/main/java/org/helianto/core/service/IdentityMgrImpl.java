@@ -40,6 +40,7 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.core.service.strategy.PrincipalGenerationStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default <code>IdentityMgr</code> implementation.
@@ -49,11 +50,13 @@ import org.slf4j.LoggerFactory;
 @org.springframework.stereotype.Service("identityMgr")
 public class IdentityMgrImpl implements IdentityMgr {
     
+	@Transactional(readOnly=true)
     public Identity findIdentityByPrincipal(String principal) {
         logger.debug("Finding unique with principal {}", principal);
         return (Identity) identityDao.findUnique(principal);
     }
     
+	@Transactional(readOnly=true)
     public Identity loadIdentity(long id) {
     	Identity sample = new Identity();
     	sample.setId(id);
@@ -64,6 +67,7 @@ public class IdentityMgrImpl implements IdentityMgr {
     	return identity;
     }
     
+	@Transactional(readOnly=true)
     public byte[] loadIdentityPhoto(Identity identity) {
     	if (identity!=null && identity.getPhoto()!=null) {
     		logger.debug("Identity {} photo size is {}.", identity, identity.getPhoto().length);
@@ -73,6 +77,7 @@ public class IdentityMgrImpl implements IdentityMgr {
     	return null;
     }
 
+	@Transactional(readOnly=true)
     public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions) {
         List<Identity> identityList = (List<Identity>) identityDao.find(filter);
         logger.debug("Found {} item(s).", identityList.size());
@@ -83,6 +88,7 @@ public class IdentityMgrImpl implements IdentityMgr {
         return identityList ;
     }
 
+	@Transactional(readOnly=true)
     public List<Identity> findIdentities(IdentityForm form) {
     	IdentityFormFilterAdapter filter = new IdentityFormFilterAdapter(form);
         List<Identity> identityList = (List<Identity>) identityDao.find(filter);
@@ -99,6 +105,7 @@ public class IdentityMgrImpl implements IdentityMgr {
      * 
      * @param identity
      */
+	@Transactional
 	public Identity storeIdentity(Identity identity) {
 		identityDao.saveOrUpdate(identity);
 		return identity;
@@ -116,6 +123,7 @@ public class IdentityMgrImpl implements IdentityMgr {
      * @param identity
      * @param generate
      */
+	@Transactional
 	public Identity storeIdentity(Identity identity, boolean generate) {
 		if (generate) {
 			int attemptCount = 0;
@@ -133,6 +141,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 		return identity;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<PersonalAddress> findPersonalAddresses(Filter filter) {
 		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(filter);
 		if (personalAddressList!=null) {
@@ -141,6 +150,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 		return personalAddressList;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<PersonalAddress> findPersonalAddresses(PersonalAddressForm form) {
 		PersonalAddressFormFilterAdapter filter = new PersonalAddressFormFilterAdapter(form);
 		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(filter);
@@ -150,12 +160,14 @@ public class IdentityMgrImpl implements IdentityMgr {
 		return personalAddressList;
 	}
 	
+	@Transactional
 	public PersonalAddress storePersonalAddress(PersonalAddress personalAddress) {
 		personalAddressDao.saveOrUpdate(personalAddress);
 		identityDao.flush();
 		return personalAddress;
 	}
 	
+	@Transactional
 	public Identity storeIdentityPhone(Phone identityPhone, Identity identity) {
 		identityDao.saveOrUpdate(identity);
 		identity.getPhones().add(identityPhone);
@@ -163,6 +175,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 		return identity;
 	}
 	
+	@Transactional
 	public Identity storeIdentityContactInfo(ContactInfo contactInfo, Identity identity) {
 		identityDao.saveOrUpdate(identity);
 		identity.getContactInfos().add(contactInfo);
@@ -170,6 +183,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 		return identity;
 	}
 	
+	@Transactional
 	public Credential installIdentity(String principal) {
 		Identity identity = identityDao.findUnique(principal);
 		if (identity==null) {
@@ -200,6 +214,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 		return installCredential(identity);
 	}
 	
+	@Transactional
 	public Credential installCredential(Identity identity) {
 		Credential credential = credentialRepository.findByIdentity(identity);
 		if (credential==null) {

@@ -37,6 +37,7 @@ import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation of <code>SequenceMgr</code> interface.
@@ -46,6 +47,7 @@ import org.springframework.stereotype.Service;
 @Service("sequenceMgr")
 public class SequenceMgrImpl implements SequenceMgr {
 	
+	@Transactional
 	public long findOrCreatePublicNumber(Operator operator, String publicNumberKey) {
 		PublicSequence publicSequence = publicEnumeratorDao.findUnique(operator, publicNumberKey);
 		if (publicSequence!=null) {
@@ -58,6 +60,7 @@ public class SequenceMgrImpl implements SequenceMgr {
         }
 	}
 	
+	@Transactional
     public long findNewPublicNumber(Operator operator, String publicNumberKey) {
     	PublicSequence publicSequence = publicEnumeratorDao.findUnique(operator, publicNumberKey);
         if (publicSequence!=null) {
@@ -77,6 +80,7 @@ public class SequenceMgrImpl implements SequenceMgr {
         }
     }
     
+	@Transactional
 	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey, int startNumber) {
 		PrivateSequence privateSequence = internalEnumeratorDao.findUnique(entity, internalNumberKey);
 		if (privateSequence!=null) {
@@ -89,21 +93,25 @@ public class SequenceMgrImpl implements SequenceMgr {
         }
     }
     
+	@Transactional
 	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey) {
 		return findOrCreateInternalNumber(entity, internalNumberKey, 1);
 	}
 	
+	@Transactional(readOnly=true)
 	public List<PrivateSequence> findPrivateSequences(PrivateSequenceForm form) {
 		Filter filter = new PrivateSequenceFilterAdapter(form);
 		List<PrivateSequence> privateSequenceList = (List<PrivateSequence>) internalEnumeratorDao.find(filter);
 		return privateSequenceList;
 	}
 	
+	@Transactional
 	public PrivateSequence storePrivateSequence(PrivateSequence privateSequence) {
 		internalEnumeratorDao.saveOrUpdate(privateSequence);
 		return privateSequence;
 	}
 	
+	@Transactional
     public long newInternalNumber(Entity entity, String internalNumberKey, int startNumber) {
         PrivateSequence privateSequence = internalEnumeratorDao.findUnique(entity, internalNumberKey);
         if (privateSequence!=null) {

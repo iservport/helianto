@@ -39,6 +39,7 @@ import org.helianto.user.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default <code>ProcessMgr</code> interface implementation.
@@ -48,6 +49,7 @@ import org.springframework.stereotype.Service;
 @Service("processMgr")
 public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 
+	@Transactional
     public List<Node> prepareTree(ProcessDocument processDocument) {
     	ProcessDocument managedProcessDocument = processDocumentDao.merge(processDocument);
     	ProcessNode root = new ProcessNode(managedProcessDocument);
@@ -55,6 +57,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     	return processTree;
     }
 
+	@Transactional(readOnly=true)
     public List<ProcessDocument> findProcessDocuments(Filter filter) {
         List<ProcessDocument> processDocumentList = (List<ProcessDocument>) processDocumentDao.find(filter);
         if (logger.isDebugEnabled() && processDocumentList.size()>0) {
@@ -72,6 +75,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return processDocumentList ;
 	}
 
+	@Transactional
   	public ProcessDocument storeProcessDocument(ProcessDocument processDocument) {
   		processDocumentDao.saveOrUpdate(processDocument);
   		if (processDocument instanceof Sequenceable) {
@@ -81,11 +85,13 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 		return processDocument;
 	}
 
+	@Transactional
 	public ProcessDocumentAssociation storeDocumentAssociation(ProcessDocumentAssociation documentAssociation) {
 		processDocumentAssociationDao.saveOrUpdate(documentAssociation);
 		return documentAssociation;
 	}
 
+	@Transactional(readOnly=true)
 	public List<ProcessDocumentAssociation> findOperations(User user, Process process) {
 		ProcessDocumentFilterAdapter filter = new ProcessDocumentFilterAdapter(process);
         logger.debug("Created filter {}", filter);
@@ -137,6 +143,7 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
     	return documentAssociation;
     }
     
+	@Transactional(readOnly=true)
     public List<ProcessDocumentAssociation> findCharacteristics(User user, Operation operation) {
 		ProcessDocumentFilterAdapter filter = new ProcessDocumentFilterAdapter((ProcessDocument) operation);
         logger.debug("Created filter {}", filter);
@@ -146,12 +153,14 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return characteristicList ;
     }
 
+	@Transactional
     public Setup storeSetup(Setup setup) {
     	setupDao.saveOrUpdate(setup);
     	setupDao.flush();
     	return setup;
     }
 
+	@Transactional
 	public List<Setup> listSetups(Operation operation) {
 		processDocumentDao.saveOrUpdate(operation);
 		List<Setup> listSetups = new ArrayList<Setup>(operation.getSetups());

@@ -26,6 +26,7 @@ import org.helianto.finance.domain.CashFlow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>FinanceMgr</code> internface.
@@ -35,6 +36,7 @@ import org.springframework.stereotype.Service;
 @Service("financeMgr")
 public class FinanceMgrImpl implements FinanceMgr {
 
+	@Transactional(readOnly=true)
 	public List<? extends CashFlow> findCashFlows(Filter filter) {
         List<? extends CashFlow> cashFlowList = (List<? extends CashFlow>) cashFlowDao.find(filter);
         if (logger.isDebugEnabled() && cashFlowList.size()>0) {
@@ -48,10 +50,12 @@ public class FinanceMgrImpl implements FinanceMgr {
 		return null;
 	}
 
+	@Transactional
 	public void removeCashFlow(CashFlow cashFlow) {
 		cashFlowDao.remove(cashFlow);
 	}
 
+	@Transactional
 	public CashFlow storeCashFlow(CashFlow cashFlow) {
 		// TODO Auto-generated method stub
 		return null;

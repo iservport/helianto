@@ -77,7 +77,7 @@ public abstract class AbstractEvent
      * Record owner.
      * @see {@link Identity}
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="ownerId", nullable=true)
 	public Identity getOwner() {
 		return owner;

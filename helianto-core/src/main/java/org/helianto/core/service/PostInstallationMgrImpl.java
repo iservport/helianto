@@ -40,6 +40,7 @@ import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 /**
@@ -50,6 +51,7 @@ import org.springframework.util.Assert;
 @org.springframework.stereotype.Service("postInstallationMgr")
 public class PostInstallationMgrImpl implements PostInstallationMgr {
 
+	@Transactional
 	public Operator installOperator(String defaultOperatorName, boolean reinstall) {
 		
 		if (defaultOperatorName==null) {
@@ -76,6 +78,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		return defaultOperator;
 	}
 
+	@Transactional
 	public void installProvinces(Operator defaultOperator, Resource rs) {
 		
 		operatorDao.saveOrUpdate(defaultOperator);
@@ -83,6 +86,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		installProvinces(defaultOperator, provinceList);
 	}
 	
+	@Transactional
 	public void installProvinces(Operator defaultOperator, List<Province> provinceList) {
 		
 		logger.debug("Will install {} province(s) ...", provinceList.size());
@@ -133,6 +137,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		provinceDao.flush();
 	}
 	
+	@Transactional
 	public KeyType installKey(Operator defaultOperator, String keyCode) {
 		
 		operatorDao.saveOrUpdate(defaultOperator);
@@ -147,6 +152,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		return keyType;
 	}
 
+	@Transactional
 	public Service installService(Operator defaultOperator, String serviceName) {
 		
 		serviceRepository.flush();
@@ -162,6 +168,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		return service;
 	}
 	
+	@Transactional
 	public Entity installEntity(Entity entity, boolean reinstall) {
 		Operator operator = entity.getOperator();
 		if (entity.getOperator()==null) {
@@ -188,6 +195,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		return entity;
 	}
 	
+	@Transactional
 	public Entity installEntity(Entity entity, Identity manager) {
 		Operator operator = entity.getOperator();
 		if (entity.getOperator()==null) {
@@ -224,6 +232,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	 * @param credential
 	 * @return
 	 */
+	@Transactional
 	public Entity installManager(Entity entity, Credential credential) {
 		Operator operator = entity.getOperator();
 		

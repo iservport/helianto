@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.service;
+package org.helianto.partner;
 
 import java.util.List;
 import java.util.Map;

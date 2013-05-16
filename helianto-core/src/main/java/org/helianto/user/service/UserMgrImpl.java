@@ -50,6 +50,7 @@ import org.helianto.user.form.UserGroupForm;
 import org.helianto.user.form.UserRoleForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -78,6 +79,7 @@ public class UserMgrImpl
 	 * This implementation is able to detect if the owning entity has changed its nature and
 	 * will create a public entity accordingly.
 	 */
+	@Transactional
 	public UserGroup storeUserGroup(UserGroup userGroup) {
     	if (userGroup.isKeyEmpty()) {
     		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
@@ -127,6 +129,7 @@ public class UserMgrImpl
 		return user.getIdentity();
     }
 
+	@Transactional(readOnly=true)
 	public List<? extends UserGroup> findUsers(UserGroupForm form) {
 		UserFormFilterAdapter filter = new UserFormFilterAdapter(form);
 		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(filter);
@@ -134,6 +137,7 @@ public class UserMgrImpl
         return userList;
 	}
 
+	@Transactional(readOnly=true)
 	public List<? extends UserGroup> findUsers(String userKey) {
 		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(
 				"select user from User user where user.userKey = ? order by lastEvent DESC", userKey);
@@ -154,6 +158,7 @@ public class UserMgrImpl
 //        return null;
 //    }
 //
+	@Transactional(readOnly=true)
 	public List<UserAssociation> findUserAssociations(AssociationForm form) {
 		Filter filter = new UserAssociationFormFilterAdapter(form);
 		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationDao.find(filter);
@@ -161,6 +166,7 @@ public class UserMgrImpl
         return userAssociationList;
 	}
 
+	@Transactional
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
 //    	if (parentAssociation.getChild() instanceof User) {
 //        	Identity identity = identityMgr.loadIdentity(((User) parentAssociation.getChild()).getIdentity().getId());
@@ -182,6 +188,7 @@ public class UserMgrImpl
      * 
      * @param userGroup
      */
+	@Transactional
     public List<UserGroup> findParentChain(UserGroup userGroup) {
     	userGroupDao.saveOrUpdate(userGroup);
     	userGroupDao.refresh(userGroup);
@@ -201,6 +208,7 @@ public class UserMgrImpl
     	return parentList;
     }
 
+	@Transactional
 	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall) {
 
 		entityDao.saveOrUpdate(defaultEntity);
@@ -219,6 +227,7 @@ public class UserMgrImpl
 		return userGroup;
 	}
 	
+	@Transactional
 	public UserAssociation installUser(UserGroup parent, String principal, boolean accountNonExpired) {
 		
 		logger.info("Check user installation with 'principal={}' as member of {}.", principal, parent);
@@ -244,6 +253,7 @@ public class UserMgrImpl
 		return association;
 	}
 	
+	@Transactional
 	public UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired) {
 		
 		logger.info("Check user installation with 'principal={}' as member of {}.", credential.getPrincipal(), parent);
@@ -269,6 +279,7 @@ public class UserMgrImpl
 		return association;
 	}
 	
+	@Transactional
 	public UserRole installUserRole(UserGroup userGroup, Service service, String extension) {
 		
 		UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
@@ -281,6 +292,7 @@ public class UserMgrImpl
 		return userRole;
 	}
 	
+	@Transactional
     public UserLog storeUserLog(User user, Date date) {
         if (user.getIdentity()==null) {
             throw new IllegalArgumentException("Must have an identity");
@@ -303,6 +315,7 @@ public class UserMgrImpl
         throw new RuntimeException("Principal should not be null or empty.");
     }
     
+	@Transactional(readOnly=true)
 	public List<UserRole> findUserRoles(Filter filter) {
 		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
     	if (userRoleList!=null && userRoleList.size()>0) {
@@ -311,6 +324,7 @@ public class UserMgrImpl
     	return userRoleList;
 	}
 
+	@Transactional(readOnly=true)
 	public List<UserRole> findUserRoles(UserRoleForm form) {
 		Filter filter = new UserRoleFormFilterAdapter(form);
 		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
@@ -320,12 +334,14 @@ public class UserMgrImpl
     	return userRoleList;
 	}
 
+	@Transactional
 	public UserRole storeUserRole(UserRole userRole) {
 		userRoleDao.saveOrUpdate(userRole);
 		userRoleDao.flush();
 		return userRole;
 	}
 	
+	@Transactional
 	public void removeUserRole(UserRole userRole, UserGroup userGroup) {
 		userGroupDao.saveOrUpdate(userGroup);
 		if (userGroup!=null ) {
@@ -347,6 +363,7 @@ public class UserMgrImpl
 				userRole+"does not belong to user group " + userGroup+".");
 	}
 
+	@Transactional(readOnly=true)
     public List<Province> findProvinceByOperator(Operator operator) {
     	ProvinceFilterAdapter filter = new ProvinceFilterAdapter(operator, "");
         return (List<Province>) provinceDao.find(filter);

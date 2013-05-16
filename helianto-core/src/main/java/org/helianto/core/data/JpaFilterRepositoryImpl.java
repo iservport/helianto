@@ -6,8 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.helianto.core.filter.Filter;
+import org.hibernate.Session;
+import org.hibernate.ejb.HibernateEntityManager;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -44,6 +47,17 @@ public class JpaFilterRepositoryImpl<T, ID extends Serializable> extends
         }
 		Query query = entityManager.createQuery(queryString.toString());
 		return query.getResultList();
+	}
+	
+	@Override
+	@Transactional
+	public <S extends T> S save(S entity) {
+		if (entityManager instanceof HibernateEntityManager) {
+			Session session = entityManager.unwrap(Session.class);
+			session.saveOrUpdate(entity);
+			return entity;
+		}
+		return super.save(entity);
 	}
 
 }

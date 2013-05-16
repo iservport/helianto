@@ -47,6 +47,7 @@ import org.helianto.core.repository.ServiceRepository;
 import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <code>ContextMgr</code> default implementation.
@@ -57,6 +58,7 @@ import org.slf4j.LoggerFactory;
 public class ContextMgrImpl 
 	implements ContextMgr {
 
+	@Transactional(readOnly=true)
 	public List<Operator> findOperators(Filter operatorFilter) {
 		List<Operator> operatorList = (List<Operator>) operatorDao.find(operatorFilter);
 		if (operatorList!=null && operatorList.size()>0) {
@@ -65,11 +67,13 @@ public class ContextMgrImpl
     	return operatorList;
 	}
 	
+	@Transactional
 	public Operator storeOperator(Operator operator) {
 		operatorDao.saveOrUpdate(operator);
 		return operator;
 	}
 
+	@Transactional(readOnly=true)
 	public List<Province> findProvinces(ProvinceForm form) {
 		Filter filter = new ProvinceFormFilterAdapter(form);
     	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
@@ -82,6 +86,7 @@ public class ContextMgrImpl
 	/**
 	 * @deprecated
 	 */
+	@Transactional(readOnly=true)
 	public List<Province> findProvinces(Filter filter) {
     	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
     	if (provinceList!=null && provinceList.size()>0) {
@@ -90,11 +95,13 @@ public class ContextMgrImpl
     	return provinceList;
 	}
 
+	@Transactional
 	public Province storeProvince(Province province) {
 		Province managedProvince =  provinceDao.merge(province);
 		return managedProvince;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<Entity> findEntities(Filter filter) {
 		List<Entity> entityList = (List<Entity>) entityDao.find(filter);
 		if (entityList!=null && entityList.size()>0) {
@@ -103,11 +110,13 @@ public class ContextMgrImpl
 		return entityList;
 	}
 	
+	@Transactional
 	public Entity storeEntity(Entity entity) {
 		entityDao.saveOrUpdate(entity);
 		return entity;
 	}
 
+	@Transactional(readOnly=true)
 	public List<KeyType> findKeyTypes(Operator operator) {
 		List<KeyType> keyTypeList = (List<KeyType>) keyTypeRepository.findByOperator(operator);
     	if (keyTypeList!=null && keyTypeList.size()>0) {
@@ -116,6 +125,7 @@ public class ContextMgrImpl
     	return keyTypeList;
 	}
 
+	@Transactional(readOnly=true)
 	public List<KeyType> findKeyTypes(KeyTypeForm form) {
 		Filter filter = new KeyTypeFormFilterAdapter(form);
 		List<KeyType> keyTypeList = (List<KeyType>) keyTypeRepository.find(filter);
@@ -125,22 +135,27 @@ public class ContextMgrImpl
     	return keyTypeList;
 	}
 
+	@Transactional
 	public KeyType storeKeyType(KeyType keyType) {
 		return keyTypeRepository.saveAndFlush(keyType);
 	}
 
+	@Transactional(readOnly=true)
 	public List<Service> findServices(Operator operator) {
     	return (List<Service>) serviceRepository.findByOperator(operator);
 	}
 
+	@Transactional(readOnly=true)
 	public List<Service> findServices(ServiceForm form) {
     	return (List<Service>) serviceRepository.find(new ServiceFormFilterAdapter(form));
 	}
 
+	@Transactional
 	public Service storeService(Service service) {
 		return serviceRepository.saveAndFlush(service);
 	}
 
+	@Transactional(readOnly=true)
 	public List<ContextEvent> findContextEvents(ContextEventForm form) {
 		Filter filter = new ContextEventFilterAdapter(form);
 		List<ContextEvent> contextEventList = (List<ContextEvent>) contextEventRepository.find(filter);
@@ -150,11 +165,13 @@ public class ContextMgrImpl
     	return contextEventList;
 	}
 
+	@Transactional
 	public ContextEvent storeContextEvent(ContextEvent contextEvent) {
 		sequenceMgr.validatePublicNumber(contextEvent);
 		return contextEventRepository.saveAndFlush(contextEvent);
 	}
 
+	@Transactional
 	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole) {
 		Operator managedOperator = operatorDao.merge(operator);
 		Map<String, String> serviceNameMap = new HashMap<String, String>();

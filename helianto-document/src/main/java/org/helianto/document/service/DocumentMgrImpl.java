@@ -34,6 +34,7 @@ import org.helianto.document.form.PrivateDocumentForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implemtation for <code>DocumentMgr</code> interface.
@@ -44,6 +45,7 @@ import org.springframework.stereotype.Service;
 public class DocumentMgrImpl 
 	implements DocumentMgr {
 
+	@Transactional
 	public Document storeDocument(Document document) {
 		if (document.isLocked()) {
 			throw new IllegalArgumentException("Tried to change a locked document.");
@@ -56,6 +58,7 @@ public class DocumentMgrImpl
 		return document;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<? extends Document> findDocuments(Filter documentFilter) {
     	List<? extends Document> documentList = (List<? extends Document>) documentDao.find(documentFilter);
     	if (logger.isDebugEnabled() && documentList!=null) {
@@ -64,6 +67,7 @@ public class DocumentMgrImpl
     	return documentList;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<PrivateDocument> findPrivateDocuments(PrivateDocumentForm form) {
 		Filter privateDocumentFilter = new PrivateDocumentFilterAdapter(form);
     	List<PrivateDocument> privateDocumentList = (List<PrivateDocument>) privateDocumentDao.find(privateDocumentFilter);
@@ -73,11 +77,13 @@ public class DocumentMgrImpl
     	return privateDocumentList;
 	}
 	
+	@Transactional
 	public PrivateDocument storePrivateDocument(PrivateDocument privateDocument) {
 		privateDocumentDao.saveOrUpdate(privateDocument);
 		return privateDocument;
 	}
 	
+	@Transactional(readOnly=true)
 	public Document findDocument(Filter documentFilter) throws NonUniqueResultException {
 		List<? extends Document> documentList = findDocuments(documentFilter);
 		if (documentList.size()>1) {
@@ -90,6 +96,7 @@ public class DocumentMgrImpl
 		return null;
 	}
 	
+	@Transactional
 	public void removeDocument(Document document) {
     	if (logger.isDebugEnabled()) {
     		logger.debug("Removing document "+document);
@@ -98,11 +105,13 @@ public class DocumentMgrImpl
     	logger.info("Removed document "+document);
 	}
 	
+	@Transactional
 	public DocumentFolder storeSerializer(DocumentFolder serializer) {
 		serializerDao.saveOrUpdate(serializer);
 		return serializer;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<? extends DocumentFolder> findSerializers(Filter serializerFilter) {
     	List<DocumentFolder> serializerList = (List<DocumentFolder>) serializerDao.find(serializerFilter);
     	if (logger.isDebugEnabled() && serializerList!=null) {
@@ -111,6 +120,7 @@ public class DocumentMgrImpl
     	return serializerList;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<? extends DocumentFolder> findSerializers(DocumentFolderForm form) {
 		Filter filter = new DocumentFolderFormFilterAdapter<DocumentFolderForm>(form);
     	List<DocumentFolder> serializerList = (List<DocumentFolder>) serializerDao.find(filter);

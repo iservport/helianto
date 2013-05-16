@@ -47,18 +47,18 @@ public class PartnerMgrImplTests {
     
     private PartnerMgrImpl partnerMgr;
     
-	@Test
-    public void findPrivateEntities() {
-    	PrivateEntityFilter partnerRegistryFilter = new PrivateEntityFilter();
-    	List<PrivateEntity2> partnerRegistryList = new ArrayList<PrivateEntity2>();
-    	
-    	expect(privateEntityDao.find(partnerRegistryFilter)).andReturn(partnerRegistryList);
-    	replay(privateEntityDao);
-    	
-    	assertSame(partnerRegistryList, partnerMgr.findPrivateEntities(partnerRegistryFilter));
-    	verify(privateEntityDao);
-    }
-    
+//	@Test
+//    public void findPrivateEntities() {
+//    	PrivateEntityFilter partnerRegistryFilter = new PrivateEntityFilter();
+//    	List<PrivateEntity2> partnerRegistryList = new ArrayList<PrivateEntity2>();
+//    	
+//    	expect(privateEntityDao.find(partnerRegistryFilter)).andReturn(partnerRegistryList);
+//    	replay(privateEntityDao);
+//    	
+//    	assertSame(partnerRegistryList, partnerMgr.findPrivateEntities(partnerRegistryFilter));
+//    	verify(privateEntityDao);
+//    }
+//    
 	@Test
     public void storePartnerRegistry() {
     	PrivateEntity2 partnerRegistry = new PrivateEntity2();

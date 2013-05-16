@@ -23,6 +23,7 @@ import org.helianto.core.repository.FilterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation of <code>PublicEntity</code>.
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Service;
 @Service("publicEntityMgr")
 public class PublicEntityMgrImpl implements PublicEntityMgr {
 
+	@Transactional(readOnly=true)
 	public List<PublicAddress> findPublicAddress(PublicAddressForm form) {
 		Filter filter = new PublicAddressFormFilterAdapter(form);
 		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressDao.find(filter);
@@ -41,6 +43,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return publicAddressList;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<PublicAddress> findPublicAddress(Filter filter) {
 		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressDao.find(filter);
 		if (publicAddressList!=null) {
@@ -49,15 +52,18 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return publicAddressList;
 	}
 	
+	@Transactional
 	public PublicAddress storePublicAddress(PublicAddress publicAddress) {
 		publicAddressDao.saveOrUpdate(publicAddress);
 		return publicAddress;
 	}
 	
+	@Transactional
 	public void removePublicAddress(PublicAddress publicAddress) {
 		publicAddressDao.remove(publicAddress);
 	}
 	
+	@Transactional(readOnly=true)
 	public List<? extends PublicEntity> findPublicEntities(Filter publicEntityFilter) {
 		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(publicEntityFilter);
 		if (publicEntitiyList!=null) {
@@ -66,6 +72,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return publicEntitiyList;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<? extends PublicEntity> findPublicEntities(PublicEntityForm form) {
 		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(form);
 		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(filter);
@@ -75,6 +82,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return publicEntitiyList;
 	}
 	
+	@Transactional(readOnly=true)
 	public PublicEntity findPublicEntity(Entity entity) {
 		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(new CompositeEntityForm(entity));
 		List<? extends PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(filter);
@@ -85,6 +93,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return null;
 	}
 	
+	@Transactional
 	public PublicEntity installPublicEntity(Entity entity) {
 		PublicEntity publicEntity = null;
     	if (entity.getNatureAsArray().length>0) {
@@ -103,15 +112,18 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return publicEntity;
 	}
 	
+	@Transactional
 	public PublicEntity storePublicEntity(PublicEntity publicEntity) {
 		publicEntityDao.saveOrUpdate(publicEntity);
 		return publicEntity;
 	}
 	
+	@Transactional
 	public void removePublicEntity(PublicEntity publicEntity) {
 		publicEntityDao.remove(publicEntity);
 	}
 	
+	@Transactional(readOnly=true)
 	public Map<String, PublicEntityKey> loadPublicEntityKeyMap(PublicEntity publicEntity) {
 		publicEntityDao.saveOrUpdate(publicEntity);
 		Map<String, PublicEntityKey> publicEntityKeyMap = new HashMap<String, PublicEntityKey>();
@@ -122,11 +134,13 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 		return publicEntityKeyMap;
 	}
 	
+	@Transactional
 	public PublicEntityKey storePublicEntityKey(PublicEntityKey publicEntityKey) {
 		publicEntityKeyDao.saveOrUpdate(publicEntityKey);
 		return publicEntityKey;
 	}
 	
+	@Transactional
 	public void removePublicEntityKey(PublicEntityKey publicEntityKey) {
 		publicEntityKeyDao.remove(publicEntityKey);
 	}

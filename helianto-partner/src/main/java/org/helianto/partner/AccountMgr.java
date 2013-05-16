@@ -13,12 +13,12 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.service;
+package org.helianto.partner;
 
 import java.util.List;
 
-import org.helianto.core.filter.Filter;
 import org.helianto.partner.domain.Account;
+import org.helianto.partner.form.AccountForm;
 
 /**
  * Account service interface.
@@ -29,16 +29,22 @@ public interface AccountMgr {
 
     /**
      * Find <code>Account</code>.
+     * 
+     * @param form
      */
-	public List<Account> findAccounts(Filter accountFilter);
+	public List<Account> findAccounts(AccountForm form);
 	
     /**
      * Write <code>Account</code> to the datastore.
+     * 
+     * @param account
      */
     public Account storeAccount(Account account);
 
     /**
      * Remove <code>Account</code> from the datastore.
+     * 
+     * @param account
      */
     public void removeAccount(Account account);
 

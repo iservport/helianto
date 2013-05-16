@@ -41,6 +41,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>SecurityMgr</code> interface.
@@ -50,20 +51,24 @@ import org.springframework.stereotype.Service;
 @Service("securityMgr")
 public class SecurityMgrImpl implements SecurityMgr {
     
+	@Transactional(readOnly=true)
 	public Credential findCredentialByIdentity(Identity identity) {
 		return credentialRepository.findByIdentity(identity);
 	}
 
+	@Transactional(readOnly=true)
 	public Credential findCredentialByPrincipal(String principal) {
 		Identity identity = identityDao.findUnique(principal);
 		logger.debug("Found {}", identity);
 		return credentialRepository.findByIdentity(identity);
 	}
 	
+	@Transactional(readOnly=true)
 	public Credential loadCredential(Credential credential) {
 		return credentialRepository.findOne(credential.getId());
 	}
 
+	@Transactional(readOnly=false)
 	public Credential storeCredential(Credential credential) throws PasswordNotVerifiedException {
 		if (credential.isPasswordVerified()) {
 	        return credentialRepository.saveAndFlush(credential);
@@ -91,6 +96,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 		return localRoles;
 	}
 
+	@Transactional(readOnly=true)
 	public Set<UserRole> findRoles(UserGroup userGroup, boolean recursively) {
 		userGroupDao.saveOrUpdate(userGroup);
 		Set<UserRole> roles = new HashSet<UserRole>(userGroup.getRoles());
@@ -148,14 +154,17 @@ public class SecurityMgrImpl implements SecurityMgr {
 		SecurityContextHolder.clearContext();
 	}
 	
+	@Transactional(readOnly=true)
 	public PublicUserDetails findAuthenticatedUser() {
 		try {
-			return (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			PublicUserDetails userDetails = (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			userGroupDao.refresh(userDetails.getUser());
+			return userDetails;
 		} catch(Exception e) {
 			throw new IllegalArgumentException("Unable to find authenticated user.", e);
 		}
 	}
-    
+	
     // collabs
 
     private FilterDao<Identity> identityDao;

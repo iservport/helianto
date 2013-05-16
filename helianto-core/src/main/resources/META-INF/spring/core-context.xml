@@ -44,67 +44,8 @@
 	<context:component-scan 
 		base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.user.service"/>
 	
-	<!-- 
-	 ! Required to let presentation layer (with the aid of SWF) manage the PersistenceContext
-	 ! If the transaction advices and pointcuts below are omitted, must use @Transaction at service
-	 ! layer method level individually.
-	 !
-	 ! @see http://sourceforge.net/projects/hibernate-swf/
-	 !-->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager" >
-	<tx:attributes>
-	
-		<tx:method name="commit*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-		<tx:method name="load*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-		<tx:method name="create*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-		<tx:method name="prepare*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-	           
-		<tx:method name="fin*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-		<tx:method name="merg*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-		<tx:method name="pers*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-		<tx:method name="remov*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-	
-		<tx:method name="store*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-		<tx:method name="install*" read-only="true" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-	           
-		<tx:method name="*" read-only="false" isolation="READ_COMMITTED" propagation="SUPPORTS" />
-		
-	</tx:attributes>
-	</tx:advice>
-	
-	<!-- 
-	 ! Required to apply transactions to service and installation APIs
-	 !-->
-	<aop:config>
-		<aop:pointcut id="servicePointcut" expression="execution(* *..*Mgr*.*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
-	</aop:config>
-	
-	<aop:config>
-		<aop:pointcut id="installerPointcut" expression="execution(* *..*Installer.*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
-	</aop:config>
-	
-	<!-- 
-	<aop:config>
-	    <aop:pointcut id="repositoryPointcut" expression="execution(* *..*RepositoryConfiguration.*(..))" />
-	    <aop:advisor advice-ref="txAdvice" pointcut-ref="repositoryPointcut" />
-	</aop:config>
-	-->
-	
-	<aop:config>
-	    <aop:pointcut id="controllerPointcut" expression="execution(* *..*Controller*.*(..))" />
-	    <aop:advisor advice-ref="txAdvice" pointcut-ref="controllerPointcut" />
-	</aop:config>
-	
-	<aop:config>
-	    <aop:pointcut id="testPointcut" expression="execution(* *..*IntegrationTest*.*(..))" />
-	    <aop:advisor advice-ref="txAdvice" pointcut-ref="testPointcut" />
-	</aop:config>
-	
-	<!-- Can't declare annotation-driven AND tx:advice to instruct Spring 
+	<!-- Can't declare annotation-driven AND tx:advice to instruct Spring  -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	 -->
 	 
 	<!-- 
 	 ! Transaction manager and factory for JPA 

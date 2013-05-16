@@ -30,9 +30,9 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.KeyTypeFilterAdapter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.utils.AddressUtils;
+import org.helianto.partner.PartnerMgr;
 import org.helianto.partner.PartnerState;
 import org.helianto.partner.domain.ContactGroup;
 import org.helianto.partner.domain.Partner;
@@ -68,6 +68,7 @@ import org.helianto.user.domain.UserGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Default implementation for <code>PartnerMgr</code> interface.
@@ -77,6 +78,7 @@ import org.springframework.stereotype.Service;
 @Service("partnerMgr")
 public class PartnerMgrImpl implements PartnerMgr {
 
+	@Transactional(readOnly=true)
 	public List<PrivateEntity2> findPrivateEntities(PrivateEntityForm form) {
 		PrivateEntityFormFilterAdapter filter = new PrivateEntityFormFilterAdapter(form);
 		List<PrivateEntity2> privateEntityList = (List<PrivateEntity2>) privateEntityDao.find(filter);
@@ -86,17 +88,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return privateEntityList;
 	}
 
-	/**
-	 * @deprecated
-	 */
-	public List<PrivateEntity2> findPrivateEntities(Filter privateEntityFilter) {
-		List<PrivateEntity2> privateEntityList = (List<PrivateEntity2>) privateEntityDao.find(privateEntityFilter);
-    	if (logger.isDebugEnabled() && privateEntityList!=null) {
-    		logger.debug("Found private entity list of size {}", privateEntityList.size());
-    	}
-		return privateEntityList;
-	}
-
+	@Transactional
 	public PrivateEntity2 storePrivateEntity(PrivateEntity2 privateEntity) {
 		privateEntityDao.saveOrUpdate(privateEntity);
 		sequenceMgr.validateInternalNumber(privateEntity);
@@ -174,10 +166,12 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return create;
 	}
 	
+	@Transactional
     public void removePrivateEntity(PrivateEntity2 privateEntity) {
     	privateEntityDao.remove(privateEntity);
     }
 
+	@Transactional(readOnly=true)
 	public List<? extends Partner> findPartners(PartnerForm form) {
 		PartnerFormFilterAdapter filter = new PartnerFormFilterAdapter(form);
 		List<Partner> partnerList = (List<Partner>) partnerDao.find(filter);
@@ -187,6 +181,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerList;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<? extends Partner> findPartners(Filter partnerFilter) {
 		List<Partner> partnerList = (List<Partner>) partnerDao.find(partnerFilter);
     	if (logger.isDebugEnabled() && partnerList!=null) {
@@ -195,11 +190,13 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerList;
 	}
 	
+	@Transactional
 	public Partner storePartner(Partner partner) {
 		partnerDao.saveOrUpdate(partner);
 		return partner;
 	}
 
+	@Transactional
 	public Partner storePartner(Partner partner, Entity entity) {
 		if (partner.isNewPrivateEntityRequested(entity)) {
 			return storePartner(partner);
@@ -207,10 +204,12 @@ public class PartnerMgrImpl implements PartnerMgr {
 		throw new IllegalArgumentException("Unable to create partner: a private entity is required.");
 	}
 
+	@Transactional
 	public void removePartner(Partner partner) {
 		partnerDao.remove(partner);
 	}
 
+	@Transactional(readOnly=true)
 	public Map<String, PartnerKey> loadPartnerKeyMap(Partner partner) {
 		Map<String, PartnerKey> partnerKeyMap = new HashMap<String, PartnerKey>();
 		Set<PartnerKey> partnerKeys = partnerDao.merge(partner).getPartnerKeys();
@@ -220,16 +219,19 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerKeyMap;
 	}
 
+	@Transactional
 	public PartnerKey storePartnerKey(PartnerKey partnerKey) {
 		partnerDao.saveOrUpdate(partnerKey.getPartner());
 		partnerKeyDao.saveOrUpdate(partnerKey);
 		return partnerKey;
 	}
 
+	@Transactional
 	public PrivateEntity2 removePartnerKey(PartnerKey partnerKey) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
+	@Transactional(readOnly=true)
 	public List<PartnerPhone> findPartnerPhones(PartnerPhoneForm form) {
 		PartnerPhoneFormFilterAdapter filter = new PartnerPhoneFormFilterAdapter(form);
 		List<PartnerPhone> partnerPhoneList = (List<PartnerPhone>) partnerPhoneDao.find(filter);
@@ -239,15 +241,18 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerPhoneList;
 	}
 
+	@Transactional
 	public PartnerPhone storePartnerPhone(PartnerPhone phone) {
 		partnerPhoneDao.saveOrUpdate(phone);
 		return phone;
 	}
 
+	@Transactional
 	public PrivateEntity2 removePartnerPhone(PartnerPhone phone) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
+	@Transactional
 	public Division installDivision(Entity entity, String entityName, AbstractAddress partnerAddress, boolean reinstall) {
 		String partnerAlias = entity.getAlias();
 		PrivateEntity2 privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
@@ -279,6 +284,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return division;
 	}
 	
+	@Transactional
 	public Customer installCustomer(Entity entity, String entityName, AbstractAddress partnerAddress, boolean reinstall) {
 		String partnerAlias = entity.getAlias();
 		PrivateEntity2 privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
@@ -310,6 +316,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return customer;
 	}
 	
+	@Transactional
 	public void installPartnerKeys(String[] keyValues, Partner partner) {
 		logger.debug("Ready to install key value pairs {} to {}", keyValues, partner);
 		Operator operator = partner.getPrivateEntity().getEntity().getOperator();
@@ -341,6 +348,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		partnerKeyDao.flush();
 	}
 	
+	@Transactional(readOnly=true)
 	public List<PrivateAddress> findPrivateAddresses(PrivateAddressForm form) {
 		Filter filter = new PrivateAddressFormFilterAdapter(form);
 		List<PrivateAddress> privateAddressList = (List<PrivateAddress>) addressDao.find(filter);
@@ -350,15 +358,18 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return privateAddressList;
 	}
 	
+	@Transactional
 	public PrivateAddress storePrivateAddress(PrivateAddress address) {
 		addressDao.saveOrUpdate(address);
 		return address;
 	}
 
+	@Transactional
 	public PrivateEntity2 removePrivateAddress(PrivateAddress address) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
+	@Transactional(readOnly=true)
 	public List<PrivateEntityKey> findPrivateEntityKeys(PrivateEntityKeyForm form) {
 		Filter filter = new PrivateEntityKeyFormFilterAdapter(form);
 		List<PrivateEntityKey> privateEntityKeyList = (List<PrivateEntityKey>) privateEntityKeyDao.find(filter);
@@ -368,11 +379,13 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return privateEntityKeyList;
 	}
 	
+	@Transactional
 	public PrivateEntityKey storePrivateEntityKey(PrivateEntityKey privateEntityKey) {
 		privateEntityKeyDao.saveOrUpdate(privateEntityKey);
 		return privateEntityKey;
 	}
 	
+	@Transactional(readOnly=true)
 	public List<PartnerCategory> findPartnerCategories(PartnerCategoryForm form) {
 		PartnerCategoryFormFilterAdapter filter = new PartnerCategoryFormFilterAdapter(form);
 		List<PartnerCategory> partnerCategoryList = (List<PartnerCategory>) partnerCategoryDao.find(filter);
@@ -382,11 +395,13 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerCategoryList;
 	}
 
+	@Transactional
 	public PartnerCategory storePartnerCategory(PartnerCategory partnerCategory) {
 		partnerCategoryDao.saveOrUpdate(partnerCategory);
 		return partnerCategory;
 	}
 
+	@Transactional(readOnly=true)
 	public List<? extends UserGroup> findContactGroups(ContactGroupForm form) {
 		Filter filter = new ContactGroupFormFilterAdapter(form);
 		List<? extends UserGroup> contactGroupList = (List<? extends UserGroup>) userGroupDao.find(filter);
@@ -396,6 +411,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return contactGroupList;
 	}
 	
+	@Transactional
 	public ContactGroup storeContactGroup(ContactGroup contactGroup) {
 		userGroupDao.saveOrUpdate(contactGroup);
 		return contactGroup;
