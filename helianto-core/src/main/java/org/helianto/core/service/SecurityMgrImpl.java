@@ -29,6 +29,7 @@ import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;
@@ -58,7 +59,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 
 	@Transactional(readOnly=true)
 	public Credential findCredentialByPrincipal(String principal) {
-		Identity identity = identityDao.findUnique(principal);
+		Identity identity = identityRepository.findByPrincipal(principal);
 		logger.debug("Found {}", identity);
 		return credentialRepository.findByIdentity(identity);
 	}
@@ -167,14 +168,14 @@ public class SecurityMgrImpl implements SecurityMgr {
 	
     // collabs
 
-    private FilterDao<Identity> identityDao;
+    private IdentityRepository identityRepository;
     private FilterDao<UserGroup> userGroupDao;
     private CredentialRepository credentialRepository;
 
-    @Resource(name="identityDao")
-    public void setIdentityDao(FilterDao<Identity> identityDao) {
-        this.identityDao = identityDao;
-    }
+    @Resource
+    public void setIdentityRepository(IdentityRepository identityRepository) {
+		this.identityRepository = identityRepository;
+	}
     
     @Resource(name="userGroupDao")
     public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {

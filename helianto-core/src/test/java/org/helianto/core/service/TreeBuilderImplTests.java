@@ -25,7 +25,6 @@ import java.util.List;
 import org.helianto.core.Node;
 import org.helianto.core.base.AbstractNode;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.test.IdentityTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +61,7 @@ public class TreeBuilderImplTests {
 	
 	@Test
 	public void nodeConstructor() {
-		Identity identity = IdentityTestSupport.createIdentity();
+		Identity identity = new Identity();
 		Node node = new NodeStub(10, identity, 100, 1000);
 		assertEquals(10, node.getId());
 		assertEquals(identity.getPrincipal(), node.getCaption());
@@ -74,7 +73,7 @@ public class TreeBuilderImplTests {
 	
 	@Test
 	public void addNodeCollapsed() {
-		Identity identity = IdentityTestSupport.createIdentity();
+		Identity identity = new Identity();
 		Node node = new NodeStub(10, identity, 100, 1000);
 		((TreeBuilderImpl) treeBuilder).addNode(node);
 		List<Node> tree = treeBuilder.getTree();
@@ -84,7 +83,7 @@ public class TreeBuilderImplTests {
 	
 	@Test
 	public void addNodeExpanded() {
-		Identity identity = IdentityTestSupport.createIdentity();
+		Identity identity = new Identity();
 		Node node = new NodeStub(10, identity, 100, 1000);
 		((TreeBuilderImpl) treeBuilder).addNode(node);
 		List<Node> tree = treeBuilder.getTree();

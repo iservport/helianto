@@ -7,10 +7,10 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Service;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.core.test.UserTestSupport;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
@@ -26,7 +26,7 @@ public class UserDetailsAdapterTests {
 	
 	@Test
 	public void grantAuthorities() {
-		User user = UserTestSupport.createUser();
+		User user = new User(new Entity(), new Identity("p"));
 		user.getIdentity().setId(100);
 		Collection<UserRole> roles = new HashSet<UserRole>();
 		roles.add(new UserRole(user, new Service(new Operator(), "A"), "READ, WRITE"));

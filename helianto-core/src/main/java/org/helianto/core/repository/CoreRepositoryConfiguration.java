@@ -59,14 +59,6 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	}
 
 	/**
-	 * Identity data access.
-	 */
-	@Bean
-	public FilterDao<Identity> identityDao() {
-		return getFilterDao(Identity.class, "principal");
-	}
-
-	/**
 	 * Address database data access.
 	 */
 	@Bean

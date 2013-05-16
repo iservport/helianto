@@ -18,6 +18,8 @@ package org.helianto.core.test;
 import java.util.HashSet;
 
 import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserRole;
@@ -34,7 +36,7 @@ import org.springframework.security.core.context.SecurityContextImpl;
 public class SecurityTestSupport {
     
     public static Authentication createAuthentication() {
-    	return createAuthentication(UserTestSupport.createUser());
+    	return createAuthentication(new User(new Entity(), new Identity("p")));
     }
     
     public static Authentication createAuthentication(User user) {
@@ -44,7 +46,7 @@ public class SecurityTestSupport {
     }
     
     public static UserDetailsAdapter createUserDetailsAdapter() {
-        return createUserDetailsAdapter(UserTestSupport.createUser());
+        return createUserDetailsAdapter(new User(new Entity(), new Identity("p")));
     }
 
     public static UserDetailsAdapter createUserDetailsAdapter(User user) {

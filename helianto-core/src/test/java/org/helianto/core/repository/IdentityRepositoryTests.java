@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  * @author mauriciofernandesdecastro
  */
-public class IdentityRepositoryTests extends AbstractJpaRepositoryIntegrationTest<Identity, IdentityRepository> {
+public class IdentityRepositoryTests 
+	extends AbstractJpaRepositoryIntegrationTest<Identity, IdentityRepository> {
 
 	@Autowired
 	private IdentityRepository repository;

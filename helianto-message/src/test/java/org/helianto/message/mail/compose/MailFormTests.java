@@ -28,7 +28,6 @@ import javax.mail.MessagingException;
 import org.helianto.core.IdentityType;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.test.IdentityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Test;
 
@@ -37,7 +36,7 @@ public class MailFormTests {
     @Test
     public void mailForm() {
         Operator operator = OperatorTestSupport.createOperator();
-        Identity identity = IdentityTestSupport.createIdentity();
+        Identity identity = new Identity();
         identity.setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
         MailForm mailForm = createMailForm(operator, identity);
         assertSame(operator, mailForm.getOperator());
@@ -59,7 +58,7 @@ public class MailFormTests {
         //create with organizational email
         MailForm mailForm = createMailForm();
         
-        Identity recipient = IdentityTestSupport.createIdentity();
+        Identity recipient = new Identity();
         try {
         	Set<Identity> identities = new HashSet<Identity>();
             recipient.setIdentityType(IdentityType.NOT_ADDRESSABLE.getValue());
@@ -84,7 +83,7 @@ public class MailFormTests {
     
     public static MailForm createMailForm() {
         Operator operator = OperatorTestSupport.createOperator();
-        Identity identity = IdentityTestSupport.createIdentity();
+        Identity identity = new Identity();
         identity.setIdentityType(IdentityType.ORGANIZATIONAL_EMAIL.getValue());
         return createMailForm(operator, identity);
     }

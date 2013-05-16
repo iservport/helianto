@@ -4,9 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.def.NavigationMode;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
 import org.helianto.core.form.NavigableForm;
-import org.helianto.core.test.UserTestSupport;
 import org.helianto.user.domain.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class FilterAdapterTests {
 	
 	@Test
 	public void filter() {
-		User user = UserTestSupport.createUser();
+		User user = new User(new Entity(), new Identity("p"));
 		user.getIdentity().setPrincipal("TESTE");
 		
 		FirstFilter filter1 = new FirstFilter(user);

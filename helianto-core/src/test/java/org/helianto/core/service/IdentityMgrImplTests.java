@@ -21,7 +21,6 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
@@ -30,13 +29,12 @@ import java.util.List;
 import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.IdentityFilterAdapter;
 import org.helianto.core.repository.CredentialRepository;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.service.strategy.PrincipalGenerationStrategy;
-import org.helianto.core.test.IdentityTestSupport;
-import org.helianto.core.test.UserTestSupport;
 import org.helianto.user.domain.User;
 import org.junit.After;
 import org.junit.Before;
@@ -58,13 +56,13 @@ public class IdentityMgrImplTests {
         principalGenerationStrategy.generatePrincipal(identity, 0);
         replay(principalGenerationStrategy);
         
-        identityDao.saveOrUpdate(identity);
+        expect(identityRepository.saveAndFlush(identity)).andReturn(identity);
         // null below means no duplication in the db
-        expect(identityDao.findUnique(identity.getPrincipal())).andReturn(null);
-        replay(identityDao);
+        expect(identityRepository.findByPrincipal(identity.getPrincipal())).andReturn(null);
+        replay(identityRepository);
         
         assertSame(identity, identityMgr.storeIdentity(identity, true));
-        verify(identityDao);
+        verify(identityRepository);
         verify(principalGenerationStrategy);
     }
     
@@ -76,11 +74,11 @@ public class IdentityMgrImplTests {
         Identity identity = new Identity();
         identity.setPrincipal("principal");
         
-        identityDao.saveOrUpdate(identity);
-        replay(identityDao);
+        expect(identityRepository.saveAndFlush(identity)).andReturn(identity);
+        replay(identityRepository);
         
         assertSame(identity, identityMgr.storeIdentity(identity));
-        verify(identityDao);
+        verify(identityRepository);
     }
     
 	/**
@@ -96,11 +94,11 @@ public class IdentityMgrImplTests {
         principalGenerationStrategy.generatePrincipal(identity, 0);
         replay(principalGenerationStrategy);
         
-        expect(identityDao.findUnique(identity.getPrincipal())).andReturn(checkForPreviousIdentity);
-        replay(identityDao);
+        expect(identityRepository.findByPrincipal(identity.getPrincipal())).andReturn(checkForPreviousIdentity);
+        replay(identityRepository);
         
         assertSame(managedIdentity, identityMgr.storeIdentity(identity, true));
-        verify(identityDao);
+        verify(identityRepository);
         verify(principalGenerationStrategy);
     }
     
@@ -109,35 +107,31 @@ public class IdentityMgrImplTests {
         String principal = "123";
         Identity identity = new Identity();
         
-        expect(identityDao.findUnique(principal))
+        expect(identityRepository.findByPrincipal(principal))
             .andReturn(identity);
-        replay(identityDao);
+        replay(identityRepository);
         
         assertSame(identity, identityMgr.findIdentityByPrincipal(principal));
-        verify(identityDao);
+        verify(identityRepository);
     }
 
 	@Test
     public void selectIdentities() {
-        int size = 10;
         IdentityFilterAdapter filter = new IdentityFilterAdapter("");
-        List<Identity> identityList = IdentityTestSupport.createIdentityList(size);
+        List<Identity> identityList = new ArrayList<Identity>();
         List<Identity> exclusions = new ArrayList<Identity>();
-        Identity excluded = identityList.get((int) (Math.random()*size));
-        exclusions.add(excluded);
 
-        expect(identityDao.find(filter)).andReturn(identityList);
-        replay(identityDao);
+        expect(identityRepository.find(filter)).andReturn(identityList);
+        replay(identityRepository);
 
         assertSame(identityList, identityMgr.findIdentities(filter, exclusions));
-        verify(identityDao);
+        verify(identityRepository);
         
-        assertFalse(identityList.contains(excluded));
     }
     
 	@Test
     public void userState() {
-        User user = UserTestSupport.createUser();
+        User user = new User(new Entity(), new Identity());
         Credential credential = new Credential(user.getIdentity());
         assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
         assertEquals(ActivityState.ACTIVE.getValue(), credential.getCredentialState());
@@ -145,17 +139,16 @@ public class IdentityMgrImplTests {
     
     private IdentityMgrImpl identityMgr;
     
-    private FilterDao<Identity> identityDao;
+    private IdentityRepository identityRepository;
     private CredentialRepository credentialRepository;
     private PrincipalGenerationStrategy principalGenerationStrategy;
 
     
-    @SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         identityMgr = new IdentityMgrImpl();
-        identityDao = createMock(FilterDao.class);
-        identityMgr.setIdentityDao(identityDao);
+        identityRepository = createMock(IdentityRepository.class);
+        identityMgr.setIdentityRepository(identityRepository);
         principalGenerationStrategy = createMock(PrincipalGenerationStrategy.class);
         identityMgr.setPrincipalGenerationStrategy(principalGenerationStrategy);
         credentialRepository = createMock(CredentialRepository.class);
@@ -165,7 +158,7 @@ public class IdentityMgrImplTests {
     @After
     public void tearDown() {
         reset(credentialRepository);
-        reset(identityDao);
+        reset(identityRepository);
         reset(principalGenerationStrategy);
     }
     

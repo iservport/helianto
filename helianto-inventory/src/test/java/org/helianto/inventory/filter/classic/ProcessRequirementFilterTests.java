@@ -4,8 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.classic.DateFilterMode;
-import org.helianto.core.test.UserTestSupport;
+import org.helianto.user.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,6 +62,6 @@ public class ProcessRequirementFilterTests {
     
     @Before
     public void setUp() {
-    	filter = new ProcessRequirementFilter(UserTestSupport.createUser());
+    	filter = new ProcessRequirementFilter(new User(new Entity(), new Identity("p")));
     }
 }

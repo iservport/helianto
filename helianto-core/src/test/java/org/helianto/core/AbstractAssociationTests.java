@@ -24,7 +24,6 @@ import java.io.Serializable;
 
 import org.helianto.core.base.AbstractAssociation;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.test.IdentityTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -105,8 +104,8 @@ public class AbstractAssociationTests {
 	@Test
 	public void hashTest() {
 		association.setSequence(10);
-		association.setChild(IdentityTestSupport.createIdentity("CHILD"));
-		association.setParent(IdentityTestSupport.createIdentity());
+		association.setChild(new Identity("CHILD"));
+		association.setParent(new Identity());
 //		System.out.println("Child hash "+association.getChild().hashCode());
 //		int result = 23643 + association.getChild().hashCode(); 
 		assertEquals(94655468, association.hashCode());

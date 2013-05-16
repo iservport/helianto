@@ -37,6 +37,7 @@ import org.helianto.core.form.IdentityForm;
 import org.helianto.core.form.PersonalAddressForm;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.service.strategy.PrincipalGenerationStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,14 +54,12 @@ public class IdentityMgrImpl implements IdentityMgr {
 	@Transactional(readOnly=true)
     public Identity findIdentityByPrincipal(String principal) {
         logger.debug("Finding unique with principal {}", principal);
-        return (Identity) identityDao.findUnique(principal);
+        return (Identity) identityRepository.findByPrincipal(principal);
     }
     
 	@Transactional(readOnly=true)
     public Identity loadIdentity(long id) {
-    	Identity sample = new Identity();
-    	sample.setId(id);
-    	Identity identity = identityDao.load(sample);
+    	Identity identity = identityRepository.findOne(id);
     	if (identity!=null && identity.getPhoto()!=null) {
     		logger.debug("Identity {} photo size is {}.", identity, identity.getPhoto().length);
     	}
@@ -79,7 +78,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 
 	@Transactional(readOnly=true)
     public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions) {
-        List<Identity> identityList = (List<Identity>) identityDao.find(filter);
+        List<Identity> identityList = (List<Identity>) identityRepository.find(filter);
         logger.debug("Found {} item(s).", identityList.size());
         if (exclusions!=null) {
             identityList.removeAll(exclusions);
@@ -91,7 +90,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 	@Transactional(readOnly=true)
     public List<Identity> findIdentities(IdentityForm form) {
     	IdentityFormFilterAdapter filter = new IdentityFormFilterAdapter(form);
-        List<Identity> identityList = (List<Identity>) identityDao.find(filter);
+        List<Identity> identityList = (List<Identity>) identityRepository.find(filter);
         logger.debug("Found {} item(s).", identityList.size());
         if (form.getExclusions()!=null) {
             identityList.removeAll(form.getExclusions());
@@ -107,8 +106,7 @@ public class IdentityMgrImpl implements IdentityMgr {
      */
 	@Transactional
 	public Identity storeIdentity(Identity identity) {
-		identityDao.saveOrUpdate(identity);
-		return identity;
+		return identityRepository.saveAndFlush(identity);
 	}
 	
     /**
@@ -130,15 +128,14 @@ public class IdentityMgrImpl implements IdentityMgr {
 			principalGenerationStrategy.generatePrincipal(identity, attemptCount);
 			if (identity.getId()==0) {
 				logger.debug("Identity with principal {} is likely new.", identity.getPrincipal());
-				Identity checkForPreviousIdentity = (Identity) identityDao.findUnique(identity.getPrincipal());
+				Identity checkForPreviousIdentity = (Identity) identityRepository.findByPrincipal(identity.getPrincipal());
 				if (checkForPreviousIdentity!=null) {
 					logger.warn("Found previous identity with same principal as new indentity: {}, rejecting.", checkForPreviousIdentity);
 					throw new DuplicateIdentityException(checkForPreviousIdentity, "Found previous identity with same principal as new indentity");
 				}
 			}
 		}
-		identityDao.saveOrUpdate(identity);
-		return identity;
+		return identityRepository.saveAndFlush(identity);
 	}
 	
 	@Transactional(readOnly=true)
@@ -163,37 +160,32 @@ public class IdentityMgrImpl implements IdentityMgr {
 	@Transactional
 	public PersonalAddress storePersonalAddress(PersonalAddress personalAddress) {
 		personalAddressDao.saveOrUpdate(personalAddress);
-		identityDao.flush();
+		identityRepository.flush();
 		return personalAddress;
 	}
 	
 	@Transactional
 	public Identity storeIdentityPhone(Phone identityPhone, Identity identity) {
-		identityDao.saveOrUpdate(identity);
 		identity.getPhones().add(identityPhone);
-		identityDao.flush();
-		return identity;
+		return identityRepository.saveAndFlush(identity);
 	}
 	
 	@Transactional
 	public Identity storeIdentityContactInfo(ContactInfo contactInfo, Identity identity) {
-		identityDao.saveOrUpdate(identity);
 		identity.getContactInfos().add(contactInfo);
-		identityDao.flush();
-		return identity;
+		return identityRepository.saveAndFlush(identity);
 	}
 	
 	@Transactional
 	public Credential installIdentity(String principal) {
-		Identity identity = identityDao.findUnique(principal);
+		Identity identity = identityRepository.findByPrincipal(principal);
 		if (identity==null) {
 			logger.info("Will install identity for {}.", principal);
-			identity = identityDao.merge(new Identity(principal));
+			identity = identityRepository.saveAndFlush(new Identity(principal));
 		}
 		else {
 			logger.debug("Found existing identity for {}.", principal);
 		}
-		personalAddressDao.flush();
 		PersonalAddress personalAddress = new PersonalAddress(identity, AddressType.PERSONAL);
 		final long identityId = identity.getId();
 		PersonalAddressForm form = new PersonalAddressForm() {
@@ -229,16 +221,16 @@ public class IdentityMgrImpl implements IdentityMgr {
 	
     //- collaborators
     
-    private FilterDao<Identity> identityDao;
+    private IdentityRepository identityRepository;
     private CredentialRepository credentialRepository;
     private FilterDao<PersonalAddress> personalAddressDao;
     private PrincipalGenerationStrategy principalGenerationStrategy;
 	
 
-    @Resource(name="identityDao")
-    public void setIdentityDao(FilterDao<Identity> identityDao) {
-        this.identityDao = identityDao;
-    }
+    @Resource
+    public void setIdentityRepository(IdentityRepository identityRepository) {
+		this.identityRepository = identityRepository;
+	}
     
     @Resource
     public void setCredentialRepository(CredentialRepository credentialRepository) {

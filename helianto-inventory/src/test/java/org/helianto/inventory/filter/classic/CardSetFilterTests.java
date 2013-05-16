@@ -2,7 +2,8 @@ package org.helianto.inventory.filter.classic;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.test.UserTestSupport;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.inventory.CardType;
 import org.helianto.process.domain.Process;
 import org.helianto.user.domain.User;
@@ -48,7 +49,7 @@ public class CardSetFilterTests {
     
     @Before
     public void setUp() {
-    	user = UserTestSupport.createUser();
+    	user = new User(new Entity(), new Identity("p"));
     	filter = CardSetFilter.cardSetFilterFactory(user);
     }
 }

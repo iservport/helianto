@@ -31,6 +31,7 @@ import java.util.List;
 import org.easymock.EasyMock;
 import org.helianto.core.IdentityMgr;
 import org.helianto.core.PublicEntityMgr;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.PublicEntity;
@@ -38,7 +39,6 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.UserGroupTestSupport;
-import org.helianto.core.test.UserTestSupport;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
@@ -131,7 +131,7 @@ public class UserMgrImplTests {
 	@Test
 	public void findUserGroupParentLevel1() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-		User user = UserTestSupport.createUser();
+		User user = new User(new Entity(), new Identity("p"));
 		UserAssociation association = new UserAssociation(userGroup, user);
 		user.getParentAssociations().add(association);
 		

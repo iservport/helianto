@@ -29,13 +29,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.easymock.EasyMock;
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Service;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;
@@ -71,15 +71,15 @@ public class SecurityMgrImplTests {
         Credential credential = new Credential();
         Identity identity = new Identity();
         
-        expect(identityDao.findUnique("PRINCIPAL"))
+        expect(identityRepository.findByPrincipal("PRINCIPAL"))
             .andReturn(identity);
-        replay(identityDao);
+        replay(identityRepository);
         
         expect(credentialRepository.findByIdentity(identity)).andReturn(credential);
         replay(credentialRepository);
     
         assertSame(credential, securityMgr.findCredentialByPrincipal("PRINCIPAL"));
-        verify(identityDao);
+        verify(identityRepository);
         verify(credentialRepository);
     }
 
@@ -140,7 +140,7 @@ public class SecurityMgrImplTests {
     //~ collaborators
     
 	private FilterDao<UserGroup> userGroupDao;
-	private FilterDao<Identity> identityDao;
+	private IdentityRepository identityRepository;
     private CredentialRepository credentialRepository;
     
     //~ setup
@@ -150,9 +150,9 @@ public class SecurityMgrImplTests {
     public void setUp() {
         securityMgr = new SecurityMgrImpl();
         userGroupDao = createMock(FilterDao.class);
-        identityDao = createMock(FilterDao.class);
+        identityRepository = createMock(IdentityRepository.class);
         securityMgr.setUserGroupDao(userGroupDao);
-        securityMgr.setIdentityDao(identityDao);
+        securityMgr.setIdentityRepository(identityRepository);
         credentialRepository = createMock(CredentialRepository.class);
         securityMgr.setCredentialRepository(credentialRepository);
     }
@@ -160,7 +160,7 @@ public class SecurityMgrImplTests {
     @After
     public void tearDown() {
         reset(userGroupDao);
-        reset(identityDao);
+        reset(identityRepository);
         reset(credentialRepository);
     }
 
