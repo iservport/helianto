@@ -41,8 +41,10 @@ import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
 import org.helianto.core.repository.ContextEventRepository;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.ContextRepository;
+import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
 import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
@@ -60,7 +62,7 @@ public class ContextMgrImpl
 
 	@Transactional(readOnly=true)
 	public List<Operator> findOperators(Filter operatorFilter) {
-		List<Operator> operatorList = (List<Operator>) operatorDao.find(operatorFilter);
+		List<Operator> operatorList = (List<Operator>) contextRepository.find(operatorFilter);
 		if (operatorList!=null && operatorList.size()>0) {
 			logger.debug("Found {} namespace operator(s)", operatorList.size());
 		}
@@ -69,26 +71,13 @@ public class ContextMgrImpl
 	
 	@Transactional
 	public Operator storeOperator(Operator operator) {
-		operatorDao.saveOrUpdate(operator);
-		return operator;
+		return contextRepository.saveAndFlush(operator);
 	}
 
 	@Transactional(readOnly=true)
 	public List<Province> findProvinces(ProvinceForm form) {
 		Filter filter = new ProvinceFormFilterAdapter(form);
-    	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
-    	if (provinceList!=null && provinceList.size()>0) {
-        	logger.debug("Found province list of size {}", provinceList.size());
-    	}
-    	return provinceList;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Transactional(readOnly=true)
-	public List<Province> findProvinces(Filter filter) {
-    	List<Province> provinceList = (List<Province>) provinceDao.find(filter);
+    	List<Province> provinceList = (List<Province>) provinceRepository.find(filter);
     	if (provinceList!=null && provinceList.size()>0) {
         	logger.debug("Found province list of size {}", provinceList.size());
     	}
@@ -97,13 +86,12 @@ public class ContextMgrImpl
 
 	@Transactional
 	public Province storeProvince(Province province) {
-		Province managedProvince =  provinceDao.merge(province);
-		return managedProvince;
+		return provinceRepository.saveAndFlush(province);
 	}
 	
 	@Transactional(readOnly=true)
 	public List<Entity> findEntities(Filter filter) {
-		List<Entity> entityList = (List<Entity>) entityDao.find(filter);
+		List<Entity> entityList = (List<Entity>) entityRepository.find(filter);
 		if (entityList!=null && entityList.size()>0) {
 			logger.debug("Found {} entity(ies).", entityList.size());
 		}
@@ -112,8 +100,7 @@ public class ContextMgrImpl
 	
 	@Transactional
 	public Entity storeEntity(Entity entity) {
-		entityDao.saveOrUpdate(entity);
-		return entity;
+		return entityRepository.saveAndFlush(entity);
 	}
 
 	@Transactional(readOnly=true)
@@ -173,7 +160,7 @@ public class ContextMgrImpl
 
 	@Transactional
 	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole) {
-		Operator managedOperator = operatorDao.merge(operator);
+		Operator managedOperator = contextRepository.save(operator);
 		Map<String, String> serviceNameMap = new HashMap<String, String>();
 		Collection<Service> services = managedOperator.getServiceMap().values();
 		if (services!=null && services.size()>0) {
@@ -194,28 +181,28 @@ public class ContextMgrImpl
 
 	// collabs
 	
-	private FilterDao<Operator> operatorDao;
-	private FilterDao<Province> provinceDao;
-	private FilterDao<Entity> entityDao;
+	private ContextRepository contextRepository;
+	private ProvinceRepository provinceRepository;
+	private EntityRepository entityRepository;
 	private KeyTypeRepository keyTypeRepository;
 	private ServiceRepository serviceRepository;
 	private ContextEventRepository contextEventRepository;
 	private SequenceMgr sequenceMgr;
 	
-	@Resource(name="operatorDao")
-	public void setOperatorDao(FilterDao<Operator> operatorDao) {
-		this.operatorDao = operatorDao;
+	@Resource
+	public void setContextRepository(ContextRepository contextRepository) {
+		this.contextRepository = contextRepository;
 	}
 
-    @Resource(name="provinceDao")
-    public void setProvinceDao(FilterDao<Province> provinceDao) {
-        this.provinceDao = provinceDao;
-    }
+    @Resource
+    public void setProvinceRepository(ProvinceRepository provinceRepository) {
+		this.provinceRepository = provinceRepository;
+	}
 
-    @Resource(name="entityDao")
-    public void setEntityDao(FilterDao<Entity> entityDao) {
-        this.entityDao = entityDao;
-    }
+    @Resource
+    public void setEntityRepository(EntityRepository entityRepository) {
+		this.entityRepository = entityRepository;
+	}
     
     @Resource
     public void setKeyTypeRepository(KeyTypeRepository keyTypeRepository) {

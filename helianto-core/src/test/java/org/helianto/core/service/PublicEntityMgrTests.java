@@ -14,7 +14,8 @@ import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.TestingFilter;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.PublicAddressRepository;
+import org.helianto.core.repository.PublicEntityRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,33 +33,33 @@ public class PublicEntityMgrTests {
 		Filter filter = new TestingFilter();
 		List<PublicAddress> publicAddressList = new ArrayList<PublicAddress>();
 		
-		EasyMock.expect(publicAddressDao.find(filter)).andReturn(publicAddressList);
-		EasyMock.replay(publicAddressDao);
+		EasyMock.expect(publicAddressRepository.find(filter)).andReturn(publicAddressList);
+		EasyMock.replay(publicAddressRepository);
 		
 		assertEquals(publicAddressList, publicEntityMgr.findPublicAddress(filter));
-		EasyMock.verify(publicAddressDao);
+		EasyMock.verify(publicAddressRepository);
 	}
 	
 	@Test
 	public void storePublicAddress() {
 		PublicAddress publicAddress = new PublicAddress(operator, "POSTALCODE");
 		
-		publicAddressDao.saveOrUpdate(publicAddress);
-		EasyMock.replay(publicAddressDao);
+		EasyMock.expect(publicAddressRepository.saveAndFlush(publicAddress)).andReturn(publicAddress);
+		EasyMock.replay(publicAddressRepository);
 		
 		assertEquals(publicAddress, publicEntityMgr.storePublicAddress(publicAddress));
-		EasyMock.verify(publicAddressDao);
+		EasyMock.verify(publicAddressRepository);
 	}
 	
 	@Test
 	public void removePublicAddress() {
 		PublicAddress publicAddress = new PublicAddress(operator, "POSTALCODE");
 		
-		publicAddressDao.remove(publicAddress);
-		EasyMock.replay(publicAddressDao);
+		publicAddressRepository.delete(publicAddress);
+		EasyMock.replay(publicAddressRepository);
 		
 		publicEntityMgr.removePublicAddress(publicAddress);
-		EasyMock.verify(publicAddressDao);
+		EasyMock.verify(publicAddressRepository);
 	}
 	
 	///
@@ -68,11 +69,11 @@ public class PublicEntityMgrTests {
 		Filter filter = new TestingFilter();
 		List<PublicEntity> publicEntityList = new ArrayList<PublicEntity>();
 		
-		EasyMock.expect(publicEntityDao.find(filter)).andReturn(publicEntityList);
-		EasyMock.replay(publicEntityDao);
+		EasyMock.expect(publicEntityRepository.find(filter)).andReturn(publicEntityList);
+		EasyMock.replay(publicEntityRepository);
 		
 		assertEquals(publicEntityList, publicEntityMgr.findPublicEntities(filter));
-		EasyMock.verify(publicEntityDao);
+		EasyMock.verify(publicEntityRepository);
 	}
 	
 	@Test
@@ -80,22 +81,22 @@ public class PublicEntityMgrTests {
 		PublicEntity publicEntity = new PublicEntity(entity);
 		entity.setInstallDate(new Date());
 		
-		publicEntityDao.saveOrUpdate(publicEntity);
-		EasyMock.replay(publicEntityDao);
+		EasyMock.expect(publicEntityRepository.saveAndFlush(publicEntity)).andReturn(publicEntity);
+		EasyMock.replay(publicEntityRepository);
 		
 		assertEquals(publicEntity, publicEntityMgr.storePublicEntity(publicEntity));
-		EasyMock.verify(publicEntityDao);
+		EasyMock.verify(publicEntityRepository);
 	}
 	
 	@Test
 	public void removePublicEntity() {
 		PublicEntity publicEntity = new PublicEntity(entity);
 		
-		publicEntityDao.remove(publicEntity);
-		EasyMock.replay(publicEntityDao);
+		publicEntityRepository.delete(publicEntity);
+		EasyMock.replay(publicEntityRepository);
 		
 		publicEntityMgr.removePublicEntity(publicEntity);
-		EasyMock.verify(publicEntityDao);
+		EasyMock.verify(publicEntityRepository);
 	}
 	
 
@@ -104,25 +105,24 @@ public class PublicEntityMgrTests {
 	
 	private Operator operator;
 	private Entity entity;
-	private FilterDao<PublicAddress> publicAddressDao;
-	private FilterDao<PublicEntity> publicEntityDao;
+	private PublicAddressRepository publicAddressRepository;
+	private PublicEntityRepository publicEntityRepository;
 	
-	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		operator = new Operator("DEFAULT");
 		entity = new Entity(operator, "ENTITY");
 		publicEntityMgr = new PublicEntityMgrImpl();
-		publicAddressDao = EasyMock.createMock(FilterDao.class);
-		((PublicEntityMgrImpl) publicEntityMgr).setPublicAddressDao(publicAddressDao);
-		publicEntityDao = EasyMock.createMock(FilterDao.class);
-		((PublicEntityMgrImpl) publicEntityMgr).setPublicEntityDao(publicEntityDao);
+		publicAddressRepository = EasyMock.createMock(PublicAddressRepository.class);
+		((PublicEntityMgrImpl) publicEntityMgr).setPublicAddressRepository(publicAddressRepository);
+		publicEntityRepository = EasyMock.createMock(PublicEntityRepository.class);
+		((PublicEntityMgrImpl) publicEntityMgr).setPublicEntityRepository(publicEntityRepository);
 	}
 	
 	@After
 	public void tearDown() {
-		EasyMock.reset(publicAddressDao);
-		EasyMock.reset(publicEntityDao);
+		EasyMock.reset(publicAddressRepository);
+		EasyMock.reset(publicEntityRepository);
 	}
 
 }

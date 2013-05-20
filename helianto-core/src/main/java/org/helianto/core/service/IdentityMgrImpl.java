@@ -36,8 +36,8 @@ import org.helianto.core.filter.PersonalAddressFormFilterAdapter;
 import org.helianto.core.form.IdentityForm;
 import org.helianto.core.form.PersonalAddressForm;
 import org.helianto.core.repository.CredentialRepository;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.IdentityRepository;
+import org.helianto.core.repository.PersonalAddressRepository;
 import org.helianto.core.service.strategy.PrincipalGenerationStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,7 +140,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 	
 	@Transactional(readOnly=true)
 	public List<PersonalAddress> findPersonalAddresses(Filter filter) {
-		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(filter);
+		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressRepository.find(filter);
 		if (personalAddressList!=null) {
 			logger.debug("Found {} personal addresses.", personalAddressList.size());
 		}
@@ -150,7 +150,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 	@Transactional(readOnly=true)
 	public List<PersonalAddress> findPersonalAddresses(PersonalAddressForm form) {
 		PersonalAddressFormFilterAdapter filter = new PersonalAddressFormFilterAdapter(form);
-		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(filter);
+		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressRepository.find(filter);
 		if (personalAddressList!=null) {
 			logger.debug("Found {} personal addresses.", personalAddressList.size());
 		}
@@ -159,9 +159,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 	
 	@Transactional
 	public PersonalAddress storePersonalAddress(PersonalAddress personalAddress) {
-		personalAddressDao.saveOrUpdate(personalAddress);
-		identityRepository.flush();
-		return personalAddress;
+		return personalAddressRepository.saveAndFlush(personalAddress);
 	}
 	
 	@Transactional
@@ -199,9 +197,9 @@ public class IdentityMgrImpl implements IdentityMgr {
 				return identityId;
 			}
 		};
-		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressDao.find(new PersonalAddressFormFilterAdapter(form));
+		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressRepository.find(new PersonalAddressFormFilterAdapter(form));
 		if (personalAddressList.size()==0) {
-			personalAddressDao.saveOrUpdate(personalAddress);
+			personalAddressRepository.saveAndFlush(personalAddress);
 		}
 		return installCredential(identity);
 	}
@@ -223,7 +221,7 @@ public class IdentityMgrImpl implements IdentityMgr {
     
     private IdentityRepository identityRepository;
     private CredentialRepository credentialRepository;
-    private FilterDao<PersonalAddress> personalAddressDao;
+    private PersonalAddressRepository personalAddressRepository;
     private PrincipalGenerationStrategy principalGenerationStrategy;
 	
 
@@ -237,9 +235,10 @@ public class IdentityMgrImpl implements IdentityMgr {
 		this.credentialRepository = credentialRepository;
 	}
     
-    @Resource(name="personalAddressDao")
-    public void setPersonalAddressDao(FilterDao<PersonalAddress> personalAddressDao) {
-		this.personalAddressDao = personalAddressDao;
+    @Resource
+    public void setPersonalAddressRepository(
+			PersonalAddressRepository personalAddressRepository) {
+		this.personalAddressRepository = personalAddressRepository;
 	}
 
     @Resource

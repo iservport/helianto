@@ -12,7 +12,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.EntityRepository;
-import org.helianto.core.repository.OperatorRepository;
+import org.helianto.core.repository.ContextRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +40,7 @@ public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends FilterRe
     protected EntityRepository entityRepository;
     
 	@Autowired
-    protected OperatorRepository operatorRepository;
+    protected ContextRepository operatorRepository;
 
     /**
 	 * Provide the test infrastructure with an entity.

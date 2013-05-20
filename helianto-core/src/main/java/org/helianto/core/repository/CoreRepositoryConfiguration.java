@@ -15,22 +15,8 @@
 
 package org.helianto.core.repository;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.PersonalAddress;
-import org.helianto.core.domain.PrivateSequence;
-import org.helianto.core.domain.Province;
-import org.helianto.core.domain.PublicAddress;
-import org.helianto.core.domain.PublicEntity;
-import org.helianto.core.domain.PublicEntityKey;
-import org.helianto.core.domain.PublicSequence;
-import org.helianto.core.domain.Server;
-import org.helianto.core.domain.Service;
-import org.helianto.core.domain.Unit;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.user.domain.UserAssociation;
-import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserLog;
 import org.helianto.user.domain.UserRequest;
 import org.helianto.user.domain.UserRole;
@@ -51,91 +37,11 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	public CoreRepositoryConfiguration() { }
 	
 	/**
-	 * Entity data access.
-	 */
-	@Bean
-	public FilterDao<Entity> entityDao() {
-		return getFilterDao(Entity.class, "operator", "alias");
-	}
-
-	/**
-	 * Address database data access.
-	 */
-	@Bean
-	public FilterDao<PublicAddress> publicAddressDao() {
-		return getFilterDao(PublicAddress.class, "operator", "postalCode");
-	}
-
-	/**
-	 * Personal address access.
-	 */
-	@Bean
-	public FilterDao<PersonalAddress> personalAddressDao() {
-		return getFilterDao(PersonalAddress.class, "identity", "addressType");
-	}
-
-	/**
-	 * Internal enumerator data access.
-	 */
-	@Bean
-	public FilterDao<PrivateSequence> internalEnumeratorDao() {
-		return getFilterDao(PrivateSequence.class, "entity", "typeName");
-	}
-
-	/**
-	 * Public enumerator data access.
-	 */
-	@Bean
-	public FilterDao<PublicSequence> publicEnumeratorDao() {
-		return getFilterDao(PublicSequence.class, "operator", "typeName");
-	}
-
-	/**
-	 * Operator data access.
-	 */
-	@Bean
-	public FilterDao<Operator> operatorDao() {
-		return getFilterDao(Operator.class, "operatorName");
-	}
-
-	/**
-	 * Province data access.
-	 */
-	@Bean
-	public FilterDao<Province> provinceDao() {
-		return getFilterDao(Province.class, "operator", "provinceCode");
-	}
-
-	/**
-	 * Server data access.
-	 */
-	@Bean
-	public FilterDao<Server> serverDao() {
-		return getFilterDao(Server.class, "operator", "serverName");
-	}
-
-	/**
-	 * Unit data access.
-	 */
-	@Bean
-	public FilterDao<Unit> unitDao() {
-		return getFilterDao(Unit.class, "entity", "unitCode");
-	}
-
-	/**
 	 * User association data access.
 	 */
 	@Bean
 	public FilterDao<UserAssociation> userAssociationDao() {
 		return getFilterDao(UserAssociation.class, "parent", "child");
-	}
-
-	/**
-	 * User group data access.
-	 */
-	@Bean
-	public FilterDao<UserGroup> userGroupDao() {
-		return getFilterDao(UserGroup.class, "entity", "userKey");
 	}
 
 	/**
@@ -162,20 +68,4 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 		return getFilterDao(UserRequest.class, "userGroup", "internalNumber");
 	}
 	
-	/**
-	 * Public entity data access.
-	 */
-	@Bean
-	public FilterDao<PublicEntity> publicEntityDao() {
-		return getFilterDao(PublicEntity.class, "entity", "entityAlias", "class");
-	}
-
-	/**
-	 * Public entity key data access.
-	 */
-	@Bean
-	public FilterDao<PublicEntityKey> publicEntityKeyDao() {
-		return getFilterDao(PublicEntityKey.class, "publicEntity", "keyType");
-	}
-
 }

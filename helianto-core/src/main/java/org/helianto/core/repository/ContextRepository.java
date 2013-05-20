@@ -6,11 +6,11 @@ import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Operator;
 
 /**
- * Operator repository.
+ * Context repository.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface OperatorRepository extends FilterRepository<Operator, Serializable> {
+public interface ContextRepository extends FilterRepository<Operator, Serializable> {
 	
 	/**
 	 * Find by natural key.

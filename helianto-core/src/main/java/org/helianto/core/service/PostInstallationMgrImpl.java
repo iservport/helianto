@@ -30,13 +30,18 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.ContextRepository;
+import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
+import org.helianto.user.repository.UserGroupRepository;
+import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -61,11 +66,11 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		logger.debug("Check operator {} installation with 'reinstall={}'", defaultOperatorName, reinstall);
 		Operator defaultOperator = null;
 		if (!reinstall) {
-			defaultOperator = operatorDao.findUnique(defaultOperatorName);
+			defaultOperator = contextRepository.findByOperatorName(defaultOperatorName);
 		}
 		if (defaultOperator==null) {
 			logger.debug("Will install operator {} ...", defaultOperatorName); 
-			defaultOperator = operatorDao.merge(new Operator(defaultOperatorName, Locale.getDefault()));
+			defaultOperator = contextRepository.save(new Operator(defaultOperatorName, Locale.getDefault()));
 		}
 		logger.debug("Default operator AVAILABLE as {}.", defaultOperator);
 		
@@ -74,14 +79,13 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		Service userService = installService(defaultOperator, "USER");
 		defaultOperator.getServiceMap().put("USER", userService);
-		operatorDao.flush();
+		contextRepository.flush();
 		return defaultOperator;
 	}
 
 	@Transactional
 	public void installProvinces(Operator defaultOperator, Resource rs) {
 		
-		operatorDao.saveOrUpdate(defaultOperator);
 		List<Province> provinceList = provinceResourceParserStrategy.parseProvinces(defaultOperator, rs);
 		installProvinces(defaultOperator, provinceList);
 	}
@@ -95,30 +99,30 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		// first only  provinces
 		for (Province p: provinceList) {
 			if (p.getClass().equals(Province.class)) {
-				Province province = provinceDao.findUnique(defaultOperator, p.getProvinceCode());
+				Province province = provinceRepository.findByOperatorAndProvinceCode(defaultOperator, p.getProvinceCode());
 		    	if (province==null) {
 		    		logger.debug("New province {}", p.getProvinceCode());
 		    		p.setOperator(defaultOperator);
 		    		if (p.getParent()!=null) {
 		    			throw new IllegalArgumentException("Progrmming error: instances of Province class must not have a parent");
 		    		}
-			        provinceDao.saveOrUpdate(p);
+			        provinceRepository.saveAndFlush(p);
 		    	}
 		    	else {
 			    	logger.debug("Province AVAILABLE as {}.", province);	    		
 		    	}
 			}
 		}
-		provinceDao.flush();
+		provinceRepository.flush();
     	// then other descendants
 		for (Province d: provinceList) {
 			if (!d.getClass().equals(Province.class)) {
-				Province province = provinceDao.findUnique(defaultOperator, d.getProvinceCode());
+				Province province = provinceRepository.findByOperatorAndProvinceCode(defaultOperator, d.getProvinceCode());
 		    	if (province==null) {
 		    		logger.debug("New province {}", d.getProvinceCode());
 		    		d.setOperator(defaultOperator);
 		    		if (d.getParent()!=null) {
-		    			Province parent = provinceDao.findUnique(defaultOperator, d.getParent().getProvinceCode());
+		    			Province parent = provinceRepository.findByOperatorAndProvinceCode(defaultOperator, d.getParent().getProvinceCode());
 		    			if (parent==null) {
 		    				logger.debug("New parent {}", d.getParent().getProvinceCode());
 		    				d.setParent(parent);
@@ -127,20 +131,18 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		    				logger.debug("Current parent {}", d.getParent().getProvinceCode());
 		    			}
 		    		}
-			        provinceDao.saveOrUpdate(d);
+			        provinceRepository.saveAndFlush(d);
 		    	}
 		    	else {
 			    	logger.debug("Province AVAILABLE as {}.", province);	    		
 		    	}
 			}
 		}
-		provinceDao.flush();
+		provinceRepository.flush();
 	}
 	
 	@Transactional
 	public KeyType installKey(Operator defaultOperator, String keyCode) {
-		
-		operatorDao.saveOrUpdate(defaultOperator);
 		
 		logger.debug("Check key code {} installation ...", keyCode);
 		KeyType keyType = keyTypeRepository.findByOperatorAndKeyCode(defaultOperator, keyCode);
@@ -174,23 +176,23 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		if (entity.getOperator()==null) {
 			throw new IllegalArgumentException("An opertor is required.");
 		}
-		operatorDao.saveOrUpdate(operator);
+		operator = contextRepository.save(operator);
 		String alias = entity.getAlias();
 		
 		logger.debug("Check entity {} installation with 'reinstall={}'", alias, reinstall);
 		if (!reinstall) {
-			entity = entityDao.findUnique(operator, alias);
+			entity = entityRepository.findByOperatorAndAlias(operator, alias);
 		}
 
 		if (entity==null) {
 			logger.debug("Will install entity {} ...", alias);
-			entity = entityDao.merge(new Entity(operator, alias));
+			entity = entityRepository.saveAndFlush(new Entity(operator, alias));
 		} 
 		else {
 			logger.debug("Entity AVAILABLE as {}.", entity);
 			return entity;
 		}
-		entityDao.saveOrUpdate(entity);
+		entityRepository.saveAndFlush(entity);
 		
 		return entity;
 	}
@@ -201,21 +203,21 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		if (entity.getOperator()==null) {
 			throw new IllegalArgumentException("An opertor is required.");
 		}
-		operatorDao.saveOrUpdate(operator);
+		operator = contextRepository.save(operator);
 		String alias = entity.getAlias();		
 		
 		logger.debug("Check if is there already a current entity {} installation'", alias);
-		Entity current = entityDao.findUnique(operator, alias);
+		Entity current = entityRepository.findByOperatorAndAlias(operator, alias);
 
 		if (current==null) {
 			logger.debug("Will install entity {} ...", alias);
-			entity = entityDao.merge(new Entity(operator, alias));
+			entity = entityRepository.saveAndFlush(new Entity(operator, alias));
 		} 
 		else {
 			logger.debug("Entity AVAILABLE as {}.", entity);
 			return current;
 		}
-		entityDao.saveOrUpdate(entity);
+		entityRepository.saveAndFlush(entity);
 		
 		// TODO remove 
 		if (manager!=null) {
@@ -236,8 +238,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	public Entity installManager(Entity entity, Credential credential) {
 		Operator operator = entity.getOperator();
 		
-		UserGroup adminGroup  = new UserGroup(entity, "ADMIN");
-		userGroupDao.saveOrUpdate(adminGroup);
+		UserGroup adminGroup = userGroupRepository.save(new UserGroup(entity, "ADMIN"));
 		
 		Service adminService = operator.getServiceMap().get("ADMIN");
 		if (adminService==null) {
@@ -256,8 +257,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		}
 		userRoleDao.flush();
 		
-		UserGroup userGroup  = new UserGroup(entity, "USER");
-		userGroupDao.saveOrUpdate(userGroup);
+		UserGroup userGroup = userGroupRepository.save(new UserGroup(entity, "USER"));
 		
 		Service userService = operator.getServiceMap().get("USER");
 		if (userService==null) {
@@ -276,7 +276,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		userRoleDao.flush();
 		
 		entity.setInstallDate(new Date());
-		entityDao.flush();
+		entityRepository.flush();
 		logger.debug("Entity {} installation finished at {}.", entity.getAlias(), entity.getInstallDate());
 
 		return entity;
@@ -284,18 +284,18 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	
 //	public Entity installEntityWORK_IN_PROGRESS(Operator defaultOperator, String entityAlias, String managerPrincipal, boolean reinstall) {
 //		
-//		operatorDao.saveOrUpdate(defaultOperator);
+//		contextRepository.saveOrUpdate(defaultOperator);
 //		
 //		logger.debug("Check entity {} installation with 'reinstall={}'", entityAlias, reinstall);
 //		Entity defaultEntity = null;
 //		if (!reinstall) {
-//			defaultEntity = entityDao.findUnique(defaultOperator, entityAlias);
+//			defaultEntity = entityRepository.findUnique(defaultOperator, entityAlias);
 //		}
 //		
 //		if (defaultEntity==null) {
 //			logger.debug("Will install entity {} ...", entityAlias);
 //			defaultEntity = new Entity(defaultOperator, entityAlias);
-//			entityDao.saveOrUpdate(defaultEntity);
+//			entityRepository.saveOrUpdate(defaultEntity);
 //		} 
 //		logger.debug("Entity AVAILABLE as {}.", defaultEntity);
 //		
@@ -334,25 +334,26 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 //	
 	// collabs
 	
-	private BasicDao<Operator> operatorDao;
-	private BasicDao<Province> provinceDao;
+	private ContextRepository contextRepository;
+	private ProvinceRepository provinceRepository;
 	private KeyTypeRepository keyTypeRepository;
 	private ServiceRepository serviceRepository;
-	private BasicDao<Entity> entityDao;
-	private BasicDao<UserGroup> userGroupDao;
+	private EntityRepository entityRepository;
+	private UserGroupRepository userGroupRepository;
+//	private UserRepository userRepository;
 	private BasicDao<UserRole> userRoleDao;
 	private ProvinceResourceParserStrategy provinceResourceParserStrategy;
 	private IdentityMgr identityMgr;
 	private UserMgr userMgr;
 
-	@javax.annotation.Resource(name="operatorDao")
-	public void setOperatorDao(BasicDao<Operator> operatorDao) {
-		this.operatorDao = operatorDao;
+	@javax.annotation.Resource
+	public void setContextRepository(ContextRepository contextRepository) {
+		this.contextRepository = contextRepository;
 	}
 	
-	@javax.annotation.Resource(name="provinceDao")
-	public void setProvinceDao(BasicDao<Province> provinceDao) {
-		this.provinceDao = provinceDao;
+	@javax.annotation.Resource
+	public void setProvinceRepository(ProvinceRepository provinceRepository) {
+		this.provinceRepository = provinceRepository;
 	}
 	
 	@javax.annotation.Resource
@@ -365,15 +366,20 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		this.serviceRepository = serviceRepository;
 	}
 
-	@javax.annotation.Resource(name="entityDao")
-	public void setEntityDao(BasicDao<Entity> entityDao) {
-		this.entityDao = entityDao;
+	@javax.annotation.Resource
+	public void setEntityRepository(EntityRepository entityRepository) {
+		this.entityRepository = entityRepository;
 	}
 	
-	@javax.annotation.Resource(name="userGroupDao")
-	public void setUserGroupDao(BasicDao<UserGroup> userGroupDao) {
-		this.userGroupDao = userGroupDao;
+	@javax.annotation.Resource
+	public void setUserGroupRepository(UserGroupRepository userGroupRepository) {
+		this.userGroupRepository = userGroupRepository;
 	}
+	
+//	@javax.annotation.Resource
+//	public void setUserRepository(UserRepository userRepository) {
+//		this.userRepository = userRepository;
+//	}
 	
 	@javax.annotation.Resource(name="userRoleDao")
 	public void setUserRoleDao(BasicDao<UserRole> userRoleDao) {

@@ -18,8 +18,9 @@ import org.helianto.core.filter.PublicEntityFormFilterAdapter;
 import org.helianto.core.form.CompositeEntityForm;
 import org.helianto.core.form.PublicAddressForm;
 import org.helianto.core.form.PublicEntityForm;
-import org.helianto.core.repository.BasicDao;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.PublicAddressRepository;
+import org.helianto.core.repository.PublicEntityKeyRepository;
+import org.helianto.core.repository.PublicEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	@Transactional(readOnly=true)
 	public List<PublicAddress> findPublicAddress(PublicAddressForm form) {
 		Filter filter = new PublicAddressFormFilterAdapter(form);
-		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressDao.find(filter);
+		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressRepository.find(filter);
 		if (publicAddressList!=null) {
 			logger.debug("Found {} public addresses.", publicAddressList.size());
 		}
@@ -45,7 +46,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	
 	@Transactional(readOnly=true)
 	public List<PublicAddress> findPublicAddress(Filter filter) {
-		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressDao.find(filter);
+		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressRepository.find(filter);
 		if (publicAddressList!=null) {
 			logger.debug("Found {} public addresses.", publicAddressList.size());
 		}
@@ -54,18 +55,17 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	
 	@Transactional
 	public PublicAddress storePublicAddress(PublicAddress publicAddress) {
-		publicAddressDao.saveOrUpdate(publicAddress);
-		return publicAddress;
+		return publicAddressRepository.saveAndFlush(publicAddress);
 	}
 	
 	@Transactional
 	public void removePublicAddress(PublicAddress publicAddress) {
-		publicAddressDao.remove(publicAddress);
+		publicAddressRepository.delete(publicAddress);
 	}
 	
 	@Transactional(readOnly=true)
 	public List<? extends PublicEntity> findPublicEntities(Filter publicEntityFilter) {
-		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(publicEntityFilter);
+		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityRepository.find(publicEntityFilter);
 		if (publicEntitiyList!=null) {
 			logger.debug("Found {} public entities.", publicEntitiyList.size());
 		}
@@ -75,7 +75,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	@Transactional(readOnly=true)
 	public List<? extends PublicEntity> findPublicEntities(PublicEntityForm form) {
 		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(form);
-		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(filter);
+		List<PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityRepository.find(filter);
 		if (publicEntitiyList!=null) {
 			logger.debug("Found {} public entities.", publicEntitiyList.size());
 		}
@@ -85,7 +85,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	@Transactional(readOnly=true)
 	public PublicEntity findPublicEntity(Entity entity) {
 		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(new CompositeEntityForm(entity));
-		List<? extends PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityDao.find(filter);
+		List<? extends PublicEntity> publicEntitiyList = (List<PublicEntity>) publicEntityRepository.find(filter);
 		if (publicEntitiyList!=null && publicEntitiyList.size()>0) {
 			logger.debug("Found {}.", publicEntitiyList.get(0));
 			return publicEntitiyList.get(0);
@@ -99,10 +99,10 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
     	if (entity.getNatureAsArray().length>0) {
     		logger.debug("Looking for existing public entity");
     		PublicEntityFormFilterAdapter filter = new PublicEntityFormFilterAdapter(new CompositeEntityForm(entity));
-    		List<? extends PublicEntity> publicEntities = (List<PublicEntity>) publicEntityDao.find(filter);
+    		List<? extends PublicEntity> publicEntities = (List<PublicEntity>) publicEntityRepository.find(filter);
     		if (publicEntities!=null && publicEntities.size()==0) {
     			logger.debug("Installing public entity ...");
-    			publicEntity = publicEntityDao.merge(new PublicEntity(entity));
+    			publicEntity = publicEntityRepository.saveAndFlush(new PublicEntity(entity));
     			logger.debug("Installed {}.", publicEntity);
     		}
     	}
@@ -114,18 +114,16 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	
 	@Transactional
 	public PublicEntity storePublicEntity(PublicEntity publicEntity) {
-		publicEntityDao.saveOrUpdate(publicEntity);
-		return publicEntity;
+		return publicEntityRepository.saveAndFlush(publicEntity);
 	}
 	
 	@Transactional
 	public void removePublicEntity(PublicEntity publicEntity) {
-		publicEntityDao.remove(publicEntity);
+		publicEntityRepository.delete(publicEntity);
 	}
 	
 	@Transactional(readOnly=true)
 	public Map<String, PublicEntityKey> loadPublicEntityKeyMap(PublicEntity publicEntity) {
-		publicEntityDao.saveOrUpdate(publicEntity);
 		Map<String, PublicEntityKey> publicEntityKeyMap = new HashMap<String, PublicEntityKey>();
 		Set<PublicEntityKey> publicEntityKeys = publicEntity.getPublicEntityKeys();
 		for (PublicEntityKey publicEntityKey: publicEntityKeys) {
@@ -136,34 +134,34 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 	
 	@Transactional
 	public PublicEntityKey storePublicEntityKey(PublicEntityKey publicEntityKey) {
-		publicEntityKeyDao.saveOrUpdate(publicEntityKey);
+		publicEntityKeyRepository.saveAndFlush(publicEntityKey);
 		return publicEntityKey;
 	}
 	
 	@Transactional
 	public void removePublicEntityKey(PublicEntityKey publicEntityKey) {
-		publicEntityKeyDao.remove(publicEntityKey);
+		publicEntityKeyRepository.delete(publicEntityKey);
 	}
 	
 	// collabs
 	
-	private FilterDao<PublicAddress> publicAddressDao;
-	private FilterDao<PublicEntity> publicEntityDao;
-	private BasicDao<PublicEntityKey> publicEntityKeyDao;
+	private PublicAddressRepository publicAddressRepository;
+	private PublicEntityRepository publicEntityRepository;
+	private PublicEntityKeyRepository publicEntityKeyRepository;
 	
-	@Resource(name="publicAddressDao")
-	public void setPublicAddressDao(FilterDao<PublicAddress> publicAddressDao) {
-		this.publicAddressDao = publicAddressDao;
+	@Resource
+	public void setPublicAddressRepository(PublicAddressRepository publicAddressRepository) {
+		this.publicAddressRepository = publicAddressRepository;
 	}
 	
-	@Resource(name="publicEntityDao")
-	public void setPublicEntityDao(FilterDao<PublicEntity> publicEntityDao) {
-		this.publicEntityDao = publicEntityDao;
+	@Resource
+	public void setPublicEntityRepository(PublicEntityRepository publicEntityRepository) {
+		this.publicEntityRepository = publicEntityRepository;
 	}
 	
-	@Resource(name="publicEntityKeyDao")
-	public void setPublicEntityKeyDao(BasicDao<PublicEntityKey> publicEntityKeyDao) {
-		this.publicEntityKeyDao = publicEntityKeyDao;
+	@Resource
+	public void setPublicEntityKeyRepository(PublicEntityKeyRepository publicEntityKeyRepository) {
+		this.publicEntityKeyRepository = publicEntityKeyRepository;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(PublicEntityMgrImpl.class);

@@ -33,7 +33,6 @@ import org.helianto.core.IdentityMgr;
 import org.helianto.core.PublicEntityMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.Province;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.TestingFilter;
@@ -46,6 +45,8 @@ import org.helianto.user.domain.UserLog;
 import org.helianto.user.domain.UserRole;
 import org.helianto.user.filter.UserFormFilterAdapter;
 import org.helianto.user.form.UserGroupForm;
+import org.helianto.user.repository.UserGroupRepository;
+import org.helianto.user.repository.UserRepository;
 import org.helianto.user.service.UserMgrImpl;
 import org.junit.After;
 import org.junit.Before;
@@ -61,11 +62,11 @@ public class UserMgrImplTests {
     	List<UserGroup> userList = new ArrayList<UserGroup>();
     	UserGroupForm form = EasyMock.createMock(UserGroupForm.class);
     	
-    	expect(userGroupDao.find(EasyMock.isA(UserFormFilterAdapter.class))).andReturn(userList);
-    	replay(userGroupDao);
+    	expect(userGroupRepository.find(EasyMock.isA(UserFormFilterAdapter.class))).andReturn(userList);
+    	replay(userGroupRepository);
     	
     	assertSame(userList, userMgr.findUsers(form));
-    	verify(userGroupDao);
+    	verify(userGroupRepository);
     }
     
 	@Test(expected=IllegalArgumentException.class)
@@ -88,12 +89,11 @@ public class UserMgrImplTests {
     public void storeUserGroup() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	
-    	userGroupDao.saveOrUpdate(userGroup);
-    	userGroupDao.flush();
-    	replay(userGroupDao);
+    	expect(userGroupRepository.saveAndFlush(userGroup)).andReturn(userGroup);
+    	replay(userGroupRepository);
     	
     	assertSame(userGroup, userMgr.storeUserGroup(userGroup));
-    	verify(userGroupDao);
+    	verify(userGroupRepository);
     }
 	
 	@Test
@@ -102,28 +102,27 @@ public class UserMgrImplTests {
     	userGroup.getEntity().setNature("S, E");
     	PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());
     	
-    	userGroupDao.saveOrUpdate(userGroup);
-    	userGroupDao.flush();
-    	replay(userGroupDao);
+    	expect(userGroupRepository.saveAndFlush(userGroup)).andReturn(userGroup);
+    	replay(userGroupRepository);
     	    	
 		EasyMock.expect(publicEntityMgr.installPublicEntity(userGroup.getEntity())).andReturn(publicEntity);
-    	EasyMock.expect(publicEntityMgr.storePublicEntity(EasyMock.eq(publicEntity))).andReturn(publicEntity);
+//    	EasyMock.expect(publicEntityMgr.storePublicEntity(EasyMock.eq(publicEntity))).andReturn(publicEntity);
     	replay(publicEntityMgr);
     	
     	assertSame(userGroup, userMgr.storeUserGroup(userGroup));
-    	verify(userGroupDao);
+    	verify(userGroupRepository);
+    	verify(publicEntityMgr);
     }
 	
 	@Test
 	public void findUserGroupParentRoot() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
 		
-    	userGroupDao.saveOrUpdate(userGroup);
-    	userGroupDao.refresh(userGroup);
-    	replay(userGroupDao);
+    	userGroupRepository.refresh(userGroup);
+    	replay(userGroupRepository);
     	
     	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(userGroup);
-    	verify(userGroupDao);
+    	verify(userGroupRepository);
     	
     	assertEquals(0, expectedUserGroupList.size());
 	}
@@ -135,12 +134,11 @@ public class UserMgrImplTests {
 		UserAssociation association = new UserAssociation(userGroup, user);
 		user.getParentAssociations().add(association);
 		
-    	userGroupDao.saveOrUpdate(user);
-    	userGroupDao.refresh(user);
-    	replay(userGroupDao);
+    	userGroupRepository.refresh(user);
+    	replay(userGroupRepository);
     	
     	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(user);
-    	verify(userGroupDao);
+    	verify(userGroupRepository);
     	
     	assertSame(userGroup, expectedUserGroupList.get(0));
 	}
@@ -204,9 +202,9 @@ public class UserMgrImplTests {
     
     private UserMgrImpl userMgr;
     
-    private FilterDao<UserGroup> userGroupDao;
+    private UserRepository userRepository;
+    private UserGroupRepository userGroupRepository;
     private FilterDao<UserAssociation> userAssociationDao;
-    private FilterDao<Province> provinceDao;
     private FilterDao<UserLog> userLogDao;
     private FilterDao<UserRole> userRoleDao;
 	private IdentityMgr identityMgr;
@@ -216,12 +214,12 @@ public class UserMgrImplTests {
 	@Before
     public void setUp() {
         userMgr = new UserMgrImpl();
-        userGroupDao = createMock(FilterDao.class);
-        userMgr.setUserGroupDao(userGroupDao);
+        userGroupRepository = createMock(UserGroupRepository.class);
+        userMgr.setUserGroupRepository(userGroupRepository);
+        userRepository = createMock(UserRepository.class);
+        userMgr.setUserRepository(userRepository);
         userAssociationDao = createMock(FilterDao.class);
         userMgr.setUserAssociationDao(userAssociationDao);
-        provinceDao = createMock(FilterDao.class);
-        userMgr.setProvinceDao(provinceDao);
         userLogDao = createMock(FilterDao.class);
         userMgr.setUserLogDao(userLogDao);
 		userRoleDao = createMock(FilterDao.class);
@@ -234,9 +232,9 @@ public class UserMgrImplTests {
     
     @After
     public void tearDown() {
-        reset(userGroupDao);
+        reset(userGroupRepository);
+        reset(userRepository);
         reset(userAssociationDao);
-        reset(provinceDao);
         reset(userLogDao);
 		reset(userRoleDao);
         reset(identityMgr);

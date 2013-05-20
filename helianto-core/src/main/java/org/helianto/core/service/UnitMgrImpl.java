@@ -23,7 +23,7 @@ import org.helianto.core.UnitMgr;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Unit;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.UnitRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,16 +38,15 @@ public class UnitMgrImpl implements UnitMgr {
 	
 	@Transactional(readOnly=true)
 	public List<Unit> findUnits(Filter unitFilter) {
-    	List<Unit> unitList = (List<Unit>) unitDao.find(unitFilter);
+    	List<Unit> unitList = (List<Unit>) unitRepository.find(unitFilter);
     	logger.debug("Found unit list of size {}", unitList.size());
     	return unitList;
 	}
 
 	@Transactional
 	public Unit storeUnit(Unit unit) {
-		unitDao.saveOrUpdate(unit);
+		unitRepository.saveAndFlush(unit);
     	logger.debug("Stored unit  {}", unit);
-    	unitDao.flush();
     	return unit;
 	}
 
@@ -59,25 +58,24 @@ public class UnitMgrImpl implements UnitMgr {
 
 	@Transactional
 	public Unit installUnit(Category category, String unitCode, String unitName) {
-		Unit unit = unitDao.findUnique(category.getEntity(), unitCode);
+		Unit unit = unitRepository.findByCategoryAndUnitCode(category, unitCode);
     	if (unit!=null) {
         	logger.debug("Found existing unit  {}", unit);
     		return unit;
     	}
-    	unit = unitDao.merge(new Unit(category, unitCode, unitName));
+    	unit = unitRepository.saveAndFlush(new Unit(category, unitCode, unitName));
     	logger.debug("Installed unit  {}", unit);
-    	unitDao.flush();
 		return unit;
 	}
 
     //- collabs
 
-    private FilterDao<Unit> unitDao;
+    private UnitRepository unitRepository;
     
-	@Resource(name="unitDao")
-    public void setUnitDao(FilterDao<Unit> unitDao) {
-        this.unitDao = unitDao;
-    }
+	@Resource
+    public void setUnitRepository(UnitRepository unitRepository) {
+		this.unitRepository = unitRepository;
+	}
 
     private final Logger logger = LoggerFactory.getLogger(UnitMgrImpl.class);
 

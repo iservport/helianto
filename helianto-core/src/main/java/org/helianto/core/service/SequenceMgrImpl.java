@@ -32,8 +32,8 @@ import org.helianto.core.number.DigitGenerationStrategy;
 import org.helianto.core.number.Numerable;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.number.Verifiable;
-import org.helianto.core.repository.BasicDao;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.PrivateSequenceRepository;
+import org.helianto.core.repository.PublicSequenceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -49,12 +49,12 @@ public class SequenceMgrImpl implements SequenceMgr {
 	
 	@Transactional
 	public long findOrCreatePublicNumber(Operator operator, String publicNumberKey) {
-		PublicSequence publicSequence = publicEnumeratorDao.findUnique(operator, publicNumberKey);
+		PublicSequence publicSequence = publicSequenceRepository.findByOperatorAndTypeName(operator, publicNumberKey);
 		if (publicSequence!=null) {
 			return publicSequence.getLastNumber();
 		} else  {
             publicSequence = new PublicSequence(operator, publicNumberKey);
-            publicEnumeratorDao.saveOrUpdate(publicSequence);
+            publicSequenceRepository.save(publicSequence);
             logger.debug("Created PublicSequence: {}", publicSequence);
             return 1;
         }
@@ -62,11 +62,11 @@ public class SequenceMgrImpl implements SequenceMgr {
 	
 	@Transactional
     public long findNewPublicNumber(Operator operator, String publicNumberKey) {
-    	PublicSequence publicSequence = publicEnumeratorDao.findUnique(operator, publicNumberKey);
+    	PublicSequence publicSequence = publicSequenceRepository.findByOperatorAndTypeName(operator, publicNumberKey);
         if (publicSequence!=null) {
             long lastNumber = publicSequence.getLastNumber();
             publicSequence.setLastNumber(lastNumber+1);
-            publicEnumeratorDao.saveOrUpdate(publicSequence);
+            publicSequenceRepository.save(publicSequence);
             logger.debug("Incremented existing PublicSequence: {}", publicSequence);
             return lastNumber;
         } else  {
@@ -74,7 +74,7 @@ public class SequenceMgrImpl implements SequenceMgr {
             publicSequence.setOperator(operator);
             publicSequence.setTypeName(publicNumberKey);
             publicSequence.setLastNumber(2);    
-            publicEnumeratorDao.saveOrUpdate(publicSequence);
+            publicSequenceRepository.save(publicSequence);
             logger.debug("Created PublicSequence: {}", publicSequence);
             return 1;
         }
@@ -82,12 +82,11 @@ public class SequenceMgrImpl implements SequenceMgr {
     
 	@Transactional
 	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey, int startNumber) {
-		PrivateSequence privateSequence = internalEnumeratorDao.findUnique(entity, internalNumberKey);
+		PrivateSequence privateSequence = privateSequenceRepository.findByEntityAndTypeName(entity, internalNumberKey);
 		if (privateSequence!=null) {
 			return privateSequence.getLastNumber();
 		} else  {
-            privateSequence = new PrivateSequence(entity, internalNumberKey);
-            internalEnumeratorDao.saveOrUpdate(privateSequence);
+            privateSequence = privateSequenceRepository.save(new PrivateSequence(entity, internalNumberKey));
             logger.debug("Created PrivateSequence: {}", privateSequence);
             return startNumber;
         }
@@ -101,23 +100,22 @@ public class SequenceMgrImpl implements SequenceMgr {
 	@Transactional(readOnly=true)
 	public List<PrivateSequence> findPrivateSequences(PrivateSequenceForm form) {
 		Filter filter = new PrivateSequenceFilterAdapter(form);
-		List<PrivateSequence> privateSequenceList = (List<PrivateSequence>) internalEnumeratorDao.find(filter);
+		List<PrivateSequence> privateSequenceList = (List<PrivateSequence>) privateSequenceRepository.find(filter);
 		return privateSequenceList;
 	}
 	
 	@Transactional
 	public PrivateSequence storePrivateSequence(PrivateSequence privateSequence) {
-		internalEnumeratorDao.saveOrUpdate(privateSequence);
-		return privateSequence;
+		return privateSequenceRepository.saveAndFlush(privateSequence);
 	}
 	
 	@Transactional
     public long newInternalNumber(Entity entity, String internalNumberKey, int startNumber) {
-        PrivateSequence privateSequence = internalEnumeratorDao.findUnique(entity, internalNumberKey);
+        PrivateSequence privateSequence = privateSequenceRepository.findByEntityAndTypeName(entity, internalNumberKey);
         if (privateSequence!=null) {
             long lastNumber = privateSequence.getLastNumber();
             privateSequence.setLastNumber(lastNumber+1);
-            internalEnumeratorDao.saveOrUpdate(privateSequence);
+            privateSequenceRepository.save(privateSequence);
             logger.debug("Incremented existing PrivateSequence: {}", privateSequence);
             return lastNumber;
         } else  {
@@ -125,7 +123,7 @@ public class SequenceMgrImpl implements SequenceMgr {
             privateSequence.setEntity(entity);
             privateSequence.setTypeName(internalNumberKey);
             privateSequence.setLastNumber(startNumber+1);    
-            internalEnumeratorDao.saveOrUpdate(privateSequence);
+            privateSequenceRepository.save(privateSequence);
             logger.debug("Created PrivateSequence: {}", privateSequence);
             return startNumber;
         }
@@ -178,20 +176,20 @@ public class SequenceMgrImpl implements SequenceMgr {
 
     // collabs 
     
-	private BasicDao<PublicSequence> publicEnumeratorDao;
-	private FilterDao<PrivateSequence> internalEnumeratorDao;
+	private PublicSequenceRepository publicSequenceRepository;
+	private PrivateSequenceRepository privateSequenceRepository;
 	private DigitGenerationStrategy digitGenerationStrategy;
 	private TreeBuilder treeBuilder;
 	
-    @Resource(name="publicEnumeratorDao")
-	public void setPublicEnumeratorDao(BasicDao<PublicSequence> publicEnumeratorDao) {
-		this.publicEnumeratorDao = publicEnumeratorDao;
+    @Resource
+	public void setPublicSequenceRepository(PublicSequenceRepository publicSequenceRepository) {
+		this.publicSequenceRepository = publicSequenceRepository;
 	}
 
-    @Resource(name="internalEnumeratorDao")
-    public void setInternalEnumeratorDao(FilterDao<PrivateSequence> internalEnumeratorDao) {
-        this.internalEnumeratorDao = internalEnumeratorDao;
-    }
+    @Resource
+    public void setPrivateSequenceRepository(PrivateSequenceRepository privateSequenceRepository) {
+		this.privateSequenceRepository = privateSequenceRepository;
+	}
     
     @Resource(name="digitGenerationStrategy")
     public void setDigitGenerationStrategy(DigitGenerationStrategy digitGenerationStrategy) {

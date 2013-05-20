@@ -12,19 +12,22 @@ import java.util.List;
 
 import org.easymock.EasyMock;
 import org.helianto.core.IdentityMgr;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.repository.BasicDao;
+import org.helianto.core.repository.ContextRepository;
+import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
 import org.helianto.user.UserMgr;
-import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
+import org.helianto.user.repository.UserGroupRepository;
+import org.helianto.user.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,9 +55,9 @@ public class PostInstallationMgrImplTests {
 		provinceList.add(p2);
 //		Province parent
 		
-		EasyMock.expect(provinceDao.findUnique(defaultOperator, "P1")).andReturn(p1);
-		EasyMock.expect(provinceDao.findUnique(defaultOperator, "P2")).andReturn(null);
-		EasyMock.replay(provinceDao);
+		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(defaultOperator, "P1")).andReturn(p1);
+		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(defaultOperator, "P2")).andReturn(null);
+		EasyMock.replay(provinceRepository);
 		
 		postInstallationMgr.installProvinces(defaultOperator, provinceList);
 	}
@@ -63,18 +66,18 @@ public class PostInstallationMgrImplTests {
 //		
 //		logger.debug("Will install {} province(s) ...", provinceList.size());
 //		for (Province p: provinceList) {
-//			Province province = provinceDao.findUnique(defaultOperator, p.getProvinceCode());
+//			Province province = provinceRepository.findUnique(defaultOperator, p.getProvinceCode());
 //	    	if (province==null) {
 //	    		logger.debug("New province {}", p.getProvinceCode());
 //	    		p.setOperator(defaultOperator);
 //	    		if (p.getParent()!=null) {
-//	    			Province parent = provinceDao.findUnique(defaultOperator, p.getParent().getProvinceCode());
+//	    			Province parent = provinceRepository.findUnique(defaultOperator, p.getParent().getProvinceCode());
 //	    			if (parent==null) {
 //	    				logger.debug("New parent {}", p.getParent().getProvinceCode());
 //	    				p.setParent(parent);
 //	    			}
 //	    		}
-//		        provinceDao.saveOrUpdate(p);
+//		        provinceRepository.saveOrUpdate(p);
 //	    	}
 //	    	else {
 //		    	logger.debug("Province AVAILABLE as {}.", province);	    		
@@ -88,14 +91,10 @@ public class PostInstallationMgrImplTests {
 		Operator operator = new Operator("DEFAULT");
 		KeyType keyType = new KeyType(operator, "CODE");
 		
-		operatorDao.saveOrUpdate(operator);
-		replay(operatorDao);
-		
 		expect(keyTypeRepository.findByOperatorAndKeyCode(operator, "CODE")).andReturn(keyType);
 		replay(keyTypeRepository);
 		
 		assertSame(keyType, postInstallationMgr.installKey(operator, "CODE"));
-		verify(operatorDao);
 		verify(keyTypeRepository);
 
 	}
@@ -105,15 +104,11 @@ public class PostInstallationMgrImplTests {
 		Operator operator = new Operator("DEFAULT");
 		KeyType keyType = new KeyType(operator, "CODE");
 		
-		operatorDao.saveOrUpdate(operator);
-		replay(operatorDao);
-		
 		expect(keyTypeRepository.findByOperatorAndKeyCode(operator, "CODE")).andReturn(null);
 		expect(keyTypeRepository.saveAndFlush(new KeyType(operator, "CODE"))).andReturn(keyType);
 		replay(keyTypeRepository);
 		
 		assertSame(keyType, postInstallationMgr.installKey(operator, "CODE"));
-		verify(operatorDao);
 		verify(keyTypeRepository);
 
 	}
@@ -135,12 +130,13 @@ public class PostInstallationMgrImplTests {
 	
 	// collabs
 	
-	private BasicDao<Operator> operatorDao;
-	private BasicDao<Province> provinceDao;
+	private ContextRepository contextRepository;
+	private ProvinceRepository provinceRepository;
 	private KeyTypeRepository keyTypeRepository;
 	private ServiceRepository serviceRepository;
-	private BasicDao<Entity> entityDao;
-	private BasicDao<UserGroup> userGroupDao;
+	private EntityRepository entityRepository;
+	private UserGroupRepository userGroupRepository;
+//	private UserRepository userRepository;
 	private BasicDao<UserRole> userRoleDao;
 	private ProvinceResourceParserStrategy provinceResourceParserStrategy;
 	private IdentityMgr identityMgr;
@@ -149,23 +145,24 @@ public class PostInstallationMgrImplTests {
     @SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
-        operatorDao = createMock(FilterDao.class);
-        provinceDao = createMock(FilterDao.class);
+        contextRepository = createMock(ContextRepository.class);
+        provinceRepository = createMock(ProvinceRepository.class);
         keyTypeRepository = createMock(KeyTypeRepository.class);
         serviceRepository = createMock(ServiceRepository.class);
-        entityDao = createMock(FilterDao.class);
-        userGroupDao = createMock(FilterDao.class);
+        entityRepository = createMock(EntityRepository.class);
+        userGroupRepository = createMock(UserGroupRepository.class);
+//        userRepository = createMock(UserRepository.class);
         userRoleDao = createMock(FilterDao.class);
         provinceResourceParserStrategy = createMock(ProvinceResourceParserStrategy.class);
         identityMgr = createMock(IdentityMgr.class);
         userMgr = createMock(UserMgr.class);
         postInstallationMgr = new PostInstallationMgrImpl();
-        postInstallationMgr.setOperatorDao(operatorDao);
-        postInstallationMgr.setProvinceDao(provinceDao);
+        postInstallationMgr.setContextRepository(contextRepository);
+        postInstallationMgr.setProvinceRepository(provinceRepository);
         postInstallationMgr.setKeyTypeRepository(keyTypeRepository);
         postInstallationMgr.setServiceRepository(serviceRepository);
-        postInstallationMgr.setEntityDao(entityDao);
-        postInstallationMgr.setUserGroupDao(userGroupDao);
+        postInstallationMgr.setEntityRepository(entityRepository);
+//        postInstallationMgr.setUserRepository(userRepository);
         postInstallationMgr.setUserRoleDao(userRoleDao);
         postInstallationMgr.setProvinceResourceParserStrategy(provinceResourceParserStrategy);
         postInstallationMgr.setIdentityMgr(identityMgr);
@@ -174,12 +171,13 @@ public class PostInstallationMgrImplTests {
     
     @After
     public void tearDown() {
-        reset(operatorDao);
-        reset(provinceDao);
+        reset(contextRepository);
+        reset(provinceRepository);
         reset(keyTypeRepository);
         reset(serviceRepository);
-        reset(entityDao);
-        reset(userGroupDao);
+        reset(entityRepository);
+        reset(userGroupRepository);
+//        reset(userRepository);
         reset(userRoleDao);
         reset(provinceResourceParserStrategy);
         reset(identityMgr);

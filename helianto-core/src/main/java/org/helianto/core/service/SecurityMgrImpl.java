@@ -28,7 +28,6 @@ import org.helianto.core.SecurityMgr;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.repository.CredentialRepository;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
@@ -36,6 +35,7 @@ import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
+import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -99,14 +99,13 @@ public class SecurityMgrImpl implements SecurityMgr {
 
 	@Transactional(readOnly=true)
 	public Set<UserRole> findRoles(UserGroup userGroup, boolean recursively) {
-		userGroupDao.saveOrUpdate(userGroup);
 		Set<UserRole> roles = new HashSet<UserRole>(userGroup.getRoles());
 		if (recursively) {
 			Set<UserAssociation> parents = userGroup.getParentAssociations();
 			for (UserAssociation parentAssociation: parents) {
 				UserGroup parent = parentAssociation.getParent();
 				if (parent!=null) {
-//					userGroupDao.saveOrUpdate(parent);
+//					userRepository.saveOrUpdate(parent);
 					// TODO SORRY, for the moment only one level recursion available...
 					roles.addAll(parent.getRoles());
 				}
@@ -123,12 +122,12 @@ public class SecurityMgrImpl implements SecurityMgr {
 //			if (userGroup==null) {
 //				throw new IllegalArgumentException("UserGroup required.");
 //			}
-//			userGroupDao.saveOrUpdate(userGroup);
+//			userRepository.saveOrUpdate(userGroup);
 //			Set<UserAssociation> parents = userGroup.getParentAssociations();
 //			for (UserAssociation parentAssociation: parents) {
 //				UserGroup parent = parentAssociation.getParent();
 //				if (parent!=null) {
-////					userGroupDao.saveOrUpdate(parent);
+////					userRepository.saveOrUpdate(parent);
 //					// TODO SORRY, for the moment only one level recursion available...
 //					UserRoleFilterAdapter parentFilter = (UserRoleFilterAdapter) ((UserRoleFilterAdapter) filter).clone();
 //					parentFilter.getForm
@@ -158,8 +157,8 @@ public class SecurityMgrImpl implements SecurityMgr {
 	@Transactional(readOnly=true)
 	public PublicUserDetails findAuthenticatedUser() {
 		try {
-			PublicUserDetails userDetails = (PublicUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			userGroupDao.refresh(userDetails.getUser());
+			UserDetailsAdapter userDetails = (UserDetailsAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			userRepository.refresh(userDetails.getUser());
 			return userDetails;
 		} catch(Exception e) {
 			throw new IllegalArgumentException("Unable to find authenticated user.", e);
@@ -169,7 +168,7 @@ public class SecurityMgrImpl implements SecurityMgr {
     // collabs
 
     private IdentityRepository identityRepository;
-    private FilterDao<UserGroup> userGroupDao;
+    private UserRepository userRepository;
     private CredentialRepository credentialRepository;
 
     @Resource
@@ -177,9 +176,9 @@ public class SecurityMgrImpl implements SecurityMgr {
 		this.identityRepository = identityRepository;
 	}
     
-    @Resource(name="userGroupDao")
-    public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
-		this.userGroupDao = userGroupDao;
+    @Resource
+    public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 
     @Resource

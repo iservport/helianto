@@ -28,7 +28,7 @@ import java.util.List;
 import org.helianto.core.domain.Unit;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.TestingFilter;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.UnitRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,26 +43,25 @@ public class UnitMgrImplTests {
     	Filter unitFilter = new TestingFilter();
     	List<Unit> unitList = new ArrayList<Unit>();
     	
-    	expect(unitDao.find(unitFilter)).andReturn(unitList);
-    	replay(unitDao);
+    	expect(unitRepository.find(unitFilter)).andReturn(unitList);
+    	replay(unitRepository);
     	
     	assertSame(unitList, unitMgr.findUnits(unitFilter));
-    	verify(unitDao);
+    	verify(unitRepository);
     }
     
-    private FilterDao<Unit> unitDao;
+    private UnitRepository unitRepository;
     
-    @SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         unitMgr = new UnitMgrImpl();
-        unitDao = createMock(FilterDao.class);
-        unitMgr.setUnitDao(unitDao);
+        unitRepository = createMock(UnitRepository.class);
+        unitMgr.setUnitRepository(unitRepository);
     }
     
     @After
     public void tearDown() {
-        reset(unitDao);
+        reset(unitRepository);
     }
     
 }

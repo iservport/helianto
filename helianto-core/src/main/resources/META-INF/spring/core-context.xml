@@ -35,7 +35,7 @@
 	<import resource="dataSource.xml"/>
 	
 	<jpa:repositories 
-		base-package="org.helianto.core.repository" 
+		base-package="org.helianto.*.repository" 
 		factory-class="org.helianto.core.data.FilterRepositoryFactoryBean"/>
                
 	<!--

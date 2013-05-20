@@ -31,11 +31,11 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity2;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.filter.classic.PartnerFilter;
-import org.helianto.partner.filter.classic.PrivateEntityFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -165,8 +165,8 @@ public class PartnerMgrImplTests {
 		privateEntityDao.saveOrUpdate(EasyMock.isA(PrivateEntity2.class));
 		EasyMock.replay(privateEntityDao);
 		
-		EasyMock.expect(provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
-		EasyMock.replay(provinceDao);
+		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
+		EasyMock.replay(provinceRepository);
 		
 		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(null);
 		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
@@ -191,8 +191,8 @@ public class PartnerMgrImplTests {
 		privateEntityDao.saveOrUpdate(privateEntity);
 		EasyMock.replay(privateEntityDao);
 		
-		EasyMock.expect(provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
-		EasyMock.replay(provinceDao);
+		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
+		EasyMock.replay(provinceRepository);
 		
 		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(null);
 		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
@@ -212,8 +212,8 @@ public class PartnerMgrImplTests {
 		privateEntityDao.saveOrUpdate(privateEntity);
 		EasyMock.replay(privateEntityDao);
 		
-		EasyMock.expect(provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
-		EasyMock.replay(provinceDao);
+		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
+		EasyMock.replay(provinceRepository);
 		
 		Customer customer = new Customer(privateEntity);
 		
@@ -227,7 +227,7 @@ public class PartnerMgrImplTests {
 
     private FilterDao<PrivateEntity2> privateEntityDao;
     private FilterDao<Partner> partnerDao;
-    private FilterDao<Province> provinceDao;
+    private ProvinceRepository provinceRepository;
     private Province province;
     private AbstractAddress partnerAddress;
 	private SequenceMgr sequenceMgr;
@@ -242,11 +242,11 @@ public class PartnerMgrImplTests {
         partnerMgr = new PartnerMgrImpl();
         privateEntityDao = EasyMock.createMock(FilterDao.class);
         partnerDao = EasyMock.createMock(FilterDao.class);
-        provinceDao = EasyMock.createMock(FilterDao.class);
+        provinceRepository = EasyMock.createMock(ProvinceRepository.class);
         sequenceMgr = EasyMock.createMock(SequenceMgr.class);
         partnerMgr.setPrivateEntityDao(privateEntityDao);
         partnerMgr.setPartnerDao(partnerDao);
-        partnerMgr.setProvinceDao(provinceDao);
+        partnerMgr.setProvinceRepository(provinceRepository);
         partnerMgr.setSequenceMgr(sequenceMgr);
         
 		province = new Province(entity.getOperator(), "CODE");
@@ -263,7 +263,7 @@ public class PartnerMgrImplTests {
     public void tearDown() {
     	EasyMock.reset(privateEntityDao);
     	EasyMock.reset(partnerDao);
-    	EasyMock.reset(provinceDao);
+    	EasyMock.reset(provinceRepository);
     	EasyMock.reset(sequenceMgr);
     }
 

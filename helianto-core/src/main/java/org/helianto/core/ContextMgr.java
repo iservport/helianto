@@ -76,13 +76,6 @@ public interface ContextMgr {
 	List<Province> findProvinces(ProvinceForm form);
 	
     /**
-     * Find <code>Province</code>s.
-     * 
-     * @param filter
-     */
-	List<Province> findProvinces(Filter filter);
-	
-    /**
      * Store <code>Province</code> to the data store.
      * 
      * @param province

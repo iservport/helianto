@@ -30,11 +30,8 @@ import org.helianto.core.def.EventType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.ProvinceFilterAdapter;
 import org.helianto.core.filter.UserAssociationFormFilterAdapter;
 import org.helianto.core.form.AssociationForm;
 import org.helianto.core.repository.FilterDao;
@@ -48,6 +45,8 @@ import org.helianto.user.filter.UserFormFilterAdapter;
 import org.helianto.user.filter.UserRoleFormFilterAdapter;
 import org.helianto.user.form.UserGroupForm;
 import org.helianto.user.form.UserRoleForm;
+import org.helianto.user.repository.UserGroupRepository;
+import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,9 +83,8 @@ public class UserMgrImpl
     	if (userGroup.isKeyEmpty()) {
     		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
     	}
-    	userGroupDao.saveOrUpdate(userGroup);
+    	userGroupRepository.saveAndFlush(userGroup);
     	publicEntityMgr.installPublicEntity(userGroup.getEntity());
-    	userGroupDao.flush();
         return userGroup;
     }
     
@@ -132,15 +130,14 @@ public class UserMgrImpl
 	@Transactional(readOnly=true)
 	public List<? extends UserGroup> findUsers(UserGroupForm form) {
 		UserFormFilterAdapter filter = new UserFormFilterAdapter(form);
-		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(filter);
+		List<UserGroup> userList = (List<UserGroup>) userGroupRepository.find(filter);
     	logger.debug("Found user list of size {}", userList.size());
         return userList;
 	}
 
 	@Transactional(readOnly=true)
 	public List<? extends UserGroup> findUsers(String userKey) {
-		List<UserGroup> userList = (List<UserGroup>) userGroupDao.find(
-				"select user from User user where user.userKey = ? order by lastEvent DESC", userKey);
+		List<UserGroup> userList = userGroupRepository.findByUserKeyOrderByLastEventDesc(userKey);
     	logger.debug("Found user list of size {}", userList.size());
         return userList;
 	}
@@ -174,7 +171,7 @@ public class UserMgrImpl
 //    	}
 //    	if (parentAssociation.getChild()!=null && parentAssociation.getChild().getId()>0) {
 //    		int id = parentAssociation.getChild().getId();
-//        	UserGroup child = userGroupDao.get(UserGroup.class, id);
+//        	UserGroup child = userRepository.get(UserGroup.class, id);
 //        	if (child!=null) {
 //        		parentAssociation.setChild(child);
 //        	}
@@ -190,8 +187,7 @@ public class UserMgrImpl
      */
 	@Transactional
     public List<UserGroup> findParentChain(UserGroup userGroup) {
-    	userGroupDao.saveOrUpdate(userGroup);
-    	userGroupDao.refresh(userGroup);
+		userGroupRepository.refresh(userGroup);
     	List<UserGroup> parentList = new ArrayList<UserGroup>();
 //    	parentList.add(userGroup);
     	if(userGroup.getParentAssociations()!=null) {
@@ -211,19 +207,17 @@ public class UserMgrImpl
 	@Transactional
 	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall) {
 
-		entityDao.saveOrUpdate(defaultEntity);
-		
 		logger.debug("Check user (group) {} installation with 'reinstall={}'", userGroupName, reinstall);
 		UserGroup userGroup = null;
 		if (!reinstall) {
-			userGroup = userGroupDao.findUnique(defaultEntity, userGroupName);
+			userGroup = userRepository.findByEntityAndUserKey(defaultEntity, userGroupName);
 		}
 		if (userGroup==null) {
 			logger.debug("Will install user (group) {} ...", userGroupName);
-			userGroup = userGroupDao.merge(new UserGroup(defaultEntity, userGroupName));
+			userGroup = userGroupRepository.save(new UserGroup(defaultEntity, userGroupName));
 		}
 		logger.debug("UserGroup AVAILABLE as {}.", userGroup);
-		userGroupDao.flush();
+		userRepository.flush();
 		return userGroup;
 	}
 	
@@ -231,7 +225,7 @@ public class UserMgrImpl
 	public UserAssociation installUser(UserGroup parent, String principal, boolean accountNonExpired) {
 		
 		logger.info("Check user installation with 'principal={}' as member of {}.", principal, parent);
-		User user = (User) userGroupDao.findUnique(parent.getEntity(), principal);
+		User user = (User) userRepository.findByEntityAndUserKey(parent.getEntity(), principal);
 		if (user==null) {
 			Credential credential = identityMgr.installIdentity(principal);
 			user = new User(parent.getEntity(), credential);
@@ -240,7 +234,7 @@ public class UserMgrImpl
 		user.setAccountNonExpired(true);
 		logger.warn("User {} set to {} expired.", user, accountNonExpired ? "non" : "");
 
-		userGroupDao.saveOrUpdate(user);
+		userRepository.save(user);
 		logger.info("User AVAILABLE as {}.", user);
 		
 		UserAssociation association = userAssociationDao.findUnique(parent, user);
@@ -257,13 +251,13 @@ public class UserMgrImpl
 	public UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired) {
 		
 		logger.info("Check user installation with 'principal={}' as member of {}.", credential.getPrincipal(), parent);
-		User user = (User) userGroupDao.findUnique(parent.getEntity(), credential.getPrincipal());
+		User user = (User) userRepository.findByEntityAndUserKey(parent.getEntity(), credential.getPrincipal());
 		if (user==null) {
-			user = (User) userGroupDao.merge(new User(parent.getEntity(), credential));
+			user = (User) userRepository.save(new User(parent.getEntity(), credential));
 		}
 		
 		user.setAccountNonExpired(true);
-		userGroupDao.flush();
+		userRepository.flush();
 		logger.warn("User {} set to {} expired.", user, accountNonExpired ? "non" : "");
 
 		
@@ -343,7 +337,6 @@ public class UserMgrImpl
 	
 	@Transactional
 	public void removeUserRole(UserRole userRole, UserGroup userGroup) {
-		userGroupDao.saveOrUpdate(userGroup);
 		if (userGroup!=null ) {
 			UserRole[] rr = (UserRole[]) userGroup.getRoles().toArray();
 			for (UserRole r: rr) {
@@ -363,32 +356,25 @@ public class UserMgrImpl
 				userRole+"does not belong to user group " + userGroup+".");
 	}
 
-	@Transactional(readOnly=true)
-    public List<Province> findProvinceByOperator(Operator operator) {
-    	ProvinceFilterAdapter filter = new ProvinceFilterAdapter(operator, "");
-        return (List<Province>) provinceDao.find(filter);
-    }
-
     //- collaborators
     
-    private FilterDao<Entity> entityDao;
-    private FilterDao<UserGroup> userGroupDao;
+    private UserRepository userRepository;
+    private UserGroupRepository userGroupRepository;
     private FilterDao<UserAssociation> userAssociationDao;
     private FilterDao<UserRole> userRoleDao;
     private FilterDao<UserLog> userLogDao;
-    private FilterDao<Province> provinceDao;
 	private IdentityMgr identityMgr;
 	private PublicEntityMgr publicEntityMgr;
 	
 
-    @Resource(name="entityDao")
-    public void setEntityDao(FilterDao<Entity> entityDao) {
-        this.entityDao = entityDao;
-    }
+    @Resource
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
     
-    @Resource(name="userGroupDao")
-	public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
-		this.userGroupDao = userGroupDao;
+    @Resource
+    public void setUserGroupRepository(UserGroupRepository userGroupRepository) {
+		this.userGroupRepository = userGroupRepository;
 	}
 
     @Resource(name="userAssociationDao")
@@ -404,11 +390,6 @@ public class UserMgrImpl
     @Resource(name="userLogDao")
     public void setUserLogDao(FilterDao<UserLog> userLogDao) {
         this.userLogDao = userLogDao;
-    }
-    
-    @Resource(name="provinceDao")
-    public void setProvinceDao(FilterDao<Province> provinceDao) {
-        this.provinceDao = provinceDao;
     }
     
     @Resource

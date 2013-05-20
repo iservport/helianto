@@ -38,6 +38,7 @@ import org.helianto.message.form.NotificationEventForm;
 import org.helianto.message.sender.SendGridMessageAdapter;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
+import org.helianto.user.repository.UserGroupRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -67,10 +68,7 @@ public class MessageMgrImpl implements MessageMgr {
     public void findHourly() {
     	logger.info("Hourly scheduler triggered at {}.", new Date());
     	MessageAdapter<String> hourlyMessage = new SendGridMessageAdapter();
-    	String query = "select distinct child from User child " +
-    			"join child.parentAssociations parents " +
-    			"where lower(parents.parent.userKey) like 'admin' ";
-    	Collection<UserGroup> adminList = userGroupDao.find(query, new Object[0]);
+    	Collection<UserGroup> adminList = userGroupRepository.findByParent("admin");
     	Map<Identity, List<UserGroup>> adminMap = new HashMap<Identity, List<UserGroup>>();
     	for (UserGroup admin: adminList) {
     		Identity identity = ((User) admin).getIdentity();
@@ -111,7 +109,7 @@ public class MessageMgrImpl implements MessageMgr {
     // collabs
 
     private MessageSender messageSender;
-    private FilterDao<UserGroup> userGroupDao;
+    private UserGroupRepository userGroupRepository;
     private FilterDao<NotificationEvent> notificationEventDao;
     private SequenceMgr sequenceMgr;
     
@@ -120,9 +118,9 @@ public class MessageMgrImpl implements MessageMgr {
 		this.messageSender = messageSender;
 	}
     
-    @Resource(name="userGroupDao")
-    public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
-		this.userGroupDao = userGroupDao;
+    @Resource
+    public void setUserGroupRepository(UserGroupRepository userGroupRepository) {
+		this.userGroupRepository = userGroupRepository;
 	}
     
     @Resource(name="notificationEventDao")

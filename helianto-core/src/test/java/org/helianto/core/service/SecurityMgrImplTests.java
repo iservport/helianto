@@ -34,13 +34,12 @@ import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Service;
 import org.helianto.core.repository.CredentialRepository;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;
-import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
+import org.helianto.user.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -118,8 +117,8 @@ public class SecurityMgrImplTests {
     	Set<UserRole> roles = new HashSet<UserRole>();
     	roles.add(new UserRole(user, new Service(), "TEST"));
     	
-        userGroupDao.refresh(user);
-        replay(userGroupDao);
+        userRepository.refresh(user);
+        replay(userRepository);
 
         securityMgr.authenticate(user, roles);
     	PublicUserDetails authenticatedUserDetails = securityMgr.findAuthenticatedUser();
@@ -139,19 +138,18 @@ public class SecurityMgrImplTests {
     
     //~ collaborators
     
-	private FilterDao<UserGroup> userGroupDao;
+	private UserRepository userRepository;
 	private IdentityRepository identityRepository;
     private CredentialRepository credentialRepository;
     
     //~ setup
     
-    @SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         securityMgr = new SecurityMgrImpl();
-        userGroupDao = createMock(FilterDao.class);
+        userRepository = createMock(UserRepository.class);
         identityRepository = createMock(IdentityRepository.class);
-        securityMgr.setUserGroupDao(userGroupDao);
+        securityMgr.setUserRepository(userRepository);
         securityMgr.setIdentityRepository(identityRepository);
         credentialRepository = createMock(CredentialRepository.class);
         securityMgr.setCredentialRepository(credentialRepository);
@@ -159,7 +157,7 @@ public class SecurityMgrImplTests {
     
     @After
     public void tearDown() {
-        reset(userGroupDao);
+        reset(userRepository);
         reset(identityRepository);
         reset(credentialRepository);
     }

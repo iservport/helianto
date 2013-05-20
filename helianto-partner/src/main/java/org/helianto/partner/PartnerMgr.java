@@ -216,13 +216,6 @@ public interface PartnerMgr {
 	public List<? extends UserGroup> findContactGroups(ContactGroupForm form);
 	
     /**
-     * Write <code>ContactGroup</code> to the datastore.
-     * 
-     * @param privateEntityKey
-     */
-	public ContactGroup storeContactGroup(ContactGroup contactGroup);
-
-    /**
      * Find <code>PartnerCategory</code>.
      * 
      * @param partnerFilter

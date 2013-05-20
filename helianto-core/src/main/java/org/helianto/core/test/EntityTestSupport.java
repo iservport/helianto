@@ -8,7 +8,7 @@ import org.helianto.core.domain.Operator;
 
 
 /**
- * Class to support <code>EntityDao</code> tests.
+ * Class to support <code>Entity</code> tests.
  * 
  * @author Mauricio Fernandes de Castro
  */

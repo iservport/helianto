@@ -51,18 +51,18 @@ public class PostInstallationMgrImplTests {
 //		
 //		logger.debug("Will install {} province(s) ...", provinceList.size());
 //		for (Province p: provinceList) {
-//			Province province = provinceDao.findUnique(defaultOperator, p.getProvinceCode());
+//			Province province = provinceRepository.findUnique(defaultOperator, p.getProvinceCode());
 //	    	if (province==null) {
 //	    		logger.debug("New province {}", p.getProvinceCode());
 //	    		p.setOperator(defaultOperator);
 //	    		if (p.getParent()!=null) {
-//	    			Province parent = provinceDao.findUnique(defaultOperator, p.getParent().getProvinceCode());
+//	    			Province parent = provinceRepository.findUnique(defaultOperator, p.getParent().getProvinceCode());
 //	    			if (parent==null) {
 //	    				logger.debug("New parent {}", p.getParent().getProvinceCode());
 //	    				p.setParent(parent);
 //	    			}
 //	    		}
-//		        provinceDao.saveOrUpdate(p);
+//		        provinceRepository.saveOrUpdate(p);
 //	    	}
 //	    	else {
 //		    	logger.debug("Province AVAILABLE as {}.", province);	    		

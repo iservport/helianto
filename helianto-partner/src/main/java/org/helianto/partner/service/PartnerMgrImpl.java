@@ -31,10 +31,10 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.PartnerMgr;
 import org.helianto.partner.PartnerState;
-import org.helianto.partner.domain.ContactGroup;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
@@ -65,6 +65,7 @@ import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
 import org.helianto.partner.form.PrivateEntityKeyForm;
 import org.helianto.user.domain.UserGroup;
+import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -262,7 +263,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 			privateEntity = new PrivateEntity2(entity, partnerAlias);
 			privateEntity.setEntityName(entityName);
 			AddressUtils.copyAddress(partnerAddress, privateEntity);
-			Province province = provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode());
+			Province province = provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode());
 			if (province==null) {
 				logger.error("A province was not found in database for {}, please, install first.", partnerAddress.getProvinceCode());
 				throw new IllegalArgumentException("A province is required here.");
@@ -294,7 +295,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 			privateEntity = new PrivateEntity2(entity, partnerAlias);
 			privateEntity.setEntityName(entityName);
 			AddressUtils.copyAddress(partnerAddress, privateEntity);
-			Province province = provinceDao.findUnique(entity.getOperator(), partnerAddress.getProvinceCode());
+			Province province = provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode());
 			if (province==null) {
 				logger.error("A province was not found in database for {}, please, install first.", partnerAddress.getProvinceCode());
 				throw new IllegalArgumentException("A province is required here.");
@@ -404,19 +405,13 @@ public class PartnerMgrImpl implements PartnerMgr {
 	@Transactional(readOnly=true)
 	public List<? extends UserGroup> findContactGroups(ContactGroupForm form) {
 		Filter filter = new ContactGroupFormFilterAdapter(form);
-		List<? extends UserGroup> contactGroupList = (List<? extends UserGroup>) userGroupDao.find(filter);
+		List<? extends UserGroup> contactGroupList = (List<? extends UserGroup>) userRepository.find(filter);
     	if (logger.isDebugEnabled() && contactGroupList!=null) {
     		logger.debug("Found contact group list of size {}", contactGroupList.size());
     	}
 		return contactGroupList;
 	}
 	
-	@Transactional
-	public ContactGroup storeContactGroup(ContactGroup contactGroup) {
-		userGroupDao.saveOrUpdate(contactGroup);
-		return contactGroup;
-	}
-
     //- collaborators
     
     private FilterDao<PrivateEntity2> privateEntityDao;
@@ -424,10 +419,10 @@ public class PartnerMgrImpl implements PartnerMgr {
     private FilterDao<PrivateAddress> addressDao;
     private FilterDao<PrivateEntityKey> privateEntityKeyDao;
     private FilterDao<PartnerKey> partnerKeyDao;
-    private FilterDao<Province> provinceDao;
+    private ProvinceRepository provinceRepository;
     private FilterDao<PartnerPhone> partnerPhoneDao;
     private FilterDao<PartnerCategory> partnerCategoryDao;
-    private FilterDao<UserGroup> userGroupDao;
+    private UserRepository userRepository;
 	private ContextMgr contextMgr;
 	private SequenceMgr sequenceMgr;
 
@@ -456,9 +451,9 @@ public class PartnerMgrImpl implements PartnerMgr {
         this.partnerKeyDao = partnerKeyDao;
     }
     
-    @Resource(name="provinceDao")
-    public void setProvinceDao(FilterDao<Province> provinceDao) {
-		this.provinceDao = provinceDao;
+    @Resource
+    public void setProvinceRepository(ProvinceRepository provinceRepository) {
+		this.provinceRepository = provinceRepository;
 	}
     
     @Resource(name="partnerPhoneDao")
@@ -471,9 +466,9 @@ public class PartnerMgrImpl implements PartnerMgr {
 		this.partnerCategoryDao = partnerCategoryDao;
 	}
     
-    @Resource(name="userGroupDao")
-    public void setUserGroupDao(FilterDao<UserGroup> userGroupDao) {
-		this.userGroupDao = userGroupDao;
+    @Resource
+    public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
     
 	@Resource(name="namespaceMgr")

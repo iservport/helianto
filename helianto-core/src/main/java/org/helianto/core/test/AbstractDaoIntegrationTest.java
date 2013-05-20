@@ -4,7 +4,8 @@ import javax.annotation.Resource;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.ContextRepository;
+import org.helianto.core.repository.EntityRepository;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -35,33 +36,31 @@ public abstract class AbstractDaoIntegrationTest {
 	@Before
 	public void prepareSetUp() {
 		logger.debug("PREPARE TEST");
-		Operator operator = OperatorTestSupport.createOperator();
-		operatorDao.saveOrUpdate(operator);
+		Operator operator = contextRepository.save(OperatorTestSupport.createOperator());
 
-		entity = EntityTestSupport.createEntity(operator);
-			entityDao.saveOrUpdate(entity);
+		entity = entityRepository.saveAndFlush(EntityTestSupport.createEntity(operator));
 		logger.debug("START TEST");
 	}
 	
 	// collabs
 
-    private FilterDao<Entity> entityDao;
-	private FilterDao<Operator> operatorDao;
+    private EntityRepository entityRepository;
+	private ContextRepository contextRepository;
 	
-	public FilterDao<Operator> getOperatorDao() {
-		return operatorDao;
+	public ContextRepository getContextRepository() {
+		return contextRepository;
 	}
-	@Resource(name="operatorDao")
-	public void setOperatorDao(FilterDao<Operator> operatorDao) {
-		this.operatorDao = operatorDao;
+	@Resource
+	public void setContextRepository(ContextRepository contextRepository) {
+		this.contextRepository = contextRepository;
 	}
 	
-	public FilterDao<Entity> getEntityDao() {
-		return entityDao;
+	public EntityRepository getEntityRepository() {
+		return entityRepository;
 	}
-	@Resource(name="entityDao")
-	public void setEntityDao(FilterDao<Entity> entityDao) {
-		this.entityDao = entityDao;
+	@Resource
+	public void setEntityRepository(EntityRepository entityRepository) {
+		this.entityRepository = entityRepository;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(AbstractDaoIntegrationTest.class);

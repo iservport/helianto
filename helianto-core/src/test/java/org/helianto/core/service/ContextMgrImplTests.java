@@ -27,6 +27,8 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.easymock.EasyMock;
+import org.easymock.EasyMockSupport;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
@@ -36,9 +38,12 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ServiceFormFilterAdapter;
 import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.form.KeyTypeForm;
+import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.core.repository.ContextRepository;
+import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.OperatorTestSupport;
@@ -57,34 +62,34 @@ public class ContextMgrImplTests {
 		Filter filter = new TestingFilter();
 		List<Operator> operatorList = OperatorTestSupport.createOperatorList(1);
 		
-		expect(operatorDao.find(filter)).andReturn(operatorList);
-		replay(operatorDao);
+		expect(contextRepository.find(filter)).andReturn(operatorList);
+		replay(contextRepository);
 		
 		assertSame(operatorList , contextMgr.findOperators(filter));
-		verify(operatorDao);
+		verify(contextRepository);
 	}
 	
 	@Test
 	public void storeOperator() {
 		Operator operator = OperatorTestSupport.createOperator();
 		
-		operatorDao.saveOrUpdate(operator);
-		replay(operatorDao);
+		expect(contextRepository.saveAndFlush(operator)).andReturn(operator);
+		replay(contextRepository);
 		
 		assertSame(operator , contextMgr.storeOperator(operator));
-		verify(operatorDao);
+		verify(contextRepository);
 	}
 	
 	@Test
 	public void findProvinces() {
 		List<Province> provinceList = new ArrayList<Province>();
-		Filter filter = new TestingFilter();
+		ProvinceForm form = new EasyMockSupport().createMock(ProvinceForm.class);
 		
-		expect(provinceDao.find(filter)).andReturn(provinceList);
-		replay(provinceDao);
+		expect(provinceRepository.find(EasyMock.isA(Filter.class))).andReturn(provinceList);
+		replay(provinceRepository);
 		
-		assertSame(provinceList , contextMgr.findProvinces(filter));
-		verify(provinceDao);
+		assertSame(provinceList , contextMgr.findProvinces(form));
+		verify(provinceRepository);
 	}
 	
 	@Test
@@ -92,11 +97,11 @@ public class ContextMgrImplTests {
 		Province province = new Province();
 		Province managedProvince = new Province();
 		
-		expect(provinceDao.merge(province)).andReturn(managedProvince);
-		replay(provinceDao);
+		expect(provinceRepository.saveAndFlush(province)).andReturn(managedProvince);
+		replay(provinceRepository);
 		
 		assertSame(managedProvince , contextMgr.storeProvince(province));
-		verify(provinceDao);
+		verify(provinceRepository);
 	}
 	
 	@Test
@@ -104,22 +109,22 @@ public class ContextMgrImplTests {
 		List<Entity> entityList = EntityTestSupport.createEntityList(1);
 		Filter filter = new TestingFilter();
 		
-		expect(entityDao.find(filter)).andReturn(entityList);
-		replay(entityDao);
+		expect(entityRepository.find(filter)).andReturn(entityList);
+		replay(entityRepository);
 		
 		assertSame(entityList , contextMgr.findEntities(filter));
-		verify(entityDao);
+		verify(entityRepository);
 	}
 	
 	@Test
 	public void storeEntity() {
 		Entity entity = EntityTestSupport.createEntity();
 		
-		entityDao.saveOrUpdate(entity);
-		replay(entityDao);
+		expect(entityRepository.saveAndFlush(entity)).andReturn(entity);
+		replay(entityRepository);
 		
 		assertSame(entity , contextMgr.storeEntity(entity));
-		verify(entityDao);
+		verify(entityRepository);
 	}
 	
 	@Test
@@ -189,33 +194,32 @@ public class ContextMgrImplTests {
 //		managedOperator.getServices().add(service);
 //		UserRole userRole = new UserRole();
 //		
-//		expect(operatorDao.merge(operator)).andReturn(managedOperator);
-//		replay(operatorDao);
+//		expect(contextRepository.save(operator)).andReturn(managedOperator);
+//		replay(contextRepository);
 //		
 //		Map<String, String> serviceNameMap = namespaceMgr.loadServiceNameMap(operator, userRole);
 //		assertSame(service.getServiceName() , serviceNameMap.get("2147483647"));
 //		assertSame(service, userRole.getService());
-//		verify(operatorDao);
+//		verify(contextRepository);
 //	}
 	
 	private ContextMgrImpl contextMgr;
-	private FilterDao<Operator> operatorDao;
-	private FilterDao<Province> provinceDao;
-	private FilterDao<Entity> entityDao;
+	private ContextRepository contextRepository;
+	private ProvinceRepository provinceRepository;
+	private EntityRepository entityRepository;
 	private KeyTypeRepository keyTypeRepository;
 	private ServiceRepository serviceRepository;
 	
 	
-	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		contextMgr = new ContextMgrImpl();
-		operatorDao = createMock(FilterDao.class);
-		contextMgr.setOperatorDao(operatorDao);
-		provinceDao = createMock(FilterDao.class);
-		contextMgr.setProvinceDao(provinceDao);
-		entityDao = createMock(FilterDao.class);
-		contextMgr.setEntityDao(entityDao);
+		contextRepository = createMock(ContextRepository.class);
+		contextMgr.setContextRepository(contextRepository);
+		provinceRepository = createMock(ProvinceRepository.class);
+		contextMgr.setProvinceRepository(provinceRepository);
+		entityRepository = createMock(EntityRepository.class);
+		contextMgr.setEntityRepository(entityRepository);
 		keyTypeRepository = createMock(KeyTypeRepository.class);
 		contextMgr.setKeyTypeRepository(keyTypeRepository);
 		serviceRepository = createMock(ServiceRepository.class);
@@ -224,9 +228,9 @@ public class ContextMgrImplTests {
 	
 	@After
 	public void tearDown() {
-		reset(operatorDao);
-		reset(provinceDao);
-		reset(entityDao);
+		reset(contextRepository);
+		reset(provinceRepository);
+		reset(entityRepository);
 		reset(keyTypeRepository);
 		reset(serviceRepository);
 	}

@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
-import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
 import org.springframework.data.jpa.repository.Query;
 
 /**
- * User repository.
+ * User group repository.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface UserRepository extends FilterRepository<User, Serializable> {
+public interface UserGroupRepository extends FilterRepository<UserGroup, Serializable> {
 	
 	/**
 	 * Find by natural key.
@@ -21,7 +21,7 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
 	 * @param entity
 	 * @param userKey
 	 */
-	User findByEntityAndUserKey(Entity entity, String userKey);
+	UserGroup findByEntityAndUserKey(Entity entity, String userKey);
 	
 	/**
 	 * Find by user key.
@@ -29,7 +29,7 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
 	 * @param entity
 	 * @param userKey
 	 */
-	List<User> findByUserKey(String userKey);
+	List<UserGroup> findByUserKey(String userKey);
 	
 //	select user from User user where user.userKey = ? order by lastEvent DESC
 	
@@ -38,7 +38,7 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
 	 * 
 	 * @param userKey
 	 */
-	List<User> findByUserKeyOrderByLastEventDesc(String userKey);
+	List<UserGroup> findByUserKeyOrderByLastEventDesc(String userKey);
 	
 	/**
 	 * Find by parent key.
@@ -48,5 +48,5 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
 	@Query(value="select distinct child from User child " +
     		   	"join child.parentAssociations parents " +
     			"where lower(parents.parent.userKey) like ?1 ")
-	List<User> findByParent(String parentKey);
+	List<UserGroup> findByParent(String parentKey);
 }

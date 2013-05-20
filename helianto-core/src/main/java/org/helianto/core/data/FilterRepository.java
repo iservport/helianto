@@ -18,6 +18,25 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface FilterRepository<T, ID extends Serializable> extends JpaRepository<T, ID> {
 
+	/**
+	 * Add find by filter.
+	 * 
+	 * @param filter
+	 */
 	Iterable<T> find(Filter filter);
+	
+	/**
+	 * Add count by filter.
+	 * 
+	 * @param filter
+	 */
+	long count(Filter filter);
+	
+	/**
+	 * Add refresh.
+	 * 
+	 * @param entity
+	 */
+	void refresh(T entity);
 
 }

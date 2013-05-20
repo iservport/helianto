@@ -7,7 +7,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.user.domain.UserGroup;
 
 /**
- * Class to support <code>UserGroupDao</code> tests.
+ * Class to support <code>UserGroup</code> tests.
  * 
  * @author Mauricio Fernandes de Castro
  */
