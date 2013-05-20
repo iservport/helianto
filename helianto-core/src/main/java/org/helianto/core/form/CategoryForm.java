@@ -1,6 +1,5 @@
 package org.helianto.core.form;
 
-import org.helianto.core.Resettable;
 import org.helianto.core.domain.type.TrunkEntity;
 
 /**
@@ -8,7 +7,7 @@ import org.helianto.core.domain.type.TrunkEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface CategoryForm extends TrunkEntity, Resettable {
+public interface CategoryForm extends TrunkEntity {
 	
 	/**
 	 * Category code.

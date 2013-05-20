@@ -46,6 +46,7 @@ import org.helianto.user.filter.UserRoleFormFilterAdapter;
 import org.helianto.user.form.UserGroupForm;
 import org.helianto.user.form.UserRoleForm;
 import org.helianto.user.repository.UserGroupRepository;
+import org.helianto.user.repository.UserLogRepository;
 import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -295,8 +296,7 @@ public class UserMgrImpl
             date = new Date();
         }
         UserLog userLog = new UserLog(user, date, EventType.LOGIN_ATTEMPT);
-        userLogDao.saveOrUpdate(userLog);
-        return userLog;
+        return userLogRepository.saveAndFlush(userLog);
     }
     
     /**
@@ -362,7 +362,7 @@ public class UserMgrImpl
     private UserGroupRepository userGroupRepository;
     private FilterDao<UserAssociation> userAssociationDao;
     private FilterDao<UserRole> userRoleDao;
-    private FilterDao<UserLog> userLogDao;
+    private UserLogRepository userLogRepository;
 	private IdentityMgr identityMgr;
 	private PublicEntityMgr publicEntityMgr;
 	
@@ -387,10 +387,10 @@ public class UserMgrImpl
 		this.userRoleDao = userRoleDao;
 	}
 	
-    @Resource(name="userLogDao")
-    public void setUserLogDao(FilterDao<UserLog> userLogDao) {
-        this.userLogDao = userLogDao;
-    }
+    @Resource
+    public void setUserLogRepository(UserLogRepository userLogRepository) {
+		this.userLogRepository = userLogRepository;
+	}
     
     @Resource
     public void setIdentityMgr(IdentityMgr identityMgr) {

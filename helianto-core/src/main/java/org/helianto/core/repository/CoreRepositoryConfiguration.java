@@ -17,8 +17,6 @@ package org.helianto.core.repository;
 
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
 import org.helianto.user.domain.UserAssociation;
-import org.helianto.user.domain.UserLog;
-import org.helianto.user.domain.UserRequest;
 import org.helianto.user.domain.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,14 +43,6 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 	}
 
 	/**
-	 * User log data access.
-	 */
-	@Bean
-	public FilterDao<UserLog> userLogDao() {
-		return getFilterDao(UserLog.class, "user", "lastEvent");
-	}
-
-	/**
 	 * User role data access.
 	 */
 	@Bean
@@ -60,12 +50,4 @@ public class CoreRepositoryConfiguration extends AbstractRepositoryConfiguration
 		return getFilterDao(UserRole.class, "userGroup", "service", "serviceExtension");
 	}
 
-	/**
-	 * User request data access.
-	 */
-	@Bean
-	public FilterDao<UserRequest> userRequestDao() {
-		return getFilterDao(UserRequest.class, "userGroup", "internalNumber");
-	}
-	
 }

@@ -9,9 +9,9 @@ import org.easymock.EasyMock;
 import org.helianto.core.SequenceMgr;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.form.CompositeIdentityForm;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.user.domain.UserRequest;
 import org.helianto.user.form.UserRequestForm;
+import org.helianto.user.repository.UserRequestRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,14 +26,14 @@ public class UserRequestMgrImplTests {
 	public void store() {
 		UserRequest userRequest = new UserRequest();
 		
-		userRequestDao.saveOrUpdate(userRequest);
-		userRequestDao.flush();
-		EasyMock.replay(userRequestDao);
+		EasyMock.expect(userRequestRepository.saveAndFlush(userRequest)).andReturn(userRequest);
+		EasyMock.replay(userRequestRepository);
+		
 		sequenceMgr.validateInternalNumber(userRequest);
 		EasyMock.replay(sequenceMgr);
 		
 		assertSame(userRequest, loginRequestMgr.storeUserRequest(userRequest));
-		EasyMock.verify(userRequestDao);
+		EasyMock.verify(userRequestRepository);
 		EasyMock.verify(sequenceMgr);
 	}
 	
@@ -42,30 +42,30 @@ public class UserRequestMgrImplTests {
 		List<UserRequest> userRequestList = new ArrayList<UserRequest>();
 		UserRequestForm form = new CompositeIdentityForm("TESTE");
 		
-		EasyMock.expect(userRequestDao.find(EasyMock.isA(Filter.class))).andReturn(userRequestList);
-		EasyMock.replay(userRequestDao);
+		EasyMock.expect(userRequestRepository.find(EasyMock.isA(Filter.class))).andReturn(userRequestList);
+		EasyMock.replay(userRequestRepository);
 		
 		assertSame(userRequestList, loginRequestMgr.findUserRequests(form));
-		EasyMock.verify(userRequestDao);
+		EasyMock.verify(userRequestRepository);
 	}
 	
 	private UserRequestMgrImpl loginRequestMgr;
-	private FilterDao<UserRequest> userRequestDao;
+	private UserRequestRepository userRequestRepository;
 	private SequenceMgr sequenceMgr;
 	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		loginRequestMgr = new UserRequestMgrImpl();
-		userRequestDao = EasyMock.createMock(FilterDao.class);
-		loginRequestMgr.setUserRequestDao(userRequestDao);
+		userRequestRepository = EasyMock.createMock(UserRequestRepository.class);
+		loginRequestMgr.setUserRequestRepository(userRequestRepository);
 		sequenceMgr = EasyMock.createMock(SequenceMgr.class);
 		loginRequestMgr.setSequenceMgr(sequenceMgr);
 	}
 	
 	@After
 	public void tearDown() {
-		EasyMock.reset(userRequestDao);
+		EasyMock.reset(userRequestRepository);
 		EasyMock.reset(sequenceMgr);
 	}
 

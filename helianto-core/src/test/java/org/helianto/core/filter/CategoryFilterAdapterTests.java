@@ -19,11 +19,12 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.form.AbstractCategoryForm;
 import org.helianto.core.form.CategoryForm;
 import org.helianto.core.test.EntityTestSupport;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -43,38 +44,36 @@ public class CategoryFilterAdapterTests {
     
     @Test
     public void categoryCode() {
-    	((AbstractCategoryForm) form).setCategoryCode("CODE");
+    	Mockito.when(form.getCategoryCode()).thenReturn("CODE");
         assertEquals(C1+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void categoryName() {
-    	((AbstractCategoryForm) form).setCategoryName("NAME_LIKE");
+    	Mockito.when(form.getCategoryName()).thenReturn("NAME_LIKE");
         assertEquals(C1+C3, filter.createCriteriaAsString());
     }
     
     @Test
     public void categoryGroup() {
-    	((AbstractCategoryForm) form).setCategoryGroup(CategoryGroup.UNIT.getValue());
+    	Mockito.when(form.getCategoryGroup()).thenReturn(CategoryGroup.UNIT.getValue());
         assertEquals(C1+C4, filter.createCriteriaAsString());
     }
     
     private CategoryFormFilterAdapter filter;
     private CategoryForm form;
     
-    @SuppressWarnings("serial")
 	@Before
     public void setUp() {
-    	form = new AbstractCategoryForm() {
-    		@Override
-    		public Entity getEntity() {
-    			Entity entity = EntityTestSupport.createEntity();
-    			entity.setId(1);
-    			return entity;
-    		}
-    	};
-    	form.reset();
+		Entity entity = EntityTestSupport.createEntity(1);
+    	form = Mockito.mock(CategoryForm.class);
     	filter = new CategoryFormFilterAdapter(form);
+    	Mockito.when(form.getEntity()).thenReturn(entity);
+    }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
     }
 
 }

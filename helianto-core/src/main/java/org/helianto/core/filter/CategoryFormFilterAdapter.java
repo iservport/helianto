@@ -37,10 +37,6 @@ public class CategoryFormFilterAdapter extends AbstractTrunkFilterAdapter<Catego
 		super(category);
 	}
 	
-	public void reset() {
-		getForm().reset();
-	}
-	
 	public boolean isSelection() {
 		return (getForm().getCategoryCode()!=null && getForm().getCategoryCode().length()>0);
 	}
@@ -49,7 +45,7 @@ public class CategoryFormFilterAdapter extends AbstractTrunkFilterAdapter<Catego
 	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
         super.preProcessFilter(mainCriteriaBuilder);
         logger.debug("CategoryGroup is: '{}'", getForm().getCategoryGroup());
-        if (getForm().getCategoryGroup()!=' ') {
+        if (getForm().getCategoryGroup()!=0 && getForm().getCategoryGroup()!=' ' && getForm().getCategoryGroup()!='_') {
             mainCriteriaBuilder.appendAnd().appendSegment("categoryGroup", "=")
             	.append(getForm().getCategoryGroup());
             return true;
@@ -61,7 +57,6 @@ public class CategoryFormFilterAdapter extends AbstractTrunkFilterAdapter<Catego
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
         logger.debug("CategoryCode is: '{}'",getForm().getCategoryCode());
     	appendEqualFilter("categoryCode", getForm().getCategoryCode(), (OrmCriteriaBuilder) mainCriteriaBuilder);
-    	reset();
 	}
 
 	@Override

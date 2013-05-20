@@ -46,6 +46,7 @@ import org.helianto.user.domain.UserRole;
 import org.helianto.user.filter.UserFormFilterAdapter;
 import org.helianto.user.form.UserGroupForm;
 import org.helianto.user.repository.UserGroupRepository;
+import org.helianto.user.repository.UserLogRepository;
 import org.helianto.user.repository.UserRepository;
 import org.helianto.user.service.UserMgrImpl;
 import org.junit.After;
@@ -166,12 +167,13 @@ public class UserMgrImplTests {
         Identity identity = new Identity();
         User user = new User();
         user.setIdentity(identity);
+        UserLog userLog = new UserLog(user, date);
         
-        userLogDao.saveOrUpdate(isA(UserLog.class));
-        replay(userLogDao);
+    	expect(userLogRepository.saveAndFlush(isA(UserLog.class))).andReturn(userLog);
+        replay(userLogRepository);
         
-        userMgr.storeUserLog(user,date);
-        verify(userLogDao);
+		assertSame(userLog , userMgr.storeUserLog(user,date));
+        verify(userLogRepository);
     }
 
 	@Test
@@ -205,7 +207,7 @@ public class UserMgrImplTests {
     private UserRepository userRepository;
     private UserGroupRepository userGroupRepository;
     private FilterDao<UserAssociation> userAssociationDao;
-    private FilterDao<UserLog> userLogDao;
+    private UserLogRepository userLogRepository;
     private FilterDao<UserRole> userRoleDao;
 	private IdentityMgr identityMgr;
 	private PublicEntityMgr publicEntityMgr;
@@ -220,8 +222,8 @@ public class UserMgrImplTests {
         userMgr.setUserRepository(userRepository);
         userAssociationDao = createMock(FilterDao.class);
         userMgr.setUserAssociationDao(userAssociationDao);
-        userLogDao = createMock(FilterDao.class);
-        userMgr.setUserLogDao(userLogDao);
+        userLogRepository = createMock(UserLogRepository.class);
+        userMgr.setUserLogRepository(userLogRepository);
 		userRoleDao = createMock(FilterDao.class);
 		userMgr.setUserRoleDao(userRoleDao);
 		identityMgr = createMock(IdentityMgr.class);
@@ -235,7 +237,7 @@ public class UserMgrImplTests {
         reset(userGroupRepository);
         reset(userRepository);
         reset(userAssociationDao);
-        reset(userLogDao);
+        reset(userLogRepository);
 		reset(userRoleDao);
         reset(identityMgr);
         reset(publicEntityMgr);
