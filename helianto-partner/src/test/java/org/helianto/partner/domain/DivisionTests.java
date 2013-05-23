@@ -20,7 +20,7 @@ public class DivisionTests {
 	@Test
 	public void partner() {
 		Entity entity = new Entity();
-		PrivateEntity2 registry = new PrivateEntity2(entity);
+		PrivateEntity registry = new PrivateEntity(entity);
 		Partner customer = new Customer(registry);
 		Division division = new Division(customer);
 		assertSame(registry, division.getPrivateEntity());
@@ -29,7 +29,7 @@ public class DivisionTests {
 	@Test(expected=IllegalArgumentException.class)
 	public void partnerError() {
 		Entity entity = new Entity();
-		PrivateEntity2 registry = new PrivateEntity2(entity);
+		PrivateEntity registry = new PrivateEntity(entity);
 		Partner other = new Division(registry);
 		Division division = new Division(other);
 		assertSame(registry, division.getPrivateEntity());
@@ -38,7 +38,7 @@ public class DivisionTests {
 	@Test
     public void equality() {
 		Entity entity = new Entity(new Operator("DEFAULT"));
-        PrivateEntity2 partnerRegistry = new PrivateEntity2(entity, "TEST");
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
         
         Division division = new Division();
         Division other = new Division();

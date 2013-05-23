@@ -5,26 +5,19 @@
 	<classpathentry kind="src" path="helianto-core/src/test/java"/>
 	<classpathentry excluding="**" kind="src" path="helianto-core/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-partner/src/main/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-partner/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-partner/src/test/java"/>
 	<classpathentry excluding="**" kind="src" path="helianto-partner/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-document/src/main/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-document/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-document/src/test/java"/>
 	<classpathentry excluding="**" kind="src" path="helianto-document/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-finance/src/main/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-finance/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-finance/src/test/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-finance/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-resource/src/main/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-resource/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-resource/src/test/java"/>
 	<classpathentry kind="src" path="helianto-process/src/main/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-process/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-process/src/test/java"/>
 	<classpathentry excluding="**" kind="src" path="helianto-process/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-inventory/src/main/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-inventory/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-inventory/src/test/java"/>
 	<classpathentry kind="src" path="helianto-message/src/main/java"/>
 	<classpathentry excluding="**" kind="src" path="helianto-message/src/main/resources"/>

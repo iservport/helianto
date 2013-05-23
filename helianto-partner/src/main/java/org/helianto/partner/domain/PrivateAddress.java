@@ -48,7 +48,7 @@ import org.helianto.core.def.PrivacyLevel;
 public class PrivateAddress extends AbstractAddress implements Comparable<PrivateAddress> {
 
     private static final long serialVersionUID = 1L;
-    private PrivateEntity2 privateEntity;
+    private PrivateEntity privateEntity;
     private int sequence;
     private char addressType;
     private char privacyLevel;
@@ -67,7 +67,7 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
      * 
      * @param privateEntity
 	 */
-    public PrivateAddress(PrivateEntity2 privateEntity, int sequence) {
+    public PrivateAddress(PrivateEntity privateEntity, int sequence) {
     	this();
     	setPrivateEntity(privateEntity);
     	setSequence(sequence);
@@ -83,7 +83,7 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
      * Partner registry (old name).
      */
     @Transient
-    public PrivateEntity2 getPartnerRegistry() {
+    public PrivateEntity getPartnerRegistry() {
         return this.privateEntity;
     }
     
@@ -92,10 +92,10 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
      */
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PrivateEntity2 getPrivateEntity() {
+    public PrivateEntity getPrivateEntity() {
         return this.privateEntity;
     }
-    public void setPrivateEntity(PrivateEntity2 privateEntity) {
+    public void setPrivateEntity(PrivateEntity privateEntity) {
         this.privateEntity = privateEntity;
     }
 

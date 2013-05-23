@@ -59,23 +59,6 @@ public class DocumentRepositoryConfiguration extends AbstractRepositoryConfigura
 	}
 
 	/**
-	 * Serializer data access.
-	 * @deprecated see document folder
-	 */
-	@Bean
-	public FilterDao<DocumentFolder> serializerDao() {
-		return getFilterDao(DocumentFolder.class, "entity", "folderCode");
-	}
-
-	/**
-	 * Document folder data access.
-	 */
-	@Bean
-	public FilterDao<DocumentFolder> documentFolderDao() {
-		return getFilterDao(DocumentFolder.class, "entity", "folderCode");
-	}
-
-	/**
 	 * Document tag data access.
 	 */
 	@Bean

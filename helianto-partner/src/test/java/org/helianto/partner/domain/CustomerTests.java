@@ -24,7 +24,7 @@ public class CustomerTests {
     
 	@Test
 	public void constructorPartnerRegistry() {
-		PrivateEntity2 partnerRegistry = new PrivateEntity2();
+		PrivateEntity partnerRegistry = new PrivateEntity();
 		Customer customer = new Customer(partnerRegistry);
 		assertTrue(customer instanceof Partner);
 		assertEquals(customer.getPrivateEntity(), partnerRegistry);
@@ -44,7 +44,7 @@ public class CustomerTests {
 	@Test
     public void customerEquals() {
 		Entity entity = new Entity(new Operator("DEFAULT"));
-        PrivateEntity2 partnerRegistry = new PrivateEntity2(entity, "TEST");
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
         
         Customer customer = new Customer();
         Customer other = new Customer();

@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PrivateEntity;
 
 
 /**
@@ -55,7 +55,7 @@ public class EducationPartner extends Partner {
      * 
      * @param partnerRegistry
      */
-    public EducationPartner(PrivateEntity2 partnerRegistry) {
+    public EducationPartner(PrivateEntity partnerRegistry) {
     	this();
     	setPrivateEntity(partnerRegistry);
     }
@@ -68,7 +68,7 @@ public class EducationPartner extends Partner {
      */
     public EducationPartner(Entity entity, String partnerAlias) {
     	this();
-    	setPrivateEntity(new PrivateEntity2(entity, partnerAlias));
+    	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
 
     /**

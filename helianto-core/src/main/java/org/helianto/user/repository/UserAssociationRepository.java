@@ -28,7 +28,7 @@ public interface UserAssociationRepository
 	 * 
 	 * @param userKey
 	 */
-	@Query("select userAssociation a where lower(a.parent.userKey) like ?1 ")
+	@Query("select userAssociation from UserAssociation userAssociation where lower(userAssociation.parent.userKey) like ?1 ")
 	Iterable<UserAssociation> findByParentUserKey(String userKey);
 	
 	/**
@@ -36,7 +36,7 @@ public interface UserAssociationRepository
 	 * 
 	 * @param userKey
 	 */
-	@Query("select userAssociation a where lower(a.child.userKey) like ?1 ")
+	@Query("select userAssociation from UserAssociation userAssociation where lower(userAssociation.child.userKey) like ?1 ")
 	Iterable<UserAssociation> findByChildUserKey(String userKey);
 	
 }

@@ -17,7 +17,7 @@ public class PrivateEntityKeyTests {
     
 	@Test
     public void constructor() {
-        PrivateEntity2 partnerRegistry = new PrivateEntity2();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         KeyType keyType = new KeyType();
         
         PrivateEntityKey partnerRegistryKey = new PrivateEntityKey(partnerRegistry, keyType);
@@ -29,7 +29,7 @@ public class PrivateEntityKeyTests {
     
 	@Test
     public void equality() {
-        PrivateEntity2 partnerRegistry = new PrivateEntity2();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         KeyType keyType = new KeyType();
         
         PrivateEntityKey partnerRegistryKey = new PrivateEntityKey(partnerRegistry, keyType);

@@ -19,7 +19,7 @@ public class PrivateEntityTests {
     
 	@Test
 	public void constructor() {
-		PrivateEntity2 privateEntity = new PrivateEntity2();
+		PrivateEntity privateEntity = new PrivateEntity();
 		assertTrue(privateEntity instanceof AbstractAddress);
 		assertEquals("", privateEntity.getEntityAlias());
 		assertEquals("", privateEntity.getEntityName());
@@ -28,7 +28,7 @@ public class PrivateEntityTests {
 	@Test
 	public void constructorEntity() {
 		Entity entity = new Entity();
-		PrivateEntity2 privateEntity = new PrivateEntity2(entity);
+		PrivateEntity privateEntity = new PrivateEntity(entity);
 		assertTrue(privateEntity instanceof AbstractAddress);
 		assertEquals(entity, privateEntity.getEntity());
 	}
@@ -47,7 +47,7 @@ public class PrivateEntityTests {
 	@Test
 	public void force() {
 		Entity entity = new Entity();
-		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "ENTITY");
+		PrivateEntity privateEntity = new PrivateEntity(entity, "ENTITY");
 		privateEntity.setAutoNumber(true);
 		SequenceMgrImpl sequenceMgr = new SequenceMgrImpl() {
 			@Override public long newInternalNumber(Entity entity, String internalNumberKey, int startNumber) {
@@ -66,8 +66,8 @@ public class PrivateEntityTests {
         Entity entity = new Entity();
         String partnerAlias = DomainTestSupport.STRING_TEST_VALUE;
         
-        PrivateEntity2 privateEntity = new PrivateEntity2(entity, partnerAlias);
-        PrivateEntity2 copy = (PrivateEntity2) DomainTestSupport.minimalEqualsTest(privateEntity);
+        PrivateEntity privateEntity = new PrivateEntity(entity, partnerAlias);
+        PrivateEntity copy = (PrivateEntity) DomainTestSupport.minimalEqualsTest(privateEntity);
         
         copy.setEntity(null);
         copy.setEntityAlias(partnerAlias);

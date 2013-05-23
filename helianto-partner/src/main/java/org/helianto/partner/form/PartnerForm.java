@@ -2,7 +2,7 @@ package org.helianto.partner.form;
 
 import org.helianto.core.Prioritizable;
 import org.helianto.core.form.ParentForm;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PrivateEntity;
 
 /**
  * Partner form interface.
@@ -13,7 +13,7 @@ public interface PartnerForm
 
 	extends 
 	  PrivateEntityForm
-	, ParentForm<PrivateEntity2>
+	, ParentForm<PrivateEntity>
 	, Prioritizable 
 
 {

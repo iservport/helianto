@@ -16,18 +16,15 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
-import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
 import org.helianto.user.UserMgr;
-import org.helianto.user.domain.UserRole;
 import org.helianto.user.repository.UserGroupRepository;
-import org.helianto.user.repository.UserRepository;
+import org.helianto.user.repository.UserRoleRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -136,13 +133,11 @@ public class PostInstallationMgrImplTests {
 	private ServiceRepository serviceRepository;
 	private EntityRepository entityRepository;
 	private UserGroupRepository userGroupRepository;
-//	private UserRepository userRepository;
-	private BasicDao<UserRole> userRoleDao;
+	private UserRoleRepository userRoleRepository;
 	private ProvinceResourceParserStrategy provinceResourceParserStrategy;
 	private IdentityMgr identityMgr;
 	private UserMgr userMgr;
     
-    @SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         contextRepository = createMock(ContextRepository.class);
@@ -151,8 +146,7 @@ public class PostInstallationMgrImplTests {
         serviceRepository = createMock(ServiceRepository.class);
         entityRepository = createMock(EntityRepository.class);
         userGroupRepository = createMock(UserGroupRepository.class);
-//        userRepository = createMock(UserRepository.class);
-        userRoleDao = createMock(FilterDao.class);
+        userRoleRepository = createMock(UserRoleRepository.class);
         provinceResourceParserStrategy = createMock(ProvinceResourceParserStrategy.class);
         identityMgr = createMock(IdentityMgr.class);
         userMgr = createMock(UserMgr.class);
@@ -162,8 +156,7 @@ public class PostInstallationMgrImplTests {
         postInstallationMgr.setKeyTypeRepository(keyTypeRepository);
         postInstallationMgr.setServiceRepository(serviceRepository);
         postInstallationMgr.setEntityRepository(entityRepository);
-//        postInstallationMgr.setUserRepository(userRepository);
-        postInstallationMgr.setUserRoleDao(userRoleDao);
+        postInstallationMgr.setUserRoleRepository(userRoleRepository);
         postInstallationMgr.setProvinceResourceParserStrategy(provinceResourceParserStrategy);
         postInstallationMgr.setIdentityMgr(identityMgr);
         postInstallationMgr.setUserMgr(userMgr);
@@ -177,8 +170,7 @@ public class PostInstallationMgrImplTests {
         reset(serviceRepository);
         reset(entityRepository);
         reset(userGroupRepository);
-//        reset(userRepository);
-        reset(userRoleDao);
+        reset(userRoleRepository);
         reset(provinceResourceParserStrategy);
         reset(identityMgr);
         reset(userMgr);

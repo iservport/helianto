@@ -22,7 +22,7 @@ public class SupplierTests {
 	@Test
     public void testSupplierEquals() {
 		Entity entity = new Entity(new Operator("DEFAULT"));
-        PrivateEntity2 partnerRegistry = new PrivateEntity2(entity, "TEST");
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
         
         Supplier supplier = new Supplier();
         Supplier other = new Supplier();

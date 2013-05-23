@@ -22,7 +22,7 @@ public class AgentTests {
 	@Test
     public void agentEquals() {
 		Entity entity = new Entity(new Operator("DEFAULT"));
-        PrivateEntity2 partnerRegistry = new PrivateEntity2(entity, "TEST");
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
         
         Agent agent = new Agent();
         Agent other = new Agent();

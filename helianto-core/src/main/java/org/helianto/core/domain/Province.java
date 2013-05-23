@@ -57,8 +57,8 @@ public class Province  implements RootEntity, Comparable<Province> {
     private int id;
     private Operator operator;
     private Province parent;
-    private String provinceCode;
-    private String provinceName;
+    private String provinceCode = "";
+    private String provinceName = "";
     private Country country;
     private char priority;
 
@@ -66,8 +66,7 @@ public class Province  implements RootEntity, Comparable<Province> {
 	 * Empty constructor.
 	 */
     public Province() {
-        setProvinceCode("");
-        setProvinceName("");
+        super();
     }
 
     /**

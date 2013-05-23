@@ -111,13 +111,14 @@ public class SecurityMgrImplTests {
     @Test
     public void authentication() {
     	User user = new User();
+    	user.setId(10);
     	Identity identity = new Identity();
     	identity.setId(100);
     	user.setIdentity(identity);
     	Set<UserRole> roles = new HashSet<UserRole>();
     	roles.add(new UserRole(user, new Service(), "TEST"));
     	
-        userRepository.refresh(user);
+    	expect(userRepository.findOne(10)).andReturn(user);
         replay(userRepository);
 
         securityMgr.authenticate(user, roles);

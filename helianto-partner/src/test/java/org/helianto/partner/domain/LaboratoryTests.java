@@ -22,7 +22,7 @@ public class LaboratoryTests{
 	@Test
     public void laboratoryEquals() {
 		Entity entity = new Entity(new Operator("DEFAULT"));
-        PrivateEntity2 partnerRegistry = new PrivateEntity2(entity, "TEST");
+        PrivateEntity partnerRegistry = new PrivateEntity(entity, "TEST");
         
         Laboratory laboratory = new Laboratory();
         Laboratory other = new Laboratory();

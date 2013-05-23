@@ -18,7 +18,7 @@ public class ContactTests {
      */
 	@Test
     public void constructor() {
-        PrivateEntity2 partnerRegistry = new PrivateEntity2();
+        PrivateEntity partnerRegistry = new PrivateEntity();
         int sequence = DomainTestSupport.INT_TEST_VALUE;
         Identity identity = new Identity();
         

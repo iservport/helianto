@@ -34,7 +34,6 @@ import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.UserAssociationFormFilterAdapter;
 import org.helianto.core.form.AssociationForm;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
@@ -45,9 +44,11 @@ import org.helianto.user.filter.UserFormFilterAdapter;
 import org.helianto.user.filter.UserRoleFormFilterAdapter;
 import org.helianto.user.form.UserGroupForm;
 import org.helianto.user.form.UserRoleForm;
+import org.helianto.user.repository.UserAssociationRepository;
 import org.helianto.user.repository.UserGroupRepository;
 import org.helianto.user.repository.UserLogRepository;
 import org.helianto.user.repository.UserRepository;
+import org.helianto.user.repository.UserRoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -159,26 +160,14 @@ public class UserMgrImpl
 	@Transactional(readOnly=true)
 	public List<UserAssociation> findUserAssociations(AssociationForm form) {
 		Filter filter = new UserAssociationFormFilterAdapter(form);
-		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationDao.find(filter);
+		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationRepository.find(filter);
     	logger.debug("Found user association list of size {}", userAssociationList.size());
         return userAssociationList;
 	}
 
 	@Transactional
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
-//    	if (parentAssociation.getChild() instanceof User) {
-//        	Identity identity = identityMgr.loadIdentity(((User) parentAssociation.getChild()).getIdentity().getId());
-//        	((User) parentAssociation.getChild()).setIdentity(identity);
-//    	}
-//    	if (parentAssociation.getChild()!=null && parentAssociation.getChild().getId()>0) {
-//    		int id = parentAssociation.getChild().getId();
-//        	UserGroup child = userRepository.get(UserGroup.class, id);
-//        	if (child!=null) {
-//        		parentAssociation.setChild(child);
-//        	}
-//    	}
-    	userAssociationDao.saveOrUpdate(parentAssociation);
-    	return parentAssociation;
+    	return userAssociationRepository.saveAndFlush(parentAssociation);
     }
     
     /**
@@ -238,13 +227,12 @@ public class UserMgrImpl
 		userRepository.save(user);
 		logger.info("User AVAILABLE as {}.", user);
 		
-		UserAssociation association = userAssociationDao.findUnique(parent, user);
+		UserAssociation association = userAssociationRepository.findByParentAndChild(parent, user);
 		if(association==null) {
 			logger.info("Will install user association for user group {} and {}.", parent, user);
-			association = userAssociationDao.merge(new UserAssociation(parent, user));
+			association = userAssociationRepository.saveAndFlush(new UserAssociation(parent, user));
 		}
 		logger.info("User {} available as part of association {}.", user, association);
-		userAssociationDao.flush();
 		return association;
 	}
 	
@@ -264,26 +252,24 @@ public class UserMgrImpl
 		
 		logger.info("User AVAILABLE as {}.", user);
 		
-		UserAssociation association = userAssociationDao.findUnique(parent, user);
+		UserAssociation association = userAssociationRepository.findByParentAndChild(parent, user);
 		if(association==null) {
 			logger.info("Will install user association for user group {} and {}.", parent, user);
-			association = userAssociationDao.merge(new UserAssociation(parent, user));
+			association = userAssociationRepository.saveAndFlush(new UserAssociation(parent, user));
 		}
 		logger.info("User {} available as part of association {}.", user, association);
-		userAssociationDao.flush();
 		return association;
 	}
 	
 	@Transactional
 	public UserRole installUserRole(UserGroup userGroup, Service service, String extension) {
 		
-		UserRole userRole = userRoleDao.findUnique(userGroup, service, extension);
+		UserRole userRole = userRoleRepository.findByUserGroupAndServiceAndServiceExtension(userGroup, service, extension);
 		if (userRole==null) {
 			logger.debug("Will install required user role {} for user group {} ...", userRole, userGroup);
-			userRole = userRoleDao.merge(new UserRole(userGroup, service, extension));
+			userRole = userRoleRepository.saveAndFlush(new UserRole(userGroup, service, extension));
 		}
 		logger.debug("User role AVAILABLE as {}.", userRole);
-		userRoleDao.flush();
 		return userRole;
 	}
 	
@@ -311,7 +297,7 @@ public class UserMgrImpl
     
 	@Transactional(readOnly=true)
 	public List<UserRole> findUserRoles(Filter filter) {
-		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
+		List<UserRole> userRoleList = (List<UserRole>) userRoleRepository.find(filter);
     	if (userRoleList!=null && userRoleList.size()>0) {
     		logger.debug("Loaded user role list of size {}", userRoleList.size());
     	}
@@ -321,7 +307,7 @@ public class UserMgrImpl
 	@Transactional(readOnly=true)
 	public List<UserRole> findUserRoles(UserRoleForm form) {
 		Filter filter = new UserRoleFormFilterAdapter(form);
-		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
+		List<UserRole> userRoleList = (List<UserRole>) userRoleRepository.find(filter);
     	if (userRoleList!=null && userRoleList.size()>0) {
     		logger.debug("Loaded user role list of size {}", userRoleList.size());
     	}
@@ -330,9 +316,7 @@ public class UserMgrImpl
 
 	@Transactional
 	public UserRole storeUserRole(UserRole userRole) {
-		userRoleDao.saveOrUpdate(userRole);
-		userRoleDao.flush();
-		return userRole;
+		return userRoleRepository.saveAndFlush(userRole);
 	}
 	
 	@Transactional
@@ -342,9 +326,8 @@ public class UserMgrImpl
 			for (UserRole r: rr) {
 				System.out.println("User role: "+r);
 				if (r.getUserGroup().equals(userGroup)) {
-					userRoleDao.remove(userRole);
+					userRoleRepository.delete(userRole);
 					userGroup.getRoles().remove(userRole);
-//					userRoleDao.flush();
 					System.out.println("= "+userRole);
 				}
 				else {
@@ -360,8 +343,8 @@ public class UserMgrImpl
     
     private UserRepository userRepository;
     private UserGroupRepository userGroupRepository;
-    private FilterDao<UserAssociation> userAssociationDao;
-    private FilterDao<UserRole> userRoleDao;
+    private UserAssociationRepository userAssociationRepository;
+    private UserRoleRepository userRoleRepository;
     private UserLogRepository userLogRepository;
 	private IdentityMgr identityMgr;
 	private PublicEntityMgr publicEntityMgr;
@@ -377,14 +360,14 @@ public class UserMgrImpl
 		this.userGroupRepository = userGroupRepository;
 	}
 
-    @Resource(name="userAssociationDao")
-	public void setUserAssociationDao(FilterDao<UserAssociation> userAssociationDao) {
-		this.userAssociationDao = userAssociationDao;
+    @Resource
+	public void setUserAssociationRepository(UserAssociationRepository userAssociationRepository) {
+		this.userAssociationRepository = userAssociationRepository;
 	}
 
-	@javax.annotation.Resource(name="userRoleDao")
-	public void setUserRoleDao(FilterDao<UserRole> userRoleDao) {
-		this.userRoleDao = userRoleDao;
+	@javax.annotation.Resource
+	public void setUserRoleRepository(UserRoleRepository userRoleRepository) {
+		this.userRoleRepository = userRoleRepository;
 	}
 	
     @Resource

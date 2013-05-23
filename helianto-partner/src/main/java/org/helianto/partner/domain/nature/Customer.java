@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PrivateEntity;
 
 
 /**
@@ -55,7 +55,7 @@ public class Customer extends Partner implements java.io.Serializable {
      * 
      * @param partnerRegistry
      */
-    public Customer(PrivateEntity2 partnerRegistry) {
+    public Customer(PrivateEntity partnerRegistry) {
     	this();
     	setPrivateEntity(partnerRegistry);
     }
@@ -68,7 +68,7 @@ public class Customer extends Partner implements java.io.Serializable {
      */
     public Customer(Entity entity, String partnerAlias) {
     	this();
-    	setPrivateEntity(new PrivateEntity2(entity, partnerAlias));
+    	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
 
     /**
@@ -81,7 +81,7 @@ public class Customer extends Partner implements java.io.Serializable {
      * @param entity
      */
     public Customer(Entity entity) {
-    	this(new PrivateEntity2(entity));
+    	this(new PrivateEntity(entity));
     }
 
     /**

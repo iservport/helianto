@@ -18,7 +18,7 @@ public class PartnerCategoryTests {
 	@Test
     public void testPartnerKeyEquals() {
 		Entity entity = EntityTestSupport.createEntity();
-        PrivateEntity2 privateEntity = new PrivateEntity2(entity);
+        PrivateEntity privateEntity = new PrivateEntity(entity);
         Partner partner = new Partner(privateEntity);
         Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "");
         

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.helianto.core.domain.Category;
 import org.helianto.core.form.ParentForm;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PrivateEntity;
 
 /**
  * Classes implementing this interface represent a partner category.
@@ -16,7 +16,7 @@ public interface PartnerCategoryForm
 
 	extends 
 	  Serializable
-	, ParentForm<PrivateEntity2>
+	, ParentForm<PrivateEntity>
 	
 {
 	

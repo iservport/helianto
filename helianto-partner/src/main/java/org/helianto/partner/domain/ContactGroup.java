@@ -41,7 +41,7 @@ public class ContactGroup extends UserGroup {
 	}
 
     private static final long serialVersionUID = 1L;
-    private PrivateEntity2 privateEntity;
+    private PrivateEntity privateEntity;
 
 	/** 
 	 * Empty constructor.
@@ -76,7 +76,7 @@ public class ContactGroup extends UserGroup {
 	 * 
 	 * @param parent
 	 */
-    public ContactGroup(PrivateEntity2 parent) {
+    public ContactGroup(PrivateEntity parent) {
     	this(parent.getEntity(), "");
     	setPrivateEntity(parent);
     }
@@ -86,10 +86,10 @@ public class ContactGroup extends UserGroup {
      */
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PrivateEntity2 getPrivateEntity() {
+    public PrivateEntity getPrivateEntity() {
         return this.privateEntity;
     }
-    public void setPrivateEntity(PrivateEntity2 privateEntity) {
+    public void setPrivateEntity(PrivateEntity privateEntity) {
         this.privateEntity = privateEntity;
     }
 

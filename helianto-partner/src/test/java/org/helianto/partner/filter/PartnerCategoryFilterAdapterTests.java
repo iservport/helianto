@@ -21,7 +21,7 @@ import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.nature.Customer;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,12 +70,12 @@ public class PartnerCategoryFilterAdapterTests {
     
     private PartnerCategoryFormFilterAdapter filter;
     private CompositeTestPartnerForm form;
-    private PrivateEntity2 parent;
+    private PrivateEntity parent;
     
     @Before
     public void setUp() {
     	Entity entity = EntityTestSupport.createEntity(1);
-    	parent = new PrivateEntity2(entity, "PRIVATE_ENTITY");
+    	parent = new PrivateEntity(entity, "PRIVATE_ENTITY");
     	Customer customer = new Customer(parent);
     	Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "CATEGORY");
     	form = new CompositeTestPartnerForm(customer);

@@ -21,7 +21,7 @@ import javax.persistence.Transient;
 import org.helianto.core.domain.Entity;
 import org.helianto.partner.DivisionType;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PrivateEntity;
 
 
 /**
@@ -57,7 +57,7 @@ public class Division extends Partner implements java.io.Serializable {
      * 
      * @param partnerRegistry
      */
-    public Division(PrivateEntity2 partnerRegistry) {
+    public Division(PrivateEntity partnerRegistry) {
     	this();
     	setPrivateEntity(partnerRegistry);
     }
@@ -70,7 +70,7 @@ public class Division extends Partner implements java.io.Serializable {
      */
     public Division(Entity entity, String partnerAlias) {
     	this();
-    	setPrivateEntity(new PrivateEntity2(entity, partnerAlias));
+    	setPrivateEntity(new PrivateEntity(entity, partnerAlias));
     }
 
     /**

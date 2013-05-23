@@ -29,6 +29,7 @@ import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.filter.classic.DocumentFilter;
 import org.helianto.document.filter.classic.SerializerFilter;
+import org.helianto.document.repository.DocumentFolderRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -118,25 +119,13 @@ public class DocumentMgrImplTests {
 	
 	@Test
 	public void storeDocumentCodeBuilder() {
-		DocumentFolder serializer = new DocumentFolder();
+		DocumentFolder documentFolder = new DocumentFolder();
 		
-		serializerDao.saveOrUpdate(serializer);
-		EasyMock.replay(serializerDao);
+		EasyMock.expect(documentFolderRepository.saveAndFlush(documentFolder)).andReturn(documentFolder);
+		EasyMock.replay(documentFolderRepository);
 		
-		assertSame(serializer, documentMgr.storeSerializer(serializer));
-		EasyMock.verify(serializerDao);
-	}
-	
-	@Test
-	public void findDocumentCodeBuilders() {
-		List<DocumentFolder> serializerList = new ArrayList<DocumentFolder>();
-		SerializerFilter serializerFilter = new SerializerFilter();
-		
-		EasyMock.expect(serializerDao.find(serializerFilter)).andReturn(serializerList);
-		EasyMock.replay(serializerDao);
-		
-		assertSame(serializerList, documentMgr.findSerializers(serializerFilter));
-		EasyMock.verify(serializerDao);
+		assertSame(documentFolder, documentMgr.storeDocumentFolder(documentFolder));
+		EasyMock.verify(documentFolderRepository);
 	}
 	
 	//
@@ -144,7 +133,7 @@ public class DocumentMgrImplTests {
 	private DocumentMgrImpl documentMgr;
 	private FilterDao<Document> documentDao;
 	private FilterDao<PrivateDocument> privateDocumentDao;
-	private FilterDao<DocumentFolder> serializerDao;
+	private DocumentFolderRepository documentFolderRepository;
 	private SequenceMgr sequenceMgr;
 	
 	@SuppressWarnings("unchecked")
@@ -155,8 +144,8 @@ public class DocumentMgrImplTests {
 		documentMgr.setDocumentDao(documentDao);
 		privateDocumentDao = EasyMock.createMock(FilterDao.class);
 		documentMgr.setPrivateDocumentDao(privateDocumentDao);
-		serializerDao = EasyMock.createMock(FilterDao.class);
-		documentMgr.setSerializerDao(serializerDao);
+		documentFolderRepository = EasyMock.createMock(DocumentFolderRepository.class);
+		documentMgr.setDocumentFolderRepository(documentFolderRepository);
 		sequenceMgr = EasyMock.createMock(SequenceMgr.class);
 		documentMgr.setSequenceMgr(sequenceMgr);
 	}
@@ -165,7 +154,7 @@ public class DocumentMgrImplTests {
 	public void tearDown() {
 		EasyMock.reset(documentDao);
 		EasyMock.reset(privateDocumentDao);
-		EasyMock.reset(serializerDao);
+		EasyMock.reset(documentFolderRepository);
 		EasyMock.reset(sequenceMgr);
 	}
 

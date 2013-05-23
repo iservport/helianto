@@ -30,12 +30,21 @@ import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.partner.domain.Partner;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PartnerCategory;
+import org.helianto.partner.domain.PartnerKey;
+import org.helianto.partner.domain.PartnerPhone;
+import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.filter.classic.PartnerFilter;
+import org.helianto.partner.repository.PartnerCategoryRepository;
+import org.helianto.partner.repository.PartnerKeyRepository;
+import org.helianto.partner.repository.PartnerPhoneRepository;
+import org.helianto.partner.repository.PartnerRepository;
+import org.helianto.partner.repository.PrivateEntityKeyRepository;
+import org.helianto.partner.repository.PrivateEntityRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,42 +56,45 @@ public class PartnerMgrImplTests {
     
     private PartnerMgrImpl partnerMgr;
     
-//	@Test
-//    public void findPrivateEntities() {
-//    	PrivateEntityFilter partnerRegistryFilter = new PrivateEntityFilter();
-//    	List<PrivateEntity2> partnerRegistryList = new ArrayList<PrivateEntity2>();
-//    	
-//    	expect(privateEntityDao.find(partnerRegistryFilter)).andReturn(partnerRegistryList);
-//    	replay(privateEntityDao);
-//    	
-//    	assertSame(partnerRegistryList, partnerMgr.findPrivateEntities(partnerRegistryFilter));
-//    	verify(privateEntityDao);
-//    }
-//    
 	@Test
-    public void storePartnerRegistry() {
-    	PrivateEntity2 partnerRegistry = new PrivateEntity2();
+    public void storePrivateEntity() {
+    	PrivateEntity privateEntity = new PrivateEntity();
+    	Partner partner = new Partner(privateEntity);
     	
-    	privateEntityDao.saveOrUpdate(partnerRegistry);
-    	replay(privateEntityDao);
+		EasyMock.expect(privateEntityRepository.save(EasyMock.isA(PrivateEntity.class))).andReturn(privateEntity);
+    	replay(privateEntityRepository);
 
-    	sequenceMgr.validateInternalNumber(partnerRegistry);
+		EasyMock.expect(partnerRepository.save(EasyMock.isA(Partner.class))).andReturn(partner);
+    	replay(partnerRepository);
+
+    	sequenceMgr.validateInternalNumber(privateEntity);
     	replay(sequenceMgr);
 
-    	assertSame(partnerRegistry, partnerMgr.storePrivateEntity(partnerRegistry));
-    	verify(privateEntityDao);
+    	assertSame(privateEntity, partnerMgr.storePrivateEntity(privateEntity));
+    	verify(privateEntityRepository);
     	verify(sequenceMgr);
     }
     
 	@Test
+    public void storePrivateEntityKey() {
+		PrivateEntityKey privateEntityKey = new PrivateEntityKey();
+		
+    	expect(privateEntityKeyRepository.saveAndFlush(privateEntityKey)).andReturn(privateEntityKey);
+    	replay(privateEntityKeyRepository);
+		
+    	assertSame(privateEntityKey, partnerMgr.storePrivateEntityKey(privateEntityKey));
+    	verify(privateEntityKeyRepository);
+    }
+    
+	@Test
     public void removePartnerRegistry() {
-    	PrivateEntity2 partnerRegistry = new PrivateEntity2();
+    	PrivateEntity partnerRegistry = new PrivateEntity();
     	
-    	privateEntityDao.remove(partnerRegistry);
-    	replay(privateEntityDao);
+    	privateEntityRepository.delete(partnerRegistry);
+    	replay(privateEntityRepository);
 
     	partnerMgr.removePrivateEntity(partnerRegistry);
-    	verify(privateEntityDao);
+    	verify(privateEntityRepository);
     }
 	
 	// partner...
@@ -92,22 +104,22 @@ public class PartnerMgrImplTests {
 		PartnerFilter partnerFilter = new PartnerFilter();
 		List<Partner> partnerList = new ArrayList<Partner>();
 		
-    	expect(partnerDao.find(partnerFilter)).andReturn(partnerList);
-    	replay(partnerDao);
+    	expect(partnerRepository.find(partnerFilter)).andReturn(partnerList);
+    	replay(partnerRepository);
 		
     	assertSame(partnerList, partnerMgr.findPartners(partnerFilter));
-    	verify(partnerDao);
+    	verify(partnerRepository);
 	}
 	
 	@Test
 	public void storePartner1() {
 		Partner partner = new Partner();
 		
-    	partnerDao.saveOrUpdate(partner);
-    	replay(partnerDao);
+    	expect(partnerRepository.saveAndFlush(partner)).andReturn(partner);
+    	replay(partnerRepository);
 		
     	assertSame(partner, partnerMgr.storePartner(partner));
-    	verify(partnerDao);
+    	verify(partnerRepository);
 	}
     
 	@Test
@@ -116,13 +128,24 @@ public class PartnerMgrImplTests {
 		partner.setNewEntityAlias("TEST");
 		Entity entity = new Entity();
 		
-    	partnerDao.saveOrUpdate(partner);
-    	replay(partnerDao);
+    	expect(partnerRepository.saveAndFlush(partner)).andReturn(partner);
+    	replay(partnerRepository);
 		
     	assertSame(partner, partnerMgr.storePartner(partner, entity));
-    	verify(partnerDao);
+    	verify(partnerRepository);
     	
     	assertEquals("TEST", partner.getEntityAlias());
+	}
+
+	@Test
+	public void storePartnerKey() {
+		PartnerKey partnerKey = new PartnerKey();
+		
+    	expect(partnerKeyRepository.saveAndFlush(partnerKey)).andReturn(partnerKey);
+    	replay(partnerKeyRepository);
+		
+    	assertSame(partnerKey, partnerMgr.storePartnerKey(partnerKey));
+    	verify(partnerKeyRepository);
 	}
 
 	@Test(expected=IllegalArgumentException.class)
@@ -137,11 +160,11 @@ public class PartnerMgrImplTests {
 	public void removePartner() {
 		Partner partner = new Partner();
 		
-    	partnerDao.remove(partner);
-    	replay(partnerDao);
+    	partnerRepository.delete(partner);
+    	replay(partnerRepository);
 		
     	partnerMgr.removePartner(partner);
-    	verify(partnerDao);
+    	verify(partnerRepository);
 	}
 	
 	@Test
@@ -159,45 +182,39 @@ public class PartnerMgrImplTests {
 
 	@Test
 	public void installCustomerCase1() {
-		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "ALIAS");
+		PrivateEntity privateEntity = new PrivateEntity(entity, "ALIAS");
+		Customer newCustomer = new Customer();
 
-		EasyMock.expect(privateEntityDao.findUnique(entity, "ALIAS")).andReturn(null);
-		privateEntityDao.saveOrUpdate(EasyMock.isA(PrivateEntity2.class));
-		EasyMock.replay(privateEntityDao);
+		EasyMock.expect(privateEntityRepository.findByEntityAndEntityAlias(entity, "ALIAS")).andReturn(null);
+		EasyMock.expect(privateEntityRepository.saveAndFlush(EasyMock.isA(PrivateEntity.class))).andReturn(privateEntity);
+		EasyMock.replay(privateEntityRepository);
 		
 		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
 		EasyMock.replay(provinceRepository);
 		
-		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(null);
-		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
-		partnerDao.flush();
-		EasyMock.replay(partnerDao);
+		EasyMock.expect(partnerRepository.findByPrivateEntityAndType(privateEntity, 'C')).andReturn(null);
+    	expect(partnerRepository.saveAndFlush(EasyMock.isA(Customer.class))).andReturn(newCustomer);
+		EasyMock.replay(partnerRepository);
 		
 		Customer customer = partnerMgr.installCustomer(entity, "NAME", partnerAddress, false);
 		assertEquals("ALIAS", customer.getEntityAlias());
-		assertEquals("NAME", customer.getEntityName());
-		assertEquals(province, customer.getProvince());
-		assertEquals("address1", customer.getAddress1());
-		assertEquals("addressNumber", customer.getAddressNumber());
-		assertEquals("addressDetail", customer.getAddressDetail());
-		assertEquals("county", customer.getAddress2());
 	}
 
 	@Test
 	public void installCustomerCase2() {
-		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "ALIAS");
+		PrivateEntity privateEntity = new PrivateEntity(entity, "ALIAS");
+		Customer newCustomer = new Customer();
 
-		EasyMock.expect(privateEntityDao.findUnique(entity, "ALIAS")).andReturn(privateEntity);
-		privateEntityDao.saveOrUpdate(privateEntity);
-		EasyMock.replay(privateEntityDao);
+		EasyMock.expect(privateEntityRepository.findByEntityAndEntityAlias(entity, "ALIAS")).andReturn(privateEntity);
+		EasyMock.expect(privateEntityRepository.saveAndFlush(privateEntity)).andReturn(privateEntity);
+		EasyMock.replay(privateEntityRepository);
 		
 		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
 		EasyMock.replay(provinceRepository);
 		
-		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(null);
-		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
-		partnerDao.flush();
-		EasyMock.replay(partnerDao);
+		EasyMock.expect(partnerRepository.findByPrivateEntityAndType(privateEntity, 'C')).andReturn(null);
+    	expect(partnerRepository.saveAndFlush(EasyMock.isA(Customer.class))).andReturn(newCustomer);
+		EasyMock.replay(partnerRepository);
 		
 		Customer customer = partnerMgr.installCustomer(entity, "NAME", partnerAddress, false);
 		assertEquals("ALIAS", customer.getEntityAlias());
@@ -206,47 +223,82 @@ public class PartnerMgrImplTests {
 
 	@Test
 	public void installCustomerCase3() {
-		PrivateEntity2 privateEntity = new PrivateEntity2(entity, "ALIAS");
+		PrivateEntity privateEntity = new PrivateEntity(entity, "ALIAS");
+		Customer newCustomer = new Customer();
 
-		EasyMock.expect(privateEntityDao.findUnique(entity, "ALIAS")).andReturn(privateEntity);
-		privateEntityDao.saveOrUpdate(privateEntity);
-		EasyMock.replay(privateEntityDao);
+		EasyMock.expect(privateEntityRepository.findByEntityAndEntityAlias(entity, "ALIAS")).andReturn(privateEntity);
+		EasyMock.expect(privateEntityRepository.saveAndFlush(privateEntity)).andReturn(privateEntity);
+		EasyMock.replay(privateEntityRepository);
 		
 		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
 		EasyMock.replay(provinceRepository);
 		
-		Customer customer = new Customer(privateEntity);
+		Partner customer = new Customer(privateEntity);
 		
-		EasyMock.expect(partnerDao.findUnique(privateEntity, "D")).andReturn(customer);
-		partnerDao.saveOrUpdate(EasyMock.isA(Customer.class));
-		partnerDao.flush();
-		EasyMock.replay(partnerDao);
+		EasyMock.expect(partnerRepository.findByPrivateEntityAndType(privateEntity, 'C')).andReturn(customer);
+    	expect(partnerRepository.saveAndFlush(EasyMock.isA(Customer.class))).andReturn(newCustomer);
+		EasyMock.replay(partnerRepository);
 		
 		assertSame(customer, partnerMgr.installCustomer(entity, "NAME", partnerAddress, false));
 	}
 
-    private FilterDao<PrivateEntity2> privateEntityDao;
-    private FilterDao<Partner> partnerDao;
+	@Test
+    public void storePartnerPhone() {
+		PartnerPhone phone = new PartnerPhone();
+		
+    	expect(partnerPhoneRepository.saveAndFlush(phone)).andReturn(phone);
+    	replay(partnerPhoneRepository);
+		
+    	assertSame(phone, partnerMgr.storePartnerPhone(phone));
+    	verify(partnerPhoneRepository);
+    }
+    
+	@Test
+    public void storePrivateCategory() {
+		PartnerCategory partnerCategory = new PartnerCategory();
+		
+    	expect(partnerCategoryRepository.saveAndFlush(partnerCategory)).andReturn(partnerCategory);
+    	replay(partnerCategoryRepository);
+		
+    	assertSame(partnerCategory, partnerMgr.storePartnerCategory(partnerCategory));
+    	verify(partnerCategoryRepository);
+    }
+    
+    private PrivateEntityRepository privateEntityRepository;
+    private PrivateEntityKeyRepository privateEntityKeyRepository;
+    private PartnerRepository partnerRepository;
     private ProvinceRepository provinceRepository;
+    private PartnerKeyRepository partnerKeyRepository;
+    private PartnerPhoneRepository partnerPhoneRepository;
+    private PartnerCategoryRepository partnerCategoryRepository;
+
     private Province province;
     private AbstractAddress partnerAddress;
 	private SequenceMgr sequenceMgr;
     
     private Entity entity;
     
-	@SuppressWarnings({ "unchecked", "serial" })
+	@SuppressWarnings("serial")
 	@Before
     public void setUp() {
 		Operator operator = new Operator();
 		entity = new Entity(operator, "ALIAS");
         partnerMgr = new PartnerMgrImpl();
-        privateEntityDao = EasyMock.createMock(FilterDao.class);
-        partnerDao = EasyMock.createMock(FilterDao.class);
+        privateEntityRepository = EasyMock.createMock(PrivateEntityRepository.class);
+        privateEntityKeyRepository = EasyMock.createMock(PrivateEntityKeyRepository.class);
+        partnerRepository = EasyMock.createMock(PartnerRepository.class);
         provinceRepository = EasyMock.createMock(ProvinceRepository.class);
+        partnerKeyRepository = EasyMock.createMock(PartnerKeyRepository.class);
+        partnerPhoneRepository = EasyMock.createMock(PartnerPhoneRepository.class);
+        partnerCategoryRepository = EasyMock.createMock(PartnerCategoryRepository.class);
         sequenceMgr = EasyMock.createMock(SequenceMgr.class);
-        partnerMgr.setPrivateEntityDao(privateEntityDao);
-        partnerMgr.setPartnerDao(partnerDao);
+        partnerMgr.setPrivateEntityRepository(privateEntityRepository);
+        partnerMgr.setPrivateEntityKeyRepository(privateEntityKeyRepository);
+        partnerMgr.setPartnerRepository(partnerRepository);
         partnerMgr.setProvinceRepository(provinceRepository);
+        partnerMgr.setPartnerKeyRepository(partnerKeyRepository);
+        partnerMgr.setPartnerPhoneRepository(partnerPhoneRepository);
+        partnerMgr.setPartnerCategoryRepository(partnerCategoryRepository);
         partnerMgr.setSequenceMgr(sequenceMgr);
         
 		province = new Province(entity.getOperator(), "CODE");
@@ -261,9 +313,13 @@ public class PartnerMgrImplTests {
     
     @After
     public void tearDown() {
-    	EasyMock.reset(privateEntityDao);
-    	EasyMock.reset(partnerDao);
+    	EasyMock.reset(privateEntityRepository);
+    	EasyMock.reset(privateEntityKeyRepository);
+    	EasyMock.reset(partnerRepository);
     	EasyMock.reset(provinceRepository);
+    	EasyMock.reset(partnerKeyRepository);
+    	EasyMock.reset(partnerPhoneRepository);
+    	EasyMock.reset(partnerCategoryRepository);
     	EasyMock.reset(sequenceMgr);
     }
 

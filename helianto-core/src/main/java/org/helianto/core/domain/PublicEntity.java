@@ -36,14 +36,10 @@ import org.helianto.core.domain.type.RootEntity;
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
 public class PublicEntity 
-
 	extends AbstractAddress 
-	
 	implements 
 	  RootEntity
-	, BusinessAddress 
-
-{
+	, BusinessAddress {
 	
 	/**
 	 * Exposes the discriminator.

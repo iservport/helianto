@@ -42,7 +42,7 @@
 	 ! Scan this packages for annotated beans.
 	 !-->
 	<context:component-scan 
-		base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.user.service"/>
+		base-package="org.helianto.*.repository,org.helianto.*.service"/>
 	
 	<!-- Can't declare annotation-driven AND tx:advice to instruct Spring  -->
 	<tx:annotation-driven transaction-manager="transactionManager" />

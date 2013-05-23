@@ -36,7 +36,7 @@ import org.helianto.core.domain.KeyType;
 public class PrivateEntityKey extends AbstractKeyStringValue {
 
     private static final long serialVersionUID = 1L;
-    private PrivateEntity2 privateEntity;
+    private PrivateEntity privateEntity;
 
     /** 
      * Default constructor.
@@ -50,7 +50,7 @@ public class PrivateEntityKey extends AbstractKeyStringValue {
      * 
      * @param privateEntity
      */
-    public PrivateEntityKey(PrivateEntity2 privateEntity) {
+    public PrivateEntityKey(PrivateEntity privateEntity) {
     	this();
     	setPrivateEntity(privateEntity);
     }
@@ -62,7 +62,7 @@ public class PrivateEntityKey extends AbstractKeyStringValue {
      * @param keyType
      * @param keyValue
      */
-    public PrivateEntityKey(PrivateEntity2 privateEntity, KeyType keyType, String keyValue) {
+    public PrivateEntityKey(PrivateEntity privateEntity, KeyType keyType, String keyValue) {
     	this(privateEntity, keyType);
     	setKeyValue(keyValue);
     }
@@ -73,7 +73,7 @@ public class PrivateEntityKey extends AbstractKeyStringValue {
      * @param privateEntity
      * @param keyType
      */
-    public PrivateEntityKey(PrivateEntity2 privateEntity, KeyType keyType) {
+    public PrivateEntityKey(PrivateEntity privateEntity, KeyType keyType) {
     	this(privateEntity);
     	setKeyType(keyType);
     }
@@ -83,10 +83,10 @@ public class PrivateEntityKey extends AbstractKeyStringValue {
      */
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PrivateEntity2 getPrivateEntity() {
+    public PrivateEntity getPrivateEntity() {
         return this.privateEntity;
     }
-    public void setPrivateEntity(PrivateEntity2 privateEntity) {
+    public void setPrivateEntity(PrivateEntity privateEntity) {
         this.privateEntity = privateEntity;
     }
     

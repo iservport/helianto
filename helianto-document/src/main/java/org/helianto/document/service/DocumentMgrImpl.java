@@ -31,6 +31,7 @@ import org.helianto.document.filter.DocumentFolderFormFilterAdapter;
 import org.helianto.document.filter.PrivateDocumentFilterAdapter;
 import org.helianto.document.form.DocumentFolderForm;
 import org.helianto.document.form.PrivateDocumentForm;
+import org.helianto.document.repository.DocumentFolderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -106,24 +107,14 @@ public class DocumentMgrImpl
 	}
 	
 	@Transactional
-	public DocumentFolder storeSerializer(DocumentFolder serializer) {
-		serializerDao.saveOrUpdate(serializer);
-		return serializer;
+	public DocumentFolder storeDocumentFolder(DocumentFolder serializer) {
+		return documentFolderRepository.saveAndFlush(serializer);
 	}
 	
 	@Transactional(readOnly=true)
-	public List<? extends DocumentFolder> findSerializers(Filter serializerFilter) {
-    	List<DocumentFolder> serializerList = (List<DocumentFolder>) serializerDao.find(serializerFilter);
-    	if (logger.isDebugEnabled() && serializerList!=null) {
-    		logger.debug("Found serializer list of size {}", serializerList.size());
-    	}
-    	return serializerList;
-	}
-	
-	@Transactional(readOnly=true)
-	public List<? extends DocumentFolder> findSerializers(DocumentFolderForm form) {
+	public List<? extends DocumentFolder> findDocumentFolders(DocumentFolderForm form) {
 		Filter filter = new DocumentFolderFormFilterAdapter<DocumentFolderForm>(form);
-    	List<DocumentFolder> serializerList = (List<DocumentFolder>) serializerDao.find(filter);
+    	List<DocumentFolder> serializerList = (List<DocumentFolder>) documentFolderRepository.find(filter);
     	if (logger.isDebugEnabled() && serializerList!=null) {
     		logger.debug("Found serializer list of size {}", serializerList.size());
     	}
@@ -134,7 +125,7 @@ public class DocumentMgrImpl
 	
 	private FilterDao<Document> documentDao;
 	private FilterDao<PrivateDocument> privateDocumentDao;
-	private FilterDao<DocumentFolder> serializerDao;
+	private DocumentFolderRepository documentFolderRepository;
 	private SequenceMgr sequenceMgr;
 	
 	@Resource(name="documentDao")
@@ -147,9 +138,9 @@ public class DocumentMgrImpl
 		this.privateDocumentDao = privateDocumentDao;
 	}
 	
-	@Resource(name="serializerDao")
-	public void setSerializerDao(FilterDao<DocumentFolder> serializerDao) {
-		this.serializerDao = serializerDao;
+	@Resource
+	public void setDocumentFolderRepository(DocumentFolderRepository documentFolderRepository) {
+		this.documentFolderRepository = documentFolderRepository;
 	}
 	
 	@Resource

@@ -116,7 +116,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 	}
 	
 //	public List<UserRole> findRoles(Filter filter, boolean recursively) {
-//		List<UserRole> userRoleList = (List<UserRole>) userRoleDao.find(filter);
+//		List<UserRole> userRoleList = (List<UserRole>) UserRoleRepository.find(filter);
 //		if (recursively) {
 //			UserGroup userGroup = ((UserRoleFilterAdapter) filter).getForm().getUserGroup();
 //			if (userGroup==null) {
@@ -131,7 +131,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 //					// TODO SORRY, for the moment only one level recursion available...
 //					UserRoleFilterAdapter parentFilter = (UserRoleFilterAdapter) ((UserRoleFilterAdapter) filter).clone();
 //					parentFilter.getForm
-//					List<UserRole> userParentRoleList = (List<UserRole>) userRoleDao.find(filter);
+//					List<UserRole> userParentRoleList = (List<UserRole>) UserRoleRepository.find(filter);
 //					roles.addAll(parent.getRoles());
 //				}
 //			}
@@ -157,8 +157,9 @@ public class SecurityMgrImpl implements SecurityMgr {
 	@Transactional(readOnly=true)
 	public PublicUserDetails findAuthenticatedUser() {
 		try {
-			UserDetailsAdapter userDetails = (UserDetailsAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			userRepository.refresh(userDetails.getUser());
+			UserDetailsAdapter userDetails = UserDetailsAdapter.getUserDetailsFromContext();
+			User user = userRepository.findOne(userDetails.getUser().getId());
+			userDetails.updateUser(user);
 			return userDetails;
 		} catch(Exception e) {
 			throw new IllegalArgumentException("Unable to find authenticated user.", e);

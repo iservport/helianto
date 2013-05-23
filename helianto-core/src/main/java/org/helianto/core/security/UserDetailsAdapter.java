@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -235,6 +236,24 @@ public class UserDetailsAdapter
     		return null;
     	}
         return (User) user;
+    }
+    
+    /**
+     * Convenience to retrieve user details from context.
+     */
+    public static UserDetailsAdapter getUserDetailsFromContext() {
+    	return ((UserDetailsAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    }
+    
+    /**
+     * Convenience to replace current user with a managed version.
+     * 
+     * @param user
+     */
+    public void updateUser(User user) {
+    	if (this.user.getId()==user.getId()) {
+    		this.user = user;
+    	}
     }
     
     /**

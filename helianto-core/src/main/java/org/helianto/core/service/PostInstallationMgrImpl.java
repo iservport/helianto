@@ -29,7 +29,6 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
-import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
@@ -41,7 +40,7 @@ import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
 import org.helianto.user.repository.UserGroupRepository;
-import org.helianto.user.repository.UserRepository;
+import org.helianto.user.repository.UserRoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -248,14 +247,14 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		// the user installing the entity is assigned administrative roles.
 		UserRole adminRole = new UserRole(adminGroup, adminService, "READ, WRITE");
 		adminGroup.getRoles().add(adminRole);
-		userRoleDao.saveOrUpdate(adminRole);
+		userRoleRepository.save(adminRole);
 		
 		if (credential!=null) {
 			UserAssociation adminAssociation = userMgr.installUser(adminGroup, credential, true);
 			adminGroup.getChildAssociations().add(adminAssociation);
 			logger.debug("Association to ADMIN group AVAILABLE as {}.", adminAssociation);
 		}
-		userRoleDao.flush();
+		userRoleRepository.flush();
 		
 		UserGroup userGroup = userGroupRepository.save(new UserGroup(entity, "USER"));
 		
@@ -266,14 +265,14 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		UserRole userRole = new UserRole(userGroup, userService, "READ, WRITE");
 		userGroup.getRoles().add(userRole);
-		userRoleDao.saveOrUpdate(userRole);
+		userRoleRepository.save(userRole);
 		
 		if (credential!=null) {
 			UserAssociation userAssociation = userMgr.installUser(userGroup, credential, true);
 			userGroup.getChildAssociations().add(userAssociation);
 			logger.debug("Association to USER group AVAILABLE as {}.", userAssociation);
 		}
-		userRoleDao.flush();
+		userRoleRepository.flush();
 		
 		entity.setInstallDate(new Date());
 		entityRepository.flush();
@@ -341,7 +340,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	private EntityRepository entityRepository;
 	private UserGroupRepository userGroupRepository;
 //	private UserRepository userRepository;
-	private BasicDao<UserRole> userRoleDao;
+	private UserRoleRepository userRoleRepository;
 	private ProvinceResourceParserStrategy provinceResourceParserStrategy;
 	private IdentityMgr identityMgr;
 	private UserMgr userMgr;
@@ -376,14 +375,9 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		this.userGroupRepository = userGroupRepository;
 	}
 	
-//	@javax.annotation.Resource
-//	public void setUserRepository(UserRepository userRepository) {
-//		this.userRepository = userRepository;
-//	}
-	
-	@javax.annotation.Resource(name="userRoleDao")
-	public void setUserRoleDao(BasicDao<UserRole> userRoleDao) {
-		this.userRoleDao = userRoleDao;
+	@javax.annotation.Resource
+	public void setUserRoleRepository(UserRoleRepository userRoleRepository) {
+		this.userRoleRepository = userRoleRepository;
 	}
 	
 	@javax.annotation.Resource(name="provinceResourceParserStrategy")

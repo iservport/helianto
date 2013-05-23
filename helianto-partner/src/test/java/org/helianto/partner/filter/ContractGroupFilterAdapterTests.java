@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PrivateEntity;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,7 +50,7 @@ public class ContractGroupFilterAdapterTests {
     @Before
     public void setUp() {
     	Entity entity = EntityTestSupport.createEntity(1);
-    	PrivateEntity2 privateEntity = new PrivateEntity2(entity, "");
+    	PrivateEntity privateEntity = new PrivateEntity(entity, "");
     	form = new CompositeTestPartnerForm(privateEntity);
     	filter = new ContactGroupFormFilterAdapter(form);
     }

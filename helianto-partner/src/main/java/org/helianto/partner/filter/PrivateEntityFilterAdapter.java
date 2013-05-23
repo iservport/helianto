@@ -18,7 +18,7 @@ package org.helianto.partner.filter;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PrivateEntity;
 
 /**
  * Partner registry filter adapter.
@@ -27,7 +27,7 @@ import org.helianto.partner.domain.PrivateEntity2;
  * @deprecated
  * @see PrivateEntityFormFilterAdapter
  */
-public class PrivateEntityFilterAdapter extends AbstractTrunkFilterAdapter<PrivateEntity2> {
+public class PrivateEntityFilterAdapter extends AbstractTrunkFilterAdapter<PrivateEntity> {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class PrivateEntityFilterAdapter extends AbstractTrunkFilterAdapter<Priva
 	 * 
 	 * @param privateEntity
 	 */
-	public PrivateEntityFilterAdapter(PrivateEntity2 privateEntity) {
+	public PrivateEntityFilterAdapter(PrivateEntity privateEntity) {
 		super(privateEntity);
 	}
 
@@ -47,7 +47,7 @@ public class PrivateEntityFilterAdapter extends AbstractTrunkFilterAdapter<Priva
 	 * @param partnerAlias
 	 */
 	public PrivateEntityFilterAdapter(Entity entity, String partnerAlias) {
-		this(new PrivateEntity2(entity, partnerAlias));
+		this(new PrivateEntity(entity, partnerAlias));
 	}
 
 	/**

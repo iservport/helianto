@@ -3,25 +3,18 @@
         <wb-resource deploy-path="/" source-path="/helianto-core/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-core/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-partner/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-partner/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-partner/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-partner/src/test/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-document/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-document/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-document/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-document/src/test/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-finance/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-finance/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-finance/src/test/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-finance/src/test/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-resource/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-resource/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-resource/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-process/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-process/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-process/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-inventory/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-inventory/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-inventory/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-message/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-message/src/main/resources"/>

@@ -79,21 +79,13 @@ public interface DocumentMgr {
 	 * 
 	 * @param serializer
 	 */
-	DocumentFolder storeSerializer(DocumentFolder serializer);
+	DocumentFolder storeDocumentFolder(DocumentFolder serializer);
 
 	/**
 	 * Find a <code>Serializer</code> list.
 	 * 
 	 * @param serializerFilter
-	 * @deprecated
 	 */
-	List<? extends DocumentFolder> findSerializers(Filter serializerFilter);
-	
-	/**
-	 * Find a <code>Serializer</code> list.
-	 * 
-	 * @param serializerFilter
-	 */
-	List<? extends DocumentFolder> findSerializers(DocumentFolderForm form);
+	List<? extends DocumentFolder> findDocumentFolders(DocumentFolderForm form);
 	
 }

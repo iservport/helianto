@@ -28,6 +28,7 @@ import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.domain.Account;
 import org.helianto.partner.filter.AccountFilterAdapter;
 import org.helianto.partner.form.AccountForm;
+import org.helianto.partner.repository.AccountRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,11 +43,11 @@ public class AccountMgrImplTests {
 		AccountForm form = EasyMock.createMock(AccountForm.class);
     	List<Account> accountList = new ArrayList<Account>();
     	
-    	expect(accountDao.find(EasyMock.isA(AccountFilterAdapter.class))).andReturn(accountList);
-    	replay(accountDao);
+    	expect(accountRepository.find(EasyMock.isA(AccountFilterAdapter.class))).andReturn(accountList);
+    	replay(accountRepository);
     	
     	assertSame(accountList, accountMgr.findAccounts(form));
-    	verify(accountDao);
+    	verify(accountRepository);
     }
     
 	@Test
@@ -54,38 +55,38 @@ public class AccountMgrImplTests {
     	Account account = new Account();
     	Account managedAccount = new Account();
     	
-    	expect(accountDao.merge(account)).andReturn(managedAccount);
-    	replay(accountDao);
+    	expect(accountRepository.saveAndFlush(account)).andReturn(managedAccount);
+    	replay(accountRepository);
 
     	assertSame(managedAccount, accountMgr.storeAccount(account));
-    	verify(accountDao);
+    	verify(accountRepository);
     }
     
 	@Test
     public void removeAccount() {
     	Account account = new Account();
     	
-    	accountDao.remove(account);
-    	replay(accountDao);
+    	accountRepository.delete(account);
+    	replay(accountRepository);
 
     	accountMgr.removeAccount(account);
-    	verify(accountDao);
+    	verify(accountRepository);
     }
     
     private AccountMgrImpl accountMgr;
-    private FilterDao<Account> accountDao;
+    private AccountRepository accountRepository;
 
 	@SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         accountMgr = new AccountMgrImpl();
-        accountDao = EasyMock.createMock(FilterDao.class);
-        accountMgr.setAccountDao(accountDao);
+        accountRepository = EasyMock.createMock(AccountRepository.class);
+        accountMgr.setAccountRepository(accountRepository);
     }
     
     @After
     public void tearDown() {
-    	EasyMock.reset(accountDao);
+    	EasyMock.reset(accountRepository);
     }
 
 }

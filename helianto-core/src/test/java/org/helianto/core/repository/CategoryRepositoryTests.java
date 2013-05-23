@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  * @author mauriciofernandesdecastro
  */
-public class CategoryRepositoryTests extends AbstractJpaRepositoryIntegrationTest<Category, CategoryRepository> {
+public class CategoryRepositoryTests 
+	extends AbstractJpaRepositoryIntegrationTest<Category, CategoryRepository> {
 
 	@Autowired
 	private CategoryRepository repository;

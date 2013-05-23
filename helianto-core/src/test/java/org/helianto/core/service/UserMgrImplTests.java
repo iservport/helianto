@@ -36,7 +36,6 @@ import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.classic.TestingFilter;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
@@ -45,9 +44,11 @@ import org.helianto.user.domain.UserLog;
 import org.helianto.user.domain.UserRole;
 import org.helianto.user.filter.UserFormFilterAdapter;
 import org.helianto.user.form.UserGroupForm;
+import org.helianto.user.repository.UserAssociationRepository;
 import org.helianto.user.repository.UserGroupRepository;
 import org.helianto.user.repository.UserLogRepository;
 import org.helianto.user.repository.UserRepository;
+import org.helianto.user.repository.UserRoleRepository;
 import org.helianto.user.service.UserMgrImpl;
 import org.junit.After;
 import org.junit.Before;
@@ -148,11 +149,11 @@ public class UserMgrImplTests {
     public void storeUserAssociation() {
     	UserAssociation parentAssociation = new UserAssociation();
 	
-    	userAssociationDao.saveOrUpdate(parentAssociation);
-    	replay(userAssociationDao);
+    	expect(userAssociationRepository.saveAndFlush(parentAssociation)).andReturn(parentAssociation);
+    	replay(userAssociationRepository);
     	
     	assertSame(parentAssociation, userMgr.storeUserAssociation(parentAssociation));
-    	verify(userAssociationDao);
+    	verify(userAssociationRepository);
     }
     
 	@Test(expected=IllegalArgumentException.class)
@@ -181,23 +182,22 @@ public class UserMgrImplTests {
 		List<UserRole> userRoleList = new ArrayList<UserRole>();
 		Filter filter = new TestingFilter();
 		
-		expect(userRoleDao.find(filter)).andReturn(userRoleList);
-		replay(userRoleDao);
+		expect(userRoleRepository.find(filter)).andReturn(userRoleList);
+		replay(userRoleRepository);
 		
 		assertSame(userRoleList , userMgr.findUserRoles(filter));
-		verify(userRoleDao);
+		verify(userRoleRepository);
 	}
 	
 	@Test
 	public void storeUserRole() {
 		UserRole userRole = new UserRole();
 		
-		userRoleDao.saveOrUpdate(userRole);
-		userRoleDao.flush();
-		replay(userRoleDao);
+		expect(userRoleRepository.saveAndFlush(userRole)).andReturn(userRole);
+		replay(userRoleRepository);
 		
 		assertSame(userRole , userMgr.storeUserRole(userRole));
-		verify(userRoleDao);
+		verify(userRoleRepository);
 	}
 	
     // 
@@ -206,13 +206,12 @@ public class UserMgrImplTests {
     
     private UserRepository userRepository;
     private UserGroupRepository userGroupRepository;
-    private FilterDao<UserAssociation> userAssociationDao;
+    private UserAssociationRepository userAssociationRepository;
     private UserLogRepository userLogRepository;
-    private FilterDao<UserRole> userRoleDao;
+    private UserRoleRepository userRoleRepository;
 	private IdentityMgr identityMgr;
 	private PublicEntityMgr publicEntityMgr;
     
-    @SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         userMgr = new UserMgrImpl();
@@ -220,12 +219,12 @@ public class UserMgrImplTests {
         userMgr.setUserGroupRepository(userGroupRepository);
         userRepository = createMock(UserRepository.class);
         userMgr.setUserRepository(userRepository);
-        userAssociationDao = createMock(FilterDao.class);
-        userMgr.setUserAssociationDao(userAssociationDao);
+        userAssociationRepository = createMock(UserAssociationRepository.class);
+        userMgr.setUserAssociationRepository(userAssociationRepository);
         userLogRepository = createMock(UserLogRepository.class);
         userMgr.setUserLogRepository(userLogRepository);
-		userRoleDao = createMock(FilterDao.class);
-		userMgr.setUserRoleDao(userRoleDao);
+		userRoleRepository = createMock(UserRoleRepository.class);
+		userMgr.setUserRoleRepository(userRoleRepository);
 		identityMgr = createMock(IdentityMgr.class);
 		userMgr.setIdentityMgr(identityMgr);
 		publicEntityMgr = createMock(PublicEntityMgr.class);
@@ -236,9 +235,9 @@ public class UserMgrImplTests {
     public void tearDown() {
         reset(userGroupRepository);
         reset(userRepository);
-        reset(userAssociationDao);
+        reset(userAssociationRepository);
         reset(userLogRepository);
-		reset(userRoleDao);
+		reset(userRoleRepository);
         reset(identityMgr);
         reset(publicEntityMgr);
     }

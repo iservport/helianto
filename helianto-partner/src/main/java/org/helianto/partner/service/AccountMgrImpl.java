@@ -21,11 +21,11 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.AccountMgr;
 import org.helianto.partner.domain.Account;
 import org.helianto.partner.filter.AccountFilterAdapter;
 import org.helianto.partner.form.AccountForm;
+import org.helianto.partner.repository.AccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,7 @@ public class AccountMgrImpl
 	@Transactional(readOnly=true)
 	public List<Account> findAccounts(AccountForm form) {
 		Filter filter = new AccountFilterAdapter(form);
-		List<Account> accountList = (List<Account>) accountDao.find(filter);
+		List<Account> accountList = (List<Account>) accountRepository.find(filter);
     	if (logger.isDebugEnabled() && accountList!=null) {
     		logger.debug("Found account list of size {}", accountList.size());
     	}
@@ -52,22 +52,22 @@ public class AccountMgrImpl
 
 	@Transactional
 	public Account storeAccount(Account account) {
-		return accountDao.merge(account);
+		return accountRepository.saveAndFlush(account);
 	}
 	
 	@Transactional
     public void removeAccount(Account account) {
-    	accountDao.remove(account);
+    	accountRepository.delete(account);
     }
 
 	// collabs
 	
-	private FilterDao<Account> accountDao;
+	private AccountRepository accountRepository;
 
-    @Resource(name="accountDao")
-    public void setAccountDao(FilterDao<Account> accountDao) {
-        this.accountDao = accountDao;
-    }
+    @Resource
+    public void setAccountRepository(AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
+	}
 
     
     private Logger logger = LoggerFactory.getLogger(AccountMgrImpl.class);

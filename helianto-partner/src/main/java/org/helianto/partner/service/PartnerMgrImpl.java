@@ -30,7 +30,6 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.PartnerMgr;
@@ -40,7 +39,7 @@ import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateAddress;
-import org.helianto.partner.domain.PrivateEntity2;
+import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.nature.Agent;
 import org.helianto.partner.domain.nature.Customer;
@@ -64,6 +63,13 @@ import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
 import org.helianto.partner.form.PrivateEntityKeyForm;
+import org.helianto.partner.repository.PartnerCategoryRepository;
+import org.helianto.partner.repository.PartnerKeyRepository;
+import org.helianto.partner.repository.PartnerPhoneRepository;
+import org.helianto.partner.repository.PartnerRepository;
+import org.helianto.partner.repository.PrivateAddressRepository;
+import org.helianto.partner.repository.PrivateEntityKeyRepository;
+import org.helianto.partner.repository.PrivateEntityRepository;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
@@ -80,9 +86,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class PartnerMgrImpl implements PartnerMgr {
 
 	@Transactional(readOnly=true)
-	public List<PrivateEntity2> findPrivateEntities(PrivateEntityForm form) {
+	public List<PrivateEntity> findPrivateEntities(PrivateEntityForm form) {
 		PrivateEntityFormFilterAdapter filter = new PrivateEntityFormFilterAdapter(form);
-		List<PrivateEntity2> privateEntityList = (List<PrivateEntity2>) privateEntityDao.find(filter);
+		List<PrivateEntity> privateEntityList = (List<PrivateEntity>) privateEntityRepository.find(filter);
     	if (logger.isDebugEnabled() && privateEntityList!=null) {
     		logger.debug("Found private entity list of size {}", privateEntityList.size());
     	}
@@ -90,62 +96,56 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 
 	@Transactional
-	public PrivateEntity2 storePrivateEntity(PrivateEntity2 privateEntity) {
-		privateEntityDao.saveOrUpdate(privateEntity);
+	public PrivateEntity storePrivateEntity(PrivateEntity privateEntity) {
+		privateEntity = privateEntityRepository.save(privateEntity);
 		sequenceMgr.validateInternalNumber(privateEntity);
 		Set<Partner> partners = privateEntity.getPartners();
 		
 		// create partner, if does not exist, or activate it
+		Partner partner = null;
 		for (String nature: privateEntity.getNatureAsArray()) {
 			if (nature.equals("C")) {
 				if (reviewPartner(partners, Customer.class)) {
-					Customer customer = new Customer(privateEntity);
-					partnerDao.saveOrUpdate(customer);
+					partner = partnerRepository.saveAndFlush(new Customer(privateEntity));
 				}
 			}
 			else if (nature.equals("S")) {
 				if (reviewPartner(partners, Supplier.class)) {
-					Supplier supplier = new Supplier(privateEntity);
-					partnerDao.saveOrUpdate(supplier);
+					partner = partnerRepository.saveAndFlush(new Supplier(privateEntity));
 				}
 			}
 			else if (nature.equals("D")) {
 				if (reviewPartner(partners, Division.class)) {
-					Division division = new Division(privateEntity);
-					partnerDao.saveOrUpdate(division);
+					partner = partnerRepository.saveAndFlush(new Division(privateEntity));
 				}				
 			}
 			else if (nature.equals("A")) {
 				if (reviewPartner(partners, Agent.class)) {
-					Agent agent = new Agent(privateEntity);
-					partnerDao.saveOrUpdate(agent);
+					partner = partnerRepository.saveAndFlush(new Agent(privateEntity));
 				}
 			}
 			else if (nature.equals("L")) {
 				if (reviewPartner(partners, Laboratory.class)) {
-					Laboratory laboratory = new Laboratory(privateEntity);
-					partnerDao.saveOrUpdate(laboratory);
+					partner = partnerRepository.saveAndFlush(new Laboratory(privateEntity));
 				}
 			}
 			else if (nature.equals("M")) {
 				if (reviewPartner(partners, Manufacturer.class)) {
-					Manufacturer manufacturer = new Manufacturer(privateEntity);
-					partnerDao.saveOrUpdate(manufacturer);
+					partner = partnerRepository.saveAndFlush(new Manufacturer(privateEntity));
 				}
 			}
 			else if (nature.equals("T")) {
 				if (reviewPartner(partners, TransportPartner.class)) {
-					TransportPartner transportPartner = new TransportPartner(privateEntity);
-					partnerDao.saveOrUpdate(transportPartner);
+					partner = partnerRepository.saveAndFlush(new TransportPartner(privateEntity));
 				}
 			}
 			else if (nature.equals("E")) {
 				if (reviewPartner(partners, EducationPartner.class)) {
-					EducationPartner educationPartner = new EducationPartner(privateEntity);
-					partnerDao.saveOrUpdate(educationPartner);
+					partner = partnerRepository.saveAndFlush(new EducationPartner(privateEntity));
 				}
 			}
 		}
+		logger.debug("Partner is {}.", partner);
 		return privateEntity;
 	}
 	
@@ -168,14 +168,14 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
 	
 	@Transactional
-    public void removePrivateEntity(PrivateEntity2 privateEntity) {
-    	privateEntityDao.remove(privateEntity);
+    public void removePrivateEntity(PrivateEntity privateEntity) {
+    	privateEntityRepository.delete(privateEntity);
     }
 
 	@Transactional(readOnly=true)
 	public List<? extends Partner> findPartners(PartnerForm form) {
 		PartnerFormFilterAdapter filter = new PartnerFormFilterAdapter(form);
-		List<Partner> partnerList = (List<Partner>) partnerDao.find(filter);
+		List<Partner> partnerList = (List<Partner>) partnerRepository.find(filter);
     	if (logger.isDebugEnabled() && partnerList!=null) {
     		logger.debug("Found partner list of size {}", partnerList.size());
     	}
@@ -184,7 +184,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
 	@Transactional(readOnly=true)
 	public List<? extends Partner> findPartners(Filter partnerFilter) {
-		List<Partner> partnerList = (List<Partner>) partnerDao.find(partnerFilter);
+		List<Partner> partnerList = (List<Partner>) partnerRepository.find(partnerFilter);
     	if (logger.isDebugEnabled() && partnerList!=null) {
     		logger.debug("Found partner list of size {}", partnerList.size());
     	}
@@ -193,8 +193,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
 	@Transactional
 	public Partner storePartner(Partner partner) {
-		partnerDao.saveOrUpdate(partner);
-		return partner;
+		return partnerRepository.saveAndFlush(partner);
 	}
 
 	@Transactional
@@ -207,13 +206,13 @@ public class PartnerMgrImpl implements PartnerMgr {
 
 	@Transactional
 	public void removePartner(Partner partner) {
-		partnerDao.remove(partner);
+		partnerRepository.delete(partner);
 	}
 
 	@Transactional(readOnly=true)
 	public Map<String, PartnerKey> loadPartnerKeyMap(Partner partner) {
 		Map<String, PartnerKey> partnerKeyMap = new HashMap<String, PartnerKey>();
-		Set<PartnerKey> partnerKeys = partnerDao.merge(partner).getPartnerKeys();
+		Set<PartnerKey> partnerKeys = partnerRepository.save(partner).getPartnerKeys();
 		for (PartnerKey partnerKey: partnerKeys) {
 			partnerKeyMap.put(partnerKey.getKeyType().getKeyCode(), partnerKey);
 		}
@@ -222,20 +221,18 @@ public class PartnerMgrImpl implements PartnerMgr {
 
 	@Transactional
 	public PartnerKey storePartnerKey(PartnerKey partnerKey) {
-		partnerDao.saveOrUpdate(partnerKey.getPartner());
-		partnerKeyDao.saveOrUpdate(partnerKey);
-		return partnerKey;
+		return partnerKeyRepository.saveAndFlush(partnerKey);
 	}
 
 	@Transactional
-	public PrivateEntity2 removePartnerKey(PartnerKey partnerKey) {
+	public PrivateEntity removePartnerKey(PartnerKey partnerKey) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
 	@Transactional(readOnly=true)
 	public List<PartnerPhone> findPartnerPhones(PartnerPhoneForm form) {
 		PartnerPhoneFormFilterAdapter filter = new PartnerPhoneFormFilterAdapter(form);
-		List<PartnerPhone> partnerPhoneList = (List<PartnerPhone>) partnerPhoneDao.find(filter);
+		List<PartnerPhone> partnerPhoneList = (List<PartnerPhone>) partnerPhoneRepository.find(filter);
     	if (logger.isDebugEnabled() && partnerPhoneList!=null) {
     		logger.debug("Found partner phone list of size {}", partnerPhoneList.size());
     	}
@@ -244,23 +241,22 @@ public class PartnerMgrImpl implements PartnerMgr {
 
 	@Transactional
 	public PartnerPhone storePartnerPhone(PartnerPhone phone) {
-		partnerPhoneDao.saveOrUpdate(phone);
-		return phone;
+		return partnerPhoneRepository.saveAndFlush(phone);
 	}
 
 	@Transactional
-	public PrivateEntity2 removePartnerPhone(PartnerPhone phone) {
+	public PrivateEntity removePartnerPhone(PartnerPhone phone) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
 	@Transactional
 	public Division installDivision(Entity entity, String entityName, AbstractAddress partnerAddress, boolean reinstall) {
 		String partnerAlias = entity.getAlias();
-		PrivateEntity2 privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
+		PrivateEntity privateEntity = privateEntityRepository.findByEntityAndEntityAlias(entity, partnerAlias);
 		Division division = null;
 		if (privateEntity==null) {
 			logger.info("Creating private entity for {}.", partnerAlias);
-			privateEntity = new PrivateEntity2(entity, partnerAlias);
+			privateEntity = new PrivateEntity(entity, partnerAlias);
 			privateEntity.setEntityName(entityName);
 			AddressUtils.copyAddress(partnerAddress, privateEntity);
 			Province province = provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode());
@@ -269,30 +265,29 @@ public class PartnerMgrImpl implements PartnerMgr {
 				throw new IllegalArgumentException("A province is required here.");
 			}
 			privateEntity.setProvince(province);
-			privateEntityDao.saveOrUpdate(privateEntity);
+			privateEntity = privateEntityRepository.saveAndFlush(privateEntity);
 		}
 		else {
-			division = (Division) partnerDao.findUnique(privateEntity, "D");
+			division = (Division) partnerRepository.findByPrivateEntityAndType(privateEntity, 'D');
 		}
 		if (division==null) {
 			logger.info("Creating division for {}.", partnerAlias);
 			division = new Division(privateEntity);
 			division.setPartnerStateAsEnum(PartnerState.ACTIVE);
-			partnerDao.saveOrUpdate(division);
+			partnerRepository.saveAndFlush(division);
 		}
 		logger.info("Default division is {} ", division);
-		partnerDao.flush();
 		return division;
 	}
 	
 	@Transactional
 	public Customer installCustomer(Entity entity, String entityName, AbstractAddress partnerAddress, boolean reinstall) {
 		String partnerAlias = entity.getAlias();
-		PrivateEntity2 privateEntity = privateEntityDao.findUnique(entity, partnerAlias);
+		PrivateEntity privateEntity = privateEntityRepository.findByEntityAndEntityAlias(entity, partnerAlias);
 		Customer customer = null;
 		if (privateEntity==null) {
 			logger.info("Creating private entity for {}.", partnerAlias);
-			privateEntity = new PrivateEntity2(entity, partnerAlias);
+			privateEntity = new PrivateEntity(entity, partnerAlias);
 			privateEntity.setEntityName(entityName);
 			AddressUtils.copyAddress(partnerAddress, privateEntity);
 			Province province = provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode());
@@ -301,19 +296,18 @@ public class PartnerMgrImpl implements PartnerMgr {
 				throw new IllegalArgumentException("A province is required here.");
 			}
 			privateEntity.setProvince(partnerAddress.getProvince());
-			privateEntityDao.saveOrUpdate(privateEntity);
+			privateEntity = privateEntityRepository.saveAndFlush(privateEntity);
 		}
 		else {
-			customer = (Customer) partnerDao.findUnique(privateEntity, "D");
+			customer = (Customer) partnerRepository.findByPrivateEntityAndType(privateEntity, 'C');
 		}
 		if (customer==null) {
 			logger.info("Creating division for {}.", partnerAlias);
 			customer = new Customer(privateEntity);
 			customer.setPartnerStateAsEnum(PartnerState.ACTIVE);
-			partnerDao.saveOrUpdate(customer);
+			partnerRepository.saveAndFlush(customer);
 		}
 		logger.info("Default division is {} ", customer);
-		partnerDao.flush();
 		return customer;
 	}
 	
@@ -337,7 +331,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 						partnerKey = new PartnerKey(partner, keyType);
 					}
 					partnerKey.setKeyValue(keyValue[1]);
-					partnerKeyDao.saveOrUpdate(partnerKey);
+					partnerKeyRepository.save(partnerKey);
 					keyNotAvailable = false;
 					break;
 				}
@@ -346,13 +340,13 @@ public class PartnerMgrImpl implements PartnerMgr {
 				logger.warn("Unable to set key value {}", keyValueTuple);
 			}
 		}
-		partnerKeyDao.flush();
+		partnerKeyRepository.flush();
 	}
 	
 	@Transactional(readOnly=true)
 	public List<PrivateAddress> findPrivateAddresses(PrivateAddressForm form) {
 		Filter filter = new PrivateAddressFormFilterAdapter(form);
-		List<PrivateAddress> privateAddressList = (List<PrivateAddress>) addressDao.find(filter);
+		List<PrivateAddress> privateAddressList = (List<PrivateAddress>) privateAddressRepository.find(filter);
     	if (logger.isDebugEnabled() && privateAddressList!=null) {
     		logger.debug("Found private address list of size {}", privateAddressList.size());
     	}
@@ -361,19 +355,18 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
 	@Transactional
 	public PrivateAddress storePrivateAddress(PrivateAddress address) {
-		addressDao.saveOrUpdate(address);
-		return address;
+		return privateAddressRepository.saveAndFlush(address);
 	}
 
 	@Transactional
-	public PrivateEntity2 removePrivateAddress(PrivateAddress address) {
+	public PrivateEntity removePrivateAddress(PrivateAddress address) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
 	@Transactional(readOnly=true)
 	public List<PrivateEntityKey> findPrivateEntityKeys(PrivateEntityKeyForm form) {
 		Filter filter = new PrivateEntityKeyFormFilterAdapter(form);
-		List<PrivateEntityKey> privateEntityKeyList = (List<PrivateEntityKey>) privateEntityKeyDao.find(filter);
+		List<PrivateEntityKey> privateEntityKeyList = (List<PrivateEntityKey>) privateEntityKeyRepository.find(filter);
     	if (logger.isDebugEnabled() && privateEntityKeyList!=null) {
     		logger.debug("Found private entity key list of size {}", privateEntityKeyList.size());
     	}
@@ -382,14 +375,13 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
 	@Transactional
 	public PrivateEntityKey storePrivateEntityKey(PrivateEntityKey privateEntityKey) {
-		privateEntityKeyDao.saveOrUpdate(privateEntityKey);
-		return privateEntityKey;
+		return privateEntityKeyRepository.saveAndFlush(privateEntityKey);
 	}
 	
 	@Transactional(readOnly=true)
 	public List<PartnerCategory> findPartnerCategories(PartnerCategoryForm form) {
 		PartnerCategoryFormFilterAdapter filter = new PartnerCategoryFormFilterAdapter(form);
-		List<PartnerCategory> partnerCategoryList = (List<PartnerCategory>) partnerCategoryDao.find(filter);
+		List<PartnerCategory> partnerCategoryList = (List<PartnerCategory>) partnerCategoryRepository.find(filter);
     	if (logger.isDebugEnabled() && partnerCategoryList!=null) {
     		logger.debug("Found partner category list of size {}", partnerCategoryList.size());
     	}
@@ -398,8 +390,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 
 	@Transactional
 	public PartnerCategory storePartnerCategory(PartnerCategory partnerCategory) {
-		partnerCategoryDao.saveOrUpdate(partnerCategory);
-		return partnerCategory;
+		return partnerCategoryRepository.saveAndFlush(partnerCategory);
 	}
 
 	@Transactional(readOnly=true)
@@ -414,56 +405,57 @@ public class PartnerMgrImpl implements PartnerMgr {
 	
     //- collaborators
     
-    private FilterDao<PrivateEntity2> privateEntityDao;
-    private FilterDao<Partner> partnerDao;
-    private FilterDao<PrivateAddress> addressDao;
-    private FilterDao<PrivateEntityKey> privateEntityKeyDao;
-    private FilterDao<PartnerKey> partnerKeyDao;
+    private PrivateEntityRepository privateEntityRepository;
+    private PartnerRepository partnerRepository;
+    private PrivateAddressRepository privateAddressRepository;
+    private PrivateEntityKeyRepository privateEntityKeyRepository;
+    private PartnerKeyRepository partnerKeyRepository;
     private ProvinceRepository provinceRepository;
-    private FilterDao<PartnerPhone> partnerPhoneDao;
-    private FilterDao<PartnerCategory> partnerCategoryDao;
+    private PartnerPhoneRepository partnerPhoneRepository;
+    private PartnerCategoryRepository partnerCategoryRepository;
     private UserRepository userRepository;
 	private ContextMgr contextMgr;
 	private SequenceMgr sequenceMgr;
 
-    @Resource(name="privateEntityDao")
-    public void setPrivateEntityDao(FilterDao<PrivateEntity2> privateEntityDao) {
-        this.privateEntityDao = privateEntityDao;
-    }
-
-    @Resource(name="partnerDao")
-    public void setPartnerDao(FilterDao<Partner> partnerDao) {
-        this.partnerDao = partnerDao;
-    }
-
-    @Resource(name="addressDao")
-    public void setAddressDao(FilterDao<PrivateAddress> addressDao) {
-        this.addressDao = addressDao;
-    }
-
-    @Resource(name="privateEntityKeyDao")
-    public void setPrivateEntityKeyDao(FilterDao<PrivateEntityKey> privateEntityKeyDao) {
-		this.privateEntityKeyDao = privateEntityKeyDao;
+    @Resource
+    public void setPrivateEntityRepository(PrivateEntityRepository privateEntityRepository) {
+		this.privateEntityRepository = privateEntityRepository;
 	}
 
-    @Resource(name="partnerKeyDao")
-    public void setPartnerKeyDao(FilterDao<PartnerKey> partnerKeyDao) {
-        this.partnerKeyDao = partnerKeyDao;
-    }
+    @Resource
+    public void setPartnerRepository(PartnerRepository partnerRepository) {
+		this.partnerRepository = partnerRepository;
+	}
+
+    @Resource
+    public void setPrivateAddressRepository(PrivateAddressRepository privateAddressRepository) {
+		this.privateAddressRepository = privateAddressRepository;
+	}
+
+    @Resource
+    public void setPrivateEntityKeyRepository(
+			PrivateEntityKeyRepository privateEntityKeyRepository) {
+		this.privateEntityKeyRepository = privateEntityKeyRepository;
+	}
+
+    @Resource
+   public void setPartnerKeyRepository(PartnerKeyRepository partnerKeyRepository) {
+	this.partnerKeyRepository = partnerKeyRepository;
+}
     
     @Resource
     public void setProvinceRepository(ProvinceRepository provinceRepository) {
 		this.provinceRepository = provinceRepository;
 	}
     
-    @Resource(name="partnerPhoneDao")
-    public void setPartnerPhoneDao(FilterDao<PartnerPhone> partnerPhoneDao) {
-		this.partnerPhoneDao = partnerPhoneDao;
+    @Resource
+    public void setPartnerPhoneRepository(PartnerPhoneRepository partnerPhoneRepository) {
+		this.partnerPhoneRepository = partnerPhoneRepository;
 	}
     
-    @Resource(name="partnerCategoryDao")
-    public void setPartnerCategoryDao(FilterDao<PartnerCategory> partnerCategoryDao) {
-		this.partnerCategoryDao = partnerCategoryDao;
+    @Resource
+    public void setPartnerCategoryRepository(PartnerCategoryRepository partnerCategoryRepository) {
+		this.partnerCategoryRepository = partnerCategoryRepository;
 	}
     
     @Resource
@@ -476,7 +468,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 		this.contextMgr = contextMgr;
 	}
 	
-	@Resource(name="sequenceMgr")
+	@Resource
 	public void setSequenceMgr(SequenceMgr sequenceMgr) {
 		this.sequenceMgr = sequenceMgr;
 	}

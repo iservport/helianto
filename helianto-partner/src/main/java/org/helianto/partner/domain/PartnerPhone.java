@@ -42,7 +42,7 @@ public class PartnerPhone implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private PrivateEntity2 partnerRegistry;
+    private PrivateEntity partnerRegistry;
     private int sequence;
     private Phone phone;
     private String comment;
@@ -61,7 +61,7 @@ public class PartnerPhone implements java.io.Serializable {
      * @param privateEntity
      * @param sequence
      */
-    public PartnerPhone(PrivateEntity2 privateEntity, int sequence) {
+    public PartnerPhone(PrivateEntity privateEntity, int sequence) {
     	this();
     	setPrivateEntity(privateEntity);
     	setSequence(sequence);
@@ -117,10 +117,10 @@ public class PartnerPhone implements java.io.Serializable {
      */
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
-    public PrivateEntity2 getPrivateEntity() {
+    public PrivateEntity getPrivateEntity() {
 		return partnerRegistry;
 	}
-    public void setPrivateEntity(PrivateEntity2 partnerRegistry) {
+    public void setPrivateEntity(PrivateEntity partnerRegistry) {
 		this.partnerRegistry = partnerRegistry;
 	}
 
@@ -129,10 +129,10 @@ public class PartnerPhone implements java.io.Serializable {
      * @deprecated
      */
     @Transient
-    public PrivateEntity2 getPartnerRegistry() {
+    public PrivateEntity getPartnerRegistry() {
 		return partnerRegistry;
 	}
-    public void setPartnerRegistry(PrivateEntity2 partnerRegistry) {
+    public void setPartnerRegistry(PrivateEntity partnerRegistry) {
 		this.partnerRegistry = partnerRegistry;
 	}
 

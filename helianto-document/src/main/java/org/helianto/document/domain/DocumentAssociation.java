@@ -40,6 +40,18 @@ public class DocumentAssociation extends AbstractAssociation<Document, Document>
     private static final long serialVersionUID = 1L;
     
     /**
+     * Parent and child constructor.
+     * 
+     * @param parent
+     * @param child
+     */
+    public DocumentAssociation(Document parent, Document child) {
+		super();
+		setParent(parent);
+		setChild(child);
+	}
+    
+    /**
      * Associated parent document.
      */
     @ManyToOne(fetch=FetchType.LAZY)
