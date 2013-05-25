@@ -24,7 +24,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.classic.PolymorphicFilter;
 import org.helianto.document.filter.classic.AbstractDocumentFilter;
 import org.helianto.partner.domain.Partner;
-import org.helianto.process.domain.Characteristic;
 import org.helianto.process.domain.ControlMethod;
 import org.helianto.process.domain.Operation;
 import org.helianto.process.domain.Process;
@@ -106,9 +105,6 @@ public class ProcessDocumentFilter extends AbstractDocumentFilter implements Ser
 		if (clazz.equals(ControlMethod.class)) {
 			return 'S'; 
 		}
-		if (clazz.equals(Characteristic.class)) {
-			return 'K'; 
-		}
 		if (clazz.equals(Operation.class)) {
 			return 'O'; 
 		}
@@ -121,9 +117,6 @@ public class ProcessDocumentFilter extends AbstractDocumentFilter implements Ser
 	public void setDiscriminator(char discriminator) {
 		if (discriminator=='S') {
 			clazz = ControlMethod.class; 
-		}
-		if (discriminator=='K') {
-			clazz = Characteristic.class; 
 		}
 		if (discriminator=='O') {
 			clazz = Operation.class; 

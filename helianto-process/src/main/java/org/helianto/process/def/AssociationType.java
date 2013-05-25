@@ -3,9 +3,7 @@
 
 package org.helianto.process.def;
 
-import org.helianto.process.domain.Characteristic;
 import org.helianto.process.domain.ControlPlan;
-import org.helianto.process.domain.Method;
 import org.helianto.process.domain.Operation;
 import org.helianto.process.domain.Process;
 import org.helianto.process.domain.ProcessDocument;
@@ -27,18 +25,6 @@ public enum AssociationType {
      * 
      */
     PROCESS_OPERATION('O', Process.class, Operation.class, true),
-    
-    /**
-     * Association to a required characteristic within a process operation.
-     */
-    OPERATION_CHARACTERISTIC('K', Operation.class, Characteristic.class, true),
-
-    /**
-     * A characteristic should have a method for 
-     * each process development phase.
-     * 
-     */
-    CHARACTERISTIC_METHOD('S', Characteristic.class, Method.class, true),
     
 	/*
 	 * Other associations

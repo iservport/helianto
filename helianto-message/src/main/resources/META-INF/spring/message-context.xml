@@ -33,7 +33,7 @@
 	
 	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
 	
-	<bean id="mailSender" class="org.helianto.message.sender.TestingMailSender" />
+	<bean id="mailSender" class="org.helianto.message.service.TestingMailSender" />
 
 	<!-- 
 	 ! Uncomment to provide Java Mail Smtp sender

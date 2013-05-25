@@ -74,6 +74,17 @@ public class ProcessDocumentAssociation extends AbstractAssociation<ProcessDocum
     	setParent(parent);
     }
 
+	/** 
+	 * Key constructor.
+	 * 
+	 * @param parent
+	 * @param child
+	 */
+    public ProcessDocumentAssociation(ProcessDocument parent, ProcessDocument child) {
+    	this(parent);
+    	setChild(child);
+    }
+
     /**
      * Parent document (lazy loaded).
      */

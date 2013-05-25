@@ -19,12 +19,12 @@ import java.util.List;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.ResourceMgr;
 import org.helianto.resource.def.ResourceType;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.filter.ResourceGroupFormFilterAdapter;
 import org.helianto.resource.form.ResourceGroupForm;
+import org.helianto.resource.repository.ResourceGroupRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class ResourceMgrImpl implements ResourceMgr {
 	@Transactional(readOnly=true)
 	public List<ResourceGroup> findResourceGroups(ResourceGroupForm form) {
 		Filter filter = new ResourceGroupFormFilterAdapter(form);
-		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupDao.find(filter);
+		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupRepository.find(filter);
 		if (logger.isDebugEnabled() && resourceGroupList!=null) {
 			logger.debug("Found resource group list of size {}", resourceGroupList.size());
 		}
@@ -57,18 +57,17 @@ public class ResourceMgrImpl implements ResourceMgr {
     
 	@Transactional
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup) {
-    	resourceGroupDao.saveOrUpdate(resourceGroup);
-    	return resourceGroup;
+    	return resourceGroupRepository.saveAndFlush(resourceGroup);
     }
     
     // collaborators
 
-    private FilterDao<ResourceGroup> resourceGroupDao;
+    private ResourceGroupRepository resourceGroupRepository;
     
-    @javax.annotation.Resource(name="resourceGroupDao")
-    public void setResourceGroupDao(FilterDao<ResourceGroup> resourceGroupDao) {
-        this.resourceGroupDao = resourceGroupDao;
-    }
+    @javax.annotation.Resource
+    public void setResourceGroupRepository(ResourceGroupRepository resourceGroupRepository) {
+		this.resourceGroupRepository = resourceGroupRepository;
+	}
 
 	static final Logger logger = LoggerFactory.getLogger(ResourceMgrImpl.class);
 

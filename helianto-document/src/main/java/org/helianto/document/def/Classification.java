@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process.def;
+package org.helianto.document.def;
 
 /**
  * Classification applicable to process characteristics.

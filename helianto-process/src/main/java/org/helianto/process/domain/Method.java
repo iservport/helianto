@@ -60,7 +60,7 @@ public class Method extends ProcessDocumentAssociation {
 
 	@Transient
 	public String getUnitCode() {
-		return ((Characteristic) getParent()).getUnitCode();
+		return "";
 	}
 
     /**

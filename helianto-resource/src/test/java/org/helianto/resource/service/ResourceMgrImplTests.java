@@ -12,9 +12,9 @@ import java.util.List;
 
 import org.easymock.EasyMock;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.resource.domain.ResourceGroup;
 import org.helianto.resource.form.ResourceGroupForm;
+import org.helianto.resource.repository.ResourceGroupRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,41 +29,40 @@ public class ResourceMgrImplTests {
 		List<ResourceGroup> resourceGroupList = new ArrayList<ResourceGroup>();
 		ResourceGroupForm form = EasyMock.createMock(ResourceGroupForm.class);
 		
-		expect(resourceGroupDao.find(EasyMock.isA(Filter.class))).andReturn(resourceGroupList);
-		replay(resourceGroupDao);
+		expect(resourceGroupRepository.find(EasyMock.isA(Filter.class))).andReturn(resourceGroupList);
+		replay(resourceGroupRepository);
 		replay(form);
 		
 		assertSame(resourceGroupList, resourceMgr.findResourceGroups(form));
-		verify(resourceGroupDao);
+		verify(resourceGroupRepository);
 	}
 	
 	@Test
 	public void storeResourceGroup() {
 		ResourceGroup resourceGroup = new ResourceGroup();
 		
-		resourceGroupDao.saveOrUpdate(resourceGroup);
-		replay(resourceGroupDao);
+		expect(resourceGroupRepository.saveAndFlush(resourceGroup)).andReturn(resourceGroup);
+		replay(resourceGroupRepository);
 		
 		assertSame(resourceGroup, resourceMgr.storeResourceGroup(resourceGroup));
-		verify(resourceGroupDao);
+		verify(resourceGroupRepository);
 	}
 	
 	// collabs
 	
 	private ResourceMgrImpl resourceMgr;
-	private FilterDao<ResourceGroup> resourceGroupDao;
+	private ResourceGroupRepository resourceGroupRepository;
 	
-	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		resourceMgr = new ResourceMgrImpl();
-		resourceGroupDao = createMock(FilterDao.class);
-		resourceMgr.setResourceGroupDao(resourceGroupDao);
+		resourceGroupRepository = createMock(ResourceGroupRepository.class);
+		resourceMgr.setResourceGroupRepository(resourceGroupRepository);
 	}
 	
 	@After
 	public void tearDown() {
-		reset(resourceGroupDao);
+		reset(resourceGroupRepository);
 	}
 	
 

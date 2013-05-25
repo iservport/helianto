@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import org.helianto.core.NonUniqueResultException;
 import org.helianto.core.SequenceMgr;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.document.DocumentMgr;
 import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;
@@ -32,6 +31,8 @@ import org.helianto.document.filter.PrivateDocumentFilterAdapter;
 import org.helianto.document.form.DocumentFolderForm;
 import org.helianto.document.form.PrivateDocumentForm;
 import org.helianto.document.repository.DocumentFolderRepository;
+import org.helianto.document.repository.DocumentRepository;
+import org.helianto.document.repository.PrivateDocumentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -51,17 +52,17 @@ public class DocumentMgrImpl
 		if (document.isLocked()) {
 			throw new IllegalArgumentException("Tried to change a locked document.");
 		}
-		documentDao.saveOrUpdate(document);
+		document = documentRepository.save(document);
 		if (document.getSeries()!=null) {
 			sequenceMgr.validateInternalNumber(document);
 		}
-		documentDao.flush();
+		documentRepository.flush();
 		return document;
 	}
 	
 	@Transactional(readOnly=true)
 	public List<? extends Document> findDocuments(Filter documentFilter) {
-    	List<? extends Document> documentList = (List<? extends Document>) documentDao.find(documentFilter);
+    	List<? extends Document> documentList = (List<? extends Document>) documentRepository.find(documentFilter);
     	if (logger.isDebugEnabled() && documentList!=null) {
     		logger.debug("Found document list of size {}", documentList.size());
     	}
@@ -71,7 +72,7 @@ public class DocumentMgrImpl
 	@Transactional(readOnly=true)
 	public List<PrivateDocument> findPrivateDocuments(PrivateDocumentForm form) {
 		Filter privateDocumentFilter = new PrivateDocumentFilterAdapter(form);
-    	List<PrivateDocument> privateDocumentList = (List<PrivateDocument>) privateDocumentDao.find(privateDocumentFilter);
+    	List<PrivateDocument> privateDocumentList = (List<PrivateDocument>) privateDocumentRepository.find(privateDocumentFilter);
     	if (logger.isDebugEnabled() && privateDocumentList!=null) {
     		logger.debug("Found private document list of size {}", privateDocumentList.size());
     	}
@@ -80,8 +81,7 @@ public class DocumentMgrImpl
 	
 	@Transactional
 	public PrivateDocument storePrivateDocument(PrivateDocument privateDocument) {
-		privateDocumentDao.saveOrUpdate(privateDocument);
-		return privateDocument;
+		return privateDocumentRepository.saveAndFlush(privateDocument);
 	}
 	
 	@Transactional(readOnly=true)
@@ -102,7 +102,7 @@ public class DocumentMgrImpl
     	if (logger.isDebugEnabled()) {
     		logger.debug("Removing document "+document);
     	}
-    	documentDao.remove(document);
+    	documentRepository.delete(document);
     	logger.info("Removed document "+document);
 	}
 	
@@ -123,19 +123,19 @@ public class DocumentMgrImpl
 	
 	// collabs
 	
-	private FilterDao<Document> documentDao;
-	private FilterDao<PrivateDocument> privateDocumentDao;
+	private DocumentRepository documentRepository;
+	private PrivateDocumentRepository privateDocumentRepository;
 	private DocumentFolderRepository documentFolderRepository;
 	private SequenceMgr sequenceMgr;
 	
-	@Resource(name="documentDao")
-	public void setDocumentDao(FilterDao<Document> documentDao) {
-		this.documentDao = documentDao;
+	@Resource
+	public void setDocumentRepository(DocumentRepository documentRepository) {
+		this.documentRepository = documentRepository;
 	}
 	
-	@Resource(name="privateDocumentDao")
-	public void setPrivateDocumentDao(FilterDao<PrivateDocument> privateDocumentDao) {
-		this.privateDocumentDao = privateDocumentDao;
+	@Resource
+	public void setPrivateDocumentRepository(PrivateDocumentRepository privateDocumentRepository) {
+		this.privateDocumentRepository = privateDocumentRepository;
 	}
 	
 	@Resource

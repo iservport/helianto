@@ -8,8 +8,6 @@
         <wb-resource deploy-path="/" source-path="/helianto-document/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-document/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-document/src/test/resources"/>
-        <wb-resource deploy-path="/" source-path="/helianto-finance/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-finance/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-resource/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-resource/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-process/src/main/java"/>

@@ -23,13 +23,13 @@ import java.util.List;
 import org.easymock.EasyMock;
 import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.filter.classic.DocumentFilter;
-import org.helianto.document.filter.classic.SerializerFilter;
 import org.helianto.document.repository.DocumentFolderRepository;
+import org.helianto.document.repository.DocumentRepository;
+import org.helianto.document.repository.PrivateDocumentRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,13 +45,13 @@ public class DocumentMgrImplTests {
 	public void storeDocumentNoBuilder() {
 		Document document= new Document();
 		
-		documentDao.saveOrUpdate(document);
-		documentDao.flush();
-		EasyMock.replay(documentDao);
+		EasyMock.expect(documentRepository.save(document)).andReturn(document);
+		documentRepository.flush();
+		EasyMock.replay(documentRepository);
 		EasyMock.replay(sequenceMgr);
 		
 		assertSame(document, documentMgr.storeDocument(document));
-		EasyMock.verify(documentDao);
+		EasyMock.verify(documentRepository);
 		EasyMock.verify(sequenceMgr);
 	}
 	
@@ -60,14 +60,14 @@ public class DocumentMgrImplTests {
 		Document document= new Document();
 		document.setSeries(new DocumentFolder());
 		
-		documentDao.saveOrUpdate(document);
-		documentDao.flush();
-		EasyMock.replay(documentDao);
+		EasyMock.expect(documentRepository.save(document)).andReturn(document);
+		documentRepository.flush();
+		EasyMock.replay(documentRepository);
 		sequenceMgr.validateInternalNumber(document);
 		EasyMock.replay(sequenceMgr);
 		
 		assertSame(document, documentMgr.storeDocument(document));
-		EasyMock.verify(documentDao);
+		EasyMock.verify(documentRepository);
 		EasyMock.verify(sequenceMgr);
 	}
 	
@@ -75,11 +75,11 @@ public class DocumentMgrImplTests {
 	public void storePrivateDocument() {
 		PrivateDocument privateDocument= new PrivateDocument();
 		
-		privateDocumentDao.saveOrUpdate(privateDocument);
-		EasyMock.replay(privateDocumentDao);
+		EasyMock.expect(privateDocumentRepository.saveAndFlush(privateDocument)).andReturn(privateDocument);
+		EasyMock.replay(privateDocumentRepository);
 		
 		assertSame(privateDocument, documentMgr.storePrivateDocument(privateDocument));
-		EasyMock.verify(privateDocumentDao);
+		EasyMock.verify(privateDocumentRepository);
 	}
 	
 	@Test
@@ -87,34 +87,22 @@ public class DocumentMgrImplTests {
 		List<Document> documentList = new ArrayList<Document>();
 		DocumentFilter documentFilter = new DocumentFilter(new Entity(), "");
 		
-		EasyMock.expect(documentDao.find(documentFilter)).andReturn(documentList);
-		EasyMock.replay(documentDao);
+		EasyMock.expect(documentRepository.find(documentFilter)).andReturn(documentList);
+		EasyMock.replay(documentRepository);
 		
 		assertSame(documentList, documentMgr.findDocuments(documentFilter));
-		EasyMock.verify(documentDao);
+		EasyMock.verify(documentRepository);
 	}
-	
-//	@Test
-//	public void findPrivateDocuments() {
-//		List<PrivateDocument> documentList = new ArrayList<PrivateDocument>();
-//		Filter filter = new TestingFilter();
-//		
-//		EasyMock.expect(privateDocumentDao.find(filter)).andReturn(documentList);
-//		EasyMock.replay(privateDocumentDao);
-//		
-//		assertSame(documentList, documentMgr.findPrivateDocuments(filter));
-//		EasyMock.verify(privateDocumentDao);
-//	}
 	
 	@Test
 	public void removeDocument() {
 		Document document= new Document();
 		
-		documentDao.remove(document);
-		EasyMock.replay(documentDao);
+		documentRepository.delete(document);
+		EasyMock.replay(documentRepository);
 		
-		documentDao.remove(document);
-		EasyMock.verify(documentDao);
+		documentRepository.delete(document);
+		EasyMock.verify(documentRepository);
 	}
 	
 	@Test
@@ -131,19 +119,18 @@ public class DocumentMgrImplTests {
 	//
 	
 	private DocumentMgrImpl documentMgr;
-	private FilterDao<Document> documentDao;
-	private FilterDao<PrivateDocument> privateDocumentDao;
+	private DocumentRepository documentRepository;
+	private PrivateDocumentRepository privateDocumentRepository;
 	private DocumentFolderRepository documentFolderRepository;
 	private SequenceMgr sequenceMgr;
 	
-	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		documentMgr = new DocumentMgrImpl();
-		documentDao = EasyMock.createMock(FilterDao.class);
-		documentMgr.setDocumentDao(documentDao);
-		privateDocumentDao = EasyMock.createMock(FilterDao.class);
-		documentMgr.setPrivateDocumentDao(privateDocumentDao);
+		documentRepository = EasyMock.createMock(DocumentRepository.class);
+		documentMgr.setDocumentRepository(documentRepository);
+		privateDocumentRepository = EasyMock.createMock(PrivateDocumentRepository.class);
+		documentMgr.setPrivateDocumentRepository(privateDocumentRepository);
 		documentFolderRepository = EasyMock.createMock(DocumentFolderRepository.class);
 		documentMgr.setDocumentFolderRepository(documentFolderRepository);
 		sequenceMgr = EasyMock.createMock(SequenceMgr.class);
@@ -152,8 +139,8 @@ public class DocumentMgrImplTests {
 	
 	@After
 	public void tearDown() {
-		EasyMock.reset(documentDao);
-		EasyMock.reset(privateDocumentDao);
+		EasyMock.reset(documentRepository);
+		EasyMock.reset(privateDocumentRepository);
 		EasyMock.reset(documentFolderRepository);
 		EasyMock.reset(sequenceMgr);
 	}

@@ -30,7 +30,6 @@
 			<module>helianto-core</module>
 			<module>helianto-partner</module>
 			<module>helianto-document</module>
-			<module>helianto-finance</module>
 			<module>helianto-resource</module>
 			<module>helianto-process</module>
 			<module>helianto-inventory</module>

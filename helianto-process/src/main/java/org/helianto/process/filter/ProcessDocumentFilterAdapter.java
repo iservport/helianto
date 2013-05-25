@@ -21,7 +21,6 @@ import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.process.domain.Characteristic;
 import org.helianto.process.domain.ControlMethod;
 import org.helianto.process.domain.Operation;
 import org.helianto.process.domain.Process;
@@ -130,9 +129,6 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 		if (clazz.equals(ControlMethod.class)) {
 			return 'S'; 
 		}
-		if (clazz.equals(Characteristic.class)) {
-			return 'K'; 
-		}
 		if (clazz.equals(Operation.class)) {
 			return 'O'; 
 		}
@@ -145,9 +141,6 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 	public void setDiscriminator(char discriminator) {
 		if (discriminator=='S') {
 			clazz = ControlMethod.class; 
-		}
-		if (discriminator=='K') {
-			clazz = Characteristic.class; 
 		}
 		if (discriminator=='O') {
 			clazz = Operation.class; 

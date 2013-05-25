@@ -33,7 +33,8 @@ import org.helianto.core.domain.KeyType;
 @Table(name="proc_docKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"processDocumentId", "keyTypeId"})}
 )
-public class ProcessDocumentKey extends AbstractKeyStringValue {
+public class ProcessDocumentKey 
+	extends AbstractKeyStringValue {
 
 	/**
 	 * <<Transient>> Delegate to the actual key owner.
@@ -44,19 +45,6 @@ public class ProcessDocumentKey extends AbstractKeyStringValue {
 		return getProcessDocument();
 	}   
 
-    /**
-     * Factory method.
-     * 
-     * @param document
-     * @param keyType
-     */
-    public static ProcessDocumentKey documentKeyFactory(ProcessDocument document, KeyType keyType) {
-    	ProcessDocumentKey documentKey = new ProcessDocumentKey();
-        documentKey.setProcessDocument(document);
-        documentKey.setKeyType(keyType);
-        return documentKey;
-    }
-
     private static final long serialVersionUID = 1L;
     private ProcessDocument processDocument;
 
@@ -65,6 +53,18 @@ public class ProcessDocumentKey extends AbstractKeyStringValue {
      */
     public ProcessDocumentKey() {
     	super();
+    }
+
+    /**
+     * Key constructor.
+     * 
+     * @param document
+     * @param keyType
+     */
+    public ProcessDocumentKey(ProcessDocument document, KeyType keyType) {
+    	this();
+        setProcessDocument(document);
+        setKeyType(keyType);
     }
 
     /** 

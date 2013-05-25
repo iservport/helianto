@@ -40,6 +40,8 @@
         destroy-method="close">
         <property name="driverClass" value="org.hsqldb.jdbcDriver"/>
         <property name="jdbcUrl" value="jdbc:hsqldb:file:target/testdb/db2;shutdown=true"/>
+        <property name="user" value="sa" />
+        <property name="password" value="" />
         <property name="properties">
             <props>
                 <prop key="c3p0.acquire_increment">5</prop>
@@ -47,7 +49,6 @@
                 <prop key="c3p0.max_size">100</prop>
                 <prop key="c3p0.max_statements">0</prop>
                 <prop key="c3p0.min_size">10</prop>
-                <prop key="user">sa</prop>
             </props>
         </property>
     </bean>
